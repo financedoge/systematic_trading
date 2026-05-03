@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "systematic-trading"
+version = "0.1.0"
+description = "Global long-horizon portfolio research, backtesting, and execution toolkit."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.116.0",
+    "uvicorn>=0.35.0",
+    "pydantic-settings>=2.10.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.4.0",
+    "httpx>=0.28.0",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+addopts = "-q"
+testpaths = ["tests"]
