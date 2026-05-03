@@ -28,6 +28,7 @@ def write_backtest_report(
     benchmark_symbol: str | None = None,
     benchmark_nav_series: list[dict[str, Any]] | None = None,
     benchmark_name: str | None = None,
+    extra_benchmarks: list[dict[str, Any]] | None = None,
     signal_diagnostics: dict[str, Any] | None = None,
 ) -> BacktestReportResult:
     result_path = Path(result_path)
@@ -40,6 +41,7 @@ def write_backtest_report(
         benchmark_symbol=benchmark_symbol,
         benchmark_nav_series=benchmark_nav_series,
         benchmark_name=benchmark_name,
+        extra_benchmarks=extra_benchmarks,
         signal_diagnostics=signal_diagnostics,
     )
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -55,6 +57,7 @@ def build_backtest_report_data(
     benchmark_symbol: str | None = None,
     benchmark_nav_series: list[dict[str, Any]] | None = None,
     benchmark_name: str | None = None,
+    extra_benchmarks: list[dict[str, Any]] | None = None,
     signal_diagnostics: dict[str, Any] | None = None,
 ) -> tuple[dict[str, Any], list[str]]:
     warnings: list[str] = []
@@ -67,11 +70,13 @@ def build_backtest_report_data(
     end_date = nav_points[-1]["date"]
     prices: dict[str, dict[str, float]] = {}
     fx_rates: dict[str, float] = {}
+    extra_benchmarks = extra_benchmarks or []
+    market_symbols = sorted(set(symbols) | _benchmark_symbols(extra_benchmarks, benchmark_symbol))
 
     if database_path is not None:
         prices, fx_rates, market_warnings = _load_market_data(
             Path(database_path),
-            symbols=symbols,
+            symbols=market_symbols,
             start_date=start_date,
             end_date=end_date,
         )
@@ -88,6 +93,29 @@ def build_backtest_report_data(
     )
     if benchmark_warning is not None:
         warnings.append(benchmark_warning)
+    benchmark_choices = [
+        {
+            "id": "primary",
+            "name": benchmark_name,
+            "series": benchmark,
+        }
+    ]
+    for index, spec in enumerate(extra_benchmarks):
+        choice_id = str(spec.get("id") or f"benchmark_{index + 1}")
+        if choice_id == "primary" or any(choice["id"] == choice_id for choice in benchmark_choices):
+            continue
+        choice_series, choice_name, choice_warning = _benchmark_series(
+            nav_points=nav_points,
+            symbols=symbols,
+            prices=prices,
+            fx_rates=fx_rates,
+            benchmark_symbol=spec.get("symbol"),
+            benchmark_nav_series=spec.get("nav_series"),
+            benchmark_name=spec.get("name"),
+        )
+        if choice_warning is not None:
+            warnings.append(choice_warning)
+        benchmark_choices.append({"id": choice_id, "name": choice_name, "series": choice_series})
 
     holding_series, allocation_source, allocation_warnings = _holding_series(
         result=result,
@@ -102,6 +130,14 @@ def build_backtest_report_data(
     chart_points = []
     for index, point in enumerate(nav_points):
         benchmark_nav = benchmark[index]["nav"] if benchmark else None
+        point_benchmarks = {
+            choice["id"]: {
+                "name": choice["name"],
+                "nav": choice["series"][index]["nav"] if choice["series"] else None,
+                "index": choice["series"][index]["index"] if choice["series"] else None,
+            }
+            for choice in benchmark_choices
+        }
         chart_points.append(
             {
                 "date": point["date"],
@@ -109,24 +145,38 @@ def build_backtest_report_data(
                 "navIndex": point["navIndex"],
                 "benchmark": benchmark_nav,
                 "benchmarkIndex": benchmark[index]["index"] if benchmark else None,
+                "benchmarks": point_benchmarks,
                 "drawdown": drawdowns[index],
                 "weights": holding_series[index],
             }
         )
 
     colors = _color_map(symbols)
-    summary = _summary_metrics(chart_points)
-    metrics = {
-        "yearly": _period_metrics(chart_points, "yearly"),
-        "quarterly": _period_metrics(chart_points, "quarterly"),
-        "monthly": _period_metrics(chart_points, "monthly"),
+    benchmark_options = [{"id": choice["id"], "name": choice["name"]} for choice in benchmark_choices]
+    summaries_by_benchmark = {
+        choice["id"]: _summary_metrics(chart_points, benchmark_id=choice["id"])
+        for choice in benchmark_choices
     }
+    metrics_by_benchmark = {
+        choice["id"]: {
+            "yearly": _period_metrics(chart_points, "yearly", benchmark_id=choice["id"]),
+            "quarterly": _period_metrics(chart_points, "quarterly", benchmark_id=choice["id"]),
+            "monthly": _period_metrics(chart_points, "monthly", benchmark_id=choice["id"]),
+        }
+        for choice in benchmark_choices
+    }
+    summary = summaries_by_benchmark["primary"]
+    metrics = metrics_by_benchmark["primary"]
 
     report = {
         "title": result_path.stem.replace("_", " ").title(),
         "sourceJson": str(result_path),
         "database": str(database_path) if database_path is not None else None,
         "benchmarkName": benchmark_name,
+        "defaultBenchmarkId": "primary",
+        "benchmarkOptions": benchmark_options,
+        "summariesByBenchmark": summaries_by_benchmark,
+        "metricsByBenchmark": metrics_by_benchmark,
         "allocationSource": allocation_source,
         "symbols": symbols,
         "allocationOrder": [*symbols, CASH_LABEL],
@@ -172,6 +222,15 @@ def _extract_symbols(result: dict[str, Any]) -> list[str]:
     for position in final_snapshot.get("positions", []):
         symbols.add(str(position["symbol"]))
     return sorted(symbols)
+
+
+def _benchmark_symbols(extra_benchmarks: list[dict[str, Any]], benchmark_symbol: str | None) -> set[str]:
+    symbols = {benchmark_symbol} if benchmark_symbol else set()
+    for spec in extra_benchmarks:
+        symbol = spec.get("symbol")
+        if symbol:
+            symbols.add(str(symbol))
+    return symbols
 
 
 def _load_market_data(
@@ -250,10 +309,10 @@ def _benchmark_series(
 
     if benchmark_symbol:
         benchmark_symbols = [benchmark_symbol]
-        benchmark_label = f"{benchmark_symbol} buy-and-hold"
+        benchmark_label = benchmark_name or f"{benchmark_symbol} buy-and-hold"
     else:
         benchmark_symbols = symbols
-        benchmark_label = "Equal-weight ETF universe"
+        benchmark_label = benchmark_name or "Equal-weight ETF universe"
 
     first = nav_points[0]
     initial_nav = first["nav"]
@@ -493,11 +552,15 @@ def _drawdown_series(nav_points: list[dict[str, Any]]) -> tuple[list[float], lis
     return drawdowns, periods
 
 
-def _summary_metrics(chart_points: list[dict[str, Any]]) -> dict[str, Any]:
+def _summary_metrics(chart_points: list[dict[str, Any]], benchmark_id: str = "primary") -> dict[str, Any]:
     first = chart_points[0]
     last = chart_points[-1]
     nav_values = [point["nav"] for point in chart_points]
-    benchmark_values = [point["benchmark"] for point in chart_points if point["benchmark"] is not None]
+    benchmark_values = [
+        _benchmark_nav(point, benchmark_id)
+        for point in chart_points
+        if _benchmark_nav(point, benchmark_id) is not None
+    ]
     returns = _returns(nav_values)
     benchmark_return = None
     if benchmark_values:
@@ -518,10 +581,10 @@ def _summary_metrics(chart_points: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def _period_metrics(chart_points: list[dict[str, Any]], frequency: str) -> list[dict[str, Any]]:
+def _period_metrics(chart_points: list[dict[str, Any]], frequency: str, benchmark_id: str = "primary") -> list[dict[str, Any]]:
     dates = [_parse_date(point["date"]) for point in chart_points]
     nav_values = [point["nav"] for point in chart_points]
-    benchmark_values = [point["benchmark"] for point in chart_points]
+    benchmark_values = [_benchmark_nav(point, benchmark_id) for point in chart_points]
     groups: dict[str, list[int]] = defaultdict(list)
     for index, day in enumerate(dates):
         groups[_period_key(day, frequency)].append(index)
@@ -559,6 +622,13 @@ def _period_metrics(chart_points: list[dict[str, Any]], frequency: str) -> list[
             }
         )
     return rows
+
+
+def _benchmark_nav(point: dict[str, Any], benchmark_id: str) -> float | None:
+    benchmark = point.get("benchmarks", {}).get(benchmark_id)
+    if benchmark is not None:
+        return benchmark.get("nav")
+    return point.get("benchmark")
 
 
 def _period_key(day: date, frequency: str) -> str:
@@ -846,6 +916,24 @@ HTML_TEMPLATE = """<!doctype html>
       background: var(--ink);
       color: white;
     }
+    .benchmark-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .benchmark-control select {
+      min-width: 220px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--ink);
+      padding: 8px 10px;
+      font: inherit;
+      font-size: 12px;
+    }
     .table-scroll {
       max-height: 560px;
       overflow: auto;
@@ -974,7 +1062,13 @@ HTML_TEMPLATE = """<!doctype html>
           <h2>NAV, Benchmark, Holdings, Drawdowns</h2>
           <div class="meta" id="chartMeta"></div>
         </div>
-        <div class="legend" id="legend"></div>
+        <div>
+          <label class="benchmark-control">
+            Benchmark
+            <select id="benchmarkSelect"></select>
+          </label>
+          <div class="legend" id="legend"></div>
+        </div>
       </div>
       <div class="chart-wrap" id="chartWrap">
         <svg id="chartSvg" role="img" aria-label="Backtest chart"></svg>
@@ -1029,7 +1123,7 @@ HTML_TEMPLATE = """<!doctype html>
 
   <script>
     const report = __REPORT_DATA__;
-    const state = { frequency: "yearly" };
+    const state = { frequency: "yearly", benchmarkId: report.defaultBenchmarkId || "primary" };
     const strategyColor = "#0f766e";
     const benchmarkColor = "#111827";
 
@@ -1057,6 +1151,14 @@ HTML_TEMPLATE = """<!doctype html>
       return value < 0 ? "negative" : "positive";
     }
 
+    function currentBenchmarkOption() {
+      return (report.benchmarkOptions || []).find((item) => item.id === state.benchmarkId) || { id: "primary", name: report.benchmarkName };
+    }
+
+    function currentBenchmark(point) {
+      return (point.benchmarks && point.benchmarks[state.benchmarkId]) || { nav: point.benchmark, index: point.benchmarkIndex };
+    }
+
     function setupHeader() {
       document.getElementById("title").textContent = report.title;
       document.getElementById("meta").textContent = `${report.summary.start} to ${report.summary.end}`;
@@ -1064,17 +1166,18 @@ HTML_TEMPLATE = """<!doctype html>
         `Source: ${escapeHtml(report.sourceJson)}`,
         report.database ? `Market DB: ${escapeHtml(report.database)}` : null
       ].filter(Boolean).join("<br>");
-      document.getElementById("chartMeta").textContent = `${report.benchmarkName}. ${report.allocationSource}`;
+      document.getElementById("chartMeta").textContent = `${currentBenchmarkOption().name}. ${report.allocationSource}`;
     }
 
     function setupSummary() {
+      const summary = (report.summariesByBenchmark && report.summariesByBenchmark[state.benchmarkId]) || report.summary;
       const items = [
-        ["Final NAV", fmtMoney(report.summary.finalNav)],
-        ["Total Return", fmtPct(report.summary.totalReturn)],
-        ["Annualized", fmtPct(report.summary.annualizedReturn)],
-        ["Max Drawdown", fmtPct(report.summary.maxDrawdown)],
-        ["Sharpe", fmtNum(report.summary.sharpe)],
-        ["Alpha", fmtPct(report.summary.alpha)]
+        ["Final NAV", fmtMoney(summary.finalNav)],
+        ["Total Return", fmtPct(summary.totalReturn)],
+        ["Annualized", fmtPct(summary.annualizedReturn)],
+        ["Max Drawdown", fmtPct(summary.maxDrawdown)],
+        ["Sharpe", fmtNum(summary.sharpe)],
+        ["Alpha", fmtPct(summary.alpha)]
       ];
       document.getElementById("summaryCards").innerHTML = items.map(([label, value]) => `
         <div class="stat">
@@ -1087,7 +1190,7 @@ HTML_TEMPLATE = """<!doctype html>
     function setupLegend() {
       const items = [
         ["Strategy NAV", strategyColor],
-        [report.benchmarkName, benchmarkColor],
+        [currentBenchmarkOption().name, benchmarkColor],
         ["Drawdown periods", "#b91c1c"],
         ...report.allocationOrder.map((symbol) => [symbol, report.colors[symbol]])
       ];
@@ -1124,7 +1227,7 @@ HTML_TEMPLATE = """<!doctype html>
       const start = points[0].day.getTime();
       const end = points[points.length - 1].day.getTime();
       const x = (day) => left + ((day.getTime() - start) / Math.max(1, end - start)) * plotW;
-      const values = points.flatMap((point) => [point.navIndex, point.benchmarkIndex].filter((value) => Number.isFinite(value)));
+      const values = points.flatMap((point) => [point.navIndex, currentBenchmark(point).index].filter((value) => Number.isFinite(value)));
       const minV = Math.min(...values);
       const maxV = Math.max(...values);
       const pad = Math.max(4, (maxV - minV) * 0.08);
@@ -1199,9 +1302,12 @@ HTML_TEMPLATE = """<!doctype html>
           .join(" ");
       }
 
-      if (points.some((point) => Number.isFinite(point.benchmarkIndex))) {
+      if (points.some((point) => Number.isFinite(currentBenchmark(point).index))) {
         svg.appendChild(svgEl("path", {
-          d: pathFor("benchmarkIndex"),
+          d: points
+            .filter((point) => Number.isFinite(currentBenchmark(point).index))
+            .map((point, index) => `${index === 0 ? "M" : "L"}${x(point.day).toFixed(2)},${y(currentBenchmark(point).index).toFixed(2)}`)
+            .join(" "),
           fill: "none",
           stroke: benchmarkColor,
           "stroke-width": "2.2",
@@ -1256,7 +1362,7 @@ HTML_TEMPLATE = """<!doctype html>
         tooltip.innerHTML = `
           <div class="tooltip-title">${escapeHtml(point.date)}</div>
           <div class="tooltip-row"><span>NAV index</span><strong>${fmtNum(point.navIndex)}</strong></div>
-          <div class="tooltip-row"><span>Benchmark</span><strong>${fmtNum(point.benchmarkIndex)}</strong></div>
+          <div class="tooltip-row"><span>${escapeHtml(currentBenchmarkOption().name)}</span><strong>${fmtNum(currentBenchmark(point).index)}</strong></div>
           <div class="tooltip-row"><span>Drawdown</span><strong>${fmtPct(point.drawdown)}</strong></div>
           ${topHoldings}
         `;
@@ -1275,7 +1381,8 @@ HTML_TEMPLATE = """<!doctype html>
     }
 
     function renderMetrics() {
-      const rows = report.metrics[state.frequency] || [];
+      const benchmarkMetrics = (report.metricsByBenchmark && report.metricsByBenchmark[state.benchmarkId]) || report.metrics;
+      const rows = benchmarkMetrics[state.frequency] || [];
       const table = document.getElementById("metricsTable");
       table.innerHTML = `
         <thead>
@@ -1429,6 +1536,23 @@ HTML_TEMPLATE = """<!doctype html>
       });
     }
 
+    function setupBenchmarkSelect() {
+      const select = document.getElementById("benchmarkSelect");
+      const options = report.benchmarkOptions && report.benchmarkOptions.length
+        ? report.benchmarkOptions
+        : [{ id: "primary", name: report.benchmarkName }];
+      select.innerHTML = options.map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.name)}</option>`).join("");
+      select.value = state.benchmarkId;
+      select.addEventListener("change", () => {
+        state.benchmarkId = select.value;
+        setupHeader();
+        setupSummary();
+        setupLegend();
+        renderMetrics();
+        renderChart();
+      });
+    }
+
     function setupWarnings() {
       const panel = document.getElementById("warnings");
       if (!report.warnings.length) return;
@@ -1438,6 +1562,7 @@ HTML_TEMPLATE = """<!doctype html>
 
     setupHeader();
     setupSummary();
+    setupBenchmarkSelect();
     setupLegend();
     setupSegments();
     setupWarnings();
