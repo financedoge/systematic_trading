@@ -46,3 +46,18 @@ GLOBAL_ETF_UNIVERSE = {
         country="Korea",
     ),
 }
+
+
+MSCI_WORLD_PROXY_SYMBOL = "URTH"
+MSCI_WORLD_PROXY_NAME = "MSCI World proxy (URTH)"
+
+BENCHMARK_INSTRUMENTS = {
+    MSCI_WORLD_PROXY_SYMBOL: Instrument(
+        symbol=MSCI_WORLD_PROXY_SYMBOL,
+        name="iShares MSCI World ETF",
+        asset_class=AssetClass.ETF,
+        exchange=Exchange.NYSE,
+        quote_currency=Currency.USD,
+        country="Global developed equity",
+    ),
+}

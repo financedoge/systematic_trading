@@ -1,3 +1,8 @@
-from systematic_trading.research.etf_universe import GLOBAL_ETF_UNIVERSE
+from systematic_trading.research.etf_universe import (
+    BENCHMARK_INSTRUMENTS,
+    GLOBAL_ETF_UNIVERSE,
+    MSCI_WORLD_PROXY_NAME,
+    MSCI_WORLD_PROXY_SYMBOL,
+)
 
-__all__ = ["GLOBAL_ETF_UNIVERSE"]
+__all__ = ["BENCHMARK_INSTRUMENTS", "GLOBAL_ETF_UNIVERSE", "MSCI_WORLD_PROXY_NAME", "MSCI_WORLD_PROXY_SYMBOL"]

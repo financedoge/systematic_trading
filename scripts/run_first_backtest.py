@@ -12,7 +12,12 @@ from systematic_trading.config import AppSettings
 from systematic_trading.data.yahoo import YahooChartProvider
 from systematic_trading.domain.enums import Currency
 from systematic_trading.domain.market import FXRate
-from systematic_trading.research import GLOBAL_ETF_UNIVERSE
+from systematic_trading.research import (
+    BENCHMARK_INSTRUMENTS,
+    GLOBAL_ETF_UNIVERSE,
+    MSCI_WORLD_PROXY_NAME,
+    MSCI_WORLD_PROXY_SYMBOL,
+)
 from systematic_trading.storage.sqlite import SQLiteStore
 
 
@@ -31,7 +36,7 @@ def main() -> None:
     store.initialize()
     provider = YahooChartProvider()
 
-    for instrument in GLOBAL_ETF_UNIVERSE.values():
+    for instrument in [*GLOBAL_ETF_UNIVERSE.values(), *BENCHMARK_INSTRUMENTS.values()]:
         store.upsert_instrument(instrument)
         for bar in provider.fetch_daily_bars(instrument.symbol, start_date, end_date):
             store.upsert_price_bar(instrument.symbol, bar)
@@ -61,7 +66,14 @@ def main() -> None:
 
     result_path.write_text(json.dumps(result.model_dump(mode="json"), indent=2), encoding="utf-8")
     summary_path.write_text(_markdown_summary(result, config), encoding="utf-8")
-    write_backtest_report(result_path=result_path, output_path=report_path, database_path=settings.database_path)
+    write_backtest_report(
+        result_path=result_path,
+        output_path=report_path,
+        database_path=settings.database_path,
+        extra_benchmarks=[
+            {"id": "msci_world", "name": MSCI_WORLD_PROXY_NAME, "symbol": MSCI_WORLD_PROXY_SYMBOL},
+        ],
+    )
     print(summary_path)
     print(result_path)
     print(report_path)

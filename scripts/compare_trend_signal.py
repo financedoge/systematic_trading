@@ -19,7 +19,13 @@ from systematic_trading.backtest.comparison import (
 from systematic_trading.backtest.reporting import write_backtest_report
 from systematic_trading.backtest.stored import StoredRiskParityBacktestConfig, run_stored_risk_parity_backtest
 from systematic_trading.config import AppSettings
-from systematic_trading.research import GLOBAL_ETF_UNIVERSE
+from systematic_trading.data.yahoo import YahooChartProvider
+from systematic_trading.research import (
+    BENCHMARK_INSTRUMENTS,
+    GLOBAL_ETF_UNIVERSE,
+    MSCI_WORLD_PROXY_NAME,
+    MSCI_WORLD_PROXY_SYMBOL,
+)
 from systematic_trading.signals import TimeSeriesMomentumOverlay
 from systematic_trading.storage.sqlite import SQLiteStore
 
@@ -37,6 +43,11 @@ def main() -> None:
     parser.add_argument("--trend-lookback-bars", type=int, default=252)
     parser.add_argument("--trend-threshold", default="0")
     parser.add_argument(
+        "--no-fetch-benchmarks",
+        action="store_true",
+        help="Do not fetch missing benchmark bars from Yahoo before rendering benchmark choices.",
+    )
+    parser.add_argument(
         "--reallocate-survivors",
         action="store_true",
         help="If set, inactive assets are reallocated across positive-trend assets instead of left in cash.",
@@ -49,6 +60,8 @@ def main() -> None:
     store.initialize()
 
     start_date, end_date = _date_range_from_store(store, args.start_date, args.end_date)
+    if not args.no_fetch_benchmarks:
+        _ensure_benchmark_data(store, start_date, end_date)
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -112,6 +125,9 @@ def main() -> None:
         database_path=database_path,
         benchmark_nav_series=baseline_payload["nav_series"],
         benchmark_name="Baseline risk parity",
+        extra_benchmarks=[
+            {"id": "msci_world", "name": MSCI_WORLD_PROXY_NAME, "symbol": MSCI_WORLD_PROXY_SYMBOL},
+        ],
         signal_diagnostics=signal_diagnostics,
     )
 
@@ -148,6 +164,17 @@ def _prices_by_symbol(store: SQLiteStore) -> dict[str, dict[date, float]]:
         symbol: {bar.trade_date: float(bar.close) for bar in store.list_price_bars(symbol)}
         for symbol in GLOBAL_ETF_UNIVERSE
     }
+
+
+def _ensure_benchmark_data(store: SQLiteStore, start_date: date, end_date: date) -> None:
+    provider = YahooChartProvider()
+    for instrument in BENCHMARK_INSTRUMENTS.values():
+        bars = store.list_price_bars(instrument.symbol, start_date=start_date, end_date=end_date)
+        if bars:
+            continue
+        store.upsert_instrument(instrument)
+        for bar in provider.fetch_daily_bars(instrument.symbol, start_date, end_date):
+            store.upsert_price_bar(instrument.symbol, bar)
 
 
 if __name__ == "__main__":

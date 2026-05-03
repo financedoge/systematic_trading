@@ -9,6 +9,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from systematic_trading.backtest.reporting import write_backtest_report
+from systematic_trading.research import MSCI_WORLD_PROXY_NAME, MSCI_WORLD_PROXY_SYMBOL
 
 
 def main() -> None:
@@ -31,6 +32,9 @@ def main() -> None:
         output_path=output_path,
         database_path=database_path,
         benchmark_symbol=args.benchmark_symbol,
+        extra_benchmarks=[
+            {"id": "msci_world", "name": MSCI_WORLD_PROXY_NAME, "symbol": MSCI_WORLD_PROXY_SYMBOL},
+        ],
     )
     for warning in report.warnings:
         print(f"warning: {warning}")
