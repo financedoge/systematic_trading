@@ -1,0 +1,3199 @@
+{
+  "baselineName": "Baseline risk parity",
+  "candidateName": "Risk parity + ts-momentum-252d-cash",
+  "splitDate": "2023-01-01",
+  "dateRange": {
+    "start": "2021-01-04",
+    "end": "2026-04-29"
+  },
+  "observations": {
+    "full": 1336,
+    "in_sample": 503,
+    "out_of_sample": 833
+  },
+  "metrics": {
+    "full": {
+      "baseline": {
+        "start": "2021-01-04",
+        "end": "2026-04-29",
+        "observations": 1336,
+        "return": 0.42112446999999986,
+        "annualizedReturn": 0.06837011582020303,
+        "maxDrawdown": -0.24397129251521932,
+        "sharpe": 0.507685662822422,
+        "sortino": 0.49145214075311194,
+        "calmar": 0.28023836376543354
+      },
+      "candidate": {
+        "start": "2021-01-04",
+        "end": "2026-04-29",
+        "observations": 1336,
+        "return": 0.40887156000000013,
+        "annualizedReturn": 0.06663063855485718,
+        "maxDrawdown": -0.1347028203528744,
+        "sharpe": 0.6291621486164768,
+        "sortino": 0.5790008141181747,
+        "calmar": 0.49464917200922853
+      },
+      "delta": {
+        "return": -0.012252909999999728,
+        "annualizedReturn": -0.0017394772653458457,
+        "maxDrawdown": 0.10926847216234492,
+        "sharpe": 0.12147648579405479,
+        "sortino": 0.08754867336506278,
+        "calmar": 0.214410808243795
+      }
+    },
+    "in_sample": {
+      "baseline": {
+        "start": "2021-01-04",
+        "end": "2022-12-30",
+        "observations": 503,
+        "return": -0.14183374999999998,
+        "annualizedReturn": -0.07416467990063613,
+        "maxDrawdown": -0.24397129251521932,
+        "sharpe": -0.4141614375420732,
+        "sortino": -0.3832544126506671,
+        "calmar": -0.3039893716020282
+      },
+      "candidate": {
+        "start": "2021-01-04",
+        "end": "2022-12-30",
+        "observations": 503,
+        "return": -0.006133699999999909,
+        "annualizedReturn": -0.003094832713170459,
+        "maxDrawdown": -0.1347028203528744,
+        "sharpe": 0.011691159660380828,
+        "sortino": 0.009634052359149551,
+        "calmar": -0.022975262916270625
+      },
+      "delta": {
+        "return": 0.13570005000000007,
+        "annualizedReturn": 0.07106984718746567,
+        "maxDrawdown": 0.10926847216234492,
+        "sharpe": 0.425852597202454,
+        "sortino": 0.39288846500981667,
+        "calmar": 0.2810141086857576
+      }
+    },
+    "out_of_sample": {
+      "baseline": {
+        "start": "2023-01-03",
+        "end": "2026-04-29",
+        "observations": 833,
+        "return": 0.6644329418764399,
+        "annualizedReturn": 0.1659532025804027,
+        "maxDrawdown": -0.13026658687877046,
+        "sharpe": 1.0874524380175428,
+        "sortino": 1.0809632042188644,
+        "calmar": 1.2739506465678965
+      },
+      "candidate": {
+        "start": "2023-01-03",
+        "end": "2026-04-29",
+        "observations": 833,
+        "return": 0.43088886154593675,
+        "annualizedReturn": 0.11402159763509045,
+        "maxDrawdown": -0.10809614495641229,
+        "sharpe": 0.9355371058133175,
+        "sortino": 0.9054608497004691,
+        "calmar": 1.0548165032256007
+      },
+      "delta": {
+        "return": -0.2335440803305031,
+        "annualizedReturn": -0.05193160494531224,
+        "maxDrawdown": 0.022170441922358175,
+        "sharpe": -0.15191533220422526,
+        "sortino": -0.17550235451839524,
+        "calmar": -0.21913414334229575
+      }
+    }
+  },
+  "signalDiagnostics": {
+    "splitDate": "2023-01-01",
+    "periods": [
+      {
+        "period": "2021-05-03 to 2021-06-01",
+        "start": "2021-05-03",
+        "end": "2021-06-01",
+        "sample": "in_sample",
+        "baselineReturn": 0.004501960000000027,
+        "candidateReturn": 0.004501960000000027,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.0,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2021-06-01 to 2021-07-01",
+        "start": "2021-06-01",
+        "end": "2021-07-01",
+        "sample": "in_sample",
+        "baselineReturn": 0.0025105077943303744,
+        "candidateReturn": 0.0025105077943303744,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.0,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2021-07-01 to 2021-08-02",
+        "start": "2021-07-01",
+        "end": "2021-08-02",
+        "sample": "in_sample",
+        "baselineReturn": -0.0047899465173497635,
+        "candidateReturn": -0.0047899465173497635,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.0,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2021-08-02 to 2021-09-01",
+        "start": "2021-08-02",
+        "end": "2021-09-01",
+        "sample": "in_sample",
+        "baselineReturn": 0.013504298113376834,
+        "candidateReturn": 0.013504298113376834,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.0,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2021-09-01 to 2021-10-01",
+        "start": "2021-09-01",
+        "end": "2021-10-01",
+        "sample": "in_sample",
+        "baselineReturn": -0.05038004086482506,
+        "candidateReturn": -0.05038004086482506,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.0,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2021-10-01 to 2021-11-01",
+        "start": "2021-10-01",
+        "end": "2021-11-01",
+        "sample": "in_sample",
+        "baselineReturn": 0.02298125201892276,
+        "candidateReturn": 0.02298125201892276,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.0,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2021-11-01 to 2021-12-01",
+        "start": "2021-11-01",
+        "end": "2021-12-01",
+        "sample": "in_sample",
+        "baselineReturn": -0.049687437257930456,
+        "candidateReturn": -0.049687437257930456,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.0,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2021-12-01 to 2022-01-03",
+        "start": "2021-12-01",
+        "end": "2022-01-03",
+        "sample": "in_sample",
+        "baselineReturn": 0.03069948927924493,
+        "candidateReturn": 0.03069948927924493,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.0,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2022-01-03 to 2022-02-01",
+        "start": "2022-01-03",
+        "end": "2022-02-01",
+        "sample": "in_sample",
+        "baselineReturn": -0.029374015202953352,
+        "candidateReturn": -0.029374015202953352,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.0,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2022-02-01 to 2022-03-01",
+        "start": "2022-02-01",
+        "end": "2022-03-01",
+        "sample": "in_sample",
+        "baselineReturn": -0.058511353189689363,
+        "candidateReturn": -0.03754928058658291,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.020962072603106452,
+            "estimatedContribution": 0.021146187080401134,
+            "activeChanges": 3,
+            "positiveChanges": 3,
+            "negativeChanges": 0,
+            "topPositive": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.214326,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.214326,
+                "assetReturn": -0.05494964167607941,
+                "estimatedContribution": 0.011777136901867394
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.208544,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.208544,
+                "assetReturn": -0.03151320891032372,
+                "estimatedContribution": 0.00657189063899455
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.137004,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.137004,
+                "assetReturn": -0.0204166268104522,
+                "estimatedContribution": 0.002797159539539193
+              }
+            ],
+            "topNegative": [],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.214326,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.214326,
+                "assetReturn": -0.05494964167607941,
+                "estimatedContribution": 0.011777136901867394
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.208544,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.208544,
+                "assetReturn": -0.03151320891032372,
+                "estimatedContribution": 0.00657189063899455
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.137004,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.137004,
+                "assetReturn": -0.0204166268104522,
+                "estimatedContribution": 0.002797159539539193
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2022-03-01 to 2022-04-01",
+        "start": "2022-03-01",
+        "end": "2022-04-01",
+        "sample": "in_sample",
+        "baselineReturn": 0.024632707231083018,
+        "candidateReturn": 0.022204348163319843,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.002428359067763175,
+            "estimatedContribution": -0.0023545561110238024,
+            "activeChanges": 3,
+            "positiveChanges": 2,
+            "negativeChanges": 1,
+            "topPositive": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.155428,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.155428,
+                "assetReturn": -0.006574363333997524,
+                "estimatedContribution": 0.0010218401442765672
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.21952,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.21952,
+                "assetReturn": -0.002416261621369209,
+                "estimatedContribution": 0.0005304177511229688
+              }
+            ],
+            "topNegative": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.225694,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.225694,
+                "assetReturn": 0.017310225377827226,
+                "estimatedContribution": -0.003906814006423338
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.225694,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.225694,
+                "assetReturn": 0.017310225377827226,
+                "estimatedContribution": -0.003906814006423338
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.155428,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.155428,
+                "assetReturn": -0.006574363333997524,
+                "estimatedContribution": 0.0010218401442765672
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.21952,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.21952,
+                "assetReturn": -0.002416261621369209,
+                "estimatedContribution": 0.0005304177511229688
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2022-04-01 to 2022-05-02",
+        "start": "2022-04-01",
+        "end": "2022-05-02",
+        "sample": "in_sample",
+        "baselineReturn": -0.03621890836437103,
+        "candidateReturn": 0.02285071363845992,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.059069622002830946,
+            "estimatedContribution": 0.05665234048548009,
+            "activeChanges": 4,
+            "positiveChanges": 4,
+            "negativeChanges": 0,
+            "topPositive": [
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.234416,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.234416,
+                "assetReturn": -0.08606494113983132,
+                "estimatedContribution": 0.0201749992422347
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.201586,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.201586,
+                "assetReturn": -0.06980804433437149,
+                "estimatedContribution": 0.01407232442518861
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.166208,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.166208,
+                "assetReturn": -0.07681320872109687,
+                "estimatedContribution": 0.012766969795116068
+              }
+            ],
+            "topNegative": [],
+            "changes": [
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.234416,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.234416,
+                "assetReturn": -0.08606494113983132,
+                "estimatedContribution": 0.0201749992422347
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.201586,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.201586,
+                "assetReturn": -0.06980804433437149,
+                "estimatedContribution": 0.01407232442518861
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.166208,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.166208,
+                "assetReturn": -0.07681320872109687,
+                "estimatedContribution": 0.012766969795116068
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.164542,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.164542,
+                "assetReturn": -0.05857499618906248,
+                "estimatedContribution": 0.009638047022940717
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2022-05-02 to 2022-06-01",
+        "start": "2022-05-02",
+        "end": "2022-06-01",
+        "sample": "in_sample",
+        "baselineReturn": 0.02479375873464984,
+        "candidateReturn": 0.01153998613149998,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.01325377260314986,
+            "estimatedContribution": -0.013117909261283407,
+            "activeChanges": 5,
+            "positiveChanges": 1,
+            "negativeChanges": 4,
+            "topPositive": [
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.198058,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.198058,
+                "assetReturn": -0.011797950489339293,
+                "estimatedContribution": 0.0023366784780175618
+              }
+            ],
+            "topNegative": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.21119,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.21119,
+                "assetReturn": 0.03564729079552187,
+                "estimatedContribution": -0.007528351343106263
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.22344,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.22344,
+                "assetReturn": 0.01819792617954019,
+                "estimatedContribution": -0.004066144625556461
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.180614,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.180614,
+                "assetReturn": 0.01121746923651501,
+                "estimatedContribution": -0.002026031988683922
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.21119,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.21119,
+                "assetReturn": 0.03564729079552187,
+                "estimatedContribution": -0.007528351343106263
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.22344,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.22344,
+                "assetReturn": 0.01819792617954019,
+                "estimatedContribution": -0.004066144625556461
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.198058,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.198058,
+                "assetReturn": -0.011797950489339293,
+                "estimatedContribution": 0.0023366784780175618
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.180614,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.180614,
+                "assetReturn": 0.01121746923651501,
+                "estimatedContribution": -0.002026031988683922
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.166698,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.166698,
+                "assetReturn": 0.011002290261156844,
+                "estimatedContribution": -0.0018340597819543236
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2022-06-01 to 2022-07-01",
+        "start": "2022-06-01",
+        "end": "2022-07-01",
+        "sample": "in_sample",
+        "baselineReturn": -0.07255962897971258,
+        "candidateReturn": 0.0019087265829518252,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.0744683555626644,
+            "estimatedContribution": 0.07413494284896782,
+            "activeChanges": 5,
+            "positiveChanges": 4,
+            "negativeChanges": 1,
+            "topPositive": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.170422,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.170422,
+                "assetReturn": -0.1510131488285985,
+                "estimatedContribution": 0.025735962849667414
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.233828,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.233828,
+                "assetReturn": -0.07947252726303788,
+                "estimatedContribution": 0.018582902104861625
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.174048,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.174048,
+                "assetReturn": -0.10117328046249097,
+                "estimatedContribution": 0.01760900711793563
+              }
+            ],
+            "topNegative": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.21413,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.21413,
+                "assetReturn": 0.003623184962974646,
+                "estimatedContribution": -0.0007758325961217608
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.170422,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.170422,
+                "assetReturn": -0.1510131488285985,
+                "estimatedContribution": 0.025735962849667414
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.233828,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.233828,
+                "assetReturn": -0.07947252726303788,
+                "estimatedContribution": 0.018582902104861625
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.174048,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.174048,
+                "assetReturn": -0.10117328046249097,
+                "estimatedContribution": 0.01760900711793563
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.187572,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.187572,
+                "assetReturn": -0.06921557254081057,
+                "estimatedContribution": 0.01298290337262492
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.21413,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.21413,
+                "assetReturn": 0.003623184962974646,
+                "estimatedContribution": -0.0007758325961217608
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2022-07-01 to 2022-08-01",
+        "start": "2022-07-01",
+        "end": "2022-08-01",
+        "sample": "in_sample",
+        "baselineReturn": 0.04389118345132759,
+        "candidateReturn": 0.010184919028723982,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.033706264422603605,
+            "estimatedContribution": -0.03314522695156555,
+            "activeChanges": 5,
+            "positiveChanges": 1,
+            "negativeChanges": 4,
+            "topPositive": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.241178,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.241178,
+                "assetReturn": -0.048285185116965446,
+                "estimatedContribution": 0.011645324376139493
+              }
+            ],
+            "topNegative": [
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.230594,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.230594,
+                "assetReturn": 0.07200753533952131,
+                "estimatedContribution": -0.01660450560408158
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.160524,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.160524,
+                "assetReturn": 0.07745776816630046,
+                "estimatedContribution": -0.012433830777127215
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.183848,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.183848,
+                "assetReturn": 0.047483887486782894,
+                "estimatedContribution": -0.008729817746670062
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.230594,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.230594,
+                "assetReturn": 0.07200753533952131,
+                "estimatedContribution": -0.01660450560408158
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.160524,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.160524,
+                "assetReturn": 0.07745776816630046,
+                "estimatedContribution": -0.012433830777127215
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.241178,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.241178,
+                "assetReturn": -0.048285185116965446,
+                "estimatedContribution": 0.011645324376139493
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.183848,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.183848,
+                "assetReturn": 0.047483887486782894,
+                "estimatedContribution": -0.008729817746670062
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.163856,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.163856,
+                "assetReturn": 0.04285712576790712,
+                "estimatedContribution": -0.00702239719982619
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2022-08-01 to 2022-09-01",
+        "start": "2022-08-01",
+        "end": "2022-09-01",
+        "sample": "in_sample",
+        "baselineReturn": -0.03590979693110452,
+        "candidateReturn": 0.019990315482886656,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.055900112413991176,
+            "estimatedContribution": 0.05467965293408418,
+            "activeChanges": 5,
+            "positiveChanges": 5,
+            "negativeChanges": 0,
+            "topPositive": [
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.24206,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.24206,
+                "assetReturn": -0.06892910572480293,
+                "estimatedContribution": 0.016684979331745797
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.170716,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.170716,
+                "assetReturn": -0.08795374798319489,
+                "estimatedContribution": 0.0150151120406991
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.24745,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.24745,
+                "assetReturn": -0.036036046627936025,
+                "estimatedContribution": 0.00891711973808277
+              }
+            ],
+            "topNegative": [],
+            "changes": [
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.24206,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.24206,
+                "assetReturn": -0.06892910572480293,
+                "estimatedContribution": 0.016684979331745797
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.170716,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.170716,
+                "assetReturn": -0.08795374798319489,
+                "estimatedContribution": 0.0150151120406991
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.24745,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.24745,
+                "assetReturn": -0.036036046627936025,
+                "estimatedContribution": 0.00891711973808277
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.158956,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.158956,
+                "assetReturn": -0.05312396045358314,
+                "estimatedContribution": 0.008444372257859762
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.160818,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.160818,
+                "assetReturn": -0.03493433300810078,
+                "estimatedContribution": 0.0056180695656967514
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2022-09-01 to 2022-10-03",
+        "start": "2022-09-01",
+        "end": "2022-10-03",
+        "sample": "in_sample",
+        "baselineReturn": -0.05653152600799083,
+        "candidateReturn": 0.029781925073048443,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.08631345108103927,
+            "estimatedContribution": 0.08388176855081342,
+            "activeChanges": 5,
+            "positiveChanges": 5,
+            "negativeChanges": 0,
+            "topPositive": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.162582,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.162582,
+                "assetReturn": -0.14573045327729472,
+                "estimatedContribution": 0.02369314855472913
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.25235,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.25235,
+                "assetReturn": -0.08952285792691939,
+                "estimatedContribution": 0.022591093197858108
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.224126,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.224126,
+                "assetReturn": -0.06081210905207113,
+                "estimatedContribution": 0.013629574753404494
+              }
+            ],
+            "topNegative": [],
+            "changes": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.162582,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.162582,
+                "assetReturn": -0.14573045327729472,
+                "estimatedContribution": 0.02369314855472913
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.25235,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.25235,
+                "assetReturn": -0.08952285792691939,
+                "estimatedContribution": 0.022591093197858108
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.224126,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.224126,
+                "assetReturn": -0.06081210905207113,
+                "estimatedContribution": 0.013629574753404494
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.171402,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.171402,
+                "assetReturn": -0.07519809057674154,
+                "estimatedContribution": 0.012889103121034653
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.16954,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.16954,
+                "assetReturn": -0.06534651954575343,
+                "estimatedContribution": 0.011078848923787037
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2022-10-03 to 2022-11-01",
+        "start": "2022-10-03",
+        "end": "2022-11-01",
+        "sample": "in_sample",
+        "baselineReturn": 0.038676228410638114,
+        "candidateReturn": 0.02581302131249097,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.012863207098147145,
+            "estimatedContribution": -0.012548423084418656,
+            "activeChanges": 5,
+            "positiveChanges": 1,
+            "negativeChanges": 4,
+            "topPositive": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.256466,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.256466,
+                "assetReturn": -0.09778495102977758,
+                "estimatedContribution": 0.02507851525080294
+              }
+            ],
+            "topNegative": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.168364,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.168364,
+                "assetReturn": 0.0885997744270628,
+                "estimatedContribution": -0.014917012421638001
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.162582,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.162582,
+                "assetReturn": 0.0682202829228371,
+                "estimatedContribution": -0.011091390038160703
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.182476,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.182476,
+                "assetReturn": 0.04885301649635787,
+                "estimatedContribution": -0.008914503038189399
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.256466,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.256466,
+                "assetReturn": -0.09778495102977758,
+                "estimatedContribution": 0.02507851525080294
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.168364,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.168364,
+                "assetReturn": 0.0885997744270628,
+                "estimatedContribution": -0.014917012421638001
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.162582,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.162582,
+                "assetReturn": 0.0682202829228371,
+                "estimatedContribution": -0.011091390038160703
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.182476,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.182476,
+                "assetReturn": 0.04885301649635787,
+                "estimatedContribution": -0.008914503038189399
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.210112,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.210112,
+                "assetReturn": 0.012869483119638536,
+                "estimatedContribution": -0.002704032837233492
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2022-11-01 to 2022-12-01",
+        "start": "2022-11-01",
+        "end": "2022-12-01",
+        "sample": "in_sample",
+        "baselineReturn": 0.09973528002203569,
+        "candidateReturn": -0.03037391678818724,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.13010919681022293,
+            "estimatedContribution": -0.13404412710211908,
+            "activeChanges": 5,
+            "positiveChanges": 0,
+            "negativeChanges": 5,
+            "topPositive": [],
+            "topNegative": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.222852,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.222852,
+                "assetReturn": 0.2143712431229805,
+                "estimatedContribution": -0.04777306027244245
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.22638,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.22638,
+                "assetReturn": 0.11534646608088805,
+                "estimatedContribution": -0.026112132991391437
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.179242,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.179242,
+                "assetReturn": 0.14418521003270457,
+                "estimatedContribution": -0.025844045416682036
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.222852,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.222852,
+                "assetReturn": 0.2143712431229805,
+                "estimatedContribution": -0.04777306027244245
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.22638,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.22638,
+                "assetReturn": 0.11534646608088805,
+                "estimatedContribution": -0.026112132991391437
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.179242,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.179242,
+                "assetReturn": 0.14418521003270457,
+                "estimatedContribution": -0.025844045416682036
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.168168,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.168168,
+                "assetReturn": 0.1392304782368563,
+                "estimatedContribution": -0.023414111064135653
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.183358,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.183358,
+                "assetReturn": 0.05945078675305959,
+                "estimatedContribution": -0.0109007773574675
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2022-12-01 to 2023-01-03",
+        "start": "2022-12-01",
+        "end": "2023-01-03",
+        "sample": "in_sample",
+        "baselineReturn": -0.05034693153322811,
+        "candidateReturn": -0.024868712308798058,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.025478219224430054,
+            "estimatedContribution": 0.026117065840740368,
+            "activeChanges": 5,
+            "positiveChanges": 4,
+            "negativeChanges": 1,
+            "topPositive": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.174048,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.174048,
+                "assetReturn": -0.08091528696725248,
+                "estimatedContribution": 0.01408314386607636
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.202174,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.202174,
+                "assetReturn": -0.06519710648595534,
+                "estimatedContribution": 0.013181159806691534
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.236376,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.236376,
+                "assetReturn": -0.026343886333157873,
+                "estimatedContribution": 0.006227062475886526
+              }
+            ],
+            "topNegative": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.187278,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.187278,
+                "assetReturn": 0.06114397086459222,
+                "estimatedContribution": -0.011450920575579102
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.174048,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.174048,
+                "assetReturn": -0.08091528696725248,
+                "estimatedContribution": 0.01408314386607636
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.202174,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.202174,
+                "assetReturn": -0.06519710648595534,
+                "estimatedContribution": 0.013181159806691534
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.187278,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.187278,
+                "assetReturn": 0.06114397086459222,
+                "estimatedContribution": -0.011450920575579102
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.236376,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.236376,
+                "assetReturn": -0.026343886333157873,
+                "estimatedContribution": 0.006227062475886526
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.180124,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.180124,
+                "assetReturn": -0.022632299236442943,
+                "estimatedContribution": 0.0040766202676650485
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2023-01-03 to 2023-02-01",
+        "start": "2023-01-03",
+        "end": "2023-02-01",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.06609513257493682,
+        "candidateReturn": -0.020433665881975815,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.08652879845691264,
+            "estimatedContribution": -0.08847457009503563,
+            "activeChanges": 5,
+            "positiveChanges": 0,
+            "negativeChanges": 5,
+            "topPositive": [],
+            "topNegative": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.173068,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.173068,
+                "assetReturn": 0.17463467890819961,
+                "estimatedContribution": -0.030223674609284292
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.241276,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.241276,
+                "assetReturn": 0.07623396911852676,
+                "estimatedContribution": -0.01839342713304166
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.1911,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.1911,
+                "assetReturn": 0.09440682747919316,
+                "estimatedContribution": -0.01804114473127381
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.173068,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.173068,
+                "assetReturn": 0.17463467890819961,
+                "estimatedContribution": -0.030223674609284292
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.241276,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.241276,
+                "assetReturn": 0.07623396911852676,
+                "estimatedContribution": -0.01839342713304166
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.1911,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.1911,
+                "assetReturn": 0.09440682747919316,
+                "estimatedContribution": -0.01804114473127381
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.20335,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.20335,
+                "assetReturn": 0.07872480408631977,
+                "estimatedContribution": -0.016008688910953126
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.171206,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.171206,
+                "assetReturn": 0.033921911092384294,
+                "estimatedContribution": -0.0058076347104827454
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2023-02-01 to 2023-03-01",
+        "start": "2023-02-01",
+        "end": "2023-03-01",
+        "sample": "out_of_sample",
+        "baselineReturn": -0.02299417475779353,
+        "candidateReturn": 0.025976782012861577,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.048970956770655105,
+            "estimatedContribution": 0.047825593403197725,
+            "activeChanges": 5,
+            "positiveChanges": 5,
+            "negativeChanges": 0,
+            "topPositive": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.151998,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.151998,
+                "assetReturn": -0.08431887002000682,
+                "estimatedContribution": 0.012816299605300997
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.23226,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.23226,
+                "assetReturn": -0.04824189237499221,
+                "estimatedContribution": 0.011204661923015691
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.174146,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.174146,
+                "assetReturn": -0.062471882680828705,
+                "estimatedContribution": 0.010879228481335596
+              }
+            ],
+            "topNegative": [],
+            "changes": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.151998,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.151998,
+                "assetReturn": -0.08431887002000682,
+                "estimatedContribution": 0.012816299605300997
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.23226,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.23226,
+                "assetReturn": -0.04824189237499221,
+                "estimatedContribution": 0.011204661923015691
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.174146,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.174146,
+                "assetReturn": -0.062471882680828705,
+                "estimatedContribution": 0.010879228481335596
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.211876,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.211876,
+                "assetReturn": -0.03909444507259219,
+                "estimatedContribution": 0.008283174644200543
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.20972,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.20972,
+                "assetReturn": -0.02213536500736646,
+                "estimatedContribution": 0.004642228749344893
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2023-03-01 to 2023-04-03",
+        "start": "2023-03-01",
+        "end": "2023-04-03",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.020394811425848536,
+        "candidateReturn": -0.007792709083633831,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.028187520509482367,
+            "estimatedContribution": -0.02837554525843713,
+            "activeChanges": 5,
+            "positiveChanges": 1,
+            "negativeChanges": 4,
+            "topPositive": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.179144,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.179144,
+                "assetReturn": -0.0004793973436834076,
+                "estimatedContribution": 8.588115773682036e-05
+              }
+            ],
+            "topNegative": [
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.239022,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.239022,
+                "assetReturn": 0.05229342082831567,
+                "estimatedContribution": -0.01249927803322567
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.201586,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.201586,
+                "assetReturn": 0.04106506149283651,
+                "estimatedContribution": -0.00827814148609494
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.228046,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.228046,
+                "assetReturn": 0.021637802886826707,
+                "estimatedContribution": -0.004934414397129283
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.239022,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.239022,
+                "assetReturn": 0.05229342082831567,
+                "estimatedContribution": -0.01249927803322567
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.201586,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.201586,
+                "assetReturn": 0.04106506149283651,
+                "estimatedContribution": -0.00827814148609494
+              },
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.228046,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.228046,
+                "assetReturn": 0.021637802886826707,
+                "estimatedContribution": -0.004934414397129283
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.132202,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.132202,
+                "assetReturn": 0.020798418327438783,
+                "estimatedContribution": -0.002749592499724062
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.179144,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.179144,
+                "assetReturn": -0.0004793973436834076,
+                "estimatedContribution": 8.588115773682036e-05
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2023-04-03 to 2023-05-01",
+        "start": "2023-04-03",
+        "end": "2023-05-01",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.011494652878823786,
+        "candidateReturn": 0.004812276435600671,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.006682376443223115,
+            "estimatedContribution": -0.006635122879642423,
+            "activeChanges": 5,
+            "positiveChanges": 3,
+            "negativeChanges": 2,
+            "topPositive": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.133966,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.133966,
+                "assetReturn": -0.009694382955486525,
+                "estimatedContribution": 0.0012987177070147079
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.2303,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.2303,
+                "assetReturn": -0.003222500503040515,
+                "estimatedContribution": 0.0007421418658502307
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.20874,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.20874,
+                "assetReturn": -0.0019185091029012558,
+                "estimatedContribution": 0.00040046959013960816
+              }
+            ],
+            "topNegative": [
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.197274,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.197274,
+                "assetReturn": 0.03421307327431711,
+                "estimatedContribution": -0.006749349817117633
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.20972,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.20972,
+                "assetReturn": 0.011096234148051387,
+                "estimatedContribution": -0.0023271022255293367
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.197274,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.197274,
+                "assetReturn": 0.03421307327431711,
+                "estimatedContribution": -0.006749349817117633
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.20972,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.20972,
+                "assetReturn": 0.011096234148051387,
+                "estimatedContribution": -0.0023271022255293367
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.133966,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.133966,
+                "assetReturn": -0.009694382955486525,
+                "estimatedContribution": 0.0012987177070147079
+              },
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.2303,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.2303,
+                "assetReturn": -0.003222500503040515,
+                "estimatedContribution": 0.0007421418658502307
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.20874,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.20874,
+                "assetReturn": -0.0019185091029012558,
+                "estimatedContribution": 0.00040046959013960816
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2023-05-01 to 2023-06-01",
+        "start": "2023-05-01",
+        "end": "2023-06-01",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.020119572899705895,
+        "candidateReturn": 0.026272448356369882,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.0061528754566639865,
+            "estimatedContribution": 0.0060302910666259705,
+            "activeChanges": 3,
+            "positiveChanges": 1,
+            "negativeChanges": 2,
+            "topPositive": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.208936,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.208936,
+                "assetReturn": -0.08217199079083293,
+                "estimatedContribution": 0.01716868706787347
+              }
+            ],
+            "topNegative": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.138278,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.138278,
+                "assetReturn": 0.057906053380823774,
+                "estimatedContribution": -0.00800713324939355
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.206192,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.206192,
+                "assetReturn": 0.015186150538594845,
+                "estimatedContribution": -0.003131262751853948
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.208936,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.208936,
+                "assetReturn": -0.08217199079083293,
+                "estimatedContribution": 0.01716868706787347
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.138278,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.138278,
+                "assetReturn": 0.057906053380823774,
+                "estimatedContribution": -0.00800713324939355
+              },
+              {
+                "symbol": "SPY",
+                "action": "cut",
+                "baselineWeight": 0.206192,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.206192,
+                "assetReturn": 0.015186150538594845,
+                "estimatedContribution": -0.003131262751853948
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2023-06-01 to 2023-07-03",
+        "start": "2023-06-01",
+        "end": "2023-07-03",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.044755999367848576,
+        "candidateReturn": 0.038498775246201156,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.00625722412164742,
+            "estimatedContribution": -0.006014819274880943,
+            "activeChanges": 2,
+            "positiveChanges": 0,
+            "negativeChanges": 2,
+            "topPositive": [],
+            "topNegative": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.188258,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.188258,
+                "assetReturn": 0.01884809925722264,
+                "estimatedContribution": -0.00354830546996622
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.152684,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.152684,
+                "assetReturn": 0.016154369841730132,
+                "estimatedContribution": -0.002466513804914723
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.188258,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.188258,
+                "assetReturn": 0.01884809925722264,
+                "estimatedContribution": -0.00354830546996622
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.152684,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.152684,
+                "assetReturn": 0.016154369841730132,
+                "estimatedContribution": -0.002466513804914723
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2023-07-03 to 2023-08-01",
+        "start": "2023-07-03",
+        "end": "2023-08-01",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.013265980107955322,
+        "candidateReturn": 0.011264495459039292,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.00200148464891603,
+            "estimatedContribution": -0.0020655684996947854,
+            "activeChanges": 1,
+            "positiveChanges": 0,
+            "negativeChanges": 1,
+            "topPositive": [],
+            "topNegative": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.167482,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.167482,
+                "assetReturn": 0.012333077582634466,
+                "estimatedContribution": -0.0020655684996947854
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.167482,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.167482,
+                "assetReturn": 0.012333077582634466,
+                "estimatedContribution": -0.0020655684996947854
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2023-08-01 to 2023-09-01",
+        "start": "2023-08-01",
+        "end": "2023-09-01",
+        "sample": "out_of_sample",
+        "baselineReturn": -0.021210851303782086,
+        "candidateReturn": -0.010823992664603543,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.010386858639178542,
+            "estimatedContribution": 0.010297962703880552,
+            "activeChanges": 1,
+            "positiveChanges": 1,
+            "negativeChanges": 0,
+            "topPositive": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.15974,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.15974,
+                "assetReturn": -0.06446702581620478,
+                "estimatedContribution": 0.010297962703880552
+              }
+            ],
+            "topNegative": [],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.15974,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.15974,
+                "assetReturn": -0.06446702581620478,
+                "estimatedContribution": 0.010297962703880552
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2023-09-01 to 2023-10-02",
+        "start": "2023-09-01",
+        "end": "2023-10-02",
+        "sample": "out_of_sample",
+        "baselineReturn": -0.06740108993443839,
+        "candidateReturn": -0.055644801375750674,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.01175628855868771,
+            "estimatedContribution": 0.011672265720257464,
+            "activeChanges": 1,
+            "positiveChanges": 1,
+            "negativeChanges": 0,
+            "topPositive": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.159348,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.159348,
+                "assetReturn": -0.0732501551337793,
+                "estimatedContribution": 0.011672265720257464
+              }
+            ],
+            "topNegative": [],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.159348,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.159348,
+                "assetReturn": -0.0732501551337793,
+                "estimatedContribution": 0.011672265720257464
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2023-10-02 to 2023-11-01",
+        "start": "2023-10-02",
+        "end": "2023-11-01",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.006513662808149245,
+        "candidateReturn": 0.009080305438102343,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.0025666426299530976,
+            "estimatedContribution": 0.00252872752396776,
+            "activeChanges": 1,
+            "positiveChanges": 1,
+            "negativeChanges": 0,
+            "topPositive": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.154252,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.154252,
+                "assetReturn": -0.016393482897905765,
+                "estimatedContribution": 0.00252872752396776
+              }
+            ],
+            "topNegative": [],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.154252,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.154252,
+                "assetReturn": -0.016393482897905765,
+                "estimatedContribution": 0.00252872752396776
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2023-11-01 to 2023-12-01",
+        "start": "2023-11-01",
+        "end": "2023-12-01",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.03945919766422534,
+        "candidateReturn": 0.03950086059636004,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 4.1662932134700625e-05,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2023-12-01 to 2024-01-02",
+        "start": "2023-12-01",
+        "end": "2024-01-02",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.016331877736638356,
+        "candidateReturn": 0.01560505960986358,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.0007268181267747753,
+            "estimatedContribution": -0.0007079684181089224,
+            "activeChanges": 1,
+            "positiveChanges": 0,
+            "negativeChanges": 1,
+            "topPositive": [],
+            "topNegative": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.17052,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.17052,
+                "assetReturn": 0.004151820420530861,
+                "estimatedContribution": -0.0007079684181089224
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.17052,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.17052,
+                "assetReturn": 0.004151820420530861,
+                "estimatedContribution": -0.0007079684181089224
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2024-01-02 to 2024-02-01",
+        "start": "2024-01-02",
+        "end": "2024-02-01",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.010393021705933592,
+        "candidateReturn": 0.019844201130301276,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.009451179424367684,
+            "estimatedContribution": 0.009479897261732399,
+            "activeChanges": 1,
+            "positiveChanges": 1,
+            "negativeChanges": 0,
+            "topPositive": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.15141,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.15141,
+                "assetReturn": -0.06261077380445412,
+                "estimatedContribution": 0.009479897261732399
+              }
+            ],
+            "topNegative": [],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.15141,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.15141,
+                "assetReturn": -0.06261077380445412,
+                "estimatedContribution": 0.009479897261732399
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2024-02-01 to 2024-03-01",
+        "start": "2024-02-01",
+        "end": "2024-03-01",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.05258171962698044,
+        "candidateReturn": 0.042045324032701004,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.010536395594279435,
+            "estimatedContribution": -0.010389596315254102,
+            "activeChanges": 2,
+            "positiveChanges": 0,
+            "negativeChanges": 2,
+            "topPositive": [],
+            "topNegative": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.12201,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.12201,
+                "assetReturn": 0.059216983903657594,
+                "estimatedContribution": -0.007225064206085262
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.128772,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.128772,
+                "assetReturn": 0.024574690997801074,
+                "estimatedContribution": -0.00316453210916884
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.12201,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.12201,
+                "assetReturn": 0.059216983903657594,
+                "estimatedContribution": -0.007225064206085262
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.128772,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.128772,
+                "assetReturn": 0.024574690997801074,
+                "estimatedContribution": -0.00316453210916884
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2024-03-01 to 2024-04-01",
+        "start": "2024-03-01",
+        "end": "2024-04-01",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.014687320736087806,
+        "candidateReturn": 0.019191382939349966,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.00450406220326216,
+            "estimatedContribution": 0.004507401740520124,
+            "activeChanges": 1,
+            "positiveChanges": 1,
+            "negativeChanges": 0,
+            "topPositive": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.120148,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.120148,
+                "assetReturn": -0.03751541216266707,
+                "estimatedContribution": 0.004507401740520124
+              }
+            ],
+            "topNegative": [],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.120148,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.120148,
+                "assetReturn": -0.03751541216266707,
+                "estimatedContribution": 0.004507401740520124
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2024-04-01 to 2024-05-01",
+        "start": "2024-04-01",
+        "end": "2024-05-01",
+        "sample": "out_of_sample",
+        "baselineReturn": -0.02821540476244433,
+        "candidateReturn": -0.03237324560585686,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.00415784084341253,
+            "estimatedContribution": -0.004069782799419919,
+            "activeChanges": 1,
+            "positiveChanges": 0,
+            "negativeChanges": 1,
+            "topPositive": [],
+            "topNegative": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.132692,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.132692,
+                "assetReturn": 0.030670898015102033,
+                "estimatedContribution": -0.004069782799419919
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.132692,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.132692,
+                "assetReturn": 0.030670898015102033,
+                "estimatedContribution": -0.004069782799419919
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2024-05-01 to 2024-06-03",
+        "start": "2024-05-01",
+        "end": "2024-06-03",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.04229963247220292,
+        "candidateReturn": 0.03730450858868317,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.0049951238835197476,
+            "estimatedContribution": -0.00491471162601774,
+            "activeChanges": 1,
+            "positiveChanges": 0,
+            "negativeChanges": 1,
+            "topPositive": [],
+            "topNegative": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.146804,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.146804,
+                "assetReturn": 0.03347804982165159,
+                "estimatedContribution": -0.00491471162601774
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.146804,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.146804,
+                "assetReturn": 0.03347804982165159,
+                "estimatedContribution": -0.00491471162601774
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2024-06-03 to 2024-07-01",
+        "start": "2024-06-03",
+        "end": "2024-07-01",
+        "sample": "out_of_sample",
+        "baselineReturn": -0.0071886731862939035,
+        "candidateReturn": -0.002466192559619662,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.004722480626674241,
+            "estimatedContribution": 0.0047827268667639845,
+            "activeChanges": 2,
+            "positiveChanges": 1,
+            "negativeChanges": 1,
+            "topPositive": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.137004,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.137004,
+                "assetReturn": -0.08338334354895682,
+                "estimatedContribution": 0.01142385159958128
+              }
+            ],
+            "topNegative": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.144256,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.144256,
+                "assetReturn": 0.04603707806134438,
+                "estimatedContribution": -0.006641124732817295
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.137004,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.137004,
+                "assetReturn": -0.08338334354895682,
+                "estimatedContribution": 0.01142385159958128
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.144256,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.144256,
+                "assetReturn": 0.04603707806134438,
+                "estimatedContribution": -0.006641124732817295
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2024-07-01 to 2024-08-01",
+        "start": "2024-07-01",
+        "end": "2024-08-01",
+        "sample": "out_of_sample",
+        "baselineReturn": -0.007717229106526169,
+        "candidateReturn": -0.007360094459069932,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.00035713464745623646,
+            "estimatedContribution": 0.0003601881444674351,
+            "activeChanges": 1,
+            "positiveChanges": 1,
+            "negativeChanges": 0,
+            "topPositive": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.137592,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.137592,
+                "assetReturn": -0.002617798596338705,
+                "estimatedContribution": 0.0003601881444674351
+              }
+            ],
+            "topNegative": [],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.137592,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.137592,
+                "assetReturn": -0.002617798596338705,
+                "estimatedContribution": 0.0003601881444674351
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2024-08-01 to 2024-09-03",
+        "start": "2024-08-01",
+        "end": "2024-09-03",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.005109685718074353,
+        "candidateReturn": 0.0047933698108775236,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.0003163159071968291,
+            "estimatedContribution": -0.00037950579396534446,
+            "activeChanges": 2,
+            "positiveChanges": 1,
+            "negativeChanges": 1,
+            "topPositive": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.159936,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.159936,
+                "assetReturn": -0.0318432030936191,
+                "estimatedContribution": 0.005092874529981064
+              }
+            ],
+            "topNegative": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.146314,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.146314,
+                "assetReturn": 0.03740161791726293,
+                "estimatedContribution": -0.0054723803239464085
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.146314,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.146314,
+                "assetReturn": 0.03740161791726293,
+                "estimatedContribution": -0.0054723803239464085
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.159936,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.159936,
+                "assetReturn": -0.0318432030936191,
+                "estimatedContribution": 0.005092874529981064
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2024-09-03 to 2024-10-01",
+        "start": "2024-09-03",
+        "end": "2024-10-01",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.03971889134306439,
+        "candidateReturn": -0.0006029793503882219,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.04032187069345261,
+            "estimatedContribution": -0.040924011682841835,
+            "activeChanges": 1,
+            "positiveChanges": 0,
+            "negativeChanges": 1,
+            "topPositive": [],
+            "topNegative": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.197862,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.197862,
+                "assetReturn": 0.20683108268814543,
+                "estimatedContribution": -0.040924011682841835
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.197862,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.197862,
+                "assetReturn": 0.20683108268814543,
+                "estimatedContribution": -0.040924011682841835
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2024-10-01 to 2024-11-01",
+        "start": "2024-10-01",
+        "end": "2024-11-01",
+        "sample": "out_of_sample",
+        "baselineReturn": -0.023130360000271577,
+        "candidateReturn": -0.023160253617265703,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -2.9893616994125516e-05,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2024-11-01 to 2024-12-02",
+        "start": "2024-11-01",
+        "end": "2024-12-02",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.02077296735498524,
+        "candidateReturn": 0.020554372340966687,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.0002185950140185522,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2024-12-02 to 2025-01-02",
+        "start": "2024-12-02",
+        "end": "2025-01-02",
+        "sample": "out_of_sample",
+        "baselineReturn": -0.0410605596575877,
+        "candidateReturn": -0.027292009294038966,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.013768550363548737,
+            "estimatedContribution": 0.013707575626324063,
+            "activeChanges": 1,
+            "positiveChanges": 1,
+            "negativeChanges": 0,
+            "topPositive": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.139062,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.139062,
+                "assetReturn": -0.09857168476164635,
+                "estimatedContribution": 0.013707575626324063
+              }
+            ],
+            "topNegative": [],
+            "changes": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.139062,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.139062,
+                "assetReturn": -0.09857168476164635,
+                "estimatedContribution": 0.013707575626324063
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2025-01-02 to 2025-02-03",
+        "start": "2025-01-02",
+        "end": "2025-02-03",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.012026447578812327,
+        "candidateReturn": -0.007477611382546212,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.01950405896135854,
+            "estimatedContribution": -0.01982410595775564,
+            "activeChanges": 3,
+            "positiveChanges": 1,
+            "negativeChanges": 2,
+            "topPositive": [
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.104272,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.104272,
+                "assetReturn": -0.005487814309836914,
+                "estimatedContribution": 0.0005722253737153147
+              }
+            ],
+            "topNegative": [
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.258328,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.258328,
+                "assetReturn": 0.052540015535277984,
+                "estimatedContribution": -0.01357255713319729
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.15435,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.15435,
+                "assetReturn": 0.044209745372683296,
+                "estimatedContribution": -0.006823774198273666
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "VGK",
+                "action": "cut",
+                "baselineWeight": 0.258328,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.258328,
+                "assetReturn": 0.052540015535277984,
+                "estimatedContribution": -0.01357255713319729
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.15435,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.15435,
+                "assetReturn": 0.044209745372683296,
+                "estimatedContribution": -0.006823774198273666
+              },
+              {
+                "symbol": "EWH",
+                "action": "cut",
+                "baselineWeight": 0.104272,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.104272,
+                "assetReturn": -0.005487814309836914,
+                "estimatedContribution": 0.0005722253737153147
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2025-02-03 to 2025-03-03",
+        "start": "2025-02-03",
+        "end": "2025-03-03",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.04150915908158259,
+        "candidateReturn": 0.03900040867386312,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.0025087504077194733,
+            "estimatedContribution": -0.002402226491106749,
+            "activeChanges": 1,
+            "positiveChanges": 0,
+            "negativeChanges": 1,
+            "topPositive": [],
+            "topNegative": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.136416,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.136416,
+                "assetReturn": 0.01760956552828663,
+                "estimatedContribution": -0.002402226491106749
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.136416,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.136416,
+                "assetReturn": 0.01760956552828663,
+                "estimatedContribution": -0.002402226491106749
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2025-03-03 to 2025-04-01",
+        "start": "2025-03-03",
+        "end": "2025-04-01",
+        "sample": "out_of_sample",
+        "baselineReturn": -0.011460711410813174,
+        "candidateReturn": -0.009897590825693414,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 0.0015631205851197594,
+            "estimatedContribution": 0.0015535667859149515,
+            "activeChanges": 2,
+            "positiveChanges": 1,
+            "negativeChanges": 1,
+            "topPositive": [
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.198254,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.198254,
+                "assetReturn": -0.014593297927915527,
+                "estimatedContribution": 0.002893179687400965
+              }
+            ],
+            "topNegative": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.137298,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.137298,
+                "assetReturn": 0.009756973164110283,
+                "estimatedContribution": -0.0013396129014860137
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.198254,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.198254,
+                "assetReturn": -0.014593297927915527,
+                "estimatedContribution": 0.002893179687400965
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.137298,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.137298,
+                "assetReturn": 0.009756973164110283,
+                "estimatedContribution": -0.0013396129014860137
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2025-04-01 to 2025-05-01",
+        "start": "2025-04-01",
+        "end": "2025-05-01",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.014540968958084877,
+        "candidateReturn": 0.0033827933541044075,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.01115817560398047,
+            "estimatedContribution": -0.011168301052178005,
+            "activeChanges": 2,
+            "positiveChanges": 0,
+            "negativeChanges": 2,
+            "topPositive": [],
+            "topNegative": [
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.211778,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.211778,
+                "assetReturn": 0.0435484069443155,
+                "estimatedContribution": -0.009222594525853247
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.142296,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.142296,
+                "assetReturn": 0.013673655804272489,
+                "estimatedContribution": -0.001945706526324758
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWJ",
+                "action": "cut",
+                "baselineWeight": 0.211778,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.211778,
+                "assetReturn": 0.0435484069443155,
+                "estimatedContribution": -0.009222594525853247
+              },
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.142296,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.142296,
+                "assetReturn": 0.013673655804272489,
+                "estimatedContribution": -0.001945706526324758
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2025-05-01 to 2025-06-02",
+        "start": "2025-05-01",
+        "end": "2025-06-02",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.06669934341375838,
+        "candidateReturn": 0.04749200988450908,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.019207333529249304,
+            "estimatedContribution": -0.01942604304529212,
+            "activeChanges": 1,
+            "positiveChanges": 0,
+            "negativeChanges": 1,
+            "topPositive": [],
+            "topNegative": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.17591,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.17591,
+                "assetReturn": 0.11043171533904905,
+                "estimatedContribution": -0.01942604304529212
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.17591,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.17591,
+                "assetReturn": 0.11043171533904905,
+                "estimatedContribution": -0.01942604304529212
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2025-06-02 to 2025-07-01",
+        "start": "2025-06-02",
+        "end": "2025-07-01",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.03694444543906372,
+        "candidateReturn": 0.008414653389041016,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.028529792050022706,
+            "estimatedContribution": -0.028662849736953322,
+            "activeChanges": 1,
+            "positiveChanges": 0,
+            "negativeChanges": 1,
+            "topPositive": [],
+            "topNegative": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.178752,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.178752,
+                "assetReturn": 0.16034981279623906,
+                "estimatedContribution": -0.028662849736953322
+              }
+            ],
+            "changes": [
+              {
+                "symbol": "EWY",
+                "action": "cut",
+                "baselineWeight": 0.178752,
+                "candidateWeight": 0.0,
+                "weightDelta": -0.178752,
+                "assetReturn": 0.16034981279623906,
+                "estimatedContribution": -0.028662849736953322
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "period": "2025-07-01 to 2025-08-01",
+        "start": "2025-07-01",
+        "end": "2025-08-01",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.0009952241976824983,
+        "candidateReturn": 0.0010275329733753225,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 3.23087756928242e-05,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2025-08-01 to 2025-09-02",
+        "start": "2025-08-01",
+        "end": "2025-09-02",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.026605364026412115,
+        "candidateReturn": 0.026590961157488824,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -1.4402868923291123e-05,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2025-09-02 to 2025-10-01",
+        "start": "2025-09-02",
+        "end": "2025-10-01",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.042983715385543686,
+        "candidateReturn": 0.042901043517533655,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -8.267186801003135e-05,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2025-10-01 to 2025-11-03",
+        "start": "2025-10-01",
+        "end": "2025-11-03",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.04278247341598118,
+        "candidateReturn": 0.04279168341677386,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 9.210000792680972e-06,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2025-11-03 to 2025-12-01",
+        "start": "2025-11-03",
+        "end": "2025-12-01",
+        "sample": "out_of_sample",
+        "baselineReturn": -0.0156612401198003,
+        "candidateReturn": -0.015632293582495294,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 2.8946537305007958e-05,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2025-12-01 to 2026-01-02",
+        "start": "2025-12-01",
+        "end": "2026-01-02",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.008814620678088358,
+        "candidateReturn": 0.008894150885126795,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": 7.953020703843627e-05,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2026-01-02 to 2026-02-02",
+        "start": "2026-01-02",
+        "end": "2026-02-02",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.0491238884620826,
+        "candidateReturn": 0.049072888402223125,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -5.100005985947398e-05,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2026-02-02 to 2026-03-02",
+        "start": "2026-02-02",
+        "end": "2026-03-02",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.018450066901515738,
+        "candidateReturn": 0.018425871823964046,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -2.4195077551691924e-05,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2026-03-02 to 2026-04-01",
+        "start": "2026-03-02",
+        "end": "2026-04-01",
+        "sample": "out_of_sample",
+        "baselineReturn": -0.05016813991929692,
+        "candidateReturn": -0.05030247514871222,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -0.0001343352294153055,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      },
+      {
+        "period": "2026-04-01 to 2026-04-29",
+        "start": "2026-04-01",
+        "end": "2026-04-29",
+        "sample": "out_of_sample",
+        "baselineReturn": 0.04227836881454716,
+        "candidateReturn": 0.04222813565738903,
+        "signals": [
+          {
+            "name": "ts-momentum-252d-cash",
+            "realizedDelta": -5.023315715813048e-05,
+            "estimatedContribution": 0.0,
+            "activeChanges": 0,
+            "positiveChanges": 0,
+            "negativeChanges": 0,
+            "topPositive": [],
+            "topNegative": [],
+            "changes": []
+          }
+        ]
+      }
+    ],
+    "summary": {
+      "full": {
+        "periods": 60,
+        "positivePeriods": 22,
+        "negativePeriods": 29,
+        "estimatedContribution": -0.040286816852855664,
+        "realizedDeltaSum": -0.02800236542837209,
+        "compoundedDelta": -0.01225290999999995,
+        "averageEstimatedContribution": -0.0006714469475475944,
+        "averageRealizedDelta": -0.00046670609047286813
+      },
+      "in_sample": {
+        "periods": 20,
+        "positivePeriods": 6,
+        "negativePeriods": 5,
+        "estimatedContribution": 0.12140171523007652,
+        "realizedDeltaSum": 0.1298310328861756,
+        "compoundedDelta": 0.13079384999999988,
+        "averageEstimatedContribution": 0.006070085761503826,
+        "averageRealizedDelta": 0.00649155164430878
+      },
+      "out_of_sample": {
+        "periods": 40,
+        "positivePeriods": 16,
+        "negativePeriods": 24,
+        "estimatedContribution": -0.16168853208293218,
+        "realizedDeltaSum": -0.15783339831454768,
+        "compoundedDelta": -0.23354408033050222,
+        "averageEstimatedContribution": -0.004042213302073305,
+        "averageRealizedDelta": -0.003945834957863692
+      }
+    }
+  }
+}
