@@ -7,6 +7,7 @@ from systematic_trading.data.providers import (
     ProviderCapability,
     ProviderRegistry,
 )
+from systematic_trading.data.tushare import TushareUsDailyProvider, read_tushare_token
 
 __all__ = [
     "DataSourceManifest",
@@ -16,4 +17,6 @@ __all__ = [
     "MarketDataProvider",
     "ProviderCapability",
     "ProviderRegistry",
+    "TushareUsDailyProvider",
+    "read_tushare_token",
 ]

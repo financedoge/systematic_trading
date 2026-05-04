@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from datetime import date
 from decimal import Decimal
 from enum import StrEnum
+from pathlib import Path
 from typing import Mapping, Sequence
 
 from pydantic import BaseModel, Field
@@ -86,6 +87,18 @@ class ProviderRegistry:
                 notes="Configure a paid global EOD vendor to make this the source of record.",
             ),
             DataSourceManifest(
+                source_id="tushare",
+                name="Tushare Pro",
+                source_type=DataSourceType.MARKET_DATA,
+                regions=["China", "US"],
+                capabilities=[ProviderCapability.DAILY_BARS, ProviderCapability.CORPORATE_ACTIONS],
+                configured=_token_file_configured(self.settings.tushare_token_path),
+                notes=(
+                    "Optional market data source. Put the token in ./tushare_token.txt or set "
+                    "ST_TUSHARE_TOKEN_PATH; US adjusted daily bars are available through the optional SDK adapter."
+                ),
+            ),
+            DataSourceManifest(
                 source_id="interactive-brokers",
                 name="Interactive Brokers",
                 source_type=DataSourceType.BROKER,
@@ -150,3 +163,14 @@ class ProviderRegistry:
             ),
         ]
         return manifests
+
+
+def _token_file_configured(path: object) -> bool:
+    try:
+        token_path = Path(path)
+    except TypeError:
+        return False
+    try:
+        return token_path.exists() and bool(token_path.read_text(encoding="utf-8").strip())
+    except OSError:
+        return False
