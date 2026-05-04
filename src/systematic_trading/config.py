@@ -29,6 +29,7 @@ class AppSettings(BaseSettings):
 
     primary_eod_provider: str = "UNSET"
     primary_eod_api_key: str | None = None
+    tushare_token_path: Path = Path("tushare_token.txt")
     openai_api_key: str | None = None
     sec_user_agent: str = "systematic-trading/0.1"
 

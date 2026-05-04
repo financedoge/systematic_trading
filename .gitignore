@@ -5,6 +5,7 @@ __pycache__/
 *.pyo
 *.pyd
 .env
+tushare_token.txt
 var/*.db
 dist/
 build/

@@ -1,0 +1,2862 @@
+{
+  "caseCount": 24,
+  "rankedBy": "out_of_sample_delta_return",
+  "cases": [
+    {
+      "name": "ts-momentum-126d-reallocate-thr-m0p05",
+      "lookbackBars": 126,
+      "threshold": "-0.05",
+      "mode": "reallocate",
+      "reallocateSurvivors": true,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-126d-reallocate-thr-m0p05",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.3714385800000002,
+              "annualizedReturn": 0.061239304503323266,
+              "maxDrawdown": -0.2107179906650598,
+              "sharpe": 0.48400740024849453,
+              "sortino": 0.4525095151247512,
+              "calmar": 0.2906220978571511
+            },
+            "delta": {
+              "return": -0.04968588999999968,
+              "annualizedReturn": -0.007130811316879759,
+              "maxDrawdown": 0.03325330185015951,
+              "sharpe": -0.023678262573927467,
+              "sortino": -0.03894262562836076,
+              "calmar": 0.010383734091717556
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.18476031999999998,
+              "annualizedReturn": -0.0977930860747509,
+              "maxDrawdown": -0.2107179906650598,
+              "sharpe": -0.7091852610404755,
+              "sortino": -0.5985017313063655,
+              "calmar": -0.46409462128079443
+            },
+            "delta": {
+              "return": -0.04292657,
+              "annualizedReturn": -0.02362840617411477,
+              "maxDrawdown": 0.03325330185015951,
+              "sharpe": -0.29502382349840234,
+              "sortino": -0.2152473186556984,
+              "calmar": -0.16010524967876621
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6910289896902662,
+              "annualizedReturn": 0.1715367526648437,
+              "maxDrawdown": -0.13823393652283888,
+              "sharpe": 1.1245001906604126,
+              "sortino": 1.107092819215532,
+              "calmar": 1.240916355127473
+            },
+            "delta": {
+              "return": 0.026596047813826296,
+              "annualizedReturn": 0.005583550084441002,
+              "maxDrawdown": -0.007967349644068422,
+              "sharpe": 0.03704775264286986,
+              "sortino": 0.02612961499666766,
+              "calmar": -0.03303429144042358
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-63d-reallocate-thr-m0p05",
+      "lookbackBars": 63,
+      "threshold": "-0.05",
+      "mode": "reallocate",
+      "reallocateSurvivors": true,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-63d-reallocate-thr-m0p05",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.18925946999999987,
+              "annualizedReturn": 0.033154490923029245,
+              "maxDrawdown": -0.3062496599375759,
+              "sharpe": 0.2960007948851834,
+              "sortino": 0.2747479232007986,
+              "calmar": 0.10825968241005478
+            },
+            "delta": {
+              "return": -0.231865,
+              "annualizedReturn": -0.03521562489717378,
+              "maxDrawdown": -0.062278367422356595,
+              "sharpe": -0.21168486793723862,
+              "sortino": -0.21670421755231334,
+              "calmar": -0.17197868135537875
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.2823468,
+              "annualizedReturn": -0.15392126049017896,
+              "maxDrawdown": -0.3062496599375759,
+              "sharpe": -1.136492881472102,
+              "sortino": -0.9331193891409125,
+              "calmar": -0.5026005923453216
+            },
+            "delta": {
+              "return": -0.14051305000000003,
+              "annualizedReturn": -0.07975658058954282,
+              "maxDrawdown": -0.062278367422356595,
+              "sharpe": -0.7223314439300288,
+              "sortino": -0.5498649764902455,
+              "calmar": -0.1986112207432934
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6654993489304335,
+              "annualizedReturn": 0.16617827809717278,
+              "maxDrawdown": -0.1313314287869759,
+              "sharpe": 1.0937833032415523,
+              "sortino": 1.0847070095212543,
+              "calmar": 1.2653351877159553
+            },
+            "delta": {
+              "return": 0.0010664070539936343,
+              "annualizedReturn": 0.0002250755167700902,
+              "maxDrawdown": -0.0010648419082054383,
+              "sharpe": 0.0063308652240094965,
+              "sortino": 0.0037438053023899354,
+              "calmar": -0.008615458851941149
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-63d-reallocate-thr-0p05",
+      "lookbackBars": 63,
+      "threshold": "0.05",
+      "mode": "reallocate",
+      "reallocateSurvivors": true,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-63d-reallocate-thr-0p05",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.62825683,
+              "annualizedReturn": 0.09607737172810338,
+              "maxDrawdown": -0.18931182181099382,
+              "sharpe": 0.7524059328379816,
+              "sortino": 0.7048029299214077,
+              "calmar": 0.5075085687148774
+            },
+            "delta": {
+              "return": 0.20713236000000013,
+              "annualizedReturn": 0.027707255907900352,
+              "maxDrawdown": 0.0546594707042255,
+              "sharpe": 0.24472027001555963,
+              "sortino": 0.21335078916829575,
+              "calmar": 0.22727020494944383
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": 0.004138079999999933,
+              "annualizedReturn": 0.0020826002313178993,
+              "maxDrawdown": -0.1501595172261535,
+              "sharpe": 0.06654248994801545,
+              "sortino": 0.053010135684130426,
+              "calmar": 0.01386925231106943
+            },
+            "delta": {
+              "return": 0.1459718299999999,
+              "annualizedReturn": 0.07624728013195403,
+              "maxDrawdown": 0.09381177528906581,
+              "sharpe": 0.4807039274900886,
+              "sortino": 0.43626454833479755,
+              "calmar": 0.31785862391309766
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6167612854056701,
+              "annualizedReturn": 0.15578703366309354,
+              "maxDrawdown": -0.18931182181099382,
+              "sharpe": 1.0043364272632194,
+              "sortino": 0.9991354681828633,
+              "calmar": 0.8229123367616686
+            },
+            "delta": {
+              "return": -0.04767165647076976,
+              "annualizedReturn": -0.010166168917309149,
+              "maxDrawdown": -0.059045234932223356,
+              "sharpe": -0.0831160107543234,
+              "sortino": -0.08182773603600113,
+              "calmar": -0.45103830980622783
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-126d-cash-thr-m0p05",
+      "lookbackBars": 126,
+      "threshold": "-0.05",
+      "mode": "cash",
+      "reallocateSurvivors": false,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-126d-cash-thr-m0p05",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.49507778000000013,
+              "annualizedReturn": 0.07861776110229246,
+              "maxDrawdown": -0.11978532257417152,
+              "sharpe": 0.7049979833817376,
+              "sortino": 0.6606094720863043,
+              "calmar": 0.6563221554428094
+            },
+            "delta": {
+              "return": 0.07395331000000027,
+              "annualizedReturn": 0.010247645282089435,
+              "maxDrawdown": 0.1241859699410478,
+              "sharpe": 0.19731232055931558,
+              "sortino": 0.16915733133319233,
+              "calmar": 0.3760837916773758
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.05503954,
+              "annualizedReturn": -0.028117953014907604,
+              "maxDrawdown": -0.11978532257417152,
+              "sharpe": -0.3096471263989729,
+              "sortino": -0.25754259042247324,
+              "calmar": -0.23473621317417134
+            },
+            "delta": {
+              "return": 0.08679420999999998,
+              "annualizedReturn": 0.04604672688572853,
+              "maxDrawdown": 0.1241859699410478,
+              "sharpe": 0.10451431114310028,
+              "sortino": 0.12571182222819388,
+              "calmar": 0.06925315842785687
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.5929418002270002,
+              "annualizedReturn": 0.15062881227957026,
+              "maxDrawdown": -0.10308624259311927,
+              "sharpe": 1.1149483806504235,
+              "sortino": 1.0902828548267076,
+              "calmar": 1.4611921871485918
+            },
+            "delta": {
+              "return": -0.0714911416494397,
+              "annualizedReturn": -0.015324390300832436,
+              "maxDrawdown": 0.027180344285651192,
+              "sharpe": 0.027495942632880688,
+              "sortino": 0.009319650607843233,
+              "calmar": 0.1872415405806953
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-252d-reallocate-thr-m0p05",
+      "lookbackBars": 252,
+      "threshold": "-0.05",
+      "mode": "reallocate",
+      "reallocateSurvivors": true,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-252d-reallocate-thr-m0p05",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.2935313700000002,
+              "annualizedReturn": 0.04962402883646688,
+              "maxDrawdown": -0.23474874152101088,
+              "sharpe": 0.4061354107825232,
+              "sortino": 0.3728229590823106,
+              "calmar": 0.21139209741844495
+            },
+            "delta": {
+              "return": -0.12759309999999968,
+              "annualizedReturn": -0.018746086983736143,
+              "maxDrawdown": 0.009222550994208434,
+              "sharpe": -0.10155025203989881,
+              "sortino": -0.11862918167080133,
+              "calmar": -0.0688462663469886
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.1547903100000001,
+              "annualizedReturn": -0.0812333925604074,
+              "maxDrawdown": -0.23474874152101088,
+              "sharpe": -0.5183762281590936,
+              "sortino": -0.4297171941552226,
+              "calmar": -0.34604399595103563
+            },
+            "delta": {
+              "return": -0.012956560000000117,
+              "annualizedReturn": -0.00706871265977127,
+              "maxDrawdown": 0.009222550994208434,
+              "sharpe": -0.10421479061702038,
+              "sortino": -0.04646278150455546,
+              "calmar": -0.04205462434900742
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.5447635588616715,
+              "annualizedReturn": 0.14002852708822533,
+              "maxDrawdown": -0.13931132030185978,
+              "sharpe": 0.9682496762896773,
+              "sortino": 0.9422402803698352,
+              "calmar": 1.0051482304870236
+            },
+            "delta": {
+              "return": -0.11966938301476837,
+              "annualizedReturn": -0.025924675492177363,
+              "maxDrawdown": -0.009044733423089313,
+              "sharpe": -0.11920276172786548,
+              "sortino": -0.13872292384902918,
+              "calmar": -0.26880241608087285
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-378d-reallocate-thr-m0p05",
+      "lookbackBars": 378,
+      "threshold": "-0.05",
+      "mode": "reallocate",
+      "reallocateSurvivors": true,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-378d-reallocate-thr-m0p05",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.13852065999999996,
+              "annualizedReturn": 0.024712465397605188,
+              "maxDrawdown": -0.3238012956630737,
+              "sharpe": 0.2408691165026121,
+              "sortino": 0.22135165692679004,
+              "calmar": 0.07631984716737931
+            },
+            "delta": {
+              "return": -0.2826038099999999,
+              "annualizedReturn": -0.04365765042259784,
+              "maxDrawdown": -0.07983000314785438,
+              "sharpe": -0.2668165463198099,
+              "sortino": -0.2701004838263219,
+              "calmar": -0.2039185165980542
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.25148462000000005,
+              "annualizedReturn": -0.13578222497463266,
+              "maxDrawdown": -0.27896313850714693,
+              "sharpe": -0.9086833255554839,
+              "sortino": -0.7625133502284174,
+              "calmar": -0.4867389494585643
+            },
+            "delta": {
+              "return": -0.10965087000000007,
+              "annualizedReturn": -0.06161754507399653,
+              "maxDrawdown": -0.03499184599192762,
+              "sharpe": -0.49452188801341074,
+              "sortino": -0.37925893757775025,
+              "calmar": -0.18274957785653606
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.5416306101810822,
+              "annualizedReturn": 0.13933125462775142,
+              "maxDrawdown": -0.1326849218427455,
+              "sharpe": 0.9821925240910521,
+              "sortino": 0.9571507512431325,
+              "calmar": 1.050091093190551
+            },
+            "delta": {
+              "return": -0.1228023316953577,
+              "annualizedReturn": -0.02662194795265127,
+              "maxDrawdown": -0.002418334963975033,
+              "sharpe": -0.1052599139264907,
+              "sortino": -0.12381245297573185,
+              "calmar": -0.22385955337734553
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-126d-reallocate",
+      "lookbackBars": 126,
+      "threshold": "0",
+      "mode": "reallocate",
+      "reallocateSurvivors": true,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-126d-reallocate",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.4160111799999999,
+              "annualizedReturn": 0.06764569665803166,
+              "maxDrawdown": -0.14409584931910324,
+              "sharpe": 0.5664503786040973,
+              "sortino": 0.5231359975886887,
+              "calmar": 0.46944930737199003
+            },
+            "delta": {
+              "return": -0.005113289999999937,
+              "annualizedReturn": -0.0007244191621713636,
+              "maxDrawdown": 0.09987544319611608,
+              "sharpe": 0.0587647157816753,
+              "sortino": 0.03168385683557673,
+              "calmar": 0.1892109436065565
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.06976445999999992,
+              "annualizedReturn": -0.035777339706806854,
+              "maxDrawdown": -0.14409584931910324,
+              "sharpe": -0.2691278650556168,
+              "sortino": -0.22067388121511286,
+              "calmar": -0.24828848211704693
+            },
+            "delta": {
+              "return": 0.07206929000000006,
+              "annualizedReturn": 0.03838734019382928,
+              "maxDrawdown": 0.09987544319611608,
+              "sharpe": 0.14503357248645637,
+              "sortino": 0.16258053143555426,
+              "calmar": 0.05570088948498128
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.5364888535938097,
+              "annualizedReturn": 0.138184750951015,
+              "maxDrawdown": -0.11374067285737699,
+              "sharpe": 0.9907544972792636,
+              "sortino": 0.9680046320226304,
+              "calmar": 1.2149106162251142
+            },
+            "delta": {
+              "return": -0.12794408828263015,
+              "annualizedReturn": -0.02776845162938768,
+              "maxDrawdown": 0.016525914021393473,
+              "sharpe": -0.0966979407382792,
+              "sortino": -0.11295857219623395,
+              "calmar": -0.05904003034278227
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-63d-cash-thr-m0p05",
+      "lookbackBars": 63,
+      "threshold": "-0.05",
+      "mode": "cash",
+      "reallocateSurvivors": false,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-63d-cash-thr-m0p05",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.3355234199999999,
+              "annualizedReturn": 0.055953084396273445,
+              "maxDrawdown": -0.14726412457864413,
+              "sharpe": 0.5045659294797615,
+              "sortino": 0.4695711261219464,
+              "calmar": 0.37995054502491926
+            },
+            "delta": {
+              "return": -0.08560104999999996,
+              "annualizedReturn": -0.012417031423929581,
+              "maxDrawdown": 0.09670716793657519,
+              "sharpe": -0.003119733342660469,
+              "sortino": -0.02188101463116554,
+              "calmar": 0.09971218125948572
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.12141994999999994,
+              "annualizedReturn": -0.06313411353169796,
+              "maxDrawdown": -0.14726412457864413,
+              "sharpe": -0.595902796562455,
+              "sortino": -0.49260807796038575,
+              "calmar": -0.4287134678071723
+            },
+            "delta": {
+              "return": 0.020413800000000037,
+              "annualizedReturn": 0.011030566368938177,
+              "maxDrawdown": 0.09670716793657519,
+              "sharpe": -0.18174135902038185,
+              "sortino": -0.10935366530971863,
+              "calmar": -0.12472409620514407
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.5277728387709939,
+              "annualizedReturn": 0.13623512444902364,
+              "maxDrawdown": -0.10974803594928995,
+              "sharpe": 1.0179769267219225,
+              "sortino": 0.9972430954170309,
+              "calmar": 1.2413445331447415
+            },
+            "delta": {
+              "return": -0.13666010310544596,
+              "annualizedReturn": -0.029718078131379055,
+              "maxDrawdown": 0.020518550929480517,
+              "sharpe": -0.06947551129562024,
+              "sortino": -0.08372010880183345,
+              "calmar": -0.032606113423155
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-378d-cash-thr-m0p05",
+      "lookbackBars": 378,
+      "threshold": "-0.05",
+      "mode": "cash",
+      "reallocateSurvivors": false,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-378d-cash-thr-m0p05",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.28807428999999996,
+              "annualizedReturn": 0.048789335833908654,
+              "maxDrawdown": -0.20323667395198797,
+              "sharpe": 0.43639343122772173,
+              "sortino": 0.4039898550646886,
+              "calmar": 0.24006167236054307
+            },
+            "delta": {
+              "return": -0.1330501799999999,
+              "annualizedReturn": -0.019580779986294372,
+              "maxDrawdown": 0.04073461856323135,
+              "sharpe": -0.07129223159470027,
+              "sortino": -0.08746228568842335,
+              "calmar": -0.04017669140489047
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.13717411999999995,
+              "annualizedReturn": -0.0716354861727394,
+              "maxDrawdown": -0.20323667395198797,
+              "sharpe": -0.5112058700420126,
+              "sortino": -0.43937995763981263,
+              "calmar": -0.352473226311814
+            },
+            "delta": {
+              "return": 0.004659630000000026,
+              "annualizedReturn": 0.002529193727896728,
+              "maxDrawdown": 0.04073461856323135,
+              "sharpe": -0.09704443249993938,
+              "sortino": -0.056125544989145515,
+              "calmar": -0.04848385470978578
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.5081101556603065,
+              "annualizedReturn": 0.13180819885447748,
+              "maxDrawdown": -0.11270747563653705,
+              "sharpe": 1.0363023689607256,
+              "sortino": 1.0034962339290967,
+              "calmar": 1.169471662017674
+            },
+            "delta": {
+              "return": -0.15632278621613338,
+              "annualizedReturn": -0.034145003725925216,
+              "maxDrawdown": 0.017559111242233416,
+              "sharpe": -0.05115006905681718,
+              "sortino": -0.07746697028976768,
+              "calmar": -0.10447898455022253
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-252d-reallocate",
+      "lookbackBars": 252,
+      "threshold": "0",
+      "mode": "reallocate",
+      "reallocateSurvivors": true,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-252d-reallocate",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.35637644,
+              "annualizedReturn": 0.0590362106009088,
+              "maxDrawdown": -0.19893926924291172,
+              "sharpe": 0.48540717759127294,
+              "sortino": 0.4469927919944292,
+              "calmar": 0.29675493845724116
+            },
+            "delta": {
+              "return": -0.06474802999999985,
+              "annualizedReturn": -0.009333905219294225,
+              "maxDrawdown": 0.0450320232723076,
+              "sharpe": -0.02227848523114906,
+              "sortino": -0.04445934875868274,
+              "calmar": 0.016516574691807617
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.08628398999999998,
+              "annualizedReturn": -0.04444218156043589,
+              "maxDrawdown": -0.19893926924291172,
+              "sharpe": -0.303312191625723,
+              "sortino": -0.2501908733693041,
+              "calmar": -0.22339572136545074
+            },
+            "delta": {
+              "return": 0.055549760000000004,
+              "annualizedReturn": 0.029722498340200243,
+              "maxDrawdown": 0.0450320232723076,
+              "sharpe": 0.1108492459163502,
+              "sortino": 0.133063539281363,
+              "calmar": 0.08059365023657747
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.4983905057747917,
+              "annualizedReturn": 0.12960497707414165,
+              "maxDrawdown": -0.14174035652582528,
+              "sharpe": 0.911876835491864,
+              "sortino": 0.8878519678068651,
+              "calmar": 0.9143830328275451
+            },
+            "delta": {
+              "return": -0.16604243610164815,
+              "annualizedReturn": -0.036348225506261045,
+              "maxDrawdown": -0.011473769647054821,
+              "sharpe": -0.17557560252567872,
+              "sortino": -0.19311123641199923,
+              "calmar": -0.3595676137403514
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-378d-reallocate",
+      "lookbackBars": 378,
+      "threshold": "0",
+      "mode": "reallocate",
+      "reallocateSurvivors": true,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-378d-reallocate",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.17837425000000007,
+              "annualizedReturn": 0.031368373396200244,
+              "maxDrawdown": -0.25238508000968485,
+              "sharpe": 0.2892909340337695,
+              "sortino": 0.2637945826506205,
+              "calmar": 0.1242877486854474
+            },
+            "delta": {
+              "return": -0.2427502199999998,
+              "annualizedReturn": -0.03700174242400278,
+              "maxDrawdown": -0.00841378749446553,
+              "sharpe": -0.21839472878865251,
+              "sortino": -0.22765755810249144,
+              "calmar": -0.15595061507998614
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.20388277,
+              "annualizedReturn": -0.10851732564993577,
+              "maxDrawdown": -0.22360272131368175,
+              "sharpe": -0.7288874274640709,
+              "sortino": -0.6172465805404089,
+              "calmar": -0.48531308122007116
+            },
+            "delta": {
+              "return": -0.06204902000000001,
+              "annualizedReturn": -0.03435264574929964,
+              "maxDrawdown": 0.020368571201537566,
+              "sharpe": -0.3147259899219977,
+              "sortino": -0.2339921678897418,
+              "calmar": -0.18132370961804295
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.4940518914680456,
+              "annualizedReturn": 0.12861828871669645,
+              "maxDrawdown": -0.13623097900084558,
+              "sharpe": 0.9326869692309794,
+              "sortino": 0.8904413732215208,
+              "calmar": 0.944119242627612
+            },
+            "delta": {
+              "return": -0.17038105040839424,
+              "annualizedReturn": -0.03733491386370624,
+              "maxDrawdown": -0.005964392122075113,
+              "sharpe": -0.1547654687865634,
+              "sortino": -0.19052183099734354,
+              "calmar": -0.32983140394028443
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-63d-reallocate",
+      "lookbackBars": 63,
+      "threshold": "0",
+      "mode": "reallocate",
+      "reallocateSurvivors": true,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-63d-reallocate",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.4324828799999998,
+              "annualizedReturn": 0.06997176490453638,
+              "maxDrawdown": -0.15788822010295278,
+              "sharpe": 0.5772369098211677,
+              "sortino": 0.5291762084647519,
+              "calmar": 0.44317280199188075
+            },
+            "delta": {
+              "return": 0.01135840999999993,
+              "annualizedReturn": 0.0016016490843333564,
+              "maxDrawdown": 0.08608307241226654,
+              "sharpe": 0.06955124699874571,
+              "sortino": 0.03772406771163994,
+              "calmar": 0.1629344382264472
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.030050380000000043,
+              "annualizedReturn": -0.01525376990591687,
+              "maxDrawdown": -0.13703961399989073,
+              "sharpe": -0.10836030626873897,
+              "sortino": -0.08718781344665973,
+              "calmar": -0.11130920075365239
+            },
+            "delta": {
+              "return": 0.11178336999999994,
+              "annualizedReturn": 0.05891090999471926,
+              "maxDrawdown": 0.10693167851532859,
+              "sharpe": 0.3058011312733342,
+              "sortino": 0.2960665992040074,
+              "calmar": 0.19268017084837583
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.49178244034759344,
+              "annualizedReturn": 0.1281013721878208,
+              "maxDrawdown": -0.15788822010295278,
+              "sharpe": 0.8822401964335712,
+              "sortino": 0.8530682111325687,
+              "calmar": 0.8113421767899522
+            },
+            "delta": {
+              "return": -0.17265050152884642,
+              "annualizedReturn": -0.03785183039258189,
+              "maxDrawdown": -0.027621633224182318,
+              "sharpe": -0.20521224158397156,
+              "sortino": -0.22789499308629568,
+              "calmar": -0.46260846977794423
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-378d-reallocate-thr-0p05",
+      "lookbackBars": 378,
+      "threshold": "0.05",
+      "mode": "reallocate",
+      "reallocateSurvivors": true,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-378d-reallocate-thr-0p05",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.25509004999999996,
+              "annualizedReturn": 0.04368217200114599,
+              "maxDrawdown": -0.20323667395198797,
+              "sharpe": 0.38021643796739657,
+              "sortino": 0.3475007868541324,
+              "calmar": 0.2149325274407184
+            },
+            "delta": {
+              "return": -0.1660344199999999,
+              "annualizedReturn": -0.024687943819057034,
+              "maxDrawdown": 0.04073461856323135,
+              "sharpe": -0.12746922485502543,
+              "sortino": -0.14395135389897956,
+              "calmar": -0.06530583632471515
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14057392000000002,
+              "annualizedReturn": -0.07348018789080779,
+              "maxDrawdown": -0.20323667395198797,
+              "sharpe": -0.5038815882382686,
+              "sortino": -0.42838383422494625,
+              "calmar": -0.36154984463171513
+            },
+            "delta": {
+              "return": 0.0012598299999999618,
+              "annualizedReturn": 0.0006844920098283414,
+              "maxDrawdown": 0.04073461856323135,
+              "sharpe": -0.08972015069619538,
+              "sortino": -0.04512942157427913,
+              "calmar": -0.05756047302968692
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.47411532911573984,
+              "annualizedReturn": 0.12405839921860062,
+              "maxDrawdown": -0.12861358088506591,
+              "sharpe": 0.9085344663414797,
+              "sortino": 0.865194859556739,
+              "calmar": 0.9645824209611582
+            },
+            "delta": {
+              "return": -0.19031761276070003,
+              "annualizedReturn": -0.04189480336180207,
+              "maxDrawdown": 0.0016530059937045483,
+              "sharpe": -0.17891797167606305,
+              "sortino": -0.21576834466212536,
+              "calmar": -0.30936822560673827
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-63d-cash",
+      "lookbackBars": 63,
+      "threshold": "0",
+      "mode": "cash",
+      "reallocateSurvivors": false,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-63d-cash",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.44533851999999996,
+              "annualizedReturn": 0.07177214781339059,
+              "maxDrawdown": -0.1057041270840754,
+              "sharpe": 0.7036334229411759,
+              "sortino": 0.6473562991561295,
+              "calmar": 0.678990970298673
+            },
+            "delta": {
+              "return": 0.024214050000000098,
+              "annualizedReturn": 0.0034020319931875598,
+              "maxDrawdown": 0.13826716543114392,
+              "sharpe": 0.19594776011875392,
+              "sortino": 0.15590415840301752,
+              "calmar": 0.3987526065332394
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.005374079999999948,
+              "annualizedReturn": -0.002711044033542942,
+              "maxDrawdown": -0.09124403159036765,
+              "sharpe": -0.004537309317640926,
+              "sortino": -0.003644578306294208,
+              "calmar": -0.02971201498103399
+            },
+            "delta": {
+              "return": 0.13645967000000003,
+              "annualizedReturn": 0.07145363586709319,
+              "maxDrawdown": 0.15272726092485167,
+              "sharpe": 0.4096241282244323,
+              "sortino": 0.3796098343443729,
+              "calmar": 0.27427735662099423
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.46755826197238437,
+              "annualizedReturn": 0.12254925535498118,
+              "maxDrawdown": -0.1057041270840754,
+              "sharpe": 0.9976852859517369,
+              "sortino": 0.9643009089997396,
+              "calmar": 1.159361121799033
+            },
+            "delta": {
+              "return": -0.1968746799040555,
+              "annualizedReturn": -0.04340394722542151,
+              "maxDrawdown": 0.02456245979469507,
+              "sharpe": -0.08976715206580588,
+              "sortino": -0.11666229521912475,
+              "calmar": -0.11458952476886353
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-252d-cash-thr-m0p05",
+      "lookbackBars": 252,
+      "threshold": "-0.05",
+      "mode": "cash",
+      "reallocateSurvivors": false,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-252d-cash-thr-m0p05",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.3880716499999999,
+              "annualizedReturn": 0.06364946725915299,
+              "maxDrawdown": -0.1347028203528744,
+              "sharpe": 0.578761202703463,
+              "sortino": 0.5367950341667576,
+              "calmar": 0.4725177029880562
+            },
+            "delta": {
+              "return": -0.03305281999999998,
+              "annualizedReturn": -0.004720648561050034,
+              "maxDrawdown": 0.10926847216234492,
+              "sharpe": 0.07107553988104098,
+              "sortino": 0.04534289341364561,
+              "calmar": 0.19227933922262264
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.03425535999999996,
+              "annualizedReturn": -0.017406845045762398,
+              "maxDrawdown": -0.1347028203528744,
+              "sharpe": -0.14414952839152068,
+              "sortino": -0.12027282826275211,
+              "calmar": -0.12922405781974378
+            },
+            "delta": {
+              "return": 0.10757839000000002,
+              "annualizedReturn": 0.056757834854873734,
+              "maxDrawdown": 0.10926847216234492,
+              "sharpe": 0.2700119091505525,
+              "sortino": 0.262981584387915,
+              "calmar": 0.17476531378228444
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.45080787588724247,
+              "annualizedReturn": 0.11867255864399517,
+              "maxDrawdown": -0.12290295896638626,
+              "sharpe": 0.9145609372971125,
+              "sortino": 0.8873009691899494,
+              "calmar": 0.965579345217001
+            },
+            "delta": {
+              "return": -0.2136250659891974,
+              "annualizedReturn": -0.04728064393640752,
+              "maxDrawdown": 0.0073636279123842074,
+              "sharpe": -0.17289150072043025,
+              "sortino": -0.193662235028915,
+              "calmar": -0.3083713013508955
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-378d-cash",
+      "lookbackBars": 378,
+      "threshold": "0",
+      "mode": "cash",
+      "reallocateSurvivors": false,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-378d-cash",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.2385662500000001,
+              "annualizedReturn": 0.041082603796963824,
+              "maxDrawdown": -0.20323667395198797,
+              "sharpe": 0.38389429840643075,
+              "sortino": 0.35052575685772547,
+              "calmar": 0.20214168534695198
+            },
+            "delta": {
+              "return": -0.18255821999999977,
+              "annualizedReturn": -0.027287512023239202,
+              "maxDrawdown": 0.04073461856323135,
+              "sharpe": -0.12379136441599126,
+              "sortino": -0.14092638389538648,
+              "calmar": -0.07809667841848156
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.12640289000000005,
+              "annualizedReturn": -0.06581480220635383,
+              "maxDrawdown": -0.20323667395198797,
+              "sharpe": -0.46413485184046505,
+              "sortino": -0.3994638556660687,
+              "calmar": -0.3238332970451077
+            },
+            "delta": {
+              "return": 0.015430859999999935,
+              "annualizedReturn": 0.008349877694282304,
+              "maxDrawdown": 0.04073461856323135,
+              "sharpe": -0.04997341429839186,
+              "sortino": -0.01620944301540156,
+              "calmar": -0.019843925443079502
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.4311142750698542,
+              "annualizedReturn": 0.11407448249804064,
+              "maxDrawdown": -0.1122523085559275,
+              "sharpe": 0.9369631993838151,
+              "sortino": 0.8875384334867882,
+              "calmar": 1.0162328415829889
+            },
+            "delta": {
+              "return": -0.23331866680658564,
+              "annualizedReturn": -0.05187872008236205,
+              "maxDrawdown": 0.01801427832284297,
+              "sharpe": -0.15048923863372765,
+              "sortino": -0.1934247707320762,
+              "calmar": -0.2577178049849076
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-252d-cash",
+      "lookbackBars": 252,
+      "threshold": "0",
+      "mode": "cash",
+      "reallocateSurvivors": false,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-252d-cash",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.40887156000000013,
+              "annualizedReturn": 0.06663063855485718,
+              "maxDrawdown": -0.1347028203528744,
+              "sharpe": 0.6291621486164768,
+              "sortino": 0.5790008141181747,
+              "calmar": 0.49464917200922853
+            },
+            "delta": {
+              "return": -0.012252909999999728,
+              "annualizedReturn": -0.0017394772653458457,
+              "maxDrawdown": 0.10926847216234492,
+              "sharpe": 0.12147648579405479,
+              "sortino": 0.08754867336506278,
+              "calmar": 0.214410808243795
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.006133699999999909,
+              "annualizedReturn": -0.003094832713170459,
+              "maxDrawdown": -0.1347028203528744,
+              "sharpe": 0.011691159660380828,
+              "sortino": 0.009634052359149551,
+              "calmar": -0.022975262916270625
+            },
+            "delta": {
+              "return": 0.13570005000000007,
+              "annualizedReturn": 0.07106984718746567,
+              "maxDrawdown": 0.10926847216234492,
+              "sharpe": 0.425852597202454,
+              "sortino": 0.39288846500981667,
+              "calmar": 0.2810141086857576
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.43088886154593675,
+              "annualizedReturn": 0.11402159763509045,
+              "maxDrawdown": -0.10809614495641229,
+              "sharpe": 0.9355371058133175,
+              "sortino": 0.9054608497004691,
+              "calmar": 1.0548165032256007
+            },
+            "delta": {
+              "return": -0.2335440803305031,
+              "annualizedReturn": -0.05193160494531224,
+              "maxDrawdown": 0.022170441922358175,
+              "sharpe": -0.15191533220422526,
+              "sortino": -0.17550235451839524,
+              "calmar": -0.21913414334229575
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-126d-reallocate-thr-0p05",
+      "lookbackBars": 126,
+      "threshold": "0.05",
+      "mode": "reallocate",
+      "reallocateSurvivors": true,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-126d-reallocate-thr-0p05",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.4120624399999999,
+              "annualizedReturn": 0.06708480904867753,
+              "maxDrawdown": -0.14995617832020336,
+              "sharpe": 0.570493352284841,
+              "sortino": 0.5174314088507648,
+              "calmar": 0.4473627549071734
+            },
+            "delta": {
+              "return": -0.009062029999999943,
+              "annualizedReturn": -0.0012853067715254962,
+              "maxDrawdown": 0.09401511419501596,
+              "sharpe": 0.06280768946241899,
+              "sortino": 0.02597926809765283,
+              "calmar": 0.16712439114173988
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": 0.0076395499999999394,
+              "annualizedReturn": 0.0038414853454604714,
+              "maxDrawdown": -0.10158739386551552,
+              "sharpe": 0.08904979674467073,
+              "sortino": 0.07272097889118062,
+              "calmar": 0.03781458701997953
+            },
+            "delta": {
+              "return": 0.14947329999999992,
+              "annualizedReturn": 0.0780061652460966,
+              "maxDrawdown": 0.1423838986497038,
+              "sharpe": 0.5032112342867439,
+              "sortino": 0.45597539154184774,
+              "calmar": 0.34180395862200774
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.4144907953627548,
+              "annualizedReturn": 0.11015868953523777,
+              "maxDrawdown": -0.11257497881195255,
+              "sharpe": 0.8176642183995895,
+              "sortino": 0.7804238664058869,
+              "calmar": 0.9785361782678992
+            },
+            "delta": {
+              "return": -0.24994214651368507,
+              "annualizedReturn": -0.05579451304516492,
+              "maxDrawdown": 0.01769160806681791,
+              "sharpe": -0.2697882196179533,
+              "sortino": -0.3005393378129775,
+              "calmar": -0.2954144682999973
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-252d-reallocate-thr-0p05",
+      "lookbackBars": 252,
+      "threshold": "0.05",
+      "mode": "reallocate",
+      "reallocateSurvivors": true,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-252d-reallocate-thr-0p05",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.28036726999999995,
+              "annualizedReturn": 0.047605597136684885,
+              "maxDrawdown": -0.18370772948549363,
+              "sharpe": 0.41021116935512264,
+              "sortino": 0.3773458322887953,
+              "calmar": 0.25913769262737546
+            },
+            "delta": {
+              "return": -0.14075719999999992,
+              "annualizedReturn": -0.02076451868351814,
+              "maxDrawdown": 0.060263563029725686,
+              "sharpe": -0.09747449346729936,
+              "sortino": -0.11410630846431663,
+              "calmar": -0.02110067113805808
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.07969647999999996,
+              "annualizedReturn": -0.04097765018149102,
+              "maxDrawdown": -0.17796035922145093,
+              "sharpe": -0.2893554299020346,
+              "sortino": -0.23835672612273962,
+              "calmar": -0.23026279762955024
+            },
+            "delta": {
+              "return": 0.06213727000000002,
+              "annualizedReturn": 0.03318702971914511,
+              "maxDrawdown": 0.06601093329376839,
+              "sharpe": 0.12480600764003857,
+              "sortino": 0.1448976865279275,
+              "calmar": 0.07372657397247798
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.40430054234433577,
+              "annualizedReturn": 0.1077423746270676,
+              "maxDrawdown": -0.1463893942052934,
+              "sharpe": 0.7790105314228454,
+              "sortino": 0.7568889153810825,
+              "calmar": 0.7359985005195934
+            },
+            "delta": {
+              "return": -0.2601323995321041,
+              "annualizedReturn": -0.0582108279533351,
+              "maxDrawdown": -0.016122807326522937,
+              "sharpe": -0.3084419065946974,
+              "sortino": -0.3240742888377819,
+              "calmar": -0.5379521460483031
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-378d-cash-thr-0p05",
+      "lookbackBars": 378,
+      "threshold": "0.05",
+      "mode": "cash",
+      "reallocateSurvivors": false,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-378d-cash-thr-0p05",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.21564715999999984,
+              "annualizedReturn": 0.03742989917490691,
+              "maxDrawdown": -0.20323667395198797,
+              "sharpe": 0.3648684940538767,
+              "sortino": 0.32960399621581987,
+              "calmar": 0.1841690205171791
+            },
+            "delta": {
+              "return": -0.20547731000000002,
+              "annualizedReturn": -0.030940216645296115,
+              "maxDrawdown": 0.04073461856323135,
+              "sharpe": -0.14281716876854528,
+              "sortino": -0.16184814453729207,
+              "calmar": -0.09606934324825445
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.11519411000000002,
+              "annualizedReturn": -0.05979535710151729,
+              "maxDrawdown": -0.20323667395198797,
+              "sharpe": -0.4153736208135099,
+              "sortino": -0.3546561416201769,
+              "calmar": -0.2942153890770874
+            },
+            "delta": {
+              "return": 0.026639639999999964,
+              "annualizedReturn": 0.014369322799118844,
+              "maxDrawdown": 0.04073461856323135,
+              "sharpe": -0.0012121832714367398,
+              "sortino": 0.02859827103049023,
+              "calmar": 0.009773982524940827
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.3868410206685484,
+              "annualizedReturn": 0.10357373778057943,
+              "maxDrawdown": -0.10314220442680055,
+              "sharpe": 0.9080581571917204,
+              "sortino": 0.8517922469912483,
+              "calmar": 1.0041838678567816
+            },
+            "delta": {
+              "return": -0.27759192120789145,
+              "annualizedReturn": -0.06237946479982326,
+              "maxDrawdown": 0.02712438245196991,
+              "sharpe": -0.17939428082582232,
+              "sortino": -0.22917095722761605,
+              "calmar": -0.2697667787111149
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-126d-cash",
+      "lookbackBars": 126,
+      "threshold": "0",
+      "mode": "cash",
+      "reallocateSurvivors": false,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-126d-cash",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.39759228999999996,
+              "annualizedReturn": 0.06501849316118591,
+              "maxDrawdown": -0.1030011078121087,
+              "sharpe": 0.6658525737514637,
+              "sortino": 0.6152004328253347,
+              "calmar": 0.6312407171366599
+            },
+            "delta": {
+              "return": -0.023532179999999903,
+              "annualizedReturn": -0.003351622659017117,
+              "maxDrawdown": 0.14097018470311062,
+              "sharpe": 0.15816691092904167,
+              "sortino": 0.12374829207222271,
+              "calmar": 0.3510023533712263
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": 0.032270229999999955,
+              "annualizedReturn": 0.01612940947782593,
+              "maxDrawdown": -0.07286642185918857,
+              "sharpe": 0.2600820275094168,
+              "sortino": 0.22215209510541975,
+              "calmar": 0.22135586002830446
+            },
+            "delta": {
+              "return": 0.17410397999999994,
+              "annualizedReturn": 0.09029408937846206,
+              "maxDrawdown": 0.17110487065603075,
+              "sharpe": 0.6742434650514899,
+              "sortino": 0.6054065077560868,
+              "calmar": 0.5253452316303326
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.36662924093643134,
+              "annualizedReturn": 0.09870192553484847,
+              "maxDrawdown": -0.1030011078121087,
+              "sharpe": 0.8613096872372672,
+              "sortino": 0.8250759191051038,
+              "calmar": 0.9582608151642149
+            },
+            "delta": {
+              "return": -0.2978037009400085,
+              "annualizedReturn": -0.06725127704555423,
+              "maxDrawdown": 0.02726547906666177,
+              "sharpe": -0.22614275078027557,
+              "sortino": -0.2558872851137606,
+              "calmar": -0.31568983140368156
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-252d-cash-thr-0p05",
+      "lookbackBars": 252,
+      "threshold": "0.05",
+      "mode": "cash",
+      "reallocateSurvivors": false,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-252d-cash-thr-0p05",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.3195285400000001,
+              "annualizedReturn": 0.053561640043138015,
+              "maxDrawdown": -0.12046167252303486,
+              "sharpe": 0.5435451347649427,
+              "sortino": 0.4947774066847171,
+              "calmar": 0.44463636376039756
+            },
+            "delta": {
+              "return": -0.10159592999999978,
+              "annualizedReturn": -0.014808475777065011,
+              "maxDrawdown": 0.12350961999218446,
+              "sharpe": 0.035859471942520704,
+              "sortino": 0.003325265931605148,
+              "calmar": 0.16439799999496402
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.013710239999999985,
+              "annualizedReturn": -0.006930781382998297,
+              "maxDrawdown": -0.12046167252303486,
+              "sharpe": -0.03357087801837722,
+              "sortino": -0.027482373009352804,
+              "calmar": -0.05753515817799211
+            },
+            "delta": {
+              "return": 0.12812351,
+              "annualizedReturn": 0.06723389851763784,
+              "maxDrawdown": 0.12350961999218446,
+              "sharpe": 0.38059055952369597,
+              "sortino": 0.3557720396413143,
+              "calmar": 0.24645421342403612
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.3504427263427381,
+              "annualizedReturn": 0.09476392876607531,
+              "maxDrawdown": -0.10298636291406049,
+              "sharpe": 0.8411650643643027,
+              "sortino": 0.8051900713363397,
+              "calmar": 0.920159971521214
+            },
+            "delta": {
+              "return": -0.31399021553370177,
+              "annualizedReturn": -0.07118927381432738,
+              "maxDrawdown": 0.02728022396470997,
+              "sharpe": -0.24628737365324005,
+              "sortino": -0.2757731328825247,
+              "calmar": -0.3537906750466825
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-63d-cash-thr-0p05",
+      "lookbackBars": 63,
+      "threshold": "0.05",
+      "mode": "cash",
+      "reallocateSurvivors": false,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-63d-cash-thr-0p05",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.34037150000000005,
+              "annualizedReturn": 0.05667334320504813,
+              "maxDrawdown": -0.08338994516151321,
+              "sharpe": 0.7478632818466016,
+              "sortino": 0.6856708794236107,
+              "calmar": 0.6796184251624194
+            },
+            "delta": {
+              "return": -0.08075296999999981,
+              "annualizedReturn": -0.011696772615154893,
+              "maxDrawdown": 0.1605813473537061,
+              "sharpe": 0.24017761902417956,
+              "sortino": 0.19421873867049877,
+              "calmar": 0.3993800613969859
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": 0.043692370000000036,
+              "annualizedReturn": 0.02177836256006649,
+              "maxDrawdown": -0.04430009700400528,
+              "sharpe": 0.5709254250371495,
+              "sortino": 0.4853051709450094,
+              "calmar": 0.49160981652246616
+            },
+            "delta": {
+              "return": 0.18552612000000002,
+              "annualizedReturn": 0.09594304246070262,
+              "maxDrawdown": 0.19967119551121404,
+              "sharpe": 0.9850868625792226,
+              "sortino": 0.8685595835956765,
+              "calmar": 0.7955991881244944
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.2894948048484074,
+              "annualizedReturn": 0.07963312935645162,
+              "maxDrawdown": -0.08338994516151321,
+              "sharpe": 0.8658761815018159,
+              "sortino": 0.8278572855346981,
+              "calmar": 0.9549488154982566
+            },
+            "delta": {
+              "return": -0.37493813702803247,
+              "annualizedReturn": -0.08632007322395108,
+              "maxDrawdown": 0.04687664171725725,
+              "sharpe": -0.22157625651572688,
+              "sortino": -0.2531059186841663,
+              "calmar": -0.31900183106963986
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "ts-momentum-126d-cash-thr-0p05",
+      "lookbackBars": 126,
+      "threshold": "0.05",
+      "mode": "cash",
+      "reallocateSurvivors": false,
+      "comparison": {
+        "baselineName": "Baseline risk parity",
+        "candidateName": "Risk parity + ts-momentum-126d-cash-thr-0p05",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2021-01-04",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 1336,
+          "in_sample": 503,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.42112446999999986,
+              "annualizedReturn": 0.06837011582020303,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": 0.507685662822422,
+              "sortino": 0.49145214075311194,
+              "calmar": 0.28023836376543354
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2026-04-29",
+              "observations": 1336,
+              "return": 0.34015859000000015,
+              "annualizedReturn": 0.0566417565004087,
+              "maxDrawdown": -0.10317659835896387,
+              "sharpe": 0.6491216686448826,
+              "sortino": 0.5860943987278853,
+              "calmar": 0.548978716116858
+            },
+            "delta": {
+              "return": -0.08096587999999971,
+              "annualizedReturn": -0.011728359319794324,
+              "maxDrawdown": 0.14079469415625545,
+              "sharpe": 0.14143600582246063,
+              "sortino": 0.09464225797477333,
+              "calmar": 0.26874035235142446
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": -0.14183374999999998,
+              "annualizedReturn": -0.07416467990063613,
+              "maxDrawdown": -0.24397129251521932,
+              "sharpe": -0.4141614375420732,
+              "sortino": -0.3832544126506671,
+              "calmar": -0.3039893716020282
+            },
+            "candidate": {
+              "start": "2021-01-04",
+              "end": "2022-12-30",
+              "observations": 503,
+              "return": 0.06268593999999994,
+              "annualizedReturn": 0.031104361658507607,
+              "maxDrawdown": -0.0484084246534634,
+              "sharpe": 0.510912467241567,
+              "sortino": 0.44026879177880257,
+              "calmar": 0.6425402578408888
+            },
+            "delta": {
+              "return": 0.20451968999999992,
+              "annualizedReturn": 0.10526904155914374,
+              "maxDrawdown": 0.19556286786175592,
+              "sharpe": 0.9250739047836403,
+              "sortino": 0.8235232044294697,
+              "calmar": 0.946529629442917
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.6644329418764399,
+              "annualizedReturn": 0.1659532025804027,
+              "maxDrawdown": -0.13026658687877046,
+              "sharpe": 1.0874524380175428,
+              "sortino": 1.0809632042188644,
+              "calmar": 1.2739506465678965
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.2729307629836255,
+              "annualizedReturn": 0.07543487117107128,
+              "maxDrawdown": -0.10317659835896387,
+              "sharpe": 0.7495278946916902,
+              "sortino": 0.6972816993408842,
+              "calmar": 0.7311238436900608
+            },
+            "delta": {
+              "return": -0.39150217889281436,
+              "annualizedReturn": -0.09051833140933141,
+              "maxDrawdown": 0.027089988519806596,
+              "sharpe": -0.33792454332585253,
+              "sortino": -0.38368150487798014,
+              "calmar": -0.5428268028778357
+            }
+          }
+        }
+      }
+    }
+  ]
+}

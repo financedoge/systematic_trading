@@ -16,6 +16,47 @@
 
 Alpha here is candidate return minus baseline return over the same window.
 
+## Market Data Audit
+
+- Source: SQLite var\systematic_trading.db
+- Price field: close
+- Adjusted prices validated: no
+- Required observations: 1336
+- Common required observations: 1336
+
+| Symbol | Obs. | Required Coverage | Missing Required | Max Gap Days | Stale Runs | Non-Positive |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| EWH | 1336 | 100.00% | 0 | 4 | 0 | 0 |
+| EWJ | 1336 | 100.00% | 0 | 4 | 0 | 0 |
+| EWY | 1336 | 100.00% | 0 | 4 | 0 | 0 |
+| SPY | 1336 | 100.00% | 0 | 4 | 0 | 0 |
+| VGK | 1336 | 100.00% | 0 | 4 | 0 | 0 |
+
+Warnings:
+- Stored prices are close prices, not validated adjusted total-return prices; ETF dividends and split adjustments remain a research risk.
+
+## Signal Forecast Quality
+
+- Lookback bars: 252
+- Threshold: 0.00%
+- Forward horizon: next_rebalance
+
+| Window | Obs. | Positive Signals | Negative Signals | Positive Avg Fwd | Negative Avg Fwd | Spread | Accuracy | IC |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Full | 250 | 147 | 103 | 1.13% | 0.21% | 0.91% | 55.60% | 0.04 |
+| In Sample | 55 | 5 | 50 | -2.65% | -1.18% | -1.48% | 58.18% | -0.30 |
+| Out Of Sample | 195 | 142 | 53 | 1.26% | 1.53% | -0.27% | 54.87% | -0.00 |
+
+### Forecast By Symbol
+
+| Symbol | Obs. | Positive Avg Fwd | Negative Avg Fwd | Spread | Accuracy | IC |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| EWH | 50 | 1.24% | -0.48% | 1.72% | 60.00% | 0.03 |
+| EWJ | 50 | 1.15% | -0.18% | 1.33% | 60.00% | -0.01 |
+| EWY | 50 | 2.07% | 1.03% | 1.05% | 46.00% | 0.10 |
+| SPY | 50 | 1.03% | 0.28% | 0.75% | 58.00% | -0.05 |
+| VGK | 50 | 0.55% | 0.66% | -0.11% | 54.00% | -0.14 |
+
 ## Signal Attribution
 
 | Window | Periods | Positive | Negative | Est. Contribution | Compounded Delta | Avg. Period Delta |
@@ -43,3 +84,41 @@ Alpha here is candidate return minus baseline return over the same window.
 | 2022-08-01 to 2022-09-01 | 5.59% | 5.47% | EWJ cut (1.67%, asset -6.89%) |
 | 2023-02-01 to 2023-03-01 | 4.89% | 4.78% | EWY cut (1.28%, asset -8.43%) |
 | 2022-12-01 to 2023-01-03 | 2.55% | 2.61% | EWY cut (1.41%, asset -8.09%) |
+
+## Decision Quality
+
+| Window | Active Decisions | Helped | Hurt | Hit Rate | False Exits | Good Exits | False Keeps | Est. Contribution |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Full | 190 | 101 | 89 | 53.16% | 52 | 51 | 46 | -6.87% |
+| In Sample | 55 | 32 | 23 | 58.18% | 20 | 30 | 24 | 4.39% |
+| Out Of Sample | 135 | 69 | 66 | 51.11% | 32 | 21 | 22 | -11.26% |
+
+### Decision Quality By Symbol
+
+| Symbol | Active | Helped | Hurt | Hit Rate | False Exits | False Keeps | Est. Contribution |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| EWY | 38 | 16 | 22 | 42.11% | 16 | 12 | -5.46% |
+| SPY | 38 | 20 | 18 | 52.63% | 7 | 6 | -4.73% |
+| VGK | 38 | 20 | 18 | 52.63% | 8 | 9 | -3.69% |
+| EWJ | 38 | 23 | 15 | 60.53% | 7 | 10 | 3.14% |
+| EWH | 38 | 22 | 16 | 57.89% | 14 | 9 | 3.88% |
+
+### Worst False Exits
+
+| Period | Symbol | Action | Asset Return | Est. Contribution |
+| --- | --- | --- | ---: | ---: |
+| 2022-11-01 to 2022-12-01 | EWH | cut | 21.44% | -4.78% |
+| 2024-09-03 to 2024-10-01 | EWH | cut | 20.68% | -4.09% |
+| 2023-01-03 to 2023-02-01 | EWY | cut | 17.46% | -3.02% |
+| 2025-06-02 to 2025-07-01 | EWY | cut | 16.03% | -2.87% |
+| 2022-11-01 to 2022-12-01 | EWJ | cut | 11.53% | -2.61% |
+
+### Worst False Keeps
+
+| Period | Symbol | Asset Return |
+| --- | --- | ---: |
+| 2026-03-02 to 2026-04-01 | EWY | -14.45% |
+| 2025-11-03 to 2025-12-01 | EWY | -10.08% |
+| 2021-09-01 to 2021-10-01 | EWY | -8.20% |
+| 2021-09-01 to 2021-10-01 | EWH | -7.94% |
+| 2021-11-01 to 2021-12-01 | VGK | -6.27% |

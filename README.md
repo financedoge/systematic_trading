@@ -20,6 +20,7 @@ Python-first toolkit for global long-horizon stock and ETF research, backtesting
 - Thin FastAPI operator API for health, manifest, and risk-parity proposal previews.
 - Local SQLite persistence for watchlists, theses, normalized price bars, FX rates, proposal queues, and approval decisions.
 - Provider and broker manifests so the operator API can expose data-source coverage and paper-vs-live execution boundaries.
+- Research state tracking with a current SOTA registry and comparison artifacts that include model layer and decision-tree diagrams.
 
 ## Quick start
 
@@ -38,9 +39,18 @@ uvicorn systematic_trading.app:app --reload
 pytest
 ```
 
+## Optional Tushare data
+
+Put a Tushare token in `./tushare_token.txt` or set `ST_TUSHARE_TOKEN_PATH`. The token file is ignored by git. The optional SDK adapter uses Tushare Pro US adjusted daily bars when `tushare` is installed:
+
+```bash
+pip install -e ".[data]"
+```
+
 ## Repository layout
 
 - `docs/` architecture and operating notes.
+- `docs/research-state.md` current research hurdle and SOTA promotion notes.
 - `src/systematic_trading/` application package.
 - `tests/` deterministic tests for accounting, sleeves, API, and backtests.
 

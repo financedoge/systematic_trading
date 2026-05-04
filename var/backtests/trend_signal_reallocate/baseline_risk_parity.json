@@ -8019,8 +8019,8 @@
   ],
   "proposals": [
     {
-      "proposal_id": "466b1c49dae2",
-      "created_at": "2026-05-03T17:05:23.782511Z",
+      "proposal_id": "0d95d8aa13a0",
+      "created_at": "2021-05-03T00:00:00Z",
       "as_of": "2021-05-03",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -8134,8 +8134,8 @@
       }
     },
     {
-      "proposal_id": "2777403799aa",
-      "created_at": "2026-05-03T17:05:23.782511Z",
+      "proposal_id": "d918bfc7a25b",
+      "created_at": "2021-06-01T00:00:00Z",
       "as_of": "2021-06-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -8238,8 +8238,8 @@
       }
     },
     {
-      "proposal_id": "ec5380459a65",
-      "created_at": "2026-05-03T17:05:23.782511Z",
+      "proposal_id": "8be53727a277",
+      "created_at": "2021-07-01T00:00:00Z",
       "as_of": "2021-07-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -8353,8 +8353,8 @@
       }
     },
     {
-      "proposal_id": "1bf40e7e6aae",
-      "created_at": "2026-05-03T17:05:23.782511Z",
+      "proposal_id": "feb2ca6a22b2",
+      "created_at": "2021-08-02T00:00:00Z",
       "as_of": "2021-08-02",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -8457,8 +8457,8 @@
       }
     },
     {
-      "proposal_id": "f39081f1f135",
-      "created_at": "2026-05-03T17:05:23.782511Z",
+      "proposal_id": "0fd1073df538",
+      "created_at": "2021-09-01T00:00:00Z",
       "as_of": "2021-09-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -8561,8 +8561,8 @@
       }
     },
     {
-      "proposal_id": "1f9cb350f1bb",
-      "created_at": "2026-05-03T17:05:23.782511Z",
+      "proposal_id": "de582fc4feef",
+      "created_at": "2021-10-01T00:00:00Z",
       "as_of": "2021-10-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -8676,8 +8676,8 @@
       }
     },
     {
-      "proposal_id": "5e16d0429bed",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "85015f74a221",
+      "created_at": "2021-11-01T00:00:00Z",
       "as_of": "2021-11-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -8791,8 +8791,8 @@
       }
     },
     {
-      "proposal_id": "d20f765e6dfb",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "5c86bfca6f34",
+      "created_at": "2021-12-01T00:00:00Z",
       "as_of": "2021-12-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -8895,8 +8895,8 @@
       }
     },
     {
-      "proposal_id": "95bc295214a7",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "46c98bf6893b",
+      "created_at": "2022-01-03T00:00:00Z",
       "as_of": "2022-01-03",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -9010,8 +9010,8 @@
       }
     },
     {
-      "proposal_id": "03ad091bc4a7",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "1a9391ff4869",
+      "created_at": "2022-02-01T00:00:00Z",
       "as_of": "2022-02-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -9125,8 +9125,8 @@
       }
     },
     {
-      "proposal_id": "b6c0b9a4d268",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "862927c4104f",
+      "created_at": "2022-03-01T00:00:00Z",
       "as_of": "2022-03-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -9240,8 +9240,8 @@
       }
     },
     {
-      "proposal_id": "40c0972797d6",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "43fa87a7ebed",
+      "created_at": "2022-04-01T00:00:00Z",
       "as_of": "2022-04-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -9355,8 +9355,8 @@
       }
     },
     {
-      "proposal_id": "c4f0276a822b",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "8c058870fb17",
+      "created_at": "2022-05-02T00:00:00Z",
       "as_of": "2022-05-02",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -9470,8 +9470,8 @@
       }
     },
     {
-      "proposal_id": "7f36dddc4436",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "f7a13aa60886",
+      "created_at": "2022-06-01T00:00:00Z",
       "as_of": "2022-06-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -9585,8 +9585,8 @@
       }
     },
     {
-      "proposal_id": "4ec96829b978",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "0492b1a5e400",
+      "created_at": "2022-07-01T00:00:00Z",
       "as_of": "2022-07-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -9700,8 +9700,8 @@
       }
     },
     {
-      "proposal_id": "6b3f8710c5f0",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "074113798198",
+      "created_at": "2022-08-01T00:00:00Z",
       "as_of": "2022-08-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -9815,8 +9815,8 @@
       }
     },
     {
-      "proposal_id": "96875d543cbc",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "7f7c43fbf647",
+      "created_at": "2022-09-01T00:00:00Z",
       "as_of": "2022-09-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -9919,8 +9919,8 @@
       }
     },
     {
-      "proposal_id": "59c7e819ad3f",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "2331efcc0d6a",
+      "created_at": "2022-10-03T00:00:00Z",
       "as_of": "2022-10-03",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -10034,8 +10034,8 @@
       }
     },
     {
-      "proposal_id": "6e5eb618cdbf",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "1fa7469b5b30",
+      "created_at": "2022-11-01T00:00:00Z",
       "as_of": "2022-11-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -10149,8 +10149,8 @@
       }
     },
     {
-      "proposal_id": "88237f078165",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "28e2838a824b",
+      "created_at": "2022-12-01T00:00:00Z",
       "as_of": "2022-12-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -10264,8 +10264,8 @@
       }
     },
     {
-      "proposal_id": "89dad3fd7111",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "ea43e18eff07",
+      "created_at": "2023-01-03T00:00:00Z",
       "as_of": "2023-01-03",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -10379,8 +10379,8 @@
       }
     },
     {
-      "proposal_id": "c1b101232aaf",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "840f53fee96b",
+      "created_at": "2023-02-01T00:00:00Z",
       "as_of": "2023-02-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -10494,8 +10494,8 @@
       }
     },
     {
-      "proposal_id": "819f6f4b3cd7",
-      "created_at": "2026-05-03T17:05:23.798232Z",
+      "proposal_id": "23ce91a69300",
+      "created_at": "2023-03-01T00:00:00Z",
       "as_of": "2023-03-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -10609,8 +10609,8 @@
       }
     },
     {
-      "proposal_id": "affc6c247942",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "2dcad63b08dc",
+      "created_at": "2023-04-03T00:00:00Z",
       "as_of": "2023-04-03",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -10724,8 +10724,8 @@
       }
     },
     {
-      "proposal_id": "b12349367651",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "3367a658b69b",
+      "created_at": "2023-05-01T00:00:00Z",
       "as_of": "2023-05-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -10839,8 +10839,8 @@
       }
     },
     {
-      "proposal_id": "de38d7ff1a06",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "5c1f745debfa",
+      "created_at": "2023-06-01T00:00:00Z",
       "as_of": "2023-06-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -10954,8 +10954,8 @@
       }
     },
     {
-      "proposal_id": "a3fa5561d19a",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "35e9c24a5af9",
+      "created_at": "2023-07-03T00:00:00Z",
       "as_of": "2023-07-03",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -11069,8 +11069,8 @@
       }
     },
     {
-      "proposal_id": "67b387f07ff3",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "427db7814dc4",
+      "created_at": "2023-08-01T00:00:00Z",
       "as_of": "2023-08-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -11184,8 +11184,8 @@
       }
     },
     {
-      "proposal_id": "6c3ba9483193",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "a485180d32d7",
+      "created_at": "2023-09-01T00:00:00Z",
       "as_of": "2023-09-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -11277,8 +11277,8 @@
       }
     },
     {
-      "proposal_id": "8f28c8aad8c7",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "d97742811358",
+      "created_at": "2023-10-02T00:00:00Z",
       "as_of": "2023-10-02",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -11392,8 +11392,8 @@
       }
     },
     {
-      "proposal_id": "54943d890124",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "84ee755a0a52",
+      "created_at": "2023-11-01T00:00:00Z",
       "as_of": "2023-11-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -11507,8 +11507,8 @@
       }
     },
     {
-      "proposal_id": "36af86ae805f",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "ec2e33c7246c",
+      "created_at": "2023-12-01T00:00:00Z",
       "as_of": "2023-12-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -11622,8 +11622,8 @@
       }
     },
     {
-      "proposal_id": "3e52da600fac",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "d22a82886421",
+      "created_at": "2024-01-02T00:00:00Z",
       "as_of": "2024-01-02",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -11737,8 +11737,8 @@
       }
     },
     {
-      "proposal_id": "2b4bc145d928",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "4b18a4ffa08f",
+      "created_at": "2024-02-01T00:00:00Z",
       "as_of": "2024-02-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -11852,8 +11852,8 @@
       }
     },
     {
-      "proposal_id": "17c38d2246c2",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "1848e70da0a7",
+      "created_at": "2024-03-01T00:00:00Z",
       "as_of": "2024-03-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -11967,8 +11967,8 @@
       }
     },
     {
-      "proposal_id": "19eb413f52c1",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "7d7385896cbb",
+      "created_at": "2024-04-01T00:00:00Z",
       "as_of": "2024-04-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -12082,8 +12082,8 @@
       }
     },
     {
-      "proposal_id": "ef0d8eb9ca7c",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "221afbe4826a",
+      "created_at": "2024-05-01T00:00:00Z",
       "as_of": "2024-05-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -12197,8 +12197,8 @@
       }
     },
     {
-      "proposal_id": "184d3054d7d1",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "cf472f4a78af",
+      "created_at": "2024-06-03T00:00:00Z",
       "as_of": "2024-06-03",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -12312,8 +12312,8 @@
       }
     },
     {
-      "proposal_id": "7c6af72c9f15",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "313438733a98",
+      "created_at": "2024-07-01T00:00:00Z",
       "as_of": "2024-07-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -12427,8 +12427,8 @@
       }
     },
     {
-      "proposal_id": "aa304d2c4c02",
-      "created_at": "2026-05-03T17:05:23.814314Z",
+      "proposal_id": "445f41593add",
+      "created_at": "2024-08-01T00:00:00Z",
       "as_of": "2024-08-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -12531,8 +12531,8 @@
       }
     },
     {
-      "proposal_id": "cb9fd771f4fe",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "21c203fc1f45",
+      "created_at": "2024-09-03T00:00:00Z",
       "as_of": "2024-09-03",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -12646,8 +12646,8 @@
       }
     },
     {
-      "proposal_id": "a964888474d5",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "da77a72ec907",
+      "created_at": "2024-10-01T00:00:00Z",
       "as_of": "2024-10-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -12761,8 +12761,8 @@
       }
     },
     {
-      "proposal_id": "57ebeb4c2249",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "9804bd89e6ad",
+      "created_at": "2024-11-01T00:00:00Z",
       "as_of": "2024-11-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -12876,8 +12876,8 @@
       }
     },
     {
-      "proposal_id": "bd5cf52bfcc7",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "68d0f4b06678",
+      "created_at": "2024-12-02T00:00:00Z",
       "as_of": "2024-12-02",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -12980,8 +12980,8 @@
       }
     },
     {
-      "proposal_id": "4198859f888d",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "ce591c3b5203",
+      "created_at": "2025-01-02T00:00:00Z",
       "as_of": "2025-01-02",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -13095,8 +13095,8 @@
       }
     },
     {
-      "proposal_id": "2f0b3f8bbe8e",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "6eb38fe353cc",
+      "created_at": "2025-02-03T00:00:00Z",
       "as_of": "2025-02-03",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -13210,8 +13210,8 @@
       }
     },
     {
-      "proposal_id": "fbe3d68e7067",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "7ad40cbe2e91",
+      "created_at": "2025-03-03T00:00:00Z",
       "as_of": "2025-03-03",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -13325,8 +13325,8 @@
       }
     },
     {
-      "proposal_id": "915dc775e72d",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "2cbf6f235f4d",
+      "created_at": "2025-04-01T00:00:00Z",
       "as_of": "2025-04-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -13440,8 +13440,8 @@
       }
     },
     {
-      "proposal_id": "0dd39f9e7254",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "4f4856111c16",
+      "created_at": "2025-05-01T00:00:00Z",
       "as_of": "2025-05-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -13555,8 +13555,8 @@
       }
     },
     {
-      "proposal_id": "ac36b0604a0c",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "442df80996b9",
+      "created_at": "2025-06-02T00:00:00Z",
       "as_of": "2025-06-02",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -13670,8 +13670,8 @@
       }
     },
     {
-      "proposal_id": "77488565f801",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "11c8e61f4955",
+      "created_at": "2025-07-01T00:00:00Z",
       "as_of": "2025-07-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -13774,8 +13774,8 @@
       }
     },
     {
-      "proposal_id": "a7ab649f50e3",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "df1b41882cca",
+      "created_at": "2025-08-01T00:00:00Z",
       "as_of": "2025-08-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -13889,8 +13889,8 @@
       }
     },
     {
-      "proposal_id": "4400a75e03d2",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "23b34bec9025",
+      "created_at": "2025-09-02T00:00:00Z",
       "as_of": "2025-09-02",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -14004,8 +14004,8 @@
       }
     },
     {
-      "proposal_id": "2f60f1774a73",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "7246133b4629",
+      "created_at": "2025-10-01T00:00:00Z",
       "as_of": "2025-10-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -14108,8 +14108,8 @@
       }
     },
     {
-      "proposal_id": "97ce218bb60b",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "650ba9ae5571",
+      "created_at": "2025-11-03T00:00:00Z",
       "as_of": "2025-11-03",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -14223,8 +14223,8 @@
       }
     },
     {
-      "proposal_id": "adf5888aed6d",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "57fff356eaf9",
+      "created_at": "2025-12-01T00:00:00Z",
       "as_of": "2025-12-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -14338,8 +14338,8 @@
       }
     },
     {
-      "proposal_id": "c3dce08a0dec",
-      "created_at": "2026-05-03T17:05:23.830132Z",
+      "proposal_id": "e5f5ba0af538",
+      "created_at": "2026-01-02T00:00:00Z",
       "as_of": "2026-01-02",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -14453,8 +14453,8 @@
       }
     },
     {
-      "proposal_id": "6e9148448c6f",
-      "created_at": "2026-05-03T17:05:23.846226Z",
+      "proposal_id": "6e3fefee6a3b",
+      "created_at": "2026-02-02T00:00:00Z",
       "as_of": "2026-02-02",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -14568,8 +14568,8 @@
       }
     },
     {
-      "proposal_id": "e58705e615dc",
-      "created_at": "2026-05-03T17:05:23.846226Z",
+      "proposal_id": "f40967599aa4",
+      "created_at": "2026-03-02T00:00:00Z",
       "as_of": "2026-03-02",
       "status": "pending",
       "sleeve": "baseline-risk-parity",
@@ -14683,8 +14683,8 @@
       }
     },
     {
-      "proposal_id": "de029c31af38",
-      "created_at": "2026-05-03T17:05:23.846226Z",
+      "proposal_id": "86744b6c9a78",
+      "created_at": "2026-04-01T00:00:00Z",
       "as_of": "2026-04-01",
       "status": "pending",
       "sleeve": "baseline-risk-parity",

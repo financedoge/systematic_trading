@@ -8019,8 +8019,8 @@
   ],
   "proposals": [
     {
-      "proposal_id": "4adfec64fd6a",
-      "created_at": "2026-05-03T17:05:24.129064Z",
+      "proposal_id": "b3477f4eab7d",
+      "created_at": "2021-05-03T00:00:00Z",
       "as_of": "2021-05-03",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -8134,8 +8134,8 @@
       }
     },
     {
-      "proposal_id": "bb5293de2fac",
-      "created_at": "2026-05-03T17:05:24.129064Z",
+      "proposal_id": "477d525c782b",
+      "created_at": "2021-06-01T00:00:00Z",
       "as_of": "2021-06-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -8238,8 +8238,8 @@
       }
     },
     {
-      "proposal_id": "8c728227e63a",
-      "created_at": "2026-05-03T17:05:24.131071Z",
+      "proposal_id": "c3e60c46b4ba",
+      "created_at": "2021-07-01T00:00:00Z",
       "as_of": "2021-07-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -8353,8 +8353,8 @@
       }
     },
     {
-      "proposal_id": "b2a392c19cf2",
-      "created_at": "2026-05-03T17:05:24.131071Z",
+      "proposal_id": "12fe1d42e8d9",
+      "created_at": "2021-08-02T00:00:00Z",
       "as_of": "2021-08-02",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -8457,8 +8457,8 @@
       }
     },
     {
-      "proposal_id": "9b483a9c3706",
-      "created_at": "2026-05-03T17:05:24.133076Z",
+      "proposal_id": "50c03bf9e12c",
+      "created_at": "2021-09-01T00:00:00Z",
       "as_of": "2021-09-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -8561,8 +8561,8 @@
       }
     },
     {
-      "proposal_id": "c66ddbe9df65",
-      "created_at": "2026-05-03T17:05:24.133076Z",
+      "proposal_id": "1babdacf4d5b",
+      "created_at": "2021-10-01T00:00:00Z",
       "as_of": "2021-10-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -8676,8 +8676,8 @@
       }
     },
     {
-      "proposal_id": "0ae889c8be7d",
-      "created_at": "2026-05-03T17:05:24.135081Z",
+      "proposal_id": "bbf735777c1d",
+      "created_at": "2021-11-01T00:00:00Z",
       "as_of": "2021-11-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -8791,8 +8791,8 @@
       }
     },
     {
-      "proposal_id": "efee574e39ee",
-      "created_at": "2026-05-03T17:05:24.135081Z",
+      "proposal_id": "9be5dc850211",
+      "created_at": "2021-12-01T00:00:00Z",
       "as_of": "2021-12-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -8895,8 +8895,8 @@
       }
     },
     {
-      "proposal_id": "611b79b89276",
-      "created_at": "2026-05-03T17:05:24.137085Z",
+      "proposal_id": "821bacb31bad",
+      "created_at": "2022-01-03T00:00:00Z",
       "as_of": "2022-01-03",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -9010,8 +9010,8 @@
       }
     },
     {
-      "proposal_id": "a6ae2a5e02fd",
-      "created_at": "2026-05-03T17:05:24.137085Z",
+      "proposal_id": "b8a3ceb20d89",
+      "created_at": "2022-02-01T00:00:00Z",
       "as_of": "2022-02-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -9125,8 +9125,8 @@
       }
     },
     {
-      "proposal_id": "feae8d4734bd",
-      "created_at": "2026-05-03T17:05:24.139089Z",
+      "proposal_id": "84b99e72bfcc",
+      "created_at": "2022-03-01T00:00:00Z",
       "as_of": "2022-03-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -9207,8 +9207,8 @@
       }
     },
     {
-      "proposal_id": "d2d6609fbe08",
-      "created_at": "2026-05-03T17:05:24.139089Z",
+      "proposal_id": "5fceb7e1761d",
+      "created_at": "2022-04-01T00:00:00Z",
       "as_of": "2022-04-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -9289,8 +9289,8 @@
       }
     },
     {
-      "proposal_id": "7be300efc5ac",
-      "created_at": "2026-05-03T17:05:24.139089Z",
+      "proposal_id": "ae46c06ea7c6",
+      "created_at": "2022-05-02T00:00:00Z",
       "as_of": "2022-05-02",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -9360,8 +9360,8 @@
       }
     },
     {
-      "proposal_id": "ee4e1487bf85",
-      "created_at": "2026-05-03T17:05:24.141094Z",
+      "proposal_id": "22dc951fc283",
+      "created_at": "2022-06-01T00:00:00Z",
       "as_of": "2022-06-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -9419,8 +9419,8 @@
       }
     },
     {
-      "proposal_id": "3c15463489c8",
-      "created_at": "2026-05-03T17:05:24.141094Z",
+      "proposal_id": "2502ccf4498b",
+      "created_at": "2022-07-01T00:00:00Z",
       "as_of": "2022-07-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -9478,8 +9478,8 @@
       }
     },
     {
-      "proposal_id": "1b35714759f8",
-      "created_at": "2026-05-03T17:05:24.141094Z",
+      "proposal_id": "b4ecfeaf72e4",
+      "created_at": "2022-08-01T00:00:00Z",
       "as_of": "2022-08-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -9537,8 +9537,8 @@
       }
     },
     {
-      "proposal_id": "c5561f82fcd5",
-      "created_at": "2026-05-03T17:05:24.141094Z",
+      "proposal_id": "459bfbe7d480",
+      "created_at": "2022-09-01T00:00:00Z",
       "as_of": "2022-09-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -9596,8 +9596,8 @@
       }
     },
     {
-      "proposal_id": "5c307ddf412e",
-      "created_at": "2026-05-03T17:05:24.143098Z",
+      "proposal_id": "2dfbfc3522de",
+      "created_at": "2022-10-03T00:00:00Z",
       "as_of": "2022-10-03",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -9655,8 +9655,8 @@
       }
     },
     {
-      "proposal_id": "317f88cdb1ab",
-      "created_at": "2026-05-03T17:05:24.143098Z",
+      "proposal_id": "992551a8c033",
+      "created_at": "2022-11-01T00:00:00Z",
       "as_of": "2022-11-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -9714,8 +9714,8 @@
       }
     },
     {
-      "proposal_id": "ed421fec4277",
-      "created_at": "2026-05-03T17:05:24.143098Z",
+      "proposal_id": "c8a6673a30d7",
+      "created_at": "2022-12-01T00:00:00Z",
       "as_of": "2022-12-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -9773,8 +9773,8 @@
       }
     },
     {
-      "proposal_id": "01ca6b46012c",
-      "created_at": "2026-05-03T17:05:24.144843Z",
+      "proposal_id": "d61d0d8e2f70",
+      "created_at": "2023-01-03T00:00:00Z",
       "as_of": "2023-01-03",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -9832,8 +9832,8 @@
       }
     },
     {
-      "proposal_id": "b658a86fa81b",
-      "created_at": "2026-05-03T17:05:24.144843Z",
+      "proposal_id": "8e16b1bbf2f3",
+      "created_at": "2023-02-01T00:00:00Z",
       "as_of": "2023-02-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -9891,8 +9891,8 @@
       }
     },
     {
-      "proposal_id": "85cb4fab1505",
-      "created_at": "2026-05-03T17:05:24.144843Z",
+      "proposal_id": "ba23d9e125b8",
+      "created_at": "2023-03-01T00:00:00Z",
       "as_of": "2023-03-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -9950,8 +9950,8 @@
       }
     },
     {
-      "proposal_id": "53e4070bd7f1",
-      "created_at": "2026-05-03T17:05:24.144843Z",
+      "proposal_id": "1578e43a0bc4",
+      "created_at": "2023-04-03T00:00:00Z",
       "as_of": "2023-04-03",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -10009,8 +10009,8 @@
       }
     },
     {
-      "proposal_id": "09a53271cba3",
-      "created_at": "2026-05-03T17:05:24.146848Z",
+      "proposal_id": "6242e4f2e72b",
+      "created_at": "2023-05-01T00:00:00Z",
       "as_of": "2023-05-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -10091,8 +10091,8 @@
       }
     },
     {
-      "proposal_id": "cb572fb41339",
-      "created_at": "2026-05-03T17:05:24.146848Z",
+      "proposal_id": "9cca9125522d",
+      "created_at": "2023-06-01T00:00:00Z",
       "as_of": "2023-06-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -10184,8 +10184,8 @@
       }
     },
     {
-      "proposal_id": "69c67d856fdd",
-      "created_at": "2026-05-03T17:05:24.148852Z",
+      "proposal_id": "dbc233f95021",
+      "created_at": "2023-07-03T00:00:00Z",
       "as_of": "2023-07-03",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -10288,8 +10288,8 @@
       }
     },
     {
-      "proposal_id": "beb42d3d054e",
-      "created_at": "2026-05-03T17:05:24.148852Z",
+      "proposal_id": "7dedb447f6b8",
+      "created_at": "2023-08-01T00:00:00Z",
       "as_of": "2023-08-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -10392,8 +10392,8 @@
       }
     },
     {
-      "proposal_id": "aee6f44b37d3",
-      "created_at": "2026-05-03T17:05:24.148852Z",
+      "proposal_id": "40434ed56859",
+      "created_at": "2023-09-01T00:00:00Z",
       "as_of": "2023-09-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -10485,8 +10485,8 @@
       }
     },
     {
-      "proposal_id": "482622d394d7",
-      "created_at": "2026-05-03T17:05:24.150856Z",
+      "proposal_id": "208d5078c733",
+      "created_at": "2023-10-02T00:00:00Z",
       "as_of": "2023-10-02",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -10589,8 +10589,8 @@
       }
     },
     {
-      "proposal_id": "120656761459",
-      "created_at": "2026-05-03T17:05:24.150856Z",
+      "proposal_id": "ff53bbc1d4d6",
+      "created_at": "2023-11-01T00:00:00Z",
       "as_of": "2023-11-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -10704,8 +10704,8 @@
       }
     },
     {
-      "proposal_id": "ba8771ca6c46",
-      "created_at": "2026-05-03T17:05:24.152861Z",
+      "proposal_id": "937ba3e7d295",
+      "created_at": "2023-12-01T00:00:00Z",
       "as_of": "2023-12-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -10819,8 +10819,8 @@
       }
     },
     {
-      "proposal_id": "ce14c17c6f1e",
-      "created_at": "2026-05-03T17:05:24.152861Z",
+      "proposal_id": "e7ef51c801ee",
+      "created_at": "2024-01-02T00:00:00Z",
       "as_of": "2024-01-02",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -10923,8 +10923,8 @@
       }
     },
     {
-      "proposal_id": "7c3aa861b0b1",
-      "created_at": "2026-05-03T17:05:24.154865Z",
+      "proposal_id": "136adf72349d",
+      "created_at": "2024-02-01T00:00:00Z",
       "as_of": "2024-02-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -11027,8 +11027,8 @@
       }
     },
     {
-      "proposal_id": "86f618c870b3",
-      "created_at": "2026-05-03T17:05:24.154865Z",
+      "proposal_id": "433b67f8ffed",
+      "created_at": "2024-03-01T00:00:00Z",
       "as_of": "2024-03-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -11120,8 +11120,8 @@
       }
     },
     {
-      "proposal_id": "ceca86005319",
-      "created_at": "2026-05-03T17:05:24.156869Z",
+      "proposal_id": "fa6b07076451",
+      "created_at": "2024-04-01T00:00:00Z",
       "as_of": "2024-04-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -11224,8 +11224,8 @@
       }
     },
     {
-      "proposal_id": "91ba1fe7d65f",
-      "created_at": "2026-05-03T17:05:24.156869Z",
+      "proposal_id": "b40017436fbe",
+      "created_at": "2024-05-01T00:00:00Z",
       "as_of": "2024-05-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -11328,8 +11328,8 @@
       }
     },
     {
-      "proposal_id": "071f47588316",
-      "created_at": "2026-05-03T17:05:24.156869Z",
+      "proposal_id": "35115ca1d78f",
+      "created_at": "2024-06-03T00:00:00Z",
       "as_of": "2024-06-03",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -11432,8 +11432,8 @@
       }
     },
     {
-      "proposal_id": "49d878cc55e6",
-      "created_at": "2026-05-03T17:05:24.158873Z",
+      "proposal_id": "a2ab007e7f88",
+      "created_at": "2024-07-01T00:00:00Z",
       "as_of": "2024-07-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -11536,8 +11536,8 @@
       }
     },
     {
-      "proposal_id": "79820c0e469c",
-      "created_at": "2026-05-03T17:05:24.160619Z",
+      "proposal_id": "d1b939a63ee1",
+      "created_at": "2024-08-01T00:00:00Z",
       "as_of": "2024-08-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -11629,8 +11629,8 @@
       }
     },
     {
-      "proposal_id": "7fac5e638a63",
-      "created_at": "2026-05-03T17:05:24.160619Z",
+      "proposal_id": "49974730822f",
+      "created_at": "2024-09-03T00:00:00Z",
       "as_of": "2024-09-03",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -11733,8 +11733,8 @@
       }
     },
     {
-      "proposal_id": "01b626fc65f5",
-      "created_at": "2026-05-03T17:05:24.160619Z",
+      "proposal_id": "499649ce316a",
+      "created_at": "2024-10-01T00:00:00Z",
       "as_of": "2024-10-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -11826,8 +11826,8 @@
       }
     },
     {
-      "proposal_id": "199d12c6ee9d",
-      "created_at": "2026-05-03T17:05:24.162623Z",
+      "proposal_id": "5555a931ee38",
+      "created_at": "2024-11-01T00:00:00Z",
       "as_of": "2024-11-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -11930,8 +11930,8 @@
       }
     },
     {
-      "proposal_id": "e67f0177a5dd",
-      "created_at": "2026-05-03T17:05:24.162623Z",
+      "proposal_id": "e305d9e6b01d",
+      "created_at": "2024-12-02T00:00:00Z",
       "as_of": "2024-12-02",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -12034,8 +12034,8 @@
       }
     },
     {
-      "proposal_id": "add3126a0c21",
-      "created_at": "2026-05-03T17:05:24.164627Z",
+      "proposal_id": "396cc26a3414",
+      "created_at": "2025-01-02T00:00:00Z",
       "as_of": "2025-01-02",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -12138,8 +12138,8 @@
       }
     },
     {
-      "proposal_id": "ad1ae1191c25",
-      "created_at": "2026-05-03T17:05:24.164627Z",
+      "proposal_id": "619d55820582",
+      "created_at": "2025-02-03T00:00:00Z",
       "as_of": "2025-02-03",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -12242,8 +12242,8 @@
       }
     },
     {
-      "proposal_id": "5fdedf54055c",
-      "created_at": "2026-05-03T17:05:24.166631Z",
+      "proposal_id": "3d7481d68dcd",
+      "created_at": "2025-03-03T00:00:00Z",
       "as_of": "2025-03-03",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -12346,8 +12346,8 @@
       }
     },
     {
-      "proposal_id": "d80a9a88967f",
-      "created_at": "2026-05-03T17:05:24.166631Z",
+      "proposal_id": "539f5f396050",
+      "created_at": "2025-04-01T00:00:00Z",
       "as_of": "2025-04-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -12439,8 +12439,8 @@
       }
     },
     {
-      "proposal_id": "e9a9c81c68b1",
-      "created_at": "2026-05-03T17:05:24.166631Z",
+      "proposal_id": "7f6d2da37595",
+      "created_at": "2025-05-01T00:00:00Z",
       "as_of": "2025-05-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -12543,8 +12543,8 @@
       }
     },
     {
-      "proposal_id": "21e697f80740",
-      "created_at": "2026-05-03T17:05:24.168636Z",
+      "proposal_id": "bc620e422123",
+      "created_at": "2025-06-02T00:00:00Z",
       "as_of": "2025-06-02",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -12647,8 +12647,8 @@
       }
     },
     {
-      "proposal_id": "faf14863030d",
-      "created_at": "2026-05-03T17:05:24.168636Z",
+      "proposal_id": "c1ef8f3893d0",
+      "created_at": "2025-07-01T00:00:00Z",
       "as_of": "2025-07-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -12751,8 +12751,8 @@
       }
     },
     {
-      "proposal_id": "0e6224af0c51",
-      "created_at": "2026-05-03T17:05:24.170640Z",
+      "proposal_id": "4fd28164e5ec",
+      "created_at": "2025-08-01T00:00:00Z",
       "as_of": "2025-08-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -12866,8 +12866,8 @@
       }
     },
     {
-      "proposal_id": "6c7d36fda287",
-      "created_at": "2026-05-03T17:05:24.170640Z",
+      "proposal_id": "1fa84b983f2f",
+      "created_at": "2025-09-02T00:00:00Z",
       "as_of": "2025-09-02",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -12981,8 +12981,8 @@
       }
     },
     {
-      "proposal_id": "fc0a53270b9b",
-      "created_at": "2026-05-03T17:05:24.172644Z",
+      "proposal_id": "736cb2eb3d75",
+      "created_at": "2025-10-01T00:00:00Z",
       "as_of": "2025-10-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -13074,8 +13074,8 @@
       }
     },
     {
-      "proposal_id": "56bc97931238",
-      "created_at": "2026-05-03T17:05:24.172644Z",
+      "proposal_id": "c98d1b40361c",
+      "created_at": "2025-11-03T00:00:00Z",
       "as_of": "2025-11-03",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -13189,8 +13189,8 @@
       }
     },
     {
-      "proposal_id": "7ec9791ba8a1",
-      "created_at": "2026-05-03T17:05:24.174648Z",
+      "proposal_id": "ead98031c117",
+      "created_at": "2025-12-01T00:00:00Z",
       "as_of": "2025-12-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -13304,8 +13304,8 @@
       }
     },
     {
-      "proposal_id": "42984be172bf",
-      "created_at": "2026-05-03T17:05:24.174648Z",
+      "proposal_id": "eb5bb0acde48",
+      "created_at": "2026-01-02T00:00:00Z",
       "as_of": "2026-01-02",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -13408,8 +13408,8 @@
       }
     },
     {
-      "proposal_id": "c87849df026b",
-      "created_at": "2026-05-03T17:05:24.176393Z",
+      "proposal_id": "fd32990f099b",
+      "created_at": "2026-02-02T00:00:00Z",
       "as_of": "2026-02-02",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -13523,8 +13523,8 @@
       }
     },
     {
-      "proposal_id": "ce111db46a5c",
-      "created_at": "2026-05-03T17:05:24.176393Z",
+      "proposal_id": "d243709ea1a2",
+      "created_at": "2026-03-02T00:00:00Z",
       "as_of": "2026-03-02",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",
@@ -13638,8 +13638,8 @@
       }
     },
     {
-      "proposal_id": "c4b65fe67d68",
-      "created_at": "2026-05-03T17:05:24.178398Z",
+      "proposal_id": "704931c52f91",
+      "created_at": "2026-04-01T00:00:00Z",
       "as_of": "2026-04-01",
       "status": "pending",
       "sleeve": "risk-parity+ts-momentum-252d-cash",

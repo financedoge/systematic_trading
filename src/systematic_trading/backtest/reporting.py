@@ -296,7 +296,7 @@ def _benchmark_series(
     benchmark_symbol: str | None,
     benchmark_nav_series: list[dict[str, Any]] | None,
     benchmark_name: str | None,
-) -> tuple[list[dict[str, float]] | None, str, str | None]:
+) -> tuple[list[dict[str, float | None]] | None, str, str | None]:
     if benchmark_nav_series is not None:
         return _external_benchmark_series(
             nav_points=nav_points,
@@ -316,18 +316,28 @@ def _benchmark_series(
 
     first = nav_points[0]
     initial_nav = first["nav"]
-    base_values = {
-        symbol: _price_cnh(symbol, first["date"], prices, fx_rates)
-        for symbol in benchmark_symbols
-    }
-    base_values = {symbol: value for symbol, value in base_values.items() if value is not None and value > 0}
+    base_index = None
+    base_values: dict[str, float] = {}
+    for index, point in enumerate(nav_points):
+        values = {
+            symbol: _price_cnh(symbol, point["date"], prices, fx_rates)
+            for symbol in benchmark_symbols
+        }
+        values = {symbol: value for symbol, value in values.items() if value is not None and value > 0}
+        if values:
+            base_index = index
+            base_values = values
+            break
     if not base_values:
-        return None, benchmark_label, f"Benchmark was not plotted because no start-date prices were found for {', '.join(benchmark_symbols)}."
+        return None, benchmark_label, f"Benchmark was not plotted because no prices were found for {', '.join(benchmark_symbols)}."
 
     weight = 1 / len(base_values)
     last_index = 100.0
     series = []
-    for point in nav_points:
+    for index, point in enumerate(nav_points):
+        if base_index is not None and index < base_index:
+            series.append({"nav": None, "index": None})
+            continue
         ratio = 0.0
         covered_weight = 0.0
         for symbol, base_value in base_values.items():
@@ -344,9 +354,14 @@ def _benchmark_series(
         series.append({"nav": initial_nav * (index_value / 100), "index": index_value})
 
     missing = sorted(set(benchmark_symbols) - set(base_values))
-    warning = None
+    warning_parts = []
+    if base_index is not None and base_index > 0:
+        warning_parts.append(
+            f"{benchmark_label} starts on {nav_points[base_index]['date']} because no earlier benchmark prices were found."
+        )
     if missing:
-        warning = f"Benchmark excluded symbols with missing start-date prices: {', '.join(missing)}."
+        warning_parts.append(f"Benchmark excluded symbols with missing inception prices: {', '.join(missing)}.")
+    warning = " ".join(warning_parts) if warning_parts else None
     return series, benchmark_label, warning
 
 
@@ -355,21 +370,31 @@ def _external_benchmark_series(
     nav_points: list[dict[str, Any]],
     benchmark_nav_series: list[dict[str, Any]],
     benchmark_name: str,
-) -> tuple[list[dict[str, float]] | None, str, str | None]:
+) -> tuple[list[dict[str, float | None]] | None, str, str | None]:
     benchmark_by_date = {
         str(item.get("trade_date")): _to_float(item["nav_cnh"])
         for item in benchmark_nav_series
         if item.get("trade_date") is not None and item.get("nav_cnh") is not None
     }
-    base_nav = benchmark_by_date.get(nav_points[0]["date"])
-    if base_nav is None or base_nav <= 0:
-        return None, benchmark_name, "External benchmark was not plotted because it does not cover the strategy start date."
+    base_index = None
+    base_nav = None
+    for index, point in enumerate(nav_points):
+        candidate = benchmark_by_date.get(point["date"])
+        if candidate is not None and candidate > 0:
+            base_index = index
+            base_nav = candidate
+            break
+    if base_nav is None:
+        return None, benchmark_name, "External benchmark was not plotted because it has no overlapping dates with the strategy."
 
     strategy_initial_nav = nav_points[0]["nav"]
     last_index = 100.0
     series = []
     missing_dates = 0
-    for point in nav_points:
+    for index, point in enumerate(nav_points):
+        if base_index is not None and index < base_index:
+            series.append({"nav": None, "index": None})
+            continue
         benchmark_nav = benchmark_by_date.get(point["date"])
         if benchmark_nav is None:
             missing_dates += 1
@@ -379,9 +404,14 @@ def _external_benchmark_series(
             last_index = index_value
         series.append({"nav": strategy_initial_nav * (index_value / 100), "index": index_value})
 
-    warning = None
+    warning_parts = []
+    if base_index is not None and base_index > 0:
+        warning_parts.append(
+            f"{benchmark_name} starts on {nav_points[base_index]['date']} because no earlier benchmark NAV was found."
+        )
     if missing_dates:
-        warning = f"External benchmark was forward-filled on {missing_dates} dates missing from the benchmark series."
+        warning_parts.append(f"External benchmark was forward-filled on {missing_dates} dates missing from the benchmark series.")
+    warning = " ".join(warning_parts) if warning_parts else None
     return series, benchmark_name, warning
 
 
@@ -556,28 +586,45 @@ def _summary_metrics(chart_points: list[dict[str, Any]], benchmark_id: str = "pr
     first = chart_points[0]
     last = chart_points[-1]
     nav_values = [point["nav"] for point in chart_points]
-    benchmark_values = [
-        _benchmark_nav(point, benchmark_id)
-        for point in chart_points
-        if _benchmark_nav(point, benchmark_id) is not None
-    ]
+    benchmark_points = []
+    for index, point in enumerate(chart_points):
+        benchmark_nav = _benchmark_nav(point, benchmark_id)
+        if benchmark_nav is not None:
+            benchmark_points.append((index, benchmark_nav))
     returns = _returns(nav_values)
     benchmark_return = None
-    if benchmark_values:
-        benchmark_return = (benchmark_values[-1] / benchmark_values[0]) - 1
+    benchmark_start = None
+    benchmark_end = None
+    strategy_comparison_return = None
     total_return = (last["nav"] / first["nav"]) - 1
+    if benchmark_points:
+        first_benchmark_index, first_benchmark_nav = benchmark_points[0]
+        last_benchmark_index, last_benchmark_nav = benchmark_points[-1]
+        benchmark_start = chart_points[first_benchmark_index]["date"]
+        benchmark_end = chart_points[last_benchmark_index]["date"]
+        benchmark_return = (last_benchmark_nav / first_benchmark_nav) - 1
+        strategy_comparison_return = (
+            chart_points[last_benchmark_index]["nav"] / chart_points[first_benchmark_index]["nav"]
+        ) - 1
     return {
         "start": first["date"],
         "end": last["date"],
+        "benchmarkStart": benchmark_start,
+        "benchmarkEnd": benchmark_end,
         "initialNav": first["nav"],
         "finalNav": last["nav"],
         "totalReturn": total_return,
+        "strategyComparisonReturn": strategy_comparison_return,
         "annualizedReturn": _annualized_return(total_return, first["date"], last["date"]),
         "maxDrawdown": min(point["drawdown"] for point in chart_points),
         "sharpe": _sharpe(returns),
         "sortino": _sortino(returns),
         "benchmarkReturn": benchmark_return,
-        "alpha": total_return - benchmark_return if benchmark_return is not None else None,
+        "alpha": (
+            strategy_comparison_return - benchmark_return
+            if benchmark_return is not None and strategy_comparison_return is not None
+            else None
+        ),
     }
 
 
@@ -601,8 +648,20 @@ def _period_metrics(chart_points: list[dict[str, Any]], frequency: str, benchmar
             for index in range(max(1, start_index), end_index + 1)
         ]
         benchmark_return = None
-        if benchmark_values[base_index] is not None and benchmark_values[end_index] is not None:
-            benchmark_return = (benchmark_values[end_index] / benchmark_values[base_index]) - 1
+        strategy_comparison_return = None
+        benchmark_indices = [
+            index
+            for index in range(base_index, end_index + 1)
+            if benchmark_values[index] is not None
+        ]
+        if benchmark_indices:
+            benchmark_start_index = benchmark_indices[0]
+            benchmark_end_index = benchmark_indices[-1]
+            benchmark_start_value = benchmark_values[benchmark_start_index]
+            benchmark_end_value = benchmark_values[benchmark_end_index]
+            if benchmark_start_value is not None and benchmark_end_value is not None:
+                benchmark_return = (benchmark_end_value / benchmark_start_value) - 1
+                strategy_comparison_return = (nav_values[benchmark_end_index] / nav_values[benchmark_start_index]) - 1
         max_drawdown = _max_drawdown(nav_values[base_index : end_index + 1])
         annualized = _annualized_return(nav_return, dates[base_index].isoformat(), dates[end_index].isoformat())
         calmar = None
@@ -615,7 +674,11 @@ def _period_metrics(chart_points: list[dict[str, Any]], frequency: str, benchmar
                 "sharpe": _sharpe(daily_returns),
                 "sortino": _sortino(daily_returns),
                 "calmar": calmar,
-                "alpha": nav_return - benchmark_return if benchmark_return is not None else None,
+                "alpha": (
+                    strategy_comparison_return - benchmark_return
+                    if benchmark_return is not None and strategy_comparison_return is not None
+                    else None
+                ),
                 "benchmarkReturn": benchmark_return,
                 "maxDrawdown": max_drawdown,
                 "observations": len(daily_returns),
