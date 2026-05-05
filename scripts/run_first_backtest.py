@@ -27,6 +27,7 @@ def main() -> None:
     parser.add_argument("--end-date", default="2026-04-30")
     parser.add_argument("--initial-cash-cnh", default="1000000")
     parser.add_argument("--output-dir", default="var/backtests")
+    parser.add_argument("--split-date", default=None, help="Optional in-sample/OOS cutoff date to mark in charts.")
     args = parser.parse_args()
 
     start_date = date.fromisoformat(args.start_date)
@@ -70,6 +71,7 @@ def main() -> None:
         result_path=result_path,
         output_path=report_path,
         database_path=settings.database_path,
+        split_date=args.split_date,
         extra_benchmarks=[
             {"id": "msci_world", "name": MSCI_WORLD_PROXY_NAME, "symbol": MSCI_WORLD_PROXY_SYMBOL},
         ],

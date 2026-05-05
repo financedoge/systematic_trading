@@ -1,10 +1,18 @@
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 from decimal import Decimal
 from typing import Any
 
-from systematic_trading.signals import AdaptiveTrendOverlay, RegimeGatedRelativeMomentumOverlay, TimeSeriesMomentumOverlay
+from systematic_trading.signals import (
+    AdaptiveTrendOverlay,
+    CountryCompositeFactorOverlay,
+    DecisionTreeSignalOverlay,
+    RegimeGatedRelativeMomentumOverlay,
+    SimpleDecisionTreeModel,
+    TimeSeriesMomentumOverlay,
+)
 from systematic_trading.signals.base import TargetOverlay
 
 
@@ -51,26 +59,26 @@ def risk_parity_definition() -> StrategyDefinition:
 
 def current_sota_definition() -> StrategyDefinition:
     return StrategyDefinition(
-        key="sota_relative_momentum_126_252d_regime",
-        name="SOTA: risk parity + relative momentum 126/252d regime",
-        sleeve_name="sota-relative-momentum-126-252d-regime",
+        key="sota_relative_momentum_20_60d_tilt20_regime",
+        name="SOTA: risk parity + relative momentum 20/60d 20% tilt",
+        sleeve_name="sota-relative-momentum-20-60d-tilt20-regime",
         state="sota",
         promoted_on="2026-05-05",
         description=(
-            "Monthly risk parity with a regime-gated cross-sectional relative momentum tilt. "
+            "Monthly risk parity with a shorter-horizon regime-gated cross-sectional relative momentum tilt. "
             "This is the current research hurdle for new candidate strategies."
         ),
         overlays=(
             OverlaySpec(
                 kind="relative_momentum",
                 parameters={
-                    "mediumLookbackBars": "126",
-                    "longLookbackBars": "252",
+                    "mediumLookbackBars": "20",
+                    "longLookbackBars": "60",
                     "fastVolatilityBars": "21",
                     "slowVolatilityBars": "252",
                     "drawdownLookbackBars": "252",
-                    "calmTilt": "0.12",
-                    "riskTilt": "0.12",
+                    "calmTilt": "0.20",
+                    "riskTilt": "0.20",
                     "drawdownTrigger": "-0.08",
                     "volatilityRatioTrigger": "1.35",
                     "maxActiveWeight": "0.07",
@@ -81,6 +89,66 @@ def current_sota_definition() -> StrategyDefinition:
 
 
 def strategy_definition_from_overlay(overlay: TargetOverlay) -> StrategyDefinition:
+    if isinstance(overlay, DecisionTreeSignalOverlay):
+        summary = dict(overlay.model.training_summary)
+        return StrategyDefinition(
+            key=overlay.name.replace("-", "_"),
+            name=f"Research: risk parity + {overlay.name}",
+            sleeve_name=f"research-risk-parity-{overlay.name}",
+            state="research",
+            description=(
+                "Research candidate using an in-sample-trained regression decision tree over the signal library."
+            ),
+            overlays=(
+                OverlaySpec(
+                    kind="decision_tree",
+                    parameters={
+                        "maxDepth": str(overlay.model.max_depth),
+                        "minSamplesLeaf": str(overlay.model.min_samples_leaf),
+                        "trainingSamples": str(summary.get("samples", "0")),
+                        "tilt": str(overlay.tilt),
+                        "maxActiveWeight": str(overlay.max_active_weight),
+                        "valuationScores": _score_map_param(overlay.valuation_scores),
+                        "macroScores": _score_map_param(overlay.macro_scores),
+                        "model": json.dumps(overlay.model.to_dict(), separators=(",", ":")),
+                    },
+                ),
+            ),
+        )
+    if isinstance(overlay, CountryCompositeFactorOverlay):
+        return StrategyDefinition(
+            key=overlay.name.replace("-", "_"),
+            name=f"Research: risk parity + {overlay.name}",
+            sleeve_name=f"research-risk-parity-{overlay.name}",
+            state="research",
+            description=(
+                "Research candidate using country ETF trend, volume, mean-reversion, valuation, "
+                "and macro-growth factor tilts."
+            ),
+            overlays=(
+                OverlaySpec(
+                    kind="country_factor",
+                    parameters={
+                        "shortMomentumBars": str(overlay.short_momentum_bars),
+                        "mediumMomentumBars": str(overlay.medium_momentum_bars),
+                        "longMomentumBars": str(overlay.long_momentum_bars),
+                        "reversalBars": str(overlay.reversal_bars),
+                        "meanReversionBars": str(overlay.mean_reversion_bars),
+                        "volumeBars": str(overlay.volume_bars),
+                        "slowVolumeBars": str(overlay.slow_volume_bars),
+                        "trendWeight": str(overlay.trend_weight),
+                        "volumeWeight": str(overlay.volume_weight),
+                        "meanReversionWeight": str(overlay.mean_reversion_weight),
+                        "valuationWeight": str(overlay.valuation_weight),
+                        "macroWeight": str(overlay.macro_weight),
+                        "tilt": str(overlay.tilt),
+                        "maxActiveWeight": str(overlay.max_active_weight),
+                        "valuationScores": _score_map_param(overlay.valuation_scores),
+                        "macroScores": _score_map_param(overlay.macro_scores),
+                    },
+                ),
+            ),
+        )
     if isinstance(overlay, RegimeGatedRelativeMomentumOverlay):
         return StrategyDefinition(
             key=overlay.name.replace("-", "_"),
@@ -176,6 +244,37 @@ def instantiate_overlays(definition: StrategyDefinition) -> list[TargetOverlay]:
                     max_active_weight=Decimal(params["maxActiveWeight"]),
                 )
             )
+        elif spec.kind == "decision_tree":
+            overlays.append(
+                DecisionTreeSignalOverlay(
+                    model=SimpleDecisionTreeModel.from_dict(json.loads(params["model"])),
+                    tilt=Decimal(params["tilt"]),
+                    max_active_weight=Decimal(params["maxActiveWeight"]),
+                    valuation_scores=_parse_score_map(params.get("valuationScores", "")),
+                    macro_scores=_parse_score_map(params.get("macroScores", "")),
+                )
+            )
+        elif spec.kind == "country_factor":
+            overlays.append(
+                CountryCompositeFactorOverlay(
+                    short_momentum_bars=int(params["shortMomentumBars"]),
+                    medium_momentum_bars=int(params["mediumMomentumBars"]),
+                    long_momentum_bars=int(params["longMomentumBars"]),
+                    reversal_bars=int(params["reversalBars"]),
+                    mean_reversion_bars=int(params["meanReversionBars"]),
+                    volume_bars=int(params["volumeBars"]),
+                    slow_volume_bars=int(params["slowVolumeBars"]),
+                    trend_weight=Decimal(params["trendWeight"]),
+                    volume_weight=Decimal(params["volumeWeight"]),
+                    mean_reversion_weight=Decimal(params["meanReversionWeight"]),
+                    valuation_weight=Decimal(params["valuationWeight"]),
+                    macro_weight=Decimal(params["macroWeight"]),
+                    tilt=Decimal(params["tilt"]),
+                    max_active_weight=Decimal(params["maxActiveWeight"]),
+                    valuation_scores=_parse_score_map(params.get("valuationScores", "")),
+                    macro_scores=_parse_score_map(params.get("macroScores", "")),
+                )
+            )
         elif spec.kind == "adaptive_trend":
             overlays.append(
                 AdaptiveTrendOverlay(
@@ -269,6 +368,21 @@ def _overlay_layer(overlay: OverlaySpec, index: int) -> dict[str, str]:
             f"tilt {params['calmTilt']} calm / {params['riskTilt']} risk; cap active weight {params['maxActiveWeight']}."
         )
         title = "Relative momentum overlay"
+    elif overlay.kind == "decision_tree":
+        detail = (
+            f"Train a max-depth {params['maxDepth']} regression tree on {params['trainingSamples']} "
+            f"in-sample asset-month observations from the signal library; tilt {params['tilt']}, "
+            f"cap active weight {params['maxActiveWeight']}."
+        )
+        title = "Decision-tree signal overlay"
+    elif overlay.kind == "country_factor":
+        detail = (
+            f"Blend {params['shortMomentumBars']}/{params['mediumMomentumBars']}/{params['longMomentumBars']}d trend, "
+            f"{params['volumeBars']}d volume pressure, {params['reversalBars']}/{params['meanReversionBars']}d "
+            f"mean reversion, valuation priors, and macro-growth priors; tilt {params['tilt']}, "
+            f"cap active weight {params['maxActiveWeight']}."
+        )
+        title = "Country factor overlay"
     elif overlay.kind == "adaptive_trend":
         detail = (
             f"Blend {params['shortLookbackBars']}/{params['mediumLookbackBars']}/{params['longLookbackBars']}d trend, "
@@ -325,9 +439,15 @@ def _overlay_decision_tree(overlay: OverlaySpec) -> str:
         return "\n".join(
             [
                 "flowchart TD",
-                '  A(["Risk-parity targets"]) --> B{"Enough 126d and 252d history for the basket?"}',
+                (
+                    f'  A(["Risk-parity targets"]) --> B{{"Enough {params["mediumLookbackBars"]}d '
+                    f'and {params["longLookbackBars"]}d history for the basket?"}}'
+                ),
                 '  B -- "No" --> C["Keep risk-parity targets"]',
-                '  B -- "Yes" --> D["Score each ETF = 45% medium momentum + 55% long momentum"]',
+                (
+                    f'  B -- "Yes" --> D["Score each ETF = 45% {params["mediumLookbackBars"]}d '
+                    f'momentum + 55% {params["longLookbackBars"]}d momentum"]'
+                ),
                 (
                     f'  D --> E{{"Basket drawdown <= {params["drawdownTrigger"]} '
                     f'or vol-ratio >= {params["volatilityRatioTrigger"]}?"}}'
@@ -340,6 +460,35 @@ def _overlay_decision_tree(overlay: OverlaySpec) -> str:
                 f'  I --> J["Cap active delta at +/-{params["maxActiveWeight"]} per ETF"]',
                 '  J --> K["Rescale to preserve original invested weight"]',
                 '  K --> L(["Final SOTA/research targets"])',
+            ]
+        )
+    if overlay.kind == "decision_tree":
+        return "\n".join(
+            [
+                "flowchart TD",
+                '  A(["In-sample rebalance rows"]) --> B["Compute signal-library features"]',
+                '  B --> C["Target = next-month asset return minus basket mean"]',
+                f'  C --> D["Fit regression tree, max depth {params["maxDepth"]}"]',
+                '  D --> E(["Freeze tree before OOS starts"])',
+                '  E --> F["Score ETFs at each rebalance"]',
+                f'  F --> G["Rank forecasts and apply tilt {params["tilt"]}"]',
+                f'  G --> H["Cap active delta at +/-{params["maxActiveWeight"]} per ETF"]',
+                '  H --> I["Rescale to preserve original invested weight"]',
+                '  I --> J(["Final decision-tree targets"])',
+            ]
+        )
+    if overlay.kind == "country_factor":
+        return "\n".join(
+            [
+                "flowchart TD",
+                '  A(["Risk-parity targets"]) --> B{"Enough price and volume history?"}',
+                '  B -- "No" --> C["Keep risk-parity targets"]',
+                '  B -- "Yes" --> D["Rank trend, volume pressure, and mean-reversion factors"]',
+                '  D --> E["Add valuation and macro-growth score maps when supplied"]',
+                f'  E --> F["Blend factor scores using tilt {params["tilt"]}"]',
+                f'  F --> G["Cap active delta at +/-{params["maxActiveWeight"]} per ETF"]',
+                '  G --> H["Rescale to preserve original invested weight"]',
+                '  H --> I(["Final country factor targets"])',
             ]
         )
     if overlay.kind == "adaptive_trend":
@@ -387,3 +536,20 @@ def _escape_mermaid(value: str) -> str:
 
 def _bool(value: str) -> bool:
     return value.strip().lower() in {"1", "true", "yes", "y"}
+
+
+def _score_map_param(values: dict[str, Decimal]) -> str:
+    return ",".join(f"{symbol}:{value}" for symbol, value in sorted(values.items()))
+
+
+def _parse_score_map(value: str) -> dict[str, Decimal]:
+    scores: dict[str, Decimal] = {}
+    for item in value.split(","):
+        if not item.strip():
+            continue
+        if ":" in item:
+            symbol, score = item.split(":", 1)
+        else:
+            symbol, score = item.split("=", 1)
+        scores[symbol.strip().upper()] = Decimal(score.strip())
+    return scores

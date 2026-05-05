@@ -22,6 +22,7 @@ def test_backtest_report_keeps_extra_benchmark_choices() -> None:
     report, warnings = build_backtest_report_data(
         result=result,
         result_path=Path("candidate.json"),
+        split_date=date(2023, 1, 4),
         benchmark_nav_series=[
             {"trade_date": "2023-01-03", "nav_cnh": "100"},
             {"trade_date": "2023-01-04", "nav_cnh": "105"},
@@ -40,6 +41,7 @@ def test_backtest_report_keeps_extra_benchmark_choices() -> None:
     )
 
     assert warnings == []
+    assert report["splitDate"] == "2023-01-04"
     assert report["benchmarkOptions"] == [
         {"id": "primary", "name": "Baseline"},
         {"id": "msci_world", "name": "MSCI World proxy"},

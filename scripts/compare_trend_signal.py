@@ -36,7 +36,15 @@ from systematic_trading.research import (
     risk_parity_definition,
     strategy_definition_from_overlay,
 )
-from systematic_trading.signals import AdaptiveTrendOverlay, RegimeGatedRelativeMomentumOverlay, TimeSeriesMomentumOverlay
+from systematic_trading.signals import (
+    AdaptiveTrendOverlay,
+    CountryCompositeFactorOverlay,
+    DecisionTreeSignalOverlay,
+    RegimeGatedRelativeMomentumOverlay,
+    TimeSeriesMomentumOverlay,
+    train_decision_tree_overlay,
+)
+from systematic_trading.signals.library import signal_library_rows, write_signal_library_markdown
 from systematic_trading.storage.sqlite import SQLiteStore
 
 
@@ -56,7 +64,11 @@ def main() -> None:
         default="sota",
         help="Research hurdle used as the comparison baseline.",
     )
-    parser.add_argument("--overlay", choices=["trend", "adaptive", "relative"], default="trend")
+    parser.add_argument(
+        "--overlay",
+        choices=["trend", "adaptive", "relative", "country-factor", "decision-tree"],
+        default="trend",
+    )
     parser.add_argument("--trend-lookback-bars", type=int, default=252)
     parser.add_argument("--trend-threshold", default="0")
     parser.add_argument("--adaptive-short-lookback-bars", type=int, default=63)
@@ -76,6 +88,34 @@ def main() -> None:
     parser.add_argument("--relative-calm-tilt", default="0.12")
     parser.add_argument("--relative-risk-tilt", default="0.12")
     parser.add_argument("--relative-max-active-weight", default="0.07")
+    parser.add_argument("--factor-short-momentum-bars", type=int, default=63)
+    parser.add_argument("--factor-medium-momentum-bars", type=int, default=126)
+    parser.add_argument("--factor-long-momentum-bars", type=int, default=252)
+    parser.add_argument("--factor-reversal-bars", type=int, default=21)
+    parser.add_argument("--factor-mean-reversion-bars", type=int, default=63)
+    parser.add_argument("--factor-volume-bars", type=int, default=21)
+    parser.add_argument("--factor-slow-volume-bars", type=int, default=126)
+    parser.add_argument("--factor-trend-weight", default="0.40")
+    parser.add_argument("--factor-volume-weight", default="0.15")
+    parser.add_argument("--factor-mean-reversion-weight", default="0.20")
+    parser.add_argument("--factor-valuation-weight", default="0.15")
+    parser.add_argument("--factor-macro-weight", default="0.10")
+    parser.add_argument("--factor-tilt", default="0.12")
+    parser.add_argument("--factor-max-active-weight", default="0.06")
+    parser.add_argument("--tree-max-depth", type=int, default=3)
+    parser.add_argument("--tree-min-samples-leaf", type=int, default=25)
+    parser.add_argument("--tree-tilt", default="0.12")
+    parser.add_argument("--tree-max-active-weight", default="0.06")
+    parser.add_argument(
+        "--factor-valuation-scores",
+        default="",
+        help="Comma-separated SYMBOL=SCORE map where positive means cheaper/more attractive.",
+    )
+    parser.add_argument(
+        "--factor-macro-scores",
+        default="",
+        help="Comma-separated SYMBOL=SCORE map where positive means stronger macro growth.",
+    )
     parser.add_argument(
         "--skip-robustness",
         action="store_true",
@@ -112,6 +152,21 @@ def main() -> None:
         help="Comma-separated risk-regime relative tilt strengths.",
     )
     parser.add_argument(
+        "--factor-robustness-tilts",
+        default="0.06,0.10,0.12,0.16",
+        help="Comma-separated composite country-factor tilt strengths.",
+    )
+    parser.add_argument(
+        "--factor-robustness-mean-reversion-weights",
+        default="0.10,0.20,0.30",
+        help="Comma-separated composite country-factor mean-reversion weights.",
+    )
+    parser.add_argument(
+        "--tree-robustness-tilts",
+        default="0.08,0.12,0.16,0.20",
+        help="Comma-separated decision-tree tilt strengths.",
+    )
+    parser.add_argument(
         "--no-fetch-benchmarks",
         action="store_true",
         help="Do not fetch missing benchmark bars from Yahoo before rendering benchmark choices.",
@@ -139,7 +194,17 @@ def main() -> None:
     output_dir = Path(args.output_dir or _default_output_dir(args.overlay))
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    overlay = _build_overlay(args)
+    split_date = date.fromisoformat(args.split_date)
+    if args.overlay == "decision-tree":
+        overlay = _build_decision_tree_overlay(
+            store=store,
+            args=args,
+            start_date=start_date,
+            end_date=end_date,
+            split_date=split_date,
+        )
+    else:
+        overlay = _build_overlay(args)
     baseline_definition = current_sota_definition() if args.baseline_model == "sota" else risk_parity_definition()
     candidate_definition = strategy_definition_from_overlay(overlay)
     baseline_overlays = instantiate_overlays(baseline_definition)
@@ -154,7 +219,6 @@ def main() -> None:
         update={"sleeve_name": candidate_definition.sleeve_name}
     )
 
-    split_date = date.fromisoformat(args.split_date)
     baseline = run_stored_risk_parity_backtest(
         store=store,
         instruments=GLOBAL_ETF_UNIVERSE,
@@ -255,7 +319,7 @@ def main() -> None:
                 weak_scales=_parse_decimal_list(args.adaptive_robustness_weak_scales, include=overlay.weak_scale),
                 rebound_scales=_parse_decimal_list(args.adaptive_robustness_rebound_scales, include=overlay.rebound_scale),
             )
-        else:
+        elif args.overlay == "relative":
             robustness_cases = _run_relative_robustness_grid(
                 store=store,
                 baseline_config=baseline_config,
@@ -267,11 +331,53 @@ def main() -> None:
                 calm_tilts=_parse_decimal_list(args.relative_robustness_calm_tilts, include=overlay.calm_tilt),
                 risk_tilts=_parse_decimal_list(args.relative_robustness_risk_tilts, include=overlay.risk_tilt),
             )
+        elif args.overlay == "country-factor":
+            robustness_cases = _run_country_factor_robustness_grid(
+                store=store,
+                baseline_config=baseline_config,
+                baseline_payload=baseline_payload,
+                current_overlay=overlay,
+                current_candidate_payload=candidate_payload,
+                split_date=split_date,
+                baseline_name=baseline_definition.name,
+                tilts=_parse_decimal_list(args.factor_robustness_tilts, include=overlay.tilt),
+                mean_reversion_weights=_parse_decimal_list(
+                    args.factor_robustness_mean_reversion_weights,
+                    include=overlay.mean_reversion_weight,
+                ),
+            )
+        else:
+            robustness_cases = _run_decision_tree_robustness_grid(
+                store=store,
+                baseline_config=baseline_config,
+                baseline_payload=baseline_payload,
+                current_overlay=overlay,
+                current_candidate_payload=candidate_payload,
+                split_date=split_date,
+                baseline_name=baseline_definition.name,
+                tilts=_parse_decimal_list(args.tree_robustness_tilts, include=overlay.tilt),
+            )
         robustness_artifacts = write_robustness_artifacts(
             cases=robustness_cases,
             output_dir=output_dir,
             stem="robustness",
         )
+
+    if isinstance(overlay, DecisionTreeSignalOverlay):
+        training_path = output_dir / "decision_tree_training.json"
+        training_path.write_text(
+            json.dumps(
+                {
+                    "model": overlay.model.to_dict(),
+                    "signalLibrary": signal_library_rows(),
+                    "valuationScores": {symbol: str(value) for symbol, value in sorted(overlay.valuation_scores.items())},
+                    "macroScores": {symbol: str(value) for symbol, value in sorted(overlay.macro_scores.items())},
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        write_signal_library_markdown(output_dir / "signal_library.md")
     extra_benchmarks = []
     if risk_parity_reference_payload is not None:
         extra_benchmarks.append(
@@ -287,6 +393,7 @@ def main() -> None:
         result_path=candidate_path,
         output_path=output_dir / f"{overlay.name}.html",
         database_path=database_path,
+        split_date=split_date,
         benchmark_nav_series=baseline_payload["nav_series"],
         benchmark_name=baseline_definition.name,
         extra_benchmarks=extra_benchmarks,
@@ -307,7 +414,26 @@ def main() -> None:
 
 def _build_overlay(
     args: argparse.Namespace,
-) -> TimeSeriesMomentumOverlay | AdaptiveTrendOverlay | RegimeGatedRelativeMomentumOverlay:
+) -> TimeSeriesMomentumOverlay | AdaptiveTrendOverlay | RegimeGatedRelativeMomentumOverlay | CountryCompositeFactorOverlay:
+    if args.overlay == "country-factor":
+        return CountryCompositeFactorOverlay(
+            short_momentum_bars=args.factor_short_momentum_bars,
+            medium_momentum_bars=args.factor_medium_momentum_bars,
+            long_momentum_bars=args.factor_long_momentum_bars,
+            reversal_bars=args.factor_reversal_bars,
+            mean_reversion_bars=args.factor_mean_reversion_bars,
+            volume_bars=args.factor_volume_bars,
+            slow_volume_bars=args.factor_slow_volume_bars,
+            trend_weight=Decimal(args.factor_trend_weight),
+            volume_weight=Decimal(args.factor_volume_weight),
+            mean_reversion_weight=Decimal(args.factor_mean_reversion_weight),
+            valuation_weight=Decimal(args.factor_valuation_weight),
+            macro_weight=Decimal(args.factor_macro_weight),
+            tilt=Decimal(args.factor_tilt),
+            max_active_weight=Decimal(args.factor_max_active_weight),
+            valuation_scores=_parse_score_map(args.factor_valuation_scores),
+            macro_scores=_parse_score_map(args.factor_macro_scores),
+        )
     if args.overlay == "adaptive":
         return AdaptiveTrendOverlay(
             short_lookback_bars=args.adaptive_short_lookback_bars,
@@ -334,7 +460,38 @@ def _build_overlay(
     )
 
 
+def _build_decision_tree_overlay(
+    *,
+    store: SQLiteStore,
+    args: argparse.Namespace,
+    start_date: date,
+    end_date: date,
+    split_date: date,
+) -> DecisionTreeSignalOverlay:
+    bars_by_symbol = {
+        symbol: store.list_price_bars(symbol, start_date=start_date, end_date=end_date)
+        for symbol in GLOBAL_ETF_UNIVERSE
+    }
+    trade_dates = _common_price_dates(bars_by_symbol)
+    rebalance_dates = _monthly_rebalance_dates(trade_dates)
+    return train_decision_tree_overlay(
+        symbols=list(GLOBAL_ETF_UNIVERSE),
+        bars_by_symbol=bars_by_symbol,
+        trade_dates=trade_dates,
+        rebalance_dates=rebalance_dates,
+        split_date=split_date,
+        max_depth=args.tree_max_depth,
+        min_samples_leaf=args.tree_min_samples_leaf,
+        tilt=Decimal(args.tree_tilt),
+        max_active_weight=Decimal(args.tree_max_active_weight),
+        valuation_scores=_parse_score_map(args.factor_valuation_scores),
+        macro_scores=_parse_score_map(args.factor_macro_scores),
+    )
+
+
 def _default_output_dir(overlay: str) -> str:
+    if overlay == "country-factor":
+        return "var/backtests/country_factor_signal"
     if overlay == "adaptive":
         return "var/backtests/adaptive_trend_signal"
     if overlay == "relative":
@@ -370,6 +527,23 @@ def _prices_by_symbol(store: SQLiteStore) -> dict[str, dict[date, float]]:
     }
 
 
+def _common_price_dates(bars_by_symbol: dict[str, list[object]]) -> list[date]:
+    date_sets = [{bar.trade_date for bar in bars} for bars in bars_by_symbol.values()]
+    return sorted(set.intersection(*date_sets)) if date_sets else []
+
+
+def _monthly_rebalance_dates(trade_dates: list[date]) -> list[date]:
+    dates: list[date] = []
+    seen_months: set[tuple[int, int]] = set()
+    for trade_date in trade_dates:
+        month_key = (trade_date.year, trade_date.month)
+        if month_key in seen_months:
+            continue
+        seen_months.add(month_key)
+        dates.append(trade_date)
+    return dates
+
+
 def _rebalance_dates(payload: dict[str, object]) -> list[date]:
     return [date.fromisoformat(str(proposal["as_of"])) for proposal in payload.get("proposals", [])]
 
@@ -384,6 +558,20 @@ def _parse_decimal_list(value: str, *, include: Decimal) -> list[Decimal]:
     items = {Decimal(include)}
     items.update(Decimal(item.strip()) for item in value.split(",") if item.strip())
     return sorted(items)
+
+
+def _parse_score_map(value: str) -> dict[str, Decimal]:
+    scores: dict[str, Decimal] = {}
+    for item in value.split(","):
+        item = item.strip()
+        if not item:
+            continue
+        if "=" in item:
+            symbol, score = item.split("=", 1)
+        else:
+            symbol, score = item.split(":", 1)
+        scores[symbol.strip().upper()] = Decimal(score.strip())
+    return scores
 
 
 def _run_robustness_grid(
@@ -578,6 +766,138 @@ def _run_relative_robustness_grid(
                     "comparison": comparison,
                 }
             )
+    return cases
+
+
+def _run_country_factor_robustness_grid(
+    *,
+    store: SQLiteStore,
+    baseline_config: StoredRiskParityBacktestConfig,
+    baseline_payload: dict[str, object],
+    current_overlay: CountryCompositeFactorOverlay,
+    current_candidate_payload: dict[str, object],
+    split_date: date,
+    baseline_name: str,
+    tilts: list[Decimal],
+    mean_reversion_weights: list[Decimal],
+) -> list[dict[str, object]]:
+    result_cache = {
+        (
+            current_overlay.tilt,
+            current_overlay.mean_reversion_weight,
+        ): current_candidate_payload
+    }
+    cases: list[dict[str, object]] = []
+    for tilt in tilts:
+        for mean_reversion_weight in mean_reversion_weights:
+            overlay = CountryCompositeFactorOverlay(
+                short_momentum_bars=current_overlay.short_momentum_bars,
+                medium_momentum_bars=current_overlay.medium_momentum_bars,
+                long_momentum_bars=current_overlay.long_momentum_bars,
+                reversal_bars=current_overlay.reversal_bars,
+                mean_reversion_bars=current_overlay.mean_reversion_bars,
+                volume_bars=current_overlay.volume_bars,
+                slow_volume_bars=current_overlay.slow_volume_bars,
+                trend_weight=current_overlay.trend_weight,
+                volume_weight=current_overlay.volume_weight,
+                mean_reversion_weight=mean_reversion_weight,
+                valuation_weight=current_overlay.valuation_weight,
+                macro_weight=current_overlay.macro_weight,
+                tilt=tilt,
+                max_active_weight=current_overlay.max_active_weight,
+                valuation_scores=current_overlay.valuation_scores,
+                macro_scores=current_overlay.macro_scores,
+            )
+            cache_key = (overlay.tilt, overlay.mean_reversion_weight)
+            candidate_payload = result_cache.get(cache_key)
+            if candidate_payload is None:
+                candidate = run_stored_risk_parity_backtest(
+                    store=store,
+                    instruments=GLOBAL_ETF_UNIVERSE,
+                    config=baseline_config.model_copy(
+                        update={"sleeve_name": f"risk-parity+{overlay.name}"}
+                    ),
+                    target_overlays=[overlay],
+                )
+                candidate_payload = _stable_backtest_payload(candidate.model_dump(mode="json"))
+                result_cache[cache_key] = candidate_payload
+            comparison = compare_backtests(
+                baseline=baseline_payload,
+                candidate=candidate_payload,
+                split_date=split_date,
+                baseline_name=baseline_name,
+                candidate_name=f"Risk parity + {overlay.name}",
+            )
+            cases.append(
+                {
+                    "name": overlay.name,
+                    "lookbackBars": overlay.lookback_bars,
+                    "threshold": str(overlay.threshold),
+                    "mode": "country-factor",
+                    "tilt": str(tilt),
+                    "meanReversionWeight": str(mean_reversion_weight),
+                    "trendWeight": str(overlay.trend_weight),
+                    "volumeWeight": str(overlay.volume_weight),
+                    "valuationWeight": str(overlay.valuation_weight),
+                    "macroWeight": str(overlay.macro_weight),
+                    "comparison": comparison,
+                }
+            )
+    return cases
+
+
+def _run_decision_tree_robustness_grid(
+    *,
+    store: SQLiteStore,
+    baseline_config: StoredRiskParityBacktestConfig,
+    baseline_payload: dict[str, object],
+    current_overlay: DecisionTreeSignalOverlay,
+    current_candidate_payload: dict[str, object],
+    split_date: date,
+    baseline_name: str,
+    tilts: list[Decimal],
+) -> list[dict[str, object]]:
+    result_cache = {current_overlay.tilt: current_candidate_payload}
+    cases: list[dict[str, object]] = []
+    for tilt in tilts:
+        overlay = DecisionTreeSignalOverlay(
+            model=current_overlay.model,
+            tilt=tilt,
+            max_active_weight=current_overlay.max_active_weight,
+            valuation_scores=current_overlay.valuation_scores,
+            macro_scores=current_overlay.macro_scores,
+        )
+        candidate_payload = result_cache.get(overlay.tilt)
+        if candidate_payload is None:
+            candidate = run_stored_risk_parity_backtest(
+                store=store,
+                instruments=GLOBAL_ETF_UNIVERSE,
+                config=baseline_config.model_copy(
+                    update={"sleeve_name": f"risk-parity+{overlay.name}"}
+                ),
+                target_overlays=[overlay],
+            )
+            candidate_payload = _stable_backtest_payload(candidate.model_dump(mode="json"))
+            result_cache[overlay.tilt] = candidate_payload
+        comparison = compare_backtests(
+            baseline=baseline_payload,
+            candidate=candidate_payload,
+            split_date=split_date,
+            baseline_name=baseline_name,
+            candidate_name=f"Risk parity + {overlay.name}",
+        )
+        cases.append(
+            {
+                "name": overlay.name,
+                "lookbackBars": overlay.lookback_bars,
+                "threshold": str(overlay.threshold),
+                "mode": "decision-tree",
+                "tilt": str(tilt),
+                "maxDepth": str(overlay.model.max_depth),
+                "minSamplesLeaf": str(overlay.model.min_samples_leaf),
+                "comparison": comparison,
+            }
+        )
     return cases
 
 
