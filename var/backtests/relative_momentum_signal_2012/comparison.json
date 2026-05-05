@@ -1,6 +1,6 @@
 {
   "baselineName": "Baseline risk parity",
-  "candidateName": "Risk parity + relative-momentum-126-252d-regime",
+  "candidateName": "Research: risk parity + relative-momentum-126-252d-regime",
   "splitDate": "2023-01-01",
   "dateRange": {
     "start": "2012-01-03",
@@ -31485,5 +31485,98 @@
         "symbol": "SPY"
       }
     ]
+  },
+  "modelStructure": {
+    "baseline": {
+      "definition": {
+        "key": "risk_parity",
+        "name": "Baseline risk parity",
+        "sleeveName": "baseline-risk-parity",
+        "state": "baseline",
+        "description": "Monthly inverse-volatility ETF allocation with a max weight cap and cash reserve.",
+        "promotedOn": null,
+        "overlays": []
+      },
+      "layers": [
+        {
+          "id": "data",
+          "title": "Market data",
+          "detail": "Adjusted ETF closes, volumes, and USD/CNH FX for SPY, VGK, EWJ, EWH, EWY."
+        },
+        {
+          "id": "schedule",
+          "title": "Monthly rebalance",
+          "detail": "Recompute targets on the first available trading day of each month."
+        },
+        {
+          "id": "risk_parity",
+          "title": "Risk parity beta",
+          "detail": "63-bar realized volatility, inverse-vol weights, 45% max weight, 2% cash reserve."
+        },
+        {
+          "id": "targets",
+          "title": "Final target weights",
+          "detail": "Normalize portfolio weights and feed the daily backtest execution engine."
+        }
+      ],
+      "layerDiagram": "flowchart LR\n  L1[\"Market data<br/>Adjusted ETF closes, volumes, and USD/CNH FX for SPY, VGK, EWJ, EWH, EWY.\"]\n  L2[\"Monthly rebalance<br/>Recompute targets on the first available trading day of each month.\"]\n  L1 --> L2\n  L3[\"Risk parity beta<br/>63-bar realized volatility, inverse-vol weights, 45% max weight, 2% cash reserve.\"]\n  L2 --> L3\n  L4[\"Final target weights<br/>Normalize portfolio weights and feed the daily backtest execution engine.\"]\n  L3 --> L4",
+      "decisionTree": "flowchart TD\n  A([\"Monthly rebalance date\"]) --> B{\"Enough 63-bar history for every ETF?\"}\n  B -- \"No\" --> C[\"Skip rebalance until history is available\"]\n  B -- \"Yes\" --> D[\"Compute realized volatility by ETF\"]\n  D --> E{\"All volatilities positive?\"}\n  E -- \"No\" --> C\n  E -- \"Yes\" --> F[\"Allocate inverse to volatility\"]\n  F --> G[\"Apply 45% max weight and 2% cash reserve\"]\n  G --> H([\"Final risk-parity targets\"])"
+    },
+    "candidate": {
+      "definition": {
+        "key": "relative_momentum_126_252d_regime",
+        "name": "Research: risk parity + relative-momentum-126-252d-regime",
+        "sleeveName": "research-risk-parity-relative-momentum-126-252d-regime",
+        "state": "research",
+        "description": "Research candidate using a regime-gated cross-sectional relative momentum overlay.",
+        "promotedOn": null,
+        "overlays": [
+          {
+            "kind": "relative_momentum",
+            "parameters": {
+              "mediumLookbackBars": "126",
+              "longLookbackBars": "252",
+              "fastVolatilityBars": "21",
+              "slowVolatilityBars": "252",
+              "drawdownLookbackBars": "252",
+              "calmTilt": "0.12",
+              "riskTilt": "0.12",
+              "drawdownTrigger": "-0.08",
+              "volatilityRatioTrigger": "1.35",
+              "maxActiveWeight": "0.07"
+            }
+          }
+        ]
+      },
+      "layers": [
+        {
+          "id": "data",
+          "title": "Market data",
+          "detail": "Adjusted ETF closes, volumes, and USD/CNH FX for SPY, VGK, EWJ, EWH, EWY."
+        },
+        {
+          "id": "schedule",
+          "title": "Monthly rebalance",
+          "detail": "Recompute targets on the first available trading day of each month."
+        },
+        {
+          "id": "risk_parity",
+          "title": "Risk parity beta",
+          "detail": "63-bar realized volatility, inverse-vol weights, 45% max weight, 2% cash reserve."
+        },
+        {
+          "id": "overlay_1",
+          "title": "Relative momentum overlay",
+          "detail": "Score = 45% 126d momentum + 55% 252d momentum; regime drawdown trigger -0.08, vol-ratio trigger 1.35; tilt 0.12 calm / 0.12 risk; cap active weight 0.07."
+        },
+        {
+          "id": "targets",
+          "title": "Final target weights",
+          "detail": "Normalize portfolio weights and feed the daily backtest execution engine."
+        }
+      ],
+      "layerDiagram": "flowchart LR\n  L1[\"Market data<br/>Adjusted ETF closes, volumes, and USD/CNH FX for SPY, VGK, EWJ, EWH, EWY.\"]\n  L2[\"Monthly rebalance<br/>Recompute targets on the first available trading day of each month.\"]\n  L1 --> L2\n  L3[\"Risk parity beta<br/>63-bar realized volatility, inverse-vol weights, 45% max weight, 2% cash reserve.\"]\n  L2 --> L3\n  L4[\"Relative momentum overlay<br/>Score = 45% 126d momentum + 55% 252d momentum; regime drawdown trigger -0.08, vol-ratio trigger 1.35; tilt 0.12 calm / 0.12 risk; cap active weight 0.07.\"]\n  L3 --> L4\n  L5[\"Final target weights<br/>Normalize portfolio weights and feed the daily backtest execution engine.\"]\n  L4 --> L5",
+      "decisionTree": "flowchart TD\n  A([\"Risk-parity targets\"]) --> B{\"Enough 126d and 252d history for the basket?\"}\n  B -- \"No\" --> C[\"Keep risk-parity targets\"]\n  B -- \"Yes\" --> D[\"Score each ETF = 45% medium momentum + 55% long momentum\"]\n  D --> E{\"Basket drawdown <= -0.08 or vol-ratio >= 1.35?\"}\n  E -- \"Yes\" --> F[\"Use risk tilt 0.12\"]\n  E -- \"No\" --> G[\"Use calm tilt 0.12\"]\n  F --> H[\"Rank ETFs by score\"]\n  G --> H\n  H --> I[\"Multiply base weight by 1 + tilt * rank score\"]\n  I --> J[\"Cap active delta at +/-0.07 per ETF\"]\n  J --> K[\"Rescale to preserve original invested weight\"]\n  K --> L([\"Final SOTA/research targets\"])"
+    }
   }
 }

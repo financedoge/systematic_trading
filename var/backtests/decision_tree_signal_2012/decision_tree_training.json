@@ -1,0 +1,258 @@
+{
+  "model": {
+    "featureNames": [
+      "mom_21",
+      "mom_63",
+      "mom_126",
+      "mom_252",
+      "mom_378",
+      "relative_momentum_126_252",
+      "above_ma_63",
+      "above_ma_252",
+      "reversal_21",
+      "mean_reversion_ma_63",
+      "up_volume_share_21",
+      "signed_volume_pressure_21_126",
+      "vol_ratio_21_252",
+      "drawdown_252",
+      "valuation_score",
+      "macro_growth_score"
+    ],
+    "maxDepth": 3,
+    "minSamplesLeaf": 25,
+    "trainingSummary": {
+      "samples": 655,
+      "features": 16,
+      "target": "next_rebalance_forward_return_minus_cross_section_mean",
+      "leaves": 7,
+      "depth": 3
+    },
+    "root": {
+      "value": -2.0128089186906463e-19,
+      "samples": 655,
+      "mse": 0.0006392555659464499,
+      "feature": "macro_growth_score",
+      "threshold": 0.5,
+      "left": {
+        "value": -0.001212082217938864,
+        "samples": 524,
+        "mse": 0.0006715817721616449,
+        "feature": "mom_21",
+        "threshold": -0.04559713104310892,
+        "left": {
+          "value": 0.004875025641369194,
+          "samples": 92,
+          "mse": 0.0009602736211754371,
+          "feature": "mom_378",
+          "threshold": -0.06570006550772922,
+          "left": {
+            "value": 0.010129761618018589,
+            "samples": 48,
+            "mse": 0.0012465176630994652,
+            "feature": null,
+            "threshold": null,
+            "left": null,
+            "right": null
+          },
+          "right": {
+            "value": -0.0008574136058846913,
+            "samples": 44,
+            "mse": 0.0005850240791519934,
+            "feature": null,
+            "threshold": null,
+            "left": null,
+            "right": null
+          }
+        },
+        "right": {
+          "value": -0.0025084107435322466,
+          "samples": 432,
+          "mse": 0.0006005297414097596,
+          "feature": "mom_21",
+          "threshold": -0.027313306076003935,
+          "left": {
+            "value": -0.010348814286486563,
+            "samples": 36,
+            "mse": 0.0005691189107038415,
+            "feature": null,
+            "threshold": null,
+            "left": null,
+            "right": null
+          },
+          "right": {
+            "value": -0.0017956467850818543,
+            "samples": 396,
+            "mse": 0.0005972888819483435,
+            "feature": null,
+            "threshold": null,
+            "left": null,
+            "right": null
+          }
+        }
+      },
+      "right": {
+        "value": 0.004848328871755455,
+        "samples": 131,
+        "mse": 0.0004805678750247977,
+        "feature": "vol_ratio_21_252",
+        "threshold": 0.6144759553258736,
+        "left": {
+          "value": -0.0003992731078133143,
+          "samples": 41,
+          "mse": 0.0004996043320812913,
+          "feature": null,
+          "threshold": null,
+          "left": null,
+          "right": null
+        },
+        "right": {
+          "value": 0.007238903106892338,
+          "samples": 90,
+          "mse": 0.0004536360839923065,
+          "feature": "vol_ratio_21_252",
+          "threshold": 1.1620500709439705,
+          "left": {
+            "value": 0.011628536898205116,
+            "samples": 60,
+            "mse": 0.00031172001192530913,
+            "feature": null,
+            "threshold": null,
+            "left": null,
+            "right": null
+          },
+          "right": {
+            "value": -0.0015403644757332146,
+            "samples": 30,
+            "mse": 0.0006218549191952913,
+            "feature": null,
+            "threshold": null,
+            "left": null,
+            "right": null
+          }
+        }
+      }
+    }
+  },
+  "signalLibrary": [
+    {
+      "featureId": "mom_21",
+      "family": "price_trend",
+      "name": "21-bar momentum",
+      "description": "Short-term price return.",
+      "lookbackBars": 21
+    },
+    {
+      "featureId": "mom_63",
+      "family": "price_trend",
+      "name": "63-bar momentum",
+      "description": "Quarterly price return.",
+      "lookbackBars": 63
+    },
+    {
+      "featureId": "mom_126",
+      "family": "price_trend",
+      "name": "126-bar momentum",
+      "description": "Medium-term price return.",
+      "lookbackBars": 126
+    },
+    {
+      "featureId": "mom_252",
+      "family": "price_trend",
+      "name": "252-bar momentum",
+      "description": "Long-term price return.",
+      "lookbackBars": 252
+    },
+    {
+      "featureId": "mom_378",
+      "family": "price_trend",
+      "name": "378-bar momentum",
+      "description": "Extended trend return.",
+      "lookbackBars": 378
+    },
+    {
+      "featureId": "relative_momentum_126_252",
+      "family": "price_trend",
+      "name": "126/252 relative momentum",
+      "description": "SOTA-style blend: 45% 126-bar return plus 55% 252-bar return.",
+      "lookbackBars": 252
+    },
+    {
+      "featureId": "above_ma_63",
+      "family": "price_trend",
+      "name": "Above 63-bar MA",
+      "description": "1 when close is above its 63-bar average.",
+      "lookbackBars": 63
+    },
+    {
+      "featureId": "above_ma_252",
+      "family": "price_trend",
+      "name": "Above 252-bar MA",
+      "description": "1 when close is above its 252-bar average.",
+      "lookbackBars": 252
+    },
+    {
+      "featureId": "reversal_21",
+      "family": "mean_reversion",
+      "name": "21-bar reversal",
+      "description": "Negative of 21-bar momentum.",
+      "lookbackBars": 21
+    },
+    {
+      "featureId": "mean_reversion_ma_63",
+      "family": "mean_reversion",
+      "name": "63-bar MA reversion",
+      "description": "Negative of price deviation from the 63-bar moving average.",
+      "lookbackBars": 63
+    },
+    {
+      "featureId": "up_volume_share_21",
+      "family": "volume",
+      "name": "21-bar up-volume share",
+      "description": "Share of recent volume traded on up-close days.",
+      "lookbackBars": 21
+    },
+    {
+      "featureId": "signed_volume_pressure_21_126",
+      "family": "volume",
+      "name": "Signed volume pressure",
+      "description": "21-bar volume acceleration, positive when short momentum is positive and negative when it is weak.",
+      "lookbackBars": 126
+    },
+    {
+      "featureId": "vol_ratio_21_252",
+      "family": "risk_regime",
+      "name": "21/252 volatility ratio",
+      "description": "Fast realized volatility divided by slow realized volatility.",
+      "lookbackBars": 252
+    },
+    {
+      "featureId": "drawdown_252",
+      "family": "risk_regime",
+      "name": "252-bar drawdown",
+      "description": "Drawdown from the trailing 252-bar high.",
+      "lookbackBars": 252
+    },
+    {
+      "featureId": "valuation_score",
+      "family": "valuation",
+      "name": "Valuation score",
+      "description": "External score map. Positive means cheaper or more attractive.",
+      "lookbackBars": null
+    },
+    {
+      "featureId": "macro_growth_score",
+      "family": "macro",
+      "name": "Macro growth score",
+      "description": "External country score map. Positive means stronger growth or policy backdrop.",
+      "lookbackBars": null
+    }
+  ],
+  "valuationScores": {},
+  "macroScores": {
+    "EWH": "-1",
+    "EWJ": "-1",
+    "EWY": "0",
+    "SPY": "1",
+    "VGK": "-1"
+  }
+}

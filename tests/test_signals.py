@@ -6,10 +6,14 @@ from systematic_trading.domain.market import Instrument, PriceBar
 from systematic_trading.domain.portfolio import AllocationTarget
 from systematic_trading.signals import (
     AdaptiveTrendOverlay,
+    CountryCompositeFactorOverlay,
+    DecisionTreeSignalOverlay,
     RegimeGatedRelativeMomentumOverlay,
     SignalContext,
     TimeSeriesMomentumOverlay,
 )
+from systematic_trading.signals.decision_tree import DecisionTreeSample, train_simple_regression_tree
+from systematic_trading.signals.library import compute_signal_features
 
 
 def test_time_series_momentum_overlay_moves_negative_trend_to_cash() -> None:
@@ -176,6 +180,142 @@ def test_regime_gated_relative_momentum_uses_stronger_risk_tilt() -> None:
 
     assert risk_weights["SPY"] - Decimal("0.30") > calm_weights["SPY"] - Decimal("0.30")
     assert Decimal("0.30") - risk_weights["VGK"] > Decimal("0.30") - calm_weights["VGK"]
+
+
+def test_country_composite_factor_overlay_uses_valuation_and_macro_scores() -> None:
+    context = SignalContext(
+        as_of=date(2024, 1, 10),
+        instruments={"SPY": _instrument("SPY"), "EWY": _instrument("EWY"), "VGK": _instrument("VGK")},
+        bars_by_symbol={
+            "SPY": _bars([Decimal("100"), Decimal("100"), Decimal("100"), Decimal("100"), Decimal("100")]),
+            "EWY": _bars([Decimal("100"), Decimal("100"), Decimal("100"), Decimal("100"), Decimal("100")]),
+            "VGK": _bars([Decimal("100"), Decimal("100"), Decimal("100"), Decimal("100"), Decimal("100")]),
+        },
+        trade_dates=[],
+    )
+    overlay = CountryCompositeFactorOverlay(
+        short_momentum_bars=2,
+        medium_momentum_bars=3,
+        long_momentum_bars=4,
+        reversal_bars=2,
+        mean_reversion_bars=3,
+        volume_bars=2,
+        slow_volume_bars=4,
+        trend_weight=Decimal("0"),
+        volume_weight=Decimal("0"),
+        mean_reversion_weight=Decimal("0"),
+        valuation_weight=Decimal("0.50"),
+        macro_weight=Decimal("0.50"),
+        tilt=Decimal("0.10"),
+        valuation_scores={"SPY": Decimal("-1"), "EWY": Decimal("1")},
+        macro_scores={"SPY": Decimal("-1"), "EWY": Decimal("1")},
+    )
+
+    targets = overlay.apply(
+        [_target("SPY", Decimal("0.30")), _target("EWY", Decimal("0.30")), _target("VGK", Decimal("0.30"))],
+        context,
+    )
+    weights = {target.symbol: target.target_weight for target in targets}
+
+    assert weights["SPY"] < Decimal("0.30")
+    assert weights["EWY"] > Decimal("0.30")
+    assert weights["VGK"] == Decimal("0.30")
+    assert sum(weights.values(), Decimal("0")) == Decimal("0.900")
+    assert "valuation=1.00" in targets[1].rationale
+    assert "macro=1.00" in targets[1].rationale
+
+
+def test_country_composite_factor_overlay_can_buy_short_term_mean_reversion() -> None:
+    context = SignalContext(
+        as_of=date(2024, 1, 10),
+        instruments={"SPY": _instrument("SPY"), "EWY": _instrument("EWY")},
+        bars_by_symbol={
+            "SPY": _bars([Decimal("100"), Decimal("100"), Decimal("100"), Decimal("90"), Decimal("90")]),
+            "EWY": _bars([Decimal("100"), Decimal("100"), Decimal("100"), Decimal("110"), Decimal("110")]),
+        },
+        trade_dates=[],
+    )
+    overlay = CountryCompositeFactorOverlay(
+        short_momentum_bars=2,
+        medium_momentum_bars=3,
+        long_momentum_bars=4,
+        reversal_bars=2,
+        mean_reversion_bars=3,
+        volume_bars=2,
+        slow_volume_bars=4,
+        trend_weight=Decimal("0"),
+        volume_weight=Decimal("0"),
+        mean_reversion_weight=Decimal("1"),
+        valuation_weight=Decimal("0"),
+        macro_weight=Decimal("0"),
+        tilt=Decimal("0.10"),
+    )
+
+    targets = overlay.apply([_target("SPY", Decimal("0.45")), _target("EWY", Decimal("0.45"))], context)
+    weights = {target.symbol: target.target_weight for target in targets}
+
+    assert weights["SPY"] > Decimal("0.45")
+    assert weights["EWY"] < Decimal("0.45")
+    assert sum(weights.values(), Decimal("0")) == Decimal("0.900")
+
+
+def test_signal_library_computes_external_and_price_features() -> None:
+    context = SignalContext(
+        as_of=date(2024, 4, 1),
+        instruments={"SPY": _instrument("SPY")},
+        bars_by_symbol={"SPY": _bars([Decimal(100 + index) for index in range(70)])},
+        trade_dates=[],
+    )
+
+    features = compute_signal_features(
+        symbol="SPY",
+        context=context,
+        valuation_scores={"SPY": Decimal("0.5")},
+        macro_scores={"SPY": Decimal("-0.25")},
+    )
+
+    assert features["mom_20"] is not None
+    assert features["mom_21"] is not None
+    assert features["relative_momentum_20_60"] is not None
+    assert features["up_volume_share_21"] == 1
+    assert features["valuation_score"] == 0.5
+    assert features["macro_growth_score"] == -0.25
+
+
+def test_decision_tree_overlay_tilts_toward_higher_forecast() -> None:
+    samples = [
+        DecisionTreeSample(features={"macro_growth_score": -1.0}, target=-0.05),
+        DecisionTreeSample(features={"macro_growth_score": -0.8}, target=-0.04),
+        DecisionTreeSample(features={"macro_growth_score": 0.8}, target=0.04),
+        DecisionTreeSample(features={"macro_growth_score": 1.0}, target=0.05),
+    ]
+    model = train_simple_regression_tree(
+        samples,
+        feature_names=["macro_growth_score"],
+        max_depth=1,
+        min_samples_leaf=1,
+    )
+    overlay = DecisionTreeSignalOverlay(
+        model=model,
+        tilt=Decimal("0.10"),
+        macro_scores={"SPY": Decimal("1"), "VGK": Decimal("-1")},
+    )
+    context = SignalContext(
+        as_of=date(2024, 1, 10),
+        instruments={"SPY": _instrument("SPY"), "VGK": _instrument("VGK")},
+        bars_by_symbol={
+            "SPY": _bars([Decimal("100"), Decimal("101"), Decimal("102")]),
+            "VGK": _bars([Decimal("100"), Decimal("99"), Decimal("98")]),
+        },
+        trade_dates=[],
+    )
+
+    targets = overlay.apply([_target("SPY", Decimal("0.45")), _target("VGK", Decimal("0.45"))], context)
+    weights = {target.symbol: target.target_weight for target in targets}
+
+    assert weights["SPY"] > Decimal("0.45")
+    assert weights["VGK"] < Decimal("0.45")
+    assert sum(weights.values(), Decimal("0")) == Decimal("0.900")
 
 
 def _instrument(symbol: str) -> Instrument:

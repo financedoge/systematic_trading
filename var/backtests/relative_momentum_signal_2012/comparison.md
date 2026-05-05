@@ -1,20 +1,94 @@
 # Signal Comparison
 
 - Baseline: Baseline risk parity
-- Candidate: Risk parity + relative-momentum-126-252d-regime
+- Candidate: Research: risk parity + relative-momentum-126-252d-regime
 - Out-of-sample split: 2023-01-01
 - Range: 2012-01-03 to 2026-04-29
 
 | Window | Strategy | Return | Ann. Return | Max DD | Sharpe | Sortino | Calmar | Alpha vs Baseline |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | Full | Baseline risk parity | 280.63% | 9.78% | -29.39% | 0.68 | 0.64 | 0.33 | n/a |
-| Full | Risk parity + relative-momentum-126-252d-regime | 281.84% | 9.81% | -29.60% | 0.68 | 0.64 | 0.33 | 1.22% |
+| Full | Research: risk parity + relative-momentum-126-252d-regime | 281.84% | 9.81% | -29.60% | 0.68 | 0.64 | 0.33 | 1.22% |
 | In Sample | Baseline risk parity | 110.98% | 7.03% | -29.39% | 0.51 | 0.47 | 0.24 | n/a |
-| In Sample | Risk parity + relative-momentum-126-252d-regime | 110.19% | 6.99% | -29.60% | 0.51 | 0.47 | 0.24 | -0.78% |
+| In Sample | Research: risk parity + relative-momentum-126-252d-regime | 110.19% | 6.99% | -29.60% | 0.51 | 0.47 | 0.24 | -0.78% |
 | Out Of Sample | Baseline risk parity | 81.34% | 19.65% | -12.86% | 1.27 | 1.28 | 1.53 | n/a |
-| Out Of Sample | Risk parity + relative-momentum-126-252d-regime | 82.58% | 19.89% | -12.97% | 1.28 | 1.28 | 1.53 | 1.24% |
+| Out Of Sample | Research: risk parity + relative-momentum-126-252d-regime | 82.58% | 19.89% | -12.97% | 1.28 | 1.28 | 1.53 | 1.24% |
 
 Alpha here is candidate return minus baseline return over the same window.
+
+## Model Structure
+
+### Baseline / SOTA
+
+- Name: Baseline risk parity
+- State: baseline
+- Description: Monthly inverse-volatility ETF allocation with a max weight cap and cash reserve.
+
+#### Layers
+
+```mermaid
+flowchart LR
+  L1["Market data<br/>Adjusted ETF closes, volumes, and USD/CNH FX for SPY, VGK, EWJ, EWH, EWY."]
+  L2["Monthly rebalance<br/>Recompute targets on the first available trading day of each month."]
+  L1 --> L2
+  L3["Risk parity beta<br/>63-bar realized volatility, inverse-vol weights, 45% max weight, 2% cash reserve."]
+  L2 --> L3
+  L4["Final target weights<br/>Normalize portfolio weights and feed the daily backtest execution engine."]
+  L3 --> L4
+```
+
+#### Decision Tree
+
+```mermaid
+flowchart TD
+  A(["Monthly rebalance date"]) --> B{"Enough 63-bar history for every ETF?"}
+  B -- "No" --> C["Skip rebalance until history is available"]
+  B -- "Yes" --> D["Compute realized volatility by ETF"]
+  D --> E{"All volatilities positive?"}
+  E -- "No" --> C
+  E -- "Yes" --> F["Allocate inverse to volatility"]
+  F --> G["Apply 45% max weight and 2% cash reserve"]
+  G --> H(["Final risk-parity targets"])
+```
+
+### Research Candidate
+
+- Name: Research: risk parity + relative-momentum-126-252d-regime
+- State: research
+- Description: Research candidate using a regime-gated cross-sectional relative momentum overlay.
+
+#### Layers
+
+```mermaid
+flowchart LR
+  L1["Market data<br/>Adjusted ETF closes, volumes, and USD/CNH FX for SPY, VGK, EWJ, EWH, EWY."]
+  L2["Monthly rebalance<br/>Recompute targets on the first available trading day of each month."]
+  L1 --> L2
+  L3["Risk parity beta<br/>63-bar realized volatility, inverse-vol weights, 45% max weight, 2% cash reserve."]
+  L2 --> L3
+  L4["Relative momentum overlay<br/>Score = 45% 126d momentum + 55% 252d momentum; regime drawdown trigger -0.08, vol-ratio trigger 1.35; tilt 0.12 calm / 0.12 risk; cap active weight 0.07."]
+  L3 --> L4
+  L5["Final target weights<br/>Normalize portfolio weights and feed the daily backtest execution engine."]
+  L4 --> L5
+```
+
+#### Decision Tree
+
+```mermaid
+flowchart TD
+  A(["Risk-parity targets"]) --> B{"Enough 126d and 252d history for the basket?"}
+  B -- "No" --> C["Keep risk-parity targets"]
+  B -- "Yes" --> D["Score each ETF = 45% medium momentum + 55% long momentum"]
+  D --> E{"Basket drawdown <= -0.08 or vol-ratio >= 1.35?"}
+  E -- "Yes" --> F["Use risk tilt 0.12"]
+  E -- "No" --> G["Use calm tilt 0.12"]
+  F --> H["Rank ETFs by score"]
+  G --> H
+  H --> I["Multiply base weight by 1 + tilt * rank score"]
+  I --> J["Cap active delta at +/-0.07 per ETF"]
+  J --> K["Rescale to preserve original invested weight"]
+  K --> L(["Final SOTA/research targets"])
+```
 
 ## Market Data Audit
 

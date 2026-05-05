@@ -1,0 +1,490 @@
+{
+  "caseCount": 4,
+  "rankedBy": "out_of_sample_delta_return",
+  "cases": [
+    {
+      "name": "decision-tree-signal-d3-tilt-0p2",
+      "lookbackBars": 378,
+      "threshold": "0",
+      "mode": "decision-tree",
+      "tilt": "0.20",
+      "maxDepth": "3",
+      "minSamplesLeaf": "25",
+      "comparison": {
+        "baselineName": "SOTA: risk parity + relative momentum 126/252d regime",
+        "candidateName": "Risk parity + decision-tree-signal-d3-tilt-0p2",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2012-01-03",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 3601,
+          "in_sample": 2768,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2012-01-03",
+              "end": "2026-04-29",
+              "observations": 3601,
+              "return": 2.81843815,
+              "annualizedReturn": 0.09808872647816358,
+              "maxDrawdown": -0.2960138465229635,
+              "sharpe": 0.6803445709669065,
+              "sortino": 0.6413937611495116,
+              "calmar": 0.3313653318259701
+            },
+            "candidate": {
+              "start": "2012-01-03",
+              "end": "2026-04-29",
+              "observations": 3601,
+              "return": 3.1084409199999996,
+              "annualizedReturn": 0.10371680741139322,
+              "maxDrawdown": -0.2929673306154582,
+              "sharpe": 0.7154050003462247,
+              "sortino": 0.6782529473624503,
+              "calmar": 0.35402175114033235
+            },
+            "delta": {
+              "return": 0.29000276999999963,
+              "annualizedReturn": 0.00562808093322964,
+              "maxDrawdown": 0.003046515907505265,
+              "sharpe": 0.03506042937931819,
+              "sortino": 0.03685918621293871,
+              "calmar": 0.02265641931436224
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2012-01-03",
+              "end": "2022-12-30",
+              "observations": 2768,
+              "return": 1.1019446200000003,
+              "annualizedReturn": 0.06993305876332823,
+              "maxDrawdown": -0.2960138465229635,
+              "sharpe": 0.5094565933065512,
+              "sortino": 0.4728202222106682,
+              "calmar": 0.23624928220343613
+            },
+            "candidate": {
+              "start": "2012-01-03",
+              "end": "2022-12-30",
+              "observations": 2768,
+              "return": 1.2566259999999998,
+              "annualizedReturn": 0.0768685885763305,
+              "maxDrawdown": -0.2929673306154582,
+              "sharpe": 0.552084224898408,
+              "sortino": 0.5145551977215046,
+              "calmar": 0.2623793868580737
+            },
+            "delta": {
+              "return": 0.15468137999999954,
+              "annualizedReturn": 0.0069355298130022724,
+              "maxDrawdown": 0.003046515907505265,
+              "sharpe": 0.042627631591856785,
+              "sortino": 0.04173497551083638,
+              "calmar": 0.02613010465463758
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.825780984429525,
+              "annualizedReturn": 0.19892091503776577,
+              "maxDrawdown": -0.12966940676126437,
+              "sharpe": 1.282869320691641,
+              "sortino": 1.283363523479192,
+              "calmar": 1.5340620428996103
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.8307758183731264,
+              "annualizedReturn": 0.19990841236803591,
+              "maxDrawdown": -0.12888123549664177,
+              "sharpe": 1.2932417091760604,
+              "sortino": 1.3076698994701148,
+              "calmar": 1.5511056485274375
+            },
+            "delta": {
+              "return": 0.004994833943601451,
+              "annualizedReturn": 0.0009874973302701484,
+              "maxDrawdown": 0.0007881712646226058,
+              "sharpe": 0.010372388484419348,
+              "sortino": 0.02430637599092278,
+              "calmar": 0.01704360562782714
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "decision-tree-signal-d3-tilt-0p16",
+      "lookbackBars": 378,
+      "threshold": "0",
+      "mode": "decision-tree",
+      "tilt": "0.16",
+      "maxDepth": "3",
+      "minSamplesLeaf": "25",
+      "comparison": {
+        "baselineName": "SOTA: risk parity + relative momentum 126/252d regime",
+        "candidateName": "Risk parity + decision-tree-signal-d3-tilt-0p16",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2012-01-03",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 3601,
+          "in_sample": 2768,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2012-01-03",
+              "end": "2026-04-29",
+              "observations": 3601,
+              "return": 2.81843815,
+              "annualizedReturn": 0.09808872647816358,
+              "maxDrawdown": -0.2960138465229635,
+              "sharpe": 0.6803445709669065,
+              "sortino": 0.6413937611495116,
+              "calmar": 0.3313653318259701
+            },
+            "candidate": {
+              "start": "2012-01-03",
+              "end": "2026-04-29",
+              "observations": 3601,
+              "return": 3.0479392799999996,
+              "annualizedReturn": 0.10257385308905231,
+              "maxDrawdown": -0.2930807959005469,
+              "sharpe": 0.708438056120399,
+              "sortino": 0.6704256052642766,
+              "calmar": 0.34998490014971634
+            },
+            "delta": {
+              "return": 0.2295011299999996,
+              "annualizedReturn": 0.004485126610888734,
+              "maxDrawdown": 0.0029330506224165553,
+              "sharpe": 0.028093485153492526,
+              "sortino": 0.029031844114765004,
+              "calmar": 0.018619568323746227
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2012-01-03",
+              "end": "2022-12-30",
+              "observations": 2768,
+              "return": 1.1019446200000003,
+              "annualizedReturn": 0.06993305876332823,
+              "maxDrawdown": -0.2960138465229635,
+              "sharpe": 0.5094565933065512,
+              "sortino": 0.4728202222106682,
+              "calmar": 0.23624928220343613
+            },
+            "candidate": {
+              "start": "2012-01-03",
+              "end": "2022-12-30",
+              "observations": 2768,
+              "return": 1.2274070799999999,
+              "annualizedReturn": 0.0755922979709791,
+              "maxDrawdown": -0.2930807959005469,
+              "sharpe": 0.5443494858599799,
+              "sortino": 0.5061883895054593,
+              "calmar": 0.2579230677284988
+            },
+            "delta": {
+              "return": 0.1254624599999996,
+              "annualizedReturn": 0.005659239207650879,
+              "maxDrawdown": 0.0029330506224165553,
+              "sharpe": 0.034892892553428645,
+              "sortino": 0.033368167294791085,
+              "calmar": 0.02167378552506269
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.825780984429525,
+              "annualizedReturn": 0.19892091503776577,
+              "maxDrawdown": -0.12966940676126437,
+              "sharpe": 1.282869320691641,
+              "sortino": 1.283363523479192,
+              "calmar": 1.5340620428996103
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.8273190379557238,
+              "annualizedReturn": 0.19922519486001944,
+              "maxDrawdown": -0.12885855868259344,
+              "sharpe": 1.28846733250779,
+              "sortino": 1.302330783637837,
+              "calmar": 1.546076542348687
+            },
+            "delta": {
+              "return": 0.001538053526198846,
+              "annualizedReturn": 0.00030427982225367245,
+              "maxDrawdown": 0.0008108480786709338,
+              "sharpe": 0.00559801181614894,
+              "sortino": 0.018967260158645027,
+              "calmar": 0.012014499449076732
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "decision-tree-signal-d3-tilt-0p12",
+      "lookbackBars": 378,
+      "threshold": "0",
+      "mode": "decision-tree",
+      "tilt": "0.12",
+      "maxDepth": "3",
+      "minSamplesLeaf": "25",
+      "comparison": {
+        "baselineName": "SOTA: risk parity + relative momentum 126/252d regime",
+        "candidateName": "Risk parity + decision-tree-signal-d3-tilt-0p12",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2012-01-03",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 3601,
+          "in_sample": 2768,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2012-01-03",
+              "end": "2026-04-29",
+              "observations": 3601,
+              "return": 2.81843815,
+              "annualizedReturn": 0.09808872647816358,
+              "maxDrawdown": -0.2960138465229635,
+              "sharpe": 0.6803445709669065,
+              "sortino": 0.6413937611495116,
+              "calmar": 0.3313653318259701
+            },
+            "candidate": {
+              "start": "2012-01-03",
+              "end": "2026-04-29",
+              "observations": 3601,
+              "return": 2.98636765,
+              "annualizedReturn": 0.10139425371247635,
+              "maxDrawdown": -0.2934361134848428,
+              "sharpe": 0.7011313289398915,
+              "sortino": 0.6630939199992423,
+              "calmar": 0.34554115547783043
+            },
+            "delta": {
+              "return": 0.16792950000000006,
+              "annualizedReturn": 0.003305527234312766,
+              "maxDrawdown": 0.0025777330381206998,
+              "sharpe": 0.020786757972985015,
+              "sortino": 0.021700158849730644,
+              "calmar": 0.01417582365186032
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2012-01-03",
+              "end": "2022-12-30",
+              "observations": 2768,
+              "return": 1.1019446200000003,
+              "annualizedReturn": 0.06993305876332823,
+              "maxDrawdown": -0.2960138465229635,
+              "sharpe": 0.5094565933065512,
+              "sortino": 0.4728202222106682,
+              "calmar": 0.23624928220343613
+            },
+            "candidate": {
+              "start": "2012-01-03",
+              "end": "2022-12-30",
+              "observations": 2768,
+              "return": 1.1971544500000002,
+              "annualizedReturn": 0.07425471718530519,
+              "maxDrawdown": -0.2934361134848428,
+              "sharpe": 0.5361407698088749,
+              "sortino": 0.4979981339322517,
+              "calmar": 0.25305241506731163
+            },
+            "delta": {
+              "return": 0.09520982999999994,
+              "annualizedReturn": 0.004321658421976959,
+              "maxDrawdown": 0.0025777330381206998,
+              "sharpe": 0.026684176502323687,
+              "sortino": 0.025177911721583457,
+              "calmar": 0.016803132863875497
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.825780984429525,
+              "annualizedReturn": 0.19892091503776577,
+              "maxDrawdown": -0.12966940676126437,
+              "sharpe": 1.282869320691641,
+              "sortino": 1.283363523479192,
+              "calmar": 1.5340620428996103
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.8241582099799865,
+              "annualizedReturn": 0.19859968029552033,
+              "maxDrawdown": -0.12876458981405436,
+              "sharpe": 1.2839789996678186,
+              "sortino": 1.2989759367056586,
+              "calmar": 1.542347011568266
+            },
+            "delta": {
+              "return": -0.001622774449538511,
+              "annualizedReturn": -0.00032123474224543536,
+              "maxDrawdown": 0.0009048169472100076,
+              "sharpe": 0.0011096789761775305,
+              "sortino": 0.01561241322646656,
+              "calmar": 0.00828496866865569
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "decision-tree-signal-d3-tilt-0p08",
+      "lookbackBars": 378,
+      "threshold": "0",
+      "mode": "decision-tree",
+      "tilt": "0.08",
+      "maxDepth": "3",
+      "minSamplesLeaf": "25",
+      "comparison": {
+        "baselineName": "SOTA: risk parity + relative momentum 126/252d regime",
+        "candidateName": "Risk parity + decision-tree-signal-d3-tilt-0p08",
+        "splitDate": "2023-01-01",
+        "dateRange": {
+          "start": "2012-01-03",
+          "end": "2026-04-29"
+        },
+        "observations": {
+          "full": 3601,
+          "in_sample": 2768,
+          "out_of_sample": 833
+        },
+        "metrics": {
+          "full": {
+            "baseline": {
+              "start": "2012-01-03",
+              "end": "2026-04-29",
+              "observations": 3601,
+              "return": 2.81843815,
+              "annualizedReturn": 0.09808872647816358,
+              "maxDrawdown": -0.2960138465229635,
+              "sharpe": 0.6803445709669065,
+              "sortino": 0.6413937611495116,
+              "calmar": 0.3313653318259701
+            },
+            "candidate": {
+              "start": "2012-01-03",
+              "end": "2026-04-29",
+              "observations": 3601,
+              "return": 2.9254710299999998,
+              "annualizedReturn": 0.10021079735234206,
+              "maxDrawdown": -0.29355924751216556,
+              "sharpe": 0.6938850496523875,
+              "sortino": 0.655859605161548,
+              "calmar": 0.34136481204936037
+            },
+            "delta": {
+              "return": 0.10703287999999977,
+              "annualizedReturn": 0.0021220708741784833,
+              "maxDrawdown": 0.00245459901079792,
+              "sharpe": 0.013540478685481028,
+              "sortino": 0.014465844012036322,
+              "calmar": 0.009999480223390256
+            }
+          },
+          "in_sample": {
+            "baseline": {
+              "start": "2012-01-03",
+              "end": "2022-12-30",
+              "observations": 2768,
+              "return": 1.1019446200000003,
+              "annualizedReturn": 0.06993305876332823,
+              "maxDrawdown": -0.2960138465229635,
+              "sharpe": 0.5094565933065512,
+              "sortino": 0.4728202222106682,
+              "calmar": 0.23624928220343613
+            },
+            "candidate": {
+              "start": "2012-01-03",
+              "end": "2022-12-30",
+              "observations": 2768,
+              "return": 1.1680192000000003,
+              "annualizedReturn": 0.07295061970975425,
+              "maxDrawdown": -0.29355924751216556,
+              "sharpe": 0.5282111801583721,
+              "sortino": 0.4907156030536002,
+              "calmar": 0.24850390620629678
+            },
+            "delta": {
+              "return": 0.06607458,
+              "annualizedReturn": 0.0030175609464260233,
+              "maxDrawdown": 0.00245459901079792,
+              "sharpe": 0.018754586851820854,
+              "sortino": 0.017895380842931963,
+              "calmar": 0.012254624002860648
+            }
+          },
+          "out_of_sample": {
+            "baseline": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.825780984429525,
+              "annualizedReturn": 0.19892091503776577,
+              "maxDrawdown": -0.12966940676126437,
+              "sharpe": 1.282869320691641,
+              "sortino": 1.283363523479192,
+              "calmar": 1.5340620428996103
+            },
+            "candidate": {
+              "start": "2023-01-03",
+              "end": "2026-04-29",
+              "observations": 833,
+              "return": 0.8202830740757503,
+              "annualizedReturn": 0.19783177308561806,
+              "maxDrawdown": -0.12863255693900633,
+              "sharpe": 1.2786060798859722,
+              "sortino": 1.2894894257878566,
+              "calmar": 1.5379603561750228
+            },
+            "delta": {
+              "return": -0.005497910353774671,
+              "annualizedReturn": -0.0010891419521477097,
+              "maxDrawdown": 0.0010368498222580458,
+              "sharpe": -0.004263240805668866,
+              "sortino": 0.00612590230866461,
+              "calmar": 0.003898313275412457
+            }
+          }
+        }
+      }
+    }
+  ]
+}

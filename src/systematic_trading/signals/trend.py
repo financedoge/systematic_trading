@@ -1,11 +1,18 @@
 from __future__ import annotations
 
 import math
+from dataclasses import dataclass
 from decimal import Decimal
-from typing import Sequence
+from typing import Mapping, Sequence
 
 from systematic_trading.domain.portfolio import AllocationTarget
 from systematic_trading.signals.base import SignalContext
+
+
+@dataclass(frozen=True)
+class CompositeFactorScore:
+    total: Decimal
+    components: Mapping[str, Decimal]
 
 
 class TimeSeriesMomentumOverlay:
@@ -326,7 +333,8 @@ class RegimeGatedRelativeMomentumOverlay:
         self.max_active_weight = Decimal(max_active_weight)
         self.lookback_bars = long_lookback_bars
         self.threshold = Decimal("0")
-        self.name = f"relative-momentum-{medium_lookback_bars}-{long_lookback_bars}d-regime"
+        tilt_suffix = _relative_tilt_suffix(self.calm_tilt, self.risk_tilt)
+        self.name = f"relative-momentum-{medium_lookback_bars}-{long_lookback_bars}d-regime{tilt_suffix}"
 
     def apply(self, targets: Sequence[AllocationTarget], context: SignalContext) -> list[AllocationTarget]:
         target_list = list(targets)
@@ -421,6 +429,210 @@ class RegimeGatedRelativeMomentumOverlay:
         }
 
 
+class CountryCompositeFactorOverlay:
+    def __init__(
+        self,
+        *,
+        short_momentum_bars: int = 63,
+        medium_momentum_bars: int = 126,
+        long_momentum_bars: int = 252,
+        reversal_bars: int = 21,
+        mean_reversion_bars: int = 63,
+        volume_bars: int = 21,
+        slow_volume_bars: int = 126,
+        trend_weight: Decimal = Decimal("0.40"),
+        volume_weight: Decimal = Decimal("0.15"),
+        mean_reversion_weight: Decimal = Decimal("0.20"),
+        valuation_weight: Decimal = Decimal("0.15"),
+        macro_weight: Decimal = Decimal("0.10"),
+        tilt: Decimal = Decimal("0.12"),
+        max_active_weight: Decimal = Decimal("0.06"),
+        valuation_scores: Mapping[str, Decimal | str | int | float] | None = None,
+        macro_scores: Mapping[str, Decimal | str | int | float] | None = None,
+    ) -> None:
+        lookbacks = [
+            short_momentum_bars,
+            medium_momentum_bars,
+            long_momentum_bars,
+            reversal_bars,
+            mean_reversion_bars,
+            volume_bars,
+            slow_volume_bars,
+        ]
+        if any(item < 2 for item in lookbacks):
+            raise ValueError("All country factor lookbacks must be at least 2.")
+        weights = [trend_weight, volume_weight, mean_reversion_weight, valuation_weight, macro_weight]
+        if any(Decimal(item) < Decimal("0") for item in weights):
+            raise ValueError("Country factor weights must be non-negative.")
+        if Decimal(tilt) < Decimal("0"):
+            raise ValueError("tilt must be non-negative.")
+        if Decimal(max_active_weight) < Decimal("0"):
+            raise ValueError("max_active_weight must be non-negative.")
+
+        self.short_momentum_bars = short_momentum_bars
+        self.medium_momentum_bars = medium_momentum_bars
+        self.long_momentum_bars = long_momentum_bars
+        self.reversal_bars = reversal_bars
+        self.mean_reversion_bars = mean_reversion_bars
+        self.volume_bars = volume_bars
+        self.slow_volume_bars = slow_volume_bars
+        self.trend_weight = Decimal(trend_weight)
+        self.volume_weight = Decimal(volume_weight)
+        self.mean_reversion_weight = Decimal(mean_reversion_weight)
+        self.valuation_weight = Decimal(valuation_weight)
+        self.macro_weight = Decimal(macro_weight)
+        self.tilt = Decimal(tilt)
+        self.max_active_weight = Decimal(max_active_weight)
+        self.valuation_scores = _score_map(valuation_scores)
+        self.macro_scores = _score_map(macro_scores)
+        self.lookback_bars = max(lookbacks)
+        self.threshold = Decimal("0")
+        self.name = (
+            f"country-factor-{short_momentum_bars}-{medium_momentum_bars}-{long_momentum_bars}d-"
+            f"tilt-{_threshold_label(self.tilt)}"
+        )
+
+    def apply(self, targets: Sequence[AllocationTarget], context: SignalContext) -> list[AllocationTarget]:
+        target_list = list(targets)
+        if len(target_list) < 2:
+            return list(target_list)
+
+        factor_scores = self._factor_scores(target_list, context)
+        if factor_scores is None:
+            return [
+                target.model_copy(
+                    update={
+                        "rationale": (
+                            f"{target.rationale} Country factor overlay was neutral because not enough "
+                            "price/volume history was available."
+                        )
+                    }
+                )
+                for target in target_list
+            ]
+
+        adjusted_weights: dict[str, Decimal] = {}
+        for target in target_list:
+            score = factor_scores[target.symbol].total
+            proposed_weight = target.target_weight * (Decimal("1") + self.tilt * score)
+            delta = proposed_weight - target.target_weight
+            if delta > self.max_active_weight:
+                proposed_weight = target.target_weight + self.max_active_weight
+            elif delta < -self.max_active_weight:
+                proposed_weight = max(Decimal("0"), target.target_weight - self.max_active_weight)
+            adjusted_weights[target.symbol] = max(Decimal("0"), proposed_weight)
+
+        original_weight = sum((target.target_weight for target in target_list), Decimal("0"))
+        adjusted_weight = sum(adjusted_weights.values(), Decimal("0"))
+        if adjusted_weight > Decimal("0") and original_weight > Decimal("0"):
+            scale = original_weight / adjusted_weight
+            adjusted_weights = {symbol: weight * scale for symbol, weight in adjusted_weights.items()}
+
+        return [
+            target.model_copy(
+                update={
+                    "target_weight": adjusted_weights[target.symbol],
+                    "rationale": (
+                        f"{target.rationale} Country factor overlay applied a {self.tilt:.0%} tilt; "
+                        f"score={factor_scores[target.symbol].total:.2f}, "
+                        f"{_component_summary(factor_scores[target.symbol].components)}."
+                    ),
+                }
+            )
+            for target in target_list
+        ]
+
+    def _factor_scores(
+        self,
+        targets: Sequence[AllocationTarget],
+        context: SignalContext,
+    ) -> dict[str, CompositeFactorScore] | None:
+        symbols = [target.symbol for target in targets]
+        category_values: dict[str, dict[str, Decimal]] = {}
+
+        _add_category(
+            category_values,
+            "trend",
+            [
+                (
+                    Decimal("0.25"),
+                    _rank_metric({symbol: _momentum(symbol, context, self.short_momentum_bars) for symbol in symbols}),
+                ),
+                (
+                    Decimal("0.35"),
+                    _rank_metric({symbol: _momentum(symbol, context, self.medium_momentum_bars) for symbol in symbols}),
+                ),
+                (
+                    Decimal("0.40"),
+                    _rank_metric({symbol: _momentum(symbol, context, self.long_momentum_bars) for symbol in symbols}),
+                ),
+            ],
+        )
+        _add_category(
+            category_values,
+            "volume",
+            [
+                (
+                    Decimal("0.70"),
+                    _rank_metric({symbol: _up_volume_share(symbol, context, self.volume_bars) for symbol in symbols}),
+                ),
+                (
+                    Decimal("0.30"),
+                    _rank_metric({symbol: _signed_volume_pressure(symbol, context, self.volume_bars, self.slow_volume_bars) for symbol in symbols}),
+                ),
+            ],
+        )
+        _add_category(
+            category_values,
+            "mean-reversion",
+            [
+                (
+                    Decimal("0.60"),
+                    _rank_metric({symbol: _negated(_momentum(symbol, context, self.reversal_bars)) for symbol in symbols}),
+                ),
+                (
+                    Decimal("0.40"),
+                    _rank_metric({symbol: _negated(_moving_average_deviation(symbol, context, self.mean_reversion_bars)) for symbol in symbols}),
+                ),
+            ],
+        )
+        if self.valuation_scores:
+            category_values["valuation"] = {
+                symbol: self.valuation_scores.get(symbol, Decimal("0")) for symbol in symbols
+            }
+        if self.macro_scores:
+            category_values["macro"] = {symbol: self.macro_scores.get(symbol, Decimal("0")) for symbol in symbols}
+
+        category_weights = {
+            "trend": self.trend_weight,
+            "volume": self.volume_weight,
+            "mean-reversion": self.mean_reversion_weight,
+            "valuation": self.valuation_weight,
+            "macro": self.macro_weight,
+        }
+        if not any(category_values.get(category) for category, weight in category_weights.items() if weight > Decimal("0")):
+            return None
+
+        scores: dict[str, CompositeFactorScore] = {}
+        for symbol in symbols:
+            weighted_score = Decimal("0")
+            weight_sum = Decimal("0")
+            components: dict[str, Decimal] = {}
+            for category, weight in category_weights.items():
+                if weight <= Decimal("0"):
+                    continue
+                value = category_values.get(category, {}).get(symbol)
+                if value is None:
+                    continue
+                clipped = _clip(value, Decimal("-1"), Decimal("1"))
+                components[category] = clipped
+                weighted_score += weight * clipped
+                weight_sum += weight
+            total = weighted_score / weight_sum if weight_sum > Decimal("0") else Decimal("0")
+            scores[symbol] = CompositeFactorScore(total=_clip(total, Decimal("-1"), Decimal("1")), components=components)
+        return scores
+
+
 def _momentum(symbol: str, context: SignalContext, lookback_bars: int) -> Decimal | None:
     history = [bar for bar in context.bars_by_symbol.get(symbol, []) if bar.trade_date < context.as_of]
     if len(history) < lookback_bars + 1:
@@ -456,6 +668,40 @@ def _up_volume_share(symbol: str, context: SignalContext, lookback_bars: int) ->
     if total_volume <= Decimal("0"):
         return None
     return up_volume / total_volume
+
+
+def _signed_volume_pressure(
+    symbol: str,
+    context: SignalContext,
+    fast_bars: int,
+    slow_bars: int,
+) -> Decimal | None:
+    fast_average = _average_volume(symbol, context, fast_bars)
+    slow_average = _average_volume(symbol, context, slow_bars)
+    short_momentum = _momentum(symbol, context, fast_bars)
+    if fast_average is None or slow_average is None or slow_average <= Decimal("0") or short_momentum is None:
+        return None
+    pressure = (fast_average / slow_average) - Decimal("1")
+    return pressure if short_momentum >= Decimal("0") else -pressure
+
+
+def _average_volume(symbol: str, context: SignalContext, lookback_bars: int) -> Decimal | None:
+    history = [bar for bar in context.bars_by_symbol.get(symbol, []) if bar.trade_date < context.as_of]
+    if len(history) < lookback_bars:
+        return None
+    volumes = [Decimal(bar.volume) for bar in history[-lookback_bars:]]
+    return sum(volumes, Decimal("0")) / Decimal(len(volumes))
+
+
+def _moving_average_deviation(symbol: str, context: SignalContext, lookback_bars: int) -> Decimal | None:
+    history = [bar for bar in context.bars_by_symbol.get(symbol, []) if bar.trade_date < context.as_of]
+    if len(history) < lookback_bars:
+        return None
+    lookback = history[-lookback_bars:]
+    average = sum((bar.close for bar in lookback), Decimal("0")) / Decimal(len(lookback))
+    if average <= Decimal("0"):
+        return None
+    return (history[-1].close / average) - Decimal("1")
 
 
 def _volatility_ratio(
@@ -496,6 +742,75 @@ def _rank_scores(scores: dict[str, Decimal]) -> dict[str, Decimal]:
     }
 
 
+def _rank_metric(values: Mapping[str, Decimal | None]) -> dict[str, Decimal] | None:
+    present = {symbol: value for symbol, value in values.items() if value is not None}
+    if len(present) < 2:
+        return None
+    ranked = sorted(present.items(), key=lambda item: (item[1], item[0]))
+    if ranked[0][1] == ranked[-1][1]:
+        return {symbol: Decimal("0") for symbol in present}
+
+    denominator = Decimal(len(ranked) - 1)
+    result: dict[str, Decimal] = {}
+    index = 0
+    while index < len(ranked):
+        value = ranked[index][1]
+        end = index
+        while end + 1 < len(ranked) and ranked[end + 1][1] == value:
+            end += 1
+        average_rank = (Decimal(index) + Decimal(end)) / Decimal("2")
+        score = (average_rank / denominator) * Decimal("2") - Decimal("1")
+        for tied_index in range(index, end + 1):
+            result[ranked[tied_index][0]] = score
+        index = end + 1
+    return result
+
+
+def _add_category(
+    category_values: dict[str, dict[str, Decimal]],
+    category: str,
+    metrics: Sequence[tuple[Decimal, Mapping[str, Decimal] | None]],
+) -> None:
+    weighted: dict[str, Decimal] = {}
+    weights: dict[str, Decimal] = {}
+    for metric_weight, values in metrics:
+        if values is None or metric_weight <= Decimal("0"):
+            continue
+        for symbol, value in values.items():
+            weighted[symbol] = weighted.get(symbol, Decimal("0")) + metric_weight * value
+            weights[symbol] = weights.get(symbol, Decimal("0")) + metric_weight
+    if not weighted:
+        return
+    category_values[category] = {
+        symbol: weighted[symbol] / weights[symbol]
+        for symbol in weighted
+        if weights[symbol] > Decimal("0")
+    }
+
+
+def _score_map(values: Mapping[str, Decimal | str | int | float] | None) -> dict[str, Decimal]:
+    if values is None:
+        return {}
+    return {
+        symbol.upper(): _clip(Decimal(str(value)), Decimal("-1"), Decimal("1"))
+        for symbol, value in values.items()
+    }
+
+
+def _negated(value: Decimal | None) -> Decimal | None:
+    return None if value is None else -value
+
+
+def _clip(value: Decimal, lower: Decimal, upper: Decimal) -> Decimal:
+    return max(lower, min(upper, value))
+
+
+def _component_summary(components: Mapping[str, Decimal]) -> str:
+    if not components:
+        return "components=n/a"
+    return ", ".join(f"{name}={value:.2f}" for name, value in sorted(components.items()))
+
+
 def _realized_volatility(bars: Sequence[object]) -> float | None:
     returns: list[float] = []
     for index in range(1, len(bars)):
@@ -521,3 +836,12 @@ def _fmt_decimal(value: Decimal | None) -> str:
 
 def _threshold_label(value: Decimal) -> str:
     return str(value.normalize()).replace("-", "m").replace(".", "p")
+
+
+def _relative_tilt_suffix(calm_tilt: Decimal, risk_tilt: Decimal) -> str:
+    default_tilt = Decimal("0.12")
+    if calm_tilt == default_tilt and risk_tilt == default_tilt:
+        return ""
+    if calm_tilt == risk_tilt:
+        return f"-tilt-{_threshold_label(calm_tilt)}"
+    return f"-tilt-c{_threshold_label(calm_tilt)}-r{_threshold_label(risk_tilt)}"

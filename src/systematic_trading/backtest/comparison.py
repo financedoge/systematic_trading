@@ -920,6 +920,8 @@ def _decision_markdown(decision_diagnostics: dict[str, Any]) -> list[str]:
 def _robustness_markdown(payload: dict[str, Any]) -> str:
     show_adaptive_scales = any("weakScale" in case or "reboundScale" in case for case in payload["cases"])
     show_relative_tilts = any("calmTilt" in case or "riskTilt" in case for case in payload["cases"])
+    show_decision_tree = any("maxDepth" in case for case in payload["cases"])
+    show_country_factors = any("meanReversionWeight" in case or "tilt" in case for case in payload["cases"])
     lines = [
         "# Parameter Robustness",
         "",
@@ -941,6 +943,20 @@ def _robustness_markdown(payload: dict[str, Any]) -> str:
                 "| ---: | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
             ]
         )
+    elif show_decision_tree:
+        lines.extend(
+            [
+                "| Rank | Strategy | Lookback | Threshold | Mode | Tilt | Max Depth | Min Leaf | OOS Alpha | OOS Delta Sharpe | OOS Delta Max DD | Full Alpha | In-Sample Alpha |",
+                "| ---: | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+            ]
+        )
+    elif show_country_factors:
+        lines.extend(
+            [
+                "| Rank | Strategy | Lookback | Threshold | Mode | Tilt | Mean-Reversion Wt. | OOS Alpha | OOS Delta Sharpe | OOS Delta Max DD | Full Alpha | In-Sample Alpha |",
+                "| ---: | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+            ]
+        )
     else:
         lines.extend(
             [
@@ -958,6 +974,10 @@ def _robustness_markdown(payload: dict[str, Any]) -> str:
             base += f"{case.get('weakScale', 'n/a')} | {case.get('reboundScale', 'n/a')} | "
         elif show_relative_tilts:
             base += f"{case.get('calmTilt', 'n/a')} | {case.get('riskTilt', 'n/a')} | "
+        elif show_decision_tree:
+            base += f"{case.get('tilt', 'n/a')} | {case.get('maxDepth', 'n/a')} | {case.get('minSamplesLeaf', 'n/a')} | "
+        elif show_country_factors:
+            base += f"{case.get('tilt', 'n/a')} | {case.get('meanReversionWeight', 'n/a')} | "
         lines.append(
             base
             + f"{_fmt_pct(_robustness_delta(comparison, 'out_of_sample', 'return'))} | "

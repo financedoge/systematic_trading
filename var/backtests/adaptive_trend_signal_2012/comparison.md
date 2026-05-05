@@ -1,20 +1,101 @@
 # Signal Comparison
 
-- Baseline: Baseline risk parity
-- Candidate: Risk parity + adaptive-trend-63-126-252d-reallocate-thr-m0p05
+- Baseline: SOTA: risk parity + relative momentum 126/252d regime
+- Candidate: Research: risk parity + adaptive-trend-63-126-252d-reallocate-thr-m0p05
 - Out-of-sample split: 2023-01-01
 - Range: 2012-01-03 to 2026-04-29
 
 | Window | Strategy | Return | Ann. Return | Max DD | Sharpe | Sortino | Calmar | Alpha vs Baseline |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Full | Baseline risk parity | 280.63% | 9.78% | -29.39% | 0.68 | 0.64 | 0.33 | n/a |
-| Full | Risk parity + adaptive-trend-63-126-252d-reallocate-thr-m0p05 | 205.52% | 8.11% | -29.54% | 0.60 | 0.56 | 0.27 | -75.11% |
-| In Sample | Baseline risk parity | 110.98% | 7.03% | -29.39% | 0.51 | 0.47 | 0.24 | n/a |
-| In Sample | Risk parity + adaptive-trend-63-126-252d-reallocate-thr-m0p05 | 69.01% | 4.89% | -29.54% | 0.40 | 0.36 | 0.17 | -41.97% |
-| Out Of Sample | Baseline risk parity | 81.34% | 19.65% | -12.86% | 1.27 | 1.28 | 1.53 | n/a |
-| Out Of Sample | Risk parity + adaptive-trend-63-126-252d-reallocate-thr-m0p05 | 81.70% | 19.72% | -13.06% | 1.28 | 1.28 | 1.51 | 0.36% |
+| Full | SOTA: risk parity + relative momentum 126/252d regime | 281.84% | 9.81% | -29.60% | 0.68 | 0.64 | 0.33 | n/a |
+| Full | Research: risk parity + adaptive-trend-63-126-252d-reallocate-thr-m0p05 | 205.52% | 8.11% | -29.54% | 0.60 | 0.56 | 0.27 | -76.33% |
+| In Sample | SOTA: risk parity + relative momentum 126/252d regime | 110.19% | 6.99% | -29.60% | 0.51 | 0.47 | 0.24 | n/a |
+| In Sample | Research: risk parity + adaptive-trend-63-126-252d-reallocate-thr-m0p05 | 69.01% | 4.89% | -29.54% | 0.40 | 0.36 | 0.17 | -41.19% |
+| Out Of Sample | SOTA: risk parity + relative momentum 126/252d regime | 82.58% | 19.89% | -12.97% | 1.28 | 1.28 | 1.53 | n/a |
+| Out Of Sample | Research: risk parity + adaptive-trend-63-126-252d-reallocate-thr-m0p05 | 81.70% | 19.72% | -13.06% | 1.28 | 1.28 | 1.51 | -0.88% |
 
 Alpha here is candidate return minus baseline return over the same window.
+
+## Model Structure
+
+### Baseline / SOTA
+
+- Name: SOTA: risk parity + relative momentum 126/252d regime
+- State: sota
+- Promoted on: 2026-05-05
+- Description: Monthly risk parity with a regime-gated cross-sectional relative momentum tilt. This is the current research hurdle for new candidate strategies.
+
+#### Layers
+
+```mermaid
+flowchart LR
+  L1["Market data<br/>Adjusted ETF closes, volumes, and USD/CNH FX for SPY, VGK, EWJ, EWH, EWY."]
+  L2["Monthly rebalance<br/>Recompute targets on the first available trading day of each month."]
+  L1 --> L2
+  L3["Risk parity beta<br/>63-bar realized volatility, inverse-vol weights, 45% max weight, 2% cash reserve."]
+  L2 --> L3
+  L4["Relative momentum overlay<br/>Score = 45% 126d momentum + 55% 252d momentum; regime drawdown trigger -0.08, vol-ratio trigger 1.35; tilt 0.12 calm / 0.12 risk; cap active weight 0.07."]
+  L3 --> L4
+  L5["Final target weights<br/>Normalize portfolio weights and feed the daily backtest execution engine."]
+  L4 --> L5
+```
+
+#### Decision Tree
+
+```mermaid
+flowchart TD
+  A(["Risk-parity targets"]) --> B{"Enough 126d and 252d history for the basket?"}
+  B -- "No" --> C["Keep risk-parity targets"]
+  B -- "Yes" --> D["Score each ETF = 45% medium momentum + 55% long momentum"]
+  D --> E{"Basket drawdown <= -0.08 or vol-ratio >= 1.35?"}
+  E -- "Yes" --> F["Use risk tilt 0.12"]
+  E -- "No" --> G["Use calm tilt 0.12"]
+  F --> H["Rank ETFs by score"]
+  G --> H
+  H --> I["Multiply base weight by 1 + tilt * rank score"]
+  I --> J["Cap active delta at +/-0.07 per ETF"]
+  J --> K["Rescale to preserve original invested weight"]
+  K --> L(["Final SOTA/research targets"])
+```
+
+### Research Candidate
+
+- Name: Research: risk parity + adaptive-trend-63-126-252d-reallocate-thr-m0p05
+- State: research
+- Description: Research candidate using adaptive trend exposure scaling.
+
+#### Layers
+
+```mermaid
+flowchart LR
+  L1["Market data<br/>Adjusted ETF closes, volumes, and USD/CNH FX for SPY, VGK, EWJ, EWH, EWY."]
+  L2["Monthly rebalance<br/>Recompute targets on the first available trading day of each month."]
+  L1 --> L2
+  L3["Risk parity beta<br/>63-bar realized volatility, inverse-vol weights, 45% max weight, 2% cash reserve."]
+  L2 --> L3
+  L4["Adaptive trend overlay<br/>Blend 63/126/252d trend, volume, rebound, and volatility shock gates; scales 0.35, 0.75, 0.35, 1.00."]
+  L3 --> L4
+  L5["Final target weights<br/>Normalize portfolio weights and feed the daily backtest execution engine."]
+  L4 --> L5
+```
+
+#### Decision Tree
+
+```mermaid
+flowchart TD
+  A(["Risk-parity targets"]) --> B{"Enough short/medium/long trend history?"}
+  B -- "No" --> C["Keep risk-parity targets"]
+  B -- "Yes" --> D["Score trend across short, medium, and long windows"]
+  D --> E{"Volatility shock?"}
+  E -- "Yes" --> F["Use defensive scale 0.35"]
+  E -- "No" --> G{"Rebound or volume confirmation?"}
+  G -- "Yes" --> H["Use rebound/neutral scale up to 1.00"]
+  G -- "No" --> I["Use weak/neutral/full trend scale starting at 0.35"]
+  F --> J["Optionally reallocate residual to stronger assets"]
+  H --> J
+  I --> J
+  J --> K(["Final adaptive targets"])
+```
 
 ## Market Data Audit
 
@@ -62,64 +143,64 @@ Warnings:
 
 | Window | Periods | Positive | Negative | Est. Contribution | Compounded Delta | Avg. Period Delta |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Full | 168 | 83 | 85 | -24.28% | -75.11% | -0.14% |
-| In Sample | 128 | 62 | 66 | -24.41% | -41.75% | -0.19% |
-| Out Of Sample | 40 | 21 | 19 | 0.14% | 0.36% | 0.00% |
+| Full | 168 | 80 | 88 | -24.53% | -76.33% | -0.14% |
+| In Sample | 128 | 61 | 67 | -24.00% | -41.00% | -0.18% |
+| Out Of Sample | 40 | 19 | 21 | -0.52% | -0.88% | -0.01% |
 
 ### Worst Signal Periods
 
 | Period | Realized Delta | Est. Contribution | Main Negative |
 | --- | ---: | ---: | --- |
-| 2022-11-01 to 2022-12-01 | -8.43% | -8.71% | EWH underweight (-3.10%, asset 21.44%) |
-| 2020-04-01 to 2020-05-01 | -6.35% | -6.40% | SPY underweight (-1.71%, asset 14.89%) |
-| 2015-10-01 to 2015-11-02 | -5.44% | -5.48% | EWY underweight (-1.43%, asset 11.58%) |
+| 2022-11-01 to 2022-12-01 | -8.13% | -8.39% | EWH underweight (-2.81%, asset 21.44%) |
+| 2020-04-01 to 2020-05-01 | -6.40% | -6.45% | SPY underweight (-2.01%, asset 14.89%) |
+| 2015-10-01 to 2015-11-02 | -5.40% | -5.45% | SPY underweight (-1.66%, asset 9.50%) |
 | 2012-06-01 to 2012-07-02 | -5.20% | -5.23% | EWJ underweight (-1.53%, asset 9.48%) |
-| 2019-01-02 to 2019-02-01 | -4.98% | -5.11% | EWH underweight (-1.20%, asset 9.31%) |
+| 2019-01-02 to 2019-02-01 | -4.96% | -5.09% | EWH underweight (-1.31%, asset 9.31%) |
 
 ### Best Signal Periods
 
 | Period | Realized Delta | Est. Contribution | Main Positive |
 | --- | ---: | ---: | --- |
-| 2022-09-01 to 2022-10-03 | 5.51% | 5.37% | EWY underweight (1.52%, asset -14.57%) |
-| 2022-06-01 to 2022-07-01 | 5.42% | 5.41% | EWY underweight (1.67%, asset -15.10%) |
-| 2022-03-01 to 2022-04-01 | 2.28% | 2.28% | SPY overweight (2.95%, asset 5.66%) |
-| 2016-03-01 to 2016-04-01 | 1.21% | 1.23% | EWY overweight (1.49%, asset 8.68%) |
-| 2014-10-01 to 2014-11-03 | 0.72% | 0.73% | SPY overweight (0.36%, asset 3.82%) |
+| 2022-09-01 to 2022-10-03 | 5.39% | 5.25% | EWH underweight (1.63%, asset -8.95%) |
+| 2022-06-01 to 2022-07-01 | 5.26% | 5.25% | EWY underweight (1.37%, asset -15.10%) |
+| 2022-03-01 to 2022-04-01 | 2.12% | 2.12% | SPY overweight (2.83%, asset 5.66%) |
+| 2016-03-01 to 2016-04-01 | 1.15% | 1.17% | EWY overweight (1.40%, asset 8.68%) |
+| 2018-08-01 to 2018-09-04 | 0.59% | 0.59% | SPY overweight (0.57%, asset 3.19%) |
 
 ## Decision Quality
 
 | Window | Active Decisions | Helped | Hurt | Hit Rate | False Exits | Good Exits | False Keeps | Est. Contribution |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Full | 540 | 270 | 270 | 50.00% | 145 | 98 | 118 | -24.28% |
-| In Sample | 425 | 210 | 215 | 49.41% | 122 | 83 | 90 | -24.41% |
-| Out Of Sample | 115 | 60 | 55 | 52.17% | 23 | 15 | 28 | 0.14% |
+| Full | 827 | 399 | 428 | 48.25% | 263 | 168 | 5 | -24.53% |
+| In Sample | 629 | 309 | 320 | 49.13% | 200 | 140 | 5 | -24.00% |
+| Out Of Sample | 198 | 90 | 108 | 45.45% | 63 | 28 | 0 | -0.52% |
 
 ### Decision Quality By Symbol
 
 | Symbol | Active | Helped | Hurt | Hit Rate | False Exits | False Keeps | Est. Contribution |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| VGK | 108 | 52 | 56 | 48.15% | 27 | 26 | -12.54% |
-| EWH | 108 | 50 | 58 | 46.30% | 31 | 22 | -4.92% |
-| EWJ | 108 | 57 | 51 | 52.78% | 26 | 25 | -4.13% |
-| EWY | 108 | 50 | 58 | 46.30% | 44 | 27 | -3.72% |
-| SPY | 108 | 61 | 47 | 56.48% | 17 | 18 | 1.03% |
+| VGK | 166 | 76 | 90 | 45.78% | 51 | 1 | -11.24% |
+| EWY | 165 | 67 | 98 | 40.61% | 70 | 1 | -5.67% |
+| EWJ | 166 | 83 | 83 | 50.00% | 45 | 1 | -3.85% |
+| EWH | 166 | 84 | 82 | 50.60% | 49 | 1 | -3.56% |
+| SPY | 164 | 89 | 75 | 54.27% | 48 | 1 | -0.19% |
 
 ### Worst False Exits
 
 | Period | Symbol | Action | Asset Return | Est. Contribution |
 | --- | --- | --- | ---: | ---: |
-| 2022-11-01 to 2022-12-01 | EWH | underweight | 21.44% | -3.10% |
-| 2020-04-01 to 2020-05-01 | SPY | underweight | 14.89% | -1.71% |
-| 2022-11-01 to 2022-12-01 | EWJ | underweight | 11.53% | -1.70% |
-| 2020-05-01 to 2020-06-01 | EWJ | underweight | 10.62% | -1.69% |
-| 2022-11-01 to 2022-12-01 | EWY | underweight | 14.42% | -1.68% |
+| 2022-11-01 to 2022-12-01 | EWH | underweight | 21.44% | -2.81% |
+| 2020-04-01 to 2020-05-01 | SPY | underweight | 14.89% | -2.01% |
+| 2022-11-01 to 2022-12-01 | EWJ | underweight | 11.53% | -1.85% |
+| 2020-05-01 to 2020-06-01 | EWJ | underweight | 10.62% | -1.85% |
+| 2015-10-01 to 2015-11-02 | SPY | underweight | 9.50% | -1.66% |
 
 ### Worst False Keeps
 
 | Period | Symbol | Asset Return |
 | --- | --- | ---: |
-| 2020-03-02 to 2020-04-01 | EWY | -22.27% |
-| 2020-03-02 to 2020-04-01 | VGK | -21.62% |
-| 2020-03-02 to 2020-04-01 | SPY | -19.89% |
-| 2020-03-02 to 2020-04-01 | EWH | -15.29% |
 | 2012-05-01 to 2012-06-01 | VGK | -14.78% |
+| 2012-05-01 to 2012-06-01 | EWY | -13.74% |
+| 2012-05-01 to 2012-06-01 | EWH | -11.81% |
+| 2012-05-01 to 2012-06-01 | EWJ | -10.27% |
+| 2012-05-01 to 2012-06-01 | SPY | -8.94% |

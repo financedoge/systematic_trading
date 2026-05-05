@@ -25,6 +25,7 @@ def write_backtest_report(
     result_path: Path,
     output_path: Path | None = None,
     database_path: Path | None = None,
+    split_date: date | str | None = None,
     benchmark_symbol: str | None = None,
     benchmark_nav_series: list[dict[str, Any]] | None = None,
     benchmark_name: str | None = None,
@@ -38,6 +39,7 @@ def write_backtest_report(
         result=result,
         result_path=result_path,
         database_path=database_path,
+        split_date=split_date,
         benchmark_symbol=benchmark_symbol,
         benchmark_nav_series=benchmark_nav_series,
         benchmark_name=benchmark_name,
@@ -54,6 +56,7 @@ def build_backtest_report_data(
     result: dict[str, Any],
     result_path: Path,
     database_path: Path | None = None,
+    split_date: date | str | None = None,
     benchmark_symbol: str | None = None,
     benchmark_nav_series: list[dict[str, Any]] | None = None,
     benchmark_name: str | None = None,
@@ -167,11 +170,13 @@ def build_backtest_report_data(
     }
     summary = summaries_by_benchmark["primary"]
     metrics = metrics_by_benchmark["primary"]
+    split_date_value = _split_date_value(split_date, signal_diagnostics)
 
     report = {
         "title": result_path.stem.replace("_", " ").title(),
         "sourceJson": str(result_path),
         "database": str(database_path) if database_path is not None else None,
+        "splitDate": split_date_value,
         "benchmarkName": benchmark_name,
         "defaultBenchmarkId": "primary",
         "benchmarkOptions": benchmark_options,
@@ -190,6 +195,14 @@ def build_backtest_report_data(
         "warnings": warnings,
     }
     return report, warnings
+
+
+def _split_date_value(split_date: date | str | None, signal_diagnostics: dict[str, Any] | None) -> str | None:
+    if split_date is not None:
+        return split_date.isoformat() if isinstance(split_date, date) else str(split_date)
+    if signal_diagnostics is not None and signal_diagnostics.get("splitDate") is not None:
+        return str(signal_diagnostics["splitDate"])
+    return None
 
 
 def _nav_points(result: dict[str, Any]) -> list[dict[str, Any]]:
@@ -1255,6 +1268,7 @@ HTML_TEMPLATE = """<!doctype html>
         ["Strategy NAV", strategyColor],
         [currentBenchmarkOption().name, benchmarkColor],
         ["Drawdown periods", "#b91c1c"],
+        ...(report.splitDate ? [["OOS period", "#0f766e"]] : []),
         ...report.allocationOrder.map((symbol) => [symbol, report.colors[symbol]])
       ];
       document.getElementById("legend").innerHTML = items.map(([label, color]) => `
@@ -1331,6 +1345,50 @@ HTML_TEMPLATE = """<!doctype html>
           fill: "#b91c1c",
           opacity: Math.min(0.16, Math.max(0.045, Math.abs(period.depth) * 0.55))
         }));
+      }
+
+      if (report.splitDate) {
+        const splitDay = new Date(`${report.splitDate}T00:00:00`);
+        if (splitDay > points[0].day && splitDay < points[points.length - 1].day) {
+          const xx = x(splitDay);
+          svg.appendChild(svgEl("rect", {
+            x: xx,
+            y: top,
+            width: Math.max(1, right - xx),
+            height: plotH,
+            fill: "#0f766e",
+            opacity: "0.055"
+          }));
+          svg.appendChild(svgEl("line", {
+            x1: xx,
+            y1: top,
+            x2: xx,
+            y2: bottom,
+            stroke: "#0f766e",
+            "stroke-width": "2",
+            "stroke-dasharray": "5 4"
+          }));
+          const labelBg = svgEl("rect", {
+            x: Math.min(right - 118, Math.max(left + 8, xx + 8)),
+            y: top + 8,
+            width: "110",
+            height: "24",
+            rx: "4",
+            fill: "#ffffff",
+            opacity: "0.92"
+          });
+          const label = svgEl("text", {
+            x: Math.min(right - 63, Math.max(left + 63, xx + 63)),
+            y: top + 25,
+            "text-anchor": "middle",
+            fill: "#0f766e",
+            "font-size": "12",
+            "font-weight": "700"
+          });
+          label.textContent = `OOS from ${report.splitDate}`;
+          svg.appendChild(labelBg);
+          svg.appendChild(label);
+        }
       }
 
       const gridTicks = 5;

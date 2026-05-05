@@ -81,7 +81,7 @@ def test_comparison_artifacts_include_model_structure_diagrams(tmp_path) -> None
     assert payload["modelStructure"]["baseline"]["definition"]["state"] == "sota"
     assert "## Model Structure" in markdown
     assert "```mermaid" in markdown
-    assert "SOTA: risk parity + relative momentum 126/252d regime" in markdown
+    assert "SOTA: risk parity + relative momentum 20/60d 20% tilt" in markdown
 
 
 def test_build_signal_diagnostics_attributes_weight_changes() -> None:
