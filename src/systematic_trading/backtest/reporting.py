@@ -168,6 +168,12 @@ def build_backtest_report_data(
         }
         for choice in benchmark_choices
     }
+    holding_contributions = _holding_contribution_tables(
+        chart_points=chart_points,
+        symbols=symbols,
+        prices=prices,
+        fx_rates=fx_rates,
+    )
     summary = summaries_by_benchmark["primary"]
     metrics = metrics_by_benchmark["primary"]
     split_date_value = _split_date_value(split_date, signal_diagnostics)
@@ -191,6 +197,7 @@ def build_backtest_report_data(
         "drawdownPeriods": [period for period in periods if period["depth"] <= -0.02],
         "topDrawdowns": sorted(periods, key=lambda item: item["depth"])[:5],
         "metrics": metrics,
+        "holdingContributions": holding_contributions,
         "signalDiagnostics": signal_diagnostics,
         "warnings": warnings,
     }
@@ -458,7 +465,7 @@ def _holding_series_from_orders(
     warnings: list[str] = []
     proposals_by_date: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for proposal in result.get("proposals", []):
-        proposals_by_date[str(proposal["as_of"])].append(proposal)
+        proposals_by_date[_proposal_execution_date_key(proposal)].append(proposal)
 
     positions: dict[str, float] = defaultdict(float)
     series: list[dict[str, float]] = []
@@ -498,7 +505,7 @@ def _holding_series_from_orders(
 
     if missing_prices:
         warnings.append(f"Some holding weights could not be priced for: {', '.join(sorted(missing_prices))}.")
-    return series, "Daily holdings reconstructed from rebalance orders, stored closes, and USD/CNH FX.", warnings
+    return series, "Daily holdings reconstructed from next-session rebalance orders, stored closes, and USD/CNH FX.", warnings
 
 
 def _holding_series_from_targets(
@@ -509,7 +516,7 @@ def _holding_series_from_targets(
 ) -> tuple[list[dict[str, float]], str, list[str]]:
     proposals_by_date: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for proposal in result.get("proposals", []):
-        proposals_by_date[str(proposal["as_of"])].append(proposal)
+        proposals_by_date[_proposal_execution_date_key(proposal)].append(proposal)
 
     current = {CASH_LABEL: 1.0}
     series: list[dict[str, float]] = []
@@ -524,6 +531,10 @@ def _holding_series_from_targets(
             current[CASH_LABEL] = max(0.0, 1 - sum(current.values()))
         series.append(_complete_weights(current, symbols))
     return series, "Allocation background uses proposal target weights because daily market data was unavailable.", []
+
+
+def _proposal_execution_date_key(proposal: dict[str, Any]) -> str:
+    return str(proposal.get("intended_trade_date") or proposal["as_of"])
 
 
 def _complete_weights(weights: dict[str, float], symbols: list[str]) -> dict[str, float]:
@@ -619,6 +630,7 @@ def _summary_metrics(chart_points: list[dict[str, Any]], benchmark_id: str = "pr
         strategy_comparison_return = (
             chart_points[last_benchmark_index]["nav"] / chart_points[first_benchmark_index]["nav"]
         ) - 1
+    active = _active_return_metrics(chart_points, benchmark_id=benchmark_id)
     return {
         "start": first["date"],
         "end": last["date"],
@@ -638,6 +650,8 @@ def _summary_metrics(chart_points: list[dict[str, Any]], benchmark_id: str = "pr
             if benchmark_return is not None and strategy_comparison_return is not None
             else None
         ),
+        "trackingError": active["trackingError"],
+        "informationRatio": active["informationRatio"],
     }
 
 
@@ -675,6 +689,10 @@ def _period_metrics(chart_points: list[dict[str, Any]], frequency: str, benchmar
             if benchmark_start_value is not None and benchmark_end_value is not None:
                 benchmark_return = (benchmark_end_value / benchmark_start_value) - 1
                 strategy_comparison_return = (nav_values[benchmark_end_index] / nav_values[benchmark_start_index]) - 1
+        active = _active_return_metrics(
+            [chart_points[index] for index in range(base_index, end_index + 1)],
+            benchmark_id=benchmark_id,
+        )
         max_drawdown = _max_drawdown(nav_values[base_index : end_index + 1])
         annualized = _annualized_return(nav_return, dates[base_index].isoformat(), dates[end_index].isoformat())
         calmar = None
@@ -692,12 +710,159 @@ def _period_metrics(chart_points: list[dict[str, Any]], frequency: str, benchmar
                     if benchmark_return is not None and strategy_comparison_return is not None
                     else None
                 ),
+                "informationRatio": active["informationRatio"],
+                "trackingError": active["trackingError"],
                 "benchmarkReturn": benchmark_return,
                 "maxDrawdown": max_drawdown,
                 "observations": len(daily_returns),
             }
         )
     return rows
+
+
+def _holding_contribution_tables(
+    *,
+    chart_points: list[dict[str, Any]],
+    symbols: list[str],
+    prices: dict[str, dict[str, float]],
+    fx_rates: dict[str, float],
+) -> dict[str, list[dict[str, Any]]]:
+    if len(chart_points) < 2 or not symbols or not prices or not fx_rates:
+        return {"yearly": [], "quarterly": [], "monthly": []}
+    return {
+        frequency: _holding_contributions(chart_points, symbols, prices, fx_rates, frequency)
+        for frequency in ["yearly", "quarterly", "monthly"]
+    }
+
+
+def _holding_contributions(
+    chart_points: list[dict[str, Any]],
+    symbols: list[str],
+    prices: dict[str, dict[str, float]],
+    fx_rates: dict[str, float],
+    frequency: str,
+) -> list[dict[str, Any]]:
+    grouped: dict[str, dict[str, Any]] = {}
+    for index in range(1, len(chart_points)):
+        previous = chart_points[index - 1]
+        current = chart_points[index]
+        key = _period_key(_parse_date(current["date"]), frequency)
+        group = grouped.setdefault(
+            key,
+            {
+                "period": key,
+                "start": previous["date"],
+                "end": current["date"],
+                "baseNav": previous["nav"],
+                "endNav": current["nav"],
+                "symbols": {},
+            },
+        )
+        group["end"] = current["date"]
+        group["endNav"] = current["nav"]
+        base_nav = group["baseNav"]
+        if not base_nav:
+            continue
+
+        for symbol in symbols:
+            previous_weight = float(previous["weights"].get(symbol, 0.0))
+            current_weight = float(current["weights"].get(symbol, 0.0))
+            previous_price = _price_cnh(symbol, previous["date"], prices, fx_rates)
+            current_price = _price_cnh(symbol, current["date"], prices, fx_rates)
+            if previous_price is None or current_price is None or previous_price <= 0:
+                continue
+            asset_return = (current_price / previous_price) - 1
+            symbol_state = group["symbols"].setdefault(
+                symbol,
+                {
+                    "symbol": symbol,
+                    "startWeight": previous_weight,
+                    "endWeight": current_weight,
+                    "weightSum": 0.0,
+                    "observations": 0,
+                    "daysHeld": 0,
+                    "contribution": 0.0,
+                    "assetGrowth": 1.0,
+                },
+            )
+            symbol_state["endWeight"] = current_weight
+            symbol_state["weightSum"] += previous_weight
+            symbol_state["observations"] += 1
+            if previous_weight > 0.0001 or current_weight > 0.0001:
+                symbol_state["daysHeld"] += 1
+            symbol_state["contribution"] += previous_weight * previous["nav"] * asset_return / base_nav
+            symbol_state["assetGrowth"] *= 1 + asset_return
+
+    rows: list[dict[str, Any]] = []
+    for key in sorted(grouped):
+        group = grouped[key]
+        base_nav = group["baseNav"]
+        end_nav = group["endNav"]
+        period_return = (end_nav / base_nav) - 1 if base_nav else None
+        holdings = []
+        for item in group["symbols"].values():
+            observations = item["observations"]
+            average_weight = item["weightSum"] / observations if observations else 0.0
+            contribution = item["contribution"]
+            start_weight = item["startWeight"]
+            end_weight = item["endWeight"]
+            include = (
+                max(abs(start_weight), abs(end_weight), abs(average_weight)) >= 0.005
+                or abs(contribution) >= 0.0005
+            )
+            if not include:
+                continue
+            holdings.append(
+                {
+                    "symbol": item["symbol"],
+                    "startWeight": start_weight,
+                    "averageWeight": average_weight,
+                    "endWeight": end_weight,
+                    "assetReturn": item["assetGrowth"] - 1,
+                    "contribution": contribution,
+                    "daysHeld": item["daysHeld"],
+                    "observations": observations,
+                }
+            )
+        rows.append(
+            {
+                "period": group["period"],
+                "start": group["start"],
+                "end": group["end"],
+                "return": period_return,
+                "totalContribution": sum(item["contribution"] for item in holdings),
+                "holdings": sorted(
+                    holdings,
+                    key=lambda item: (abs(item["contribution"]), abs(item["averageWeight"]), item["symbol"]),
+                    reverse=True,
+                ),
+            }
+        )
+    return rows
+
+
+def _active_return_metrics(chart_points: list[dict[str, Any]], benchmark_id: str = "primary") -> dict[str, float | None]:
+    active_returns: list[float] = []
+    for index in range(1, len(chart_points)):
+        previous = chart_points[index - 1]
+        current = chart_points[index]
+        previous_benchmark = _benchmark_nav(previous, benchmark_id)
+        current_benchmark = _benchmark_nav(current, benchmark_id)
+        if previous["nav"] == 0 or previous_benchmark in {None, 0} or current_benchmark is None:
+            continue
+        strategy_return = (current["nav"] / previous["nav"]) - 1
+        benchmark_return = (current_benchmark / previous_benchmark) - 1
+        active_returns.append(strategy_return - benchmark_return)
+    deviation = _stddev(active_returns)
+    average = sum(active_returns) / len(active_returns) if active_returns else None
+    return {
+        "trackingError": deviation * math.sqrt(TRADING_DAYS_PER_YEAR) if deviation is not None else None,
+        "informationRatio": (
+            (average / deviation) * math.sqrt(TRADING_DAYS_PER_YEAR)
+            if average is not None and deviation not in {None, 0}
+            else None
+        ),
+    }
 
 
 def _benchmark_nav(point: dict[str, Any], benchmark_id: str) -> float | None:
@@ -1049,6 +1214,9 @@ HTML_TEMPLATE = """<!doctype html>
       margin-top: 14px;
       overflow: hidden;
     }
+    .contribution-panel {
+      margin-top: 14px;
+    }
     .signal-layout {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
@@ -1176,6 +1344,23 @@ HTML_TEMPLATE = """<!doctype html>
       </div>
     </section>
 
+    <section class="table-panel contribution-panel">
+      <div class="panel-head">
+        <div>
+          <h2>Holdings And Contribution</h2>
+          <div class="meta">Contribution is estimated from prior-close weights and daily CNH price returns within each period.</div>
+        </div>
+        <div class="segments" id="contributionSegments">
+          <button type="button" data-frequency="yearly">Yearly</button>
+          <button type="button" data-frequency="quarterly">Quarterly</button>
+          <button type="button" data-frequency="monthly" class="active">Monthly</button>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table id="contributionTable"></table>
+      </div>
+    </section>
+
     <section class="table-panel signal-panel" id="signalPanel" hidden>
       <div class="panel-head">
         <div>
@@ -1199,7 +1384,7 @@ HTML_TEMPLATE = """<!doctype html>
 
   <script>
     const report = __REPORT_DATA__;
-    const state = { frequency: "yearly", benchmarkId: report.defaultBenchmarkId || "primary" };
+    const state = { frequency: "yearly", contributionFrequency: "monthly", benchmarkId: report.defaultBenchmarkId || "primary" };
     const strategyColor = "#0f766e";
     const benchmarkColor = "#111827";
 
@@ -1253,7 +1438,9 @@ HTML_TEMPLATE = """<!doctype html>
         ["Annualized", fmtPct(summary.annualizedReturn)],
         ["Max Drawdown", fmtPct(summary.maxDrawdown)],
         ["Sharpe", fmtNum(summary.sharpe)],
-        ["Alpha", fmtPct(summary.alpha)]
+        ["Alpha", fmtPct(summary.alpha)],
+        ["Info Ratio", fmtNum(summary.informationRatio)],
+        ["Tracking Error", fmtPct(summary.trackingError)]
       ];
       document.getElementById("summaryCards").innerHTML = items.map(([label, value]) => `
         <div class="stat">
@@ -1514,6 +1701,7 @@ HTML_TEMPLATE = """<!doctype html>
             <th>Sortino</th>
             <th>Calmar</th>
             <th>Alpha</th>
+            <th>IR</th>
             <th>Bench</th>
           </tr>
         </thead>
@@ -1526,6 +1714,7 @@ HTML_TEMPLATE = """<!doctype html>
               <td>${fmtNum(row.sortino)}</td>
               <td>${fmtNum(row.calmar)}</td>
               <td class="${cls(row.alpha)}">${fmtPct(row.alpha)}</td>
+              <td>${fmtNum(row.informationRatio)}</td>
               <td class="${cls(row.benchmarkReturn)}">${fmtPct(row.benchmarkReturn)}</td>
             </tr>
           `).join("")}
@@ -1558,6 +1747,49 @@ HTML_TEMPLATE = """<!doctype html>
       `;
     }
 
+    function renderContributions() {
+      const periods = (report.holdingContributions && report.holdingContributions[state.contributionFrequency]) || [];
+      const rows = [];
+      for (const period of periods) {
+        for (const holding of period.holdings || []) {
+          rows.push({ period, holding });
+        }
+      }
+      const table = document.getElementById("contributionTable");
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Symbol</th>
+            <th>Start Wt</th>
+            <th>Avg Wt</th>
+            <th>End Wt</th>
+            <th>Asset Return</th>
+            <th>Contribution</th>
+            <th>Held Days</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map(({ period, holding }) => `
+            <tr>
+              <td>${escapeHtml(period.period)}</td>
+              <td>${escapeHtml(holding.symbol)}</td>
+              <td>${fmtPct(holding.startWeight, 1)}</td>
+              <td>${fmtPct(holding.averageWeight, 1)}</td>
+              <td>${fmtPct(holding.endWeight, 1)}</td>
+              <td class="${cls(holding.assetReturn)}">${fmtPct(holding.assetReturn)}</td>
+              <td class="${cls(holding.contribution)}">${fmtPct(holding.contribution)}</td>
+              <td>${holding.daysHeld} / ${holding.observations}</td>
+            </tr>
+          `).join("") || `
+            <tr>
+              <td colspan="8">No contribution rows are available. Stored prices and FX rates are required.</td>
+            </tr>
+          `}
+        </tbody>
+      `;
+    }
+
     function renderSignalDiagnostics() {
       const diagnostics = report.signalDiagnostics;
       if (!diagnostics || !diagnostics.periods || !diagnostics.periods.length) return;
@@ -1576,6 +1808,8 @@ HTML_TEMPLATE = """<!doctype html>
           <div><span>Est. contribution</span><b class="${cls(item && item.estimatedContribution)}">${fmtPct(item && item.estimatedContribution)}</b></div>
           <div><span>Compounded delta</span><b class="${cls(item && item.compoundedDelta)}">${fmtPct(item && item.compoundedDelta)}</b></div>
           <div><span>Avg. period delta</span><b class="${cls(item && item.averageRealizedDelta)}">${fmtPct(item && item.averageRealizedDelta)}</b></div>
+          <div><span>Information ratio</span><b>${fmtNum(item && item.informationRatio)}</b></div>
+          <div><span>Tracking error</span><b>${fmtPct(item && item.trackingError)}</b></div>
         </div>
       `).join("");
 
@@ -1655,6 +1889,15 @@ HTML_TEMPLATE = """<!doctype html>
         }
         renderMetrics();
       });
+      document.getElementById("contributionSegments").addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-frequency]");
+        if (!button) return;
+        state.contributionFrequency = button.dataset.frequency;
+        for (const item of document.querySelectorAll("#contributionSegments button")) {
+          item.classList.toggle("active", item === button);
+        }
+        renderContributions();
+      });
     }
 
     function setupBenchmarkSelect() {
@@ -1689,6 +1932,7 @@ HTML_TEMPLATE = """<!doctype html>
     setupWarnings();
     renderMetrics();
     renderDrawdowns();
+    renderContributions();
     renderSignalDiagnostics();
     renderChart();
     window.addEventListener("resize", renderChart);

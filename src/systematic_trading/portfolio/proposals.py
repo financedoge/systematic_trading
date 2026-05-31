@@ -17,9 +17,13 @@ class RebalanceProposalBuilder:
         *,
         environment: OrderEnvironment = OrderEnvironment.PAPER,
         order_type: OrderType = OrderType.LIMIT,
+        execution_start_time: str | None = None,
+        execution_end_time: str | None = None,
     ) -> None:
         self.environment = environment
         self.order_type = order_type
+        self.execution_start_time = execution_start_time
+        self.execution_end_time = execution_end_time
 
     def build(
         self,
@@ -32,6 +36,7 @@ class RebalanceProposalBuilder:
         prices: Mapping[str, Decimal | str],
         fx_to_cnh: Mapping[Currency | str, Decimal | str],
         targets: Iterable[AllocationTarget],
+        intended_trade_date: date | None = None,
     ) -> TradeProposal:
         converter = FxConverter(fx_to_cnh)
         position_list = list(positions)
@@ -90,6 +95,9 @@ class RebalanceProposalBuilder:
                     environment=self.environment,
                     notional_cnh=order_notional_cnh,
                     rationale=rationale,
+                    intended_trade_date=intended_trade_date,
+                    execution_start_time=self.execution_start_time,
+                    execution_end_time=self.execution_end_time,
                 )
             )
 
@@ -105,6 +113,7 @@ class RebalanceProposalBuilder:
 
         return TradeProposal(
             as_of=as_of,
+            intended_trade_date=intended_trade_date,
             sleeve=sleeve,
             summary=summary,
             targets=target_list,

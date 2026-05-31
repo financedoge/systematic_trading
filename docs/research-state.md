@@ -2,25 +2,39 @@
 
 ## Current SOTA
 
-- Name: SOTA: risk parity + relative momentum 20/60d 20% tilt
-- Promoted on: 2026-05-05
+- Name: SOTA: price/volume top 6 + technical tree + relative/adaptive
+- Promoted on: 2026-05-26
 - Registry: `systematic_trading.research.current_sota_definition`
-- Backtest hurdle: new research candidates should compare against this SOTA by default, not against plain risk parity.
-- Artifact: `var/backtests/relative_momentum_20_60_tilt20_2012/`
+- Backtest hurdle: new multi-asset research candidates should compare against this SOTA by default, not against plain risk parity.
+- Canonical artifact folder: `var/backtests/sota_current/`
+- Model HTML: `var/backtests/sota_current/sota_model.html`
+- Promotion source artifact: `var/backtests/monthly_allweather_sleeve_variant_floor_search_20260525/`
+- Prior SOTA artifact: `var/backtests/sota_current/history/2026-05-17_sota_dynamic_sleeve_commodity_guard_55/`
 
 ## Model Summary
 
-The SOTA keeps the monthly risk-parity beta sleeve as the foundation, then applies a shorter-horizon regime-gated relative momentum overlay:
+The SOTA now uses the expanded multi-asset ETF universe and static monthly rebalancing. It keeps inverse-volatility beta weights as the foundation, then applies the best stability-adjusted daily research stack:
 
-- Base: 63-bar inverse-volatility risk parity, 45% max weight, 2% cash reserve.
-- Score: 45% short-term momentum over 20 bars plus 55% medium-term momentum over 60 bars.
-- Regime: risk regime if average basket drawdown is at or below -8% or volatility ratio is at or above 1.35.
-- Tilt: 20% in calm regimes and 20% in risk regimes.
-- Risk control: cap active weight changes at 7% per ETF, then rescale to preserve the original invested weight.
+- Base: monthly multi-asset ETF universe, 63-bar inverse-volatility risk parity, 45% max weight, 2% cash reserve.
+- Pool filter: rank assets using 63/126/252-bar price momentum and 21/126-bar volume pressure; keep the top 6, require at least 4 selected assets, require positive 252-bar momentum, and reallocate residual weight.
+- Technical tree: frozen pre-2023 regression tree, max depth 3, min leaf 25, trained on 1,572 in-sample asset-month observations with MACD, Bollinger, RSI, price trend, volume pressure, drawdown, valuation, and macro features. Tilt is 16%, with active changes capped at 6% per ETF.
+- Relative momentum: 20/60-bar relative momentum overlay, 12% calm and 12% risk tilt, with active changes capped at 5% per ETF.
+- Adaptive trend: 63/126/252-bar trend and volume/rebound/volatility-shock gates with weak, neutral, defensive, and rebound scaling.
+- Benchmark: the canonical folder includes a benchmark-only run using the same multi-asset universe and static monthly scheduler.
+
+Canonical results versus benchmark-only multi-asset risk parity, 2012-01-03 to 2026-04-29, split 2023-01-01:
+
+| Window | Ann. Return | Sharpe | Calmar | Max DD | Alpha vs Benchmark | Information Ratio |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Full | 9.10% | 0.95 | 0.65 | -14.11% | 134.60% | 0.63 |
+| In-sample | 6.89% | 0.77 | 0.49 | -14.11% | 54.07% | 0.49 |
+| Out-of-sample | 16.92% | 1.48 | 2.00 | -8.46% | 28.57% | 1.13 |
+
+Stability note: this candidate was promoted because it is cleaner than the high-OOS all-weather sleeve after penalizing weak in-sample evidence. The OOS/IS Sharpe ratio is still high at about 1.92, so it should be treated as the current best production candidate rather than a final answer to the stability objective.
 
 ## Workflow Rule
 
-Use `scripts/compare_trend_signal.py` with the default `--baseline-model sota` for new research. Use `--baseline-model risk-parity` only for legacy diagnostics or to quantify the value added versus the original beta sleeve.
+Use `scripts/export_sota_artifacts.py` to regenerate the canonical SOTA folder after a promotion. Use the multi-asset research scripts for new challengers; use legacy `scripts/compare_trend_signal.py` only for old single-basket diagnostics or to quantify value added versus the original beta sleeve.
 
 The comparison artifacts include model structure diagrams for the SOTA and candidate:
 
@@ -49,7 +63,7 @@ Results versus prior 126/252d SOTA, 2012-01-03 to 2026-04-29, split 2023-01-01:
 | Three-horizon trend rank 20/40/60d, 12% tilt | -0.89% | -0.30% | -0.09% | -0.00 | 0.06% |
 | Relative momentum 20/60d, 20% tilt | 1.09% | -1.02% | 1.47% | 0.01 | 0.03% |
 
-The 20/60d shorter-horizon pair is now the registered SOTA because future iterations should benchmark against this version. A 25-case tilt grid ranked 20% calm / 20% risk tilt first by OOS alpha. It still trails the MSCI World proxy by 0.87% OOS, versus the prior 126/252d SOTA trailing URTH by 2.34% OOS, so future work should continue using URTH as an external benchmark check.
+The 20/60d shorter-horizon pair became a prior registered SOTA and remains part of the current promoted stack at a more restrained 12% calm / 12% risk tilt. A 25-case tilt grid ranked 20% calm / 20% risk tilt first by OOS alpha. It still trailed the MSCI World proxy by 0.87% OOS, versus the prior 126/252d SOTA trailing URTH by 2.34% OOS, so future work should continue using URTH as an external benchmark check.
 
 ## Latest Country-Factor Research
 

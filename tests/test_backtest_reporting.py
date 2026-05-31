@@ -48,6 +48,8 @@ def test_backtest_report_keeps_extra_benchmark_choices() -> None:
     ]
     assert report["summariesByBenchmark"]["primary"]["alpha"] == pytest.approx(0.05)
     assert report["summariesByBenchmark"]["msci_world"]["alpha"] == pytest.approx(0.08)
+    assert "informationRatio" in report["summariesByBenchmark"]["primary"]
+    assert "trackingError" in report["summariesByBenchmark"]["primary"]
 
 
 def test_report_starts_symbol_benchmark_on_first_available_price(tmp_path) -> None:
@@ -123,3 +125,66 @@ def test_report_starts_symbol_benchmark_on_first_available_price(tmp_path) -> No
     yearly = report["metricsByBenchmark"]["msci_world"]["yearly"][0]
     assert yearly["benchmarkReturn"] == pytest.approx(0.05)
     assert yearly["alpha"] == pytest.approx(((110 / 105) - 1) - 0.05)
+    assert "informationRatio" in yearly
+
+
+def test_report_adds_monthly_holding_contribution_from_orders(tmp_path) -> None:
+    store = SQLiteStore(tmp_path / "market.db")
+    store.initialize()
+    for trade_date, close in [
+        (date(2023, 1, 3), Decimal("100")),
+        (date(2023, 1, 4), Decimal("110")),
+        (date(2023, 1, 5), Decimal("121")),
+    ]:
+        store.upsert_price_bar(
+            "SPY",
+            PriceBar(
+                trade_date=trade_date,
+                open=close,
+                high=close,
+                low=close,
+                close=close,
+                volume=100,
+            ),
+        )
+        store.upsert_fx_rate(
+            FXRate(
+                rate_date=trade_date,
+                base_currency=Currency.USD,
+                quote_currency=Currency.CNH,
+                rate=Decimal("1"),
+            )
+        )
+
+    result = {
+        "nav_series": [
+            {"trade_date": "2023-01-03", "nav_cnh": "100", "cash_cnh": "0"},
+            {"trade_date": "2023-01-04", "nav_cnh": "110", "cash_cnh": "0"},
+            {"trade_date": "2023-01-05", "nav_cnh": "121", "cash_cnh": "0"},
+        ],
+        "proposals": [
+            {
+                "as_of": "2023-01-03",
+                "targets": [{"symbol": "SPY", "target_weight": "1"}],
+                "orders": [{"symbol": "SPY", "side": "buy", "quantity": 1}],
+            }
+        ],
+        "final_snapshot": {"positions": [{"symbol": "SPY"}]},
+    }
+
+    report, warnings = build_backtest_report_data(
+        result=result,
+        result_path=Path("candidate.json"),
+        database_path=store.database_path,
+    )
+
+    assert warnings == []
+    monthly = report["holdingContributions"]["monthly"]
+    assert len(monthly) == 1
+    assert monthly[0]["period"] == "2023-01"
+    assert monthly[0]["return"] == pytest.approx(0.21)
+    holding = monthly[0]["holdings"][0]
+    assert holding["symbol"] == "SPY"
+    assert holding["averageWeight"] == pytest.approx(1)
+    assert holding["assetReturn"] == pytest.approx(0.21)
+    assert holding["contribution"] == pytest.approx(0.21)

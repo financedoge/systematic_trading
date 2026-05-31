@@ -5,8 +5,13 @@ __pycache__/
 *.pyo
 *.pyd
 .env
+openai_key.txt
 tushare_token.txt
 var/*.db
+var/backtests/
+var/live/
+var/log/
+var/run/
 dist/
 build/
 *.egg-info/

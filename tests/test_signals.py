@@ -6,11 +6,17 @@ from systematic_trading.domain.market import Instrument, PriceBar
 from systematic_trading.domain.portfolio import AllocationTarget
 from systematic_trading.signals import (
     AdaptiveTrendOverlay,
+    AssetPoolFilterOverlay,
+    BasketRiskControlOverlay,
+    CommodityRiskGuardOverlay,
     CountryCompositeFactorOverlay,
     DecisionTreeSignalOverlay,
     RegimeGatedRelativeMomentumOverlay,
     SignalContext,
+    SleeveCappedMomentumOverlay,
+    TechnicalDecisionTreeAllocatorOverlay,
     TimeSeriesMomentumOverlay,
+    TrendQualityFilterOverlay,
 )
 from systematic_trading.signals.decision_tree import DecisionTreeSample, train_simple_regression_tree
 from systematic_trading.signals.library import compute_signal_features
@@ -108,6 +114,248 @@ def test_adaptive_trend_overlay_reallocates_residual_to_stronger_assets() -> Non
     assert weights["VGK"] == Decimal("0.2000")
 
 
+def test_asset_pool_filter_selects_top_ranked_assets_and_reallocates() -> None:
+    context = SignalContext(
+        as_of=date(2024, 1, 10),
+        instruments={
+            "SPY": _instrument("SPY"),
+            "IEF": _instrument("IEF"),
+            "VGK": _instrument("VGK"),
+            "GLD": _instrument("GLD"),
+        },
+        bars_by_symbol={
+            "SPY": _bars([Decimal("100"), Decimal("102"), Decimal("104"), Decimal("106"), Decimal("110")]),
+            "IEF": _bars([Decimal("100"), Decimal("101"), Decimal("101"), Decimal("102"), Decimal("103")]),
+            "VGK": _bars([Decimal("100"), Decimal("98"), Decimal("96"), Decimal("94"), Decimal("92")]),
+            "GLD": _bars([Decimal("100"), Decimal("100"), Decimal("100"), Decimal("100"), Decimal("100")]),
+        },
+        trade_dates=[],
+    )
+    overlay = AssetPoolFilterOverlay(
+        short_momentum_bars=2,
+        medium_momentum_bars=3,
+        long_momentum_bars=4,
+        volume_bars=2,
+        slow_volume_bars=4,
+        top_n=2,
+        min_selected=2,
+        trend_weight=Decimal("1"),
+        volume_weight=Decimal("0"),
+        reallocate_selected=True,
+    )
+
+    targets = overlay.apply(
+        [
+            _target("SPY", Decimal("0.20")),
+            _target("IEF", Decimal("0.20")),
+            _target("VGK", Decimal("0.20")),
+            _target("GLD", Decimal("0.20")),
+        ],
+        context,
+    )
+    weights = {target.symbol: target.target_weight for target in targets}
+
+    assert weights["SPY"] == Decimal("0.40")
+    assert weights["IEF"] == Decimal("0.40")
+    assert weights["VGK"] == Decimal("0")
+    assert weights["GLD"] == Decimal("0")
+    assert "selected SPY" in targets[0].rationale
+
+
+def test_trend_quality_filter_prefers_smoother_risk_adjusted_trend() -> None:
+    context = SignalContext(
+        as_of=date(2024, 1, 10),
+        instruments={"SPY": _instrument("SPY"), "IEF": _instrument("IEF"), "VGK": _instrument("VGK")},
+        bars_by_symbol={
+            "SPY": _bars([Decimal("100"), Decimal("102"), Decimal("104"), Decimal("106"), Decimal("108")]),
+            "IEF": _bars([Decimal("100"), Decimal("101"), Decimal("99"), Decimal("102"), Decimal("101")]),
+            "VGK": _bars([Decimal("100"), Decimal("98"), Decimal("96"), Decimal("94"), Decimal("92")]),
+        },
+        trade_dates=[],
+    )
+    overlay = TrendQualityFilterOverlay(
+        short_momentum_bars=2,
+        medium_momentum_bars=3,
+        long_momentum_bars=4,
+        volatility_bars=4,
+        consistency_bars=4,
+        drawdown_lookback_bars=4,
+        top_n=1,
+        min_selected=1,
+        reallocate_selected=True,
+    )
+
+    targets = overlay.apply(
+        [_target("SPY", Decimal("0.30")), _target("IEF", Decimal("0.30")), _target("VGK", Decimal("0.30"))],
+        context,
+    )
+    weights = {target.symbol: target.target_weight for target in targets}
+
+    assert weights["SPY"] == Decimal("0.90")
+    assert weights["IEF"] == Decimal("0")
+    assert weights["VGK"] == Decimal("0")
+    assert "Trend-quality filter selected SPY" in targets[0].rationale
+
+
+def test_sleeve_capped_momentum_respects_caps_and_reallocates() -> None:
+    context = SignalContext(
+        as_of=date(2024, 1, 10),
+        instruments={
+            "SPY": _instrument("SPY"),
+            "MDY": _instrument("MDY"),
+            "IEF": _instrument("IEF"),
+            "GLD": _instrument("GLD"),
+        },
+        bars_by_symbol={
+            "SPY": _bars([Decimal("100"), Decimal("104"), Decimal("108"), Decimal("112"), Decimal("116")]),
+            "MDY": _bars([Decimal("100"), Decimal("103"), Decimal("106"), Decimal("109"), Decimal("112")]),
+            "IEF": _bars([Decimal("100"), Decimal("101"), Decimal("103"), Decimal("105"), Decimal("107")]),
+            "GLD": _bars([Decimal("100"), Decimal("100"), Decimal("101"), Decimal("101"), Decimal("102")]),
+        },
+        trade_dates=[],
+    )
+    overlay = SleeveCappedMomentumOverlay(
+        sleeve_by_symbol={
+            "SPY": "equity_us",
+            "MDY": "equity_us",
+            "IEF": "rates_us",
+            "GLD": "commodity_precious_metals",
+        },
+        asset_class_by_symbol={
+            "SPY": "equity",
+            "MDY": "equity",
+            "IEF": "rates",
+            "GLD": "commodity",
+        },
+        region_by_symbol={
+            "SPY": "US",
+            "MDY": "US",
+            "IEF": "US",
+            "GLD": "global",
+        },
+        short_momentum_bars=2,
+        medium_momentum_bars=3,
+        long_momentum_bars=4,
+        volume_bars=2,
+        slow_volume_bars=4,
+        top_n=2,
+        max_per_sleeve=1,
+        trend_weight=Decimal("1"),
+        volume_weight=Decimal("0"),
+        reallocate_selected=True,
+    )
+
+    targets = overlay.apply(
+        [
+            _target("SPY", Decimal("0.25")),
+            _target("MDY", Decimal("0.25")),
+            _target("IEF", Decimal("0.25")),
+            _target("GLD", Decimal("0.25")),
+        ],
+        context,
+    )
+    weights = {target.symbol: target.target_weight for target in targets}
+
+    assert weights["SPY"] == Decimal("0.50")
+    assert weights["MDY"] == Decimal("0")
+    assert weights["IEF"] == Decimal("0.50")
+    assert weights["GLD"] == Decimal("0")
+    assert "selected SPY" in targets[0].rationale
+    assert "removed MDY" in targets[1].rationale
+
+
+def test_sleeve_capped_momentum_can_force_minimum_rates_asset() -> None:
+    context = SignalContext(
+        as_of=date(2024, 1, 10),
+        instruments={
+            "SPY": _instrument("SPY"),
+            "MDY": _instrument("MDY"),
+            "IEF": _instrument("IEF"),
+        },
+        bars_by_symbol={
+            "SPY": _bars([Decimal("100"), Decimal("105"), Decimal("110"), Decimal("116"), Decimal("123")]),
+            "MDY": _bars([Decimal("100"), Decimal("104"), Decimal("108"), Decimal("113"), Decimal("119")]),
+            "IEF": _bars([Decimal("100"), Decimal("101"), Decimal("102"), Decimal("103"), Decimal("104")]),
+        },
+        trade_dates=[],
+    )
+    overlay = SleeveCappedMomentumOverlay(
+        sleeve_by_symbol={"SPY": "equity_us_large", "MDY": "equity_us_mid", "IEF": "rates_us"},
+        asset_class_by_symbol={"SPY": "equity", "MDY": "equity", "IEF": "rates"},
+        region_by_symbol={"SPY": "US", "MDY": "US", "IEF": "US"},
+        short_momentum_bars=2,
+        medium_momentum_bars=3,
+        long_momentum_bars=4,
+        volume_bars=2,
+        slow_volume_bars=4,
+        top_n=2,
+        max_per_sleeve=1,
+        max_per_asset_class={"equity": 2, "rates": 1},
+        min_per_asset_class={"rates": 1},
+        trend_weight=Decimal("1"),
+        volume_weight=Decimal("0"),
+        reallocate_selected=True,
+    )
+
+    targets = overlay.apply(
+        [
+            _target("SPY", Decimal("0.34")),
+            _target("MDY", Decimal("0.33")),
+            _target("IEF", Decimal("0.33")),
+        ],
+        context,
+    )
+    weights = {target.symbol: target.target_weight for target in targets}
+
+    assert weights["SPY"] + weights["MDY"] > Decimal("0")
+    assert weights["IEF"] > Decimal("0")
+    assert sum(1 for symbol in ["SPY", "MDY"] if weights[symbol] > Decimal("0")) == 1
+    assert abs(sum(weights.values(), Decimal("0")) - Decimal("1")) < Decimal("0.0001")
+
+
+def test_commodity_risk_guard_caps_and_reallocates_triggered_commodity_exposure() -> None:
+    context = SignalContext(
+        as_of=date(2024, 1, 10),
+        instruments={
+            "UNG": _instrument("UNG"),
+            "WEAT": _instrument("WEAT"),
+            "IEF": _instrument("IEF"),
+        },
+        bars_by_symbol={
+            "UNG": _bars([Decimal("120"), Decimal("118"), Decimal("115"), Decimal("105"), Decimal("95")]),
+            "WEAT": _bars([Decimal("100"), Decimal("98"), Decimal("96"), Decimal("91"), Decimal("88")]),
+            "IEF": _bars([Decimal("100"), Decimal("101"), Decimal("102"), Decimal("103"), Decimal("104")]),
+        },
+        trade_dates=[],
+    )
+    overlay = CommodityRiskGuardOverlay(
+        asset_class_by_symbol={"UNG": "commodity", "WEAT": "commodity", "IEF": "rates"},
+        max_asset_class_weight=Decimal("0.60"),
+        triggered_scale=Decimal("0.50"),
+        short_momentum_bars=2,
+        slow_momentum_bars=4,
+        fast_volatility_bars=2,
+        slow_volatility_bars=4,
+        short_momentum_threshold=Decimal("-0.03"),
+        reallocate_residual=True,
+    )
+
+    targets = overlay.apply(
+        [
+            _target("UNG", Decimal("0.40")),
+            _target("WEAT", Decimal("0.40")),
+            _target("IEF", Decimal("0.20")),
+        ],
+        context,
+    )
+    weights = {target.symbol: target.target_weight for target in targets}
+
+    assert weights["UNG"] == Decimal("0.200")
+    assert weights["WEAT"] == Decimal("0.200")
+    assert weights["IEF"] == Decimal("0.600")
+    assert "Commodity risk guard" in targets[0].rationale
+
+
 def test_regime_gated_relative_momentum_tilts_within_total_weight() -> None:
     context = SignalContext(
         as_of=date(2024, 1, 10),
@@ -180,6 +428,38 @@ def test_regime_gated_relative_momentum_uses_stronger_risk_tilt() -> None:
 
     assert risk_weights["SPY"] - Decimal("0.30") > calm_weights["SPY"] - Decimal("0.30")
     assert Decimal("0.30") - risk_weights["VGK"] > Decimal("0.30") - calm_weights["VGK"]
+
+
+def test_basket_risk_control_scales_weak_breadth_to_cash() -> None:
+    context = SignalContext(
+        as_of=date(2024, 1, 10),
+        instruments={"SPY": _instrument("SPY"), "IEF": _instrument("IEF")},
+        bars_by_symbol={
+            "SPY": _bars([Decimal("100"), Decimal("98"), Decimal("96"), Decimal("94"), Decimal("92")]),
+            "IEF": _bars([Decimal("100"), Decimal("101"), Decimal("102"), Decimal("103"), Decimal("104")]),
+        },
+        trade_dates=[],
+    )
+    overlay = BasketRiskControlOverlay(
+        short_momentum_bars=2,
+        long_momentum_bars=4,
+        moving_average_bars=4,
+        drawdown_lookback_bars=4,
+        fast_volatility_bars=2,
+        slow_volatility_bars=4,
+        weak_breadth_threshold=Decimal("0.60"),
+        healthy_breadth_threshold=Decimal("0.70"),
+        defensive_scale=Decimal("0.50"),
+        severe_scale=Decimal("0.25"),
+    )
+
+    targets = overlay.apply([_target("SPY", Decimal("0.45")), _target("IEF", Decimal("0.45"))], context)
+    weights = {target.symbol: target.target_weight for target in targets}
+
+    assert weights["SPY"] == Decimal("0.2250")
+    assert weights["IEF"] == Decimal("0.2250")
+    assert sum(weights.values(), Decimal("0")) == Decimal("0.4500")
+    assert "residual stays in cash" in targets[0].rationale
 
 
 def test_country_composite_factor_overlay_uses_valuation_and_macro_scores() -> None:
@@ -277,6 +557,9 @@ def test_signal_library_computes_external_and_price_features() -> None:
     assert features["mom_20"] is not None
     assert features["mom_21"] is not None
     assert features["relative_momentum_20_60"] is not None
+    assert features["macd_hist_12_26_9"] is not None
+    assert features["bollinger_z_20"] is not None
+    assert features["rsi_14"] == 1
     assert features["up_volume_share_21"] == 1
     assert features["valuation_score"] == 0.5
     assert features["macro_growth_score"] == -0.25
@@ -316,6 +599,45 @@ def test_decision_tree_overlay_tilts_toward_higher_forecast() -> None:
     assert weights["SPY"] > Decimal("0.45")
     assert weights["VGK"] < Decimal("0.45")
     assert sum(weights.values(), Decimal("0")) == Decimal("0.900")
+
+
+def test_technical_decision_tree_allocator_selects_and_reallocates_top_ranked_asset() -> None:
+    samples = [
+        DecisionTreeSample(features={"macro_growth_score": -1.0}, target=-0.05),
+        DecisionTreeSample(features={"macro_growth_score": 1.0}, target=0.05),
+    ]
+    model = train_simple_regression_tree(
+        samples,
+        feature_names=["macro_growth_score"],
+        max_depth=1,
+        min_samples_leaf=1,
+    )
+    overlay = TechnicalDecisionTreeAllocatorOverlay(
+        model=model,
+        top_n=1,
+        min_selected=1,
+        tree_weight=Decimal("1"),
+        momentum_weight=Decimal("0"),
+        technical_weight=Decimal("0"),
+        allocation_tilt=Decimal("0.20"),
+        macro_scores={"SPY": Decimal("1"), "VGK": Decimal("-1")},
+    )
+    context = SignalContext(
+        as_of=date(2025, 1, 1),
+        instruments={"SPY": _instrument("SPY"), "VGK": _instrument("VGK")},
+        bars_by_symbol={
+            "SPY": _bars([Decimal(100 + index) for index in range(280)]),
+            "VGK": _bars([Decimal(400 - index) for index in range(280)]),
+        },
+        trade_dates=[],
+    )
+
+    targets = overlay.apply([_target("SPY", Decimal("0.45")), _target("VGK", Decimal("0.45"))], context)
+    weights = {target.symbol: target.target_weight for target in targets}
+
+    assert weights["SPY"].quantize(Decimal("0.01")) == Decimal("0.90")
+    assert weights["VGK"] == Decimal("0")
+    assert "Technical decision-tree allocator selected SPY" in targets[0].rationale
 
 
 def _instrument(symbol: str) -> Instrument:

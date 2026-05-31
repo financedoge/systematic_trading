@@ -15,6 +15,13 @@ class CompositeFactorScore:
     components: Mapping[str, Decimal]
 
 
+@dataclass(frozen=True)
+class AssetPoolSelectionScore:
+    total: Decimal
+    components: Mapping[str, Decimal]
+    raw_metrics: Mapping[str, Decimal]
+
+
 class TimeSeriesMomentumOverlay:
     def __init__(
         self,
@@ -297,6 +304,472 @@ class AdaptiveTrendOverlay:
         )
 
 
+class AssetPoolFilterOverlay:
+    def __init__(
+        self,
+        *,
+        short_momentum_bars: int = 63,
+        medium_momentum_bars: int = 126,
+        long_momentum_bars: int = 252,
+        volume_bars: int = 21,
+        slow_volume_bars: int = 126,
+        trend_weight: Decimal = Decimal("0.75"),
+        volume_weight: Decimal = Decimal("0.25"),
+        top_n: int = 6,
+        min_selected: int = 2,
+        require_positive_long_momentum: bool = True,
+        min_long_momentum: Decimal = Decimal("0"),
+        reallocate_selected: bool = True,
+    ) -> None:
+        lookbacks = [
+            short_momentum_bars,
+            medium_momentum_bars,
+            long_momentum_bars,
+            volume_bars,
+            slow_volume_bars,
+        ]
+        if any(item < 2 for item in lookbacks):
+            raise ValueError("All asset-pool filter lookbacks must be at least 2.")
+        if top_n < 1:
+            raise ValueError("top_n must be at least 1.")
+        if min_selected < 1:
+            raise ValueError("min_selected must be at least 1.")
+        if Decimal(trend_weight) < Decimal("0") or Decimal(volume_weight) < Decimal("0"):
+            raise ValueError("Asset-pool filter weights must be non-negative.")
+        if Decimal(trend_weight) + Decimal(volume_weight) <= Decimal("0"):
+            raise ValueError("At least one asset-pool filter weight must be positive.")
+
+        self.short_momentum_bars = short_momentum_bars
+        self.medium_momentum_bars = medium_momentum_bars
+        self.long_momentum_bars = long_momentum_bars
+        self.volume_bars = volume_bars
+        self.slow_volume_bars = slow_volume_bars
+        self.trend_weight = Decimal(trend_weight)
+        self.volume_weight = Decimal(volume_weight)
+        self.top_n = top_n
+        self.min_selected = min_selected
+        self.require_positive_long_momentum = require_positive_long_momentum
+        self.min_long_momentum = Decimal(min_long_momentum)
+        self.reallocate_selected = reallocate_selected
+        self.lookback_bars = max(lookbacks)
+        self.threshold = self.min_long_momentum
+        mode = "reallocate" if reallocate_selected else "cash"
+        momentum_gate = "pos" if require_positive_long_momentum else "rank"
+        self.name = (
+            f"asset-pool-filter-top{top_n}-{short_momentum_bars}-{medium_momentum_bars}-"
+            f"{long_momentum_bars}d-{momentum_gate}-{mode}"
+        )
+
+    def apply(self, targets: Sequence[AllocationTarget], context: SignalContext) -> list[AllocationTarget]:
+        target_list = list(targets)
+        if len(target_list) < 2:
+            return target_list
+
+        scores = self._selection_scores(target_list, context)
+        if scores is None:
+            return [
+                target.model_copy(
+                    update={
+                        "rationale": (
+                            f"{target.rationale} Asset-pool filter was neutral because not enough "
+                            "price/volume history was available."
+                        )
+                    }
+                )
+                for target in target_list
+            ]
+
+        eligible_symbols = [
+            symbol
+            for symbol, score in scores.items()
+            if (
+                not self.require_positive_long_momentum
+                or score.raw_metrics.get("longMomentum", Decimal("-1")) > self.min_long_momentum
+            )
+        ]
+        ranked_symbols = sorted(
+            eligible_symbols,
+            key=lambda symbol: (-scores[symbol].total, symbol),
+        )
+        if len(ranked_symbols) < self.min_selected:
+            return [
+                target.model_copy(
+                    update={
+                        "rationale": (
+                            f"{target.rationale} Asset-pool filter was neutral because only "
+                            f"{len(ranked_symbols)} assets passed the momentum gate; minimum is {self.min_selected}."
+                        )
+                    }
+                )
+                for target in target_list
+            ]
+
+        selected = set(ranked_symbols[: self.top_n])
+        rank_by_symbol = {symbol: index + 1 for index, symbol in enumerate(ranked_symbols)}
+        original_weight = sum((target.target_weight for target in target_list), Decimal("0"))
+        selected_weight = sum((target.target_weight for target in target_list if target.symbol in selected), Decimal("0"))
+        scale = original_weight / selected_weight if self.reallocate_selected and selected_weight > Decimal("0") else Decimal("1")
+
+        adjusted: list[AllocationTarget] = []
+        for target in target_list:
+            score = scores.get(target.symbol)
+            if target.symbol in selected:
+                if score is None:
+                    continue
+                adjusted.append(
+                    target.model_copy(
+                        update={
+                            "target_weight": target.target_weight * scale,
+                            "rationale": (
+                                f"{target.rationale} Asset-pool filter selected {target.symbol} "
+                                f"rank {rank_by_symbol[target.symbol]}/{len(ranked_symbols)}; "
+                                f"score={score.total:.2f}, long={_fmt_decimal_pct(score.raw_metrics.get('longMomentum'))}, "
+                                f"{_component_summary(score.components)}."
+                            ),
+                        }
+                    )
+                )
+                continue
+
+            rank_text = str(rank_by_symbol[target.symbol]) if target.symbol in rank_by_symbol else "not eligible"
+            score_text = "n/a" if score is None else f"{score.total:.2f}"
+            long_text = "n/a" if score is None else _fmt_decimal_pct(score.raw_metrics.get("longMomentum"))
+            adjusted.append(
+                target.model_copy(
+                    update={
+                        "target_weight": Decimal("0"),
+                        "rationale": (
+                            f"{target.rationale} Asset-pool filter removed {target.symbol}; "
+                            f"rank={rank_text}, score={score_text}, long={long_text}."
+                        ),
+                    }
+                )
+            )
+        return adjusted
+
+    def _selection_scores(
+        self,
+        targets: Sequence[AllocationTarget],
+        context: SignalContext,
+    ) -> dict[str, AssetPoolSelectionScore] | None:
+        symbols = [target.symbol for target in targets]
+        short_momentum = {symbol: _momentum(symbol, context, self.short_momentum_bars) for symbol in symbols}
+        medium_momentum = {symbol: _momentum(symbol, context, self.medium_momentum_bars) for symbol in symbols}
+        long_momentum = {symbol: _momentum(symbol, context, self.long_momentum_bars) for symbol in symbols}
+        up_volume = {symbol: _up_volume_share(symbol, context, self.volume_bars) for symbol in symbols}
+        signed_volume = {
+            symbol: _signed_volume_pressure(symbol, context, self.volume_bars, self.slow_volume_bars)
+            for symbol in symbols
+        }
+
+        category_values: dict[str, dict[str, Decimal]] = {}
+        _add_category(
+            category_values,
+            "trend",
+            [
+                (Decimal("0.20"), _rank_metric(short_momentum)),
+                (Decimal("0.35"), _rank_metric(medium_momentum)),
+                (Decimal("0.45"), _rank_metric(long_momentum)),
+            ],
+        )
+        _add_category(
+            category_values,
+            "volume",
+            [
+                (Decimal("0.65"), _rank_metric(up_volume)),
+                (Decimal("0.35"), _rank_metric(signed_volume)),
+            ],
+        )
+        if not category_values:
+            return None
+
+        category_weights = {
+            "trend": self.trend_weight,
+            "volume": self.volume_weight,
+        }
+        scores: dict[str, AssetPoolSelectionScore] = {}
+        for symbol in symbols:
+            weighted_score = Decimal("0")
+            weight_sum = Decimal("0")
+            components: dict[str, Decimal] = {}
+            for category, weight in category_weights.items():
+                if weight <= Decimal("0"):
+                    continue
+                value = category_values.get(category, {}).get(symbol)
+                if value is None:
+                    continue
+                clipped = _clip(value, Decimal("-1"), Decimal("1"))
+                components[category] = clipped
+                weighted_score += weight * clipped
+                weight_sum += weight
+            if weight_sum <= Decimal("0"):
+                continue
+            raw_metrics = {
+                key: value
+                for key, value in {
+                    "shortMomentum": short_momentum.get(symbol),
+                    "mediumMomentum": medium_momentum.get(symbol),
+                    "longMomentum": long_momentum.get(symbol),
+                    "upVolumeShare": up_volume.get(symbol),
+                    "signedVolumePressure": signed_volume.get(symbol),
+                }.items()
+                if value is not None
+            }
+            scores[symbol] = AssetPoolSelectionScore(
+                total=_clip(weighted_score / weight_sum, Decimal("-1"), Decimal("1")),
+                components=components,
+                raw_metrics=raw_metrics,
+            )
+        return scores if len(scores) >= self.min_selected else None
+
+
+class TrendQualityFilterOverlay:
+    def __init__(
+        self,
+        *,
+        short_momentum_bars: int = 63,
+        medium_momentum_bars: int = 126,
+        long_momentum_bars: int = 252,
+        volatility_bars: int = 126,
+        consistency_bars: int = 126,
+        drawdown_lookback_bars: int = 252,
+        momentum_weight: Decimal = Decimal("0.50"),
+        risk_adjusted_weight: Decimal = Decimal("0.30"),
+        consistency_weight: Decimal = Decimal("0.10"),
+        drawdown_weight: Decimal = Decimal("0.10"),
+        low_volatility_weight: Decimal = Decimal("0"),
+        top_n: int = 6,
+        min_selected: int = 3,
+        require_positive_long_momentum: bool = True,
+        min_long_momentum: Decimal = Decimal("0"),
+        fallback_to_top_ranked: bool = True,
+        reallocate_selected: bool = True,
+    ) -> None:
+        lookbacks = [
+            short_momentum_bars,
+            medium_momentum_bars,
+            long_momentum_bars,
+            volatility_bars,
+            consistency_bars,
+            drawdown_lookback_bars,
+        ]
+        if any(item < 2 for item in lookbacks):
+            raise ValueError("All trend-quality lookbacks must be at least 2.")
+        if top_n < 1:
+            raise ValueError("top_n must be at least 1.")
+        if min_selected < 1:
+            raise ValueError("min_selected must be at least 1.")
+        weights = [
+            momentum_weight,
+            risk_adjusted_weight,
+            consistency_weight,
+            drawdown_weight,
+            low_volatility_weight,
+        ]
+        if any(Decimal(item) < Decimal("0") for item in weights):
+            raise ValueError("Trend-quality weights must be non-negative.")
+        if sum((Decimal(item) for item in weights), Decimal("0")) <= Decimal("0"):
+            raise ValueError("At least one trend-quality weight must be positive.")
+
+        self.short_momentum_bars = short_momentum_bars
+        self.medium_momentum_bars = medium_momentum_bars
+        self.long_momentum_bars = long_momentum_bars
+        self.volatility_bars = volatility_bars
+        self.consistency_bars = consistency_bars
+        self.drawdown_lookback_bars = drawdown_lookback_bars
+        self.momentum_weight = Decimal(momentum_weight)
+        self.risk_adjusted_weight = Decimal(risk_adjusted_weight)
+        self.consistency_weight = Decimal(consistency_weight)
+        self.drawdown_weight = Decimal(drawdown_weight)
+        self.low_volatility_weight = Decimal(low_volatility_weight)
+        self.top_n = top_n
+        self.min_selected = min_selected
+        self.require_positive_long_momentum = require_positive_long_momentum
+        self.min_long_momentum = Decimal(min_long_momentum)
+        self.fallback_to_top_ranked = fallback_to_top_ranked
+        self.reallocate_selected = reallocate_selected
+        self.lookback_bars = max(lookbacks)
+        self.threshold = self.min_long_momentum
+        mode = "reallocate" if reallocate_selected else "cash"
+        momentum_gate = "pos" if require_positive_long_momentum else "rank"
+        self.name = (
+            f"trend-quality-filter-top{top_n}-{short_momentum_bars}-{medium_momentum_bars}-"
+            f"{long_momentum_bars}d-{momentum_gate}-{mode}"
+        )
+
+    def apply(self, targets: Sequence[AllocationTarget], context: SignalContext) -> list[AllocationTarget]:
+        target_list = list(targets)
+        if len(target_list) < 2:
+            return target_list
+
+        scores = self._selection_scores(target_list, context)
+        if scores is None:
+            return [
+                target.model_copy(
+                    update={
+                        "rationale": (
+                            f"{target.rationale} Trend-quality filter was neutral because not enough "
+                            "price history was available."
+                        )
+                    }
+                )
+                for target in target_list
+            ]
+
+        ranked_symbols = sorted(scores, key=lambda symbol: (-scores[symbol].total, symbol))
+        eligible_symbols = [
+            symbol
+            for symbol in ranked_symbols
+            if (
+                not self.require_positive_long_momentum
+                or scores[symbol].raw_metrics.get("longMomentum", Decimal("-1")) > self.min_long_momentum
+            )
+        ]
+        if len(eligible_symbols) >= self.min_selected:
+            selected = set(eligible_symbols[: self.top_n])
+            gate_reason = "positive-momentum gate"
+        elif self.fallback_to_top_ranked and ranked_symbols:
+            selected = set(ranked_symbols[: min(self.min_selected, len(ranked_symbols))])
+            gate_reason = "fallback top-ranked gate"
+        else:
+            return [
+                target.model_copy(
+                    update={
+                        "rationale": (
+                            f"{target.rationale} Trend-quality filter was neutral because only "
+                            f"{len(eligible_symbols)} assets passed the momentum gate; minimum is {self.min_selected}."
+                        )
+                    }
+                )
+                for target in target_list
+            ]
+
+        rank_by_symbol = {symbol: index + 1 for index, symbol in enumerate(ranked_symbols)}
+        original_weight = sum((target.target_weight for target in target_list), Decimal("0"))
+        selected_weight = sum((target.target_weight for target in target_list if target.symbol in selected), Decimal("0"))
+        scale = original_weight / selected_weight if self.reallocate_selected and selected_weight > Decimal("0") else Decimal("1")
+
+        adjusted: list[AllocationTarget] = []
+        for target in target_list:
+            score = scores.get(target.symbol)
+            if target.symbol in selected and score is not None:
+                adjusted.append(
+                    target.model_copy(
+                        update={
+                            "target_weight": target.target_weight * scale,
+                            "rationale": (
+                                f"{target.rationale} Trend-quality filter selected {target.symbol} via {gate_reason}; "
+                                f"rank {rank_by_symbol[target.symbol]}/{len(ranked_symbols)}, score={score.total:.2f}, "
+                                f"long={_fmt_decimal_pct(score.raw_metrics.get('longMomentum'))}, "
+                                f"vol={_fmt_decimal(score.raw_metrics.get('volatility'))}, "
+                                f"{_component_summary(score.components)}."
+                            ),
+                        }
+                    )
+                )
+                continue
+
+            rank_text = str(rank_by_symbol[target.symbol]) if target.symbol in rank_by_symbol else "not ranked"
+            score_text = "n/a" if score is None else f"{score.total:.2f}"
+            adjusted.append(
+                target.model_copy(
+                    update={
+                        "target_weight": Decimal("0"),
+                        "rationale": (
+                            f"{target.rationale} Trend-quality filter removed {target.symbol}; "
+                            f"rank={rank_text}, score={score_text}."
+                        ),
+                    }
+                )
+            )
+        return adjusted
+
+    def _selection_scores(
+        self,
+        targets: Sequence[AllocationTarget],
+        context: SignalContext,
+    ) -> dict[str, AssetPoolSelectionScore] | None:
+        symbols = [target.symbol for target in targets]
+        short_momentum = {symbol: _momentum(symbol, context, self.short_momentum_bars) for symbol in symbols}
+        medium_momentum = {symbol: _momentum(symbol, context, self.medium_momentum_bars) for symbol in symbols}
+        long_momentum = {symbol: _momentum(symbol, context, self.long_momentum_bars) for symbol in symbols}
+        volatility = {symbol: _realized_volatility_metric(symbol, context, self.volatility_bars) for symbol in symbols}
+        consistency = {symbol: _positive_return_share(symbol, context, self.consistency_bars) for symbol in symbols}
+        drawdown = {symbol: _drawdown_from_high(symbol, context, self.drawdown_lookback_bars) for symbol in symbols}
+        medium_risk_adjusted = {
+            symbol: _safe_divide(medium_momentum[symbol], volatility[symbol]) for symbol in symbols
+        }
+        long_risk_adjusted = {
+            symbol: _safe_divide(long_momentum[symbol], volatility[symbol]) for symbol in symbols
+        }
+        low_volatility = {symbol: _negated(volatility[symbol]) for symbol in symbols}
+
+        category_values: dict[str, dict[str, Decimal]] = {}
+        _add_category(
+            category_values,
+            "momentum",
+            [
+                (Decimal("0.20"), _rank_metric(short_momentum)),
+                (Decimal("0.35"), _rank_metric(medium_momentum)),
+                (Decimal("0.45"), _rank_metric(long_momentum)),
+            ],
+        )
+        _add_category(
+            category_values,
+            "risk-adjusted",
+            [
+                (Decimal("0.45"), _rank_metric(medium_risk_adjusted)),
+                (Decimal("0.55"), _rank_metric(long_risk_adjusted)),
+            ],
+        )
+        _add_category(category_values, "consistency", [(Decimal("1"), _rank_metric(consistency))])
+        _add_category(category_values, "drawdown", [(Decimal("1"), _rank_metric(drawdown))])
+        _add_category(category_values, "low-volatility", [(Decimal("1"), _rank_metric(low_volatility))])
+
+        category_weights = {
+            "momentum": self.momentum_weight,
+            "risk-adjusted": self.risk_adjusted_weight,
+            "consistency": self.consistency_weight,
+            "drawdown": self.drawdown_weight,
+            "low-volatility": self.low_volatility_weight,
+        }
+        scores: dict[str, AssetPoolSelectionScore] = {}
+        for symbol in symbols:
+            weighted_score = Decimal("0")
+            weight_sum = Decimal("0")
+            components: dict[str, Decimal] = {}
+            for category, weight in category_weights.items():
+                if weight <= Decimal("0"):
+                    continue
+                value = category_values.get(category, {}).get(symbol)
+                if value is None:
+                    continue
+                clipped = _clip(value, Decimal("-1"), Decimal("1"))
+                components[category] = clipped
+                weighted_score += weight * clipped
+                weight_sum += weight
+            if weight_sum <= Decimal("0"):
+                continue
+            raw_metrics = {
+                key: value
+                for key, value in {
+                    "shortMomentum": short_momentum.get(symbol),
+                    "mediumMomentum": medium_momentum.get(symbol),
+                    "longMomentum": long_momentum.get(symbol),
+                    "volatility": volatility.get(symbol),
+                    "consistency": consistency.get(symbol),
+                    "drawdown": drawdown.get(symbol),
+                }.items()
+                if value is not None
+            }
+            scores[symbol] = AssetPoolSelectionScore(
+                total=_clip(weighted_score / weight_sum, Decimal("-1"), Decimal("1")),
+                components=components,
+                raw_metrics=raw_metrics,
+            )
+        return scores if len(scores) >= self.min_selected else None
+
+
 class RegimeGatedRelativeMomentumOverlay:
     def __init__(
         self,
@@ -427,6 +900,198 @@ class RegimeGatedRelativeMomentumOverlay:
                 else Decimal("1")
             ),
         }
+
+
+class BasketRiskControlOverlay:
+    def __init__(
+        self,
+        *,
+        short_momentum_bars: int = 63,
+        long_momentum_bars: int = 252,
+        moving_average_bars: int = 252,
+        drawdown_lookback_bars: int = 252,
+        fast_volatility_bars: int = 21,
+        slow_volatility_bars: int = 252,
+        weak_breadth_threshold: Decimal = Decimal("0.40"),
+        healthy_breadth_threshold: Decimal = Decimal("0.55"),
+        short_momentum_threshold: Decimal = Decimal("-0.02"),
+        long_momentum_threshold: Decimal = Decimal("0"),
+        drawdown_trigger: Decimal = Decimal("-0.08"),
+        severe_drawdown_trigger: Decimal = Decimal("-0.14"),
+        volatility_ratio_trigger: Decimal = Decimal("1.35"),
+        severe_volatility_ratio_trigger: Decimal = Decimal("1.70"),
+        neutral_scale: Decimal = Decimal("0.85"),
+        defensive_scale: Decimal = Decimal("0.60"),
+        severe_scale: Decimal = Decimal("0.35"),
+    ) -> None:
+        lookbacks = [
+            short_momentum_bars,
+            long_momentum_bars,
+            moving_average_bars,
+            drawdown_lookback_bars,
+            fast_volatility_bars,
+            slow_volatility_bars,
+        ]
+        if any(item < 2 for item in lookbacks):
+            raise ValueError("All basket risk-control lookbacks must be at least 2.")
+        for value in [weak_breadth_threshold, healthy_breadth_threshold, neutral_scale, defensive_scale, severe_scale]:
+            decimal_value = Decimal(value)
+            if decimal_value < Decimal("0") or decimal_value > Decimal("1"):
+                raise ValueError("Breadth thresholds and basket risk-control scales must be between 0 and 1.")
+        if Decimal(weak_breadth_threshold) > Decimal(healthy_breadth_threshold):
+            raise ValueError("weak_breadth_threshold cannot exceed healthy_breadth_threshold.")
+
+        self.short_momentum_bars = short_momentum_bars
+        self.long_momentum_bars = long_momentum_bars
+        self.moving_average_bars = moving_average_bars
+        self.drawdown_lookback_bars = drawdown_lookback_bars
+        self.fast_volatility_bars = fast_volatility_bars
+        self.slow_volatility_bars = slow_volatility_bars
+        self.weak_breadth_threshold = Decimal(weak_breadth_threshold)
+        self.healthy_breadth_threshold = Decimal(healthy_breadth_threshold)
+        self.short_momentum_threshold = Decimal(short_momentum_threshold)
+        self.long_momentum_threshold = Decimal(long_momentum_threshold)
+        self.drawdown_trigger = Decimal(drawdown_trigger)
+        self.severe_drawdown_trigger = Decimal(severe_drawdown_trigger)
+        self.volatility_ratio_trigger = Decimal(volatility_ratio_trigger)
+        self.severe_volatility_ratio_trigger = Decimal(severe_volatility_ratio_trigger)
+        self.neutral_scale = Decimal(neutral_scale)
+        self.defensive_scale = Decimal(defensive_scale)
+        self.severe_scale = Decimal(severe_scale)
+        self.lookback_bars = max(lookbacks)
+        self.threshold = self.long_momentum_threshold
+        self.name = (
+            f"basket-risk-control-{short_momentum_bars}-{long_momentum_bars}d-"
+            f"dd-{_threshold_label(self.drawdown_trigger)}-scale-{_threshold_label(self.defensive_scale)}"
+        )
+
+    def apply(self, targets: Sequence[AllocationTarget], context: SignalContext) -> list[AllocationTarget]:
+        target_list = list(targets)
+        active_targets = [target for target in target_list if target.target_weight > Decimal("0")]
+        if not active_targets:
+            return target_list
+
+        state = self._state(active_targets, context)
+        if not _basket_state_ready(state):
+            return [
+                target.model_copy(
+                    update={
+                        "rationale": (
+                            f"{target.rationale} Basket risk control was neutral because not enough "
+                            "basket history was available."
+                        )
+                    }
+                )
+                for target in target_list
+            ]
+
+        scale, label = self._scale(state)
+        state_summary = self._state_summary(state)
+        if scale >= Decimal("1"):
+            return [
+                target.model_copy(
+                    update={
+                        "rationale": (
+                            f"{target.rationale} Basket risk control kept full exposure; {state_summary}."
+                        )
+                    }
+                )
+                if target.target_weight > Decimal("0")
+                else target
+                for target in target_list
+            ]
+
+        return [
+            target.model_copy(
+                update={
+                    "target_weight": target.target_weight * scale,
+                    "rationale": (
+                        f"{target.rationale} Basket risk control used {label} exposure at {scale:.0%}; "
+                        f"residual stays in cash; {state_summary}."
+                    ),
+                }
+            )
+            if target.target_weight > Decimal("0")
+            else target
+            for target in target_list
+        ]
+
+    def _state(
+        self,
+        targets: Sequence[AllocationTarget],
+        context: SignalContext,
+    ) -> dict[str, Decimal | None]:
+        weights = {target.symbol: target.target_weight for target in targets}
+        symbols = list(weights)
+        short_momentum = {symbol: _momentum(symbol, context, self.short_momentum_bars) for symbol in symbols}
+        long_momentum = {symbol: _momentum(symbol, context, self.long_momentum_bars) for symbol in symbols}
+        moving_average_deviation = {
+            symbol: _moving_average_deviation(symbol, context, self.moving_average_bars)
+            for symbol in symbols
+        }
+        drawdowns = {
+            symbol: _drawdown_from_high(symbol, context, self.drawdown_lookback_bars)
+            for symbol in symbols
+        }
+        volatility_ratios = {
+            symbol: _volatility_ratio(symbol, context, self.fast_volatility_bars, self.slow_volatility_bars)
+            for symbol in symbols
+        }
+        return {
+            "shortMomentum": _weighted_average_metric(short_momentum, weights),
+            "longMomentum": _weighted_average_metric(long_momentum, weights),
+            "longBreadth": _breadth_above(long_momentum, self.long_momentum_threshold),
+            "movingAverageBreadth": _breadth_above(moving_average_deviation, Decimal("0")),
+            "drawdown": _weighted_average_metric(drawdowns, weights),
+            "volatilityRatio": _weighted_average_metric(volatility_ratios, weights),
+        }
+
+    def _scale(self, state: Mapping[str, Decimal | None]) -> tuple[Decimal, str]:
+        severe = (
+            (
+                _lte(state["drawdown"], self.severe_drawdown_trigger)
+                and _gte(state["volatilityRatio"], self.volatility_ratio_trigger)
+            )
+            or (
+                _lte(state["longMomentum"], Decimal("-0.08"))
+                and _lte(state["longBreadth"], self.weak_breadth_threshold)
+            )
+            or _gte(state["volatilityRatio"], self.severe_volatility_ratio_trigger)
+        )
+        if severe:
+            return self.severe_scale, "severe-defensive"
+
+        defensive = (
+            _lte(state["longBreadth"], self.weak_breadth_threshold)
+            or _lte(state["movingAverageBreadth"], self.weak_breadth_threshold)
+            or (
+                _lte(state["longMomentum"], self.long_momentum_threshold)
+                and _lte(state["shortMomentum"], self.short_momentum_threshold)
+            )
+            or _lte(state["drawdown"], self.drawdown_trigger)
+            or _gte(state["volatilityRatio"], self.volatility_ratio_trigger)
+        )
+        if defensive:
+            return self.defensive_scale, "defensive"
+
+        neutral = (
+            _lt(state["longBreadth"], self.healthy_breadth_threshold)
+            or _lt(state["movingAverageBreadth"], self.healthy_breadth_threshold)
+            or _lte(state["shortMomentum"], self.short_momentum_threshold)
+        )
+        if neutral:
+            return self.neutral_scale, "neutral"
+
+        return Decimal("1"), "full"
+
+    def _state_summary(self, state: Mapping[str, Decimal | None]) -> str:
+        return (
+            f"short={_fmt_decimal_pct(state['shortMomentum'])}, long={_fmt_decimal_pct(state['longMomentum'])}, "
+            f"long-breadth={_fmt_decimal_pct(state['longBreadth'])}, "
+            f"ma-breadth={_fmt_decimal_pct(state['movingAverageBreadth'])}, "
+            f"drawdown={_fmt_decimal_pct(state['drawdown'])}, "
+            f"vol-ratio={_fmt_decimal(state['volatilityRatio'])}"
+        )
 
 
 class CountryCompositeFactorOverlay:
@@ -720,6 +1385,32 @@ def _volatility_ratio(
     return Decimal(str(fast / slow))
 
 
+def _realized_volatility_metric(symbol: str, context: SignalContext, lookback_bars: int) -> Decimal | None:
+    history = [bar for bar in context.bars_by_symbol.get(symbol, []) if bar.trade_date < context.as_of]
+    if len(history) < lookback_bars + 1:
+        return None
+    volatility = _realized_volatility(history[-(lookback_bars + 1) :])
+    return None if volatility is None else Decimal(str(volatility))
+
+
+def _positive_return_share(symbol: str, context: SignalContext, lookback_bars: int) -> Decimal | None:
+    history = [bar for bar in context.bars_by_symbol.get(symbol, []) if bar.trade_date < context.as_of]
+    if len(history) < lookback_bars + 1:
+        return None
+    lookback = history[-(lookback_bars + 1) :]
+    returns = []
+    for index in range(1, len(lookback)):
+        previous = Decimal(lookback[index - 1].close)
+        current = Decimal(lookback[index].close)
+        if previous <= Decimal("0"):
+            continue
+        returns.append((current / previous) - Decimal("1"))
+    if not returns:
+        return None
+    positive = sum(1 for item in returns if item > Decimal("0"))
+    return Decimal(positive) / Decimal(len(returns))
+
+
 def _drawdown_from_high(symbol: str, context: SignalContext, lookback_bars: int) -> Decimal | None:
     history = [bar for bar in context.bars_by_symbol.get(symbol, []) if bar.trade_date < context.as_of]
     if len(history) < 2:
@@ -729,6 +1420,49 @@ def _drawdown_from_high(symbol: str, context: SignalContext, lookback_bars: int)
     if peak <= Decimal("0"):
         return None
     return (lookback[-1].close / peak) - Decimal("1")
+
+
+def _weighted_average_metric(
+    values_by_symbol: Mapping[str, Decimal | None],
+    weights_by_symbol: Mapping[str, Decimal],
+) -> Decimal | None:
+    total = Decimal("0")
+    weight_sum = Decimal("0")
+    for symbol, value in values_by_symbol.items():
+        if value is None:
+            continue
+        weight = weights_by_symbol.get(symbol, Decimal("0"))
+        if weight <= Decimal("0"):
+            continue
+        total += value * weight
+        weight_sum += weight
+    if weight_sum <= Decimal("0"):
+        return None
+    return total / weight_sum
+
+
+def _breadth_above(values_by_symbol: Mapping[str, Decimal | None], threshold: Decimal) -> Decimal | None:
+    present = [value for value in values_by_symbol.values() if value is not None]
+    if not present:
+        return None
+    positive = sum(1 for value in present if value > threshold)
+    return Decimal(positive) / Decimal(len(present))
+
+
+def _basket_state_ready(state: Mapping[str, Decimal | None]) -> bool:
+    return any(value is not None for value in state.values())
+
+
+def _lt(value: Decimal | None, threshold: Decimal) -> bool:
+    return value is not None and value < threshold
+
+
+def _lte(value: Decimal | None, threshold: Decimal) -> bool:
+    return value is not None and value <= threshold
+
+
+def _gte(value: Decimal | None, threshold: Decimal) -> bool:
+    return value is not None and value >= threshold
 
 
 def _rank_scores(scores: dict[str, Decimal]) -> dict[str, Decimal]:
@@ -799,6 +1533,12 @@ def _score_map(values: Mapping[str, Decimal | str | int | float] | None) -> dict
 
 def _negated(value: Decimal | None) -> Decimal | None:
     return None if value is None else -value
+
+
+def _safe_divide(numerator: Decimal | None, denominator: Decimal | None) -> Decimal | None:
+    if numerator is None or denominator is None or denominator <= Decimal("0"):
+        return None
+    return numerator / denominator
 
 
 def _clip(value: Decimal, lower: Decimal, upper: Decimal) -> Decimal:

@@ -13,8 +13,9 @@
 - Price bar: trade date, open, high, low, close, volume.
 - Corporate action: dividend amount and split ratio by effective date.
 - FX rate: one base currency unit translated into CNH.
-- Fundamental snapshot: valuation and quality fields keyed by symbol and as-of date.
+- Fundamental snapshot: valuation, quality, balance-sheet, and revision fields keyed by symbol, period end, and availability date. Historical research must filter by `available_date <= rebalance_date`.
 - Research artifact: filing, transcript, memo, or note with source metadata.
+- Broker order record: local order id, proposal id, broker, environment, broker order id, status, order payload, timestamps, fill quantities, average fill price, and broker message.
 
 ## Currency policy
 
@@ -27,4 +28,5 @@
 - Reject zero or negative FX rates.
 - Reject missing FX rates when a non-CNH instrument must be valued.
 - Reject proposal previews when a symbol is missing an instrument, price, or volatility input.
+- Reject broker routing unless the proposal is approved, the route is paper, no duplicate broker order records exist, and the order environment matches the route environment.
 - Keep source payloads and normalized tables both available for audit.

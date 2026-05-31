@@ -44,6 +44,8 @@ def test_compare_backtests_splits_candidate_against_baseline() -> None:
     assert comparison["observations"]["in_sample"] == 1
     assert comparison["observations"]["out_of_sample"] == 2
     assert comparison["metrics"]["out_of_sample"]["delta"]["return"] == pytest.approx(0.1)
+    assert comparison["metrics"]["full"]["active"]["trackingError"] is not None
+    assert comparison["metrics"]["full"]["active"]["informationRatio"] is not None
 
 
 def test_comparison_artifacts_include_model_structure_diagrams(tmp_path) -> None:
@@ -81,7 +83,7 @@ def test_comparison_artifacts_include_model_structure_diagrams(tmp_path) -> None
     assert payload["modelStructure"]["baseline"]["definition"]["state"] == "sota"
     assert "## Model Structure" in markdown
     assert "```mermaid" in markdown
-    assert "SOTA: risk parity + relative momentum 20/60d 20% tilt" in markdown
+    assert "SOTA: price/volume top 6 + technical tree + relative/adaptive" in markdown
 
 
 def test_build_signal_diagnostics_attributes_weight_changes() -> None:
@@ -125,6 +127,8 @@ def test_build_signal_diagnostics_attributes_weight_changes() -> None:
     assert signal["estimatedContribution"] == pytest.approx(-0.05)
     assert signal["topNegative"][0]["symbol"] == "SPY"
     assert signal["decisions"][0]["outcome"] == "false_exit"
+    assert "informationRatio" in diagnostics["summary"]["full"]
+    assert "trackingError" in diagnostics["summary"]["full"]
 
 
 def test_build_decision_diagnostics_counts_false_exits_and_keeps() -> None:
@@ -224,3 +228,4 @@ def test_build_signal_forecast_diagnostics_scores_forward_returns() -> None:
     assert diagnostics["summary"]["full"]["positiveSignals"] == 1
     assert diagnostics["summary"]["full"]["negativeSignals"] == 1
     assert diagnostics["summary"]["full"]["directionalAccuracy"] == pytest.approx(1)
+    assert "spreadInformationRatio" in diagnostics["summary"]["full"]

@@ -1,3 +1,17 @@
-from systematic_trading.execution.broker import BrokerConnectionProfile, InteractiveBrokersAdapter
+from systematic_trading.execution.broker import (
+    BrokerConnectionProfile,
+    IBContractSpec,
+    IBOrderSpec,
+    InteractiveBrokersAdapter,
+    InteractiveBrokersOrderRouter,
+    order_spec_for,
+)
 
-__all__ = ["BrokerConnectionProfile", "InteractiveBrokersAdapter"]
+__all__ = [
+    "BrokerConnectionProfile",
+    "IBContractSpec",
+    "IBOrderSpec",
+    "InteractiveBrokersAdapter",
+    "InteractiveBrokersOrderRouter",
+    "order_spec_for",
+]
