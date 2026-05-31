@@ -13,7 +13,7 @@ from systematic_trading.config import AppSettings
 from systematic_trading.data.yahoo import YahooChartProvider
 from systematic_trading.domain.enums import Currency
 from systematic_trading.domain.market import FXRate
-from systematic_trading.research import BENCHMARK_INSTRUMENTS, GLOBAL_ETF_UNIVERSE
+from systematic_trading.research import BENCHMARK_INSTRUMENTS, MULTI_ASSET_ETF_UNIVERSE
 from systematic_trading.storage.sqlite import SQLiteStore
 
 
@@ -34,7 +34,7 @@ def main() -> None:
 
     start_date = date.fromisoformat(args.start_date)
     end_date = date.fromisoformat(args.end_date) if args.end_date else _default_end_date(store)
-    instruments = dict(GLOBAL_ETF_UNIVERSE)
+    instruments = dict(MULTI_ASSET_ETF_UNIVERSE)
     if args.include_benchmarks:
         instruments.update(BENCHMARK_INSTRUMENTS)
     symbols = _symbols(args.symbols, instruments)
@@ -72,7 +72,7 @@ def main() -> None:
 
 def _default_end_date(store: SQLiteStore) -> date:
     last_dates: list[date] = []
-    for symbol in GLOBAL_ETF_UNIVERSE:
+    for symbol in MULTI_ASSET_ETF_UNIVERSE:
         bars = store.list_price_bars(symbol)
         if bars:
             last_dates.append(bars[-1].trade_date)

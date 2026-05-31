@@ -56,6 +56,8 @@ class OrderSide(StrEnum):
 class OrderType(StrEnum):
     MARKET = "market"
     LIMIT = "limit"
+    TWAP = "twap"
+    VWAP = "vwap"
     MARKET_ON_OPEN = "market_on_open"
     LIMIT_ON_OPEN = "limit_on_open"
 
@@ -63,3 +65,13 @@ class OrderType(StrEnum):
 class OrderEnvironment(StrEnum):
     PAPER = "paper"
     LIVE = "live"
+
+
+class BrokerOrderStatus(StrEnum):
+    PENDING_SUBMIT = "pending_submit"
+    SUBMITTED = "submitted"
+    ACKNOWLEDGED = "acknowledged"
+    PARTIALLY_FILLED = "partially_filled"
+    FILLED = "filled"
+    CANCELLED = "cancelled"
+    REJECTED = "rejected"

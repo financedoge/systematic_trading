@@ -4,7 +4,7 @@ import math
 from dataclasses import dataclass
 from decimal import Decimal
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Mapping, Sequence
 
 from systematic_trading.signals.base import SignalContext
 
@@ -59,6 +59,48 @@ SIGNAL_LIBRARY: tuple[SignalFeatureSpec, ...] = (
         "63-bar MA reversion",
         "Negative of price deviation from the 63-bar moving average.",
         63,
+    ),
+    SignalFeatureSpec(
+        "macd_line_12_26",
+        "technical",
+        "MACD 12/26 line",
+        "12-bar EMA minus 26-bar EMA, divided by latest close.",
+        26,
+    ),
+    SignalFeatureSpec(
+        "macd_hist_12_26_9",
+        "technical",
+        "MACD 12/26/9 histogram",
+        "MACD line minus its 9-bar signal EMA, divided by latest close.",
+        35,
+    ),
+    SignalFeatureSpec(
+        "bollinger_z_20",
+        "technical",
+        "20-bar Bollinger z-score",
+        "Latest close minus the 20-bar average, divided by the 20-bar close standard deviation.",
+        20,
+    ),
+    SignalFeatureSpec(
+        "bollinger_pct_b_20",
+        "technical",
+        "20-bar Bollinger percent-b",
+        "Position of latest close inside 2-standard-deviation Bollinger bands.",
+        20,
+    ),
+    SignalFeatureSpec(
+        "bollinger_bandwidth_20",
+        "technical",
+        "20-bar Bollinger bandwidth",
+        "Upper minus lower Bollinger band, divided by the 20-bar average.",
+        20,
+    ),
+    SignalFeatureSpec(
+        "rsi_14",
+        "technical",
+        "14-bar RSI",
+        "Relative strength index scaled to -1 to +1, where positive means stronger upside pressure.",
+        14,
     ),
     SignalFeatureSpec(
         "up_volume_share_21",
@@ -118,15 +160,18 @@ def compute_signal_features(
 ) -> dict[str, float | None]:
     valuation = _score_map(valuation_scores)
     macro = _score_map(macro_scores)
-    mom_20 = _momentum(symbol, context, 20)
-    mom_21 = _momentum(symbol, context, 21)
-    mom_40 = _momentum(symbol, context, 40)
-    mom_60 = _momentum(symbol, context, 60)
-    mom_63 = _momentum(symbol, context, 63)
-    mom_126 = _momentum(symbol, context, 126)
-    mom_252 = _momentum(symbol, context, 252)
-    mom_378 = _momentum(symbol, context, 378)
-    ma_dev_63 = _moving_average_deviation(symbol, context, 63)
+    history = _history(symbol, context)
+    mom_20 = _momentum_from_history(history, 20)
+    mom_21 = _momentum_from_history(history, 21)
+    mom_40 = _momentum_from_history(history, 40)
+    mom_60 = _momentum_from_history(history, 60)
+    mom_63 = _momentum_from_history(history, 63)
+    mom_126 = _momentum_from_history(history, 126)
+    mom_252 = _momentum_from_history(history, 252)
+    mom_378 = _momentum_from_history(history, 378)
+    ma_dev_63 = _moving_average_deviation_from_history(history, 63)
+    macd = _macd_from_history(history, 12, 26, 9)
+    bollinger = _bollinger_from_history(history, 20, Decimal("2"))
     return {
         "mom_20": _float(mom_20),
         "mom_21": _float(mom_21),
@@ -146,14 +191,20 @@ def compute_signal_features(
             if mom_126 is not None and mom_252 is not None
             else None
         ),
-        "above_ma_63": _above_moving_average(symbol, context, 63),
-        "above_ma_252": _above_moving_average(symbol, context, 252),
+        "above_ma_63": _above_moving_average_from_history(history, 63),
+        "above_ma_252": _above_moving_average_from_history(history, 252),
         "reversal_21": _float(-mom_21 if mom_21 is not None else None),
         "mean_reversion_ma_63": _float(-ma_dev_63 if ma_dev_63 is not None else None),
-        "up_volume_share_21": _float(_up_volume_share(symbol, context, 21)),
-        "signed_volume_pressure_21_126": _float(_signed_volume_pressure(symbol, context, 21, 126)),
-        "vol_ratio_21_252": _float(_volatility_ratio(symbol, context, 21, 252)),
-        "drawdown_252": _float(_drawdown_from_high(symbol, context, 252)),
+        "macd_line_12_26": _float(macd["line"] if macd is not None else None),
+        "macd_hist_12_26_9": _float(macd["histogram"] if macd is not None else None),
+        "bollinger_z_20": _float(bollinger["z"] if bollinger is not None else None),
+        "bollinger_pct_b_20": _float(bollinger["percent_b"] if bollinger is not None else None),
+        "bollinger_bandwidth_20": _float(bollinger["bandwidth"] if bollinger is not None else None),
+        "rsi_14": _float(_rsi_from_history(history, 14)),
+        "up_volume_share_21": _float(_up_volume_share_from_history(history, 21)),
+        "signed_volume_pressure_21_126": _float(_signed_volume_pressure_from_history(history, 21, 126)),
+        "vol_ratio_21_252": _float(_volatility_ratio_from_history(history, 21, 252)),
+        "drawdown_252": _float(_drawdown_from_high_from_history(history, 252)),
         "valuation_score": _float(valuation.get(symbol.upper(), Decimal("0"))),
         "macro_growth_score": _float(macro.get(symbol.upper(), Decimal("0"))),
     }
@@ -179,7 +230,10 @@ def write_signal_library_markdown(path: Path) -> Path:
 
 
 def _momentum(symbol: str, context: SignalContext, lookback_bars: int) -> Decimal | None:
-    history = _history(symbol, context)
+    return _momentum_from_history(_history(symbol, context), lookback_bars)
+
+
+def _momentum_from_history(history: Sequence[object], lookback_bars: int) -> Decimal | None:
     if len(history) < lookback_bars + 1:
         return None
     latest = history[-1]
@@ -190,12 +244,19 @@ def _momentum(symbol: str, context: SignalContext, lookback_bars: int) -> Decima
 
 
 def _above_moving_average(symbol: str, context: SignalContext, lookback_bars: int) -> float | None:
-    deviation = _moving_average_deviation(symbol, context, lookback_bars)
+    return _above_moving_average_from_history(_history(symbol, context), lookback_bars)
+
+
+def _above_moving_average_from_history(history: Sequence[object], lookback_bars: int) -> float | None:
+    deviation = _moving_average_deviation_from_history(history, lookback_bars)
     return None if deviation is None else float(deviation > Decimal("0"))
 
 
 def _moving_average_deviation(symbol: str, context: SignalContext, lookback_bars: int) -> Decimal | None:
-    history = _history(symbol, context)
+    return _moving_average_deviation_from_history(_history(symbol, context), lookback_bars)
+
+
+def _moving_average_deviation_from_history(history: Sequence[object], lookback_bars: int) -> Decimal | None:
     if len(history) < lookback_bars:
         return None
     lookback = history[-lookback_bars:]
@@ -205,8 +266,100 @@ def _moving_average_deviation(symbol: str, context: SignalContext, lookback_bars
     return (history[-1].close / average) - Decimal("1")
 
 
+def _macd(symbol: str, context: SignalContext, fast_bars: int, slow_bars: int, signal_bars: int) -> dict[str, Decimal] | None:
+    return _macd_from_history(_history(symbol, context), fast_bars, slow_bars, signal_bars)
+
+
+def _macd_from_history(history: Sequence[object], fast_bars: int, slow_bars: int, signal_bars: int) -> dict[str, Decimal] | None:
+    if len(history) < slow_bars + signal_bars:
+        return None
+    closes = [Decimal(bar.close) for bar in history]
+    if closes[-1] <= Decimal("0"):
+        return None
+    fast_ema = _ema_series(closes, fast_bars)
+    slow_ema = _ema_series(closes, slow_bars)
+    offset = len(fast_ema) - len(slow_ema)
+    macd_values = [fast_ema[index + offset] - slow_ema[index] for index in range(len(slow_ema))]
+    if len(macd_values) < signal_bars:
+        return None
+    signal = _ema_series(macd_values, signal_bars)[-1]
+    line = macd_values[-1]
+    return {
+        "line": line / closes[-1],
+        "histogram": (line - signal) / closes[-1],
+    }
+
+
+def _ema_series(values: list[Decimal], lookback_bars: int) -> list[Decimal]:
+    if len(values) < lookback_bars:
+        return []
+    alpha = Decimal("2") / Decimal(lookback_bars + 1)
+    ema = sum(values[:lookback_bars], Decimal("0")) / Decimal(lookback_bars)
+    series = [ema]
+    for value in values[lookback_bars:]:
+        ema = (value - ema) * alpha + ema
+        series.append(ema)
+    return series
+
+
+def _bollinger(symbol: str, context: SignalContext, lookback_bars: int, band_width: Decimal) -> dict[str, Decimal] | None:
+    return _bollinger_from_history(_history(symbol, context), lookback_bars, band_width)
+
+
+def _bollinger_from_history(history: Sequence[object], lookback_bars: int, band_width: Decimal) -> dict[str, Decimal] | None:
+    if len(history) < lookback_bars:
+        return None
+    closes = [Decimal(bar.close) for bar in history[-lookback_bars:]]
+    average = sum(closes, Decimal("0")) / Decimal(lookback_bars)
+    if average <= Decimal("0"):
+        return None
+    variance = sum((close - average) ** 2 for close in closes) / Decimal(lookback_bars)
+    standard_deviation = Decimal(str(math.sqrt(float(variance))))
+    if standard_deviation <= Decimal("0"):
+        return None
+    latest = closes[-1]
+    upper = average + band_width * standard_deviation
+    lower = average - band_width * standard_deviation
+    band_range = upper - lower
+    return {
+        "z": (latest - average) / standard_deviation,
+        "percent_b": (latest - lower) / band_range if band_range > Decimal("0") else Decimal("0.5"),
+        "bandwidth": band_range / average,
+    }
+
+
+def _rsi(symbol: str, context: SignalContext, lookback_bars: int) -> Decimal | None:
+    return _rsi_from_history(_history(symbol, context), lookback_bars)
+
+
+def _rsi_from_history(history: Sequence[object], lookback_bars: int) -> Decimal | None:
+    if len(history) < lookback_bars + 1:
+        return None
+    closes = [Decimal(bar.close) for bar in history[-(lookback_bars + 1) :]]
+    gains: list[Decimal] = []
+    losses: list[Decimal] = []
+    for index in range(1, len(closes)):
+        change = closes[index] - closes[index - 1]
+        if change >= Decimal("0"):
+            gains.append(change)
+            losses.append(Decimal("0"))
+        else:
+            gains.append(Decimal("0"))
+            losses.append(abs(change))
+    average_gain = sum(gains, Decimal("0")) / Decimal(lookback_bars)
+    average_loss = sum(losses, Decimal("0")) / Decimal(lookback_bars)
+    if average_loss == Decimal("0"):
+        return Decimal("1")
+    rs = average_gain / average_loss
+    rsi = Decimal("100") - (Decimal("100") / (Decimal("1") + rs))
+    return (rsi / Decimal("50")) - Decimal("1")
+
+
 def _up_volume_share(symbol: str, context: SignalContext, lookback_bars: int) -> Decimal | None:
-    history = _history(symbol, context)
+    return _up_volume_share_from_history(_history(symbol, context), lookback_bars)
+
+
+def _up_volume_share_from_history(history: Sequence[object], lookback_bars: int) -> Decimal | None:
     if len(history) < lookback_bars + 1:
         return None
     lookback = history[-(lookback_bars + 1) :]
@@ -223,9 +376,13 @@ def _up_volume_share(symbol: str, context: SignalContext, lookback_bars: int) ->
 
 
 def _signed_volume_pressure(symbol: str, context: SignalContext, fast_bars: int, slow_bars: int) -> Decimal | None:
-    fast_average = _average_volume(symbol, context, fast_bars)
-    slow_average = _average_volume(symbol, context, slow_bars)
-    short_momentum = _momentum(symbol, context, fast_bars)
+    return _signed_volume_pressure_from_history(_history(symbol, context), fast_bars, slow_bars)
+
+
+def _signed_volume_pressure_from_history(history: Sequence[object], fast_bars: int, slow_bars: int) -> Decimal | None:
+    fast_average = _average_volume_from_history(history, fast_bars)
+    slow_average = _average_volume_from_history(history, slow_bars)
+    short_momentum = _momentum_from_history(history, fast_bars)
     if fast_average is None or slow_average is None or slow_average <= Decimal("0") or short_momentum is None:
         return None
     pressure = (fast_average / slow_average) - Decimal("1")
@@ -233,7 +390,10 @@ def _signed_volume_pressure(symbol: str, context: SignalContext, fast_bars: int,
 
 
 def _average_volume(symbol: str, context: SignalContext, lookback_bars: int) -> Decimal | None:
-    history = _history(symbol, context)
+    return _average_volume_from_history(_history(symbol, context), lookback_bars)
+
+
+def _average_volume_from_history(history: Sequence[object], lookback_bars: int) -> Decimal | None:
     if len(history) < lookback_bars:
         return None
     volumes = [Decimal(bar.volume) for bar in history[-lookback_bars:]]
@@ -241,7 +401,10 @@ def _average_volume(symbol: str, context: SignalContext, lookback_bars: int) -> 
 
 
 def _volatility_ratio(symbol: str, context: SignalContext, fast_bars: int, slow_bars: int) -> Decimal | None:
-    history = _history(symbol, context)
+    return _volatility_ratio_from_history(_history(symbol, context), fast_bars, slow_bars)
+
+
+def _volatility_ratio_from_history(history: Sequence[object], fast_bars: int, slow_bars: int) -> Decimal | None:
     if len(history) < slow_bars + 1:
         return None
     fast = _realized_volatility(history[-(fast_bars + 1) :])
@@ -252,7 +415,10 @@ def _volatility_ratio(symbol: str, context: SignalContext, fast_bars: int, slow_
 
 
 def _drawdown_from_high(symbol: str, context: SignalContext, lookback_bars: int) -> Decimal | None:
-    history = _history(symbol, context)
+    return _drawdown_from_high_from_history(_history(symbol, context), lookback_bars)
+
+
+def _drawdown_from_high_from_history(history: Sequence[object], lookback_bars: int) -> Decimal | None:
     if len(history) < 2:
         return None
     lookback = history[-min(len(history), lookback_bars + 1) :]

@@ -18,6 +18,9 @@ dependencies = [
 data = [
     "tushare>=1.2.10",
 ]
+ib = [
+    "ibapi>=9.81.1",
+]
 test = [
     "pytest>=8.4.0",
     "httpx>=0.28.0",

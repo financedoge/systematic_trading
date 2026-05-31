@@ -50,6 +50,11 @@ def compare_backtests(
             "baseline": baseline_metrics,
             "candidate": candidate_metrics,
             "delta": _metric_delta(candidate_metrics, baseline_metrics),
+            "active": _active_metrics(
+                baseline_points=baseline_points,
+                candidate_points=candidate_points,
+                window_dates=window_dates,
+            ),
         }
 
     return {
@@ -442,6 +447,37 @@ def _metric_delta(candidate: dict[str, Any], baseline: dict[str, Any]) -> dict[s
     return delta
 
 
+def _active_metrics(
+    *,
+    baseline_points: dict[date, float],
+    candidate_points: dict[date, float],
+    window_dates: list[date],
+) -> dict[str, Any]:
+    active_returns: list[float] = []
+    for index in range(1, len(window_dates)):
+        previous = window_dates[index - 1]
+        current = window_dates[index]
+        if baseline_points[previous] == 0 or candidate_points[previous] == 0:
+            continue
+        baseline_return = (baseline_points[current] / baseline_points[previous]) - 1
+        candidate_return = (candidate_points[current] / candidate_points[previous]) - 1
+        active_returns.append(candidate_return - baseline_return)
+    deviation = _stddev(active_returns)
+    average = sum(active_returns) / len(active_returns) if active_returns else None
+    tracking_error = deviation * math.sqrt(TRADING_DAYS_PER_YEAR) if deviation is not None else None
+    return {
+        "observations": len(active_returns),
+        "averageActiveReturn": average,
+        "annualizedActiveReturn": average * TRADING_DAYS_PER_YEAR if average is not None else None,
+        "trackingError": tracking_error,
+        "informationRatio": (
+            (average / deviation) * math.sqrt(TRADING_DAYS_PER_YEAR)
+            if average is not None and deviation not in {None, 0}
+            else None
+        ),
+    }
+
+
 def _targets_by_date(result: dict[str, Any]) -> dict[date, dict[str, float]]:
     targets: dict[date, dict[str, float]] = {}
     for proposal in result.get("proposals", []):
@@ -572,6 +608,11 @@ def _signal_window_summary(periods: list[dict[str, Any]]) -> dict[str, Any]:
     realized = [signal["realizedDelta"] for signal in signals]
     baseline_compounded = _compound_returns([period["baselineReturn"] for period in periods])
     candidate_compounded = _compound_returns([period["candidateReturn"] for period in periods])
+    periods_per_year = _periods_per_year(periods)
+    realized_deviation = _stddev(realized)
+    estimated_deviation = _stddev(estimated)
+    average_realized = sum(realized) / len(realized) if realized else None
+    average_estimated = sum(estimated) / len(estimated) if estimated else None
     return {
         "periods": len(periods),
         "positivePeriods": sum(1 for value in realized if value > 0),
@@ -579,8 +620,20 @@ def _signal_window_summary(periods: list[dict[str, Any]]) -> dict[str, Any]:
         "estimatedContribution": sum(estimated),
         "realizedDeltaSum": sum(realized),
         "compoundedDelta": candidate_compounded - baseline_compounded if periods else None,
-        "averageEstimatedContribution": sum(estimated) / len(estimated) if estimated else None,
-        "averageRealizedDelta": sum(realized) / len(realized) if realized else None,
+        "averageEstimatedContribution": average_estimated,
+        "averageRealizedDelta": average_realized,
+        "trackingError": realized_deviation * math.sqrt(periods_per_year) if realized_deviation is not None else None,
+        "informationRatio": (
+            (average_realized / realized_deviation) * math.sqrt(periods_per_year)
+            if average_realized is not None and realized_deviation not in {None, 0}
+            else None
+        ),
+        "estimatedTrackingError": estimated_deviation * math.sqrt(periods_per_year) if estimated_deviation is not None else None,
+        "estimatedInformationRatio": (
+            (average_estimated / estimated_deviation) * math.sqrt(periods_per_year)
+            if average_estimated is not None and estimated_deviation not in {None, 0}
+            else None
+        ),
     }
 
 
@@ -589,6 +642,15 @@ def _compound_returns(returns: list[float]) -> float:
     for item in returns:
         value *= 1 + item
     return value - 1
+
+
+def _periods_per_year(periods: list[dict[str, Any]]) -> float:
+    if len(periods) < 2:
+        return 12.0
+    start = date.fromisoformat(str(periods[0]["start"]))
+    end = date.fromisoformat(str(periods[-1]["end"]))
+    years = max((end - start).days / 365.25, 1 / 365.25)
+    return len(periods) / years
 
 
 def _stale_runs(dates: list[date], prices: dict[date, float]) -> list[dict[str, Any]]:
@@ -649,6 +711,10 @@ def _forecast_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     negative_returns = [row["forwardReturn"] for row in negative]
     avg_positive = _mean(positive_returns)
     avg_negative = _mean(negative_returns)
+    spread_returns = _forecast_spread_returns(rows)
+    spread_deviation = _stddev(spread_returns)
+    avg_spread_return = _mean(spread_returns)
+    periods_per_year = _forecast_periods_per_year(rows)
     return {
         "observations": len(rows),
         "positiveSignals": len(positive),
@@ -667,7 +733,32 @@ def _forecast_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
             [row["momentum"] for row in rows],
             [row["forwardReturn"] for row in rows],
         ),
+        "spreadTrackingError": spread_deviation * math.sqrt(periods_per_year) if spread_deviation is not None else None,
+        "spreadInformationRatio": (
+            (avg_spread_return / spread_deviation) * math.sqrt(periods_per_year)
+            if avg_spread_return is not None and spread_deviation not in {None, 0}
+            else None
+        ),
     }
+
+
+def _forecast_spread_returns(rows: list[dict[str, Any]]) -> list[float]:
+    spreads: list[float] = []
+    for start in sorted({row["start"] for row in rows}):
+        period_rows = [row for row in rows if row["start"] == start]
+        positive = [row["forwardReturn"] for row in period_rows if row["signal"] == "positive"]
+        negative = [row["forwardReturn"] for row in period_rows if row["signal"] == "negative"]
+        if positive and negative:
+            spreads.append((sum(positive) / len(positive)) - (sum(negative) / len(negative)))
+    return spreads
+
+
+def _forecast_periods_per_year(rows: list[dict[str, Any]]) -> float:
+    starts = sorted({date.fromisoformat(str(row["start"])) for row in rows})
+    if len(starts) < 2:
+        return 12.0
+    years = max((starts[-1] - starts[0]).days / 365.25, 1 / 365.25)
+    return len(starts) / years
 
 
 def _forecast_symbol_summary(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -730,8 +821,8 @@ def _comparison_markdown(
         f"- Out-of-sample split: {comparison['splitDate']}",
         f"- Range: {comparison['dateRange']['start']} to {comparison['dateRange']['end']}",
         "",
-        "| Window | Strategy | Return | Ann. Return | Max DD | Sharpe | Sortino | Calmar | Alpha vs Baseline |",
-        "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+        "| Window | Strategy | Return | Ann. Return | Max DD | Sharpe | Sortino | Calmar | Alpha vs Baseline | Info Ratio | Tracking Error |",
+        "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for window in ["full", "in_sample", "out_of_sample"]:
         label = window.replace("_", " ").title()
@@ -740,7 +831,15 @@ def _comparison_markdown(
         candidate = metrics["candidate"]
         delta = metrics["delta"]
         lines.append(_metric_row(label, comparison["baselineName"], baseline, None))
-        lines.append(_metric_row(label, comparison["candidateName"], candidate, delta["return"]))
+        lines.append(
+            _metric_row(
+                label,
+                comparison["candidateName"],
+                candidate,
+                delta["return"],
+                metrics.get("active", {}),
+            )
+        )
     lines.append("")
     lines.append("Alpha here is candidate return minus baseline return over the same window.")
     if model_structure:
@@ -758,7 +857,7 @@ def _comparison_markdown(
 
 def _model_structure_markdown(model_structure: dict[str, Any]) -> list[str]:
     lines = ["", "## Model Structure"]
-    for key, label in [("baseline", "Baseline / SOTA"), ("candidate", "Research Candidate")]:
+    for key, label in [("baseline", "Baseline"), ("candidate", "Candidate")]:
         card = model_structure.get(key)
         if not card:
             continue
@@ -829,8 +928,8 @@ def _forecast_markdown(forecast: dict[str, Any]) -> list[str]:
         f"- Threshold: {_fmt_pct(forecast['threshold'])}",
         f"- Forward horizon: {forecast['forwardHorizon']}",
         "",
-        "| Window | Obs. | Positive Signals | Negative Signals | Positive Avg Fwd | Negative Avg Fwd | Spread | Accuracy | IC |",
-        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+        "| Window | Obs. | Positive Signals | Negative Signals | Positive Avg Fwd | Negative Avg Fwd | Spread | Accuracy | IC | Spread IR |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for key, label in [("full", "Full"), ("in_sample", "In Sample"), ("out_of_sample", "Out Of Sample")]:
         item = forecast["summary"][key]
@@ -838,15 +937,16 @@ def _forecast_markdown(forecast: dict[str, Any]) -> list[str]:
             f"| {label} | {item['observations']} | {item['positiveSignals']} | {item['negativeSignals']} | "
             f"{_fmt_pct(item['avgForwardReturnPositiveSignal'])} | "
             f"{_fmt_pct(item['avgForwardReturnNegativeSignal'])} | {_fmt_pct(item['spread'])} | "
-            f"{_fmt_pct(item['directionalAccuracy'])} | {_fmt_num(item['informationCoefficient'])} |"
+            f"{_fmt_pct(item['directionalAccuracy'])} | {_fmt_num(item['informationCoefficient'])} | "
+            f"{_fmt_num(item['spreadInformationRatio'])} |"
         )
     lines.extend(
         [
             "",
             "### Forecast By Symbol",
             "",
-            "| Symbol | Obs. | Positive Avg Fwd | Negative Avg Fwd | Spread | Accuracy | IC |",
-            "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
+            "| Symbol | Obs. | Positive Avg Fwd | Negative Avg Fwd | Spread | Accuracy | IC | Spread IR |",
+            "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
         ]
     )
     for item in forecast["bySymbol"]:
@@ -854,7 +954,8 @@ def _forecast_markdown(forecast: dict[str, Any]) -> list[str]:
             f"| {item['symbol']} | {item['observations']} | "
             f"{_fmt_pct(item['avgForwardReturnPositiveSignal'])} | "
             f"{_fmt_pct(item['avgForwardReturnNegativeSignal'])} | {_fmt_pct(item['spread'])} | "
-            f"{_fmt_pct(item['directionalAccuracy'])} | {_fmt_num(item['informationCoefficient'])} |"
+            f"{_fmt_pct(item['directionalAccuracy'])} | {_fmt_num(item['informationCoefficient'])} | "
+            f"{_fmt_num(item['spreadInformationRatio'])} |"
         )
     return lines
 
@@ -1004,15 +1105,16 @@ def _signal_markdown(signal_diagnostics: dict[str, Any]) -> list[str]:
         "",
         "## Signal Attribution",
         "",
-        "| Window | Periods | Positive | Negative | Est. Contribution | Compounded Delta | Avg. Period Delta |",
-        "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
+        "| Window | Periods | Positive | Negative | Est. Contribution | Compounded Delta | Avg. Period Delta | Info Ratio | Tracking Error |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for key, label in [("full", "Full"), ("in_sample", "In Sample"), ("out_of_sample", "Out Of Sample")]:
         item = signal_diagnostics["summary"][key]
         lines.append(
             f"| {label} | {item['periods']} | {item['positivePeriods']} | {item['negativePeriods']} | "
             f"{_fmt_pct(item['estimatedContribution'])} | {_fmt_pct(item['compoundedDelta'])} | "
-            f"{_fmt_pct(item['averageRealizedDelta'])} |"
+            f"{_fmt_pct(item['averageRealizedDelta'])} | {_fmt_num(item['informationRatio'])} | "
+            f"{_fmt_pct(item['trackingError'])} |"
         )
     periods = signal_diagnostics.get("periods", [])
     worst = sorted(periods, key=lambda period: period["signals"][0]["realizedDelta"])[:5]
@@ -1045,11 +1147,19 @@ def _impact_label(item: dict[str, Any] | None) -> str:
     )
 
 
-def _metric_row(label: str, strategy: str, metrics: dict[str, Any], alpha: float | None) -> str:
+def _metric_row(
+    label: str,
+    strategy: str,
+    metrics: dict[str, Any],
+    alpha: float | None,
+    active: dict[str, Any] | None = None,
+) -> str:
+    active = active or {}
     return (
         f"| {label} | {strategy} | {_fmt_pct(metrics['return'])} | {_fmt_pct(metrics['annualizedReturn'])} | "
         f"{_fmt_pct(metrics['maxDrawdown'])} | {_fmt_num(metrics['sharpe'])} | {_fmt_num(metrics['sortino'])} | "
-        f"{_fmt_num(metrics['calmar'])} | {_fmt_pct(alpha)} |"
+        f"{_fmt_num(metrics['calmar'])} | {_fmt_pct(alpha)} | {_fmt_num(active.get('informationRatio'))} | "
+        f"{_fmt_pct(active.get('trackingError'))} |"
     )
 
 

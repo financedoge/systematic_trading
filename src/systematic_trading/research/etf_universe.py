@@ -50,6 +50,68 @@ GLOBAL_ETF_UNIVERSE = {
 
 MSCI_WORLD_PROXY_SYMBOL = "URTH"
 MSCI_WORLD_PROXY_NAME = "MSCI World proxy (URTH)"
+MULTI_ASSET_BENCHMARK_SYMBOL = "AOR"
+MULTI_ASSET_BENCHMARK_NAME = "Multi-asset allocation proxy (AOR)"
+
+MULTI_ASSET_ETF_UNIVERSE = {
+    **GLOBAL_ETF_UNIVERSE,
+    "MCHI": Instrument(
+        symbol="MCHI",
+        name="iShares MSCI China ETF",
+        asset_class=AssetClass.ETF,
+        exchange=Exchange.NYSE,
+        quote_currency=Currency.USD,
+        country="China",
+    ),
+    "IEF": Instrument(
+        symbol="IEF",
+        name="iShares 7-10 Year Treasury Bond ETF",
+        asset_class=AssetClass.ETF,
+        exchange=Exchange.NYSE,
+        quote_currency=Currency.USD,
+        country="US bonds",
+    ),
+    "TLT": Instrument(
+        symbol="TLT",
+        name="iShares 20+ Year Treasury Bond ETF",
+        asset_class=AssetClass.ETF,
+        exchange=Exchange.NYSE,
+        quote_currency=Currency.USD,
+        country="US bonds",
+    ),
+    "LQD": Instrument(
+        symbol="LQD",
+        name="iShares iBoxx $ Investment Grade Corporate Bond ETF",
+        asset_class=AssetClass.ETF,
+        exchange=Exchange.NYSE,
+        quote_currency=Currency.USD,
+        country="US credit",
+    ),
+    "HYG": Instrument(
+        symbol="HYG",
+        name="iShares iBoxx $ High Yield Corporate Bond ETF",
+        asset_class=AssetClass.ETF,
+        exchange=Exchange.NYSE,
+        quote_currency=Currency.USD,
+        country="US credit",
+    ),
+    "GLD": Instrument(
+        symbol="GLD",
+        name="SPDR Gold Shares",
+        asset_class=AssetClass.ETF,
+        exchange=Exchange.NYSE,
+        quote_currency=Currency.USD,
+        country="Commodity gold",
+    ),
+    "DBC": Instrument(
+        symbol="DBC",
+        name="Invesco DB Commodity Index Tracking Fund",
+        asset_class=AssetClass.ETF,
+        exchange=Exchange.NYSE,
+        quote_currency=Currency.USD,
+        country="Broad commodities",
+    ),
+}
 
 BENCHMARK_INSTRUMENTS = {
     MSCI_WORLD_PROXY_SYMBOL: Instrument(
@@ -59,5 +121,13 @@ BENCHMARK_INSTRUMENTS = {
         exchange=Exchange.NYSE,
         quote_currency=Currency.USD,
         country="Global developed equity",
+    ),
+    MULTI_ASSET_BENCHMARK_SYMBOL: Instrument(
+        symbol=MULTI_ASSET_BENCHMARK_SYMBOL,
+        name="iShares Core Growth Allocation ETF",
+        asset_class=AssetClass.ETF,
+        exchange=Exchange.NYSE,
+        quote_currency=Currency.USD,
+        country="Global multi-asset",
     ),
 }
