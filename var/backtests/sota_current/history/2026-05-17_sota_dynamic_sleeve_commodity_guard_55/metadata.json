@@ -1,0 +1,46 @@
+{
+  "key": "sota_dynamic_sleeve_commodity_guard_55",
+  "name": "SOTA: dynamic sleeve-capped momentum + commodity guard",
+  "promotedOn": "2026-05-17",
+  "generatedAt": "2026-05-17T05:06:04.978208+00:00",
+  "source": "export_sota_artifacts.py",
+  "metrics": {
+    "dateRange": {
+      "start": "2012-01-03",
+      "end": "2026-04-29"
+    },
+    "splitDate": "2023-01-01",
+    "full": {
+      "return": 3.8928157800000003,
+      "annualizedReturn": 0.11726720383712363,
+      "maxDrawdown": -0.27816861830613704,
+      "sharpe": 0.8701089643389104,
+      "sortino": 0.8139687022238815,
+      "calmar": 0.4215687756268244,
+      "alpha": 3.3383015,
+      "informationRatio": 0.7451081520751734,
+      "trackingError": 0.11807091705927385
+    },
+    "outOfSample": {
+      "return": 1.729594472651502,
+      "annualizedReturn": 0.3533905414397098,
+      "maxDrawdown": -0.11403549978158312,
+      "sharpe": 1.8306234891195288,
+      "sortino": 1.8431782791507068,
+      "calmar": 3.0989520115803697,
+      "alpha": 1.453703203689363,
+      "informationRatio": 1.7113133116901096,
+      "trackingError": 0.1419596371433786
+    }
+  },
+  "files": {
+    "readme": "history/2026-05-17_sota_dynamic_sleeve_commodity_guard_55/README.md",
+    "benchmark_json": "history/2026-05-17_sota_dynamic_sleeve_commodity_guard_55/risk_parity.json",
+    "benchmark_html": "history/2026-05-17_sota_dynamic_sleeve_commodity_guard_55/risk_parity.html",
+    "sota_json": "history/2026-05-17_sota_dynamic_sleeve_commodity_guard_55/sota_dynamic_sleeve_commodity_guard_55.json",
+    "sota_html": "history/2026-05-17_sota_dynamic_sleeve_commodity_guard_55/sota_dynamic_sleeve_commodity_guard_55.html",
+    "comparison_json": "history/2026-05-17_sota_dynamic_sleeve_commodity_guard_55/sota_vs_benchmark.json",
+    "comparison_md": "history/2026-05-17_sota_dynamic_sleeve_commodity_guard_55/sota_vs_benchmark.md",
+    "model_html": "history/2026-05-17_sota_dynamic_sleeve_commodity_guard_55/sota_model.html"
+  }
+}

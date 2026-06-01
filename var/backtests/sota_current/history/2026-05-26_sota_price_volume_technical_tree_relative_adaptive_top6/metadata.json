@@ -1,0 +1,46 @@
+{
+  "key": "sota_price_volume_technical_tree_relative_adaptive_top6",
+  "name": "SOTA: price/volume top 6 + technical tree + relative/adaptive",
+  "promotedOn": "2026-05-26",
+  "generatedAt": "2026-05-25T17:10:25.481039+00:00",
+  "source": "export_sota_artifacts.py",
+  "metrics": {
+    "dateRange": {
+      "start": "2012-01-03",
+      "end": "2026-04-29"
+    },
+    "splitDate": "2023-01-01",
+    "full": {
+      "return": 2.48223183,
+      "annualizedReturn": 0.09104326523324557,
+      "maxDrawdown": -0.1411204908221072,
+      "sharpe": 0.9512180763900472,
+      "sortino": 0.8944823166799165,
+      "calmar": 0.6451456106966942,
+      "alpha": 1.34599783,
+      "informationRatio": 0.625314834172209,
+      "trackingError": 0.05693268764415975
+    },
+    "outOfSample": {
+      "return": 0.6798144869240432,
+      "annualizedReturn": 0.1691899249838409,
+      "maxDrawdown": -0.08460488532979682,
+      "sharpe": 1.4771452105804033,
+      "sortino": 1.4382919538622547,
+      "calmar": 1.9997654310897606,
+      "alpha": 0.28571540259214734,
+      "informationRatio": 1.1330787642036584,
+      "trackingError": 0.05167125997560448
+    }
+  },
+  "files": {
+    "readme": "history/2026-05-26_sota_price_volume_technical_tree_relative_adaptive_top6/README.md",
+    "benchmark_json": "history/2026-05-26_sota_price_volume_technical_tree_relative_adaptive_top6/risk_parity.json",
+    "benchmark_html": "history/2026-05-26_sota_price_volume_technical_tree_relative_adaptive_top6/risk_parity.html",
+    "sota_json": "history/2026-05-26_sota_price_volume_technical_tree_relative_adaptive_top6/sota_price_volume_technical_tree_relative_adaptive_top6.json",
+    "sota_html": "history/2026-05-26_sota_price_volume_technical_tree_relative_adaptive_top6/sota_price_volume_technical_tree_relative_adaptive_top6.html",
+    "comparison_json": "history/2026-05-26_sota_price_volume_technical_tree_relative_adaptive_top6/sota_vs_benchmark.json",
+    "comparison_md": "history/2026-05-26_sota_price_volume_technical_tree_relative_adaptive_top6/sota_vs_benchmark.md",
+    "model_html": "history/2026-05-26_sota_price_volume_technical_tree_relative_adaptive_top6/sota_model.html"
+  }
+}

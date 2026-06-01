@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Current SOTA Model</title>
+  <script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'; mermaid.initialize({startOnLoad: true});</script>
+  <style>
+    body { margin: 0; font-family: Inter, Segoe UI, Arial, sans-serif; color: #172033; background: #f6f8fb; }
+    main { max-width: 1180px; margin: 0 auto; padding: 28px; }
+    h1, h2, h3 { margin: 0; }
+    h1 { font-size: 30px; }
+    h2 { margin-top: 28px; font-size: 21px; }
+    h3 { margin-top: 18px; font-size: 16px; }
+    .subtle { color: #607089; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 18px 0 24px; }
+    .stat, .panel { background: #fff; border: 1px solid #dce4ef; border-radius: 8px; box-shadow: 0 8px 20px rgba(30, 45, 70, .06); }
+    .stat { padding: 14px 16px; }
+    .stat span { display: block; color: #607089; font-size: 12px; margin-bottom: 6px; }
+    .stat strong { font-size: 22px; }
+    .panel { padding: 18px; margin-top: 14px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border-bottom: 1px solid #e6edf5; padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { color: #607089; font-size: 12px; text-transform: uppercase; }
+    code, pre { font-family: Consolas, Monaco, monospace; }
+    pre { background: #101828; color: #e5edf8; padding: 14px; border-radius: 6px; overflow-x: auto; }
+    .mermaid { background: #fff; border: 1px solid #e6edf5; border-radius: 6px; padding: 12px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>SOTA: price/volume top 6 + technical tree + relative/adaptive</h1>
+  <p class="subtle">Canonical current SOTA model card and benchmark comparison. Generated from the strategy catalog.</p>
+  <section class="grid">
+    <div class="stat"><span>Full Alpha vs Benchmark</span><strong>134.60%</strong></div>
+    <div class="stat"><span>Full Information Ratio</span><strong>0.63</strong></div>
+    <div class="stat"><span>OOS Alpha vs Benchmark</span><strong>28.57%</strong></div>
+    <div class="stat"><span>OOS Information Ratio</span><strong>1.13</strong></div>
+  </section>
+
+  <section class="panel">
+    <h2>Benchmark Only</h2>
+    <p><strong>Baseline risk parity</strong></p>
+    <p class="subtle">Monthly inverse-volatility ETF allocation with a max weight cap and cash reserve.</p>
+    <h3>Layer Diagram</h3>
+    <div class="mermaid">flowchart LR
+  L1[&quot;Market data&lt;br/&gt;Adjusted ETF closes, volumes, and USD/CNH FX for the configured ETF basket.&quot;]
+  L2[&quot;Monthly rebalance&lt;br/&gt;Recompute targets on the first available trading day of each month.&quot;]
+  L1 --&gt; L2
+  L3[&quot;Risk parity beta&lt;br/&gt;63-bar realized volatility, inverse-vol weights, 45% max weight, 2% cash reserve.&quot;]
+  L2 --&gt; L3
+  L4[&quot;Final target weights&lt;br/&gt;Normalize portfolio weights and feed the daily backtest execution engine.&quot;]
+  L3 --&gt; L4</div>
+    <h3>Decision Tree</h3>
+    <div class="mermaid">flowchart TD
+  A([&quot;Monthly rebalance date&quot;]) --&gt; B{&quot;Enough 63-bar history for every ETF?&quot;}
+  B -- &quot;No&quot; --&gt; C[&quot;Skip rebalance until history is available&quot;]
+  B -- &quot;Yes&quot; --&gt; D[&quot;Compute realized volatility by ETF&quot;]
+  D --&gt; E{&quot;All volatilities positive?&quot;}
+  E -- &quot;No&quot; --&gt; C
+  E -- &quot;Yes&quot; --&gt; F[&quot;Allocate inverse to volatility&quot;]
+  F --&gt; G[&quot;Apply 45% max weight and 2% cash reserve&quot;]
+  G --&gt; H([&quot;Final risk-parity targets&quot;])</div>
+    <p class="subtle">No overlay parameters; this is the benchmark-only risk-parity model.</p>
+    <h3>Raw Mermaid</h3>
+    <pre>flowchart TD
+  A([&quot;Monthly rebalance date&quot;]) --&gt; B{&quot;Enough 63-bar history for every ETF?&quot;}
+  B -- &quot;No&quot; --&gt; C[&quot;Skip rebalance until history is available&quot;]
+  B -- &quot;Yes&quot; --&gt; D[&quot;Compute realized volatility by ETF&quot;]
+  D --&gt; E{&quot;All volatilities positive?&quot;}
+  E -- &quot;No&quot; --&gt; C
+  E -- &quot;Yes&quot; --&gt; F[&quot;Allocate inverse to volatility&quot;]
+  F --&gt; G[&quot;Apply 45% max weight and 2% cash reserve&quot;]
+  G --&gt; H([&quot;Final risk-parity targets&quot;])</pre>
+  </section>
+
+
+  <section class="panel">
+    <h2>SOTA Strategy</h2>
+    <p><strong>SOTA: price/volume top 6 + technical tree + relative/adaptive</strong></p>
+    <p class="subtle">Expanded multi-asset ETF universe with inverse-volatility base weights, a price/volume top-six pool filter, a frozen pre-2023 technical decision-tree tilt, a restrained 20/60d relative-momentum tilt, and adaptive trend exposure scaling. Promoted because it has the strongest stability-adjusted profile after penalizing weak in-sample Sharpe.</p>
+    <h3>Layer Diagram</h3>
+    <div class="mermaid">flowchart LR
+  L1[&quot;Market data&lt;br/&gt;Adjusted ETF closes, volumes, and USD/CNH FX for the configured ETF basket.&quot;]
+  L2[&quot;Monthly rebalance&lt;br/&gt;Recompute targets on the first available trading day of each month.&quot;]
+  L1 --&gt; L2
+  L3[&quot;Risk parity beta&lt;br/&gt;63-bar realized volatility, inverse-vol weights, 45% max weight, 2% cash reserve.&quot;]
+  L2 --&gt; L3
+  L4[&quot;Asset-pool filter overlay&lt;br/&gt;Rank assets using 63/126/252d momentum and 21d volume pressure; select top 6 with minimum 4; requires 252d momentum &gt; 0; reallocate selected assets.&quot;]
+  L3 --&gt; L4
+  L5[&quot;Decision-tree signal overlay&lt;br/&gt;Train a max-depth 3 regression tree on 1572 in-sample asset-month observations from the signal library; tilt 0.16, cap active weight 0.06.&quot;]
+  L4 --&gt; L5
+  L6[&quot;Relative momentum overlay&lt;br/&gt;Score = 45% 20d momentum + 55% 60d momentum; regime drawdown trigger -0.08, vol-ratio trigger 1.35; tilt 0.12 calm / 0.12 risk; cap active weight 0.05.&quot;]
+  L5 --&gt; L6
+  L7[&quot;Adaptive trend overlay&lt;br/&gt;Blend 63/126/252d trend, volume, rebound, and volatility shock gates; scales 0.50, 0.80, 0.35, 1.00.&quot;]
+  L6 --&gt; L7
+  L8[&quot;Final target weights&lt;br/&gt;Normalize portfolio weights and feed the daily backtest execution engine.&quot;]
+  L7 --&gt; L8</div>
+    <h3>Decision Tree</h3>
+    <div class="mermaid">flowchart TD
+  A([&quot;Risk-parity targets&quot;]) --&gt; B{&quot;Enough price/volume history?&quot;}
+  B -- &quot;No&quot; --&gt; C[&quot;Keep risk-parity targets&quot;]
+  B -- &quot;Yes&quot; --&gt; D[&quot;Score assets with 63/126/252d momentum and 21d volume pressure&quot;]
+  D --&gt; E{&quot;252d momentum &gt; 0?&quot;}
+  E -- &quot;No&quot; --&gt; F[&quot;Remove from selected pool&quot;]
+  E -- &quot;Yes&quot; --&gt; G[&quot;Rank and keep top 6 assets&quot;]
+  G --&gt; H[&quot;Require at least 4 selected assets&quot;]
+  F --&gt; I[&quot;Reallocate removed weight to selected assets&quot;]
+  H --&gt; I
+  I --&gt; J([&quot;Final filtered multi-asset targets&quot;])
+
+flowchart TD
+  A([&quot;In-sample rebalance rows&quot;]) --&gt; B[&quot;Compute signal-library features&quot;]
+  B --&gt; C[&quot;Target = next-month asset return minus basket mean&quot;]
+  C --&gt; D[&quot;Fit regression tree, max depth 3&quot;]
+  D --&gt; E([&quot;Freeze tree before OOS starts&quot;])
+  E --&gt; F[&quot;Score ETFs at each rebalance&quot;]
+  F --&gt; G[&quot;Rank forecasts and apply tilt 0.16&quot;]
+  G --&gt; H[&quot;Cap active delta at +/-0.06 per ETF&quot;]
+  H --&gt; I[&quot;Rescale to preserve original invested weight&quot;]
+  I --&gt; J([&quot;Final decision-tree targets&quot;])
+
+flowchart TD
+  A([&quot;Risk-parity targets&quot;]) --&gt; B{&quot;Enough 20d and 60d history for the basket?&quot;}
+  B -- &quot;No&quot; --&gt; C[&quot;Keep risk-parity targets&quot;]
+  B -- &quot;Yes&quot; --&gt; D[&quot;Score each ETF = 45% 20d momentum + 55% 60d momentum&quot;]
+  D --&gt; E{&quot;Basket drawdown &lt;= -0.08 or vol-ratio &gt;= 1.35?&quot;}
+  E -- &quot;Yes&quot; --&gt; F[&quot;Use risk tilt 0.12&quot;]
+  E -- &quot;No&quot; --&gt; G[&quot;Use calm tilt 0.12&quot;]
+  F --&gt; H[&quot;Rank ETFs by score&quot;]
+  G --&gt; H
+  H --&gt; I[&quot;Multiply base weight by 1 + tilt * rank score&quot;]
+  I --&gt; J[&quot;Cap active delta at +/-0.05 per ETF&quot;]
+  J --&gt; K[&quot;Rescale to preserve original invested weight&quot;]
+  K --&gt; L([&quot;Final SOTA/research targets&quot;])
+
+flowchart TD
+  A([&quot;Risk-parity targets&quot;]) --&gt; B{&quot;Enough short/medium/long trend history?&quot;}
+  B -- &quot;No&quot; --&gt; C[&quot;Keep risk-parity targets&quot;]
+  B -- &quot;Yes&quot; --&gt; D[&quot;Score trend across short, medium, and long windows&quot;]
+  D --&gt; E{&quot;Volatility shock?&quot;}
+  E -- &quot;Yes&quot; --&gt; F[&quot;Use defensive scale 0.35&quot;]
+  E -- &quot;No&quot; --&gt; G{&quot;Rebound or volume confirmation?&quot;}
+  G -- &quot;Yes&quot; --&gt; H[&quot;Use rebound/neutral scale up to 1.00&quot;]
+  G -- &quot;No&quot; --&gt; I[&quot;Use weak/neutral/full trend scale starting at 0.50&quot;]
+  F --&gt; J[&quot;Optionally reallocate residual to stronger assets&quot;]
+  H --&gt; J
+  I --&gt; J
+  J --&gt; K([&quot;Final adaptive targets&quot;])</div>
+    <h3>Parameters</h3><table><thead><tr><th>Overlay</th><th>Parameter</th><th>Value</th></tr></thead><tbody><tr><td>asset_pool_filter</td><td>shortMomentumBars</td><td><code>63</code></td></tr>
+<tr><td>asset_pool_filter</td><td>mediumMomentumBars</td><td><code>126</code></td></tr>
+<tr><td>asset_pool_filter</td><td>longMomentumBars</td><td><code>252</code></td></tr>
+<tr><td>asset_pool_filter</td><td>volumeBars</td><td><code>21</code></td></tr>
+<tr><td>asset_pool_filter</td><td>slowVolumeBars</td><td><code>126</code></td></tr>
+<tr><td>asset_pool_filter</td><td>trendWeight</td><td><code>0.75</code></td></tr>
+<tr><td>asset_pool_filter</td><td>volumeWeight</td><td><code>0.25</code></td></tr>
+<tr><td>asset_pool_filter</td><td>topN</td><td><code>6</code></td></tr>
+<tr><td>asset_pool_filter</td><td>minSelected</td><td><code>4</code></td></tr>
+<tr><td>asset_pool_filter</td><td>requirePositiveLongMomentum</td><td><code>true</code></td></tr>
+<tr><td>asset_pool_filter</td><td>minLongMomentum</td><td><code>0</code></td></tr>
+<tr><td>asset_pool_filter</td><td>reallocateSelected</td><td><code>true</code></td></tr>
+<tr><td>decision_tree</td><td>maxDepth</td><td><code>3</code></td></tr>
+<tr><td>decision_tree</td><td>minSamplesLeaf</td><td><code>25</code></td></tr>
+<tr><td>decision_tree</td><td>trainingSamples</td><td><code>1572</code></td></tr>
+<tr><td>decision_tree</td><td>tilt</td><td><code>0.16</code></td></tr>
+<tr><td>decision_tree</td><td>maxActiveWeight</td><td><code>0.06</code></td></tr>
+<tr><td>decision_tree</td><td>valuationScores</td><td><code></code></td></tr>
+<tr><td>decision_tree</td><td>macroScores</td><td><code></code></td></tr>
+<tr><td>decision_tree</td><td>model</td><td><code>{&quot;featureNames&quot;:[&quot;mom_20&quot;,&quot;mom_21&quot;,&quot;mom_40&quot;,&quot;mom_60&quot;,&quot;mom_63&quot;,&quot;mom_126&quot;,&quot;mom_252&quot;,&quot;mom_378&quot;,&quot;relative_momentum_20_60&quot;,&quot;relative_momentum_126_252&quot;,&quot;above_ma_63&quot;,&quot;above_ma_252&quot;,&quot;reversal_21&quot;,&quot;mean_reversion_ma_63&quot;,&quot;macd_line_12_26&quot;,&quot;macd_hist_12_26_9&quot;,&quot;bollinger_z_20&quot;,&quot;bollinger_pct_b_20&quot;,&quot;bollinger_bandwidth_20&quot;,&quot;rsi_14&quot;,&quot;up_volume_share_21&quot;,&quot;signed_volume_pressure_21_126&quot;,&quot;vol_ratio_21_252&quot;,&quot;drawdown_252&quot;,&quot;valuation_score&quot;,&quot;macro_growth_score&quot;],&quot;maxDepth&quot;:3,&quot;minSamplesLeaf&quot;:25,&quot;trainingSummary&quot;:{&quot;samples&quot;:1572,&quot;features&quot;:26,&quot;target&quot;:&quot;next_rebalance_forward_return_minus_cross_section_mean&quot;,&quot;leaves&quot;:6,&quot;depth&quot;:3},&quot;root&quot;:{&quot;value&quot;:3.8819541525665786e-19,&quot;samples&quot;:1572,&quot;mse&quot;:0.0013128850859094497,&quot;feature&quot;:&quot;bollinger_bandwidth_20&quot;,&quot;threshold&quot;:0.1412446406559187,&quot;left&quot;:{&quot;value&quot;:-0.0006075145092087619,&quot;samples&quot;:1507,&quot;mse&quot;:0.00125177387767094,&quot;feature&quot;:&quot;macd_hist_12_26_9&quot;,&quot;threshold&quot;:0.0011556058326167135,&quot;left&quot;:{&quot;value&quot;:0.0012392550414228292,&quot;samples&quot;:1058,&quot;mse&quot;:0.0011138232072694335,&quot;feature&quot;:&quot;up_volume_share_21&quot;,&quot;threshold&quot;:0.43123614609888,&quot;left&quot;:{&quot;value&quot;:0.005674690912213706,&quot;samples&quot;:322,&quot;mse&quot;:0.001185694989584301,&quot;feature&quot;:null,&quot;threshold&quot;:null,&quot;left&quot;:null,&quot;right&quot;:null},&quot;right&quot;:{&quot;value&quot;:-0.0007012481520481796,&quot;samples&quot;:736,&quot;mse&quot;:0.0010700067723911021,&quot;feature&quot;:null,&quot;threshold&quot;:null,&quot;left&quot;:null,&quot;right&quot;:null}},&quot;right&quot;:{&quot;value&quot;:-0.004959145209806141,&quot;samples&quot;:449,&quot;mse&quot;:0.0015498604377179206,&quot;feature&quot;:&quot;signed_volume_pressure_21_126&quot;,&quot;threshold&quot;:0.20457101601642258,&quot;left&quot;:{&quot;value&quot;:-0.007249644802577503,&quot;samples&quot;:394,&quot;mse&quot;:0.0014163699238408255,&quot;feature&quot;:null,&quot;threshold&quot;:null,&quot;left&quot;:null,&quot;right&quot;:null},&quot;right&quot;:{&quot;value&quot;:0.011449160963865074,&quot;samples&quot;:55,&quot;mse&quot;:0.0021993222070305863,&quot;feature&quot;:null,&quot;threshold&quot;:null,&quot;left&quot;:null,&quot;right&quot;:null}}},&quot;right&quot;:{&quot;value&quot;:0.014084990236578535,&quot;samples&quot;:65,&quot;mse&quot;:0.002522781158713135,&quot;feature&quot;:&quot;relative_momentum_126_252&quot;,&quot;threshold&quot;:-0.08261979488728374,&quot;left&quot;:{&quot;value&quot;:0.029010603690186876,&quot;samples&quot;:37,&quot;mse&quot;:0.00226660152071632,&quot;feature&quot;:null,&quot;threshold&quot;:null,&quot;left&quot;:null,&quot;right&quot;:null},&quot;right&quot;:{&quot;value&quot;:-0.005638141827118205,&quot;samples&quot;:28,&quot;mse&quot;:0.0021779224681011252,&quot;feature&quot;:null,&quot;threshold&quot;:null,&quot;left&quot;:null,&quot;right&quot;:null}}}}</code></td></tr>
+<tr><td>relative_momentum</td><td>mediumLookbackBars</td><td><code>20</code></td></tr>
+<tr><td>relative_momentum</td><td>longLookbackBars</td><td><code>60</code></td></tr>
+<tr><td>relative_momentum</td><td>fastVolatilityBars</td><td><code>21</code></td></tr>
+<tr><td>relative_momentum</td><td>slowVolatilityBars</td><td><code>252</code></td></tr>
+<tr><td>relative_momentum</td><td>drawdownLookbackBars</td><td><code>252</code></td></tr>
+<tr><td>relative_momentum</td><td>calmTilt</td><td><code>0.12</code></td></tr>
+<tr><td>relative_momentum</td><td>riskTilt</td><td><code>0.12</code></td></tr>
+<tr><td>relative_momentum</td><td>drawdownTrigger</td><td><code>-0.08</code></td></tr>
+<tr><td>relative_momentum</td><td>volatilityRatioTrigger</td><td><code>1.35</code></td></tr>
+<tr><td>relative_momentum</td><td>maxActiveWeight</td><td><code>0.05</code></td></tr>
+<tr><td>adaptive_trend</td><td>shortLookbackBars</td><td><code>63</code></td></tr>
+<tr><td>adaptive_trend</td><td>mediumLookbackBars</td><td><code>126</code></td></tr>
+<tr><td>adaptive_trend</td><td>longLookbackBars</td><td><code>252</code></td></tr>
+<tr><td>adaptive_trend</td><td>reboundLookbackBars</td><td><code>21</code></td></tr>
+<tr><td>adaptive_trend</td><td>volumeLookbackBars</td><td><code>21</code></td></tr>
+<tr><td>adaptive_trend</td><td>fastVolatilityBars</td><td><code>21</code></td></tr>
+<tr><td>adaptive_trend</td><td>slowVolatilityBars</td><td><code>252</code></td></tr>
+<tr><td>adaptive_trend</td><td>shortThreshold</td><td><code>0</code></td></tr>
+<tr><td>adaptive_trend</td><td>mediumThreshold</td><td><code>-0.03</code></td></tr>
+<tr><td>adaptive_trend</td><td>longThreshold</td><td><code>-0.05</code></td></tr>
+<tr><td>adaptive_trend</td><td>weakScale</td><td><code>0.50</code></td></tr>
+<tr><td>adaptive_trend</td><td>neutralScale</td><td><code>0.80</code></td></tr>
+<tr><td>adaptive_trend</td><td>defensiveScale</td><td><code>0.35</code></td></tr>
+<tr><td>adaptive_trend</td><td>reboundScale</td><td><code>1.00</code></td></tr>
+<tr><td>adaptive_trend</td><td>reallocateResidual</td><td><code>true</code></td></tr></tbody></table>
+    <h3>Raw Mermaid</h3>
+    <pre>flowchart TD
+  A([&quot;Risk-parity targets&quot;]) --&gt; B{&quot;Enough price/volume history?&quot;}
+  B -- &quot;No&quot; --&gt; C[&quot;Keep risk-parity targets&quot;]
+  B -- &quot;Yes&quot; --&gt; D[&quot;Score assets with 63/126/252d momentum and 21d volume pressure&quot;]
+  D --&gt; E{&quot;252d momentum &gt; 0?&quot;}
+  E -- &quot;No&quot; --&gt; F[&quot;Remove from selected pool&quot;]
+  E -- &quot;Yes&quot; --&gt; G[&quot;Rank and keep top 6 assets&quot;]
+  G --&gt; H[&quot;Require at least 4 selected assets&quot;]
+  F --&gt; I[&quot;Reallocate removed weight to selected assets&quot;]
+  H --&gt; I
+  I --&gt; J([&quot;Final filtered multi-asset targets&quot;])
+
+flowchart TD
+  A([&quot;In-sample rebalance rows&quot;]) --&gt; B[&quot;Compute signal-library features&quot;]
+  B --&gt; C[&quot;Target = next-month asset return minus basket mean&quot;]
+  C --&gt; D[&quot;Fit regression tree, max depth 3&quot;]
+  D --&gt; E([&quot;Freeze tree before OOS starts&quot;])
+  E --&gt; F[&quot;Score ETFs at each rebalance&quot;]
+  F --&gt; G[&quot;Rank forecasts and apply tilt 0.16&quot;]
+  G --&gt; H[&quot;Cap active delta at +/-0.06 per ETF&quot;]
+  H --&gt; I[&quot;Rescale to preserve original invested weight&quot;]
+  I --&gt; J([&quot;Final decision-tree targets&quot;])
+
+flowchart TD
+  A([&quot;Risk-parity targets&quot;]) --&gt; B{&quot;Enough 20d and 60d history for the basket?&quot;}
+  B -- &quot;No&quot; --&gt; C[&quot;Keep risk-parity targets&quot;]
+  B -- &quot;Yes&quot; --&gt; D[&quot;Score each ETF = 45% 20d momentum + 55% 60d momentum&quot;]
+  D --&gt; E{&quot;Basket drawdown &lt;= -0.08 or vol-ratio &gt;= 1.35?&quot;}
+  E -- &quot;Yes&quot; --&gt; F[&quot;Use risk tilt 0.12&quot;]
+  E -- &quot;No&quot; --&gt; G[&quot;Use calm tilt 0.12&quot;]
+  F --&gt; H[&quot;Rank ETFs by score&quot;]
+  G --&gt; H
+  H --&gt; I[&quot;Multiply base weight by 1 + tilt * rank score&quot;]
+  I --&gt; J[&quot;Cap active delta at +/-0.05 per ETF&quot;]
+  J --&gt; K[&quot;Rescale to preserve original invested weight&quot;]
+  K --&gt; L([&quot;Final SOTA/research targets&quot;])
+
+flowchart TD
+  A([&quot;Risk-parity targets&quot;]) --&gt; B{&quot;Enough short/medium/long trend history?&quot;}
+  B -- &quot;No&quot; --&gt; C[&quot;Keep risk-parity targets&quot;]
+  B -- &quot;Yes&quot; --&gt; D[&quot;Score trend across short, medium, and long windows&quot;]
+  D --&gt; E{&quot;Volatility shock?&quot;}
+  E -- &quot;Yes&quot; --&gt; F[&quot;Use defensive scale 0.35&quot;]
+  E -- &quot;No&quot; --&gt; G{&quot;Rebound or volume confirmation?&quot;}
+  G -- &quot;Yes&quot; --&gt; H[&quot;Use rebound/neutral scale up to 1.00&quot;]
+  G -- &quot;No&quot; --&gt; I[&quot;Use weak/neutral/full trend scale starting at 0.50&quot;]
+  F --&gt; J[&quot;Optionally reallocate residual to stronger assets&quot;]
+  H --&gt; J
+  I --&gt; J
+  J --&gt; K([&quot;Final adaptive targets&quot;])</pre>
+  </section>
+
+</main>
+</body>
+</html>

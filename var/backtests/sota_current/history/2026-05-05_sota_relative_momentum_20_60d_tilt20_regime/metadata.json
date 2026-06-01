@@ -1,0 +1,43 @@
+{
+  "key": "sota_relative_momentum_20_60d_tilt20_regime",
+  "name": "SOTA: risk parity + relative momentum 20/60d 20% tilt",
+  "promotedOn": "2026-05-05",
+  "generatedAt": "2026-05-17T00:00:00Z",
+  "source": "seeded from var/backtests/relative_momentum_20_60_tilt20_2012",
+  "metrics": {
+    "dateRange": {
+      "start": "2012-01-03",
+      "end": "2026-04-29"
+    },
+    "splitDate": "2023-01-01",
+    "full": {
+      "return": 2.8294,
+      "annualizedReturn": 0.0983,
+      "maxDrawdown": -0.2958,
+      "sharpe": 0.68,
+      "sortino": 0.64,
+      "calmar": 0.33,
+      "alpha": 0.0109,
+      "informationRatio": null,
+      "trackingError": null
+    },
+    "outOfSample": {
+      "return": 0.8405,
+      "annualizedReturn": 0.2018,
+      "maxDrawdown": -0.1294,
+      "sharpe": 1.29,
+      "sortino": 1.31,
+      "calmar": 1.56,
+      "alpha": 0.0147,
+      "informationRatio": null,
+      "trackingError": null
+    }
+  },
+  "files": {
+    "readme": "history/2026-05-05_sota_relative_momentum_20_60d_tilt20_regime/README.md",
+    "sota_json": "history/2026-05-05_sota_relative_momentum_20_60d_tilt20_regime/relative-momentum-20-60d-regime.json",
+    "sota_html": "history/2026-05-05_sota_relative_momentum_20_60d_tilt20_regime/relative-momentum-20-60d-regime.html",
+    "comparison_json": "history/2026-05-05_sota_relative_momentum_20_60d_tilt20_regime/comparison.json",
+    "comparison_md": "history/2026-05-05_sota_relative_momentum_20_60d_tilt20_regime/comparison.md"
+  }
+}

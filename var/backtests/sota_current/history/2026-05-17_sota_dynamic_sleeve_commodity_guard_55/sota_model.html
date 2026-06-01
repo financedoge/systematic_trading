@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Current SOTA Model</title>
+  <script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'; mermaid.initialize({startOnLoad: true});</script>
+  <style>
+    body { margin: 0; font-family: Inter, Segoe UI, Arial, sans-serif; color: #172033; background: #f6f8fb; }
+    main { max-width: 1180px; margin: 0 auto; padding: 28px; }
+    h1, h2, h3 { margin: 0; }
+    h1 { font-size: 30px; }
+    h2 { margin-top: 28px; font-size: 21px; }
+    h3 { margin-top: 18px; font-size: 16px; }
+    .subtle { color: #607089; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 18px 0 24px; }
+    .stat, .panel { background: #fff; border: 1px solid #dce4ef; border-radius: 8px; box-shadow: 0 8px 20px rgba(30, 45, 70, .06); }
+    .stat { padding: 14px 16px; }
+    .stat span { display: block; color: #607089; font-size: 12px; margin-bottom: 6px; }
+    .stat strong { font-size: 22px; }
+    .panel { padding: 18px; margin-top: 14px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border-bottom: 1px solid #e6edf5; padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { color: #607089; font-size: 12px; text-transform: uppercase; }
+    code, pre { font-family: Consolas, Monaco, monospace; }
+    pre { background: #101828; color: #e5edf8; padding: 14px; border-radius: 6px; overflow-x: auto; }
+    .mermaid { background: #fff; border: 1px solid #e6edf5; border-radius: 6px; padding: 12px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>SOTA: dynamic sleeve-capped momentum + commodity guard</h1>
+  <p class="subtle">Canonical current SOTA model card and benchmark comparison. Generated from the strategy catalog.</p>
+  <section class="grid">
+    <div class="stat"><span>Full Alpha vs Benchmark</span><strong>333.83%</strong></div>
+    <div class="stat"><span>Full Information Ratio</span><strong>0.75</strong></div>
+    <div class="stat"><span>OOS Alpha vs Benchmark</span><strong>145.37%</strong></div>
+    <div class="stat"><span>OOS Information Ratio</span><strong>1.71</strong></div>
+  </section>
+
+  <section class="panel">
+    <h2>Benchmark Only</h2>
+    <p><strong>Baseline risk parity</strong></p>
+    <p class="subtle">Monthly inverse-volatility ETF allocation with a max weight cap and cash reserve.</p>
+    <h3>Layer Diagram</h3>
+    <div class="mermaid">flowchart LR
+  L1[&quot;Market data&lt;br/&gt;Adjusted ETF closes, volumes, and USD/CNH FX for the configured ETF basket.&quot;]
+  L2[&quot;Monthly rebalance&lt;br/&gt;Recompute targets on the first available trading day of each month.&quot;]
+  L1 --&gt; L2
+  L3[&quot;Risk parity beta&lt;br/&gt;63-bar realized volatility, inverse-vol weights, 45% max weight, 2% cash reserve.&quot;]
+  L2 --&gt; L3
+  L4[&quot;Final target weights&lt;br/&gt;Normalize portfolio weights and feed the daily backtest execution engine.&quot;]
+  L3 --&gt; L4</div>
+    <h3>Decision Tree</h3>
+    <div class="mermaid">flowchart TD
+  A([&quot;Monthly rebalance date&quot;]) --&gt; B{&quot;Enough 63-bar history for every ETF?&quot;}
+  B -- &quot;No&quot; --&gt; C[&quot;Skip rebalance until history is available&quot;]
+  B -- &quot;Yes&quot; --&gt; D[&quot;Compute realized volatility by ETF&quot;]
+  D --&gt; E{&quot;All volatilities positive?&quot;}
+  E -- &quot;No&quot; --&gt; C
+  E -- &quot;Yes&quot; --&gt; F[&quot;Allocate inverse to volatility&quot;]
+  F --&gt; G[&quot;Apply 45% max weight and 2% cash reserve&quot;]
+  G --&gt; H([&quot;Final risk-parity targets&quot;])</div>
+    <p class="subtle">No overlay parameters; this is the benchmark-only risk-parity model.</p>
+    <h3>Raw Mermaid</h3>
+    <pre>flowchart TD
+  A([&quot;Monthly rebalance date&quot;]) --&gt; B{&quot;Enough 63-bar history for every ETF?&quot;}
+  B -- &quot;No&quot; --&gt; C[&quot;Skip rebalance until history is available&quot;]
+  B -- &quot;Yes&quot; --&gt; D[&quot;Compute realized volatility by ETF&quot;]
+  D --&gt; E{&quot;All volatilities positive?&quot;}
+  E -- &quot;No&quot; --&gt; C
+  E -- &quot;Yes&quot; --&gt; F[&quot;Allocate inverse to volatility&quot;]
+  F --&gt; G[&quot;Apply 45% max weight and 2% cash reserve&quot;]
+  G --&gt; H([&quot;Final risk-parity targets&quot;])</pre>
+  </section>
+
+
+  <section class="panel">
+    <h2>SOTA Strategy</h2>
+    <p><strong>SOTA: dynamic sleeve-capped momentum + commodity guard</strong></p>
+    <p class="subtle">Dynamic all-weather ETF universe with inverse-volatility base weights, global momentum selection, sleeve/asset/region caps, a monthly commodity risk guard, and the 20/60d regime-gated relative-momentum tilt. This is the current research hurdle for new candidate strategies.</p>
+    <h3>Layer Diagram</h3>
+    <div class="mermaid">flowchart LR
+  L1[&quot;Market data&lt;br/&gt;Adjusted ETF closes, volumes, and USD/CNH FX for the configured ETF basket.&quot;]
+  L2[&quot;Monthly rebalance&lt;br/&gt;Recompute targets on the first available trading day of each month.&quot;]
+  L1 --&gt; L2
+  L3[&quot;Risk parity beta&lt;br/&gt;63-bar realized volatility, inverse-vol weights, 45% max weight, 2% cash reserve.&quot;]
+  L2 --&gt; L3
+  L4[&quot;Sleeve-capped momentum selector&lt;br/&gt;Rank the dynamic all-weather ETF pool using 21/63/252d momentum and 21d volume pressure; keep top 3 subject to sleeve, asset-class, and region caps; reallocate selected assets.&quot;]
+  L3 --&gt; L4
+  L5[&quot;Commodity risk guard&lt;br/&gt;Guard commodity exposure: cap gross weight at 0.55, scale by 0.50 when 10d basket momentum &lt;= -0.05 or fast volatility is 1.50x slow volatility.&quot;]
+  L4 --&gt; L5
+  L6[&quot;Relative momentum overlay&lt;br/&gt;Score = 45% 20d momentum + 55% 60d momentum; regime drawdown trigger -0.08, vol-ratio trigger 1.35; tilt 0.20 calm / 0.20 risk; cap active weight 0.07.&quot;]
+  L5 --&gt; L6
+  L7[&quot;Final target weights&lt;br/&gt;Normalize portfolio weights and feed the daily backtest execution engine.&quot;]
+  L6 --&gt; L7</div>
+    <h3>Decision Tree</h3>
+    <div class="mermaid">flowchart TD
+  A([&quot;Monthly rebalance date&quot;]) --&gt; B{&quot;Enough dynamic all-weather price and volume history?&quot;}
+  B -- &quot;No&quot; --&gt; C[&quot;Skip rebalance until ETF histories are eligible&quot;]
+  B -- &quot;Yes&quot; --&gt; D[&quot;Compute inverse-volatility base weights on currently eligible ETFs&quot;]
+  D --&gt; E[&quot;Score ETFs with 21/63/252d momentum and 21d volume pressure&quot;]
+  E --&gt; F[&quot;Keep top 3 subject to sleeve, asset-class, and region caps&quot;]
+  F --&gt; G[&quot;Reallocate selected weights&quot;]
+  G --&gt; H{&quot;Commodity gross weight above cap?&quot;}
+  H -- &quot;Yes&quot; --&gt; I[&quot;Scale commodity sleeve toward 0.55 cap&quot;]
+  H -- &quot;No&quot; --&gt; J{&quot;10d commodity momentum &lt;= -0.05?&quot;}
+  J -- &quot;Yes&quot; --&gt; K[&quot;Scale commodity targets by 0.50&quot;]
+  J -- &quot;No&quot; --&gt; L{&quot;Fast commodity vol &gt;= 1.50x slow vol?&quot;}
+  L -- &quot;Yes&quot; --&gt; K
+  L -- &quot;No&quot; --&gt; M[&quot;Leave commodity targets unchanged&quot;]
+  I --&gt; N[&quot;Reallocate residual to non-commodity selected assets&quot;]
+  K --&gt; N
+  M --&gt; O{&quot;Basket drawdown or volatility-risk regime?&quot;}
+  N --&gt; O
+  O -- &quot;Risk&quot; --&gt; P[&quot;Use relative-momentum tilt 0.20&quot;]
+  O -- &quot;Calm&quot; --&gt; Q[&quot;Use relative-momentum tilt 0.20&quot;]
+  P --&gt; R[&quot;Rank ETFs by 20/60d relative momentum&quot;]
+  Q --&gt; R
+  R --&gt; S[&quot;Cap active delta at +/-0.07 per ETF&quot;]
+  S --&gt; T[&quot;Rescale to preserve invested weight&quot;]
+  T --&gt; U([&quot;Final SOTA targets&quot;])</div>
+    <h3>Parameters</h3><table><thead><tr><th>Overlay</th><th>Parameter</th><th>Value</th></tr></thead><tbody><tr><td>sleeve_capped_momentum</td><td>metadataSource</td><td><code>all_weather</code></td></tr>
+<tr><td>sleeve_capped_momentum</td><td>shortMomentumBars</td><td><code>21</code></td></tr>
+<tr><td>sleeve_capped_momentum</td><td>mediumMomentumBars</td><td><code>63</code></td></tr>
+<tr><td>sleeve_capped_momentum</td><td>longMomentumBars</td><td><code>252</code></td></tr>
+<tr><td>sleeve_capped_momentum</td><td>volumeBars</td><td><code>21</code></td></tr>
+<tr><td>sleeve_capped_momentum</td><td>slowVolumeBars</td><td><code>126</code></td></tr>
+<tr><td>sleeve_capped_momentum</td><td>trendWeight</td><td><code>0.80</code></td></tr>
+<tr><td>sleeve_capped_momentum</td><td>volumeWeight</td><td><code>0.20</code></td></tr>
+<tr><td>sleeve_capped_momentum</td><td>topN</td><td><code>3</code></td></tr>
+<tr><td>sleeve_capped_momentum</td><td>maxPerSleeve</td><td><code>1</code></td></tr>
+<tr><td>sleeve_capped_momentum</td><td>maxPerAssetClass</td><td><code>{&quot;equity&quot;:2,&quot;rates&quot;:3,&quot;credit&quot;:1,&quot;commodity&quot;:2}</code></td></tr>
+<tr><td>sleeve_capped_momentum</td><td>minPerAssetClass</td><td><code>{}</code></td></tr>
+<tr><td>sleeve_capped_momentum</td><td>maxPerRegion</td><td><code>{&quot;US&quot;:2,&quot;Europe&quot;:1,&quot;China&quot;:1,&quot;Asia ex-China&quot;:1,&quot;Global ex-US&quot;:2,&quot;Energy&quot;:1,&quot;Base metals&quot;:1,&quot;Precious metals&quot;:1,&quot;Agriculture&quot;:1}</code></td></tr>
+<tr><td>sleeve_capped_momentum</td><td>requirePositiveLongMomentum</td><td><code>true</code></td></tr>
+<tr><td>sleeve_capped_momentum</td><td>minLongMomentum</td><td><code>0</code></td></tr>
+<tr><td>sleeve_capped_momentum</td><td>reallocateSelected</td><td><code>true</code></td></tr>
+<tr><td>commodity_guard</td><td>metadataSource</td><td><code>all_weather</code></td></tr>
+<tr><td>commodity_guard</td><td>guardedAssetClass</td><td><code>commodity</code></td></tr>
+<tr><td>commodity_guard</td><td>maxAssetClassWeight</td><td><code>0.55</code></td></tr>
+<tr><td>commodity_guard</td><td>triggeredScale</td><td><code>0.50</code></td></tr>
+<tr><td>commodity_guard</td><td>shortMomentumBars</td><td><code>10</code></td></tr>
+<tr><td>commodity_guard</td><td>slowMomentumBars</td><td><code>21</code></td></tr>
+<tr><td>commodity_guard</td><td>shortMomentumThreshold</td><td><code>-0.05</code></td></tr>
+<tr><td>commodity_guard</td><td>fastVolatilityBars</td><td><code>10</code></td></tr>
+<tr><td>commodity_guard</td><td>slowVolatilityBars</td><td><code>63</code></td></tr>
+<tr><td>commodity_guard</td><td>volatilitySpikeMultiple</td><td><code>1.50</code></td></tr>
+<tr><td>commodity_guard</td><td>reallocateResidual</td><td><code>true</code></td></tr>
+<tr><td>relative_momentum</td><td>mediumLookbackBars</td><td><code>20</code></td></tr>
+<tr><td>relative_momentum</td><td>longLookbackBars</td><td><code>60</code></td></tr>
+<tr><td>relative_momentum</td><td>fastVolatilityBars</td><td><code>21</code></td></tr>
+<tr><td>relative_momentum</td><td>slowVolatilityBars</td><td><code>252</code></td></tr>
+<tr><td>relative_momentum</td><td>drawdownLookbackBars</td><td><code>252</code></td></tr>
+<tr><td>relative_momentum</td><td>calmTilt</td><td><code>0.20</code></td></tr>
+<tr><td>relative_momentum</td><td>riskTilt</td><td><code>0.20</code></td></tr>
+<tr><td>relative_momentum</td><td>drawdownTrigger</td><td><code>-0.08</code></td></tr>
+<tr><td>relative_momentum</td><td>volatilityRatioTrigger</td><td><code>1.35</code></td></tr>
+<tr><td>relative_momentum</td><td>maxActiveWeight</td><td><code>0.07</code></td></tr></tbody></table>
+    <h3>Raw Mermaid</h3>
+    <pre>flowchart TD
+  A([&quot;Monthly rebalance date&quot;]) --&gt; B{&quot;Enough dynamic all-weather price and volume history?&quot;}
+  B -- &quot;No&quot; --&gt; C[&quot;Skip rebalance until ETF histories are eligible&quot;]
+  B -- &quot;Yes&quot; --&gt; D[&quot;Compute inverse-volatility base weights on currently eligible ETFs&quot;]
+  D --&gt; E[&quot;Score ETFs with 21/63/252d momentum and 21d volume pressure&quot;]
+  E --&gt; F[&quot;Keep top 3 subject to sleeve, asset-class, and region caps&quot;]
+  F --&gt; G[&quot;Reallocate selected weights&quot;]
+  G --&gt; H{&quot;Commodity gross weight above cap?&quot;}
+  H -- &quot;Yes&quot; --&gt; I[&quot;Scale commodity sleeve toward 0.55 cap&quot;]
+  H -- &quot;No&quot; --&gt; J{&quot;10d commodity momentum &lt;= -0.05?&quot;}
+  J -- &quot;Yes&quot; --&gt; K[&quot;Scale commodity targets by 0.50&quot;]
+  J -- &quot;No&quot; --&gt; L{&quot;Fast commodity vol &gt;= 1.50x slow vol?&quot;}
+  L -- &quot;Yes&quot; --&gt; K
+  L -- &quot;No&quot; --&gt; M[&quot;Leave commodity targets unchanged&quot;]
+  I --&gt; N[&quot;Reallocate residual to non-commodity selected assets&quot;]
+  K --&gt; N
+  M --&gt; O{&quot;Basket drawdown or volatility-risk regime?&quot;}
+  N --&gt; O
+  O -- &quot;Risk&quot; --&gt; P[&quot;Use relative-momentum tilt 0.20&quot;]
+  O -- &quot;Calm&quot; --&gt; Q[&quot;Use relative-momentum tilt 0.20&quot;]
+  P --&gt; R[&quot;Rank ETFs by 20/60d relative momentum&quot;]
+  Q --&gt; R
+  R --&gt; S[&quot;Cap active delta at +/-0.07 per ETF&quot;]
+  S --&gt; T[&quot;Rescale to preserve invested weight&quot;]
+  T --&gt; U([&quot;Final SOTA targets&quot;])</pre>
+  </section>
+
+</main>
+</body>
+</html>
