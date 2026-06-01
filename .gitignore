@@ -8,8 +8,13 @@ __pycache__/
 openai_key.txt
 tushare_token.txt
 var/*.db
-var/backtests/
-var/live/
+var/backtests/*
+!var/backtests/sota_current/
+!var/backtests/sota_current/**
+var/live/*
+!var/live/account_snapshots/
+var/live/account_snapshots/*
+!var/live/account_snapshots/.gitkeep
 var/log/
 var/run/
 dist/
