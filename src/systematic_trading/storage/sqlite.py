@@ -13,13 +13,26 @@ from systematic_trading.domain import (
     FXRate,
     FundamentalSnapshot,
     Instrument,
+    AnyPlatformEvent,
+    EventSource,
+    FillRecordedEvent,
+    FillRecordedPayload,
+    OrderLifecyclePayload,
+    OrderStatusChangedEvent,
+    OrderEnvironment,
     PnLBaseline,
     PnLSnapshot,
+    PlatformEventOutboxRecord,
+    PlatformEventType,
     PriceBar,
+    ProposalCreatedEvent,
+    ProposalDecisionRecordedEvent,
+    ProposalEventPayload,
     ProposalStatus,
     ThesisMemo,
     TradeProposal,
     WatchlistEntry,
+    decode_platform_event,
 )
 
 
@@ -125,6 +138,24 @@ class SQLiteStore:
 
                 CREATE INDEX IF NOT EXISTS idx_pnl_baselines_cutoff_at
                     ON pnl_baselines(cutoff_at);
+
+                CREATE TABLE IF NOT EXISTS platform_event_outbox (
+                    event_id TEXT PRIMARY KEY,
+                    event_type TEXT NOT NULL,
+                    subject TEXT NOT NULL,
+                    payload TEXT NOT NULL,
+                    occurred_at TEXT NOT NULL,
+                    created_at TEXT NOT NULL,
+                    published_at TEXT,
+                    publish_attempts INTEGER NOT NULL DEFAULT 0,
+                    last_error TEXT
+                );
+
+                CREATE INDEX IF NOT EXISTS idx_platform_event_outbox_pending
+                    ON platform_event_outbox(published_at, created_at, event_id);
+
+                CREATE INDEX IF NOT EXISTS idx_platform_event_outbox_type
+                    ON platform_event_outbox(event_type, occurred_at);
                 """
             )
 
@@ -196,6 +227,7 @@ class SQLiteStore:
                     now,
                 ),
             )
+            _insert_platform_event(connection, _proposal_created_event(proposal), created_at=now)
         return proposal
 
     def get_proposal(self, proposal_id: str) -> TradeProposal | None:
@@ -255,6 +287,10 @@ class SQLiteStore:
                     now,
                 ),
             )
+            _insert_platform_event(connection, _order_status_changed_event(record), created_at=now)
+            fill_event = _fill_recorded_event(record)
+            if fill_event is not None:
+                _insert_platform_event(connection, fill_event, created_at=now)
         return record
 
     def save_broker_order_records(self, records: list[BrokerOrderRecord]) -> list[BrokerOrderRecord]:
@@ -347,6 +383,7 @@ class SQLiteStore:
             raise KeyError(decision.proposal_id)
 
         updated = proposal.model_copy(update={"status": decision.status})
+        now = datetime.now(tz=UTC).isoformat()
         with self._connect() as connection:
             connection.execute(
                 """
@@ -369,10 +406,11 @@ class SQLiteStore:
                 (
                     updated.status.value,
                     self._dump(updated),
-                    datetime.now(tz=UTC).isoformat(),
+                    now,
                     updated.proposal_id,
                 ),
             )
+            _insert_platform_event(connection, _proposal_decision_event(updated, decision), created_at=now)
         return updated
 
     def upsert_price_bar(self, symbol: str, bar: PriceBar) -> PriceBar:
@@ -514,6 +552,114 @@ class SQLiteStore:
             return None
         return FundamentalSnapshot.model_validate_json(row["payload"])
 
+    def append_platform_event(self, event: AnyPlatformEvent) -> PlatformEventOutboxRecord:
+        now = datetime.now(tz=UTC).isoformat()
+        with self._connect() as connection:
+            _insert_platform_event(connection, event, created_at=now)
+        record = self.get_platform_event_outbox_record(event.event_id)
+        if record is None:
+            raise RuntimeError(f"failed to append platform event {event.event_id}")
+        return record
+
+    def get_platform_event_outbox_record(self, event_id: str) -> PlatformEventOutboxRecord | None:
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT *
+                FROM platform_event_outbox
+                WHERE event_id = ?
+                """,
+                (event_id,),
+            ).fetchone()
+        if row is None:
+            return None
+        return _event_outbox_record_from_row(row)
+
+    def list_pending_platform_events(self, *, limit: int = 100) -> list[PlatformEventOutboxRecord]:
+        if limit < 1:
+            raise ValueError("limit must be positive")
+        with self._connect() as connection:
+            rows = connection.execute(
+                """
+                SELECT *
+                FROM platform_event_outbox
+                WHERE published_at IS NULL
+                ORDER BY created_at ASC, event_id ASC
+                LIMIT ?
+                """,
+                (limit,),
+            ).fetchall()
+        return [_event_outbox_record_from_row(row) for row in rows]
+
+    def list_platform_event_outbox_records(
+        self,
+        *,
+        limit: int = 1000,
+        published: bool | None = None,
+        event_type: PlatformEventType | None = None,
+    ) -> list[PlatformEventOutboxRecord]:
+        if limit < 1:
+            raise ValueError("limit must be positive")
+        query = "SELECT * FROM platform_event_outbox"
+        clauses: list[str] = []
+        params: list[str | int] = []
+        if published is True:
+            clauses.append("published_at IS NOT NULL")
+        elif published is False:
+            clauses.append("published_at IS NULL")
+        if event_type is not None:
+            clauses.append("event_type = ?")
+            params.append(event_type.value)
+        if clauses:
+            query += " WHERE " + " AND ".join(clauses)
+        query += " ORDER BY created_at ASC, event_id ASC LIMIT ?"
+        params.append(limit)
+        with self._connect() as connection:
+            rows = connection.execute(query, tuple(params)).fetchall()
+        return [_event_outbox_record_from_row(row) for row in rows]
+
+    def mark_platform_event_published(
+        self,
+        event_id: str,
+        *,
+        published_at: datetime | None = None,
+    ) -> PlatformEventOutboxRecord | None:
+        resolved_published_at = _datetime_to_utc(published_at or datetime.now(tz=UTC)).isoformat()
+        with self._connect() as connection:
+            connection.execute(
+                """
+                UPDATE platform_event_outbox
+                SET
+                    published_at = COALESCE(published_at, ?),
+                    publish_attempts = CASE
+                        WHEN published_at IS NULL THEN publish_attempts + 1
+                        ELSE publish_attempts
+                    END,
+                    last_error = NULL
+                WHERE event_id = ?
+                """,
+                (resolved_published_at, event_id),
+            )
+        return self.get_platform_event_outbox_record(event_id)
+
+    def record_platform_event_publish_failure(
+        self,
+        event_id: str,
+        error: str,
+    ) -> PlatformEventOutboxRecord | None:
+        with self._connect() as connection:
+            connection.execute(
+                """
+                UPDATE platform_event_outbox
+                SET
+                    publish_attempts = publish_attempts + 1,
+                    last_error = ?
+                WHERE event_id = ? AND published_at IS NULL
+                """,
+                (error, event_id),
+            )
+        return self.get_platform_event_outbox_record(event_id)
+
     def _connect(self) -> sqlite3.Connection:
         connection = sqlite3.connect(self.database_path)
         connection.row_factory = sqlite3.Row
@@ -521,4 +667,164 @@ class SQLiteStore:
 
     @staticmethod
     def _dump(model: object) -> str:
-        return json.dumps(model.model_dump(mode="json"), separators=(",", ":"))
+        return _dump_model(model)
+
+
+def _proposal_created_event(proposal: TradeProposal) -> ProposalCreatedEvent:
+    return ProposalCreatedEvent(
+        event_id=f"proposal.created.{proposal.proposal_id}",
+        occurred_at=proposal.created_at,
+        source=_event_source("proposal-store", _proposal_environment(proposal)),
+        payload=ProposalEventPayload(
+            proposal_id=proposal.proposal_id,
+            status=proposal.status,
+            sleeve=proposal.sleeve,
+            as_of=proposal.as_of,
+            intended_trade_date=proposal.intended_trade_date,
+            target_count=len(proposal.targets),
+            order_count=len(proposal.orders),
+            message=proposal.summary,
+        ),
+    )
+
+
+def _proposal_decision_event(
+    proposal: TradeProposal,
+    decision: ApprovalDecision,
+) -> ProposalDecisionRecordedEvent:
+    return ProposalDecisionRecordedEvent(
+        event_id=f"proposal.decision.{decision.proposal_id}.{decision.decided_at.isoformat()}",
+        occurred_at=decision.decided_at,
+        source=_event_source("proposal-store", _proposal_environment(proposal)),
+        causation_id=f"proposal.created.{proposal.proposal_id}",
+        payload=ProposalEventPayload(
+            proposal_id=proposal.proposal_id,
+            status=decision.status,
+            sleeve=proposal.sleeve,
+            as_of=proposal.as_of,
+            intended_trade_date=proposal.intended_trade_date,
+            target_count=len(proposal.targets),
+            order_count=len(proposal.orders),
+            message=decision.comment,
+        ),
+    )
+
+
+def _order_status_changed_event(record: BrokerOrderRecord) -> OrderStatusChangedEvent:
+    return OrderStatusChangedEvent(
+        event_id=f"order.status.{record.local_order_id}.{record.status.value}.{record.updated_at.isoformat()}",
+        occurred_at=record.updated_at,
+        source=_event_source("broker-order-store", record.environment),
+        causation_id=f"proposal.created.{record.proposal_id}",
+        payload=OrderLifecyclePayload(
+            local_order_id=record.local_order_id,
+            proposal_id=record.proposal_id,
+            broker=record.broker,
+            environment=record.environment,
+            symbol=record.order.symbol,
+            side=record.order.side,
+            order_type=record.order.order_type,
+            quantity=record.order.quantity,
+            status=record.status,
+            order_ref=record.order_ref,
+            broker_order_id=record.broker_order_id,
+            message=record.message,
+        ),
+    )
+
+
+def _fill_recorded_event(record: BrokerOrderRecord) -> FillRecordedEvent | None:
+    if record.filled_quantity <= 0 or record.average_fill_price is None:
+        return None
+    return FillRecordedEvent(
+        event_id=(
+            f"fill.recorded.{record.local_order_id}."
+            f"{record.filled_quantity}.{record.average_fill_price}.{record.updated_at.isoformat()}"
+        ),
+        occurred_at=record.updated_at,
+        source=_event_source("broker-order-store", record.environment),
+        causation_id=f"order.status.{record.local_order_id}.{record.status.value}.{record.updated_at.isoformat()}",
+        payload=FillRecordedPayload(
+            local_order_id=record.local_order_id,
+            proposal_id=record.proposal_id,
+            broker=record.broker,
+            environment=record.environment,
+            broker_order_id=record.broker_order_id,
+            order_ref=record.order_ref,
+            symbol=record.order.symbol,
+            side=record.order.side,
+            quantity=record.filled_quantity,
+            average_price=record.average_fill_price,
+            currency=record.order.currency,
+            filled_at=record.updated_at,
+        ),
+    )
+
+
+def _proposal_environment(proposal: TradeProposal) -> OrderEnvironment | None:
+    environments = {order.environment for order in proposal.orders}
+    if len(environments) != 1:
+        return None
+    return next(iter(environments))
+
+
+def _event_source(service: str, environment: OrderEnvironment | None = None) -> EventSource:
+    return EventSource(service=service, environment=environment)
+
+
+def _insert_platform_event(
+    connection: sqlite3.Connection,
+    event: AnyPlatformEvent,
+    *,
+    created_at: str,
+) -> None:
+    connection.execute(
+        """
+        INSERT INTO platform_event_outbox(
+            event_id,
+            event_type,
+            subject,
+            payload,
+            occurred_at,
+            created_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?)
+        ON CONFLICT(event_id) DO NOTHING
+        """,
+        (
+            event.event_id,
+            event.event_type.value,
+            event.subject,
+            _dump_model(event),
+            event.occurred_at.isoformat(),
+            created_at,
+        ),
+    )
+
+
+def _dump_model(model: object) -> str:
+    return json.dumps(model.model_dump(mode="json"), separators=(",", ":"))
+
+
+def _event_outbox_record_from_row(row: sqlite3.Row) -> PlatformEventOutboxRecord:
+    return PlatformEventOutboxRecord(
+        event_id=row["event_id"],
+        event_type=PlatformEventType(row["event_type"]),
+        subject=row["subject"],
+        payload=decode_platform_event(row["payload"]),
+        occurred_at=_datetime_from_iso(row["occurred_at"]),
+        created_at=_datetime_from_iso(row["created_at"]),
+        published_at=_datetime_from_iso(row["published_at"]) if row["published_at"] is not None else None,
+        publish_attempts=row["publish_attempts"],
+        last_error=row["last_error"],
+    )
+
+
+def _datetime_from_iso(value: str) -> datetime:
+    return _datetime_to_utc(datetime.fromisoformat(value))
+
+
+def _datetime_to_utc(value: datetime) -> datetime:
+    if value.tzinfo is None or value.utcoffset() is None:
+        raise ValueError("event outbox timestamps must be timezone-aware")
+    return value.astimezone(UTC)

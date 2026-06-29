@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "profile": "local-two-lane-recorder",
+  "decision_date": "2026-06-27",
+  "storage_policy": "config/market-data-storage.json",
+  "lanes": {
+    "daily_reference_recorder": {
+      "status": "existing_or_near_existing",
+      "frequency": "after_close_or_backfill",
+      "primary_sources": ["wind", "tushare"],
+      "fallback_sources": ["yahoo_finance"],
+      "data_kinds": ["daily_bar", "corporate_action", "fx", "reference_data"],
+      "policy": {
+        "raw_before_normalized": true,
+        "point_in_time_available_at_required": true,
+        "yahoo_source_of_record": false
+      }
+    },
+    "intraday_ib_recorder": {
+      "status": "p3_2_target",
+      "frequency": "market_session_streaming",
+      "primary_source": "interactive_brokers_tws_or_gateway",
+      "data_kinds": ["realtime_bar_5s", "top_of_book_quote_optional", "tick_by_tick_canary"],
+      "default_environment": "paper",
+      "record_market_data_mode": true,
+      "market_data_modes": ["live", "frozen", "delayed", "delayed_frozen"],
+      "policy": {
+        "raw_before_publish": true,
+        "bulk_data_outside_repo": true,
+        "live_trading_decision_source": false,
+        "delayed_data_blocks_live_trading": true
+      }
+    }
+  },
+  "ibkr_capacity_policy": {
+    "checked_at": "2026-06-27",
+    "assumed_total_market_data_lines": 100,
+    "reserved_market_data_lines": 20,
+    "usable_market_data_lines_for_recorder": 80,
+    "api_request_pacing": {
+      "documented_message_rate_error_threshold_per_second": 50,
+      "recorder_default_requests_per_second": 5,
+      "recorder_burst_requests": 10
+    },
+    "realtime_bars": {
+      "bar_size_seconds": 5,
+      "max_new_requests_per_600_seconds": 60,
+      "recorder_startup_spacing_seconds": 10,
+      "counts_against_level_1_lines": true,
+      "default_full_universe_enabled": true
+    },
+    "historical_small_bars": {
+      "max_simultaneous_open_requests": 50,
+      "avoid_identical_request_within_seconds": 15,
+      "avoid_six_or_more_same_contract_exchange_ticktype_within_seconds": 2,
+      "max_requests_per_600_seconds": 60,
+      "bid_ask_counts_double": true,
+      "bars_30_seconds_or_less_unavailable_after_months": 6,
+      "recorder_default_spacing_seconds": 10
+    },
+    "tick_by_tick": {
+      "approx_capacity_percent_of_market_data_lines": 5,
+      "default_capacity_at_100_lines": 5,
+      "default_canary_symbols": ["SPY", "QQQ", "TLT"],
+      "hard_cap_symbols": 5,
+      "same_instrument_request_spacing_seconds": 15,
+      "full_universe_enabled": false
+    },
+    "level_2_depth": {
+      "default_capacity_at_100_lines": 3,
+      "p3_2_enabled": false
+    }
+  },
+  "initial_etf_universe_seed": {
+    "purpose": "capacity_test_and_research_recording_not_promoted_trading_universe",
+    "max_symbols": 40,
+    "groups": {
+      "broad_us_and_global_equity": ["SPY", "QQQ", "IWM", "DIA", "MDY", "VTI", "URTH", "ACWI", "EFA", "EEM", "VEA", "VWO"],
+      "us_sectors": ["XLK", "XLF", "XLV", "XLY", "XLP", "XLI", "XLE", "XLB", "XLU", "XLRE", "XLC"],
+      "bonds_and_credit": ["AGG", "BND", "TLT", "IEF", "SHY", "TIP", "LQD", "HYG", "MUB", "EMB"],
+      "real_assets_and_commodities": ["GLD", "IAU", "SLV", "PDBC", "DBC", "VNQ", "VNQI"]
+    },
+    "default_recording": {
+      "full_universe": ["ibkr_realtime_bar_5s_trades"],
+      "optional_after_line_probe": ["ibkr_top_of_book_quotes"],
+      "canary_only": ["ibkr_tick_by_tick_last_or_alllast"],
+      "excluded_by_default": ["level_2_market_depth"]
+    }
+  },
+  "secondary_intraday_candidates": [
+    {
+      "source": "interactive_brokers_delayed",
+      "role": "bootstrap_and_entitlement_fallback",
+      "freshness": "10_to_20_minute_delayed_depending_on_endpoint_and_market",
+      "production_source_of_truth": false
+    },
+    {
+      "source": "alpaca_market_data",
+      "role": "us_equity_etf_iex_stream_or_delayed_sip_cross_check",
+      "freshness": "iex_live_free_or_sip_recent_data_with_subscription_or_sip_historical_after_15_minute_delay",
+      "production_source_of_truth": false
+    },
+    {
+      "source": "alpha_vantage_premium",
+      "role": "rest_intraday_bar_backfill",
+      "supported_intervals": ["1min", "5min", "15min", "30min", "60min"],
+      "freshness": "historical_realtime_or_15_minute_delayed_by_entitlement",
+      "production_source_of_truth": false
+    },
+    {
+      "source": "massive_polygon",
+      "role": "paid_us_equity_etf_intraday_aggregate_vendor_candidate",
+      "freshness": "end_of_day_15_minute_delayed_or_realtime_by_plan",
+      "production_source_of_truth": "candidate_after_license_review"
+    },
+    {
+      "source": "wind_intraday",
+      "role": "candidate_if_local_entitlement_allows_intraday_storage",
+      "freshness": "unknown_until_local_entitlement_check",
+      "production_source_of_truth": "candidate_after_entitlement_and_license_review"
+    }
+  ],
+  "references": [
+    "https://www.interactivebrokers.com/campus/ibkr-api-page/market-data-subscriptions/",
+    "https://www.interactivebrokers.com/campus/ibkr-api-page/twsapi-doc/",
+    "https://www.interactivebrokers.com/campus/ibkr-api-page/twsapi-ref/",
+    "https://interactivebrokers.github.io/tws-api/historical_limitations.html",
+    "https://interactivebrokers.github.io/tws-api/realtime_bars.html",
+    "https://interactivebrokers.github.io/tws-api/tick_data.html",
+    "https://interactivebrokers.github.io/tws-api/market_data_type.html",
+    "https://interactivebrokers.github.io/tws-api/delayed_data.html",
+    "https://docs.alpaca.markets/us/docs/market-data-faq",
+    "https://www.alphavantage.co/documentation/",
+    "https://massive.com/docs/rest/stocks/aggregates/custom-bars"
+  ]
+}

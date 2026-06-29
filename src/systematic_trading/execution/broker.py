@@ -30,7 +30,7 @@ from systematic_trading.domain.execution import (
 )
 from systematic_trading.domain.market import Instrument
 from systematic_trading.research import current_sota_definition, instruments_for_definition
-from systematic_trading.storage.sqlite import SQLiteStore
+from systematic_trading.storage.interfaces import BrokerOrderStore
 
 
 class BrokerConnectionProfile(BaseModel):
@@ -154,7 +154,7 @@ class InteractiveBrokersOrderRouter:
         self,
         *,
         proposal: TradeProposal,
-        store: SQLiteStore,
+        store: BrokerOrderStore,
         environment: OrderEnvironment = OrderEnvironment.PAPER,
         allow_resubmit: bool = False,
         order_indexes: set[int] | None = None,
@@ -234,7 +234,7 @@ class InteractiveBrokersOrderRouter:
         self,
         *,
         proposal: TradeProposal,
-        store: SQLiteStore,
+        store: BrokerOrderStore,
         environment: OrderEnvironment = OrderEnvironment.PAPER,
         allow_resubmit: bool = False,
         order_indexes: set[int] | None = None,
@@ -261,7 +261,7 @@ class InteractiveBrokersOrderRouter:
     def _validate_proposal_for_submission(
         self,
         proposal: TradeProposal,
-        store: SQLiteStore,
+        store: BrokerOrderStore,
         environment: OrderEnvironment,
         allow_resubmit: bool,
         order_indexes: set[int] | None = None,
@@ -309,7 +309,7 @@ class InteractiveBrokersExecutionSynchronizer:
     def sync_order_fills(
         self,
         *,
-        store: SQLiteStore,
+        store: BrokerOrderStore,
         environment: OrderEnvironment = OrderEnvironment.PAPER,
     ) -> BrokerFillSyncResult:
         profile = self.adapter.profile_for(environment).model_copy(

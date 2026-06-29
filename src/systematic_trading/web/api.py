@@ -50,7 +50,8 @@ from systematic_trading.live import (
 from systematic_trading.portfolio.beta import BetaInstrumentState, RiskParityBetaSleeve
 from systematic_trading.portfolio.proposals import RebalanceProposalBuilder
 from systematic_trading.research import current_sota_definition, instruments_for_definition
-from systematic_trading.storage.sqlite import SQLiteStore
+from systematic_trading.services import ServiceGraph, build_service_graph
+from systematic_trading.storage.interfaces import TradingStore
 
 router = APIRouter(prefix="/api/v1")
 FAILED_RESUBMIT_STATUSES = {BrokerOrderStatus.REJECTED, BrokerOrderStatus.CANCELLED}
@@ -236,7 +237,7 @@ def _settings(request: Request) -> AppSettings:
     return request.app.state.settings
 
 
-def _store(request: Request) -> SQLiteStore:
+def _store(request: Request) -> TradingStore:
     return request.app.state.store
 
 
@@ -340,6 +341,11 @@ def platform_manifest(request: Request) -> PlatformManifest:
             "live_trading_enabled": False,
         },
     )
+
+
+@router.get("/platform/service-graph", response_model=ServiceGraph)
+def platform_service_graph() -> ServiceGraph:
+    return build_service_graph()
 
 
 @router.get("/automation/status", response_model=TradingServiceStatus)
@@ -864,7 +870,7 @@ def _load_json(path: Path, warnings: list[str]) -> dict[str, Any] | None:
 
 def _strategy_nav_points(
     payload: dict[str, Any],
-    store: SQLiteStore,
+    store: TradingStore,
     warnings: list[str],
 ) -> tuple[list[tuple[date, Decimal]], date | None, int]:
     points: list[tuple[date, Decimal]] = []
@@ -890,7 +896,7 @@ def _strategy_nav_points(
 def _strategy_mark_to_market_extension(
     payload: dict[str, Any],
     points: list[tuple[date, Decimal]],
-    store: SQLiteStore,
+    store: TradingStore,
     warnings: list[str],
 ) -> list[tuple[date, Decimal]]:
     if not points:
@@ -961,7 +967,7 @@ def _strategy_mark_to_market_extension(
 
 def _account_nav_points(
     settings: AppSettings,
-    store: SQLiteStore,
+    store: TradingStore,
     warnings: list[str],
 ) -> list[tuple[date, Decimal]]:
     points: list[tuple[date, Decimal]] = []
@@ -1044,7 +1050,7 @@ def _account_snapshot_date(path: Path) -> date | None:
 
 def _latest_strategy_proposal(
     settings: AppSettings,
-    store: SQLiteStore,
+    store: TradingStore,
     warnings: list[str],
 ) -> tuple[Path | None, TradeProposal | None]:
     live_plan_dir = settings.data_dir / "live" / "sota_rebalance"
@@ -1090,7 +1096,7 @@ def _dashboard_as_of(
 
 def _value_account_snapshot(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     account_snapshot: LiveAccountSnapshotInput,
     as_of: date,
     warnings: list[str],
@@ -1143,13 +1149,13 @@ def _value_account_snapshot(
     return valuation, position_values, price_map
 
 
-def _latest_price(store: SQLiteStore, symbol: str, as_of: date) -> Decimal | None:
+def _latest_price(store: TradingStore, symbol: str, as_of: date) -> Decimal | None:
     bars = store.list_price_bars(symbol, end_date=as_of)
     return bars[-1].close if bars else None
 
 
 def _fx_to_cnh(
-    store: SQLiteStore,
+    store: TradingStore,
     currencies: set[Currency],
     as_of: date,
     warnings: list[str],
@@ -1166,11 +1172,11 @@ def _fx_to_cnh(
     return rates
 
 
-def _latest_market_data_date(store: SQLiteStore) -> date | None:
+def _latest_market_data_date(store: TradingStore) -> date | None:
     return _latest_market_data_date_for_symbols(store, instruments_for_definition(current_sota_definition()).keys())
 
 
-def _latest_market_data_date_for_symbols(store: SQLiteStore, symbols: Iterable[str]) -> date | None:
+def _latest_market_data_date_for_symbols(store: TradingStore, symbols: Iterable[str]) -> date | None:
     dates: list[date] = []
     for symbol in symbols:
         bars = store.list_price_bars(str(symbol).upper())
@@ -1180,7 +1186,7 @@ def _latest_market_data_date_for_symbols(store: SQLiteStore, symbols: Iterable[s
 
 
 def _execution_slippage_rows(
-    store: SQLiteStore,
+    store: TradingStore,
     *,
     as_of: date,
 ) -> tuple[list[DashboardExecutionSlippageRow], list[str]]:
@@ -1230,7 +1236,7 @@ def _execution_slippage_rows(
     return rows, _dedupe_messages(warnings)
 
 
-def _single_fx_to_cnh(store: SQLiteStore, currency: Currency, as_of: date, warnings: list[str]) -> Decimal | None:
+def _single_fx_to_cnh(store: TradingStore, currency: Currency, as_of: date, warnings: list[str]) -> Decimal | None:
     if currency == Currency.CNH:
         return Decimal("1")
     stored_rates = store.list_fx_rates(currency, end_date=as_of)
@@ -1247,7 +1253,7 @@ def _record_trade_time(record: BrokerOrderRecord) -> datetime:
     return value.astimezone(UTC)
 
 
-def _pnl_comparison_history(store: SQLiteStore, limit: int) -> list[DashboardPnlComparisonPoint]:
+def _pnl_comparison_history(store: TradingStore, limit: int) -> list[DashboardPnlComparisonPoint]:
     points: list[DashboardPnlComparisonPoint] = []
     for actual in store.list_pnl_snapshots(limit=limit):
         theoretical = build_reference_pnl_snapshot(store, as_of=actual.as_of.date())

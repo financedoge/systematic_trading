@@ -1,5 +1,11 @@
 # Research State
 
+## Production Research Rule
+
+Research is now part of a controlled research-to-paper-to-live pipeline. New candidates must compare against the current SOTA, use point-in-time data, record reproducible artifacts, and pass the promotion gates in `docs/industrial-platform-plan.md` before paper or live use.
+
+Use `.agents/skills/continuous-research-loop.md` for recurring challenger research and `.agents/skills/strategy-promotion-control.md` for promotion decisions.
+
 ## Current SOTA
 
 - Name: SOTA: price/volume top 6 + technical tree + relative/adaptive

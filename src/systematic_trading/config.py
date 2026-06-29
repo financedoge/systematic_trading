@@ -29,6 +29,7 @@ class AppSettings(BaseSettings):
 
     data_dir: Path = Path("var")
     database_path: Path = Path("var/systematic_trading.db")
+    transactional_store_backend: str = "sqlite"
 
     automation_enabled: bool = False
     automation_timezone: str = "America/New_York"
@@ -36,6 +37,8 @@ class AppSettings(BaseSettings):
     automation_loop_interval_seconds: int = 15
     automation_execution_poll_seconds: int = 60
     automation_eod_retry_seconds: int = 300
+    automation_ib_error_breaker_threshold: int = 3
+    automation_ib_error_breaker_cooldown_seconds: int = 1800
     automation_queue_rebalance: bool = True
     automation_market_data_carry_forward: bool = True
     automation_market_data_carry_forward_max_calendar_days: int = 4

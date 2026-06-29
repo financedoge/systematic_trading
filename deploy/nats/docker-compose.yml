@@ -1,0 +1,15 @@
+services:
+  nats:
+    image: ${NATS_IMAGE:-nats:latest}
+    container_name: systematic-trading-nats
+    command: ["-c", "/etc/nats/nats-server.conf"]
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    volumes:
+      - nats_jetstream_data:/data/jetstream
+      - ./nats-server.conf:/etc/nats/nats-server.conf:ro
+    restart: unless-stopped
+
+volumes:
+  nats_jetstream_data:

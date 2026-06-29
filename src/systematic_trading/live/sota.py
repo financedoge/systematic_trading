@@ -18,7 +18,7 @@ from systematic_trading.portfolio.beta import BetaInstrumentState, RiskParityBet
 from systematic_trading.portfolio.proposals import RebalanceProposalBuilder
 from systematic_trading.research import current_sota_definition, instruments_for_definition, instantiate_overlays
 from systematic_trading.signals.base import SignalContext, TargetOverlay
-from systematic_trading.storage.sqlite import SQLiteStore
+from systematic_trading.storage.interfaces import TradingStore
 
 
 class AccountPositionInput(BaseModel):
@@ -52,7 +52,7 @@ def load_account_snapshot(path: Path) -> LiveAccountSnapshotInput:
 
 def build_sota_live_rebalance_plan(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     broker: InteractiveBrokersAdapter,
     account_snapshot: LiveAccountSnapshotInput,
     decision_date: date | None = None,
@@ -235,7 +235,7 @@ def _required_currencies(
 
 def _latest_fx_to_cnh(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     currencies: set[Currency],
     decision_date: date,
 ) -> dict[Currency, Decimal]:

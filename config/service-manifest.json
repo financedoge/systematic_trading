@@ -1,0 +1,260 @@
+{
+  "schema_version": 1,
+  "profile": "local-windows",
+  "description": "Local supervised service layout for the operator stack.",
+  "services": [
+    {
+      "service_id": "operator_dashboard",
+      "display_name": "Operator Dashboard API",
+      "service_type": "api",
+      "implementation_status": "active",
+      "required": true,
+      "startup_order": 20,
+      "command": [
+        ".venv/Scripts/python.exe",
+        "scripts/serve_operator_dashboard.py",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8000",
+        "--pid-path",
+        "var/run/operator_dashboard.pid"
+      ],
+      "working_directory": ".",
+      "pid_file": "var/run/operator_dashboard.pid",
+      "stdout_log": "var/log/operator_dashboard.out.log",
+      "stderr_log": "var/log/operator_dashboard.err.log",
+      "health_check": {
+        "kind": "http",
+        "target": "http://127.0.0.1:8000/health",
+        "timeout_seconds": 2,
+        "stale_after_seconds": 30
+      },
+      "environment": {
+        "PYTHONPATH": "src",
+        "ST_AUTOMATION_ENABLED": "true"
+      },
+      "restart_policy": {
+        "mode": "manual",
+        "max_restarts": 0
+      },
+      "depends_on": [],
+      "notes": "Started by scripts/start_operator_dashboard.ps1."
+    },
+    {
+      "service_id": "event_outbox_dispatcher",
+      "display_name": "Event Outbox Dispatcher",
+      "service_type": "worker",
+      "implementation_status": "active",
+      "required": true,
+      "startup_order": 30,
+      "command": [
+        ".venv/Scripts/python.exe",
+        "scripts/dispatch_event_outbox.py",
+        "--database",
+        "var/systematic_trading.db",
+        "--output",
+        "var/events/platform_events.jsonl",
+        "--state-path",
+        "var/run/event_outbox_dispatcher.state.json",
+        "--publisher",
+        "nats",
+        "--nats-url",
+        "nats://127.0.0.1:4222",
+        "--loop",
+        "--interval-seconds",
+        "5"
+      ],
+      "working_directory": ".",
+      "pid_file": "var/run/event_outbox_dispatcher.pid",
+      "stdout_log": "var/log/event_outbox_dispatcher.out.log",
+      "stderr_log": "var/log/event_outbox_dispatcher.err.log",
+      "health_check": {
+        "kind": "state_file",
+        "target": "var/run/event_outbox_dispatcher.state.json",
+        "timeout_seconds": 2,
+        "stale_after_seconds": 30
+      },
+      "environment": {
+        "PYTHONPATH": "src"
+      },
+      "restart_policy": {
+        "mode": "manual",
+        "max_restarts": 0
+      },
+      "depends_on": [
+        "nats_jetstream"
+      ],
+      "notes": "Started by scripts/start_operator_dashboard.ps1 unless -DisableEventDispatcher is passed. Recommended local platform startup publishes to NATS."
+    },
+    {
+      "service_id": "trading_management_loop",
+      "display_name": "Trading Management Automation Loop",
+      "service_type": "embedded_worker",
+      "implementation_status": "active",
+      "required": true,
+      "startup_order": 40,
+      "command": [],
+      "working_directory": ".",
+      "pid_file": null,
+      "stdout_log": null,
+      "stderr_log": null,
+      "health_check": {
+        "kind": "state_file",
+        "target": "var/live/trading_management_service_state.json",
+        "timeout_seconds": 2,
+        "stale_after_seconds": 120
+      },
+      "environment": {
+        "ST_AUTOMATION_ENABLED": "true"
+      },
+      "restart_policy": {
+        "mode": "parent_process",
+        "max_restarts": 0
+      },
+      "depends_on": [
+        "operator_dashboard"
+      ],
+      "supervised_by": "operator_dashboard",
+      "notes": "Runs inside the FastAPI process when automation is enabled."
+    },
+    {
+      "service_id": "nats_jetstream",
+      "display_name": "NATS JetStream Event Bus",
+      "service_type": "worker",
+      "implementation_status": "active",
+      "required": true,
+      "startup_order": 5,
+      "command": [
+        "powershell",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "scripts/start_nats_jetstream.ps1"
+      ],
+      "working_directory": ".",
+      "pid_file": null,
+      "stdout_log": null,
+      "stderr_log": null,
+      "health_check": {
+        "kind": "http",
+        "target": "http://127.0.0.1:8222/healthz?js-enabled-only=true",
+        "timeout_seconds": 2,
+        "stale_after_seconds": 30
+      },
+      "environment": {},
+      "restart_policy": {
+        "mode": "docker_compose",
+        "max_restarts": 0
+      },
+      "depends_on": [],
+      "notes": "Docker Compose path is versioned under deploy/nats. Local Docker runtime has been smoke-tested."
+    },
+    {
+      "service_id": "postgres_transactional",
+      "display_name": "Postgres Transactional Store",
+      "service_type": "worker",
+      "implementation_status": "active",
+      "required": true,
+      "startup_order": 10,
+      "command": [
+        "powershell",
+        "-Command",
+        "Get-Service postgresql* | Where-Object { $_.Status -eq 'Running' }"
+      ],
+      "working_directory": ".",
+      "pid_file": null,
+      "stdout_log": null,
+      "stderr_log": null,
+      "health_check": {
+        "kind": "tcp",
+        "target": "127.0.0.1:5432",
+        "timeout_seconds": 2,
+        "stale_after_seconds": 30
+      },
+      "environment": {
+        "PGDATABASE": "systematic_trading"
+      },
+      "restart_policy": {
+        "mode": "external_windows_service",
+        "max_restarts": 0
+      },
+      "depends_on": [],
+      "notes": "Installed local PostgreSQL service. Startup script verifies TCP readiness and leaves Windows service management to the operator/installer."
+    },
+    {
+      "service_id": "clickhouse_columnar",
+      "display_name": "ClickHouse Columnar Store",
+      "service_type": "worker",
+      "implementation_status": "active",
+      "required": true,
+      "startup_order": 15,
+      "command": [
+        "powershell",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "scripts/start_clickhouse.ps1"
+      ],
+      "working_directory": ".",
+      "pid_file": null,
+      "stdout_log": null,
+      "stderr_log": null,
+      "health_check": {
+        "kind": "http",
+        "target": "http://127.0.0.1:8123/ping",
+        "timeout_seconds": 2,
+        "stale_after_seconds": 30
+      },
+      "environment": {
+        "ST_CLICKHOUSE_LOG_ROOT": "D:/systematic_trading_data/clickhouse/logs"
+      },
+      "restart_policy": {
+        "mode": "docker_compose",
+        "max_restarts": 0
+      },
+      "depends_on": [],
+      "notes": "Docker Compose path is versioned under deploy/clickhouse. P2.8 owns the local runtime smoke."
+    },
+    {
+      "service_id": "market_data_recorder",
+      "display_name": "Live Market Data Recorder",
+      "service_type": "worker",
+      "implementation_status": "active",
+      "required": false,
+      "startup_order": 50,
+      "command": [
+        ".venv/Scripts/python.exe",
+        "scripts/record_ib_market_data.py",
+        "--mode",
+        "realtime",
+        "--use-seed-universe",
+        "--pid-path",
+        "var/run/market_data_recorder.pid",
+        "--state-path",
+        "var/run/market_data_recorder.state.json"
+      ],
+      "working_directory": ".",
+      "pid_file": "var/run/market_data_recorder.pid",
+      "stdout_log": "var/log/market_data_recorder.out.log",
+      "stderr_log": "var/log/market_data_recorder.err.log",
+      "health_check": {
+        "kind": "state_file",
+        "target": "var/run/market_data_recorder.state.json",
+        "timeout_seconds": 2,
+        "stale_after_seconds": 30
+      },
+      "environment": {
+        "PYTHONPATH": "src"
+      },
+      "restart_policy": {
+        "mode": "manual",
+        "max_restarts": 0
+      },
+      "depends_on": [
+        "event_outbox_dispatcher"
+      ],
+      "notes": "Implemented P3.2 worker. Start manually for paper recording; use --mode historical-smoke for closed-market connection and raw-write tests."
+    }
+  ]
+}
