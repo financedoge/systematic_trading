@@ -9,7 +9,7 @@ from systematic_trading.data.yahoo import YahooChartProvider
 from systematic_trading.domain.enums import Currency
 from systematic_trading.domain.market import FXRate, PriceBar
 from systematic_trading.research import current_sota_definition, instruments_for_definition
-from systematic_trading.storage.sqlite import SQLiteStore
+from systematic_trading.storage.interfaces import MarketDataStore
 
 
 class DailyBarProvider(Protocol):
@@ -34,7 +34,7 @@ class MarketDataRefreshResult(BaseModel):
 
 def refresh_sota_market_data(
     *,
-    store: SQLiteStore,
+    store: MarketDataStore,
     target_date: date,
     symbols: Sequence[str] | None = None,
     provider: DailyBarProvider | None = None,
@@ -216,7 +216,7 @@ def _fetch_fallback_bars(
     return fallback_bars, f"{fallback_source} fallback returned {len(eligible_bars)} bar(s)."
 
 
-def _next_missing_price_date(store: SQLiteStore, symbol: str, target_date: date) -> date | None:
+def _next_missing_price_date(store: MarketDataStore, symbol: str, target_date: date) -> date | None:
     bars = store.list_price_bars(symbol)
     if bars and bars[-1].trade_date >= target_date:
         return None
@@ -225,12 +225,12 @@ def _next_missing_price_date(store: SQLiteStore, symbol: str, target_date: date)
     return date(2012, 1, 1)
 
 
-def _latest_price_date(store: SQLiteStore, symbol: str) -> date | None:
+def _latest_price_date(store: MarketDataStore, symbol: str) -> date | None:
     bars = store.list_price_bars(symbol)
     return bars[-1].trade_date if bars else None
 
 
-def _next_missing_fx_date(store: SQLiteStore, currency: Currency, target_date: date) -> date | None:
+def _next_missing_fx_date(store: MarketDataStore, currency: Currency, target_date: date) -> date | None:
     rates = store.list_fx_rates(currency)
     if rates and rates[-1].rate_date >= target_date:
         return None
@@ -240,7 +240,7 @@ def _next_missing_fx_date(store: SQLiteStore, currency: Currency, target_date: d
 
 
 def _carry_forward_price_bars(
-    store: SQLiteStore,
+    store: MarketDataStore,
     symbol: str,
     *,
     target_date: date,
@@ -279,7 +279,7 @@ def _carry_forward_price_bars(
 
 
 def _carry_forward_fx_rates(
-    store: SQLiteStore,
+    store: MarketDataStore,
     currency: Currency,
     *,
     target_date: date,
@@ -314,7 +314,7 @@ def _carry_forward_fx_rates(
     ]
 
 
-def _complete_bar_date(store: SQLiteStore, symbols: Sequence[str]) -> date | None:
+def _complete_bar_date(store: MarketDataStore, symbols: Sequence[str]) -> date | None:
     dates: list[date] = []
     for symbol in symbols:
         bars = store.list_price_bars(symbol)
@@ -323,7 +323,7 @@ def _complete_bar_date(store: SQLiteStore, symbols: Sequence[str]) -> date | Non
     return min(dates) if dates else None
 
 
-def _latest_fx_date(store: SQLiteStore, currency: Currency) -> date | None:
+def _latest_fx_date(store: MarketDataStore, currency: Currency) -> date | None:
     rates = store.list_fx_rates(currency)
     return rates[-1].rate_date if rates else None
 

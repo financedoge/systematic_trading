@@ -9,6 +9,13 @@ from threading import Lock, Thread
 from typing import Any, Protocol
 
 from systematic_trading.config import AppSettings
+from systematic_trading.domain import (
+    AlertRaisedEvent,
+    AlertRaisedPayload,
+    EventSeverity,
+    EventSource,
+)
+from systematic_trading.storage.interfaces import PlatformEventAppendStore
 
 
 class AutomationEvent(Protocol):
@@ -20,18 +27,24 @@ class AutomationEvent(Protocol):
 
 
 class AutomationAlertNotifier:
-    def __init__(self, settings: AppSettings) -> None:
+    def __init__(self, settings: AppSettings, *, event_store: PlatformEventAppendStore | None = None) -> None:
         self.settings = settings
+        self.event_store = event_store
         self.alert_log_path = settings.data_dir / "log" / "automation_alerts.jsonl"
         self.email_error_log_path = settings.data_dir / "log" / "automation_alert_email_errors.log"
+        self.event_error_log_path = settings.data_dir / "log" / "automation_alert_event_errors.log"
         self._lock = Lock()
+        self._last_alert_at: dict[str, datetime] = {}
         self._last_email_at: dict[str, datetime] = {}
         self._last_email_config_warning_at: datetime | None = None
 
     def notify(self, event: AutomationEvent) -> None:
         if event.status not in {"warning", "error"}:
             return
+        if not self._reserve_alert_record(event):
+            return
         self._append_alert_log(event)
+        self._append_platform_alert_event(event)
         email_config_issue = self.email_config_issue()
         if email_config_issue is not None:
             self._append_email_config_warning_once(email_config_issue)
@@ -53,6 +66,33 @@ class AutomationAlertNotifier:
             self.alert_log_path.parent.mkdir(parents=True, exist_ok=True)
             with self.alert_log_path.open("a", encoding="utf-8") as handle:
                 handle.write(json.dumps(payload, sort_keys=True, default=str) + "\n")
+
+    def _append_platform_alert_event(self, event: AutomationEvent) -> None:
+        if self.event_store is None:
+            return
+        try:
+            self.event_store.append_platform_event(
+                AlertRaisedEvent(
+                    occurred_at=_as_utc(event.timestamp),
+                    source=EventSource(
+                        service="trading-management-service",
+                        environment=self.settings.default_environment,
+                    ),
+                    payload=AlertRaisedPayload(
+                        severity=_event_severity(event.status),
+                        category=event.event_type,
+                        message=event.message,
+                        details={
+                            "automation_status": event.status,
+                            "automation_event_type": event.event_type,
+                            "automation_event_timestamp": _isoformat(event.timestamp),
+                            **event.details,
+                        },
+                    ),
+                )
+            )
+        except Exception as exc:
+            self._append_alert_event_error(exc)
 
     def email_config_issue(self) -> str | None:
         missing: list[str] = []
@@ -81,8 +121,18 @@ class AutomationAlertNotifier:
             with self.email_error_log_path.open("a", encoding="utf-8") as handle:
                 handle.write(f"{now.isoformat()} {message}\n")
 
+    def _reserve_alert_record(self, event: AutomationEvent) -> bool:
+        key = _alert_dedupe_key(event)
+        now = datetime.now(tz=UTC)
+        with self._lock:
+            last_alert = self._last_alert_at.get(key)
+            if last_alert is not None and (now - last_alert).total_seconds() < self.settings.automation_alert_dedupe_seconds:
+                return False
+            self._last_alert_at[key] = now
+            return True
+
     def _reserve_email_delivery(self, event: AutomationEvent) -> bool:
-        key = f"{event.event_type}:{event.status}:{event.message}"
+        key = _alert_dedupe_key(event)
         now = datetime.now(tz=UTC)
         with self._lock:
             last_sent = self._last_email_at.get(key)
@@ -130,6 +180,13 @@ class AutomationAlertNotifier:
             with self.email_error_log_path.open("a", encoding="utf-8") as handle:
                 handle.write(line)
 
+    def _append_alert_event_error(self, exc: Exception) -> None:
+        line = f"{datetime.now(tz=UTC).isoformat()} {type(exc).__name__}: {exc}\n"
+        with self._lock:
+            self.event_error_log_path.parent.mkdir(parents=True, exist_ok=True)
+            with self.event_error_log_path.open("a", encoding="utf-8") as handle:
+                handle.write(line)
+
 
 def _email_body(event: AutomationEvent) -> str:
     details = json.dumps(event.details, indent=2, sort_keys=True, default=str)
@@ -142,6 +199,11 @@ def _email_body(event: AutomationEvent) -> str:
     )
 
 
+def _alert_dedupe_key(event: AutomationEvent) -> str:
+    details = json.dumps(event.details, sort_keys=True, default=str, separators=(",", ":"))
+    return f"{event.event_type}:{event.status}:{event.message}:{details}"
+
+
 def _split_recipients(value: str | None) -> list[str]:
     if value is None:
         return []
@@ -149,6 +211,18 @@ def _split_recipients(value: str | None) -> list[str]:
 
 
 def _isoformat(value: datetime) -> str:
+    return _as_utc(value).isoformat()
+
+
+def _as_utc(value: datetime) -> datetime:
     if value.tzinfo is None:
-        return value.replace(tzinfo=UTC).isoformat()
-    return value.astimezone(UTC).isoformat()
+        return value.replace(tzinfo=UTC)
+    return value.astimezone(UTC)
+
+
+def _event_severity(status: str) -> EventSeverity:
+    if status == "error":
+        return EventSeverity.ERROR
+    if status == "warning":
+        return EventSeverity.WARNING
+    return EventSeverity.INFO

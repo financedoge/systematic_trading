@@ -333,6 +333,83 @@ def test_trading_management_service_skips_market_closed_holiday_without_alerts(t
     assert status.next_execution_sync_at == datetime(2026, 5, 26, 13, 30, tzinfo=UTC)
 
 
+def test_trading_management_service_opens_ib_circuit_after_repeated_failures(tmp_path) -> None:
+    store = SQLiteStore(tmp_path / "ib_breaker.db")
+    store.initialize()
+    settings = AppSettings(
+        database_path=tmp_path / "ib_breaker.db",
+        data_dir=tmp_path,
+        automation_enabled=True,
+        automation_ib_error_breaker_threshold=2,
+        automation_ib_error_breaker_cooldown_seconds=600,
+    )
+    state_path = trading_service_state_path(settings)
+    state_path.parent.mkdir(parents=True, exist_ok=True)
+    state_path.write_text(
+        TradingServiceStatus(
+            enabled=True,
+            running=False,
+            last_eod_date=date(2026, 5, 26),
+            last_eod_pnl_date=date(2026, 5, 26),
+            last_eod_pnl_snapshot_id="already-saved",
+            last_eod_pnl_total_cnh="0.00",
+        ).model_dump_json(indent=2),
+        encoding="utf-8",
+    )
+    notifier = _FakeAlertNotifier()
+    service = TradingManagementService(
+        settings=settings,
+        store=store,
+        execution_sync_client=_FailingExecutionSyncClient(),
+        account_snapshot_client=_FailingAccountSnapshotClient(),
+        alert_notifier=notifier,
+    )
+
+    first = service.run_once(now=datetime(2026, 5, 27, 10, 0, tzinfo=ZoneInfo("America/New_York")))
+    second = service.run_once(now=datetime(2026, 5, 27, 10, 2, tzinfo=ZoneInfo("America/New_York")))
+    third = service.run_once(now=datetime(2026, 5, 27, 10, 3, tzinfo=ZoneInfo("America/New_York")))
+
+    assert first.ib_automation_consecutive_errors == 1
+    assert second.ib_automation_consecutive_errors == 2
+    assert second.ib_automation_circuit_open_until == datetime(2026, 5, 27, 14, 12, tzinfo=UTC)
+    assert second.next_execution_sync_at == datetime(2026, 5, 27, 14, 12, tzinfo=UTC)
+    assert "IB automation circuit opened" in (second.last_error or "")
+    assert third.ib_automation_circuit_open_until == second.ib_automation_circuit_open_until
+    assert sum(1 for event in notifier.events if event.event_type == "ib_connection") == 1
+
+
+def test_trading_management_service_filters_non_sota_positions_for_rebalance(tmp_path) -> None:
+    store = SQLiteStore(tmp_path / "non_sota_position.db")
+    store.initialize()
+    as_of = _seed_sota_history(store)
+    store.upsert_fx_rate(FXRate(rate_date=as_of, base_currency=Currency.USD, rate=Decimal("7.20")))
+    settings = AppSettings(
+        database_path=tmp_path / "non_sota_position.db",
+        data_dir=tmp_path,
+        automation_enabled=True,
+        automation_after_close_time="16:20",
+    )
+    service = TradingManagementService(
+        settings=settings,
+        store=store,
+        execution_sync_client=_FakeExecutionSyncClient([]),
+        account_snapshot_client=_AccountSnapshotClientWithNonSotaPosition(),
+        market_data_provider=_FakeMarketDataProvider({}),
+        fx_market_data_provider=_FakeMarketDataProvider({}),
+    )
+
+    status = service.run_once(now=datetime.combine(as_of, time(16, 30), tzinfo=ZoneInfo("America/New_York")))
+
+    assert status.last_eod_date == as_of
+    assert status.last_rebalance_proposal_id is not None
+    assert not any("DBB is not in the SOTA" in event.message for event in status.events)
+    assert any(
+        event.event_type == "account_snapshot"
+        and "ignored non-SOTA position DBB" in str(event.details.get("warnings", []))
+        for event in status.events
+    )
+
+
 def test_us_trading_calendar_excludes_market_holidays() -> None:
     assert not is_us_trading_day(date(2026, 5, 25))
     assert is_us_trading_day(date(2026, 5, 26))
@@ -364,6 +441,28 @@ class _FailingAccountSnapshotClient:
 class _FailingExecutionSyncClient:
     def fetch_fills(self, profile):
         raise TimeoutError("IB execution sync unavailable")
+
+
+class _AccountSnapshotClientWithNonSotaPosition:
+    def fetch(self, profile):
+        return (
+            [AccountSummaryRow(account="DU123", tag="TotalCashValue", value="1000000", currency="CNH")],
+            [
+                _PositionRow("SPY", Decimal("3"), Decimal("500")),
+                _PositionRow("DBB", Decimal("2"), Decimal("20")),
+            ],
+            ["DU123"],
+        )
+
+
+class _PositionRow:
+    def __init__(self, symbol: str, quantity: Decimal, average_cost: Decimal) -> None:
+        self.account = "DU123"
+        self.symbol = symbol
+        self.security_type = "STK"
+        self.currency = "USD"
+        self.quantity = quantity
+        self.average_cost = average_cost
 
 
 class _FakeMarketDataProvider:

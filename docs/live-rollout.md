@@ -1,11 +1,24 @@
 # Live Rollout
 
+## Policy
+
+Live trading is disabled until the platform proves paper trading reliability through service health checks, market-data recording, pre-trade validation, order idempotency, broker reconciliation, post-trade reporting, alerting, and rollback drills.
+
+The target rollout path is defined in `docs/industrial-platform-plan.md`. This document tracks the current IB paper-to-live implementation path.
+
 ## Paper-first stages
 
 1. Proposal preview only: no orders leave the system.
 2. Paper routing: manually approved paper orders are sent to IB paper.
 3. Shadow live review: proposals are compared against paper fills and manual expectations.
 4. Live enablement: capital caps, stronger validations, and rollback procedures are in place.
+
+## Promotion Gates
+
+- A strategy must be registered with versioned data, feature, universe, risk, and artifact metadata before paper trading.
+- A paper strategy must run long enough to validate order routing, fills, cash, positions, slippage, and reconciliation.
+- A live strategy must have explicit capital caps, kill-switch conditions, alert coverage, and a rollback plan.
+- No live route is allowed from an unapproved proposal, stale market data, unresolved broker mismatch, or missing operator approval.
 
 ## Safeguards
 
@@ -15,6 +28,8 @@
 - Local reconciliation of positions, orders, and cash balances against broker state.
 - Durable local storage for proposal, approval, and broker order history before and after broker routing.
 - Live remains disabled until paper trading is stable for an extended period.
+- Idempotent order submission so retries cannot create duplicate exposure.
+- Persistent incident logging for every alert that affects trading or data quality.
 
 ## v1 order assumptions
 
@@ -22,6 +37,16 @@
 - Long-only.
 - Daily monitoring.
 - Limit, market, and open-oriented workflows only.
+
+## Minimum Live Checklist
+
+- IB account, port, client id, and environment are verified against the intended live profile.
+- Latest market data, FX, corporate actions, and account snapshot are fresh.
+- Broker open orders, positions, cash, fills, and commissions reconcile to local state.
+- Rebalance blotter shows current, target, proposed, expected cash, fees, residuals, and risk limits.
+- Alerts are active through email plus one urgent channel such as SMS, push, or desktop popup.
+- Kill switch and rollback procedure were tested in paper mode.
+- Operator has approved the exact strategy version, proposal id, and capital cap.
 
 ## SOTA Nightly Job
 
@@ -94,7 +119,15 @@ ST_AUTOMATION_ALERT_EMAIL_TO=operator@example.com
 
 ## Operator Dashboard
 
-Start the local web service:
+Start the recommended local platform stack:
+
+```powershell
+.\scripts\start_local_platform.ps1
+```
+
+Open `http://127.0.0.1:8000/platform` for service health and the service connection chart.
+
+Start only the local operator stack:
 
 ```powershell
 .\scripts\start_operator_dashboard.ps1
@@ -102,10 +135,16 @@ Start the local web service:
 
 Open `http://127.0.0.1:8000/operator`.
 
+The start script also runs the event outbox dispatcher in loop mode unless disabled. In the recommended path the dispatcher publishes to NATS JetStream; for isolated local-file dispatch use `-EventPublisher jsonl`. The dispatcher has separate PID and log files:
+
+```powershell
+.\scripts\start_operator_dashboard.ps1 -DisableEventDispatcher
+```
+
 Stop it:
 
 ```powershell
-.\scripts\stop_operator_dashboard.ps1
+.\scripts\stop_local_platform.ps1
 ```
 
 The dashboard lists proposals, shows target/order details, approves or rejects queued proposals, submits approved proposals as TWAP paper orders, exposes a resubmit button only for failed or missing broker records, and shows persisted broker order records. Keep this service bound to localhost until authentication and network controls are added.
@@ -157,3 +196,14 @@ References:
 - IBKR TWS API documentation: https://www.interactivebrokers.com/campus/ibkr-api-page/twsapi-doc/
 - TWS API initial setup: https://interactivebrokers.github.io/tws-api/initial_setup.html
 - TWS API order submission: https://interactivebrokers.github.io/tws-api/order_submission.html
+
+## IB Session Robustness
+
+TWS is acceptable for interactive local paper testing, but it is not a production-grade unattended dependency on this workstation. The 2026-06-29 incident showed that VPN/network instability plus a TWS logout can leave API clients timing out on `nextValidId` and account-summary requests until the operator manually logs in again.
+
+Current controls:
+
+- Recurring automation opens an IB circuit breaker after repeated IB failures, backs off execution/account-snapshot retries, and exposes the circuit state through automation status and platform health details.
+- The platform does not attempt to automate TWS login or 2FA recovery.
+- After any TWS relogin, run `scripts/test_ib_paper_connection.py` before restarting IB-dependent recorder or paper-execution work.
+- For server or 24x7 operation, prefer IB Gateway under an explicit process supervisor and keep VPN dependency out of the critical network path.

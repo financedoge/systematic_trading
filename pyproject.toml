@@ -21,6 +21,9 @@ data = [
 ib = [
     "ibapi>=9.81.1",
 ]
+queue = [
+    "nats-py>=2.8.0,<3",
+]
 test = [
     "pytest>=8.4.0",
     "httpx>=0.28.0",

@@ -14,7 +14,7 @@ from systematic_trading.domain.portfolio import AllocationTarget, CashBalance
 from systematic_trading.portfolio.beta import BetaInstrumentState, RiskParityBetaSleeve
 from systematic_trading.backtest.engine import BacktestResult, DailyBacktestEngine
 from systematic_trading.signals.base import SignalContext, TargetOverlay
-from systematic_trading.storage.sqlite import SQLiteStore
+from systematic_trading.storage.interfaces import MarketDataStore
 
 
 class StoredRiskParityBacktestConfig(BaseModel):
@@ -34,7 +34,7 @@ class StoredRiskParityBacktestConfig(BaseModel):
 
 def run_stored_risk_parity_backtest(
     *,
-    store: SQLiteStore,
+    store: MarketDataStore,
     instruments: Mapping[str, Instrument],
     config: StoredRiskParityBacktestConfig,
     target_overlays: Sequence[TargetOverlay] | None = None,
@@ -98,7 +98,7 @@ def run_stored_risk_parity_backtest(
 
 def run_dynamic_risk_parity_backtest(
     *,
-    store: SQLiteStore,
+    store: MarketDataStore,
     instruments: Mapping[str, Instrument],
     config: StoredRiskParityBacktestConfig,
     target_overlays: Sequence[TargetOverlay] | None = None,

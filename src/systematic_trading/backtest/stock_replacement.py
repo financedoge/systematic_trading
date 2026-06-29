@@ -22,7 +22,7 @@ from systematic_trading.domain.portfolio import AllocationTarget, CashBalance
 from systematic_trading.portfolio.beta import BetaInstrumentState, RiskParityBetaSleeve
 from systematic_trading.research import GLOBAL_ETF_UNIVERSE, SPY_REPLACEMENT_SYMBOL
 from systematic_trading.signals.base import SignalContext, TargetOverlay
-from systematic_trading.storage.sqlite import SQLiteStore
+from systematic_trading.storage.interfaces import MarketDataStore
 from systematic_trading.valuation.framework import StockValuationReport, framework_allocation_weights
 from systematic_trading.valuation.quantitative import build_quantitative_framework_screen
 from systematic_trading.valuation.screener import build_market_feature_snapshots
@@ -46,7 +46,7 @@ class StockReplacementBacktestConfig(BaseModel):
 
 def run_spy_replacement_backtest(
     *,
-    store: SQLiteStore,
+    store: MarketDataStore,
     stock_instruments: Mapping[str, Instrument],
     selected_symbols: Sequence[str],
     config: StockReplacementBacktestConfig,

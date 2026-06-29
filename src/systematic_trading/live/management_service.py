@@ -25,7 +25,7 @@ from systematic_trading.live.pnl import build_dashboard_pnl_snapshot
 from systematic_trading.live.sota import LiveAccountSnapshotInput, build_sota_live_rebalance_plan, write_sota_live_plan_artifacts
 from systematic_trading.live.trading_calendar import is_us_trading_day, next_us_trading_day, previous_us_trading_day, us_trading_dates_after
 from systematic_trading.research import current_sota_definition
-from systematic_trading.storage.sqlite import SQLiteStore
+from systematic_trading.storage.interfaces import TradingStore
 
 ACCOUNT_SNAPSHOT_PATTERN = re.compile(r"ib_paper_account_snapshot_(\d{8})(?:_\d{6})?\.json$")
 
@@ -64,6 +64,9 @@ class TradingServiceStatus(BaseModel):
     last_account_snapshot_path: str | None = None
     last_rebalance_proposal_id: str | None = None
     last_rebalance_artifact_path: str | None = None
+    ib_automation_consecutive_errors: int = 0
+    ib_automation_circuit_open_until: datetime | None = None
+    ib_automation_circuit_reason: str | None = None
     last_error: str | None = None
     events: list[TradingServiceEvent] = Field(default_factory=list)
 
@@ -115,7 +118,7 @@ class TradingManagementService:
         self,
         *,
         settings: AppSettings,
-        store: SQLiteStore,
+        store: TradingStore,
         execution_sync_client: IBExecutionSyncClient | None = None,
         account_snapshot_client: AccountSnapshotClient | None = None,
         market_data_provider: DailyBarProvider | None = None,
@@ -130,7 +133,7 @@ class TradingManagementService:
         self.market_data_provider = market_data_provider
         self.market_data_fallback_provider = market_data_fallback_provider
         self.fx_market_data_provider = fx_market_data_provider
-        self.alert_notifier = alert_notifier or AutomationAlertNotifier(settings)
+        self.alert_notifier = alert_notifier or AutomationAlertNotifier(settings, event_store=store)
         self.state_path = trading_service_state_path(settings)
         self._lock = Lock()
         self._stop = Event()
@@ -150,6 +153,7 @@ class TradingManagementService:
             if self._thread is not None and self._thread.is_alive():
                 return
             now = datetime.now(tz=UTC)
+            ib_circuit_open = _is_future_time(self._status.ib_automation_circuit_open_until, now)
             self._status = self._status.model_copy(
                 update={
                     "enabled": True,
@@ -160,7 +164,7 @@ class TradingManagementService:
                     "next_eod_attempt_at": None
                     if self._status.pending_eod_date is not None or self._status.pending_eod_dates
                     else self._status.next_eod_attempt_at,
-                    "last_error": None,
+                    "last_error": self._status.last_error if ib_circuit_open else None,
                 }
             )
             self._record_event("service", "ok", "Trading management service started.", save=False)
@@ -226,6 +230,10 @@ class TradingManagementService:
 
     def _sync_executions(self, now: datetime) -> BrokerFillSyncResult | None:
         now_utc = _as_utc(now)
+        open_until = self._ib_circuit_open_until(now_utc)
+        if open_until is not None:
+            self._defer_execution_sync_for_ib_circuit(open_until)
+            return None
         try:
             synchronizer = InteractiveBrokersExecutionSynchronizer(
                 self.settings,
@@ -241,6 +249,9 @@ class TradingManagementService:
                         "last_execution_sync_records_updated": result.records_updated,
                         "next_execution_sync_at": datetime.fromtimestamp(next_at, tz=UTC),
                         "last_error": None,
+                        "ib_automation_consecutive_errors": 0,
+                        "ib_automation_circuit_open_until": None,
+                        "ib_automation_circuit_reason": None,
                     }
                 )
                 self._record_event(
@@ -265,6 +276,11 @@ class TradingManagementService:
                     }
                 )
                 self._record_event("execution_sync", "error", f"Execution sync failed: {exc}", save=False)
+                self._record_ib_failure_locked(
+                    now_utc,
+                    source="execution_sync",
+                    reason=str(exc),
+                )
                 self._save_status_locked()
             return None
 
@@ -291,34 +307,40 @@ class TradingManagementService:
 
         account_snapshot = None
         account_snapshot_path: str | None = None
-        try:
-            account_result = fetch_and_write_account_snapshot(
-                settings=self.settings,
-                client=self.account_snapshot_client,
-                as_of=service_date,
-                sota_universe_only=False,
-            )
-            account_snapshot = account_result.snapshot
-            account_snapshot_path = str(account_result.output_path)
+        ib_open_until = self._ib_circuit_open_until(_as_utc(now))
+        if ib_open_until is not None:
             self._record_event(
                 "account_snapshot",
-                "ok",
-                f"Fetched account snapshot with {len(account_result.snapshot.positions)} position(s).",
-                details={"warnings": account_result.warnings, "managed_accounts": account_result.managed_accounts},
+                "warning",
+                f"Skipped live IB account snapshot because IB automation circuit is open until {ib_open_until.isoformat()}.",
+                notify=False,
             )
-        except Exception as exc:
-            self._record_error("account_snapshot", f"Account snapshot refresh failed: {exc}")
             fallback = _latest_stored_account_snapshot(self.settings, service_date)
             if fallback is not None:
-                account_snapshot_path, account_snapshot = fallback
-                with self._lock:
-                    self._status = self._status.model_copy(update={"last_account_snapshot_path": account_snapshot_path})
-                    self._save_status_locked()
+                account_snapshot_path, account_snapshot = self._use_stored_account_snapshot_fallback(fallback)
+        else:
+            try:
+                account_result = fetch_and_write_account_snapshot(
+                    settings=self.settings,
+                    client=self.account_snapshot_client,
+                    as_of=service_date,
+                    sota_universe_only=True,
+                )
+                account_snapshot = account_result.snapshot
+                account_snapshot_path = str(account_result.output_path)
+                self._clear_ib_failure_state()
                 self._record_event(
                     "account_snapshot",
-                    "warning",
-                    f"Using stored same-day account snapshot after live IB snapshot failed: {account_snapshot_path}",
+                    "ok",
+                    f"Fetched account snapshot with {len(account_result.snapshot.positions)} position(s).",
+                    details={"warnings": account_result.warnings, "managed_accounts": account_result.managed_accounts},
                 )
+            except Exception as exc:
+                self._record_error("account_snapshot", f"Account snapshot refresh failed: {exc}")
+                self._record_ib_failure(_as_utc(now), source="account_snapshot", reason=str(exc))
+                fallback = _latest_stored_account_snapshot(self.settings, service_date)
+                if fallback is not None:
+                    account_snapshot_path, account_snapshot = self._use_stored_account_snapshot_fallback(fallback)
 
         if not pnl_ready and market_ready:
             try:
@@ -544,6 +566,117 @@ class TradingManagementService:
             self._record_event(event_type, "error", message, save=False)
             self._save_status_locked()
 
+    def _use_stored_account_snapshot_fallback(
+        self,
+        fallback: tuple[str, LiveAccountSnapshotInput],
+    ) -> tuple[str, LiveAccountSnapshotInput]:
+        account_snapshot_path, account_snapshot = fallback
+        with self._lock:
+            self._status = self._status.model_copy(update={"last_account_snapshot_path": account_snapshot_path})
+            self._save_status_locked()
+        self._record_event(
+            "account_snapshot",
+            "warning",
+            f"Using stored same-day account snapshot after live IB snapshot failed: {account_snapshot_path}",
+        )
+        return account_snapshot_path, account_snapshot
+
+    def _ib_circuit_open_until(self, now: datetime) -> datetime | None:
+        now_utc = _as_utc(now)
+        with self._lock:
+            open_until = self._status.ib_automation_circuit_open_until
+            if open_until is None:
+                return None
+            open_until = _as_utc(open_until)
+            if now_utc < open_until:
+                return open_until
+            self._status = self._status.model_copy(
+                update={
+                    "ib_automation_consecutive_errors": 0,
+                    "ib_automation_circuit_open_until": None,
+                    "ib_automation_circuit_reason": None,
+                }
+            )
+            self._record_event(
+                "ib_connection",
+                "warning",
+                "IB automation circuit cooldown ended; retrying IB-dependent work.",
+                save=False,
+                notify=False,
+            )
+            self._save_status_locked()
+            return None
+
+    def _defer_execution_sync_for_ib_circuit(self, open_until: datetime) -> None:
+        with self._lock:
+            self._status = self._status.model_copy(
+                update={
+                    "next_execution_sync_at": _as_utc(open_until),
+                    "last_error": f"IB automation circuit is open until {_as_utc(open_until).isoformat()}.",
+                }
+            )
+            self._save_status_locked()
+
+    def _record_ib_failure(self, now: datetime, *, source: str, reason: str) -> None:
+        with self._lock:
+            self._record_ib_failure_locked(_as_utc(now), source=source, reason=reason)
+            self._save_status_locked()
+
+    def _record_ib_failure_locked(self, now: datetime, *, source: str, reason: str) -> None:
+        threshold = max(self.settings.automation_ib_error_breaker_threshold, 1)
+        cooldown_seconds = max(self.settings.automation_ib_error_breaker_cooldown_seconds, 60)
+        consecutive_errors = self._status.ib_automation_consecutive_errors + 1
+        if consecutive_errors < threshold:
+            self._status = self._status.model_copy(
+                update={
+                    "ib_automation_consecutive_errors": consecutive_errors,
+                    "ib_automation_circuit_reason": reason,
+                }
+            )
+            return
+
+        now_utc = _as_utc(now)
+        open_until = now_utc + timedelta(seconds=cooldown_seconds)
+        self._status = self._status.model_copy(
+            update={
+                "ib_automation_consecutive_errors": consecutive_errors,
+                "ib_automation_circuit_open_until": open_until,
+                "ib_automation_circuit_reason": reason,
+                "next_execution_sync_at": open_until,
+                "last_error": f"IB automation circuit opened until {open_until.isoformat()}: {reason}",
+            }
+        )
+        self._record_event(
+            "ib_connection",
+            "error",
+            f"IB automation circuit opened after {consecutive_errors} consecutive IB failure(s).",
+            details={
+                "source": source,
+                "reason": reason,
+                "open_until": open_until.isoformat(),
+                "threshold": threshold,
+                "cooldown_seconds": cooldown_seconds,
+            },
+            save=False,
+        )
+
+    def _clear_ib_failure_state(self) -> None:
+        with self._lock:
+            if (
+                self._status.ib_automation_consecutive_errors == 0
+                and self._status.ib_automation_circuit_open_until is None
+                and self._status.ib_automation_circuit_reason is None
+            ):
+                return
+            self._status = self._status.model_copy(
+                update={
+                    "ib_automation_consecutive_errors": 0,
+                    "ib_automation_circuit_open_until": None,
+                    "ib_automation_circuit_reason": None,
+                }
+            )
+            self._save_status_locked()
+
     def _record_event(
         self,
         event_type: str,
@@ -552,6 +685,7 @@ class TradingManagementService:
         *,
         details: dict[str, Any] | None = None,
         save: bool = True,
+        notify: bool = True,
     ) -> None:
         event = TradingServiceEvent(
             timestamp=datetime.now(tz=UTC),
@@ -564,6 +698,8 @@ class TradingManagementService:
         self._status = self._status.model_copy(update={"events": events})
         if save:
             self._save_status_locked()
+        if not notify:
+            return
         try:
             self.alert_notifier.notify(event)
         except Exception:
@@ -584,7 +720,7 @@ class TradingManagementService:
         return IbHistoricalDailyBarProvider(self.settings)
 
 
-def _existing_staged_proposal(store: SQLiteStore, decision_date: date) -> TradeProposal | None:
+def _existing_staged_proposal(store: TradingStore, decision_date: date) -> TradeProposal | None:
     sleeve_name = current_sota_definition().sleeve_name
     for proposal in store.list_proposals():
         if proposal.as_of == decision_date and proposal.sleeve == sleeve_name:
@@ -637,3 +773,7 @@ def _as_utc(value: datetime) -> datetime:
     if value.tzinfo is None:
         return value.replace(tzinfo=UTC)
     return value.astimezone(UTC)
+
+
+def _is_future_time(value: datetime | None, now: datetime) -> bool:
+    return value is not None and _as_utc(value) > _as_utc(now)

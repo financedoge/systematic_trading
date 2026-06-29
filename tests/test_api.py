@@ -12,6 +12,44 @@ from systematic_trading.live import AccountSummaryRow, IbPositionRow
 from systematic_trading.research import current_sota_definition
 
 
+def test_health_endpoint_reports_service_health_contract(tmp_path) -> None:
+    settings = AppSettings(database_path=tmp_path / "health.db", data_dir=tmp_path, automation_enabled=False)
+    with TestClient(create_app(settings)) as client:
+        response = client.get("/health")
+
+        assert response.status_code == 200
+        payload = response.json()
+        services = {service["service_id"]: service for service in payload["services"]}
+
+        assert payload["status"] == "error"
+        assert services["operator_dashboard"]["status"] == "ok"
+        assert services["operator_dashboard"]["running"] is True
+        assert services["event_outbox_dispatcher"]["health_check_kind"] == "state_file"
+        assert services["event_outbox_dispatcher"]["status"] == "error"
+        assert services["nats_jetstream"]["health_check_kind"] == "http"
+        assert services["postgres_transactional"]["health_check_kind"] == "tcp"
+        assert services["clickhouse_columnar"]["health_check_kind"] == "http"
+        assert services["trading_management_loop"]["status"] == "disabled"
+        assert services["market_data_recorder"]["status"] == "degraded"
+
+
+def test_platform_service_graph_endpoint_returns_manifest_edges(tmp_path) -> None:
+    settings = AppSettings(database_path=tmp_path / "graph.db", data_dir=tmp_path, automation_enabled=False)
+    with TestClient(create_app(settings)) as client:
+        response = client.get("/api/v1/platform/service-graph")
+
+        assert response.status_code == 200
+        payload = response.json()
+        node_ids = {node["service_id"] for node in payload["nodes"]}
+        edges = {(edge["source"], edge["target"], edge["relation"]) for edge in payload["edges"]}
+
+        assert "nats_jetstream" in node_ids
+        assert "postgres_transactional" in node_ids
+        assert "clickhouse_columnar" in node_ids
+        assert ("nats_jetstream", "event_outbox_dispatcher", "depends_on") in edges
+        assert ("operator_dashboard", "trading_management_loop", "supervises") in edges
+
+
 def test_risk_parity_preview_endpoint_returns_cnh_proposal() -> None:
     with TestClient(create_app()) as client:
         response = client.post(

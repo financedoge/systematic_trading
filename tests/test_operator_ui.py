@@ -72,3 +72,20 @@ def test_root_redirects_to_operator_dashboard(tmp_path) -> None:
 
     assert response.status_code in {307, 308}
     assert response.headers["location"] == "/operator"
+
+
+def test_platform_health_portal_is_served(tmp_path) -> None:
+    settings = AppSettings(database_path=tmp_path / "platform.db", data_dir=tmp_path)
+    with TestClient(create_app(settings)) as client:
+        response = client.get("/platform")
+
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    html = response.text
+    assert "Platform Health" in html
+    assert "Service Map" in html
+    assert "Service Status" in html
+    assert "Health Details" in html
+    assert "/api/v1/platform/service-graph" in html
+    assert "/health" in html
+    assert "/operator" in html

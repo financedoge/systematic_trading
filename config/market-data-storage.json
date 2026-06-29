@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "profile": "local-tiered-windows",
+  "hot_spool_root": "E:/systematic_trading_runtime/market-data/hot",
+  "local_archive_root": "D:/systematic_trading_data/market-data",
+  "backup_archive_root": "Z:/systematic_trading_backup/market-data",
+  "policy": {
+    "raw_write_path": "hot_spool_first",
+    "archive_path": "copy_closed_chunks_to_local_archive",
+    "backup_path": "async_mirror_closed_chunks_to_network_backup",
+    "never_block_live_ingest_on_backup": true,
+    "do_not_store_bulk_market_data_inside_repo": true
+  },
+  "retention": {
+    "hot_spool_days": 14,
+    "hot_spool_max_gb": 120,
+    "archive_min_free_gb": 150,
+    "backup_min_free_gb": 250
+  },
+  "watermarks": {
+    "hot_spool_warn_free_gb": 100,
+    "hot_spool_stop_free_gb": 60,
+    "local_archive_warn_free_gb": 200,
+    "local_archive_stop_free_gb": 100,
+    "backup_warn_free_gb": 300
+  },
+  "observed_drive_state": {
+    "checked_at": "2026-06-27",
+    "D_free_gb": 600.25,
+    "E_free_gb": 308.15,
+    "Z_free_gb": 1138.21,
+    "Z_provider": "\\\\WDMYCLOUDMIRROR\\Public"
+  },
+  "notes": [
+    "E is the fast NAND hot spool for active writes and near-term replay.",
+    "D is the larger local archive for closed immutable chunks.",
+    "Z is the network backup target and must not be in the synchronous recorder write path."
+  ]
+}

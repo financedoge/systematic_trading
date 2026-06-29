@@ -16,7 +16,7 @@ from systematic_trading.domain import (
     PnLSnapshot,
     SymbolPnL,
 )
-from systematic_trading.storage.sqlite import SQLiteStore
+from systematic_trading.storage.interfaces import TradingStore
 
 PNL_FILL_STATUSES = {BrokerOrderStatus.FILLED, BrokerOrderStatus.PARTIALLY_FILLED}
 
@@ -32,16 +32,16 @@ class _LedgerFill:
     traded_at: datetime
 
 
-def build_dashboard_pnl_snapshot(store: SQLiteStore, *, as_of: date | None = None) -> PnLSnapshot:
+def build_dashboard_pnl_snapshot(store: TradingStore, *, as_of: date | None = None) -> PnLSnapshot:
     return _build_pnl_snapshot(store, as_of=as_of, use_reference_prices=False)
 
 
-def build_reference_pnl_snapshot(store: SQLiteStore, *, as_of: date | None = None) -> PnLSnapshot:
+def build_reference_pnl_snapshot(store: TradingStore, *, as_of: date | None = None) -> PnLSnapshot:
     return _build_pnl_snapshot(store, as_of=as_of, use_reference_prices=True)
 
 
 def _build_pnl_snapshot(
-    store: SQLiteStore,
+    store: TradingStore,
     *,
     as_of: date | None = None,
     use_reference_prices: bool,
@@ -102,7 +102,7 @@ def _build_pnl_snapshot(
     )
 
 
-def build_pnl_baseline(store: SQLiteStore, *, cutoff_date: date) -> PnLBaseline:
+def build_pnl_baseline(store: TradingStore, *, cutoff_date: date) -> PnLBaseline:
     cutoff_at = datetime.combine(cutoff_date, time.max, tzinfo=UTC)
     warnings: list[str] = []
     lots_by_symbol: dict[str, list[PnLOpenLot]] = {}
@@ -132,7 +132,7 @@ def build_pnl_baseline(store: SQLiteStore, *, cutoff_date: date) -> PnLBaseline:
 
 
 def _broker_record_fills(
-    store: SQLiteStore,
+    store: TradingStore,
     warnings: list[str],
     *,
     use_reference_prices: bool = False,
@@ -162,7 +162,7 @@ def _broker_record_fills(
 
 
 def _apply_fills(
-    store: SQLiteStore,
+    store: TradingStore,
     fills: list[_LedgerFill],
     lots_by_symbol: dict[str, list[PnLOpenLot]],
     realized_by_symbol: dict[str, Decimal],
@@ -224,7 +224,7 @@ def _apply_signed_fill(
 
 
 def _symbol_pnl_rows(
-    store: SQLiteStore,
+    store: TradingStore,
     lots_by_symbol: dict[str, list[PnLOpenLot]],
     realized_by_symbol: dict[str, Decimal],
     as_of: date,
@@ -275,12 +275,12 @@ def _symbol_pnl_rows(
     return rows, valuation_complete
 
 
-def _latest_price(store: SQLiteStore, symbol: str, as_of: date) -> Decimal | None:
+def _latest_price(store: TradingStore, symbol: str, as_of: date) -> Decimal | None:
     bars = store.list_price_bars(symbol, end_date=as_of)
     return bars[-1].close if bars else None
 
 
-def _fx_to_cnh(store: SQLiteStore, currency: Currency, as_of: date, warnings: list[str]) -> Decimal | None:
+def _fx_to_cnh(store: TradingStore, currency: Currency, as_of: date, warnings: list[str]) -> Decimal | None:
     if currency == Currency.CNH:
         return Decimal("1")
     rates = store.list_fx_rates(currency, end_date=as_of)
