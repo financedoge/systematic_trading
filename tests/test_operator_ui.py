@@ -60,6 +60,9 @@ def test_operator_dashboard_is_served(tmp_path) -> None:
     assert "/api/v1/dashboard/execution-quality" in html
     assert "/api/v1/execution/interactive-brokers/proposals/" in html
     assert "/api/v1/execution/interactive-brokers/orders" in html
+    assert "/operator" in html
+    assert "/platform" in html
+    assert "/platform/market-data-audit" in html
     assert "confirm_submit: true" in html
     assert "failed_only: true" in html
     assert 'route_order_type: "twap"' in html
@@ -88,4 +91,28 @@ def test_platform_health_portal_is_served(tmp_path) -> None:
     assert "Health Details" in html
     assert "/api/v1/platform/service-graph" in html
     assert "/health" in html
+    assert "/operator" in html
+    assert "/platform" in html
+    assert "/platform/market-data-audit" in html
+    assert "/api/v1/platform/service-actions" in html
+    assert "/api/v1/platform/services/" in html
+
+
+def test_market_data_audit_portal_is_served(tmp_path) -> None:
+    settings = AppSettings(database_path=tmp_path / "platform_audit.db", data_dir=tmp_path)
+    with TestClient(create_app(settings)) as client:
+        response = client.get("/platform/market-data-audit")
+
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    html = response.text
+    assert "Market Data" in html
+    assert "Daily Bars" in html
+    assert "OHLCV" in html
+    assert "Raw Evidence" in html
+    assert "golden-symbol-options" in html
+    assert "/api/v1/market-data/daily-symbols" in html
+    assert "/api/v1/market-data/daily-bars" in html
+    assert "/api/v1/market-data/audit" in html
+    assert "/platform" in html
     assert "/operator" in html

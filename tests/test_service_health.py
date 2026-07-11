@@ -20,6 +20,7 @@ def test_platform_health_uses_state_file_heartbeat(tmp_path) -> None:
         started_at=now - timedelta(minutes=1),
         heartbeat_at=now,
         message="worker heartbeat",
+        details={"last_daily_backfill_at": "2026-06-27T11:55:00+00:00"},
     )
     manifest = ServiceManifest.model_validate(
         {
@@ -54,6 +55,7 @@ def test_platform_health_uses_state_file_heartbeat(tmp_path) -> None:
     assert health.services[0].status == ServiceHealthLevel.OK
     assert health.services[0].heartbeat_at == now
     assert health.services[0].message == "worker heartbeat"
+    assert health.services[0].details["last_daily_backfill_at"] == "2026-06-27T11:55:00+00:00"
 
 
 def test_platform_health_marks_required_stale_state_as_error(tmp_path) -> None:

@@ -4,15 +4,22 @@ param(
     [switch]$SkipNats,
     [switch]$SkipClickHouse,
     [switch]$SkipOperator,
+    [switch]$SkipMarketDataRecorder,
     [switch]$StartMarketDataRecorder,
     [string[]]$RecorderSymbols = @("SPY", "QQQ", "TLT", "GLD", "IWM"),
-    [int]$RecorderDurationSeconds = 600,
+    [int]$RecorderRealtimeChunkSeconds = 300,
+    [int]$RecorderGapFillLookbackMinutes = 60,
+    [int]$RecorderPollSeconds = 60,
     [int]$RecorderClientId = 121,
     [ValidateSet("live", "frozen", "delayed", "delayed_frozen")]
-    [string]$RecorderMarketDataMode = "delayed",
+    [string]$RecorderMarketDataMode = "live",
     [ValidateSet("jsonl", "nats")]
     [string]$EventPublisher = "nats",
     [string]$NatsUrl = "nats://127.0.0.1:4222",
+    [ValidateSet("sqlite", "postgres")]
+    [string]$TransactionalStoreBackend = "postgres",
+    [ValidateSet("sqlite", "clickhouse")]
+    [string]$MarketDataStoreBackend = "clickhouse",
     [string]$OperationLogPath = "var\log\platform_operations.jsonl"
 )
 
@@ -114,7 +121,7 @@ function Assert-PostgresReady {
     Test-TcpPort -Name "Postgres" -Address "127.0.0.1" -TcpPort 5432
 }
 
-function Start-RecorderPilot {
+function Start-RecorderService {
     $pidPath = Join-Path $RunDir "market_data_recorder.pid"
     $statePath = Join-Path $RunDir "market_data_recorder.state.json"
     $outLog = Join-Path $LogDir "market_data_recorder.out.log"
@@ -137,13 +144,15 @@ function Start-RecorderPilot {
     $process = Start-Process `
         -FilePath $Python `
         -ArgumentList @(
-            ".\scripts\record_ib_market_data.py",
-            "--mode",
-            "realtime",
+            ".\scripts\run_market_data_recorder_service.py",
             "--symbols",
             $symbolsArg,
-            "--duration-seconds",
-            [string]$RecorderDurationSeconds,
+            "--realtime-chunk-seconds",
+            [string]$RecorderRealtimeChunkSeconds,
+            "--gap-fill-lookback-minutes",
+            [string]$RecorderGapFillLookbackMinutes,
+            "--poll-seconds",
+            [string]$RecorderPollSeconds,
             "--market-data-mode",
             $RecorderMarketDataMode,
             "--client-id",
@@ -160,20 +169,22 @@ function Start-RecorderPilot {
         -PassThru
 
     Set-Content -LiteralPath $pidPath -Value ([string]$process.Id) -Encoding ascii
-    Write-Output "Market data recorder pilot started."
+    Write-Output "Market data recorder service started."
     Write-Output "Recorder PID: $($process.Id)"
     Write-Output "Recorder symbols: $symbolsArg"
     Write-Output "Recorder market data mode: $RecorderMarketDataMode"
-    Write-Output "Recorder duration seconds: $RecorderDurationSeconds"
+    Write-Output "Recorder realtime chunk seconds: $RecorderRealtimeChunkSeconds"
+    Write-Output "Recorder gap-fill lookback minutes: $RecorderGapFillLookbackMinutes"
     Write-Output "Recorder state: $statePath"
     Write-OperationLog `
-        -Event "recorder_pilot_started" `
-        -Message "Market data recorder pilot process started." `
+        -Event "recorder_service_started" `
+        -Message "Market data recorder service process started." `
         -Details @{
             pid = $process.Id
             symbols = $RecorderSymbols
             market_data_mode = $RecorderMarketDataMode
-            duration_seconds = $RecorderDurationSeconds
+            realtime_chunk_seconds = $RecorderRealtimeChunkSeconds
+            gap_fill_lookback_minutes = $RecorderGapFillLookbackMinutes
             client_id = $RecorderClientId
             state_path = $statePath
         }
@@ -181,6 +192,8 @@ function Start-RecorderPilot {
 
 Push-Location $RepoRoot
 try {
+    $env:ST_TRANSACTIONAL_STORE_BACKEND = $TransactionalStoreBackend
+    $env:ST_MARKET_DATA_STORE_BACKEND = $MarketDataStoreBackend
     Write-OperationLog `
         -Event "local_platform_start_requested" `
         -Message "Local platform startup requested." `
@@ -188,11 +201,14 @@ try {
             host = $HostName
             port = $Port
             event_publisher = $EventPublisher
+            transactional_store_backend = $TransactionalStoreBackend
+            market_data_store_backend = $MarketDataStoreBackend
             nats_url = $NatsUrl
             skip_nats = [bool]$SkipNats
             skip_clickhouse = [bool]$SkipClickHouse
             skip_operator = [bool]$SkipOperator
-            start_market_data_recorder = [bool]$StartMarketDataRecorder
+            skip_market_data_recorder = [bool]$SkipMarketDataRecorder
+            start_market_data_recorder = -not [bool]$SkipMarketDataRecorder
             recorder_symbols = $RecorderSymbols
             recorder_market_data_mode = $RecorderMarketDataMode
         }
@@ -221,20 +237,22 @@ try {
     }
 
     if (-not $SkipOperator) {
-        Write-OperationLog -Event "operator_start_requested" -Message "Operator dashboard startup requested." -Details @{ host = $HostName; port = $Port; event_publisher = $EventPublisher }
+        Write-OperationLog -Event "operator_start_requested" -Message "Operator dashboard startup requested." -Details @{ host = $HostName; port = $Port; event_publisher = $EventPublisher; transactional_store_backend = $TransactionalStoreBackend; market_data_store_backend = $MarketDataStoreBackend }
         & (Join-Path $ScriptDir "start_operator_dashboard.ps1") `
             -HostName $HostName `
             -Port $Port `
             -EventPublisher $EventPublisher `
             -NatsUrl $NatsUrl `
+            -TransactionalStoreBackend $TransactionalStoreBackend `
+            -MarketDataStoreBackend $MarketDataStoreBackend `
             -OperationLogPath $ResolvedOperationLogPath
     }
 
-    if ($StartMarketDataRecorder) {
-        Start-RecorderPilot
+    if (-not $SkipMarketDataRecorder) {
+        Start-RecorderService
     } else {
-        Write-Output "Market data recorder not started. Pass -StartMarketDataRecorder for an explicit pilot."
-        Write-OperationLog -Event "recorder_pilot_not_started" -Message "Market data recorder was not started because it is opt-in." -Details @{}
+        Write-Output "Market data recorder service not started because -SkipMarketDataRecorder was passed."
+        Write-OperationLog -Event "recorder_service_not_started" -Message "Market data recorder service was not started by request." -Details @{}
     }
 
     Write-Output "Local platform startup completed."

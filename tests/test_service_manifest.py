@@ -50,8 +50,9 @@ def test_default_service_manifest_loads_current_operator_stack() -> None:
     assert clickhouse.environment["ST_CLICKHOUSE_LOG_ROOT"].startswith("D:/")
     assert recorder.implementation_status.value == "active"
     assert recorder.required is False
-    assert "scripts/record_ib_market_data.py" in recorder.command
+    assert "scripts/run_market_data_recorder_service.py" in recorder.command
     assert "--use-seed-universe" in recorder.command
+    assert recorder.health_check.stale_after_seconds == 180
     assert recorder.health_check.target == "var/run/market_data_recorder.state.json"
 
 

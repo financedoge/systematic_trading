@@ -32,7 +32,9 @@
       },
       "environment": {
         "PYTHONPATH": "src",
-        "ST_AUTOMATION_ENABLED": "true"
+        "ST_AUTOMATION_ENABLED": "true",
+        "ST_TRANSACTIONAL_STORE_BACKEND": "postgres",
+        "ST_MARKET_DATA_STORE_BACKEND": "clickhouse"
       },
       "restart_policy": {
         "mode": "manual",
@@ -76,7 +78,8 @@
         "stale_after_seconds": 30
       },
       "environment": {
-        "PYTHONPATH": "src"
+        "PYTHONPATH": "src",
+        "ST_TRANSACTIONAL_STORE_BACKEND": "postgres"
       },
       "restart_policy": {
         "mode": "manual",
@@ -173,7 +176,10 @@
         "stale_after_seconds": 30
       },
       "environment": {
-        "PGDATABASE": "systematic_trading"
+        "PGDATABASE": "systematic_trading",
+        "ST_POSTGRES_DATABASE": "systematic_trading",
+        "ST_POSTGRES_APP_USER": "st_app",
+        "ST_POSTGRES_MIGRATOR_USER": "st_migrator"
       },
       "restart_policy": {
         "mode": "external_windows_service",
@@ -225,9 +231,7 @@
       "startup_order": 50,
       "command": [
         ".venv/Scripts/python.exe",
-        "scripts/record_ib_market_data.py",
-        "--mode",
-        "realtime",
+        "scripts/run_market_data_recorder_service.py",
         "--use-seed-universe",
         "--pid-path",
         "var/run/market_data_recorder.pid",
@@ -242,10 +246,12 @@
         "kind": "state_file",
         "target": "var/run/market_data_recorder.state.json",
         "timeout_seconds": 2,
-        "stale_after_seconds": 30
+        "stale_after_seconds": 180
       },
       "environment": {
-        "PYTHONPATH": "src"
+        "PYTHONPATH": "src",
+        "ST_TRANSACTIONAL_STORE_BACKEND": "postgres",
+        "ST_MARKET_DATA_STORE_BACKEND": "clickhouse"
       },
       "restart_policy": {
         "mode": "manual",
@@ -254,7 +260,7 @@
       "depends_on": [
         "event_outbox_dispatcher"
       ],
-      "notes": "Implemented P3.2 worker. Start manually for paper recording; use --mode historical-smoke for closed-market connection and raw-write tests."
+      "notes": "Always-on scheduled worker. It idles outside regular US equity hours, runs historical gap-fill on startup/restart during the session, and records in bounded realtime chunks when market data permissions are available."
     }
   ]
 }

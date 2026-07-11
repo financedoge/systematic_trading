@@ -388,7 +388,11 @@ def _evaluate_state_file(
         heartbeat_at=_parse_datetime(payload.get("heartbeat_at")),
         last_error=_optional_str(payload.get("last_error")),
         message=_optional_str(payload.get("message")),
-        details={"path": str(state_path), "state_service_id": payload.get("service_id")},
+        details={
+            "path": str(state_path),
+            "state_service_id": payload.get("service_id"),
+            **_details(payload.get("details")),
+        },
     )
     return _from_snapshot(service, health_check=health_check, snapshot=snapshot, checked_at=checked_at)
 
@@ -542,6 +546,10 @@ def _optional_str(value: Any) -> str | None:
         return None
     text = str(value).strip()
     return text or None
+
+
+def _details(value: Any) -> dict[str, Any]:
+    return dict(value) if isinstance(value, dict) else {}
 
 
 def _as_utc(value: datetime) -> datetime:

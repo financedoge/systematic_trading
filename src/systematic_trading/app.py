@@ -17,15 +17,17 @@ from systematic_trading.services import (
     build_platform_health,
     default_operational_log_path,
 )
-from systematic_trading.storage import create_transactional_store
+from systematic_trading.storage import create_trading_store
 from systematic_trading.web.api import router
+from systematic_trading.web.market_data_audit import router as market_data_audit_router
 from systematic_trading.web.operator import router as operator_router
+from systematic_trading.web.platform_actions import router as platform_actions_router
 from systematic_trading.web.platform import router as platform_router
 
 
 def create_app(settings: AppSettings | None = None) -> FastAPI:
     resolved_settings = settings or get_settings()
-    store = create_transactional_store(resolved_settings)
+    store = create_trading_store(resolved_settings)
     provider_registry = ProviderRegistry(resolved_settings)
     broker = InteractiveBrokersAdapter(resolved_settings)
     operation_logger = OperationalLogger(
@@ -117,6 +119,8 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
     app.include_router(operator_router)
     app.include_router(platform_router)
     app.include_router(router)
+    app.include_router(market_data_audit_router)
+    app.include_router(platform_actions_router)
     return app
 
 

@@ -87,10 +87,10 @@ _OPERATOR_HTML = """<!doctype html>
       gap: 4px;
       width: 100%;
     }
-    button, select, input {
+    a.button, button, select, input {
       font: inherit;
     }
-    button {
+    a.button, button {
       border: 1px solid var(--line);
       background: var(--panel);
       color: var(--text);
@@ -98,8 +98,12 @@ _OPERATOR_HTML = """<!doctype html>
       padding: 6px 10px;
       border-radius: 6px;
       cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
-    button:hover { border-color: #aeb9c9; }
+    a.button:hover, button:hover { border-color: #aeb9c9; }
     button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible {
       outline: 2px solid var(--focus);
       outline-offset: 1px;
@@ -483,14 +487,19 @@ _OPERATOR_HTML = """<!doctype html>
       .metrics-compact { grid-template-columns: 1fr; }
       .tabs { grid-template-columns: repeat(2, 1fr); }
       .actions { width: 100%; }
-      .actions button { flex: 1 1 130px; }
+      .actions .button, .actions button { flex: 1 1 130px; }
     }
   </style>
 </head>
 <body>
   <header>
     <h1>Trading Operator</h1>
-    <div class="status-line"><span class="dot"></span><span id="connection-status">Loading</span></div>
+    <div class="actions">
+      <div class="status-line"><span class="dot"></span><span id="connection-status">Loading</span></div>
+      <a class="button" href="/operator">Operator</a>
+      <a class="button" href="/platform">Health</a>
+      <a class="button" href="/platform/market-data-audit">Market Data</a>
+    </div>
   </header>
   <div class="shell">
     <aside>
