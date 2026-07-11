@@ -1,8 +1,34 @@
 # Postgres Transactional Store Design
 
-Status: P2.4 target design
+Status: P2.4 target design; P2.9 initial runtime adapter implemented
 
 Decision date: 2026-06-27
+
+## Implementation Status
+
+Implemented on 2026-07-11:
+
+- Versioned migration runner: `scripts/apply_postgres_migrations.py`.
+- Initial DDL migration: `deploy/postgres/migrations/001_initial_transactional_store.sql`.
+- Runtime adapter: `systematic_trading.storage.postgres.PostgresStore`.
+- Factory support: `ST_TRANSACTIONAL_STORE_BACKEND=postgres`.
+- One-way SQLite transactional sync: `scripts/sync_sqlite_transactional_to_postgres.py`.
+- Adapter smoke: `scripts/smoke_postgres_transactional_store.py`.
+
+Current local runtime split:
+
+- Postgres stores transactional and audit state: instruments, theses, proposals, approvals, broker order records, PnL snapshots, fundamental snapshots, and event outbox.
+- ClickHouse stores serving market data: daily bars and FX rates.
+- SQLite remains a legacy fallback and migration source only; it is not the recommended local operator runtime.
+
+Verification from the 2026-07-11 migration session:
+
+- Applied migration `001_initial_transactional_store`.
+- Smoke test wrote and read proposal/order/PnL/fundamental/outbox state through `PostgresStore`, then cleaned up.
+- Copied SQLite transactional state into Postgres: 39 instruments, 38 proposals, 7 approval decisions, 16 broker order records, 37 PnL snapshots, and 955 outbox events.
+- Direct Postgres count check after sync: 39 instruments, 38 proposals, 7 approval decisions, 16 broker orders, 37 PnL snapshots, 955 outbox events, and 0 pending migrated outbox events.
+- FastAPI smoke with `postgres + clickhouse`: `/health`, `/api/v1/proposals`, and `/api/v1/market-data/bars/SPY?start_date=2026-06-01&end_date=2026-06-01` returned HTTP 200; SPY close was `756.5908203125` with volume `43634900`.
+- Test evidence: focused storage/script tests passed; full suite passed with 194 tests before the final startup-default doc/script adjustment; affected script/manifest/storage tests passed afterward.
 
 ## Local Runtime Smoke
 

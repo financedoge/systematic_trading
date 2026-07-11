@@ -154,6 +154,7 @@ class IbApiMarketDataRecorderClient:
                 request_id = 94000 + index
                 app.request_symbols[request_id] = symbol
                 app.max_bars_by_request[request_id] = max_bars_per_symbol
+                app.bar_size_seconds_by_request[request_id] = _bar_size_to_seconds(bar_size)
                 app.done_events[request_id] = Event()
                 app.reqHistoricalData(
                     request_id,
@@ -204,6 +205,7 @@ class IbApiMarketDataRecorderClient:
                 self.request_modes: dict[int, IBMarketDataMode] = {}
                 self.done_events: dict[int, Event] = {}
                 self.max_bars_by_request: dict[int, int | None] = {}
+                self.bar_size_seconds_by_request: dict[int, int | None] = {}
                 self.bars_by_request: dict[int, int] = {}
                 self.bars_seen = 0
                 self.requested_mode = IBMarketDataMode.LIVE
@@ -289,7 +291,8 @@ class IbApiMarketDataRecorderClient:
                             volume=int(Decimal(str(getattr(bar, "volume", "0") or "0"))),
                             wap=Decimal(str(getattr(bar, "average", "0") or "0")) or None,
                             count=int(Decimal(str(getattr(bar, "barCount", "0") or "0"))),
-                            bar_size_seconds=_bar_size_to_seconds(str(getattr(bar, "barSize", "") or "")),
+                            bar_size_seconds=self.bar_size_seconds_by_request.get(reqId)
+                            or _bar_size_to_seconds(str(getattr(bar, "barSize", "") or "")),
                         )
                     )
                     self.bars_seen += 1

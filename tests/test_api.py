@@ -50,6 +50,30 @@ def test_platform_service_graph_endpoint_returns_manifest_edges(tmp_path) -> Non
         assert ("operator_dashboard", "trading_management_loop", "supervises") in edges
 
 
+def test_platform_service_actions_catalog_marks_safe_restart_targets(tmp_path) -> None:
+    settings = AppSettings(database_path=tmp_path / "actions.db", data_dir=tmp_path, automation_enabled=False)
+    with TestClient(create_app(settings)) as client:
+        response = client.get("/api/v1/platform/service-actions")
+
+    assert response.status_code == 200
+    services = {item["service_id"]: item for item in response.json()["services"]}
+    assert services["nats_jetstream"]["restartable"] is True
+    assert services["clickhouse_columnar"]["restartable"] is True
+    assert services["postgres_transactional"]["restartable"] is False
+    assert "external database" in services["postgres_transactional"]["reason"]
+    assert services["operator_dashboard"]["restartable"] is False
+    assert services["market_data_recorder"]["restartable"] is True
+
+
+def test_platform_service_restart_rejects_unmanaged_service(tmp_path) -> None:
+    settings = AppSettings(database_path=tmp_path / "actions_reject.db", data_dir=tmp_path, automation_enabled=False)
+    with TestClient(create_app(settings)) as client:
+        response = client.post("/api/v1/platform/services/postgres_transactional/restart")
+
+    assert response.status_code == 400
+    assert "external database" in response.json()["detail"]
+
+
 def test_risk_parity_preview_endpoint_returns_cnh_proposal() -> None:
     with TestClient(create_app()) as client:
         response = client.post(

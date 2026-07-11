@@ -6,6 +6,10 @@ param(
     [ValidateSet("jsonl", "nats")]
     [string]$EventPublisher = "nats",
     [string]$NatsUrl = "nats://127.0.0.1:4222",
+    [ValidateSet("sqlite", "postgres")]
+    [string]$TransactionalStoreBackend = "postgres",
+    [ValidateSet("sqlite", "clickhouse")]
+    [string]$MarketDataStoreBackend = "clickhouse",
     [string]$OperationLogPath = "var\log\platform_operations.jsonl",
     [int]$DispatcherLogHeartbeatEveryIterations = 12
 )
@@ -33,6 +37,10 @@ if (-not (Test-Path $Python)) {
 
 New-Item -ItemType Directory -Force -Path $RunDir | Out-Null
 New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
+
+$env:PYTHONPATH = Join-Path $RepoRoot "src"
+$env:ST_TRANSACTIONAL_STORE_BACKEND = $TransactionalStoreBackend
+$env:ST_MARKET_DATA_STORE_BACKEND = $MarketDataStoreBackend
 
 function Start-EventOutboxDispatcher {
     if ($DisableEventDispatcher) {
@@ -126,7 +134,6 @@ try {
     # Expected when the port is free.
 }
 
-$env:PYTHONPATH = Join-Path $RepoRoot "src"
 $process = Start-Process `
     -FilePath $Python `
     -ArgumentList @(
@@ -155,6 +162,8 @@ do {
             Write-Output "Operator dashboard started."
             Write-Output "PID: $serverPid"
             Write-Output "URL: http://$HostName`:$Port/operator"
+            Write-Output "Transactional store backend: $TransactionalStoreBackend"
+            Write-Output "Market data store backend: $MarketDataStoreBackend"
             Write-Output "Health: $($health.Content)"
             Write-Output "Logs: $OutLog"
             Write-Output "Errors: $ErrLog"

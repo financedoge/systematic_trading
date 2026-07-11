@@ -12,8 +12,15 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     clickhouse_smoke_script = Path("scripts/smoke_clickhouse_columnar_store.ps1").read_text(encoding="utf-8")
     local_start_script = Path("scripts/start_local_platform.ps1").read_text(encoding="utf-8")
     local_stop_script = Path("scripts/stop_local_platform.ps1").read_text(encoding="utf-8")
+    recorder_start_script = Path("scripts/start_market_data_recorder_service.ps1").read_text(encoding="utf-8")
     recorder_stop_script = Path("scripts/stop_market_data_recorder.ps1").read_text(encoding="utf-8")
     watchdog_script = Path("scripts/watch_local_platform.ps1").read_text(encoding="utf-8")
+    golden_sync_script = Path("scripts/sync_sqlite_daily_bars_to_clickhouse.py").read_text(encoding="utf-8")
+    fx_sync_script = Path("scripts/sync_sqlite_fx_rates_to_clickhouse.py").read_text(encoding="utf-8")
+    daily_backfill_script = Path("scripts/backfill_clickhouse_daily_bars.py").read_text(encoding="utf-8")
+    postgres_migration_script = Path("scripts/apply_postgres_migrations.py").read_text(encoding="utf-8")
+    postgres_sync_script = Path("scripts/sync_sqlite_transactional_to_postgres.py").read_text(encoding="utf-8")
+    postgres_smoke_script = Path("scripts/smoke_postgres_transactional_store.py").read_text(encoding="utf-8")
 
     assert "operator_dashboard.pid" in start_script
     assert "event_outbox_dispatcher.pid" in start_script
@@ -31,6 +38,10 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert "--publisher" in start_script
     assert "OperationLogPath" in start_script
     assert "--operation-log" in start_script
+    assert "TransactionalStoreBackend" in start_script
+    assert "ST_TRANSACTIONAL_STORE_BACKEND" in start_script
+    assert "MarketDataStoreBackend" in start_script
+    assert "ST_MARKET_DATA_STORE_BACKEND" in start_script
     assert "--log-heartbeat-every-iterations" in start_script
     assert "nats://127.0.0.1:4222" in start_script
     assert "platform_events.jsonl" in start_script
@@ -74,12 +85,19 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert "start_clickhouse.ps1" in local_start_script
     assert "start_operator_dashboard.ps1" in local_start_script
     assert "StartMarketDataRecorder" in local_start_script
+    assert "SkipMarketDataRecorder" in local_start_script
+    assert "run_market_data_recorder_service.py" in local_start_script
     assert "RecorderMarketDataMode" in local_start_script
+    assert "TransactionalStoreBackend" in local_start_script
+    assert "MarketDataStoreBackend" in local_start_script
+    assert "ST_TRANSACTIONAL_STORE_BACKEND" in local_start_script
+    assert "ST_MARKET_DATA_STORE_BACKEND" in local_start_script
     assert "platform_operations.jsonl" in local_start_script
     assert "Write-OperationLog" in local_start_script
     assert "local_platform_start_requested" in local_start_script
     assert "--market-data-mode" in local_start_script
-    assert "Market data recorder not started" in local_start_script
+    assert "Market data recorder service started" in local_start_script
+    assert "recorder_service_not_started" in local_start_script
     assert "/platform" in local_start_script
     assert "pg_isready" in local_start_script
     assert "stop_market_data_recorder.ps1" in local_stop_script
@@ -87,6 +105,13 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert "stop_clickhouse.ps1" in local_stop_script
     assert "stop_nats_jetstream.ps1" in local_stop_script
     assert "External Postgres was not stopped" in local_stop_script
+    assert "run_market_data_recorder_service.py" in recorder_start_script
+    assert "market_data_recorder.pid" in recorder_start_script
+    assert "market_data_recorder.state.json" in recorder_start_script
+    assert "DailyBackfillProvider" in recorder_start_script
+    assert "--daily-backfill-provider" in recorder_start_script
+    assert "--daily-backfill-fallback-provider" in recorder_start_script
+    assert "-WindowStyle Hidden" in recorder_start_script
     assert "market_data_recorder.pid" in recorder_stop_script
     assert "local_platform_watchdog" in watchdog_script
     assert "nats_repair_requested" in watchdog_script
@@ -97,3 +122,17 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert "start_nats_jetstream.ps1" in watchdog_script
     assert "start_clickhouse.ps1" in watchdog_script
     assert "start_operator_dashboard.ps1" in watchdog_script
+    assert "ClickHouseMarketDataClient" in golden_sync_script
+    assert "price_bars" in golden_sync_script
+    assert "fx_rates" in fx_sync_script
+    assert "insert_fx_rate_rows" in fx_sync_script
+    assert "backfill_clickhouse_daily_bars" in daily_backfill_script
+    assert "--refresh-existing" in daily_backfill_script
+    assert "--fallback-provider" in daily_backfill_script
+    assert "ops.schema_migrations" in postgres_migration_script
+    assert "SET ROLE" in postgres_migration_script
+    assert "platform_event_outbox" in postgres_sync_script
+    assert "price_bars" not in postgres_sync_script
+    assert "fx_rates" not in postgres_sync_script
+    assert "transactional_store_backend=\"postgres\"" in postgres_smoke_script
+    assert "--keep-records" in postgres_smoke_script

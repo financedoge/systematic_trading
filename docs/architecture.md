@@ -65,6 +65,7 @@ The current implementation is the v0 control plane and research harness. It is i
 - Introduce event schemas, Postgres transactional state, and the ClickHouse plus Parquet columnar market-data path.
 - Maintain event and data schemas through the code-based registry in `systematic_trading.schemas` until a separate schema registry service is justified.
 - Build an always-on market-data recorder and replay path.
+- Promote ClickHouse `market_data.daily_bars` and later intraday tables as the golden market-data source for UI, research, backtests, feature jobs, and validation.
 - Integrate LEAN into the promotion path for production candidates.
 - Build the strong rebalance blotter before any live trading.
 - Add Grafana-class dashboards and multi-channel alerts.

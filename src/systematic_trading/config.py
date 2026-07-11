@@ -30,6 +30,25 @@ class AppSettings(BaseSettings):
     data_dir: Path = Path("var")
     database_path: Path = Path("var/systematic_trading.db")
     transactional_store_backend: str = "sqlite"
+    market_data_store_backend: str = "sqlite"
+    market_data_storage_policy_path: Path = Path("config/market-data-storage.json")
+    postgres_host: str = "127.0.0.1"
+    postgres_port: int = 5432
+    postgres_database: str = "systematic_trading"
+    postgres_app_user: str = "st_app"
+    postgres_app_password: str | None = None
+    postgres_migrator_user: str = "st_migrator"
+    postgres_migrator_password: str | None = None
+    postgres_owner_role: str = "st_owner"
+    postgres_sslmode: str = "prefer"
+    app_postgre_db_password: str | None = None
+    migrator_postgre_db_password: str | None = None
+    owner_postgre_db_password: str | None = None
+    readonly_postgre_db_password: str | None = None
+    clickhouse_http_url: str = "http://127.0.0.1:8123"
+    clickhouse_database: str = "systematic_trading"
+    clickhouse_user: str = "st_app"
+    clickhouse_password: str = "local-dev-change-me"
 
     automation_enabled: bool = False
     automation_timezone: str = "America/New_York"

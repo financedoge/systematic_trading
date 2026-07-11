@@ -24,7 +24,8 @@ The active execution tracker is in `docs/execution-kanban.md`.
 - Initial inverse-volatility risk-parity sleeve and proposal preview builder.
 - Minimal daily backtest engine for deterministic portfolio simulations.
 - Thin FastAPI operator API for health, manifest, and risk-parity proposal previews.
-- Local SQLite persistence for watchlists, theses, normalized price bars, FX rates, proposal queues, and approval decisions.
+- Postgres transactional persistence for watchlists, theses, proposal queues, approval decisions, broker order records, PnL snapshots, and the event outbox on the recommended local platform path.
+- ClickHouse serving storage for normalized daily bars and FX rates.
 - Provider and broker manifests so the operator API can expose data-source coverage and paper-vs-live execution boundaries.
 - Research state tracking with a current SOTA registry and comparison artifacts that include model layer and decision-tree diagrams.
 
@@ -61,7 +62,7 @@ Recommended local foundation startup:
 .\scripts\start_local_platform.ps1
 ```
 
-This starts NATS JetStream, verifies Postgres, starts ClickHouse, and starts the operator dashboard plus event dispatcher. Open `http://127.0.0.1:8000/platform` for service health and `http://127.0.0.1:8000/operator` for the trading operator UI.
+This starts NATS JetStream, verifies Postgres, starts ClickHouse, starts the operator dashboard plus event dispatcher, and starts the always-on market-data recorder service. The recorder idles outside regular US equity market hours and only records during the configured session. Open `http://127.0.0.1:8000/platform` for service health and `http://127.0.0.1:8000/operator` for the trading operator UI.
 
 Structured operational logs are written to `var/log/platform_operations.jsonl`.
 
@@ -72,13 +73,17 @@ Check and optionally repair the required local services after Docker, VPN, Wi-Fi
 .\scripts\watch_local_platform.ps1 -Repair
 ```
 
-The market-data recorder is opt-in to protect disk space:
+Skip the market-data recorder service for maintenance:
 
 ```powershell
-.\scripts\start_local_platform.ps1 -StartMarketDataRecorder
+.\scripts\start_local_platform.ps1 -SkipMarketDataRecorder
 ```
 
-Recorder pilots default to IB delayed market data so the pipeline can be tested without paid live subscriptions. Use `-RecorderMarketDataMode live` only after the needed IB market-data subscriptions are active.
+The recorder service starts in `-RecorderMarketDataMode live` by default, stays idle after hours and on weekends, and runs historical gap-fill before live capture after startup/restart during market hours. Use `-RecorderMarketDataMode delayed` only for controlled testing.
+
+The recorder service also runs ClickHouse daily-bar backfill on startup and then on an interval, including after-hours/weekends. The default path repairs `market_data.daily_bars` directly from Yahoo adjusted daily bars, with IB historical daily bars as fallback.
+
+The local operator startup path now defaults to `ST_TRANSACTIONAL_STORE_BACKEND=postgres` and `ST_MARKET_DATA_STORE_BACKEND=clickhouse`. Active dashboard, proposal, broker-record, PnL, and event-outbox state use Postgres, while daily bars and FX reads use ClickHouse. SQLite remains only a legacy fallback and migration source.
 
 ## Optional Tushare data
 
@@ -97,7 +102,8 @@ pip install -e ".[data]"
 - `docs/queue-adapter-selection.md` queue adapter decision and future migration triggers.
 - `docs/market-data-recorder-contract.md` raw-before-publish recorder contract and replay rules.
 - `docs/market-data-recorder-source-plan.md` two-lane recorder source plan, IBKR capacity limits, and ETF universe seed.
-- `docs/postgres-transactional-store-design.md` target Postgres schema and SQLite migration plan.
+- `docs/market-data-golden-source.md` corrected columnar golden-source model for local market data.
+- `docs/postgres-transactional-store-design.md` Postgres schema, migration tooling, and SQLite migration plan.
 - `docs/columnar-store-target-design.md` ClickHouse, Parquet, and DuckDB target for columnar analytics.
 - `docs/schema-registry-convention.md` code-based event/data schema registry and compatibility rules.
 - `config/service-manifest.json` machine-readable service manifest for the local operator stack.
@@ -116,4 +122,4 @@ pip install -e ".[data]"
 
 ## Local state
 
-The API now initializes a local SQLite store at `var/systematic_trading.db` by default. This is used for watchlist instruments, thesis memos, normalized price bars, FX rates, queued proposals, and approval decisions.
+The recommended local platform startup uses Postgres for transactional state and ClickHouse for market data. `var/systematic_trading.db` still exists as the legacy SQLite fallback and one-way migration source while the platform soaks on Postgres.

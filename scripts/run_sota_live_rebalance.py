@@ -17,7 +17,7 @@ from systematic_trading.live import (
     load_account_snapshot,
     write_sota_live_plan_artifacts,
 )
-from systematic_trading.storage.sqlite import SQLiteStore
+from systematic_trading.storage import create_trading_store
 
 
 def main() -> None:
@@ -36,7 +36,7 @@ def main() -> None:
 
     settings = AppSettings()
     database_path = Path(args.database) if args.database else settings.database_path
-    store = SQLiteStore(database_path)
+    store = create_trading_store(settings, database_path=database_path)
     store.initialize()
     broker = InteractiveBrokersAdapter(settings)
     account_snapshot = load_account_snapshot(Path(args.account_snapshot))

@@ -14,10 +14,10 @@ The machine-readable manifest is `config/service-manifest.json`.
 | NATS JetStream | Active | `scripts/start_nats_jetstream.ps1` | Docker Compose | Docker logs | `http://127.0.0.1:8222/healthz?js-enabled-only=true` |
 | Postgres transactional store | Active external service | Windows service | External | PostgreSQL logs | TCP `127.0.0.1:5432` |
 | ClickHouse columnar store | Active | `scripts/start_clickhouse.ps1` | Docker Compose | Docker logs plus `D:/systematic_trading_data/clickhouse/logs` | `http://127.0.0.1:8123/ping` |
-| Market data recorder | Active optional | Manual script/service | `var/run/market_data_recorder.pid` | `var/log/market_data_recorder.*.log` | `var/run/market_data_recorder.state.json` and freshness metrics |
+| Market data recorder | Active scheduled worker | `scripts/start_local_platform.ps1` | `var/run/market_data_recorder.pid` | `var/log/market_data_recorder.*.log` | `var/run/market_data_recorder.state.json` and freshness metrics |
 | Local platform watchdog | Active operator script | Manual now; Windows Task Scheduler later | `var/run/local_platform_watchdog.state.json` | `var/log/platform_operations.jsonl` | Checks NATS, Postgres, ClickHouse, operator API, and optional recorder state |
 
-The recorder implementation follows `docs/market-data-recorder-contract.md` and the source/capacity plan in `docs/market-data-recorder-source-plan.md`. The initial P3.2 entry point is `scripts/record_ib_market_data.py`; use `--mode realtime` for session recording and `--mode historical-smoke` for bounded closed-market tests.
+The recorder implementation follows `docs/market-data-recorder-contract.md` and the source/capacity plan in `docs/market-data-recorder-source-plan.md`. The scheduled service entry point is `scripts/run_market_data_recorder_service.py`; it stays alive, runs ClickHouse daily-bar backfill on startup/interval, idles outside regular US equity hours for realtime capture, runs IB historical gap-fill on startup/restart during the session, and delegates bounded captures to `scripts/record_ib_market_data.py`.
 
 ## Rules
 
@@ -39,15 +39,17 @@ Recommended local startup:
 .\scripts\start_local_platform.ps1
 ```
 
-This starts NATS JetStream, configures the `ST_EVENTS` stream, verifies Postgres readiness, starts ClickHouse, then starts the operator dashboard and event outbox dispatcher. The dispatcher publishes to NATS by default. The platform health portal is served at `http://127.0.0.1:8000/platform`.
+This starts NATS JetStream, configures the `ST_EVENTS` stream, verifies Postgres readiness, starts ClickHouse, then starts the operator dashboard, event outbox dispatcher, and scheduled market-data recorder service. The dispatcher publishes to NATS by default. The platform health portal is served at `http://127.0.0.1:8000/platform`.
 
-The market-data recorder is deliberately opt-in because raw high-frequency data can fill disks:
+The operator startup script defaults to `-TransactionalStoreBackend postgres` and `-MarketDataStoreBackend clickhouse`, which sets `ST_TRANSACTIONAL_STORE_BACKEND=postgres` and `ST_MARKET_DATA_STORE_BACKEND=clickhouse` for the dashboard, dispatcher, and recorder startup path. Transactional state uses Postgres; daily bars and FX reads are routed to ClickHouse.
+
+Skip the market-data recorder service for maintenance:
 
 ```powershell
-.\scripts\start_local_platform.ps1 -StartMarketDataRecorder
+.\scripts\start_local_platform.ps1 -SkipMarketDataRecorder
 ```
 
-Recorder pilots default to `-RecorderMarketDataMode delayed` because IB paper accounts can connect successfully while still lacking live exchange market-data permissions. Use `-RecorderMarketDataMode live` only after the required subscriptions are enabled.
+The recorder service defaults to `-RecorderMarketDataMode live`, but it does not record realtime bars after hours or on weekends. It still runs the ClickHouse daily-bar backfill child job while idle. During market hours it first runs a historical lookback gap-fill, then records in bounded realtime chunks. Use `-RecorderMarketDataMode delayed` only for controlled tests.
 
 Startup order:
 
@@ -57,7 +59,7 @@ Startup order:
 4. Operator dashboard API.
 5. Event outbox dispatcher.
 6. Embedded trading management loop inside the dashboard API.
-7. Optional market data recorder pilot.
+7. Scheduled market data recorder service.
 
 The dashboard is health-gated before startup is considered successful. The outbox dispatcher is started as a companion process and can be disabled for debugging with:
 
