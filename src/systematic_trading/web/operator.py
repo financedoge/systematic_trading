@@ -631,6 +631,7 @@ _OPERATOR_HTML = """<!doctype html>
         <div id="pnl-comparison-chart" class="chart-wrap"></div>
         <div id="slippage-chart" class="chart-wrap"></div>
         <div id="execution-quality-legend" class="legend"></div>
+        <div id="execution-missed-table"></div>
         <div id="execution-slippage-table"></div>
         <div id="execution-quality-warnings" class="warnings"></div>
       </section>
@@ -713,7 +714,7 @@ _OPERATOR_HTML = """<!doctype html>
         api("/api/v1/dashboard/holdings"),
         api("/api/v1/dashboard/pnl"),
         api("/api/v1/dashboard/pnl/snapshots?limit=60"),
-        api("/api/v1/dashboard/execution-quality?history_limit=60")
+        api("/api/v1/dashboard/execution-quality?history_limit=1")
       ]);
       renderAutomation(automation);
       renderPerformance(performance);
@@ -1077,6 +1078,20 @@ _OPERATOR_HTML = """<!doctype html>
         <span class="legend-item"><span class="swatch theoretical"></span>Cumulative Slippage</span>
       `;
       renderExecutionSlippageTable(payload.rows || []);
+      renderMissedOrdersTable(payload.missed_rows || []);
+    }
+
+    function renderMissedOrdersTable(rows) {
+      if (!rows.length) {
+        el("execution-missed-table").innerHTML = "";
+        return;
+      }
+      el("execution-missed-table").innerHTML = `
+        <div class="panel-head"><h2>Missed Rebalances</h2><span class="status-line">Not eligible for resubmission</span></div>
+        <table>
+          <thead><tr><th>Missed At</th><th>Proposal</th><th>Symbol</th><th>Side</th><th class="num">Qty</th><th class="num">Reference CNH</th></tr></thead>
+          <tbody>${rows.map((row) => `<tr><td>${esc(fmtDateTime(row.missed_at))}</td><td>${esc(row.proposal_id)}</td><td>${esc(row.symbol)}</td><td>${esc(row.side)}</td><td class="num">${esc(row.quantity)}</td><td class="num">${fmtMoney(row.reference_notional_cnh)}</td></tr>`).join("")}</tbody>
+        </table>`;
     }
 
     function renderExecutionSlippageTable(rows) {

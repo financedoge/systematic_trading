@@ -226,6 +226,17 @@ class DashboardExecutionSlippageRow(BaseModel):
     filled_at: datetime
 
 
+class DashboardMissedOrderRow(BaseModel):
+    proposal_id: str
+    order_index: int
+    symbol: str
+    side: OrderSide
+    quantity: int
+    reference_notional_cnh: Decimal
+    missed_at: datetime
+    reason: str | None = None
+
+
 class DashboardExecutionQuality(BaseModel):
     as_of: datetime
     actual_pnl_cnh: Decimal
@@ -236,6 +247,7 @@ class DashboardExecutionQuality(BaseModel):
     filled_trade_count: int = 0
     missed_order_count: int = 0
     missed_notional_cnh: Decimal = Decimal("0")
+    missed_rows: list[DashboardMissedOrderRow] = Field(default_factory=list)
     history: list[DashboardPnlComparisonPoint] = Field(default_factory=list)
     slippage: list[DashboardSlippagePoint] = Field(default_factory=list)
     rows: list[DashboardExecutionSlippageRow] = Field(default_factory=list)
@@ -651,6 +663,19 @@ def dashboard_execution_quality(
     rows, slippage_warnings = _execution_slippage_rows(store, as_of=actual.as_of.date())
     missed_records = [record for record in store.list_broker_order_records() if record.status == BrokerOrderStatus.MISSED]
     missed_notional = sum((record.order.notional_cnh for record in missed_records), Decimal("0"))
+    missed_rows = [
+        DashboardMissedOrderRow(
+            proposal_id=record.proposal_id,
+            order_index=record.order_index,
+            symbol=record.order.symbol.upper(),
+            side=record.order.side,
+            quantity=record.order.quantity,
+            reference_notional_cnh=quantize_money(record.order.notional_cnh),
+            missed_at=record.updated_at,
+            reason=record.message,
+        )
+        for record in sorted(missed_records, key=lambda item: item.updated_at, reverse=True)
+    ]
     filled_notional = sum(
         (row.reference_notional_cnh for row in rows if row.reference_notional_cnh is not None),
         Decimal("0"),
@@ -672,6 +697,7 @@ def dashboard_execution_quality(
         filled_trade_count=len(rows),
         missed_order_count=len(missed_records),
         missed_notional_cnh=quantize_money(missed_notional),
+        missed_rows=missed_rows,
         history=history,
         slippage=_daily_slippage_points(rows),
         rows=rows,
