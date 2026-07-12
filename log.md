@@ -1,5 +1,15 @@
 # Project Log
 
+## 2026-07-13 - Rebalance Execution Window And Missed Attribution
+
+- Added a configurable next-open execution deadline using `ST_EXECUTION_REBALANCE_TIMEOUT_MINUTES` (default 30) after `ST_EXECUTION_TWAP_START_TIME` in `ST_AUTOMATION_TIMEZONE`.
+- Added durable `missed` proposal and broker-order states. Pending proposals and approved proposals with failed/missing orders expire; broker-accepted orders remain active.
+- Approval, direct submission, resubmission, and lower-level IB routing all reject expired proposals. Missed orders store their remaining quantity, reference notional, deadline, timestamp, and reason without inventing a fill price.
+- Operator proposal rows are grey when missed, decisions/resubmission are disabled, and deadline/reason are visible. Execution-quality analysis reports missed count, reference notional, and detailed missed orders.
+- Live queue cleanup marked 32 stale proposals and 192 orders missed while preserving 6 approved proposals with routed activity. Browser verification confirmed 32 grey rows with disabled Approve/Reject controls.
+- Reduced the operator's legacy PnL-comparison history request from 60 recomputed points to 1 so missed analysis is not held behind a multi-minute historical recalculation.
+- Verification: full suite passed (`207 tests`); focused API/domain/router/UI tests passed (`48 passed`); `git diff --check` passed apart from existing line-ending warnings.
+
 ## 2026-07-13 - Unified Operational Header
 
 - Standardized Operator, Strategies, Platform Health, and Market Data headers on the same ordered navigation: Operator, Strategies, Health, Market Data.

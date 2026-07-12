@@ -35,7 +35,7 @@ After finishing work:
 | Service foundation | 9 | 0 | 0 | 0 |
 | Market data recording | 4 | 3 | 2 | 1 |
 | Research/backtest promotion | 1 | 0 | 6 | 1 |
-| Portfolio and execution controls | 0 | 3 | 6 | 1 |
+| Portfolio and execution controls | 1 | 2 | 6 | 1 |
 | Observability and alerts | 10 | 0 | 6 | 1 |
 | Daily operating loops | 0 | 0 | 6 | 0 |
 
@@ -116,7 +116,7 @@ After finishing work:
 | P5.4 | Pending | Resize/defer workflow | Operator can approve, reject, resize, defer, or cancel generated orders. | Must persist audit events. |
 | P5.5 | In Progress | IB connection health gate | Confirm server time, account, managed accounts, next valid id, and profile before routing. | Added `scripts/probe_ib_tws_health.py`, `systematic_trading.execution.ib_health`, `ib_tws_api` service manifest entry, startup/watchdog probes, and health-page state-file reporting. Local probe on 2026-07-12 correctly reported TWS/API down at `127.0.0.1:7497` with missing `nextValidId`. Remaining before Done: make order routing and recorder live capture consume a fresh healthy IB state/profile check before proceeding. |
 | P5.6 | In Progress | Broker reconciliation gate | Compare IB positions, cash, open orders, fills, and commissions before routing. | Added `systematic_trading.execution.reconciliation`, `/api/v1/dashboard/reconciliation/interactive-brokers`, and `scripts/reconcile_ib_paper_account.py`. The report compares local broker order records to IB paper executions and account positions, writes a JSON report, and can record an empty PnL reset baseline only with `--record-pnl-reset-baseline --confirm-paper-reset` when IB paper positions are zero. Remaining before Done: include broker open orders/commissions, persist reconciliation runs in Postgres, and block new routing on unresolved breaks. |
-| P5.10 | In Progress | Rebalance execution window and missed attribution | Rebalance proposals expire after a configurable next-session-open window; approval, submission, and resubmission are server-blocked after expiry; missed requests are durable, greyed in the UI, and included in execution-quality analysis. | Current session. Default timeout: 30 minutes from configured execution-window start in `automation_timezone`. |
+| P5.10 | Done | Rebalance execution window and missed attribution | Rebalance proposals expire after a configurable next-session-open window; approval, submission, and resubmission are server-blocked after expiry; missed requests are durable, greyed in the UI, and included in execution-quality analysis. | Added `ST_EXECUTION_REBALANCE_TIMEOUT_MINUTES` (default 30), UTC deadlines derived from next-session start in `automation_timezone`, `missed` proposal/order states, API and router gates, durable missed records, and missed count/notional/detail analysis. Live cleanup moved 32 stale proposals/192 orders to missed while preserving 6 approved proposals with routed activity. Browser verified 32 grey rows with disabled decisions and visible deadlines. Full suite passed (`207 tests`). |
 | P5.7 | Pending | Live kill switch | A hard config/runtime switch prevents live order routing immediately. | Must be tested in paper. |
 | P5.8 | Pending | Live capital caps | Per-account, per-strategy, per-symbol, per-order, turnover, and drawdown caps. | Required before Phase 5. |
 | P5.9 | Blocked | Live account enablement | Requires explicit human approval, credentials, account id, and proven paper evidence. | Keep live disabled. |
