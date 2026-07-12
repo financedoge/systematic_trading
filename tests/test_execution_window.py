@@ -90,6 +90,7 @@ def test_api_blocks_late_approval_and_reports_missed_notional(tmp_path) -> None:
     assert listed.json()[0]["missed_reason"]
     assert quality.json()["missed_order_count"] == 1
     assert quality.json()["missed_notional_cnh"] == "36000.00"
+    assert quality.json()["missed_rows"][0]["proposal_id"] == proposal.proposal_id
 
 
 def _proposal(

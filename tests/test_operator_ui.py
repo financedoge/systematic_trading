@@ -59,6 +59,8 @@ def test_operator_dashboard_is_served(tmp_path) -> None:
     assert "Execution Gain" in html
     assert "Missed Orders" in html
     assert "Missed Notional" in html
+    assert "Missed Rebalances" in html
+    assert "Not eligible for resubmission" in html
     assert "proposal-row.missed" in html
     assert "Execution Deadline" in html
     assert "execution-slippage-table" in html
@@ -81,6 +83,7 @@ def test_operator_dashboard_is_served(tmp_path) -> None:
     assert "/api/v1/dashboard/pnl" in html
     assert "/api/v1/dashboard/pnl/snapshots" in html
     assert "/api/v1/dashboard/execution-quality" in html
+    assert "history_limit=1" in html
     assert "/api/v1/execution/interactive-brokers/proposals/" in html
     assert "/api/v1/execution/interactive-brokers/orders" in html
     assert "/operator" in html
