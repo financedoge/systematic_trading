@@ -11,6 +11,8 @@ if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
     throw "Docker CLI is not available. Install Docker Desktop or run this on a server with Docker."
 }
 
+& (Join-Path $ScriptDir "assert_docker_ready.ps1") -Context "ClickHouse startup" -StartDockerDesktopIfStopped
+
 $LogRoot = if ($env:ST_CLICKHOUSE_LOG_ROOT) { $env:ST_CLICKHOUSE_LOG_ROOT } else { "D:/systematic_trading_data/clickhouse/logs" }
 
 New-Item -ItemType Directory -Force -Path $LogRoot | Out-Null

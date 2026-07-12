@@ -4,6 +4,12 @@
 
 Research is now part of a controlled research-to-paper-to-live pipeline. New candidates must compare against the current SOTA, use point-in-time data, record reproducible artifacts, and pass the promotion gates in `docs/industrial-platform-plan.md` before paper or live use.
 
+## Alpha Factory Direction
+
+The next research operating model should treat each alpha or factor as a versioned, independently observable contributor rather than only storing monolithic strategy runs. Before risk-parity-style alpha weighting is promoted, add contracts for factor identity and lineage, point-in-time signal values, theoretical factor returns, realized portfolio contribution, turnover/cost/capacity, correlation and covariance estimates, allocation weights, and retirement or rollback state.
+
+Portfolio attribution should remain layered: strategy backtest NAV versus actual account NAV measures implementation divergence; reference-fill versus actual-fill PnL measures execution quality; factor-level theoretical and realized contribution explains which alphas earned or lost the portfolio result. Factor weights must be reproducible artifacts with concentration, correlation, liquidity, and regime-stability limits, not an unconstrained inverse-volatility calculation.
+
 Use `.agents/skills/continuous-research-loop.md` for recurring challenger research and `.agents/skills/strategy-promotion-control.md` for promotion decisions.
 
 ## Current SOTA

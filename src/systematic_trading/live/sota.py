@@ -14,6 +14,7 @@ from systematic_trading.domain.execution import TradeProposal
 from systematic_trading.domain.market import Instrument, PriceBar
 from systematic_trading.domain.portfolio import AllocationTarget, CashBalance, PortfolioPosition
 from systematic_trading.execution.broker import InteractiveBrokersAdapter
+from systematic_trading.execution.window import attach_execution_deadline
 from systematic_trading.portfolio.beta import BetaInstrumentState, RiskParityBetaSleeve
 from systematic_trading.portfolio.proposals import RebalanceProposalBuilder
 from systematic_trading.research import current_sota_definition, instruments_for_definition, instantiate_overlays
@@ -127,6 +128,7 @@ def build_sota_live_rebalance_plan(
         fx_to_cnh=fx_to_cnh,
         targets=targets,
     )
+    proposal = attach_execution_deadline(proposal, broker.settings)
     validation_issues = broker.validate_orders(proposal.orders)
     queued = False
     if queue:

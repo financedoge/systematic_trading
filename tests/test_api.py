@@ -28,6 +28,8 @@ def test_health_endpoint_reports_service_health_contract(tmp_path) -> None:
         assert services["event_outbox_dispatcher"]["status"] == "error"
         assert services["nats_jetstream"]["health_check_kind"] == "http"
         assert services["postgres_transactional"]["health_check_kind"] == "tcp"
+        assert services["ib_tws_api"]["health_check_kind"] == "state_file"
+        assert services["ib_tws_api"]["status"] == "error"
         assert services["clickhouse_columnar"]["health_check_kind"] == "http"
         assert services["trading_management_loop"]["status"] == "disabled"
         assert services["market_data_recorder"]["status"] == "degraded"
@@ -45,6 +47,7 @@ def test_platform_service_graph_endpoint_returns_manifest_edges(tmp_path) -> Non
 
         assert "nats_jetstream" in node_ids
         assert "postgres_transactional" in node_ids
+        assert "ib_tws_api" in node_ids
         assert "clickhouse_columnar" in node_ids
         assert ("nats_jetstream", "event_outbox_dispatcher", "depends_on") in edges
         assert ("operator_dashboard", "trading_management_loop", "supervises") in edges
@@ -61,6 +64,8 @@ def test_platform_service_actions_catalog_marks_safe_restart_targets(tmp_path) -
     assert services["clickhouse_columnar"]["restartable"] is True
     assert services["postgres_transactional"]["restartable"] is False
     assert "external database" in services["postgres_transactional"]["reason"]
+    assert services["ib_tws_api"]["restartable"] is False
+    assert "2FA" in services["ib_tws_api"]["reason"]
     assert services["operator_dashboard"]["restartable"] is False
     assert services["market_data_recorder"]["restartable"] is True
 
@@ -184,7 +189,7 @@ def test_queue_and_approve_proposal_persists_status(tmp_path) -> None:
         response = client.post(
             "/api/v1/proposals/risk-parity-queue",
             json={
-                "as_of": "2026-04-18",
+                "as_of": "2026-07-13",
                 "cash": [{"currency": "CNH", "amount": "120000"}],
                 "instruments": [
                     {
@@ -242,7 +247,7 @@ def test_submit_approved_proposal_to_ib_paper_persists_broker_records(tmp_path) 
         queue_response = client.post(
             "/api/v1/proposals/risk-parity-queue",
             json={
-                "as_of": "2026-04-18",
+                "as_of": "2026-07-13",
                 "cash": [{"currency": "CNH", "amount": "120000"}],
                 "instruments": [
                     {
@@ -317,7 +322,7 @@ def test_approve_and_submit_routes_twap_paper_orders_in_one_call(tmp_path) -> No
         queue_response = client.post(
             "/api/v1/proposals/risk-parity-queue",
             json={
-                "as_of": "2026-04-18",
+                "as_of": "2026-07-13",
                 "cash": [{"currency": "CNH", "amount": "120000"}],
                 "instruments": [
                     {
@@ -367,10 +372,10 @@ def test_approve_and_submit_routes_twap_paper_orders_in_one_call(tmp_path) -> No
         assert {
             record["order"]["intended_trade_date"]
             for record in payload["broker_submission"]["records"]
-        } == {"2026-04-20"}
+        } == {"2026-07-14"}
         assert [item[0] for item in fake_ib.placed_orders] == [800, 801]
-        assert fake_ib.placed_orders[0][2].algo_params["startTime"] == "20260420 09:30:00 US/Eastern"
-        assert fake_ib.placed_orders[0][2].algo_params["endTime"] == "20260420 10:00:00 US/Eastern"
+        assert fake_ib.placed_orders[0][2].algo_params["startTime"] == "20260714 09:30:00 US/Eastern"
+        assert fake_ib.placed_orders[0][2].algo_params["endTime"] == "20260714 10:00:00 US/Eastern"
 
 
 def test_failed_only_submit_resubmits_rejected_and_missing_records(tmp_path) -> None:
@@ -379,7 +384,7 @@ def test_failed_only_submit_resubmits_rejected_and_missing_records(tmp_path) -> 
         queue_response = client.post(
             "/api/v1/proposals/risk-parity-queue",
             json={
-                "as_of": "2026-04-18",
+                "as_of": "2026-07-13",
                 "cash": [{"currency": "CNH", "amount": "120000"}],
                 "instruments": [
                     {
@@ -455,7 +460,7 @@ def test_failed_only_submit_resubmits_all_missing_records_after_approved_send_fa
         queue_response = client.post(
             "/api/v1/proposals/risk-parity-queue",
             json={
-                "as_of": "2026-04-18",
+                "as_of": "2026-07-13",
                 "cash": [{"currency": "CNH", "amount": "120000"}],
                 "instruments": [
                     {
@@ -1053,6 +1058,25 @@ def test_dashboard_can_sync_ib_fills_into_local_broker_records(tmp_path) -> None
         assert pnl.json()["unrealized_pnl_cnh"] == "576.00"
 
 
+def test_dashboard_can_reconcile_ib_paper_account(tmp_path) -> None:
+    settings = AppSettings(database_path=tmp_path / "dashboard_reconcile.db", data_dir=tmp_path)
+    with TestClient(create_app(settings)) as client:
+        client.app.state.ib_execution_sync_client = _FakeExecutionSyncClient([])
+        client.app.state.ib_account_snapshot_client = _FakeEmptyAccountSnapshotClient()
+
+        response = client.post("/api/v1/dashboard/reconciliation/interactive-brokers")
+
+        assert response.status_code == 200
+        payload = response.json()
+        assert payload["local_order_count"] == 0
+        assert payload["ib_fill_count"] == 0
+        assert payload["ib_position_count"] == 0
+        assert payload["unmatched_local_orders"] == []
+        assert payload["unmatched_ib_fills"] == []
+        assert payload["position_differences"] == []
+        assert payload["suggested_actions"] == ["No reconciliation breaks detected."]
+
+
 def test_market_data_volatility_endpoint_uses_stored_bars(tmp_path) -> None:
     settings = AppSettings(database_path=tmp_path / "volatility.db", data_dir=tmp_path)
     with TestClient(create_app(settings)) as client:
@@ -1122,6 +1146,15 @@ class _FakeAccountSnapshotClient:
                     average_cost=Decimal("500.25"),
                 )
             ],
+            ["DU123"],
+        )
+
+
+class _FakeEmptyAccountSnapshotClient:
+    def fetch(self, profile):
+        return (
+            [AccountSummaryRow(account="DU123", tag="TotalCashValue", value="1000", currency="USD")],
+            [],
             ["DU123"],
         )
 

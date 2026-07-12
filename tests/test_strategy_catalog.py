@@ -165,3 +165,36 @@ def test_technical_tree_allocator_definition_round_trips_and_diagrams() -> None:
     assert overlays[0].macro_scores["SPY"] == overlay.macro_scores["SPY"]
     assert "Technical tree allocator" in card["layerDiagram"]
     assert "MACD and Bollinger bands" in card["decisionTree"]
+
+
+def test_discovers_backtest_artifact_metrics_and_allocation(tmp_path) -> None:
+    import json
+
+    import pytest
+
+    from systematic_trading.research.catalog import discover_strategy_artifacts
+
+    sota = tmp_path / "sota_current"
+    sota.mkdir()
+    (sota / "alpha.json").write_text(
+        json.dumps({
+            "researchCase": {"key": "alpha", "name": "Alpha One"},
+            "nav_series": [
+                {"trade_date": "2025-01-02", "nav_cnh": "100"},
+                {"trade_date": "2025-01-03", "nav_cnh": "110"},
+            ],
+            "final_snapshot": {"positions": [
+                {"symbol": "SPY", "quantity": "2", "market_price": "30"},
+                {"symbol": "TLT", "quantity": "1", "market_price": "40"},
+            ]},
+        }),
+        encoding="utf-8",
+    )
+
+    artifacts = discover_strategy_artifacts(tmp_path, "alpha")
+
+    assert len(artifacts) == 1
+    assert artifacts[0].is_sota is True
+    assert artifacts[0].total_return == pytest.approx(0.1)
+    assert artifacts[0].allocation[0]["symbol"] == "SPY"
+    assert artifacts[0].allocation[0]["weight"] == 0.6

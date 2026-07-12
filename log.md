@@ -1,6 +1,52 @@
 # Project Log
 
+## 2026-07-13 - Unified Operational Header
+
+- Standardized Operator, Strategies, Platform Health, and Market Data headers on the same ordered navigation: Operator, Strategies, Health, Market Data.
+- Removed page-specific controls from the global header. Health Refresh/status now live in Service Status; market-data refresh/status live in filter toolbars; operator connection state lives in Automation.
+- Added a regression test that compares the header link contract across all primary pages and rejects header buttons or status widgets.
+- Browser verification confirmed identical Health and Strategies navigation with zero header buttons/status elements; focused UI/script tests passed (`7 passed`).
+- Updated dispatcher startup to store the child process id reported by its state file, preventing orphaned dispatcher processes during dashboard restarts.
+
+## 2026-07-13 - Primary Strategy Navigation
+
+- The strategy catalog existed at `/strategies`, but its only Operator entry point was buried inside the Performance panel and was not discoverable from the global page header.
+- Added a persistent `Strategies` destination to the Operator, Platform Health, and Market Data headers.
+- Browser verification clicked Strategies from Platform Health, opened `/strategies`, loaded 90 strategy runs, and displayed the current SOTA detail.
+- Replaced supervisor command-line inspection with privilege-independent identity checks: operator PID must own port 8000, while the dispatcher publishes its process id in the service state file.
+- Verification: focused operator UI/script tests passed (`6 passed`); dispatcher script compiled; live `/platform` and `/strategies` browser checks passed.
+
+## 2026-07-13 - Operator Startup Blocked By Recycled PID
+
+- `start_local_platform.ps1` reported completion but `127.0.0.1:8000` had no listener because `var/run/operator_dashboard.pid` contained stale PID `31312`, which Windows had reassigned to Microsoft Edge.
+- Hardened `scripts/start_operator_dashboard.ps1` so operator and dispatcher PID files are trusted only when the process command line contains the expected service script; a mismatched live PID is treated as stale.
+- Hardened `scripts/stop_operator_dashboard.ps1` with the same identity check so stale PID reuse cannot terminate an unrelated process.
+- Live recovery preserved Edge, started Uvicorn as PID `36112`, and restored `/platform` with HTTP 200. Browser verification reported overall `ok`, 7/7 required services healthy, and 0 errors/degraded services.
+- Verification: `tests/test_operator_scripts.py` passed; live startup and browser smoke passed; `git diff --check` passed apart from existing line-ending warnings.
+
+## 2026-07-12 - Strategy Catalog And Theoretical Versus Actual Attribution
+
+- Added a read-only strategy artifact catalog over `var/backtests`, exposed through `GET /api/v1/strategies` and `/strategies`.
+- The catalog pins the canonical current SOTA, normalizes comparable backtest metrics, exposes artifact provenance and final allocation, and discovers 90 distinct usable strategy runs in current local artifacts.
+- Clarified the operator performance contract: indexed SOTA backtest NAV is theoretical strategy performance and account NAV is actual performance; reference-fill PnL remains a separate execution-quality counterfactual.
+- Recorded the alpha-factory direction in `docs/research-state.md`: versioned factor identities, theoretical and realized contribution, covariance-aware weighting, capacity/cost controls, and promotion discipline are required before factor risk-parity allocation.
+- Verification: focused strategy/operator/API tests passed (`35 passed`); full suite passed (`200 passed`).
+
 This file records durable project decisions, operating status, incidents, and next actions. Keep entries concise, dated, and useful for future agents and human review.
+
+## 2026-07-12
+
+### TWS Health, Docker Preflight, And Paper Reset Reconciliation
+
+- Operator reported three operational gaps: TWS was not monitored as a critical dependency, `start_local_platform.ps1` failed opaquely when Docker Desktop Linux engine was not running, and the IB paper account reset can diverge from local trade records.
+- Added Docker daemon preflight: `scripts/assert_docker_ready.ps1` now runs before NATS and ClickHouse Docker Compose startup. It attempts to start Docker Desktop and wait for the daemon when used by the NATS/ClickHouse startup scripts. Local Docker-down smoke returned a concise Docker Desktop/Linux engine remediation message and suggested `-SkipNats -SkipClickHouse` for partial startup.
+- Added TWS/API health monitoring: `systematic_trading.execution.ib_health`, `scripts/probe_ib_tws_health.py`, and service manifest entry `ib_tws_api`. Startup and watchdog runs refresh `var/run/ib_tws_api.state.json`; platform health reads the state file.
+- Local TWS probe on 2026-07-12 reported `running=false`: TWS/API was not reachable at `127.0.0.1:7497`, and no `nextValidId` arrived for health client id `151`. This is now visible as a platform health error instead of a silent dependency failure.
+- Added report-first IB paper reconciliation: `systematic_trading.execution.reconciliation`, API endpoint `POST /api/v1/dashboard/reconciliation/interactive-brokers`, and CLI `scripts/reconcile_ib_paper_account.py`.
+- Reconciliation compares local broker order records with IB paper executions and the fetched IB account snapshot. It reports unmatched local orders, unmatched IB fills, and position differences.
+- For confirmed IB paper-account resets with zero broker positions, the CLI can explicitly write an empty PnL reset baseline with `--record-pnl-reset-baseline --confirm-paper-reset`. Local broker order records remain audit history and are not deleted or mutated automatically.
+- Current remaining gate work: make order routing and live recorder capture require fresh IB health plus no unresolved reconciliation breaks before proceeding; include broker open orders and commissions in reconciliation; persist reconciliation runs in Postgres.
+- Verification: focused tests passed (`30 passed`); compile pass passed for `src`, `scripts/probe_ib_tws_health.py`, and `scripts/reconcile_ib_paper_account.py`.
 
 ## 2026-07-11
 

@@ -13,6 +13,7 @@ The machine-readable manifest is `config/service-manifest.json`.
 | Trading management loop | Active embedded worker | FastAPI process | Parent dashboard PID | Dashboard/API logs and state file | `var/live/trading_management_service_state.json` |
 | NATS JetStream | Active | `scripts/start_nats_jetstream.ps1` | Docker Compose | Docker logs | `http://127.0.0.1:8222/healthz?js-enabled-only=true` |
 | Postgres transactional store | Active external service | Windows service | External | PostgreSQL logs | TCP `127.0.0.1:5432` |
+| IB TWS Paper API | Active external session | `scripts/probe_ib_tws_health.py` | External TWS/Gateway login | `var/run/ib_tws_api.state.json` | State file health in platform portal |
 | ClickHouse columnar store | Active | `scripts/start_clickhouse.ps1` | Docker Compose | Docker logs plus `D:/systematic_trading_data/clickhouse/logs` | `http://127.0.0.1:8123/ping` |
 | Market data recorder | Active scheduled worker | `scripts/start_local_platform.ps1` | `var/run/market_data_recorder.pid` | `var/log/market_data_recorder.*.log` | `var/run/market_data_recorder.state.json` and freshness metrics |
 | Local platform watchdog | Active operator script | Manual now; Windows Task Scheduler later | `var/run/local_platform_watchdog.state.json` | `var/log/platform_operations.jsonl` | Checks NATS, Postgres, ClickHouse, operator API, and optional recorder state |
@@ -42,6 +43,10 @@ Recommended local startup:
 This starts NATS JetStream, configures the `ST_EVENTS` stream, verifies Postgres readiness, starts ClickHouse, then starts the operator dashboard, event outbox dispatcher, and scheduled market-data recorder service. The dispatcher publishes to NATS by default. The platform health portal is served at `http://127.0.0.1:8000/platform`.
 
 The operator startup script defaults to `-TransactionalStoreBackend postgres` and `-MarketDataStoreBackend clickhouse`, which sets `ST_TRANSACTIONAL_STORE_BACKEND=postgres` and `ST_MARKET_DATA_STORE_BACKEND=clickhouse` for the dashboard, dispatcher, and recorder startup path. Transactional state uses Postgres; daily bars and FX reads are routed to ClickHouse.
+
+NATS and ClickHouse startup scripts run `scripts/assert_docker_ready.ps1` before Docker Compose. If Docker Desktop is installed but its Linux engine is not running, startup attempts to start Docker Desktop and wait for the daemon. If the daemon remains unreachable, startup fails with an explicit Docker remediation message before attempting `docker compose up`.
+
+Startup and watchdog runs refresh `var/run/ib_tws_api.state.json` through `scripts/probe_ib_tws_health.py`. TWS/Gateway login and 2FA recovery remain manual; the platform reports the API as down rather than attempting to recover the session automatically.
 
 Skip the market-data recorder service for maintenance:
 

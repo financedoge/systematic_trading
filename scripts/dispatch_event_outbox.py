@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import time
 from datetime import UTC, datetime
@@ -280,6 +281,7 @@ def _write_dispatcher_state(
         last_error=last_error,
         message=message,
         details={
+            "process_id": os.getpid(),
             "database_path": str(database_path),
             "output_path": str(output_path),
             "publisher": publisher_name,

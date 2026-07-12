@@ -26,6 +26,7 @@ class AppSettings(BaseSettings):
     ib_market_data_client_id: int | None = None
     ib_execution_sync_client_id: int | None = None
     ib_account_snapshot_client_id: int | None = None
+    ib_health_client_id: int | None = None
 
     data_dir: Path = Path("var")
     database_path: Path = Path("var/systematic_trading.db")
@@ -63,6 +64,7 @@ class AppSettings(BaseSettings):
     automation_market_data_carry_forward_max_calendar_days: int = 4
     execution_twap_start_time: str = "09:30"
     execution_twap_end_time: str = "10:00"
+    execution_rebalance_timeout_minutes: int = 30
     automation_alert_dedupe_seconds: int = 3600
     automation_alert_smtp_host: str | None = None
     automation_alert_smtp_port: int = 587

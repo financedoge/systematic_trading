@@ -189,6 +189,40 @@
       "notes": "Installed local PostgreSQL service. Startup script verifies TCP readiness and leaves Windows service management to the operator/installer."
     },
     {
+      "service_id": "ib_tws_api",
+      "display_name": "IB TWS Paper API",
+      "service_type": "worker",
+      "implementation_status": "active",
+      "required": true,
+      "startup_order": 12,
+      "command": [
+        ".venv/Scripts/python.exe",
+        "scripts/probe_ib_tws_health.py",
+        "--state-path",
+        "var/run/ib_tws_api.state.json"
+      ],
+      "working_directory": ".",
+      "pid_file": null,
+      "stdout_log": null,
+      "stderr_log": null,
+      "health_check": {
+        "kind": "state_file",
+        "target": "var/run/ib_tws_api.state.json",
+        "timeout_seconds": 2,
+        "stale_after_seconds": 180
+      },
+      "environment": {
+        "PYTHONPATH": "src",
+        "ST_DEFAULT_ENVIRONMENT": "paper"
+      },
+      "restart_policy": {
+        "mode": "external_tws_session",
+        "max_restarts": 0
+      },
+      "depends_on": [],
+      "notes": "Health probe connects to TWS/Gateway paper API and waits for nextValidId. Login and 2FA recovery remain manual."
+    },
+    {
       "service_id": "clickhouse_columnar",
       "display_name": "ClickHouse Columnar Store",
       "service_type": "worker",

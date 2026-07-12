@@ -10,6 +10,7 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     clickhouse_start_script = Path("scripts/start_clickhouse.ps1").read_text(encoding="utf-8")
     clickhouse_stop_script = Path("scripts/stop_clickhouse.ps1").read_text(encoding="utf-8")
     clickhouse_smoke_script = Path("scripts/smoke_clickhouse_columnar_store.ps1").read_text(encoding="utf-8")
+    docker_ready_script = Path("scripts/assert_docker_ready.ps1").read_text(encoding="utf-8")
     local_start_script = Path("scripts/start_local_platform.ps1").read_text(encoding="utf-8")
     local_stop_script = Path("scripts/stop_local_platform.ps1").read_text(encoding="utf-8")
     recorder_start_script = Path("scripts/start_market_data_recorder_service.ps1").read_text(encoding="utf-8")
@@ -21,8 +22,14 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     postgres_migration_script = Path("scripts/apply_postgres_migrations.py").read_text(encoding="utf-8")
     postgres_sync_script = Path("scripts/sync_sqlite_transactional_to_postgres.py").read_text(encoding="utf-8")
     postgres_smoke_script = Path("scripts/smoke_postgres_transactional_store.py").read_text(encoding="utf-8")
+    ib_tws_probe_script = Path("scripts/probe_ib_tws_health.py").read_text(encoding="utf-8")
+    ib_reconcile_script = Path("scripts/reconcile_ib_paper_account.py").read_text(encoding="utf-8")
 
     assert "operator_dashboard.pid" in start_script
+    assert "Test-ProcessOwnsPort" in start_script
+    assert "Test-DispatcherStatePid" in start_script
+    assert "dispatcherState.details.process_id" in start_script
+    assert "belongs to another process" in start_script
     assert "event_outbox_dispatcher.pid" in start_script
     assert "operator_dashboard.out.log" in start_script
     assert "operator_dashboard.err.log" in start_script
@@ -49,8 +56,12 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert "/operator" in start_script
     assert "Start-Process" in start_script
     assert "-WindowStyle Hidden" in start_script
+    assert "probe_ib_tws_health.py" in start_script
+    assert "ib_tws_api.state.json" in start_script
 
     assert "operator_dashboard.pid" in stop_script
+    assert "Test-ExpectedServiceProcess" in stop_script
+    assert "Removed stale PID file without stopping it" in stop_script
     assert "event_outbox_dispatcher.pid" in stop_script
     assert "Event outbox dispatcher" in stop_script
     assert "Stop-Process" in stop_script
@@ -63,6 +74,7 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert "--disable-automation" in serve_script
 
     assert "docker compose" in nats_start_script
+    assert "assert_docker_ready.ps1" in nats_start_script
     assert "deploy\\nats\\docker-compose.yml" in nats_start_script
     assert "nats://127.0.0.1:4222" in nats_start_script
     assert "$LASTEXITCODE" in nats_start_script
@@ -71,6 +83,7 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert Path("scripts/configure_nats_stream.py").exists()
 
     assert "docker compose" in clickhouse_start_script
+    assert "assert_docker_ready.ps1" in clickhouse_start_script
     assert "deploy\\clickhouse\\docker-compose.yml" in clickhouse_start_script
     assert "Data volume: clickhouse_data" in clickhouse_start_script
     assert "D:/systematic_trading_data/clickhouse/logs" in clickhouse_start_script
@@ -79,6 +92,12 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert "$LASTEXITCODE" in clickhouse_stop_script
     assert "clickhouse-client" in clickhouse_smoke_script
     assert "smoke_p2_8" in clickhouse_smoke_script
+    assert "docker info" in docker_ready_script
+    assert "Docker daemon is not reachable" in docker_ready_script
+    assert "StartDockerDesktopIfStopped" in docker_ready_script
+    assert "Docker Desktop.exe" in docker_ready_script
+    assert "-SkipNats -SkipClickHouse" in docker_ready_script
+    assert "Last docker error" in docker_ready_script
 
     assert "start_nats_jetstream.ps1" in local_start_script
     assert "configure_nats_stream.py" in local_start_script
@@ -100,6 +119,8 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert "recorder_service_not_started" in local_start_script
     assert "/platform" in local_start_script
     assert "pg_isready" in local_start_script
+    assert "probe_ib_tws_health.py" in local_start_script
+    assert "ib_tws_api.state.json" in local_start_script
     assert "stop_market_data_recorder.ps1" in local_stop_script
     assert "stop_operator_dashboard.ps1" in local_stop_script
     assert "stop_clickhouse.ps1" in local_stop_script
@@ -119,6 +140,8 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert "operator_repair_requested" in watchdog_script
     assert "market_data_recorder.state.json" in watchdog_script
     assert "local_platform_watchdog.state.json" in watchdog_script
+    assert "ib_tws_api.state.json" in watchdog_script
+    assert "probe_ib_tws_health.py" in watchdog_script
     assert "start_nats_jetstream.ps1" in watchdog_script
     assert "start_clickhouse.ps1" in watchdog_script
     assert "start_operator_dashboard.ps1" in watchdog_script
@@ -136,3 +159,8 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert "fx_rates" not in postgres_sync_script
     assert "transactional_store_backend=\"postgres\"" in postgres_smoke_script
     assert "--keep-records" in postgres_smoke_script
+    assert "probe_ib_tws_health" in ib_tws_probe_script
+    assert "write_service_state_file" in ib_tws_probe_script
+    assert "reconcile_ib_paper_account" in ib_reconcile_script
+    assert "--record-pnl-reset-baseline" in ib_reconcile_script
+    assert "--confirm-paper-reset" in ib_reconcile_script

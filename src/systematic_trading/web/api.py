@@ -37,6 +37,12 @@ from systematic_trading.execution.broker import (
     InteractiveBrokersExecutionSynchronizer,
     InteractiveBrokersOrderRouter,
 )
+from systematic_trading.execution.reconciliation import IBPaperReconciliationReport, reconcile_ib_paper_account
+from systematic_trading.execution.window import (
+    attach_execution_deadline,
+    expire_due_proposals,
+    proposal_is_expired,
+)
 from systematic_trading.live import (
     LiveAccountSnapshotInput,
     SotaLiveRebalancePlan,
@@ -50,6 +56,7 @@ from systematic_trading.live import (
 from systematic_trading.portfolio.beta import BetaInstrumentState, RiskParityBetaSleeve
 from systematic_trading.portfolio.proposals import RebalanceProposalBuilder
 from systematic_trading.research import current_sota_definition, instruments_for_definition
+from systematic_trading.research.catalog import discover_strategy_artifacts
 from systematic_trading.services import ServiceGraph, build_service_graph
 from systematic_trading.storage.interfaces import TradingStore
 
@@ -227,6 +234,8 @@ class DashboardExecutionQuality(BaseModel):
     execution_gain_bps: Decimal | None = None
     filled_notional_cnh: Decimal = Decimal("0")
     filled_trade_count: int = 0
+    missed_order_count: int = 0
+    missed_notional_cnh: Decimal = Decimal("0")
     history: list[DashboardPnlComparisonPoint] = Field(default_factory=list)
     slippage: list[DashboardSlippagePoint] = Field(default_factory=list)
     rows: list[DashboardExecutionSlippageRow] = Field(default_factory=list)
@@ -381,9 +390,12 @@ def submit_proposal_to_ib(
     request: Request,
 ) -> BrokerSubmissionResult:
     store = _store(request)
+    expire_due_proposals(store, _settings(request))
     proposal = store.get_proposal(proposal_id)
     if proposal is None:
         raise HTTPException(status_code=404, detail=f"Unknown proposal: {proposal_id}")
+    if proposal_is_expired(proposal, _settings(request)):
+        raise HTTPException(status_code=409, detail=f"{proposal_id}: execution window expired; proposal is missed.")
     return _submit_proposal_to_ib(proposal=proposal, submission=submission, request=request)
 
 
@@ -586,12 +598,45 @@ def refresh_dashboard_fills(
         raise HTTPException(status_code=502, detail=f"Could not refresh IB fills: {exc}") from exc
 
 
+@router.post("/dashboard/reconciliation/interactive-brokers", response_model=IBPaperReconciliationReport)
+def reconcile_dashboard_interactive_brokers(request: Request) -> IBPaperReconciliationReport:
+    execution_client = getattr(request.app.state, "ib_execution_sync_client", None)
+    account_client = getattr(request.app.state, "ib_account_snapshot_client", None)
+    try:
+        return reconcile_ib_paper_account(
+            settings=_settings(request),
+            store=_store(request),
+            execution_client=execution_client,
+            account_snapshot_client=account_client,
+            record_pnl_reset_baseline=False,
+            confirm_paper_reset=False,
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Could not reconcile IB paper account: {exc}") from exc
+
+
 @router.get("/dashboard/pnl", response_model=PnLSnapshot)
 def dashboard_pnl(
     request: Request,
     as_of: date | None = Query(default=None),
 ) -> PnLSnapshot:
     return build_dashboard_pnl_snapshot(_store(request), as_of=as_of)
+
+
+@router.get("/strategies")
+def strategy_catalog(request: Request) -> dict[str, Any]:
+    settings = _settings(request)
+    artifacts = discover_strategy_artifacts(
+        settings.data_dir / "backtests",
+        current_sota_definition().key,
+    )
+    return {
+        "registry_type": "artifact_catalog",
+        "theoretical_performance_source": "backtest_nav",
+        "current_sota_id": next((item.strategy_id for item in artifacts if item.is_sota), None),
+        "strategies": [item.as_dict() for item in artifacts],
+        "warnings": [] if artifacts else ["No backtest strategy artifacts with NAV series were discovered."],
+    }
 
 
 @router.get("/dashboard/execution-quality", response_model=DashboardExecutionQuality)
@@ -604,6 +649,8 @@ def dashboard_execution_quality(
     actual = build_dashboard_pnl_snapshot(store, as_of=as_of)
     theoretical = build_reference_pnl_snapshot(store, as_of=as_of)
     rows, slippage_warnings = _execution_slippage_rows(store, as_of=actual.as_of.date())
+    missed_records = [record for record in store.list_broker_order_records() if record.status == BrokerOrderStatus.MISSED]
+    missed_notional = sum((record.order.notional_cnh for record in missed_records), Decimal("0"))
     filled_notional = sum(
         (row.reference_notional_cnh for row in rows if row.reference_notional_cnh is not None),
         Decimal("0"),
@@ -623,6 +670,8 @@ def dashboard_execution_quality(
         execution_gain_bps=gain_bps,
         filled_notional_cnh=quantize_money(filled_notional),
         filled_trade_count=len(rows),
+        missed_order_count=len(missed_records),
+        missed_notional_cnh=quantize_money(missed_notional),
         history=history,
         slippage=_daily_slippage_points(rows),
         rows=rows,
@@ -746,7 +795,12 @@ def preview_risk_parity(request_body: RiskParityPreviewRequest, request: Request
 
 @router.post("/proposals/risk-parity-queue")
 def queue_risk_parity(request_body: RiskParityPreviewRequest, request: Request) -> dict[str, object]:
-    proposal, snapshot = _build_risk_parity_artifacts(request_body, _settings(request))
+    settings = _settings(request)
+    proposal, snapshot = _build_risk_parity_artifacts(request_body, settings)
+    proposal = attach_execution_deadline(
+        _proposal_with_route_order_type(proposal, OrderType.TWAP, settings),
+        settings,
+    )
     issues = _broker(request).validate_orders(proposal.orders)
     if issues:
         raise HTTPException(status_code=400, detail=issues)
@@ -756,15 +810,23 @@ def queue_risk_parity(request_body: RiskParityPreviewRequest, request: Request) 
 
 @router.get("/proposals", response_model=list[TradeProposal])
 def list_proposals(request: Request, status: ProposalStatus | None = Query(default=None)) -> list[TradeProposal]:
+    expire_due_proposals(_store(request), _settings(request))
     return _store(request).list_proposals(status)
 
 
 @router.post("/proposals/{proposal_id}/decisions", response_model=TradeProposal)
 def decide_proposal(proposal_id: str, decision: ProposalDecisionInput, request: Request) -> TradeProposal:
-    if decision.status == ProposalStatus.PENDING:
+    if decision.status not in {ProposalStatus.APPROVED, ProposalStatus.REJECTED}:
         raise HTTPException(status_code=400, detail="A decision must approve or reject the proposal.")
+    store = _store(request)
+    expire_due_proposals(store, _settings(request))
+    proposal = store.get_proposal(proposal_id)
+    if proposal is None:
+        raise HTTPException(status_code=404, detail=f"Unknown proposal: {proposal_id}")
+    if proposal_is_expired(proposal, _settings(request)):
+        raise HTTPException(status_code=409, detail=f"{proposal_id}: execution window expired; proposal is missed.")
     try:
-        return _store(request).apply_decision(
+        return store.apply_decision(
             ApprovalDecision(proposal_id=proposal_id, status=decision.status, comment=decision.comment)
         )
     except KeyError as exc:
@@ -778,6 +840,12 @@ def approve_and_submit_proposal(
     request: Request,
 ) -> ProposalApprovalSubmissionResult:
     store = _store(request)
+    expire_due_proposals(store, _settings(request))
+    existing = store.get_proposal(proposal_id)
+    if existing is None:
+        raise HTTPException(status_code=404, detail=f"Unknown proposal: {proposal_id}")
+    if proposal_is_expired(existing, _settings(request)):
+        raise HTTPException(status_code=409, detail=f"{proposal_id}: execution window expired; proposal is missed.")
     try:
         proposal = store.apply_decision(
             ApprovalDecision(proposal_id=proposal_id, status=ProposalStatus.APPROVED, comment=approval.comment)

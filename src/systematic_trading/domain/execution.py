@@ -44,6 +44,9 @@ class TradeProposal(BaseModel):
     as_of: date
     intended_trade_date: date | None = None
     status: ProposalStatus = ProposalStatus.PENDING
+    execution_deadline_at: datetime | None = None
+    missed_at: datetime | None = None
+    missed_reason: str | None = None
     sleeve: str
     summary: str
     base_currency: Currency = Currency.CNH
@@ -60,7 +63,7 @@ class ApprovalDecision(BaseModel):
 
     @model_validator(mode="after")
     def validate_terminal_status(self) -> "ApprovalDecision":
-        if self.status == ProposalStatus.PENDING:
+        if self.status not in {ProposalStatus.APPROVED, ProposalStatus.REJECTED}:
             raise ValueError("Approval decisions must resolve a proposal to approved or rejected.")
         return self
 

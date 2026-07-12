@@ -42,6 +42,38 @@ $env:PYTHONPATH = Join-Path $RepoRoot "src"
 $env:ST_TRANSACTIONAL_STORE_BACKEND = $TransactionalStoreBackend
 $env:ST_MARKET_DATA_STORE_BACKEND = $MarketDataStoreBackend
 
+function Test-ProcessOwnsPort {
+    param(
+        [int]$ProcessId,
+        [int]$ExpectedPort
+    )
+
+    $pattern = ":$ExpectedPort\s+.*LISTENING\s+$ProcessId$"
+    return $null -ne (netstat -ano -p tcp | Select-String -Pattern $pattern | Select-Object -First 1)
+}
+
+function Test-DispatcherStatePid {
+    param([int]$ProcessId)
+
+    if (-not (Test-Path $DispatcherStatePath)) { return $false }
+    try {
+        $state = Get-Content -LiteralPath $DispatcherStatePath -Raw | ConvertFrom-Json
+        return $state.running -and [int]$state.details.process_id -eq $ProcessId
+    } catch {
+        return $false
+    }
+}
+
+function Update-IbTwsHealthState {
+    $statePath = Join-Path $RunDir "ib_tws_api.state.json"
+    & $Python ".\scripts\probe_ib_tws_health.py" --state-path $statePath | Out-Null
+    if ($LASTEXITCODE -eq 0) {
+        Write-Output "IB TWS API health probe OK."
+    } else {
+        Write-Output "IB TWS API health probe failed. Check $statePath and the platform health page."
+    }
+}
+
 function Start-EventOutboxDispatcher {
     if ($DisableEventDispatcher) {
         Write-Output "Event outbox dispatcher disabled for this start."
@@ -51,8 +83,9 @@ function Start-EventOutboxDispatcher {
     if (Test-Path $DispatcherPidPath) {
         $existingDispatcherPidText = (Get-Content -LiteralPath $DispatcherPidPath -Raw).Trim()
         if ($existingDispatcherPidText) {
-            $existingDispatcher = Get-Process -Id ([int]$existingDispatcherPidText) -ErrorAction SilentlyContinue
-            if ($existingDispatcher) {
+            $existingDispatcherPid = [int]$existingDispatcherPidText
+            $existingDispatcher = Get-Process -Id $existingDispatcherPid -ErrorAction SilentlyContinue
+            if ($existingDispatcher -and (Test-DispatcherStatePid -ProcessId $existingDispatcherPid)) {
                 Write-Output "Event outbox dispatcher already appears to be running."
                 Write-Output "Dispatcher PID: $existingDispatcherPidText"
                 Write-Output "Dispatcher output: $DispatcherOutput"
@@ -60,6 +93,10 @@ function Start-EventOutboxDispatcher {
             }
         }
         Remove-Item -LiteralPath $DispatcherPidPath -Force
+    }
+
+    if (Test-Path $DispatcherStatePath) {
+        Remove-Item -LiteralPath $DispatcherStatePath -Force
     }
 
     $dispatcherArgs = @(
@@ -93,9 +130,25 @@ function Start-EventOutboxDispatcher {
         -WindowStyle Hidden `
         -PassThru
 
-    Set-Content -LiteralPath $DispatcherPidPath -Value ([string]$dispatcherProcess.Id) -Encoding ascii
+    $dispatcherPid = $dispatcherProcess.Id
+    $dispatcherStateDeadline = (Get-Date).AddSeconds(5)
+    do {
+        Start-Sleep -Milliseconds 200
+        if (Test-Path $DispatcherStatePath) {
+            try {
+                $dispatcherState = Get-Content -LiteralPath $DispatcherStatePath -Raw | ConvertFrom-Json
+                if ($dispatcherState.running -and $dispatcherState.details.process_id) {
+                    $dispatcherPid = [int]$dispatcherState.details.process_id
+                    break
+                }
+            } catch {
+                # State file may be between atomic updates; retry until the deadline.
+            }
+        }
+    } while ((Get-Date) -lt $dispatcherStateDeadline)
+    Set-Content -LiteralPath $DispatcherPidPath -Value ([string]$dispatcherPid) -Encoding ascii
     Write-Output "Event outbox dispatcher started."
-    Write-Output "Dispatcher PID: $($dispatcherProcess.Id)"
+    Write-Output "Dispatcher PID: $dispatcherPid"
     Write-Output "Dispatcher publisher: $EventPublisher"
     if ($EventPublisher -eq "nats") {
         Write-Output "Dispatcher NATS URL: $NatsUrl"
@@ -106,16 +159,22 @@ function Start-EventOutboxDispatcher {
     Write-Output "Dispatcher errors: $DispatcherErrLog"
 }
 
+Update-IbTwsHealthState
+
 if (Test-Path $PidPath) {
     $existingPidText = (Get-Content -LiteralPath $PidPath -Raw).Trim()
     if ($existingPidText) {
-        $existing = Get-Process -Id ([int]$existingPidText) -ErrorAction SilentlyContinue
-        if ($existing) {
+        $existingPid = [int]$existingPidText
+        $existing = Get-Process -Id $existingPid -ErrorAction SilentlyContinue
+        if ($existing -and (Test-ProcessOwnsPort -ProcessId $existingPid -ExpectedPort $Port)) {
             Start-EventOutboxDispatcher
             Write-Output "Operator dashboard already appears to be running."
             Write-Output "PID: $existingPidText"
             Write-Output "URL: http://$HostName`:$Port/operator"
             exit 0
+        }
+        if ($existing) {
+            Write-Output "Operator dashboard PID $existingPidText belongs to another process. Removing stale PID file."
         }
     }
     Remove-Item -LiteralPath $PidPath -Force

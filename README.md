@@ -73,6 +73,30 @@ Check and optionally repair the required local services after Docker, VPN, Wi-Fi
 .\scripts\watch_local_platform.ps1 -Repair
 ```
 
+If Docker Desktop is installed but not running, NATS/ClickHouse startup now tries to start Docker Desktop and waits for the daemon before Docker Compose. If the engine still is not reachable, startup fails with an explicit Docker daemon message. Use `-SkipNats -SkipClickHouse` for a partial non-Docker startup.
+
+The platform health view includes `ib_tws_api`, populated by:
+
+```powershell
+.\.venv\Scripts\python.exe .\scripts\probe_ib_tws_health.py
+```
+
+This checks the paper TWS API path by waiting for `nextValidId`; it does not attempt to automate TWS login or 2FA recovery.
+
+After an IB paper-account reset, generate a reconciliation report before trusting local PnL or exposure:
+
+```powershell
+.\.venv\Scripts\python.exe .\scripts\reconcile_ib_paper_account.py
+```
+
+If the report confirms the broker paper account is reset to zero positions, the operator can explicitly create an empty PnL reset baseline:
+
+```powershell
+.\.venv\Scripts\python.exe .\scripts\reconcile_ib_paper_account.py `
+  --record-pnl-reset-baseline `
+  --confirm-paper-reset
+```
+
 Skip the market-data recorder service for maintenance:
 
 ```powershell
@@ -84,6 +108,8 @@ The recorder service starts in `-RecorderMarketDataMode live` by default, stays 
 The recorder service also runs ClickHouse daily-bar backfill on startup and then on an interval, including after-hours/weekends. The default path repairs `market_data.daily_bars` directly from Yahoo adjusted daily bars, with IB historical daily bars as fallback.
 
 The local operator startup path now defaults to `ST_TRANSACTIONAL_STORE_BACKEND=postgres` and `ST_MARKET_DATA_STORE_BACKEND=clickhouse`. Active dashboard, proposal, broker-record, PnL, and event-outbox state use Postgres, while daily bars and FX reads use ClickHouse. SQLite remains only a legacy fallback and migration source.
+
+Rebalance proposals are time-bound to preserve next-open parity with the backtest. The default execution deadline is 30 minutes after the configured TWAP start on the intended trade date. Change it with `ST_EXECUTION_REBALANCE_TIMEOUT_MINUTES`; expired pending or retryable proposals become `missed`, cannot be approved or resubmitted, and are retained in execution-quality analysis.
 
 ## Optional Tushare data
 

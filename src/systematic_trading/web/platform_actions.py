@@ -60,6 +60,7 @@ _DISABLED_REASONS = {
     "operator_dashboard": "The operator API cannot safely restart its own hosting process from inside a request.",
     "event_outbox_dispatcher": "Dispatcher lifecycle is tied to the operator dashboard startup script.",
     "trading_management_loop": "The management loop is embedded in the operator API; restart the operator supervisor instead.",
+    "ib_tws_api": "TWS/Gateway login and 2FA recovery must be handled by the operator.",
 }
 
 
@@ -68,6 +69,7 @@ def platform_service_actions() -> ServiceActionCatalog:
     service_ids = [
         "nats_jetstream",
         "postgres_transactional",
+        "ib_tws_api",
         "clickhouse_columnar",
         "operator_dashboard",
         "event_outbox_dispatcher",

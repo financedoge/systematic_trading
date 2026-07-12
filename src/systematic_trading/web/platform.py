@@ -286,11 +286,10 @@ _PLATFORM_HTML = """<!doctype html>
   <header>
     <h1>Platform Health</h1>
     <div class="actions">
-      <span class="status-line"><span id="overall-dot" class="dot"></span><span id="overall-status">Loading</span></span>
       <a class="button" href="/operator">Operator</a>
+      <a class="button" href="/strategies">Strategies</a>
       <a class="button" href="/platform">Health</a>
       <a class="button" href="/platform/market-data-audit">Market Data</a>
-      <button id="refresh-btn" class="primary" type="button">Refresh</button>
     </div>
   </header>
   <main>
@@ -312,7 +311,7 @@ _PLATFORM_HTML = """<!doctype html>
       <section class="panel">
         <div class="panel-head">
           <h2>Service Status</h2>
-          <span class="status-line">Auto-refresh 5s</span>
+          <div class="actions"><span class="status-line"><span id="overall-dot" class="dot"></span><span id="overall-status">Loading</span></span><span class="status-line">Auto-refresh 5s</span><button id="refresh-btn" class="primary" type="button">Refresh</button></div>
         </div>
         <div id="service-cards" class="cards"></div>
       </section>
@@ -812,11 +811,10 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
   <header>
     <h1>Market Data</h1>
     <div class="actions">
-      <span id="status" class="status-line">Loading</span>
       <a class="button" href="/operator">Operator</a>
+      <a class="button" href="/strategies">Strategies</a>
       <a class="button" href="/platform">Health</a>
       <a class="button" href="/platform/market-data-audit">Market Data</a>
-      <button id="refresh-btn" class="primary" type="button">Refresh</button>
     </div>
   </header>
   <main>
@@ -839,6 +837,8 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
         <button id="pan-right" class="icon" type="button" title="Pan right">&gt;</button>
       </div>
       <button class="primary" type="submit">Run</button>
+      <button id="refresh-btn" type="button">Refresh</button>
+      <span id="status" class="status-line">Loading</span>
     </form>
     <section class="summary" aria-label="Daily market-data summary">
       <div class="metric"><label>Bars</label><strong id="metric-bars">0</strong></div>
@@ -1521,11 +1521,10 @@ _RAW_MARKET_DATA_AUDIT_HTML = """<!doctype html>
   <header>
     <h1>Market Data Audit</h1>
     <div class="actions">
-      <span id="status" class="status-line">Loading</span>
       <a class="button" href="/operator">Operator</a>
+      <a class="button" href="/strategies">Strategies</a>
       <a class="button" href="/platform">Health</a>
       <a class="button" href="/platform/market-data-audit">Market Data</a>
-      <button id="refresh-btn" class="primary" type="button">Refresh</button>
     </div>
   </header>
   <main>
@@ -1538,6 +1537,8 @@ _RAW_MARKET_DATA_AUDIT_HTML = """<!doctype html>
       <label>Bar Size<input id="bar-size" class="small" type="number" min="1" placeholder="all"></label>
       <label>Limit<input id="limit" class="small" type="number" min="1" max="5000" value="500"></label>
       <button class="primary" type="submit">Run</button>
+      <button id="refresh-btn" type="button">Refresh</button>
+      <span id="status" class="status-line">Loading</span>
     </form>
     <section class="summary" aria-label="Market data audit summary">
       <div class="metric"><label>Rows</label><strong id="metric-rows">0</strong></div>
