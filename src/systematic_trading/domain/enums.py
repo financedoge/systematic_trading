@@ -46,6 +46,7 @@ class ProposalStatus(StrEnum):
     PENDING = "pending"
     APPROVED = "approved"
     REJECTED = "rejected"
+    MISSED = "missed"
 
 
 class OrderSide(StrEnum):
@@ -75,3 +76,4 @@ class BrokerOrderStatus(StrEnum):
     FILLED = "filled"
     CANCELLED = "cancelled"
     REJECTED = "rejected"
+    MISSED = "missed"

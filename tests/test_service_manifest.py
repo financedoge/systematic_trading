@@ -13,14 +13,15 @@ def test_default_service_manifest_loads_current_operator_stack() -> None:
     assert [service.service_id for service in manifest.ordered_services()[:4]] == [
         "nats_jetstream",
         "postgres_transactional",
+        "ib_tws_api",
         "clickhouse_columnar",
-        "operator_dashboard",
     ]
     dashboard = manifest.service("operator_dashboard")
     dispatcher = manifest.service("event_outbox_dispatcher")
     automation = manifest.service("trading_management_loop")
     nats = manifest.service("nats_jetstream")
     postgres = manifest.service("postgres_transactional")
+    ib_tws = manifest.service("ib_tws_api")
     clickhouse = manifest.service("clickhouse_columnar")
     recorder = manifest.service("market_data_recorder")
 
@@ -44,6 +45,11 @@ def test_default_service_manifest_loads_current_operator_stack() -> None:
     assert postgres.health_check.kind.value == "tcp"
     assert postgres.health_check.target == "127.0.0.1:5432"
     assert postgres.restart_policy.mode == "external_windows_service"
+    assert ib_tws.required is True
+    assert ib_tws.health_check.kind.value == "state_file"
+    assert ib_tws.health_check.target == "var/run/ib_tws_api.state.json"
+    assert "scripts/probe_ib_tws_health.py" in ib_tws.command
+    assert ib_tws.restart_policy.mode == "external_tws_session"
     assert clickhouse.implementation_status.value == "active"
     assert clickhouse.health_check.target == "http://127.0.0.1:8123/ping"
     assert "scripts/start_clickhouse.ps1" in clickhouse.command

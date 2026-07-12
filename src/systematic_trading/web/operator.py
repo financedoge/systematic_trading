@@ -16,6 +16,11 @@ def operator_dashboard() -> HTMLResponse:
     return HTMLResponse(_OPERATOR_HTML)
 
 
+@router.get("/strategies", response_class=HTMLResponse, include_in_schema=False)
+def strategy_portal() -> HTMLResponse:
+    return HTMLResponse(_STRATEGIES_HTML)
+
+
 _OPERATOR_HTML = """<!doctype html>
 <html lang="en">
 <head>
@@ -137,6 +142,8 @@ _OPERATOR_HTML = """<!doctype html>
       background: transparent;
     }
     .proposal-row.active { background: #eef4fb; }
+    .proposal-row.missed { background: #f1f3f5; color: #7b8492; opacity: .72; }
+    .proposal-row.missed:hover, .proposal-row.missed.active { background: #e5e8ec; }
     .proposal-title {
       min-width: 0;
       overflow: hidden;
@@ -169,6 +176,7 @@ _OPERATOR_HTML = """<!doctype html>
     .badge.pending { color: var(--warn); border-color: #f0c674; background: #fff8e8; }
     .badge.approved { color: var(--good); border-color: #9cd6cd; background: #ecf9f6; }
     .badge.rejected { color: var(--bad); border-color: #f0a7a1; background: #fff0ef; }
+    .badge.missed { color: #667085; border-color: #c7cdd6; background: #eef0f3; }
     .grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -495,8 +503,8 @@ _OPERATOR_HTML = """<!doctype html>
   <header>
     <h1>Trading Operator</h1>
     <div class="actions">
-      <div class="status-line"><span class="dot"></span><span id="connection-status">Loading</span></div>
       <a class="button" href="/operator">Operator</a>
+      <a class="button" href="/strategies">Strategies</a>
       <a class="button" href="/platform">Health</a>
       <a class="button" href="/platform/market-data-audit">Market Data</a>
     </div>
@@ -549,7 +557,7 @@ _OPERATOR_HTML = """<!doctype html>
       <section class="panel">
         <div class="panel-head">
           <h2>Automation</h2>
-          <span class="status-line"><span class="dot"></span><span id="automation-state">n/a</span></span>
+          <div class="actions"><span class="status-line"><span class="dot"></span><span id="connection-status">Loading</span></span><span class="status-line" id="automation-state">n/a</span></div>
         </div>
         <div class="metrics-compact" aria-label="Automation summary">
           <div class="mini-metric"><label>Heartbeat</label><strong id="auto-heartbeat">n/a</strong></div>
@@ -564,7 +572,7 @@ _OPERATOR_HTML = """<!doctype html>
       <section class="panel">
         <div class="panel-head">
           <h2>Performance</h2>
-          <span class="status-line">Auto-updated</span>
+          <div class="actions"><a class="button" href="/strategies">Strategy catalog</a><span class="status-line">Auto-updated · Backtest theoretical vs actual account</span></div>
         </div>
         <div class="metrics-compact" aria-label="Performance summary">
           <div class="mini-metric"><label>Strategy NAV</label><strong id="perf-strategy-nav">n/a</strong></div>
@@ -617,6 +625,8 @@ _OPERATOR_HTML = """<!doctype html>
           <div class="mini-metric"><label>Real PnL</label><strong id="exec-actual-pnl">n/a</strong></div>
           <div class="mini-metric"><label>Execution Gain</label><strong id="exec-gain">n/a</strong></div>
           <div class="mini-metric"><label>Execution Bps</label><strong id="exec-bps">n/a</strong></div>
+          <div class="mini-metric"><label>Missed Orders</label><strong id="exec-missed-count">0</strong></div>
+          <div class="mini-metric"><label>Missed Notional</label><strong id="exec-missed-notional">0.00</strong></div>
         </div>
         <div id="pnl-comparison-chart" class="chart-wrap"></div>
         <div id="slippage-chart" class="chart-wrap"></div>
@@ -790,8 +800,8 @@ _OPERATOR_HTML = """<!doctype html>
       const svg = performanceSvg(strategy, account);
       el("performance-chart").innerHTML = svg;
       el("performance-legend").innerHTML = `
-        <span class="legend-item"><span class="swatch"></span>Strategy</span>
-        <span class="legend-item"><span class="swatch account"></span>Account</span>
+        <span class="legend-item"><span class="swatch"></span>Theoretical strategy (backtest)</span>
+        <span class="legend-item"><span class="swatch account"></span>Actual account</span>
       `;
       renderPerformanceAnalysis(strategy, account);
     }
@@ -1044,6 +1054,8 @@ _OPERATOR_HTML = """<!doctype html>
       el("exec-actual-pnl").textContent = fmtSignedMoney(payload.actual_pnl_cnh);
       el("exec-gain").textContent = fmtSignedMoney(payload.execution_gain_cnh);
       el("exec-bps").textContent = fmtMaybeBps(payload.execution_gain_bps);
+      el("exec-missed-count").textContent = payload.missed_order_count || 0;
+      el("exec-missed-notional").textContent = fmtMoney(payload.missed_notional_cnh);
       el("execution-quality-warnings").textContent = (payload.warnings || []).join("\\n");
       const currentPoint = {
         as_of: payload.as_of,
@@ -1286,10 +1298,10 @@ _OPERATOR_HTML = """<!doctype html>
         return;
       }
       list.innerHTML = state.proposals.map((proposal) => `
-        <button class="proposal-row ${proposal.proposal_id === state.selectedId ? "active" : ""}" data-id="${esc(proposal.proposal_id)}">
+        <button class="proposal-row ${proposal.status === "missed" ? "missed" : ""} ${proposal.proposal_id === state.selectedId ? "active" : ""}" data-id="${esc(proposal.proposal_id)}">
           <span>
             <span class="proposal-title">${esc(proposal.sleeve)}</span>
-            <span class="meta">${esc(proposal.as_of)} | ${esc(proposal.proposal_id)} | ${proposal.orders.length} orders</span>
+            <span class="meta">${esc(proposal.as_of)} | ${esc(proposal.proposal_id)} | ${proposal.orders.length} orders${proposal.execution_deadline_at ? ` | deadline ${esc(fmtDateTime(proposal.execution_deadline_at))}` : ""}</span>
           </span>
           <span class="badge ${esc(proposal.status)}">${esc(proposal.status)}</span>
         </button>
@@ -1332,6 +1344,9 @@ _OPERATOR_HTML = """<!doctype html>
         <table>
           <tbody>
             <tr><th>As Of</th><td>${esc(proposal.as_of)}</td></tr>
+            <tr><th>Intended Trade</th><td>${esc(proposal.intended_trade_date || "n/a")}</td></tr>
+            <tr><th>Execution Deadline</th><td>${esc(fmtDateTime(proposal.execution_deadline_at))}</td></tr>
+            ${proposal.missed_reason ? `<tr><th>Missed</th><td>${esc(proposal.missed_reason)}</td></tr>` : ""}
             <tr><th>Summary</th><td>${esc(proposal.summary)}</td></tr>
             <tr><th>Reasoning</th><td>${esc(proposal.reasoning?.summary || "")}</td></tr>
             <tr><th>Drivers</th><td>${esc((proposal.reasoning?.drivers || []).join("; "))}</td></tr>
@@ -1589,3 +1604,17 @@ _OPERATOR_HTML = """<!doctype html>
 </body>
 </html>
 """
+
+
+_STRATEGIES_HTML = """<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Strategy Catalog</title><style>
+:root{--bg:#f6f7f9;--panel:#fff;--text:#1d2433;--muted:#667085;--line:#d9dee7;--focus:#2456a6;--good:#087f5b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px Inter,Segoe UI,Arial,sans-serif}header{height:56px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--line)}h1,h2{margin:0;letter-spacing:0}h1{font-size:18px}h2{font-size:15px}.actions{display:flex;gap:8px;align-items:center}.button{min-height:32px;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--text);text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.layout{display:grid;grid-template-columns:minmax(500px,1.35fr) minmax(340px,.65fr);min-height:calc(100vh - 56px)}main,aside{padding:16px;min-width:0}aside{border-left:1px solid var(--line);background:#fbfcfd}.panel{background:#fff;border:1px solid var(--line);border-radius:7px;overflow:hidden}.head{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.note{color:var(--muted);font-size:12px}.table-wrap{overflow:auto;max-height:calc(100vh - 145px)}table{border-collapse:collapse;width:100%;font-size:12px}th,td{padding:9px 10px;border-bottom:1px solid #edf0f4;text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#f8fafc;color:var(--muted);font-weight:650}td.num,th.num{text-align:right}.strategy-row{cursor:pointer}.strategy-row:hover,.strategy-row.active{background:#eef4fb}.sota{display:inline-block;margin-left:6px;padding:2px 6px;border:1px solid #9cd6cd;border-radius:999px;background:#ecf9f6;color:var(--good);font-size:10px;font-weight:700}.details{padding:14px}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.metric{border-bottom:1px solid #edf0f4;padding:8px 0}.metric label{display:block;color:var(--muted);font-size:11px}.metric strong{display:block;margin-top:3px;font-size:15px}.path{overflow-wrap:anywhere;color:var(--muted);font:11px Consolas,monospace}.alloc{margin-top:14px}.bar{height:7px;background:#e8edf4;margin-top:4px}.fill{height:100%;background:#2456a6}.empty{padding:24px;color:var(--muted);text-align:center}@media(max-width:850px){header{height:auto;align-items:flex-start;flex-direction:column;padding:10px 12px}.actions{width:100%;flex-wrap:wrap}.actions .button{flex:1 1 110px}.layout{grid-template-columns:1fr}.table-wrap{max-height:none}aside{border-left:0;border-top:1px solid var(--line)}}
+</style></head><body><header><h1>Strategy Catalog</h1><div class="actions"><a class="button" href="/operator">Operator</a><a class="button" href="/strategies">Strategies</a><a class="button" href="/platform">Health</a><a class="button" href="/platform/market-data-audit">Market Data</a></div></header>
+<div class="layout"><main><section class="panel"><div class="head"><div><h2>Backtest strategies</h2><div id="catalog-note" class="note">Loading artifact registry</div></div><strong id="strategy-count">0</strong></div><div class="table-wrap"><table><thead><tr><th>Strategy</th><th>End</th><th class="num">Return</th><th class="num">Ann. Return</th><th class="num">Sharpe</th><th class="num">Max DD</th></tr></thead><tbody id="strategy-list"></tbody></table></div></section></main><aside><section class="panel"><div class="head"><h2>Strategy detail</h2></div><div id="strategy-detail" class="empty">Select a strategy</div></section></aside></div>
+<script>
+const state={items:[],selected:null};const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const pct=v=>v===null||v===undefined?"n/a":`${(Number(v)*100).toFixed(2)}%`;const ratio=v=>v===null||v===undefined?"n/a":Number(v).toFixed(2);const money=v=>v===null||v===undefined?"n/a":Number(v).toLocaleString(undefined,{maximumFractionDigits:0});
+function renderList(){document.getElementById("strategy-count").textContent=state.items.length;document.getElementById("strategy-list").innerHTML=state.items.map((item,index)=>`<tr class="strategy-row ${index===state.selected?'active':''}" data-index="${index}"><td>${esc(item.name)}${item.is_sota?'<span class="sota">SOTA</span>':''}<div class="note">${esc(item.strategy_id)}</div></td><td>${esc(item.end_date)}</td><td class="num">${pct(item.total_return)}</td><td class="num">${pct(item.annualized_return)}</td><td class="num">${ratio(item.sharpe)}</td><td class="num">${pct(item.max_drawdown)}</td></tr>`).join("");document.querySelectorAll("[data-index]").forEach(row=>row.onclick=()=>{state.selected=Number(row.dataset.index);renderList();renderDetail()})}
+function renderDetail(){const item=state.items[state.selected];const target=document.getElementById("strategy-detail");if(!item){target.className="empty";target.textContent="No strategy artifacts found";return}target.className="details";target.innerHTML=`<h2>${esc(item.name)}${item.is_sota?'<span class="sota">CURRENT SOTA</span>':''}</h2><p class="note">Theoretical performance from stored backtest NAV. It is not actual account PnL.</p><div class="metrics"><div class="metric"><label>Period</label><strong>${esc(item.start_date)} to ${esc(item.end_date)}</strong></div><div class="metric"><label>Observations</label><strong>${item.observations}</strong></div><div class="metric"><label>Final NAV (CNH)</label><strong>${money(item.final_nav_cnh)}</strong></div><div class="metric"><label>Annual volatility</label><strong>${pct(item.annualized_volatility)}</strong></div><div class="metric"><label>Calmar</label><strong>${ratio(item.calmar)}</strong></div><div class="metric"><label>Max drawdown</label><strong>${pct(item.max_drawdown)}</strong></div></div><div class="path">${esc(item.artifact_path)}</div><div class="alloc"><h2>Final backtest allocation</h2>${item.allocation.length?item.allocation.sort((a,b)=>b.weight-a.weight).map(row=>`<div class="metric"><label>${esc(row.symbol)}</label><strong>${pct(row.weight)}</strong><div class="bar"><div class="fill" style="width:${Math.max(0,Math.min(100,Number(row.weight)*100))}%"></div></div></div>`).join(""):'<div class="empty">No final allocation in this artifact</div>'}</div>`}
+fetch("/api/v1/strategies").then(r=>{if(!r.ok)throw new Error(r.statusText);return r.json()}).then(payload=>{state.items=payload.strategies||[];state.selected=state.items.length?0:null;document.getElementById("catalog-note").textContent=`${payload.registry_type}; theoretical source: ${payload.theoretical_performance_source}`;renderList();renderDetail()}).catch(error=>{document.getElementById("catalog-note").textContent=`Catalog error: ${error.message}`});
+</script></body></html>"""

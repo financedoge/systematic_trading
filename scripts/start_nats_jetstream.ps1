@@ -11,6 +11,8 @@ if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
     throw "Docker CLI is not available. Install Docker Desktop or run this on a server with Docker."
 }
 
+& (Join-Path $ScriptDir "assert_docker_ready.ps1") -Context "NATS JetStream startup" -StartDockerDesktopIfStopped
+
 Push-Location $RepoRoot
 try {
     docker compose -f $ResolvedComposeFile up -d

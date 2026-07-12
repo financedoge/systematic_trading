@@ -1,7 +1,23 @@
+import re
+
 from fastapi.testclient import TestClient
 
 from systematic_trading.app import create_app
 from systematic_trading.config import AppSettings
+
+
+EXPECTED_HEADER_LINKS = [
+    ("/operator", "Operator"),
+    ("/strategies", "Strategies"),
+    ("/platform", "Health"),
+    ("/platform/market-data-audit", "Market Data"),
+]
+
+
+def _header_links(html: str) -> list[tuple[str, str]]:
+    header = re.search(r"<header>(.*?)</header>", html, re.DOTALL)
+    assert header is not None
+    return re.findall(r'<a class="button" href="([^"]+)">([^<]+)</a>', header.group(1))
 
 
 def test_operator_dashboard_is_served(tmp_path) -> None:
@@ -28,6 +44,9 @@ def test_operator_dashboard_is_served(tmp_path) -> None:
     assert "Submit TWAP Paper" not in html
     assert "Approved and submitted" in html
     assert "Performance" in html
+    assert "Backtest theoretical vs actual account" in html
+    assert "/strategies" in html
+    assert '>Strategies</a>' in html
     assert "performance-range-buttons" in html
     assert "perf-range-start" in html
     assert "perf-range-end" in html
@@ -38,6 +57,10 @@ def test_operator_dashboard_is_served(tmp_path) -> None:
     assert "PnL Attribution" in html
     assert "Reference Fill PnL" in html
     assert "Execution Gain" in html
+    assert "Missed Orders" in html
+    assert "Missed Notional" in html
+    assert "proposal-row.missed" in html
+    assert "Execution Deadline" in html
     assert "execution-slippage-table" in html
     assert "slippage-chart" in html
     assert "Daily Slippage" in html
@@ -61,6 +84,7 @@ def test_operator_dashboard_is_served(tmp_path) -> None:
     assert "/api/v1/execution/interactive-brokers/proposals/" in html
     assert "/api/v1/execution/interactive-brokers/orders" in html
     assert "/operator" in html
+    assert 'href="/strategies">Strategies</a>' in html
     assert "/platform" in html
     assert "/platform/market-data-audit" in html
     assert "confirm_submit: true" in html
@@ -75,6 +99,27 @@ def test_root_redirects_to_operator_dashboard(tmp_path) -> None:
 
     assert response.status_code in {307, 308}
     assert response.headers["location"] == "/operator"
+
+
+def test_strategy_catalog_portal_and_api_are_served(tmp_path) -> None:
+    backtests = tmp_path / "backtests" / "sota_current"
+    backtests.mkdir(parents=True)
+    (backtests / "sota_price_volume_technical_tree_relative_adaptive_top6.json").write_text(
+        '{"nav_series":[{"trade_date":"2025-01-02","nav_cnh":"100"},'
+        '{"trade_date":"2025-01-03","nav_cnh":"101"}]}',
+        encoding="utf-8",
+    )
+    settings = AppSettings(database_path=tmp_path / "strategies.db", data_dir=tmp_path)
+    with TestClient(create_app(settings)) as client:
+        page = client.get("/strategies")
+        payload = client.get("/api/v1/strategies")
+
+    assert page.status_code == 200
+    assert "Strategy Catalog" in page.text
+    assert "Final backtest allocation" in page.text
+    assert payload.status_code == 200
+    assert payload.json()["registry_type"] == "artifact_catalog"
+    assert payload.json()["strategies"][0]["is_sota"] is True
 
 
 def test_platform_health_portal_is_served(tmp_path) -> None:
@@ -92,6 +137,7 @@ def test_platform_health_portal_is_served(tmp_path) -> None:
     assert "/api/v1/platform/service-graph" in html
     assert "/health" in html
     assert "/operator" in html
+    assert 'href="/strategies">Strategies</a>' in html
     assert "/platform" in html
     assert "/platform/market-data-audit" in html
     assert "/api/v1/platform/service-actions" in html
@@ -116,3 +162,19 @@ def test_market_data_audit_portal_is_served(tmp_path) -> None:
     assert "/api/v1/market-data/audit" in html
     assert "/platform" in html
     assert "/operator" in html
+
+
+def test_operational_pages_share_one_control_free_header(tmp_path) -> None:
+    settings = AppSettings(database_path=tmp_path / "unified_headers.db", data_dir=tmp_path)
+    with TestClient(create_app(settings)) as client:
+        pages = [
+            client.get(path).text
+            for path in ["/operator", "/strategies", "/platform", "/platform/market-data-audit"]
+        ]
+
+    for html in pages:
+        assert _header_links(html) == EXPECTED_HEADER_LINKS
+        header = re.search(r"<header>(.*?)</header>", html, re.DOTALL)
+        assert header is not None
+        assert "<button" not in header.group(1)
+        assert "status-line" not in header.group(1)

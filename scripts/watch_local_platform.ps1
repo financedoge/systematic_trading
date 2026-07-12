@@ -155,6 +155,36 @@ function Test-RecorderState {
     return New-Check -ServiceId "market_data_recorder" -Required $false -Status "degraded" -Message "Recorder state exists but the PID is not alive." -Details @{ records_written = $recordsWritten }
 }
 
+function Test-IbTwsState {
+    $statePath = Join-Path $RepoRoot "var\run\ib_tws_api.state.json"
+    if (-not (Test-Path $Python)) {
+        return New-Check -ServiceId "ib_tws_api" -Required $true -Status "error" -Message "Python virtualenv not found; cannot probe IB TWS API." -Details @{ python = $Python }
+    }
+    & $Python ".\scripts\probe_ib_tws_health.py" --state-path $statePath | Out-Null
+    $probeExitCode = $LASTEXITCODE
+    if (-not (Test-Path $statePath)) {
+        return New-Check -ServiceId "ib_tws_api" -Required $true -Status "error" -Message "IB TWS health probe did not write a state file." -Details @{ state_path = $statePath; exit_code = $probeExitCode }
+    }
+    try {
+        $state = Get-Content -Raw -LiteralPath $statePath | ConvertFrom-Json
+    } catch {
+        return New-Check -ServiceId "ib_tws_api" -Required $true -Status "error" -Message "IB TWS state file could not be parsed: $($_.Exception.Message)" -Details @{ state_path = $statePath; exit_code = $probeExitCode }
+    }
+    $details = @{
+        state_path = $statePath
+        exit_code = $probeExitCode
+        host = $state.details.host
+        port = $state.details.port
+        client_id = $state.details.client_id
+        managed_accounts = $state.details.managed_accounts
+        next_valid_order_id = $state.details.next_valid_order_id
+    }
+    if ($state.running) {
+        return New-Check -ServiceId "ib_tws_api" -Required $true -Status "ok" -Message "IB TWS API probe passed." -Details $details
+    }
+    return New-Check -ServiceId "ib_tws_api" -Required $true -Status "error" -Message ([string]$state.last_error) -Details $details
+}
+
 Push-Location $RepoRoot
 try {
     Write-OperationLog -Event "watchdog_run_started" -Message "Local platform watchdog run started." -Details @{ repair = [bool]$Repair }
@@ -185,6 +215,8 @@ try {
         -Required $true `
         -Status $(if ($postgres.ok) { "ok" } else { "error" }) `
         -Message $postgres.message
+
+    $checks += Test-IbTwsState
 
     $clickhouseHealth = Test-HttpEndpoint -Url "http://127.0.0.1:8123/ping"
     $clickhouseRepaired = $false

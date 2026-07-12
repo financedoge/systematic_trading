@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import UTC, date, datetime
 from decimal import Decimal
 
 import pytest
@@ -278,6 +278,20 @@ def test_ib_order_translation_sets_algo_strategy_and_params() -> None:
         "startTime": "09:30:00 US/Eastern",
         "allowPastEndTime": "0",
     }
+
+
+def test_router_rejects_expired_approved_proposal(tmp_path) -> None:
+    settings = AppSettings(database_path=tmp_path / "expired-router.db")
+    router = InteractiveBrokersOrderRouter(settings, client=FakeIBClient())
+    proposal = _proposal(status=ProposalStatus.APPROVED).model_copy(
+        update={"execution_deadline_at": datetime(2020, 1, 2, tzinfo=UTC)}
+    )
+    store = _store(tmp_path)
+    store.save_proposal(proposal)
+
+    issues = router.validate_proposal_for_submission(proposal=proposal, store=store)
+
+    assert any("execution window expired" in issue for issue in issues)
 
 
 def _store(tmp_path) -> SQLiteStore:

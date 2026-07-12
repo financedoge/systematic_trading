@@ -29,6 +29,7 @@ from systematic_trading.domain.execution import (
     TradeProposal,
 )
 from systematic_trading.domain.market import Instrument
+from systematic_trading.execution.window import proposal_is_expired
 from systematic_trading.research import current_sota_definition, instruments_for_definition
 from systematic_trading.storage.interfaces import BrokerOrderStore
 
@@ -270,6 +271,8 @@ class InteractiveBrokersOrderRouter:
         order_items = _selected_order_items(proposal, order_indexes)
         if proposal.status != ProposalStatus.APPROVED:
             issues.append(f"{proposal.proposal_id}: proposal status must be approved before routing.")
+        if proposal_is_expired(proposal, self.settings):
+            issues.append(f"{proposal.proposal_id}: execution window expired; missed proposals cannot be routed.")
         if environment == OrderEnvironment.LIVE:
             issues.append(f"{proposal.proposal_id}: live routing is disabled in v1.")
         profile = self.adapter.profile_for(environment)

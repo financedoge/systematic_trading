@@ -1,5 +1,13 @@
 # Live Rollout
 
+## Rebalance Execution Window
+
+- Signals are calculated from the decision-date close and orders target the next session open.
+- `ST_EXECUTION_REBALANCE_TIMEOUT_MINUTES` controls how long after `ST_EXECUTION_TWAP_START_TIME` approval or retry remains allowed; default is 30 minutes in `ST_AUTOMATION_TIMEZONE`.
+- Pending proposals and approved proposals with failed or missing broker orders become `missed` after the deadline.
+- Orders already accepted by the broker remain active and are not falsely expired.
+- Missed orders are durable audit records. They cannot be resubmitted and their count/reference notional appear in execution-quality analysis; no synthetic fill price or invented slippage PnL is created.
+
 ## Policy
 
 Live trading is disabled until the platform proves paper trading reliability through service health checks, market-data recording, pre-trade validation, order idempotency, broker reconciliation, post-trade reporting, alerting, and rollback drills.
@@ -186,8 +194,8 @@ Implementation stages:
 
 1. Implemented: translate approved `OrderRequest` objects into IB stock/ETF contracts and orders using SMART routing; attach a stable `orderRef` containing the local proposal id.
 2. Implemented: require explicit approval, block live routing, reject duplicate submissions by default, and persist local broker order records.
-3. Next: connection health check that confirms account, server time, next valid order id, and managed accounts before routing.
-4. Next: reconciliation that pulls IB positions, cash/account values, and open orders; compare with the local proposal snapshot before any order can route.
+3. Implemented initial monitoring: `scripts/probe_ib_tws_health.py` checks TWS/Gateway paper API connectivity by waiting for `nextValidId`, captures managed accounts/server time when available, and writes `var/run/ib_tws_api.state.json` for the platform health page.
+4. Implemented initial reconciliation report: `scripts/reconcile_ib_paper_account.py` fetches IB paper account snapshot and executions, compares them to local broker order records, writes a report under `var/reconciliation`, and can explicitly record an empty PnL reset baseline after a confirmed paper-account reset.
 5. Next: fill capture that persists order status, execution, and commission events locally and reconciles them against the proposal.
 6. Later: live switch with explicit config, separate port/account check, capital caps, and a fresh dry-run report before live routing is enabled.
 
@@ -204,6 +212,9 @@ TWS is acceptable for interactive local paper testing, but it is not a productio
 Current controls:
 
 - Recurring automation opens an IB circuit breaker after repeated IB failures, backs off execution/account-snapshot retries, and exposes the circuit state through automation status and platform health details.
+- The platform health page includes `ib_tws_api`; startup and watchdog runs refresh `var/run/ib_tws_api.state.json`.
+- TWS down or not logged in is an operator-visible health error, not a silent recorder/execution failure.
+- Reconciliation after a paper-account reset is report-first. Local broker order records remain audit history; a PnL reset baseline can only be written with explicit `--record-pnl-reset-baseline --confirm-paper-reset`.
 - The platform does not attempt to automate TWS login or 2FA recovery.
 - After any TWS relogin, run `scripts/test_ib_paper_connection.py` before restarting IB-dependent recorder or paper-execution work.
 - For server or 24x7 operation, prefer IB Gateway under an explicit process supervisor and keep VPN dependency out of the critical network path.

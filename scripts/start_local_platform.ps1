@@ -121,6 +121,19 @@ function Assert-PostgresReady {
     Test-TcpPort -Name "Postgres" -Address "127.0.0.1" -TcpPort 5432
 }
 
+function Update-IbTwsHealthState {
+    $statePath = Join-Path $RunDir "ib_tws_api.state.json"
+    Write-OperationLog -Event "ib_tws_health_probe_requested" -Message "IB TWS API health probe requested." -Details @{ state_path = $statePath }
+    & $Python ".\scripts\probe_ib_tws_health.py" --state-path $statePath
+    if ($LASTEXITCODE -eq 0) {
+        Write-Output "IB TWS API health probe OK."
+        Write-OperationLog -Event "ib_tws_health_ok" -Message "IB TWS API health probe passed." -Details @{ state_path = $statePath }
+    } else {
+        Write-Output "IB TWS API health probe failed. Check $statePath and the platform health page."
+        Write-OperationLog -Event "ib_tws_health_failed" -Level "warning" -Message "IB TWS API health probe failed." -Details @{ state_path = $statePath; exit_code = $LASTEXITCODE }
+    }
+}
+
 function Start-RecorderService {
     $pidPath = Join-Path $RunDir "market_data_recorder.pid"
     $statePath = Join-Path $RunDir "market_data_recorder.state.json"
@@ -228,6 +241,8 @@ try {
 
     Assert-PostgresReady
     Write-OperationLog -Event "postgres_ready" -Message "Postgres readiness check passed." -Details @{ host = "127.0.0.1"; port = 5432 }
+
+    Update-IbTwsHealthState
 
     if (-not $SkipClickHouse) {
         Write-OperationLog -Event "clickhouse_start_requested" -Message "ClickHouse startup requested." -Details @{ url = "http://127.0.0.1:8123" }
