@@ -1,0 +1,317 @@
+{
+  "account_snapshot_path": "var\\live\\account_snapshots\\ib_paper_account_snapshot_20260714_230924.json",
+  "broker_cash": [
+    {
+      "amount": "1015927.15",
+      "currency": "HKD"
+    }
+  ],
+  "broker_positions": [],
+  "checked_at": "2026-07-14T15:09:24.012911Z",
+  "environment": "paper",
+  "has_breaks": false,
+  "ib_fill_count": 10,
+  "ib_position_count": 0,
+  "local_filled_order_count": 18,
+  "local_order_count": 220,
+  "local_order_history_count": 220,
+  "managed_accounts": [
+    "DU8959779"
+  ],
+  "pnl_reset_baseline_id": "bed6ac19a652",
+  "position_differences": [
+    {
+      "difference": -10818,
+      "ib_quantity": 0,
+      "local_quantity": 10818,
+      "symbol": "DBB"
+    },
+    {
+      "difference": -1062,
+      "ib_quantity": 0,
+      "local_quantity": 1062,
+      "symbol": "DBC"
+    },
+    {
+      "difference": -1089,
+      "ib_quantity": 0,
+      "local_quantity": 1089,
+      "symbol": "EWJ"
+    },
+    {
+      "difference": -2433,
+      "ib_quantity": 0,
+      "local_quantity": 2433,
+      "symbol": "EWY"
+    },
+    {
+      "difference": -870,
+      "ib_quantity": 0,
+      "local_quantity": 870,
+      "symbol": "IWM"
+    },
+    {
+      "difference": -1060,
+      "ib_quantity": 0,
+      "local_quantity": 1060,
+      "symbol": "USO"
+    }
+  ],
+  "report_path": "var\\reconciliation\\ib_paper_reconciliation_20260714_150924_012911.json",
+  "requires_operator_confirmation": false,
+  "reset_applied": true,
+  "status": "reset_to_broker",
+  "suggested_actions": [
+    "Run fill sync, then inspect unmatched IB fills before generating new proposals.",
+    "Do not trust local PnL/exposure until reconciliation breaks are reviewed.",
+    "IB paper account appears reset or empty while local records have exposure. After operator confirmation, run the reconciliation script with --record-pnl-reset-baseline --confirm-paper-reset.",
+    "Reset active portfolio/PnL state to IB snapshot via baseline bed6ac19a652."
+  ],
+  "unmatched_ib_fills": [
+    {
+      "average_price": "94.38",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:13Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 200,
+      "symbol": "EWJ"
+    },
+    {
+      "average_price": "94.38",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:14Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 245,
+      "symbol": "EWJ"
+    },
+    {
+      "average_price": "94.38",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:14Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 104,
+      "symbol": "EWJ"
+    },
+    {
+      "average_price": "94.38",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:14Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 145,
+      "symbol": "EWJ"
+    },
+    {
+      "average_price": "94.38",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:14Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 150,
+      "symbol": "EWJ"
+    },
+    {
+      "average_price": "94.38",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:15Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 245,
+      "symbol": "EWJ"
+    },
+    {
+      "average_price": "28.55",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:30Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 200,
+      "symbol": "DBC"
+    },
+    {
+      "average_price": "28.55",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:30Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 486,
+      "symbol": "DBC"
+    },
+    {
+      "average_price": "28.55",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:30Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 100,
+      "symbol": "DBC"
+    },
+    {
+      "average_price": "28.55",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:30Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 276,
+      "symbol": "DBC"
+    }
+  ],
+  "unmatched_local_orders": [
+    {
+      "broker_order_id": 7,
+      "filled_quantity": 44,
+      "local_order_id": "b953d24439be",
+      "order_ref": "st-0b8b0f0713c2-00",
+      "proposal_id": "0b8b0f0713c2",
+      "status": "partially_filled",
+      "symbol": "EWY"
+    },
+    {
+      "broker_order_id": 8,
+      "filled_quantity": 64,
+      "local_order_id": "26f572a349fd",
+      "order_ref": "st-0b8b0f0713c2-01",
+      "proposal_id": "0b8b0f0713c2",
+      "status": "partially_filled",
+      "symbol": "IWM"
+    },
+    {
+      "broker_order_id": 9,
+      "filled_quantity": 39,
+      "local_order_id": "66e78f0e1d2f",
+      "order_ref": "st-0b8b0f0713c2-02",
+      "proposal_id": "0b8b0f0713c2",
+      "status": "partially_filled",
+      "symbol": "USO"
+    },
+    {
+      "broker_order_id": 3,
+      "filled_quantity": 1534,
+      "local_order_id": "4652b32e93f8",
+      "order_ref": "st-4d08ccc78d78-00",
+      "proposal_id": "4d08ccc78d78",
+      "status": "filled",
+      "symbol": "EWY"
+    },
+    {
+      "broker_order_id": 4,
+      "filled_quantity": 2259,
+      "local_order_id": "0c97429e085a",
+      "order_ref": "st-4d08ccc78d78-01",
+      "proposal_id": "4d08ccc78d78",
+      "status": "filled",
+      "symbol": "IWM"
+    },
+    {
+      "broker_order_id": 5,
+      "filled_quantity": 1425,
+      "local_order_id": "d56238b5392e",
+      "order_ref": "st-4d08ccc78d78-02",
+      "proposal_id": "4d08ccc78d78",
+      "status": "filled",
+      "symbol": "USO"
+    },
+    {
+      "broker_order_id": 1,
+      "filled_quantity": 1062,
+      "local_order_id": "57a6b0b6e50a",
+      "order_ref": "st-7517760937c2-00",
+      "proposal_id": "7517760937c2",
+      "status": "filled",
+      "symbol": "DBC"
+    },
+    {
+      "broker_order_id": 2,
+      "filled_quantity": 1089,
+      "local_order_id": "45025f938a46",
+      "order_ref": "st-7517760937c2-01",
+      "proposal_id": "7517760937c2",
+      "status": "filled",
+      "symbol": "EWJ"
+    },
+    {
+      "broker_order_id": 10,
+      "filled_quantity": 10643,
+      "local_order_id": "a2c90823758f",
+      "order_ref": "st-8fd4591c0a22-00",
+      "proposal_id": "8fd4591c0a22",
+      "status": "partially_filled",
+      "symbol": "DBB"
+    },
+    {
+      "broker_order_id": 11,
+      "filled_quantity": 200,
+      "local_order_id": "42fc7ba591b0",
+      "order_ref": "st-8fd4591c0a22-01",
+      "proposal_id": "8fd4591c0a22",
+      "status": "partially_filled",
+      "symbol": "EWY"
+    },
+    {
+      "broker_order_id": 12,
+      "filled_quantity": 1325,
+      "local_order_id": "7fbe17376ab8",
+      "order_ref": "st-8fd4591c0a22-02",
+      "proposal_id": "8fd4591c0a22",
+      "status": "partially_filled",
+      "symbol": "IWM"
+    },
+    {
+      "broker_order_id": 13,
+      "filled_quantity": 120,
+      "local_order_id": "11bfeaefab77",
+      "order_ref": "st-8fd4591c0a22-03",
+      "proposal_id": "8fd4591c0a22",
+      "status": "partially_filled",
+      "symbol": "USO"
+    },
+    {
+      "broker_order_id": 14,
+      "filled_quantity": 215,
+      "local_order_id": "f2e50d6b6426",
+      "order_ref": "st-e2afd9113a16-00",
+      "proposal_id": "e2afd9113a16",
+      "status": "partially_filled",
+      "symbol": "DBB"
+    },
+    {
+      "broker_order_id": 15,
+      "filled_quantity": 500,
+      "local_order_id": "ffdb76707158",
+      "order_ref": "st-e2afd9113a16-01",
+      "proposal_id": "e2afd9113a16",
+      "status": "partially_filled",
+      "symbol": "EWY"
+    },
+    {
+      "broker_order_id": 16,
+      "filled_quantity": 208,
+      "local_order_id": "b7c0680d6c05",
+      "order_ref": "st-e2afd9113a16-02",
+      "proposal_id": "e2afd9113a16",
+      "status": "partially_filled",
+      "symbol": "USO"
+    },
+    {
+      "broker_order_id": 17,
+      "filled_quantity": 40,
+      "local_order_id": "733cb364c8bb",
+      "order_ref": "st-ec40ca1249ef-00",
+      "proposal_id": "ec40ca1249ef",
+      "status": "filled",
+      "symbol": "DBB"
+    },
+    {
+      "broker_order_id": 18,
+      "filled_quantity": 243,
+      "local_order_id": "50248eaadb1b",
+      "order_ref": "st-ec40ca1249ef-01",
+      "proposal_id": "ec40ca1249ef",
+      "status": "filled",
+      "symbol": "EWY"
+    },
+    {
+      "broker_order_id": 19,
+      "filled_quantity": 2,
+      "local_order_id": "1ee8b91eebee",
+      "order_ref": "st-ec40ca1249ef-02",
+      "proposal_id": "ec40ca1249ef",
+      "status": "filled",
+      "symbol": "USO"
+    }
+  ],
+  "warnings": []
+}

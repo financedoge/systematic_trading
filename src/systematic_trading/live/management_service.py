@@ -53,6 +53,10 @@ class TradingServiceStatus(BaseModel):
     last_execution_sync_at: datetime | None = None
     last_execution_sync_fills_seen: int | None = None
     last_execution_sync_records_updated: int | None = None
+    last_reconciliation_at: datetime | None = None
+    last_reconciliation_status: str | None = None
+    last_reconciliation_report_path: str | None = None
+    last_reconciliation_break_count: int | None = None
     last_eod_date: date | None = None
     last_eod_pnl_date: date | None = None
     last_eod_pnl_snapshot_id: str | None = None
@@ -240,15 +244,44 @@ class TradingManagementService:
                 client=self.execution_sync_client,
             )
             result = synchronizer.sync_order_fills(store=self.store, environment=OrderEnvironment.PAPER)
+            from systematic_trading.execution.reconciliation import (
+                load_latest_ib_reconciliation,
+                reconcile_ib_paper_account,
+            )
+
+            previous_reconciliation = load_latest_ib_reconciliation(self.settings)
+            reconciliation = reconcile_ib_paper_account(
+                settings=self.settings,
+                store=self.store,
+                execution_client=self.execution_sync_client,
+                account_snapshot_client=self.account_snapshot_client,
+                as_of=now_utc.date(),
+            )
             next_at = now_utc.timestamp() + max(self.settings.automation_execution_poll_seconds, 1)
+            reconciliation_break_count = (
+                len(reconciliation.position_differences)
+                + len(reconciliation.unmatched_local_orders)
+                + len(reconciliation.unmatched_ib_fills)
+            )
+            notify_reconciliation = _reconciliation_signature(previous_reconciliation) != _reconciliation_signature(
+                reconciliation
+            )
             with self._lock:
                 self._status = self._status.model_copy(
                     update={
                         "last_execution_sync_at": now_utc,
                         "last_execution_sync_fills_seen": result.fills_seen,
                         "last_execution_sync_records_updated": result.records_updated,
+                        "last_reconciliation_at": reconciliation.checked_at,
+                        "last_reconciliation_status": reconciliation.status,
+                        "last_reconciliation_report_path": reconciliation.report_path,
+                        "last_reconciliation_break_count": reconciliation_break_count,
                         "next_execution_sync_at": datetime.fromtimestamp(next_at, tz=UTC),
-                        "last_error": None,
+                        "last_error": (
+                            f"IB portfolio reconciliation break: {reconciliation_break_count} issue(s)."
+                            if reconciliation.has_breaks
+                            else None
+                        ),
                         "ib_automation_consecutive_errors": 0,
                         "ib_automation_circuit_open_until": None,
                         "ib_automation_circuit_reason": None,
@@ -260,6 +293,23 @@ class TradingManagementService:
                     f"Synced {result.records_updated} local broker record(s) from {result.fills_seen} IB fill(s).",
                     details={"warnings": result.warnings},
                     save=False,
+                )
+                self._record_event(
+                    "broker_reconciliation",
+                    "error" if reconciliation.has_breaks else "ok",
+                    (
+                        f"IB portfolio reconciliation found {reconciliation_break_count} issue(s); trading is blocked."
+                        if reconciliation.has_breaks
+                        else "IB portfolio reconciliation matched the active broker-anchored ledger."
+                    ),
+                    details={
+                        "report_path": reconciliation.report_path,
+                        "account_snapshot_path": reconciliation.account_snapshot_path,
+                        "ib_position_count": reconciliation.ib_position_count,
+                        "position_differences": len(reconciliation.position_differences),
+                    },
+                    save=False,
+                    notify=notify_reconciliation,
                 )
                 self._save_status_locked()
             return result
@@ -302,6 +352,7 @@ class TradingManagementService:
         self._sync_executions(now)
         market_result = self._refresh_market_data(service_date)
         market_ready = market_result is not None and market_result.latest_bar_date is not None and market_result.latest_bar_date >= service_date
+        reconciliation_ready = self._status.last_reconciliation_status in {"matched", "reset_to_broker"}
         pnl_ready = self._status.last_eod_pnl_date == service_date
         rebalance_ready = not self.settings.automation_queue_rebalance or _existing_staged_proposal(self.store, service_date) is not None
 
@@ -342,7 +393,7 @@ class TradingManagementService:
                 if fallback is not None:
                     account_snapshot_path, account_snapshot = self._use_stored_account_snapshot_fallback(fallback)
 
-        if not pnl_ready and market_ready:
+        if not pnl_ready and market_ready and reconciliation_ready:
             try:
                 pnl_snapshot = self.store.save_pnl_snapshot(build_dashboard_pnl_snapshot(self.store, as_of=service_date))
                 pnl_ready = True
@@ -369,10 +420,14 @@ class TradingManagementService:
             self._record_event(
                 "pnl_snapshot",
                 "warning",
-                f"Skipped EOD PnL snapshot for {service_date}; market data is not current.",
+                (
+                    f"Skipped EOD PnL snapshot for {service_date}; IB portfolio reconciliation is unresolved."
+                    if market_ready and not reconciliation_ready
+                    else f"Skipped EOD PnL snapshot for {service_date}; market data is not current."
+                ),
             )
 
-        if account_snapshot is not None and self.settings.automation_queue_rebalance and market_ready:
+        if account_snapshot is not None and self.settings.automation_queue_rebalance and market_ready and reconciliation_ready:
             try:
                 existing = _existing_staged_proposal(self.store, service_date)
                 if existing is None:
@@ -408,11 +463,15 @@ class TradingManagementService:
                     self._save_status_locked()
             except Exception as exc:
                 self._record_error("rebalance_stage", f"Rebalance staging failed: {exc}")
-        elif self.settings.automation_queue_rebalance and not market_ready:
+        elif self.settings.automation_queue_rebalance and (not market_ready or not reconciliation_ready):
             self._record_event(
                 "rebalance_stage",
                 "warning",
-                f"Skipped rebalance staging for {service_date}; market data is not current.",
+                (
+                    f"Skipped rebalance staging for {service_date}; IB portfolio reconciliation is unresolved."
+                    if market_ready and not reconciliation_ready
+                    else f"Skipped rebalance staging for {service_date}; market data is not current."
+                ),
             )
 
         with self._lock:
@@ -763,6 +822,17 @@ def _account_snapshot_date(path: Path) -> date | None:
 
 def _business_dates_after(start_date: date, end_date: date) -> list[date]:
     return us_trading_dates_after(start_date, end_date)
+
+
+def _reconciliation_signature(report) -> tuple[object, ...] | None:
+    if report is None:
+        return None
+    return (
+        report.status,
+        tuple((row.symbol, row.local_quantity, row.ib_quantity) for row in report.position_differences),
+        tuple(row.local_order_id for row in report.unmatched_local_orders),
+        tuple((row.symbol, row.broker_order_id, row.order_ref) for row in report.unmatched_ib_fills),
+    )
 
 
 def _dedupe_dates(values: list[date]) -> list[date]:

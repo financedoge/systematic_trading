@@ -11,6 +11,8 @@ param(
     [int]$RecorderGapFillLookbackMinutes = 60,
     [int]$RecorderPollSeconds = 60,
     [int]$RecorderClientId = 121,
+    [ValidateSet("delayed-trades", "historical-live", "realtime")]
+    [string]$RecorderIntradayFeed = "delayed-trades",
     [ValidateSet("live", "frozen", "delayed", "delayed_frozen")]
     [string]$RecorderMarketDataMode = "live",
     [ValidateSet("jsonl", "nats")]
@@ -168,6 +170,8 @@ function Start-RecorderService {
             [string]$RecorderPollSeconds,
             "--market-data-mode",
             $RecorderMarketDataMode,
+            "--intraday-feed",
+            $RecorderIntradayFeed,
             "--client-id",
             [string]$RecorderClientId,
             "--pid-path",
@@ -186,6 +190,7 @@ function Start-RecorderService {
     Write-Output "Recorder PID: $($process.Id)"
     Write-Output "Recorder symbols: $symbolsArg"
     Write-Output "Recorder market data mode: $RecorderMarketDataMode"
+    Write-Output "Recorder intraday feed: $RecorderIntradayFeed"
     Write-Output "Recorder realtime chunk seconds: $RecorderRealtimeChunkSeconds"
     Write-Output "Recorder gap-fill lookback minutes: $RecorderGapFillLookbackMinutes"
     Write-Output "Recorder state: $statePath"
@@ -196,6 +201,7 @@ function Start-RecorderService {
             pid = $process.Id
             symbols = $RecorderSymbols
             market_data_mode = $RecorderMarketDataMode
+            intraday_feed = $RecorderIntradayFeed
             realtime_chunk_seconds = $RecorderRealtimeChunkSeconds
             gap_fill_lookback_minutes = $RecorderGapFillLookbackMinutes
             client_id = $RecorderClientId
@@ -224,6 +230,7 @@ try {
             start_market_data_recorder = -not [bool]$SkipMarketDataRecorder
             recorder_symbols = $RecorderSymbols
             recorder_market_data_mode = $RecorderMarketDataMode
+            recorder_intraday_feed = $RecorderIntradayFeed
         }
     if (-not $SkipNats) {
         Write-OperationLog -Event "nats_start_requested" -Message "NATS JetStream startup requested." -Details @{ nats_url = $NatsUrl }

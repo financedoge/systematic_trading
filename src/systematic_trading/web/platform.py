@@ -265,6 +265,7 @@ _PLATFORM_HTML = """<!doctype html>
       color: var(--muted);
     }
     .error { color: var(--bad); }
+    .hidden { display: none !important; }
     @media (max-width: 980px) {
       .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .layout { grid-template-columns: 1fr; }
@@ -286,9 +287,9 @@ _PLATFORM_HTML = """<!doctype html>
   <header>
     <h1>Platform Health</h1>
     <div class="actions">
-      <a class="button" href="/operator">Operator</a>
+      <a class="button" href="/operator">Trading</a>
       <a class="button" href="/strategies">Strategies</a>
-      <a class="button" href="/platform">Health</a>
+      <a class="button" href="/platform">System</a>
       <a class="button" href="/platform/market-data-audit">Market Data</a>
     </div>
   </header>
@@ -668,9 +669,9 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       font: inherit;
       font-size: 13px;
     }
-    input.symbol {
-      width: 118px;
-      min-width: 118px;
+    .symbol {
+      width: 210px;
+      min-width: 160px;
       text-transform: uppercase;
     }
     input.small {
@@ -685,6 +686,12 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       min-height: 30px;
       padding: 5px 9px;
       font-size: 12px;
+    }
+    .range-buttons button[aria-pressed="true"] {
+      border-color: var(--focus);
+      background: #eaf1fb;
+      color: var(--focus);
+      font-weight: 650;
     }
     .summary {
       display: grid;
@@ -706,7 +713,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
     }
     .grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(440px, .75fr);
+      grid-template-columns: minmax(0, 1fr);
       gap: 12px;
       align-items: start;
     }
@@ -782,6 +789,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
     .raw-section {
       margin-top: 12px;
     }
+    .hidden { display: none !important; }
     .raw-grid {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(360px, .55fr);
@@ -803,6 +811,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       .summary { grid-template-columns: 1fr; }
       .filters { align-items: stretch; }
       label, input, select, button, .button { flex: 1 1 140px; width: 100%; }
+      .symbol { width: 100%; }
       button.icon { width: 100%; }
     }
   </style>
@@ -811,20 +820,24 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
   <header>
     <h1>Market Data</h1>
     <div class="actions">
-      <a class="button" href="/operator">Operator</a>
+      <a class="button" href="/operator">Trading</a>
       <a class="button" href="/strategies">Strategies</a>
-      <a class="button" href="/platform">Health</a>
+      <a class="button" href="/platform">System</a>
       <a class="button" href="/platform/market-data-audit">Market Data</a>
     </div>
   </header>
   <main>
     <form id="golden-filters" class="filters panel">
-      <label>Store<select id="store"><option value="daily-bars">Daily Bars</option></select></label>
-      <label>Symbol<input id="golden-symbol" class="symbol" list="golden-symbol-options" placeholder="search"><datalist id="golden-symbol-options"></datalist></label>
-      <label>Start<input id="start-date" type="date"></label>
-      <label>End<input id="end-date" type="date"></label>
+      <label>Store<select id="store"><option value="intraday-bars" selected>Intraday Bars</option><option value="daily-bars">Daily Bars</option></select></label>
+      <label>Symbol<select id="golden-symbol" class="symbol" aria-label="Symbol"></select></label>
+      <label class="daily-control">Start<input id="start-date" type="date"></label>
+      <label class="daily-control">End<input id="end-date" type="date"></label>
+      <label class="intraday-control">Start Session<input id="intraday-start-date" type="date"></label>
+      <label class="intraday-control">End Session<input id="intraday-end-date" type="date"></label>
+      <label class="intraday-control">Capture<select id="intraday-capture-mode"><option value="stream" selected>stream</option><option value="">all</option><option value="historical_backfill">historical backfill</option></select></label>
+      <label class="intraday-control">Bar Size<input id="intraday-bar-size" class="small" type="number" min="1" value="5"></label>
       <label>Limit<input id="golden-limit" class="small" type="number" min="1" max="50000" value="5000"></label>
-      <div class="range-buttons" aria-label="Date range controls">
+      <div id="daily-range-controls" class="range-buttons daily-control" aria-label="Date range controls">
         <button type="button" data-range="1m">1M</button>
         <button type="button" data-range="3m">3M</button>
         <button type="button" data-range="ytd">YTD</button>
@@ -836,11 +849,17 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
         <button id="zoom-out" class="icon" type="button" title="Zoom out">-</button>
         <button id="pan-right" class="icon" type="button" title="Pan right">&gt;</button>
       </div>
+      <div id="intraday-range-controls" class="range-buttons intraday-control" aria-label="Recorder session range">
+        <button type="button" data-sessions="1" aria-pressed="true">1D</button>
+        <button type="button" data-sessions="5" aria-pressed="false">5D</button>
+        <button type="button" data-sessions="10" aria-pressed="false">10D</button>
+        <button type="button" data-sessions="all" aria-pressed="false">All</button>
+      </div>
       <button class="primary" type="submit">Run</button>
       <button id="refresh-btn" type="button">Refresh</button>
       <span id="status" class="status-line">Loading</span>
     </form>
-    <section class="summary" aria-label="Daily market-data summary">
+    <section class="summary" aria-label="Market-data summary">
       <div class="metric"><label>Bars</label><strong id="metric-bars">0</strong></div>
       <div class="metric"><label>Range</label><strong id="metric-range">n/a</strong></div>
       <div class="metric"><label>Last Close</label><strong id="metric-close">n/a</strong></div>
@@ -858,7 +877,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       </section>
       <section class="panel">
         <div class="panel-head">
-          <h2>Daily Bars</h2>
+          <h2 id="table-title">Intraday Bars</h2>
           <span id="table-meta" class="status-line">n/a</span>
         </div>
         <div id="golden-table" class="table-wrap"></div>
@@ -886,7 +905,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
   </main>
   <script>
     const el = (id) => document.getElementById(id);
-    const state = { symbols: [], goldenBars: [] };
+    const state = { symbols: [], goldenBars: [], recorderDates: [], sessionPreset: "1" };
 
     function esc(value) {
       return String(value ?? "")
@@ -911,6 +930,19 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       const parsed = new Date(value);
       if (Number.isNaN(parsed.getTime())) return String(value);
       return parsed.toLocaleString();
+    }
+
+    function fmtCompactDateTime(value) {
+      if (!value) return "n/a";
+      const parsed = new Date(value);
+      if (Number.isNaN(parsed.getTime())) return String(value);
+      return parsed.toLocaleString(undefined, {
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      });
     }
 
     function parseIsoDate(value) {
@@ -940,6 +972,24 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
 
     function selectedSymbol() {
       return el("golden-symbol").value.trim().toUpperCase();
+    }
+
+    function selectedStore() {
+      return el("store").value;
+    }
+
+    function isIntraday() {
+      return selectedStore() === "intraday-bars";
+    }
+
+    function setStoreControls() {
+      for (const control of document.querySelectorAll(".daily-control")) {
+        control.classList.toggle("hidden", isIntraday());
+      }
+      for (const control of document.querySelectorAll(".intraday-control")) {
+        control.classList.toggle("hidden", !isIntraday());
+      }
+      el("table-title").textContent = isIntraday() ? "Intraday Bars" : "Daily Bars";
     }
 
     function selectedMeta() {
@@ -1021,7 +1071,19 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       return params;
     }
 
-    async function loadSymbols() {
+    function applySymbolOptions(labelFor) {
+      const current = selectedSymbol();
+      el("golden-symbol").innerHTML = state.symbols.map((item) =>
+        `<option value="${esc(item.symbol)}">${esc(item.symbol)} | ${esc(labelFor(item))}</option>`
+      ).join("");
+      if (!state.symbols.length) return;
+      const selected = state.symbols.find((item) => item.symbol === current)
+        || state.symbols.find((item) => item.symbol === "SPY")
+        || state.symbols[0];
+      el("golden-symbol").value = selected.symbol;
+    }
+
+    async function loadDailySymbols() {
       el("status").textContent = "Loading symbols";
       const response = await fetch("/api/v1/market-data/daily-symbols", {
         headers: { "Accept": "application/json" }
@@ -1029,15 +1091,76 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       if (!response.ok) throw new Error(`daily symbols returned ${response.status}`);
       const data = await response.json();
       state.symbols = data.symbols || [];
-      el("golden-symbol-options").innerHTML = state.symbols.map((item) => {
-        const label = `${item.row_count} rows | ${item.first_trade_date || "n/a"} to ${item.last_trade_date || "n/a"}`;
-        return `<option value="${esc(item.symbol)}" label="${esc(label)}"></option>`;
-      }).join("");
-      const current = selectedSymbol();
-      if (!current && state.symbols.length) {
-        const spy = state.symbols.find((item) => item.symbol === "SPY");
-        el("golden-symbol").value = (spy || state.symbols[0]).symbol;
+      applySymbolOptions((item) => `${item.row_count} rows | ${item.first_trade_date || "n/a"} to ${item.last_trade_date || "n/a"}`);
+    }
+
+    async function loadIntradaySymbols() {
+      el("status").textContent = "Loading recorder dates";
+      const baseParams = new URLSearchParams({ source: "interactive-brokers", data_kind: "bar" });
+      const baseResponse = await fetch(`/api/v1/market-data/audit/symbols?${baseParams.toString()}`, {
+        headers: { "Accept": "application/json" }
+      });
+      if (!baseResponse.ok) throw new Error(`intraday symbols returned ${baseResponse.status}`);
+      const base = await baseResponse.json();
+      state.recorderDates = base.recorder_dates || [];
+      if (!el("intraday-start-date").value && !el("intraday-end-date").value && base.latest_recorder_date) {
+        setIntradaySessionRange(state.sessionPreset);
       }
+      const start = el("intraday-start-date").value;
+      const end = el("intraday-end-date").value;
+      if (start) baseParams.set("recorder_start_date", start);
+      if (end) baseParams.set("recorder_end_date", end);
+      const response = await fetch(`/api/v1/market-data/audit/symbols?${baseParams.toString()}`, {
+        headers: { "Accept": "application/json" }
+      });
+      if (!response.ok) throw new Error(`intraday symbols returned ${response.status}`);
+      const data = await response.json();
+      state.symbols = (data.symbols || []).map((symbol) => ({ symbol }));
+      applySymbolOptions(() => `raw intraday | ${intradayRangeLabel()}`);
+    }
+
+    function setIntradaySessionRange(sessionCount) {
+      const dates = state.recorderDates || [];
+      state.sessionPreset = String(sessionCount);
+      for (const button of document.querySelectorAll("[data-sessions]")) {
+        button.setAttribute("aria-pressed", String(button.dataset.sessions === state.sessionPreset));
+      }
+      if (!dates.length) {
+        el("intraday-start-date").value = "";
+        el("intraday-end-date").value = "";
+        return;
+      }
+      const requestedCount = Number(sessionCount);
+      const count = sessionCount === "all" || !Number.isFinite(requestedCount)
+        ? dates.length
+        : Math.max(1, requestedCount);
+      el("intraday-start-date").value = dates[Math.max(0, dates.length - count)];
+      el("intraday-end-date").value = dates[dates.length - 1];
+    }
+
+    function intradayRangeLabel() {
+      const start = el("intraday-start-date").value;
+      const end = el("intraday-end-date").value;
+      if (!start && !end) return "all sessions";
+      if (start === end || !end) return start || end;
+      return `${start} to ${end}`;
+    }
+
+    function selectedRecorderSessionCount() {
+      const start = el("intraday-start-date").value;
+      const end = el("intraday-end-date").value;
+      return state.recorderDates.filter((value) => (!start || value >= start) && (!end || value <= end)).length;
+    }
+
+    async function applyIntradaySessions(sessionCount) {
+      setIntradaySessionRange(sessionCount);
+      await loadIntradaySymbols();
+      await loadIntraday();
+    }
+
+    async function loadSymbols() {
+      if (isIntraday()) return loadIntradaySymbols();
+      return loadDailySymbols();
     }
 
     async function loadGolden() {
@@ -1055,6 +1178,80 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       const data = await response.json();
       renderGolden(data);
       el("status").textContent = "Loaded";
+    }
+
+    function intradayParams() {
+      const params = new URLSearchParams({ source: "interactive-brokers", data_kind: "bar" });
+      const symbol = selectedSymbol();
+      if (symbol) params.set("symbol", symbol);
+      if (el("intraday-start-date").value) params.set("recorder_start_date", el("intraday-start-date").value);
+      if (el("intraday-end-date").value) params.set("recorder_end_date", el("intraday-end-date").value);
+      if (el("intraday-capture-mode").value) params.set("capture_mode", el("intraday-capture-mode").value);
+      if (el("intraday-bar-size").value) params.set("bar_size_seconds", el("intraday-bar-size").value);
+      if (el("golden-limit").value) params.set("limit", Math.min(Number(el("golden-limit").value), 5000));
+      return params;
+    }
+
+    async function loadIntraday() {
+      const symbol = selectedSymbol();
+      if (!symbol) {
+        renderGolden({ summary: {}, bars: [] });
+        el("status").textContent = "No symbol";
+        return;
+      }
+      el("status").textContent = "Loading intraday";
+      const response = await fetch(`/api/v1/market-data/audit?${intradayParams().toString()}`, {
+        headers: { "Accept": "application/json" }
+      });
+      if (!response.ok) throw new Error(`intraday bars returned ${response.status}`);
+      const data = await response.json();
+      const summary = data.summary || {};
+      const rowsById = new Map((data.rows || []).map((row) => [row.raw_event_id, row]));
+      const seenBarIds = new Set();
+      const uniqueBars = (data.bars || []).filter((bar) => {
+        if (seenBarIds.has(bar.raw_event_id)) return false;
+        seenBarIds.add(bar.raw_event_id);
+        return true;
+      });
+      const bars = uniqueBars.map((bar) => {
+        const row = rowsById.get(bar.raw_event_id) || {};
+        const timestamp = bar.exchange_timestamp || bar.received_at;
+        return {
+          ...bar,
+          trade_date: fmtCompactDateTime(timestamp),
+          adjustment: `${bar.capture_mode || "unknown"} | ${bar.bar_size_seconds || "?"}s`,
+          source_name: `${row.source_name || "interactive-brokers"} | ${bar.market_data_mode || "unknown"}`,
+          available_at: bar.received_at,
+          payload_hash: row.payload_hash || bar.raw_event_id,
+          raw_ref: row.raw_ref || "",
+        };
+      });
+      const modes = [...new Set(uniqueBars.map((bar) => bar.market_data_mode).filter(Boolean))];
+      renderGolden({
+        summary: {
+          symbol: summary.symbol || symbol,
+          rows_returned: bars.length,
+          first_trade_date: fmtCompactDateTime(summary.first_exchange_timestamp),
+          last_trade_date: fmtCompactDateTime(summary.last_exchange_timestamp),
+          source_names: modes.map((mode) => `IB ${mode}`),
+        },
+        bars,
+      });
+      const exactDate = el("intraday-start-date").value === el("intraday-end-date").value
+        ? el("intraday-start-date").value
+        : "";
+      el("raw-recorder-date").value = exactDate;
+      el("raw-bar-size").value = el("intraday-bar-size").value;
+      const sessions = selectedRecorderSessionCount();
+      el("chart-meta").textContent = `${symbol} | ${bars.length} bars | ${sessions} recorded session${sessions === 1 ? "" : "s"} | ${intradayRangeLabel()}`;
+      renderRaw(data);
+      el("raw-status").textContent = "Loaded";
+      el("status").textContent = modes.length ? `Loaded | ${modes.join(", ")}` : "Loaded";
+    }
+
+    async function loadActive() {
+      if (isIntraday()) return loadIntraday();
+      return loadGolden();
     }
 
     function renderGolden(data) {
@@ -1082,7 +1279,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
 
     function renderGoldenChart(bars) {
       if (!bars.length) {
-        el("golden-chart").innerHTML = '<div class="empty">No daily bars</div>';
+        el("golden-chart").innerHTML = `<div class="empty">No ${isIntraday() ? "intraday" : "daily"} bars</div>`;
         return;
       }
       const width = 940;
@@ -1151,13 +1348,13 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
 
     function renderGoldenTable(bars) {
       if (!bars.length) {
-        el("golden-table").innerHTML = '<div class="empty">No daily bars</div>';
+        el("golden-table").innerHTML = `<div class="empty">No ${isIntraday() ? "intraday" : "daily"} bars</div>`;
         return;
       }
       el("golden-table").innerHTML = `<table>
         <thead>
           <tr>
-            <th style="width: 16%;">Date</th>
+            <th style="width: 16%;">${isIntraday() ? "Timestamp" : "Date"}</th>
             <th class="numeric" style="width: 12%;">Open</th>
             <th class="numeric" style="width: 12%;">High</th>
             <th class="numeric" style="width: 12%;">Low</th>
@@ -1176,7 +1373,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
             <td class="numeric">${esc(number(bar.close, 4))}</td>
             <td class="numeric">${esc(number(bar.volume, 0))}</td>
             <td>${esc(bar.source_name)}<br><span class="muted">${esc(fmtDateTime(bar.available_at))}</span></td>
-            <td>${esc((bar.quality_flags || []).join(", ") || "none")}<br><span class="muted">${esc(String(bar.payload_hash || "").slice(0, 24))}</span></td>
+            <td>${esc((bar.quality_flags || []).join(", ") || "none")}<br><span class="muted">${esc(bar.raw_ref || String(bar.payload_hash || "").slice(0, 24))}</span></td>
           </tr>`).join("")}
         </tbody>
       </table>`;
@@ -1262,8 +1459,9 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
 
     async function start() {
       try {
+        setStoreControls();
         await loadSymbols();
-        await loadGolden();
+        await loadActive();
       } catch (error) {
         el("status").textContent = "Error";
         el("golden-chart").innerHTML = `<div class="error">${esc(error.message)}</div>`;
@@ -1274,13 +1472,21 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
     for (const button of document.querySelectorAll("[data-range]")) {
       button.addEventListener("click", () => applyRange(button.dataset.range));
     }
+    for (const button of document.querySelectorAll("[data-sessions]")) {
+      button.addEventListener("click", () => {
+        applyIntradaySessions(button.dataset.sessions).catch((error) => {
+          el("status").textContent = "Error";
+          el("golden-chart").innerHTML = `<div class="error">${esc(error.message)}</div>`;
+        });
+      });
+    }
     el("zoom-in").addEventListener("click", () => zoom(0.5));
     el("zoom-out").addEventListener("click", () => zoom(2));
     el("pan-left").addEventListener("click", () => pan(-1));
     el("pan-right").addEventListener("click", () => pan(1));
     el("golden-filters").addEventListener("submit", (event) => {
       event.preventDefault();
-      loadGolden().catch((error) => {
+      loadActive().catch((error) => {
         el("status").textContent = "Error";
         el("golden-chart").innerHTML = `<div class="error">${esc(error.message)}</div>`;
       });
@@ -1288,7 +1494,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
     el("golden-symbol").addEventListener("change", () => {
       el("start-date").value = "";
       el("end-date").value = "";
-      loadGolden().catch((error) => {
+      loadActive().catch((error) => {
         el("status").textContent = "Error";
         el("golden-chart").innerHTML = `<div class="error">${esc(error.message)}</div>`;
       });
@@ -1298,11 +1504,29 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       loadRaw();
     });
     el("refresh-btn").addEventListener("click", () => {
-      loadGolden().catch((error) => {
+      const reload = isIntraday() ? loadSymbols().then(loadActive) : loadActive();
+      reload.catch((error) => {
         el("status").textContent = "Error";
         el("golden-chart").innerHTML = `<div class="error">${esc(error.message)}</div>`;
       });
     });
+    el("store").addEventListener("change", () => {
+      setStoreControls();
+      loadSymbols().then(loadActive).catch((error) => {
+        el("status").textContent = "Error";
+        el("golden-chart").innerHTML = `<div class="error">${esc(error.message)}</div>`;
+      });
+    });
+    for (const input of [el("intraday-start-date"), el("intraday-end-date")]) {
+      input.addEventListener("change", () => {
+        state.sessionPreset = "custom";
+        for (const button of document.querySelectorAll("[data-sessions]")) button.setAttribute("aria-pressed", "false");
+        loadIntradaySymbols().then(loadIntraday).catch((error) => {
+          el("status").textContent = "Error";
+          el("golden-chart").innerHTML = `<div class="error">${esc(error.message)}</div>`;
+        });
+      });
+    }
     start();
   </script>
 </body>
@@ -1521,9 +1745,9 @@ _RAW_MARKET_DATA_AUDIT_HTML = """<!doctype html>
   <header>
     <h1>Market Data Audit</h1>
     <div class="actions">
-      <a class="button" href="/operator">Operator</a>
+      <a class="button" href="/operator">Trading</a>
       <a class="button" href="/strategies">Strategies</a>
-      <a class="button" href="/platform">Health</a>
+      <a class="button" href="/platform">System</a>
       <a class="button" href="/platform/market-data-audit">Market Data</a>
     </div>
   </header>

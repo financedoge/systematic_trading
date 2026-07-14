@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "monitored_strategy_ids": [
+    "sota_price_volume_technical_tree_relative_adaptive_top6"
+  ],
+  "method": "daily_mark_to_market_final_holdings",
+  "notes": "Monitored artifacts are extended with current golden market data. Full signal/rebalance replay remains a separate promotion requirement."
+}

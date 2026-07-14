@@ -1,5 +1,67 @@
 # Project Log
 
+## 2026-07-14 - Current Full Report For Monitored Strategies
+
+- Changed Monitored strategy clicks to open the complete backtest report directly instead of the simplified strategy detail page. Archived rows retain the existing detail fallback, including the 67 discovered artifacts without generated HTML reports.
+- The report is rendered from an in-memory monitored copy of the artifact. It extends NAV and the risk-parity benchmark through current golden data, reads current market prices/FX for holdings and contribution analysis, and does not overwrite immutable JSON/HTML artifacts.
+- Added explicit artifact-end, monitored-through, lifecycle, and monitoring-method provenance. The report retains full period metrics, largest drawdowns, two benchmark choices, holdings contribution, and signal attribution, and now shares the operational navigation header.
+- Live browser verification clicked the monitored SOTA directly into the full report: artifact end `2026-04-29`, monitored through `2026-07-14`, 8 summary metrics, 2 benchmark choices, 15 yearly rows, 1,348 monthly contribution rows, signal attribution visible, and no horizontal overflow. An archived strategy still opened its existing detail page.
+- Verification: focused reporting/API/UI tests passed (`32 passed`); full suite passed (`217 tests`); compile and `git diff --check` passed apart from existing line-ending warnings.
+
+## 2026-07-14 - Broker-Authoritative Portfolio Reconciliation
+
+- Diagnosed the paper-account reset against live TWS: IB reported zero positions and HKD cash while the local fill-derived ledger implied six positions; the pre-change report contained 18 local filled records, 10 IB executions, and six position differences.
+- Made IB positions/cash authoritative for active holdings. The Trading page refreshes reconciliation before rendering and the trading-management loop repeats it on the execution-sync cadence with a dedicated client id (`ST_IB_RECONCILIATION_CLIENT_ID`, default 161).
+- Persisted timestamped and latest reconciliation reports, emitted a durable `alert.raised` on a new break signature, disabled operator approval/resubmission, blocked EOD PnL/rebalance staging, and server-blocked IB routing when reconciliation is missing, stale, or broken.
+- Added `Reset local to IB` with a server-enforced confirmation. It creates an empty or populated broker-derived PnL baseline while preserving all earlier local orders/fills as immutable audit history.
+- Fixed IB execution timestamps without an explicit suffix: TWS supplies them in workstation-local time, so they are now localized before UTC conversion instead of being mislabeled as UTC.
+- During live verification an operator-confirmed empty baseline `bed6ac19a652` was created. Final state: reconciliation `matched`, IB positions `0`, HKD cash `1,015,927.30`, zero active open lots, total PnL `0.00`, and the unattended management loop reporting zero breaks.
+- Verification: focused reconciliation/execution/management/API/UI suite passed (`60 passed`); full suite passed (`216 passed`); `git diff --check` passed apart from existing line-ending warnings.
+
+## 2026-07-14 - Explicit Market Data Symbol Selection
+
+- Diagnosed the apparent SPY-only Market Data page as a UI discovery failure, not missing data: the datalist held all symbols but rendered only the current SPY value until browser-native suggestions were opened.
+- Replaced the datalist text input with an explicit symbol dropdown that visibly repopulates for the selected store and intraday session range.
+- Live latest-session Intraday Bars exposed the active pilot `GLD/IWM/QQQ/SPY/TLT`; QQQ loaded 223 delayed 5-second bars. The broader raw catalog also contains AAPL from an earlier smoke partition, for six raw symbols overall.
+- Daily Bars exposed all 39 converted symbols. AOR was selected and loaded 3,643 rows from `2012-01-03` through `2026-07-13`, proving the non-SPY converted-store path.
+- Verification: focused market-data API/UI tests passed (`11 passed`); full suite passed (`212 passed`); browser checks had zero desktop overflow; `git diff --check` passed apart from existing line-ending warnings.
+
+## 2026-07-14 - Multi-Session Intraday Market Data
+
+- Extended the raw audit and symbol-discovery APIs with inclusive `recorder_start_date` and `recorder_end_date` filters while retaining the existing exact `recorder_date` contract.
+- Added `1D`, `5D`, `10D`, and `All` intraday presets plus explicit start/end session inputs. Presets select the latest available recorder partitions, so weekends and recorder gaps do not create artificial empty sessions.
+- Multi-session reads scan newest matching catalog evidence first when a limit applies, then return bars and rows chronologically for the chart and audit table. Exact duplicate event ids remain excluded only from the main series and retained in Raw Evidence.
+- Live verification found recorder partitions `2026-06-27`, `2026-07-11`, and `2026-07-13`. `1D` selected the latest partition; `5D` and `10D` selected all three. The final 5D SPY view loaded 198 unique delayed 5-second bars with zero desktop overflow; the active recorder continued increasing the count. Daily Bars remained available with 3,651 SPY rows.
+- Verification: focused market-data API/UI tests passed (`11 passed`); full suite passed (`212 passed`); `git diff --check` passed apart from existing line-ending warnings. The in-app viewport override remained at 1280px, so no new 390px runtime claim was made.
+
+## 2026-07-13 - First-Class Intraday Market Data Workspace
+
+- Promoted raw intraday recorder bars from the secondary Raw Evidence form into the primary Market Data store selector; `/platform/market-data-audit` now opens on Intraday Bars.
+- Extended raw symbol discovery with available/latest recorder dates. The UI automatically selects the latest date, limits symbols to that partition, defaults to 5-second stream bars, and exposes capture mode, delayed/live provenance, quality flags, and raw references.
+- Kept raw audit semantics explicit: the main OHLCV series removes exact duplicate raw event ids, while Raw Evidence retains every immutable record and duplicate/hash diagnostics.
+- Live browser verification on `2026-07-13` loaded `GLD/IWM/QQQ/SPY/TLT`, 52 unique SPY bars, 57 raw rows, five duplicate ids, and `IB delayed`. Daily Bars remained selectable and loaded 3,651 ClickHouse rows. Desktop/full-width table and 390px compact layouts had no horizontal overflow.
+- Verification: focused market-data API/UI tests passed (`10 passed`); full suite passed (`211 passed`); `git diff --check` passed apart from existing line-ending warnings.
+
+## 2026-07-13 - Five-Symbol IB Intraday Recorder Recovery
+
+- Diagnosed the scheduled recorder as process-live but data-degraded: `reqRealTimeBars` failed for all pilot symbols with IB 10089/420 API entitlement errors, historical gap-fill timed out inside the slow raw-write callback after SPY, and the stop script left the child holding client id 121.
+- Added independent historical-request timeouts so one symbol cannot abort later symbols, a buffered `reqHistoricalData(..., keepUpToDate=True)` recovery channel, and a timestamped delayed trade stream using TWS delayed last/size/timestamp plus delayed RTVolume callbacks.
+- The active testing feed aggregates delayed trades into raw 5-second bars and always records `ib_market_data_mode_delayed` plus `ib_delayed_trade_aggregate`. It is explicitly barred from signals and execution. Paid `reqRealTimeBars` remains selectable after API subscriptions are enabled.
+- Kept the initial runtime universe at `SPY/QQQ/TLT/GLD/IWM`; it is a recorder pilot, not the investible universe. Prospective capture now starts before synchronous recovery, and historical gap-fill runs only after a failed stream chunk.
+- Hardened service operations: parent state identifies the actual intraday channel and stores parsed child results; degraded children return nonzero; recorder shutdown stops both supervisor and child; health staleness allows the configured 300-second capture chunk plus startup margin.
+- Live evidence: bounded canary wrote 25 valid bars in 40 seconds, five per pilot symbol. The first supervised chunk wrote 32 bars (`SPY 7`, `QQQ 6`, `TLT 7`, `GLD 6`, `IWM 6`) with all five symbols covered, raw/catalog/outbox parity, and zero hash mismatches. Timestamps were about 15 minutes delayed, matching IB mode 3.
+- A later normal-service restart completed daily ClickHouse backfill, then IB began returning 10197 `No market data during competing live session` for all five subscriptions. The child now fails fast and the parent immediately reports `service_mode=degraded`, the exact source error, and scheduled historical recovery. Clear the competing IB live/TWS session before expecting prospective capture to resume.
+- Verification: focused recorder/service/script tests passed (`18 passed`); full suite passed (`211 passed`); PowerShell parsing, service-manifest JSON validation, and `git diff --check` passed apart from existing line-ending warnings.
+
+## 2026-07-13 - Monitored Strategy Workspace
+
+- Renamed global navigation to `Trading / Strategies / System / Market Data` across operational pages.
+- Added `config/strategy-monitoring.json` and split the registry into Monitored and Archived views. Current SOTA is always monitored; additional strategy ids can be added to the config.
+- Monitored strategies extend their audited artifact NAV through current golden daily bars using final audited holdings. The UI explicitly distinguishes artifact end from data-through date and discloses that this is mark-to-market, not full signal/rebalance replay.
+- Added click-through strategy detail pages and APIs with NAV versus benchmark, full/in-sample/OOS comparison metrics, holdings, leverage, country/currency exposures, attribution context, and generated rich-report access.
+- Live verification: 1 monitored SOTA, 89 archived; SOTA artifact end `2026-04-29`, monitored through `2026-07-10` with 49 extension points; detail rendered 8 metrics, 6 holdings, 3 comparison windows, 2 chart series, and the full report link.
+- Verification: full suite passed (`207 tests`); focused catalog/API/UI tests passed (`36 passed`); platform health remained `ok`.
+
 ## 2026-07-13 - Rebalance Execution Window And Missed Attribution
 
 - Added a configurable next-open execution deadline using `ST_EXECUTION_REBALANCE_TIMEOUT_MINUTES` (default 30) after `ST_EXECUTION_TWAP_START_TIME` in `ST_AUTOMATION_TIMEZONE`.

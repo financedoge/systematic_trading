@@ -9,9 +9,11 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from fastapi import APIRouter, HTTPException, Query, Request
+from fastapi.responses import FileResponse, HTMLResponse, Response
 from pydantic import BaseModel, Field
 
 from systematic_trading.backtest.accounting import FxConverter, PortfolioValuationService, quantize_money
+from systematic_trading.backtest.reporting import build_backtest_report_data, render_backtest_report_html
 from systematic_trading.config import AppSettings
 from systematic_trading.data.analytics import realized_volatility_from_bars
 from systematic_trading.data.providers import DataSourceManifest, ProviderRegistry
@@ -37,16 +39,22 @@ from systematic_trading.execution.broker import (
     InteractiveBrokersExecutionSynchronizer,
     InteractiveBrokersOrderRouter,
 )
-from systematic_trading.execution.reconciliation import IBPaperReconciliationReport, reconcile_ib_paper_account
+from systematic_trading.execution.reconciliation import (
+    IBPaperReconciliationReport,
+    load_latest_ib_reconciliation,
+    reconcile_ib_paper_account,
+)
 from systematic_trading.execution.window import (
     attach_execution_deadline,
     expire_due_proposals,
     proposal_is_expired,
 )
 from systematic_trading.live import (
+    AutomationAlertNotifier,
     LiveAccountSnapshotInput,
     SotaLiveRebalancePlan,
     TradingServiceStatus,
+    TradingServiceEvent,
     build_dashboard_pnl_snapshot,
     build_pnl_baseline,
     build_reference_pnl_snapshot,
@@ -55,8 +63,13 @@ from systematic_trading.live import (
 )
 from systematic_trading.portfolio.beta import BetaInstrumentState, RiskParityBetaSleeve
 from systematic_trading.portfolio.proposals import RebalanceProposalBuilder
-from systematic_trading.research import current_sota_definition, instruments_for_definition
-from systematic_trading.research.catalog import discover_strategy_artifacts
+from systematic_trading.research import (
+    MSCI_WORLD_PROXY_NAME,
+    MSCI_WORLD_PROXY_SYMBOL,
+    current_sota_definition,
+    instruments_for_definition,
+)
+from systematic_trading.research.catalog import discover_strategy_artifacts, summarize_nav_points
 from systematic_trading.services import ServiceGraph, build_service_graph
 from systematic_trading.storage.interfaces import TradingStore
 
@@ -189,6 +202,10 @@ class DashboardAccountSnapshotRefresh(BaseModel):
     position_count: int
     managed_accounts: list[str] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)
+
+
+class BrokerPortfolioResetInput(BaseModel):
+    confirm_reset_to_ib: bool = False
 
 
 class DashboardPnlCollapseInput(BaseModel):
@@ -448,6 +465,29 @@ def _submit_proposal_to_ib(
             records=[],
             validation_issues=validation_issues + ["confirm_submit is required before routing orders to IB."],
         )
+    latest_reconciliation = load_latest_ib_reconciliation(_settings(request))
+    if latest_reconciliation is None:
+        raise HTTPException(
+            status_code=409,
+            detail="Order routing is blocked until a fresh IB portfolio reconciliation succeeds.",
+        )
+    if latest_reconciliation.has_breaks:
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                "Order routing is blocked by an unresolved IB portfolio reconciliation break. "
+                "Refresh reconciliation and either resolve the mismatch or explicitly reset active state to IB."
+            ),
+        )
+    checked_at = latest_reconciliation.checked_at
+    if checked_at.tzinfo is None:
+        checked_at = checked_at.replace(tzinfo=UTC)
+    age_seconds = (datetime.now(tz=UTC) - checked_at.astimezone(UTC)).total_seconds()
+    if age_seconds > 180:
+        raise HTTPException(
+            status_code=409,
+            detail="Order routing is blocked because the latest IB portfolio reconciliation is older than 180 seconds.",
+        )
     result = order_router.submit_approved_proposal(
         proposal=route_proposal,
         store=store,
@@ -612,6 +652,65 @@ def refresh_dashboard_fills(
 
 @router.post("/dashboard/reconciliation/interactive-brokers", response_model=IBPaperReconciliationReport)
 def reconcile_dashboard_interactive_brokers(request: Request) -> IBPaperReconciliationReport:
+    previous = load_latest_ib_reconciliation(_settings(request))
+    report = _run_dashboard_reconciliation(request)
+    if report.has_breaks and _reconciliation_break_signature(previous) != _reconciliation_break_signature(report):
+        AutomationAlertNotifier(_settings(request), event_store=_store(request)).notify(
+            TradingServiceEvent(
+                timestamp=report.checked_at,
+                event_type="broker_reconciliation",
+                status="error",
+                message=(
+                    f"IB portfolio mismatch: {len(report.position_differences)} position difference(s), "
+                    f"{len(report.unmatched_local_orders)} unmatched local order(s), and "
+                    f"{len(report.unmatched_ib_fills)} unmatched IB fill(s)."
+                ),
+                details={
+                    "report_path": report.report_path,
+                    "account_snapshot_path": report.account_snapshot_path,
+                    "ib_position_count": report.ib_position_count,
+                    "local_order_count": report.local_order_count,
+                },
+            )
+        )
+    return report
+
+
+@router.get("/dashboard/reconciliation/interactive-brokers", response_model=IBPaperReconciliationReport | None)
+def latest_dashboard_interactive_brokers_reconciliation(request: Request) -> IBPaperReconciliationReport | None:
+    return load_latest_ib_reconciliation(_settings(request))
+
+
+@router.post(
+    "/dashboard/reconciliation/interactive-brokers/reset-to-broker",
+    response_model=IBPaperReconciliationReport,
+)
+def reset_dashboard_portfolio_to_interactive_brokers(
+    reset: BrokerPortfolioResetInput,
+    request: Request,
+) -> IBPaperReconciliationReport:
+    if not reset.confirm_reset_to_ib:
+        raise HTTPException(status_code=400, detail="confirm_reset_to_ib=true is required.")
+    latest = load_latest_ib_reconciliation(_settings(request))
+    if latest is None or not latest.has_breaks:
+        raise HTTPException(status_code=409, detail="A current unresolved IB reconciliation break is required.")
+    checked_at = latest.checked_at if latest.checked_at.tzinfo is not None else latest.checked_at.replace(tzinfo=UTC)
+    if (datetime.now(tz=UTC) - checked_at.astimezone(UTC)).total_seconds() > 180:
+        raise HTTPException(status_code=409, detail="Refresh IB reconciliation before confirming a broker reset.")
+    report = _run_dashboard_reconciliation(
+        request,
+        record_pnl_reset_baseline=True,
+        confirm_paper_reset=True,
+    )
+    return report
+
+
+def _run_dashboard_reconciliation(
+    request: Request,
+    *,
+    record_pnl_reset_baseline: bool = False,
+    confirm_paper_reset: bool = False,
+) -> IBPaperReconciliationReport:
     execution_client = getattr(request.app.state, "ib_execution_sync_client", None)
     account_client = getattr(request.app.state, "ib_account_snapshot_client", None)
     try:
@@ -620,11 +719,21 @@ def reconcile_dashboard_interactive_brokers(request: Request) -> IBPaperReconcil
             store=_store(request),
             execution_client=execution_client,
             account_snapshot_client=account_client,
-            record_pnl_reset_baseline=False,
-            confirm_paper_reset=False,
+            record_pnl_reset_baseline=record_pnl_reset_baseline,
+            confirm_paper_reset=confirm_paper_reset,
         )
     except Exception as exc:
         raise HTTPException(status_code=502, detail=f"Could not reconcile IB paper account: {exc}") from exc
+
+
+def _reconciliation_break_signature(report: IBPaperReconciliationReport | None) -> tuple[object, ...] | None:
+    if report is None or not report.has_breaks:
+        return None
+    return (
+        tuple((row.symbol, row.local_quantity, row.ib_quantity) for row in report.position_differences),
+        tuple(row.local_order_id for row in report.unmatched_local_orders),
+        tuple((row.symbol, row.broker_order_id, row.order_ref) for row in report.unmatched_ib_fills),
+    )
 
 
 @router.get("/dashboard/pnl", response_model=PnLSnapshot)
@@ -638,17 +747,169 @@ def dashboard_pnl(
 @router.get("/strategies")
 def strategy_catalog(request: Request) -> dict[str, Any]:
     settings = _settings(request)
+    store = _store(request)
     artifacts = discover_strategy_artifacts(
         settings.data_dir / "backtests",
         current_sota_definition().key,
     )
+    monitored_ids, monitoring_method, monitoring_notes = _strategy_monitoring_config(settings)
+    rows: list[dict[str, Any]] = []
+    warnings: list[str] = []
+    for artifact in artifacts:
+        row = artifact.as_dict()
+        row["artifact_end_date"] = row["end_date"]
+        row["lifecycle"] = "monitored" if artifact.is_sota or artifact.strategy_id in monitored_ids else "archived"
+        row["monitoring_method"] = monitoring_method if row["lifecycle"] == "monitored" else None
+        path = settings.data_dir / "backtests" / artifact.artifact_path
+        row["report_available"] = row["lifecycle"] == "monitored" or path.with_suffix(".html").exists()
+        if row["lifecycle"] == "monitored":
+            payload = _load_json(path, warnings)
+            if payload is not None:
+                points, _artifact_end, extension_count = _strategy_nav_points(payload, store, warnings)
+                metrics = summarize_nav_points([(point_date, float(nav)) for point_date, nav in points])
+                row.update(metrics)
+                row["monitoring_extension_count"] = extension_count
+        rows.append(row)
     return {
         "registry_type": "artifact_catalog",
-        "theoretical_performance_source": "backtest_nav",
+        "theoretical_performance_source": "backtest_nav_plus_monitored_mark_to_market",
         "current_sota_id": next((item.strategy_id for item in artifacts if item.is_sota), None),
-        "strategies": [item.as_dict() for item in artifacts],
-        "warnings": [] if artifacts else ["No backtest strategy artifacts with NAV series were discovered."],
+        "monitoring_notes": monitoring_notes,
+        "strategies": rows,
+        "warnings": warnings if artifacts else ["No backtest strategy artifacts with NAV series were discovered."],
     }
+
+
+@router.get("/strategies/{strategy_id}")
+def strategy_detail(strategy_id: str, request: Request) -> dict[str, Any]:
+    settings = _settings(request)
+    store = _store(request)
+    artifacts = discover_strategy_artifacts(settings.data_dir / "backtests", current_sota_definition().key)
+    artifact = next((item for item in artifacts if item.strategy_id == strategy_id), None)
+    if artifact is None:
+        raise HTTPException(status_code=404, detail=f"Unknown strategy: {strategy_id}")
+    path = settings.data_dir / "backtests" / artifact.artifact_path
+    warnings: list[str] = []
+    payload = _load_json(path, warnings)
+    if payload is None:
+        raise HTTPException(status_code=422, detail=f"Could not load strategy artifact: {artifact.artifact_path}")
+    monitored_ids, monitoring_method, monitoring_notes = _strategy_monitoring_config(settings)
+    lifecycle = "monitored" if artifact.is_sota or artifact.strategy_id in monitored_ids else "archived"
+    raw_points, artifact_end, extension_count = _strategy_nav_points(payload, store, warnings) if lifecycle == "monitored" else (
+        _raw_nav_points(payload), artifact.end_date, 0
+    )
+    points = [(point_date, float(nav)) for point_date, nav in raw_points]
+    metrics = summarize_nav_points(points)
+    snapshot = payload.get("final_snapshot") if isinstance(payload.get("final_snapshot"), dict) else {}
+    holdings = artifact.as_dict()["allocation"]
+    nav = float(snapshot.get("nav_cnh") or 0)
+    gross = float(snapshot.get("gross_exposure_cnh") or 0)
+    country_exposure = snapshot.get("country_exposure_cnh") or {}
+    currency_exposure = snapshot.get("currency_exposure_cnh") or {}
+    if lifecycle == "monitored" and points:
+        marked = _strategy_marked_snapshot(payload, store, points[-1][0], warnings)
+        if marked is not None:
+            marked_snapshot, holdings = marked
+            nav = float(marked_snapshot.nav_cnh)
+            gross = float(marked_snapshot.gross_exposure_cnh)
+            country_exposure = marked_snapshot.country_exposure_cnh
+            currency_exposure = marked_snapshot.currency_exposure_cnh
+    comparison = _strategy_comparison_payload(settings, artifact.is_sota, warnings)
+    benchmark = _strategy_benchmark_points(settings, artifact.is_sota, warnings)
+    return {
+        **artifact.as_dict(),
+        **metrics,
+        "artifact_end_date": artifact_end.isoformat() if artifact_end else artifact.end_date.isoformat(),
+        "lifecycle": lifecycle,
+        "monitoring_method": monitoring_method if lifecycle == "monitored" else None,
+        "monitoring_notes": monitoring_notes,
+        "monitoring_extension_count": extension_count,
+        "nav_series": [{"trade_date": point_date.isoformat(), "nav_cnh": value} for point_date, value in points],
+        "benchmark_series": benchmark,
+        "comparison": comparison,
+        "holdings": sorted(holdings, key=lambda row: row["weight"], reverse=True),
+        "gross_exposure_cnh": gross or None,
+        "leverage": gross / nav if nav > 0 else None,
+        "country_exposure_cnh": country_exposure,
+        "currency_exposure_cnh": currency_exposure,
+        "report_available": lifecycle == "monitored" or path.with_suffix(".html").exists(),
+        "report_url": (
+            f"/api/v1/strategies/{strategy_id}/report"
+            if lifecycle == "monitored" or path.with_suffix(".html").exists()
+            else None
+        ),
+        "warnings": warnings,
+    }
+
+
+@router.get("/strategies/{strategy_id}/report")
+def strategy_report(strategy_id: str, request: Request) -> Response:
+    settings = _settings(request)
+    store = _store(request)
+    artifacts = discover_strategy_artifacts(settings.data_dir / "backtests", current_sota_definition().key)
+    artifact = next((item for item in artifacts if item.strategy_id == strategy_id), None)
+    if artifact is None:
+        raise HTTPException(status_code=404, detail=f"Unknown strategy: {strategy_id}")
+    report_path = (settings.data_dir / "backtests" / artifact.artifact_path).with_suffix(".html")
+    monitored_ids, monitoring_method, monitoring_notes = _strategy_monitoring_config(settings)
+    lifecycle = "monitored" if artifact.is_sota or artifact.strategy_id in monitored_ids else "archived"
+    if lifecycle == "archived":
+        if not report_path.exists():
+            raise HTTPException(status_code=404, detail=f"No generated report is available for {strategy_id}.")
+        return FileResponse(report_path, media_type="text/html")
+
+    warnings: list[str] = []
+    result_path = settings.data_dir / "backtests" / artifact.artifact_path
+    payload = _load_json(result_path, warnings)
+    if payload is None:
+        raise HTTPException(status_code=422, detail=f"Could not load strategy artifact: {artifact.artifact_path}")
+    points, artifact_end, extension_count = _strategy_nav_points(payload, store, warnings)
+    if not points:
+        raise HTTPException(status_code=422, detail=f"Strategy artifact has no usable NAV series: {artifact.artifact_path}")
+
+    monitored_payload = _strategy_report_payload(payload, points)
+    market_prices, market_fx_rates = _strategy_report_market_data(monitored_payload, store)
+    comparison = _strategy_comparison_payload(settings, artifact.is_sota, warnings)
+    benchmark_series = _strategy_monitored_benchmark_series(settings, store, artifact.is_sota, warnings)
+    extra_benchmarks: list[dict[str, Any]] = []
+    if artifact.is_sota:
+        msci_series = _strategy_market_benchmark_series(store, MSCI_WORLD_PROXY_SYMBOL)
+        if msci_series:
+            extra_benchmarks.append(
+                {
+                    "id": "msci_world",
+                    "name": MSCI_WORLD_PROXY_NAME,
+                    "nav_series": msci_series,
+                }
+            )
+    report, report_warnings = build_backtest_report_data(
+        result=monitored_payload,
+        result_path=result_path,
+        split_date=comparison.get("split_date") if comparison else None,
+        benchmark_nav_series=benchmark_series,
+        benchmark_name=comparison.get("baseline_name") if comparison else None,
+        extra_benchmarks=extra_benchmarks,
+        signal_diagnostics=comparison.get("signal_diagnostics") if comparison else None,
+        market_prices=market_prices,
+        market_fx_rates=market_fx_rates,
+    )
+    monitored_through = points[-1][0]
+    report.update(
+        {
+            "title": artifact.name,
+            "database": "Configured golden market-data store",
+            "monitoring": {
+                "lifecycle": lifecycle,
+                "artifactEndDate": (artifact_end or artifact.end_date).isoformat(),
+                "monitoredThrough": monitored_through.isoformat(),
+                "extensionCount": extension_count,
+                "method": monitoring_method,
+                "notes": monitoring_notes,
+            },
+            "warnings": _dedupe_messages([*warnings, *report_warnings]),
+        }
+    )
+    return HTMLResponse(render_backtest_report_html(report))
 
 
 @router.get("/dashboard/execution-quality", response_model=DashboardExecutionQuality)
@@ -947,6 +1208,167 @@ def _strategy_result_path(settings: AppSettings) -> Path:
     return settings.data_dir / "backtests" / "sota_current" / f"{current_sota_definition().key}.json"
 
 
+def _strategy_monitoring_config(settings: AppSettings) -> tuple[set[str], str, str]:
+    path = settings.strategy_monitoring_config_path
+    if not path.is_absolute():
+        path = Path.cwd() / path
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        payload = {}
+    monitored = {str(item) for item in payload.get("monitored_strategy_ids", [])}
+    monitored.add(current_sota_definition().key)
+    return (
+        monitored,
+        str(payload.get("method") or "daily_mark_to_market_final_holdings"),
+        str(payload.get("notes") or "Monitored strategies use current golden market data."),
+    )
+
+
+def _raw_nav_points(payload: dict[str, Any]) -> list[tuple[date, Decimal]]:
+    points: list[tuple[date, Decimal]] = []
+    for item in payload.get("nav_series", []):
+        if not isinstance(item, dict):
+            continue
+        try:
+            point_date = date.fromisoformat(str(item["trade_date"]))
+            nav = Decimal(str(item["nav_cnh"]))
+        except (KeyError, ValueError):
+            continue
+        if nav > 0:
+            points.append((point_date, nav))
+    return sorted(points)
+
+
+def _strategy_comparison_payload(
+    settings: AppSettings,
+    is_sota: bool,
+    warnings: list[str],
+) -> dict[str, Any] | None:
+    if not is_sota:
+        return None
+    payload = _load_json(settings.data_dir / "backtests" / "sota_current" / "sota_vs_benchmark.json", warnings)
+    if payload is None:
+        return None
+    return {
+        "baseline_name": payload.get("baselineName"),
+        "candidate_name": payload.get("candidateName"),
+        "split_date": payload.get("splitDate"),
+        "metrics": payload.get("metrics"),
+        "decision_diagnostics": payload.get("decisionDiagnostics"),
+        "signal_diagnostics": payload.get("signalDiagnostics"),
+    }
+
+
+def _strategy_benchmark_points(
+    settings: AppSettings,
+    is_sota: bool,
+    warnings: list[str],
+) -> list[dict[str, Any]]:
+    if not is_sota:
+        return []
+    payload = _load_json(settings.data_dir / "backtests" / "sota_current" / "risk_parity.json", warnings)
+    if payload is None:
+        return []
+    return [
+        {"trade_date": point_date.isoformat(), "nav_cnh": float(nav)}
+        for point_date, nav in _raw_nav_points(payload)
+    ]
+
+
+def _strategy_monitored_benchmark_series(
+    settings: AppSettings,
+    store: TradingStore,
+    is_sota: bool,
+    warnings: list[str],
+) -> list[dict[str, Any]] | None:
+    if not is_sota:
+        return None
+    payload = _load_json(settings.data_dir / "backtests" / "sota_current" / "risk_parity.json", warnings)
+    if payload is None:
+        return None
+    points, _, _ = _strategy_nav_points(payload, store, warnings)
+    return [
+        {"trade_date": point_date.isoformat(), "nav_cnh": float(nav)}
+        for point_date, nav in points
+    ]
+
+
+def _strategy_report_payload(
+    payload: dict[str, Any],
+    points: list[tuple[date, Decimal]],
+) -> dict[str, Any]:
+    rows_by_date = {
+        str(row.get("trade_date")): row
+        for row in payload.get("nav_series", [])
+        if isinstance(row, dict) and row.get("trade_date") is not None
+    }
+    nav_series = []
+    for point_date, nav in points:
+        trade_date = point_date.isoformat()
+        row = dict(rows_by_date.get(trade_date, {}))
+        row.update({"trade_date": trade_date, "nav_cnh": str(nav)})
+        nav_series.append(row)
+    return {**payload, "nav_series": nav_series}
+
+
+def _strategy_report_market_data(
+    payload: dict[str, Any],
+    store: TradingStore,
+) -> tuple[dict[str, dict[str, float]], dict[str, float]]:
+    symbols: set[str] = set()
+    for proposal in payload.get("proposals", []):
+        if not isinstance(proposal, dict):
+            continue
+        for key in ("targets", "orders"):
+            for row in proposal.get(key, []):
+                if isinstance(row, dict) and row.get("symbol"):
+                    symbols.add(str(row["symbol"]).upper())
+    snapshot = payload.get("final_snapshot")
+    if isinstance(snapshot, dict):
+        for row in snapshot.get("positions", []):
+            if isinstance(row, dict) and row.get("symbol"):
+                symbols.add(str(row["symbol"]).upper())
+    prices = {
+        symbol: {
+            bar.trade_date.isoformat(): float(bar.close)
+            for bar in store.list_price_bars(symbol)
+        }
+        for symbol in sorted(symbols)
+    }
+    fx_rates = {
+        rate.rate_date.isoformat(): float(rate.rate)
+        for rate in store.list_fx_rates(Currency.USD)
+    }
+    return prices, fx_rates
+
+
+def _strategy_market_benchmark_series(
+    store: TradingStore,
+    symbol: str,
+) -> list[dict[str, Any]]:
+    bars = store.list_price_bars(symbol.upper())
+    rates = store.list_fx_rates(Currency.USD)
+    if not bars or not rates:
+        return []
+    rate_index = 0
+    current_rate: Decimal | None = None
+    series: list[dict[str, Any]] = []
+    for bar in bars:
+        while rate_index < len(rates) and rates[rate_index].rate_date <= bar.trade_date:
+            current_rate = rates[rate_index].rate
+            rate_index += 1
+        if current_rate is None:
+            continue
+        series.append(
+            {
+                "trade_date": bar.trade_date.isoformat(),
+                "nav_cnh": float(bar.close * current_rate),
+            }
+        )
+    return series
+
+
 def _load_json(path: Path, warnings: list[str]) -> dict[str, Any] | None:
     if not path.exists():
         warnings.append(f"Missing dashboard source: {path}")
@@ -1057,6 +1479,50 @@ def _strategy_mark_to_market_extension(
             "rerun the full strategy artifact to include new rebalance decisions."
         )
     return extension
+
+
+def _strategy_marked_snapshot(
+    payload: dict[str, Any],
+    store: TradingStore,
+    as_of: date,
+    warnings: list[str],
+) -> tuple[PortfolioSnapshot, list[dict[str, Any]]] | None:
+    raw_snapshot = payload.get("final_snapshot")
+    if not isinstance(raw_snapshot, dict):
+        return None
+    try:
+        snapshot = PortfolioSnapshot.model_validate(raw_snapshot)
+    except ValueError:
+        return None
+    positions = [position for position in snapshot.positions if position.quantity > 0]
+    marked_positions: list[PortfolioPosition] = []
+    for position in positions:
+        bars = store.list_price_bars(position.symbol.upper(), end_date=as_of)
+        price = bars[-1].close if bars else position.market_price
+        if not bars:
+            warnings.append(f"{position.symbol}: no monitored price on or before {as_of}; retained artifact price.")
+        marked_positions.append(position.model_copy(update={"market_price": price}))
+    currencies = {balance.currency for balance in snapshot.cash} | {position.currency for position in positions}
+    fx_to_cnh = _fx_to_cnh(store, currencies, as_of, warnings)
+    if fx_to_cnh is None:
+        return None
+    valuation = PortfolioValuationService.build_snapshot(
+        as_of=as_of,
+        positions=marked_positions,
+        cash=snapshot.cash,
+        converter=FxConverter(fx_to_cnh),
+    )
+    values = [
+        {
+            "symbol": position.symbol,
+            "value_cnh": float(Decimal(position.quantity) * position.market_price * fx_to_cnh[position.currency]),
+        }
+        for position in marked_positions
+    ]
+    total = sum(item["value_cnh"] for item in values)
+    for item in values:
+        item["weight"] = item["value_cnh"] / total if total > 0 else 0
+    return valuation, sorted(values, key=lambda item: item["weight"], reverse=True)
 
 
 def _account_nav_points(

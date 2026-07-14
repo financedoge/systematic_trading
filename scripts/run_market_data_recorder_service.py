@@ -32,6 +32,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--use-seed-universe", action="store_true")
     parser.add_argument("--max-symbols", type=int, default=None)
     parser.add_argument("--market-data-mode", choices=[item.value for item in IBMarketDataMode if item != IBMarketDataMode.UNKNOWN], default=IBMarketDataMode.LIVE.value)
+    parser.add_argument(
+        "--intraday-feed",
+        choices=["delayed-trades", "historical-live", "realtime"],
+        default="delayed-trades",
+        help="IB 5-second feed channel. delayed-trades aggregates timestamped delayed trade callbacks.",
+    )
     parser.add_argument("--client-id", type=int, default=None)
     parser.add_argument("--timezone", default="America/New_York")
     parser.add_argument("--market-open", default="09:30")
@@ -42,6 +48,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--gap-fill-interval-minutes", type=int, default=15)
     parser.add_argument("--gap-fill-max-bars-per-symbol", type=int, default=2000)
     parser.add_argument("--historical-bar-size", default="5 secs")
+    parser.add_argument("--historical-live-initial-duration", default="3600 S")
+    parser.add_argument("--historical-live-write-lookback-seconds", type=int, default=60)
     parser.add_argument("--what-to-show", default="TRADES")
     parser.add_argument("--disable-daily-backfill", action="store_true")
     parser.add_argument("--daily-backfill-symbols", default=None, help="Comma-separated daily symbols. Defaults to symbols in ClickHouse.")
@@ -88,6 +96,7 @@ def main(argv: list[str] | None = None) -> int:
         message="Market data recorder service started.",
         symbols=symbols,
         market_data_mode=args.market_data_mode,
+        intraday_feed=args.intraday_feed,
         timezone=args.timezone,
         market_open=args.market_open,
         market_close=args.market_close,
@@ -149,7 +158,14 @@ def main(argv: list[str] | None = None) -> int:
                 time.sleep(args.poll_seconds)
                 continue
 
-            if _should_gap_fill(now, last_gap_fill_at, args.gap_fill_interval_minutes):
+            # Keep the prospective feed primary. A synchronous historical pull can
+            # take minutes because every raw record is durably written before the
+            # next callback; use it only to recover after a failed stream chunk.
+            if (
+                last_child_status is not None
+                and last_child_status.get("returncode") not in (None, 0)
+                and _should_gap_fill(now, last_gap_fill_at, args.gap_fill_interval_minutes)
+            ):
                 _write_state(
                     state_path,
                     running=True,
@@ -184,26 +200,59 @@ def main(argv: list[str] | None = None) -> int:
                 state_path,
                 running=True,
                 mode="recording",
-                message="Market data recorder service running realtime capture chunk.",
+                message=(
+                    "Market data recorder service running IB historical live-update 5-second feed."
+                    if args.intraday_feed == "historical-live"
+                    else "Market data recorder service running IB delayed trade 5-second feed."
+                    if args.intraday_feed == "delayed-trades"
+                    else "Market data recorder service running IB realtime 5-second feed."
+                ),
                 symbols=symbols,
                 session=session,
                 last_gap_fill_at=last_gap_fill_at,
                 last_daily_backfill_at=last_daily_backfill_at,
                 last_child_status=last_child_status,
                 last_daily_backfill_status=last_daily_backfill_status,
+                intraday_feed=args.intraday_feed,
             )
             last_child_status = _run_child(
-                mode="realtime",
+                mode=args.intraday_feed,
                 symbols=symbols,
                 market_data_mode=args.market_data_mode,
                 client_id=args.client_id,
                 duration_seconds=chunk_seconds,
+                historical_duration=(
+                    args.historical_live_initial_duration
+                    if args.intraday_feed == "historical-live"
+                    else None
+                ),
+                historical_bar_size=(
+                    args.historical_bar_size if args.intraday_feed == "historical-live" else None
+                ),
+                historical_live_write_lookback_seconds=(
+                    args.historical_live_write_lookback_seconds
+                    if args.intraday_feed == "historical-live"
+                    else None
+                ),
                 what_to_show=args.what_to_show,
                 child_state_path=child_state_path,
                 child_pid_path=child_pid_path,
                 logger=logger,
             )
             if last_child_status.get("returncode") != 0:
+                _write_state(
+                    state_path,
+                    running=True,
+                    mode="degraded",
+                    message="Market data recorder feed failed; historical recovery is scheduled.",
+                    symbols=symbols,
+                    session=session,
+                    last_gap_fill_at=last_gap_fill_at,
+                    last_daily_backfill_at=last_daily_backfill_at,
+                    last_child_status=last_child_status,
+                    last_daily_backfill_status=last_daily_backfill_status,
+                    intraday_feed=args.intraday_feed,
+                )
                 time.sleep(args.poll_seconds)
     except KeyboardInterrupt:
         logger.warning("recorder_service_interrupted", message="Market data recorder service interrupted by operator.")
@@ -240,6 +289,7 @@ def _run_child(
     historical_bar_size: str | None = None,
     historical_end_datetime: str | None = None,
     max_bars_per_symbol: int | None = None,
+    historical_live_write_lookback_seconds: int | None = None,
 ) -> dict[str, object]:
     command = [
         sys.executable,
@@ -269,6 +319,13 @@ def _run_child(
         command.extend(["--historical-end-datetime", historical_end_datetime])
     if max_bars_per_symbol is not None:
         command.extend(["--max-bars-per-symbol", str(max_bars_per_symbol)])
+    if historical_live_write_lookback_seconds is not None:
+        command.extend(
+            [
+                "--historical-live-write-lookback-seconds",
+                str(historical_live_write_lookback_seconds),
+            ]
+        )
     started_at = datetime.now(tz=UTC)
     logger.info("recorder_service_child_starting", message="Starting recorder child capture.", mode=mode, symbols=symbols)
     result = subprocess.run(command, cwd=REPO_ROOT, capture_output=True, text=True, check=False)
@@ -281,6 +338,12 @@ def _run_child(
         "stdout_tail": result.stdout[-2000:],
         "stderr_tail": result.stderr[-2000:],
     }
+    for line in reversed(result.stdout.splitlines()):
+        try:
+            status["child_result"] = json.loads(line)
+            break
+        except json.JSONDecodeError:
+            continue
     level = logger.info if result.returncode == 0 else logger.error
     level(
         "recorder_service_child_completed",
@@ -358,6 +421,7 @@ def _write_state(
     last_daily_backfill_at: datetime | None,
     last_child_status: dict[str, object] | None,
     last_daily_backfill_status: dict[str, object] | None,
+    intraday_feed: str | None = None,
 ) -> None:
     details = {
         "service_mode": mode,
@@ -366,6 +430,7 @@ def _write_state(
         "last_daily_backfill_at": last_daily_backfill_at.isoformat() if last_daily_backfill_at else None,
         "last_child_status": last_child_status,
         "last_daily_backfill_status": last_daily_backfill_status,
+        "intraday_feed": intraday_feed,
     }
     if session is not None:
         details.update(
@@ -402,7 +467,12 @@ def _child_last_error(
         returncode = status.get("returncode")
         if returncode not in (None, 0):
             stderr = str(status.get("stderr_tail") or "").strip()
-            suffix = f": {stderr[-300:]}" if stderr else ""
+            child_result = status.get("child_result")
+            run = child_result.get("run") if isinstance(child_result, dict) else None
+            errors = run.get("errors") if isinstance(run, dict) else None
+            source_error = str(errors[-1]) if isinstance(errors, list) and errors else ""
+            detail = stderr or source_error
+            suffix = f": {detail[-300:]}" if detail else ""
             return f"{label} failed with return code {returncode}{suffix}"
     return None
 

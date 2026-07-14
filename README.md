@@ -83,13 +83,15 @@ The platform health view includes `ib_tws_api`, populated by:
 
 This checks the paper TWS API path by waiting for `nextValidId`; it does not attempt to automate TWS login or 2FA recovery.
 
-After an IB paper-account reset, generate a reconciliation report before trusting local PnL or exposure:
+The trading-management loop and Trading page refresh IB positions, cash, and executions and persist a reconciliation report. An unresolved mismatch raises an alert, blocks EOD PnL/rebalance staging and IB routing, and appears in `IB Portfolio Reconciliation` on `/operator`. The trader can explicitly reset active portfolio/PnL state to the fresh IB snapshot; historical orders and fills remain immutable audit history.
+
+After an IB paper-account reset, the same report can be generated from the CLI:
 
 ```powershell
 .\.venv\Scripts\python.exe .\scripts\reconcile_ib_paper_account.py
 ```
 
-If the report confirms the broker paper account is reset to zero positions, the operator can explicitly create an empty PnL reset baseline:
+If the report confirms the broker paper account is reset, the operator can use `Reset local to IB` on the Trading page or explicitly create the baseline from the CLI:
 
 ```powershell
 .\.venv\Scripts\python.exe .\scripts\reconcile_ib_paper_account.py `
@@ -103,13 +105,15 @@ Skip the market-data recorder service for maintenance:
 .\scripts\start_local_platform.ps1 -SkipMarketDataRecorder
 ```
 
-The recorder service starts in `-RecorderMarketDataMode live` by default, stays idle after hours and on weekends, and runs historical gap-fill before live capture after startup/restart during market hours. Use `-RecorderMarketDataMode delayed` only for controlled testing.
+The recorder service starts with the five-symbol `SPY/QQQ/TLT/GLD/IWM` pilot and `-RecorderIntradayFeed delayed-trades`. It aggregates timestamped IB delayed trade callbacks into raw 5-second bars, tags them as delayed, and never exposes them as trading-decision data. The paid `reqRealTimeBars` path remains available with `-RecorderIntradayFeed realtime` after API market-data subscriptions are verified. The service stays idle after hours and on weekends; synchronous historical gap-fill runs only after a failed stream chunk so it cannot block a healthy prospective feed.
 
 The recorder service also runs ClickHouse daily-bar backfill on startup and then on an interval, including after-hours/weekends. The default path repairs `market_data.daily_bars` directly from Yahoo adjusted daily bars, with IB historical daily bars as fallback.
 
 The local operator startup path now defaults to `ST_TRANSACTIONAL_STORE_BACKEND=postgres` and `ST_MARKET_DATA_STORE_BACKEND=clickhouse`. Active dashboard, proposal, broker-record, PnL, and event-outbox state use Postgres, while daily bars and FX reads use ClickHouse. SQLite remains only a legacy fallback and migration source.
 
 Rebalance proposals are time-bound to preserve next-open parity with the backtest. The default execution deadline is 30 minutes after the configured TWAP start on the intended trade date. Change it with `ST_EXECUTION_REBALANCE_TIMEOUT_MINUTES`; expired pending or retryable proposals become `missed`, cannot be approved or resubmitted, and are retained in execution-quality analysis.
+
+The strategy workspace at `/strategies` separates Monitored and Archived artifacts. Membership is configured in `config/strategy-monitoring.json`; current SOTA is always monitored. Monitored results are extended daily through the latest golden market data using the last audited holdings, with artifact end and monitoring method shown explicitly. Click any strategy for performance, benchmark metrics, holdings, leverage, exposure/attribution, and its generated full report when available.
 
 ## Optional Tushare data
 

@@ -29,13 +29,23 @@ from systematic_trading.storage import create_transactional_store
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Record Interactive Brokers paper market data to immutable raw JSONL.")
-    parser.add_argument("--mode", choices=["realtime", "historical-smoke"], default="realtime")
+    parser.add_argument(
+        "--mode",
+        choices=["realtime", "delayed-trades", "historical-live", "historical-smoke"],
+        default="realtime",
+    )
     parser.add_argument("--symbols", default=None, help="Comma-separated symbols. Defaults to SPY unless --use-seed-universe is passed.")
     parser.add_argument("--use-seed-universe", action="store_true", help="Use the ETF seed list from config/market-data-recorder-sources.json.")
     parser.add_argument("--max-symbols", type=int, default=None, help="Limit symbols after resolving the configured list.")
     parser.add_argument("--duration-seconds", type=float, default=60.0, help="Runtime for realtime mode.")
     parser.add_argument("--historical-duration", default="1 D", help="IB duration string for historical-smoke mode.")
     parser.add_argument("--historical-bar-size", default="5 secs", help="IB bar size for historical-smoke mode.")
+    parser.add_argument(
+        "--historical-live-write-lookback-seconds",
+        type=int,
+        default=60,
+        help="Initial HMDS tail to persist before prospective live updates.",
+    )
     parser.add_argument("--historical-end-datetime", default="", help="IB endDateTime. Empty means now per TWS.")
     parser.add_argument("--max-bars-per-symbol", type=int, default=10, help="Bound historical-smoke writes per symbol.")
     parser.add_argument("--market-data-mode", choices=[item.value for item in IBMarketDataMode if item != IBMarketDataMode.UNKNOWN], default=IBMarketDataMode.LIVE.value)
@@ -95,7 +105,9 @@ def main(argv: list[str] | None = None) -> int:
         if args.request_spacing_seconds is not None
         else (
             source_policy.historical_request_spacing_seconds
-            if args.mode == "historical-smoke"
+            if args.mode in {"historical-live", "historical-smoke"}
+            else 0.25
+            if args.mode == "delayed-trades"
             else source_policy.realtime_subscription_spacing_seconds
         )
     )
@@ -142,6 +154,32 @@ def main(argv: list[str] | None = None) -> int:
                 request_burst=request_burst,
                 max_bars_per_symbol=args.max_bars_per_symbol,
             )
+        elif args.mode == "historical-live":
+            result = client.record_historical_live_bars(
+                profile=profile,
+                symbols=symbols,
+                recorder=recorder,
+                duration_seconds=args.duration_seconds,
+                initial_duration=args.historical_duration,
+                initial_write_lookback_seconds=args.historical_live_write_lookback_seconds,
+                bar_size=args.historical_bar_size,
+                market_data_mode=market_data_mode,
+                what_to_show=args.what_to_show,
+                use_rth=not args.include_outside_rth,
+                request_spacing_seconds=request_spacing_seconds,
+                request_rate_per_second=request_rate_per_second,
+                request_burst=request_burst,
+            )
+        elif args.mode == "delayed-trades":
+            result = client.record_delayed_trade_bars(
+                profile=profile,
+                symbols=symbols,
+                recorder=recorder,
+                duration_seconds=args.duration_seconds,
+                request_spacing_seconds=request_spacing_seconds,
+                request_rate_per_second=request_rate_per_second,
+                request_burst=request_burst,
+            )
         else:
             result = client.record_realtime_bars(
                 profile=profile,
@@ -155,13 +193,26 @@ def main(argv: list[str] | None = None) -> int:
                 request_rate_per_second=request_rate_per_second,
                 request_burst=request_burst,
             )
+        exit_code = 0 if result.completed_successfully else 1
+        failed_message = (
+            f"No usable intraday data for: {', '.join(result.failed_symbols)}."
+            if result.failed_symbols
+            else None
+        )
+        completion_message = (
+            "IB market data recorder completed."
+            if result.completed_successfully
+            else "IB market data recorder completed with missing symbol coverage."
+        )
         recorder.write_state(
             running=False,
-            message="IB market data recorder completed.",
+            last_error=failed_message,
+            message=completion_message,
         )
-        logger.info(
-            "recorder_run_completed",
-            message="IB market data recorder completed.",
+        log = logger.info if result.completed_successfully else logger.error
+        log(
+            "recorder_run_completed" if result.completed_successfully else "recorder_run_degraded",
+            message=completion_message,
             run=result,
             summary=recorder.summary(),
             state_path=state_path,
@@ -170,7 +221,7 @@ def main(argv: list[str] | None = None) -> int:
         print(
             json.dumps(
                 {
-                    "status": "completed",
+                    "status": "completed" if result.completed_successfully else "degraded",
                     "profile": profile.model_dump(mode="json"),
                     "run": result.model_dump(mode="json"),
                     "recorder": recorder.summary().model_dump(mode="json"),

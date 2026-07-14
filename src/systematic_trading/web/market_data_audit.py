@@ -72,6 +72,8 @@ class MarketDataAuditSummary(BaseModel):
     data_kind: str | None = None
     symbol: str | None = None
     recorder_date: date | None = None
+    recorder_start_date: date | None = None
+    recorder_end_date: date | None = None
     entry_count: int
     rows_returned: int
     records_read: int
@@ -97,6 +99,10 @@ class MarketDataAuditSymbolsResponse(BaseModel):
     environment: str | None = None
     data_kind: str | None = None
     recorder_date: date | None = None
+    recorder_start_date: date | None = None
+    recorder_end_date: date | None = None
+    recorder_dates: list[date] = Field(default_factory=list)
+    latest_recorder_date: date | None = None
     symbols: list[str] = Field(default_factory=list)
     records_read: int
     records_invalid: int
@@ -207,7 +213,10 @@ def market_data_audit_symbols(
     environment: str | None = Query(default=None),
     data_kind: str | None = Query(default="bar"),
     recorder_date: date | None = Query(default=None),
+    recorder_start_date: date | None = Query(default=None),
+    recorder_end_date: date | None = Query(default=None),
 ) -> MarketDataAuditSymbolsResponse:
+    _validate_recorder_range(recorder_start_date, recorder_end_date)
     settings = request.app.state.settings
     storage_policy = _load_storage_policy(settings.market_data_storage_policy_path)
     catalog_result = query_raw_catalog(
@@ -217,13 +226,23 @@ def market_data_audit_symbols(
         data_kind=data_kind,
         day=recorder_date,
     )
-    symbols = sorted({entry.symbol.upper() for entry in catalog_result.entries if entry.symbol})
+    entries = [
+        entry
+        for entry in catalog_result.entries
+        if _entry_in_recorder_range(entry, recorder_start_date, recorder_end_date)
+    ]
+    symbols = sorted({entry.symbol.upper() for entry in entries if entry.symbol})
+    recorder_dates = sorted({entry.recorder_date for entry in entries})
     return MarketDataAuditSymbolsResponse(
         root=catalog_result.root,
         source=source,
         environment=environment,
         data_kind=data_kind,
         recorder_date=recorder_date,
+        recorder_start_date=recorder_start_date,
+        recorder_end_date=recorder_end_date,
+        recorder_dates=recorder_dates,
+        latest_recorder_date=recorder_dates[-1] if recorder_dates else None,
         symbols=symbols,
         records_read=catalog_result.records_read,
         records_invalid=catalog_result.records_invalid,
@@ -239,10 +258,13 @@ def market_data_audit(
     data_kind: str | None = Query(default="bar"),
     symbol: str | None = Query(default=None),
     recorder_date: date | None = Query(default=None),
+    recorder_start_date: date | None = Query(default=None),
+    recorder_end_date: date | None = Query(default=None),
     capture_mode: str | None = Query(default=None),
     bar_size_seconds: int | None = Query(default=None, ge=1),
     limit: int = Query(default=500, ge=1, le=5000),
 ) -> MarketDataAuditResponse:
+    _validate_recorder_range(recorder_start_date, recorder_end_date)
     settings = request.app.state.settings
     storage_policy = _load_storage_policy(settings.market_data_storage_policy_path)
     catalog_result = query_raw_catalog(
@@ -253,6 +275,11 @@ def market_data_audit(
         symbol=symbol,
         day=recorder_date,
     )
+    matching_entries = [
+        entry
+        for entry in catalog_result.entries
+        if _entry_in_recorder_range(entry, recorder_start_date, recorder_end_date)
+    ]
     seen_event_ids: set[str] = set()
     duplicate_event_ids = 0
     hash_mismatches = 0
@@ -263,7 +290,7 @@ def market_data_audit(
     first_exchange_timestamp: datetime | None = None
     last_exchange_timestamp: datetime | None = None
 
-    for entry in catalog_result.entries:
+    for entry in reversed(matching_entries):
         if len(rows) >= limit:
             break
         envelope, read_error = _read_envelope(entry)
@@ -334,7 +361,9 @@ def market_data_audit(
             data_kind=data_kind,
             symbol=symbol.upper() if symbol else None,
             recorder_date=recorder_date,
-            entry_count=len(catalog_result.entries),
+            recorder_start_date=recorder_start_date,
+            recorder_end_date=recorder_end_date,
+            entry_count=len(matching_entries),
             rows_returned=len(rows),
             records_read=catalog_result.records_read,
             records_invalid=catalog_result.records_invalid,
@@ -356,6 +385,19 @@ def _load_storage_policy(path: Path):
         return load_storage_policy(path)
     except (OSError, ValueError) as exc:
         raise HTTPException(status_code=500, detail=f"Could not load market-data storage policy {path}: {exc}") from exc
+
+
+def _validate_recorder_range(start: date | None, end: date | None) -> None:
+    if start is not None and end is not None and start > end:
+        raise HTTPException(status_code=400, detail="recorder_start_date must be on or before recorder_end_date")
+
+
+def _entry_in_recorder_range(entry: RawCatalogEntry, start: date | None, end: date | None) -> bool:
+    if start is not None and entry.recorder_date < start:
+        return False
+    if end is not None and entry.recorder_date > end:
+        return False
+    return True
 
 
 def _clickhouse_client(request: Request) -> ClickHouseMarketDataClient:

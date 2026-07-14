@@ -26,6 +26,7 @@ class AccountPositionInput(BaseModel):
     symbol: str
     quantity: int = Field(ge=0)
     average_cost: Decimal = Field(default=Decimal("0"), ge=0)
+    currency: Currency = Currency.USD
 
 
 class LiveAccountSnapshotInput(BaseModel):

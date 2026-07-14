@@ -4,18 +4,19 @@ from fastapi.testclient import TestClient
 
 from systematic_trading.app import create_app
 from systematic_trading.config import AppSettings
+from systematic_trading.research import current_sota_definition
 
 
 EXPECTED_HEADER_LINKS = [
-    ("/operator", "Operator"),
+    ("/operator", "Trading"),
     ("/strategies", "Strategies"),
-    ("/platform", "Health"),
+    ("/platform", "System"),
     ("/platform/market-data-audit", "Market Data"),
 ]
 
 
 def _header_links(html: str) -> list[tuple[str, str]]:
-    header = re.search(r"<header>(.*?)</header>", html, re.DOTALL)
+    header = re.search(r"<header(?:\s[^>]*)?>(.*?)</header>", html, re.DOTALL)
     assert header is not None
     return re.findall(r'<a class="button" href="([^"]+)">([^<]+)</a>', header.group(1))
 
@@ -70,7 +71,13 @@ def test_operator_dashboard_is_served(tmp_path) -> None:
     assert "Automation" in html
     assert "Market Data" in html
     assert "Auto-updated" in html
-    assert "Holdings Drift" in html
+    assert "IB Holdings vs Strategy" in html
+    assert "IB Portfolio Reconciliation" in html
+    assert "Refresh IB" in html
+    assert "Reset local to IB" in html
+    assert "/dashboard/reconciliation/interactive-brokers" in html
+    assert "/reset-to-broker" in html
+    assert "confirm_reset_to_ib: true" in html
     assert "Refresh IB Account" not in html
     assert "Sync IB Fills" not in html
     assert "Save Snapshot" not in html
@@ -116,13 +123,32 @@ def test_strategy_catalog_portal_and_api_are_served(tmp_path) -> None:
     with TestClient(create_app(settings)) as client:
         page = client.get("/strategies")
         payload = client.get("/api/v1/strategies")
+        detail_page = client.get("/strategies/sota_price_volume_technical_tree_relative_adaptive_top6")
+        report_page = client.get(
+            "/api/v1/strategies/sota_price_volume_technical_tree_relative_adaptive_top6/report"
+        )
+        detail = client.get("/api/v1/strategies/sota_price_volume_technical_tree_relative_adaptive_top6")
 
     assert page.status_code == 200
-    assert "Strategy Catalog" in page.text
-    assert "Final backtest allocation" in page.text
+    assert "Strategy Registry" in page.text
     assert payload.status_code == 200
     assert payload.json()["registry_type"] == "artifact_catalog"
     assert payload.json()["strategies"][0]["is_sota"] is True
+    assert payload.json()["strategies"][0]["lifecycle"] == "monitored"
+    assert "Monitored" in page.text
+    assert "Archived" in page.text
+    assert detail_page.status_code == 200
+    assert "location.replace(d.report_url)" in detail_page.text
+    assert 'button.dataset.strategyLifecycle==="monitored"' in page.text
+    assert report_page.status_code == 200
+    assert "NAV, Benchmark, Holdings, Drawdowns" in report_page.text
+    assert "Period Metrics" in report_page.text
+    assert "Holdings And Contribution" in report_page.text
+    assert '"monitoredThrough":"2025-01-03"' in report_page.text
+    assert "Performance vs Benchmark" not in report_page.text
+    assert detail.status_code == 200
+    assert detail.json()["lifecycle"] == "monitored"
+    assert detail.json()["artifact_end_date"] == "2025-01-03"
 
 
 def test_platform_health_portal_is_served(tmp_path) -> None:
@@ -156,28 +182,52 @@ def test_market_data_audit_portal_is_served(tmp_path) -> None:
     assert "text/html" in response.headers["content-type"]
     html = response.text
     assert "Market Data" in html
+    assert "Intraday Bars" in html
     assert "Daily Bars" in html
     assert "OHLCV" in html
     assert "Raw Evidence" in html
-    assert "golden-symbol-options" in html
+    assert '<select id="golden-symbol"' in html
+    assert "<datalist id=\"golden-symbol-options\"" not in html
     assert "/api/v1/market-data/daily-symbols" in html
     assert "/api/v1/market-data/daily-bars" in html
     assert "/api/v1/market-data/audit" in html
+    assert "latest_recorder_date" in html
+    assert "Start Session" in html
+    assert "End Session" in html
+    assert 'data-sessions="1"' in html
+    assert 'data-sessions="5"' in html
+    assert 'data-sessions="10"' in html
+    assert 'params.set("recorder_start_date"' in html
+    assert 'params.set("recorder_end_date"' in html
     assert "/platform" in html
     assert "/operator" in html
 
 
 def test_operational_pages_share_one_control_free_header(tmp_path) -> None:
+    strategy_key = current_sota_definition().key
+    backtests = tmp_path / "backtests" / "sota_current"
+    backtests.mkdir(parents=True)
+    (backtests / f"{strategy_key}.json").write_text(
+        '{"nav_series":[{"trade_date":"2025-01-02","nav_cnh":"100"},'
+        '{"trade_date":"2025-01-03","nav_cnh":"101"}]}',
+        encoding="utf-8",
+    )
     settings = AppSettings(database_path=tmp_path / "unified_headers.db", data_dir=tmp_path)
     with TestClient(create_app(settings)) as client:
         pages = [
             client.get(path).text
-            for path in ["/operator", "/strategies", "/platform", "/platform/market-data-audit"]
+            for path in [
+                "/operator",
+                "/strategies",
+                f"/strategies/{strategy_key}",
+                "/platform",
+                "/platform/market-data-audit",
+            ]
         ]
 
     for html in pages:
         assert _header_links(html) == EXPECTED_HEADER_LINKS
-        header = re.search(r"<header>(.*?)</header>", html, re.DOTALL)
+        header = re.search(r"<header(?:\s[^>]*)?>(.*?)</header>", html, re.DOTALL)
         assert header is not None
         assert "<button" not in header.group(1)
         assert "status-line" not in header.group(1)

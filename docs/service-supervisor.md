@@ -18,7 +18,7 @@ The machine-readable manifest is `config/service-manifest.json`.
 | Market data recorder | Active scheduled worker | `scripts/start_local_platform.ps1` | `var/run/market_data_recorder.pid` | `var/log/market_data_recorder.*.log` | `var/run/market_data_recorder.state.json` and freshness metrics |
 | Local platform watchdog | Active operator script | Manual now; Windows Task Scheduler later | `var/run/local_platform_watchdog.state.json` | `var/log/platform_operations.jsonl` | Checks NATS, Postgres, ClickHouse, operator API, and optional recorder state |
 
-The recorder implementation follows `docs/market-data-recorder-contract.md` and the source/capacity plan in `docs/market-data-recorder-source-plan.md`. The scheduled service entry point is `scripts/run_market_data_recorder_service.py`; it stays alive, runs ClickHouse daily-bar backfill on startup/interval, idles outside regular US equity hours for realtime capture, runs IB historical gap-fill on startup/restart during the session, and delegates bounded captures to `scripts/record_ib_market_data.py`.
+The recorder implementation follows `docs/market-data-recorder-contract.md` and the source/capacity plan in `docs/market-data-recorder-source-plan.md`. The scheduled service entry point is `scripts/run_market_data_recorder_service.py`; it stays alive, runs ClickHouse daily-bar backfill on startup/interval, idles outside regular US equity hours, and delegates bounded captures to `scripts/record_ib_market_data.py`. Prospective capture starts before recovery work; synchronous historical gap-fill runs only after a failed stream chunk.
 
 ## Rules
 
@@ -54,7 +54,7 @@ Skip the market-data recorder service for maintenance:
 .\scripts\start_local_platform.ps1 -SkipMarketDataRecorder
 ```
 
-The recorder service defaults to `-RecorderMarketDataMode live`, but it does not record realtime bars after hours or on weekends. It still runs the ClickHouse daily-bar backfill child job while idle. During market hours it first runs a historical lookback gap-fill, then records in bounded realtime chunks. Use `-RecorderMarketDataMode delayed` only for controlled tests.
+The recorder service defaults to the five-symbol testing pilot and `-RecorderIntradayFeed delayed-trades`. This uses TWS delayed last-price, size, timestamp, and delayed RTVolume callbacks to build 5-second trade bars with explicit delayed quality flags. It does not record intraday bars after hours or on weekends, but still runs the ClickHouse daily-bar backfill child job while idle. Use `-RecorderIntradayFeed realtime` only after paid API market-data subscriptions are verified; delayed bars are prohibited from signals and live trading decisions.
 
 Startup order:
 

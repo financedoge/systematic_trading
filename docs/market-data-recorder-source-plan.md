@@ -68,13 +68,13 @@ Rules:
 
 ### Current IB Entitlement Policy
 
-As of 2026-06-29, the operator plans to enable live IB market-data subscriptions in July 2026. Until those entitlements are active and confirmed, do not scale the IB intraday streaming recorder.
+As of 2026-07-13, TWS paper connectivity and delayed streaming are working, but paid API `reqRealTimeBars` entitlements are not active. Do not scale the IB intraday recorder beyond the five-symbol pilot until live subscriptions are confirmed.
 
 Current interim policy:
 
-- Keep the recorder opt-in.
-- Use historical-smoke tests, daily reference data, and tiny delayed-mode experiments only for plumbing validation.
-- Treat the 2026-06-29 delayed 5-symbol real-time-bar pilot as failed for data capture: it wrote 0 records and received IB 420 permission errors for AMEX/ISLAND ETF contracts.
+- Run the always-on recorder with the five-symbol `SPY/QQQ/TLT/GLD/IWM` pilot only; this is recorder validation, not the investible universe.
+- Use `delayed-trades` as the interim prospective channel. It aggregates TWS delayed trade price, size, and exchange timestamp callbacks into 5-second bars and records `ib_market_data_mode_delayed` plus `ib_delayed_trade_aggregate` quality flags.
+- Keep the 2026-06-29 and 2026-07-13 `reqRealTimeBars` failures as entitlement evidence: IB returned 10089/420 for the pilot symbols.
 - Do not use delayed IB data for live trading decisions.
 - After July 2026 subscriptions are enabled, run a live-mode entitlement smoke before any broad ETF recording: first 1 symbol, then 5 symbols, then 30-40 symbols only after errors, line usage, and disk growth are reviewed.
 
@@ -162,6 +162,15 @@ Realtime session recording for the configured ETF seed:
 .\.venv\Scripts\python.exe .\scripts\record_ib_market_data.py `
   --mode realtime `
   --use-seed-universe `
+  --duration-seconds 3600
+```
+
+Current five-symbol delayed testing feed:
+
+```powershell
+.\.venv\Scripts\python.exe .\scripts\record_ib_market_data.py `
+  --mode delayed-trades `
+  --symbols SPY,QQQ,TLT,GLD,IWM `
   --duration-seconds 3600
 ```
 

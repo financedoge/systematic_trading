@@ -1,0 +1,33 @@
+{
+  "account_snapshot_path": "var\\live\\account_snapshots\\ib_paper_account_snapshot_20260715_000424.json",
+  "broker_cash": [
+    {
+      "amount": "1015927.05",
+      "currency": "HKD"
+    }
+  ],
+  "broker_positions": [],
+  "checked_at": "2026-07-14T16:04:23.879475Z",
+  "environment": "paper",
+  "has_breaks": false,
+  "ib_fill_count": 0,
+  "ib_position_count": 0,
+  "local_filled_order_count": 0,
+  "local_order_count": 0,
+  "local_order_history_count": 220,
+  "managed_accounts": [
+    "DU8959779"
+  ],
+  "pnl_reset_baseline_id": null,
+  "position_differences": [],
+  "report_path": "var\\reconciliation\\ib_paper_reconciliation_20260714_160423_879475.json",
+  "requires_operator_confirmation": false,
+  "reset_applied": false,
+  "status": "matched",
+  "suggested_actions": [
+    "No reconciliation breaks detected."
+  ],
+  "unmatched_ib_fills": [],
+  "unmatched_local_orders": [],
+  "warnings": []
+}

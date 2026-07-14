@@ -1,17 +1,21 @@
 from __future__ import annotations
 
+import json
 from datetime import UTC, date, datetime
 from decimal import Decimal
+from pathlib import Path
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, computed_field
 
 from systematic_trading.config import AppSettings
 from systematic_trading.domain import (
     BrokerExecutionFill,
     BrokerOrderRecord,
+    Currency,
     OrderEnvironment,
     OrderSide,
     PnLBaseline,
+    PnLOpenLot,
 )
 from systematic_trading.execution.broker import (
     IBExecutionSyncClient,
@@ -19,6 +23,7 @@ from systematic_trading.execution.broker import (
     InteractiveBrokersAdapter,
 )
 from systematic_trading.live.account_snapshot import AccountSnapshotClient, fetch_and_write_account_snapshot
+from systematic_trading.live.sota import AccountPositionInput
 from systematic_trading.storage.interfaces import TradingStore
 
 
@@ -51,8 +56,12 @@ class PositionDifference(BaseModel):
 class IBPaperReconciliationReport(BaseModel):
     environment: OrderEnvironment = OrderEnvironment.PAPER
     checked_at: datetime
+    report_path: str | None = None
     managed_accounts: list[str] = Field(default_factory=list)
     account_snapshot_path: str | None = None
+    broker_cash: list[dict[str, str]] = Field(default_factory=list)
+    broker_positions: list[AccountPositionInput] = Field(default_factory=list)
+    local_order_history_count: int
     local_order_count: int
     local_filled_order_count: int
     ib_fill_count: int
@@ -63,10 +72,26 @@ class IBPaperReconciliationReport(BaseModel):
     warnings: list[str] = Field(default_factory=list)
     suggested_actions: list[str] = Field(default_factory=list)
     pnl_reset_baseline_id: str | None = None
+    reset_applied: bool = False
 
+    @computed_field(return_type=bool)
     @property
     def has_breaks(self) -> bool:
-        return bool(self.unmatched_local_orders or self.unmatched_ib_fills or self.position_differences)
+        return not self.reset_applied and bool(
+            self.unmatched_local_orders or self.unmatched_ib_fills or self.position_differences
+        )
+
+    @computed_field(return_type=bool)
+    @property
+    def requires_operator_confirmation(self) -> bool:
+        return self.has_breaks
+
+    @computed_field(return_type=str)
+    @property
+    def status(self) -> str:
+        if self.reset_applied:
+            return "reset_to_broker"
+        return "break" if self.has_breaks else "matched"
 
 
 def reconcile_ib_paper_account(
@@ -87,22 +112,40 @@ def reconcile_ib_paper_account(
         sota_universe_only=False,
     )
     profile = InteractiveBrokersAdapter(settings).profile_for(OrderEnvironment.PAPER).model_copy(
-        update={"client_id": settings.ib_execution_sync_client_id or settings.ib_client_id + 30}
+        update={"client_id": settings.ib_reconciliation_client_id or settings.ib_client_id + 60}
     )
     fill_client = execution_client or IbApiExecutionSyncClient()
     ib_fills = fill_client.fetch_fills(profile)
-    local_records = [
+    local_history = [
         record
         for record in store.list_broker_order_records()
         if record.environment == OrderEnvironment.PAPER
     ]
+    baseline = store.latest_pnl_baseline()
+    baseline_cutoff = _aware(baseline.cutoff_at) if baseline is not None else None
+    local_records = [
+        record
+        for record in local_history
+        if baseline_cutoff is None or _record_time(record) > baseline_cutoff
+    ]
+    if baseline_cutoff is not None:
+        ib_fills = [fill for fill in ib_fills if _aware(fill.filled_at) > baseline_cutoff]
     local_filled_records = [
         record
         for record in local_records
         if record.filled_quantity > 0 or record.average_fill_price is not None
     ]
     unmatched_local, unmatched_ib = _match_fills(local_filled_records, ib_fills)
-    position_differences = _position_differences(local_filled_records, snapshot_result.snapshot.positions)
+    local_filled_history = [
+        record
+        for record in local_history
+        if record.filled_quantity > 0 or record.average_fill_price is not None
+    ]
+    position_differences = _position_differences(
+        local_filled_records,
+        snapshot_result.snapshot.positions,
+        baseline=baseline,
+    )
     warnings = list(snapshot_result.warnings)
     suggested_actions = _suggested_actions(
         unmatched_local=unmatched_local,
@@ -111,31 +154,32 @@ def reconcile_ib_paper_account(
         ib_position_count=len(snapshot_result.snapshot.positions),
     )
     baseline_id: str | None = None
+    reset_applied = False
     if record_pnl_reset_baseline:
         if not confirm_paper_reset:
             raise ValueError("--confirm-paper-reset is required before writing a PnL reset baseline.")
-        if snapshot_result.snapshot.positions:
-            raise ValueError("PnL reset baseline is only supported when the fetched IB paper account has zero positions.")
-        baseline = PnLBaseline(
-            cutoff_at=checked_at,
-            source="ib_paper_reconciliation_reset",
-            realized_pnl_cnh=Decimal("0"),
-            realized_pnl_by_symbol_cnh={},
-            open_lots=[],
-            filled_trade_count=len(local_filled_records),
-            warnings=[
-                "Paper account reset baseline recorded from IB reconciliation. "
-                "Local broker order records remain audit history and are ignored for PnL before this cutoff."
-            ],
+        baseline = _broker_pnl_baseline(
+            store=store,
+            checked_at=checked_at,
+            valuation_date=snapshot_result.snapshot.as_of or checked_at.date(),
+            positions=snapshot_result.snapshot.positions,
+            filled_trade_count=len(local_filled_history),
         )
         store.save_pnl_baseline(baseline)
         baseline_id = baseline.baseline_id
-        suggested_actions.append(f"Recorded empty PnL reset baseline {baseline.baseline_id}.")
+        reset_applied = True
+        suggested_actions.append(f"Reset active portfolio/PnL state to IB snapshot via baseline {baseline.baseline_id}.")
 
-    return IBPaperReconciliationReport(
+    report = IBPaperReconciliationReport(
         checked_at=checked_at,
         managed_accounts=snapshot_result.managed_accounts,
         account_snapshot_path=str(snapshot_result.output_path),
+        broker_cash=[
+            {"currency": balance.currency.value, "amount": str(balance.amount)}
+            for balance in snapshot_result.snapshot.cash
+        ],
+        broker_positions=snapshot_result.snapshot.positions,
+        local_order_history_count=len(local_history),
         local_order_count=len(local_records),
         local_filled_order_count=len(local_filled_records),
         ib_fill_count=len(ib_fills),
@@ -146,7 +190,9 @@ def reconcile_ib_paper_account(
         warnings=_dedupe(warnings),
         suggested_actions=_dedupe(suggested_actions),
         pnl_reset_baseline_id=baseline_id,
+        reset_applied=reset_applied,
     )
+    return _persist_report(settings, report)
 
 
 def _match_fills(
@@ -197,8 +243,12 @@ def _match_fills(
     return unmatched_local, unmatched_ib
 
 
-def _position_differences(local_records, ib_positions) -> list[PositionDifference]:
+def _position_differences(local_records, ib_positions, *, baseline: PnLBaseline | None) -> list[PositionDifference]:
     local_quantities: dict[str, int] = {}
+    if baseline is not None:
+        for lot in baseline.open_lots:
+            symbol = lot.symbol.upper()
+            local_quantities[symbol] = local_quantities.get(symbol, 0) + lot.quantity
     for record in local_records:
         signed_quantity = record.filled_quantity if record.order.side == OrderSide.BUY else -record.filled_quantity
         local_quantities[record.order.symbol.upper()] = local_quantities.get(record.order.symbol.upper(), 0) + signed_quantity
@@ -217,6 +267,94 @@ def _position_differences(local_records, ib_positions) -> list[PositionDifferenc
                 )
             )
     return differences
+
+
+def _broker_pnl_baseline(
+    *,
+    store: TradingStore,
+    checked_at: datetime,
+    valuation_date: date,
+    positions: list[AccountPositionInput],
+    filled_trade_count: int,
+) -> PnLBaseline:
+    open_lots: list[PnLOpenLot] = []
+    for position in positions:
+        if position.quantity <= 0:
+            continue
+        if position.average_cost <= 0:
+            raise ValueError(f"Cannot reset {position.symbol} to IB; broker average cost is not positive.")
+        fx_to_cnh = _fx_to_cnh(store, position.currency, valuation_date)
+        if fx_to_cnh is None:
+            raise ValueError(
+                f"Cannot reset {position.symbol} to IB; missing {position.currency.value}/CNH FX on or before "
+                f"{valuation_date}."
+            )
+        open_lots.append(
+            PnLOpenLot(
+                symbol=position.symbol.upper(),
+                quantity=position.quantity,
+                cost_price=position.average_cost,
+                cost_fx_to_cnh=fx_to_cnh,
+                currency=position.currency,
+                opened_at=checked_at,
+                source_order_id=f"ib-portfolio-reset:{position.symbol.upper()}:{checked_at.isoformat()}",
+            )
+        )
+    return PnLBaseline(
+        cutoff_at=checked_at,
+        source="ib_broker_authoritative_reset",
+        realized_pnl_cnh=Decimal("0"),
+        realized_pnl_by_symbol_cnh={},
+        open_lots=open_lots,
+        filled_trade_count=filled_trade_count,
+        warnings=[
+            "Active portfolio/PnL state was reset to an operator-confirmed IB account snapshot. "
+            "Earlier local broker records remain immutable audit history and are ignored before this cutoff."
+        ],
+    )
+
+
+def _fx_to_cnh(store: TradingStore, currency: Currency, as_of: date) -> Decimal | None:
+    if currency == Currency.CNH:
+        return Decimal("1")
+    rates = store.list_fx_rates(currency, end_date=as_of)
+    return rates[-1].rate if rates else None
+
+
+def latest_reconciliation_report_path(settings: AppSettings) -> Path:
+    return settings.data_dir / "reconciliation" / "ib_paper_reconciliation_latest.json"
+
+
+def load_latest_ib_reconciliation(settings: AppSettings) -> IBPaperReconciliationReport | None:
+    path = latest_reconciliation_report_path(settings)
+    if not path.exists():
+        return None
+    try:
+        return IBPaperReconciliationReport.model_validate_json(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+
+
+def _persist_report(settings: AppSettings, report: IBPaperReconciliationReport) -> IBPaperReconciliationReport:
+    output_dir = settings.data_dir / "reconciliation"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    stamp = report.checked_at.strftime("%Y%m%d_%H%M%S_%f")
+    output_path = output_dir / f"ib_paper_reconciliation_{stamp}.json"
+    report = report.model_copy(update={"report_path": str(output_path)})
+    payload = json.dumps(report.model_dump(mode="json"), indent=2, sort_keys=True)
+    output_path.write_text(payload, encoding="utf-8")
+    latest_reconciliation_report_path(settings).write_text(payload, encoding="utf-8")
+    return report
+
+
+def _record_time(record: BrokerOrderRecord) -> datetime:
+    return _aware(record.submitted_at or record.updated_at)
+
+
+def _aware(value: datetime) -> datetime:
+    if value.tzinfo is None:
+        return value.replace(tzinfo=UTC)
+    return value.astimezone(UTC)
 
 
 def _suggested_actions(
