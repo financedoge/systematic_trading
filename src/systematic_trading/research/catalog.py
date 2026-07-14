@@ -155,6 +155,31 @@ def _sample_std(values: list[float]) -> float | None:
     return math.sqrt(sum((value - mean) ** 2 for value in values) / (len(values) - 1))
 
 
+def summarize_nav_points(points: list[tuple[date, float]]) -> dict[str, Any]:
+    clean = sorted((point_date, value) for point_date, value in points if value > 0 and math.isfinite(value))
+    if len(clean) < 2:
+        return {}
+    returns = [clean[index][1] / clean[index - 1][1] - 1 for index in range(1, len(clean))]
+    years = max((clean[-1][0] - clean[0][0]).days / 365.25, 1 / 252)
+    total_return = clean[-1][1] / clean[0][1] - 1
+    annualized_return = (clean[-1][1] / clean[0][1]) ** (1 / years) - 1
+    volatility = _sample_std(returns)
+    max_drawdown = _max_drawdown([point[1] for point in clean])
+    return {
+        "start_date": clean[0][0].isoformat(),
+        "end_date": clean[-1][0].isoformat(),
+        "observations": len(clean),
+        "initial_nav_cnh": clean[0][1],
+        "final_nav_cnh": clean[-1][1],
+        "total_return": total_return,
+        "annualized_return": annualized_return,
+        "annualized_volatility": volatility * math.sqrt(252) if volatility is not None else None,
+        "sharpe": (sum(returns) / len(returns)) / volatility * math.sqrt(252) if volatility and volatility > 0 else None,
+        "max_drawdown": max_drawdown,
+        "calmar": annualized_return / abs(max_drawdown) if max_drawdown < 0 else None,
+    }
+
+
 def _max_drawdown(values: list[float]) -> float:
     peak = values[0]
     drawdown = 0.0

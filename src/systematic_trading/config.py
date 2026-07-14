@@ -27,12 +27,14 @@ class AppSettings(BaseSettings):
     ib_execution_sync_client_id: int | None = None
     ib_account_snapshot_client_id: int | None = None
     ib_health_client_id: int | None = None
+    ib_reconciliation_client_id: int | None = None
 
     data_dir: Path = Path("var")
     database_path: Path = Path("var/systematic_trading.db")
     transactional_store_backend: str = "sqlite"
     market_data_store_backend: str = "sqlite"
     market_data_storage_policy_path: Path = Path("config/market-data-storage.json")
+    strategy_monitoring_config_path: Path = Path("config/strategy-monitoring.json")
     postgres_host: str = "127.0.0.1"
     postgres_port: int = 5432
     postgres_database: str = "systematic_trading"

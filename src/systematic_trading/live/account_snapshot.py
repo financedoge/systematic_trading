@@ -238,11 +238,16 @@ def _positions(
         if row.quantity != row.quantity.to_integral_value():
             warnings.append(f"ignored fractional position {row.symbol} quantity={row.quantity}; current SOTA live model uses whole shares")
             continue
+        currency = _currency_or_none(row.currency)
+        if currency is None:
+            warnings.append(f"ignored position {row.symbol}; unsupported currency {row.currency}")
+            continue
         positions.append(
             AccountPositionInput(
                 symbol=row.symbol,
                 quantity=int(row.quantity),
                 average_cost=max(row.average_cost, Decimal("0")),
+                currency=currency,
             )
         )
     return positions

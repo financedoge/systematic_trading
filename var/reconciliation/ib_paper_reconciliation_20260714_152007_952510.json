@@ -1,0 +1,114 @@
+{
+  "account_snapshot_path": "var\\live\\account_snapshots\\ib_paper_account_snapshot_20260714_232008.json",
+  "broker_cash": [
+    {
+      "amount": "1015927.15",
+      "currency": "HKD"
+    }
+  ],
+  "broker_positions": [],
+  "checked_at": "2026-07-14T15:20:07.952510Z",
+  "environment": "paper",
+  "has_breaks": true,
+  "ib_fill_count": 10,
+  "ib_position_count": 0,
+  "local_filled_order_count": 0,
+  "local_order_count": 0,
+  "local_order_history_count": 220,
+  "managed_accounts": [
+    "DU8959779"
+  ],
+  "pnl_reset_baseline_id": null,
+  "position_differences": [],
+  "report_path": "var\\reconciliation\\ib_paper_reconciliation_20260714_152007_952510.json",
+  "requires_operator_confirmation": true,
+  "reset_applied": false,
+  "status": "break",
+  "suggested_actions": [
+    "Run fill sync, then inspect unmatched IB fills before generating new proposals."
+  ],
+  "unmatched_ib_fills": [
+    {
+      "average_price": "94.38",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:13Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 200,
+      "symbol": "EWJ"
+    },
+    {
+      "average_price": "94.38",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:14Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 245,
+      "symbol": "EWJ"
+    },
+    {
+      "average_price": "94.38",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:14Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 104,
+      "symbol": "EWJ"
+    },
+    {
+      "average_price": "94.38",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:14Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 145,
+      "symbol": "EWJ"
+    },
+    {
+      "average_price": "94.38",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:14Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 150,
+      "symbol": "EWJ"
+    },
+    {
+      "average_price": "94.38",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:15Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 245,
+      "symbol": "EWJ"
+    },
+    {
+      "average_price": "28.55",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:30Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 200,
+      "symbol": "DBC"
+    },
+    {
+      "average_price": "28.55",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:30Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 486,
+      "symbol": "DBC"
+    },
+    {
+      "average_price": "28.55",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:30Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 100,
+      "symbol": "DBC"
+    },
+    {
+      "average_price": "28.55",
+      "broker_order_id": 0,
+      "filled_at": "2026-07-14T22:31:30Z",
+      "order_ref": "ActivityMonitor",
+      "quantity": 276,
+      "symbol": "DBC"
+    }
+  ],
+  "unmatched_local_orders": [],
+  "warnings": []
+}

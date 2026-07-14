@@ -21,6 +21,12 @@ def strategy_portal() -> HTMLResponse:
     return HTMLResponse(_STRATEGIES_HTML)
 
 
+@router.get("/strategies/{strategy_id}", response_class=HTMLResponse, include_in_schema=False)
+def strategy_detail_portal(strategy_id: str) -> HTMLResponse:
+    html = _STRATEGY_DETAIL_HTML.replace("join('\n')", "join(String.fromCharCode(10))")
+    return HTMLResponse(html)
+
+
 _OPERATOR_HTML = """<!doctype html>
 <html lang="en">
 <head>
@@ -465,6 +471,14 @@ _OPERATOR_HTML = """<!doctype html>
       white-space: pre-wrap;
       overflow-wrap: anywhere;
     }
+    .reconciliation-break { border-color: #d92d20; }
+    .reconciliation-break .panel-head { background: #fff4f2; }
+    .reconciliation-message {
+      padding: 10px 12px;
+      color: var(--bad);
+      font-weight: 650;
+      overflow-wrap: anywhere;
+    }
     .status-line {
       display: flex;
       align-items: center;
@@ -503,9 +517,9 @@ _OPERATOR_HTML = """<!doctype html>
   <header>
     <h1>Trading Operator</h1>
     <div class="actions">
-      <a class="button" href="/operator">Operator</a>
+      <a class="button" href="/operator">Trading</a>
       <a class="button" href="/strategies">Strategies</a>
-      <a class="button" href="/platform">Health</a>
+      <a class="button" href="/platform">System</a>
       <a class="button" href="/platform/market-data-audit">Market Data</a>
     </div>
   </header>
@@ -568,6 +582,25 @@ _OPERATOR_HTML = """<!doctype html>
         </div>
         <div id="automation-events"></div>
         <div id="automation-warnings" class="warnings"></div>
+      </section>
+      <section id="reconciliation-panel" class="panel">
+        <div class="panel-head">
+          <h2>IB Portfolio Reconciliation</h2>
+          <div class="actions">
+            <span id="reconciliation-checked" class="status-line">Not checked</span>
+            <button id="refresh-reconciliation-btn" type="button">Refresh IB</button>
+            <button id="reset-to-ib-btn" class="bad" type="button" hidden>Reset local to IB</button>
+          </div>
+        </div>
+        <div class="metrics-compact" aria-label="IB reconciliation summary">
+          <div class="mini-metric"><label>Status</label><strong id="reconciliation-status">n/a</strong></div>
+          <div class="mini-metric"><label>IB Positions</label><strong id="reconciliation-ib-positions">n/a</strong></div>
+          <div class="mini-metric"><label>IB Cash</label><strong id="reconciliation-ib-cash">n/a</strong></div>
+          <div class="mini-metric"><label>Position Breaks</label><strong id="reconciliation-break-count">n/a</strong></div>
+        </div>
+        <div id="reconciliation-message" class="reconciliation-message" hidden></div>
+        <div id="reconciliation-table"></div>
+        <div id="reconciliation-warnings" class="warnings"></div>
       </section>
       <section class="panel">
         <div class="panel-head">
@@ -637,7 +670,7 @@ _OPERATOR_HTML = """<!doctype html>
       </section>
       <section class="panel">
         <div class="panel-head">
-          <h2>Holdings Drift</h2>
+          <h2>IB Holdings vs Strategy</h2>
           <div class="actions">
             <span class="status-line"><span id="holdings-as-of">n/a</span></span>
           </div>
@@ -653,6 +686,7 @@ _OPERATOR_HTML = """<!doctype html>
       selectedId: null,
       filter: "",
       brokerRecords: [],
+      reconciliation: null,
       performance: { payload: null, rangeKey: "3m", start: null, end: null }
     };
     const el = (id) => document.getElementById(id);
@@ -708,6 +742,13 @@ _OPERATOR_HTML = """<!doctype html>
     }
 
     async function loadDashboardData() {
+      try {
+        state.reconciliation = await api("/api/v1/dashboard/reconciliation/interactive-brokers", { method: "POST" });
+        renderReconciliation(state.reconciliation);
+      } catch (error) {
+        state.reconciliation = { has_breaks: true, unavailable: true };
+        renderReconciliationUnavailable(error.message);
+      }
       const [automation, performance, holdings, pnl, pnlHistory, executionQuality] = await Promise.all([
         api("/api/v1/automation/status"),
         api("/api/v1/dashboard/performance"),
@@ -721,6 +762,48 @@ _OPERATOR_HTML = """<!doctype html>
       renderHoldings(holdings);
       renderPnl(pnl, pnlHistory);
       renderExecutionQuality(executionQuality);
+    }
+
+    function renderReconciliation(payload) {
+      const hasBreaks = Boolean(payload.has_breaks);
+      el("reconciliation-panel").classList.toggle("reconciliation-break", hasBreaks);
+      el("reconciliation-checked").textContent = fmtDateTime(payload.checked_at);
+      el("reconciliation-status").textContent = payload.status === "matched" ? "Matched" : payload.status === "reset_to_broker" ? "Reset to IB" : "Break";
+      el("reconciliation-ib-positions").textContent = payload.ib_position_count ?? 0;
+      el("reconciliation-ib-cash").textContent = (payload.broker_cash || []).map((row) => `${row.currency} ${fmtMoney(row.amount)}`).join(" / ") || "0";
+      el("reconciliation-break-count").textContent = (payload.position_differences || []).length;
+      el("reset-to-ib-btn").hidden = !payload.requires_operator_confirmation;
+      el("reconciliation-message").hidden = !hasBreaks;
+      el("reconciliation-message").textContent = hasBreaks
+        ? "IB official holdings do not match the active local ledger. Trading is blocked until the break is resolved or a trader confirms reset to IB."
+        : "";
+      const rows = payload.position_differences || [];
+      el("reconciliation-table").innerHTML = rows.length ? `
+        <table>
+          <thead><tr><th>Symbol</th><th class="num">Local Qty</th><th class="num">IB Qty</th><th class="num">Difference</th></tr></thead>
+          <tbody>${rows.map((row) => `<tr><td>${esc(row.symbol)}</td><td class="num">${esc(row.local_quantity)}</td><td class="num">${esc(row.ib_quantity)}</td><td class="num">${esc(row.difference)}</td></tr>`).join("")}</tbody>
+        </table>
+      ` : '<div class="empty">No position differences</div>';
+      const warnings = [...(payload.warnings || [])];
+      if ((payload.unmatched_local_orders || []).length) warnings.push(`${payload.unmatched_local_orders.length} unmatched local order(s).`);
+      if ((payload.unmatched_ib_fills || []).length) warnings.push(`${payload.unmatched_ib_fills.length} unmatched IB fill(s).`);
+      el("reconciliation-warnings").textContent = warnings.join("\\n");
+      setButtons(Boolean(selectedProposal()));
+    }
+
+    function renderReconciliationUnavailable(message) {
+      el("reconciliation-panel").classList.add("reconciliation-break");
+      el("reconciliation-checked").textContent = "IB unavailable";
+      el("reconciliation-status").textContent = "Unavailable";
+      el("reconciliation-ib-positions").textContent = "n/a";
+      el("reconciliation-ib-cash").textContent = "n/a";
+      el("reconciliation-break-count").textContent = "n/a";
+      el("reset-to-ib-btn").hidden = true;
+      el("reconciliation-message").hidden = false;
+      el("reconciliation-message").textContent = "Fresh IB portfolio state could not be obtained. Trading is blocked.";
+      el("reconciliation-table").innerHTML = "";
+      el("reconciliation-warnings").textContent = message;
+      setButtons(Boolean(selectedProposal()));
     }
 
     function renderAutomation(payload) {
@@ -1481,12 +1564,13 @@ _OPERATOR_HTML = """<!doctype html>
 
     function setButtons(enabled) {
       const proposal = selectedProposal();
-      const canDecide = enabled && proposal && proposal.status === "pending";
+      const brokerReady = state.reconciliation && !state.reconciliation.has_breaks && !state.reconciliation.unavailable;
+      const canDecide = enabled && proposal && proposal.status === "pending" && brokerReady;
       el("approve-btn").disabled = !canDecide;
       el("reject-btn").disabled = !canDecide;
       const retryable = retryableOrderIndexes();
       el("resubmit-failed-btn").hidden = !retryable.length;
-      el("resubmit-failed-btn").disabled = !enabled || !retryable.length;
+      el("resubmit-failed-btn").disabled = !enabled || !retryable.length || !brokerReady;
     }
 
     function retryableOrderIndexes() {
@@ -1575,6 +1659,29 @@ _OPERATOR_HTML = """<!doctype html>
       }
     }
 
+    async function resetPortfolioToIb() {
+      const reconciliation = state.reconciliation;
+      if (!reconciliation?.requires_operator_confirmation) return;
+      const confirmed = confirm(
+        `Reset active portfolio and PnL state to the fresh IB snapshot with ${reconciliation.ib_position_count || 0} position(s)? ` +
+        "Historical orders and fills will remain immutable audit records."
+      );
+      if (!confirmed) return;
+      el("reset-to-ib-btn").disabled = true;
+      try {
+        await api("/api/v1/dashboard/reconciliation/interactive-brokers/reset-to-broker", {
+          method: "POST",
+          body: JSON.stringify({ confirm_reset_to_ib: true })
+        });
+        log("Active portfolio and PnL state reset to the official IB snapshot.");
+        await loadDashboardData();
+      } catch (error) {
+        log(error.message, true);
+      } finally {
+        el("reset-to-ib-btn").disabled = false;
+      }
+    }
+
     document.querySelectorAll(".tab").forEach((button) => {
       button.addEventListener("click", async () => {
         document.querySelectorAll(".tab").forEach((item) => item.classList.remove("active"));
@@ -1588,6 +1695,10 @@ _OPERATOR_HTML = """<!doctype html>
       await loadProposals();
       await loadDashboardData();
     });
+    el("refresh-reconciliation-btn").addEventListener("click", () => {
+      loadDashboardData().catch((error) => log(error.message, true));
+    });
+    el("reset-to-ib-btn").addEventListener("click", resetPortfolioToIb);
     el("approve-btn").addEventListener("click", () => decide("approved"));
     el("reject-btn").addEventListener("click", () => decide("rejected"));
     el("resubmit-failed-btn").addEventListener("click", resubmitFailed);
@@ -1625,7 +1736,7 @@ _STRATEGIES_HTML = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Strategy Catalog</title><style>
 :root{--bg:#f6f7f9;--panel:#fff;--text:#1d2433;--muted:#667085;--line:#d9dee7;--focus:#2456a6;--good:#087f5b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px Inter,Segoe UI,Arial,sans-serif}header{height:56px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--line)}h1,h2{margin:0;letter-spacing:0}h1{font-size:18px}h2{font-size:15px}.actions{display:flex;gap:8px;align-items:center}.button{min-height:32px;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--text);text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.layout{display:grid;grid-template-columns:minmax(500px,1.35fr) minmax(340px,.65fr);min-height:calc(100vh - 56px)}main,aside{padding:16px;min-width:0}aside{border-left:1px solid var(--line);background:#fbfcfd}.panel{background:#fff;border:1px solid var(--line);border-radius:7px;overflow:hidden}.head{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.note{color:var(--muted);font-size:12px}.table-wrap{overflow:auto;max-height:calc(100vh - 145px)}table{border-collapse:collapse;width:100%;font-size:12px}th,td{padding:9px 10px;border-bottom:1px solid #edf0f4;text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#f8fafc;color:var(--muted);font-weight:650}td.num,th.num{text-align:right}.strategy-row{cursor:pointer}.strategy-row:hover,.strategy-row.active{background:#eef4fb}.sota{display:inline-block;margin-left:6px;padding:2px 6px;border:1px solid #9cd6cd;border-radius:999px;background:#ecf9f6;color:var(--good);font-size:10px;font-weight:700}.details{padding:14px}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.metric{border-bottom:1px solid #edf0f4;padding:8px 0}.metric label{display:block;color:var(--muted);font-size:11px}.metric strong{display:block;margin-top:3px;font-size:15px}.path{overflow-wrap:anywhere;color:var(--muted);font:11px Consolas,monospace}.alloc{margin-top:14px}.bar{height:7px;background:#e8edf4;margin-top:4px}.fill{height:100%;background:#2456a6}.empty{padding:24px;color:var(--muted);text-align:center}@media(max-width:850px){header{height:auto;align-items:flex-start;flex-direction:column;padding:10px 12px}.actions{width:100%;flex-wrap:wrap}.actions .button{flex:1 1 110px}.layout{grid-template-columns:1fr}.table-wrap{max-height:none}aside{border-left:0;border-top:1px solid var(--line)}}
-</style></head><body><header><h1>Strategy Catalog</h1><div class="actions"><a class="button" href="/operator">Operator</a><a class="button" href="/strategies">Strategies</a><a class="button" href="/platform">Health</a><a class="button" href="/platform/market-data-audit">Market Data</a></div></header>
+</style></head><body><header><h1>Strategy Catalog</h1><div class="actions"><a class="button" href="/operator">Trading</a><a class="button" href="/strategies">Strategies</a><a class="button" href="/platform">System</a><a class="button" href="/platform/market-data-audit">Market Data</a></div></header>
 <div class="layout"><main><section class="panel"><div class="head"><div><h2>Backtest strategies</h2><div id="catalog-note" class="note">Loading artifact registry</div></div><strong id="strategy-count">0</strong></div><div class="table-wrap"><table><thead><tr><th>Strategy</th><th>End</th><th class="num">Return</th><th class="num">Ann. Return</th><th class="num">Sharpe</th><th class="num">Max DD</th></tr></thead><tbody id="strategy-list"></tbody></table></div></section></main><aside><section class="panel"><div class="head"><h2>Strategy detail</h2></div><div id="strategy-detail" class="empty">Select a strategy</div></section></aside></div>
 <script>
 const state={items:[],selected:null};const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const pct=v=>v===null||v===undefined?"n/a":`${(Number(v)*100).toFixed(2)}%`;const ratio=v=>v===null||v===undefined?"n/a":Number(v).toFixed(2);const money=v=>v===null||v===undefined?"n/a":Number(v).toLocaleString(undefined,{maximumFractionDigits:0});
@@ -1633,3 +1744,16 @@ function renderList(){document.getElementById("strategy-count").textContent=stat
 function renderDetail(){const item=state.items[state.selected];const target=document.getElementById("strategy-detail");if(!item){target.className="empty";target.textContent="No strategy artifacts found";return}target.className="details";target.innerHTML=`<h2>${esc(item.name)}${item.is_sota?'<span class="sota">CURRENT SOTA</span>':''}</h2><p class="note">Theoretical performance from stored backtest NAV. It is not actual account PnL.</p><div class="metrics"><div class="metric"><label>Period</label><strong>${esc(item.start_date)} to ${esc(item.end_date)}</strong></div><div class="metric"><label>Observations</label><strong>${item.observations}</strong></div><div class="metric"><label>Final NAV (CNH)</label><strong>${money(item.final_nav_cnh)}</strong></div><div class="metric"><label>Annual volatility</label><strong>${pct(item.annualized_volatility)}</strong></div><div class="metric"><label>Calmar</label><strong>${ratio(item.calmar)}</strong></div><div class="metric"><label>Max drawdown</label><strong>${pct(item.max_drawdown)}</strong></div></div><div class="path">${esc(item.artifact_path)}</div><div class="alloc"><h2>Final backtest allocation</h2>${item.allocation.length?item.allocation.sort((a,b)=>b.weight-a.weight).map(row=>`<div class="metric"><label>${esc(row.symbol)}</label><strong>${pct(row.weight)}</strong><div class="bar"><div class="fill" style="width:${Math.max(0,Math.min(100,Number(row.weight)*100))}%"></div></div></div>`).join(""):'<div class="empty">No final allocation in this artifact</div>'}</div>`}
 fetch("/api/v1/strategies").then(r=>{if(!r.ok)throw new Error(r.statusText);return r.json()}).then(payload=>{state.items=payload.strategies||[];state.selected=state.items.length?0:null;document.getElementById("catalog-note").textContent=`${payload.registry_type}; theoretical source: ${payload.theoretical_performance_source}`;renderList();renderDetail()}).catch(error=>{document.getElementById("catalog-note").textContent=`Catalog error: ${error.message}`});
 </script></body></html>"""
+
+
+_STRATEGIES_HTML = """<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Strategies</title>
+<style>:root{--bg:#f6f7f9;--panel:#fff;--text:#1d2433;--muted:#667085;--line:#d9dee7;--focus:#2456a6;--good:#087f5b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px Inter,Segoe UI,Arial,sans-serif}header{height:56px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--line)}h1,h2{margin:0;letter-spacing:0}h1{font-size:18px}h2{font-size:15px}.actions,.segments{display:flex;gap:8px;align-items:center}.button,button{min-height:32px;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--text);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}.segments button.active{background:#e9f0fb;border-color:#b8c7e6;color:#183b73;font-weight:650}main{padding:16px 18px 28px}.panel{background:#fff;border:1px solid var(--line);border-radius:7px;overflow:hidden}.head{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;justify-content:space-between}.note{color:var(--muted);font-size:12px}.table-wrap{overflow:auto;max-height:calc(100vh - 170px)}table{border-collapse:collapse;width:100%;font-size:12px}th,td{padding:10px;border-bottom:1px solid #edf0f4;text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#f8fafc;color:var(--muted)}td.num,th.num{text-align:right}.strategy-link{border:0;padding:0;min-height:0;background:transparent;color:var(--focus);font-weight:650}.strategy-link:hover{text-decoration:underline}.badge{display:inline-block;margin-left:6px;padding:2px 6px;border:1px solid #c7cdd6;border-radius:999px;color:#667085;font-size:10px}.badge.sota,.badge.monitored{border-color:#9cd6cd;background:#ecf9f6;color:var(--good)}@media(max-width:700px){header{height:auto;align-items:flex-start;flex-direction:column;padding:10px 12px}.actions{width:100%;flex-wrap:wrap}.actions .button{flex:1 1 110px}.head{align-items:flex-start;flex-direction:column}.table-wrap{max-height:none}}</style></head>
+<body><header><h1>Strategies</h1><div class="actions"><a class="button" href="/operator">Trading</a><a class="button" href="/strategies">Strategies</a><a class="button" href="/platform">System</a><a class="button" href="/platform/market-data-audit">Market Data</a></div></header>
+<main><section class="panel"><div class="head"><div><h2>Strategy Registry</h2><div id="catalog-note" class="note">Loading strategy artifacts</div></div><div class="segments"><button class="active" data-lifecycle="monitored">Monitored <span id="monitored-count">0</span></button><button data-lifecycle="archived">Archived <span id="archived-count">0</span></button></div></div><div class="table-wrap"><table><thead><tr><th>Strategy</th><th>Lifecycle</th><th>Artifact End</th><th>Data Through</th><th class="num">Return</th><th class="num">Ann. Return</th><th class="num">Sharpe</th><th class="num">Max DD</th></tr></thead><tbody id="strategy-list"></tbody></table></div></section></main>
+<script>const state={items:[],lifecycle:"monitored"};const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const pct=v=>v==null?"n/a":`${(Number(v)*100).toFixed(2)}%`;const ratio=v=>v==null?"n/a":Number(v).toFixed(2);function render(){const items=state.items.filter(x=>x.lifecycle===state.lifecycle);document.getElementById("strategy-list").innerHTML=items.length?items.map(item=>`<tr><td><button class="strategy-link" data-id="${esc(item.strategy_id)}" data-strategy-lifecycle="${esc(item.lifecycle)}">${esc(item.name)}</button>${item.is_sota?'<span class="badge sota">SOTA</span>':''}<div class="note">${esc(item.strategy_id)}</div></td><td><span class="badge ${esc(item.lifecycle)}">${esc(item.lifecycle)}</span></td><td>${esc(item.artifact_end_date)}</td><td>${esc(item.end_date)}</td><td class="num">${pct(item.total_return)}</td><td class="num">${pct(item.annualized_return)}</td><td class="num">${ratio(item.sharpe)}</td><td class="num">${pct(item.max_drawdown)}</td></tr>`).join(""):'<tr><td colspan="8" class="note">No strategies in this lifecycle.</td></tr>';document.querySelectorAll(".strategy-link").forEach(button=>button.onclick=()=>location.href=button.dataset.strategyLifecycle==="monitored"?`/api/v1/strategies/${encodeURIComponent(button.dataset.id)}/report`:`/strategies/${encodeURIComponent(button.dataset.id)}`);document.querySelectorAll("[data-lifecycle]").forEach(button=>button.classList.toggle("active",button.dataset.lifecycle===state.lifecycle))}document.querySelectorAll("[data-lifecycle]").forEach(button=>button.onclick=()=>{state.lifecycle=button.dataset.lifecycle;render()});fetch("/api/v1/strategies").then(r=>r.json()).then(payload=>{state.items=payload.strategies||[];document.getElementById("monitored-count").textContent=state.items.filter(x=>x.lifecycle==="monitored").length;document.getElementById("archived-count").textContent=state.items.filter(x=>x.lifecycle==="archived").length;document.getElementById("catalog-note").textContent=payload.monitoring_notes||payload.theoretical_performance_source;render()}).catch(error=>document.getElementById("catalog-note").textContent=`Catalog error: ${error.message}`);</script></body></html>"""
+
+
+_STRATEGY_DETAIL_HTML = """<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Strategy Detail</title>
+<style>:root{--bg:#f6f7f9;--panel:#fff;--text:#1d2433;--muted:#667085;--line:#d9dee7;--focus:#2456a6;--good:#087f5b;--benchmark:#111827}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px Inter,Segoe UI,Arial,sans-serif}header{height:56px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--line)}h1,h2{margin:0;letter-spacing:0}h1{font-size:18px}h2{font-size:15px}.actions{display:flex;gap:8px;align-items:center}.button{min-height:32px;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--text);text-decoration:none;display:inline-flex;align-items:center;justify-content:center}main{padding:16px 18px 28px}.titlebar{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}.note{color:var(--muted);font-size:12px}.badge{display:inline-block;margin-left:6px;padding:2px 7px;border:1px solid #9cd6cd;border-radius:999px;background:#ecf9f6;color:var(--good);font-size:10px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}.metric,.panel{background:#fff;border:1px solid var(--line);border-radius:7px}.metric{padding:11px}.metric label{display:block;color:var(--muted);font-size:11px}.metric strong{display:block;margin-top:4px;font-size:16px}.grid{display:grid;grid-template-columns:1.4fr .6fr;gap:12px;margin-bottom:12px}.panel{overflow:hidden}.head{padding:11px 13px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.body{padding:12px}.chart{min-height:300px}.chart svg{display:block;width:100%;height:auto}table{border-collapse:collapse;width:100%;font-size:12px}th,td{padding:8px 9px;border-bottom:1px solid #edf0f4;text-align:left}td.num,th.num{text-align:right}.line{fill:none;stroke:#2456a6;stroke-width:2}.bench{fill:none;stroke:var(--benchmark);stroke-width:1.5}.axis{stroke:#ccd3dd;stroke-width:1}.legend{display:flex;gap:14px;color:var(--muted);font-size:12px}.swatch{width:18px;height:3px;background:#2456a6;display:inline-block}.swatch.bench{background:#111827}.exposures{display:grid;grid-template-columns:1fr 1fr;gap:12px}.warning{white-space:pre-wrap;color:#9a5b09}@media(max-width:900px){header{height:auto;align-items:flex-start;flex-direction:column;padding:10px 12px}.actions{width:100%;flex-wrap:wrap}.actions .button{flex:1 1 110px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.grid,.exposures{grid-template-columns:1fr}}@media(max-width:520px){.metrics{grid-template-columns:1fr}}</style></head>
+<body><header><h1>Strategy Detail</h1><div class="actions"><a class="button" href="/operator">Trading</a><a class="button" href="/strategies">Strategies</a><a class="button" href="/platform">System</a><a class="button" href="/platform/market-data-audit">Market Data</a></div></header><main><div class="titlebar"><div><h1 id="name">Loading strategy</h1><div id="method" class="note"></div></div><div class="actions"><a class="button" href="/strategies">Back to registry</a><a id="report-link" class="button" hidden target="_blank">Full backtest report</a></div></div><section id="metrics" class="metrics"></section><div class="grid"><section class="panel"><div class="head"><h2>Performance vs Benchmark</h2><div class="legend"><span><i class="swatch"></i> Strategy</span><span><i class="swatch bench"></i> Benchmark</span></div></div><div id="chart" class="body chart"></div></section><section class="panel"><div class="head"><h2>Current Holdings</h2></div><div id="holdings" class="body"></div></section></div><section class="panel" style="margin-bottom:12px"><div class="head"><h2>Benchmark Comparison</h2></div><div id="comparison" class="body"></div></section><section class="panel"><div class="head"><h2>Exposure and Performance Attribution</h2></div><div class="body exposures"><div><h2>Country Exposure</h2><div id="country"></div></div><div><h2>Currency Exposure</h2><div id="currency"></div></div></div></section><div id="warnings" class="warning"></div></main>
+<script>const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const pct=v=>v==null?"n/a":`${(Number(v)*100).toFixed(2)}%`;const ratio=v=>v==null?"n/a":Number(v).toFixed(2);const money=v=>v==null?"n/a":Number(v).toLocaleString(undefined,{maximumFractionDigits:0});function metric(label,value){return `<div class="metric"><label>${label}</label><strong>${value}</strong></div>`}function table(rows,headers){return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table>`}function exposureTable(values){const rows=Object.entries(values||{}).sort((a,b)=>Number(b[1])-Number(a[1])).map(([key,value])=>`<tr><td>${esc(key)}</td><td class="num">${money(value)}</td></tr>`);return table(rows,["Exposure","CNH"])}function chartSvg(strategy,benchmark){const s=strategy.map(x=>({d:x.trade_date,v:Number(x.nav_cnh)})).filter(x=>x.v>0),b=benchmark.map(x=>({d:x.trade_date,v:Number(x.nav_cnh)})).filter(x=>x.v>0);if(!s.length)return '<div class="note">No NAV series</div>';const baseS=s[0].v,baseB=b[0]?.v||1,all=[...s.map(x=>({...x,i:x.v/baseS*100})),...b.map(x=>({...x,i:x.v/baseB*100}))],dates=all.map(x=>Date.parse(x.d)),vals=all.map(x=>x.i),w=820,h=300,p={l:50,r:15,t:15,b:28},minX=Math.min(...dates),maxX=Math.max(...dates),minY=Math.min(...vals)*.98,maxY=Math.max(...vals)*1.02,x=d=>p.l+(Date.parse(d)-minX)/(maxX-minX||1)*(w-p.l-p.r),y=v=>h-p.b-(v-minY)/(maxY-minY||1)*(h-p.t-p.b),path=(rows,base)=>rows.map((q,i)=>`${i?'L':'M'} ${x(q.d).toFixed(1)} ${y(q.v/base*100).toFixed(1)}`).join(' ');return `<svg viewBox="0 0 ${w} ${h}"><line class="axis" x1="${p.l}" x2="${w-p.r}" y1="${h-p.b}" y2="${h-p.b}"/><path class="line" d="${path(s,baseS)}"/>${b.length?`<path class="bench" d="${path(b,baseB)}"/>`:''}<text x="${p.l}" y="${h-8}" fill="#667085" font-size="11">${esc(s[0].d)}</text><text x="${w-90}" y="${h-8}" fill="#667085" font-size="11">${esc(s[s.length-1].d)}</text></svg>`}function comparisonTable(c){if(!c?.metrics)return '<div class="note">No structured benchmark comparison artifact is available for this run.</div>';const labels={full:'Full',in_sample:'In sample',out_of_sample:'Out of sample'},rows=Object.entries(c.metrics).map(([key,v])=>`<tr><td>${labels[key]||esc(key)}</td><td class="num">${pct(v.candidate?.return)}</td><td class="num">${pct(v.baseline?.return)}</td><td class="num">${pct(v.delta?.return)}</td><td class="num">${ratio(v.candidate?.sharpe)}</td><td class="num">${ratio(v.active?.informationRatio)}</td><td class="num">${pct(v.candidate?.maxDrawdown)}</td></tr>`);return table(rows,["Window","Strategy","Benchmark","Alpha","Sharpe","Info Ratio","Max DD"])}const id=decodeURIComponent(location.pathname.split('/').filter(Boolean).pop());fetch(`/api/v1/strategies/${encodeURIComponent(id)}`).then(r=>{if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);return r.json()}).then(d=>{if(d.lifecycle==='monitored'&&d.report_url){location.replace(d.report_url);return}document.title=d.name;document.getElementById('name').innerHTML=`${esc(d.name)}${d.is_sota?'<span class="badge">CURRENT SOTA</span>':''}<span class="badge">${esc(d.lifecycle)}</span>`;document.getElementById('method').textContent=d.lifecycle==='monitored'?`Data through ${d.end_date}; artifact ended ${d.artifact_end_date}. ${d.monitoring_notes}`:`Archived artifact through ${d.artifact_end_date}.`;document.getElementById('metrics').innerHTML=metric('Total Return',pct(d.total_return))+metric('Annual Return',pct(d.annualized_return))+metric('Annual Volatility',pct(d.annualized_volatility))+metric('Sharpe',ratio(d.sharpe))+metric('Max Drawdown',pct(d.max_drawdown))+metric('Calmar',ratio(d.calmar))+metric('Leverage',ratio(d.leverage))+metric('Final NAV CNH',money(d.final_nav_cnh));document.getElementById('chart').innerHTML=chartSvg(d.nav_series||[],d.benchmark_series||[]);document.getElementById('holdings').innerHTML=table((d.holdings||[]).map(x=>`<tr><td>${esc(x.symbol)}</td><td class="num">${pct(x.weight)}</td><td class="num">${money(x.value_cnh)}</td></tr>`),['Symbol','Weight','CNH']);document.getElementById('comparison').innerHTML=comparisonTable(d.comparison);document.getElementById('country').innerHTML=exposureTable(d.country_exposure_cnh);document.getElementById('currency').innerHTML=exposureTable(d.currency_exposure_cnh);document.getElementById('warnings').textContent=(d.warnings||[]).join('\n');if(d.report_url){const a=document.getElementById('report-link');a.href=d.report_url;a.hidden=false}}).catch(e=>{document.getElementById('name').textContent='Strategy unavailable';document.getElementById('warnings').textContent=e.message});</script></body></html>"""

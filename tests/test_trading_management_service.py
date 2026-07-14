@@ -6,7 +6,8 @@ from systematic_trading.config import AppSettings
 from systematic_trading.domain.enums import BrokerOrderStatus, Currency, OrderEnvironment, OrderSide, OrderType
 from systematic_trading.domain.execution import BrokerExecutionFill, BrokerOrderRecord, OrderRequest, ProposalReasoning, TradeProposal
 from systematic_trading.domain.market import FXRate, PriceBar
-from systematic_trading.live import AccountSummaryRow, TradingManagementService, TradingServiceStatus, trading_service_state_path
+from systematic_trading.execution.reconciliation import reconcile_ib_paper_account
+from systematic_trading.live import AccountSummaryRow, IbPositionRow, TradingManagementService, TradingServiceStatus, trading_service_state_path
 from systematic_trading.domain.portfolio import CashBalance
 from systematic_trading.live.sota import LiveAccountSnapshotInput
 from systematic_trading.live.trading_calendar import is_us_trading_day, us_trading_dates_after
@@ -77,7 +78,7 @@ def test_trading_management_service_runs_after_close_workflow(tmp_path) -> None:
                 )
             ]
         ),
-        account_snapshot_client=_FakeAccountSnapshotClient(),
+        account_snapshot_client=_AccountSnapshotClientWithPosition("SPY", 10, "100"),
         market_data_provider=_FakeMarketDataProvider({}),
         fx_market_data_provider=_FakeMarketDataProvider({}),
     )
@@ -114,7 +115,7 @@ def test_trading_management_service_runs_after_close_workflow(tmp_path) -> None:
     assert len(staged_after_second_run) == 1
 
 
-def test_trading_management_service_retries_pending_eod_with_stored_account_snapshot(tmp_path) -> None:
+def test_trading_management_service_does_not_complete_eod_from_stored_snapshot_without_reconciliation(tmp_path) -> None:
     store = SQLiteStore(tmp_path / "pending.db")
     store.initialize()
     as_of = _seed_sota_history(store)
@@ -158,17 +159,18 @@ def test_trading_management_service_retries_pending_eod_with_stored_account_snap
 
     status = service.run_once(now=datetime.combine(as_of + timedelta(days=1), time(9), tzinfo=ZoneInfo("America/New_York")))
 
-    assert status.last_eod_date == as_of
-    assert status.pending_eod_date is None
-    assert status.last_rebalance_proposal_id is not None
-    assert status.last_account_snapshot_path is not None
+    assert status.last_eod_date is None
+    assert status.pending_eod_date == as_of
+    assert status.last_rebalance_proposal_id is None
+    assert "IB account snapshot unavailable" in (status.last_error or "")
     assert any(event.status == "warning" and "stored same-day account snapshot" in event.message for event in status.events)
+    assert any("reconciliation is unresolved" in event.message for event in status.events)
     staged = [
         item
         for item in store.list_proposals()
         if item.sleeve == current_sota_definition().sleeve_name and item.as_of == as_of
     ]
-    assert len(staged) == 1
+    assert staged == []
 
 
 def test_trading_management_service_replays_missed_eod_dates_on_restart(tmp_path) -> None:
@@ -389,6 +391,15 @@ def test_trading_management_service_filters_non_sota_positions_for_rebalance(tmp
         automation_enabled=True,
         automation_after_close_time="16:20",
     )
+    reconcile_ib_paper_account(
+        settings=settings,
+        store=store,
+        execution_client=_FakeExecutionSyncClient([]),
+        account_snapshot_client=_AccountSnapshotClientWithNonSotaPosition(),
+        as_of=as_of,
+        record_pnl_reset_baseline=True,
+        confirm_paper_reset=True,
+    )
     service = TradingManagementService(
         settings=settings,
         store=store,
@@ -441,6 +452,29 @@ class _FailingAccountSnapshotClient:
 class _FailingExecutionSyncClient:
     def fetch_fills(self, profile):
         raise TimeoutError("IB execution sync unavailable")
+
+
+class _AccountSnapshotClientWithPosition:
+    def __init__(self, symbol: str, quantity: int, average_cost: str) -> None:
+        self.symbol = symbol
+        self.quantity = quantity
+        self.average_cost = average_cost
+
+    def fetch(self, profile):
+        return (
+            [AccountSummaryRow(account="DU123", tag="TotalCashValue", value="1000000", currency="CNH")],
+            [
+                IbPositionRow(
+                    account="DU123",
+                    symbol=self.symbol,
+                    security_type="STK",
+                    currency="USD",
+                    quantity=Decimal(self.quantity),
+                    average_cost=Decimal(self.average_cost),
+                )
+            ],
+            ["DU123"],
+        )
 
 
 class _AccountSnapshotClientWithNonSotaPosition:

@@ -266,7 +266,10 @@
       "command": [
         ".venv/Scripts/python.exe",
         "scripts/run_market_data_recorder_service.py",
-        "--use-seed-universe",
+        "--symbols",
+        "SPY,QQQ,TLT,GLD,IWM",
+        "--intraday-feed",
+        "delayed-trades",
         "--pid-path",
         "var/run/market_data_recorder.pid",
         "--state-path",
@@ -280,7 +283,7 @@
         "kind": "state_file",
         "target": "var/run/market_data_recorder.state.json",
         "timeout_seconds": 2,
-        "stale_after_seconds": 180
+        "stale_after_seconds": 420
       },
       "environment": {
         "PYTHONPATH": "src",
@@ -294,7 +297,7 @@
       "depends_on": [
         "event_outbox_dispatcher"
       ],
-      "notes": "Always-on scheduled worker. It idles outside regular US equity hours, runs historical gap-fill on startup/restart during the session, and records in bounded realtime chunks when market data permissions are available."
+      "notes": "Always-on scheduled worker. The initial five-symbol universe is a recorder pilot, not the investible universe. It idles outside regular US equity hours, uses historical gap-fill only after a failed stream chunk, and currently aggregates timestamped IB delayed trades into 5-second bars because reqRealTimeBars API entitlements are unavailable. Delayed data is never eligible for trading decisions."
     }
   ]
 }

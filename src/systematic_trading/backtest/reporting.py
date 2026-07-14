@@ -62,6 +62,8 @@ def build_backtest_report_data(
     benchmark_name: str | None = None,
     extra_benchmarks: list[dict[str, Any]] | None = None,
     signal_diagnostics: dict[str, Any] | None = None,
+    market_prices: dict[str, dict[str, float]] | None = None,
+    market_fx_rates: dict[str, float] | None = None,
 ) -> tuple[dict[str, Any], list[str]]:
     warnings: list[str] = []
     nav_points = _nav_points(result)
@@ -71,12 +73,12 @@ def build_backtest_report_data(
     symbols = _extract_symbols(result)
     start_date = nav_points[0]["date"]
     end_date = nav_points[-1]["date"]
-    prices: dict[str, dict[str, float]] = {}
-    fx_rates: dict[str, float] = {}
+    prices: dict[str, dict[str, float]] = market_prices or {}
+    fx_rates: dict[str, float] = market_fx_rates or {}
     extra_benchmarks = extra_benchmarks or []
     market_symbols = sorted(set(symbols) | _benchmark_symbols(extra_benchmarks, benchmark_symbol))
 
-    if database_path is not None:
+    if database_path is not None and not (prices and fx_rates):
         prices, fx_rates, market_warnings = _load_market_data(
             Path(database_path),
             symbols=market_symbols,
@@ -958,6 +960,11 @@ def _render_html(report: dict[str, Any]) -> str:
     return HTML_TEMPLATE.replace("__REPORT_DATA__", payload)
 
 
+def render_backtest_report_html(report: dict[str, Any]) -> str:
+    """Render a complete report payload without writing or mutating an artifact."""
+    return _render_html(report)
+
+
 HTML_TEMPLATE = """<!doctype html>
 <html lang="en">
 <head>
@@ -991,12 +998,36 @@ HTML_TEMPLATE = """<!doctype html>
       margin: 0 auto;
       padding: 24px 0 40px;
     }
-    header {
+    .report-header {
       display: flex;
       justify-content: space-between;
       gap: 18px;
       align-items: flex-end;
       margin-bottom: 18px;
+    }
+    .app-header {
+      min-height: 56px;
+      padding: 8px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
+    }
+    .app-header h1 { margin: 0; font-size: 18px; }
+    .app-actions { display: flex; gap: 8px; align-items: center; }
+    .app-actions a {
+      min-height: 32px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #ffffff;
+      color: var(--ink);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     h1 {
       margin: 0 0 6px;
@@ -1275,10 +1306,13 @@ HTML_TEMPLATE = """<!doctype html>
     }
     @media (max-width: 720px) {
       main { width: min(100vw - 20px, 1480px); padding-top: 16px; }
-      header, .chart-head, .panel-head {
+      .report-header, .chart-head, .panel-head {
         flex-direction: column;
         align-items: stretch;
       }
+      .app-header { align-items: flex-start; flex-direction: column; padding: 10px 12px; }
+      .app-actions { width: 100%; flex-wrap: wrap; }
+      .app-actions a { flex: 1 1 110px; }
       .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .signal-summary { grid-template-columns: 1fr; }
       .chart-wrap { height: 520px; }
@@ -1289,14 +1323,23 @@ HTML_TEMPLATE = """<!doctype html>
   </style>
 </head>
 <body>
+  <header class="app-header">
+    <h1>Strategies</h1>
+    <div class="app-actions">
+      <a class="button" href="/operator">Trading</a>
+      <a class="button" href="/strategies">Strategies</a>
+      <a class="button" href="/platform">System</a>
+      <a class="button" href="/platform/market-data-audit">Market Data</a>
+    </div>
+  </header>
   <main>
-    <header>
+    <section class="report-header">
       <div>
         <h1 id="title">Backtest Report</h1>
         <div class="meta" id="meta"></div>
       </div>
       <div class="meta" id="dataMeta"></div>
-    </header>
+    </section>
 
     <section class="summary" id="summaryCards"></section>
 
@@ -1422,10 +1465,16 @@ HTML_TEMPLATE = """<!doctype html>
 
     function setupHeader() {
       document.getElementById("title").textContent = report.title;
-      document.getElementById("meta").textContent = `${report.summary.start} to ${report.summary.end}`;
+      const monitoring = report.monitoring || null;
+      document.getElementById("meta").textContent = monitoring
+        ? `${report.summary.start} to ${report.summary.end} | ${monitoring.lifecycle}`
+        : `${report.summary.start} to ${report.summary.end}`;
       document.getElementById("dataMeta").innerHTML = [
         `Source: ${escapeHtml(report.sourceJson)}`,
-        report.database ? `Market DB: ${escapeHtml(report.database)}` : null
+        report.database ? `Market DB: ${escapeHtml(report.database)}` : null,
+        monitoring ? `Artifact ended: ${escapeHtml(monitoring.artifactEndDate)}` : null,
+        monitoring ? `Monitored through: ${escapeHtml(monitoring.monitoredThrough)}` : null,
+        monitoring ? `Method: ${escapeHtml(monitoring.method)}` : null
       ].filter(Boolean).join("<br>");
       document.getElementById("chartMeta").textContent = `${currentBenchmarkOption().name}. ${report.allocationSource}`;
     }

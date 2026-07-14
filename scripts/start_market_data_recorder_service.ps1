@@ -4,6 +4,8 @@ param(
     [int]$RecorderGapFillLookbackMinutes = 60,
     [int]$RecorderPollSeconds = 60,
     [int]$RecorderClientId = 121,
+    [ValidateSet("delayed-trades", "historical-live", "realtime")]
+    [string]$RecorderIntradayFeed = "delayed-trades",
     [ValidateSet("live", "frozen", "delayed", "delayed_frozen")]
     [string]$RecorderMarketDataMode = "live",
     [switch]$DisableDailyBackfill,
@@ -88,6 +90,8 @@ $recorderArgs = @(
     [string]$RecorderPollSeconds,
     "--market-data-mode",
     $RecorderMarketDataMode,
+    "--intraday-feed",
+    $RecorderIntradayFeed,
     "--client-id",
     [string]$RecorderClientId,
     "--daily-backfill-lookback-days",
@@ -121,6 +125,7 @@ Write-Output "Market data recorder service started."
 Write-Output "Recorder PID: $($process.Id)"
 Write-Output "Recorder symbols: $symbolsArg"
 Write-Output "Recorder market data mode: $RecorderMarketDataMode"
+Write-Output "Recorder intraday feed: $RecorderIntradayFeed"
 Write-Output "Recorder realtime chunk seconds: $RecorderRealtimeChunkSeconds"
 Write-Output "Recorder gap-fill lookback minutes: $RecorderGapFillLookbackMinutes"
 Write-Output "Daily ClickHouse backfill: $(-not $DisableDailyBackfill)"
@@ -134,6 +139,7 @@ Write-OperationLog `
         pid = $process.Id
         symbols = $RecorderSymbols
         market_data_mode = $RecorderMarketDataMode
+        intraday_feed = $RecorderIntradayFeed
         realtime_chunk_seconds = $RecorderRealtimeChunkSeconds
         gap_fill_lookback_minutes = $RecorderGapFillLookbackMinutes
         daily_backfill_enabled = -not $DisableDailyBackfill

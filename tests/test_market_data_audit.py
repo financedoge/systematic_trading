@@ -198,7 +198,69 @@ def test_market_data_audit_symbols_endpoint_lists_recorded_symbols(tmp_path) -> 
     assert response.status_code == 200
     payload = response.json()
     assert payload["symbols"] == ["QQQ", "SPY"]
+    assert payload["recorder_dates"] == ["2026-07-11"]
+    assert payload["latest_recorder_date"] == "2026-07-11"
     assert payload["records_invalid"] == 0
+
+
+def test_market_data_audit_supports_inclusive_recorder_session_ranges(tmp_path) -> None:
+    hot_root = tmp_path / "hot"
+    policy_path = _write_storage_policy(tmp_path, hot_root)
+    recorder = MarketDataRecorder(
+        writer=RawMarketDataWriter(hot_root, part_id="audit-range", fsync=False),
+        catalog=RawDataCatalog(hot_root, fsync=False),
+        state_path=tmp_path / "run" / "market_data_recorder.state.json",
+        started_at=datetime(2026, 7, 11, 3, 30, tzinfo=UTC),
+    )
+    recorder.record_bar(
+        _bar(
+            datetime(2026, 7, 10, 19, 30, 0, tzinfo=UTC),
+            "512.34",
+            received_at=datetime(2026, 7, 11, 3, 30, 5, tzinfo=UTC),
+        )
+    )
+    recorder.record_bar(
+        _bar(
+            datetime(2026, 7, 12, 19, 30, 0, tzinfo=UTC),
+            "516.78",
+            symbol="QQQ",
+            received_at=datetime(2026, 7, 13, 3, 30, 5, tzinfo=UTC),
+        )
+    )
+
+    settings = AppSettings(
+        database_path=tmp_path / "platform.db",
+        data_dir=tmp_path,
+        market_data_storage_policy_path=policy_path,
+    )
+    with TestClient(create_app(settings)) as client:
+        symbols_response = client.get(
+            "/api/v1/market-data/audit/symbols",
+            params={"recorder_start_date": "2026-07-11", "recorder_end_date": "2026-07-13"},
+        )
+        range_response = client.get(
+            "/api/v1/market-data/audit",
+            params={"recorder_start_date": "2026-07-11", "recorder_end_date": "2026-07-13"},
+        )
+        latest_response = client.get(
+            "/api/v1/market-data/audit",
+            params={"recorder_start_date": "2026-07-11", "recorder_end_date": "2026-07-13", "limit": 1},
+        )
+        invalid_response = client.get(
+            "/api/v1/market-data/audit",
+            params={"recorder_start_date": "2026-07-13", "recorder_end_date": "2026-07-11"},
+        )
+
+    assert symbols_response.status_code == 200
+    assert symbols_response.json()["symbols"] == ["QQQ", "SPY"]
+    assert symbols_response.json()["recorder_dates"] == ["2026-07-11", "2026-07-13"]
+    assert range_response.status_code == 200
+    payload = range_response.json()
+    assert payload["summary"]["recorder_start_date"] == "2026-07-11"
+    assert payload["summary"]["recorder_end_date"] == "2026-07-13"
+    assert [row["recorder_date"] for row in payload["rows"]] == ["2026-07-11", "2026-07-13"]
+    assert latest_response.json()["rows"][0]["recorder_date"] == "2026-07-13"
+    assert invalid_response.status_code == 400
 
 
 def _write_storage_policy(tmp_path, hot_root):
@@ -221,13 +283,19 @@ def _write_storage_policy(tmp_path, hot_root):
     return policy_path
 
 
-def _bar(exchange_timestamp: datetime, close: str, *, symbol: str = "SPY") -> CapturedMarketDataBar:
+def _bar(
+    exchange_timestamp: datetime,
+    close: str,
+    *,
+    symbol: str = "SPY",
+    received_at: datetime | None = None,
+) -> CapturedMarketDataBar:
     return CapturedMarketDataBar(
         environment=OrderEnvironment.PAPER,
         symbol=symbol,
         request_id=94001,
         exchange_timestamp=exchange_timestamp,
-        received_at=datetime(2026, 7, 11, 3, 30, 5, tzinfo=UTC),
+        received_at=received_at or datetime(2026, 7, 11, 3, 30, 5, tzinfo=UTC),
         capture_mode="historical_backfill",
         market_data_mode=IBMarketDataMode.DELAYED,
         source_sequence=f"{symbol}:{exchange_timestamp.isoformat()}",

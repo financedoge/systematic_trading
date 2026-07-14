@@ -107,6 +107,7 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert "SkipMarketDataRecorder" in local_start_script
     assert "run_market_data_recorder_service.py" in local_start_script
     assert "RecorderMarketDataMode" in local_start_script
+    assert "RecorderIntradayFeed" in local_start_script
     assert "TransactionalStoreBackend" in local_start_script
     assert "MarketDataStoreBackend" in local_start_script
     assert "ST_TRANSACTIONAL_STORE_BACKEND" in local_start_script
@@ -132,6 +133,7 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert "DailyBackfillProvider" in recorder_start_script
     assert "--daily-backfill-provider" in recorder_start_script
     assert "--daily-backfill-fallback-provider" in recorder_start_script
+    assert "--intraday-feed" in recorder_start_script
     assert "-WindowStyle Hidden" in recorder_start_script
     assert "market_data_recorder.pid" in recorder_stop_script
     assert "local_platform_watchdog" in watchdog_script

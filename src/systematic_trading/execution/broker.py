@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from datetime import UTC, date, datetime
+from datetime import UTC, date, datetime, tzinfo
 from decimal import Decimal, ROUND_HALF_UP
 from hashlib import sha1
 from threading import Event, Thread
 from typing import Protocol
+from zoneinfo import ZoneInfo
 
 from pydantic import BaseModel, Field
 
@@ -700,17 +701,25 @@ def _normalize_hhmmss(value: str) -> str:
     raise ValueError(f"Invalid execution time: {value}")
 
 
-def _parse_ib_execution_time(value: str) -> datetime:
+def _parse_ib_execution_time(value: str, *, default_timezone: tzinfo | None = None) -> datetime:
     text = value.strip()
-    for suffix in (" US/Eastern", " US/Central", " US/Pacific", " UTC"):
+    timezone = default_timezone or datetime.now().astimezone().tzinfo or UTC
+    suffix_timezones = {
+        " US/Eastern": ZoneInfo("America/New_York"),
+        " US/Central": ZoneInfo("America/Chicago"),
+        " US/Pacific": ZoneInfo("America/Los_Angeles"),
+        " UTC": UTC,
+    }
+    for suffix, suffix_timezone in suffix_timezones.items():
         if text.endswith(suffix):
             text = text[: -len(suffix)].strip()
+            timezone = suffix_timezone
             break
     text = " ".join(text.split())
     for fmt in ("%Y%m%d %H:%M:%S", "%Y%m%d"):
         try:
             parsed = datetime.strptime(text, fmt)
-            return parsed.replace(tzinfo=UTC)
+            return parsed.replace(tzinfo=timezone).astimezone(UTC)
         except ValueError:
             continue
     return datetime.now(tz=UTC)

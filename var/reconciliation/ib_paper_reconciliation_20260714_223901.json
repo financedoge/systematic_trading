@@ -1,0 +1,303 @@
+{
+  "environment": "paper",
+  "checked_at": "2026-07-14T14:39:00.646706Z",
+  "managed_accounts": [
+    "DU8959779"
+  ],
+  "account_snapshot_path": "var\\live\\account_snapshots\\ib_paper_account_snapshot_20260714_223900.json",
+  "local_order_count": 220,
+  "local_filled_order_count": 18,
+  "ib_fill_count": 10,
+  "ib_position_count": 0,
+  "unmatched_local_orders": [
+    {
+      "local_order_id": "b953d24439be",
+      "proposal_id": "0b8b0f0713c2",
+      "symbol": "EWY",
+      "broker_order_id": 7,
+      "order_ref": "st-0b8b0f0713c2-00",
+      "filled_quantity": 44,
+      "status": "partially_filled"
+    },
+    {
+      "local_order_id": "26f572a349fd",
+      "proposal_id": "0b8b0f0713c2",
+      "symbol": "IWM",
+      "broker_order_id": 8,
+      "order_ref": "st-0b8b0f0713c2-01",
+      "filled_quantity": 64,
+      "status": "partially_filled"
+    },
+    {
+      "local_order_id": "66e78f0e1d2f",
+      "proposal_id": "0b8b0f0713c2",
+      "symbol": "USO",
+      "broker_order_id": 9,
+      "order_ref": "st-0b8b0f0713c2-02",
+      "filled_quantity": 39,
+      "status": "partially_filled"
+    },
+    {
+      "local_order_id": "4652b32e93f8",
+      "proposal_id": "4d08ccc78d78",
+      "symbol": "EWY",
+      "broker_order_id": 3,
+      "order_ref": "st-4d08ccc78d78-00",
+      "filled_quantity": 1534,
+      "status": "filled"
+    },
+    {
+      "local_order_id": "0c97429e085a",
+      "proposal_id": "4d08ccc78d78",
+      "symbol": "IWM",
+      "broker_order_id": 4,
+      "order_ref": "st-4d08ccc78d78-01",
+      "filled_quantity": 2259,
+      "status": "filled"
+    },
+    {
+      "local_order_id": "d56238b5392e",
+      "proposal_id": "4d08ccc78d78",
+      "symbol": "USO",
+      "broker_order_id": 5,
+      "order_ref": "st-4d08ccc78d78-02",
+      "filled_quantity": 1425,
+      "status": "filled"
+    },
+    {
+      "local_order_id": "57a6b0b6e50a",
+      "proposal_id": "7517760937c2",
+      "symbol": "DBC",
+      "broker_order_id": 1,
+      "order_ref": "st-7517760937c2-00",
+      "filled_quantity": 1062,
+      "status": "filled"
+    },
+    {
+      "local_order_id": "45025f938a46",
+      "proposal_id": "7517760937c2",
+      "symbol": "EWJ",
+      "broker_order_id": 2,
+      "order_ref": "st-7517760937c2-01",
+      "filled_quantity": 1089,
+      "status": "filled"
+    },
+    {
+      "local_order_id": "a2c90823758f",
+      "proposal_id": "8fd4591c0a22",
+      "symbol": "DBB",
+      "broker_order_id": 10,
+      "order_ref": "st-8fd4591c0a22-00",
+      "filled_quantity": 10643,
+      "status": "partially_filled"
+    },
+    {
+      "local_order_id": "42fc7ba591b0",
+      "proposal_id": "8fd4591c0a22",
+      "symbol": "EWY",
+      "broker_order_id": 11,
+      "order_ref": "st-8fd4591c0a22-01",
+      "filled_quantity": 200,
+      "status": "partially_filled"
+    },
+    {
+      "local_order_id": "7fbe17376ab8",
+      "proposal_id": "8fd4591c0a22",
+      "symbol": "IWM",
+      "broker_order_id": 12,
+      "order_ref": "st-8fd4591c0a22-02",
+      "filled_quantity": 1325,
+      "status": "partially_filled"
+    },
+    {
+      "local_order_id": "11bfeaefab77",
+      "proposal_id": "8fd4591c0a22",
+      "symbol": "USO",
+      "broker_order_id": 13,
+      "order_ref": "st-8fd4591c0a22-03",
+      "filled_quantity": 120,
+      "status": "partially_filled"
+    },
+    {
+      "local_order_id": "f2e50d6b6426",
+      "proposal_id": "e2afd9113a16",
+      "symbol": "DBB",
+      "broker_order_id": 14,
+      "order_ref": "st-e2afd9113a16-00",
+      "filled_quantity": 215,
+      "status": "partially_filled"
+    },
+    {
+      "local_order_id": "ffdb76707158",
+      "proposal_id": "e2afd9113a16",
+      "symbol": "EWY",
+      "broker_order_id": 15,
+      "order_ref": "st-e2afd9113a16-01",
+      "filled_quantity": 500,
+      "status": "partially_filled"
+    },
+    {
+      "local_order_id": "b7c0680d6c05",
+      "proposal_id": "e2afd9113a16",
+      "symbol": "USO",
+      "broker_order_id": 16,
+      "order_ref": "st-e2afd9113a16-02",
+      "filled_quantity": 208,
+      "status": "partially_filled"
+    },
+    {
+      "local_order_id": "733cb364c8bb",
+      "proposal_id": "ec40ca1249ef",
+      "symbol": "DBB",
+      "broker_order_id": 17,
+      "order_ref": "st-ec40ca1249ef-00",
+      "filled_quantity": 40,
+      "status": "filled"
+    },
+    {
+      "local_order_id": "50248eaadb1b",
+      "proposal_id": "ec40ca1249ef",
+      "symbol": "EWY",
+      "broker_order_id": 18,
+      "order_ref": "st-ec40ca1249ef-01",
+      "filled_quantity": 243,
+      "status": "filled"
+    },
+    {
+      "local_order_id": "1ee8b91eebee",
+      "proposal_id": "ec40ca1249ef",
+      "symbol": "USO",
+      "broker_order_id": 19,
+      "order_ref": "st-ec40ca1249ef-02",
+      "filled_quantity": 2,
+      "status": "filled"
+    }
+  ],
+  "unmatched_ib_fills": [
+    {
+      "symbol": "EWJ",
+      "broker_order_id": 0,
+      "order_ref": "ActivityMonitor",
+      "quantity": 200,
+      "average_price": "94.38",
+      "filled_at": "2026-07-14T22:31:13Z"
+    },
+    {
+      "symbol": "EWJ",
+      "broker_order_id": 0,
+      "order_ref": "ActivityMonitor",
+      "quantity": 245,
+      "average_price": "94.38",
+      "filled_at": "2026-07-14T22:31:14Z"
+    },
+    {
+      "symbol": "EWJ",
+      "broker_order_id": 0,
+      "order_ref": "ActivityMonitor",
+      "quantity": 104,
+      "average_price": "94.38",
+      "filled_at": "2026-07-14T22:31:14Z"
+    },
+    {
+      "symbol": "EWJ",
+      "broker_order_id": 0,
+      "order_ref": "ActivityMonitor",
+      "quantity": 145,
+      "average_price": "94.38",
+      "filled_at": "2026-07-14T22:31:14Z"
+    },
+    {
+      "symbol": "EWJ",
+      "broker_order_id": 0,
+      "order_ref": "ActivityMonitor",
+      "quantity": 150,
+      "average_price": "94.38",
+      "filled_at": "2026-07-14T22:31:14Z"
+    },
+    {
+      "symbol": "EWJ",
+      "broker_order_id": 0,
+      "order_ref": "ActivityMonitor",
+      "quantity": 245,
+      "average_price": "94.38",
+      "filled_at": "2026-07-14T22:31:15Z"
+    },
+    {
+      "symbol": "DBC",
+      "broker_order_id": 0,
+      "order_ref": "ActivityMonitor",
+      "quantity": 200,
+      "average_price": "28.55",
+      "filled_at": "2026-07-14T22:31:30Z"
+    },
+    {
+      "symbol": "DBC",
+      "broker_order_id": 0,
+      "order_ref": "ActivityMonitor",
+      "quantity": 486,
+      "average_price": "28.55",
+      "filled_at": "2026-07-14T22:31:30Z"
+    },
+    {
+      "symbol": "DBC",
+      "broker_order_id": 0,
+      "order_ref": "ActivityMonitor",
+      "quantity": 100,
+      "average_price": "28.55",
+      "filled_at": "2026-07-14T22:31:30Z"
+    },
+    {
+      "symbol": "DBC",
+      "broker_order_id": 0,
+      "order_ref": "ActivityMonitor",
+      "quantity": 276,
+      "average_price": "28.55",
+      "filled_at": "2026-07-14T22:31:30Z"
+    }
+  ],
+  "position_differences": [
+    {
+      "symbol": "DBB",
+      "local_quantity": 10818,
+      "ib_quantity": 0,
+      "difference": -10818
+    },
+    {
+      "symbol": "DBC",
+      "local_quantity": 1062,
+      "ib_quantity": 0,
+      "difference": -1062
+    },
+    {
+      "symbol": "EWJ",
+      "local_quantity": 1089,
+      "ib_quantity": 0,
+      "difference": -1089
+    },
+    {
+      "symbol": "EWY",
+      "local_quantity": 2433,
+      "ib_quantity": 0,
+      "difference": -2433
+    },
+    {
+      "symbol": "IWM",
+      "local_quantity": 870,
+      "ib_quantity": 0,
+      "difference": -870
+    },
+    {
+      "symbol": "USO",
+      "local_quantity": 1060,
+      "ib_quantity": 0,
+      "difference": -1060
+    }
+  ],
+  "warnings": [],
+  "suggested_actions": [
+    "Run fill sync, then inspect unmatched IB fills before generating new proposals.",
+    "Do not trust local PnL/exposure until reconciliation breaks are reviewed.",
+    "IB paper account appears reset or empty while local records have exposure. After operator confirmation, run the reconciliation script with --record-pnl-reset-baseline --confirm-paper-reset."
+  ],
+  "pnl_reset_baseline_id": null
+}

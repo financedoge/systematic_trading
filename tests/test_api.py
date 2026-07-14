@@ -184,7 +184,11 @@ def test_watchlist_endpoints_persist_instrument_and_thesis(tmp_path) -> None:
 
 
 def test_queue_and_approve_proposal_persists_status(tmp_path) -> None:
-    settings = AppSettings(database_path=tmp_path / "queue.db", data_dir=tmp_path)
+    settings = AppSettings(
+        database_path=tmp_path / "queue.db",
+        data_dir=tmp_path,
+        execution_rebalance_timeout_minutes=10_000_000,
+    )
     with TestClient(create_app(settings)) as client:
         response = client.post(
             "/api/v1/proposals/risk-parity-queue",
@@ -242,7 +246,11 @@ def test_queue_and_approve_proposal_persists_status(tmp_path) -> None:
 
 
 def test_submit_approved_proposal_to_ib_paper_persists_broker_records(tmp_path) -> None:
-    settings = AppSettings(database_path=tmp_path / "ib_submit.db", data_dir=tmp_path)
+    settings = AppSettings(
+        database_path=tmp_path / "ib_submit.db",
+        data_dir=tmp_path,
+        execution_rebalance_timeout_minutes=10_000_000,
+    )
     with TestClient(create_app(settings)) as client:
         queue_response = client.post(
             "/api/v1/proposals/risk-parity-queue",
@@ -287,6 +295,7 @@ def test_submit_approved_proposal_to_ib_paper_persists_broker_records(tmp_path) 
             json={"status": "approved", "comment": "Route to paper."},
         )
         assert decision.status_code == 200
+        _seed_matched_reconciliation(client)
 
         dry_run = client.post(
             f"/api/v1/execution/interactive-brokers/proposals/{proposal_id}/submit",
@@ -317,7 +326,11 @@ def test_submit_approved_proposal_to_ib_paper_persists_broker_records(tmp_path) 
 
 
 def test_approve_and_submit_routes_twap_paper_orders_in_one_call(tmp_path) -> None:
-    settings = AppSettings(database_path=tmp_path / "approve_submit.db", data_dir=tmp_path)
+    settings = AppSettings(
+        database_path=tmp_path / "approve_submit.db",
+        data_dir=tmp_path,
+        execution_rebalance_timeout_minutes=10_000_000,
+    )
     with TestClient(create_app(settings)) as client:
         queue_response = client.post(
             "/api/v1/proposals/risk-parity-queue",
@@ -357,6 +370,7 @@ def test_approve_and_submit_routes_twap_paper_orders_in_one_call(tmp_path) -> No
         proposal_id = queue_response.json()["proposal"]["proposal_id"]
         fake_ib = _FakeIBClient(first_order_id=800)
         client.app.state.ib_order_client = fake_ib
+        _seed_matched_reconciliation(client)
 
         response = client.post(
             f"/api/v1/proposals/{proposal_id}/approve-and-submit",
@@ -379,7 +393,11 @@ def test_approve_and_submit_routes_twap_paper_orders_in_one_call(tmp_path) -> No
 
 
 def test_failed_only_submit_resubmits_rejected_and_missing_records(tmp_path) -> None:
-    settings = AppSettings(database_path=tmp_path / "ib_resubmit.db", data_dir=tmp_path)
+    settings = AppSettings(
+        database_path=tmp_path / "ib_resubmit.db",
+        data_dir=tmp_path,
+        execution_rebalance_timeout_minutes=10_000_000,
+    )
     with TestClient(create_app(settings)) as client:
         queue_response = client.post(
             "/api/v1/proposals/risk-parity-queue",
@@ -436,6 +454,7 @@ def test_failed_only_submit_resubmits_rejected_and_missing_records(tmp_path) -> 
         )
         fake_ib = _FakeIBClient(first_order_id=700)
         client.app.state.ib_order_client = fake_ib
+        _seed_matched_reconciliation(client)
 
         submit = client.post(
             f"/api/v1/execution/interactive-brokers/proposals/{proposal.proposal_id}/submit",
@@ -455,7 +474,11 @@ def test_failed_only_submit_resubmits_rejected_and_missing_records(tmp_path) -> 
 
 
 def test_failed_only_submit_resubmits_all_missing_records_after_approved_send_failure(tmp_path) -> None:
-    settings = AppSettings(database_path=tmp_path / "ib_resubmit_missing.db", data_dir=tmp_path)
+    settings = AppSettings(
+        database_path=tmp_path / "ib_resubmit_missing.db",
+        data_dir=tmp_path,
+        execution_rebalance_timeout_minutes=10_000_000,
+    )
     with TestClient(create_app(settings)) as client:
         queue_response = client.post(
             "/api/v1/proposals/risk-parity-queue",
@@ -500,6 +523,7 @@ def test_failed_only_submit_resubmits_all_missing_records_after_approved_send_fa
         assert decision.status_code == 200
         fake_ib = _FakeIBClient(first_order_id=900)
         client.app.state.ib_order_client = fake_ib
+        _seed_matched_reconciliation(client)
 
         submit = client.post(
             f"/api/v1/execution/interactive-brokers/proposals/{proposal_id}/submit",
@@ -741,6 +765,79 @@ def test_dashboard_performance_extends_strategy_snapshot_with_new_market_bars(tm
         assert payload["strategy_extension_count"] == 1
         assert payload["latest_strategy_nav_cnh"] == "7920.00"
         assert payload["strategy"][-1]["trade_date"] == "2026-04-19"
+
+
+def test_monitored_strategy_route_opens_full_report_through_current_market_data(tmp_path) -> None:
+    strategy_key = current_sota_definition().key
+    strategy_path = tmp_path / "backtests" / "sota_current" / f"{strategy_key}.json"
+    strategy_path.parent.mkdir(parents=True)
+    strategy_path.write_text(
+        """
+        {
+          "nav_series": [
+            {"trade_date": "2026-04-17", "nav_cnh": "7200"},
+            {"trade_date": "2026-04-18", "nav_cnh": "7200"}
+          ],
+          "proposals": [],
+          "final_snapshot": {
+            "as_of": "2026-04-18",
+            "base_currency": "CNH",
+            "cash": [],
+            "positions": [{
+              "symbol": "SPY",
+              "quantity": 10,
+              "average_cost": "100",
+              "market_price": "100",
+              "currency": "USD",
+              "country": "US"
+            }],
+            "nav_cnh": "7200",
+            "gross_exposure_cnh": "7200",
+            "country_exposure_cnh": {"US": "7200"},
+            "currency_exposure_cnh": {"USD": "7200"}
+          }
+        }
+        """,
+        encoding="utf-8",
+    )
+    settings = AppSettings(database_path=tmp_path / "strategy_report.db", data_dir=tmp_path)
+    with TestClient(create_app(settings)) as client:
+        for trade_date, close in [("2026-04-17", "100"), ("2026-04-18", "100"), ("2026-04-19", "110")]:
+            assert client.put(
+                "/api/v1/market-data/bars/SPY",
+                json={
+                    "trade_date": trade_date,
+                    "open": close,
+                    "high": close,
+                    "low": close,
+                    "close": close,
+                    "volume": 1000,
+                },
+            ).status_code == 200
+            assert client.put(
+                "/api/v1/market-data/fx-rates",
+                json={
+                    "rate_date": trade_date,
+                    "base_currency": "USD",
+                    "quote_currency": "CNH",
+                    "rate": "7.20",
+                },
+            ).status_code == 200
+
+        registry = client.get("/strategies")
+        report = client.get(f"/api/v1/strategies/{strategy_key}/report")
+
+    assert registry.status_code == 200
+    assert 'button.dataset.strategyLifecycle==="monitored"' in registry.text
+    assert f"/api/v1/strategies/${{encodeURIComponent(button.dataset.id)}}/report" in registry.text
+    assert report.status_code == 200
+    assert "NAV, Benchmark, Holdings, Drawdowns" in report.text
+    assert "Period Metrics" in report.text
+    assert "Holdings And Contribution" in report.text
+    assert '"artifactEndDate":"2026-04-18"' in report.text
+    assert '"monitoredThrough":"2026-04-19"' in report.text
+    assert '"extensionCount":1' in report.text
+    assert '"end":"2026-04-19"' in report.text
 
 
 def test_dashboard_can_refresh_ib_account_snapshot(tmp_path) -> None:
@@ -1077,6 +1174,82 @@ def test_dashboard_can_reconcile_ib_paper_account(tmp_path) -> None:
         assert payload["suggested_actions"] == ["No reconciliation breaks detected."]
 
 
+def test_dashboard_reconciliation_requires_confirmation_to_reset_active_state_to_ib(tmp_path) -> None:
+    settings = AppSettings(database_path=tmp_path / "dashboard_reset.db", data_dir=tmp_path)
+    with TestClient(create_app(settings)) as client:
+        store = client.app.state.store
+        order = OrderRequest(
+            symbol="SPY",
+            side=OrderSide.BUY,
+            order_type=OrderType.TWAP,
+            quantity=10,
+            reference_price=Decimal("500"),
+            currency=Currency.USD,
+            environment=OrderEnvironment.PAPER,
+            notional_cnh=Decimal("35000"),
+            rationale="reset test",
+        )
+        proposal = TradeProposal(
+            proposal_id="dashboard-reset-proposal",
+            created_at=datetime(2026, 7, 10, 1, tzinfo=UTC),
+            as_of=date(2026, 7, 10),
+            sleeve="test",
+            summary="test",
+            orders=[order],
+            reasoning=ProposalReasoning(summary="test"),
+        )
+        store.save_proposal(proposal)
+        store.save_broker_order_record(
+            BrokerOrderRecord(
+                local_order_id="dashboard-reset-order",
+                proposal_id=proposal.proposal_id,
+                environment=OrderEnvironment.PAPER,
+                order_index=0,
+                order=order,
+                order_ref="st-dashboard-reset-00",
+                broker_order_id=901,
+                status=BrokerOrderStatus.FILLED,
+                submitted_at=datetime(2026, 7, 10, 1, 5, tzinfo=UTC),
+                updated_at=datetime(2026, 7, 10, 1, 6, tzinfo=UTC),
+                filled_quantity=10,
+                remaining_quantity=0,
+                average_fill_price=Decimal("501"),
+            )
+        )
+        client.app.state.ib_execution_sync_client = _FakeExecutionSyncClient([])
+        client.app.state.ib_account_snapshot_client = _FakeEmptyAccountSnapshotClient()
+
+        reconciliation = client.post("/api/v1/dashboard/reconciliation/interactive-brokers")
+        blocked_route = client.post(
+            f"/api/v1/execution/interactive-brokers/proposals/{proposal.proposal_id}/submit",
+            json={"environment": "paper", "confirm_submit": True},
+        )
+        unconfirmed = client.post(
+            "/api/v1/dashboard/reconciliation/interactive-brokers/reset-to-broker",
+            json={"confirm_reset_to_ib": False},
+        )
+        reset = client.post(
+            "/api/v1/dashboard/reconciliation/interactive-brokers/reset-to-broker",
+            json={"confirm_reset_to_ib": True},
+        )
+        follow_up = client.post("/api/v1/dashboard/reconciliation/interactive-brokers")
+
+    assert reconciliation.status_code == 200
+    assert reconciliation.json()["has_breaks"] is True
+    assert reconciliation.json()["requires_operator_confirmation"] is True
+    assert blocked_route.status_code == 409
+    assert "unresolved IB portfolio reconciliation break" in blocked_route.json()["detail"]
+    assert unconfirmed.status_code == 400
+    assert reset.status_code == 200
+    assert reset.json()["reset_applied"] is True
+    assert reset.json()["has_breaks"] is False
+    assert follow_up.status_code == 200
+    assert follow_up.json()["has_breaks"] is False
+    assert store.latest_pnl_baseline() is not None
+    assert (tmp_path / "reconciliation" / "ib_paper_reconciliation_latest.json").exists()
+    assert "IB portfolio mismatch" in (tmp_path / "log" / "automation_alerts.jsonl").read_text(encoding="utf-8")
+
+
 def test_market_data_volatility_endpoint_uses_stored_bars(tmp_path) -> None:
     settings = AppSettings(database_path=tmp_path / "volatility.db", data_dir=tmp_path)
     with TestClient(create_app(settings)) as client:
@@ -1166,3 +1339,11 @@ class _FakeExecutionSyncClient:
     def fetch_fills(self, profile):
         self.profile = profile
         return self.fills
+
+
+def _seed_matched_reconciliation(client: TestClient) -> None:
+    client.app.state.ib_execution_sync_client = _FakeExecutionSyncClient([])
+    client.app.state.ib_account_snapshot_client = _FakeEmptyAccountSnapshotClient()
+    response = client.post("/api/v1/dashboard/reconciliation/interactive-brokers")
+    assert response.status_code == 200
+    assert response.json()["has_breaks"] is False

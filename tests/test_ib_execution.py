@@ -1,5 +1,6 @@
 from datetime import UTC, date, datetime
 from decimal import Decimal
+from zoneinfo import ZoneInfo
 
 import pytest
 
@@ -13,11 +14,26 @@ from systematic_trading.domain.enums import (
     ProposalStatus,
 )
 from systematic_trading.domain.execution import OrderRequest, ProposalReasoning, TradeProposal
-from systematic_trading.execution.broker import IBOrderSpec, _to_ib_order
+from systematic_trading.execution.broker import IBOrderSpec, _parse_ib_execution_time, _to_ib_order
 from systematic_trading.execution import InteractiveBrokersOrderRouter, order_spec_for
 from systematic_trading.execution.broker import InteractiveBrokersExecutionSynchronizer
 from systematic_trading.research import current_sota_definition
 from systematic_trading.storage.sqlite import SQLiteStore
+
+
+def test_ib_execution_time_without_suffix_uses_tws_local_timezone() -> None:
+    parsed = _parse_ib_execution_time(
+        "20260714 22:31:13",
+        default_timezone=ZoneInfo("Asia/Shanghai"),
+    )
+
+    assert parsed == datetime(2026, 7, 14, 14, 31, 13, tzinfo=UTC)
+
+
+def test_ib_execution_time_honors_explicit_timezone_suffix() -> None:
+    parsed = _parse_ib_execution_time("20260714 10:31:13 US/Eastern")
+
+    assert parsed == datetime(2026, 7, 14, 14, 31, 13, tzinfo=UTC)
 
 
 class FakeIBClient:

@@ -247,7 +247,7 @@ The service manifest already reserves `var/run/market_data_recorder.state.json` 
 
 The first implementation should be deliberately narrow and must follow the source, pacing, and ETF-universe limits in `docs/market-data-recorder-source-plan.md`:
 
-1. Record IB paper 5-second real-time bars for the configured ETF seed list.
+1. Record IB paper 5-second bars for a bounded pilot. Prefer paid `reqRealTimeBars`; while that API entitlement is unavailable, aggregate timestamped delayed TWS trade callbacks and mark every record delayed.
 2. Write raw JSONL using this envelope.
 3. Append `market_data.recorded` events to the local outbox only after raw write success.
 4. Write the recorder state file.
