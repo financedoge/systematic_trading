@@ -1,5 +1,17 @@
 # Project Log
 
+## 2026-09-19 - Review-driven execution and accounting repairs
+
+- Preserved the pre-existing working-copy changes and implemented the first repair batch from the codebase review. No services were restarted, broker orders submitted, migrations applied, or historical trading/research data rewritten.
+- The submission CLI now uses the configured trading-store factory; unsupported Postgres/SQLite combinations fail before database access. Shared router validation requires recent, successful paper reconciliation, including for CLI calls.
+- SQLite uses an immediate transaction and Postgres uses a transaction-scoped advisory lock to reserve each proposal/order intent before placement. Uncertain placement outcomes retain the durable pending claim and block subsequent routing; only confirmed unfilled failures can be retried. Pending claims are not reclassified as missed by deadline expiry.
+- Backtest sizing now uses decision-date holding marks and FX. Affordability simulates whole-share purchases with native cash, conversion rounding and fees. Existing backtest artifacts must be regenerated and re-audited before relying on their results.
+- PnL collapse advances the existing baseline instead of replaying pre-reset history; broker-reset lots and realized PnL survive subsequent collapses, and backwards cutoffs are rejected.
+- Removed synthetic price/FX writes from the refresh path. Legacy carry-forward settings are accepted but cannot make stale observations current. Zero-volume bars are retried and cannot establish current trading prices; EOD readiness requires current FX too. Legacy synthetic FX has no reliable provenance and needs a separate provider-backed historical repair.
+- Added isolated test defaults and regression coverage for concurrent routing, lost acknowledgments, invalid reconciliation, partial cancellations, future-price/FX independence, native cash affordability, repeated outages, and broker-reset baseline preservation.
+- Validation: final full suite **240 passed in 189.33s** (`.venv/Scripts/python.exe -B -m pytest -o addopts='' -q -p no:cacheprovider --durations=5`), including 23 new regression cases; Python syntax checks and repository-configured `git diff --check` passed. SQLite concurrency is exercised with real transactions. Postgres reservation SQL and IB behavior have not been tested against external services in this session.
+
+
 ## 2026-07-14 - Current Full Report For Monitored Strategies
 
 - Changed Monitored strategy clicks to open the complete backtest report directly instead of the simplified strategy detail page. Archived rows retain the existing detail fallback, including the 67 discovered artifacts without generated HTML reports.

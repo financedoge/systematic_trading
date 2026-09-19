@@ -227,10 +227,34 @@ class PostgresStore:
         return updated
 
     def save_broker_order_record(self, record: BrokerOrderRecord) -> BrokerOrderRecord:
+        self._write_broker_order_record(record)
+        return record
+
+    def reserve_broker_order_record(self, record: BrokerOrderRecord, *, allow_resubmit: bool = False) -> bool:
+        return self._write_broker_order_record(record, reserve=True, allow_resubmit=allow_resubmit)
+
+    def _write_broker_order_record(
+        self, record: BrokerOrderRecord, *, reserve: bool = False, allow_resubmit: bool = False,
+    ) -> bool:
         now = datetime.now(tz=UTC)
         order_event = order_status_changed_event(record)
         fill_event = fill_recorded_event(record)
         with self._connect() as connection:
+            if reserve:
+                # Transaction-scoped lock also serializes claims from other processes.
+                connection.execute(
+                    "SELECT pg_advisory_xact_lock(hashtextextended(%s, 0))",
+                    (f"order-intent:{record.proposal_id}:{record.order_index}",),
+                )
+                rows = connection.execute(
+                    "SELECT payload FROM execution.broker_orders WHERE proposal_id = %s AND order_index = %s",
+                    (record.proposal_id, record.order_index),
+                ).fetchall()
+                for row in rows:
+                    existing = BrokerOrderRecord.model_validate(row["payload"])
+                    if (not allow_resubmit or existing.status.value not in {"rejected", "cancelled"}
+                            or existing.filled_quantity > 0):
+                        return False
             connection.execute(
                 """
                 INSERT INTO execution.broker_orders(
@@ -362,7 +386,7 @@ class PostgresStore:
                         fill_event.event_id,
                     ),
                 )
-        return record
+        return True
 
     def save_broker_order_records(self, records: list[BrokerOrderRecord]) -> list[BrokerOrderRecord]:
         for record in records:

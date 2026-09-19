@@ -45,6 +45,7 @@ def refresh_sota_market_data(
     allow_stale_carry_forward: bool = False,
     carry_forward_max_calendar_days: int = 4,
 ) -> MarketDataRefreshResult:
+    """Refresh observed data only; legacy carry-forward options never authorize synthetic writes."""
     price_provider = provider or YahooChartProvider(adjust_prices=True)
     currency_provider = fx_provider or YahooChartProvider()
     configured_instruments = instruments_for_definition(current_sota_definition())
@@ -81,17 +82,7 @@ def refresh_sota_market_data(
                 warnings.append(f"{symbol}: no new market bars returned for {start_date} to {target_date}.")
 
         if allow_stale_carry_forward and _latest_price_date(store, symbol) != target_date:
-            carried_bars, carry_warnings = _carry_forward_price_bars(
-                store,
-                symbol,
-                target_date=target_date,
-                max_calendar_days=max(carry_forward_max_calendar_days, 0),
-            )
-            for bar in carried_bars:
-                store.upsert_price_bar(symbol, bar)
-            symbol_bars_upserted += len(carried_bars)
-            carried_forward_price_bars += len(carried_bars)
-            warnings.extend(carry_warnings)
+            warnings.append(f"{symbol}: stale close was not carried forward; synthetic bars cannot establish trading readiness.")
 
         if symbol_bars_upserted:
             bars_upserted += symbol_bars_upserted
@@ -121,17 +112,7 @@ def refresh_sota_market_data(
             if not fx_rates_upserted:
                 warnings.append(f"USD/CNH: no new FX bars returned for {fx_start} to {target_date}.")
         if allow_stale_carry_forward and _latest_fx_date(store, Currency.USD) != target_date:
-            carried_rates, carry_warnings = _carry_forward_fx_rates(
-                store,
-                Currency.USD,
-                target_date=target_date,
-                max_calendar_days=max(carry_forward_max_calendar_days, 0),
-            )
-            for rate in carried_rates:
-                store.upsert_fx_rate(rate)
-            fx_rates_upserted += len(carried_rates)
-            carried_forward_fx_rates += len(carried_rates)
-            warnings.extend(carry_warnings)
+            warnings.append("USD/CNH: stale FX was not carried forward; synthetic rates cannot establish trading readiness.")
 
     return MarketDataRefreshResult(
         target_date=target_date,
@@ -218,6 +199,9 @@ def _fetch_fallback_bars(
 
 def _next_missing_price_date(store: MarketDataStore, symbol: str, target_date: date) -> date | None:
     bars = store.list_price_bars(symbol)
+    suspect = [bar.trade_date for bar in bars if bar.volume == 0 and bar.trade_date <= target_date]
+    if suspect:
+        return min(suspect)
     if bars and bars[-1].trade_date >= target_date:
         return None
     if bars:
@@ -239,103 +223,19 @@ def _next_missing_fx_date(store: MarketDataStore, currency: Currency, target_dat
     return date(2012, 1, 1)
 
 
-def _carry_forward_price_bars(
-    store: MarketDataStore,
-    symbol: str,
-    *,
-    target_date: date,
-    max_calendar_days: int,
-) -> tuple[list[PriceBar], list[str]]:
-    bars = store.list_price_bars(symbol)
-    if not bars:
-        return [], [f"{symbol}: cannot carry forward missing market data; no prior price bar exists."]
-    source_bar = bars[-1]
-    if source_bar.trade_date >= target_date:
-        return [], []
-    gap_days = (target_date - source_bar.trade_date).days
-    if gap_days > max_calendar_days:
-        return [], [
-            f"{symbol}: cannot carry forward stale market data from {source_bar.trade_date} to {target_date}; "
-            f"{gap_days} calendar days exceeds limit {max_calendar_days}."
-        ]
-    carried: list[PriceBar] = []
-    for trade_date in _business_dates_after(source_bar.trade_date, target_date):
-        carried.append(
-            PriceBar(
-                trade_date=trade_date,
-                open=source_bar.close,
-                high=source_bar.close,
-                low=source_bar.close,
-                close=source_bar.close,
-                volume=0,
-            )
-        )
-    if not carried:
-        return [], []
-    return carried, [
-        f"{symbol}: carried forward stale close from {source_bar.trade_date} through {target_date} "
-        "because live market data providers did not return current data."
-    ]
-
-
-def _carry_forward_fx_rates(
-    store: MarketDataStore,
-    currency: Currency,
-    *,
-    target_date: date,
-    max_calendar_days: int,
-) -> tuple[list[FXRate], list[str]]:
-    rates = store.list_fx_rates(currency)
-    if not rates:
-        return [], [f"{currency.value}/CNH: cannot carry forward missing FX data; no prior rate exists."]
-    source_rate = rates[-1]
-    if source_rate.rate_date >= target_date:
-        return [], []
-    gap_days = (target_date - source_rate.rate_date).days
-    if gap_days > max_calendar_days:
-        return [], [
-            f"{currency.value}/CNH: cannot carry forward stale FX data from {source_rate.rate_date} to {target_date}; "
-            f"{gap_days} calendar days exceeds limit {max_calendar_days}."
-        ]
-    carried = [
-        FXRate(
-            rate_date=rate_date,
-            base_currency=source_rate.base_currency,
-            quote_currency=source_rate.quote_currency,
-            rate=source_rate.rate,
-        )
-        for rate_date in _business_dates_after(source_rate.rate_date, target_date)
-    ]
-    if not carried:
-        return [], []
-    return carried, [
-        f"{currency.value}/CNH: carried forward stale FX rate from {source_rate.rate_date} through {target_date} "
-        "because live FX providers did not return current data."
-    ]
-
-
 def _complete_bar_date(store: MarketDataStore, symbols: Sequence[str]) -> date | None:
     dates: list[date] = []
     for symbol in symbols:
         bars = store.list_price_bars(symbol)
-        if bars:
-            dates.append(bars[-1].trade_date)
+        if not bars or bars[-1].volume == 0:
+            return None
+        dates.append(bars[-1].trade_date)
     return min(dates) if dates else None
 
 
 def _latest_fx_date(store: MarketDataStore, currency: Currency) -> date | None:
     rates = store.list_fx_rates(currency)
     return rates[-1].rate_date if rates else None
-
-
-def _business_dates_after(start_date: date, end_date: date) -> list[date]:
-    dates: list[date] = []
-    cursor = start_date + timedelta(days=1)
-    while cursor <= end_date:
-        if cursor.weekday() < 5:
-            dates.append(cursor)
-        cursor += timedelta(days=1)
-    return dates
 
 
 def _dedupe(messages: list[str]) -> list[str]:

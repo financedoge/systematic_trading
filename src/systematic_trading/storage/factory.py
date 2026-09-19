@@ -44,6 +44,8 @@ def create_trading_store(
     )
     resolved_market_data_backend = _normalize_backend(market_data_backend or settings.market_data_store_backend)
     if resolved_market_data_backend == "sqlite":
+        if isinstance(transactional_store, PostgresStore):
+            raise ValueError("Postgres transactional storage requires market_data_store_backend='clickhouse'.")
         return transactional_store
     if resolved_market_data_backend == "clickhouse":
         return MarketDataRoutedTradingStore(

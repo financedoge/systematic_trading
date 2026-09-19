@@ -75,7 +75,7 @@ def build_sota_live_rebalance_plan(
     }
     effective_decision_date = decision_date or account_snapshot.as_of or _latest_trade_date(bars_by_symbol)
     latest_available_trade_date = _latest_trade_date(bars_by_symbol)
-    if decision_date is not None and latest_available_trade_date < effective_decision_date:
+    if latest_available_trade_date < effective_decision_date:
         raise ValueError(
             f"Latest SOTA market data is {latest_available_trade_date}; cannot build {effective_decision_date} "
             "live rebalance until market data is current."
@@ -180,6 +180,8 @@ def _sota_targets_as_of(
     states: list[BetaInstrumentState] = []
     for symbol, instrument in instruments.items():
         history = [bar for bar in bars_by_symbol.get(symbol, []) if bar.trade_date <= decision_date]
+        if not history or history[-1].trade_date != decision_date or history[-1].volume == 0:
+            continue
         if len(history) < max_required_history + 1:
             continue
         volatility = realized_volatility_from_bars(history[-(lookback_bars + 1) :])
@@ -221,7 +223,7 @@ def _latest_prices(
     prices: dict[str, Decimal] = {}
     for symbol, bars in bars_by_symbol.items():
         eligible = [bar for bar in bars if bar.trade_date <= decision_date]
-        if eligible:
+        if eligible and eligible[-1].trade_date == decision_date and eligible[-1].volume > 0:
             prices[symbol] = eligible[-1].close
     return prices
 
@@ -249,6 +251,8 @@ def _latest_fx_to_cnh(
         rates = store.list_fx_rates(currency, end_date=decision_date)
         if not rates:
             raise ValueError(f"Missing {currency}/CNH FX rate on or before {decision_date}.")
+        if rates[-1].rate_date != decision_date:
+            raise ValueError(f"Stale {currency}/CNH FX rate for {decision_date}.")
         fx_to_cnh[currency] = rates[-1].rate
     return fx_to_cnh
 

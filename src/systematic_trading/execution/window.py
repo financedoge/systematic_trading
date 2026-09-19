@@ -10,7 +10,6 @@ from systematic_trading.storage.interfaces import TradingStore
 
 
 ACTIONABLE_FAILURE_STATUSES = {
-    BrokerOrderStatus.PENDING_SUBMIT,
     BrokerOrderStatus.CANCELLED,
     BrokerOrderStatus.REJECTED,
     BrokerOrderStatus.MISSED,

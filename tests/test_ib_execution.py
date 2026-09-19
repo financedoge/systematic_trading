@@ -17,8 +17,20 @@ from systematic_trading.domain.execution import OrderRequest, ProposalReasoning,
 from systematic_trading.execution.broker import IBOrderSpec, _parse_ib_execution_time, _to_ib_order
 from systematic_trading.execution import InteractiveBrokersOrderRouter, order_spec_for
 from systematic_trading.execution.broker import InteractiveBrokersExecutionSynchronizer
+from systematic_trading.execution.broker import BrokerOrderRejectedError
+from systematic_trading.execution.reconciliation import IBPaperReconciliationReport
 from systematic_trading.research import current_sota_definition
 from systematic_trading.storage.sqlite import SQLiteStore
+
+
+@pytest.fixture(autouse=True)
+def matched_reconciliation(tmp_path, isolated_application_defaults):
+    path = tmp_path / "reconciliation" / "ib_paper_reconciliation_latest.json"
+    path.parent.mkdir()
+    path.write_text(IBPaperReconciliationReport(
+        checked_at=datetime.now(tz=UTC), local_order_history_count=0, local_order_count=0,
+        local_filled_order_count=0, ib_fill_count=0, ib_position_count=0,
+    ).model_dump_json(), encoding="utf-8")
 
 
 def test_ib_execution_time_without_suffix_uses_tws_local_timezone() -> None:
@@ -51,7 +63,7 @@ class FakeIBClient:
 
     def place_order(self, order_id, contract, order) -> None:
         if order_id == self.fail_on_order_id:
-            raise RuntimeError(f"IB rejected order {order_id}")
+            raise BrokerOrderRejectedError(f"IB rejected order {order_id}")
         self.placed_orders.append((order_id, contract, order))
 
     def disconnect(self) -> None:

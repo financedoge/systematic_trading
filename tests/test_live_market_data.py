@@ -64,7 +64,7 @@ def test_refresh_sota_market_data_uses_fallback_provider_when_primary_fails(tmp_
     assert fallback.requests == [("HYXU", date(2026, 5, 19), date(2026, 5, 19))]
 
 
-def test_refresh_sota_market_data_carries_forward_missing_price_and_fx_when_providers_fail(tmp_path) -> None:
+def test_refresh_sota_market_data_never_persists_synthetic_prices_or_fx(tmp_path) -> None:
     store = SQLiteStore(tmp_path / "market_refresh_carry_forward.db")
     store.initialize()
     store.upsert_price_bar("BWX", _bar(date(2026, 5, 19), Decimal("21.50")))
@@ -83,19 +83,19 @@ def test_refresh_sota_market_data_carries_forward_missing_price_and_fx_when_prov
         allow_stale_carry_forward=True,
     )
 
-    assert result.latest_bar_date == date(2026, 5, 20)
-    assert result.latest_fx_date == date(2026, 5, 20)
-    assert result.bars_upserted == 1
-    assert result.fx_rates_upserted == 1
-    assert result.carried_forward_price_bars == 1
-    assert result.carried_forward_fx_rates == 1
+    assert result.latest_bar_date == date(2026, 5, 19)
+    assert result.latest_fx_date == date(2026, 5, 19)
+    assert result.bars_upserted == 0
+    assert result.fx_rates_upserted == 0
+    assert result.carried_forward_price_bars == 0
+    assert result.carried_forward_fx_rates == 0
     carried_bar = store.list_price_bars("BWX")[-1]
-    assert carried_bar.trade_date == date(2026, 5, 20)
+    assert carried_bar.trade_date == date(2026, 5, 19)
     assert carried_bar.close == Decimal("21.50")
-    assert carried_bar.volume == 0
+    assert carried_bar.volume == 1000
     assert store.list_fx_rates(Currency.USD)[-1].rate == Decimal("7.20")
-    assert any("BWX: carried forward stale close" in warning for warning in result.warnings)
-    assert any("USD/CNH: carried forward stale FX rate" in warning for warning in result.warnings)
+    assert any("BWX: stale close was not carried forward" in warning for warning in result.warnings)
+    assert any("USD/CNH: stale FX was not carried forward" in warning for warning in result.warnings)
 
 
 class _FakeMarketDataProvider:

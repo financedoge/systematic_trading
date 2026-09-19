@@ -351,7 +351,11 @@ class TradingManagementService:
         self._record_event("eod", "started", f"Started after-close workflow for {service_date}.")
         self._sync_executions(now)
         market_result = self._refresh_market_data(service_date)
-        market_ready = market_result is not None and market_result.latest_bar_date is not None and market_result.latest_bar_date >= service_date
+        market_ready = (
+            market_result is not None
+            and market_result.latest_bar_date is not None and market_result.latest_bar_date >= service_date
+            and market_result.latest_fx_date is not None and market_result.latest_fx_date >= service_date
+        )
         reconciliation_ready = self._status.last_reconciliation_status in {"matched", "reset_to_broker"}
         pnl_ready = self._status.last_eod_pnl_date == service_date
         rebalance_ready = not self.settings.automation_queue_rebalance or _existing_staged_proposal(self.store, service_date) is not None

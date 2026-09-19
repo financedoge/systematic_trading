@@ -64,6 +64,10 @@ class ProposalStore(Protocol):
 
 @runtime_checkable
 class BrokerOrderStore(Protocol):
+    def reserve_broker_order_record(self, record: BrokerOrderRecord, *, allow_resubmit: bool = False) -> bool:
+        """Atomically claim an unsubmitted intent or an unfilled, confirmed failure."""
+        ...
+
     def save_broker_order_record(self, record: BrokerOrderRecord) -> BrokerOrderRecord:
         ...
 
