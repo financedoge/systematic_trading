@@ -28,6 +28,18 @@ After finishing work:
 
 ## Current Snapshot
 
+### 2026-09-19 review repair batch
+
+Status: **Done (implementation and isolated verification)**. Fixed CLI storage routing and invalid backend combinations; shared reconciliation enforcement; atomic order reservations and uncertain-retry blocking; decision-date backtest sizing and native-cash affordability; broker-reset PnL baseline preservation; and prevention of synthetic carry-forward writes. Added isolated test defaults and 23 regression cases in `tests/test_review_regressions.py`. Final full suite: **240 passed in 189.33s**, using `.venv/Scripts/python.exe -B -m pytest -o addopts='' -q -p no:cacheprovider --durations=5`. Python syntax checks and repository-configured `git diff --check` passed. Existing working-copy changes were preserved. No broker submission, service restart, migration, or research promotion occurred. External integration evidence remains a separate Review item below.
+
+Review follow-ups (not closed by this batch):
+
+- **Pending / P1:** persist and reconcile execution IDs so partial broker-history responses cannot reduce cumulative fills; capture definitive broker order outcomes to resolve uncertain submissions safely.
+- **Pending / P1:** align paper proposal staging with the registered monthly strategy scheduler.
+- **Pending / P2:** share the exchange session calendar across proposal generation and recorders; enforce golden-source precedence and point-in-time availability; bind local Docker services to loopback.
+- **Review:** exercise order reservations against isolated Postgres and perform controlled IB paper recovery tests before deploying the execution changes.
+- **Pending:** provider-backed repair of legacy synthetic data and regeneration/re-audit of research artifacts affected by backtest sizing.
+
 | Area | Done | In Progress | Pending | Blocked |
 | --- | ---: | ---: | ---: | ---: |
 | Project memory and governance | 6 | 0 | 1 | 0 |

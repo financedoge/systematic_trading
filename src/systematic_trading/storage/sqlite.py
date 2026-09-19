@@ -250,8 +250,30 @@ class SQLiteStore:
         return [TradeProposal.model_validate_json(row["payload"]) for row in rows]
 
     def save_broker_order_record(self, record: BrokerOrderRecord) -> BrokerOrderRecord:
+        self._write_broker_order_record(record)
+        return record
+
+    def reserve_broker_order_record(self, record: BrokerOrderRecord, *, allow_resubmit: bool = False) -> bool:
+        return self._write_broker_order_record(record, reserve=True, allow_resubmit=allow_resubmit)
+
+    def _write_broker_order_record(
+        self, record: BrokerOrderRecord, *, reserve: bool = False, allow_resubmit: bool = False,
+    ) -> bool:
         now = datetime.now(tz=UTC).isoformat()
         with self._connect() as connection:
+            if reserve:
+                connection.execute("BEGIN IMMEDIATE")
+                rows = connection.execute(
+                    "SELECT payload FROM broker_order_records WHERE proposal_id = ?",
+                    (record.proposal_id,),
+                ).fetchall()
+                previous = [BrokerOrderRecord.model_validate_json(row["payload"]) for row in rows]
+                for existing in previous:
+                    if existing.order_index == record.order_index and (
+                        not allow_resubmit or existing.status.value not in {"rejected", "cancelled"}
+                        or existing.filled_quantity > 0
+                    ):
+                        return False
             connection.execute(
                 """
                 INSERT INTO broker_order_records(
@@ -288,7 +310,7 @@ class SQLiteStore:
             fill_event = _fill_recorded_event(record)
             if fill_event is not None:
                 _insert_platform_event(connection, fill_event, created_at=now)
-        return record
+        return True
 
     def save_broker_order_records(self, records: list[BrokerOrderRecord]) -> list[BrokerOrderRecord]:
         for record in records:

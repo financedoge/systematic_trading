@@ -76,6 +76,10 @@ class IBOrderClient(Protocol):
         """Disconnect from IB."""
 
 
+class BrokerOrderRejectedError(RuntimeError):
+    """A broker explicitly rejected an order without accepting any execution."""
+
+
 class IBExecutionSyncClient(Protocol):
     def fetch_fills(self, profile: BrokerConnectionProfile) -> list[BrokerExecutionFill]:
         """Fetch broker executions that can be reconciled into local order records."""
@@ -179,6 +183,7 @@ class InteractiveBrokersOrderRouter:
         profile = self.adapter.profile_for(environment)
         client = self.client or IbApiOrderClient()
         records: list[BrokerOrderRecord] = []
+        submission_issues: list[str] = []
         order_items = _selected_order_items(proposal, order_indexes)
         try:
             first_order_id = client.connect(profile)
@@ -198,21 +203,28 @@ class InteractiveBrokersOrderRouter:
                     submitted_at=submitted_at,
                     remaining_quantity=order.quantity,
                 )
-                store.save_broker_order_record(record)
                 contract = self.contract_spec_for(order.symbol)
                 ib_order = order_spec_for(order, order_ref=order_ref)
+                if not store.reserve_broker_order_record(record, allow_resubmit=allow_resubmit):
+                    submission_issues.append(f"{order_ref}: order intent already claimed; reconcile before retrying.")
+                    break
                 try:
                     client.place_order(broker_order_id, contract, ib_order)
                 except Exception as exc:
                     record = record.model_copy(
                         update={
-                            "status": BrokerOrderStatus.REJECTED,
+                            "status": (BrokerOrderStatus.REJECTED if isinstance(exc, BrokerOrderRejectedError)
+                                       else BrokerOrderStatus.PENDING_SUBMIT),
                             "message": str(exc),
                             "updated_at": datetime.now(tz=UTC),
                         }
                     )
                     store.save_broker_order_record(record)
                     records.append(record)
+                    if not isinstance(exc, BrokerOrderRejectedError):
+                        # The broker may have accepted it. Preserve the claim and
+                        # stop the batch until its outcome has been reconciled.
+                        break
                     continue
                 record = record.model_copy(
                     update={
@@ -228,8 +240,9 @@ class InteractiveBrokersOrderRouter:
         return BrokerSubmissionResult(
             proposal_id=proposal.proposal_id,
             environment=environment,
-            submitted_at=records[0].submitted_at or datetime.now(tz=UTC),
+            submitted_at=(records[0].submitted_at if records else None) or datetime.now(tz=UTC),
             records=records,
+            validation_issues=submission_issues,
         )
 
     def validate_proposal_for_submission(
@@ -296,6 +309,19 @@ class InteractiveBrokersOrderRouter:
         existing_records = store.list_broker_order_records(proposal.proposal_id)
         if existing_records and not allow_resubmit:
             issues.append(f"{proposal.proposal_id}: broker order records already exist; pass allow_resubmit to override.")
+        selected_indexes = {index for index, _ in order_items}
+        for record in existing_records:
+            if record.order_index in selected_indexes and (
+                record.status not in {BrokerOrderStatus.REJECTED, BrokerOrderStatus.CANCELLED}
+                or record.filled_quantity > 0
+            ):
+                issues.append(f"{record.order_ref}: active, filled, or uncertain order cannot be resubmitted.")
+        for record in store.list_broker_order_records():
+            if record.environment == environment and record.status == BrokerOrderStatus.PENDING_SUBMIT:
+                issues.append(f"{record.order_ref}: unresolved submission outcome blocks new routing until reconciled.")
+        # Local import avoids the reconciliation/client import cycle.
+        from systematic_trading.execution.reconciliation import submission_reconciliation_issues
+        issues.extend(submission_reconciliation_issues(self.settings))
         return issues
 
 

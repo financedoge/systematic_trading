@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-from collections import defaultdict
 from datetime import date
 from decimal import Decimal
 from typing import Iterable, Mapping, Sequence
 
 from pydantic import BaseModel
 
-from systematic_trading.backtest.accounting import CashLedger, FxConverter, PortfolioValuationService, quantize_money
+from systematic_trading.backtest.accounting import CashLedger, FxConverter, InsufficientCashError, PortfolioValuationService, quantize_money
 from systematic_trading.domain.enums import Currency, OrderSide
 from systematic_trading.domain.execution import OrderRequest, TradeProposal
 from systematic_trading.domain.market import Instrument
@@ -69,11 +68,11 @@ class DailyBacktestEngine:
                 else rebalance_price_map
             )
 
-            for position in positions.values():
-                position.market_price = Decimal(price_map[position.symbol])
-
             if trade_date in target_schedule:
                 decision_date = (decision_dates_by_trade_date or {}).get(trade_date, trade_date)
+                decision_fx = daily_fx_to_cnh[decision_date]
+                for position in positions.values():
+                    position.market_price = Decimal(rebalance_price_map[position.symbol])
                 proposal = self._proposal_builder.build(
                     as_of=decision_date,
                     intended_trade_date=trade_date,
@@ -82,7 +81,7 @@ class DailyBacktestEngine:
                     cash=ledger.snapshot(),
                     instruments=instruments,
                     prices=rebalance_price_map,
-                    fx_to_cnh=fx_map,
+                    fx_to_cnh=decision_fx,
                     targets=target_schedule[trade_date],
                 )
                 proposals.append(proposal)
@@ -194,25 +193,32 @@ class DailyBacktestEngine:
         execution_prices: Mapping[str, Decimal] | None,
         transaction_cost_rate: Decimal,
     ) -> Decimal:
-        required_by_currency: dict[Currency, Decimal] = defaultdict(lambda: Decimal("0.00"))
-        for order in orders:
-            if order.side != OrderSide.BUY:
-                continue
-            fill_price = Decimal((execution_prices or {}).get(order.symbol, order.reference_price))
-            local_notional = quantize_money(Decimal(order.quantity) * fill_price)
-            transaction_cost = quantize_money(local_notional * max(transaction_cost_rate, Decimal("0")))
-            required_by_currency[order.currency] += local_notional + transaction_cost
+        def affordable(scale: Decimal) -> bool:
+            trial = CashLedger(ledger.snapshot())
+            try:
+                for order in orders:
+                    if order.side != OrderSide.BUY:
+                        continue
+                    quantity = int(Decimal(order.quantity) * scale)
+                    if quantity == 0:
+                        continue
+                    price = Decimal((execution_prices or {}).get(order.symbol, order.reference_price))
+                    notional = quantize_money(Decimal(quantity) * price)
+                    cost = quantize_money(notional * max(transaction_cost_rate, Decimal("0")))
+                    trial.fund_and_withdraw(order.currency, notional + cost, converter)
+            except InsufficientCashError:
+                return False
+            return True
 
-        required_cnh = Decimal("0.00")
-        for currency, required in required_by_currency.items():
-            if currency == Currency.CNH:
-                required_cnh += required
-                continue
-            shortfall = quantize_money(required - ledger.balance(currency))
-            if shortfall > 0:
-                required_cnh += converter.convert(shortfall, currency, Currency.CNH)
-
-        available_cnh = ledger.balance(Currency.CNH)
-        if required_cnh <= available_cnh or required_cnh <= 0:
+        if affordable(Decimal("1")):
             return Decimal("1")
-        return max(Decimal("0"), (available_cnh / required_cnh) * Decimal("0.9999"))
+        # Test the actual rounded whole-share purchases, including native cash,
+        # conversion rounding and fees, rather than scaling only the CNH deficit.
+        low, high = Decimal("0"), Decimal("1")
+        for _ in range(64):
+            middle = (low + high) / 2
+            if affordable(middle):
+                low = middle
+            else:
+                high = middle
+        return low

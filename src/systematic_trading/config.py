@@ -62,7 +62,7 @@ class AppSettings(BaseSettings):
     automation_ib_error_breaker_threshold: int = 3
     automation_ib_error_breaker_cooldown_seconds: int = 1800
     automation_queue_rebalance: bool = True
-    automation_market_data_carry_forward: bool = True
+    automation_market_data_carry_forward: bool = False
     automation_market_data_carry_forward_max_calendar_days: int = 4
     execution_twap_start_time: str = "09:30"
     execution_twap_end_time: str = "10:00"

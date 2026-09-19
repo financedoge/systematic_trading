@@ -104,10 +104,23 @@ def _build_pnl_snapshot(
 
 def build_pnl_baseline(store: TradingStore, *, cutoff_date: date) -> PnLBaseline:
     cutoff_at = datetime.combine(cutoff_date, time.max, tzinfo=UTC)
+    previous = store.latest_pnl_baseline()
     warnings: list[str] = []
     lots_by_symbol: dict[str, list[PnLOpenLot]] = {}
     realized_by_symbol = _decimal_map()
     fills = [fill for fill in _broker_record_fills(store, warnings) if fill.traded_at <= cutoff_at]
+    previous_trade_count = 0
+    if previous is not None:
+        previous_cutoff = _ensure_aware(previous.cutoff_at)
+        if cutoff_at < previous_cutoff:
+            raise ValueError("Cannot collapse PnL before the current baseline cutoff.")
+        for lot in previous.open_lots:
+            lots_by_symbol.setdefault(lot.symbol.upper(), []).append(lot.model_copy(deep=True))
+        for symbol, realized in previous.realized_pnl_by_symbol_cnh.items():
+            realized_by_symbol[symbol.upper()] += Decimal(realized)
+        previous_trade_count = previous.filled_trade_count
+        warnings.extend(previous.warnings)
+        fills = [fill for fill in fills if fill.traded_at > previous_cutoff]
     _apply_fills(store, fills, lots_by_symbol, realized_by_symbol, cutoff_date, warnings)
     open_lots = [
         lot
@@ -115,7 +128,7 @@ def build_pnl_baseline(store: TradingStore, *, cutoff_date: date) -> PnLBaseline
         for lot in lots_by_symbol[symbol]
         if lot.quantity != 0
     ]
-    if not fills:
+    if not fills and previous is None:
         warnings.append(f"No filled broker order records were available on or before {cutoff_date}; baseline is empty.")
     return PnLBaseline(
         cutoff_at=cutoff_at,
@@ -126,7 +139,7 @@ def build_pnl_baseline(store: TradingStore, *, cutoff_date: date) -> PnLBaseline
             if value != 0
         },
         open_lots=open_lots,
-        filled_trade_count=len(fills),
+        filled_trade_count=previous_trade_count + len(fills),
         warnings=_dedupe(warnings),
     )
 

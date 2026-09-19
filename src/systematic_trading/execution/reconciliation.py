@@ -335,6 +335,18 @@ def load_latest_ib_reconciliation(settings: AppSettings) -> IBPaperReconciliatio
         return None
 
 
+def submission_reconciliation_issues(settings: AppSettings, *, now: datetime | None = None) -> list[str]:
+    report = load_latest_ib_reconciliation(settings)
+    if report is None:
+        return ["Order routing is blocked until a fresh IB portfolio reconciliation succeeds."]
+    if report.environment != OrderEnvironment.PAPER or report.has_breaks:
+        return ["Order routing is blocked by an unresolved IB portfolio reconciliation break."]
+    age = (_aware(now or datetime.now(tz=UTC)) - _aware(report.checked_at)).total_seconds()
+    if age < -5 or age > 180:
+        return ["Order routing is blocked because the latest IB portfolio reconciliation is older than 180 seconds or future-dated."]
+    return []
+
+
 def _persist_report(settings: AppSettings, report: IBPaperReconciliationReport) -> IBPaperReconciliationReport:
     output_dir = settings.data_dir / "reconciliation"
     output_dir.mkdir(parents=True, exist_ok=True)

@@ -42,6 +42,7 @@ from systematic_trading.execution.broker import (
 from systematic_trading.execution.reconciliation import (
     IBPaperReconciliationReport,
     load_latest_ib_reconciliation,
+    submission_reconciliation_issues,
     reconcile_ib_paper_account,
 )
 from systematic_trading.execution.window import (
@@ -465,29 +466,9 @@ def _submit_proposal_to_ib(
             records=[],
             validation_issues=validation_issues + ["confirm_submit is required before routing orders to IB."],
         )
-    latest_reconciliation = load_latest_ib_reconciliation(_settings(request))
-    if latest_reconciliation is None:
-        raise HTTPException(
-            status_code=409,
-            detail="Order routing is blocked until a fresh IB portfolio reconciliation succeeds.",
-        )
-    if latest_reconciliation.has_breaks:
-        raise HTTPException(
-            status_code=409,
-            detail=(
-                "Order routing is blocked by an unresolved IB portfolio reconciliation break. "
-                "Refresh reconciliation and either resolve the mismatch or explicitly reset active state to IB."
-            ),
-        )
-    checked_at = latest_reconciliation.checked_at
-    if checked_at.tzinfo is None:
-        checked_at = checked_at.replace(tzinfo=UTC)
-    age_seconds = (datetime.now(tz=UTC) - checked_at.astimezone(UTC)).total_seconds()
-    if age_seconds > 180:
-        raise HTTPException(
-            status_code=409,
-            detail="Order routing is blocked because the latest IB portfolio reconciliation is older than 180 seconds.",
-        )
+    reconciliation_issues = submission_reconciliation_issues(_settings(request))
+    if reconciliation_issues:
+        raise HTTPException(status_code=409, detail=" ".join(reconciliation_issues))
     result = order_router.submit_approved_proposal(
         proposal=route_proposal,
         store=store,
@@ -988,7 +969,10 @@ def collapse_dashboard_pnl_history(
     request_body: DashboardPnlCollapseInput,
     request: Request,
 ) -> PnLBaseline:
-    baseline = build_pnl_baseline(_store(request), cutoff_date=request_body.cutoff_date)
+    try:
+        baseline = build_pnl_baseline(_store(request), cutoff_date=request_body.cutoff_date)
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
     return _store(request).save_pnl_baseline(baseline)
 
 

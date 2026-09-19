@@ -98,12 +98,18 @@ ST_IB_EXECUTION_SYNC_CLIENT_ID=131
 ST_IB_ACCOUNT_SNAPSHOT_CLIENT_ID=141
 ```
 
-If Yahoo and IB both fail for a recent after-close date, automation can carry forward the last stored close/FX rate for a short window so EOD PnL and proposal staging do not stall silently. The carry-forward is recorded as an automation warning and defaults to four calendar days:
+If Yahoo and IB cannot supply current observations, EOD processing and proposal staging remain blocked and the service reports the missing data. Synthetic bars and FX rates are never written to the trading store. The legacy carry-forward settings are still accepted for configuration compatibility, but enabling them only adds a warning; the day limit no longer authorizes synthetic writes:
 
 ```powershell
-ST_AUTOMATION_MARKET_DATA_CARRY_FORWARD=true
+ST_AUTOMATION_MARKET_DATA_CARRY_FORWARD=false
 ST_AUTOMATION_MARKET_DATA_CARRY_FORWARD_MAX_CALENDAR_DAYS=4
 ```
+
+Existing zero-volume daily bars are treated as suspect and retried through the refresh path. Older synthetic FX rows have no provenance in the legacy contract and require an explicit provider backfill before relying on historical results; this code change does not rewrite stored history.
+
+All submission entry points, including the CLI, require a successful paper reconciliation no more than 180 seconds old. The CLI uses the configured trading-store factory. Order intents are reserved atomically in SQLite/Postgres before placement. A timeout or unclassified client error retains `pending_submit`; it is an uncertain outcome, is not automatically expired as missed, and cannot be overridden with `--allow-resubmit`. Investigate the broker order/fill state before resolving it. Only an explicit rejection or cancellation with no fills is retryable. Generic IB error responses are treated conservatively as uncertain unless the client establishes a definitive rejection.
+
+PnL collapse advances the existing baseline, retaining broker-reset holdings and applying only subsequent fills. A cutoff earlier than the active baseline is rejected. Backtests use decision-date holdings marks and FX for sizing, and execution-date prices/FX only for fills and valuation. Previously generated backtest artifacts are not regenerated or promoted by this repair.
 
 Backtests and live order routing use the same execution timing convention: signals are decided after the decision-date close, order quantities are sized from the decision close, and fills are modeled/routed in the next trading session's opening TWAP window. Daily-bar backtests use the next session open as the available proxy for a 30-minute open-window TWAP. Live IB TWAP orders use:
 

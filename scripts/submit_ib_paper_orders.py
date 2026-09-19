@@ -12,7 +12,7 @@ sys.path.insert(0, str(REPO_ROOT / "src"))
 from systematic_trading.config import AppSettings
 from systematic_trading.domain.enums import OrderEnvironment
 from systematic_trading.execution import InteractiveBrokersOrderRouter
-from systematic_trading.storage.sqlite import SQLiteStore
+from systematic_trading.storage import create_trading_store
 
 
 def main() -> None:
@@ -34,7 +34,7 @@ def main() -> None:
 
     settings = AppSettings()
     database_path = Path(args.database) if args.database else settings.database_path
-    store = SQLiteStore(database_path)
+    store = create_trading_store(settings, database_path=database_path)
     store.initialize()
     proposal = store.get_proposal(args.proposal_id)
     if proposal is None:
