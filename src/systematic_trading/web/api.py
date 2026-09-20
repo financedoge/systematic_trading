@@ -4,7 +4,7 @@ import json
 import re
 from datetime import UTC, date, timedelta
 from datetime import datetime
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -14,7 +14,7 @@ from pydantic import BaseModel, Field
 
 from systematic_trading.backtest.accounting import FxConverter, PortfolioValuationService, quantize_money
 from systematic_trading.backtest.reporting import build_backtest_report_data, render_backtest_report_html
-from systematic_trading.live.trading_calendar import next_us_trading_day
+from systematic_trading.live.trading_calendar import next_us_trading_day, us_trading_dates_after
 from systematic_trading.config import AppSettings
 from systematic_trading.data.analytics import realized_volatility_from_bars
 from systematic_trading.data.providers import DataSourceManifest, ProviderRegistry
@@ -164,6 +164,11 @@ class DashboardPerformance(BaseModel):
     latest_market_data_date: date | None = None
     strategy_extension_count: int = 0
     account_source_count: int = 0
+    account_reset_at: datetime | None = None
+    account_tracking_start_date: date | None = None
+    account_alignment_date: date | None = None
+    account_alignment_nav_cnh: Decimal | None = None
+    account_alignment_strategy_index: Decimal | None = None
     latest_strategy_nav_cnh: Decimal | None = None
     latest_account_nav_cnh: Decimal | None = None
     strategy_total_return: Decimal | None = None
@@ -496,9 +501,12 @@ def dashboard_performance(request: Request) -> DashboardPerformance:
         strategy_raw, strategy_base_date, strategy_extension_count = _strategy_nav_points(strategy_payload, store, warnings)
     else:
         strategy_raw = []
-    account_raw = _account_nav_points(settings, store, warnings)
+    account_raw, reset_at, tracking_start = _account_nav_points(settings, store, warnings)
     strategy_series = _indexed_series(strategy_raw)
     account_series = _indexed_series(account_raw)
+    strategy_by_date = {point.trade_date: point for point in strategy_series}
+    anchor = next((point for point in account_series if tracking_start is not None
+                   and point.trade_date >= tracking_start and point.trade_date in strategy_by_date), None)
     latest_market_data_date = _latest_market_data_date(store)
     return DashboardPerformance(
         strategy_name=definition.name,
@@ -507,13 +515,18 @@ def dashboard_performance(request: Request) -> DashboardPerformance:
         latest_market_data_date=latest_market_data_date,
         strategy_extension_count=strategy_extension_count,
         account_source_count=len(account_raw),
+        account_reset_at=reset_at,
+        account_tracking_start_date=tracking_start,
+        account_alignment_date=anchor.trade_date if anchor else None,
+        account_alignment_nav_cnh=anchor.nav_cnh if anchor else None,
+        account_alignment_strategy_index=strategy_by_date[anchor.trade_date].index if anchor else None,
         latest_strategy_nav_cnh=strategy_series[-1].nav_cnh if strategy_series else None,
         latest_account_nav_cnh=account_series[-1].nav_cnh if account_series else None,
         strategy_total_return=_series_return(strategy_series),
         account_total_return=_series_return(account_series),
         strategy=strategy_series,
         account=account_series,
-        warnings=warnings,
+        warnings=_dedupe_messages(warnings),
     )
 
 
@@ -1374,11 +1387,11 @@ def _strategy_nav_points(
         try:
             trade_date = date.fromisoformat(str(item["trade_date"]))
             nav = Decimal(str(item["nav_cnh"]))
-        except (KeyError, ValueError):
+        except (KeyError, ValueError, InvalidOperation):
             continue
-        if nav > 0:
+        if nav.is_finite() and nav > 0:
             points.append((trade_date, nav))
-    points.sort(key=lambda item: item[0])
+    points = sorted(dict(points).items())
     if not points:
         warnings.append("Current SOTA strategy result has no NAV series.")
         return points, None, 0
@@ -1418,6 +1431,16 @@ def _strategy_mark_to_market_extension(
         for position in positions
     }
     trade_dates = sorted({bar.trade_date for bars in bars_by_symbol.values() for bar in bars})
+    missing_dates = sorted(set(us_trading_dates_after(source_end_date, trade_dates[-1])) - set(trade_dates)) if trade_dates else []
+    if missing_dates:
+        warnings.append(f"Strategy market-data coverage is missing {len(missing_dates)} US session(s): "
+                        + ", ".join(str(day) for day in missing_dates[:10])
+                        + ". Run the daily-bar backfill to recover provider observations; no NAV observations are interpolated.")
+    observed_dates = [{bar.trade_date for bar in bars} for bars in bars_by_symbol.values()]
+    incomplete_dates = [day for day in trade_dates if any(day not in days for days in observed_dates)]
+    if incomplete_dates:
+        warnings.append(f"Strategy marks carried forward a missing holding price on {len(incomplete_dates)} session(s): "
+                        + ", ".join(str(day) for day in incomplete_dates[:10]) + ".")
     if not trade_dates:
         latest_bar_date = _latest_market_data_date_for_symbols(store, [position.symbol for position in positions])
         if latest_bar_date is None or latest_bar_date <= source_end_date:
@@ -1507,13 +1530,60 @@ def _account_nav_points(
     settings: AppSettings,
     store: TradingStore,
     warnings: list[str],
-) -> list[tuple[date, Decimal]]:
-    points: list[tuple[date, Decimal]] = []
-    for snapshot_path, snapshot in _account_snapshots(settings, warnings):
+) -> tuple[list[tuple[date, Decimal]], datetime | None, date | None]:
+    baseline = store.latest_pnl_baseline()
+    reset_at = None
+    reset_path = None
+    if baseline is not None:
+        reset_at = baseline.account_reset_at
+        reset_path = baseline.account_snapshot_path
+        if reset_at is None and baseline.source == "ib_broker_authoritative_reset":
+            reset_at = baseline.cutoff_at
+        if reset_at is not None:
+            reset_at = _snapshot_utc(reset_at)
+        # Legacy resets already have an immutable reconciliation report linking the
+        # exact broker snapshot. Read it without rewriting financial audit history.
+        if reset_at is not None and reset_path is None:
+            stamp = reset_at.astimezone(UTC).strftime("%Y%m%d_%H%M%S")
+            for path in sorted((settings.data_dir / "reconciliation").glob(f"ib_paper_reconciliation_{stamp}_*.json")):
+                report = _load_json(path, warnings)
+                if not isinstance(report, dict) or report.get("reset_applied") is not True:
+                    continue
+                try:
+                    checked_at = _snapshot_utc(datetime.fromisoformat(str(report.get("checked_at", ""))))
+                except ValueError:
+                    warnings.append(f"Ignored reset report with invalid checked_at: {path.name}")
+                    continue
+                if (
+                    report.get("pnl_reset_baseline_id") == baseline.baseline_id
+                    or checked_at == reset_at
+                ):
+                    reset_path = report.get("account_snapshot_path")
+                    break
+    reset_name = str(reset_path).replace("\\", "/").rsplit("/", 1)[-1] if reset_path else None
+    reset_day = reset_at.date() if reset_at else None
+    snapshots = _account_snapshots(settings, warnings)
+    reset_snapshot = next((s for p, s in snapshots if p.name == reset_name), None)
+    if reset_snapshot is not None and reset_snapshot.as_of is not None:
+        reset_day = reset_snapshot.as_of
+    daily: dict[date, LiveAccountSnapshotInput] = {}
+    tracking_start: date | None = None
+    for snapshot_path, snapshot in sorted(snapshots, key=lambda item: _snapshot_capture_time(*item)):
         as_of = snapshot.as_of or _account_snapshot_date(snapshot_path)
         if as_of is None:
             warnings.append(f"Could not infer account snapshot date for {snapshot_path}.")
             continue
+        if reset_at is not None:
+            if as_of < reset_day:
+                continue
+            if (snapshot_path.name != reset_name
+                    and _snapshot_capture_time(snapshot_path, snapshot) < reset_at):
+                continue
+        if any(position.quantity > 0 for position in snapshot.positions):
+            tracking_start = min(tracking_start or as_of, as_of)
+        daily[as_of] = snapshot
+    points: list[tuple[date, Decimal]] = []
+    for as_of, snapshot in sorted(daily.items()):
         valuation, _, _ = _value_account_snapshot(
             store=store,
             account_snapshot=snapshot,
@@ -1522,8 +1592,30 @@ def _account_nav_points(
         )
         if valuation is not None and valuation.nav_cnh > 0:
             points.append((as_of, valuation.nav_cnh))
-    deduped = {trade_date: nav for trade_date, nav in points}
-    return sorted(deduped.items(), key=lambda item: item[0])
+    if reset_at is not None:
+        warnings.append(f"Account performance starts at the confirmed IB reset on {reset_day}; earlier snapshots remain in audit history.")
+    if tracking_start is None:
+        warnings.append("No positions observed in the displayed account history; strategy tracking has not started.")
+    return points, reset_at, tracking_start
+
+
+def _snapshot_capture_time(path: Path, snapshot: LiveAccountSnapshotInput) -> datetime:
+    if snapshot.captured_at is not None:
+        return _snapshot_utc(snapshot.captured_at)
+    match = re.search(r"_(\d{8}_\d{6})\.json$", path.name)
+    if match:
+        # Legacy filenames were written with workstation-local datetime.now().
+        try:
+            return datetime.strptime(match.group(1), "%Y%m%d_%H%M%S").astimezone(UTC)
+        except ValueError:
+            pass
+    return datetime.combine(snapshot.as_of or date.min, datetime.min.time(), tzinfo=UTC)
+
+
+def _snapshot_utc(value: datetime) -> datetime:
+    # Old baseline timestamps were sometimes naive UTC. Do not reinterpret them
+    # in the machine's current timezone when comparing audit boundaries.
+    return value.replace(tzinfo=UTC) if value.tzinfo is None else value.astimezone(UTC)
 
 
 def _indexed_series(points: list[tuple[date, Decimal]]) -> list[DashboardSeriesPoint]:
@@ -1575,7 +1667,10 @@ def _latest_account_snapshot(
     snapshots = _account_snapshots(settings, warnings)
     if not snapshots:
         return None, None
-    snapshots.sort(key=lambda item: item[1].as_of or _account_snapshot_date(item[0]) or date.min)
+    snapshots.sort(key=lambda item: (
+        item[1].as_of or _account_snapshot_date(item[0]) or date.min,
+        _snapshot_capture_time(*item),
+    ))
     return snapshots[-1]
 
 
@@ -1583,7 +1678,10 @@ def _account_snapshot_date(path: Path) -> date | None:
     match = ACCOUNT_SNAPSHOT_PATTERN.match(path.name)
     if match is None:
         return None
-    return datetime.strptime(match.group(1), "%Y%m%d").date()
+    try:
+        return datetime.strptime(match.group(1), "%Y%m%d").date()
+    except ValueError:
+        return None
 
 
 def _latest_strategy_proposal(
@@ -1647,8 +1745,7 @@ def _value_account_snapshot(
     for input_position in account_snapshot.positions:
         symbol = input_position.symbol.upper()
         instrument = instruments.get(symbol)
-        if instrument is None:
-            warnings.append(f"{symbol}: account position is outside the configured SOTA universe and was not valued.")
+        if input_position.quantity == 0:
             continue
         price = _latest_price(store, symbol, as_of)
         if price is None:
@@ -1657,8 +1754,9 @@ def _value_account_snapshot(
                 warnings.append(f"{symbol}: missing market price on or before {as_of}; average cost was used for valuation.")
             else:
                 warnings.append(f"{symbol}: missing market price on or before {as_of}; position was not valued.")
-                continue
-        currencies.add(instrument.quote_currency)
+                return None, position_values, price_map
+        currency = input_position.currency
+        currencies.add(currency)
         price_map[symbol] = price
         positions.append(
             PortfolioPosition(
@@ -1666,8 +1764,8 @@ def _value_account_snapshot(
                 quantity=input_position.quantity,
                 average_cost=input_position.average_cost,
                 market_price=price,
-                currency=instrument.quote_currency,
-                country=instrument.country,
+                currency=currency,
+                country=instrument.country if instrument else "UNKNOWN",
             )
         )
 
@@ -1706,6 +1804,8 @@ def _fx_to_cnh(
         if not stored_rates:
             warnings.append(f"Missing {currency}/CNH FX rate on or before {as_of}; account NAV was not valued.")
             return None
+        if (as_of - stored_rates[-1].rate_date).days > 4:
+            warnings.append(f"{currency.value}/CNH FX is stale on {as_of}: last observation {stored_rates[-1].rate_date}.")
         rates[currency] = stored_rates[-1].rate
     return rates
 

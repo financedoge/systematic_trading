@@ -202,8 +202,10 @@ def reconcile_ib_paper_account(
             positions=snapshot_result.snapshot.positions,
             filled_trade_count=len(local_filled_history),
         )
+        baseline.account_reset_at = checked_at
         baseline.execution_state_token = execution_state_token(all_history)
         baseline.parent_baseline_id = parent_baseline_id
+        baseline.account_snapshot_path = str(snapshot_result.output_path)
         store.save_pnl_baseline(baseline)
         baseline_id = baseline.baseline_id
         reset_applied = True

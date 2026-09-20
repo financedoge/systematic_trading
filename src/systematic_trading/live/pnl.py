@@ -141,6 +141,10 @@ def build_pnl_baseline(store: TradingStore, *, cutoff_date: date) -> PnLBaseline
         cutoff_at=cutoff_at,
         execution_state_token=execution_state_token(records),
         parent_baseline_id=previous.baseline_id if previous else None,
+        account_reset_at=(previous.account_reset_at or (
+            previous.cutoff_at if previous.source == "ib_broker_authoritative_reset" else None
+        )) if previous else None,
+        account_snapshot_path=previous.account_snapshot_path if previous else None,
         realized_pnl_cnh=quantize_money(sum(realized_by_symbol.values(), Decimal("0"))),
         realized_pnl_by_symbol_cnh={
             symbol: quantize_money(value)

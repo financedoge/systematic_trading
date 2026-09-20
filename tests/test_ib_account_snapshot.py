@@ -1,4 +1,5 @@
-from datetime import date
+import json
+from datetime import date, timedelta
 from decimal import Decimal
 
 from scripts.fetch_ib_paper_account_snapshot import AccountSummaryRow, IbPositionRow, build_live_snapshot
@@ -91,6 +92,9 @@ def test_fetch_and_write_account_snapshot_uses_dedicated_client_id(tmp_path) -> 
 
     assert result.output_path.exists()
     assert result.snapshot.as_of == date(2026, 5, 20)
+    assert result.snapshot.captured_at is not None
+    assert result.snapshot.captured_at.utcoffset() == timedelta(0)
+    assert json.loads(result.output_path.read_text())["captured_at"] == result.snapshot.model_dump(mode="json")["captured_at"]
     assert client.profile.client_id == 444
 
 

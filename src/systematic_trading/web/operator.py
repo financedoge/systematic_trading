@@ -392,6 +392,14 @@ _OPERATOR_HTML = """<!doctype html>
       stroke: white;
       stroke-width: 1.5;
     }
+    #performance-chart { position: relative; height: 320px; }
+    #performance-chart svg { touch-action: none; user-select: none; }
+    #performance-chart .strategy-dot, #performance-chart .account-dot { stroke: none; }
+    #performance-chart .strategy-line, #performance-chart .account-line { vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+    .performance-note { padding: 6px 12px; color: var(--muted); font-size: 12px; }
+    #performance-hover { min-height: 34px; font-variant-numeric: tabular-nums; }
+    .perf-crosshair { stroke: #657083; stroke-dasharray: 3 3; pointer-events: none; }
+    .perf-selection { fill: #2456a622; stroke: #2456a6; pointer-events: none; }
     .pnl-dot {
       fill: #7c4a03;
       stroke: white;
@@ -609,9 +617,9 @@ _OPERATOR_HTML = """<!doctype html>
         </div>
         <div class="metrics-compact" aria-label="Performance summary">
           <div class="mini-metric"><label>Strategy NAV</label><strong id="perf-strategy-nav">n/a</strong></div>
-          <div class="mini-metric"><label>Strategy Return</label><strong id="perf-strategy-return">n/a</strong></div>
+          <div class="mini-metric"><label>Strategy Return · selected period</label><strong id="perf-strategy-return">n/a</strong></div>
           <div class="mini-metric"><label>Account NAV</label><strong id="perf-account-nav">n/a</strong></div>
-          <div class="mini-metric"><label>Account Return</label><strong id="perf-account-return">n/a</strong></div>
+          <div class="mini-metric"><label>Account NAV change · selected period</label><strong id="perf-account-return">n/a</strong></div>
         </div>
         <div class="chart-tools" aria-label="Performance period">
           <div class="segmented" id="performance-range-buttons">
@@ -621,11 +629,15 @@ _OPERATOR_HTML = """<!doctype html>
             <button type="button" data-perf-range="ytd">YTD</button>
             <button type="button" data-perf-range="1y">1Y</button>
             <button type="button" data-perf-range="all">All</button>
+            <button type="button" data-perf-range="tracking">Tracking</button>
           </div>
           <label class="date-field">Start <input id="perf-range-start" type="date"></label>
           <label class="date-field">End <input id="perf-range-end" type="date"></label>
         </div>
         <div id="performance-chart" class="chart-wrap"></div>
+        <div id="performance-hover" class="performance-note" role="status" aria-live="polite">Hover or tap for dates and values. Drag across the chart to select a period; use arrow keys to inspect points.</div>
+        <div id="performance-alignment" class="performance-note"></div>
+        <div class="performance-note">Account NAV changes include deposits and withdrawals; cash flows are not adjusted. Statistics use available observations. Gaps longer than seven days appear as breaks in the chart.</div>
         <div id="performance-legend" class="legend"></div>
         <div id="performance-analysis" class="analysis-table"></div>
         <div id="performance-warnings" class="warnings"></div>
@@ -868,6 +880,10 @@ _OPERATOR_HTML = """<!doctype html>
         el("performance-chart").innerHTML = '<div class="empty">No performance data</div>';
         el("performance-legend").innerHTML = "";
         el("performance-analysis").innerHTML = "";
+        el("performance-alignment").textContent = "";
+        el("performance-hover").textContent = "No observations to inspect.";
+        state.performance.start = state.performance.end = "";
+        updatePerformanceControls();
         return;
       }
       if (state.performance.rangeKey === "custom") {
@@ -884,11 +900,22 @@ _OPERATOR_HTML = """<!doctype html>
       updatePerformanceControls();
       const strategy = filterPerformanceSeries(strategyAll, state.performance.start, state.performance.end);
       const account = filterPerformanceSeries(accountAll, state.performance.start, state.performance.end);
-      const svg = performanceSvg(strategy, account);
+      const svg = performanceSvg(strategy, account, payload);
       el("performance-chart").innerHTML = svg;
+      bindPerformanceInteraction(strategy, account);
+      el("performance-hover").textContent = strategy.length || account.length
+        ? "Hover or tap for dates and values. Drag to select a period; arrow keys inspect points."
+        : "No observations in the selected period.";
+      el("perf-strategy-nav").textContent = fmtMaybeMoney(strategy.at(-1)?.nav_cnh);
+      el("perf-account-nav").textContent = fmtMaybeMoney(account.at(-1)?.nav_cnh);
+      el("perf-strategy-return").textContent = fmtMaybePct(performanceStats("Strategy", strategy).totalReturn);
+      el("perf-account-return").textContent = fmtMaybePct(performanceStats("Account", account).totalReturn);
+      el("performance-alignment").textContent = payload.account_alignment_date
+        ? `Aligned on ${payload.account_alignment_date}: account CNH ${fmtMoney(payload.account_alignment_nav_cnh)} = strategy index ${Number(payload.account_alignment_strategy_index).toFixed(2)}. The alignment stays fixed when zooming. Strategy uses the left axis; account CNH uses the right.`
+        : `Account has ${payload.account_tracking_start_date ? "no shared strategy date yet" : "not built a position since the reset"}. Axes are independent until tracking begins. Account history starts ${accountAll[0]?.trade_date || "n/a"}.`;
       el("performance-legend").innerHTML = `
-        <span class="legend-item"><span class="swatch"></span>Theoretical strategy (backtest)</span>
-        <span class="legend-item"><span class="swatch account"></span>Actual account</span>
+        <span class="legend-item"><span class="swatch"></span>Theoretical strategy · left index</span>
+        <span class="legend-item"><span class="swatch account"></span>Actual account · right CNH</span>
       `;
       renderPerformanceAnalysis(strategy, account);
     }
@@ -898,10 +925,10 @@ _OPERATOR_HTML = """<!doctype html>
         .map((point) => ({
           trade_date: String(point.trade_date || "").slice(0, 10),
           index: Number(point.index),
-          nav_cnh: point.nav_cnh,
+          nav_cnh: Number(point.nav_cnh),
           time: Date.parse(point.trade_date)
         }))
-        .filter((point) => Number.isFinite(point.time) && Number.isFinite(point.index) && point.index > 0)
+        .filter((point) => Number.isFinite(point.time) && Number.isFinite(point.index) && point.index > 0 && Number.isFinite(point.nav_cnh) && point.nav_cnh > 0)
         .sort((a, b) => a.time - b.time);
     }
 
@@ -922,8 +949,12 @@ _OPERATOR_HTML = """<!doctype html>
 
     function shiftDateText(dateText, { months = 0, years = 0 } = {}) {
       const date = new Date(`${dateText}T00:00:00Z`);
+      const day = date.getUTCDate();
+      date.setUTCDate(1);
       if (years) date.setUTCFullYear(date.getUTCFullYear() + years);
       if (months) date.setUTCMonth(date.getUTCMonth() + months);
+      const lastDay = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + 1, 0)).getUTCDate();
+      date.setUTCDate(Math.min(day, lastDay));
       return date.toISOString().slice(0, 10);
     }
 
@@ -941,6 +972,7 @@ _OPERATOR_HTML = """<!doctype html>
       if (rangeKey === "6m") start = shiftDateText(end, { months: -6 });
       if (rangeKey === "ytd") start = `${end.slice(0, 4)}-01-01`;
       if (rangeKey === "1y") start = shiftDateText(end, { years: -1 });
+      if (rangeKey === "tracking") start = state.performance.payload.account_alignment_date || state.performance.payload.account?.[0]?.trade_date || start;
       state.performance.start = clampDateText(start, extent.minDate, extent.maxDate);
       state.performance.end = end;
     }
@@ -957,60 +989,115 @@ _OPERATOR_HTML = """<!doctype html>
       return series.filter((point) => point.trade_date >= start && point.trade_date <= end);
     }
 
-    function performanceSvg(strategy, account) {
-      const width = 760;
-      const height = 260;
-      const pad = { left: 44, right: 16, top: 16, bottom: 28 };
+    function performanceGeometry(strategy, account, payload = {}) {
+      const width = Math.max(el("performance-chart").clientWidth - 24, 320), height = 300;
+      const pad = { left: 56, right: 96, top: 30, bottom: 28 };
       const all = [...strategy, ...account];
-      if (!all.length) return '<div class="empty">No performance data in selected period</div>';
-      const times = all.map((point) => point.time);
-      const values = all.map((point) => point.index);
-      const minTime = Math.min(...times);
-      const maxTime = Math.max(...times);
-      const minValue = Math.min(...values);
-      const maxValue = Math.max(...values);
-      const valuePad = Math.max((maxValue - minValue) * 0.08, 2);
-      const yMin = minValue - valuePad;
-      const yMax = maxValue + valuePad;
-      const x = (dateText) => {
-        const time = Date.parse(dateText);
-        if (maxTime === minTime) return (pad.left + width - pad.right) / 2;
-        return pad.left + ((time - minTime) / (maxTime - minTime)) * (width - pad.left - pad.right);
+      if (!all.length) return null;
+      const minTime = Math.min(...all.map(p => p.time)), maxTime = Math.max(...all.map(p => p.time));
+      const factor = Number(payload.account_alignment_nav_cnh) > 0 && Number(payload.account_alignment_strategy_index) > 0
+        ? Number(payload.account_alignment_strategy_index) / Number(payload.account_alignment_nav_cnh) : null;
+      const bounds = values => {
+        if (!values.length) return [0, 100];
+        const low = Math.min(...values), high = Math.max(...values);
+        const margin = Math.max((high - low) * .1, Math.abs(high) * .005, .01);
+        return [low - margin, high + margin];
       };
-      const y = (value) => {
-        if (yMax === yMin) return (pad.top + height - pad.bottom) / 2;
-        return height - pad.bottom - ((Number(value) - yMin) / (yMax - yMin)) * (height - pad.top - pad.bottom);
-      };
-      const pathFor = (series) => series
-        .map((point, index) => `${index === 0 ? "M" : "L"} ${x(point.trade_date).toFixed(2)} ${y(point.index).toFixed(2)}`)
-        .join(" ");
-      const strategyDots = strategy.map((point) => `<circle class="strategy-dot" cx="${x(point.trade_date).toFixed(2)}" cy="${y(point.index).toFixed(2)}" r="3"><title>${esc(point.trade_date)} strategy ${Number(point.index).toFixed(2)}</title></circle>`).join("");
-      const dots = account.map((point) => `<circle class="account-dot" cx="${x(point.trade_date).toFixed(2)}" cy="${y(point.index).toFixed(2)}" r="3.5"><title>${esc(point.trade_date)} account ${Number(point.index).toFixed(2)}</title></circle>`).join("");
-      const yTicks = [0, 0.5, 1].map((fraction) => yMin + (yMax - yMin) * fraction);
-      const grid = yTicks.map((value) => {
-        const yy = y(value);
-        return `<line class="grid-line" x1="${pad.left}" x2="${width - pad.right}" y1="${yy.toFixed(2)}" y2="${yy.toFixed(2)}"></line><text x="8" y="${(yy + 4).toFixed(2)}" fill="#657083" font-size="11">${value.toFixed(0)}</text>`;
+      const leftValues = strategy.map(p => p.index);
+      if (factor) leftValues.push(...account.map(p => Number(p.nav_cnh) * factor));
+      const [leftMin, leftMax] = bounds(leftValues);
+      const [rightMin, rightMax] = factor ? [leftMin / factor, leftMax / factor] : bounds(account.map(p => Number(p.nav_cnh)));
+      const x = time => pad.left + (maxTime === minTime ? .5 : (time - minTime) / (maxTime - minTime)) * (width - pad.left - pad.right);
+      const y = (value, low, high) => height - pad.bottom - (value - low) / (high - low) * (height - pad.top - pad.bottom);
+      return { width, height, pad, minTime, maxTime, leftMin, leftMax, rightMin, rightMax, x,
+        strategyY: p => y(p.index, leftMin, leftMax), accountY: p => y(Number(p.nav_cnh), rightMin, rightMax) };
+    }
+
+    function performanceSvg(strategy, account, payload = {}) {
+      const g = performanceGeometry(strategy, account, payload);
+      if (!g) return '<div class="empty">No performance data in selected period</div>';
+      const {width, height, pad, x} = g;
+      const pathFor = (series, y) => series.map((p, i) => `${i && p.time - series[i-1].time <= 7 * 86400000 ? "L" : "M"} ${x(p.time).toFixed(2)} ${y(p).toFixed(2)}`).join(" ");
+      // Dense markers obscure the line at full history. Keep every line point and
+      // every hover observation, showing markers only for short series.
+      const dots = (series, y, cls) => (series.length <= 45 ? series : [series.at(-1)])
+        .map(p => `<circle class="${cls}" cx="${x(p.time)}" cy="${y(p)}" r="3"></circle>`).join("");
+      const grid = [0, .25, .5, .75, 1].map(f => {
+        const yy = height - pad.bottom - f * (height - pad.top - pad.bottom);
+        return `<line class="grid-line" x1="${pad.left}" x2="${width-pad.right}" y1="${yy}" y2="${yy}"></line>
+          <text x="${pad.left-8}" y="${yy+4}" text-anchor="end" fill="#2456a6" font-size="11">${strategy.length ? (g.leftMin+f*(g.leftMax-g.leftMin)).toFixed(1) : "—"}</text>
+          <text x="${width-pad.right+8}" y="${yy+4}" fill="#0f766e" font-size="11">${account.length ? fmtMoney(g.rightMin+f*(g.rightMax-g.rightMin)) : "—"}</text>`;
       }).join("");
-      const startDate = new Date(minTime).toISOString().slice(0, 10);
-      const endDate = new Date(maxTime).toISOString().slice(0, 10);
       return `
-        <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Strategy and account performance comparison">
+        <svg viewBox="0 0 ${width} ${height}" role="group" tabindex="0" aria-label="Interactive strategy and account performance. Drag to select dates. Arrow keys inspect observations. Escape clears selection.">
+          <text x="${pad.left}" y="14" fill="#2456a6" font-size="12">Strategy index</text>
+          <text x="${width-pad.right}" y="14" fill="#0f766e" font-size="12" text-anchor="end">Account CNH</text>
           ${grid}
-          <line class="axis-line" x1="${pad.left}" x2="${width - pad.right}" y1="${height - pad.bottom}" y2="${height - pad.bottom}"></line>
-          <text x="${pad.left}" y="${height - 8}" fill="#657083" font-size="11">${esc(startDate)}</text>
-          <text x="${width - pad.right - 70}" y="${height - 8}" fill="#657083" font-size="11">${esc(endDate)}</text>
-          ${strategy.length > 1 ? `<path class="strategy-line" d="${pathFor(strategy)}"></path>` : ""}
-          ${account.length > 1 ? `<path class="account-line" d="${pathFor(account)}"></path>` : ""}
-          ${strategyDots}
-          ${dots}
+          <text x="${pad.left}" y="${height-7}" fill="#657083" font-size="11">${dateTextFromTime(g.minTime)}</text>
+          <text x="${width-pad.right}" y="${height-7}" text-anchor="end" fill="#657083" font-size="11">${dateTextFromTime(g.maxTime)}</text>
+          ${strategy.length > 1 ? `<path class="strategy-line" d="${pathFor(strategy,g.strategyY)}"></path>` : ""}
+          ${account.length > 1 ? `<path class="account-line" d="${pathFor(account,g.accountY)}"></path>` : ""}
+          ${dots(strategy,g.strategyY,"strategy-dot")}${dots(account,g.accountY,"account-dot")}
+          <rect class="perf-selection" y="${pad.top}" height="${height-pad.top-pad.bottom}" width="0" visibility="hidden"></rect>
+          <line class="perf-crosshair" y1="${pad.top}" y2="${height-pad.bottom}" visibility="hidden"></line>
+          <rect class="perf-hit-area" x="${pad.left}" y="${pad.top}" width="${width-pad.left-pad.right}" height="${height-pad.top-pad.bottom}" fill="transparent" style="cursor:crosshair"></rect>
         </svg>
       `;
+    }
+
+    function bindPerformanceInteraction(strategy, account) {
+      const svg = el("performance-chart").querySelector("svg");
+      if (!svg) return;
+      const g = performanceGeometry(strategy, account, state.performance.payload);
+      const dates = [...new Set([...strategy,...account].map(p => p.time))].sort((a,b) => a-b);
+      const strategyMap = new Map(strategy.map(p => [p.time,p])), accountMap = new Map(account.map(p => [p.time,p]));
+      const crosshair = svg.querySelector(".perf-crosshair"), selection = svg.querySelector(".perf-selection"), hit = svg.querySelector(".perf-hit-area");
+      let dragStart = null, cursor = dates.length-1;
+      const pointerX = event => Math.max(g.pad.left,Math.min(g.width-g.pad.right,new DOMPoint(event.clientX,event.clientY).matrixTransform(svg.getScreenCTM().inverse()).x));
+      const timeAt = xx => g.minTime+(xx-g.pad.left)/(g.width-g.pad.left-g.pad.right)*(g.maxTime-g.minTime);
+      const nearest = time => dates.reduce((best,t,i) => Math.abs(t-time)<Math.abs(dates[best]-time)?i:best,0);
+      const show = index => {
+        cursor = index;
+        const time = dates[index], s = strategyMap.get(time), a = accountMap.get(time);
+        crosshair.setAttribute("x1",g.x(time)); crosshair.setAttribute("x2",g.x(time)); crosshair.setAttribute("visibility","visible");
+        el("performance-hover").textContent = `${dateTextFromTime(time)} · Strategy ${s ? `index ${s.index.toFixed(2)} / CNH ${fmtMoney(s.nav_cnh)}` : "no observation"} · Account ${a ? `CNH ${fmtMoney(a.nav_cnh)}` : "no observation"}`;
+      };
+      hit.addEventListener("pointerdown", event => {
+        if (event.button !== 0) return;
+        dragStart = pointerX(event); hit.setPointerCapture(event.pointerId); svg.focus();
+        selection.setAttribute("x",dragStart); selection.setAttribute("width",0); selection.setAttribute("visibility","visible");
+        show(nearest(timeAt(dragStart)));
+      });
+      hit.addEventListener("pointermove", event => {
+        const xx = pointerX(event); show(nearest(timeAt(xx)));
+        if (dragStart !== null) { selection.setAttribute("x",Math.min(xx,dragStart)); selection.setAttribute("width",Math.abs(xx-dragStart)); }
+      });
+      hit.addEventListener("pointerup", event => {
+        if (dragStart === null) return;
+        const xx = pointerX(event), start = dragStart; dragStart = null;
+        selection.setAttribute("visibility","hidden");
+        if (hit.hasPointerCapture(event.pointerId)) hit.releasePointerCapture(event.pointerId);
+        if (Math.abs(xx-start)<5) return;
+        const first = dates[nearest(timeAt(Math.min(xx,start)))], last = dates[nearest(timeAt(Math.max(xx,start)))];
+        state.performance.rangeKey = "custom";
+        state.performance.start = dateTextFromTime(first); state.performance.end = dateTextFromTime(last);
+        renderPerformance(state.performance.payload);
+        el("performance-hover").textContent = `Selected ${state.performance.start} to ${state.performance.end}. Statistics below use observations in this period. Use All to restore full history.`;
+      });
+      hit.addEventListener("pointercancel", () => { dragStart = null; selection.setAttribute("visibility","hidden"); });
+      svg.addEventListener("keydown", event => {
+        if (["ArrowLeft","ArrowRight"].includes(event.key)) { event.preventDefault(); show(Math.max(0,Math.min(dates.length-1,cursor+(event.key==="ArrowRight"?1:-1)))); }
+        if (event.key === "Escape") {
+          state.performance.rangeKey="all"; renderPerformance(state.performance.payload);
+          el("performance-chart").querySelector("svg")?.focus();
+        }
+      });
     }
 
     function renderPerformanceAnalysis(strategy, account) {
       const rows = [
         performanceStats("Strategy", strategy),
-        performanceStats("Account", account)
+        performanceStats("Account NAV (includes cash flows)", account)
       ];
       el("performance-analysis").innerHTML = `
         <table>
@@ -1720,6 +1807,13 @@ _OPERATOR_HTML = """<!doctype html>
       state.performance.rangeKey = "custom";
       state.performance.end = el("perf-range-end").value;
       if (state.performance.payload) renderPerformance(state.performance.payload);
+    });
+    let performanceResizeFrame = null;
+    window.addEventListener("resize", () => {
+      cancelAnimationFrame(performanceResizeFrame);
+      performanceResizeFrame = requestAnimationFrame(() => {
+        if (state.performance.payload) renderPerformance(state.performance.payload);
+      });
     });
 
     Promise.all([loadProposals(), loadDashboardData()]).catch((error) => {

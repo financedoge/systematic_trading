@@ -85,6 +85,8 @@ This checks the paper TWS API path by waiting for `nextValidId`; it does not att
 
 The trading-management loop and Trading page refresh IB positions, cash, and executions and persist a reconciliation report. An unresolved mismatch raises an alert, blocks EOD PnL/rebalance staging and IB routing, and appears in `IB Portfolio Reconciliation` on `/operator`. The trader can explicitly reset active portfolio/PnL state to the fresh IB snapshot; historical orders and fills remain immutable audit history.
 
+The [dashboard performance guide](docs/dashboard-performance.md) explains chart selection, account reset boundaries, fixed strategy/account alignment and data-gap diagnostics.
+
 After an IB paper-account reset, the same report can be generated from the CLI:
 
 ```powershell

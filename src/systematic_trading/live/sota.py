@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from datetime import date
+from datetime import date, datetime
 from decimal import Decimal
 from pathlib import Path
 from typing import Mapping, Sequence
@@ -32,6 +32,7 @@ class AccountPositionInput(BaseModel):
 
 class LiveAccountSnapshotInput(BaseModel):
     as_of: date | None = None
+    captured_at: datetime | None = None
     cash: list[CashBalance] = Field(default_factory=list)
     positions: list[AccountPositionInput] = Field(default_factory=list)
 

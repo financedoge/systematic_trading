@@ -1,5 +1,12 @@
 # Project Log
 
+## 2026-09-20 - Dashboard performance repair
+
+- Completed reset-aware account history, UTC snapshot capture metadata and reset provenance retained through PnL collapse. Legacy report lookup tolerates malformed evidence; history selection uses capture time without rewriting audit files. Include non-SOTA holdings in their recorded currency and refuse incomplete NAV when a holding cannot be priced.
+- Completed the interactive dual-axis performance chart: fixed alignment, Tracking preset, hover/tap and keyboard inspection, drag selection, selected-period statistics, empty/single-series handling, month-end range clamping and responsive geometry. Account changes explicitly include cash flows; missing strategy sessions/marks are disclosed and long chart gaps remain visible.
+- Focused verification: **15 passed** for performance, reconciliation and snapshot behavior, including Node.js checks. Synthetic browser preview verified keyboard inspection, drag selection, Escape-to-All, empty/single-series cases and a 390px viewport with no document overflow or console errors. No operational services were restarted and no broker was contacted.
+- Exact staged-snapshot full suite: **339 passed in 220.72s**, including real disposable Postgres and Node.js behavior checks. Syntax and staged `git diff --check` passed. The verified dashboard snapshot is ready for the authorized commit/push. Unrelated backfill, WSL/research and runtime changes remain outside this batch.
+
 ## 2026-09-20 - Publish completed review repairs
 
 - Prepare a single commit containing the execution-history/recovery, monthly scheduling, recorder calendar and local Docker binding repairs. Preserve unrelated performance-dashboard, account metadata, backfill and research changes in the working tree; exclude runtime reconciliation artifacts.
