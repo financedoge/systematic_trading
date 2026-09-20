@@ -1,12 +1,26 @@
 from __future__ import annotations
 
-from datetime import date, timedelta
+from datetime import date, time, timedelta
 
 
 def is_us_trading_day(value: date) -> bool:
     if value.weekday() >= 5:
         return False
     return value not in us_market_holidays(value.year)
+
+
+def us_equity_market_close(value: date) -> time | None:
+    """Scheduled core-session close in New York time; None on non-trading days.
+
+    Recurring NYSE rules, not an emergency-closure or historical-exception feed.
+    Source: https://www.nyse.com/trade/hours-calendars
+    """
+    if not is_us_trading_day(value):
+        return None
+    thanksgiving_friday = _nth_weekday(value.year, 11, 3, 4) + timedelta(days=1)
+    if value == thanksgiving_friday or (value.month, value.day) in {(7, 3), (12, 24)}:
+        return time(13)
+    return time(16)
 
 
 def previous_us_trading_day(value: date) -> date:

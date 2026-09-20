@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from datetime import date, timedelta
+from datetime import date
 from decimal import Decimal
 from pathlib import Path
 from typing import Mapping, Sequence
@@ -15,6 +15,7 @@ from systematic_trading.domain.market import Instrument, PriceBar
 from systematic_trading.domain.portfolio import AllocationTarget, CashBalance, PortfolioPosition
 from systematic_trading.execution.broker import InteractiveBrokersAdapter
 from systematic_trading.execution.window import attach_execution_deadline
+from systematic_trading.live.trading_calendar import next_us_trading_day
 from systematic_trading.portfolio.beta import BetaInstrumentState, RiskParityBetaSleeve
 from systematic_trading.portfolio.proposals import RebalanceProposalBuilder
 from systematic_trading.research import current_sota_definition, instruments_for_definition, instantiate_overlays
@@ -87,7 +88,7 @@ def build_sota_live_rebalance_plan(
     trade_dates = sorted({bar.trade_date for bars in bars_by_symbol.values() for bar in bars})
     if not trade_dates:
         raise ValueError("No stored price bars are available for the SOTA universe.")
-    effective_intended_trade_date = intended_trade_date or _next_weekday(effective_decision_date)
+    effective_intended_trade_date = intended_trade_date or next_us_trading_day(effective_decision_date)
 
     targets, eligible_symbols = _sota_targets_as_of(
         instruments=instruments,
@@ -282,13 +283,6 @@ def _portfolio_positions(
             )
         )
     return positions
-
-
-def _next_weekday(value: date) -> date:
-    candidate = value + timedelta(days=1)
-    while candidate.weekday() >= 5:
-        candidate += timedelta(days=1)
-    return candidate
 
 
 def _live_plan_markdown(plan: SotaLiveRebalancePlan) -> str:

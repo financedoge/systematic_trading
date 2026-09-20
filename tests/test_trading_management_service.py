@@ -67,6 +67,7 @@ def test_trading_management_service_runs_after_close_workflow(tmp_path) -> None:
         execution_sync_client=_FakeExecutionSyncClient(
             [
                 BrokerExecutionFill(
+                    execution_id="test-fill.01",
                     broker_order_id=1200,
                     order_ref="st-service-fill-00",
                     symbol="SPY",
@@ -223,7 +224,7 @@ def test_trading_management_service_replays_missed_eod_dates_on_restart(tmp_path
         for item in store.list_proposals()
         if item.sleeve == current_sota_definition().sleeve_name
     }
-    assert {first_missed, as_of}.issubset(staged_dates)
+    assert staged_dates == {as_of}
     completed_messages = [event.message for event in status.events if event.event_type == "eod" and event.status == "ok"]
     assert any(str(first_missed) in message for message in completed_messages)
     assert any(str(as_of) in message for message in completed_messages)
@@ -266,7 +267,7 @@ def test_trading_management_service_start_retries_pending_eod_immediately_after_
 def test_trading_management_service_notifies_on_eod_warning(tmp_path) -> None:
     store = SQLiteStore(tmp_path / "alert.db")
     store.initialize()
-    service_date = date(2026, 5, 19)
+    service_date = date(2026, 5, 29)
     store.upsert_price_bar("HYXU", PriceBar(trade_date=service_date - timedelta(days=1), open=Decimal("53"), high=Decimal("53"), low=Decimal("53"), close=Decimal("53"), volume=1000))
     settings = AppSettings(
         database_path=tmp_path / "alert.db",
@@ -525,8 +526,8 @@ def _seed_sota_history(store: SQLiteStore) -> date:
     start = date(2025, 1, 2)
     trade_dates: list[date] = []
     cursor = start
-    while len(trade_dates) < 420:
-        if cursor.weekday() < 5:
+    while cursor <= date(2026, 8, 31):
+        if is_us_trading_day(cursor):
             trade_dates.append(cursor)
         cursor += timedelta(days=1)
     sota_symbols = sorted(instruments_for_definition(current_sota_definition()))

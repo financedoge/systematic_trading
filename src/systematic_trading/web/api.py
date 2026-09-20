@@ -14,6 +14,7 @@ from pydantic import BaseModel, Field
 
 from systematic_trading.backtest.accounting import FxConverter, PortfolioValuationService, quantize_money
 from systematic_trading.backtest.reporting import build_backtest_report_data, render_backtest_report_html
+from systematic_trading.live.trading_calendar import next_us_trading_day
 from systematic_trading.config import AppSettings
 from systematic_trading.data.analytics import realized_volatility_from_bars
 from systematic_trading.data.providers import DataSourceManifest, ProviderRegistry
@@ -971,9 +972,9 @@ def collapse_dashboard_pnl_history(
 ) -> PnLBaseline:
     try:
         baseline = build_pnl_baseline(_store(request), cutoff_date=request_body.cutoff_date)
+        return _store(request).save_pnl_baseline(baseline)
     except ValueError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
-    return _store(request).save_pnl_baseline(baseline)
 
 
 @router.put("/watchlist/instruments/{symbol}", response_model=Instrument)
@@ -1162,7 +1163,7 @@ def _proposal_with_route_order_type(
     route_order_type: OrderType | None,
     settings: AppSettings,
 ) -> TradeProposal:
-    intended_trade_date = proposal.intended_trade_date or _next_weekday(proposal.as_of)
+    intended_trade_date = proposal.intended_trade_date or next_us_trading_day(proposal.as_of)
     return proposal.model_copy(
         update={
             "intended_trade_date": intended_trade_date,
@@ -1179,13 +1180,6 @@ def _proposal_with_route_order_type(
             ]
         }
     )
-
-
-def _next_weekday(value: date) -> date:
-    candidate = value + timedelta(days=1)
-    while candidate.weekday() >= 5:
-        candidate += timedelta(days=1)
-    return candidate
 
 
 def _strategy_result_path(settings: AppSettings) -> Path:

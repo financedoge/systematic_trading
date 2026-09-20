@@ -1,5 +1,37 @@
 # Project Log
 
+## 2026-09-20 - Publish completed review repairs
+
+- Prepare a single commit containing the execution-history/recovery, monthly scheduling, recorder calendar and local Docker binding repairs. Preserve unrelated performance-dashboard, account metadata, backfill and research changes in the working tree; exclude runtime reconciliation artifacts.
+- Exact staged-snapshot verification: **331 passed in 224.17s**, including real disposable Postgres; syntax parsed for 179 Python files and staged `git diff --check` passed. The verified repair snapshot is ready for the authorized commit/push to `origin/master`.
+
+## 2026-09-20 - Recorder calendar and local Docker bindings
+
+- Recorder capture now uses the same US holiday calendar as proposal scheduling, with recurring 13:00 New York early closes verified against the [NYSE calendar](https://www.nyse.com/trade/hours-calendars). Configured windows can narrow the equity core session, and exchange dates remain New York dates even when another display/window timezone is selected. Exceptional closures and emergency halts remain outside this static calendar.
+- Re-evaluate session state after synchronous daily and gap backfills, including jobs crossing the open or close. Limit capture chunks to the remaining session time without extending sub-second windows to one second. Child startup latency still prevents treating this as a hard shutdown deadline; delayed-feed draining after close remains separate work.
+- Bind the NATS client/monitor and ClickHouse HTTP/native published ports to `127.0.0.1`. Resolved Docker Compose JSON confirmed all four bindings without printing resolved credentials. Existing containers were not recreated, so runtime bindings have not been changed by this edit.
+- Focused recorder/calendar/operator checks: **42 passed**. Full suite with disposable Postgres enabled: **331 passed in 235.31s**. Python syntax parsed successfully for 179 files; `git diff --check` passed.
+- Preserve earlier uncommitted execution-recovery and unrelated local work. No service restart, broker access, trading-data migration, commit or push. Next review priorities remain golden-source selection/availability semantics and evidence-backed handling of historical execution corrections.
+
+## 2026-09-20 - Reviewed paper execution recovery
+
+- Added preview-first recovery for active paper execution histories. The review token binds the current order, replacement evidence, operator/reason and PnL baseline; apply validates again inside the same transaction as audit, order and outbox writes. No recovery has been applied to the operator's database in this session.
+- Store before/after execution evidence in the order's recovery audit. Preserve it against stale order updates and ignore verified superseded executions on later broker-history replay. Require reconciliation started after the most recent recovery before routing.
+- Refuse live orders, account changes, missing or rewritten execution identities, incomplete cumulative evidence, overfills and changes affecting saved PnL baselines. Zero-fill busts and historical baseline rebuilds remain follow-up work.
+- Added execution-state and parent-baseline checks to PnL collapse/reset persistence, with a shared Postgres transaction advisory lock for broker-record/baseline mutations. A calculation made stale by recovery fails instead of overwriting the ledger. API collapse conflicts return HTTP 409.
+- Added a disposable Postgres test fixture using the locally installed binaries and a separate password-protected loopback cluster. Fixed a Windows subprocess-pipe hang in the test launcher. Focused verification: **31 passed**, exercising SQLite and real Postgres recovery, stale reviews, reservation races, concurrent fill accumulation and atomic outbox rollback. Full suite with disposable Postgres enabled: **302 passed in 228.85s**. Final CLI checks after rejecting an ambiguous SQLite-path/Postgres combination: **2 passed**. Python syntax and `git diff --check` passed; disposable test clusters stopped successfully.
+- Existing services, broker accounts, databases and historical artifacts were not changed. No broker submissions, deployment, commit or push occurred in this batch.
+
+## 2026-09-20 - Durable executions and monthly staging
+
+- Committed and pushed the first review repair batch as `8913ff1` on `origin/master`. All 240 tests passed against a separate export of the exact staged snapshot (221.05s). Unrelated dashboard, recorder and backfill edits remain local.
+- Added individual execution evidence to the existing broker-order JSON payload. SQLite immediate transactions and Postgres row locks serialize accumulation and commit the order and outbox together. Duplicate/short-window responses retain prior evidence; delayed placement acknowledgments cannot erase synchronized fills. No schema migration is required.
+- Capture IB execution IDs, account, individual execution price and cumulative quantity. Match by stable local order reference, reject conflicting identities and overfills, and preserve partial cancellation status. Complete broker cumulative evidence can bootstrap legacy aggregates; incomplete legacy history and corrections require audited recovery. Persistent execution issues block routing and PnL collapse, including after an empty history response or broker reset.
+- PnL and reconciliation now apply individual execution timestamps across baseline boundaries. Reconciliation accepts persisted evidence outside the broker query window, still compares broker positions, and detects unsynchronized or conflicting new executions. Execution-sync failure invalidates EOD reconciliation readiness.
+- Automatic staging honors the registered static monthly scheduler at the final US session before the new month. Daily EOD reporting continues on other sessions, with data and reconciliation gates intact. Live plans and default API execution dates now share the US session calendar. Manual proposal generation remains available; unsupported automatic schedulers fail closed.
+- Added regression tests for restarts, overlapping/duplicate broker responses, concurrent fill writers, atomic outbox rollback, cumulative gaps, legacy bootstrap, corrections, reused numeric order IDs, per-execution pricing, baseline boundaries, month-end/holiday scheduling and off-cycle EOD gating. Full suite: **271 passed in 197.10s**. Final targeted API/operator/history/scheduler checks: **64 passed**; JavaScript reconciliation rendering passed three states (execution issue, position break, matched). Syntax and `git diff --check` passed. New batch remains local and uncommitted.
+- No services were restarted, broker orders submitted, migrations applied, or existing historical records rewritten. Isolated Postgres/IB paper integration evidence and an audited execution correction/recovery command remain follow-up work.
+
 ## 2026-09-19 - Review-driven execution and accounting repairs
 
 - Preserved the pre-existing working-copy changes and implemented the first repair batch from the codebase review. No services were restarted, broker orders submitted, migrations applied, or historical trading/research data rewritten.

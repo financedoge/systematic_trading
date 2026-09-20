@@ -2,10 +2,12 @@ from __future__ import annotations
 
 from datetime import date, datetime
 from typing import Protocol, runtime_checkable
+from systematic_trading.execution.recovery import ExecutionRecoveryRequest
 
 from systematic_trading.domain import (
     ApprovalDecision,
     AnyPlatformEvent,
+    BrokerExecutionFill,
     BrokerOrderRecord,
     Currency,
     FXRate,
@@ -64,6 +66,18 @@ class ProposalStore(Protocol):
 
 @runtime_checkable
 class BrokerOrderStore(Protocol):
+    def recover_broker_executions(
+        self, request: ExecutionRecoveryRequest, *, review_token: str,
+    ) -> BrokerOrderRecord:
+        """Apply a reviewed paper recovery atomically with its audit and outbox."""
+        ...
+
+    def apply_broker_execution_fills(
+        self, local_order_id: str, fills: list[BrokerExecutionFill],
+    ) -> BrokerOrderRecord:
+        """Atomically merge execution evidence and persist cumulative order state."""
+        ...
+
     def reserve_broker_order_record(self, record: BrokerOrderRecord, *, allow_resubmit: bool = False) -> bool:
         """Atomically claim an unsubmitted intent or an unfilled, confirmed failure."""
         ...

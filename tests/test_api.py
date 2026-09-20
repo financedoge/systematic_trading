@@ -1126,6 +1126,7 @@ def test_dashboard_can_sync_ib_fills_into_local_broker_records(tmp_path) -> None
         client.app.state.ib_execution_sync_client = _FakeExecutionSyncClient(
             [
                 BrokerExecutionFill(
+                    execution_id="test-fill.01",
                     broker_order_id=900,
                     order_ref="st-fill-sync-00",
                     symbol="SPY",

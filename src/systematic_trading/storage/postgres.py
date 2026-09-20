@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from contextlib import nullcontext
 from datetime import UTC, date, datetime
 from decimal import Decimal
 from typing import Any
@@ -14,6 +15,7 @@ from systematic_trading.domain import (
     ApprovalDecision,
     AnyPlatformEvent,
     BrokerOrderRecord,
+    BrokerExecutionFill,
     Currency,
     FXRate,
     FundamentalSnapshot,
@@ -36,6 +38,8 @@ from systematic_trading.storage.event_builders import (
     proposal_decision_event,
     proposal_environment,
 )
+from systematic_trading.execution.fills import merge_execution_fills, preserve_execution_evidence, validate_baseline_state
+from systematic_trading.execution.recovery import ExecutionRecoveryRequest, recover_execution_record
 
 
 @dataclass(frozen=True)
@@ -230,16 +234,51 @@ class PostgresStore:
         self._write_broker_order_record(record)
         return record
 
+    def apply_broker_execution_fills(
+        self, local_order_id: str, fills: list[BrokerExecutionFill],
+    ) -> BrokerOrderRecord:
+        with self._connect() as connection:
+            _lock_execution_ledger(connection)
+            row = connection.execute(
+                "SELECT payload FROM execution.broker_orders WHERE local_order_id = %s FOR UPDATE", (local_order_id,),
+            ).fetchone()
+            if row is None:
+                raise KeyError(local_order_id)
+            record = BrokerOrderRecord.model_validate(row["payload"])
+            updated = merge_execution_fills(record, fills)
+            if updated != record:
+                self._write_broker_order_record(updated, connection=connection)
+            return updated
+
+    def recover_broker_executions(
+        self, request: ExecutionRecoveryRequest, *, review_token: str,
+    ) -> BrokerOrderRecord:
+        with self._connect() as connection:
+            _lock_execution_ledger(connection)
+            row = connection.execute(
+                "SELECT payload FROM execution.broker_orders WHERE local_order_id = %s FOR UPDATE", (request.local_order_id,),
+            ).fetchone()
+            if row is None:
+                raise KeyError(request.local_order_id)
+            record = BrokerOrderRecord.model_validate(row["payload"])
+            baseline_row = connection.execute(
+                "SELECT payload FROM portfolio.pnl_baselines ORDER BY cutoff_at DESC, created_at DESC LIMIT 1",
+            ).fetchone()
+            baseline = PnLBaseline.model_validate(baseline_row["payload"]) if baseline_row else None
+            recovered = recover_execution_record(record, request, baseline, review_token=review_token)
+            self._write_broker_order_record(recovered, connection=connection, recovery=True)
+            return recovered
+
     def reserve_broker_order_record(self, record: BrokerOrderRecord, *, allow_resubmit: bool = False) -> bool:
         return self._write_broker_order_record(record, reserve=True, allow_resubmit=allow_resubmit)
 
     def _write_broker_order_record(
         self, record: BrokerOrderRecord, *, reserve: bool = False, allow_resubmit: bool = False,
+        connection: psycopg.Connection | None = None, recovery: bool = False,
     ) -> bool:
         now = datetime.now(tz=UTC)
-        order_event = order_status_changed_event(record)
-        fill_event = fill_recorded_event(record)
-        with self._connect() as connection:
+        with self._connect() if connection is None else nullcontext(connection) as connection:
+            _lock_execution_ledger(connection)
             if reserve:
                 # Transaction-scoped lock also serializes claims from other processes.
                 connection.execute(
@@ -255,6 +294,13 @@ class PostgresStore:
                     if (not allow_resubmit or existing.status.value not in {"rejected", "cancelled"}
                             or existing.filled_quantity > 0):
                         return False
+            prior = connection.execute(
+                "SELECT payload FROM execution.broker_orders WHERE local_order_id = %s FOR UPDATE", (record.local_order_id,),
+            ).fetchone()
+            if prior is not None and not recovery:
+                record = preserve_execution_evidence(BrokerOrderRecord.model_validate(prior["payload"]), record)
+            order_event = order_status_changed_event(record)
+            fill_event = fill_recorded_event(record)
             connection.execute(
                 """
                 INSERT INTO execution.broker_orders(
@@ -453,6 +499,15 @@ class PostgresStore:
 
     def save_pnl_baseline(self, baseline: PnLBaseline) -> PnLBaseline:
         with self._connect() as connection:
+            _lock_execution_ledger(connection)
+            if baseline.execution_state_token is not None:
+                rows = connection.execute("SELECT payload FROM execution.broker_orders").fetchall()
+                records = [BrokerOrderRecord.model_validate(row["payload"]) for row in rows]
+                prior = connection.execute(
+                    "SELECT payload FROM portfolio.pnl_baselines ORDER BY cutoff_at DESC, created_at DESC LIMIT 1",
+                ).fetchone()
+                previous = PnLBaseline.model_validate(prior["payload"]) if prior else None
+                validate_baseline_state(baseline, records, previous)
             connection.execute(
                 """
                 INSERT INTO portfolio.pnl_baselines(
@@ -875,3 +930,9 @@ def _datetime_to_utc(value: datetime) -> datetime:
     if value.tzinfo is None or value.utcoffset() is None:
         raise ValueError("event outbox timestamps must be timezone-aware")
     return value.astimezone(UTC)
+
+
+def _lock_execution_ledger(connection: psycopg.Connection) -> None:
+    # Shared with baseline writes and recovery: local paper order traffic is low,
+    # and correctness across order/baseline snapshots takes priority over parallel writes.
+    connection.execute("SELECT pg_advisory_xact_lock(hashtextextended(%s, 0))", ("execution-ledger",))

@@ -262,6 +262,7 @@ class TradingManagementService:
                 len(reconciliation.position_differences)
                 + len(reconciliation.unmatched_local_orders)
                 + len(reconciliation.unmatched_ib_fills)
+                + len(reconciliation.execution_issues)
             )
             notify_reconciliation = _reconciliation_signature(previous_reconciliation) != _reconciliation_signature(
                 reconciliation
@@ -323,6 +324,7 @@ class TradingManagementService:
                             tz=UTC,
                         ),
                         "last_error": f"Execution sync failed: {exc}",
+                        "last_reconciliation_status": "break",
                     }
                 )
                 self._record_event("execution_sync", "error", f"Execution sync failed: {exc}", save=False)
@@ -348,6 +350,11 @@ class TradingManagementService:
             service_date = self._status.pending_eod_date or self._latest_eligible_eod_date(now)
         if service_date is None:
             return
+        try:
+            rebalance_due = self.settings.automation_queue_rebalance and _scheduled_rebalance_due(service_date)
+        except ValueError as exc:
+            self._record_error("rebalance_stage", str(exc))
+            return
         self._record_event("eod", "started", f"Started after-close workflow for {service_date}.")
         self._sync_executions(now)
         market_result = self._refresh_market_data(service_date)
@@ -358,7 +365,7 @@ class TradingManagementService:
         )
         reconciliation_ready = self._status.last_reconciliation_status in {"matched", "reset_to_broker"}
         pnl_ready = self._status.last_eod_pnl_date == service_date
-        rebalance_ready = not self.settings.automation_queue_rebalance or _existing_staged_proposal(self.store, service_date) is not None
+        rebalance_ready = not rebalance_due or _existing_staged_proposal(self.store, service_date) is not None
 
         account_snapshot = None
         account_snapshot_path: str | None = None
@@ -431,7 +438,7 @@ class TradingManagementService:
                 ),
             )
 
-        if account_snapshot is not None and self.settings.automation_queue_rebalance and market_ready and reconciliation_ready:
+        if account_snapshot is not None and rebalance_due and market_ready and reconciliation_ready:
             try:
                 existing = _existing_staged_proposal(self.store, service_date)
                 if existing is None:
@@ -467,7 +474,7 @@ class TradingManagementService:
                     self._save_status_locked()
             except Exception as exc:
                 self._record_error("rebalance_stage", f"Rebalance staging failed: {exc}")
-        elif self.settings.automation_queue_rebalance and (not market_ready or not reconciliation_ready):
+        elif rebalance_due and (not market_ready or not reconciliation_ready):
             self._record_event(
                 "rebalance_stage",
                 "warning",
@@ -478,8 +485,11 @@ class TradingManagementService:
                 ),
             )
 
+        if self.settings.automation_queue_rebalance and not rebalance_due:
+            self._record_event("rebalance_stage", "ok", f"No monthly rebalance is scheduled after {service_date}.")
+
         with self._lock:
-            if pnl_ready and rebalance_ready:
+            if market_ready and reconciliation_ready and pnl_ready and rebalance_ready:
                 remaining_eod_dates = [
                     pending_date
                     for pending_date in self._status.pending_eod_dates
@@ -783,6 +793,16 @@ class TradingManagementService:
         return IbHistoricalDailyBarProvider(self.settings)
 
 
+def _scheduled_rebalance_due(decision_date: date) -> bool:
+    definition = current_sota_definition()
+    if definition.scheduler != "static_monthly":
+        raise ValueError(f"Automatic staging does not support scheduler {definition.scheduler!r}.")
+    next_session = next_us_trading_day(decision_date)
+    return is_us_trading_day(decision_date) and (next_session.year, next_session.month) != (
+        decision_date.year, decision_date.month,
+    )
+
+
 def _existing_staged_proposal(store: TradingStore, decision_date: date) -> TradeProposal | None:
     sleeve_name = current_sota_definition().sleeve_name
     for proposal in store.list_proposals():
@@ -836,6 +856,7 @@ def _reconciliation_signature(report) -> tuple[object, ...] | None:
         tuple((row.symbol, row.local_quantity, row.ib_quantity) for row in report.position_differences),
         tuple(row.local_order_id for row in report.unmatched_local_orders),
         tuple((row.symbol, row.broker_order_id, row.order_ref) for row in report.unmatched_ib_fills),
+        tuple(report.execution_issues),
     )
 
 

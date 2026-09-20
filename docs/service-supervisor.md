@@ -46,6 +46,8 @@ The operator startup script defaults to `-TransactionalStoreBackend postgres` an
 
 NATS and ClickHouse startup scripts run `scripts/assert_docker_ready.ps1` before Docker Compose. If Docker Desktop is installed but its Linux engine is not running, startup attempts to start Docker Desktop and wait for the daemon. If the daemon remains unreachable, startup fails with an explicit Docker remediation message before attempting `docker compose up`.
 
+The local Compose definitions publish NATS ports 4222/8222 and ClickHouse ports 8123/9000 on `127.0.0.1` only. A configuration edit does not alter existing containers: the bindings take effect when those containers are recreated through the normal startup/maintenance path. Remote access requires a separately reviewed deployment configuration.
+
 Startup and watchdog runs refresh `var/run/ib_tws_api.state.json` through `scripts/probe_ib_tws_health.py`. TWS/Gateway login and 2FA recovery remain manual; the platform reports the API as down rather than attempting to recover the session automatically.
 
 Skip the market-data recorder service for maintenance:
@@ -54,7 +56,9 @@ Skip the market-data recorder service for maintenance:
 .\scripts\start_local_platform.ps1 -SkipMarketDataRecorder
 ```
 
-The recorder service defaults to the five-symbol testing pilot and `-RecorderIntradayFeed delayed-trades`. This uses TWS delayed last-price, size, timestamp, and delayed RTVolume callbacks to build 5-second trade bars with explicit delayed quality flags. It does not record intraday bars after hours or on weekends, but still runs the ClickHouse daily-bar backfill child job while idle. Use `-RecorderIntradayFeed realtime` only after paid API market-data subscriptions are verified; delayed bars are prohibited from signals and live trading decisions.
+The recorder service defaults to the five-symbol testing pilot and `-RecorderIntradayFeed delayed-trades`. This uses TWS delayed last-price, size, timestamp, and delayed RTVolume callbacks to build 5-second trade bars with explicit delayed quality flags. Capture is scheduled within the US equity core session, excluding weekends and exchange holidays, but the ClickHouse daily-bar backfill child job still runs while idle. Use `-RecorderIntradayFeed realtime` only after paid API market-data subscriptions are verified; delayed bars are prohibited from signals and live trading decisions.
+
+The recorder shares the proposal scheduler's US holiday calendar and caps capture at 13:00 New York time on trading days that fall on July 3, the Friday after Thanksgiving, or December 24. These recurring rules follow the [NYSE calendar](https://www.nyse.com/trade/hours-calendars); they do not cover exceptional exchange closures or emergency halts. `--market-open`/`--market-close` define a same-day window in `--timezone` that can narrow the core session; they cannot extend it or change the New York exchange date. Session state is refreshed after synchronous daily or gap backfills, and chunk duration uses the remaining session time. Child connection/setup latency is not a hard wall-clock shutdown deadline. Delayed-feed timestamps retain their delay; this schedule does not add an after-close drain period for the last delayed bars.
 
 Startup order:
 

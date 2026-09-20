@@ -28,16 +28,30 @@ After finishing work:
 
 ## Current Snapshot
 
+Publication check: **Done (exact staged-snapshot verification)**. The completed execution-history, reviewed-recovery, monthly-scheduling and recorder/local-service repairs passed all **331 tests in 224.17s**, including real disposable Postgres, from an isolated export of the staged tree. Syntax and staged diff checks passed. Commit/push to `origin/master` is authorized; unrelated dashboard/backfill work and runtime artifacts remain outside this commit.
+
+### 2026-09-20 recorder calendar and local service bindings
+
+Status: **Done (implementation and isolated verification)**. Recorder capture shares the US exchange holiday calendar, observes scheduled early closes, and refreshes session state after blocking backfills. NATS/ClickHouse published ports bind to loopback in Compose. Focused recorder/calendar/operator checks: **42 passed**. Full suite with disposable Postgres: **331 passed in 235.31s**. Resolved Compose configuration verified all four loopback bindings; Python syntax and `git diff --check` passed. Existing working-copy changes were preserved. No services were restarted or containers recreated, so existing runtime bindings await a maintenance restart/recreation. Exceptional calendar closures and a hard child-process close deadline remain outside this batch.
+
+### 2026-09-20 audited execution recovery
+
+Status: **Done (implementation and isolated verification)**. Added `scripts/recover_ib_paper_executions.py`: read-only preview, reviewed-state token, atomic paper-only apply, durable before/after evidence and fresh reconciliation after recovery. PnL baseline commits reject stale execution or parent-baseline state. Existing baselines and live orders cannot be rewritten through recovery. **302 full-suite tests passed in 228.85s**, with real disposable Postgres enabled via `ST_TEST_POSTGRES_BIN`; **2 final CLI checks passed** after adding the database-selection guard. The focused SQLite/Postgres recovery suite passed 31 cases including concurrent reservations, fill accumulation, stale reviews and outbox rollback. Syntax and `git diff --check` passed. Temporary test databases were stopped; the trading database and existing services were untouched. Remaining: controlled IB paper validation, zero-fill bust recovery, historical baseline rebuilds and definitive handling of unfilled uncertain submissions.
+
+### 2026-09-20 execution history and scheduling batch
+
+Status: **Done (implementation and local verification)**. Broker execution identities and cumulative quantities persist atomically with order/outbox updates. Duplicate, overlapping and short history responses retain prior fills; conflicts create durable routing blocks. PnL and reconciliation use execution timestamps. Automatic staging follows the registered monthly cadence and the shared US session calendar, while daily EOD reporting retains data/reconciliation gates. Full suite: **271 passed in 197.10s**; final targeted API/operator/history/scheduler checks: **64 passed**; three operator reconciliation states passed a JavaScript rendering check. Syntax and `git diff --check` passed. No historical rewrite, service restart, broker submission or migration occurred. Postgres/IB paper integration and audited correction/recovery tooling remain Review/Pending.
+
 ### 2026-09-19 review repair batch
 
 Status: **Done (implementation and isolated verification)**. Fixed CLI storage routing and invalid backend combinations; shared reconciliation enforcement; atomic order reservations and uncertain-retry blocking; decision-date backtest sizing and native-cash affordability; broker-reset PnL baseline preservation; and prevention of synthetic carry-forward writes. Added isolated test defaults and 23 regression cases in `tests/test_review_regressions.py`. Final full suite: **240 passed in 189.33s**, using `.venv/Scripts/python.exe -B -m pytest -o addopts='' -q -p no:cacheprovider --durations=5`. Python syntax checks and repository-configured `git diff --check` passed. Existing working-copy changes were preserved. No broker submission, service restart, migration, or research promotion occurred. External integration evidence remains a separate Review item below.
 
 Review follow-ups (not closed by this batch):
 
-- **Pending / P1:** persist and reconcile execution IDs so partial broker-history responses cannot reduce cumulative fills; capture definitive broker order outcomes to resolve uncertain submissions safely.
-- **Pending / P1:** align paper proposal staging with the registered monthly strategy scheduler.
-- **Pending / P2:** share the exchange session calendar across proposal generation and recorders; enforce golden-source precedence and point-in-time availability; bind local Docker services to loopback.
-- **Review:** exercise order reservations against isolated Postgres and perform controlled IB paper recovery tests before deploying the execution changes.
+- **Implemented in the 2026-09-20 batch:** persist and reconcile execution IDs so partial broker-history responses cannot reduce cumulative fills. **Active paper recovery implemented above. Pending / P1:** historical baseline rebuilds, zero-fill bust recovery and definitive broker order outcomes to resolve unfilled uncertain submissions safely.
+- **Implemented in the 2026-09-20 batch:** align automatic paper proposal staging with the registered monthly strategy scheduler.
+- **Implemented in the recorder/calendar batch:** shared session calendar and local Docker loopback configuration (runtime application pending container recreation). **Pending / P2:** enforce golden-source precedence and point-in-time availability.
+- **Isolated Postgres verification done:** reservations, concurrent fills, recovery, stale-state refusal and outbox rollback. **Review:** controlled IB paper recovery tests before deployment.
 - **Pending:** provider-backed repair of legacy synthetic data and regeneration/re-audit of research artifacts affected by backtest sizing.
 
 | Area | Done | In Progress | Pending | Blocked |
