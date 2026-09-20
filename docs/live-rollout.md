@@ -90,6 +90,8 @@ Account snapshot shape:
 
 The proposal job writes JSON and markdown artifacts under `var/live/sota_rebalance/` and can persist the proposal to the existing approval queue. In the dashboard, approval is the one-click handoff to TWAP paper routing via `POST /api/v1/proposals/{proposal_id}/approve-and-submit`; the standalone submit API/CLI still exists for retries and controlled operational use.
 
+Automatic staging follows the registered `static_monthly` scheduler: generate the proposal after the final US market session of the month for execution in the next month's first session. Daily market-data refresh, reconciliation and PnL reporting still run on intervening sessions. Unsupported scheduler names stop automatic staging rather than defaulting to daily trading. Manual API/CLI proposal generation remains an explicit operator action. Default execution dates in both live plans and API routing use the shared US holiday calendar.
+
 The automated after-close workflow refreshes Yahoo adjusted daily bars first and then falls back to the configured Interactive Brokers paper connection for missing or failed equity/ETF daily-bar updates. Use separate client IDs for each automated IB operation so a stuck request does not block the other clients:
 
 ```powershell
@@ -111,6 +113,53 @@ All submission entry points, including the CLI, require a successful paper recon
 
 PnL collapse advances the existing baseline, retaining broker-reset holdings and applying only subsequent fills. A cutoff earlier than the active baseline is rejected. Backtests use decision-date holdings marks and FX for sizing, and execution-date prices/FX only for fills and valuation. Previously generated backtest artifacts are not regenerated or promoted by this repair.
 
+Broker records now retain individual executions in their existing JSON payloads. SQLite immediate transactions and Postgres row locks commit execution evidence, cumulative order quantities and outbox events together; no database schema migration is needed. Short history windows and duplicate responses do not remove or recount executions. Matching requires the local order reference; numeric IB order IDs alone are insufficient. Execution prices come from the individual `price` field, with broker cumulative quantities checked for gaps/overlaps. PnL and reconciliation use individual execution times across baseline cutoffs. Reconciliation still compares broker positions when old executions fall outside the broker query window.
+
+Legacy aggregate records can adopt full execution history only when broker cumulative quantities establish complete coverage without reducing the prior filled amount. Incomplete legacy history, missing identities, conflicting replays, corrections, overfills and account changes create a persistent execution-history issue. These issues block routing and PnL collapse and are not cleared by a later empty response or account reset. Active paper histories can be repaired with the reviewed recovery command below. Automatic correction application, zero-fill bust recovery and corrections affecting saved baselines remain unsupported. Controlled IB paper-session validation remains required before deployment.
+
+### Reviewed execution recovery
+
+`scripts/recover_ib_paper_executions.py` uses the configured transactional backend and never connects to IB or submits orders. It requires a complete, operator-verified broker execution export for one local paper order. Preview is read-only and does not initialize a database. Apply requires the preview token, which binds the exact order, request metadata, execution evidence and current PnL baseline. Concurrent changes invalidate the token.
+
+Prepare an evidence JSON file with this shape, replacing every example value with verified broker data. Include the complete effective execution history, selecting only the latest accepted correction per execution family:
+
+```json
+{
+  "local_order_id": "replace-with-local-order-id",
+  "operator": "operator-name",
+  "reason": "Broker export reviewed against the execution correction",
+  "account": "DU123",
+  "fills": [{
+    "execution_id": "broker-execution.02",
+    "account": "DU123",
+    "broker_order_id": 100,
+    "order_ref": "st-proposal-00",
+    "symbol": "SPY",
+    "side": "buy",
+    "quantity": 4,
+    "average_price": "101.25",
+    "cumulative_quantity": 4,
+    "currency": "USD",
+    "filled_at": "2026-08-03T15:00:00Z"
+  }]
+}
+```
+
+Here `average_price` is the individual execution's broker `price`, not the order-wide average. Preview, review the quantities/prices/IDs, then apply the unchanged request using its token:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/recover_ib_paper_executions.py --evidence reviewed-executions.json
+.\.venv\Scripts\python.exe scripts/recover_ib_paper_executions.py --evidence reviewed-executions.json --apply --review-token <preview-token>
+```
+
+An existing SQLite file can be selected with `--database` when SQLite is configured. The command refuses account changes, missing executions, conflicting reuse of an execution ID, older correction revisions, incomplete cumulative quantities, future/naive timestamps, overfills, live orders and evidence at or before the active PnL baseline. A historical baseline rebuild requires a separate reviewed workflow; the command does not rewrite baselines or snapshots.
+
+The recovery and its before/after evidence, operator, reason and review token are saved atomically with the order and outbox. Superseded broker revisions remain in the audit and can be replayed without undoing the approved correction. Generic stale order updates cannot erase the audit or restore a cleared issue. A successful reconciliation whose check started after recovery is mandatory before routing. Rebuild any PnL calculation that was in flight during recovery: baseline commits check both the execution-state token and the parent baseline. SQLite write transactions and a shared Postgres transaction advisory lock serialize these operations.
+
+Run the real Postgres concurrency and rollback tests against a disposable cluster by setting `ST_TEST_POSTGRES_BIN` to a local Postgres `bin` directory and running `tests/test_execution_recovery.py`. The fixture creates a password-protected cluster on a temporary loopback port, applies the schema only there and stops it afterward. Without that setting, Postgres cases are skipped; SQLite cases still run.
+
+The correction identity rule follows the [IB execution contract](https://www.interactivebrokers.com/docs/tws-api/ref/execution): a changed numeric suffix after the final period denotes a correction, not an additional fill.
+
 Backtests and live order routing use the same execution timing convention: signals are decided after the decision-date close, order quantities are sized from the decision close, and fills are modeled/routed in the next trading session's opening TWAP window. Daily-bar backtests use the next session open as the available proxy for a 30-minute open-window TWAP. Live IB TWAP orders use:
 
 ```powershell
@@ -118,7 +167,7 @@ ST_EXECUTION_TWAP_START_TIME=09:30
 ST_EXECUTION_TWAP_END_TIME=10:00
 ```
 
-On startup and every automation loop, the service derives a durable EOD replay backlog from the last completed EOD date through the latest eligible after-close New York business date. Missing dates are processed oldest-first until caught up: execution fills are synced, market data is refreshed into SQLite, account snapshots are refreshed or recovered from same-day files, EOD PnL snapshots are saved, and SOTA rebalance proposals are staged.
+On startup and every automation loop, the service derives a durable EOD replay backlog from the last completed EOD date through the latest eligible after-close New York business date. Missing dates are processed oldest-first until caught up: execution fills are synced, market data is refreshed into the configured store, account snapshots are refreshed or recovered from same-day files, EOD PnL snapshots are saved, and SOTA rebalance proposals are staged only on scheduled monthly decision dates.
 
 Automation warnings and errors are written immediately to `var/log/automation_alerts.jsonl`. Configure SMTP to send the same alerts by email:
 

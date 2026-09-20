@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
+from contextlib import nullcontext
 from datetime import UTC, datetime
 from datetime import date as Date
 from pathlib import Path
@@ -9,6 +10,7 @@ from pathlib import Path
 from systematic_trading.domain import (
     ApprovalDecision,
     BrokerOrderRecord,
+    BrokerExecutionFill,
     Currency,
     FXRate,
     FundamentalSnapshot,
@@ -31,6 +33,8 @@ from systematic_trading.storage.event_builders import (
     proposal_created_event as _proposal_created_event,
     proposal_decision_event as _proposal_decision_event,
 )
+from systematic_trading.execution.fills import merge_execution_fills, preserve_execution_evidence, validate_baseline_state
+from systematic_trading.execution.recovery import ExecutionRecoveryRequest, recover_execution_record
 
 
 class SQLiteStore:
@@ -253,16 +257,59 @@ class SQLiteStore:
         self._write_broker_order_record(record)
         return record
 
+    def apply_broker_execution_fills(
+        self, local_order_id: str, fills: list[BrokerExecutionFill],
+    ) -> BrokerOrderRecord:
+        with self._connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            row = connection.execute(
+                "SELECT payload FROM broker_order_records WHERE local_order_id = ?", (local_order_id,),
+            ).fetchone()
+            if row is None:
+                raise KeyError(local_order_id)
+            record = BrokerOrderRecord.model_validate_json(row["payload"])
+            updated = merge_execution_fills(record, fills)
+            if updated != record:
+                self._write_broker_order_record(updated, connection=connection)
+            return updated
+
+    def recover_broker_executions(
+        self, request: ExecutionRecoveryRequest, *, review_token: str,
+    ) -> BrokerOrderRecord:
+        with self._connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            row = connection.execute(
+                "SELECT payload FROM broker_order_records WHERE local_order_id = ?", (request.local_order_id,),
+            ).fetchone()
+            if row is None:
+                raise KeyError(request.local_order_id)
+            record = BrokerOrderRecord.model_validate_json(row["payload"])
+            baseline_row = connection.execute(
+                "SELECT payload FROM pnl_baselines ORDER BY cutoff_at DESC, created_at DESC LIMIT 1",
+            ).fetchone()
+            baseline = PnLBaseline.model_validate_json(baseline_row["payload"]) if baseline_row else None
+            recovered = recover_execution_record(record, request, baseline, review_token=review_token)
+            self._write_broker_order_record(recovered, connection=connection, recovery=True)
+            return recovered
+
     def reserve_broker_order_record(self, record: BrokerOrderRecord, *, allow_resubmit: bool = False) -> bool:
         return self._write_broker_order_record(record, reserve=True, allow_resubmit=allow_resubmit)
 
     def _write_broker_order_record(
         self, record: BrokerOrderRecord, *, reserve: bool = False, allow_resubmit: bool = False,
+        connection: sqlite3.Connection | None = None, recovery: bool = False,
     ) -> bool:
         now = datetime.now(tz=UTC).isoformat()
-        with self._connect() as connection:
-            if reserve:
+        own_connection = connection is None
+        with self._connect() if own_connection else nullcontext(connection) as connection:
+            if own_connection:
                 connection.execute("BEGIN IMMEDIATE")
+            prior = connection.execute(
+                "SELECT payload FROM broker_order_records WHERE local_order_id = ?", (record.local_order_id,),
+            ).fetchone()
+            if prior is not None and not recovery:
+                record = preserve_execution_evidence(BrokerOrderRecord.model_validate_json(prior["payload"]), record)
+            if reserve:
                 rows = connection.execute(
                     "SELECT payload FROM broker_order_records WHERE proposal_id = ?",
                     (record.proposal_id,),
@@ -364,6 +411,15 @@ class SQLiteStore:
 
     def save_pnl_baseline(self, baseline: PnLBaseline) -> PnLBaseline:
         with self._connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            if baseline.execution_state_token is not None:
+                rows = connection.execute("SELECT payload FROM broker_order_records").fetchall()
+                records = [BrokerOrderRecord.model_validate_json(row["payload"]) for row in rows]
+                prior = connection.execute(
+                    "SELECT payload FROM pnl_baselines ORDER BY cutoff_at DESC, created_at DESC LIMIT 1",
+                ).fetchone()
+                previous = PnLBaseline.model_validate_json(prior["payload"]) if prior else None
+                validate_baseline_state(baseline, records, previous)
             connection.execute(
                 """
                 INSERT INTO pnl_baselines(baseline_id, cutoff_at, payload, created_at)

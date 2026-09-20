@@ -68,6 +68,34 @@ class ApprovalDecision(BaseModel):
         return self
 
 
+class BrokerExecutionFill(BaseModel):
+    execution_id: str | None = None
+    account: str | None = None
+    broker_order_id: int | None = None
+    order_ref: str | None = None
+    symbol: str
+    side: OrderSide
+    quantity: int = Field(ge=1)
+    average_price: Decimal = Field(gt=0)
+    cumulative_quantity: int | None = Field(default=None, ge=1)
+    filled_at: datetime = Field(default_factory=lambda: datetime.now(tz=UTC))
+    currency: Currency | None = None
+
+
+class ExecutionRecoveryAudit(BaseModel):
+    recovery_id: str = Field(default_factory=lambda: uuid4().hex)
+    recovered_at: datetime = Field(default_factory=lambda: datetime.now(tz=UTC))
+    operator: str = Field(min_length=1)
+    reason: str = Field(min_length=1)
+    review_token: str
+    previous_fills: list[BrokerExecutionFill]
+    accepted_fills: list[BrokerExecutionFill]
+    previous_quantity: int
+    previous_average_price: Decimal | None
+    previous_status: BrokerOrderStatus
+    previous_issue: str | None
+
+
 class BrokerOrderRecord(BaseModel):
     local_order_id: str = Field(default_factory=lambda: uuid4().hex[:12])
     proposal_id: str
@@ -84,17 +112,10 @@ class BrokerOrderRecord(BaseModel):
     remaining_quantity: int | None = Field(default=None, ge=0)
     average_fill_price: Decimal | None = Field(default=None, ge=0)
     message: str | None = None
-
-
-class BrokerExecutionFill(BaseModel):
-    broker_order_id: int | None = None
-    order_ref: str | None = None
-    symbol: str
-    side: OrderSide
-    quantity: int = Field(ge=1)
-    average_price: Decimal = Field(gt=0)
-    filled_at: datetime = Field(default_factory=lambda: datetime.now(tz=UTC))
-    currency: Currency | None = None
+    # Append-only execution evidence, persisted in the existing order JSON payload.
+    execution_fills: list[BrokerExecutionFill] = Field(default_factory=list)
+    execution_sync_issue: str | None = None
+    execution_recoveries: list[ExecutionRecoveryAudit] = Field(default_factory=list)
 
 
 class BrokerSubmissionResult(BaseModel):

@@ -316,12 +316,17 @@ class InteractiveBrokersOrderRouter:
                 or record.filled_quantity > 0
             ):
                 issues.append(f"{record.order_ref}: active, filled, or uncertain order cannot be resubmitted.")
+        recovery_times = []
         for record in store.list_broker_order_records():
+            if record.environment == environment:
+                recovery_times.extend(audit.recovered_at for audit in record.execution_recoveries)
+            if record.environment == environment and record.execution_sync_issue:
+                issues.append(f"{record.order_ref}: unresolved execution history blocks new routing.")
             if record.environment == environment and record.status == BrokerOrderStatus.PENDING_SUBMIT:
                 issues.append(f"{record.order_ref}: unresolved submission outcome blocks new routing until reconciled.")
         # Local import avoids the reconciliation/client import cycle.
         from systematic_trading.execution.reconciliation import submission_reconciliation_issues
-        issues.extend(submission_reconciliation_issues(self.settings))
+        issues.extend(submission_reconciliation_issues(self.settings, required_after=max(recovery_times, default=None)))
         return issues
 
 
@@ -352,24 +357,12 @@ class InteractiveBrokersExecutionSynchronizer:
             for record in store.list_broker_order_records()
             if record.environment == environment
         ]
-        by_broker_order_id = {
-            record.broker_order_id: record
-            for record in existing_records
-            if record.broker_order_id is not None
-        }
-        by_order_ref = {
-            record.order_ref: record
-            for record in existing_records
-            if record.order_ref
-        }
+        from systematic_trading.execution.fills import match_execution
+
         fills_by_record: dict[str, list[BrokerExecutionFill]] = {}
         warnings: list[str] = []
         for fill in fills:
-            record = None
-            if fill.broker_order_id is not None:
-                record = by_broker_order_id.get(fill.broker_order_id)
-            if record is None and fill.order_ref:
-                record = by_order_ref.get(fill.order_ref)
+            record = match_execution(existing_records, fill)
             if record is None:
                 warnings.append(
                     f"Unmatched IB fill for {fill.symbol} order_id={fill.broker_order_id or ''} order_ref={fill.order_ref or ''}."
@@ -380,27 +373,11 @@ class InteractiveBrokersExecutionSynchronizer:
         updated_records: list[BrokerOrderRecord] = []
         records_by_local_id = {record.local_order_id: record for record in existing_records}
         for local_order_id, record_fills in fills_by_record.items():
-            record = records_by_local_id[local_order_id]
-            filled_quantity = sum(fill.quantity for fill in record_fills)
-            weighted_notional = sum(
-                Decimal(fill.quantity) * fill.average_price
-                for fill in record_fills
-            )
-            average_fill_price = weighted_notional / Decimal(filled_quantity)
-            remaining_quantity = max(record.order.quantity - filled_quantity, 0)
-            status = BrokerOrderStatus.FILLED if remaining_quantity == 0 else BrokerOrderStatus.PARTIALLY_FILLED
-            updated = record.model_copy(
-                update={
-                    "status": status,
-                    "filled_quantity": filled_quantity,
-                    "remaining_quantity": remaining_quantity,
-                    "average_fill_price": average_fill_price.quantize(Decimal("0.0001"), rounding=ROUND_HALF_UP),
-                    "updated_at": max(fill.filled_at for fill in record_fills),
-                    "message": f"Synced {len(record_fills)} IB execution fill(s).",
-                }
-            )
-            store.save_broker_order_record(updated)
-            updated_records.append(updated)
+            updated = store.apply_broker_execution_fills(local_order_id, record_fills)
+            if updated.execution_sync_issue:
+                warnings.append(f"{updated.order_ref}: {updated.execution_sync_issue}")
+            if updated != records_by_local_id[local_order_id]:
+                updated_records.append(updated)
 
         return BrokerFillSyncResult(
             environment=environment,
@@ -534,7 +511,7 @@ class IbApiExecutionSyncClient:
                 else:
                     return
                 quantity = int(Decimal(str(getattr(execution, "shares", "0"))))
-                avg_price = Decimal(str(getattr(execution, "avgPrice", "0") or getattr(execution, "price", "0")))
+                avg_price = Decimal(str(getattr(execution, "price", "0")))
                 if quantity <= 0 or avg_price <= 0:
                     return
                 broker_order_id = int(getattr(execution, "orderId")) if getattr(execution, "orderId", None) is not None else None
@@ -544,11 +521,14 @@ class IbApiExecutionSyncClient:
                 currency = Currency(currency_text) if currency_text in Currency._value2member_map_ else None
                 self.fills.append(
                     BrokerExecutionFill(
+                        execution_id=str(getattr(execution, "execId", "") or "") or None,
+                        account=str(getattr(execution, "acctNumber", "") or "") or None,
                         broker_order_id=broker_order_id,
                         order_ref=order_ref,
                         symbol=symbol,
                         side=side,
                         quantity=quantity,
+                        cumulative_quantity=int(Decimal(str(getattr(execution, "cumQty", "0")))) or None,
                         average_price=avg_price,
                         filled_at=_parse_ib_execution_time(str(getattr(execution, "time", "") or "")),
                         currency=currency,

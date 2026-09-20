@@ -766,15 +766,18 @@ _OPERATOR_HTML = """<!doctype html>
 
     function renderReconciliation(payload) {
       const hasBreaks = Boolean(payload.has_breaks);
+      const hasExecutionIssues = Boolean((payload.execution_issues || []).length);
       el("reconciliation-panel").classList.toggle("reconciliation-break", hasBreaks);
       el("reconciliation-checked").textContent = fmtDateTime(payload.checked_at);
       el("reconciliation-status").textContent = payload.status === "matched" ? "Matched" : payload.status === "reset_to_broker" ? "Reset to IB" : "Break";
       el("reconciliation-ib-positions").textContent = payload.ib_position_count ?? 0;
       el("reconciliation-ib-cash").textContent = (payload.broker_cash || []).map((row) => `${row.currency} ${fmtMoney(row.amount)}`).join(" / ") || "0";
       el("reconciliation-break-count").textContent = (payload.position_differences || []).length;
-      el("reset-to-ib-btn").hidden = !payload.requires_operator_confirmation;
+      el("reset-to-ib-btn").hidden = !payload.requires_operator_confirmation || hasExecutionIssues;
       el("reconciliation-message").hidden = !hasBreaks;
-      el("reconciliation-message").textContent = hasBreaks
+      el("reconciliation-message").textContent = hasExecutionIssues
+        ? "Broker execution history needs review. Trading is blocked; a position reset cannot resolve these issues."
+        : hasBreaks
         ? "IB official holdings do not match the active local ledger. Trading is blocked until the break is resolved or a trader confirms reset to IB."
         : "";
       const rows = payload.position_differences || [];

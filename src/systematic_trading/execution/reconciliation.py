@@ -24,6 +24,7 @@ from systematic_trading.execution.broker import (
 )
 from systematic_trading.live.account_snapshot import AccountSnapshotClient, fetch_and_write_account_snapshot
 from systematic_trading.live.sota import AccountPositionInput
+from systematic_trading.execution.fills import match_execution, merge_execution_fills, execution_state_token
 from systematic_trading.storage.interfaces import TradingStore
 
 
@@ -69,6 +70,7 @@ class IBPaperReconciliationReport(BaseModel):
     unmatched_local_orders: list[LocalUnmatchedOrder] = Field(default_factory=list)
     unmatched_ib_fills: list[IBUnmatchedFill] = Field(default_factory=list)
     position_differences: list[PositionDifference] = Field(default_factory=list)
+    execution_issues: list[str] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)
     suggested_actions: list[str] = Field(default_factory=list)
     pnl_reset_baseline_id: str | None = None
@@ -77,7 +79,7 @@ class IBPaperReconciliationReport(BaseModel):
     @computed_field(return_type=bool)
     @property
     def has_breaks(self) -> bool:
-        return not self.reset_applied and bool(
+        return bool(self.execution_issues) or not self.reset_applied and bool(
             self.unmatched_local_orders or self.unmatched_ib_fills or self.position_differences
         )
 
@@ -89,6 +91,8 @@ class IBPaperReconciliationReport(BaseModel):
     @computed_field(return_type=str)
     @property
     def status(self) -> str:
+        if self.execution_issues:
+            return "break"
         if self.reset_applied:
             return "reset_to_broker"
         return "break" if self.has_breaks else "matched"
@@ -116,18 +120,44 @@ def reconcile_ib_paper_account(
     )
     fill_client = execution_client or IbApiExecutionSyncClient()
     ib_fills = fill_client.fetch_fills(profile)
+    all_history = store.list_broker_order_records()
     local_history = [
         record
-        for record in store.list_broker_order_records()
+        for record in all_history
         if record.environment == OrderEnvironment.PAPER
     ]
     baseline = store.latest_pnl_baseline()
     baseline_cutoff = _aware(baseline.cutoff_at) if baseline is not None else None
-    local_records = [
-        record
-        for record in local_history
-        if baseline_cutoff is None or _record_time(record) > baseline_cutoff
-    ]
+    execution_issues = [f"{record.order_ref}: {record.execution_sync_issue}"
+                        for record in local_history if record.execution_sync_issue]
+    # Reconciliation also detects newly changed evidence when called without a
+    # preceding sync. It does not silently import fills or clear an existing block.
+    evidence_by_record: dict[str, list[BrokerExecutionFill]] = {}
+    for fill in ib_fills:
+        record = match_execution(local_history, fill)
+        if record is not None and record.execution_fills:
+            evidence_by_record.setdefault(record.local_order_id, []).append(fill)
+    for record in local_history:
+        evidence = evidence_by_record.get(record.local_order_id)
+        if evidence:
+            checked = merge_execution_fills(record, evidence)
+            if checked.execution_sync_issue:
+                store.apply_broker_execution_fills(record.local_order_id, evidence)
+                execution_issues.append(f"{record.order_ref}: {checked.execution_sync_issue}")
+            elif checked.execution_fills != record.execution_fills:
+                execution_issues.append(f"{record.order_ref}: broker executions await durable synchronization.")
+    local_records = []
+    for record in local_history:
+        if record.execution_fills:
+            active = [fill for fill in record.execution_fills
+                      if baseline_cutoff is None or _aware(fill.filled_at) > baseline_cutoff]
+            if active:
+                local_records.append(record.model_copy(update={
+                    "execution_fills": active,
+                    "filled_quantity": sum(fill.quantity for fill in active),
+                }))
+        elif baseline_cutoff is None or _record_time(record) > baseline_cutoff:
+            local_records.append(record)
     if baseline_cutoff is not None:
         ib_fills = [fill for fill in ib_fills if _aware(fill.filled_at) > baseline_cutoff]
     local_filled_records = [
@@ -153,11 +183,18 @@ def reconcile_ib_paper_account(
         position_differences=position_differences,
         ib_position_count=len(snapshot_result.snapshot.positions),
     )
+    if execution_issues:
+        warnings.extend(execution_issues)
+        suggested_actions = [action for action in suggested_actions if action != "No reconciliation breaks detected."]
+        suggested_actions.append("Resolve execution-history issues through audited recovery; resetting positions does not clear them.")
     baseline_id: str | None = None
     reset_applied = False
     if record_pnl_reset_baseline:
         if not confirm_paper_reset:
             raise ValueError("--confirm-paper-reset is required before writing a PnL reset baseline.")
+        if execution_issues:
+            raise ValueError("Resolve execution-history issues before resetting the PnL baseline.")
+        parent_baseline_id = baseline.baseline_id if baseline else None
         baseline = _broker_pnl_baseline(
             store=store,
             checked_at=checked_at,
@@ -165,6 +202,8 @@ def reconcile_ib_paper_account(
             positions=snapshot_result.snapshot.positions,
             filled_trade_count=len(local_filled_history),
         )
+        baseline.execution_state_token = execution_state_token(all_history)
+        baseline.parent_baseline_id = parent_baseline_id
         store.save_pnl_baseline(baseline)
         baseline_id = baseline.baseline_id
         reset_applied = True
@@ -187,6 +226,7 @@ def reconcile_ib_paper_account(
         unmatched_local_orders=unmatched_local,
         unmatched_ib_fills=unmatched_ib,
         position_differences=position_differences,
+        execution_issues=_dedupe(execution_issues),
         warnings=_dedupe(warnings),
         suggested_actions=_dedupe(suggested_actions),
         pnl_reset_baseline_id=baseline_id,
@@ -199,20 +239,16 @@ def _match_fills(
     local_records: list[BrokerOrderRecord],
     ib_fills: list[BrokerExecutionFill],
 ) -> tuple[list[LocalUnmatchedOrder], list[IBUnmatchedFill]]:
-    local_by_broker_order_id = {
-        record.broker_order_id: record
-        for record in local_records
-        if record.broker_order_id is not None
-    }
-    local_by_order_ref = {record.order_ref: record for record in local_records if record.order_ref}
-    matched_local_ids: set[str] = set()
+    # Persisted executions remain evidence even after falling out of IB's query
+    # window. Position comparison still catches broker account resets/divergence.
+    matched_local_ids = {record.local_order_id for record in local_records if record.execution_fills}
     unmatched_ib: list[IBUnmatchedFill] = []
     for fill in ib_fills:
-        record = None
-        if fill.broker_order_id is not None:
-            record = local_by_broker_order_id.get(fill.broker_order_id)
-        if record is None and fill.order_ref:
-            record = local_by_order_ref.get(fill.order_ref)
+        record = match_execution(local_records, fill)
+        if record is not None and (fill.symbol.upper() != record.order.symbol.upper()
+                                   or fill.side != record.order.side
+                                   or fill.currency is not None and fill.currency != record.order.currency):
+            record = None
         if record is None:
             unmatched_ib.append(
                 IBUnmatchedFill(
@@ -335,12 +371,16 @@ def load_latest_ib_reconciliation(settings: AppSettings) -> IBPaperReconciliatio
         return None
 
 
-def submission_reconciliation_issues(settings: AppSettings, *, now: datetime | None = None) -> list[str]:
+def submission_reconciliation_issues(
+    settings: AppSettings, *, now: datetime | None = None, required_after: datetime | None = None,
+) -> list[str]:
     report = load_latest_ib_reconciliation(settings)
     if report is None:
         return ["Order routing is blocked until a fresh IB portfolio reconciliation succeeds."]
     if report.environment != OrderEnvironment.PAPER or report.has_breaks:
         return ["Order routing is blocked by an unresolved IB portfolio reconciliation break."]
+    if required_after is not None and _aware(report.checked_at) <= _aware(required_after):
+        return ["Order routing requires a new successful reconciliation after execution recovery."]
     age = (_aware(now or datetime.now(tz=UTC)) - _aware(report.checked_at)).total_seconds()
     if age < -5 or age > 180:
         return ["Order routing is blocked because the latest IB portfolio reconciliation is older than 180 seconds or future-dated."]

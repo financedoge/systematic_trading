@@ -4,6 +4,8 @@ from dataclasses import dataclass
 from datetime import UTC, datetime, time
 from zoneinfo import ZoneInfo
 
+from systematic_trading.live.trading_calendar import us_equity_market_close
+
 
 @dataclass(frozen=True)
 class MarketSessionState:
@@ -35,17 +37,32 @@ def market_session_state(
     market_open: str = "09:30",
     market_close: str = "16:00",
 ) -> MarketSessionState:
+    """Intersect the configured local window with the US equity core session."""
     zone = ZoneInfo(timezone)
     local_now = _as_utc(now).astimezone(zone)
+    exchange_zone = ZoneInfo("America/New_York")
+    session_date = local_now.astimezone(exchange_zone).date()
+    exchange_open = datetime.combine(session_date, time(9, 30), tzinfo=exchange_zone)
+    close_time_for_day = us_equity_market_close(session_date)
+    exchange_close = datetime.combine(session_date, close_time_for_day or time(16), tzinfo=exchange_zone)
     open_time = parse_hhmm(market_open)
     close_time = parse_hhmm(market_close)
-    session_open = datetime.combine(local_now.date(), open_time, tzinfo=zone)
-    session_close = datetime.combine(local_now.date(), close_time, tzinfo=zone)
+    window_date = exchange_open.astimezone(zone).date()
+    session_open = datetime.combine(window_date, open_time, tzinfo=zone)
+    session_close = datetime.combine(window_date, close_time, tzinfo=zone)
     if session_close <= session_open:
         raise ValueError("market_close must be after market_open")
-    is_weekday = local_now.weekday() < 5
+    session_open = max(session_open, exchange_open.astimezone(zone))
+    session_close = min(session_close, exchange_close.astimezone(zone))
+    is_weekday = session_date.weekday() < 5
     if not is_weekday:
         reason = "weekend"
+        is_open = False
+    elif close_time_for_day is None:
+        reason = "market_holiday"
+        is_open = False
+    elif session_close <= session_open:
+        reason = "outside_regular_session"
         is_open = False
     elif local_now < session_open:
         reason = "before_market_open"
@@ -58,13 +75,13 @@ def market_session_state(
         is_open = True
     return MarketSessionState(
         now=local_now,
-        session_date=local_now.date().isoformat(),
+        session_date=session_date.isoformat(),
         market_open=session_open,
         market_close=session_close,
         is_weekday=is_weekday,
         is_open=is_open,
-        seconds_until_open=max((session_open - local_now).total_seconds(), 0.0),
-        seconds_until_close=max((session_close - local_now).total_seconds(), 0.0),
+        seconds_until_open=max((session_open - local_now).total_seconds(), 0.0) if close_time_for_day else 0.0,
+        seconds_until_close=max((session_close - local_now).total_seconds(), 0.0) if close_time_for_day else 0.0,
         reason=reason,
     )
 

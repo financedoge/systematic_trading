@@ -17,6 +17,7 @@ from systematic_trading.domain import (
     SymbolPnL,
 )
 from systematic_trading.storage.interfaces import TradingStore
+from systematic_trading.execution.fills import execution_state_token
 
 PNL_FILL_STATUSES = {BrokerOrderStatus.FILLED, BrokerOrderStatus.PARTIALLY_FILLED}
 
@@ -72,6 +73,9 @@ def _build_pnl_snapshot(
     fills = [fill for fill in fills if fill.traded_at <= as_of_at]
     _apply_fills(store, fills, lots_by_symbol, realized_by_symbol, as_of_date, warnings)
     symbol_rows, valuation_complete = _symbol_pnl_rows(store, lots_by_symbol, realized_by_symbol, as_of_date, warnings)
+    valuation_complete = valuation_complete and not any(
+        record.execution_sync_issue for record in store.list_broker_order_records()
+    )
     realized_total = sum((row.realized_pnl_cnh for row in symbol_rows), Decimal("0"))
     unrealized_total = sum((row.unrealized_pnl_cnh or Decimal("0") for row in symbol_rows), Decimal("0"))
     cost_total = sum((row.cost_basis_cnh for row in symbol_rows), Decimal("0"))
@@ -103,12 +107,15 @@ def _build_pnl_snapshot(
 
 
 def build_pnl_baseline(store: TradingStore, *, cutoff_date: date) -> PnLBaseline:
+    records = store.list_broker_order_records()
+    if any(record.execution_sync_issue for record in records):
+        raise ValueError("Cannot collapse PnL while broker execution history requires recovery.")
     cutoff_at = datetime.combine(cutoff_date, time.max, tzinfo=UTC)
     previous = store.latest_pnl_baseline()
     warnings: list[str] = []
     lots_by_symbol: dict[str, list[PnLOpenLot]] = {}
     realized_by_symbol = _decimal_map()
-    fills = [fill for fill in _broker_record_fills(store, warnings) if fill.traded_at <= cutoff_at]
+    fills = [fill for fill in _broker_record_fills(store, warnings, records=records) if fill.traded_at <= cutoff_at]
     previous_trade_count = 0
     if previous is not None:
         previous_cutoff = _ensure_aware(previous.cutoff_at)
@@ -132,6 +139,8 @@ def build_pnl_baseline(store: TradingStore, *, cutoff_date: date) -> PnLBaseline
         warnings.append(f"No filled broker order records were available on or before {cutoff_date}; baseline is empty.")
     return PnLBaseline(
         cutoff_at=cutoff_at,
+        execution_state_token=execution_state_token(records),
+        parent_baseline_id=previous.baseline_id if previous else None,
         realized_pnl_cnh=quantize_money(sum(realized_by_symbol.values(), Decimal("0"))),
         realized_pnl_by_symbol_cnh={
             symbol: quantize_money(value)
@@ -149,9 +158,26 @@ def _broker_record_fills(
     warnings: list[str],
     *,
     use_reference_prices: bool = False,
+    records: list[BrokerOrderRecord] | None = None,
 ) -> list[_LedgerFill]:
     fills: list[_LedgerFill] = []
-    for record in store.list_broker_order_records():
+    for record in records if records is not None else store.list_broker_order_records():
+        if record.execution_sync_issue:
+            warnings.append(f"{record.local_order_id}: {record.execution_sync_issue}")
+        if record.execution_fills:
+            fills.extend(
+                _LedgerFill(
+                    fill_id=f"{record.local_order_id}:{execution.execution_id}",
+                    symbol=record.order.symbol.upper(),
+                    side=record.order.side,
+                    quantity=execution.quantity,
+                    price=record.order.reference_price if use_reference_prices else execution.average_price,
+                    currency=record.order.currency,
+                    traded_at=_ensure_aware(execution.filled_at),
+                )
+                for execution in record.execution_fills
+            )
+            continue
         if record.filled_quantity <= 0 or record.average_fill_price is None:
             continue
         if record.status not in PNL_FILL_STATUSES:

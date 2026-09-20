@@ -39,9 +39,9 @@ def main(argv: list[str] | None = None) -> int:
         help="IB 5-second feed channel. delayed-trades aggregates timestamped delayed trade callbacks.",
     )
     parser.add_argument("--client-id", type=int, default=None)
-    parser.add_argument("--timezone", default="America/New_York")
-    parser.add_argument("--market-open", default="09:30")
-    parser.add_argument("--market-close", default="16:00")
+    parser.add_argument("--timezone", default="America/New_York", help="Timezone of the configured capture window; calendar dates follow New York.")
+    parser.add_argument("--market-open", default="09:30", help="Capture window start; cannot extend the US equity core session.")
+    parser.add_argument("--market-close", default="16:00", help="Capture window end; capped at the scheduled US equity close, including early closes.")
     parser.add_argument("--poll-seconds", type=float, default=60.0)
     parser.add_argument("--realtime-chunk-seconds", type=float, default=300.0)
     parser.add_argument("--gap-fill-lookback-minutes", type=int, default=60)
@@ -142,6 +142,14 @@ def main(argv: list[str] | None = None) -> int:
                     logger=logger,
                 )
                 last_daily_backfill_at = datetime.now(tz=UTC)
+                # Backfill can cross the open, close, or exchange-date boundary.
+                now = last_daily_backfill_at
+                session = market_session_state(
+                    now,
+                    timezone=args.timezone,
+                    market_open=args.market_open,
+                    market_close=args.market_close,
+                )
             if not session.is_open:
                 _write_state(
                     state_path,
@@ -194,8 +202,10 @@ def main(argv: list[str] | None = None) -> int:
                     logger=logger,
                 )
                 last_gap_fill_at = datetime.now(tz=UTC)
+                # Re-evaluate the session after synchronous historical recovery.
+                continue
 
-            chunk_seconds = min(args.realtime_chunk_seconds, max(session.seconds_until_close, 1.0))
+            chunk_seconds = min(args.realtime_chunk_seconds, session.seconds_until_close)
             _write_state(
                 state_path,
                 running=True,
