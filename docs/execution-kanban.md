@@ -28,6 +28,10 @@ After finishing work:
 
 ## Current Snapshot
 
+### 2026-09-20 dashboard repair completion
+
+Status: **Done (implementation, browser and exact staged-snapshot verification)**. Completed P6.14: reset provenance survives PnL collapse, non-SOTA holdings remain in account NAV, chart alignment stays fixed across selection, and empty/sparse data plus month-end ranges behave correctly. Focused tests: **15 passed**. Full isolated staged suite: **339 passed in 220.72s**, including disposable Postgres and Node.js behavior checks. Synthetic browser checks passed desktop and 390px layouts, keyboard inspection, drag selection, Escape-to-All and empty/single-series views. Syntax and staged diff checks passed. No operational service restart, broker access or audit rewrite occurred. Dashboard changes are ready for the authorized commit/push; unrelated backfill, research and runtime artifacts remain outside the commit.
+
 Publication check: **Done (exact staged-snapshot verification)**. The completed execution-history, reviewed-recovery, monthly-scheduling and recorder/local-service repairs passed all **331 tests in 224.17s**, including real disposable Postgres, from an isolated export of the staged tree. Syntax and staged diff checks passed. Commit/push to `origin/master` is authorized; unrelated dashboard/backfill work and runtime artifacts remain outside this commit.
 
 ### 2026-09-20 recorder calendar and local service bindings
@@ -62,7 +66,7 @@ Review follow-ups (not closed by this batch):
 | Market data recording | 4 | 3 | 2 | 1 |
 | Research/backtest promotion | 3 | 0 | 6 | 1 |
 | Portfolio and execution controls | 1 | 2 | 6 | 1 |
-| Observability and alerts | 10 | 0 | 6 | 1 |
+| Observability and alerts | 11 | 0 | 6 | 1 |
 | Daily operating loops | 0 | 0 | 6 | 0 |
 
 ## P0: Project Memory And Governance
@@ -154,6 +158,7 @@ Review follow-ups (not closed by this batch):
 
 | ID | Status | Work Item | Acceptance Criteria | Evidence / Notes |
 | --- | --- | --- | --- | --- |
+| P6.14 | Done | Reset-aware interactive performance tracking | Readable full-history chart, separate aligned account axis, reset-aware account history, diagnosed strategy gaps, hover and period selection with statistics. | `docs/dashboard-performance.md`; 339 tests passed against the exact staged export. Desktop/390px synthetic browser verification passed keyboard, drag, presets and empty/single-series states. Audit files and execution controls preserved. |
 | P6.0 | Done | Foundation service health portal and startup path | A single recommended local startup script brings up NATS, verifies Postgres, starts ClickHouse, starts the operator API/dispatcher, starts the scheduled market-data recorder service, and exposes a web portal with per-service health plus a connection graph. | Added `scripts/start_local_platform.ps1`, `scripts/stop_local_platform.ps1`, `scripts/stop_market_data_recorder.ps1`, `/platform`, and `/api/v1/platform/service-graph`. 2026-07-11 update: recorder is no longer merely opt-in; startup launches the scheduled service by default unless `-SkipMarketDataRecorder` is passed. Weekend smoke showed recorder `ok` and idle with message `Market data recorder service idle: weekend`; platform `/health` overall `ok`. Evidence: full suite latest `181 passed`; service manifest JSON validation; `git diff --check` only reported LF/CRLF warnings. |
 | P6.0a | Done | Structured operational logs v0 | Core scripts and services write durable JSONL operational events with service id, level, event name, timestamp, message, and details so later agents can debug startup, health, dispatcher, and recorder behavior. | Added `systematic_trading.services.operational_log` and shared `var/log/platform_operations.jsonl`. Emitters now include `local_platform_supervisor`, `operator_dashboard`, `event_outbox_dispatcher`, and `market_data_recorder`; obvious secret fields are redacted. Recorder stop script now rewrites stopped state and logs stop/stale/no-PID cases. Smoke log wrote `dispatcher_started`, `dispatch_batch`, and `dispatcher_completed`. Evidence: full suite `169 passed`; focused observability suite `31 passed`; final focused suite `9 passed`; service manifest JSON validation; `git diff --check` only reported existing LF/CRLF warnings. |
 | P6.0b | Done | Recorder/VPN/TWS incident triage and resilience hardening | Diagnose the one-day recorder run incident, document the VPN/TWS operational risk, and add local restart/health tooling so NATS, ClickHouse, and recorder failures are visible and recoverable. | Added `scripts/watch_local_platform.ps1`; watchdog writes `var/run/local_platform_watchdog.state.json` and `local_platform_watchdog` operation logs, checks NATS/Postgres/ClickHouse/operator/recorder state, and can repair required NATS/ClickHouse/operator services with `-Repair`. Added IB automation circuit breaker and alert dedupe to prevent repeated TWS logout/`nextValidId` storms. Hardened SOTA automation so non-SOTA IB account positions such as `DBB`/`USO` are filtered with warnings instead of breaking rebalance staging. Updated optional stopped-service health semantics. Updated README, service supervisor, live rollout, source plan, and `log.md`. Evidence: full suite `173 passed`; final `/health` overall `ok`; watchdog smoke required services `ok`; optional recorder `disabled`. |

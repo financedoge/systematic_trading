@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from dataclasses import dataclass
-from datetime import date, datetime
+from datetime import UTC, date, datetime
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from threading import Event, Thread
@@ -167,6 +167,7 @@ def fetch_and_write_account_snapshot(
         sota_universe_only=sota_universe_only,
     )
     resolved_output_path = output_path or default_account_snapshot_path(settings)
+    result.snapshot.captured_at = datetime.now(tz=UTC)
     resolved_output_path.parent.mkdir(parents=True, exist_ok=True)
     resolved_output_path.write_text(result.snapshot.model_dump_json(indent=2), encoding="utf-8")
     return FetchedAccountSnapshot(

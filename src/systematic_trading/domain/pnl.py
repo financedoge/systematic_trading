@@ -55,6 +55,8 @@ class PnLBaseline(BaseModel):
     source: str = "broker_order_records"
     execution_state_token: str | None = None
     parent_baseline_id: str | None = None
+    account_reset_at: datetime | None = None
+    account_snapshot_path: str | None = None
     realized_pnl_cnh: Decimal = Decimal("0")
     realized_pnl_by_symbol_cnh: dict[str, Decimal] = Field(default_factory=dict)
     open_lots: list[PnLOpenLot] = Field(default_factory=list)

@@ -54,6 +54,8 @@ def test_ib_paper_reconciliation_can_record_confirmed_empty_reset_baseline(tmp_p
     assert report.pnl_reset_baseline_id is not None
     assert baseline is not None
     assert baseline.baseline_id == report.pnl_reset_baseline_id
+    assert baseline.account_reset_at == report.checked_at
+    assert baseline.account_snapshot_path == str(report.account_snapshot_path)
     assert baseline.open_lots == []
     assert baseline.filled_trade_count == 1
     assert report.reset_applied is True
