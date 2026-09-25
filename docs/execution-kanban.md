@@ -30,7 +30,7 @@ After finishing work:
 
 ### 2026-09-25 publish NAS handoff and refresh backup
 
-Status: **Done (backup and release validation; ready to publish)**. Refreshed NAS snapshot `218c1db999494848abcfaf47944e5a35`; restored it into disposable PostgreSQL and SQLite and verified all table contents. Source state is clean, services stopped, NAS ownership released. Verification report is on the NAS under `verification/218c1db999494848abcfaf47944e5a35.json`. Exact staged-code regression: **356 passed, 1 skipped in 253.22s**. PowerShell parsing and staged whitespace checks passed. New-PC setup is documented in `docs/database-sync.md`; local infrastructure/credentials and ClickHouse data still need provisioning. NAS changes are prepared for the authorized `origin/master` publication; unrelated edits remain local.
+Status: **Done (published and backup verified)**. Published migration code as `48e49d0` on `origin/master`. Refreshed NAS snapshot `218c1db999494848abcfaf47944e5a35`; restored it into disposable PostgreSQL and SQLite and verified all table contents. Source state is clean, services stopped, NAS ownership released. Verification report is on the NAS under `verification/218c1db999494848abcfaf47944e5a35.json`. Exact staged-code regression: **356 passed, 1 skipped in 253.22s**. PowerShell parsing and staged whitespace checks passed. New-PC setup is documented in `docs/database-sync.md`; local infrastructure/credentials and ClickHouse data still need provisioning. Unrelated edits remain local.
 
 ### 2026-09-21 NAS database handoff
 
