@@ -58,6 +58,12 @@ pytest
 
 Recommended local foundation startup:
 
+For switching PCs, the startup/stop scripts now coordinate PostgreSQL and SQLite
+snapshots through `\\192.168.1.32\Public\systematic-trading`. Read the
+[NAS database handoff guide](docs/database-sync.md) for first-time setup. Stop the
+old PC cleanly before starting the other. A new PC still needs local infrastructure
+and credentials; ClickHouse and raw market-data files require separate migration.
+
 ```powershell
 .\scripts\start_local_platform.ps1
 ```

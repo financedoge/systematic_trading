@@ -17,6 +17,7 @@ var/live/account_snapshots/*
 !var/live/account_snapshots/.gitkeep
 var/log/
 var/run/
+var/database-sync/
 dist/
 build/
 *.egg-info/

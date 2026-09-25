@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 from datetime import date, datetime
-from typing import Protocol, runtime_checkable
-from systematic_trading.execution.recovery import ExecutionRecoveryRequest
+from typing import TYPE_CHECKING, Protocol, runtime_checkable
+
+if TYPE_CHECKING:
+    from systematic_trading.execution.recovery import ExecutionRecoveryRequest
 
 from systematic_trading.domain import (
     ApprovalDecision,

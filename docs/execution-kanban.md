@@ -28,6 +28,14 @@ After finishing work:
 
 ## Current Snapshot
 
+### 2026-09-25 publish NAS handoff and refresh backup
+
+Status: **Done (backup and release validation; ready to publish)**. Refreshed NAS snapshot `218c1db999494848abcfaf47944e5a35`; restored it into disposable PostgreSQL and SQLite and verified all table contents. Source state is clean, services stopped, NAS ownership released. Verification report is on the NAS under `verification/218c1db999494848abcfaf47944e5a35.json`. Exact staged-code regression: **356 passed, 1 skipped in 253.22s**. PowerShell parsing and staged whitespace checks passed. New-PC setup is documented in `docs/database-sync.md`; local infrastructure/credentials and ClickHouse data still need provisioning. NAS changes are prepared for the authorized `origin/master` publication; unrelated edits remain local.
+
+### 2026-09-21 NAS database handoff
+
+Status: **Done (implementation and isolated restore validation)**. Added single-active-workspace PostgreSQL/SQLite snapshots at `\\192.168.1.32\Public\systematic-trading`, startup restore/conflict detection, a five-minute backup worker and final stopped-service handoff. No automatic takeover or divergent-history overwrite. See `docs/database-sync.md` for provisioning, recovery and ClickHouse exclusions. Full regression run: **350 passed, 1 skipped in 251.98s**; final focused sync/storage/launcher run after additional safeguards: **25 passed, 1 skipped**. Actual NAS smoke: **12 passed**, including two-workspace SMB handoff and disposable PostgreSQL restore; evidence retained in `\\192.168.1.32\Public\systematic-trading-sync-smoke-4120c99563bb47b9b88412265decb7e0`. PowerShell parsing, Python compilation and diff checks passed. Activation occurs at the next clean platform restart; no production restore, service restart or broker action was performed. ClickHouse/raw data and local credentials still require separate provisioning/migration.
+
 ### 2026-09-20 dashboard repair completion
 
 Status: **Done (implementation, browser and exact staged-snapshot verification)**. Completed P6.14: reset provenance survives PnL collapse, non-SOTA holdings remain in account NAV, chart alignment stays fixed across selection, and empty/sparse data plus month-end ranges behave correctly. Focused tests: **15 passed**. Full isolated staged suite: **339 passed in 220.72s**, including disposable Postgres and Node.js behavior checks. Synthetic browser checks passed desktop and 390px layouts, keyboard inspection, drag selection, Escape-to-All and empty/single-series views. Syntax and staged diff checks passed. No operational service restart, broker access or audit rewrite occurred. Dashboard changes are ready for the authorized commit/push; unrelated backfill, research and runtime artifacts remain outside the commit.
