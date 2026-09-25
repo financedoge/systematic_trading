@@ -53,6 +53,10 @@ class WatchlistStore(Protocol):
 
 @runtime_checkable
 class ProposalStore(Protocol):
+    def queue_proposal_once(self, proposal: TradeProposal) -> TradeProposal:
+        """Insert a deterministic proposal once without overwriting decisions."""
+        ...
+
     def save_proposal(self, proposal: TradeProposal) -> TradeProposal:
         ...
 
@@ -62,12 +66,16 @@ class ProposalStore(Protocol):
     def list_proposals(self, status: ProposalStatus | None = None) -> list[TradeProposal]:
         ...
 
-    def apply_decision(self, decision: ApprovalDecision) -> TradeProposal:
+    def apply_decision(self, decision: ApprovalDecision, *, expected_status: ProposalStatus | None = None) -> TradeProposal:
         ...
 
 
 @runtime_checkable
 class BrokerOrderStore(Protocol):
+    def update_order_management(self, local_order_id: str, transform) -> BrokerOrderRecord:
+        """Atomically transform the latest order, preserving concurrent fills."""
+        ...
+
     def recover_broker_executions(
         self, request: ExecutionRecoveryRequest, *, review_token: str,
     ) -> BrokerOrderRecord:

@@ -1,4 +1,8 @@
 import re
+import shutil
+import subprocess
+
+import pytest
 
 from fastapi.testclient import TestClient
 
@@ -13,6 +17,48 @@ EXPECTED_HEADER_LINKS = [
     ("/platform", "System"),
     ("/platform/market-data-audit", "Market Data"),
 ]
+
+
+def test_reconciliation_ui_distinguishes_sync_lag_and_rejects_old_responses():
+    from systematic_trading.web.operator import _OPERATOR_HTML
+
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("Node.js is required for UI behavior checks.")
+    script = r'''
+const assert = require('node:assert/strict');
+const html = require('node:fs').readFileSync(0, 'utf8');
+const start = html.indexOf('function renderReconciliation(payload) {');
+const end = html.indexOf('function renderReconciliationUnavailable', start);
+const elements = new Map();
+const el = id => {
+  if (!elements.has(id)) elements.set(id, {classList:{toggle(){}}, hidden:false, textContent:''});
+  return elements.get(id);
+};
+const state = {};
+const esc = String, fmtMoney = String, fmtDateTime = String;
+const selectedProposal = () => null, setButtons = () => {};
+eval(html.slice(start, end));
+const pending = {checked_at:'2026-09-25T13:01:00Z', status:'sync_pending', has_breaks:true,
+  execution_sync_pending:['new slice'], requires_operator_confirmation:false};
+renderReconciliation(pending);
+assert.equal(el('reconciliation-status').textContent, 'Syncing fills');
+assert.match(el('reconciliation-message').textContent, /existing broker orders continue/);
+assert.equal(el('reset-to-ib-btn').hidden, true);
+const matched = {checked_at:'2026-09-25T13:02:00Z',status:'matched',has_breaks:false};
+renderReconciliation(matched);
+assert.equal(el('reconciliation-message').hidden, true);
+renderReconciliation(pending);
+assert.equal(state.reconciliation, matched);
+assert.equal(el('reconciliation-status').textContent, 'Matched');
+renderReconciliation({checked_at:'2026-09-25T13:03:00Z',status:'break',has_breaks:true,
+  execution_issues:['conflicting execution'],requires_operator_confirmation:true});
+assert.match(el('reconciliation-message').textContent, /execution history needs review/);
+assert.equal(el('reset-to-ib-btn').hidden, true);
+assert.equal(el('reconciliation-message').hidden, false);
+'''
+    subprocess.run([node, "-e", script], input=_OPERATOR_HTML, text=True, encoding="utf-8",
+                   capture_output=True, check=True, timeout=20)
 
 
 def _header_links(html: str) -> list[tuple[str, str]]:
@@ -69,11 +115,19 @@ def test_operator_dashboard_is_served(tmp_path) -> None:
     assert "Daily Slippage" in html
     assert "Cumulative Slippage" in html
     assert "Automation" in html
+    assert "auto-portfolio-alignment" in html
+    assert "auto-portfolio-drift" in html
+    assert "Difference (pp)" in html
+    assert "loadProposals({ background: true })" in html
+    assert "state.filter !== requestedFilter" in html
     assert "Market Data" in html
     assert "Auto-updated" in html
     assert "IB Holdings vs Strategy" in html
-    assert "IB Portfolio Reconciliation" in html
-    assert "Refresh IB" in html
+    assert "IB portfolio & reconciliation" in html
+    assert "Order blotter" in html
+    assert "order-action-dialog" in html
+    assert "Sync portfolio" in html
+    assert "Sync portfolio" in html
     assert "Reset local to IB" in html
     assert "/dashboard/reconciliation/interactive-brokers" in html
     assert "/reset-to-broker" in html

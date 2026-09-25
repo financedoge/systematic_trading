@@ -18,6 +18,9 @@ var/live/account_snapshots/*
 var/log/
 var/run/
 var/database-sync/
+var/dependencies/
+var/market_data/fx_observations/
 dist/
 build/
 *.egg-info/
+var/execution_benchmarks/

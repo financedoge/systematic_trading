@@ -198,7 +198,9 @@ def test_concurrent_routers_only_send_one_order(tmp_path):
     clients = [Client(barrier=barrier, first_id=n) for n in (100, 200)]
     routers = [InteractiveBrokersOrderRouter(settings, client=c) for c in clients]
     with ThreadPoolExecutor(max_workers=2) as pool:
-        results = list(pool.map(lambda r: r.submit_approved_proposal(proposal=p, store=store), routers))
+        # Exercise the DB reservation across writers independently of the new
+        # process-local connection lock (as separate processes would).
+        results = list(pool.map(lambda r: r.submit_approved_proposal.__wrapped__(r, proposal=p, store=store), routers))
     assert sum(len(c.sent) for c in clients) == 1
     assert sum(bool(r.validation_issues) for r in results) == 1
     assert len(store.list_broker_order_records()) == 1

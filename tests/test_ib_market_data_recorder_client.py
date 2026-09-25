@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from threading import Event
 
+import pytest
+
 from systematic_trading.domain.enums import OrderEnvironment
 from systematic_trading.execution.broker import BrokerConnectionProfile
 from systematic_trading.recorders import IbApiMarketDataRecorderClient
@@ -190,3 +192,51 @@ class _RecorderNotes:
 
     def note_error(self, code: str | int, message: str | None = None) -> None:
         return None
+
+
+@pytest.mark.parametrize("channel", ["realtime", "historical", "delayed"])
+def test_fractional_volume_warning_keeps_capture_alive_and_flags_affected_bars(monkeypatch, channel):
+    from datetime import UTC, datetime
+    from decimal import Decimal
+    from types import SimpleNamespace
+
+    from ibapi.client import EClient
+    from systematic_trading.recorders.market_data import CaptureMode, IBMarketDataMode
+
+    # Exercise the real callback class without opening a network connection.
+    monkeypatch.setattr(EClient, "connect", lambda app, *args: app.nextValidId(1))
+    monkeypatch.setattr(EClient, "run", lambda app: None)
+    recorder = _RecorderNotes()
+    captured = []
+    recorder.record_bar = captured.append
+    app = IbApiMarketDataRecorderClient()._connect_app(_profile(), recorder=recorder)
+    app.request_symbols.update({1: "SPY", 2: "QQQ"})
+    app.error(1, 2176, "Warning: fractional size trimmed")
+    app.error(1, 2176, "Warning: fractional size trimmed again")
+    assert 1 not in app.request_errors
+    assert 1 not in app.done_events
+    assert len(app.errors) == 2
+
+    for request_id in (1, 2):
+        if channel == "realtime":
+            app.realtimeBar(request_id, 1790337600, 100, 101, 99, 100, Decimal(5), Decimal(100), 1)
+        elif channel == "historical":
+            app.requested_mode = IBMarketDataMode.DELAYED
+            app._record_historical_bar(request_id, SimpleNamespace(
+                date="1790337600", open=100, high=101, low=99, close=100,
+                volume=5, average=100, barCount=1,
+            ), capture_mode=CaptureMode.HISTORICAL_BACKFILL)
+        else:
+            bar = _TradeBarAccumulator.start(datetime.fromtimestamp(1790337600, tz=UTC), Decimal(100), 5)
+            app._record_delayed_trade_bar(request_id, bar)
+
+    assert len(captured) == 2
+    assert captured[0].quality_flags.count("ib_fractional_volume_rounded") == 1
+    assert "ib_fractional_volume_rounded" not in captured[1].quality_flags
+    if channel == "delayed":
+        assert captured[0].market_data_mode == IBMarketDataMode.DELAYED
+        assert "ib_delayed_trade_aggregate" in captured[0].quality_flags
+    # Subscription failures must still terminate their request.
+    app.error(2, 10089, "Requested market data requires additional subscription")
+    assert 2 in app.request_errors
+    assert app.done_events[2].is_set()

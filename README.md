@@ -13,7 +13,7 @@ The active execution tracker is in `docs/execution-kanban.md`.
 - CNH-denominated reporting and risk.
 - Watchlist-first research workflow with explicit thesis and invalidation rules.
 - ETF and index risk parity as the beta bedrock.
-- Manual approve and reject workflow before any broker order is routed.
+- Manual approval by default; an audited, opt-in paper policy can approve and route new strategy TWAP proposals automatically. Live routing remains disabled. See [Trading operations](docs/trading-operations.md).
 - Long-term target: micro-services, event bus, columnar research store, transactional order state, live market-data recorder, strong rebalance blotter, and continuous operating loops.
 
 ## Current implementation slice
@@ -42,6 +42,7 @@ The active execution tracker is in `docs/execution-kanban.md`.
 1. Create or activate the workspace virtual environment.
 2. Install dependencies from `pyproject.toml`.
 3. Copy `.env.example` to `.env` and fill in broker and API credentials later.
+   For IB Gateway, install the supported official SDK with `.venv/Scripts/python.exe scripts/install_ib_api.py`; the old PyPI SDK cannot fetch the required FX history.
 4. Run the API:
 
 ```bash
@@ -55,6 +56,14 @@ pytest
 ```
 
 ## Local Platform Startup
+
+The [trading operations guide](docs/trading-operations.md) covers Gateway order status, audited cancel/amend/resubmit controls and portfolio synchronization.
+
+For one broker session shared by trading, reconciliation and recording, see the
+[IB Gateway operation guide](docs/ib-gateway-operation.md). The receiving PC uses
+paper Gateway on port 4002 with separate API client IDs and local raw storage.
+The [LEAN and NautilusTrader assessment](docs/trading-engine-assessment.md) describes
+the proposed backtest validation pilot and boundaries for any future engine migration.
 
 Recommended local foundation startup:
 

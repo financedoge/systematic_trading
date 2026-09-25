@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from systematic_trading.execution.ib_compat import compatible_ib_errors
+
 import time
 from collections import deque
 from dataclasses import dataclass
@@ -436,6 +438,7 @@ class IbApiMarketDataRecorderClient:
                 self.bars_by_request: dict[int, int] = {}
                 self.bars_by_symbol: dict[str, int] = {}
                 self.request_errors: dict[int, str] = {}
+                self.request_quality_flags: dict[int, list[str]] = {}
                 self.cancelled_request_ids: set[int] = set()
                 self.last_activity_monotonic_by_request: dict[int, float] = {}
                 self.historical_live_requests: set[int] = set()
@@ -497,6 +500,7 @@ class IbApiMarketDataRecorderClient:
                             wap=Decimal(str(wap)) if wap else None,
                             count=int(count),
                             bar_size_seconds=5,
+                            quality_flags=list(self.request_quality_flags.get(reqId, [])),
                         )
                     )
                     self.bars_seen += 1
@@ -650,7 +654,7 @@ class IbApiMarketDataRecorderClient:
                             wap=bar.wap,
                             count=bar.count,
                             bar_size_seconds=5,
-                            quality_flags=["ib_delayed_trade_aggregate"],
+                            quality_flags=["ib_delayed_trade_aggregate", *self.request_quality_flags.get(reqId, [])],
                         )
                     )
                     self.bars_seen += 1
@@ -710,7 +714,7 @@ class IbApiMarketDataRecorderClient:
                             count=int(Decimal(str(getattr(bar, "barCount", "0") or "0"))),
                             bar_size_seconds=self.bar_size_seconds_by_request.get(reqId)
                             or _bar_size_to_seconds(str(getattr(bar, "barSize", "") or "")),
-                            quality_flags=quality_flags or [],
+                            quality_flags=[*(quality_flags or []), *self.request_quality_flags.get(reqId, [])],
                         )
                     )
                     self.bars_seen += 1
@@ -732,6 +736,7 @@ class IbApiMarketDataRecorderClient:
                         )
                 self.done_events.setdefault(reqId, Event()).set()
 
+            @compatible_ib_errors
             def error(self, reqId: int, errorCode: int, errorString: str, advancedOrderRejectJson: str = "") -> None:  # noqa: N802
                 if reqId in self.cancelled_request_ids and (
                     errorCode in {162, 300, 366} or "cancel" in errorString.lower()
@@ -742,6 +747,14 @@ class IbApiMarketDataRecorderClient:
                 if errorCode == 10167:
                     return
                 recorder.note_error(errorCode, errorString)
+                if reqId >= 0 and errorCode == 2176:
+                    # IB still delivers data after rounding fractional sizes for
+                    # older clients. Preserve the warning and flag every later
+                    # bar for this request, without terminating the subscription.
+                    flags = self.request_quality_flags.setdefault(reqId, [])
+                    if "ib_fractional_volume_rounded" not in flags:
+                        flags.append("ib_fractional_volume_rounded")
+                    return
                 if reqId >= 0 and errorCode not in {2104, 2106, 2158, 2107, 2108}:
                     self.request_errors[reqId] = message
                     self.done_events.setdefault(reqId, Event()).set()

@@ -5,6 +5,7 @@ import re
 from datetime import UTC, date, datetime, time, timedelta
 from pathlib import Path
 from threading import Event, Lock, Thread
+from time import monotonic
 from typing import Any
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
@@ -20,6 +21,8 @@ from systematic_trading.execution.broker import (
 )
 from systematic_trading.live.account_snapshot import AccountSnapshotClient, fetch_and_write_account_snapshot
 from systematic_trading.live.alerts import AutomationAlertNotifier
+from systematic_trading.live.auto_approval import PaperAutoApproval
+from systematic_trading.live.initial_allocation import InitialAllocationResult, stage_portfolio_alignment
 from systematic_trading.live.market_data import DailyBarProvider, MarketDataRefreshResult, refresh_sota_market_data
 from systematic_trading.live.pnl import build_dashboard_pnl_snapshot
 from systematic_trading.live.sota import LiveAccountSnapshotInput, build_sota_live_rebalance_plan, write_sota_live_plan_artifacts
@@ -68,6 +71,11 @@ class TradingServiceStatus(BaseModel):
     last_account_snapshot_path: str | None = None
     last_rebalance_proposal_id: str | None = None
     last_rebalance_artifact_path: str | None = None
+    portfolio_alignment_status: str | None = None
+    portfolio_alignment_message: str | None = None
+    portfolio_alignment_proposal_id: str | None = None
+    portfolio_alignment: InitialAllocationResult | None = None
+    rebalance_drift_threshold: str = "0.02"
     ib_automation_consecutive_errors: int = 0
     ib_automation_circuit_open_until: datetime | None = None
     ib_automation_circuit_reason: str | None = None
@@ -129,6 +137,7 @@ class TradingManagementService:
         market_data_fallback_provider: DailyBarProvider | None = None,
         fx_market_data_provider: DailyBarProvider | None = None,
         alert_notifier: AutomationAlertNotifier | None = None,
+        order_management_client=None,
     ) -> None:
         self.settings = settings
         self.store = store
@@ -137,6 +146,9 @@ class TradingManagementService:
         self.market_data_provider = market_data_provider
         self.market_data_fallback_provider = market_data_fallback_provider
         self.fx_market_data_provider = fx_market_data_provider
+        self.order_management_client = order_management_client
+        self.auto_approval = PaperAutoApproval(settings, store, order_client=order_management_client)
+        self._next_fx_readiness_refresh: datetime | None = None
         self.alert_notifier = alert_notifier or AutomationAlertNotifier(settings, event_store=store)
         self.state_path = trading_service_state_path(settings)
         self._lock = Lock()
@@ -197,18 +209,22 @@ class TradingManagementService:
             return self._status
 
     def run_once(self, *, now: datetime | None = None) -> TradingServiceStatus:
+        started = monotonic()
         current = _as_utc(now or datetime.now(tz=UTC))
         with self._lock:
             self._status = self._status.model_copy(update={"heartbeat_at": current, "running": self._thread is not None and self._thread.is_alive()})
             self._save_status_locked()
 
         if not self._is_monitoring_day(current):
+            self._stage_portfolio_alignment(current)
             self._defer_until_next_trading_day(current)
             with self._lock:
                 return self._status
 
         if self._execution_sync_due(current):
             self._sync_executions(current)
+        self._stage_portfolio_alignment(current + timedelta(seconds=monotonic() - started))
+        self.auto_approval.tick(now=current + timedelta(seconds=monotonic() - started))
         self._refresh_eod_backlog(current)
         processed_eod_dates: set[date] = set()
         while self._eod_due(current):
@@ -222,6 +238,56 @@ class TradingManagementService:
 
         with self._lock:
             return self._status
+
+    def _stage_portfolio_alignment(self, now: datetime) -> None:
+        started = monotonic()
+        try:
+            self._refresh_alignment_fx(now)
+            now = now + timedelta(seconds=monotonic() - started)
+            result = stage_portfolio_alignment(settings=self.settings, store=self.store, now=now,
+                order_client=self.order_management_client)
+        except Exception as exc:
+            result = InitialAllocationResult(status="blocked", message=f"Portfolio alignment could not be validated: {exc}")
+        with self._lock:
+            changed = (self._status.portfolio_alignment_status, self._status.portfolio_alignment_message) != (result.status, result.message)
+            updates = dict(portfolio_alignment_status=result.status, portfolio_alignment_message=result.message,
+                portfolio_alignment_proposal_id=result.proposal_id, portfolio_alignment=result,
+                rebalance_drift_threshold=str(self.settings.automation_rebalance_drift_threshold))
+            if result.status == "queued":
+                updates.update(last_rebalance_proposal_id=result.proposal_id, last_rebalance_artifact_path=result.artifact_path)
+            self._status = self._status.model_copy(update=updates)
+            if changed:
+                self._record_event("portfolio_alignment", "warning" if result.status == "blocked" else "ok",
+                    result.message, save=False, notify=False)
+            self._save_status_locked()
+
+    def _required_fx_currencies(self):
+        from systematic_trading.domain.enums import Currency
+        from systematic_trading.execution.reconciliation import load_latest_ib_reconciliation
+        report = load_latest_ib_reconciliation(self.settings)
+        return {Currency.USD} | {Currency(row["currency"]) for row in report.broker_cash} if report else {Currency.USD}
+
+    def _fx_provider(self):
+        from systematic_trading.data.ib_fx import IbFxDailyBarProvider
+        return self.fx_market_data_provider or IbFxDailyBarProvider(self.settings)
+
+    def _refresh_alignment_fx(self, now: datetime) -> None:
+        from systematic_trading.execution.reconciliation import submission_reconciliation_issues
+        from systematic_trading.live.fx import refresh_required_fx
+        from systematic_trading.live.initial_allocation import initial_allocation_window
+        if not self.settings.automation_queue_rebalance or submission_reconciliation_issues(self.settings, now=now):
+            return
+        if self._next_fx_readiness_refresh is not None and now < self._next_fx_readiness_refresh:
+            return
+        self._next_fx_readiness_refresh = now + timedelta(seconds=max(self.settings.automation_eod_retry_seconds, 60))
+        decision_date, _, _ = initial_allocation_window(self.settings, now)
+        result = refresh_required_fx(store=self.store, target_date=decision_date,
+            currencies=self._required_fx_currencies(), provider=self._fx_provider())
+        if result.rates_upserted or result.warnings:
+            with self._lock:
+                self._record_event("fx_readiness", "warning" if result.warnings else "ok",
+                    f"Refreshed {result.rates_upserted} observed FX rate(s) for portfolio readiness.",
+                    details=result.model_dump(mode="json"), notify=False)
 
     def _run(self) -> None:
         while not self._stop.wait(max(self.settings.automation_loop_interval_seconds, 1)):
@@ -256,6 +322,7 @@ class TradingManagementService:
                 execution_client=self.execution_sync_client,
                 account_snapshot_client=self.account_snapshot_client,
                 as_of=now_utc.date(),
+                sync_new_fills=True,
             )
             next_at = now_utc.timestamp() + max(self.settings.automation_execution_poll_seconds, 1)
             reconciliation_break_count = (
@@ -442,6 +509,14 @@ class TradingManagementService:
             try:
                 existing = _existing_staged_proposal(self.store, service_date)
                 if existing is None:
+                    from systematic_trading.domain.enums import ProposalStatus
+                    from systematic_trading.execution.window import proposal_is_expired
+                    in_flight = next((proposal for proposal in self.store.list_proposals()
+                        if proposal.trigger in {"empty_portfolio", "portfolio_drift"}
+                        and proposal.status in {ProposalStatus.PENDING, ProposalStatus.APPROVED}
+                        and not proposal_is_expired(proposal, self.settings, now=now)), None)
+                    if in_flight is not None:
+                        raise ValueError(f"Waiting for portfolio-alignment proposal {in_flight.proposal_id} before monthly staging.")
                     plan = build_sota_live_rebalance_plan(
                         store=self.store,
                         broker=InteractiveBrokersAdapter(self.settings),
@@ -449,8 +524,13 @@ class TradingManagementService:
                         decision_date=service_date,
                         environment=OrderEnvironment.PAPER,
                         order_type=OrderType.TWAP,
-                        queue=True,
+                        queue=False,
                     )
+                    automatic_proposal = plan.proposal.model_copy(update={"automation_strategy_key": current_sota_definition().key})
+                    if plan.validation_issues:
+                        raise ValueError("Cannot queue proposal with validation issues: " + "; ".join(plan.validation_issues))
+                    self.store.save_proposal(automatic_proposal)
+                    plan = plan.model_copy(update={"proposal": automatic_proposal, "queued": True})
                     json_path, _ = write_sota_live_plan_artifacts(
                         plan,
                         self.settings.data_dir / "live" / "sota_rebalance",
@@ -555,7 +635,9 @@ class TradingManagementService:
                 target_date=service_date,
                 provider=self.market_data_provider,
                 fallback_provider=self._market_data_fallback_provider(),
-                fx_provider=self.fx_market_data_provider,
+                fx_provider=self._fx_provider(),
+                fx_currencies=self._required_fx_currencies(),
+                repair_history=False,
                 allow_stale_carry_forward=self.settings.automation_market_data_carry_forward,
                 carry_forward_max_calendar_days=self.settings.automation_market_data_carry_forward_max_calendar_days,
             )

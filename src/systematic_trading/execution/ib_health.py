@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from systematic_trading.execution.ib_compat import compatible_ib_errors
+
 from datetime import UTC, datetime
 from threading import Event, Thread
 
@@ -92,6 +94,7 @@ def _probe_profile(
             self.server_time = datetime.fromtimestamp(time, tz=UTC)
             self.server_time_seen.set()
 
+        @compatible_ib_errors
         def error(self, reqId: int, errorCode: int, errorString: str, advancedOrderRejectJson: str = "") -> None:  # noqa: N802
             self.errors.append(f"{reqId}:{errorCode}:{errorString}")
 

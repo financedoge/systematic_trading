@@ -232,7 +232,10 @@ def test_reconciliation_checks_new_execution_batch_as_a_whole(store, tmp_path):
                                      fill("trade-b.01", 2, "110", 4, cumulative_quantity=6)]),
     )
     assert report.has_breaks
-    assert "await durable synchronization" in report.execution_issues[0]
+    assert report.execution_issues == []
+    assert "await durable synchronization" in report.execution_sync_pending[0]
+    assert report.status == "sync_pending"
+    assert not report.requires_operator_confirmation
     assert store.list_broker_order_records()[0].execution_sync_issue is None
 
 

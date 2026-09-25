@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from systematic_trading.execution.ib_compat import compatible_ib_errors
+
 from datetime import UTC, date, datetime, time
 from decimal import Decimal
 from math import ceil
@@ -19,6 +21,8 @@ class IBHistoricalDataClient(Protocol):
         symbol: str,
         start_date: date,
         end_date: date,
+        *,
+        forex_currency: str | None = None,
     ) -> list[PriceBar]:
         """Fetch adjusted daily bars from Interactive Brokers."""
 
@@ -60,6 +64,8 @@ class IbApiHistoricalDataClient:
         symbol: str,
         start_date: date,
         end_date: date,
+        *,
+        forex_currency: str | None = None,
     ) -> list[PriceBar]:
         if end_date < start_date:
             return []
@@ -107,6 +113,7 @@ class IbApiHistoricalDataClient:
             def historicalDataEnd(self, reqId: int, start: str, end: str) -> None:  # noqa: N802
                 self.done.set()
 
+            @compatible_ib_errors
             def error(self, reqId: int, errorCode: int, errorString: str, advancedOrderRejectJson: str = "") -> None:  # noqa: N802
                 self.errors.append(f"{reqId}:{errorCode}:{errorString}")
                 if reqId >= 0 and errorCode not in {2104, 2106, 2158}:
@@ -122,9 +129,9 @@ class IbApiHistoricalDataClient:
 
             contract = Contract()
             contract.symbol = symbol.upper()
-            contract.secType = "STK"
-            contract.exchange = "SMART"
-            contract.currency = Currency.USD.value
+            contract.secType = "CASH" if forex_currency else "STK"
+            contract.exchange = "IDEALPRO" if forex_currency else "SMART"
+            contract.currency = forex_currency or Currency.USD.value
 
             app.reqHistoricalData(
                 92001,
@@ -132,8 +139,8 @@ class IbApiHistoricalDataClient:
                 _ib_end_datetime(end_date),
                 _ib_duration(start_date, end_date),
                 "1 day",
-                "ADJUSTED_LAST",
-                1,
+                "MIDPOINT" if forex_currency else "ADJUSTED_LAST",
+                0 if forex_currency else 1,
                 1,
                 False,
                 [],

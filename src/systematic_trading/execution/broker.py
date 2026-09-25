@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+from systematic_trading.execution.ib_compat import compatible_ib_errors
+
 from abc import ABC, abstractmethod
 from datetime import UTC, date, datetime, tzinfo
 from decimal import Decimal, ROUND_HALF_UP
 from hashlib import sha1
+import logging
 from threading import Event, Thread
 from typing import Protocol
 from zoneinfo import ZoneInfo
@@ -33,6 +36,8 @@ from systematic_trading.domain.market import Instrument
 from systematic_trading.execution.window import proposal_is_expired
 from systematic_trading.research import current_sota_definition, instruments_for_definition
 from systematic_trading.storage.interfaces import BrokerOrderStore
+
+logger = logging.getLogger(__name__)
 
 
 class BrokerConnectionProfile(BaseModel):
@@ -143,6 +148,9 @@ class InteractiveBrokersAdapter(BrokerAdapter):
         raise ValueError(f"Unsupported IB environment: {environment}")
 
 
+from systematic_trading.execution.locks import serialized_orders
+
+
 class InteractiveBrokersOrderRouter:
     def __init__(
         self,
@@ -156,6 +164,7 @@ class InteractiveBrokersOrderRouter:
         self.client = client
         self.instruments = instruments or instruments_for_definition(current_sota_definition())
 
+    @serialized_orders
     def submit_approved_proposal(
         self,
         *,
@@ -185,14 +194,27 @@ class InteractiveBrokersOrderRouter:
         records: list[BrokerOrderRecord] = []
         submission_issues: list[str] = []
         order_items = _selected_order_items(proposal, order_indexes)
+        stage = "connecting to IB Gateway"
         try:
-            first_order_id = client.connect(profile)
+            broker_next_id = client.connect(profile)
+            stage = "reading the restored order ledger"
+            # Gateway's sequence can restart on a different installation. Keep
+            # IDs above both the broker floor and every retained local order.
+            # The database's unique constraint remains the final race guard.
+            retained_ids = [
+                record.broker_order_id for record in store.list_broker_order_records()
+                if record.environment == environment and record.broker == "interactive-brokers"
+                and record.broker_order_id is not None
+            ]
+            first_order_id = max(broker_next_id, max(retained_ids, default=0) + 1)
             submitted_at = datetime.now(tz=UTC)
             for sequence, (index, order) in enumerate(order_items):
                 broker_order_id = first_order_id + sequence
                 order_ref = _order_ref(proposal.proposal_id, index)
+                prior_record = next((r for r in store.list_broker_order_records(proposal.proposal_id)
+                                     if r.order_index == index), None)
                 record = BrokerOrderRecord(
-                    local_order_id=_local_order_id(proposal.proposal_id, index, order),
+                    local_order_id=prior_record.local_order_id if prior_record else _local_order_id(proposal.proposal_id, index, order),
                     proposal_id=proposal.proposal_id,
                     environment=environment,
                     order_index=index,
@@ -205,9 +227,11 @@ class InteractiveBrokersOrderRouter:
                 )
                 contract = self.contract_spec_for(order.symbol)
                 ib_order = order_spec_for(order, order_ref=order_ref)
+                stage = f"reserving {order.symbol} before sending it to IB"
                 if not store.reserve_broker_order_record(record, allow_resubmit=allow_resubmit):
                     submission_issues.append(f"{order_ref}: order intent already claimed; reconcile before retrying.")
                     break
+                stage = f"recording the broker outcome for {order.symbol}"
                 try:
                     client.place_order(broker_order_id, contract, ib_order)
                 except Exception as exc:
@@ -234,6 +258,13 @@ class InteractiveBrokersOrderRouter:
                 )
                 store.save_broker_order_record(record)
                 records.append(record)
+        except Exception as exc:
+            logger.exception("Proposal %s stopped while %s", proposal.proposal_id, stage)
+            submission_issues.append(
+                f"Submission stopped while {stage} ({type(exc).__name__}). "
+                "Approval is retained. Sync broker orders and review all recorded outcomes before retrying; "
+                "earlier orders in this batch may already have reached IB."
+            )
         finally:
             client.disconnect()
 
@@ -285,6 +316,10 @@ class InteractiveBrokersOrderRouter:
         order_items = _selected_order_items(proposal, order_indexes)
         if proposal.status != ProposalStatus.APPROVED:
             issues.append(f"{proposal.proposal_id}: proposal status must be approved before routing.")
+        get_proposal = getattr(store, "get_proposal", None)
+        current = get_proposal(proposal.proposal_id) if get_proposal else None
+        if current is not None and current.status != ProposalStatus.APPROVED:
+            issues.append(f"{proposal.proposal_id}: the stored approval changed; refresh before routing.")
         if proposal_is_expired(proposal, self.settings):
             issues.append(f"{proposal.proposal_id}: execution window expired; missed proposals cannot be routed.")
         if environment == OrderEnvironment.LIVE:
@@ -311,6 +346,10 @@ class InteractiveBrokersOrderRouter:
             issues.append(f"{proposal.proposal_id}: broker order records already exist; pass allow_resubmit to override.")
         selected_indexes = {index for index, _ in order_items}
         for record in existing_records:
+            if record.order_index in selected_indexes and record.broker_observation and (
+                Decimal(str(record.broker_observation.get("filled", "-1"))) != 0
+            ):
+                issues.append(f"{record.order_ref}: broker fill evidence is nonzero or unknown; resubmission blocked.")
             if record.order_index in selected_indexes and (
                 record.status not in {BrokerOrderStatus.REJECTED, BrokerOrderStatus.CANCELLED}
                 or record.filled_quantity > 0
@@ -320,6 +359,8 @@ class InteractiveBrokersOrderRouter:
         for record in store.list_broker_order_records():
             if record.environment == environment:
                 recovery_times.extend(audit.recovered_at for audit in record.execution_recoveries)
+            if record.environment == environment and record.pending_action:
+                issues.append(f"{record.order_ref}: unresolved management action blocks new routing.")
             if record.environment == environment and record.execution_sync_issue:
                 issues.append(f"{record.order_ref}: unresolved execution history blocks new routing.")
             if record.environment == environment and record.status == BrokerOrderStatus.PENDING_SUBMIT:
@@ -434,6 +475,7 @@ class IbApiOrderClient:
             ) -> None:
                 self.order_events.setdefault(orderId, Event()).set()
 
+            @compatible_ib_errors
             def error(self, reqId: int, errorCode: int, errorString: str, advancedOrderRejectJson: str = "") -> None:  # noqa: N802
                 message = f"{reqId}:{errorCode}:{errorString}"
                 self.errors.append(message)
@@ -538,6 +580,7 @@ class IbApiExecutionSyncClient:
             def execDetailsEnd(self, reqId: int) -> None:  # noqa: N802
                 self.done.set()
 
+            @compatible_ib_errors
             def error(self, reqId: int, errorCode: int, errorString: str, advancedOrderRejectJson: str = "") -> None:  # noqa: N802
                 self.errors.append(f"{reqId}:{errorCode}:{errorString}")
 

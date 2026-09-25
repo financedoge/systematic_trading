@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from functools import lru_cache
 from pathlib import Path
+from decimal import Decimal
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from systematic_trading.domain.enums import Currency, OrderEnvironment
@@ -28,6 +30,8 @@ class AppSettings(BaseSettings):
     ib_account_snapshot_client_id: int | None = None
     ib_health_client_id: int | None = None
     ib_reconciliation_client_id: int | None = None
+    ib_fx_client_id: int | None = None
+    ib_benchmark_client_id: int | None = None
 
     data_dir: Path = Path("var")
     database_path: Path = Path("var/systematic_trading.db")
@@ -62,6 +66,7 @@ class AppSettings(BaseSettings):
     automation_ib_error_breaker_threshold: int = 3
     automation_ib_error_breaker_cooldown_seconds: int = 1800
     automation_queue_rebalance: bool = True
+    automation_rebalance_drift_threshold: Decimal = Field(default=Decimal("0.02"), ge=0, le=1)
     automation_market_data_carry_forward: bool = False
     automation_market_data_carry_forward_max_calendar_days: int = 4
     execution_twap_start_time: str = "09:30"

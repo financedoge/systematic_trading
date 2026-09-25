@@ -20,7 +20,8 @@ data = [
     "tushare>=1.2.10",
 ]
 ib = [
-    "ibapi>=9.81.1",
+    # Install the matching official SDK with scripts/install_ib_api.py.
+    "protobuf==5.29.5",
 ]
 queue = [
     "nats-py>=2.8.0,<3",

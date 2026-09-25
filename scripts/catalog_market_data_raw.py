@@ -10,12 +10,13 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "src"))
 
+from systematic_trading.config import AppSettings
 from systematic_trading.recorders import load_storage_policy, query_raw_catalog, rebuild_raw_catalog
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Query or rebuild the raw market-data catalog manifest.")
-    parser.add_argument("--storage-policy", default="config/market-data-storage.json")
+    parser.add_argument("--storage-policy", default=None, help="Defaults to ST_MARKET_DATA_STORAGE_POLICY_PATH.")
     parser.add_argument("--root", default=None, help="Raw root. Defaults to hot_spool_root from storage policy.")
     parser.add_argument("--source", default=None)
     parser.add_argument("--environment", default=None)
@@ -27,7 +28,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--limit", type=int, default=20, help="Maximum query entries to print.")
     args = parser.parse_args(argv)
 
-    policy = load_storage_policy(_resolve_repo_path(args.storage_policy))
+    policy = load_storage_policy(_resolve_repo_path(args.storage_policy or AppSettings().market_data_storage_policy_path))
     root = Path(args.root) if args.root else policy.hot_spool_root
     day = date.fromisoformat(args.date) if args.date else None
     if args.limit < 1:

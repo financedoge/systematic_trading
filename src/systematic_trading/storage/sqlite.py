@@ -231,6 +231,18 @@ class SQLiteStore:
             _insert_platform_event(connection, _proposal_created_event(proposal), created_at=now)
         return proposal
 
+    def queue_proposal_once(self, proposal: TradeProposal) -> TradeProposal:
+        with self._connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            row = connection.execute("SELECT payload FROM proposals WHERE proposal_id = ?", (proposal.proposal_id,)).fetchone()
+            if row is not None:
+                return TradeProposal.model_validate_json(row["payload"])
+            now = datetime.now(tz=UTC).isoformat()
+            connection.execute("INSERT INTO proposals(proposal_id,status,payload,created_at,updated_at) VALUES (?,?,?,?,?)",
+                (proposal.proposal_id, proposal.status.value, self._dump(proposal), proposal.created_at.isoformat(), now))
+            _insert_platform_event(connection, _proposal_created_event(proposal), created_at=now)
+        return proposal
+
     def get_proposal(self, proposal_id: str) -> TradeProposal | None:
         with self._connect() as connection:
             row = connection.execute(
@@ -271,6 +283,20 @@ class SQLiteStore:
             updated = merge_execution_fills(record, fills)
             if updated != record:
                 self._write_broker_order_record(updated, connection=connection)
+            return updated
+
+    def update_order_management(self, local_order_id: str, transform) -> BrokerOrderRecord:
+        """Serialize a lifecycle transition with fills and its outbox event."""
+        with self._connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            row = connection.execute(
+                "SELECT payload FROM broker_order_records WHERE local_order_id = ?", (local_order_id,),
+            ).fetchone()
+            if row is None:
+                raise KeyError(local_order_id)
+            record = BrokerOrderRecord.model_validate_json(row["payload"])
+            updated = transform(record)
+            self._write_broker_order_record(updated, connection=connection)
             return updated
 
     def recover_broker_executions(
@@ -318,7 +344,8 @@ class SQLiteStore:
                 for existing in previous:
                     if existing.order_index == record.order_index and (
                         not allow_resubmit or existing.status.value not in {"rejected", "cancelled"}
-                        or existing.filled_quantity > 0
+                        or existing.filled_quantity > 0 or existing.pending_action
+                        or existing.broker_observation and str(existing.broker_observation.get("filled", "unknown")) not in {"0", "0.0"}
                     ):
                         return False
             connection.execute(
@@ -355,6 +382,13 @@ class SQLiteStore:
             )
             _insert_platform_event(connection, _order_status_changed_event(record), created_at=now)
             fill_event = _fill_recorded_event(record)
+            if prior is not None:
+                previous_record = BrokerOrderRecord.model_validate_json(prior["payload"])
+                if (previous_record.filled_quantity == record.filled_quantity
+                        and previous_record.average_fill_price == record.average_fill_price
+                        and previous_record.execution_fills == record.execution_fills):
+                    fill_event = None
+
             if fill_event is not None:
                 _insert_platform_event(connection, fill_event, created_at=now)
         return True
@@ -452,14 +486,17 @@ class SQLiteStore:
             return None
         return PnLBaseline.model_validate_json(row["payload"])
 
-    def apply_decision(self, decision: ApprovalDecision) -> TradeProposal:
-        proposal = self.get_proposal(decision.proposal_id)
-        if proposal is None:
-            raise KeyError(decision.proposal_id)
-
-        updated = proposal.model_copy(update={"status": decision.status})
+    def apply_decision(self, decision: ApprovalDecision, *, expected_status: ProposalStatus | None = None) -> TradeProposal:
         now = datetime.now(tz=UTC).isoformat()
         with self._connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            row = connection.execute("SELECT payload FROM proposals WHERE proposal_id = ?", (decision.proposal_id,)).fetchone()
+            if row is None:
+                raise KeyError(decision.proposal_id)
+            proposal = TradeProposal.model_validate_json(row['payload'])
+            if expected_status is not None and proposal.status != expected_status:
+                raise ValueError("Proposal changed before its approval could be recorded.")
+            updated = proposal.model_copy(update={"status": decision.status})
             connection.execute(
                 """
                 INSERT INTO approval_decisions(proposal_id, status, payload, decided_at)

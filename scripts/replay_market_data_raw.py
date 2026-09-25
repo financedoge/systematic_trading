@@ -10,12 +10,13 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "src"))
 
+from systematic_trading.config import AppSettings
 from systematic_trading.recorders import dry_run_raw_replay, load_storage_policy
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Dry-run replay validation for raw market-data JSONL.")
-    parser.add_argument("--storage-policy", default="config/market-data-storage.json")
+    parser.add_argument("--storage-policy", default=None, help="Defaults to ST_MARKET_DATA_STORAGE_POLICY_PATH.")
     parser.add_argument("--root", default=None, help="Raw root. Defaults to hot_spool_root from storage policy.")
     parser.add_argument("--source", default="interactive-brokers")
     parser.add_argument("--environment", default="paper")
@@ -24,7 +25,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--symbol", required=True)
     args = parser.parse_args(argv)
 
-    policy = load_storage_policy(_resolve_repo_path(args.storage_policy))
+    policy = load_storage_policy(_resolve_repo_path(args.storage_policy or AppSettings().market_data_storage_policy_path))
     root = Path(args.root) if args.root else policy.hot_spool_root
     summary = dry_run_raw_replay(
         root,

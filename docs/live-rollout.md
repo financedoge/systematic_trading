@@ -2,7 +2,7 @@
 
 ## Rebalance Execution Window
 
-- Signals are calculated from the decision-date close and orders target the next session open.
+- Monthly signals are calculated from the decision-date close and scheduled orders target the next session open. Empty-account allocation and drift maintenance may propose a current-session TWAP using completed daily data and active targets; see [trading operations](trading-operations.md#initial-allocation-and-drift-monitoring).
 - `ST_EXECUTION_REBALANCE_TIMEOUT_MINUTES` controls how long after `ST_EXECUTION_TWAP_START_TIME` approval or retry remains allowed; default is 30 minutes in `ST_AUTOMATION_TIMEZONE`.
 - Pending proposals and approved proposals with failed or missing broker orders become `missed` after the deadline.
 - Orders already accepted by the broker remain active and are not falsely expired.
@@ -17,7 +17,7 @@ The target rollout path is defined in `docs/industrial-platform-plan.md`. This d
 ## Paper-first stages
 
 1. Proposal preview only: no orders leave the system.
-2. Paper routing: manually approved paper orders are sent to IB paper.
+2. Paper routing: manual approval by default, or explicitly enabled automatic approval for new current-strategy paper TWAP proposals under the operator's batch cap. See [approval mode](trading-operations.md#automatic-paper-approval).
 3. Shadow live review: proposals are compared against paper fills and manual expectations.
 4. Live enablement: capital caps, stronger validations, and rollback procedures are in place.
 
@@ -31,7 +31,7 @@ The target rollout path is defined in `docs/industrial-platform-plan.md`. This d
 ## Safeguards
 
 - Separate paper and live environments.
-- Explicit approval before order submission.
+- Persisted approval before submission: manual, or the explicitly enabled paper-only policy. Existing proposals and uncertain attempts are never released/retried automatically.
 - Buying-power, duplicate-order, and stale-price checks.
 - Local reconciliation of positions, orders, and cash balances against broker state.
 - Durable local storage for proposal, approval, and broker order history before and after broker routing.
