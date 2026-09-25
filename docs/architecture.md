@@ -8,6 +8,8 @@ market-data files, and it does not change execution approval or reconciliation g
 
 ## Target State
 
+The embedded trading management loop owns an optional paper automatic-approval controller. Its machine/profile/strategy-bound policy defaults off and is audited locally and in the event outbox. Eligible new strategy proposals pass fresh account, data, sizing, exposure, open-order and session checks before a compare-and-set approval and normal idempotent router handoff. A durable attempt claim precedes submission; restarts never retry uncertain attempts. SQLite and PostgreSQL approval decisions support expected-status checks. Read-only post-trade TWAP jobs use a separate IB client and retain observed bars in `var/execution_benchmarks/`.
+
 The target architecture is an industrial 24x7 systematic trading platform: micro-services connected by a message queue, immutable market-data recording, columnar analytics storage, transactional order and approval state, LEAN-compatible backtesting, Interactive Brokers execution, strong portfolio rebalancing controls, and Grafana-class monitoring.
 
 The full target-state system chart and execution schedule are maintained in `docs/industrial-platform-plan.md`.

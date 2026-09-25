@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from systematic_trading.execution.ib_compat import compatible_ib_errors
+
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import UTC, date, datetime
@@ -112,6 +114,7 @@ class IbAccountSnapshotClient:
             def positionEnd(self) -> None:  # noqa: N802
                 self.positions_done.set()
 
+            @compatible_ib_errors
             def error(self, reqId: int, errorCode: int, errorString: str, advancedOrderRejectJson: str = "") -> None:  # noqa: N802
                 self.errors.append(f"{reqId}:{errorCode}:{errorString}")
 

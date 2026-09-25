@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from systematic_trading.web.trading_workspace import WORKSPACE_CSS, WORKSPACE_HTML, WORKSPACE_DIALOG, WORKSPACE_JS
+
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse, RedirectResponse
 
@@ -13,7 +15,11 @@ def root_redirect() -> RedirectResponse:
 
 @router.get("/operator", response_class=HTMLResponse, include_in_schema=False)
 def operator_dashboard() -> HTMLResponse:
-    return HTMLResponse(_OPERATOR_HTML)
+    html = _OPERATOR_HTML.replace('</style>', WORKSPACE_CSS + '</style>', 1)
+    html = html.replace('<main>', '<main>' + WORKSPACE_HTML, 1)
+    html = html.replace('<script>', WORKSPACE_DIALOG + '<script>', 1)
+    html = html.replace('    Promise.all([loadProposals(), loadDashboardData()])', WORKSPACE_JS + '\n    Promise.all([loadProposals(), loadDashboardData()])', 1)
+    return HTMLResponse(html)
 
 
 @router.get("/strategies", response_class=HTMLResponse, include_in_schema=False)
@@ -523,7 +529,7 @@ _OPERATOR_HTML = """<!doctype html>
 </head>
 <body>
   <header>
-    <h1>Trading Operator</h1>
+    <h1>SYSTEMATIC <span style="font-weight:400;color:#9caec4">/ Trading operations</span></h1>
     <div class="actions">
       <a class="button" href="/operator">Trading</a>
       <a class="button" href="/strategies">Strategies</a>
@@ -541,6 +547,7 @@ _OPERATOR_HTML = """<!doctype html>
           <button class="tab" data-filter="rejected">Rejected</button>
         </div>
       </div>
+      <div id="proposal-readiness" class="warnings" role="status"></div>
       <div class="list" id="proposal-list"></div>
       <section class="execution-summary" aria-label="Execution summary">
         <div class="metric"><label>Selected</label><strong id="metric-proposal">n/a</strong></div>
@@ -576,6 +583,26 @@ _OPERATOR_HTML = """<!doctype html>
       </section>
     </aside>
     <main>
+      <section id="reconciliation-panel" class="panel">
+        <div class="panel-head">
+          <h2>IB portfolio & reconciliation</h2>
+          <div class="actions">
+            <span id="reconciliation-checked" class="status-line">Not checked</span>
+            <button id="refresh-reconciliation-btn" type="button">Sync portfolio</button>
+            <button id="reset-to-ib-btn" class="bad" type="button" hidden>Reset local to IB</button>
+          </div>
+        </div>
+        <div class="metrics-compact" aria-label="IB reconciliation summary">
+          <div class="mini-metric"><label>Status</label><strong id="reconciliation-status">n/a</strong></div>
+          <div class="mini-metric"><label>IB Positions</label><strong id="reconciliation-ib-positions">n/a</strong></div>
+          <div class="mini-metric"><label>IB Cash</label><strong id="reconciliation-ib-cash">n/a</strong></div>
+          <div class="mini-metric"><label>Position Breaks</label><strong id="reconciliation-break-count">n/a</strong></div>
+        </div>
+        <div id="reconciliation-message" class="reconciliation-message" hidden></div>
+        <div id="broker-portfolio"></div>
+        <div id="reconciliation-table"></div>
+        <div id="reconciliation-warnings" class="warnings"></div>
+      </section>
       <section class="panel">
         <div class="panel-head">
           <h2>Automation</h2>
@@ -588,28 +615,13 @@ _OPERATOR_HTML = """<!doctype html>
           <div class="mini-metric"><label>EOD PnL</label><strong id="auto-eod-pnl">n/a</strong></div>
           <div class="mini-metric"><label>Staged Proposal</label><strong id="auto-proposal">n/a</strong></div>
         </div>
+        <p id="auto-portfolio-alignment" role="status"></p>
+        <p id="auto-portfolio-valuation" class="status-line"></p>
+        <div id="auto-portfolio-drift"></div>
         <div id="automation-events"></div>
         <div id="automation-warnings" class="warnings"></div>
       </section>
-      <section id="reconciliation-panel" class="panel">
-        <div class="panel-head">
-          <h2>IB Portfolio Reconciliation</h2>
-          <div class="actions">
-            <span id="reconciliation-checked" class="status-line">Not checked</span>
-            <button id="refresh-reconciliation-btn" type="button">Refresh IB</button>
-            <button id="reset-to-ib-btn" class="bad" type="button" hidden>Reset local to IB</button>
-          </div>
-        </div>
-        <div class="metrics-compact" aria-label="IB reconciliation summary">
-          <div class="mini-metric"><label>Status</label><strong id="reconciliation-status">n/a</strong></div>
-          <div class="mini-metric"><label>IB Positions</label><strong id="reconciliation-ib-positions">n/a</strong></div>
-          <div class="mini-metric"><label>IB Cash</label><strong id="reconciliation-ib-cash">n/a</strong></div>
-          <div class="mini-metric"><label>Position Breaks</label><strong id="reconciliation-break-count">n/a</strong></div>
-        </div>
-        <div id="reconciliation-message" class="reconciliation-message" hidden></div>
-        <div id="reconciliation-table"></div>
-        <div id="reconciliation-warnings" class="warnings"></div>
-      </section>
+
       <section class="panel">
         <div class="panel-head">
           <h2>Performance</h2>
@@ -741,10 +753,15 @@ _OPERATOR_HTML = """<!doctype html>
       return data;
     }
 
-    async function loadProposals() {
+    async function loadProposals({ background = false } = {}) {
       el("connection-status").textContent = "Connected";
-      const path = state.filter ? `/api/v1/proposals?status=${encodeURIComponent(state.filter)}` : "/api/v1/proposals";
-      state.proposals = await api(path);
+      const requestedFilter = state.filter;
+      const path = requestedFilter ? `/api/v1/proposals?status=${encodeURIComponent(requestedFilter)}` : "/api/v1/proposals";
+      const proposals = await api(path);
+      if (state.filter !== requestedFilter) return;
+      if (background && JSON.stringify(proposals) === JSON.stringify(state.proposals)) return;
+      state.proposals = proposals;
+      if (!state.proposals.length) state.selectedId = null;
       if (!state.selectedId && state.proposals.length) state.selectedId = state.proposals[0].proposal_id;
       if (state.selectedId && !state.proposals.some((item) => item.proposal_id === state.selectedId) && state.proposals.length) {
         state.selectedId = state.proposals[0].proposal_id;
@@ -755,8 +772,8 @@ _OPERATOR_HTML = """<!doctype html>
 
     async function loadDashboardData() {
       try {
-        state.reconciliation = await api("/api/v1/dashboard/reconciliation/interactive-brokers", { method: "POST" });
-        renderReconciliation(state.reconciliation);
+        const reconciliation = await api("/api/v1/dashboard/reconciliation/interactive-brokers", { method: "POST" });
+        renderReconciliation(reconciliation);
       } catch (error) {
         state.reconciliation = { has_breaks: true, unavailable: true };
         renderReconciliationUnavailable(error.message);
@@ -777,18 +794,28 @@ _OPERATOR_HTML = """<!doctype html>
     }
 
     function renderReconciliation(payload) {
+      if (!payload) return;
+      // A slower check must not restore an old warning after a newer sync.
+      if (state.reconciliation?.checked_at && payload.checked_at &&
+          Date.parse(payload.checked_at) < Date.parse(state.reconciliation.checked_at)) return;
+      state.reconciliation = payload;
+      const positions = payload.broker_positions || [];
+      el("broker-portfolio").innerHTML = positions.length ? `<table><thead><tr><th>IB holding</th><th class="num">Quantity</th><th class="num">Average cost</th><th>Currency</th></tr></thead><tbody>${positions.map(p => `<tr><td class="order-symbol">${esc(p.symbol)}</td><td class="num">${esc(p.quantity)}</td><td class="num">${fmtMoney(p.average_cost)}</td><td>${esc(p.currency)}</td></tr>`).join("")}</tbody></table>` : '<div class="empty-state"><strong>No open positions at IB</strong>Cash balances above are from the latest broker snapshot.</div>';
       const hasBreaks = Boolean(payload.has_breaks);
       const hasExecutionIssues = Boolean((payload.execution_issues || []).length);
+      const hasPendingSync = Boolean((payload.execution_sync_pending || []).length);
       el("reconciliation-panel").classList.toggle("reconciliation-break", hasBreaks);
       el("reconciliation-checked").textContent = fmtDateTime(payload.checked_at);
-      el("reconciliation-status").textContent = payload.status === "matched" ? "Matched" : payload.status === "reset_to_broker" ? "Reset to IB" : "Break";
+      el("reconciliation-status").textContent = payload.status === "matched" ? "Matched" : payload.status === "reset_to_broker" ? "Reset to IB" : payload.status === "sync_pending" ? "Syncing fills" : "Break";
       el("reconciliation-ib-positions").textContent = payload.ib_position_count ?? 0;
       el("reconciliation-ib-cash").textContent = (payload.broker_cash || []).map((row) => `${row.currency} ${fmtMoney(row.amount)}`).join(" / ") || "0";
       el("reconciliation-break-count").textContent = (payload.position_differences || []).length;
-      el("reset-to-ib-btn").hidden = !payload.requires_operator_confirmation || hasExecutionIssues;
+      el("reset-to-ib-btn").hidden = !payload.requires_operator_confirmation || hasExecutionIssues || hasPendingSync;
       el("reconciliation-message").hidden = !hasBreaks;
       el("reconciliation-message").textContent = hasExecutionIssues
         ? "Broker execution history needs review. Trading is blocked; a position reset cannot resolve these issues."
+        : hasPendingSync
+        ? "New IB fills are awaiting synchronization. New orders are paused until reconciliation catches up; existing broker orders continue. No position reset is needed."
         : hasBreaks
         ? "IB official holdings do not match the active local ledger. Trading is blocked until the break is resolved or a trader confirms reset to IB."
         : "";
@@ -807,6 +834,7 @@ _OPERATOR_HTML = """<!doctype html>
     }
 
     function renderReconciliationUnavailable(message) {
+      el("broker-portfolio").innerHTML = '<div class="empty-state">Portfolio unavailable. Sync to retrieve current IB holdings.</div>';
       el("reconciliation-panel").classList.add("reconciliation-break");
       el("reconciliation-checked").textContent = "IB unavailable";
       el("reconciliation-status").textContent = "Unavailable";
@@ -835,6 +863,28 @@ _OPERATOR_HTML = """<!doctype html>
         ? `${payload.last_eod_pnl_date} / ${fmtSignedMoney(payload.last_eod_pnl_total_cnh)}`
         : "n/a";
       el("auto-proposal").textContent = payload.last_rebalance_proposal_id || "n/a";
+      el("auto-portfolio-alignment").textContent = `Portfolio alignment: ${payload.portfolio_alignment_message || "Waiting for a fresh portfolio check."}`;
+      el("proposal-readiness").textContent = payload.portfolio_alignment_status === "blocked"
+        ? payload.portfolio_alignment_message : "";
+      const alignment = payload.portfolio_alignment || {};
+      el("auto-portfolio-valuation").textContent = `Trigger: ${(Number(payload.rebalance_drift_threshold || 0.02) * 100).toFixed(2)} percentage points per holding. Prices: ${alignment.valuation_date || "unavailable"} daily close. Targets: ${alignment.target_as_of || "unavailable"}.`;
+      const driftView = el("auto-portfolio-drift");
+      driftView.replaceChildren();
+      if ((alignment.holdings || []).length) {
+        const table = document.createElement("table");
+        const header = table.createTHead().insertRow();
+        for (const label of ["Holding", "Shares", "Actual weight", "Target weight", "Difference (pp)"]) {
+          const cell = document.createElement("th"); cell.textContent = label; header.appendChild(cell);
+        }
+        const body = table.createTBody();
+        for (const holding of alignment.holdings) {
+          const row = body.insertRow();
+          for (const value of [holding.symbol, holding.quantity, fmtPct(holding.actual_weight), fmtPct(holding.target_weight), (Number(holding.drift) * 100).toFixed(2)]) {
+            row.insertCell().textContent = value;
+          }
+        }
+        driftView.appendChild(table);
+      }
       const events = payload.events || [];
       const warningLines = [];
       if (payload.last_error) warningLines.push(payload.last_error);
@@ -1209,7 +1259,7 @@ _OPERATOR_HTML = """<!doctype html>
       el("pnl-total").textContent = fmtSignedMoney(payload.total_pnl_cnh);
       el("pnl-open-value").textContent = fmtMaybeMoney(payload.open_market_value_cnh);
       const warnings = [...(payload.warnings || [])];
-      if (payload.baseline_cutoff_at) warnings.push(`Trade history collapsed through ${String(payload.baseline_cutoff_at).slice(0, 10)}.`);
+      if (payload.baseline_cutoff_at) warnings.push(`Accounting baseline cutoff: ${new Intl.DateTimeFormat('en-GB',{timeZone:'America/New_York',dateStyle:'medium',timeStyle:'medium',hourCycle:'h23'}).format(new Date(payload.baseline_cutoff_at))} New York.`);
       if (!payload.valuation_complete) warnings.push("PnL valuation is incomplete because one or more symbols could not be marked.");
       el("pnl-warnings").textContent = warnings.join("\\n");
       renderPnlTable(payload.symbols || []);
@@ -1823,6 +1873,13 @@ _OPERATOR_HTML = """<!doctype html>
     setInterval(() => {
       loadDashboardData().catch((error) => log(error.message, true));
     }, 60000);
+    setInterval(() => {
+      if (document.visibilityState === "visible") {
+        loadProposals({ background: true }).catch((error) => log(error.message, true));
+        api("/api/v1/automation/status").then(renderAutomation).catch((error) => log(error.message, true));
+        api("/api/v1/dashboard/reconciliation/interactive-brokers").then(renderReconciliation).catch((error) => log(error.message, true));
+      }
+    }, 15000);
   </script>
 </body>
 </html>

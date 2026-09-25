@@ -171,6 +171,19 @@ class PostgresStore:
             _insert_platform_event(connection, event, created_at=now)
         return proposal
 
+    def queue_proposal_once(self, proposal: TradeProposal) -> TradeProposal:
+        with self._connect() as connection:
+            connection.execute("SELECT pg_advisory_xact_lock(hashtextextended(%s, 0))", ("proposal:" + proposal.proposal_id,))
+            row = connection.execute("SELECT payload FROM portfolio.proposals WHERE proposal_id = %s", (proposal.proposal_id,)).fetchone()
+            if row is not None:
+                return TradeProposal.model_validate(row["payload"])
+            now = datetime.now(tz=UTC)
+            _upsert_proposal(connection, proposal, updated_at=now)
+            _replace_proposal_targets(connection, proposal)
+            _replace_proposal_orders(connection, proposal)
+            _insert_platform_event(connection, proposal_created_event(proposal), created_at=now)
+        return proposal
+
     def get_proposal(self, proposal_id: str) -> TradeProposal | None:
         with self._connect() as connection:
             row = connection.execute(
@@ -192,15 +205,17 @@ class PostgresStore:
             rows = connection.execute(query, params).fetchall()
         return [TradeProposal.model_validate(row["payload"]) for row in rows]
 
-    def apply_decision(self, decision: ApprovalDecision) -> TradeProposal:
-        proposal = self.get_proposal(decision.proposal_id)
-        if proposal is None:
-            raise KeyError(decision.proposal_id)
-
-        updated = proposal.model_copy(update={"status": decision.status})
-        event = proposal_decision_event(updated, decision)
+    def apply_decision(self, decision: ApprovalDecision, *, expected_status: ProposalStatus | None = None) -> TradeProposal:
         now = datetime.now(tz=UTC)
         with self._connect() as connection:
+            row = connection.execute("SELECT payload FROM portfolio.proposals WHERE proposal_id = %s FOR UPDATE", (decision.proposal_id,)).fetchone()
+            if row is None:
+                raise KeyError(decision.proposal_id)
+            proposal = TradeProposal.model_validate(row['payload'])
+            if expected_status is not None and proposal.status != expected_status:
+                raise ValueError("Proposal changed before its approval could be recorded.")
+            updated = proposal.model_copy(update={"status": decision.status})
+            event = proposal_decision_event(updated, decision)
             _insert_platform_event(connection, event, created_at=now)
             connection.execute(
                 """
@@ -250,6 +265,20 @@ class PostgresStore:
                 self._write_broker_order_record(updated, connection=connection)
             return updated
 
+    def update_order_management(self, local_order_id: str, transform) -> BrokerOrderRecord:
+        """Serialize a lifecycle transition with fills and its outbox event."""
+        with self._connect() as connection:
+            _lock_execution_ledger(connection)
+            row = connection.execute(
+                "SELECT payload FROM execution.broker_orders WHERE local_order_id = %s FOR UPDATE", (local_order_id,),
+            ).fetchone()
+            if row is None:
+                raise KeyError(local_order_id)
+            record = BrokerOrderRecord.model_validate(row["payload"])
+            updated = transform(record)
+            self._write_broker_order_record(updated, connection=connection)
+            return updated
+
     def recover_broker_executions(
         self, request: ExecutionRecoveryRequest, *, review_token: str,
     ) -> BrokerOrderRecord:
@@ -292,7 +321,8 @@ class PostgresStore:
                 for row in rows:
                     existing = BrokerOrderRecord.model_validate(row["payload"])
                     if (not allow_resubmit or existing.status.value not in {"rejected", "cancelled"}
-                            or existing.filled_quantity > 0):
+                            or existing.filled_quantity > 0 or existing.pending_action
+                        or existing.broker_observation and str(existing.broker_observation.get("filled", "unknown")) not in {"0", "0.0"}):
                         return False
             prior = connection.execute(
                 "SELECT payload FROM execution.broker_orders WHERE local_order_id = %s FOR UPDATE", (record.local_order_id,),
@@ -301,6 +331,13 @@ class PostgresStore:
                 record = preserve_execution_evidence(BrokerOrderRecord.model_validate(prior["payload"]), record)
             order_event = order_status_changed_event(record)
             fill_event = fill_recorded_event(record)
+            if prior is not None:
+                previous_record = BrokerOrderRecord.model_validate(prior["payload"])
+                if (previous_record.filled_quantity == record.filled_quantity
+                        and previous_record.average_fill_price == record.average_fill_price
+                        and previous_record.execution_fills == record.execution_fills):
+                    fill_event = None
+
             connection.execute(
                 """
                 INSERT INTO execution.broker_orders(
@@ -331,6 +368,7 @@ class PostgresStore:
                 ON CONFLICT(local_order_id) DO UPDATE SET
                     broker_order_id = excluded.broker_order_id,
                     status = excluded.status,
+                    quantity = excluded.quantity,
                     submitted_at = COALESCE(excluded.submitted_at, execution.broker_orders.submitted_at),
                     updated_at = excluded.updated_at,
                     filled_quantity = excluded.filled_quantity,

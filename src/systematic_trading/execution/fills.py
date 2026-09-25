@@ -92,6 +92,14 @@ def _merge(record: BrokerOrderRecord, incoming: list[BrokerExecutionFill]) -> Br
 
 def preserve_execution_evidence(previous: BrokerOrderRecord, update: BrokerOrderRecord) -> BrokerOrderRecord:
     """A delayed placement acknowledgment must not erase concurrent fill sync."""
+    if update.management_revision <= previous.management_revision:
+        update = update.model_copy(update={name: getattr(previous, name) for name in (
+            "management_revision", "management_audit", "pending_action", "broker_observation",
+        )})
+        if update.broker_order_id != previous.broker_order_id:
+            update = update.model_copy(update={"broker_observation": {}, "pending_action": None})
+        elif previous.management_revision:
+            update = update.model_copy(update={"order": previous.order})
     if update.execution_recoveries != previous.execution_recoveries:
         update = update.model_copy(update={"execution_recoveries": previous.execution_recoveries,
                                            "execution_sync_issue": previous.execution_sync_issue})
@@ -105,6 +113,8 @@ def preserve_execution_evidence(previous: BrokerOrderRecord, update: BrokerOrder
         )}
         if update.status not in {BrokerOrderStatus.CANCELLED, BrokerOrderStatus.REJECTED} or previous.remaining_quantity == 0:
             fields["status"] = previous.status
+        if update.order.quantity != previous.order.quantity:
+            fields["remaining_quantity"] = max(0, update.order.quantity - previous.filled_quantity)
         fields["updated_at"] = max(_aware(previous.updated_at), _aware(update.updated_at))
         update = update.model_copy(update=fields)
     return update

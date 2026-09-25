@@ -41,6 +41,10 @@ class OrderRequest(BaseModel):
 class TradeProposal(BaseModel):
     proposal_id: str = Field(default_factory=lambda: uuid4().hex[:12])
     created_at: datetime = Field(default_factory=lambda: datetime.now(tz=UTC))
+    trigger: str = "scheduled_rebalance"
+    automation_strategy_key: str | None = None
+    target_as_of: date | None = None
+    target_source_proposal_id: str | None = None
     as_of: date
     intended_trade_date: date | None = None
     status: ProposalStatus = ProposalStatus.PENDING
@@ -112,6 +116,10 @@ class BrokerOrderRecord(BaseModel):
     remaining_quantity: int | None = Field(default=None, ge=0)
     average_fill_price: Decimal | None = Field(default=None, ge=0)
     message: str | None = None
+    broker_observation: dict = Field(default_factory=dict)
+    management_revision: int = 0
+    pending_action: dict | None = None
+    management_audit: list[dict] = Field(default_factory=list)
     # Append-only execution evidence, persisted in the existing order JSON payload.
     execution_fills: list[BrokerExecutionFill] = Field(default_factory=list)
     execution_sync_issue: str | None = None

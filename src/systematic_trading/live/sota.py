@@ -67,6 +67,8 @@ def build_sota_live_rebalance_plan(
     lookback_bars: int = 63,
     max_weight: Decimal = Decimal("0.45"),
     cash_reserve_weight: Decimal = Decimal("0.02"),
+    target_decision_date: date | None = None,
+    target_proposal: TradeProposal | None = None,
 ) -> SotaLiveRebalancePlan:
     definition = current_sota_definition()
     overlays = instantiate_overlays(definition)
@@ -91,17 +93,31 @@ def build_sota_live_rebalance_plan(
         raise ValueError("No stored price bars are available for the SOTA universe.")
     effective_intended_trade_date = intended_trade_date or next_us_trading_day(effective_decision_date)
 
-    targets, eligible_symbols = _sota_targets_as_of(
-        instruments=instruments,
-        bars_by_symbol=bars_by_symbol,
-        trade_dates=trade_dates,
-        decision_date=effective_decision_date,
-        sleeve_name=definition.sleeve_name,
-        overlays=overlays,
-        lookback_bars=lookback_bars,
-        max_weight=max_weight,
-        cash_reserve_weight=cash_reserve_weight,
-    )
+    target_date = target_decision_date or effective_decision_date
+    if target_date > effective_decision_date:
+        raise ValueError("Target decision date cannot be later than the valuation date.")
+    if target_proposal is not None:
+        if target_proposal.sleeve != definition.sleeve_name or not target_proposal.targets:
+            raise ValueError("Active target proposal must belong to the current strategy and contain targets.")
+        target_date = target_proposal.target_as_of or target_proposal.as_of
+        if target_date > effective_decision_date:
+            raise ValueError("Active strategy targets are future-dated.")
+        targets = target_proposal.targets
+        eligible_symbols = sorted(target.symbol for target in targets)
+        if any(target.symbol not in instruments or target.target_weight < 0 for target in targets) or sum(target.target_weight for target in targets) > 1:
+            raise ValueError("Active strategy target weights are invalid.")
+    else:
+        targets, eligible_symbols = _sota_targets_as_of(
+            instruments=instruments,
+            bars_by_symbol={symbol: [bar for bar in bars if bar.trade_date <= target_date] for symbol, bars in bars_by_symbol.items()},
+            trade_dates=[day for day in trade_dates if day <= target_date],
+            decision_date=target_date,
+            sleeve_name=definition.sleeve_name,
+            overlays=overlays,
+            lookback_bars=lookback_bars,
+            max_weight=max_weight,
+            cash_reserve_weight=cash_reserve_weight,
+        )
     prices = _latest_prices(bars_by_symbol, effective_decision_date)
     fx_to_cnh = _latest_fx_to_cnh(
         store=store,
@@ -132,6 +148,8 @@ def build_sota_live_rebalance_plan(
         targets=targets,
     )
     proposal = attach_execution_deadline(proposal, broker.settings)
+    proposal = proposal.model_copy(update={"target_as_of": target_date,
+        "target_source_proposal_id": target_proposal.proposal_id if target_proposal else None})
     validation_issues = broker.validate_orders(proposal.orders)
     queued = False
     if queue:

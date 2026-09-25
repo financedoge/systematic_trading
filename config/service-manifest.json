@@ -190,7 +190,7 @@
     },
     {
       "service_id": "ib_tws_api",
-      "display_name": "IB TWS Paper API",
+      "display_name": "IB TWS / Gateway Paper API",
       "service_type": "worker",
       "implementation_status": "active",
       "required": true,

@@ -281,8 +281,8 @@ def test_ib_order_translation_disables_unsupported_legacy_attributes() -> None:
         )
     )
 
-    assert order.eTradeOnly is False
-    assert order.firmQuoteOnly is False
+    assert getattr(order, "eTradeOnly", False) is False
+    assert getattr(order, "firmQuoteOnly", False) is False
     assert order.lmtPrice == 100.13
 
 

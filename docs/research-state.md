@@ -14,6 +14,8 @@ Use `.agents/skills/continuous-research-loop.md` for recurring challenger resear
 
 ## Current SOTA
 
+Paper operations now include separately tagged initial-allocation and 2 percentage point drift-maintenance proposals. Monthly signal calculation is preserved; intraday TWAP timing and additional turnover are not represented in the existing monthly benchmark. Keep attribution separate and validate execution/cost effects before live promotion.
+
 - Name: SOTA: price/volume top 6 + technical tree + relative/adaptive
 - Promoted on: 2026-05-26
 - Registry: `systematic_trading.research.current_sota_definition`

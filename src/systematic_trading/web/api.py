@@ -51,6 +51,8 @@ from systematic_trading.execution.window import (
     expire_due_proposals,
     proposal_is_expired,
 )
+from systematic_trading.execution.locks import serialized_orders
+from systematic_trading.live.auto_approval import PaperApprovalPolicy, PaperApprovalUpdate
 from systematic_trading.live import (
     AutomationAlertNotifier,
     LiveAccountSnapshotInput,
@@ -406,6 +408,35 @@ def list_data_sources(request: Request) -> list[DataSourceManifest]:
     return _provider_registry(request).manifests()
 
 
+@router.get("/automation/paper-approval", response_model=PaperApprovalPolicy)
+def paper_approval_status(request: Request):
+    service = getattr(request.app.state, "trading_management_service", None)
+    return service.auto_approval.status() if service else PaperApprovalPolicy(message="Trading management service is disabled.")
+
+
+@router.put("/automation/paper-approval", response_model=PaperApprovalPolicy)
+def update_paper_approval(change: PaperApprovalUpdate, request: Request):
+    service = getattr(request.app.state, "trading_management_service", None)
+    if service is None or (change.enabled and not service.status().running):
+        raise HTTPException(status_code=409, detail="Start the paper trading management service first.")
+    try:
+        return service.auto_approval.configure(change)
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+class OrderAnalyticsInput(BaseModel):
+    local_order_ids: list[str] = Field(max_length=100)
+
+
+@router.post("/execution/interactive-brokers/order-analytics")
+def order_analytics(selection: OrderAnalyticsInput, request: Request):
+    selected = set(selection.local_order_ids)
+    service = request.app.state.twap_benchmarks
+    return {record.local_order_id: service.get(record) for record in _store(request).list_broker_order_records()
+            if record.local_order_id in selected and record.filled_quantity > 0 and record.environment == OrderEnvironment.PAPER}
+
+
 @router.get("/execution/interactive-brokers/profiles", response_model=list[BrokerConnectionProfile])
 def broker_profiles(request: Request) -> list[BrokerConnectionProfile]:
     return _broker(request).connection_profiles()
@@ -420,6 +451,7 @@ def list_broker_order_records(
 
 
 @router.post("/execution/interactive-brokers/proposals/{proposal_id}/submit", response_model=BrokerSubmissionResult)
+@serialized_orders
 def submit_proposal_to_ib(
     proposal_id: str,
     submission: BrokerSubmissionInput,
@@ -716,6 +748,7 @@ def _run_dashboard_reconciliation(
             account_snapshot_client=account_client,
             record_pnl_reset_baseline=record_pnl_reset_baseline,
             confirm_paper_reset=confirm_paper_reset,
+            sync_new_fills=True,
         )
     except Exception as exc:
         raise HTTPException(status_code=502, detail=f"Could not reconcile IB paper account: {exc}") from exc
@@ -975,7 +1008,7 @@ def list_dashboard_pnl_snapshots(
     request: Request,
     limit: int = Query(default=100, ge=1, le=1000),
 ) -> list[PnLSnapshot]:
-    return _store(request).list_pnl_snapshots(limit=limit)
+    return _active_pnl_snapshots(_store(request), limit)
 
 
 @router.post("/dashboard/pnl/collapse", response_model=PnLBaseline)
@@ -1094,12 +1127,14 @@ def queue_risk_parity(request_body: RiskParityPreviewRequest, request: Request) 
 
 
 @router.get("/proposals", response_model=list[TradeProposal])
+@serialized_orders
 def list_proposals(request: Request, status: ProposalStatus | None = Query(default=None)) -> list[TradeProposal]:
     expire_due_proposals(_store(request), _settings(request))
     return _store(request).list_proposals(status)
 
 
 @router.post("/proposals/{proposal_id}/decisions", response_model=TradeProposal)
+@serialized_orders
 def decide_proposal(proposal_id: str, decision: ProposalDecisionInput, request: Request) -> TradeProposal:
     if decision.status not in {ProposalStatus.APPROVED, ProposalStatus.REJECTED}:
         raise HTTPException(status_code=400, detail="A decision must approve or reject the proposal.")
@@ -1119,6 +1154,7 @@ def decide_proposal(proposal_id: str, decision: ProposalDecisionInput, request: 
 
 
 @router.post("/proposals/{proposal_id}/approve-and-submit", response_model=ProposalApprovalSubmissionResult)
+@serialized_orders
 def approve_and_submit_proposal(
     proposal_id: str,
     approval: ProposalApprovalSubmitInput,
@@ -1893,7 +1929,7 @@ def _record_trade_time(record: BrokerOrderRecord) -> datetime:
 
 def _pnl_comparison_history(store: TradingStore, limit: int) -> list[DashboardPnlComparisonPoint]:
     points: list[DashboardPnlComparisonPoint] = []
-    for actual in store.list_pnl_snapshots(limit=limit):
+    for actual in _active_pnl_snapshots(store, limit):
         theoretical = build_reference_pnl_snapshot(store, as_of=actual.as_of.date())
         points.append(
             DashboardPnlComparisonPoint(
@@ -1905,6 +1941,16 @@ def _pnl_comparison_history(store: TradingStore, limit: int) -> list[DashboardPn
         )
     points.sort(key=lambda point: point.as_of)
     return points
+
+
+def _active_pnl_snapshots(store: TradingStore, limit: int):
+    baseline = store.latest_pnl_baseline()
+    reset_at = baseline.account_reset_at if baseline else None
+    if baseline and not reset_at and baseline.source == "ib_broker_authoritative_reset":
+        reset_at = baseline.cutoff_at
+    return [snapshot for snapshot in store.list_pnl_snapshots(limit=limit)
+            if reset_at is None or (snapshot.as_of > reset_at and snapshot.baseline_cutoff_at is not None
+                                   and snapshot.baseline_cutoff_at >= reset_at)]
 
 
 def _daily_slippage_points(rows: list[DashboardExecutionSlippageRow]) -> list[DashboardSlippagePoint]:
@@ -1973,3 +2019,41 @@ def _dedupe_messages(messages: list[str]) -> list[str]:
         seen.add(message)
         deduped.append(message)
     return deduped
+
+
+from systematic_trading.execution.management import (
+    OrderActionInput, manage_order, review_token, sync_orders,
+)
+
+
+@router.get("/execution/interactive-brokers/workspace")
+def order_workspace(request: Request):
+    records = _store(request).list_broker_order_records()
+    return {"records": [dict(record.model_dump(mode="json"), review_token=review_token(record))
+                        for record in records],
+            "snapshot": getattr(request.app.state, "gateway_order_snapshot", None),
+            "client_id": _settings(request).ib_client_id}
+
+
+@router.post("/execution/interactive-brokers/orders/sync")
+def synchronize_gateway_orders(request: Request):
+    try:
+        snapshot = sync_orders(_settings(request), _store(request),
+                              getattr(request.app.state, "ib_management_client", None))
+        request.app.state.gateway_order_snapshot = snapshot
+        return snapshot
+    except (RuntimeError, TimeoutError, ValueError) as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+
+@router.post("/execution/interactive-brokers/orders/{local_order_id}/{action}")
+def manage_gateway_order(local_order_id: str, action: str, payload: OrderActionInput, request: Request):
+    try:
+        return manage_order(_settings(request), _store(request), local_order_id, action, payload,
+                            getattr(request.app.state, "ib_management_client", None))
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail="Order not found") from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    except (RuntimeError, TimeoutError) as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc

@@ -18,7 +18,7 @@ def test_refresh_sota_market_data_fetches_missing_bars_and_fx(tmp_path) -> None:
             "TLT": [_bar(date(2026, 5, 19), Decimal("90"))],
         }
     )
-    fx_provider = _FakeMarketDataProvider({"CNY=X": [_bar(date(2026, 5, 19), Decimal("7.21"))]})
+    fx_provider = _FakeMarketDataProvider({"USD/CNH": [_bar(date(2026, 5, 19), Decimal("7.21"))]})
 
     result = refresh_sota_market_data(
         store=store,

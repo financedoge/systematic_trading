@@ -71,6 +71,7 @@ class IBPaperReconciliationReport(BaseModel):
     unmatched_ib_fills: list[IBUnmatchedFill] = Field(default_factory=list)
     position_differences: list[PositionDifference] = Field(default_factory=list)
     execution_issues: list[str] = Field(default_factory=list)
+    execution_sync_pending: list[str] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)
     suggested_actions: list[str] = Field(default_factory=list)
     pnl_reset_baseline_id: str | None = None
@@ -79,20 +80,22 @@ class IBPaperReconciliationReport(BaseModel):
     @computed_field(return_type=bool)
     @property
     def has_breaks(self) -> bool:
-        return bool(self.execution_issues) or not self.reset_applied and bool(
+        return bool(self.execution_issues or self.execution_sync_pending) or not self.reset_applied and bool(
             self.unmatched_local_orders or self.unmatched_ib_fills or self.position_differences
         )
 
     @computed_field(return_type=bool)
     @property
     def requires_operator_confirmation(self) -> bool:
-        return self.has_breaks
+        return self.has_breaks and not self.execution_sync_pending
 
     @computed_field(return_type=str)
     @property
     def status(self) -> str:
         if self.execution_issues:
             return "break"
+        if self.execution_sync_pending:
+            return "sync_pending"
         if self.reset_applied:
             return "reset_to_broker"
         return "break" if self.has_breaks else "matched"
@@ -107,20 +110,35 @@ def reconcile_ib_paper_account(
     as_of: date | None = None,
     record_pnl_reset_baseline: bool = False,
     confirm_paper_reset: bool = False,
+    sync_new_fills: bool = False,
 ) -> IBPaperReconciliationReport:
     checked_at = datetime.now(tz=UTC)
-    snapshot_result = fetch_and_write_account_snapshot(
-        settings=settings,
-        client=account_snapshot_client,
-        as_of=as_of or checked_at.date(),
-        sota_universe_only=False,
-    )
     profile = InteractiveBrokersAdapter(settings).profile_for(OrderEnvironment.PAPER).model_copy(
         update={"client_id": settings.ib_reconciliation_client_id or settings.ib_client_id + 60}
     )
     fill_client = execution_client or IbApiExecutionSyncClient()
     ib_fills = fill_client.fetch_fills(profile)
     all_history = store.list_broker_order_records()
+    if sync_new_fills:
+        # Use this exact broker batch, not a separate earlier query. New TWAP
+        # executions can arrive between the periodic sync and reconciliation.
+        batches: dict[str, list[BrokerExecutionFill]] = {}
+        paper_history = [r for r in all_history if r.environment == OrderEnvironment.PAPER]
+        for fill in ib_fills:
+            record = match_execution(paper_history, fill)
+            if record is not None:
+                batches.setdefault(record.local_order_id, []).append(fill)
+        for local_order_id, fills in batches.items():
+            # Same atomic identity/correction/gap validation and audit/outbox as
+            # normal fill sync. A genuine conflict remains a durable block.
+            store.apply_broker_execution_fills(local_order_id, fills)
+        all_history = store.list_broker_order_records()
+    snapshot_result = fetch_and_write_account_snapshot(
+        settings=settings,
+        client=account_snapshot_client,
+        as_of=as_of or checked_at.date(),
+        sota_universe_only=False,
+    )
     local_history = [
         record
         for record in all_history
@@ -130,8 +148,10 @@ def reconcile_ib_paper_account(
     baseline_cutoff = _aware(baseline.cutoff_at) if baseline is not None else None
     execution_issues = [f"{record.order_ref}: {record.execution_sync_issue}"
                         for record in local_history if record.execution_sync_issue]
+    execution_sync_pending: list[str] = []
     # Reconciliation also detects newly changed evidence when called without a
-    # preceding sync. It does not silently import fills or clear an existing block.
+    # preceding sync. Diagnostic callers keep synchronization explicit, and no
+    # caller can clear an existing durable conflict through reconciliation.
     evidence_by_record: dict[str, list[BrokerExecutionFill]] = {}
     for fill in ib_fills:
         record = match_execution(local_history, fill)
@@ -145,7 +165,7 @@ def reconcile_ib_paper_account(
                 store.apply_broker_execution_fills(record.local_order_id, evidence)
                 execution_issues.append(f"{record.order_ref}: {checked.execution_sync_issue}")
             elif checked.execution_fills != record.execution_fills:
-                execution_issues.append(f"{record.order_ref}: broker executions await durable synchronization.")
+                execution_sync_pending.append(f"{record.order_ref}: broker executions await durable synchronization.")
     local_records = []
     for record in local_history:
         if record.execution_fills:
@@ -187,6 +207,10 @@ def reconcile_ib_paper_account(
         warnings.extend(execution_issues)
         suggested_actions = [action for action in suggested_actions if action != "No reconciliation breaks detected."]
         suggested_actions.append("Resolve execution-history issues through audited recovery; resetting positions does not clear them.")
+    if execution_sync_pending:
+        warnings.extend(execution_sync_pending)
+        suggested_actions = [action for action in suggested_actions if action != "No reconciliation breaks detected."]
+        suggested_actions.append("Synchronize new broker fills and reconcile again; no position reset is needed for synchronization lag.")
     baseline_id: str | None = None
     reset_applied = False
     if record_pnl_reset_baseline:
@@ -194,6 +218,8 @@ def reconcile_ib_paper_account(
             raise ValueError("--confirm-paper-reset is required before writing a PnL reset baseline.")
         if execution_issues:
             raise ValueError("Resolve execution-history issues before resetting the PnL baseline.")
+        if execution_sync_pending:
+            raise ValueError("Synchronize pending broker executions before resetting the PnL baseline.")
         parent_baseline_id = baseline.baseline_id if baseline else None
         baseline = _broker_pnl_baseline(
             store=store,
@@ -229,6 +255,7 @@ def reconcile_ib_paper_account(
         unmatched_ib_fills=unmatched_ib,
         position_differences=position_differences,
         execution_issues=_dedupe(execution_issues),
+        execution_sync_pending=_dedupe(execution_sync_pending),
         warnings=_dedupe(warnings),
         suggested_actions=_dedupe(suggested_actions),
         pnl_reset_baseline_id=baseline_id,

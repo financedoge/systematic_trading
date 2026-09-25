@@ -55,7 +55,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--port", type=int, default=None)
     parser.add_argument("--client-id", type=int, default=None)
     parser.add_argument("--database", default=None, help="SQLite database path. Defaults to ST_DATABASE_PATH or settings.")
-    parser.add_argument("--storage-policy", default="config/market-data-storage.json")
+    parser.add_argument("--storage-policy", default=None, help="Defaults to ST_MARKET_DATA_STORAGE_POLICY_PATH.")
     parser.add_argument("--source-policy", default="config/market-data-recorder-sources.json")
     parser.add_argument("--state-path", default=None)
     parser.add_argument("--pid-path", default=None)
@@ -68,7 +68,7 @@ def main(argv: list[str] | None = None) -> int:
 
     settings = AppSettings()
     source_policy = load_recorder_source_policy(_resolve_repo_path(args.source_policy))
-    storage_policy = load_storage_policy(_resolve_repo_path(args.storage_policy))
+    storage_policy = load_storage_policy(_resolve_repo_path(args.storage_policy or settings.market_data_storage_policy_path))
     symbols = _resolve_symbols(args, source_policy)
     source_policy.validate_line_budget(symbols)
     database_path = _resolve_path(args.database, settings.database_path)

@@ -44,10 +44,15 @@ def refresh_sota_market_data(
     fallback_source: str = "ib",
     allow_stale_carry_forward: bool = False,
     carry_forward_max_calendar_days: int = 4,
+    fx_currencies: Sequence[Currency] = (Currency.USD,),
+    repair_history: bool = True,
 ) -> MarketDataRefreshResult:
     """Refresh observed data only; legacy carry-forward options never authorize synthetic writes."""
     price_provider = provider or YahooChartProvider(adjust_prices=True)
-    currency_provider = fx_provider or YahooChartProvider()
+    if fx_provider is None:
+        from systematic_trading.config import AppSettings
+        from systematic_trading.data.ib_fx import IbFxDailyBarProvider
+        fx_provider = IbFxDailyBarProvider(AppSettings())
     configured_instruments = instruments_for_definition(current_sota_definition())
     refresh_symbols = sorted({symbol.upper() for symbol in (symbols or configured_instruments)})
     warnings: list[str] = []
@@ -59,7 +64,7 @@ def refresh_sota_market_data(
         instrument = configured_instruments.get(symbol)
         if instrument is not None:
             store.upsert_instrument(instrument)
-        start_date = _next_missing_price_date(store, symbol, target_date)
+        start_date = _next_missing_price_date(store, symbol, target_date, repair_history=repair_history)
         if start_date is None:
             continue
         bars, fetch_warnings = _fetch_price_bars(
@@ -88,31 +93,14 @@ def refresh_sota_market_data(
             bars_upserted += symbol_bars_upserted
             symbols_updated += 1
 
-    fx_rates_upserted = 0
-    carried_forward_fx_rates = 0
-    fx_start = _next_missing_fx_date(store, Currency.USD, target_date)
-    if fx_start is not None:
-        try:
-            fx_bars = currency_provider.fetch_daily_bars("CNY=X", fx_start, target_date)
-        except Exception as exc:
-            warnings.append(f"USD/CNH market data refresh failed for {fx_start} to {target_date}: {exc}")
-        else:
-            for bar in fx_bars:
-                if not (fx_start <= bar.trade_date <= target_date):
-                    continue
-                store.upsert_fx_rate(
-                    FXRate(
-                        rate_date=bar.trade_date,
-                        base_currency=Currency.USD,
-                        quote_currency=Currency.CNH,
-                        rate=bar.close,
-                    )
-                )
-                fx_rates_upserted += 1
-            if not fx_rates_upserted:
-                warnings.append(f"USD/CNH: no new FX bars returned for {fx_start} to {target_date}.")
-        if allow_stale_carry_forward and _latest_fx_date(store, Currency.USD) != target_date:
-            warnings.append("USD/CNH: stale FX was not carried forward; synthetic rates cannot establish trading readiness.")
+    from systematic_trading.live.fx import refresh_required_fx
+    fx_result = refresh_required_fx(store=store, target_date=target_date, currencies=fx_currencies, provider=fx_provider)
+    warnings.extend(fx_result.warnings)
+    if allow_stale_carry_forward:
+        warnings.extend(f"{currency}/CNH: stale FX was not carried forward; synthetic rates cannot establish trading readiness."
+            for currency, latest in fx_result.latest_dates.items() if latest != target_date)
+    latest_dates = list(fx_result.latest_dates.values())
+    complete_fx_date = min(latest_dates) if latest_dates and all(latest_dates) else None
 
     return MarketDataRefreshResult(
         target_date=target_date,
@@ -120,11 +108,11 @@ def refresh_sota_market_data(
         symbols_requested=len(refresh_symbols),
         symbols_updated=symbols_updated,
         bars_upserted=bars_upserted,
-        fx_rates_upserted=fx_rates_upserted,
+        fx_rates_upserted=fx_result.rates_upserted,
         carried_forward_price_bars=carried_forward_price_bars,
-        carried_forward_fx_rates=carried_forward_fx_rates,
+        carried_forward_fx_rates=0,
         latest_bar_date=_complete_bar_date(store, refresh_symbols),
-        latest_fx_date=_latest_fx_date(store, Currency.USD),
+        latest_fx_date=complete_fx_date,
         warnings=_dedupe(warnings),
     )
 
@@ -197,9 +185,9 @@ def _fetch_fallback_bars(
     return fallback_bars, f"{fallback_source} fallback returned {len(eligible_bars)} bar(s)."
 
 
-def _next_missing_price_date(store: MarketDataStore, symbol: str, target_date: date) -> date | None:
+def _next_missing_price_date(store: MarketDataStore, symbol: str, target_date: date, *, repair_history: bool = True) -> date | None:
     bars = store.list_price_bars(symbol)
-    suspect = [bar.trade_date for bar in bars if bar.volume == 0 and bar.trade_date <= target_date]
+    suspect = [bar.trade_date for bar in bars if bar.volume == 0 and bar.trade_date <= target_date and (repair_history or bar.trade_date == target_date)]
     if suspect:
         return min(suspect)
     if bars and bars[-1].trade_date >= target_date:
