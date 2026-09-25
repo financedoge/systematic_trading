@@ -42,6 +42,9 @@ $env:PYTHONPATH = Join-Path $RepoRoot "src"
 $env:ST_TRANSACTIONAL_STORE_BACKEND = $TransactionalStoreBackend
 $env:ST_MARKET_DATA_STORE_BACKEND = $MarketDataStoreBackend
 
+& $Python (Join-Path $ScriptDir "sync_databases.py") guard
+if ($LASTEXITCODE -ne 0) { throw "NAS handoff is not ready. Start through start_local_platform.ps1." }
+
 function Test-ProcessOwnsPort {
     param(
         [int]$ProcessId,

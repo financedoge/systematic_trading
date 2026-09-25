@@ -1,0 +1,8 @@
+{
+  "enabled": true,
+  "root": "\\\\192.168.1.32\\Public\\systematic-trading",
+  "interval_seconds": 300,
+  "postgres": true,
+  "postgres_bin": "",
+  "sqlite_paths": ["var/systematic_trading.db"]
+}

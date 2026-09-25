@@ -1,5 +1,11 @@
 # Architecture
 
+Local two-PC operation uses the [NAS database handoff protocol](database-sync.md):
+one active workspace, local PostgreSQL/SQLite engines, verified immutable NAS
+snapshots, startup conflict detection, and a final stopped-service backup before
+ownership release. It does not replicate ClickHouse, broker configuration or raw
+market-data files, and it does not change execution approval or reconciliation gates.
+
 ## Target State
 
 The target architecture is an industrial 24x7 systematic trading platform: micro-services connected by a message queue, immutable market-data recording, columnar analytics storage, transactional order and approval state, LEAN-compatible backtesting, Interactive Brokers execution, strong portfolio rebalancing controls, and Grafana-class monitoring.

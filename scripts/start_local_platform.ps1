@@ -249,6 +249,23 @@ try {
     Assert-PostgresReady
     Write-OperationLog -Event "postgres_ready" -Message "Postgres readiness check passed." -Details @{ host = "127.0.0.1"; port = 5432 }
 
+    & $Python ".\scripts\sync_databases.py" prepare
+    if ($LASTEXITCODE -ne 0) { throw "NAS database handoff failed; application services were not started." }
+    $syncConfig = Get-Content (Join-Path $RepoRoot "config\database-sync.json") -Raw | ConvertFrom-Json
+    if ($syncConfig.enabled) {
+        $syncProcess = Start-Process -FilePath $Python -ArgumentList @(".\scripts\sync_databases.py", "worker") `
+            -WorkingDirectory $RepoRoot -WindowStyle Hidden `
+            -RedirectStandardOutput (Join-Path $LogDir "database_sync.out.log") `
+            -RedirectStandardError (Join-Path $LogDir "database_sync.err.log") -PassThru
+        $syncDeadline = (Get-Date).AddSeconds(15)
+        while (-not (Test-Path (Join-Path $RunDir "database_sync.pid"))) {
+            if ($syncProcess.HasExited -or (Get-Date) -gt $syncDeadline) {
+                throw "NAS backup worker failed to start; check var/log/database_sync.err.log."
+            }
+            Start-Sleep -Milliseconds 200
+        }
+    }
+
     Update-IbTwsHealthState
 
     if (-not $SkipClickHouse) {
