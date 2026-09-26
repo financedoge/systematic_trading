@@ -9,10 +9,16 @@ from typing import Literal
 
 from pydantic import BaseModel, Field, model_validator
 
+from systematic_trading.research.flow_concentration import FlowConcentrationSpec
+from systematic_trading.research.constituent_signals import ConstituentOverlaySpec
+
 
 class BacktestRunSpec(BaseModel):
     schema_version: Literal[1] = 1
-    strategy: Literal['sota', 'benchmark'] = 'sota'
+    strategy: Literal['sota', 'benchmark', 'sota_flow', 'sota_constituents'] = 'sota'
+    flow_overlay: FlowConcentrationSpec | None = None
+    constituent_overlay: ConstituentOverlaySpec | None = None
+    base_tree_model_schedule: bool = False
     mode: Literal['targets', 'shared'] = 'shared'
     start_date: str
     end_date: str
@@ -46,6 +52,12 @@ class BacktestRunSpec(BaseModel):
 
     @model_validator(mode='after')
     def validate_economics(self):
+        if self.base_tree_model_schedule and self.strategy == 'benchmark':
+            raise ValueError('A benchmark cannot use a tree schedule')
+        if (self.strategy == 'sota_constituents') != (self.constituent_overlay is not None):
+            raise ValueError('sota_constituents requires a constituent overlay; other strategies must not have one')
+        if (self.strategy == 'sota_flow') != (self.flow_overlay is not None):
+            raise ValueError('sota_flow requires a flow overlay; other strategies must not have one')
         if not date.fromisoformat(self.warmup_start) < date.fromisoformat(self.start_date) <= date.fromisoformat(self.end_date):
             raise ValueError('Require warmup < start <= end')
         for name in ('initial_cash_cnh', 'target_tolerance', 'money_tolerance_cnh'):

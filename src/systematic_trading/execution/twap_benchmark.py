@@ -115,6 +115,10 @@ class TwapBenchmarkService:
         self.pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='twap-benchmark')
         self.lock, self.pending = Lock(), set()
         self.cache = {}
+        self.analytics = None
+        if getattr(settings, 'analytics_enabled', False) and settings.market_data_store_backend == 'clickhouse':
+            from systematic_trading.market_data.analytics_store import AnalyticsStore
+            self.analytics = AnalyticsStore.from_settings(settings)
 
     def get(self, record, *, now=None):
         now = now or datetime.now(UTC)
@@ -133,6 +137,20 @@ class TwapBenchmarkService:
         path = self.settings.data_dir / 'execution_benchmarks' / f'{key}.json'
         with self.lock:
             cached = self.cache.get(key)
+            if cached is None and self.analytics is not None:
+                try:
+                    saved = self.analytics.document('execution-benchmarks', key)
+                    if saved:
+                        candidate = json.loads(saved[0]['payload'])
+                        if (candidate['status'], candidate['symbol'], candidate['window_start'], candidate['window_end']) != ('ready', record.order.symbol, start.isoformat(), end.isoformat()):
+                            raise ValueError('Published benchmark identity does not match this order.')
+                        datetime.fromisoformat(candidate['observed_at'])
+                        calculate_twap(candidate['bars'], start, end)
+                        cached = self.cache[key] = candidate
+                except (RuntimeError, OSError, ValueError, KeyError, TypeError):
+                    # Original immutable observation is retained for recovery;
+                    # it undergoes the same identity/coverage checks below.
+                    cached = None
             if cached is None and path.exists():
                 try:
                     cached = json.loads(path.read_text(encoding='utf-8'))

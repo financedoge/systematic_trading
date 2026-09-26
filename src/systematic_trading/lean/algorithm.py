@@ -68,6 +68,8 @@ class FrozenPortfolioAlgorithm(QCAlgorithm):  # noqa: F405
         self.expected_decisions = json.loads((self.root / 'decisions.json').read_text())
         self.quotes = json.loads((self.root / 'quotes.json').read_text())
         self.rows = json.loads((self.root / 'bars.json').read_text())
+        self.constituent_features = json.loads((self.root / 'constituent_features.json').read_text()) if self.spec.constituent_overlay else None
+        self.base_tree_models = json.loads((self.root / 'base_tree_models.json').read_text()) if self.spec.base_tree_model_schedule else None
         self.instruments = {k: v.model_copy(update={'quote_currency': Currency.CNH}) for k, v in
                             instruments_for_definition(current_sota_definition()).items()}
         self.set_time_zone(TimeZones.NEW_YORK)  # noqa: F405
@@ -87,6 +89,7 @@ class FrozenPortfolioAlgorithm(QCAlgorithm):  # noqa: F405
             self.symbols_by_name[name] = security.symbol
         self.nav_rows, self.fills, self.decisions = [], [], {}
         self.processed = set()
+        self.flow_state = {}
 
     def on_data(self, data):
         day = self.time.date().isoformat()
@@ -104,7 +107,10 @@ class FrozenPortfolioAlgorithm(QCAlgorithm):  # noqa: F405
             expected = self.expected_decisions[day]
             if self.spec.mode == 'shared':
                 targets = targets_for_day(self.rows, datetime.fromisoformat(expected['signal_session']).date(),
-                                          benchmark=self.spec.strategy == 'benchmark', lookback_bars=self.spec.lookback_bars)
+                                          benchmark=self.spec.strategy == 'benchmark', lookback_bars=self.spec.lookback_bars,
+                                          flow_overlay=self.spec.flow_overlay, flow_state=self.flow_state,
+                                          constituent_overlay=self.spec.constituent_overlay,
+                                          constituent_features=self.constituent_features, base_tree_models=self.base_tree_models)
             else:
                 targets = [AllocationTarget.model_validate(t) for t in expected['targets']]
             self.decisions[day] = dict(expected, targets=[t.model_dump(mode='json') for t in targets])

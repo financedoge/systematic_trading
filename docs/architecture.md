@@ -1,5 +1,14 @@
 # Architecture
 
+The governed historical-price research layer is documented in
+`docs/price-governance-2026-09-26.md`. Immutable batches in
+`market_data.governed_daily` and `market_data.governance_comparisons` retain
+explicit adjustment bases, source lineage and overlap/gap audits. ClickHouse
+analytics publications commit a catalog only after complete row/document hash
+verification. The read-only Market Data governance API serves committed
+workspace-scoped batches. This layer does not change the production daily-bar
+reader, broker execution contracts or strategy selection.
+
 Local two-PC operation uses the [NAS database handoff protocol](database-sync.md):
 one active workspace, local PostgreSQL/SQLite engines, verified immutable NAS
 snapshots, startup conflict detection, and a final stopped-service backup before
@@ -15,6 +24,11 @@ The target architecture is an industrial 24x7 systematic trading platform: micro
 The full target-state system chart and execution schedule are maintained in `docs/industrial-platform-plan.md`.
 
 ## Current State
+
+Analytical histories and prepared Strategy/account performance responses use a
+verified ClickHouse projection worker. Requests read the last complete publication;
+source changes refresh it in the background. PostgreSQL retains transactional
+authority and original files remain replay evidence. See [analytical migration](analytics-migration.md).
 
 The current implementation is the v0 control plane and research harness. It is intentionally Python-first, local-first, and paper-first while the contracts, tests, and operator workflow are hardened.
 

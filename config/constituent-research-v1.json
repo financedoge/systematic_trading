@@ -1,0 +1,43 @@
+{
+  "version": "constituent-research-v1",
+  "start": "2019-10-01",
+  "end": "2026-09-24",
+  "warmup_start": "2018-07-02",
+  "image": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
+  "stock_root": "D:/systematic_trading_data/research/underlying-sector-hhi-20260926-v1",
+  "etf_snapshot": "D:/systematic_trading_data/lean/research/flow-concentration-20260926-v3/snapshot",
+  "mapping": "Historical ITOT US stocks -> SPY US equity proxy only; not exact SPY constituents",
+  "primary": "composite",
+  "feature_window": 211,
+  "feature_rules": {
+    "concentration": "Sector dollar-volume HHI; causal EMA10; lag10 second difference / prior126 derivative std; +/-0.5 deadband; positive acceleration increases SPY",
+    "breadth": "Equal-count fraction above trailing126 adjusted-close mean; above55% bullish, below45% bearish",
+    "breadth_change": "20-session change in breadth using same cohort; +/-3 percentage point deadband",
+    "participation": "Mean stock63-session momentum minus lagged holding-value weighted momentum; +/-2 percentage point deadband",
+    "signed_activity": "21-session sum(sign(stock adjusted daily return)*provider close*volume)/sum(close*volume); +/-5% deadband; activity proxy, not net flows",
+    "composite": "Equal mean of five fixed ternary signals; no outcome-fitted weights",
+    "price_control": "SPY63-session return +/-2%; same coverage gate and position sizing"
+  },
+  "coverage": "One fixed complete-211-session stock subset within each dated cohort; excluded names retain snapshot value/name denominator. Whole-cohort >=95% value and >=70% names. Missing means no overlay, never exit.",
+  "timing": "Prior-session close only; monthly existing SOTA rebalance at next open. Holdings available after modeled45calendar days;60day sensitivity. Actual historical vintages unknown.",
+  "allocation": "Adjust existing positive SPY weight by score*15%, at most3pp; never create SPY if absent. Offset among other selected ETFs proportional to weights subject to3pp and45% bounds. Preserve gross/cash; no leverage.",
+  "trials": {
+    "sota": null,
+    "concentration": {"signal": "concentration"},
+    "breadth": {"signal": "breadth"},
+    "breadth_change": {"signal": "breadth_change"},
+    "participation": {"signal": "participation"},
+    "signed_activity": {"signal": "signed_activity"},
+    "composite": {"signal": "composite"},
+    "price_control": {"signal": "price_control"},
+    "composite_half": {"signal": "composite", "relative_tilt": 0.075, "active_cap": 0.015},
+    "composite_lag60": {"signal": "composite", "holdings_lag_days": 60},
+    "composite_coverage90": {"signal": "composite", "min_value_coverage": 0.9}
+  },
+  "stresses": {
+    "cost45bps": {"transaction_cost_bps": "25", "slippage_bps": "20"},
+    "delay1": {"execution_delay_sessions": 1}
+  },
+  "inference": "Information ratio = sqrt252*mean(daily challenger minus SOTA)/std(active); Sharpe uses zero cash hurdle, CNH accounting. Paired63/126-session block bootstrap,2000replicates; family-adjust max-t over all10 challengers. No untouched holdout: pre2023 tree fitted; post2023 baseline reused. ICs descriptive only, overlapping20/60/120 horizons.",
+  "promotion_eligible": false
+}

@@ -1,9 +1,11 @@
 """Completed US-equity sessions and provider OHLC integrity."""
 from datetime import UTC, date, datetime, timedelta
+from functools import lru_cache
 from zoneinfo import ZoneInfo
 
 
 
+@lru_cache(maxsize=8192)
 def session_available_at(day: date) -> datetime | None:
     from systematic_trading.live.trading_calendar import us_equity_market_close
     close = us_equity_market_close(day)

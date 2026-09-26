@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 from decimal import Decimal
 
 from systematic_trading.domain.enums import Currency
@@ -290,3 +290,62 @@ def _price_bar(trade_date: date, close: str) -> PriceBar:
         close=Decimal(close),
         volume=1000,
     )
+
+
+def test_benchmark_backfill_repairs_old_hole_and_is_idempotent() -> None:
+    from systematic_trading.daily_quality import completed_session
+    from systematic_trading.market_data.backfill import benchmark_backfill_start
+
+    day = date(2012, 1, 12)
+    dates = []
+    while day <= date(2026, 9, 24):
+        if completed_session(day) and not date(2026, 4, 30) <= day <= date(2026, 9, 10):
+            dates.append(day.isoformat())
+        day += timedelta(days=1)
+    client = _FakeClickHouseDailyClient(existing_dates=dates)
+    bars = []
+    day = date(2026, 4, 30)
+    while day <= date(2026, 9, 10):
+        if completed_session(day):
+            bars.append(_price_bar(day, "150"))
+        day += timedelta(days=1)
+    kwargs = dict(client=client, provider=_StaticDailyProvider(bars), symbols=["URTH"],
+                  start_date=date(2026, 9, 10), end_date=date(2026, 9, 24),
+                  source_name="yahoo_adjusted", repair_benchmark_history=True)
+    result = backfill_clickhouse_daily_bars(**kwargs)
+    assert result.results[0].requested_start_date == date(2026, 4, 30)
+    assert result.bars_inserted == 92
+    assert not result.warnings
+    client.existing_dates.extend(row["trade_date"] for row in client.inserted_rows)
+    assert benchmark_backfill_start(client, "URTH", date(2026, 9, 10), date(2026, 9, 24)) == date(2026, 9, 10)
+    assert backfill_clickhouse_daily_bars(**kwargs).bars_inserted == 0
+
+
+def test_benchmark_bootstrap_and_nonbenchmark_window() -> None:
+    from systematic_trading.market_data.backfill import benchmark_backfill_start
+    client = _FakeClickHouseDailyClient()
+    assert benchmark_backfill_start(client, "URTH", date(2026, 9, 10), date(2026, 9, 24)) == date(2012, 1, 12)
+    assert benchmark_backfill_start(client, "SPY", date(2026, 9, 10), date(2026, 9, 24)) == date(2026, 9, 10)
+
+
+def test_benchmark_explicit_window_and_missing_provider_observations() -> None:
+    result = backfill_clickhouse_daily_bars(
+        client=_FakeClickHouseDailyClient(), provider=_StaticDailyProvider(), symbols=["URTH"],
+        start_date=date(2026, 9, 24), end_date=date(2026, 9, 27), source_name="yahoo_adjusted",
+    )
+    assert result.results[0].requested_start_date == date(2026, 9, 24)
+    assert result.bars_inserted == 0
+    assert result.results[0].missing_benchmark_sessions == 2
+    assert "2 completed benchmark sessions remain missing" in result.warnings[0]
+
+
+def test_default_daily_symbols_always_include_benchmarks() -> None:
+    import importlib.util
+    from pathlib import Path
+    from types import SimpleNamespace
+    spec = importlib.util.spec_from_file_location("daily_backfill_script", Path("scripts/backfill_clickhouse_daily_bars.py"))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    client = SimpleNamespace(query_daily_bar_symbols=lambda: [{"symbol": "SPY"}])
+    assert module._resolve_symbols(None, client) == ["AOR", "SPY", "URTH"]
+    assert module._resolve_symbols("spy", client) == ["SPY"]

@@ -127,17 +127,7 @@ class DecisionTreeSignalOverlay:
         if len(target_list) < 2:
             return target_list
 
-        forecasts = {
-            target.symbol: self.model.predict(
-                compute_signal_features(
-                    symbol=target.symbol,
-                    context=context,
-                    valuation_scores=self.valuation_scores,
-                    macro_scores=self.macro_scores,
-                )
-            )
-            for target in target_list
-        }
+        forecasts = self._forecasts(target_list, context)
         if not any(math.isfinite(value) for value in forecasts.values()):
             return [
                 target.model_copy(
@@ -181,6 +171,20 @@ class DecisionTreeSignalOverlay:
             )
             for target in target_list
         ]
+
+    def _forecasts(self, target_list, context):
+        """Separate prediction from unchanged ranking/sizing for research adapters."""
+        return {
+            target.symbol: self.model.predict(
+                compute_signal_features(
+                    symbol=target.symbol,
+                    context=context,
+                    valuation_scores=self.valuation_scores,
+                    macro_scores=self.macro_scores,
+                )
+            )
+            for target in target_list
+        }
 
 
 class TechnicalDecisionTreeAllocatorOverlay:

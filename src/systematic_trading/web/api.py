@@ -54,6 +54,7 @@ from systematic_trading.execution.window import (
 from systematic_trading.execution.locks import serialized_orders
 from systematic_trading.live.auto_approval import PaperApprovalPolicy, PaperApprovalUpdate
 from systematic_trading.live.pnl import PnlReadView
+from systematic_trading.research.market_data_view import StrategyMarketDataView
 from systematic_trading.live import (
     AutomationAlertNotifier,
     LiveAccountSnapshotInput,
@@ -524,13 +525,36 @@ def _submit_proposal_to_ib(
 def dashboard_performance(request: Request) -> DashboardPerformance:
     settings = _settings(request)
     store = _store(request)
+    analytics = getattr(request.app.state, "analytics", None)
+    if analytics is not None:
+        from systematic_trading.market_data.analytics_store import digest
+        try:
+            saved = analytics.document("dashboard-serving", "performance")
+        except Exception as exc:
+            raise HTTPException(status_code=503, detail="Account analytical history unavailable.") from exc
+        baseline = store.latest_pnl_baseline()
+        baseline_token = digest(baseline.model_dump_json()) if baseline else "none"
+        if saved is None or json.loads(saved[1]["provenance"])["baseline"] != baseline_token:
+            raise HTTPException(status_code=503, detail="Performance publication is refreshing for the current account baseline.",
+                                headers={"Retry-After": "5"})
+        payload = json.loads(saved[0]["payload"])
+        payload["warnings"].append(f"Saved analytical performance calculated at {saved[1]['published_at']} UTC.")
+        return DashboardPerformance.model_validate(payload)
     warnings: list[str] = []
     definition = current_sota_definition()
     strategy_path = _strategy_result_path(settings)
-    strategy_payload = _load_json(strategy_path, warnings)
+    strategy_analytics = getattr(request.app.state, "strategy_analytics", None)
+    published_strategy = strategy_analytics.document("strategy-serving", f"detail/{definition.key}") if strategy_analytics else None
+    strategy_payload = None if published_strategy else _load_json(strategy_path, warnings)
     strategy_base_date: date | None = None
     strategy_extension_count = 0
-    if strategy_payload is not None:
+    if published_strategy:
+        detail = json.loads(published_strategy[0]["payload"])
+        strategy_raw = [(date.fromisoformat(row["trade_date"]), Decimal(str(row["nav_cnh"]))) for row in detail["nav_series"]]
+        strategy_base_date = date.fromisoformat(detail["artifact_end_date"])
+        strategy_extension_count = detail["monitoring_extension_count"]
+        warnings.extend(detail["warnings"])
+    elif strategy_payload is not None:
         strategy_raw, strategy_base_date, strategy_extension_count = _strategy_nav_points(strategy_payload, store, warnings)
     else:
         strategy_raw = []
@@ -781,8 +805,11 @@ def dashboard_pnl(
 
 @router.get("/strategies")
 def strategy_catalog(request: Request) -> dict[str, Any]:
+    saved = _published_strategy(request, "catalog")
+    if saved is not None:
+        return saved
     settings = _settings(request)
-    store = _store(request)
+    store = StrategyMarketDataView(_store(request))
     artifacts = discover_strategy_artifacts(
         settings.data_dir / "backtests",
         current_sota_definition().key,
@@ -817,8 +844,11 @@ def strategy_catalog(request: Request) -> dict[str, Any]:
 
 @router.get("/strategies/{strategy_id}")
 def strategy_detail(strategy_id: str, request: Request) -> dict[str, Any]:
+    saved = _published_strategy(request, f"detail/{strategy_id}")
+    if saved is not None:
+        return saved
     settings = _settings(request)
-    store = _store(request)
+    store = StrategyMarketDataView(_store(request))
     artifacts = discover_strategy_artifacts(settings.data_dir / "backtests", current_sota_definition().key)
     artifact = next((item for item in artifacts if item.strategy_id == strategy_id), None)
     if artifact is None:
@@ -879,8 +909,11 @@ def strategy_detail(strategy_id: str, request: Request) -> dict[str, Any]:
 
 @router.get("/strategies/{strategy_id}/report")
 def strategy_report(strategy_id: str, request: Request) -> Response:
+    saved = _published_strategy(request, f"report/{strategy_id}", html=True)
+    if saved is not None:
+        return saved
     settings = _settings(request)
-    store = _store(request)
+    store = StrategyMarketDataView(_store(request))
     artifacts = discover_strategy_artifacts(settings.data_dir / "backtests", current_sota_definition().key)
     artifact = next((item for item in artifacts if item.strategy_id == strategy_id), None)
     if artifact is None:
@@ -945,6 +978,54 @@ def strategy_report(strategy_id: str, request: Request) -> Response:
         }
     )
     return HTMLResponse(render_backtest_report_html(report))
+
+
+def _published_strategy(request, key, *, html=False):
+    analytics = getattr(request.app.state, "analytics", None)
+    if analytics is None:
+        return None
+    try:
+        saved = analytics.document("strategy-serving", key)
+    except Exception as exc:
+        raise HTTPException(status_code=503, detail=f"Strategy analytical store unavailable: {exc}") from exc
+    if saved is None:
+        if key != "catalog" and analytics.latest("strategy-serving"):
+            raise HTTPException(status_code=404, detail="Strategy or report is not in the published catalog.")
+        raise HTTPException(status_code=503, detail="Strategy publication is being prepared; retry shortly.",
+                            headers={"Retry-After": "5"})
+    document, publication = saved
+    service = getattr(request.app.state, "analytics_service", None)
+    status = service.status() if service else {}
+    metadata = {"storage": "clickhouse", "published_at": publication["published_at"],
+                "version": publication["version"], "refresh": status}
+    if html:
+        banner = ("<div style='padding:8px;background:#edf2f7;color:#334155;font:13px sans-serif'>"
+                  f"Saved analytical report · calculated {publication['published_at']} UTC"
+                  + (" · refresh needs attention" if status.get("errors") else "") + "</div>")
+        body = document["payload"].replace("<body>", "<body>" + banner, 1)
+        return HTMLResponse(body, headers={"X-Analytics-Published-At": publication["published_at"],
+                                           "X-Analytics-Version": publication["version"]})
+    payload = {**json.loads(document["payload"]), "analytics": metadata}
+    if status.get("errors"):
+        payload.setdefault("warnings", []).append("Analytical refresh needs attention; displaying the last complete saved publication. "
+                                                   + "; ".join(f"{key}: {value}" for key, value in status["errors"].items()))
+    return payload
+
+
+@router.get("/analytics/status")
+def analytics_status(request: Request):
+    service = getattr(request.app.state, "analytics_service", None)
+    return service.status() if service else {"enabled": False}
+
+
+@router.get("/analytics/observations")
+def analytics_observations(request: Request, source: str, family: str | None = None,
+                           limit: int = Query(default=1000, ge=1, le=50000)):
+    analytics = getattr(request.app.state, "analytics", None)
+    if analytics is None:
+        raise HTTPException(status_code=503, detail="Analytical storage is not enabled.")
+    return {"source": source, "publication": analytics.latest(source),
+            "rows": analytics.observations(source, family=family, limit=limit)}
 
 
 @router.get("/dashboard/execution-quality", response_model=DashboardExecutionQuality)
@@ -1690,6 +1771,27 @@ def _account_snapshots(
     settings: AppSettings,
     warnings: list[str],
 ) -> list[tuple[Path, LiveAccountSnapshotInput]]:
+    if settings.analytics_enabled and settings.market_data_store_backend == "clickhouse":
+        from systematic_trading.market_data.analytics_store import AnalyticsStore
+        analytics = AnalyticsStore.from_settings(settings)
+        try:
+            publication = analytics.latest("account-history")
+            if publication is None:
+                warnings.append("Account analytical history is awaiting its first ClickHouse publication.")
+                return []
+            rows = analytics.current_observations("account-history/", family="account_snapshot", limit=1000000)
+            snapshots = []
+            for row in rows:
+                try:
+                    value = json.loads(row["payload"])
+                    snapshots.append((Path(value["path"]), LiveAccountSnapshotInput.model_validate(value["snapshot"])))
+                except (ValueError, KeyError, TypeError) as exc:
+                    warnings.append(f"Could not read analytical account snapshot {row['point_key']}: {exc}")
+            warnings.append(f"Account analytical history published at {publication['published_at']} UTC.")
+            return snapshots
+        except Exception as exc:
+            warnings.append(f"Account analytical history unavailable: {exc}")
+            return []
     snapshot_dir = settings.data_dir / "live" / "account_snapshots"
     if not snapshot_dir.exists():
         warnings.append(f"Missing account snapshot directory: {snapshot_dir}")

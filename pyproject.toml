@@ -16,6 +16,11 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+research = [
+    "numpy>=2.0,<3",
+    "matplotlib>=3.9,<4",
+    "exchange-calendars==4.13.2",
+]
 data = [
     "tushare>=1.2.10",
 ]

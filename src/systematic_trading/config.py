@@ -61,6 +61,8 @@ class AppSettings(BaseSettings):
     clickhouse_database: str = "systematic_trading"
     clickhouse_user: str = "st_app"
     clickhouse_password: str = "local-dev-change-me"
+    analytics_enabled: bool = True
+    analytics_refresh_seconds: int = Field(default=60, ge=15)
 
     automation_enabled: bool = False
     automation_timezone: str = "America/New_York"

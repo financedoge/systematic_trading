@@ -15,6 +15,8 @@ from systematic_trading.lean.contracts import BacktestRunSpec, sha256, write_jso
 from systematic_trading.lean.strategy import targets_for_day
 from systematic_trading.live.trading_calendar import us_equity_market_close, is_us_trading_day
 from systematic_trading.research import current_sota_definition, instruments_for_definition
+from systematic_trading.research.flow_concentration import FlowConcentrationSpec
+from systematic_trading.research.constituent_signals import ConstituentOverlaySpec
 
 
 def export_bundle(*, store, root: Path, start: date, end: date, warmup_start: date,
@@ -66,7 +68,8 @@ def export_bundle(*, store, root: Path, start: date, end: date, warmup_start: da
                          spec_values=spec_values)
 
 
-def freeze_bundle(*, root: Path, bars: dict, fx: dict, provenance: dict, spec_values: dict) -> Path:
+def freeze_bundle(*, root: Path, bars: dict, fx: dict, provenance: dict, spec_values: dict,
+                  constituent_features: dict | None = None, base_tree_models: dict | None = None) -> Path:
     if root.exists():
         raise FileExistsError(root)
     days = [row['trade_date'] for row in next(iter(bars.values()))]
@@ -87,6 +90,15 @@ def freeze_bundle(*, root: Path, bars: dict, fx: dict, provenance: dict, spec_va
     if not run_days:
         raise ValueError('Empty run window')
     decisions = {}
+    flow_config = spec_values.get('flow_overlay')
+    flow_config = FlowConcentrationSpec.model_validate(flow_config) if flow_config is not None else None
+    constituent_config = spec_values.get('constituent_overlay')
+    constituent_config = ConstituentOverlaySpec.model_validate(constituent_config) if constituent_config is not None else None
+    if (constituent_config is not None) != (constituent_features is not None):
+        raise ValueError('Constituent configuration and frozen features must be supplied together')
+    if bool(spec_values.get('base_tree_model_schedule')) != (base_tree_models is not None):
+        raise ValueError('Dated base-tree configuration and models must be supplied together')
+    flow_state = {}
     previous_month = None
     for day in run_days:
         if day[:7] != previous_month:
@@ -94,7 +106,10 @@ def freeze_bundle(*, root: Path, bars: dict, fx: dict, provenance: dict, spec_va
             if index == 0:
                 raise ValueError('Missing prior session')
             targets = targets_for_day(bars, date.fromisoformat(day), benchmark=spec_values.get('strategy') == 'benchmark',
-                                      lookback_bars=spec_values.get('lookback_bars', 63))
+                                      lookback_bars=spec_values.get('lookback_bars', 63),
+                                      flow_overlay=flow_config, flow_state=flow_state,
+                                      constituent_overlay=constituent_config, constituent_features=constituent_features,
+                                      base_tree_models=base_tree_models)
             execution_index = run_days.index(day) + spec_values.get('execution_delay_sessions', 0)
             if execution_index >= len(run_days):
                 continue
@@ -114,6 +129,14 @@ def freeze_bundle(*, root: Path, bars: dict, fx: dict, provenance: dict, spec_va
         shutil.copyfile(path, destination)
         source_hash.update(relative.as_posix().encode() + path.read_bytes())
     definition = current_sota_definition().to_dict()
+    if base_tree_models is not None:
+        write_json(root / 'base_tree_models.json', base_tree_models)
+        definition = dict(recipe=definition, research_base_models_sha256=sha256(root / 'base_tree_models.json'), promotion_eligible=False)
+    if flow_config is not None:
+        definition = dict(base=definition, research_overlay=flow_config.model_dump(), promotion_eligible=False)
+    if constituent_config is not None:
+        definition = dict(base=definition, research_overlay=constituent_config.model_dump(), promotion_eligible=False)
+        write_json(root / 'constituent_features.json', constituent_features)
     strategy_hash = hashlib.sha256(json.dumps(definition, sort_keys=True).encode()).hexdigest()
     commit = subprocess.run(['git', 'rev-parse', 'HEAD'], capture_output=True, text=True, check=True).stdout.strip()
     spec = BacktestRunSpec(**spec_values, strategy_hash=strategy_hash, source_hash=source_hash.hexdigest(), repository_commit=commit)
