@@ -6,7 +6,7 @@ from systematic_trading.storage import PostgresStore, SQLiteStore, TradingStore,
 from systematic_trading.storage.routed import MarketDataRoutedTradingStore
 
 
-def test_transactional_store_factory_returns_sqlite_store_by_default(tmp_path) -> None:
+def test_transactional_store_factory_returns_sqlite_store_when_configured(tmp_path) -> None:
     settings = AppSettings(database_path=tmp_path / "factory.db")
 
     store = create_transactional_store(settings)
@@ -88,3 +88,17 @@ def test_trading_store_factory_routes_clickhouse_over_postgres_transactional_sto
     assert isinstance(store, MarketDataRoutedTradingStore)
     assert isinstance(store.transactional_store, PostgresStore)
     assert isinstance(store.market_data_store, ClickHouseMarketDataStore)
+
+
+def test_application_defaults_require_server_stores(monkeypatch):
+    monkeypatch.delenv("ST_TRANSACTIONAL_STORE_BACKEND")
+    monkeypatch.delenv("ST_MARKET_DATA_STORE_BACKEND")
+    settings = AppSettings(_env_file=None)
+    assert settings.transactional_store_backend == "postgres"
+    assert settings.market_data_store_backend == "clickhouse"
+
+
+def test_sqlite_path_cannot_silently_redirect_production_store(tmp_path):
+    settings = AppSettings(transactional_store_backend="postgres", database_path=tmp_path / "legacy.db")
+    with pytest.raises(ValueError, match="cannot redirect PostgreSQL"):
+        create_trading_store(settings, database_path=tmp_path / "experiment.db")

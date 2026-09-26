@@ -13,6 +13,7 @@ def isolated_application_defaults(tmp_path, monkeypatch):
         "ST_TRANSACTIONAL_STORE_BACKEND": "sqlite",
         "ST_MARKET_DATA_STORE_BACKEND": "sqlite",
         "ST_AUTOMATION_ENABLED": "false",
+        "ST_IB_PNL_ENABLED": "false",
         "ST_AUTOMATION_ALERT_SMTP_HOST": "",
     }.items():
         monkeypatch.setenv(key, value)

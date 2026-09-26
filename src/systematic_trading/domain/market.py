@@ -79,5 +79,5 @@ class FundamentalSnapshot(BaseModel):
         if values.get("period_end") is None and legacy_as_of is not None:
             values["period_end"] = legacy_as_of
         if values.get("available_date") is None:
-            values["available_date"] = values.get("filing_date") or legacy_as_of or values.get("period_end")
+            values["available_date"] = values.get("filing_date") or legacy_as_of
         return values

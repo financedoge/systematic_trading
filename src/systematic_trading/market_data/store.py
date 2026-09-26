@@ -6,6 +6,7 @@ from decimal import Decimal
 from systematic_trading.config import AppSettings
 from systematic_trading.domain.enums import Currency
 from systematic_trading.domain.market import FXRate, PriceBar
+from systematic_trading.daily_quality import completed_session, captured_before_close
 from systematic_trading.market_data.golden import ClickHouseMarketDataClient, daily_bar_row, fx_rate_row
 
 
@@ -74,6 +75,7 @@ class ClickHouseMarketDataStore:
                 volume=int(row["volume"]),
             )
             for row in rows
+            if completed_session(date.fromisoformat(str(row["trade_date"]))) and not captured_before_close(row)
         ]
 
     def upsert_fx_rate(self, rate: FXRate) -> FXRate:

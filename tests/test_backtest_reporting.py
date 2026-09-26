@@ -9,6 +9,29 @@ from systematic_trading.domain import Currency, FXRate, PriceBar
 from systematic_trading.storage.sqlite import SQLiteStore
 
 
+def test_report_uses_configured_market_store_without_sqlite_file(tmp_path, monkeypatch):
+    from systematic_trading.backtest.reporting import _load_market_data
+    import systematic_trading.storage as storage
+
+    class Market:
+        def list_price_bars(self, symbol, **kwargs):
+            return [PriceBar(trade_date=date(2023, 1, 3), open=100, high=100,
+                             low=100, close=100, volume=1)]
+
+        def list_fx_rates(self, *args, **kwargs):
+            return [FXRate(rate_date=date(2023, 1, 3), base_currency=Currency.USD,
+                           quote_currency=Currency.CNH, rate=7)]
+
+    monkeypatch.setenv("ST_MARKET_DATA_STORE_BACKEND", "clickhouse")
+    monkeypatch.setattr(storage, "create_trading_store", lambda *a, **k: Market())
+    path = tmp_path / "retired.db"
+    prices, rates, warnings = _load_market_data(path, symbols=["SPY"], start_date="2023-01-03", end_date="2023-01-03")
+    assert prices == {"SPY": {"2023-01-03": 100}}
+    assert rates == {"2023-01-03": 7}
+    assert warnings == []
+    assert not path.exists()
+
+
 def test_backtest_report_keeps_extra_benchmark_choices() -> None:
     result = {
         "nav_series": [

@@ -219,6 +219,20 @@ class NasSync:
         self.state.update(values)
         write_json(self.state_path, self.state)
 
+    def preflight(self):
+        """Check NAS access and handoff identity without stopping services or changing ownership."""
+        with self.lock():
+            if self.state["phase"] == "active":
+                self.require_owner()
+            elif self.state["phase"] == "clean":
+                if self.owner() or self.head() != self.state["head"]:
+                    raise SyncConflict("NAS ownership/history changed; start through the guarded platform launcher first")
+                manifest = read_json(self.root / "snapshots" / self.state["head"] / "manifest.json")
+                if manifest["layout"] != self.databases.layout:
+                    raise SyncConflict("Database layout differs from NAS snapshot")
+            else:
+                raise SyncConflict("NAS preflight requires an active workspace or a clean handoff")
+
     @contextmanager
     def lock(self):
         # Never create the share's parent (a disconnected mount must not silently

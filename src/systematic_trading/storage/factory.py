@@ -23,6 +23,8 @@ def create_transactional_store(
     if resolved_backend == "sqlite":
         return SQLiteStore(database_path or settings.database_path)
     if resolved_backend == "postgres":
+        if database_path is not None and Path(database_path).resolve() != settings.database_path.resolve():
+            raise ValueError("A SQLite database_path override cannot redirect PostgreSQL. Configure explicit test backends for offline SQLite work.")
         return PostgresStore.from_settings(settings)
     raise ValueError(
         f"Unsupported transactional store backend '{resolved_backend}'. "

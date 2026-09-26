@@ -11,6 +11,7 @@ from systematic_trading.data.providers import ProviderRegistry
 from systematic_trading.execution.broker import InteractiveBrokersAdapter
 from systematic_trading.execution.twap_benchmark import TwapBenchmarkService
 from systematic_trading.live import TradingManagementService
+from systematic_trading.live.broker_pnl import BrokerPnlService
 from systematic_trading.services import (
     OperationalLogger,
     PlatformHealthState,
@@ -57,6 +58,8 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         app.state.provider_registry = provider_registry
         app.state.broker = broker
         app.state.twap_benchmarks = TwapBenchmarkService(resolved_settings)
+        app.state.broker_pnl = BrokerPnlService(resolved_settings)
+        app.state.broker_pnl.start()
         app.state.trading_management_service = trading_management_service
         if trading_management_service is not None:
             trading_management_service.start()
@@ -65,6 +68,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
                 message="Trading management automation loop started.",
             )
         yield
+        app.state.broker_pnl.close()
         app.state.twap_benchmarks.close()
         if trading_management_service is not None:
             trading_management_service.stop()

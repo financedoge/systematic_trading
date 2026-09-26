@@ -43,6 +43,7 @@ class DailyBacktestEngine:
         daily_rebalance_prices: Mapping[date, Mapping[str, Decimal]] | None = None,
         daily_execution_prices: Mapping[date, Mapping[str, Decimal]] | None = None,
         decision_dates_by_trade_date: Mapping[date, date] | None = None,
+        daily_execution_fx_to_cnh: Mapping[date, Mapping[Currency | str, Decimal | str]] | None = None,
         transaction_cost_bps: Decimal | str = Decimal("0"),
         sleeve: str = "beta-risk-parity",
     ) -> BacktestResult:
@@ -52,6 +53,11 @@ class DailyBacktestEngine:
         nav_series: list[DailyNavPoint] = []
         final_snapshot: PortfolioSnapshot | None = None
         cost_rate = Decimal(transaction_cost_bps) / Decimal("10000")
+
+        if len(set(trade_dates)) != len(trade_dates):
+            raise ValueError("Duplicate trade dates are not allowed.")
+        if not cost_rate.is_finite() or cost_rate < 0:
+            raise ValueError("Transaction costs must be finite and cannot be negative.")
 
         for trade_date in sorted(trade_dates):
             price_map = daily_prices[trade_date]
@@ -69,6 +75,9 @@ class DailyBacktestEngine:
             )
 
             if trade_date in target_schedule:
+                for label, supplied in (("rebalance", daily_rebalance_prices), ("execution", daily_execution_prices)):
+                    if supplied is not None and trade_date not in supplied:
+                        raise ValueError(f"Missing {label} prices for {trade_date}; no same-day/stale fallback allowed.")
                 decision_date = (decision_dates_by_trade_date or {}).get(trade_date, trade_date)
                 decision_fx = daily_fx_to_cnh[decision_date]
                 for position in positions.values():
@@ -90,12 +99,15 @@ class DailyBacktestEngine:
                     positions=positions,
                     ledger=ledger,
                     instruments=instruments,
-                    converter=converter,
+                    converter=FxConverter(daily_execution_fx_to_cnh[trade_date])
+                    if daily_execution_fx_to_cnh is not None else converter,
                     execution_prices=execution_price_map,
                     transaction_cost_rate=cost_rate,
                 )
 
             for position in positions.values():
+                if position.symbol not in price_map:
+                    raise ValueError(f"Missing valuation price for held {position.symbol} on {trade_date}.")
                 position.market_price = Decimal(price_map[position.symbol])
 
             final_snapshot = PortfolioValuationService.build_snapshot(
@@ -130,6 +142,12 @@ class DailyBacktestEngine:
         transaction_cost_rate: Decimal = Decimal("0"),
     ) -> None:
         ordered_orders = sorted(orders, key=lambda item: 0 if item.side == OrderSide.SELL else 1)
+        for order in ordered_orders:
+            if execution_prices is not None and order.symbol not in execution_prices:
+                raise ValueError(f"Missing executable price for {order.symbol}; stale marks cannot fill orders.")
+            price = Decimal((execution_prices or {}).get(order.symbol, order.reference_price))
+            if not price.is_finite() or price <= 0:
+                raise ValueError(f"Invalid executable price for {order.symbol}.")
         buy_scale: Decimal | None = None
         for order in ordered_orders:
             fill_price = Decimal((execution_prices or {}).get(order.symbol, order.reference_price))

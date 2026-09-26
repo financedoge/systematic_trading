@@ -454,7 +454,7 @@ def build_forward_return_samples(
     starts = sorted(set(rebalance_dates))
     for index, start in enumerate(starts[:-1]):
         end = starts[index + 1]
-        if start >= split_date or end > split_date:
+        if start >= split_date or end >= split_date:
             continue
         returns: dict[str, float] = {}
         for symbol in symbols:

@@ -18,6 +18,22 @@ The full target-state system chart and execution schedule are maintained in `doc
 
 The current implementation is the v0 control plane and research harness. It is intentionally Python-first, local-first, and paper-first while the contracts, tests, and operator workflow are hardened.
 
+The operator's live PnL is a dedicated read-only IB account/position subscription,
+with an independent client ID and cached HTTP reads. Account totals retain the
+broker base currency and position rows retain contract currency. Missing/stale
+callbacks do not fall back to historical daily marks.
+Last received values remain visible with explicit stale timestamps and connection
+status after hours or during an HTTP refresh failure; missing fields remain
+unavailable individually. Dashboard panels load independently. Accounting reuses
+identical ledger/FX/price reads only within a calculation, never across requests.
+
+The [LEAN worker](lean-backtesting.md) consumes hash-verified frozen D: inputs and
+runs the existing strategy inside a pinned, network-isolated container. LEAN owns
+simulated orders, fills, portfolio and cash; the Python engine checks declared
+CNH-adjusted-unit economics. Passed artifacts enter `ops.lean_research_runs` as
+research evidence only. No broker credentials, approvals or executable events
+cross this boundary. Legacy history remains uncertified for promotion.
+
 ## Principles
 
 - Optimize for low turnover, concentrated, thesis-driven portfolios.
@@ -39,7 +55,7 @@ The current implementation is the v0 control plane and research harness. It is i
 6. Portfolio layer: rebalance blotter, constraints, pre-trade checks, sizing, and approval workflow.
 7. Execution layer: Interactive Brokers paper-first routing, validation, reconciliation, idempotent order submission, and audit.
 8. Web layer: operator interface for monitoring, approvals, paper trading, and later controlled live trading.
-9. Storage layer: SQLite for v0 local persistence; Postgres for transactional target state; ClickHouse for columnar query serving; Parquet for immutable market-data archive and DuckDB-readable research snapshots.
+9. Storage layer: PostgreSQL for operational state and immutable legacy SQLite evidence; explicit SQLite only for offline tests/recovery; ClickHouse for columnar query serving; Parquet for immutable market-data archive and DuckDB-readable research snapshots.
 10. Observability layer: metrics, logs, traces, dashboards, alerts, incidents, and daily operating reports.
 
 ## Initial module boundaries
@@ -77,3 +93,5 @@ The current implementation is the v0 control plane and research harness. It is i
 - Integrate LEAN into the promotion path for production candidates.
 - Build the strong rebalance blotter before any live trading.
 - Add Grafana-class dashboards and multi-channel alerts.
+
+The [database consolidation record](database-consolidation.md) documents the server-store defaults and physical storage relocation. The [LEAN integration plan](lean-backtest-integration-plan.md) defines an isolated backtest worker with frozen input bundles and no brokerage access.

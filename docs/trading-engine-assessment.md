@@ -44,3 +44,5 @@ Neither engine removes IBKR's weekly authentication requirement or converts our 
 6. Rollback means stopping the candidate writer before re-enabling the original, then reconciling broker state. Retain both engines' immutable evidence and do not merge divergent order histories automatically.
 
 Proceed with the Gateway operational consolidation now. A bounded LEAN validation pilot is worth doing next; a wholesale migration to either engine is not justified by the current evidence.
+
+Implementation sequence: [LEAN backtest integration plan](lean-backtest-integration-plan.md), accepted for planning on 2026-09-25. No LEAN engine or brokerage writer has been installed.

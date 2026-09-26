@@ -61,6 +61,7 @@ def us_market_holidays(year: int) -> set[date]:
     }
     if year >= 2022:
         holidays.add(_observed_fixed_holiday(year, 6, 19))
+    holidays.update({date(2012, 10, 29), date(2012, 10, 30), date(2018, 12, 5), date(2025, 1, 9)})
     return {holiday for holiday in holidays if holiday.year == year}
 
 

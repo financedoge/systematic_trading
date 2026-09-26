@@ -45,7 +45,7 @@ from systematic_trading.research import (  # noqa: E402
     strategy_model_card,
 )
 from systematic_trading.signals import AssetPoolFilterOverlay  # noqa: E402
-from systematic_trading.storage.sqlite import SQLiteStore  # noqa: E402
+from systematic_trading.storage import TradingStore, create_trading_store  # noqa: E402
 
 
 TRADING_DAYS_PER_YEAR = 252
@@ -86,7 +86,7 @@ def main() -> None:
     database_path = Path(args.database) if args.database else settings.database_path
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    store = SQLiteStore(database_path)
+    store = create_trading_store(AppSettings(), database_path=database_path)
     store.initialize()
 
     all_symbols = sorted(
@@ -362,7 +362,7 @@ def _run_candidate_task(task: tuple[int, dict[str, Any]]) -> dict[str, Any]:
         raise RuntimeError("Optimization worker was not initialized.")
 
     index, params = task
-    store = SQLiteStore(Path(_WORKER_DATABASE_PATH))
+    store = create_trading_store(AppSettings(), database_path=Path(_WORKER_DATABASE_PATH))
     definition = _combined_definition(index=index, params=params)
     payload = _run_candidate_payload(
         store=store,
@@ -414,7 +414,7 @@ def _combined_definition(index: int, params: Mapping[str, Any], *, optimized: bo
 
 def _run_candidate_payload(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     definition: Any,
     start_date: date,
     end_date: date,
@@ -437,7 +437,7 @@ def _run_candidate_payload(
 
 def _baseline_payloads(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     start_date: date,
     end_date: date,
     initial_cash_cnh: Decimal,
@@ -827,7 +827,7 @@ def _json_params(params: Mapping[str, Any]) -> dict[str, Any]:
 
 def _date_range_from_store(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     symbols: Sequence[str],
     start_date_arg: str | None,
     end_date_arg: str | None,
@@ -854,7 +854,7 @@ def _date_range_from_store(
 
 def _buy_and_hold_payload(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     symbol: str,
     start_date: date,
     end_date: date,

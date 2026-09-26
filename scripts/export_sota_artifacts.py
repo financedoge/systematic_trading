@@ -39,7 +39,7 @@ from systematic_trading.research import (
     risk_parity_definition,
     strategy_model_card,
 )
-from systematic_trading.storage.sqlite import SQLiteStore
+from systematic_trading.storage import TradingStore, create_trading_store
 
 
 def main() -> None:
@@ -64,7 +64,7 @@ def main() -> None:
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     _clean_output_dir(output_dir)
-    store = SQLiteStore(database_path)
+    store = create_trading_store(AppSettings(), database_path=database_path)
     store.initialize()
 
     start_date = date.fromisoformat(args.start_date)
@@ -125,7 +125,7 @@ def main() -> None:
     market_data_audit = build_market_data_audit(
         prices_by_symbol={symbol: prices_by_symbol[symbol] for symbol in sota_instruments},
         required_dates=[date.fromisoformat(point["trade_date"]) for point in sota_payload["nav_series"]],
-        source_name=f"SQLite {database_path}",
+        source_name=f"{settings.transactional_store_backend}/{settings.market_data_store_backend}",
         adjusted_prices=True,
     )
     comparison_artifacts = write_comparison_artifacts(
@@ -241,7 +241,7 @@ def _clean_output_dir(output_dir: Path) -> None:
 
 def _run_definition_backtest(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     instruments: dict[str, Any],
     definition: Any,
     config: StoredRiskParityBacktestConfig,
@@ -392,7 +392,7 @@ def _stable_backtest_payload(payload: dict[str, Any]) -> dict[str, Any]:
     return payload
 
 
-def _prices_by_symbol(store: SQLiteStore, symbols: list[str]) -> dict[str, dict[date, float]]:
+def _prices_by_symbol(store: TradingStore, symbols: list[str]) -> dict[str, dict[date, float]]:
     return {
         symbol: {bar.trade_date: float(bar.close) for bar in store.list_price_bars(symbol)}
         for symbol in symbols

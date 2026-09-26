@@ -13,7 +13,7 @@ from zoneinfo import ZoneInfo
 
 from pydantic import BaseModel, Field
 
-from systematic_trading.domain.enums import Currency, OrderEnvironment
+from systematic_trading.domain.enums import Currency
 from systematic_trading.execution.broker import BrokerConnectionProfile
 from systematic_trading.recorders.market_data import (
     CapturedMarketDataBar,

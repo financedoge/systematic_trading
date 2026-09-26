@@ -1064,7 +1064,7 @@ def _overlay_decision_tree(overlay: OverlaySpec) -> str:
                     f'  D -- "No" --> F{{"Fast commodity vol >= {params["volatilitySpikeMultiple"]}x '
                     'slow vol?"}'
                 ),
-                f'  F -- "Yes" --> E',
+                '  F -- "Yes" --> E',
                 '  F -- "No" --> G["Leave targets unchanged"]',
                 '  C --> H["Reallocate residual to non-commodity selected assets"]',
                 '  E --> H',

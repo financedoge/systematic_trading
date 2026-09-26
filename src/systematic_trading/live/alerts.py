@@ -4,7 +4,6 @@ import json
 import smtplib
 from datetime import UTC, datetime
 from email.message import EmailMessage
-from pathlib import Path
 from threading import Lock, Thread
 from typing import Any, Protocol
 

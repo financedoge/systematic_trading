@@ -1,13 +1,11 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import html
 import json
 import os
 import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
-from dataclasses import replace
 from datetime import date
 from decimal import Decimal
 from pathlib import Path
@@ -63,7 +61,7 @@ from systematic_trading.research import (  # noqa: E402
 )
 from systematic_trading.signals import CommodityRiskGuardOverlay, SleeveCappedMomentumOverlay  # noqa: E402
 from systematic_trading.signals.base import SignalContext, TargetOverlay  # noqa: E402
-from systematic_trading.storage.sqlite import SQLiteStore  # noqa: E402
+from systematic_trading.storage import TradingStore, create_trading_store  # noqa: E402
 
 
 _WORKER_DATABASE_PATH: str | None = None
@@ -100,7 +98,7 @@ def main() -> None:
     database_path = Path(args.database) if args.database else settings.database_path
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    store = SQLiteStore(database_path)
+    store = create_trading_store(AppSettings(), database_path=database_path)
     store.initialize()
 
     start_date = date.fromisoformat(args.start_date)
@@ -429,7 +427,7 @@ def _run_candidate_task(task: tuple[int, dict[str, Any]]) -> dict[str, Any]:
     ):
         raise RuntimeError("Dynamic sleeve-capped worker was not initialized.")
     index, params = task
-    store = SQLiteStore(Path(_WORKER_DATABASE_PATH))
+    store = create_trading_store(AppSettings(), database_path=Path(_WORKER_DATABASE_PATH))
     case = _case(index, params)
     payload = _run_candidate_payload(
         store=store,
@@ -560,7 +558,7 @@ def _parse_daily_control_params(profile: Mapping[str, Any]) -> dict[str, Any]:
 
 def _run_candidate_payload(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     case: Mapping[str, Any],
     start_date: date,
     end_date: date,
@@ -589,7 +587,7 @@ def _run_candidate_payload(
 
 def _run_dynamic_risk_parity_backtest(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     instruments: Mapping[str, Instrument],
     config: StoredRiskParityBacktestConfig,
     target_overlays: Sequence[TargetOverlay] = (),
@@ -607,12 +605,12 @@ def _run_dynamic_risk_parity_backtest(
     if not fx_rates:
         raise ValueError("USD/CNH FX rates are required.")
     usd_cnh_by_date = {rate.rate_date: rate.rate for rate in fx_rates}
-    bar_by_symbol_date = {symbol: {bar.trade_date: bar for bar in bars} for symbol, bars in bars_by_symbol.items()}
     latest_bars_by_date = _latest_bars_by_date(bars_by_symbol, master_dates)
     daily_prices = {
         trade_date: {
             symbol: bar.close
             for symbol, bar in latest_bars_by_date[trade_date].items()
+            if bar.trade_date == trade_date
         }
         for trade_date in master_dates
     }
@@ -650,6 +648,7 @@ def _run_dynamic_risk_parity_backtest(
         daily_rebalance_prices=daily_rebalance_prices,
         daily_execution_prices=daily_execution_prices,
         decision_dates_by_trade_date=_previous_trade_dates(master_dates),
+        daily_execution_fx_to_cnh={day: daily_fx[prior] for day, prior in _previous_trade_dates(master_dates).items()},
         sleeve=config.sleeve_name,
     )
 
@@ -782,7 +781,7 @@ def _latest_bars_by_date(
 
 def _baseline_payloads(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     start_date: date,
     end_date: date,
     initial_cash_cnh: Decimal,

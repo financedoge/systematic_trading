@@ -1,6 +1,7 @@
 import re
 import shutil
 import subprocess
+from pathlib import Path
 
 import pytest
 
@@ -17,6 +18,15 @@ EXPECTED_HEADER_LINKS = [
     ("/platform", "System"),
     ("/platform/market-data-audit", "Market Data"),
 ]
+
+
+def test_dashboard_panels_render_independently_and_recover():
+    from systematic_trading.web.operator import _OPERATOR_HTML
+    node = shutil.which('node')
+    if node is None:
+        pytest.skip('Node.js is required for UI behavior checks.')
+    subprocess.run([node, str(Path(__file__).with_name('operator_pnl_loading_checks.cjs'))],
+                   input=_OPERATOR_HTML, text=True, encoding='utf-8', capture_output=True, check=True, timeout=20)
 
 
 def test_reconciliation_ui_distinguishes_sync_lag_and_rejects_old_responses():
@@ -100,7 +110,7 @@ def test_operator_dashboard_is_served(tmp_path) -> None:
     assert "performance-analysis" in html
     assert "Sharpe" in html
     assert "Calmar" in html
-    assert "Live PnL" in html
+    assert "Live broker PnL" in html
     assert "PnL Attribution" in html
     assert "Reference Fill PnL" in html
     assert "Execution Gain" in html

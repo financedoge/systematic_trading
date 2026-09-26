@@ -9,16 +9,12 @@ from pathlib import Path
 from systematic_trading.backtest.stored import StoredRiskParityBacktestConfig, run_stored_risk_parity_backtest
 from systematic_trading.backtest.reporting import write_backtest_report
 from systematic_trading.config import AppSettings
-from systematic_trading.data.yahoo import YahooChartProvider
-from systematic_trading.domain.enums import Currency
-from systematic_trading.domain.market import FXRate
 from systematic_trading.research import (
-    BENCHMARK_INSTRUMENTS,
     GLOBAL_ETF_UNIVERSE,
     MSCI_WORLD_PROXY_NAME,
     MSCI_WORLD_PROXY_SYMBOL,
 )
-from systematic_trading.storage.sqlite import SQLiteStore
+from systematic_trading.storage import create_trading_store
 
 
 def main() -> None:
@@ -33,24 +29,9 @@ def main() -> None:
     start_date = date.fromisoformat(args.start_date)
     end_date = date.fromisoformat(args.end_date)
     settings = AppSettings()
-    store = SQLiteStore(settings.database_path)
+    store = create_trading_store(AppSettings(), database_path=settings.database_path)
     store.initialize()
-    provider = YahooChartProvider()
-
-    for instrument in [*GLOBAL_ETF_UNIVERSE.values(), *BENCHMARK_INSTRUMENTS.values()]:
-        store.upsert_instrument(instrument)
-        for bar in provider.fetch_daily_bars(instrument.symbol, start_date, end_date):
-            store.upsert_price_bar(instrument.symbol, bar)
-
-    for bar in provider.fetch_daily_bars("CNY=X", start_date, end_date):
-        store.upsert_fx_rate(
-            FXRate(
-                rate_date=bar.trade_date,
-                base_currency=Currency.USD,
-                quote_currency=Currency.CNH,
-                rate=bar.close,
-            )
-        )
+    # Consume the configured golden data; ingestion is a separate provenance-aware job.
 
     config = StoredRiskParityBacktestConfig(
         start_date=start_date,
@@ -92,7 +73,7 @@ def _markdown_summary(result, config: StoredRiskParityBacktestConfig) -> str:
     lines = [
         "# First Real Backtest",
         "",
-        "Source: Yahoo Finance chart API. ETF prices are unadjusted daily OHLC closes; USD/CNH reporting uses Yahoo `CNY=X` as the available USD/CNY proxy.",
+        "Source: configured market-data store. Data quality and point-in-time availability require separate validation.",
         "",
         f"- Period: {first.trade_date} to {last.trade_date}",
         f"- Initial NAV: CNH {first.nav_cnh:,.2f}",

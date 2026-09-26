@@ -36,7 +36,7 @@ from systematic_trading.data.analytics import realized_volatility_from_bars  # n
 from systematic_trading.domain.enums import Currency  # noqa: E402
 from systematic_trading.domain.portfolio import AllocationTarget, CashBalance  # noqa: E402
 from systematic_trading.research import ALL_WEATHER_ETF_UNIVERSE, current_sota_definition  # noqa: E402
-from systematic_trading.storage.sqlite import SQLiteStore  # noqa: E402
+from systematic_trading.storage import TradingStore, create_trading_store  # noqa: E402
 
 
 TRADING_DAYS_PER_YEAR = 252
@@ -75,7 +75,7 @@ def main() -> None:
     )
     periods = _period_diagnostics(report, current_sota_payload)
 
-    store = SQLiteStore(database_path)
+    store = create_trading_store(AppSettings(), database_path=database_path)
     store.initialize()
     daily_reweight_payload = _run_daily_reweight_variant(
         store=store,
@@ -172,7 +172,7 @@ def _period_diagnostics(report: Mapping[str, Any], current_sota_payload: Mapping
 
 def _run_daily_reweight_variant(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     winner_row: Mapping[str, Any],
     start_date: date,
     end_date: date,
@@ -197,7 +197,8 @@ def _run_daily_reweight_variant(
     usd_cnh_by_date = {rate.rate_date: rate.rate for rate in fx_rates}
     latest_bars_by_date = _latest_bars_by_date(bars_by_symbol, trade_dates)
     daily_prices = {
-        trade_date: {symbol: bar.close for symbol, bar in latest_bars_by_date[trade_date].items()}
+        trade_date: {symbol: bar.close for symbol, bar in latest_bars_by_date[trade_date].items()
+                     if bar.trade_date == trade_date}
         for trade_date in trade_dates
     }
     daily_execution_prices = _open_prices_by_date(bars_by_symbol, trade_dates)
@@ -236,6 +237,7 @@ def _run_daily_reweight_variant(
         daily_rebalance_prices=daily_rebalance_prices,
         daily_execution_prices=daily_execution_prices,
         decision_dates_by_trade_date=_previous_trade_dates(trade_dates),
+        daily_execution_fx_to_cnh={day: daily_fx[prior] for day, prior in _previous_trade_dates(trade_dates).items()},
         sleeve=config.sleeve_name,
     )
     payload = _stable_backtest_payload(result.model_dump(mode="json"))

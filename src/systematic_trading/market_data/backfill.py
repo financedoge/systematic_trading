@@ -6,6 +6,7 @@ from typing import Protocol, Sequence
 from pydantic import BaseModel, Field
 
 from systematic_trading.domain.market import PriceBar
+from systematic_trading.daily_quality import completed_session, captured_before_close, valid_ohlc
 from systematic_trading.market_data.golden import ClickHouseMarketDataClient, daily_bar_row
 
 
@@ -152,10 +153,13 @@ def _backfill_symbol(
         fallback_source_name=fallback_source_name,
         fallback_source_priority=fallback_source_priority,
     )
+    rejected = [bar.trade_date for bar in bars if not completed_session(bar.trade_date) or not valid_ohlc(bar)]
+    if rejected:
+        warnings.append(f"{symbol}: rejected unfinished/non-session or invalid OHLC bars: {rejected}")
     bars_by_date = {
         bar.trade_date: bar
         for bar in bars
-        if start_date <= bar.trade_date <= end_date
+        if start_date <= bar.trade_date <= end_date and completed_session(bar.trade_date) and valid_ohlc(bar)
     }
     candidate_dates = sorted(bars_by_date)
     delete_dates = sorted(repair_dates - set(candidate_dates)) if candidate_dates else []
@@ -290,6 +294,8 @@ def _dedupe(messages: list[str]) -> list[str]:
 
 def _existing_daily_row_needs_repair(row: dict[str, object]) -> bool:
     quality_flags = row.get("quality_flags")
+    if captured_before_close(row):
+        return True
     if isinstance(quality_flags, list) and any(str(flag).lower() in {"carry_forward", "stale", "stale_carry_forward"} for flag in quality_flags):
         return True
     volume = _float(row.get("volume"))
@@ -297,6 +303,8 @@ def _existing_daily_row_needs_repair(row: dict[str, object]) -> bool:
     high = _float(row.get("high"))
     low = _float(row.get("low"))
     close = _float(row.get("close"))
+    if None not in {open_price, high, low, close} and not low <= min(open_price, close) <= max(open_price, close) <= high:
+        return True
     if volume == 0 and None not in {open_price, high, low, close}:
         return open_price == high == low == close
     return False

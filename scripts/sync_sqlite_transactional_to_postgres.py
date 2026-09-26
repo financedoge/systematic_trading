@@ -57,6 +57,14 @@ def sync_sqlite_transactional_state(*, sqlite_database: Path, settings: AppSetti
 
     postgres_store = PostgresStore.from_settings(settings)
     postgres_store.initialize()
+    # This historical bootstrap script replays approvals and order snapshots.
+    # It must never run against a ledger that has advanced since SQLite cutover.
+    with postgres_store._connect() as connection:
+        for table in ("core.instruments", "portfolio.proposals", "execution.broker_orders",
+                      "portfolio.approval_decisions", "portfolio.pnl_snapshots",
+                      "portfolio.pnl_baselines", "events.platform_event_outbox"):
+            if connection.execute(f"SELECT 1 FROM {table} LIMIT 1").fetchone():
+                raise ValueError("Legacy bootstrap requires an empty, stopped target. Use archive_sqlite_to_postgres.py to preserve history without overwriting current state.")
     counts: Counter[str] = Counter()
 
     with sqlite3.connect(sqlite_database) as sqlite_connection:

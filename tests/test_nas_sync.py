@@ -48,6 +48,36 @@ def test_two_pc_roundtrip_and_competing_owner(tmp_path):
     assert list(a.local.glob("before-restore-*"))
 
 
+def test_preflight_preserves_active_and_clean_handoffs(tmp_path):
+    a = make_sync(tmp_path, "a")
+    insert(a, "audit")
+    a.prepare()
+    for phase in ("active", "clean"):
+        if phase == "clean":
+            a.release()
+        before = (dict(a.state), a.owner(), a.head())
+        a.preflight()
+        assert (a.state, a.owner(), a.head()) == before
+        assert not (a.root / "operation.lock").exists()
+        assert values(a) == ["audit"]
+
+
+def test_preflight_rejects_other_owner_and_unavailable_share(tmp_path):
+    a, b = make_sync(tmp_path, "a"), make_sync(tmp_path, "b")
+    insert(a, "audit")
+    a.prepare()
+    a.release()
+    b.prepare()
+    with pytest.raises(SyncConflict, match="ownership/history changed"):
+        a.preflight()
+    owner = b.owner()
+    b.root = tmp_path / "disconnected" / "share"
+    with pytest.raises(SyncConflict, match="NAS unavailable"):
+        b.preflight()
+    assert a.owner() == owner
+    assert not b.root.exists()
+
+
 def test_offline_edits_preserved(tmp_path):
     a, b = make_sync(tmp_path, "a"), make_sync(tmp_path, "b")
     insert(a, "approval")

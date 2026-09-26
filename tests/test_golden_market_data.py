@@ -128,7 +128,7 @@ def test_daily_bar_row_maps_price_bar_for_clickhouse_golden_source() -> None:
     assert row["trade_date"] == "2026-07-10"
     assert row["close"] == 751.28
     assert row["source_name"] == "sqlite_price_bars"
-    assert row["quality_flags"] == ["from_sqlite"]
+    assert row["quality_flags"] == ["availability_unverified", "from_sqlite"]
     assert row["payload_hash"].startswith("sha256:")
 
 
@@ -179,7 +179,7 @@ def test_backfill_clickhouse_daily_bars_inserts_missing_provider_dates_only() ->
     assert client.inserted_rows[0]["symbol"] == "SPY"
     assert client.inserted_rows[0]["trade_date"] == "2026-07-10"
     assert client.inserted_rows[0]["source_name"] == "yahoo_adjusted"
-    assert client.inserted_rows[0]["quality_flags"] == ["daily_backfill"]
+    assert client.inserted_rows[0]["quality_flags"] == ["availability_unverified", "daily_backfill"]
 
 
 def test_backfill_clickhouse_daily_bars_uses_fallback_provider() -> None:
@@ -284,9 +284,9 @@ def test_backfill_clickhouse_daily_bars_deletes_stale_dates_absent_from_provider
 def _price_bar(trade_date: date, close: str) -> PriceBar:
     return PriceBar(
         trade_date=trade_date,
-        open=Decimal("620"),
-        high=Decimal("625"),
-        low=Decimal("619"),
+        open=Decimal(close),
+        high=Decimal(close) + 1,
+        low=Decimal(close) - 1,
         close=Decimal(close),
         volume=1000,
     )

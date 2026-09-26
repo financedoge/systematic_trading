@@ -10,6 +10,13 @@ Status values:
 - `Blocked`: cannot proceed without an explicit external decision, credential, service, dependency, or infrastructure change.
 - `Review`: implemented but needs human review, operational soak, or production evidence.
 
+## Active session — 2026-09-26
+
+- **Done: PnL N/A follow-up.** Retain last received broker values with explicit stale timestamps, render partial account/position fields independently and survive failed browser refreshes. Independent, bounded dashboard panel loading prevents slow performance/reconciliation requests hiding attribution; request-scoped ledger/FX/price read reuse reduced measured attribution latency from 87.14s to 3.23s with identical totals. 75 regression tests passed; full Ruff clean. Deployed dashboard/dispatcher 33380/32148; real browser shows all six position daily PnLs and account HKD 1,208.38 (stale), accounting CNH 977.08 and reference CNH 1,960.12. Reconciliation matched; existing paper policy unchanged. Evidence: `var/pnl-na-before.json`, `var/pnl-na-after.json`, `var/pnl-na-regression.xml`.
+- **Done: live broker P&L.** Dedicated read-only IB stream, verified account/currencies, freshness/unavailable states and reconnect tests. Deployed; real browser/API showed changing PnL and six positions. Stored daily accounting remains separately labelled.
+- **Done: platform audit and corrections.** Point-in-time signals/filings/labels, prior-session execution FX, missing-price/calendar/valuation failures, completed daily data and lint fixes. Final full suite: 579 passed, one optional SMB test skipped; Ruff E9/F clean. Current delayed recorder and recent IB FX history verified working. See `docs/platform-audit-2026-09-26.md` for remaining data/entitlement/research limitations.
+- **Done: LEAN v1 research worker.** Frozen manifests/source, official pinned offline engine, replay/shared signals, native fills and Python parity, runtime/robustness evidence and append-only research registry. Twelve native runs passed, including both 3,330-session histories and identical replay. `docs/lean-validation-2026-09-26.md` and `D:/systematic_trading_data/lean/validation/20260926-v1/` retain evidence. NAS registry backup completed. Historical vintage/FX/universe certification, raw corporate actions, settlement and TWAP remain explicit later promotion gates; no LEAN routing or promotion enabled.
+
 ## Operating Rule
 
 Before starting work:
@@ -27,6 +34,21 @@ After finishing work:
 4. Add a concise entry to `log.md`.
 
 ## Current Snapshot
+
+### 2026-09-26 PostgreSQL relocation command repair
+
+Status: **Done (repair, tests and service recovery); Review (elevated relocation retry)**. Replaced sc.exe serialization with Win32_Service.Change via structured CIM arguments, return-code validation and exact command readback; rollback uses the same helper and is armed before the change attempt. Tests execute helper with mocked service calls under Windows PowerShell 5.1 and PowerShell 7, covering quoted forward/rollback paths, rejection and readback mismatch; combined operator tests: 3 passed. PostgreSQL confirmed on C:, original D: copy confirmed shut down/same cluster and preserved as data.failed-sc-20260926 after checked-path rename. Standard startup restored required services and matched paper reconciliation; recorder separately reports IB 10197 competing session. NAS preflight passes. Retry same script in Administrator PowerShell; no move completion claimed.
+
+
+### 2026-09-25 elevated NAS relocation preflight
+
+Status: **Done (preflight repair and service recovery); Blocked (elevated NAS access / physical PostgreSQL move)**. Confirmed no PG stop/copy/retarget; normal session sees matching NAS ownership/history. Suspected elevated SMB-session visibility, with transient outage also possible. Added same-process preflight before downtime; checks access, exclusive lock and active/clean handoff identity without taking ownership or modifying state. Standard startup restored all eight services healthy and matched paper reconciliation. NAS/operator tests: 20 passed, 1 optional SMB test skipped; real normal-session preflight and PowerShell syntax checks passed. Retry from Administrator PowerShell only after NAS connection/preflight succeeds. No guard bypass, credential changes or broker commands.
+
+
+### 2026-09-25 database consolidation and LEAN plan
+
+Status: **Done (SQLite retirement, Docker D: relocation and LEAN plan); Blocked (PostgreSQL physical move: Windows administrator access)**. Default application/research/worker/reporting paths use PostgreSQL/ClickHouse; explicit SQLite remains for tests and retained recovery/NAS-layout compatibility. Archived all 145,836 SQLite rows into PostgreSQL with exact readback; verified operational identity/approval coverage and all 140,686 bar / 3,790 FX keys in ClickHouse, preserving newer state. Moved Docker WSL disks and both database/event volumes to `D:/systematic_trading_data/docker/DockerDesktopWSL` after stopped-volume tar backups and clean NAS handoff. Restarted platform; all eight services healthy and IB paper reconciliation matched. Read-only server-store backtest: 250 NAV points, eight proposals. Full suite: 525 passed, 1 skipped; final cutover-focused checks: 21 passed. PostgreSQL service access preflight returned Windows error 5; its C: data directory remains unchanged. Prepared/parsing-checked `scripts/move_postgres_data_to_d.ps1` for elevated execution; no admin move claimed. See `docs/database-consolidation.md` and `docs/lean-backtest-integration-plan.md`. LEAN implementation L1/L2 remains Pending; no engine installed, promotion or broker order command issued.
+
 
 ### 2026-09-25 fill prices, TWAP benchmarks and optional paper auto-approval
 

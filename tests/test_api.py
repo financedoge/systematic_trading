@@ -829,7 +829,7 @@ def test_monitored_strategy_route_opens_full_report_through_current_market_data(
 
     assert registry.status_code == 200
     assert 'button.dataset.strategyLifecycle==="monitored"' in registry.text
-    assert f"/api/v1/strategies/${{encodeURIComponent(button.dataset.id)}}/report" in registry.text
+    assert "/api/v1/strategies/${encodeURIComponent(button.dataset.id)}/report" in registry.text
     assert report.status_code == 200
     assert "NAV, Benchmark, Holdings, Drawdowns" in report.text
     assert "Period Metrics" in report.text

@@ -116,7 +116,6 @@ def company_facts_to_snapshots(
         cfo = _duration_value(concepts, CFO_TAGS, key)
         capex = _duration_value(concepts, CAPEX_TAGS, key)
         fcf = None if cfo is None else cfo - abs(capex or Decimal("0"))
-        assets = _instant_value(concepts, ASSETS_TAGS, key)
         current_assets = _instant_value(concepts, CURRENT_ASSETS_TAGS, key)
         current_liabilities = _instant_value(concepts, CURRENT_LIABILITIES_TAGS, key)
         equity = _instant_value(concepts, EQUITY_TAGS, key)

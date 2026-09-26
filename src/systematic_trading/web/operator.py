@@ -656,7 +656,7 @@ _OPERATOR_HTML = """<!doctype html>
       </section>
       <section class="panel">
         <div class="panel-head">
-          <h2>Live PnL</h2>
+          <h2>Live broker PnL</h2>
           <div class="actions">
             <span class="status-line"><span id="pnl-as-of">n/a</span></span>
           </div>
@@ -664,9 +664,13 @@ _OPERATOR_HTML = """<!doctype html>
         <div class="metrics-compact" aria-label="PnL summary">
           <div class="mini-metric"><label>Realized PnL</label><strong id="pnl-realized">n/a</strong></div>
           <div class="mini-metric"><label>Unrealized PnL</label><strong id="pnl-unrealized">n/a</strong></div>
-          <div class="mini-metric"><label>Total PnL</label><strong id="pnl-total">n/a</strong></div>
-          <div class="mini-metric"><label>Open Value</label><strong id="pnl-open-value">n/a</strong></div>
+          <div class="mini-metric"><label>Daily PnL</label><strong id="pnl-total">n/a</strong></div>
+          <div class="mini-metric"><label>Currency</label><strong id="pnl-open-value">n/a</strong></div>
         </div>
+        <div id="live-pnl-table"></div>
+        <div id="live-pnl-warnings" class="warnings" role="status"></div>
+        <h3>Stored daily accounting — CNH</h3>
+        <div class="performance-note">Daily research marks and local reset baseline; separate from current broker PnL.</div>
         <div id="pnl-chart" class="chart-wrap"></div>
         <div id="pnl-legend" class="legend"></div>
         <div id="pnl-table"></div>
@@ -679,7 +683,7 @@ _OPERATOR_HTML = """<!doctype html>
         </div>
         <div class="metrics-compact" aria-label="PnL attribution summary">
           <div class="mini-metric"><label>Reference Fill PnL</label><strong id="exec-theoretical-pnl">n/a</strong></div>
-          <div class="mini-metric"><label>Real PnL</label><strong id="exec-actual-pnl">n/a</strong></div>
+          <div class="mini-metric"><label>Stored-price PnL</label><strong id="exec-actual-pnl">n/a</strong></div>
           <div class="mini-metric"><label>Execution Gain</label><strong id="exec-gain">n/a</strong></div>
           <div class="mini-metric"><label>Execution Bps</label><strong id="exec-bps">n/a</strong></div>
           <div class="mini-metric"><label>Missed Orders</label><strong id="exec-missed-count">0</strong></div>
@@ -770,27 +774,42 @@ _OPERATOR_HTML = """<!doctype html>
       await renderSelected();
     }
 
+    const dashboardRequests = new Map();
+    function loadDashboardPanel(key, load, render, failed) {
+      if (dashboardRequests.has(key)) return dashboardRequests.get(key);
+      const pending = Promise.resolve().then(load).then(render).catch(failed)
+        .finally(() => dashboardRequests.delete(key));
+      dashboardRequests.set(key, pending);
+      return pending;
+    }
+
     async function loadDashboardData() {
-      try {
-        const reconciliation = await api("/api/v1/dashboard/reconciliation/interactive-brokers", { method: "POST" });
-        renderReconciliation(reconciliation);
-      } catch (error) {
-        state.reconciliation = { has_breaks: true, unavailable: true };
-        renderReconciliationUnavailable(error.message);
-      }
-      const [automation, performance, holdings, pnl, pnlHistory, executionQuality] = await Promise.all([
-        api("/api/v1/automation/status"),
-        api("/api/v1/dashboard/performance"),
-        api("/api/v1/dashboard/holdings"),
-        api("/api/v1/dashboard/pnl"),
-        api("/api/v1/dashboard/pnl/snapshots?limit=60"),
-        api("/api/v1/dashboard/execution-quality?history_limit=1")
+      const read = path => api(path, {signal: AbortSignal.timeout(45000)});
+      const warning = id => error => {
+        el(id).textContent = `Refresh failed: ${error.message}. Any displayed values are from the previous refresh; retrying automatically.`;
+      };
+      await Promise.allSettled([
+        loadDashboardPanel("reconciliation",
+          () => api("/api/v1/dashboard/reconciliation/interactive-brokers", {method:"POST", signal:AbortSignal.timeout(20000)}),
+          renderReconciliation, error => {
+            state.reconciliation = {has_breaks:true, unavailable:true};
+            renderReconciliationUnavailable(error.message);
+          }),
+        loadDashboardPanel("automation", () => read("/api/v1/automation/status"), renderAutomation, warning("automation-warnings")),
+        loadDashboardPanel("performance", () => read("/api/v1/dashboard/performance"), renderPerformance, warning("performance-warnings")),
+        loadDashboardPanel("holdings", () => read("/api/v1/dashboard/holdings"), renderHoldings, warning("holdings-warnings")),
+        loadDashboardPanel("pnl", async () => {
+          // Missing history must not hide a successful current accounting snapshot.
+          const [current, history] = await Promise.allSettled([
+            read("/api/v1/dashboard/pnl"), read("/api/v1/dashboard/pnl/snapshots?limit=60")
+          ]);
+          if (current.status === "rejected") throw current.reason;
+          const payload = current.value;
+          if (history.status === "rejected") payload.warnings = [...(payload.warnings || []), `Snapshot history unavailable: ${history.reason.message}`];
+          return [payload, history.status === "fulfilled" ? history.value : []];
+        }, ([pnl, history]) => renderPnl(pnl, history), warning("pnl-warnings")),
+        loadDashboardPanel("attribution", () => read("/api/v1/dashboard/execution-quality?history_limit=1"), renderExecutionQuality, warning("execution-quality-warnings"))
       ]);
-      renderAutomation(automation);
-      renderPerformance(performance);
-      renderHoldings(holdings);
-      renderPnl(pnl, pnlHistory);
-      renderExecutionQuality(executionQuality);
     }
 
     function renderReconciliation(payload) {
@@ -1252,12 +1271,38 @@ _OPERATOR_HTML = """<!doctype html>
       `;
     }
 
+    function renderLivePnl(payload) {
+      const live = payload.status === "live";
+      const money = value => value === null || value === undefined || !Number.isFinite(Number(value)) ? "n/a" : Number(value).toLocaleString(undefined, {minimumFractionDigits:2,maximumFractionDigits:2});
+      const age = payload.age_seconds == null ? "" : ` · ${Math.floor(payload.age_seconds / 60)}m ${Math.floor(payload.age_seconds % 60)}s ago`;
+      el("pnl-as-of").textContent = `${live ? "live" : payload.received_at ? "Last received · stale" : "unavailable"} · ${payload.account || "account pending"} · ${payload.received_at ? fmtDateTime(payload.received_at) : "no broker update"}${age}${payload.connected === false ? " · disconnected" : ""}`;
+      el("pnl-realized").textContent = payload.currency ? money(payload.realized_pnl) : "n/a";
+      el("pnl-unrealized").textContent = payload.currency ? money(payload.unrealized_pnl) : "n/a";
+      el("pnl-total").textContent = payload.currency ? money(payload.daily_pnl) : "n/a";
+      el("pnl-open-value").textContent = payload.currency || "unknown";
+      el("live-pnl-warnings").textContent = (payload.warnings || []).join(" ");
+      el("live-pnl-table").innerHTML = `<table><thead><tr><th>Symbol</th><th>Currency</th><th>Quantity</th><th>Daily PnL</th><th>Unrealized</th><th>Realized</th><th>Value</th><th>Update</th></tr></thead><tbody>${(payload.positions || []).map(row => `<tr><td>${esc(row.symbol)}</td><td>${esc(row.currency)}</td><td>${esc(row.quantity)}</td>${[row.daily_pnl,row.unrealized_pnl,row.realized_pnl,row.market_value].map(v => `<td class="num">${row.currency ? money(v) : "n/a"}</td>`).join("")}<td>${row.received_at ? `${row.stale ? "Last received · stale · " : ""}${esc(fmtDateTime(row.received_at))}` : "waiting for broker"}</td></tr>`).join("")}</tbody></table>`;
+    }
+
+    let livePnlLoading = false;
+    let lastLivePnl = null;
+    async function loadLivePnl() {
+      if (livePnlLoading) return;
+      livePnlLoading = true;
+      try {
+        lastLivePnl = await api("/api/v1/dashboard/pnl/live", {signal: AbortSignal.timeout(5000)});
+        renderLivePnl(lastLivePnl);
+      } catch (error) {
+        const previous = lastLivePnl || {};
+        renderLivePnl({...previous, status:"unavailable", connected:false,
+          age_seconds: previous.received_at ? Math.max(0, (Date.now() - Date.parse(previous.received_at)) / 1000) : null,
+          positions:(previous.positions || []).map(row => ({...row, stale:true})),
+          warnings:[...(previous.warnings || []), `Feed refresh failed: ${error.message}. Values shown are last received, not current.`]});
+      }
+      finally { livePnlLoading = false; }
+    }
+
     function renderPnl(payload, history) {
-      el("pnl-as-of").textContent = payload.as_of ? `as of ${String(payload.as_of).slice(0, 10)}` : "n/a";
-      el("pnl-realized").textContent = fmtSignedMoney(payload.realized_pnl_cnh);
-      el("pnl-unrealized").textContent = fmtSignedMoney(payload.unrealized_pnl_cnh);
-      el("pnl-total").textContent = fmtSignedMoney(payload.total_pnl_cnh);
-      el("pnl-open-value").textContent = fmtMaybeMoney(payload.open_market_value_cnh);
       const warnings = [...(payload.warnings || [])];
       if (payload.baseline_cutoff_at) warnings.push(`Accounting baseline cutoff: ${new Intl.DateTimeFormat('en-GB',{timeZone:'America/New_York',dateStyle:'medium',timeStyle:'medium',hourCycle:'h23'}).format(new Date(payload.baseline_cutoff_at))} New York.`);
       if (!payload.valuation_complete) warnings.push("PnL valuation is incomplete because one or more symbols could not be marked.");
@@ -1858,6 +1903,9 @@ _OPERATOR_HTML = """<!doctype html>
       state.performance.end = el("perf-range-end").value;
       if (state.performance.payload) renderPerformance(state.performance.payload);
     });
+    loadLivePnl();
+    setInterval(loadLivePnl, 2000);
+
     let performanceResizeFrame = null;
     window.addEventListener("resize", () => {
       cancelAnimationFrame(performanceResizeFrame);

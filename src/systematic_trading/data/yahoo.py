@@ -8,6 +8,7 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 from systematic_trading.domain.market import PriceBar
+from systematic_trading.daily_quality import completed_session
 
 
 class YahooChartProvider:
@@ -48,6 +49,9 @@ class YahooChartProvider:
         adjusted_closes = (indicators.get("adjclose") or [{}])[0].get("adjclose", [])
         bars: list[PriceBar] = []
         for index, timestamp in enumerate(timestamps):
+            day = datetime.fromtimestamp(timestamp, tz=UTC).date()
+            if not completed_session(day):
+                continue
             open_price = self._decimal_at(quotes, "open", index)
             high = self._decimal_at(quotes, "high", index)
             low = self._decimal_at(quotes, "low", index)
@@ -65,6 +69,8 @@ class YahooChartProvider:
                 low *= factor
                 close = adjusted_close
 
+            if not low <= min(open_price, close) <= max(open_price, close) <= high:
+                raise ValueError(f"Yahoo returned inconsistent OHLC for {symbol} on {day}.")
             bars.append(
                 PriceBar(
                     trade_date=datetime.fromtimestamp(timestamp, tz=UTC).date(),

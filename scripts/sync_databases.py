@@ -44,7 +44,7 @@ def assert_services_stopped():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["prepare", "backup", "release", "worker", "stop-worker", "status", "guard"])
+    parser.add_argument("action", choices=["prepare", "backup", "release", "worker", "stop-worker", "status", "guard", "preflight"])
     parser.add_argument("--config", type=Path, default=ROOT / "config/database-sync.json")
     args = parser.parse_args()
     config = read_json(args.config)

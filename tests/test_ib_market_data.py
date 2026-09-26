@@ -50,3 +50,34 @@ def _bar(trade_date: date, close: Decimal) -> PriceBar:
         close=close,
         volume=1000,
     )
+
+
+def test_adjusted_history_uses_empty_endpoint_and_filters_requested_dates(monkeypatch):
+    import sys
+    from types import ModuleType, SimpleNamespace
+    from systematic_trading.data.ib import IbApiHistoricalDataClient
+
+    calls = []
+    class Client:
+        def __init__(self, wrapper): self.wrapper = wrapper
+        def connect(self, *args): self.wrapper.nextValidId(1)
+        def run(self): pass
+        def disconnect(self): pass
+        def reqHistoricalData(self, *args):
+            calls.append(args)
+            for stamp in ('20250102', '20250103', '20260925'):
+                self.wrapper.historicalData(92001, SimpleNamespace(
+                    date=stamp, open=100, high=101, low=99, close=100, volume=1000))
+            self.wrapper.historicalDataEnd(92001, '', '')
+
+    for module, name, value in [('client', 'EClient', Client), ('wrapper', 'EWrapper', type('Wrapper', (), {})),
+                                ('contract', 'Contract', type('Contract', (), {}))]:
+        fake = ModuleType('ibapi.' + module)
+        setattr(fake, name, value)
+        monkeypatch.setitem(sys.modules, 'ibapi.' + module, fake)
+    profile = SimpleNamespace(host='localhost', port=4002, client_id=222)
+    bars = IbApiHistoricalDataClient().fetch_daily_bars(profile, 'SPY', date(2025, 1, 2), date(2025, 1, 3))
+    assert [b.trade_date for b in bars] == [date(2025, 1, 2), date(2025, 1, 3)]
+    assert calls[0][2] == '' and calls[0][5] == 'ADJUSTED_LAST'
+    IbApiHistoricalDataClient().fetch_daily_bars(profile, 'USD', date(2025, 1, 2), date(2025, 1, 3), forex_currency='CNH')
+    assert calls[1][2] == '20250103 23:59:59 UTC' and calls[1][5] == 'MIDPOINT'
