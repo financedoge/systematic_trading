@@ -54,6 +54,21 @@ The local policy at `var/live/paper_auto_approval.json` includes operator/reason
 
 ## Restarting P&L after a paper-account reset
 
+The operator's **Live broker PnL** panel is a separate read-only IB subscription.
+It refreshes every two seconds and shows the last broker callback time. Account
+totals use the broker's base currency (currently HKD); individual position rows
+use their contract currency (currently USD). A callback older than 15 seconds or
+a disconnect is labelled stale; its last received figures stay visible with
+their timestamps. After-hours silence does not turn known values into n/a.
+Missing fields or unknown currency remain unavailable individually. A failed
+browser refresh retains prior values with an explicit error/stale label.
+Callback freshness does not prove exchange quote entitlement, and stale values
+are not an official closing valuation. Accounting/attribution panels load
+independently of performance and broker reconciliation; a failed panel shows
+its own refresh error and retries without blanking the others.
+The **Stored daily accounting — CNH** section retains the local accounting/reset
+history below it. A local accounting reset does not change IB's PnL reset schedule.
+
 An operator-authorized opening reset uses a saved, matched, flat pre-trade snapshot of the same paper account. Current reconciliation must be fresh and today's retained executions must explain every current holding. The reset creates an audited baseline just before the requested New York trading day, retains execution history, and assigns the observed opening cash to a clearly identified prior-close reference while retaining its real capture timestamp. Earlier snapshots stay in storage but are excluded from active P&L charts. This differs from resetting positions to the broker at the current moment: today's trades remain in the active ledger.
 
 Fresh broker open-order checks, local uncertain-order checks and existing proposal decisions prevent repeated attempts. A deterministic proposal ID is inserted atomically in SQLite/PostgreSQL and survives restarts. A rejected attempt is not recreated while the same account/target/position episode remains unchanged. Expired unapproved attempts can be reconsidered for a later session; same-session duplicates are suppressed. A later full liquidation or explicit portfolio reset permits a new initial-allocation episode. Existing approvals are never overwritten. Monthly staging waits for any unexpired initial/drift proposal.

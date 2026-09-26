@@ -14,11 +14,11 @@ from systematic_trading.data.yahoo import YahooChartProvider
 from systematic_trading.domain.enums import Currency
 from systematic_trading.domain.market import FXRate
 from systematic_trading.research import BENCHMARK_INSTRUMENTS, MULTI_ASSET_ETF_UNIVERSE
-from systematic_trading.storage.sqlite import SQLiteStore
+from systematic_trading.storage import TradingStore, create_trading_store
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Backfill adjusted Yahoo daily bars and USD/CNH FX into SQLite.")
+    parser = argparse.ArgumentParser(description="Backfill adjusted Yahoo daily bars and USD/CNH FX into the configured stores.")
     parser.add_argument("--database", default=None)
     parser.add_argument("--start-date", default="2012-01-01")
     parser.add_argument("--end-date", default=None)
@@ -29,7 +29,9 @@ def main() -> None:
 
     settings = AppSettings()
     database_path = Path(args.database) if args.database else settings.database_path
-    store = SQLiteStore(database_path)
+    store = create_trading_store(AppSettings(), database_path=database_path)
+    if not args.skip_fx and settings.market_data_store_backend != "sqlite":
+        raise ValueError("Legacy CNY=X proxy is not CNH. Use --skip-fx and the verified IB FX refresh.")
     store.initialize()
 
     start_date = date.fromisoformat(args.start_date)
@@ -41,7 +43,7 @@ def main() -> None:
 
     provider = YahooChartProvider(adjust_prices=True)
     print(f"database={database_path}")
-    print(f"source=yahoo adjusted chart bars")
+    print("source=yahoo adjusted chart bars")
     print(f"range={start_date} to {end_date}")
 
     for symbol in symbols:
@@ -70,7 +72,7 @@ def main() -> None:
         print(f"USD/CNH proxy CNY=X: upserted {len(fx_bars)} rates")
 
 
-def _default_end_date(store: SQLiteStore) -> date:
+def _default_end_date(store: TradingStore) -> date:
     last_dates: list[date] = []
     for symbol in MULTI_ASSET_ETF_UNIVERSE:
         bars = store.list_price_bars(symbol)

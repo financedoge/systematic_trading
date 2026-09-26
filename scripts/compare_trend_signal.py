@@ -45,7 +45,7 @@ from systematic_trading.signals import (
     train_decision_tree_overlay,
 )
 from systematic_trading.signals.library import signal_library_rows, write_signal_library_markdown
-from systematic_trading.storage.sqlite import SQLiteStore
+from systematic_trading.storage import TradingStore, create_trading_store
 
 
 def main() -> None:
@@ -185,11 +185,11 @@ def main() -> None:
 
     settings = AppSettings()
     database_path = Path(args.database) if args.database else settings.database_path
-    store = SQLiteStore(database_path)
+    store = create_trading_store(AppSettings(), database_path=database_path)
     store.initialize()
 
     start_date, end_date = _date_range_from_store(store, args.start_date, args.end_date)
-    if not args.no_fetch_benchmarks:
+    if not args.no_fetch_benchmarks and settings.market_data_store_backend == "sqlite":
         _ensure_benchmark_data(store, start_date, end_date)
     output_dir = Path(args.output_dir or _default_output_dir(args.overlay))
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -270,7 +270,7 @@ def main() -> None:
     market_data_audit = build_market_data_audit(
         prices_by_symbol=prices_by_symbol,
         required_dates=[date.fromisoformat(point["trade_date"]) for point in baseline_payload["nav_series"]],
-        source_name=f"SQLite {database_path}",
+        source_name=f"{settings.transactional_store_backend}/{settings.market_data_store_backend}",
         adjusted_prices=args.adjusted_prices,
     )
     forecast_diagnostics = build_signal_forecast_diagnostics(
@@ -462,7 +462,7 @@ def _build_overlay(
 
 def _build_decision_tree_overlay(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     args: argparse.Namespace,
     start_date: date,
     end_date: date,
@@ -500,7 +500,7 @@ def _default_output_dir(overlay: str) -> str:
 
 
 def _date_range_from_store(
-    store: SQLiteStore,
+    store: TradingStore,
     start_date_arg: str | None,
     end_date_arg: str | None,
 ) -> tuple[date, date]:
@@ -520,7 +520,7 @@ def _date_range_from_store(
     return start_date, end_date
 
 
-def _prices_by_symbol(store: SQLiteStore) -> dict[str, dict[date, float]]:
+def _prices_by_symbol(store: TradingStore) -> dict[str, dict[date, float]]:
     return {
         symbol: {bar.trade_date: float(bar.close) for bar in store.list_price_bars(symbol)}
         for symbol in GLOBAL_ETF_UNIVERSE
@@ -576,7 +576,7 @@ def _parse_score_map(value: str) -> dict[str, Decimal]:
 
 def _run_robustness_grid(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     baseline_config: StoredRiskParityBacktestConfig,
     baseline_payload: dict[str, object],
     current_overlay: TimeSeriesMomentumOverlay,
@@ -633,7 +633,7 @@ def _run_robustness_grid(
 
 def _run_adaptive_robustness_grid(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     baseline_config: StoredRiskParityBacktestConfig,
     baseline_payload: dict[str, object],
     current_overlay: AdaptiveTrendOverlay,
@@ -703,7 +703,7 @@ def _run_adaptive_robustness_grid(
 
 def _run_relative_robustness_grid(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     baseline_config: StoredRiskParityBacktestConfig,
     baseline_payload: dict[str, object],
     current_overlay: RegimeGatedRelativeMomentumOverlay,
@@ -771,7 +771,7 @@ def _run_relative_robustness_grid(
 
 def _run_country_factor_robustness_grid(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     baseline_config: StoredRiskParityBacktestConfig,
     baseline_payload: dict[str, object],
     current_overlay: CountryCompositeFactorOverlay,
@@ -848,7 +848,7 @@ def _run_country_factor_robustness_grid(
 
 def _run_decision_tree_robustness_grid(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     baseline_config: StoredRiskParityBacktestConfig,
     baseline_payload: dict[str, object],
     current_overlay: DecisionTreeSignalOverlay,
@@ -910,7 +910,7 @@ def _stable_backtest_payload(payload: dict[str, object]) -> dict[str, object]:
     return payload
 
 
-def _ensure_benchmark_data(store: SQLiteStore, start_date: date, end_date: date) -> None:
+def _ensure_benchmark_data(store: TradingStore, start_date: date, end_date: date) -> None:
     provider = YahooChartProvider()
     for instrument in BENCHMARK_INSTRUMENTS.values():
         bars = store.list_price_bars(instrument.symbol, start_date=start_date, end_date=end_date)

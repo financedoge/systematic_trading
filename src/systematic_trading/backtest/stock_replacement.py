@@ -124,6 +124,7 @@ def run_spy_replacement_backtest(
         initial_cash=[CashBalance(currency=Currency.CNH, amount=config.initial_cash_cnh)],
         daily_prices=daily_prices,
         daily_fx_to_cnh=daily_fx,
+        daily_execution_fx_to_cnh={day: daily_fx[prior] for day, prior in _previous_trade_dates(common_dates).items()},
         target_schedule=target_schedule,
         daily_rebalance_prices=daily_rebalance_prices,
         daily_execution_prices=daily_execution_prices,
@@ -237,7 +238,7 @@ def _effective_stock_selection(
         instruments={symbol: stock_instruments[symbol] for symbol in selected_symbols},
         features=features,
         fundamentals_by_symbol=fundamentals_by_symbol,
-        as_of=trade_date,
+        as_of=feature_date,
         top_n=config.dynamic_top_n or len(selected_symbols),
         universe_name="point-in-time stock replacement universe",
     )

@@ -13,7 +13,7 @@ sys.path.insert(0, str(REPO_ROOT / "src"))
 from systematic_trading.config import AppSettings
 from systematic_trading.data.sec_edgar import SecEdgarClient, company_facts_to_snapshots
 from systematic_trading.research import US_STOCK_REPLACEMENT_UNIVERSE, default_us_stock_symbols
-from systematic_trading.storage.sqlite import SQLiteStore
+from systematic_trading.storage import create_trading_store
 
 
 def main() -> None:
@@ -35,7 +35,7 @@ def main() -> None:
     user_agent = args.user_agent or settings.sec_user_agent
     symbols = _symbols(args.symbols)
 
-    store = SQLiteStore(database_path)
+    store = create_trading_store(AppSettings(), database_path=database_path)
     store.initialize()
     client = SecEdgarClient(user_agent=user_agent)
     ticker_cik = client.fetch_ticker_cik_map()

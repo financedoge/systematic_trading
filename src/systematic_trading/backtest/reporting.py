@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import math
-import sqlite3
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import date
@@ -265,46 +264,28 @@ def _load_market_data(
     warnings: list[str] = []
     prices: dict[str, dict[str, float]] = {}
     fx_rates: dict[str, float] = {}
-    if not database_path.exists():
+    from systematic_trading.config import AppSettings
+    from systematic_trading.domain import Currency
+    from systematic_trading.storage import create_trading_store
+
+    settings = AppSettings()
+    if settings.market_data_store_backend == "sqlite" and not database_path.exists():
         return prices, fx_rates, [f"Market database was not found: {database_path}"]
-
     try:
-        with sqlite3.connect(database_path) as connection:
-            connection.row_factory = sqlite3.Row
-            for symbol in symbols:
-                rows = connection.execute(
-                    """
-                    SELECT trade_date, payload
-                    FROM price_bars
-                    WHERE symbol = ? AND trade_date >= ? AND trade_date <= ?
-                    ORDER BY trade_date ASC
-                    """,
-                    (symbol, start_date, end_date),
-                ).fetchall()
-                prices[symbol] = {
-                    str(row["trade_date"]): _to_float(json.loads(row["payload"])["close"])
-                    for row in rows
-                }
-                if not prices[symbol]:
-                    warnings.append(f"No stored price bars were found for {symbol}.")
-
-            rows = connection.execute(
-                """
-                SELECT rate_date, payload
-                FROM fx_rates
-                WHERE base_currency = 'USD' AND quote_currency = 'CNH' AND rate_date <= ?
-                ORDER BY rate_date ASC
-                """,
-                (end_date,),
-            ).fetchall()
-            fx_rates = {
-                str(row["rate_date"]): _to_float(json.loads(row["payload"])["rate"])
-                for row in rows
-            }
-            if not fx_rates:
-                warnings.append("No stored USD/CNH FX rates were found.")
-    except sqlite3.Error as exc:
-        warnings.append(f"Could not read market database {database_path}: {exc}")
+        store = create_trading_store(settings, database_path=database_path)
+        for symbol in symbols:
+            bars = store.list_price_bars(symbol, start_date=date.fromisoformat(start_date),
+                                         end_date=date.fromisoformat(end_date))
+            prices[symbol] = {bar.trade_date.isoformat(): float(bar.close) for bar in bars}
+            if not prices[symbol]:
+                warnings.append(f"No stored price bars were found for {symbol}.")
+        rates = store.list_fx_rates(Currency.USD, quote_currency=Currency.CNH,
+                                   end_date=date.fromisoformat(end_date))
+        fx_rates = {rate.rate_date.isoformat(): float(rate.rate) for rate in rates}
+        if not fx_rates:
+            warnings.append("No stored USD/CNH FX rates were found.")
+    except Exception as exc:
+        warnings.append(f"Could not read configured market store ({type(exc).__name__}).")
 
     return prices, fx_rates, warnings
 

@@ -7,7 +7,7 @@ import sys
 from datetime import date
 from decimal import Decimal
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Any, Mapping, Sequence
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -42,7 +42,7 @@ from systematic_trading.research import (
     default_us_stock_symbols,
     instantiate_overlays,
 )
-from systematic_trading.storage.sqlite import SQLiteStore
+from systematic_trading.storage import TradingStore, create_trading_store
 from systematic_trading.valuation.ai import DEFAULT_OPENAI_MODEL, OpenAIStockFrameworkClient, OpenAIStockScreenError
 from systematic_trading.valuation.framework import StockFrameworkScreen, rank_stock_reports
 from systematic_trading.valuation.quantitative import build_quantitative_framework_screen
@@ -101,8 +101,10 @@ def main() -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     settings = AppSettings()
+    if not args.skip_fetch and settings.market_data_store_backend != "sqlite":
+        raise ValueError("Use --skip-fetch with the golden market store. The legacy downloader uses a CNY proxy and cannot populate shared CNH data.")
     database_path = Path(args.database) if args.database else settings.database_path
-    store = SQLiteStore(database_path)
+    store = create_trading_store(AppSettings(), database_path=database_path)
     store.initialize()
     if args.fundamentals_path:
         loaded = _load_fundamental_snapshots(store, Path(args.fundamentals_path))
@@ -227,7 +229,7 @@ def main() -> None:
     market_data_audit = build_market_data_audit(
         prices_by_symbol=prices_by_symbol,
         required_dates=[date.fromisoformat(point["trade_date"]) for point in candidate_payload["nav_series"]],
-        source_name=f"SQLite {database_path}",
+        source_name=f"{settings.transactional_store_backend}/{settings.market_data_store_backend}",
         adjusted_prices=not args.unadjusted_prices,
     )
     artifacts = write_comparison_artifacts(
@@ -265,7 +267,7 @@ def main() -> None:
     print("Selected:", ", ".join(selected_symbols))
 
 
-def _load_fundamental_snapshots(store: SQLiteStore, path: Path) -> int:
+def _load_fundamental_snapshots(store: TradingStore, path: Path) -> int:
     raw = json.loads(path.read_text(encoding="utf-8"))
     if isinstance(raw, dict):
         records = []
@@ -341,7 +343,7 @@ def _load_or_build_screen(
 
 def _ensure_market_data(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     instruments: Mapping[str, Any],
     start_date: date,
     end_date: date,
@@ -425,7 +427,7 @@ def _safe_exception_message(exc: Exception) -> str:
     return message.encode("ascii", errors="backslashreplace").decode("ascii")
 
 
-def _prices_by_symbol(store: SQLiteStore, symbols: list[str]) -> dict[str, dict[date, float]]:
+def _prices_by_symbol(store: TradingStore, symbols: list[str]) -> dict[str, dict[date, float]]:
     return {
         symbol: {bar.trade_date: float(bar.close) for bar in store.list_price_bars(symbol)}
         for symbol in symbols

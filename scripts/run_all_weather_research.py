@@ -1,13 +1,11 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import html
 import json
 import os
 import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
-from dataclasses import replace
 from datetime import date
 from decimal import Decimal
 from pathlib import Path
@@ -50,10 +48,9 @@ from systematic_trading.research import (  # noqa: E402
     current_sota_definition,
     grouped_counts,
     instantiate_overlays,
-    risk_parity_definition,
 )
 from systematic_trading.signals import BalancedAssetGroupOverlay  # noqa: E402
-from systematic_trading.storage.sqlite import SQLiteStore  # noqa: E402
+from systematic_trading.storage import TradingStore, create_trading_store  # noqa: E402
 
 
 _WORKER_DATABASE_PATH: str | None = None
@@ -84,7 +81,7 @@ def main() -> None:
     database_path = Path(args.database) if args.database else settings.database_path
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    store = SQLiteStore(database_path)
+    store = create_trading_store(AppSettings(), database_path=database_path)
     store.initialize()
 
     all_symbols = sorted(set(ALL_WEATHER_ETF_UNIVERSE) | {MULTI_ASSET_BENCHMARK_SYMBOL, MSCI_WORLD_PROXY_SYMBOL})
@@ -338,7 +335,7 @@ def _run_candidate_task(task: tuple[int, dict[str, Any]]) -> dict[str, Any]:
     ):
         raise RuntimeError("All-weather worker was not initialized.")
     index, params = task
-    store = SQLiteStore(Path(_WORKER_DATABASE_PATH))
+    store = create_trading_store(AppSettings(), database_path=Path(_WORKER_DATABASE_PATH))
     case = _case(index, params)
     payload = _run_candidate_payload(
         store=store,
@@ -421,7 +418,7 @@ def _sleeve_budgets(asset_class_budgets: Mapping[str, Decimal]) -> dict[str, Dec
 
 def _run_candidate_payload(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     case: Mapping[str, Any],
     start_date: date,
     end_date: date,
@@ -450,7 +447,7 @@ def _run_candidate_payload(
 
 def _baseline_payloads(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     start_date: date,
     end_date: date,
     initial_cash_cnh: Decimal,

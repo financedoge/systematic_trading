@@ -8,7 +8,7 @@ from time import monotonic
 
 from pydantic import AwareDatetime, BaseModel, Field
 
-from systematic_trading.domain.enums import BrokerOrderStatus, Currency, OrderEnvironment, OrderType, ProposalStatus
+from systematic_trading.domain.enums import BrokerOrderStatus, OrderEnvironment, OrderType, ProposalStatus
 from systematic_trading.domain.execution import ApprovalDecision
 from systematic_trading.domain.events import EventSeverity, EventSource, IncidentRecordedEvent, IncidentRecordedPayload, IncidentStatus
 from systematic_trading.domain.portfolio import CashBalance

@@ -268,9 +268,9 @@ def daily_bar_row(
         "source_name": source_name,
         "source_priority": int(source_priority),
         "adjustment": adjustment,
-        "available_at": _iso_utc(available_at or datetime.combine(bar.trade_date, datetime.min.time(), tzinfo=UTC)),
+        "available_at": _iso_utc(available_at or ingested_at or now),
         "ingested_at": _iso_utc(ingested_at or now),
-        "quality_flags": sorted(set(quality_flags or [])),
+        "quality_flags": sorted(set(quality_flags or []) | ({"availability_unverified"} if available_at is None else set())),
         "payload_hash": canonical_payload_hash(payload),
     }
 
@@ -297,9 +297,9 @@ def fx_rate_row(
         "rate": float(Decimal(rate.rate)),
         "source_name": source_name,
         "source_priority": int(source_priority),
-        "available_at": _iso_utc(available_at or datetime.combine(rate.rate_date, datetime.min.time(), tzinfo=UTC)),
+        "available_at": _iso_utc(available_at or ingested_at or now),
         "ingested_at": _iso_utc(ingested_at or now),
-        "quality_flags": sorted(set(quality_flags or [])),
+        "quality_flags": sorted(set(quality_flags or []) | ({"availability_unverified"} if available_at is None else set())),
         "payload_hash": canonical_payload_hash(payload),
     }
 

@@ -67,7 +67,7 @@ from systematic_trading.signals import (  # noqa: E402
     TrendQualityFilterOverlay,
     train_technical_tree_allocator_overlay,
 )
-from systematic_trading.storage.sqlite import SQLiteStore  # noqa: E402
+from systematic_trading.storage import TradingStore, create_trading_store  # noqa: E402
 
 
 @dataclass(frozen=True)
@@ -159,7 +159,7 @@ def main() -> None:
     database_path = Path(args.database) if args.database else settings.database_path
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    store = SQLiteStore(database_path)
+    store = create_trading_store(AppSettings(), database_path=database_path)
     store.initialize()
 
     all_symbols = sorted(
@@ -704,7 +704,7 @@ def _run_case_backtests(
 
 
 def _run_case_backtest_job(job: BacktestCaseJob) -> BacktestCaseOutput:
-    store = SQLiteStore(job.database_path)
+    store = create_trading_store(AppSettings(), database_path=job.database_path)
     config = StoredRiskParityBacktestConfig(
         start_date=job.start_date,
         end_date=job.end_date,
@@ -799,7 +799,7 @@ def _trained_technical_tree_cases(
 
 
 def _train_technical_tree_case_job(job: TechnicalTreeTrainingJob) -> list[ResearchCase]:
-    store = SQLiteStore(job.database_path)
+    store = create_trading_store(AppSettings(), database_path=job.database_path)
     bars_by_symbol = {
         symbol: store.list_price_bars(symbol, start_date=job.start_date, end_date=job.end_date)
         for symbol in MULTI_ASSET_ETF_UNIVERSE
@@ -1170,7 +1170,7 @@ def _technical_tree_min_samples_leaf(spec: Mapping[str, Any], rebalance_frequenc
 
 def _date_range_from_store(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     symbols: Sequence[str],
     start_date_arg: str | None,
     end_date_arg: str | None,
@@ -1377,7 +1377,7 @@ def _ranking_markdown(
 
 def _buy_and_hold_payload(
     *,
-    store: SQLiteStore,
+    store: TradingStore,
     symbol: str,
     start_date: date,
     end_date: date,
@@ -1413,7 +1413,7 @@ def _buy_and_hold_payload(
     }
 
 
-def _prices_by_symbol(store: SQLiteStore, symbols: Sequence[str]) -> dict[str, dict[date, float]]:
+def _prices_by_symbol(store: TradingStore, symbols: Sequence[str]) -> dict[str, dict[date, float]]:
     return {
         symbol: {bar.trade_date: float(bar.close) for bar in store.list_price_bars(symbol)}
         for symbol in symbols

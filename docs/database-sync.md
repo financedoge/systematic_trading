@@ -151,3 +151,7 @@ reconciliation and current market data remain required for paper execution.
 
 Implementation references: [PostgreSQL pg_dump](https://www.postgresql.org/docs/18/app-pgdump.html)
 and [SQLite online backup API](https://www.sqlite.org/backup.html).
+
+## SQLite retirement compatibility
+
+Application/research/reporting paths now default to PostgreSQL/ClickHouse. The SQLite file remains in this backup layout solely for recovery compatibility between PCs; its full content is also verified in PostgreSQL `legacy` tables. Do not remove `sqlite_paths` or bypass its guard during a normal restart. See [database consolidation](database-consolidation.md) for evidence and the pending coordinated layout-version transition.

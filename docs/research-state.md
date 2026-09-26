@@ -14,6 +14,15 @@ Use `.agents/skills/continuous-research-loop.md` for recurring challenger resear
 
 ## Current SOTA
 
+September 26 audit: historical results below are retained as prior research
+artifacts, not re-certified after the timing/data corrections. Missing source
+vintages, fixed-universe survivorship and legacy FX lineage remain limitations.
+The pre-2023 tree is fitted; post-2023 has been used repeatedly for strategy
+selection and is not an untouched holdout. The new LEAN adjusted-CNH-unit scenario
+has separate economics and artifacts; it does not overwrite these numbers or
+promote a replacement. See [audit findings](platform-audit-2026-09-26.md) and
+[LEAN workflow](lean-backtesting.md).
+
 Paper operations now include separately tagged initial-allocation and 2 percentage point drift-maintenance proposals. Monthly signal calculation is preserved; intraday TWAP timing and additional turnover are not represented in the existing monthly benchmark. Keep attribution separate and validate execution/cost effects before live promotion.
 
 - Name: SOTA: price/volume top 6 + technical tree + relative/adaptive

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import re
-from datetime import UTC, date, timedelta
+from datetime import UTC, date
 from datetime import datetime
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from pathlib import Path
@@ -53,6 +53,7 @@ from systematic_trading.execution.window import (
 )
 from systematic_trading.execution.locks import serialized_orders
 from systematic_trading.live.auto_approval import PaperApprovalPolicy, PaperApprovalUpdate
+from systematic_trading.live.pnl import PnlReadView
 from systematic_trading.live import (
     AutomationAlertNotifier,
     LiveAccountSnapshotInput,
@@ -764,6 +765,12 @@ def _reconciliation_break_signature(report: IBPaperReconciliationReport | None) 
     )
 
 
+@router.get("/dashboard/pnl/live")
+async def dashboard_live_pnl(request: Request):
+    """Read the cached broker stream without connecting per HTTP request."""
+    return request.app.state.broker_pnl.snapshot()
+
+
 @router.get("/dashboard/pnl", response_model=PnLSnapshot)
 def dashboard_pnl(
     request: Request,
@@ -946,7 +953,7 @@ def dashboard_execution_quality(
     as_of: date | None = Query(default=None),
     history_limit: int = Query(default=60, ge=1, le=1000),
 ) -> DashboardExecutionQuality:
-    store = _store(request)
+    store = PnlReadView(_store(request))
     actual = build_dashboard_pnl_snapshot(store, as_of=as_of)
     theoretical = build_reference_pnl_snapshot(store, as_of=as_of)
     rows, slippage_warnings = _execution_slippage_rows(store, as_of=actual.as_of.date())

@@ -32,11 +32,16 @@ class AppSettings(BaseSettings):
     ib_reconciliation_client_id: int | None = None
     ib_fx_client_id: int | None = None
     ib_benchmark_client_id: int | None = None
+    ib_pnl_enabled: bool = True
+    ib_pnl_client_id: int | None = None
+    ib_pnl_account: str | None = None
+    ib_pnl_stale_seconds: int = Field(default=15, ge=2)
+    ib_pnl_reconnect_seconds: int = Field(default=30, ge=5)
 
     data_dir: Path = Path("var")
     database_path: Path = Path("var/systematic_trading.db")
-    transactional_store_backend: str = "sqlite"
-    market_data_store_backend: str = "sqlite"
+    transactional_store_backend: str = "postgres"
+    market_data_store_backend: str = "clickhouse"
     market_data_storage_policy_path: Path = Path("config/market-data-storage.json")
     strategy_monitoring_config_path: Path = Path("config/strategy-monitoring.json")
     postgres_host: str = "127.0.0.1"

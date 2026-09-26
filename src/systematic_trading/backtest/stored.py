@@ -3,7 +3,7 @@ from __future__ import annotations
 from bisect import bisect_left
 from datetime import date
 from decimal import Decimal
-from typing import Mapping, Sequence
+from typing import Mapping, Sequence, TYPE_CHECKING
 
 from pydantic import BaseModel
 
@@ -14,7 +14,8 @@ from systematic_trading.domain.portfolio import AllocationTarget, CashBalance
 from systematic_trading.portfolio.beta import BetaInstrumentState, RiskParityBetaSleeve
 from systematic_trading.backtest.engine import BacktestResult, DailyBacktestEngine
 from systematic_trading.signals.base import SignalContext, TargetOverlay
-from systematic_trading.storage.interfaces import MarketDataStore
+if TYPE_CHECKING:
+    from systematic_trading.storage.interfaces import MarketDataStore
 
 
 class StoredRiskParityBacktestConfig(BaseModel):
@@ -87,6 +88,7 @@ def run_stored_risk_parity_backtest(
         initial_cash=[CashBalance(currency=Currency.CNH, amount=config.initial_cash_cnh)],
         daily_prices=daily_prices,
         daily_fx_to_cnh=daily_fx,
+        daily_execution_fx_to_cnh={day: daily_fx[prior] for day, prior in _previous_trade_dates(common_dates).items()},
         target_schedule=target_schedule,
         daily_rebalance_prices=daily_rebalance_prices,
         daily_execution_prices=daily_execution_prices,
@@ -119,7 +121,8 @@ def run_dynamic_risk_parity_backtest(
     latest_bars_by_date = _latest_bars_by_date(bars_by_symbol, trade_dates)
 
     daily_prices = {
-        trade_date: {symbol: bar.close for symbol, bar in latest_bars_by_date[trade_date].items()}
+        trade_date: {symbol: bar.close for symbol, bar in latest_bars_by_date[trade_date].items()
+                     if bar.trade_date == trade_date}
         for trade_date in trade_dates
     }
     daily_execution_prices = _open_prices_by_date(bars_by_symbol, trade_dates)
@@ -150,6 +153,7 @@ def run_dynamic_risk_parity_backtest(
         initial_cash=[CashBalance(currency=Currency.CNH, amount=config.initial_cash_cnh)],
         daily_prices=daily_prices,
         daily_fx_to_cnh=daily_fx,
+        daily_execution_fx_to_cnh={day: daily_fx[prior] for day, prior in _previous_trade_dates(trade_dates).items()},
         target_schedule=target_schedule,
         daily_rebalance_prices=daily_rebalance_prices,
         daily_execution_prices=daily_execution_prices,
@@ -161,7 +165,14 @@ def run_dynamic_risk_parity_backtest(
 
 def _common_price_dates(bars_by_symbol: Mapping[str, Sequence[PriceBar]]) -> list[date]:
     date_sets = [{bar.trade_date for bar in bars} for bars in bars_by_symbol.values()]
-    return sorted(set.intersection(*date_sets))
+    if not date_sets:
+        return []
+    common = sorted(set.intersection(*date_sets))
+    if common:
+        required = {day for dates in date_sets for day in dates if common[0] <= day <= common[-1]}
+        if required != set(common):
+            raise ValueError('Missing price sessions inside the common backtest window; refusing to silently drop dates.')
+    return common
 
 
 def _bar_by_date(bars: Sequence[PriceBar]) -> dict[date, PriceBar]:
@@ -172,7 +183,10 @@ def _latest_rate(rates_by_date: Mapping[date, Decimal], trade_date: date) -> Dec
     available_dates = [rate_date for rate_date in rates_by_date if rate_date <= trade_date]
     if not available_dates:
         raise ValueError(f"No USD/CNH FX rate is available on or before {trade_date}.")
-    return rates_by_date[max(available_dates)]
+    latest = max(available_dates)
+    if (trade_date - latest).days > 7:
+        raise ValueError(f"Stale USD/CNH FX rate for {trade_date}: {latest}.")
+    return rates_by_date[latest]
 
 
 def _latest_bars_by_date(
@@ -206,9 +220,6 @@ def _open_prices_by_date(
             if bar is not None:
                 prices[symbol] = bar.open
                 continue
-            prior = _latest_bar_before(bars, trade_date)
-            if prior is not None:
-                prices[symbol] = prior.close
         result[trade_date] = prices
     return result
 

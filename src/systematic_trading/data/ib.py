@@ -136,8 +136,8 @@ class IbApiHistoricalDataClient:
             app.reqHistoricalData(
                 92001,
                 contract,
-                _ib_end_datetime(end_date),
-                _ib_duration(start_date, end_date),
+                _ib_end_datetime(end_date) if forex_currency else "",
+                _ib_duration(start_date, end_date if forex_currency else max(end_date, datetime.now(UTC).date())),
                 "1 day",
                 "MIDPOINT" if forex_currency else "ADJUSTED_LAST",
                 0 if forex_currency else 1,

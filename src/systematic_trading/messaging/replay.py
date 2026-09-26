@@ -11,6 +11,7 @@ from pydantic import BaseModel, Field
 from systematic_trading.domain.events import (
     AnyPlatformEvent,
     PlatformEventType,
+    PlatformEventOutboxRecord,
     decode_platform_event,
 )
 from systematic_trading.storage.interfaces import PlatformEventOutboxReplayStore

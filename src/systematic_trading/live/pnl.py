@@ -4,6 +4,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 from datetime import UTC, date, datetime, time
 from decimal import Decimal
+from functools import cache
 
 from systematic_trading.backtest.accounting import quantize_money
 from systematic_trading.domain import (
@@ -20,6 +21,23 @@ from systematic_trading.storage.interfaces import TradingStore
 from systematic_trading.execution.fills import execution_state_token
 
 PNL_FILL_STATUSES = {BrokerOrderStatus.FILLED, BrokerOrderStatus.PARTIALLY_FILLED}
+
+
+class PnlReadView:
+    """Reuse identical reads within one calculation, never across HTTP requests.
+
+    A fill batch often has dozens of slices on the same currency/date. Reading
+    its complete FX history once per slice needlessly overloads the server store.
+    Actual/reference calculations also share the same observed ledger and marks.
+    """
+
+    def __init__(self, store: TradingStore) -> None:
+        # Instance-owned caches are released with the calculation (no global TTL).
+        self.latest_pnl_baseline = cache(store.latest_pnl_baseline)
+        self.list_broker_order_records = cache(store.list_broker_order_records)
+        self.list_price_bars = cache(store.list_price_bars)
+        self.list_fx_rates = cache(store.list_fx_rates)
+        self.list_pnl_snapshots = cache(store.list_pnl_snapshots)
 
 
 @dataclass(frozen=True)
@@ -47,6 +65,7 @@ def _build_pnl_snapshot(
     as_of: date | None = None,
     use_reference_prices: bool,
 ) -> PnLSnapshot:
+    store = store if isinstance(store, PnlReadView) else PnlReadView(store)
     as_of_date = as_of or date.today()
     as_of_at = datetime.combine(as_of_date, time.max, tzinfo=UTC)
     baseline = store.latest_pnl_baseline()

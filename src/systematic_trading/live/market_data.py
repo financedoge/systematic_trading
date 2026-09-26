@@ -6,8 +6,9 @@ from typing import Protocol, Sequence
 from pydantic import BaseModel, Field
 
 from systematic_trading.data.yahoo import YahooChartProvider
+from systematic_trading.daily_quality import completed_session, valid_ohlc
 from systematic_trading.domain.enums import Currency
-from systematic_trading.domain.market import FXRate, PriceBar
+from systematic_trading.domain.market import PriceBar
 from systematic_trading.research import current_sota_definition, instruments_for_definition
 from systematic_trading.storage.interfaces import MarketDataStore
 
@@ -79,7 +80,7 @@ def refresh_sota_market_data(
         warnings.extend(fetch_warnings)
         symbol_bars_upserted = 0
         if bars is not None:
-            eligible_bars = [bar for bar in bars if start_date <= bar.trade_date <= target_date]
+            eligible_bars = [bar for bar in bars if start_date <= bar.trade_date <= target_date and completed_session(bar.trade_date) and valid_ohlc(bar)]
             for bar in eligible_bars:
                 store.upsert_price_bar(symbol, bar)
             symbol_bars_upserted += len(eligible_bars)

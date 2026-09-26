@@ -29,6 +29,7 @@ queue = [
 test = [
     "pytest>=8.4.0",
     "httpx>=0.28.0",
+    "ruff>=0.16,<0.17",
 ]
 
 [tool.setuptools]
@@ -41,3 +42,10 @@ where = ["src"]
 pythonpath = ["src"]
 addopts = "-q"
 testpaths = ["tests"]
+
+[tool.ruff.lint]
+select = ["E9", "F"]
+
+[tool.ruff.lint.per-file-ignores]
+# Pytest fixture imports are intentionally referenced by parameter name.
+"tests/*" = ["F401", "F811"]

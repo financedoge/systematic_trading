@@ -23,6 +23,8 @@ The active execution tracker is in `docs/execution-kanban.md`.
 - CNH-aware FX conversion and multi-currency cash ledger.
 - Initial inverse-volatility risk-parity sleeve and proposal preview builder.
 - Minimal daily backtest engine for deterministic portfolio simulations.
+- Offline LEAN research worker with frozen inputs, shared SOTA signals, native simulated fills, Python parity and immutable PostgreSQL research evidence. See [local LEAN backtesting](docs/lean-backtesting.md).
+- Read-only IB account/position PnL stream with explicit currencies, freshness and unavailable states, separate from stored daily accounting.
 - Thin FastAPI operator API for health, manifest, and risk-parity proposal previews.
 - Postgres transactional persistence for watchlists, theses, proposal queues, approval decisions, broker order records, PnL snapshots, and the event outbox on the recommended local platform path.
 - ClickHouse serving storage for normalized daily bars and FX rates.
@@ -64,6 +66,8 @@ For one broker session shared by trading, reconciliation and recording, see the
 paper Gateway on port 4002 with separate API client IDs and local raw storage.
 The [LEAN and NautilusTrader assessment](docs/trading-engine-assessment.md) describes
 the proposed backtest validation pilot and boundaries for any future engine migration.
+The [LEAN integration plan](docs/lean-backtest-integration-plan.md) specifies the worker boundaries and acceptance gates. The [platform audit](docs/platform-audit-2026-09-26.md) records timing/data fixes and remaining research and feed limitations.
+See [database consolidation](docs/database-consolidation.md) for SQLite retirement, verified archive evidence, D: storage, and the remaining administrator-only PostgreSQL directory move.
 
 Recommended local foundation startup:
 
@@ -126,7 +130,7 @@ The recorder service starts with the five-symbol `SPY/QQQ/TLT/GLD/IWM` pilot and
 
 The recorder service also runs ClickHouse daily-bar backfill on startup and then on an interval, including after-hours/weekends. The default path repairs `market_data.daily_bars` directly from Yahoo adjusted daily bars, with IB historical daily bars as fallback.
 
-The local operator startup path now defaults to `ST_TRANSACTIONAL_STORE_BACKEND=postgres` and `ST_MARKET_DATA_STORE_BACKEND=clickhouse`. Active dashboard, proposal, broker-record, PnL, and event-outbox state use Postgres, while daily bars and FX reads use ClickHouse. SQLite remains only a legacy fallback and migration source.
+The local operator startup path now defaults to `ST_TRANSACTIONAL_STORE_BACKEND=postgres` and `ST_MARKET_DATA_STORE_BACKEND=clickhouse`. Active dashboard, proposal, broker-record, PnL, and event-outbox state use Postgres, while daily bars and FX reads use ClickHouse. SQLite remains an explicit offline test backend and retained recovery artifact; research scripts and reports now use the configured server stores.
 
 Rebalance proposals are time-bound to preserve next-open parity with the backtest. The default execution deadline is 30 minutes after the configured TWAP start on the intended trade date. Change it with `ST_EXECUTION_REBALANCE_TIMEOUT_MINUTES`; expired pending or retryable proposals become `missed`, cannot be approved or resubmitted, and are retained in execution-quality analysis.
 
@@ -169,4 +173,4 @@ pip install -e ".[data]"
 
 ## Local state
 
-The recommended local platform startup uses Postgres for transactional state and ClickHouse for market data. `var/systematic_trading.db` still exists as the legacy SQLite fallback and one-way migration source while the platform soaks on Postgres.
+The recommended local platform startup uses Postgres for transactional state and ClickHouse for market data. `var/systematic_trading.db` is retained only for recovery and existing NAS snapshot-layout compatibility. All source rows are verified in the PostgreSQL legacy archive; default research/reporting paths no longer open it. See [migration evidence and storage locations](docs/database-consolidation.md).
