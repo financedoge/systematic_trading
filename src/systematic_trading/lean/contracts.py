@@ -15,10 +15,12 @@ from systematic_trading.research.constituent_signals import ConstituentOverlaySp
 
 class BacktestRunSpec(BaseModel):
     schema_version: Literal[1] = 1
-    strategy: Literal['sota', 'benchmark', 'sota_flow', 'sota_constituents'] = 'sota'
+    strategy: Literal['sota', 'benchmark', 'sota_flow', 'sota_constituents', 'registered'] = 'sota'
+    strategy_definition: dict | None = None
     flow_overlay: FlowConcentrationSpec | None = None
     constituent_overlay: ConstituentOverlaySpec | None = None
     base_tree_model_schedule: bool = False
+    fixed_model_from: str | None = None
     mode: Literal['targets', 'shared'] = 'shared'
     start_date: str
     end_date: str
@@ -52,6 +54,12 @@ class BacktestRunSpec(BaseModel):
 
     @model_validator(mode='after')
     def validate_economics(self):
+        if (self.strategy == 'registered') != (self.strategy_definition is not None):
+            raise ValueError('Registered runs require a complete frozen strategy definition')
+        if self.fixed_model_from is not None:
+            date.fromisoformat(self.fixed_model_from)
+            if not self.base_tree_model_schedule or self.fixed_model_from < '2023-01-01':
+                raise ValueError('Frozen deployed model must follow a causal schedule and cannot precede 2023')
         if self.base_tree_model_schedule and self.strategy == 'benchmark':
             raise ValueError('A benchmark cannot use a tree schedule')
         if (self.strategy == 'sota_constituents') != (self.constituent_overlay is not None):

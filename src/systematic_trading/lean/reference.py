@@ -16,6 +16,7 @@ from systematic_trading.lean.contracts import verify_bundle, write_json
 from systematic_trading.lean.resources import process_resources
 from systematic_trading.lean.strategy import targets_for_day
 from systematic_trading.research import current_sota_definition, instruments_for_definition
+from systematic_trading.research.strategy_catalog import StrategyDefinition
 
 
 def run_reference(root: Path) -> dict:
@@ -32,7 +33,8 @@ def run_reference(root: Path) -> dict:
             bars, date.fromisoformat(row['signal_session']), benchmark=spec.strategy == 'benchmark',
             lookback_bars=spec.lookback_bars, flow_overlay=spec.flow_overlay,
             flow_state=flow_state, constituent_overlay=spec.constituent_overlay,
-            constituent_features=features, base_tree_models=models)]) for day, row in sorted(decisions.items())}
+            constituent_features=features, base_tree_models=models, fixed_model_from=spec.fixed_model_from,
+            definition=StrategyDefinition.from_dict(spec.strategy_definition) if spec.strategy_definition else None)]) for day, row in sorted(decisions.items())}
     quotes = json.loads((root / 'quotes.json').read_text())
     days = [date.fromisoformat(d) for d in sessions]
     instruments = {key: value.model_copy(update={'quote_currency': Currency.CNH})

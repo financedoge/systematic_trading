@@ -50,6 +50,8 @@ cross this boundary. Legacy history remains uncertified for promotion.
 
 ## Principles
 
+Registered monitored strategies are application-owned analytical calculations. The analytics worker reads committed audited batches, verifies source hashes and FX evidence, freezes complete strategy definitions, and runs either the internal Python engine or isolated LEAN with Python parity. A single ClickHouse publication commits matched results, current weights and report data only after all calculations succeed; failures retain the previous complete publication with an error status. No broker credentials or order authorization enter this boundary. The shared report renderer serves both SOTA and tracked challengers. Codex/agent schedules are not calculation infrastructure.
+
 - Optimize for low turnover, concentrated, thesis-driven portfolios.
 - Keep CNH as the accounting and risk currency even when assets trade in foreign currencies.
 - Separate research, backtesting, proposal generation, and broker execution concerns.

@@ -32,6 +32,18 @@ class FlowConcentrationSpec(BaseModel):
     active_cap: float = Field(default=0.03, gt=0, le=0.06, allow_inf_nan=False)
 
 
+class ActivityConcentrationOverlay:
+    name = "etf-activity-lag20"
+
+    def __init__(self, spec: FlowConcentrationSpec):
+        self.spec = spec
+        self.state = {}
+
+    def apply(self, targets, context):
+        return apply_concentration_targets(list(targets), concentration_features(context.bars_by_symbol, self.spec),
+                                           self.spec, self.state)
+
+
 def finite_difference(values: list[float], lag: int, order: int) -> float:
     if order not in (1, 2) or lag < 1 or len(values) <= lag * order:
         raise ValueError('Insufficient observations or invalid finite difference')

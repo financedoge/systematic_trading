@@ -1,8 +1,31 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "monitored_strategy_ids": [
-    "sota_price_volume_technical_tree_relative_adaptive_top6"
+    "sota_price_volume_technical_tree_relative_adaptive_top6",
+    "research_etf_activity_lag20_v1"
   ],
-  "method": "daily_mark_to_market_final_holdings",
-  "notes": "Monitored artifacts are extended with current golden market data. Full signal/rebalance replay remains a separate promotion requirement."
+  "method": "app_native_signal_rebalance_lean_replay",
+  "notes": "App-calculated strategies on audited histories; full signal/rebalance replay, current held and target weights, matched benchmarks. Tracking confers no execution or promotion authority.",
+  "calculation": {
+    "schema_version": 1,
+    "start": "2016-01-04",
+    "warmup_start": "2012-01-05",
+    "fixed_model_from": "2023-01-01",
+    "prospective_start": "2026-09-28",
+    "initial_cash_cnh": "1000000",
+    "transaction_cost_bps": "5",
+    "slippage_bps": "0",
+    "base_models_path": "D:\\systematic_trading_data\\lean\\research\\audited-rerun-20260926-v1\\base_tree_models.json",
+    "base_models_sha256": "83c8f1ea5a3f9b63e308095a73731bde769c0dff126a7517b6e728bd44df18ee",
+    "legacy_fx_path": "D:\\systematic_trading_data\\lean\\research\\audited-rerun-20260926-v1\\fx.json",
+    "legacy_fx_sha256": "1cb99aba6c6196b01eae857d5d1367332dc35962de543018c5560bf1b57edb87",
+    "legacy_fx_through": "2026-09-24",
+    "image": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
+    "limitations": [
+      "Before 2023, annual expanding trees use only completed historical labels. From 2023 onward the deployed SOTA tree is frozen. This declared historical reconstruction differs from the earlier all-years annual-refit research study.",
+      "Provider-adjusted price vintages are audited but not historical publication vintages. Legacy FX through 2026-09-24 remains uncertified; later rates require validated observed USD/CNH evidence.",
+      "Adjusted CNH units, next-session open fills, 5 bps transaction costs, no modeled slippage; returns are simulated, not account PnL."
+    ],
+    "engine": "lean"
+  }
 }

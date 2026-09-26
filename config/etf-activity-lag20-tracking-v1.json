@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "strategy_id": "research_etf_activity_lag20_v1",
+  "name": "ETF activity lag-20 \u2014 research tracker",
+  "state": "research_tracking",
+  "promotion_eligible": false,
+  "execution_enabled": false,
+  "decision_date": "2026-09-26",
+  "prospective_start": "2026-09-28",
+  "baseline_id": "sota_price_volume_technical_tree_relative_adaptive_top6",
+  "baseline_version": "Deployed frozen model; no annual refitting",
+  "study_root": "D:\\systematic_trading_data\\lean\\research\\audited-rerun-20260926-v1",
+  "governed_batch": "69755461f6f8088675229e9aff0f7ee8cbc2cf5a8083e126e58252e7f22dd5e3",
+  "historical_end": "2026-09-24",
+  "flow_overlay": {
+    "action": "tilt",
+    "active_cap": 0.03,
+    "derivative": 2,
+    "difference_lag": 20,
+    "directional_confirmation": true,
+    "hurst_min": null,
+    "measure": "relative_dollar_activity",
+    "noise_bars": 126,
+    "normalization_bars": 63,
+    "relative_tilt": 0.15,
+    "smoothing_span": 10,
+    "threshold": 0.5,
+    "version": "activity-concentration-v1"
+  },
+  "pair": {
+    "candidate": {
+      "trial": "fixed_flow20",
+      "run_sha256": "7429c2805d8658e9ccbc88c64aa4020a6de0af449de72b97b9d7c2935c13935f",
+      "manifest_sha256": "04ff4d83a1001b7ee21584d9c64c888519e176b6526bfd1edc4bd7da6032b0a9",
+      "run_id": "st-lean-90feb2759847",
+      "strategy_hash": "72114c84ff46893710ed7d210b0b14558e434093b83f0d7eb6ad0b42b1dd11d1"
+    },
+    "baseline": {
+      "trial": "fixed_sota",
+      "run_sha256": "fc1414970c439cad18079c529e012ba812ca2add1dbf8358ea5a3987f6f1328a",
+      "manifest_sha256": "52af98636ef7c1d09ee823a08e0f197e425cef1846db70670dc7bcfde2f1a8d7",
+      "run_id": "st-lean-eebf047dcaa3",
+      "strategy_hash": "ec245464778f24aa4e9c501fab881baaf63bd15d5f5e77cee318502fc9cf244f"
+    }
+  },
+  "summary_sha256": "9b56c66739c2ba91695a9af13016eef7ee1163defb3d8141138a791f7caae447",
+  "review": {
+    "local_time": "09:00",
+    "timezone": "Asia/Shanghai",
+    "cadence": "daily; monthly evidence summary",
+    "metrics": [
+      "net return",
+      "Sharpe",
+      "paired active IR",
+      "drawdown",
+      "turnover",
+      "costs",
+      "changed decisions",
+      "audited data freshness"
+    ],
+    "windows_sessions": [
+      20,
+      60,
+      120,
+      252
+    ],
+    "no_promotion_without_new_operator_decision": true
+  },
+  "forward_protocol": "docs/etf-activity-lag20-tracking.md",
+  "limitations": [
+    "Historical results are reused exploratory evidence, not forward observations.",
+    "ETF adjusted-price activity is a proxy, not measured net capital flow.",
+    "Historical FX is the frozen legacy snapshot (max 7-day prior carry), not an audited FX publication.",
+    "Forward returns require a new matched native LEAN replay on published audited inputs; no static holdings extension or raw-price fallback.",
+    "Model fills use adjusted CNH units, next daily open, 5 bps fees and zero slippage. No actual account PnL or trading orders."
+  ]
+}

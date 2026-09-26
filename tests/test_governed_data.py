@@ -87,7 +87,7 @@ def test_ingester_rejects_duplicate_daily_identity_before_writing():
 
 def test_governed_tab_preserves_source_and_market_views():
     html=market_data_audit_portal().body.decode()
-    for value in ('Governed Histories','id="governed-panel"','id="research-panel"','id="market-bars-panel"','id="raw-filters"'):
+    for value in ('Market History','Audited Series','Raw Data','Recorded Bars','id="market-history-section"','id="governed-panel"','id="research-panel"','id="market-bars-panel"','id="raw-filters"'):
         assert value in html
     assert 'Raw — reconstructed' in html and 'Close is not necessarily raw' in html
     assert 'Earlier identity era quarantined' in html and 'Identity/start boundary' in html

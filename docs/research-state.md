@@ -1,5 +1,27 @@
 # Research State
 
+## App-owned tracked calculations — 2026-09-26
+
+The application now owns the entire calculation lifecycle for monitored executable strategies. `config/strategy-monitoring.json` selects native LEAN with Python parity (default) or the application's isolated Python engine. New audited inputs/definitions trigger signal, monthly rebalance, daily NAV, held-weight and latest indicative-target calculations; unchanged revisions are reused. Complete results and their matched benchmarks publish atomically to ClickHouse. **Refresh calculations** wakes the application worker. The Codex heartbeat was deleted and its review script retired. `AGENTS.md` and the continuous research playbook explicitly prohibit agent-scheduled strategy calculation.
+
+Both SOTA and ETF lag-20 use the same full report, including risk parity on the matched ETF universe, URTH, current SOTA, period metrics, drawdowns, holdings contributions, signal attribution, current allocation and complete decision diagrams. SOTA attribution uses risk parity; lag-20 attribution uses SOTA. History spans 2016 onward: pinned causal annual trees before 2023, then the unchanged deployed frozen model. The old 2023 card was the frozen-model companion, not a price-data boundary. The new history is a disclosed reconstruction and differs from the earlier all-years annual-refit experiment.
+
+User decision remains **track, do not promote**. Forward observations begin 2026-09-28; historical results are not relabelled as prospective evidence. Only published audited prices are used. Legacy FX remains explicitly uncertified through September 24; validated direct IB USD/CNH close evidence supports September 25. Historical price vintages remain a limitation. Protocol and engine configuration: [app-native lag-20 tracking](etf-activity-lag20-tracking.md).
+
+## Superseded initial ETF lag-20 observation workflow — 2026-09-26
+
+The initial frozen card remains historical evidence in `config/etf-activity-lag20-tracking-v1.json` and ClickHouse `research-tracking/etf-activity-lag20-v1` (935 paired historical NAV points). Its daily Codex review automation has been deleted. The application calculation and common report above supersede this workflow; do not restart its agent scheduler or treat its archived card as the current strategy.
+
+## Audited-input rerun — 2026-09-26
+
+Retain current SOTA. The pinned audited batch has now been used for 24 native LEAN runs, all passing parity, covering 2016-01-04–2026-09-24 with causal annual fits plus actual-frozen-model companions from 2023. Baseline CAGR/Sharpe 9.84%/0.956; early signed constituent activity 9.82%/0.955, IR -0.172; constituent concentration IR -0.289. Earlier allocation/selection and joint residual trees do not establish added value. The fixed ETF lag-20 observation candidate reaches 9.99%/0.966, IR +0.285, but its 63-session family-adjusted p=0.574 and uneven period performance do not justify promotion. Candidate-specific audited cost/delay work remains before any lag-20 promotion review.
+
+The stricter supported-raw/identity rules qualify only 32/129 monthly decisions, first 2023-08-01. Earlier months are neutral fallback, not a decade of constituent evidence. There are 551 matched scatter dates starting 2023-07-17; unsmoothed derivatives are near zero, with a modest smoothed 20-session relationship that has not improved the strategy. Do not lower coverage rules after seeing these results. Resolve historical issuer/raw-price gaps in a new audited batch before extending constituent evidence.
+
+Future price research must read published audited continuous histories with pinned batches, verified hashes and explicit adjustment/volume bases, as required by `AGENTS.md` and the continuous research playbook. Provider archives are acquisition/audit evidence only. Auditing does not supply missing point-in-time vintages, complete delistings or certified FX. The unchanged legacy FX and assumed holdings-publication lags in this frozen rerun remain disclosed limitations.
+
+Evidence: [audited rerun findings](audited-research-rerun-2026-09-26.md); `D:/systematic_trading_data/lean/research/audited-rerun-20260926-v1/`. ClickHouse contains 11,862 new observations and 22 documents across feature/result/review publications with exact payload readback; 24 native receipts are registered in PostgreSQL. Prior studies remain reproducible legacy evidence; the production model and monitoring-reader contracts are unchanged.
+
 ## Data-governance hold — 2026-09-26
 
 The frozen ETF inputs used in the recent studies contain adjustment/source

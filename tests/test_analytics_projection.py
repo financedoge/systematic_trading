@@ -106,6 +106,39 @@ def test_dated_rows_preserve_unknown_availability_and_nested_identities():
     assert [row["observed_at"][:10] for row in periods] == ["2023-01-01", "2023-04-01", "2023-05-01"]
 
 
+def test_dashboard_accepts_app_calculated_nav_without_legacy_extension(tmp_path, monkeypatch):
+    from systematic_trading.web import api
+    analytics = MemoryAnalytics()
+    detail = dict(nav_series=[dict(trade_date="2026-09-25", nav_cnh="1250000")],
+                  artifact_end_date="2026-09-25", warnings=[])
+    analytics.publish("strategy-serving", "v1", [], [dict(
+        point_key="detail/" + api.current_sota_definition().key, payload=encode(detail))])
+    monkeypatch.setattr(api, "_account_nav_points", lambda *a: ([], None, None))
+    monkeypatch.setattr(api, "_latest_market_data_date", lambda *a: date(2026, 9, 25))
+    req = SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(
+        settings=AppSettings(data_dir=tmp_path), store=object(), strategy_analytics=analytics)))
+    result = dashboard_performance(req)
+    assert result.latest_strategy_data_date == date(2026, 9, 25)
+    assert result.latest_strategy_nav_cnh == 1250000
+    assert result.strategy_extension_count == 0
+
+
+def test_failed_strategy_calculation_preserves_reports_and_other_projections(tmp_path, monkeypatch):
+    from systematic_trading.research import analytics_service as module
+    calls = []
+    def failure(*args):
+        raise ValueError("Invalid audited inputs")
+    monkeypatch.setattr(module, "refresh_tracked_strategies", failure)
+    for name in ("publish_strategies", "publish_dashboard", "import_json_group", "import_account_histories",
+                 "import_transactional_histories", "import_lean_histories", "import_raw_market_data"):
+        monkeypatch.setattr(module, name, lambda *args, label=name: calls.append(label))
+    service = module.AnalyticsService(AppSettings(data_dir=tmp_path), object(), SimpleNamespace(initialize=lambda: None))
+    status = service.refresh()
+    assert status["errors"] == {"tracked-strategies": "Invalid audited inputs"}
+    assert "publish_strategies" not in calls and "publish_dashboard" not in calls
+    assert "import_account_histories" in calls and "import_transactional_histories" in calls
+
+
 def test_file_import_is_idempotent_and_removed_rows_disappear(tmp_path):
     analytics = MemoryAnalytics()
     first, second = tmp_path / "a.json", tmp_path / "b.json"
