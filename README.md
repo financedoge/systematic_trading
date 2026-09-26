@@ -136,6 +136,11 @@ Rebalance proposals are time-bound to preserve next-open parity with the backtes
 
 The strategy workspace at `/strategies` separates Monitored and Archived artifacts. Membership is configured in `config/strategy-monitoring.json`; current SOTA is always monitored. Monitored results are extended daily through the latest golden market data using the last audited holdings, with artifact end and monitoring method shown explicitly. Click any strategy for performance, benchmark metrics, holdings, leverage, exposure/attribution, and its generated full report when available.
 
+Strategy pages and account performance now read prepared ClickHouse publications.
+A background worker refreshes analytical histories when source data changes.
+See [analytical time-series migration](docs/analytics-migration.md) for coverage,
+verification, freshness, rollback and backup requirements.
+
 ## Optional Tushare data
 
 Put a Tushare token in `./tushare_token.txt` or set `ST_TUSHARE_TOKEN_PATH`. The token file is ignored by git. The optional SDK adapter uses Tushare Pro US adjusted daily bars when `tushare` is installed:

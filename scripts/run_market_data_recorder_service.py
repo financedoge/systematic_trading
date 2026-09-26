@@ -52,7 +52,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--historical-live-write-lookback-seconds", type=int, default=60)
     parser.add_argument("--what-to-show", default="TRADES")
     parser.add_argument("--disable-daily-backfill", action="store_true")
-    parser.add_argument("--daily-backfill-symbols", default=None, help="Comma-separated daily symbols. Defaults to symbols in ClickHouse.")
+    parser.add_argument("--daily-backfill-symbols", default=None, help="Comma-separated daily symbols. Defaults to stored symbols plus registered benchmarks.")
     parser.add_argument("--daily-backfill-lookback-days", type=int, default=14)
     parser.add_argument("--daily-backfill-interval-minutes", type=int, default=360)
     parser.add_argument("--daily-backfill-start-date", default=None)

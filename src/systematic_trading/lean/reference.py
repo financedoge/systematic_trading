@@ -25,9 +25,14 @@ def run_reference(root: Path) -> dict:
     decisions = json.loads((root / 'decisions.json').read_text())
     if spec.mode == 'shared':
         bars = json.loads((root / 'bars.json').read_text())
+        flow_state = {}
+        features = json.loads((root / 'constituent_features.json').read_text()) if spec.constituent_overlay else None
+        models = json.loads((root / 'base_tree_models.json').read_text()) if spec.base_tree_model_schedule else None
         decisions = {day: dict(row, targets=[t.model_dump(mode='json') for t in targets_for_day(
             bars, date.fromisoformat(row['signal_session']), benchmark=spec.strategy == 'benchmark',
-            lookback_bars=spec.lookback_bars)]) for day, row in decisions.items()}
+            lookback_bars=spec.lookback_bars, flow_overlay=spec.flow_overlay,
+            flow_state=flow_state, constituent_overlay=spec.constituent_overlay,
+            constituent_features=features, base_tree_models=models)]) for day, row in sorted(decisions.items())}
     quotes = json.loads((root / 'quotes.json').read_text())
     days = [date.fromisoformat(d) for d in sessions]
     instruments = {key: value.model_copy(update={'quote_currency': Currency.CNH})

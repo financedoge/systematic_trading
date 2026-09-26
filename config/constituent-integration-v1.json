@@ -1,0 +1,39 @@
+{
+  "version": "constituent-integration-v1",
+  "start": "2019-10-01",
+  "end": "2026-09-24",
+  "warmup_start": "2018-07-02",
+  "image": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
+  "feature_origin": "D:/systematic_trading_data/lean/research/constituent-signals-20260926-v1",
+  "etf_snapshot": "D:/systematic_trading_data/lean/research/flow-concentration-20260926-v3/snapshot",
+  "primary": "selection_signed",
+  "selection": "Add 0.15 times the frozen ternary stock score to SPY's existing pool score before top-six ranking. Keep positive252-momentum eligibility. Half-boost neighbor0.075.",
+  "early_allocation": "Same15%-relative/3pp SPY tilt immediately after pool selection and before tree, relative-momentum and adaptive overlays.",
+  "tree": "Preserve frozen pre2023 tree; add a learned SPY residual correction inside its forecast before cross-ETF ranking. Annual expanding fits asofJan1, monthly samples, minimum18, maxdepth2, minleaf6. Target next monthly prior-close SPY USD return minus mean12ETF return minus frozen SPY forecast. All label_end dates strictly before fit date. Correction=25%*predicted residual, capped+/-1 percentage point. Joint features mom63,mom126,baseforecast,breadth,signedactivity; matched control omits only stock features. No future outcome in engine feature file.",
+  "risk_matching": "After downstream layers, normalize candidate gross to base gross and blend toward SOTA so every asset changes <=3pp and none rises above45% (inherited overcap cannot increase). Selection can introduce SPY absent from base; blending can retain seven names. Late reference uses prior exact implementation.",
+  "coverage": "Unchanged95% whole-cohort value/70% names/211-complete-session observations;45-calendar-day assumed holdings lag. Missing=base strategy; never relax coverage for tree training.",
+  "interpretation": "Explicit follow-up selected after signed activity and breadth had positive sample IR. All dates already inspected; chronological model fitting prevents label leakage but is not a pristine holdout. No sign flipping or parameter grid. Compare each stage with price-only and late counterpart; inspect exposures, selections, costs and all period results.",
+  "trials": {
+    "sota": null,
+    "late_signed": {"signal": "signed_activity"},
+    "late_breadth": {"signal": "breadth"},
+    "late_price": {"signal": "price_control"},
+    "early_signed": {"signal": "signed_activity", "stage": "early"},
+    "early_breadth": {"signal": "breadth", "stage": "early"},
+    "early_price": {"signal": "price_control", "stage": "early"},
+    "selection_signed": {"signal": "signed_activity", "stage": "selection"},
+    "selection_breadth": {"signal": "breadth", "stage": "selection"},
+    "selection_price": {"signal": "price_control", "stage": "selection"},
+    "tree_joint": {"signal": "signed_activity", "stage": "tree", "tree_inputs": "joint"},
+    "tree_price": {"signal": "price_control", "stage": "tree", "tree_inputs": "price"},
+    "selection_half": {"signal": "signed_activity", "stage": "selection", "selection_boost": 0.075}
+  },
+  "shared_trials": ["sota", "selection_signed", "tree_joint", "tree_price"],
+  "stress_trials": ["sota", "selection_signed", "selection_price"],
+  "stresses": {
+    "cost45bps": {"transaction_cost_bps": "25", "slippage_bps": "20"},
+    "delay1": {"execution_delay_sessions": 1}
+  },
+  "inference": "Paired daily CNH returns, zero-hurdle Sharpe and IR. Full, reusedpost2023, tree-active2025+, annual periods. Paired63/126-day block confidence intervals and max-t over all12 challenger/control variants; compare stock-versus-price and earlier-versus-late pairs. Uncertainty cannot correct prior family selection, missing delistings or unknown vintages.",
+  "promotion_eligible": false
+}

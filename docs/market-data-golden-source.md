@@ -1,5 +1,17 @@
 # Market Data Golden Source
 
+## Governed research histories (2026-09-26)
+
+The new governed research layer audits source overlaps, corporate-action
+conventions and ticker identities before assembling stock/ETF histories. It
+stores explicit dividend-adjusted and conditionally reconstructed raw versions,
+with gaps and row lineage, in versioned ClickHouse tables. Market Data exposes
+these through **Governed Histories**, alongside the existing source browser.
+See [the governance contract and replay guide](price-governance-2026-09-26.md).
+The existing `market_data.daily_bars` reader remains a transitional production
+source; its `provider_default` label does not certify an adjustment basis. The
+new layer is not automatically substituted into strategy or execution inputs.
+
 ## Correction
 
 The market-data audit page must not be limited to freshly recorded raw IB data. The platform needs a unified local market-data source in the columnar store.

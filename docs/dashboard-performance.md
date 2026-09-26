@@ -1,5 +1,12 @@
 # Dashboard performance
 
+With the default ClickHouse backend, Strategy catalog/detail/reports and account
+performance are prepared in the background and read from verified publications.
+They are not recalculated on each page load. Reports show calculation time;
+refresh errors retain the last complete result with a warning. Account resets
+invalidate an incompatible saved performance chart immediately. The
+[analytical migration guide](analytics-migration.md) lists coverage and rollback.
+
 The Trading dashboard compares the saved strategy NAV history with daily account observations. Strategy values use the left index axis; account values use the right CNH axis. The first shared observation on or after the account first holds a position establishes the alignment. Selecting another period does not change that alignment. The Tracking preset starts at the alignment date, or the first available account observation if no shared date exists.
 
 Hover, tap or focus the chart and use the arrow keys to inspect dates and values. Drag within the plot to select a period; Escape restores All. Date inputs and presets update the summary values and statistics to the selected observations. Month/year presets clamp to the last valid day of the destination month. Dense history retains all line and hover observations while reducing visible markers. Empty and single-series views remain usable, and chart geometry follows the available width.
@@ -15,6 +22,16 @@ Hover, tap or focus the chart and use the arrow keys to inspect dates and values
 Account NAV changes include deposits and withdrawals. They are not cash-flow-adjusted investment returns; the dashboard labels this distinction. Statistics use available observations, so short and sparse histories require care. Unsupported positions excluded by the existing broker snapshot contract cannot be reconstructed by this view.
 
 ## Strategy history and data gaps
+
+The recorder's recurring daily backfill includes registered benchmarks even if they
+are absent from ClickHouse. URTH coverage is checked from 2012-01-12 and AOR from
+the research horizon's 2012-01-03 start. Without an explicit start-date override,
+the fetch window expands to the first missing completed session, so a recent
+lookback cannot strand older holes. Missing provider observations return a
+nonzero child status and an explicit benchmark coverage error; the next cycle
+retries. Stored provider observations feed monitored Strategy reports on reload.
+Archived reports remain frozen. Historical repairs retain ingestion/provenance
+metadata and do not certify historical point-in-time availability.
 
 The saved backtest remains immutable. After its end date, the existing monitoring view marks its final holdings using stored prices and FX; it does not simulate new rebalance decisions. Missing US sessions, carried holding prices, stale FX and cost-based estimates appear in the warnings. No missing NAV observations are interpolated. Gaps longer than seven calendar days break the plotted line. Provider-backed data repair and backtest regeneration remain separate operations.
 

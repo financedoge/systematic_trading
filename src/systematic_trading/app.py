@@ -22,6 +22,8 @@ from systematic_trading.services import (
 from systematic_trading.storage import create_trading_store
 from systematic_trading.web.api import router
 from systematic_trading.web.market_data_audit import router as market_data_audit_router
+from systematic_trading.web.research_data import router as research_data_router
+from systematic_trading.web.governed_data import router as governed_data_router
 from systematic_trading.web.operator import router as operator_router
 from systematic_trading.web.platform_actions import router as platform_actions_router
 from systematic_trading.web.platform import router as platform_router
@@ -55,6 +57,15 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         store.initialize()
         app.state.settings = resolved_settings
         app.state.store = store
+        app.state.analytics = None
+        app.state.analytics_service = None
+        if resolved_settings.analytics_enabled and resolved_settings.market_data_store_backend == "clickhouse":
+            from systematic_trading.market_data.analytics_store import AnalyticsStore
+            from systematic_trading.research.analytics_service import AnalyticsService
+            app.state.analytics = AnalyticsStore.from_settings(resolved_settings)
+            store.analytics = app.state.analytics
+            app.state.analytics_service = AnalyticsService(resolved_settings, store, app.state.analytics)
+            app.state.analytics_service.start()
         app.state.provider_registry = provider_registry
         app.state.broker = broker
         app.state.twap_benchmarks = TwapBenchmarkService(resolved_settings)
@@ -68,6 +79,8 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
                 message="Trading management automation loop started.",
             )
         yield
+        if app.state.analytics_service is not None:
+            app.state.analytics_service.stop()
         app.state.broker_pnl.close()
         app.state.twap_benchmarks.close()
         if trading_management_service is not None:
@@ -127,6 +140,8 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
     app.include_router(platform_router)
     app.include_router(router)
     app.include_router(market_data_audit_router)
+    app.include_router(research_data_router)
+    app.include_router(governed_data_router)
     app.include_router(platform_actions_router)
     return app
 

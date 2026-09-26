@@ -13,7 +13,10 @@ def platform_health_portal() -> HTMLResponse:
 
 @router.get("/platform/market-data-audit", response_class=HTMLResponse, include_in_schema=False)
 def market_data_audit_portal() -> HTMLResponse:
-    return HTMLResponse(_MARKET_DATA_AUDIT_HTML)
+    from systematic_trading.web.research_archive_panel import RESEARCH_ARCHIVE_HTML
+    from systematic_trading.web.governed_panel import GOVERNED_HTML
+    page = _MARKET_DATA_AUDIT_HTML.replace('<main>', '<main>'+RESEARCH_ARCHIVE_HTML+GOVERNED_HTML+'<div id="market-bars-panel">', 1)
+    return HTMLResponse(page.replace('</main>', '</div></main>', 1))
 
 
 _PLATFORM_HTML = """<!doctype html>

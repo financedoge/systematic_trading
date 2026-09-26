@@ -98,3 +98,22 @@ survivorship evidence, raw corporate-action/settlement testing and observed TWAP
 costs remain promotion blockers. See the [platform audit](platform-audit-2026-09-26.md).
 Disabling the worker or choosing the existing Python runner is the rollback;
 current paper trading and the promoted strategy are unaffected.
+
+## Constituent-signal research
+
+The [constituent study](constituent-signals-research-2026-09-26.md) adds an optional
+`sota_constituents` research identity. Its frozen bundle includes
+`constituent_features.json`; shared mode selects only the previous completed
+session's record and enforces the modeled holdings-publication date and coverage
+gate. Missing records leave the base targets unchanged. Both engines use the
+same bounded SPY overlay contract, with native LEAN fills and unchanged parity
+tolerances. The general export CLI and the promoted SOTA definition are unchanged;
+use `scripts/run_constituent_research.py` for this explicitly uncertified pilot.
+
+The [earlier-stage follow-up](constituent-integration-research-2026-09-26.md)
+supports allocation before the tree, stock-informed pool ranking, and a dated
+residual correction inside the tree forecast. Its price-only controls share
+training samples and risk bounds. Model fitting excludes unfinished monthly
+labels, runtime bundles exclude outcome records, and prior SOTA/late-overlay
+economic hashes must reproduce exactly. These remain research adapters, not
+changes to the promoted strategy configuration.

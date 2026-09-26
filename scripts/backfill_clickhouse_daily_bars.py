@@ -30,7 +30,7 @@ class TushareSingleSymbolProvider:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Backfill ClickHouse daily market-data bars directly from provider data.")
-    parser.add_argument("--symbols", default=None, help="Comma-separated symbols. Defaults to symbols already present in ClickHouse.")
+    parser.add_argument("--symbols", default=None, help="Comma-separated symbols. Defaults to stored symbols plus registered benchmarks.")
     parser.add_argument("--start-date", default=None)
     parser.add_argument("--end-date", default=None)
     parser.add_argument("--lookback-days", type=int, default=10)
@@ -96,8 +96,15 @@ def main(argv: list[str] | None = None) -> int:
         fallback_source_priority=fallback_source_priority,
         adjustment=args.adjustment,
         refresh_existing=args.refresh_existing,
+        repair_benchmark_history=args.start_date is None,
     )
     print(result.model_dump_json(indent=2))
+    incomplete = [row for row in result.results if row.missing_benchmark_sessions]
+    if incomplete:
+        print("Benchmark coverage incomplete: " + "; ".join(
+            f"{row.symbol}: {row.missing_benchmark_sessions} missing sessions" for row in incomplete
+        ), file=sys.stderr)
+        return 2
     if args.sleep_seconds > 0:
         time.sleep(args.sleep_seconds)
     if args.fail_on_warning and result.warnings:
@@ -116,7 +123,7 @@ def _resolve_symbols(value: str | None, client: ClickHouseMarketDataClient) -> l
     except RuntimeError:
         symbols = []
     if symbols:
-        return sorted(set(symbols))
+        return sorted({*symbols, *BENCHMARK_INSTRUMENTS})
     return sorted({*MULTI_ASSET_ETF_UNIVERSE, *BENCHMARK_INSTRUMENTS})
 
 

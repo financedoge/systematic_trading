@@ -1,0 +1,109 @@
+{
+  "version": "constituent-tenyear-v2",
+  "start": "2016-01-04",
+  "end": "2026-09-24",
+  "warmup_start": "2012-01-05",
+  "image": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
+  "etf_snapshot": "D:/systematic_trading_data/lean/research/flow-concentration-20260926-v3/snapshot",
+  "primary": "early_signed",
+  "selection": "Add 0.15 times the frozen ternary stock score to SPY's existing pool score before top-six ranking. Keep positive252-momentum eligibility. Half-boost neighbor0.075.",
+  "early_allocation": "Same15%-relative/3pp SPY tilt immediately after pool selection and before tree, relative-momentum and adaptive overlays.",
+  "tree": "Research-only annual expanding reconstruction of base tree and SPY residual trees. Both fit only labels ending strictly before fit date, available from prior completed session. Original fixed parameters. Do not use frozen pre2023 model before2023.",
+  "risk_matching": "After downstream layers, normalize candidate gross to base gross and blend toward SOTA so every asset changes <=3pp and none rises above45% (inherited overcap cannot increase). Selection can introduce SPY absent from base; blending can retain seven names. Late reference uses prior exact implementation.",
+  "coverage": "95% holding value and70% names with211 complete observations per stock. No provider splicing inside windows. Yahoo2026 preferred, Yahoo2020 fallback, Stooq2017 fallback last. Stooq OHLC is dividend/split-adjusted; resulting dollar activity is a mixed-convention proxy. Yahoo-only90% sensitivity is separately labeled and is not a replacement for primary95% gate.",
+  "interpretation": "Historical IVV holdings are a same-index proxy for SPY. Dated membership with assumed45/60-day lag; original publication/revision timestamps unknown. Annual causal refits prevent model label leakage but hyperparameters/universe/candidates already selected. Retrospective research, not untouched out-of-sample or promotion evidence.",
+  "trials": {
+    "sota": null,
+    "late_signed": {
+      "signal": "signed_activity"
+    },
+    "late_breadth": {
+      "signal": "breadth"
+    },
+    "late_price": {
+      "signal": "price_control"
+    },
+    "early_signed": {
+      "signal": "signed_activity",
+      "stage": "early"
+    },
+    "early_breadth": {
+      "signal": "breadth",
+      "stage": "early"
+    },
+    "early_price": {
+      "signal": "price_control",
+      "stage": "early"
+    },
+    "selection_signed": {
+      "signal": "signed_activity",
+      "stage": "selection"
+    },
+    "selection_breadth": {
+      "signal": "breadth",
+      "stage": "selection"
+    },
+    "selection_price": {
+      "signal": "price_control",
+      "stage": "selection"
+    },
+    "tree_joint": {
+      "signal": "signed_activity",
+      "stage": "tree",
+      "tree_inputs": "joint"
+    },
+    "tree_price": {
+      "signal": "price_control",
+      "stage": "tree",
+      "tree_inputs": "price"
+    },
+    "late_concentration": {
+      "signal": "concentration"
+    },
+    "early_signed_lag60": {
+      "signal": "signed_activity",
+      "stage": "early",
+      "holdings_lag_days": 60
+    },
+    "early_signed_yahoo90": {
+      "signal": "signed_activity",
+      "stage": "early",
+      "min_value_coverage": 0.9
+    },
+    "early_price_yahoo90": {
+      "signal": "price_control",
+      "stage": "early",
+      "min_value_coverage": 0.9
+    }
+  },
+  "shared_trials": [
+    "sota",
+    "early_signed",
+    "tree_joint"
+  ],
+  "stress_trials": [
+    "sota",
+    "early_signed",
+    "early_price"
+  ],
+  "stresses": {
+    "cost45bps": {
+      "transaction_cost_bps": "25",
+      "slippage_bps": "20"
+    },
+    "delay1": {
+      "execution_delay_sessions": 1
+    }
+  },
+  "inference": "Paired daily CNH returns, zero-hurdle Sharpe and IR. Full, reusedpost2023, tree-active2025+, annual periods. Paired63/126-day block confidence intervals and max-t over all12 challenger/control variants; compare stock-versus-price and earlier-versus-late pairs. Uncertainty cannot correct prior family selection, missing delistings or unknown vintages.",
+  "promotion_eligible": false,
+  "stock_root": "D:/systematic_trading_data/research/ivv-constituents-2012-2026-v1",
+  "archive_root": "D:/systematic_trading_data/research/ivv-public-archive-subset-20260926-v1",
+  "download_archive_root": "D:/systematic_trading_data/research/public-equity-archives-20260926",
+  "base_tree_model_schedule": true,
+  "feature_sets": {
+    "early_signed_yahoo90": "features_yahoo_only.json",
+    "early_price_yahoo90": "features_yahoo_only.json"
+  },
+  "boundary_correction": "v1 validation stopped before a LEAN run: frozen ETF snapshot begins2012-01-05. No data imputed; warmup boundary corrected. Models/candidates unchanged."
+}

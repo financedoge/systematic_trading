@@ -1,0 +1,47 @@
+{
+  "version": "flow-concentration-study-v1",
+  "declared_before_results": true,
+  "start": "2013-04-01",
+  "end": "2026-09-24",
+  "warmup_start": "2012-01-05",
+  "primary": "confirmed_acceleration",
+  "baseline": "sota",
+  "image": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
+  "hypothesis": "An incremental concentration-acceleration tilt adds risk-adjusted return beyond existing SOTA momentum and volume signals.",
+  "expected_failure_modes": [
+    "Secondary-market activity is not net capital inflow; selling can increase volume.",
+    "Second differences amplify noise; smoothing and thresholding can introduce delay.",
+    "Hurst is a persistence diagnostic, not acceleration; short samples can mislead.",
+    "Existing SOTA already uses price/volume; new signal may be redundant.",
+    "A literal exit gate can mainly reduce market exposure and miss trends.",
+    "Historical adjusted prices, FX lineage and universe membership are not point-in-time certified."
+  ],
+  "decision_rule": "Retain for further observation only if the predeclared primary improves full and post-2023 Sharpe, has positive excess compounded return in both periods, is not driven solely by the post-April-2026 extension, survives equal cost/delay stresses, and its adjacent thresholds/lags support the direction. Promotion additionally requires untouched prospective and certified-data evidence.",
+  "trials": {
+    "sota": null,
+    "risk_parity": null,
+    "confirmed_acceleration": {},
+    "unconfirmed_acceleration": {"directional_confirmation": false},
+    "hurst_acceleration": {"hurst_min": 0.55},
+    "velocity_control": {"derivative": 1},
+    "hhi_acceleration": {"measure": "hhi_component"},
+    "volume_only": {"measure": "relative_volume"},
+    "literal_exit_gate": {"action": "gate"},
+    "threshold_025": {"threshold": 0.25},
+    "threshold_100": {"threshold": 1.0},
+    "lag_5": {"difference_lag": 5},
+    "lag_20": {"difference_lag": 20}
+  },
+  "stresses": {
+    "high_cost": {"transaction_cost_bps": "25", "slippage_bps": "20"},
+    "delay_1": {"execution_delay_sessions": 1}
+  },
+  "statistical_audit": {
+    "risk_free_rate": 0,
+    "paired_circular_block_bootstrap": {"replicates": 2000, "block_sessions": 63, "seed": 20260926},
+    "multiple_testing": "Report every trial; simultaneous max-t adjusted one-sided bootstrap p-values over all 11 challengers. Historical baseline selection is not corrected by this within-study adjustment.",
+    "windows": ["full", "fitted_pre2023", "reused_post2023", "post_artifact_extension", "calendar_years", "stress_2015_16", "stress_2018", "stress_2020", "stress_2022"]
+  },
+  "data_policy": "Read-only ClickHouse extraction. Exclude documented non-trading calendar dates, reject missing/invalid true sessions, carry prior FX at most seven calendar days with explicit lineage. No current holdings or fabricated net flows. All runs research-only.",
+  "execution": "Frozen identical data; monthly prior-close decisions, next-session opening fills, 5bps fees base; adjusted CNH whole units, instant settlement, no leverage. Shared SOTA and primary recomputed inside LEAN; other variants replay frozen targets through native LEAN fills."
+}

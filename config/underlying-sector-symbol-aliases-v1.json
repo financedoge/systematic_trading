@@ -1,0 +1,12 @@
+{
+  "purpose": "Verified ticker renames/class-share normalization before correlation results; original holding tickers and failed downloads retained",
+  "aliases": {"BK": "BNY", "MMC": "MRSH", "HEIA": "HEI-A", "SQ": "XYZ", "ABC": "COR", "BLL": "BALL"},
+  "sources": {
+    "BK": "https://www.bny.com/corporate/global/en/about-us/newsroom/press-release/bny-announces-planned-change-of-stock-ticker-symbol-to-bny-130465.html",
+    "MMC": "https://www.marsh.com/en/corp/about/news/marsh-mclennan-to-change-nyse-symbol-to-mrsh.html",
+    "HEIA": "https://heico.com/wp-content/uploads/2026/01/AnnualReport_2025.pdf",
+    "SQ": "https://s29.q4cdn.com/628966176/files/doc_financials/2024/q4/bc6dab01-b430-4b1d-ac7b-0e6b96903592.pdf",
+    "ABC": "https://investor.cencora.com/news/news-details/2023/AmerisourceBergen-becomes-Cencora-in-alignment-with-the-companys-growing-global-footprint-and-central-role-in-pharmaceutical-access-and-care/default.aspx",
+    "BLL": "https://investors.ball.com/sec-filings/all-sec-filings/content/0000009389-22-000010/bll-20220427x8k.htm"
+  }
+}

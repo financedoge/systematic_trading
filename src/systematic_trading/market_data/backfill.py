@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import UTC, date, datetime
+from datetime import UTC, date, datetime, timedelta
 from typing import Protocol, Sequence
 
 from pydantic import BaseModel, Field
@@ -8,6 +8,27 @@ from pydantic import BaseModel, Field
 from systematic_trading.domain.market import PriceBar
 from systematic_trading.daily_quality import completed_session, captured_before_close, valid_ohlc
 from systematic_trading.market_data.golden import ClickHouseMarketDataClient, daily_bar_row
+
+
+# Coverage required by the Strategy workspace's research horizon. URTH starts
+# later because its first provider observation is 2012-01-12.
+BENCHMARK_HISTORY_STARTS = {"URTH": date(2012, 1, 12), "AOR": date(2012, 1, 3)}
+
+
+def benchmark_backfill_start(client: ClickHouseMarketDataClient, symbol: str,
+                             recent_start: date, end_date: date) -> date:
+    """Expand the recent window to the first absent completed benchmark session."""
+    history_start = BENCHMARK_HISTORY_STARTS.get(symbol.upper())
+    if history_start is None:
+        return recent_start
+    dates = set(client.query_daily_bar_dates(symbol=symbol, start_date=history_start.isoformat(),
+                                            end_date=end_date.isoformat()))
+    day = history_start
+    while day <= end_date:
+        if completed_session(day) and day.isoformat() not in dates:
+            return min(recent_start, day)
+        day += timedelta(days=1)
+    return recent_start
 
 
 class DailyBarProvider(Protocol):
@@ -26,6 +47,7 @@ class DailyBackfillSymbolResult(BaseModel):
     inserted_bars: int = 0
     repaired_existing_dates: int = 0
     deleted_stale_dates: int = 0
+    missing_benchmark_sessions: int = 0
     first_inserted_date: date | None = None
     last_inserted_date: date | None = None
     warnings: list[str] = Field(default_factory=list)
@@ -59,6 +81,7 @@ def backfill_clickhouse_daily_bars(
     fallback_source_priority: int | None = None,
     refresh_existing: bool = False,
     quality_flags: Sequence[str] = ("daily_backfill",),
+    repair_benchmark_history: bool = False,
 ) -> DailyBackfillResult:
     if end_date < start_date:
         raise ValueError("end_date must be on or after start_date.")
@@ -75,7 +98,8 @@ def backfill_clickhouse_daily_bars(
                 provider=provider,
                 fallback_provider=fallback_provider,
                 symbol=symbol,
-                start_date=start_date,
+                start_date=(benchmark_backfill_start(client, symbol, start_date, end_date)
+                            if repair_benchmark_history else start_date),
                 end_date=end_date,
                 source_name=source_name,
                 source_priority=source_priority,
@@ -184,6 +208,17 @@ def _backfill_symbol(
         symbol=symbol,
         trade_dates=[trade_date.isoformat() for trade_date in delete_dates],
     )
+    missing: list[date] = []
+    if symbol in BENCHMARK_HISTORY_STARTS:
+        covered = (existing_dates - repair_dates) | set(candidate_dates)
+        day = max(start_date, BENCHMARK_HISTORY_STARTS[symbol])
+        while day <= end_date:
+            if completed_session(day) and day not in covered:
+                missing.append(day)
+            day += timedelta(days=1)
+        if missing:
+            warnings.append(f"{symbol}: {len(missing)} completed benchmark sessions remain missing "
+                            f"from {missing[0]} to {missing[-1]}; no prices were interpolated.")
     return DailyBackfillSymbolResult(
         symbol=symbol,
         requested_start_date=start_date,
@@ -195,6 +230,7 @@ def _backfill_symbol(
         inserted_bars=inserted,
         repaired_existing_dates=len([day for day in insert_dates if day in repair_dates]),
         deleted_stale_dates=deleted,
+        missing_benchmark_sessions=len(missing),
         first_inserted_date=insert_dates[0] if insert_dates else None,
         last_inserted_date=insert_dates[-1] if insert_dates else None,
         warnings=warnings,

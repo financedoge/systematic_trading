@@ -9,6 +9,20 @@ from systematic_trading.domain import Currency, FXRate, PriceBar
 from systematic_trading.storage.sqlite import SQLiteStore
 
 
+def test_sparse_report_fx_keeps_asof_semantics_without_mutating_input():
+    rates = {"2023-01-04": 7.0, "2023-01-06": 9.0}
+    dates = ["2023-01-03", "2023-01-04", "2023-01-05", "2023-01-06"]
+    result = {"nav_series": [{"trade_date": day, "nav_cnh": "100"} for day in dates],
+              "proposals": [], "final_snapshot": {"positions": [{"symbol": "SPY", "quantity": 1, "market_price": 100}]}}
+    report, _ = build_backtest_report_data(result=result, result_path=Path("test.json"),
+        market_prices={"SPY": {day: 100.0 for day in dates}}, market_fx_rates=rates, benchmark_symbol="SPY")
+    assert report["chart"][0]["benchmarkIndex"] is None
+    assert report["chart"][1]["benchmarkIndex"] == pytest.approx(100)
+    assert report["chart"][2]["benchmarkIndex"] == pytest.approx(100)
+    assert report["chart"][3]["benchmarkIndex"] == pytest.approx(900 / 7)
+    assert rates == {"2023-01-04": 7.0, "2023-01-06": 9.0}
+
+
 def test_report_uses_configured_market_store_without_sqlite_file(tmp_path, monkeypatch):
     from systematic_trading.backtest.reporting import _load_market_data
     import systematic_trading.storage as storage

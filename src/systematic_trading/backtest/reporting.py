@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import math
+from bisect import bisect_right
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import date
@@ -85,6 +86,17 @@ def build_backtest_report_data(
             end_date=end_date,
         )
         warnings.extend(market_warnings)
+
+    # Resolve dated FX once rather than scanning sparse history for every
+    # holding in every monthly/quarterly/yearly attribution calculation.
+    # This is an in-memory as-of lookup, never a synthetic database observation.
+    fx_rates = dict(fx_rates)
+    rate_dates = sorted(fx_rates)
+    for point in nav_points:
+        day = point["date"]
+        index = bisect_right(rate_dates, day) - 1
+        if day not in fx_rates and index >= 0:
+            fx_rates[day] = fx_rates[rate_dates[index]]
 
     benchmark, benchmark_name, benchmark_warning = _benchmark_series(
         nav_points=nav_points,

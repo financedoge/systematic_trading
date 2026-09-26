@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 from datetime import date
+import json
 
-from systematic_trading.domain import Currency, FXRate, PriceBar
+from systematic_trading.domain import Currency, FXRate, PriceBar, PnLSnapshot
 from systematic_trading.storage.interfaces import MarketDataStore, TradingStore
 
 
@@ -10,6 +11,13 @@ class MarketDataRoutedTradingStore:
     def __init__(self, transactional_store: TradingStore, market_data_store: MarketDataStore) -> None:
         self.transactional_store = transactional_store
         self.market_data_store = market_data_store
+        self.analytics = None
+
+    def list_pnl_snapshots(self, *, limit: int = 100) -> list[PnLSnapshot]:
+        if self.analytics is None:
+            return self.transactional_store.list_pnl_snapshots(limit=limit)
+        rows = self.analytics.observations("transactional-history", family="pnl_snapshot", limit=limit)
+        return [PnLSnapshot.model_validate(json.loads(row["payload"])) for row in rows]
 
     def __getattr__(self, name: str):
         return getattr(self.transactional_store, name)
