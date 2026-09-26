@@ -9,10 +9,13 @@ Run daily for lightweight checks and weekly for deeper challenger strategy revie
 - Current SOTA definition and artifacts from `docs/research-state.md`.
 - Strategy registry and candidate specs.
 - Point-in-time data and feature versions.
+- Published audited continuous histories only, pinned to their batch and verified hashes. Choose the supported raw or dividend/split-adjusted basis explicitly. Provider downloads are audit evidence, not direct inputs to new research; acquire, reconcile and publish missing data before use. Missing raw observations and unresolved identities must remain excluded under the declared coverage rules. Historical vintage limitations remain even after price auditing.
 - Backtest reports and benchmark comparisons.
 - Post-trade observations and live or paper slippage evidence.
 
 ## Workflow
+
+Tracked candidates must be implemented as full executable strategy definitions and calculated by the application's analytics service. Agents may develop and validate that code, but must not become recurring calculation workers or maintain manually refreshed strategy cards. Use the shared full report with current held/target weights, NAV, matched benchmarks and the complete decision chart. See `AGENTS.md` and `docs/etf-activity-lag20-tracking.md`.
 
 1. Start from the current SOTA hurdle, not from a weak benchmark.
 2. Define the research question and expected failure mode before running experiments.

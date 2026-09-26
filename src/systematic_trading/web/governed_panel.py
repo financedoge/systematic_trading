@@ -27,13 +27,13 @@ GOVERNED_HTML = r'''
  #governed-title{margin-bottom:6px}
 </style>
 <section id="governed-panel" class="panel" hidden>
- <div class="panel-head"><h2>Governed Histories</h2><span id="governed-status">Loading catalog</span></div>
+ <div class="panel-head"><h2>Audited Series</h2><span id="governed-status">Loading catalog</span></div>
  <div class="note">One dated history per symbol, with explicit price bases and source lineage. Raw prices are reconstructed from reported splits; dividend-adjusted prices follow the provider’s back-adjustment convention. Neither is certified exchange tape. Missing observations remain missing.</div>
  <form id="governed-filters" class="filters">
   <label>Underlying<input id="governed-symbol" aria-label="Governed symbol" list="governed-symbols" value="AAPL"></label><datalist id="governed-symbols"></datalist>
   <label>Price basis<select id="governed-basis" aria-label="Governed price basis"><option value="adjusted">Dividend + split adjusted</option><option value="raw">Raw — reconstructed</option></select></label>
   <label>From<input type="date" id="governed-start"></label><label>Through<input type="date" id="governed-end"></label>
-  <button class="primary" type="submit">View governed history</button><button type="button" id="governed-export" disabled>Download series JSON</button><button type="button" id="governed-catalog-export">Download audit catalog</button>
+  <button class="primary" type="submit">View audited history</button><button type="button" id="governed-export" disabled>Download series JSON</button><button type="button" id="governed-catalog-export">Download audit catalog</button>
  </form>
  <details><summary id="governed-catalog-summary">All underlyings and unresolved work</summary>
   <label>Coverage filter <select id="governed-catalog-filter" aria-label="Governed coverage filter"><option value="all">All underlyings</option><option value="unavailable">No governed history</option><option value="raw">Raw coverage incomplete</option><option value="gaps">Internal gaps</option><option value="identity">Historical identity review</option><option value="prelisting">Earlier identity era quarantined</option><option value="stale">Stale / delisted endpoint</option><option value="conflicts">Source price disagreements</option></select></label>
@@ -64,7 +64,7 @@ GOVERNED_HTML = r'''
 (() => {
  const $=id=>document.getElementById(id),esc=x=>String(x??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
  const fmt=x=>Number(x||0).toLocaleString(),num=x=>x==null?'—':Number(x).toLocaleString(undefined,{maximumFractionDigits:5}),pct=x=>x==null?'—':(100*x).toFixed(3)+'%';
- const requested=new URL(location.href).searchParams.get('view')==='governed';
+ const requested=[null,'governed','history'].includes(new URL(location.href).searchParams.get('view'));
  let batch=null,catalog=[],audit=null,page=null,generation=0,loadedSymbol=null,catalogOffset=0;
  const DAY=86400000,chartIds=['governed-chart','governed-source-chart'];
  let viewport=null,extent=null,chartMode='zoom',gesture=null,chartFrame=null;
@@ -155,10 +155,10 @@ GOVERNED_HTML = r'''
    }
   };
  }
- const button=document.createElement('button');button.id='governed-tab';button.type='button';button.textContent='Governed Histories';button.setAttribute('aria-selected','false');document.querySelector('.data-tabs').insertBefore(button,$('research-catalog-status'));
+ const button=document.createElement('button');button.id='governed-tab';button.type='button';button.textContent='Audited Series';button.setAttribute('aria-selected','false');document.querySelector('.data-tabs').insertBefore(button,$('market-bars-tab'));
  async function get(path,params={}){const r=await fetch('/api/v1/market-data/governed/'+path+'?'+new URLSearchParams(params));if(!r.ok){let s=await r.text();try{s=JSON.parse(s).detail}catch{}throw new Error(s)}return r.json()}
  function error(e){$('governed-status').textContent='Unavailable';$('governed-message').textContent=e.message}
- function activate(){['market-bars-panel','research-panel'].forEach(id=>{if($(id))$(id).hidden=true});$('governed-panel').hidden=false;['market-bars-tab','research-tab'].forEach(id=>$(id).setAttribute('aria-selected','false'));button.setAttribute('aria-selected','true');const u=new URL(location.href);u.searchParams.set('view','governed');history.replaceState(null,'',u);if(!batch)refresh().catch(error)}
+ function activate(){['market-bars-panel','research-panel'].forEach(id=>{if($(id))$(id).hidden=true});$('governed-panel').hidden=false;['market-bars-tab','research-tab'].forEach(id=>$(id).setAttribute('aria-selected','false'));button.setAttribute('aria-selected','true');const u=new URL(location.href);u.searchParams.set('view','history');history.replaceState(null,'',u);if(!batch)refresh().catch(error)}
  button.onclick=activate;
  function download(name,value){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
  function renderCatalog(){

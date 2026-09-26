@@ -950,7 +950,8 @@ def _color_map(symbols: list[str]) -> dict[str, str]:
 
 def _render_html(report: dict[str, Any]) -> str:
     payload = json.dumps(report, ensure_ascii=True, separators=(",", ":")).replace("</", "<\\/")
-    return HTML_TEMPLATE.replace("__REPORT_DATA__", payload)
+    from systematic_trading.chart_navigation import with_chart_navigation
+    return with_chart_navigation(HTML_TEMPLATE.replace("__REPORT_DATA__", payload))
 
 
 def render_backtest_report_html(report: dict[str, Any]) -> str:
@@ -1336,6 +1337,15 @@ HTML_TEMPLATE = """<!doctype html>
 
     <section class="summary" id="summaryCards"></section>
 
+    <section class="table-panel" id="currentStatePanel" hidden style="margin-bottom:14px">
+      <div class="panel-head"><div><h2>Current Portfolio and Target Weights</h2><div class="meta" id="calculationMeta"></div></div>
+        <button type="button" id="refreshCalculations">Refresh calculations</button></div>
+      <div class="meta" id="allocationMeta" style="padding:12px 16px"></div>
+      <div class="table-scroll"><table id="currentWeightsTable"></table></div>
+      <div class="meta" id="exposureMeta" style="padding:12px 16px"></div>
+      <div class="meta" id="refreshStatus" style="padding:0 16px 12px" role="status"></div>
+    </section>
+
     <section class="chart-panel">
       <div class="chart-head">
         <div>
@@ -1401,7 +1411,7 @@ HTML_TEMPLATE = """<!doctype html>
       <div class="panel-head">
         <div>
           <h2>Signal Attribution</h2>
-          <div class="meta">Period-level diagnostics show how active signal weight changes helped or hurt versus the benchmark strategy.</div>
+          <div class="meta" id="signalComparisonNote">Period-level diagnostics show how active signal weight changes helped or hurt versus the benchmark strategy.</div>
         </div>
       </div>
       <div class="signal-layout">
@@ -1415,6 +1425,10 @@ HTML_TEMPLATE = """<!doctype html>
       </div>
     </section>
 
+    <section class="table-panel" id="decisionPanel" hidden style="margin-top:14px">
+      <div class="panel-head"><div><h2>Full Strategy Decision Chart</h2><div class="meta">Execution order, gates and the fitted tree used for current signals.</div></div></div>
+      <div id="decisionCharts"></div>
+    </section>
     <section class="warning-panel" id="warnings" hidden></section>
   </main>
 
@@ -1492,12 +1506,39 @@ HTML_TEMPLATE = """<!doctype html>
       `).join("");
     }
 
+    function setupTrackedStrategy() {
+      const a=report.currentAllocation,m=report.monitoring;
+      if(a){
+        document.getElementById('currentStatePanel').hidden=false;
+        document.getElementById('calculationMeta').textContent=`Calculated by the application using ${m.engine==='lean'?'LEAN with Python parity':'Python'}. Valuation: ${a.valuation_date}. Price inputs: ${m.priceThrough}. Updated: ${m.computedAt}.`;
+        document.getElementById('allocationMeta').textContent=`${report.modelRegime}. Last scheduled rebalance: ${a.last_rebalance}; next: ${a.next_rebalance}. Latest signal targets use data through ${a.target_known_through}. ${a.notes}`;
+        document.getElementById('currentWeightsTable').innerHTML=`<thead><tr><th>Asset</th><th>Adjusted units</th><th>Value CNH</th><th>Held weight</th><th>Last scheduled target</th><th>Latest signal target</th></tr></thead><tbody>${a.holdings.map(r=>`<tr><td>${escapeHtml(r.symbol)}</td><td>${r.quantity==null?'—':fmtNum(r.quantity,0)}</td><td>${fmtMoney(r.value_cnh)}</td><td>${fmtPct(r.weight)}</td><td>${fmtPct(r.scheduled_weight)}</td><td>${fmtPct(r.target_weight)}</td></tr>`).join('')}</tbody>`;
+        document.getElementById('exposureMeta').textContent=`Gross exposure: ${fmtMoney(a.gross_exposure_cnh)} (${fmtPct(a.gross_exposure_cnh/a.nav_cnh)} of NAV); cash: ${fmtMoney(a.cash_cnh)}. Country exposure: ${Object.entries(a.country_exposure_cnh).map(([k,v])=>k+' '+fmtPct(v/a.nav_cnh)).join(' · ')}. Accounting currency: CNH; ETF quote currency: USD. Forward window starts ${m.prospectiveStart}; ${m.prospectiveObservations} simulated sessions since that date.`;
+        document.getElementById('refreshCalculations').onclick=async()=>{
+          const button=document.getElementById('refreshCalculations'),status=document.getElementById('refreshStatus');button.disabled=true;
+          try{const r=await fetch('/api/v1/strategies/refresh',{method:'POST'});if(!r.ok)throw new Error(await r.text());status.textContent='Application refresh requested. Existing values remain visible until a complete calculation is published.';
+            let attempts=0;const poll=setInterval(async()=>{try{const response=await fetch('/api/v1/analytics/status');const s=await response.json();status.textContent=s.current_job?'Application is calculating: '+s.current_job:(Object.keys(s.errors||{}).length?'Calculation issue: '+JSON.stringify(s.errors):'Refresh completed. Reload this page to view the latest publication.');if(!s.current_job||++attempts>=120){clearInterval(poll);button.disabled=false;}}catch(e){clearInterval(poll);button.disabled=false;status.textContent=e.message;}},3000);
+          }catch(e){status.textContent=e.message;button.disabled=false;}
+        };
+      }
+      if(report.decisionDiagrams?.length){
+        document.getElementById('decisionPanel').hidden=false;
+        document.getElementById('decisionCharts').innerHTML=report.decisionDiagrams.map((d,i)=>`<div style="padding:14px"><h3>${escapeHtml(d.title)}</h3><p class="meta">${escapeHtml(d.note||'')}</p><div><button data-diagram="${i}" data-scale="1.25">Zoom in</button> <button data-diagram="${i}" data-scale="0.8">Zoom out</button> <button data-diagram="${i}" data-scale="reset">Fit</button> <span class="meta">Drag to pan</span></div><div id="diagram-${i}" style="overflow:auto;max-height:720px;border:1px solid #d9dee7;cursor:grab;touch-action:none">${d.svg}</div></div>`).join('');
+        report.decisionDiagrams.forEach((_,i)=>{const box=document.getElementById('diagram-'+i),svg=box.querySelector('svg');svg.style.height='auto';svg.style.width='100%';let scale=1,drag=null;
+          document.querySelectorAll(`[data-diagram="${i}"]`).forEach(b=>b.onclick=()=>{scale=b.dataset.scale==='reset'?1:Math.max(.5,Math.min(4,scale*Number(b.dataset.scale)));svg.style.width=(scale*100)+'%';if(b.dataset.scale==='reset'){box.scrollLeft=0;box.scrollTop=0;}});
+          box.onpointerdown=e=>{if(e.button!==0)return;drag={x:e.clientX,y:e.clientY,left:box.scrollLeft,top:box.scrollTop};box.setPointerCapture(e.pointerId);e.preventDefault();};
+          box.onpointermove=e=>{if(drag){box.scrollLeft=drag.left-(e.clientX-drag.x);box.scrollTop=drag.top-(e.clientY-drag.y);}};
+          box.onpointerup=box.onpointercancel=()=>{drag=null;};
+        });
+      }
+    }
+
     function setupLegend() {
       const items = [
         ["Strategy NAV", strategyColor],
         [currentBenchmarkOption().name, benchmarkColor],
         ["Drawdown periods", "#b91c1c"],
-        ...(report.splitDate ? [["OOS period", "#0f766e"]] : []),
+        ...(report.splitDate ? [[report.splitLabel || "OOS period", "#0f766e"]] : []),
         ...report.allocationOrder.map((symbol) => [symbol, report.colors[symbol]])
       ];
       document.getElementById("legend").innerHTML = items.map(([label, color]) => `
@@ -1529,9 +1570,11 @@ HTML_TEMPLATE = """<!doctype html>
       const bottom = margin.top + plotH;
       const left = margin.left;
       const right = margin.left + plotW;
-      const points = report.chart.map((point) => ({ ...point, day: new Date(`${point.date}T00:00:00`) }));
-      const start = points[0].day.getTime();
-      const end = points[points.length - 1].day.getTime();
+      const allPoints = report.chart.map(point=>({...point,day:new Date(`${point.date}T00:00:00Z`)}));
+      const view=ChartNavigation.view('chartWrap',allPoints,p=>p.day.getTime(),renderChart,{left,right,top,bottom});
+      const points=view.rows;tooltip.classList.remove('visible');
+      if(!points.length){const label=svgEl('text',{x:left,y:top+30,fill:'#64748b'});label.textContent='No observations in this period. Use Full history to reset.';svg.appendChild(label);return}
+      const [start,end]=view.range;
       const x = (day) => left + ((day.getTime() - start) / Math.max(1, end - start)) * plotW;
       const values = points.flatMap((point) => [point.navIndex, currentBenchmark(point).index].filter((value) => Number.isFinite(value)));
       const minV = Math.min(...values);
@@ -1564,6 +1607,7 @@ HTML_TEMPLATE = """<!doctype html>
       }
 
       for (const period of report.drawdownPeriods) {
+        if(Date.parse(period.start)>end||(period.end&&Date.parse(period.end)<start))continue;
         const x0 = x(new Date(`${period.start}T00:00:00`));
         const x1 = period.end ? x(new Date(`${period.end}T00:00:00`)) : right;
         svg.appendChild(svgEl("rect", {
@@ -1614,7 +1658,7 @@ HTML_TEMPLATE = """<!doctype html>
             "font-size": "12",
             "font-weight": "700"
           });
-          label.textContent = `OOS from ${report.splitDate}`;
+          label.textContent = `${report.splitLabel || 'OOS from'} ${report.splitDate}`;
           svg.appendChild(labelBg);
           svg.appendChild(label);
         }
@@ -1630,6 +1674,7 @@ HTML_TEMPLATE = """<!doctype html>
         svg.appendChild(label);
       }
 
+      for(const [stamp,xx,anchor]of [[start,left,'start'],[end,right,'end']]){const label=svgEl('text',{x:xx,y:bottom+42,'text-anchor':anchor,fill:'#64748b','font-size':11});label.textContent=new Date(stamp).toISOString().slice(0,10);svg.appendChild(label)}
       const firstYear = points[0].day.getFullYear();
       const lastYear = points[points.length - 1].day.getFullYear();
       for (let year = firstYear; year <= lastYear; year += 1) {
@@ -1836,11 +1881,12 @@ HTML_TEMPLATE = """<!doctype html>
       const diagnostics = report.signalDiagnostics;
       if (!diagnostics || !diagnostics.periods || !diagnostics.periods.length) return;
       document.getElementById("signalPanel").hidden = false;
+      if (report.signalBenchmark) document.getElementById("signalComparisonNote").textContent = `Signal attribution compares this strategy with ${report.signalBenchmark}. The chart benchmark selector does not change this attribution baseline.`;
       const summary = diagnostics.summary || {};
       const summaryItems = [
         ["Full", summary.full],
-        ["In Sample", summary.in_sample],
-        ["Out Of Sample", summary.out_of_sample]
+        [report.sampleLabels?.in_sample || "In Sample", summary.in_sample],
+        [report.sampleLabels?.out_of_sample || "Out Of Sample", summary.out_of_sample]
       ];
       document.getElementById("signalSummary").innerHTML = summaryItems.map(([label, item]) => `
         <div class="signal-card">
@@ -1874,7 +1920,7 @@ HTML_TEMPLATE = """<!doctype html>
           ${rows.map((row) => `
             <tr data-signal-period="${row.index}">
               <td>${escapeHtml(row.period)}</td>
-              <td>${escapeHtml(row.sample === "out_of_sample" ? "OOS" : "IS")}</td>
+              <td>${escapeHtml(report.sampleLabels?.[row.sample] || (row.sample === "out_of_sample" ? "OOS" : "IS"))}</td>
               <td>${escapeHtml(row.signal.name)}</td>
               <td>${row.signal.activeChanges}</td>
               <td class="${cls(row.signal.estimatedContribution)}">${fmtPct(row.signal.estimatedContribution)}</td>
@@ -1967,6 +2013,7 @@ HTML_TEMPLATE = """<!doctype html>
     }
 
     setupHeader();
+    setupTrackedStrategy();
     setupSummary();
     setupBenchmarkSelect();
     setupLegend();

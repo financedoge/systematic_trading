@@ -112,5 +112,5 @@ def source(request:Request,symbol:str=Query(...,min_length=1,max_length=50),sour
         +' AND source_id='+_sql_string('governance-batch/'+batch+'/'+symbol)+' AND version='+_sql_string(batch)
         +' AND point_key='+_sql_string(source_id)+' LIMIT 1')
     if not docs:
-        return dict(source_id=source_id,archived_in='Original Research Data dataset',research_url='/platform/market-data-audit?view=research')
+        return dict(source_id=source_id,archived_in='Raw Data source archive',research_url='/platform/market-data-audit?view=raw')
     return dict(source_id=source_id,document=docs[0],historical_available_at=None)

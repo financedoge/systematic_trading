@@ -9,6 +9,7 @@ from systematic_trading.research.analytics_projection import (
     file_signature, import_json_group, import_transactional_histories, import_lean_histories, observation,
     publish_strategies, publish_dashboard, import_account_histories,
 )
+from systematic_trading.research.tracked_runtime import refresh_tracked_strategies
 
 
 def import_raw_market_data(settings, analytics):
@@ -63,6 +64,7 @@ class AnalyticsService:
     def __init__(self, settings, store, analytics):
         self.settings, self.store, self.analytics = settings, store, analytics
         self._stop, self._lock = Event(), Lock()
+        self._wake = Event()
         self._thread = None
         self._status = {"running": False, "last_completed_at": None, "errors": {}}
 
@@ -76,14 +78,20 @@ class AnalyticsService:
 
     def stop(self):
         self._stop.set()
+        self._wake.set()
         if self._thread:
             self._thread.join(timeout=5)
+
+    def request_refresh(self):
+        self._wake.set()
+        return {"queued": True, "owner": "application"}
 
     def refresh(self):
         self.analytics.initialize()
         errors, changed = {}, []
         root = self.settings.data_dir
         jobs = [
+            ("tracked-strategies", lambda: refresh_tracked_strategies(self.settings, self.store, self.analytics)),
             ("strategy-serving", lambda: publish_strategies(self.settings, self.store, self.analytics)),
             ("research-history", lambda: import_json_group(self.analytics, "research-history",
                 (root / "backtests").rglob("*.json"), "research")),
@@ -100,11 +108,18 @@ class AnalyticsService:
         for name, job in jobs:
             if self._stop.is_set():
                 break
+            if "tracked-strategies" in errors and name in ("strategy-serving", "dashboard-serving"):
+                continue
             try:
+                with self._lock:
+                    self._status["current_job"] = name
                 if job():
                     changed.append(name)
             except Exception as exc:
                 errors[name] = str(exc)
+                # Never fall through to the legacy static SOTA marks if a
+                # required monitored calculation failed on this refresh.
+                # Other account/execution/raw-data projections can still refresh.
         with self._lock:
             self._status = dict(running=bool(self._thread and self._thread.is_alive()),
                                 last_completed_at=datetime.now(UTC).isoformat(), errors=errors, changed=changed)
@@ -117,4 +132,5 @@ class AnalyticsService:
             except Exception as exc:
                 with self._lock:
                     self._status = dict(running=True, last_completed_at=None, errors={"worker": str(exc)})
-            self._stop.wait(self.settings.analytics_refresh_seconds)
+            self._wake.wait(self.settings.analytics_refresh_seconds)
+            self._wake.clear()

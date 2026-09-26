@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from systematic_trading.chart_navigation import with_chart_navigation
+
 from systematic_trading.web.trading_workspace import WORKSPACE_CSS, WORKSPACE_HTML, WORKSPACE_DIALOG, WORKSPACE_JS
 
 from fastapi import APIRouter
@@ -19,7 +21,7 @@ def operator_dashboard() -> HTMLResponse:
     html = html.replace('<main>', '<main>' + WORKSPACE_HTML, 1)
     html = html.replace('<script>', WORKSPACE_DIALOG + '<script>', 1)
     html = html.replace('    Promise.all([loadProposals(), loadDashboardData()])', WORKSPACE_JS + '\n    Promise.all([loadProposals(), loadDashboardData()])', 1)
-    return HTMLResponse(html)
+    return HTMLResponse(with_chart_navigation(html))
 
 
 @router.get("/strategies", response_class=HTMLResponse, include_in_schema=False)
@@ -30,7 +32,7 @@ def strategy_portal() -> HTMLResponse:
 @router.get("/strategies/{strategy_id}", response_class=HTMLResponse, include_in_schema=False)
 def strategy_detail_portal(strategy_id: str) -> HTMLResponse:
     html = _STRATEGY_DETAIL_HTML.replace("join('\n')", "join(String.fromCharCode(10))")
-    return HTMLResponse(html)
+    return HTMLResponse(with_chart_navigation(html))
 
 
 _OPERATOR_HTML = """<!doctype html>
@@ -715,7 +717,7 @@ _OPERATOR_HTML = """<!doctype html>
       filter: "",
       brokerRecords: [],
       reconciliation: null,
-      performance: { payload: null, rangeKey: "3m", start: null, end: null }
+      performance: { payload: null, rangeKey: "all", start: null, end: null }
     };
     const el = (id) => document.getElementById(id);
     const fmtMoney = (value) => Number(value || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -967,6 +969,10 @@ _OPERATOR_HTML = """<!doctype html>
         state.performance.end = previousStart;
       }
       updatePerformanceControls();
+      if (typeof ChartNavigation !== 'undefined') ChartNavigation.view('performance-chart', [...strategyAll,...accountAll], p=>p.time,
+        ()=>renderPerformance(payload), {left:56,right:Math.max(el('performance-chart').clientWidth-24,320)-96,top:30,bottom:272},
+        {range:state.performance.rangeKey==='all'?null:[Date.parse(state.performance.start),Date.parse(state.performance.end)+86399999],
+         onChange:range=>{state.performance.rangeKey=range?'custom':'all';if(range){state.performance.start=dateTextFromTime(range[0]);state.performance.end=dateTextFromTime(range[1])}renderPerformance(payload)}});
       const strategy = filterPerformanceSeries(strategyAll, state.performance.start, state.performance.end);
       const account = filterPerformanceSeries(accountAll, state.performance.start, state.performance.end);
       const svg = performanceSvg(strategy, account, payload);
@@ -1063,7 +1069,8 @@ _OPERATOR_HTML = """<!doctype html>
       const pad = { left: 56, right: 96, top: 30, bottom: 28 };
       const all = [...strategy, ...account];
       if (!all.length) return null;
-      const minTime = Math.min(...all.map(p => p.time)), maxTime = Math.max(...all.map(p => p.time));
+      const minTime = state.performance.start ? Date.parse(state.performance.start) : Math.min(...all.map(p=>p.time));
+      const maxTime = state.performance.end ? Date.parse(state.performance.end)+86399999 : Math.max(...all.map(p=>p.time));
       const factor = Number(payload.account_alignment_nav_cnh) > 0 && Number(payload.account_alignment_strategy_index) > 0
         ? Number(payload.account_alignment_strategy_index) / Number(payload.account_alignment_nav_cnh) : null;
       const bounds = values => {
@@ -1120,8 +1127,8 @@ _OPERATOR_HTML = """<!doctype html>
       const g = performanceGeometry(strategy, account, state.performance.payload);
       const dates = [...new Set([...strategy,...account].map(p => p.time))].sort((a,b) => a-b);
       const strategyMap = new Map(strategy.map(p => [p.time,p])), accountMap = new Map(account.map(p => [p.time,p]));
-      const crosshair = svg.querySelector(".perf-crosshair"), selection = svg.querySelector(".perf-selection"), hit = svg.querySelector(".perf-hit-area");
-      let dragStart = null, cursor = dates.length-1;
+      const crosshair = svg.querySelector(".perf-crosshair"), hit = svg.querySelector(".perf-hit-area");
+      let cursor = dates.length-1;
       const pointerX = event => Math.max(g.pad.left,Math.min(g.width-g.pad.right,new DOMPoint(event.clientX,event.clientY).matrixTransform(svg.getScreenCTM().inverse()).x));
       const timeAt = xx => g.minTime+(xx-g.pad.left)/(g.width-g.pad.left-g.pad.right)*(g.maxTime-g.minTime);
       const nearest = time => dates.reduce((best,t,i) => Math.abs(t-time)<Math.abs(dates[best]-time)?i:best,0);
@@ -1131,29 +1138,8 @@ _OPERATOR_HTML = """<!doctype html>
         crosshair.setAttribute("x1",g.x(time)); crosshair.setAttribute("x2",g.x(time)); crosshair.setAttribute("visibility","visible");
         el("performance-hover").textContent = `${dateTextFromTime(time)} · Strategy ${s ? `index ${s.index.toFixed(2)} / CNH ${fmtMoney(s.nav_cnh)}` : "no observation"} · Account ${a ? `CNH ${fmtMoney(a.nav_cnh)}` : "no observation"}`;
       };
-      hit.addEventListener("pointerdown", event => {
-        if (event.button !== 0) return;
-        dragStart = pointerX(event); hit.setPointerCapture(event.pointerId); svg.focus();
-        selection.setAttribute("x",dragStart); selection.setAttribute("width",0); selection.setAttribute("visibility","visible");
-        show(nearest(timeAt(dragStart)));
-      });
-      hit.addEventListener("pointermove", event => {
-        const xx = pointerX(event); show(nearest(timeAt(xx)));
-        if (dragStart !== null) { selection.setAttribute("x",Math.min(xx,dragStart)); selection.setAttribute("width",Math.abs(xx-dragStart)); }
-      });
-      hit.addEventListener("pointerup", event => {
-        if (dragStart === null) return;
-        const xx = pointerX(event), start = dragStart; dragStart = null;
-        selection.setAttribute("visibility","hidden");
-        if (hit.hasPointerCapture(event.pointerId)) hit.releasePointerCapture(event.pointerId);
-        if (Math.abs(xx-start)<5) return;
-        const first = dates[nearest(timeAt(Math.min(xx,start)))], last = dates[nearest(timeAt(Math.max(xx,start)))];
-        state.performance.rangeKey = "custom";
-        state.performance.start = dateTextFromTime(first); state.performance.end = dateTextFromTime(last);
-        renderPerformance(state.performance.payload);
-        el("performance-hover").textContent = `Selected ${state.performance.start} to ${state.performance.end}. Statistics below use observations in this period. Use All to restore full history.`;
-      });
-      hit.addEventListener("pointercancel", () => { dragStart = null; selection.setAttribute("visibility","hidden"); });
+      hit.addEventListener("pointermove", event => {show(nearest(timeAt(pointerX(event))))});
+      hit.addEventListener("click", event => {show(nearest(timeAt(pointerX(event))))});
       svg.addEventListener("keydown", event => {
         if (["ArrowLeft","ArrowRight"].includes(event.key)) { event.preventDefault(); show(Math.max(0,Math.min(dates.length-1,cursor+(event.key==="ArrowRight"?1:-1)))); }
         if (event.key === "Escape") {
@@ -1392,7 +1378,7 @@ _OPERATOR_HTML = """<!doctype html>
       const width = 760;
       const height = 260;
       const pad = { left: 64, right: 16, top: 16, bottom: 28 };
-      const valid = points
+      let valid = points
         .map((point) => ({
           as_of: point.as_of,
           time: Date.parse(point.as_of),
@@ -1400,11 +1386,13 @@ _OPERATOR_HTML = """<!doctype html>
           theoretical: Number(point.theoretical_pnl_cnh)
         }))
         .filter((point) => Number.isFinite(point.time) && Number.isFinite(point.actual) && Number.isFinite(point.theoretical));
+      let chartView=null;
+      if(typeof ChartNavigation!=='undefined'){chartView=ChartNavigation.view('pnl-comparison-chart',valid,p=>p.time,()=>{el('pnl-comparison-chart').innerHTML=pnlComparisonSvg(points)},{left:pad.left,right:width-pad.right,top:pad.top,bottom:height-pad.bottom});valid=chartView.rows}
       if (!valid.length) return '<div class="empty">No saved PnL comparison history</div>';
       const times = valid.map((point) => point.time);
       const values = valid.flatMap((point) => [point.actual, point.theoretical]);
-      const minTime = Math.min(...times);
-      const maxTime = Math.max(...times);
+      const minTime = chartView?.range?.[0] ?? Math.min(...times);
+      const maxTime = chartView?.range?.[1] ?? Math.max(...times);
       const minValue = Math.min(...values);
       const maxValue = Math.max(...values);
       const valuePad = Math.max((maxValue - minValue) * 0.12, Math.max(...values.map((value) => Math.abs(value))) * 0.04, 10);
@@ -1445,7 +1433,7 @@ _OPERATOR_HTML = """<!doctype html>
       const width = 760;
       const height = 240;
       const pad = { left: 64, right: 16, top: 16, bottom: 28 };
-      const valid = points
+      let valid = points
         .map((point) => ({
           trade_date: point.trade_date,
           time: Date.parse(point.trade_date),
@@ -1453,11 +1441,13 @@ _OPERATOR_HTML = """<!doctype html>
           cumulative: Number(point.cumulative_slippage_cnh)
         }))
         .filter((point) => Number.isFinite(point.time) && Number.isFinite(point.daily) && Number.isFinite(point.cumulative));
+      let chartView=null;
+      if(typeof ChartNavigation!=='undefined'){chartView=ChartNavigation.view('slippage-chart',valid,p=>p.time,()=>{el('slippage-chart').innerHTML=slippageSvg(points)},{left:pad.left,right:width-pad.right,top:pad.top,bottom:height-pad.bottom});valid=chartView.rows}
       if (!valid.length) return '<div class="empty">No daily slippage history</div>';
       const times = valid.map((point) => point.time);
       const values = valid.flatMap((point) => [point.daily, point.cumulative, 0]);
-      const minTime = Math.min(...times);
-      const maxTime = Math.max(...times);
+      const minTime = chartView?.range?.[0] ?? Math.min(...times);
+      const maxTime = chartView?.range?.[1] ?? Math.max(...times);
       const minValue = Math.min(...values);
       const maxValue = Math.max(...values);
       const valuePad = Math.max((maxValue - minValue) * 0.12, Math.max(...values.map((value) => Math.abs(value))) * 0.04, 10);
@@ -1531,12 +1521,14 @@ _OPERATOR_HTML = """<!doctype html>
       const width = 760;
       const height = 260;
       const pad = { left: 64, right: 16, top: 16, bottom: 28 };
-      const valid = points.filter((point) => Number.isFinite(Date.parse(point.as_of)) && Number.isFinite(Number(point.total_pnl_cnh)));
+      let valid = points.filter((point) => Number.isFinite(Date.parse(point.as_of)) && Number.isFinite(Number(point.total_pnl_cnh)));
+      let chartView=null;
+      if(typeof ChartNavigation!=='undefined'){chartView=ChartNavigation.view('pnl-chart',valid,p=>Date.parse(p.as_of),()=>{el('pnl-chart').innerHTML=pnlHistorySvg(points)},{left:pad.left,right:width-pad.right,top:pad.top,bottom:height-pad.bottom});valid=chartView.rows}
       if (!valid.length) return '<div class="empty">No saved PnL snapshots</div>';
       const times = valid.map((point) => Date.parse(point.as_of));
       const values = valid.map((point) => Number(point.total_pnl_cnh));
-      const minTime = Math.min(...times);
-      const maxTime = Math.max(...times);
+      const minTime = chartView?.range?.[0] ?? Math.min(...times);
+      const maxTime = chartView?.range?.[1] ?? Math.max(...times);
       const minValue = Math.min(...values);
       const maxValue = Math.max(...values);
       const valuePad = Math.max((maxValue - minValue) * 0.12, Math.max(...values.map((value) => Math.abs(value))) * 0.04, 10);
@@ -1952,10 +1944,10 @@ _STRATEGIES_HTML = """<!doctype html><html lang="en"><head><meta charset="utf-8"
 <style>:root{--bg:#f6f7f9;--panel:#fff;--text:#1d2433;--muted:#667085;--line:#d9dee7;--focus:#2456a6;--good:#087f5b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px Inter,Segoe UI,Arial,sans-serif}header{height:56px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--line)}h1,h2{margin:0;letter-spacing:0}h1{font-size:18px}h2{font-size:15px}.actions,.segments{display:flex;gap:8px;align-items:center}.button,button{min-height:32px;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--text);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}.segments button.active{background:#e9f0fb;border-color:#b8c7e6;color:#183b73;font-weight:650}main{padding:16px 18px 28px}.panel{background:#fff;border:1px solid var(--line);border-radius:7px;overflow:hidden}.head{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;justify-content:space-between}.note{color:var(--muted);font-size:12px}.table-wrap{overflow:auto;max-height:calc(100vh - 170px)}table{border-collapse:collapse;width:100%;font-size:12px}th,td{padding:10px;border-bottom:1px solid #edf0f4;text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#f8fafc;color:var(--muted)}td.num,th.num{text-align:right}.strategy-link{border:0;padding:0;min-height:0;background:transparent;color:var(--focus);font-weight:650}.strategy-link:hover{text-decoration:underline}.badge{display:inline-block;margin-left:6px;padding:2px 6px;border:1px solid #c7cdd6;border-radius:999px;color:#667085;font-size:10px}.badge.sota,.badge.monitored{border-color:#9cd6cd;background:#ecf9f6;color:var(--good)}@media(max-width:700px){header{height:auto;align-items:flex-start;flex-direction:column;padding:10px 12px}.actions{width:100%;flex-wrap:wrap}.actions .button{flex:1 1 110px}.head{align-items:flex-start;flex-direction:column}.table-wrap{max-height:none}}</style></head>
 <body><header><h1>Strategies</h1><div class="actions"><a class="button" href="/operator">Trading</a><a class="button" href="/strategies">Strategies</a><a class="button" href="/platform">System</a><a class="button" href="/platform/market-data-audit">Market Data</a></div></header>
 <main><section class="panel"><div class="head"><div><h2>Strategy Registry</h2><div id="catalog-note" class="note">Loading strategy artifacts</div></div><div class="segments"><button class="active" data-lifecycle="monitored">Monitored <span id="monitored-count">0</span></button><button data-lifecycle="archived">Archived <span id="archived-count">0</span></button></div></div><div class="table-wrap"><table><thead><tr><th>Strategy</th><th>Lifecycle</th><th>Artifact End</th><th>Data Through</th><th class="num">Return</th><th class="num">Ann. Return</th><th class="num">Sharpe</th><th class="num">Max DD</th></tr></thead><tbody id="strategy-list"></tbody></table></div></section></main>
-<script>const state={items:[],lifecycle:"monitored"};const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const pct=v=>v==null?"n/a":`${(Number(v)*100).toFixed(2)}%`;const ratio=v=>v==null?"n/a":Number(v).toFixed(2);function render(){const items=state.items.filter(x=>x.lifecycle===state.lifecycle);document.getElementById("strategy-list").innerHTML=items.length?items.map(item=>`<tr><td><button class="strategy-link" data-id="${esc(item.strategy_id)}" data-strategy-lifecycle="${esc(item.lifecycle)}">${esc(item.name)}</button>${item.is_sota?'<span class="badge sota">SOTA</span>':''}<div class="note">${esc(item.strategy_id)}</div></td><td><span class="badge ${esc(item.lifecycle)}">${esc(item.lifecycle)}</span></td><td>${esc(item.artifact_end_date)}</td><td>${esc(item.end_date)}</td><td class="num">${pct(item.total_return)}</td><td class="num">${pct(item.annualized_return)}</td><td class="num">${ratio(item.sharpe)}</td><td class="num">${pct(item.max_drawdown)}</td></tr>`).join(""):'<tr><td colspan="8" class="note">No strategies in this lifecycle.</td></tr>';document.querySelectorAll(".strategy-link").forEach(button=>button.onclick=()=>location.href=button.dataset.strategyLifecycle==="monitored"?`/api/v1/strategies/${encodeURIComponent(button.dataset.id)}/report`:`/strategies/${encodeURIComponent(button.dataset.id)}`);document.querySelectorAll("[data-lifecycle]").forEach(button=>button.classList.toggle("active",button.dataset.lifecycle===state.lifecycle))}document.querySelectorAll("[data-lifecycle]").forEach(button=>button.onclick=()=>{state.lifecycle=button.dataset.lifecycle;render()});fetch("/api/v1/strategies").then(r=>r.json()).then(payload=>{state.items=payload.strategies||[];document.getElementById("monitored-count").textContent=state.items.filter(x=>x.lifecycle==="monitored").length;document.getElementById("archived-count").textContent=state.items.filter(x=>x.lifecycle==="archived").length;document.getElementById("catalog-note").textContent=payload.monitoring_notes||payload.theoretical_performance_source;render()}).catch(error=>document.getElementById("catalog-note").textContent=`Catalog error: ${error.message}`);</script></body></html>"""
+<script>const state={items:[],lifecycle:"monitored"};const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const pct=v=>v==null?"n/a":`${(Number(v)*100).toFixed(2)}%`;const ratio=v=>v==null?"n/a":Number(v).toFixed(2);function render(){const items=state.items.filter(x=>x.lifecycle===state.lifecycle);document.getElementById("strategy-list").innerHTML=items.length?items.map(item=>`<tr><td><button class="strategy-link" data-id="${esc(item.strategy_id)}" data-strategy-lifecycle="${esc(item.lifecycle)}">${esc(item.name)}</button>${item.is_sota?'<span class="badge sota">SOTA</span>':''}${item.app_tracking&&!item.is_sota?'<span class="badge">Tracked · not promoted</span>':''}<div class="note">${esc(item.strategy_id)}</div></td><td><span class="badge ${esc(item.lifecycle)}">${esc(item.lifecycle)}</span></td><td>${esc(item.artifact_end_date)}</td><td>${esc(item.end_date)}</td><td class="num">${pct(item.total_return)}</td><td class="num">${pct(item.annualized_return)}</td><td class="num">${ratio(item.sharpe)}</td><td class="num">${pct(item.max_drawdown)}</td></tr>`).join(""):'<tr><td colspan="8" class="note">No strategies in this lifecycle.</td></tr>';document.querySelectorAll(".strategy-link").forEach(button=>button.onclick=()=>location.href=button.dataset.strategyLifecycle==="monitored"?`/api/v1/strategies/${encodeURIComponent(button.dataset.id)}/report`:`/strategies/${encodeURIComponent(button.dataset.id)}`);document.querySelectorAll("[data-lifecycle]").forEach(button=>button.classList.toggle("active",button.dataset.lifecycle===state.lifecycle))}document.querySelectorAll("[data-lifecycle]").forEach(button=>button.onclick=()=>{state.lifecycle=button.dataset.lifecycle;render()});fetch("/api/v1/strategies").then(r=>r.json()).then(payload=>{state.items=payload.strategies||[];document.getElementById("monitored-count").textContent=state.items.filter(x=>x.lifecycle==="monitored").length;document.getElementById("archived-count").textContent=state.items.filter(x=>x.lifecycle==="archived").length;document.getElementById("catalog-note").textContent=payload.monitoring_notes||payload.theoretical_performance_source;render()}).catch(error=>document.getElementById("catalog-note").textContent=`Catalog error: ${error.message}`);</script></body></html>"""
 
 
 _STRATEGY_DETAIL_HTML = """<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Strategy Detail</title>
 <style>:root{--bg:#f6f7f9;--panel:#fff;--text:#1d2433;--muted:#667085;--line:#d9dee7;--focus:#2456a6;--good:#087f5b;--benchmark:#111827}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px Inter,Segoe UI,Arial,sans-serif}header{height:56px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--line)}h1,h2{margin:0;letter-spacing:0}h1{font-size:18px}h2{font-size:15px}.actions{display:flex;gap:8px;align-items:center}.button{min-height:32px;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--text);text-decoration:none;display:inline-flex;align-items:center;justify-content:center}main{padding:16px 18px 28px}.titlebar{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}.note{color:var(--muted);font-size:12px}.badge{display:inline-block;margin-left:6px;padding:2px 7px;border:1px solid #9cd6cd;border-radius:999px;background:#ecf9f6;color:var(--good);font-size:10px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}.metric,.panel{background:#fff;border:1px solid var(--line);border-radius:7px}.metric{padding:11px}.metric label{display:block;color:var(--muted);font-size:11px}.metric strong{display:block;margin-top:4px;font-size:16px}.grid{display:grid;grid-template-columns:1.4fr .6fr;gap:12px;margin-bottom:12px}.panel{overflow:hidden}.head{padding:11px 13px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.body{padding:12px}.chart{min-height:300px}.chart svg{display:block;width:100%;height:auto}table{border-collapse:collapse;width:100%;font-size:12px}th,td{padding:8px 9px;border-bottom:1px solid #edf0f4;text-align:left}td.num,th.num{text-align:right}.line{fill:none;stroke:#2456a6;stroke-width:2}.bench{fill:none;stroke:var(--benchmark);stroke-width:1.5}.axis{stroke:#ccd3dd;stroke-width:1}.legend{display:flex;gap:14px;color:var(--muted);font-size:12px}.swatch{width:18px;height:3px;background:#2456a6;display:inline-block}.swatch.bench{background:#111827}.exposures{display:grid;grid-template-columns:1fr 1fr;gap:12px}.warning{white-space:pre-wrap;color:#9a5b09}@media(max-width:900px){header{height:auto;align-items:flex-start;flex-direction:column;padding:10px 12px}.actions{width:100%;flex-wrap:wrap}.actions .button{flex:1 1 110px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.grid,.exposures{grid-template-columns:1fr}}@media(max-width:520px){.metrics{grid-template-columns:1fr}}</style></head>
 <body><header><h1>Strategy Detail</h1><div class="actions"><a class="button" href="/operator">Trading</a><a class="button" href="/strategies">Strategies</a><a class="button" href="/platform">System</a><a class="button" href="/platform/market-data-audit">Market Data</a></div></header><main><div class="titlebar"><div><h1 id="name">Loading strategy</h1><div id="method" class="note"></div></div><div class="actions"><a class="button" href="/strategies">Back to registry</a><a id="report-link" class="button" hidden target="_blank">Full backtest report</a></div></div><section id="metrics" class="metrics"></section><div class="grid"><section class="panel"><div class="head"><h2>Performance vs Benchmark</h2><div class="legend"><span><i class="swatch"></i> Strategy</span><span><i class="swatch bench"></i> Benchmark</span></div></div><div id="chart" class="body chart"></div></section><section class="panel"><div class="head"><h2>Current Holdings</h2></div><div id="holdings" class="body"></div></section></div><section class="panel" style="margin-bottom:12px"><div class="head"><h2>Benchmark Comparison</h2></div><div id="comparison" class="body"></div></section><section class="panel"><div class="head"><h2>Exposure and Performance Attribution</h2></div><div class="body exposures"><div><h2>Country Exposure</h2><div id="country"></div></div><div><h2>Currency Exposure</h2><div id="currency"></div></div></div></section><div id="warnings" class="warning"></div></main>
-<script>const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const pct=v=>v==null?"n/a":`${(Number(v)*100).toFixed(2)}%`;const ratio=v=>v==null?"n/a":Number(v).toFixed(2);const money=v=>v==null?"n/a":Number(v).toLocaleString(undefined,{maximumFractionDigits:0});function metric(label,value){return `<div class="metric"><label>${label}</label><strong>${value}</strong></div>`}function table(rows,headers){return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table>`}function exposureTable(values){const rows=Object.entries(values||{}).sort((a,b)=>Number(b[1])-Number(a[1])).map(([key,value])=>`<tr><td>${esc(key)}</td><td class="num">${money(value)}</td></tr>`);return table(rows,["Exposure","CNH"])}function chartSvg(strategy,benchmark){const s=strategy.map(x=>({d:x.trade_date,v:Number(x.nav_cnh)})).filter(x=>x.v>0),b=benchmark.map(x=>({d:x.trade_date,v:Number(x.nav_cnh)})).filter(x=>x.v>0);if(!s.length)return '<div class="note">No NAV series</div>';const baseS=s[0].v,baseB=b[0]?.v||1,all=[...s.map(x=>({...x,i:x.v/baseS*100})),...b.map(x=>({...x,i:x.v/baseB*100}))],dates=all.map(x=>Date.parse(x.d)),vals=all.map(x=>x.i),w=820,h=300,p={l:50,r:15,t:15,b:28},minX=Math.min(...dates),maxX=Math.max(...dates),minY=Math.min(...vals)*.98,maxY=Math.max(...vals)*1.02,x=d=>p.l+(Date.parse(d)-minX)/(maxX-minX||1)*(w-p.l-p.r),y=v=>h-p.b-(v-minY)/(maxY-minY||1)*(h-p.t-p.b),path=(rows,base)=>rows.map((q,i)=>`${i?'L':'M'} ${x(q.d).toFixed(1)} ${y(q.v/base*100).toFixed(1)}`).join(' ');return `<svg viewBox="0 0 ${w} ${h}"><line class="axis" x1="${p.l}" x2="${w-p.r}" y1="${h-p.b}" y2="${h-p.b}"/><path class="line" d="${path(s,baseS)}"/>${b.length?`<path class="bench" d="${path(b,baseB)}"/>`:''}<text x="${p.l}" y="${h-8}" fill="#667085" font-size="11">${esc(s[0].d)}</text><text x="${w-90}" y="${h-8}" fill="#667085" font-size="11">${esc(s[s.length-1].d)}</text></svg>`}function comparisonTable(c){if(!c?.metrics)return '<div class="note">No structured benchmark comparison artifact is available for this run.</div>';const labels={full:'Full',in_sample:'In sample',out_of_sample:'Out of sample'},rows=Object.entries(c.metrics).map(([key,v])=>`<tr><td>${labels[key]||esc(key)}</td><td class="num">${pct(v.candidate?.return)}</td><td class="num">${pct(v.baseline?.return)}</td><td class="num">${pct(v.delta?.return)}</td><td class="num">${ratio(v.candidate?.sharpe)}</td><td class="num">${ratio(v.active?.informationRatio)}</td><td class="num">${pct(v.candidate?.maxDrawdown)}</td></tr>`);return table(rows,["Window","Strategy","Benchmark","Alpha","Sharpe","Info Ratio","Max DD"])}const id=decodeURIComponent(location.pathname.split('/').filter(Boolean).pop());fetch(`/api/v1/strategies/${encodeURIComponent(id)}`).then(r=>{if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);return r.json()}).then(d=>{if(d.lifecycle==='monitored'&&d.report_url){location.replace(d.report_url);return}document.title=d.name;document.getElementById('name').innerHTML=`${esc(d.name)}${d.is_sota?'<span class="badge">CURRENT SOTA</span>':''}<span class="badge">${esc(d.lifecycle)}</span>`;document.getElementById('method').textContent=d.lifecycle==='monitored'?`Data through ${d.end_date}; artifact ended ${d.artifact_end_date}. ${d.monitoring_notes}`:`Archived artifact through ${d.artifact_end_date}.`;document.getElementById('metrics').innerHTML=metric('Total Return',pct(d.total_return))+metric('Annual Return',pct(d.annualized_return))+metric('Annual Volatility',pct(d.annualized_volatility))+metric('Sharpe',ratio(d.sharpe))+metric('Max Drawdown',pct(d.max_drawdown))+metric('Calmar',ratio(d.calmar))+metric('Leverage',ratio(d.leverage))+metric('Final NAV CNH',money(d.final_nav_cnh));document.getElementById('chart').innerHTML=chartSvg(d.nav_series||[],d.benchmark_series||[]);document.getElementById('holdings').innerHTML=table((d.holdings||[]).map(x=>`<tr><td>${esc(x.symbol)}</td><td class="num">${pct(x.weight)}</td><td class="num">${money(x.value_cnh)}</td></tr>`),['Symbol','Weight','CNH']);document.getElementById('comparison').innerHTML=comparisonTable(d.comparison);document.getElementById('country').innerHTML=exposureTable(d.country_exposure_cnh);document.getElementById('currency').innerHTML=exposureTable(d.currency_exposure_cnh);document.getElementById('warnings').textContent=(d.warnings||[]).join('\n');if(d.report_url){const a=document.getElementById('report-link');a.href=d.report_url;a.hidden=false}}).catch(e=>{document.getElementById('name').textContent='Strategy unavailable';document.getElementById('warnings').textContent=e.message});</script></body></html>"""
+<script>const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const pct=v=>v==null?"n/a":`${(Number(v)*100).toFixed(2)}%`;const ratio=v=>v==null?"n/a":Number(v).toFixed(2);const money=v=>v==null?"n/a":Number(v).toLocaleString(undefined,{maximumFractionDigits:0});function metric(label,value){return `<div class="metric"><label>${label}</label><strong>${value}</strong></div>`}function table(rows,headers){return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table>`}function exposureTable(values){const rows=Object.entries(values||{}).sort((a,b)=>Number(b[1])-Number(a[1])).map(([key,value])=>`<tr><td>${esc(key)}</td><td class="num">${money(value)}</td></tr>`);return table(rows,["Exposure","CNH"])}function chartSvg(strategy,benchmark){let s=strategy.map(x=>({d:x.trade_date,v:Number(x.nav_cnh)})).filter(x=>x.v>0),b=benchmark.map(x=>({d:x.trade_date,v:Number(x.nav_cnh)})).filter(x=>x.v>0);if(!s.length)return '<div class="note">No NAV series</div>';const baseS=s[0].v,baseB=b[0]?.v||1;const view=ChartNavigation.view('chart',[...s,...b],q=>Date.parse(q.d),()=>{document.getElementById('chart').innerHTML=chartSvg(strategy,benchmark)},{left:50,right:805,top:15,bottom:272});s=s.filter(q=>Date.parse(q.d)>=view.range[0]&&Date.parse(q.d)<=view.range[1]);b=b.filter(q=>Date.parse(q.d)>=view.range[0]&&Date.parse(q.d)<=view.range[1]);if(!s.length&&!b.length)return '<div class="note">No observations in this period. Use Full history to reset.</div>';const all=[...s.map(x=>({...x,i:x.v/baseS*100})),...b.map(x=>({...x,i:x.v/baseB*100}))],vals=all.map(x=>x.i),w=820,h=300,p={l:50,r:15,t:15,b:28},minX=view.range[0],maxX=view.range[1],minY=Math.min(...vals)*.98,maxY=Math.max(...vals)*1.02,x=d=>p.l+(Date.parse(d)-minX)/(maxX-minX||1)*(w-p.l-p.r),y=v=>h-p.b-(v-minY)/(maxY-minY||1)*(h-p.t-p.b),path=(rows,base)=>rows.map((q,i)=>`${i?'L':'M'} ${x(q.d).toFixed(1)} ${y(q.v/base*100).toFixed(1)}`).join(' ');return `<svg viewBox="0 0 ${w} ${h}"><line class="axis" x1="${p.l}" x2="${w-p.r}" y1="${h-p.b}" y2="${h-p.b}"/><path class="line" d="${path(s,baseS)}"/>${b.length?`<path class="bench" d="${path(b,baseB)}"/>`:''}<text x="${p.l}" y="${h-8}" fill="#667085" font-size="11">${esc(new Date(minX).toISOString().slice(0,10))}</text><text x="${w-90}" y="${h-8}" fill="#667085" font-size="11">${esc(new Date(maxX).toISOString().slice(0,10))}</text></svg>`}function comparisonTable(c){if(!c?.metrics)return '<div class="note">No structured benchmark comparison artifact is available for this run.</div>';const labels={full:'Full',in_sample:'In sample',out_of_sample:'Out of sample'},rows=Object.entries(c.metrics).map(([key,v])=>`<tr><td>${labels[key]||esc(key)}</td><td class="num">${pct(v.candidate?.return)}</td><td class="num">${pct(v.baseline?.return)}</td><td class="num">${pct(v.delta?.return)}</td><td class="num">${ratio(v.candidate?.sharpe)}</td><td class="num">${ratio(v.active?.informationRatio)}</td><td class="num">${pct(v.candidate?.maxDrawdown)}</td></tr>`);return table(rows,["Window","Strategy","Benchmark","Alpha","Sharpe","Info Ratio","Max DD"])}const id=decodeURIComponent(location.pathname.split('/').filter(Boolean).pop());fetch(`/api/v1/strategies/${encodeURIComponent(id)}`).then(r=>{if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);return r.json()}).then(d=>{if(d.lifecycle==='monitored'&&d.report_url){location.replace(d.report_url);return}document.title=d.name;document.getElementById('name').innerHTML=`${esc(d.name)}${d.is_sota?'<span class="badge">CURRENT SOTA</span>':''}<span class="badge">${esc(d.lifecycle)}</span>`;document.getElementById('method').textContent=d.lifecycle==='monitored'?`Data through ${d.end_date}; artifact ended ${d.artifact_end_date}. ${d.monitoring_notes}`:`Archived artifact through ${d.artifact_end_date}.`;document.getElementById('metrics').innerHTML=metric('Total Return',pct(d.total_return))+metric('Annual Return',pct(d.annualized_return))+metric('Annual Volatility',pct(d.annualized_volatility))+metric('Sharpe',ratio(d.sharpe))+metric('Max Drawdown',pct(d.max_drawdown))+metric('Calmar',ratio(d.calmar))+metric('Leverage',ratio(d.leverage))+metric('Final NAV CNH',money(d.final_nav_cnh));document.getElementById('chart').innerHTML=chartSvg(d.nav_series||[],d.benchmark_series||[]);document.getElementById('holdings').innerHTML=table((d.holdings||[]).map(x=>`<tr><td>${esc(x.symbol)}</td><td class="num">${pct(x.weight)}</td><td class="num">${money(x.value_cnh)}</td></tr>`),['Symbol','Weight','CNH']);document.getElementById('comparison').innerHTML=comparisonTable(d.comparison);document.getElementById('country').innerHTML=exposureTable(d.country_exposure_cnh);document.getElementById('currency').innerHTML=exposureTable(d.currency_exposure_cnh);document.getElementById('warnings').textContent=(d.warnings||[]).join('\n');if(d.report_url){const a=document.getElementById('report-link');a.href=d.report_url;a.hidden=false}}).catch(e=>{document.getElementById('name').textContent='Strategy unavailable';document.getElementById('warnings').textContent=e.message});</script></body></html>"""

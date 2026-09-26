@@ -1,0 +1,193 @@
+{
+  "version": "audited-rerun-v1",
+  "root": "D:/systematic_trading_data/lean/research/audited-rerun-20260926-v1",
+  "governed_root": "D:/systematic_trading_data/research/governed-prices-20260926-v2",
+  "batch": "69755461f6f8088675229e9aff0f7ee8cbc2cf5a8083e126e58252e7f22dd5e3",
+  "prior_root": "D:/systematic_trading_data/lean/research/constituent-tenyear-20260926-v2",
+  "stock_root": "D:/systematic_trading_data/research/ivv-constituents-2012-2026-v1",
+  "old_snapshot": "D:/systematic_trading_data/lean/research/flow-concentration-20260926-v3/snapshot",
+  "start": "2016-01-04",
+  "end": "2026-09-24",
+  "warmup_start": "2012-01-05",
+  "image": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
+  "primary": "early_signed",
+  "trials": {
+    "sota": {
+      "constituent": null
+    },
+    "late_signed": {
+      "constituent": {
+        "signal": "signed_activity"
+      }
+    },
+    "late_price": {
+      "constituent": {
+        "signal": "price_control"
+      }
+    },
+    "early_signed": {
+      "constituent": {
+        "signal": "signed_activity",
+        "stage": "early"
+      }
+    },
+    "early_price": {
+      "constituent": {
+        "signal": "price_control",
+        "stage": "early"
+      }
+    },
+    "early_breadth": {
+      "constituent": {
+        "signal": "breadth",
+        "stage": "early"
+      }
+    },
+    "selection_signed": {
+      "constituent": {
+        "signal": "signed_activity",
+        "stage": "selection"
+      }
+    },
+    "tree_joint": {
+      "constituent": {
+        "signal": "signed_activity",
+        "stage": "tree",
+        "tree_inputs": "joint"
+      }
+    },
+    "tree_price": {
+      "constituent": {
+        "signal": "price_control",
+        "stage": "tree",
+        "tree_inputs": "price"
+      }
+    },
+    "late_concentration": {
+      "constituent": {
+        "signal": "concentration"
+      }
+    },
+    "early_signed_lag60": {
+      "constituent": {
+        "signal": "signed_activity",
+        "stage": "early",
+        "holdings_lag_days": 60
+      }
+    },
+    "early_signed_old_features": {
+      "constituent": {
+        "signal": "signed_activity",
+        "stage": "early"
+      },
+      "feature_set": "old"
+    },
+    "flow_primary": {
+      "flow": {}
+    },
+    "flow20": {
+      "flow": {
+        "difference_lag": 20
+      }
+    },
+    "sota__cost45bps": {
+      "constituent": null,
+      "stress": {
+        "transaction_cost_bps": "25",
+        "slippage_bps": "20"
+      },
+      "comparator": "sota__cost45bps"
+    },
+    "early_signed__cost45bps": {
+      "constituent": {
+        "signal": "signed_activity",
+        "stage": "early"
+      },
+      "stress": {
+        "transaction_cost_bps": "25",
+        "slippage_bps": "20"
+      },
+      "comparator": "sota__cost45bps"
+    },
+    "early_price__cost45bps": {
+      "constituent": {
+        "signal": "price_control",
+        "stage": "early"
+      },
+      "stress": {
+        "transaction_cost_bps": "25",
+        "slippage_bps": "20"
+      },
+      "comparator": "sota__cost45bps"
+    },
+    "sota__delay1": {
+      "constituent": null,
+      "stress": {
+        "execution_delay_sessions": 1
+      },
+      "comparator": "sota__delay1"
+    },
+    "early_signed__delay1": {
+      "constituent": {
+        "signal": "signed_activity",
+        "stage": "early"
+      },
+      "stress": {
+        "execution_delay_sessions": 1
+      },
+      "comparator": "sota__delay1"
+    },
+    "early_price__delay1": {
+      "constituent": {
+        "signal": "price_control",
+        "stage": "early"
+      },
+      "stress": {
+        "execution_delay_sessions": 1
+      },
+      "comparator": "sota__delay1"
+    },
+    "fixed_sota": {
+      "constituent": null,
+      "start": "2023-01-03",
+      "fixed_model": true,
+      "comparator": "fixed_sota"
+    },
+    "fixed_early_signed": {
+      "constituent": {
+        "signal": "signed_activity",
+        "stage": "early"
+      },
+      "start": "2023-01-03",
+      "fixed_model": true,
+      "comparator": "fixed_sota"
+    },
+    "fixed_early_price": {
+      "constituent": {
+        "signal": "price_control",
+        "stage": "early"
+      },
+      "start": "2023-01-03",
+      "fixed_model": true,
+      "comparator": "fixed_sota"
+    },
+    "fixed_flow20": {
+      "flow": {
+        "difference_lag": 20
+      },
+      "start": "2023-01-03",
+      "fixed_model": true,
+      "comparator": "fixed_sota"
+    }
+  },
+  "coverage": "Unchanged 95% holding value / 70% names; complete 211-session raw-price/raw-volume/adjusted-close windows; 45/60-day modeled holdings lag, maximum 140-day snapshot age.",
+  "constituent_basis": "Raw close times reconstructed raw share volume; adjusted close for returns. Unknown raw values stay missing. Original dated IVV membership and conservative identity-name matching retained.",
+  "etf_basis": "Governed dividend/split-adjusted OHLC and original split-adjusted source volume, matching the previous strategy convention. Flow overlays remain adjusted-activity proxies, not actual raw-dollar turnover or net flows.",
+  "models": "Same annual expanding causal base-tree recipe; residual joint and price trees refitted only on completed labels. Actual deployed frozen model only used after 2023. No parameter tuning.",
+  "comparison": "Same 2016-01-04 through 2026-09-24 interval and frozen legacy FX. Compare old native evidence, corrected ETF inputs with old features, and corrected ETF plus corrected stock features. Price-only controls match availability. Costs/delay identical.",
+  "scatter": "Raw and EMA10 HHI, first and second backward differences (1 and 10 sessions), against 20/60/120-session adjusted SPY and fixed-cohort constituent returns. Same 120-session-complete dates across horizons. A constituent return is unavailable if any selected stock endpoint is missing; no forward survivor reweighting.",
+  "inference": "Exploratory reused data, zero-hurdle Sharpe, paired active IR; annual and 2016-19/2020-22/2023+ periods; paired 63/126-session blocks and max-t across declared candidates. Scatter Pearson/Spearman and 240-session block intervals; nonoverlap offsets and chronological-period checks.",
+  "promotion_eligible": false,
+  "historical_available_at": null,
+  "limitations": "Revised provider prices and uncertified issuer episodes; historical publication lags assumed; IVV is an SPY same-index proxy, not all-market census. Legacy FX reused with max7-day prior carry; adjusted CNH units, modeled daily open fills. Auditing does not create certified historical vintages or untouched holdouts."
+}

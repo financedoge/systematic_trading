@@ -10,6 +10,7 @@ sys.path.insert(0, '/input/source')
 
 from systematic_trading.lean.contracts import verify_bundle, write_json
 from systematic_trading.lean.strategy import targets_for_day
+from systematic_trading.research.strategy_catalog import StrategyDefinition
 from systematic_trading.lean.resources import process_resources
 from systematic_trading.backtest.accounting import CashLedger, FxConverter
 from systematic_trading.backtest.engine import DailyBacktestEngine
@@ -110,7 +111,9 @@ class FrozenPortfolioAlgorithm(QCAlgorithm):  # noqa: F405
                                           benchmark=self.spec.strategy == 'benchmark', lookback_bars=self.spec.lookback_bars,
                                           flow_overlay=self.spec.flow_overlay, flow_state=self.flow_state,
                                           constituent_overlay=self.spec.constituent_overlay,
-                                          constituent_features=self.constituent_features, base_tree_models=self.base_tree_models)
+                                          constituent_features=self.constituent_features, base_tree_models=self.base_tree_models,
+                                          fixed_model_from=self.spec.fixed_model_from,
+                                          definition=StrategyDefinition.from_dict(self.spec.strategy_definition) if self.spec.strategy_definition else None)
             else:
                 targets = [AllocationTarget.model_validate(t) for t in expected['targets']]
             self.decisions[day] = dict(expected, targets=[t.model_dump(mode='json') for t in targets])

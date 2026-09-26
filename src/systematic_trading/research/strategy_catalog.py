@@ -45,6 +45,13 @@ class StrategyDefinition:
     scheduler: str = "static_monthly"
     overlays: tuple[OverlaySpec, ...] = ()
 
+    @classmethod
+    def from_dict(cls, value):
+        return cls(key=value["key"], name=value["name"], sleeve_name=value["sleeveName"],
+                   state=value["state"], description=value["description"], promoted_on=value.get("promotedOn"),
+                   universe_key=value["universeKey"], scheduler=value["scheduler"],
+                   overlays=tuple(OverlaySpec(kind=o["kind"], parameters=o["parameters"]) for o in value["overlays"]))
+
     def to_dict(self) -> dict[str, Any]:
         return {
             "key": self.key,
@@ -152,6 +159,27 @@ def current_sota_definition() -> StrategyDefinition:
             ),
         ),
     )
+
+
+def etf_activity_lag20_definition() -> StrategyDefinition:
+    """Complete tracked challenger; registration never confers execution authority."""
+    from dataclasses import replace
+    from systematic_trading.research.flow_concentration import FlowConcentrationSpec
+    base = current_sota_definition()
+    return replace(base, key="research_etf_activity_lag20_v1", name="ETF activity lag-20",
+        sleeve_name="research-etf-activity-lag20", state="tracked", promoted_on=None,
+        description="SOTA allocation followed by the frozen lag-20 ETF activity tilt; tracked without promotion.",
+        overlays=(*base.overlays, OverlaySpec(kind="etf_activity", parameters={
+            "spec": FlowConcentrationSpec(difference_lag=20).model_dump_json()})))
+
+
+def registered_strategy_definition(key: str) -> StrategyDefinition:
+    definitions = [current_sota_definition(), etf_activity_lag20_definition(), risk_parity_definition()]
+    return next((d for d in definitions if d.key == key), None) or _unknown_strategy(key)
+
+
+def _unknown_strategy(key):
+    raise ValueError(f"Tracked strategy needs an executable definition: {key}")
 
 
 def strategy_definition_from_overlay(overlay: TargetOverlay) -> StrategyDefinition:
@@ -493,7 +521,10 @@ def instantiate_overlays(definition: StrategyDefinition) -> list[TargetOverlay]:
     overlays: list[TargetOverlay] = []
     for spec in definition.overlays:
         params = spec.parameters
-        if spec.kind == "relative_momentum":
+        if spec.kind == "etf_activity":
+            from systematic_trading.research.flow_concentration import ActivityConcentrationOverlay, FlowConcentrationSpec
+            overlays.append(ActivityConcentrationOverlay(FlowConcentrationSpec.model_validate_json(params["spec"])))
+        elif spec.kind == "relative_momentum":
             overlays.append(
                 RegimeGatedRelativeMomentumOverlay(
                     medium_lookback_bars=int(params["mediumLookbackBars"]),

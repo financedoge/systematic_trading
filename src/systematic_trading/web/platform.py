@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from systematic_trading.chart_navigation import with_chart_navigation
+
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
 
@@ -15,8 +17,8 @@ def platform_health_portal() -> HTMLResponse:
 def market_data_audit_portal() -> HTMLResponse:
     from systematic_trading.web.research_archive_panel import RESEARCH_ARCHIVE_HTML
     from systematic_trading.web.governed_panel import GOVERNED_HTML
-    page = _MARKET_DATA_AUDIT_HTML.replace('<main>', '<main>'+RESEARCH_ARCHIVE_HTML+GOVERNED_HTML+'<div id="market-bars-panel">', 1)
-    return HTMLResponse(page.replace('</main>', '</div></main>', 1))
+    page = _MARKET_DATA_AUDIT_HTML.replace('<main>', '<main><section id="market-history-section" aria-label="Market History">'+RESEARCH_ARCHIVE_HTML+GOVERNED_HTML+'<div id="market-bars-panel" hidden>', 1)
+    return HTMLResponse(with_chart_navigation(page.replace('</main>', '</div></section></main>', 1)))
 
 
 _PLATFORM_HTML = """<!doctype html>
@@ -1280,7 +1282,11 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       renderGoldenTable(bars);
     }
 
-    function renderGoldenChart(bars) {
+    function renderGoldenChart(allBars) {
+      const view = ChartNavigation.view('golden-chart', allBars, b=>Date.parse(b.exchange_timestamp||b.trade_date),
+        ()=>renderGoldenChart(allBars), {left:62,right:922,top:18,bottom:404},
+        {key:selectedSymbol()+'|'+el('store').value+'|'+(isIntraday()?el('intraday-start-date').value+'|'+el('intraday-end-date').value:el('start-date').value+'|'+el('end-date').value),intraday:isIntraday(),resetLabel:'Full loaded range',scope:'Recorded bars · loaded range'});
+      const bars = view.rows;
       if (!bars.length) {
         el("golden-chart").innerHTML = `<div class="empty">No ${isIntraday() ? "intraday" : "daily"} bars</div>`;
         return;
@@ -1300,7 +1306,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       const span = Math.max(max - min, 0.0001);
       const volumes = bars.map((bar) => Number(bar.volume)).filter(Number.isFinite);
       const maxVolume = Math.max(...volumes, 1);
-      const x = (index) => pad.left + (bars.length === 1 ? plotW / 2 : (plotW * index / (bars.length - 1)));
+      const x = index => pad.left + (view.range[0]===view.range[1] ? plotW/2 : (Date.parse(bars[index].exchange_timestamp||bars[index].trade_date)-view.range[0])/(view.range[1]-view.range[0])*plotW);
       const y = (value) => priceTop + ((max - value) / span) * priceH;
       const candleW = Math.max(1, Math.min(12, plotW / Math.max(bars.length, 1) * 0.58));
       const grid = [0, 0.25, 0.5, 0.75, 1].map((ratio) => {
@@ -1919,7 +1925,11 @@ _RAW_MARKET_DATA_AUDIT_HTML = """<!doctype html>
       renderDetails(summary);
     }
 
-    function renderChart(bars) {
+    function renderChart(allBars) {
+      const view = ChartNavigation.view('chart', allBars, b=>Date.parse(b.exchange_timestamp),
+        ()=>renderChart(allBars), {left:58,right:844,top:16,bottom:318},
+        {key:allBars[0]?.symbol,intraday:true,resetLabel:'Full loaded range',scope:'Source inspection · loaded range'});
+      const bars = view.rows;
       if (!bars.length) {
         el("chart").innerHTML = '<div class="empty">No bars</div>';
         return;
@@ -1934,7 +1944,7 @@ _RAW_MARKET_DATA_AUDIT_HTML = """<!doctype html>
       const span = Math.max(max - min, 0.0001);
       const plotW = width - pad.left - pad.right;
       const plotH = height - pad.top - pad.bottom;
-      const x = (index) => pad.left + (bars.length === 1 ? plotW / 2 : (plotW * index / (bars.length - 1)));
+      const x = index => pad.left + (view.range[0]===view.range[1] ? plotW/2 : (Date.parse(bars[index].exchange_timestamp||bars[index].trade_date)-view.range[0])/(view.range[1]-view.range[0])*plotW);
       const y = (value) => pad.top + ((max - value) / span) * plotH;
       const candleW = Math.max(4, Math.min(16, plotW / Math.max(bars.length, 1) * 0.55));
       const grid = [0, 0.25, 0.5, 0.75, 1].map((ratio) => {

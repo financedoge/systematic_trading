@@ -15,14 +15,18 @@ RESEARCH_ARCHIVE_HTML = r'''
  #research-chart svg{width:100%;max-height:230px}
  #research-status{margin-left:auto}
 </style>
-<nav class="data-tabs" aria-label="Market data views">
- <button id="market-bars-tab" type="button" aria-selected="true">Market Bars</button>
- <button id="research-tab" type="button" aria-selected="false">Research Data</button>
- <span id="research-catalog-status" class="muted">Loading research archive…</span>
+<h2>Market History</h2>
+<p class="muted">Audited continuous series and recorded market bars, with original sources available for inspection.</p>
+<nav class="data-tabs" aria-label="Market History views">
+ <button id="market-bars-tab" type="button" aria-selected="false">Recorded Bars</button>
+</nav>
+<nav class="data-tabs raw-data-navigation" aria-label="Market History source archive" style="padding-left:18px;border-left:2px solid #d8dee8;font-size:12px">
+ <button id="research-tab" type="button" aria-selected="false">Raw Data</button>
+ <span id="research-catalog-status" class="muted">Loading source archive…</span>
 </nav>
 <section id="research-panel" class="panel" hidden>
- <div class="panel-head"><h2>Research Data</h2><span id="research-status">Loading</span></div>
- <div class="archive-note">Historical stock prices, dated fund holdings, constituent signals and study results saved for reuse. Source Close is not necessarily raw: Yahoo Close is split-adjusted, and Stooq OHLC is dividend/split-adjusted. Governed Histories separates the supported price bases and audits overlaps. Historical publication dates may be unknown.</div>
+ <div class="panel-head"><h2>Raw Data</h2><span id="research-status">Loading</span></div>
+ <div class="archive-note">Historical stock prices, dated fund holdings, constituent signals and study results saved for reuse. Source Close is not necessarily raw: Yahoo Close is split-adjusted, and Stooq OHLC is dividend/split-adjusted. Market History → Audited Series separates the supported price bases and audits overlaps. Use that published series for new research; this archive retains source evidence and legacy study artifacts. Historical publication dates may be unknown.</div>
  <form id="research-filters" class="filters">
   <label>Dataset<select id="research-dataset" aria-label="Research dataset"></select></label>
   <label>Data type<select id="research-family" aria-label="Research data type"></select></label>
@@ -43,14 +47,16 @@ RESEARCH_ARCHIVE_HTML = r'''
  async function get(path,params={}) {const r=await fetch('/api/v1/market-data/research/'+path+'?'+new URLSearchParams(params));if(!r.ok){let msg=await r.text();try{msg=JSON.parse(msg).detail}catch{}throw new Error(msg)}return r.json()}
  function activeFamily(){return catalog.find(x=>x.dataset===$('research-dataset').value)?.families.find(x=>x.family===$('research-family').value)}
  function message(error){$('research-status').textContent='Unavailable';$('research-table').innerHTML='<div class="error">'+esc(error.message)+'</div>'}
- function tab(research){$('research-panel').hidden=!research;const bars=$('market-bars-panel');if(bars)bars.hidden=research;$('research-tab').setAttribute('aria-selected',String(research));$('market-bars-tab').setAttribute('aria-selected',String(!research));const u=new URL(location.href);if(research)u.searchParams.set('view','research');else u.searchParams.delete('view');history.replaceState(null,'',u)}
+ function tab(research){$('research-panel').hidden=!research;const bars=$('market-bars-panel');if(bars)bars.hidden=research;$('research-tab').setAttribute('aria-selected',String(research));$('market-bars-tab').setAttribute('aria-selected',String(!research));const u=new URL(location.href);if(research)u.searchParams.set('view','raw');else u.searchParams.set('view','bars');history.replaceState(null,'',u)}
  $('research-tab').onclick=()=>tab(true);$('market-bars-tab').onclick=()=>tab(false);
  function renderChart(rows){
-  const valid=rows.filter(x=>Number.isFinite(x.payload.adjusted_close)&&x.payload.adjusted_close>0).sort((a,b)=>a.observed_at.localeCompare(b.observed_at));
-  if(valid.length<2||new Set(valid.map(x=>x.entity)).size!==1){$('research-chart').innerHTML='';return}
-  if(new Set(valid.map(x=>x.source_id)).size!==1){$('research-chart').textContent='This page contains multiple source histories. Inspect their price conventions below; they are not joined into one chart.';return}
+  const all=rows.filter(x=>Number.isFinite(x.payload.adjusted_close)&&x.payload.adjusted_close>0).sort((a,b)=>a.observed_at.localeCompare(b.observed_at));
+  if(all.length<2||new Set(all.map(x=>x.entity)).size!==1){ChartNavigation.clear('research-chart');$('research-chart').innerHTML='';return}
+  if(new Set(all.map(x=>x.source_id)).size!==1){ChartNavigation.clear('research-chart');$('research-chart').textContent='This page contains multiple source histories. Inspect their price conventions below; they are not joined into one chart.';return}
+  const view=ChartNavigation.view('research-chart',all,r=>Date.parse(r.observed_at),()=>renderChart(rows),{left:50,right:950,top:25,bottom:175},{key:all[0].source_id+'|'+all[0].entity+'|'+all[0].observed_at,resetLabel:'Full loaded page',scope:'Source archive · loaded page'});
+  const valid=view.rows;if(!valid.length){$('research-chart').textContent='No observations in this period. Use Full loaded page to reset.';return}
   const values=valid.map(x=>x.payload.adjusted_close),lo=Math.min(...values),hi=Math.max(...values),span=hi-lo||1;
-  const points=values.map((v,i)=>`${50+i/(values.length-1)*900},${170-(v-lo)/span*140}`).join(' ');
+  const points=values.map((v,i)=>`${50+(view.range[1]===view.range[0] ? .5 : (Date.parse(valid[i].observed_at)-view.range[0])/(view.range[1]-view.range[0]))*900},${170-(v-lo)/span*140}`).join(' ');
   $('research-chart').innerHTML=`<div class="muted">${esc(valid[0].entity)} · adjusted close · ${fmt(values.length)} loaded observations</div><svg viewBox="0 0 1000 210" role="img" aria-label="Research adjusted closing price history"><path d="M50 25V175H950" fill="none" stroke="#cbd5e1"/><polyline points="${points}" fill="none" stroke="#2456a6" stroke-width="2"/><text x="0" y="34" font-size="12">${hi.toFixed(2)}</text><text x="0" y="174" font-size="12">${lo.toFixed(2)}</text><text x="50" y="200" font-size="12">${ds(valid[0].observed_at)}</text><text x="850" y="200" font-size="12">${ds(valid.at(-1).observed_at)}</text></svg>`;
  }
  function render(data){
@@ -73,7 +79,7 @@ RESEARCH_ARCHIVE_HTML = r'''
  async function refresh(){const old=$('research-dataset').value;const x=await get('datasets');catalog=x.datasets;$('research-catalog-status').textContent=`${catalog.length} datasets · ${fmt(catalog.reduce((n,x)=>n+x.row_count,0))} saved records`;$('research-dataset').innerHTML=catalog.map(x=>`<option value="${esc(x.dataset)}">${esc(x.title)}</option>`).join('');if(catalog.some(x=>x.dataset===old))$('research-dataset').value=old;if(catalog.length)await datasetChanged();else{$('research-status').textContent='No research publications';$('research-table').innerHTML=''}}
  $('research-filters').onsubmit=e=>{e.preventDefault();load().catch(message)};$('research-dataset').onchange=()=>datasetChanged().catch(message);$('research-family').onchange=()=>familyChanged().catch(message);$('research-next').onclick=()=>load(next).catch(message);$('research-refresh').onclick=()=>refresh().catch(message);
  $('research-download').onclick=()=>{if(!page)return;const blob=new Blob([JSON.stringify(page,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='research-data-page.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
- document.addEventListener('DOMContentLoaded',()=>{tab(new URL(location.href).searchParams.get('view')==='research');refresh().catch(e=>{$('research-catalog-status').textContent='Research archive unavailable';message(e)})});
+ document.addEventListener('DOMContentLoaded',()=>{tab(new URL(location.href).searchParams.get('view')==='research'||new URL(location.href).searchParams.get('view')==='raw');refresh().catch(e=>{$('research-catalog-status').textContent='Research archive unavailable';message(e)})});
 })();
 </script>
 '''

@@ -99,6 +99,12 @@ def freeze_bundle(*, root: Path, bars: dict, fx: dict, provenance: dict, spec_va
     if bool(spec_values.get('base_tree_model_schedule')) != (base_tree_models is not None):
         raise ValueError('Dated base-tree configuration and models must be supplied together')
     flow_state = {}
+    registered = None
+    if spec_values.get('strategy_definition'):
+        from systematic_trading.research.strategy_catalog import StrategyDefinition
+        registered = StrategyDefinition.from_dict(spec_values['strategy_definition'])
+        if registered.universe_key != 'multi_asset' or registered.scheduler != 'static_monthly':
+            raise ValueError('LEAN registered adapter supports the monthly multi-asset contract')
     previous_month = None
     for day in run_days:
         if day[:7] != previous_month:
@@ -109,7 +115,8 @@ def freeze_bundle(*, root: Path, bars: dict, fx: dict, provenance: dict, spec_va
                                       lookback_bars=spec_values.get('lookback_bars', 63),
                                       flow_overlay=flow_config, flow_state=flow_state,
                                       constituent_overlay=constituent_config, constituent_features=constituent_features,
-                                      base_tree_models=base_tree_models)
+                                      base_tree_models=base_tree_models, fixed_model_from=spec_values.get('fixed_model_from'),
+                                      definition=registered)
             execution_index = run_days.index(day) + spec_values.get('execution_delay_sessions', 0)
             if execution_index >= len(run_days):
                 continue
@@ -129,6 +136,13 @@ def freeze_bundle(*, root: Path, bars: dict, fx: dict, provenance: dict, spec_va
         shutil.copyfile(path, destination)
         source_hash.update(relative.as_posix().encode() + path.read_bytes())
     definition = current_sota_definition().to_dict()
+    if registered:
+        definition = registered.to_dict()
+    if spec_values.get('strategy') == 'benchmark':
+        from systematic_trading.research.strategy_catalog import risk_parity_definition
+        definition = risk_parity_definition().to_dict()
+    if spec_values.get('fixed_model_from'):
+        definition = dict(definition=definition, fixed_model_from=spec_values['fixed_model_from'])
     if base_tree_models is not None:
         write_json(root / 'base_tree_models.json', base_tree_models)
         definition = dict(recipe=definition, research_base_models_sha256=sha256(root / 'base_tree_models.json'), promotion_eligible=False)

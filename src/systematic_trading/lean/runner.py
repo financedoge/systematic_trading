@@ -151,3 +151,36 @@ def run_bundle(*, bundle: Path, output: Path, image: str, timeout_seconds=900) -
                                 if p.is_file() and p != output / 'run.json'}
         write_json(output / 'run.json', receipt)
     return receipt
+
+
+def run_python_bundle(*, bundle: Path, output: Path, timeout_seconds=900) -> dict:
+    """Run the same frozen accounting/strategy contract without a LEAN container."""
+    verify_bundle(bundle)
+    if output.exists():
+        raise FileExistsError(f'Run artifacts are immutable: {output}')
+    output.mkdir(parents=True)
+    receipt = dict(run_id='st-python-'+uuid4().hex[:12], status='running', engine='python',
+                   bundle=str(bundle.resolve()), manifest_sha256=sha256(bundle/'manifest.json'), promotion_eligible=False)
+    runtime_keys = {'PATH', 'PATHEXT', 'SYSTEMROOT', 'WINDIR', 'SYSTEMDRIVE', 'COMSPEC', 'TEMP', 'TMP', 'LANG', 'LC_ALL'}
+    environment = {k: v for k, v in os.environ.items() if k.upper() in runtime_keys}
+    environment.update(PYTHONPATH=str(bundle.resolve()/'source'), PYTHONDONTWRITEBYTECODE='1', PYTHONUTF8='1')
+    started = time.perf_counter()
+    try:
+        with (output/'reference.log').open('w', encoding='utf8') as log:
+            subprocess.run([sys.executable, '-B', '-m', 'systematic_trading.lean.reference', str(bundle.resolve()),
+                            str(output.resolve()/'economic.json')], cwd=output, env=environment,
+                           stdout=log, stderr=subprocess.STDOUT, timeout=timeout_seconds, check=True)
+        economic = json.loads((output/'economic.json').read_text(encoding='utf8'))
+        if not economic['complete']:
+            raise ValueError('Incomplete Python calculation')
+        verify_bundle(bundle)
+        receipt.update(status='succeeded', economic_sha256=sha256(output/'economic.json'),
+                       validation='Python replay; no native LEAN parity claimed for this run')
+    except BaseException as exc:
+        receipt.update(status='failed', error=f'{type(exc).__name__}: {exc}')
+        raise
+    finally:
+        receipt['elapsed_seconds'] = time.perf_counter()-started
+        receipt['artifacts'] = {p.name: sha256(p) for p in output.iterdir() if p.is_file() and p.name != 'run.json'}
+        write_json(output/'run.json', receipt)
+    return receipt

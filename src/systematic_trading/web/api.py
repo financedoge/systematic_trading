@@ -552,7 +552,9 @@ def dashboard_performance(request: Request) -> DashboardPerformance:
         detail = json.loads(published_strategy[0]["payload"])
         strategy_raw = [(date.fromisoformat(row["trade_date"]), Decimal(str(row["nav_cnh"]))) for row in detail["nav_series"]]
         strategy_base_date = date.fromisoformat(detail["artifact_end_date"])
-        strategy_extension_count = detail["monitoring_extension_count"]
+        # App-calculated NAV includes replayed signals and fills through its
+        # valuation date; only legacy artifacts have static holding extensions.
+        strategy_extension_count = detail.get("monitoring_extension_count", 0)
         warnings.extend(detail["warnings"])
     elif strategy_payload is not None:
         strategy_raw, strategy_base_date, strategy_extension_count = _strategy_nav_points(strategy_payload, store, warnings)
@@ -818,6 +820,8 @@ def strategy_catalog(request: Request) -> dict[str, Any]:
     rows: list[dict[str, Any]] = []
     warnings: list[str] = []
     for artifact in artifacts:
+        if artifact.strategy_id in getattr(request.app.state, "calculated_strategy_ids", set()):
+            continue
         row = artifact.as_dict()
         row["artifact_end_date"] = row["end_date"]
         row["lifecycle"] = "monitored" if artifact.is_sota or artifact.strategy_id in monitored_ids else "archived"
@@ -1016,6 +1020,14 @@ def _published_strategy(request, key, *, html=False):
 def analytics_status(request: Request):
     service = getattr(request.app.state, "analytics_service", None)
     return service.status() if service else {"enabled": False}
+
+
+@router.post("/strategies/refresh")
+def refresh_strategy_calculations(request: Request):
+    service = getattr(request.app.state, "analytics_service", None)
+    if service is None:
+        raise HTTPException(status_code=503, detail="Application analytics service is unavailable")
+    return service.request_refresh()
 
 
 @router.get("/analytics/observations")

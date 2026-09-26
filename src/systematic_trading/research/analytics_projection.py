@@ -169,20 +169,25 @@ def import_transactional_histories(analytics, store):
 
 
 def strategy_inputs(settings, analytics):
+    from systematic_trading.research.tracked_runtime import SOURCE
     files = list((settings.data_dir / "backtests").rglob("*.json"))
     files += list((settings.data_dir / "backtests").rglob("*.html"))
     if settings.strategy_monitoring_config_path.exists():
         files.append(settings.strategy_monitoring_config_path)
     code_root = Path(__file__).resolve().parents[1]
-    files += [code_root / name for name in ("web/api.py", "backtest/reporting.py", "research/catalog.py",
-                                          "research/analytics_projection.py", "research/market_data_view.py")]
+    files += [code_root / name for name in ("web/api.py", "backtest/reporting.py", "chart_navigation.py", "research/catalog.py",
+                                          "research/analytics_projection.py", "research/market_data_view.py",
+                                          "research/tracked_runtime.py", "research/strategy_diagram.py")]
     return digest(encode({"files": file_signature(files), "market": analytics.market_revision(),
+                          "research_tracking": (analytics.latest(SOURCE) or {}).get("version"),
                           "day": datetime.now(UTC).date().isoformat()}))
 
 
 def publish_strategies(settings, store, analytics):
     from systematic_trading.web import api
     from systematic_trading.research.catalog import discover_strategy_artifacts
+    from systematic_trading.research.tracked_runtime import published_strategies
+    from systematic_trading.backtest.reporting import render_backtest_report_html
 
     version = strategy_inputs(settings, analytics)
     latest = analytics.latest("strategy-serving")
@@ -192,8 +197,16 @@ def publish_strategies(settings, store, analytics):
     read_view = StrategyMarketDataView(store)
     # No analytics reader on this builder request: computation is confined to
     # this background worker, while ordinary HTTP requests only read documents.
-    request = SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(settings=settings, store=read_view)))
+    calculated = published_strategies(analytics)
+    request = SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(settings=settings, store=read_view,
+        calculated_strategy_ids=set(calculated))))
     catalog = api.strategy_catalog(request)
+    trackers = {key: item[0] for key, item in calculated.items()}
+    catalog["strategies"] = [row for row in catalog["strategies"] if row["strategy_id"] not in trackers]
+    catalog["strategies"].extend({key: value for key, value in item.items()
+        if key not in ("nav_series", "benchmark_series", "comparison")} for item in trackers.values())
+    if trackers:
+        catalog["monitoring_notes"] = "Application-calculated signals, rebalances, NAV and weights on audited histories. Tracking is separate from promotion and broker execution."
     documents = [dict(point_key="catalog", media_type="application/json", payload=encode(catalog))]
     rows, seen = [], set()
     for item in catalog["strategies"]:
@@ -201,13 +214,16 @@ def publish_strategies(settings, store, analytics):
         if strategy_id in seen:
             continue
         seen.add(strategy_id)
-        detail = api.strategy_detail(strategy_id, request)
+        detail = trackers[strategy_id] if strategy_id in trackers else api.strategy_detail(strategy_id, request)
         documents.append(dict(point_key=f"detail/{strategy_id}", media_type="application/json", payload=encode(detail)))
         rows.extend(extract_series(detail["nav_series"], family="strategy_nav", entity=strategy_id, prefix=f"nav/{strategy_id}"))
         rows.extend(extract_series(detail["benchmark_series"], family="benchmark_nav", entity=strategy_id, prefix=f"benchmark/{strategy_id}"))
         if item["report_available"]:
-            response = api.strategy_report(strategy_id, request)
-            body = response.body.decode() if hasattr(response, "body") else Path(response.path).read_text(encoding="utf-8")
+            if strategy_id in calculated:
+                body = render_backtest_report_html(calculated[strategy_id][1])
+            else:
+                response = api.strategy_report(strategy_id, request)
+                body = response.body.decode() if hasattr(response, "body") else Path(response.path).read_text(encoding="utf-8")
             documents.append(dict(point_key=f"report/{strategy_id}", media_type="text/html", payload=body))
             match = re.search(r"const report = (.*);", body)
             if match:
@@ -218,7 +234,8 @@ def publish_strategies(settings, store, analytics):
     if strategy_inputs(settings, analytics) != version:
         raise RuntimeError("Strategy inputs changed during calculation; retaining previous publication")
     return analytics.publish("strategy-serving", version, rows, documents,
-                             provenance={"method": "saved_backtest_plus_final_holdings_marks", "input_revision": version})
+                             provenance={"method": "app_calculated_tracked_strategies_and_archived_artifacts",
+                                         "input_revision": version})
 
 
 def publish_dashboard(settings, store, analytics):
