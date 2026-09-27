@@ -1,5 +1,13 @@
 # Architecture
 
+## Shared application contracts
+
+The [connection repair record](app-connection-repairs-2026-09-28.md) documents the portfolio, data and recovery boundaries. `portfolio/context.py` resolves the monitoring episode independently of accounting compaction. `portfolio/targets.py` selects approved deployed targets; `portfolio/valuation.py` applies observed mark/FX freshness; `portfolio/revision.py` invalidates derived EOD results. Paired actual/reference checkpoints and dated executions support replay without future-baseline leakage. Broker capture time cannot be reassigned to a historical session.
+
+Production decisions and strategy tracking consume hash-pinned published governed inputs. The application-owned `research/governed_refresh.py` producer audits and verifies a complete supported ETF batch before publishing its catalog pointer. Research and operations projections run independently and expose their errors/freshness. The economic cash ledger bridges NAV to security P&L, flows, income, costs and cash FX; unresolved differences remain visible and suppress reconciled flow-adjusted returns.
+
+`web/shell.py` owns the shared workspace presentation. Application health includes recurring broker probes, calculation workers and durable delivery receipts. NAS SQL snapshots carry external dependency manifests; missing analytical data/artifacts block restore before ownership or database mutation. These checks preserve the existing paper/live and single-writer gates.
+
 The governed historical-price research layer is documented in
 `docs/price-governance-2026-09-26.md`. Immutable batches in
 `market_data.governed_daily` and `market_data.governance_comparisons` retain
@@ -29,6 +37,12 @@ Analytical histories and prepared Strategy/account performance responses use a
 verified ClickHouse projection worker. Requests read the last complete publication;
 source changes refresh it in the background. PostgreSQL retains transactional
 authority and original files remain replay evidence. See [analytical migration](analytics-migration.md).
+
+Tracked rolling models use an isolated application fitting process, with parallel
+monthly fits, hash-verified model caches and portable inference shared by Python
+and native LEAN. The analytics worker publishes complete strategies and matched
+controls together after parity checks. The report exposes training lineage and
+the executable allocation trace. See [rolling XGBoost tracking](rolling-xgboost-lag20-tracking.md).
 
 The current implementation is the v0 control plane and research harness. It is intentionally Python-first, local-first, and paper-first while the contracts, tests, and operator workflow are hardened.
 

@@ -135,6 +135,10 @@ and forced takeover are intentionally not automatic.
 
 ## What still needs separate migration
 
+New snapshots include a versioned `dependencies` receipt covering configured model/FX inputs, tracked calculation artifacts, hash-verified governed roots and current ClickHouse publication versions. Incoming restore validates this receipt **before** changing the databases or NAS ownership. Missing files, changed hashes, a different analytical namespace or absent publication revisions stop restore with the offending prerequisite. Legacy SQL-only snapshots cannot establish ClickHouse recovery readiness and are blocked for a ClickHouse-configured incoming workstation until the source makes a new backup.
+
+This inventory verifies separately restored prerequisites; it does not package ClickHouse or the immutable artifact trees into the SQL snapshot. Recorded paths must resolve on the destination. See [connection repairs](app-connection-repairs-2026-09-28.md) for the scope and verification evidence.
+
 This feature covers PostgreSQL and the listed SQLite databases. ClickHouse,
 NATS streams, raw recorder files, untracked research artifacts and local broker
 configuration are not included. Git transfers tracked strategy configuration;

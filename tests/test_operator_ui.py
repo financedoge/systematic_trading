@@ -74,7 +74,7 @@ assert.equal(el('reconciliation-message').hidden, false);
 def _header_links(html: str) -> list[tuple[str, str]]:
     header = re.search(r"<header(?:\s[^>]*)?>(.*?)</header>", html, re.DOTALL)
     assert header is not None
-    return re.findall(r'<a class="button" href="([^"]+)">([^<]+)</a>', header.group(1))
+    return re.findall(r'<a class="button" href="([^"]+)"[^>]*>([^<]+)</a>', header.group(1))
 
 
 def test_operator_dashboard_is_served(tmp_path) -> None:

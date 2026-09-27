@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from dataclasses import dataclass
-from datetime import UTC, date, datetime, time
+from datetime import UTC, date, datetime
 from decimal import Decimal
 from functools import cache
 
@@ -19,6 +19,8 @@ from systematic_trading.domain import (
 )
 from systematic_trading.storage.interfaces import TradingStore
 from systematic_trading.execution.fills import execution_state_token
+from systematic_trading.portfolio.context import accounting_checkpoint, portfolio_context, session_end, NY
+from systematic_trading.portfolio.valuation import fx_rate, price
 
 PNL_FILL_STATUSES = {BrokerOrderStatus.FILLED, BrokerOrderStatus.PARTIALLY_FILLED}
 
@@ -38,6 +40,8 @@ class PnlReadView:
         self.list_price_bars = cache(store.list_price_bars)
         self.list_fx_rates = cache(store.list_fx_rates)
         self.list_pnl_snapshots = cache(store.list_pnl_snapshots)
+        if hasattr(store, "list_pnl_baselines"):
+            self.list_pnl_baselines = cache(store.list_pnl_baselines)
 
 
 @dataclass(frozen=True)
@@ -66,9 +70,10 @@ def _build_pnl_snapshot(
     use_reference_prices: bool,
 ) -> PnLSnapshot:
     store = store if isinstance(store, PnlReadView) else PnlReadView(store)
-    as_of_date = as_of or date.today()
-    as_of_at = datetime.combine(as_of_date, time.max, tzinfo=UTC)
-    baseline = store.latest_pnl_baseline()
+    as_of_date = as_of or datetime.now(NY).date()
+    as_of_at = session_end(as_of_date).astimezone(NY)
+    context = portfolio_context(store)
+    baseline = accounting_checkpoint(store, as_of_at, reference=use_reference_prices)
     warnings: list[str] = []
     lots_by_symbol: dict[str, list[PnLOpenLot]] = {}
     realized_by_symbol = _decimal_map()
@@ -80,9 +85,14 @@ def _build_pnl_snapshot(
         baseline_id = baseline.baseline_id
         baseline_cutoff_at = _ensure_aware(baseline.cutoff_at)
         baseline_trade_count = baseline.filled_trade_count
-        for symbol, realized in baseline.realized_pnl_by_symbol_cnh.items():
+        realized_values = (baseline.reference_realized_pnl_by_symbol_cnh
+            if use_reference_prices and baseline.reference_realized_pnl_by_symbol_cnh is not None
+            else baseline.realized_pnl_by_symbol_cnh)
+        opening_lots = (baseline.reference_open_lots
+            if use_reference_prices and baseline.reference_open_lots is not None else baseline.open_lots)
+        for symbol, realized in realized_values.items():
             realized_by_symbol[symbol.upper()] += Decimal(realized)
-        for lot in baseline.open_lots:
+        for lot in opening_lots:
             lots_by_symbol.setdefault(lot.symbol.upper(), []).append(lot)
         warnings.extend(baseline.warnings)
 
@@ -90,9 +100,9 @@ def _build_pnl_snapshot(
     if baseline_cutoff_at is not None:
         fills = [fill for fill in fills if fill.traded_at > baseline_cutoff_at]
     fills = [fill for fill in fills if fill.traded_at <= as_of_at]
-    _apply_fills(store, fills, lots_by_symbol, realized_by_symbol, as_of_date, warnings)
+    fills_complete = _apply_fills(store, fills, lots_by_symbol, realized_by_symbol, as_of_date, warnings)
     symbol_rows, valuation_complete = _symbol_pnl_rows(store, lots_by_symbol, realized_by_symbol, as_of_date, warnings)
-    valuation_complete = valuation_complete and not any(
+    valuation_complete = valuation_complete and fills_complete and not any(
         record.execution_sync_issue for record in store.list_broker_order_records()
     )
     realized_total = sum((row.realized_pnl_cnh for row in symbol_rows), Decimal("0"))
@@ -110,6 +120,7 @@ def _build_pnl_snapshot(
     return PnLSnapshot(
         as_of=as_of_at,
         source=source,
+        portfolio_context=context.model_dump(mode="json"),
         baseline_id=baseline_id,
         baseline_cutoff_at=baseline_cutoff_at,
         realized_pnl_cnh=quantize_money(realized_total),
@@ -129,7 +140,7 @@ def build_pnl_baseline(store: TradingStore, *, cutoff_date: date) -> PnLBaseline
     records = store.list_broker_order_records()
     if any(record.execution_sync_issue for record in records):
         raise ValueError("Cannot collapse PnL while broker execution history requires recovery.")
-    cutoff_at = datetime.combine(cutoff_date, time.max, tzinfo=UTC)
+    cutoff_at = session_end(cutoff_date)
     previous = store.latest_pnl_baseline()
     warnings: list[str] = []
     lots_by_symbol: dict[str, list[PnLOpenLot]] = {}
@@ -147,7 +158,20 @@ def build_pnl_baseline(store: TradingStore, *, cutoff_date: date) -> PnLBaseline
         previous_trade_count = previous.filled_trade_count
         warnings.extend(previous.warnings)
         fills = [fill for fill in fills if fill.traded_at > previous_cutoff]
-    _apply_fills(store, fills, lots_by_symbol, realized_by_symbol, cutoff_date, warnings)
+    if not _apply_fills(store, fills, lots_by_symbol, realized_by_symbol, cutoff_date, warnings):
+        raise ValueError("Cannot compact incomplete accounting: " + "; ".join(warnings))
+    reference_base = accounting_checkpoint(store, cutoff_at, reference=True)
+    reference_lots = {}
+    reference_realized = _decimal_map()
+    if reference_base:
+        for lot in (reference_base.reference_open_lots if reference_base.reference_open_lots is not None else reference_base.open_lots):
+            reference_lots.setdefault(lot.symbol, []).append(lot.model_copy(deep=True))
+        reference_realized.update(reference_base.reference_realized_pnl_by_symbol_cnh
+            if reference_base.reference_realized_pnl_by_symbol_cnh is not None else reference_base.realized_pnl_by_symbol_cnh)
+    reference_fills = [f for f in _broker_record_fills(store, warnings, use_reference_prices=True, records=records)
+        if f.traded_at <= cutoff_at and (reference_base is None or f.traded_at > _ensure_aware(reference_base.cutoff_at))]
+    if not _apply_fills(store, reference_fills, reference_lots, reference_realized, cutoff_date, warnings):
+        raise ValueError("Cannot compact incomplete reference accounting: " + "; ".join(warnings))
     open_lots = [
         lot
         for symbol in sorted(lots_by_symbol)
@@ -158,6 +182,9 @@ def build_pnl_baseline(store: TradingStore, *, cutoff_date: date) -> PnLBaseline
         warnings.append(f"No filled broker order records were available on or before {cutoff_date}; baseline is empty.")
     return PnLBaseline(
         cutoff_at=cutoff_at,
+        portfolio_context=portfolio_context(store).model_dump(mode="json"),
+        reference_open_lots=[lot for lots in reference_lots.values() for lot in lots],
+        reference_realized_pnl_by_symbol_cnh=dict(reference_realized),
         execution_state_token=execution_state_token(records),
         parent_baseline_id=previous.baseline_id if previous else None,
         account_reset_at=(previous.account_reset_at or (
@@ -184,7 +211,10 @@ def _broker_record_fills(
     records: list[BrokerOrderRecord] | None = None,
 ) -> list[_LedgerFill]:
     fills: list[_LedgerFill] = []
+    context = portfolio_context(store)
     for record in records if records is not None else store.list_broker_order_records():
+        if record.environment.value != context.environment:
+            continue
         if record.execution_sync_issue:
             warnings.append(f"{record.local_order_id}: {record.execution_sync_issue}")
         if record.execution_fills:
@@ -230,20 +260,19 @@ def _apply_fills(
     realized_by_symbol: dict[str, Decimal],
     as_of: date,
     warnings: list[str],
-) -> None:
+) -> bool:
+    complete = True
     for fill in fills:
-        fx = _fx_to_cnh(store, fill.currency, fill.traded_at.date(), warnings)
-        if fx is None:
-            fx = _fx_to_cnh(store, fill.currency, as_of, warnings)
-            if fx is not None:
-                warnings.append(f"{fill.symbol}: used {as_of} FX for fill {fill.fill_id}; trade-date FX was unavailable.")
+        fx = _fx_to_cnh(store, fill.currency, fill.traded_at.astimezone(NY).date(), warnings)
         if fx is None:
             warnings.append(f"{fill.symbol}: skipped fill {fill.fill_id}; missing {fill.currency}/CNH FX.")
+            complete = False
             continue
         lots = lots_by_symbol.setdefault(fill.symbol, [])
         signed_quantity = fill.quantity if fill.side == OrderSide.BUY else -fill.quantity
         _apply_signed_fill(lots, realized_by_symbol, fill, signed_quantity, fx)
         lots_by_symbol[fill.symbol] = [lot for lot in lots if lot.quantity != 0]
+    return complete
 
 
 def _apply_signed_fill(
@@ -307,7 +336,7 @@ def _symbol_pnl_rows(
         unrealized: Decimal | None = None
         market_price: Decimal | None = None
         if lots:
-            market_price = _latest_price(store, symbol, as_of)
+            market_price = price(store, symbol, as_of, warnings)
             if market_price is None:
                 warnings.append(f"{symbol}: missing market price on or before {as_of}; unrealized PnL is incomplete.")
                 valuation_complete = False
@@ -343,12 +372,7 @@ def _latest_price(store: TradingStore, symbol: str, as_of: date) -> Decimal | No
 
 
 def _fx_to_cnh(store: TradingStore, currency: Currency, as_of: date, warnings: list[str]) -> Decimal | None:
-    if currency == Currency.CNH:
-        return Decimal("1")
-    rates = store.list_fx_rates(currency, end_date=as_of)
-    if not rates:
-        return None
-    return rates[-1].rate
+    return fx_rate(store, currency, as_of, warnings)
 
 
 def _record_trade_time(record: BrokerOrderRecord) -> datetime:

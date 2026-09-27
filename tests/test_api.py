@@ -693,9 +693,9 @@ def test_dashboard_performance_and_holdings_use_strategy_and_account_artifacts(t
         assert holdings.status_code == 200
         holdings_payload = holdings.json()
         assert holdings_payload["account_nav_cnh"] == "228000.00"
-        assert holdings_payload["strategy_proposal_id"] == queue_response.json()["proposal"]["proposal_id"]
+        assert holdings_payload["strategy_proposal_id"] is None  # Pending generic proposal is not an active SOTA target.
         symbols = {row["symbol"] for row in holdings_payload["rows"]}
-        assert {"SPY", "TLT", "CASH"}.issubset(symbols)
+        assert {"SPY", "CASH"}.issubset(symbols)
 
 
 def test_dashboard_performance_extends_strategy_snapshot_with_new_market_bars(tmp_path) -> None:
@@ -970,7 +970,7 @@ def test_dashboard_pnl_uses_filled_broker_history_and_persists_snapshots(tmp_pat
         after_collapse = client.get("/api/v1/dashboard/pnl", params={"as_of": "2026-04-18"})
         assert after_collapse.status_code == 200
         after_payload = after_collapse.json()
-        assert after_payload["baseline_cutoff_at"].startswith("2026-04-17")
+        assert after_payload["baseline_cutoff_at"] == "2026-04-18T03:59:59.999999Z"  # April 17 New York session end.
         assert after_payload["total_pnl_cnh"] == "1152.00"
         assert after_payload["filled_trade_count"] == 2
 

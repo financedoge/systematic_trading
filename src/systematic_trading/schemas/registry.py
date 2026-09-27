@@ -14,6 +14,7 @@ from systematic_trading.domain.events import (
     FeatureComputedEvent,
     FillRecordedEvent,
     IncidentRecordedEvent,
+    CashEventRecordedEvent,
     MarketDataRecordedEvent,
     OrderIntentCreatedEvent,
     OrderStatusChangedEvent,
@@ -221,6 +222,7 @@ def _event_schema_entries() -> tuple[SchemaRegistryEntry, ...]:
         (PlatformEventType.RECONCILIATION_COMPLETED, ReconciliationCompletedEvent, "reconciliation-service"),
         (PlatformEventType.ALERT_RAISED, AlertRaisedEvent, "alert-service"),
         (PlatformEventType.INCIDENT_RECORDED, IncidentRecordedEvent, "incident-service"),
+        (PlatformEventType.CASH_EVENT_RECORDED, CashEventRecordedEvent, "portfolio-accounting"),
     )
     return tuple(
         SchemaRegistryEntry(

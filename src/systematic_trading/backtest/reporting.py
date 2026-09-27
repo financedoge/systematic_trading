@@ -951,7 +951,8 @@ def _color_map(symbols: list[str]) -> dict[str, str]:
 def _render_html(report: dict[str, Any]) -> str:
     payload = json.dumps(report, ensure_ascii=True, separators=(",", ":")).replace("</", "<\\/")
     from systematic_trading.chart_navigation import with_chart_navigation
-    return with_chart_navigation(HTML_TEMPLATE.replace("__REPORT_DATA__", payload))
+    from systematic_trading.web.shell import with_app_shell
+    return with_app_shell(with_chart_navigation(HTML_TEMPLATE.replace("__REPORT_DATA__", payload)), "strategies")
 
 
 def render_backtest_report_html(report: dict[str, Any]) -> str:
@@ -1346,6 +1347,22 @@ HTML_TEMPLATE = """<!doctype html>
       <div class="meta" id="refreshStatus" style="padding:0 16px 12px" role="status"></div>
     </section>
 
+    <section class="table-panel" id="modelTrainingPanel" hidden style="margin-bottom:14px">
+      <div class="panel-head"><h2>Rolling Model and ETF Activity</h2><button id="downloadRollingModel">Download current model</button></div>
+      <div style="padding:12px 16px"><p id="rollingModelMeta"></p><p class="meta" id="rollingModelExplanation"></p>
+        <details><summary>Current forecasts and lag-20 activity signals</summary><div class="table-scroll"><table id="rollingForecasts"></table></div></details>
+        <details><summary>Allocation after each strategy step</summary><div class="table-scroll"><table id="rollingStages"></table></div></details>
+        <details><summary>Feature definitions and current input values</summary><div id="rollingFeatures"></div></details>
+        <details><summary>Training parameters and provenance</summary><pre id="rollingProvenance" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre></details>
+        <details id="rollingTrees"><summary>Inspect all 100 fitted trees</summary>
+          <p class="meta">The forecast adds one leaf contribution from each tree. Leaf values already include the learning rate. Inputs and thresholds use float32; equality follows the right branch.</p>
+          <label>Boosting tree <select id="rollingTreeSelect" aria-label="Boosting tree"></select></label>
+          <button id="rollingTreeIn">Zoom in</button> <button id="rollingTreeOut">Zoom out</button> <button id="rollingTreeFit">Fit</button>
+          <div id="rollingTreeChart" style="overflow:auto;max-height:550px;border:1px solid #d9dee7"></div>
+        </details>
+      </div>
+    </section>
+
     <section class="chart-panel">
       <div class="chart-head">
         <div>
@@ -1508,6 +1525,23 @@ HTML_TEMPLATE = """<!doctype html>
 
     function setupTrackedStrategy() {
       const a=report.currentAllocation,m=report.monitoring;
+      const training=report.modelTraining;
+      if(training){
+        document.getElementById('modelTrainingPanel').hidden=false;
+        const t=training.training,r=training.receipt;
+        document.getElementById('rollingModelMeta').textContent=`Fitted through ${training.fitAsOf}. One-year window starts ${t.window_start}; ${t.training_samples} ETF-month observations across ${t.training_months} months. Latest completed training label: ${t.max_label_end}. Monthly refits; latest features through ${a.target_known_through}.`;
+        document.getElementById('rollingModelExplanation').textContent=training.explanation;
+        document.getElementById('rollingForecasts').innerHTML=`<thead><tr><th>ETF</th><th>Model score</th><th>Activity z</th><th>Activity signal</th><th>Activity slope</th><th>20d return</th><th>Signed volume</th></tr></thead><tbody>${training.forecasts.map(f=>`<tr><td>${escapeHtml(f.symbol)}</td><td>${fmtPct(f.forecast)}</td><td>${fmtNum(f.activity?.z)}</td><td>${f.activity?.signal??'—'}</td><td>${fmtNum(f.activity?.velocity,6)}</td><td>${fmtPct(f.activity?.momentum_20)}</td><td>${fmtNum(f.activity?.signed_volume_20)}</td></tr>`).join('')}</tbody>`;
+        document.getElementById('rollingStages').innerHTML=`<thead><tr><th>ETF</th>${training.allocationStages.map(s=>`<th>${escapeHtml(s.name.replaceAll('_',' '))}</th>`).join('')}</tr></thead><tbody>${[...training.forecasts.map(f=>f.symbol),'Cash'].map(symbol=>`<tr><td>${escapeHtml(symbol)}</td>${training.allocationStages.map(s=>`<td>${fmtPct(symbol==='Cash'?1-Object.values(s.weights).reduce((x,y)=>x+y,0):s.weights[symbol]||0)}</td>`).join('')}</tr>`).join('')}</tbody>`;
+        document.getElementById('rollingFeatures').innerHTML=`<p class="meta">ETF activity lag-20 is applied after XGBoost, relative momentum, and adaptive trend. It is not one of the model’s 26 training inputs. Valuation and macro scores are neutral zeros.</p><div class="table-scroll"><table><thead><tr><th>Feature</th><th>Meaning</th><th>Lookback</th>${training.forecasts.map(f=>`<th>${escapeHtml(f.symbol)}</th>`).join('')}</tr></thead><tbody>${training.features.map(f=>`<tr><td>${escapeHtml(f.featureId)}</td><td>${escapeHtml(f.description)}</td><td>${f.lookbackBars??'Neutral'}</td>${training.forecasts.map(row=>`<td>${fmtNum(row.inputs[f.featureId],5)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+        document.getElementById('rollingProvenance').textContent=JSON.stringify({recipe:training.recipe,training:t,model_sha256:training.modelSha256,audited_batch:training.batch,receipt:r},null,2);
+        document.getElementById('downloadRollingModel').onclick=()=>{const url=URL.createObjectURL(new Blob([JSON.stringify({recipe:training.recipe,training:t,model:training.model,model_sha256:training.modelSha256},null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download='rolling-xgboost-'+training.fitAsOf+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+        const selector=document.getElementById('rollingTreeSelect'),box=document.getElementById('rollingTreeChart');let scale=1;
+        selector.innerHTML=training.trees.map((_,i)=>`<option value="${i}">${i+1} / ${training.trees.length}</option>`).join('');
+        const showTree=()=>{box.innerHTML=training.trees[Number(selector.value)];box.querySelector('svg').style.width=(scale*100)+'%';};
+        selector.onchange=()=>{scale=1;showTree();};showTree();
+        for(const [id,factor] of [['rollingTreeIn',1.25],['rollingTreeOut',.8],['rollingTreeFit',0]])document.getElementById(id).onclick=()=>{scale=factor?Math.max(.5,Math.min(4,scale*factor)):1;showTree();};
+      }
       if(a){
         document.getElementById('currentStatePanel').hidden=false;
         document.getElementById('calculationMeta').textContent=`Calculated by the application using ${m.engine==='lean'?'LEAN with Python parity':'Python'}. Valuation: ${a.valuation_date}. Price inputs: ${m.priceThrough}. Updated: ${m.computedAt}.`;

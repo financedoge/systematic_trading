@@ -31,14 +31,21 @@ def targets_for_day(rows: dict, day: date, *, benchmark: bool = False, lookback_
     if min(len(bars) for bars in histories.values()) < 253:
         raise ValueError(f'Insufficient warmup before {day}; 253 prior observations required')
     overlays = list(instantiate_overlays(definition))
+    rolling = [o for o, s in zip(overlays, definition.overlays, strict=True) if s.kind == 'rolling_model']
+    if rolling and (base_tree_models is None or fixed_model_from is not None):
+        raise ValueError('Rolling strategy requires a model schedule for the entire history')
     if base_tree_models is not None and (fixed_model_from is None or str(day) < fixed_model_from):
         if benchmark:
             raise ValueError('A benchmark cannot use a tree schedule')
         from systematic_trading.research.chronological_tree import select_base_tree
-        trees = [o for o, s in zip(overlays, definition.overlays, strict=True) if s.kind == 'decision_tree']
+        trees = [o for o, s in zip(overlays, definition.overlays, strict=True) if s.kind in ('decision_tree', 'rolling_model')]
         if len(trees) != 1:
             raise ValueError('Dated base-tree schedule requires exactly one decision-tree overlay')
-        trees[0].model = select_base_tree(base_tree_models, str(histories['SPY'][-1].trade_date))
+        if rolling:
+            from systematic_trading.research.rolling_tracking import select_rolling_model
+            trees[0].model = select_rolling_model(base_tree_models, histories, day)
+        else:
+            trees[0].model = select_base_tree(base_tree_models, str(histories['SPY'][-1].trade_date))
     targets = _target_schedule(
         instruments=instruments, bars_by_symbol=histories, trade_dates=[day],
         rebalance_frequency='daily', lookback_bars=lookback_bars, max_weight=Decimal('0.45'),

@@ -19,8 +19,18 @@ class GovernedInputs:
             raise ValueError('Governed batch manifest mismatch')
         self.manifest = json.loads((root / 'manifest.json').read_text(encoding='utf8'))
         self.used = {}
+        self.parent = None
+        if 'parent.json' in self.manifest:
+            parent = json.loads(self.checked('parent.json').read_text(encoding='utf8'))
+            if parent['batch'] == batch:
+                raise ValueError('Cyclic governed parent')
+            self.parent = GovernedInputs(Path(parent['root']), parent['batch'])
 
     def checked(self, relative):
+        if relative not in self.manifest and self.parent is not None:
+            path = self.parent.checked(relative)
+            self.used['parent/' + relative] = self.parent.used[relative]
+            return path
         path = self.root / relative
         if relative not in self.manifest or sha256(path) != self.manifest[relative]:
             raise ValueError('Changed or unmanifested governed input: ' + relative)

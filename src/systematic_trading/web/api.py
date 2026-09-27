@@ -54,11 +54,13 @@ from systematic_trading.execution.window import (
 from systematic_trading.execution.locks import serialized_orders
 from systematic_trading.live.auto_approval import PaperApprovalPolicy, PaperApprovalUpdate
 from systematic_trading.live.pnl import PnlReadView
+from systematic_trading.portfolio.context import portfolio_context, utc, NY
+from systematic_trading.domain.events import CashEventRecordedEvent
+from systematic_trading.portfolio.valuation import fx_rate, price as observed_price
 from systematic_trading.research.market_data_view import StrategyMarketDataView
 from systematic_trading.live import (
     AutomationAlertNotifier,
     LiveAccountSnapshotInput,
-    SotaLiveRebalancePlan,
     TradingServiceStatus,
     TradingServiceEvent,
     build_dashboard_pnl_snapshot,
@@ -162,6 +164,7 @@ class DashboardSeriesPoint(BaseModel):
 
 
 class DashboardPerformance(BaseModel):
+    portfolio_context: dict = Field(default_factory=dict)
     strategy_name: str
     strategy_source: str | None = None
     latest_strategy_data_date: date | None = None
@@ -187,7 +190,7 @@ class DashboardHoldingDiff(BaseModel):
     account_quantity: int | None = None
     account_value_cnh: Decimal | None = None
     account_weight: Decimal | None = None
-    strategy_weight: Decimal = Decimal("0")
+    strategy_weight: Decimal | None = None
     target_value_cnh: Decimal | None = None
     weight_diff: Decimal | None = None
     trade_side: str | None = None
@@ -197,6 +200,7 @@ class DashboardHoldingDiff(BaseModel):
 
 
 class DashboardHoldings(BaseModel):
+    portfolio_context: dict = Field(default_factory=dict)
     as_of: date | None = None
     account_snapshot_source: str | None = None
     strategy_source: str | None = None
@@ -267,10 +271,15 @@ class DashboardMissedOrderRow(BaseModel):
 
 class DashboardExecutionQuality(BaseModel):
     as_of: datetime
+    portfolio_context: dict = Field(default_factory=dict)
+    valuation_complete: bool = True
+    filled_order_count: int = 0
     actual_pnl_cnh: Decimal
     theoretical_pnl_cnh: Decimal
     execution_gain_cnh: Decimal
     execution_gain_bps: Decimal | None = None
+    execution_rows_gain_cnh: Decimal = Decimal("0")
+    execution_reconciliation_difference_cnh: Decimal = Decimal("0")
     filled_notional_cnh: Decimal = Decimal("0")
     filled_trade_count: int = 0
     missed_order_count: int = 0
@@ -306,8 +315,8 @@ def _build_risk_parity_artifacts(
     price_map = {price.symbol: price.price for price in request_body.prices}
     volatility_map = {vol.symbol: vol.realized_volatility for vol in request_body.volatilities}
     fx_map: dict[Currency, Decimal] = {Currency.CNH: Decimal("1")}
-    for fx_rate in request_body.fx_rates:
-        fx_map[fx_rate.currency] = fx_rate.rate_to_cnh
+    for rate_input in request_body.fx_rates:
+        fx_map[rate_input.currency] = rate_input.rate_to_cnh
 
     missing_symbols = sorted(
         {
@@ -538,6 +547,10 @@ def dashboard_performance(request: Request) -> DashboardPerformance:
             raise HTTPException(status_code=503, detail="Performance publication is refreshing for the current account baseline.",
                                 headers={"Retry-After": "5"})
         payload = json.loads(saved[0]["payload"])
+        service = getattr(request.app.state, "analytics_service", None)
+        if service and service.status().get("errors"):
+            payload["warnings"].append("Some analytical calculations need attention; account and strategy publication times may differ.")
+        payload["portfolio_context"] = portfolio_context(store).model_dump(mode="json")
         payload["warnings"].append(f"Saved analytical performance calculated at {saved[1]['published_at']} UTC.")
         return DashboardPerformance.model_validate(payload)
     warnings: list[str] = []
@@ -545,7 +558,7 @@ def dashboard_performance(request: Request) -> DashboardPerformance:
     strategy_path = _strategy_result_path(settings)
     strategy_analytics = getattr(request.app.state, "strategy_analytics", None)
     published_strategy = strategy_analytics.document("strategy-serving", f"detail/{definition.key}") if strategy_analytics else None
-    strategy_payload = None if published_strategy else _load_json(strategy_path, warnings)
+    strategy_payload = None if published_strategy or getattr(request.app.state, "disable_legacy_strategy", False) else _load_json(strategy_path, warnings)
     strategy_base_date: date | None = None
     strategy_extension_count = 0
     if published_strategy:
@@ -568,6 +581,7 @@ def dashboard_performance(request: Request) -> DashboardPerformance:
                    and point.trade_date >= tracking_start and point.trade_date in strategy_by_date), None)
     latest_market_data_date = _latest_market_data_date(store)
     return DashboardPerformance(
+        portfolio_context=portfolio_context(store).model_dump(mode="json"),
         strategy_name=definition.name,
         strategy_source=str(strategy_path) if strategy_path.exists() else None,
         latest_strategy_data_date=strategy_base_date,
@@ -616,10 +630,8 @@ def dashboard_holdings(request: Request) -> DashboardHoldings:
         target.symbol.upper(): Decimal(target.target_weight)
         for target in (strategy_proposal.targets if strategy_proposal is not None else [])
     }
-    order_by_symbol = {
-        order.symbol.upper(): order
-        for order in (strategy_proposal.orders if strategy_proposal is not None else [])
-    }
+    # Targets remain active after execution; completed orders are not new trades.
+    order_by_symbol = {}
     target_cash_weight = max(Decimal("0"), Decimal("1") - sum(target_weights.values(), Decimal("0")))
     symbols = set(account_quantities) | {symbol for symbol, weight in target_weights.items() if weight != 0} | set(order_by_symbol)
     rows: list[DashboardHoldingDiff] = []
@@ -657,8 +669,12 @@ def dashboard_holdings(request: Request) -> DashboardHoldings:
                 weight_diff=_weight_diff(target_cash_weight, cash_weight),
             )
         )
+    if strategy_proposal is None:
+        for row in rows:
+            row.strategy_weight = row.target_value_cnh = row.weight_diff = None
     rows.sort(key=_holding_sort_key)
     return DashboardHoldings(
+        portfolio_context=portfolio_context(store).model_dump(mode="json"),
         as_of=as_of,
         account_snapshot_source=str(account_source) if account_source is not None else None,
         strategy_source=str(strategy_source) if strategy_source is not None else None,
@@ -802,7 +818,15 @@ def dashboard_pnl(
     request: Request,
     as_of: date | None = Query(default=None),
 ) -> PnLSnapshot:
-    return build_dashboard_pnl_snapshot(_store(request), as_of=as_of)
+    try:
+        return build_dashboard_pnl_snapshot(_store(request), as_of=as_of)
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/portfolio/context")
+def dashboard_portfolio_context(request: Request):
+    return portfolio_context(_store(request))
 
 
 @router.get("/strategies")
@@ -1003,10 +1027,11 @@ def _published_strategy(request, key, *, html=False):
     metadata = {"storage": "clickhouse", "published_at": publication["published_at"],
                 "version": publication["version"], "refresh": status}
     if html:
+        from systematic_trading.web.shell import with_app_shell
         banner = ("<div style='padding:8px;background:#edf2f7;color:#334155;font:13px sans-serif'>"
                   f"Saved analytical report · calculated {publication['published_at']} UTC"
                   + (" · refresh needs attention" if status.get("errors") else "") + "</div>")
-        body = document["payload"].replace("<body>", "<body>" + banner, 1)
+        body = with_app_shell(document["payload"], "strategies").replace("<body>", "<body>" + banner, 1)
         return HTMLResponse(body, headers={"X-Analytics-Published-At": publication["published_at"],
                                            "X-Analytics-Version": publication["version"]})
     payload = {**json.loads(document["payload"]), "analytics": metadata}
@@ -1020,6 +1045,39 @@ def _published_strategy(request, key, *, html=False):
 def analytics_status(request: Request):
     service = getattr(request.app.state, "analytics_service", None)
     return service.status() if service else {"enabled": False}
+
+
+@router.post("/portfolio/cash-events")
+def import_cash_event(event: CashEventRecordedEvent, request: Request):
+    from systematic_trading.portfolio.economic import record_cash_event
+    try:
+        return record_cash_event(_store(request), event)
+    except ValueError as exc:
+        raise HTTPException(409, str(exc)) from exc
+
+
+@router.get("/dashboard/economic-reconciliation")
+def dashboard_economic_reconciliation(request: Request):
+    from systematic_trading.portfolio.economic import economic_bridge
+    store, settings, warnings = _store(request), _settings(request), []
+    context = portfolio_context(store)
+    opening = None
+    if context.opening_snapshot_path:
+        try:
+            opening = LiveAccountSnapshotInput.model_validate_json(Path(context.opening_snapshot_path).read_text(encoding="utf8"))
+        except (OSError, ValueError) as exc:
+            warnings.append("Opening snapshot unavailable: " + str(exc))
+    _, closing = _latest_account_snapshot(settings, warnings)
+    day = closing.as_of if closing and closing.as_of else datetime.now(NY).date()
+    def nav(snapshot):
+        if snapshot is None or snapshot.as_of is None:
+            return None
+        value, _, _ = _value_account_snapshot(store=store, account_snapshot=snapshot, as_of=snapshot.as_of, warnings=warnings)
+        return value.nav_cnh if value else None
+    pnl = build_dashboard_pnl_snapshot(store, as_of=day)
+    result = economic_bridge(store, opening, nav(opening), nav(closing), pnl.total_pnl_cnh if pnl.valuation_complete else None, day)
+    result["warnings"].extend(warnings)
+    return result
 
 
 @router.post("/strategies/refresh")
@@ -1047,10 +1105,17 @@ def dashboard_execution_quality(
     history_limit: int = Query(default=60, ge=1, le=1000),
 ) -> DashboardExecutionQuality:
     store = PnlReadView(_store(request))
-    actual = build_dashboard_pnl_snapshot(store, as_of=as_of)
-    theoretical = build_reference_pnl_snapshot(store, as_of=as_of)
+    try:
+        actual = build_dashboard_pnl_snapshot(store, as_of=as_of)
+        theoretical = build_reference_pnl_snapshot(store, as_of=as_of)
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
     rows, slippage_warnings = _execution_slippage_rows(store, as_of=actual.as_of.date())
-    missed_records = [record for record in store.list_broker_order_records() if record.status == BrokerOrderStatus.MISSED]
+    context = portfolio_context(store)
+    missed_records = [record for record in store.list_broker_order_records()
+        if record.status == BrokerOrderStatus.MISSED and record.environment.value == context.environment
+        and context.includes_session(record.order.intended_trade_date or utc(record.submitted_at or record.updated_at).astimezone(NY).date())
+        and (record.order.intended_trade_date or utc(record.submitted_at or record.updated_at).astimezone(NY).date()) <= actual.as_of.date()]
     missed_notional = sum((record.order.notional_cnh for record in missed_records), Decimal("0"))
     missed_rows = [
         DashboardMissedOrderRow(
@@ -1074,14 +1139,19 @@ def dashboard_execution_quality(
         Decimal("0"),
     )
     execution_gain = quantize_money(actual.total_pnl_cnh - theoretical.total_pnl_cnh)
-    gain_bps = _quantize_bps((row_gain / filled_notional) * Decimal("10000")) if filled_notional > 0 else None
+    gain_bps = _quantize_bps((execution_gain / filled_notional) * Decimal("10000")) if filled_notional > 0 else None
     history = _pnl_comparison_history(store, history_limit)
     return DashboardExecutionQuality(
         as_of=actual.as_of,
+        portfolio_context=context.model_dump(mode="json"),
+        valuation_complete=actual.valuation_complete and theoretical.valuation_complete,
+        filled_order_count=len({row.local_order_id for row in rows}),
         actual_pnl_cnh=actual.total_pnl_cnh,
         theoretical_pnl_cnh=theoretical.total_pnl_cnh,
         execution_gain_cnh=execution_gain,
         execution_gain_bps=gain_bps,
+        execution_rows_gain_cnh=row_gain,
+        execution_reconciliation_difference_cnh=execution_gain-row_gain,
         filled_notional_cnh=quantize_money(filled_notional),
         filled_trade_count=len(rows),
         missed_order_count=len(missed_records),
@@ -1099,7 +1169,12 @@ def save_dashboard_pnl_snapshot(
     request: Request,
     as_of: date | None = Query(default=None),
 ) -> PnLSnapshot:
-    snapshot = build_dashboard_pnl_snapshot(_store(request), as_of=as_of)
+    view = PnlReadView(_store(request))
+    snapshot = build_dashboard_pnl_snapshot(view, as_of=as_of)
+    reference = build_reference_pnl_snapshot(view, as_of=as_of)
+    if not snapshot.valuation_complete or not reference.valuation_complete:
+        raise HTTPException(409, "Cannot save incomplete P&L valuation")
+    snapshot.reference_total_pnl_cnh = reference.total_pnl_cnh
     return _store(request).save_pnl_snapshot(snapshot)
 
 
@@ -1228,9 +1303,18 @@ def queue_risk_parity(request_body: RiskParityPreviewRequest, request: Request) 
 
 @router.get("/proposals", response_model=list[TradeProposal])
 @serialized_orders
-def list_proposals(request: Request, status: ProposalStatus | None = Query(default=None)) -> list[TradeProposal]:
+def list_proposals(request: Request, status: ProposalStatus | None = Query(default=None),
+                   scope: str = Query(default="portfolio", pattern="^(portfolio|all)$")) -> list[TradeProposal]:
     expire_due_proposals(_store(request), _settings(request))
-    return _store(request).list_proposals(status)
+    proposals = _store(request).list_proposals(status)
+    context = portfolio_context(_store(request))
+    open_proposals = {r.proposal_id for r in _store(request).list_broker_order_records()
+                      if r.status in {BrokerOrderStatus.PENDING_SUBMIT, BrokerOrderStatus.SUBMITTED,
+                                      BrokerOrderStatus.ACKNOWLEDGED, BrokerOrderStatus.PARTIALLY_FILLED}
+                      or r.pending_action or r.execution_sync_issue}
+    return proposals if scope == "all" else [p for p in proposals
+        if context.includes_session(p.intended_trade_date or p.as_of)
+        or p.proposal_id in open_proposals]
 
 
 @router.post("/proposals/{proposal_id}/decisions", response_model=TradeProposal)
@@ -1703,19 +1787,26 @@ def _account_nav_points(
     if reset_snapshot is not None and reset_snapshot.as_of is not None:
         reset_day = reset_snapshot.as_of
     daily: dict[date, LiveAccountSnapshotInput] = {}
-    tracking_start: date | None = None
+    episode_start = portfolio_context(store).start_date
+    tracking_start: date | None = episode_start
     for snapshot_path, snapshot in sorted(snapshots, key=lambda item: _snapshot_capture_time(*item)):
         as_of = snapshot.as_of or _account_snapshot_date(snapshot_path)
         if as_of is None:
             warnings.append(f"Could not infer account snapshot date for {snapshot_path}.")
             continue
+        if (snapshot_path.name != reset_name and snapshot.captured_at is not None
+                and utc(snapshot.captured_at).astimezone(NY).date() != as_of):
+            warnings.append(f"Ignored backdated account observation: {snapshot_path.name}.")
+            continue
         if reset_at is not None:
             if as_of < reset_day:
+                continue
+            if episode_start and as_of < episode_start and snapshot_path.name != reset_name:
                 continue
             if (snapshot_path.name != reset_name
                     and _snapshot_capture_time(snapshot_path, snapshot) < reset_at):
                 continue
-        if any(position.quantity > 0 for position in snapshot.positions):
+        if episode_start is None and any(position.quantity > 0 for position in snapshot.positions):
             tracking_start = min(tracking_start or as_of, as_of)
         daily[as_of] = snapshot
     points: list[tuple[date, Decimal]] = []
@@ -1846,31 +1937,27 @@ def _latest_strategy_proposal(
     store: TradingStore,
     warnings: list[str],
 ) -> tuple[Path | None, TradeProposal | None]:
-    live_plan_dir = settings.data_dir / "live" / "sota_rebalance"
-    if live_plan_dir.exists():
-        plan_paths = sorted(live_plan_dir.glob("sota_live_rebalance_*.json"), key=lambda item: item.stat().st_mtime)
-        for path in reversed(plan_paths):
-            try:
-                plan = SotaLiveRebalancePlan.model_validate_json(path.read_text(encoding="utf-8"))
-            except (OSError, ValueError) as exc:
-                warnings.append(f"Could not read SOTA live plan {path}: {exc}")
-                continue
-            return path, plan.proposal
-
-    stored_proposals = store.list_proposals()
-    if stored_proposals:
-        return None, stored_proposals[0]
-
-    strategy_payload = _load_json(_strategy_result_path(settings), warnings)
-    if strategy_payload is None:
+    from systematic_trading.portfolio.targets import approved_target
+    from systematic_trading.live.initial_allocation import latest_monthly_target_date
+    from systematic_trading.live.sota import build_sota_live_rebalance_plan
+    day = _latest_market_data_date(store)
+    if day is None:
+        warnings.append("No complete market session is available for active strategy targets.")
         return None, None
-    proposals = strategy_payload.get("proposals", [])
-    if isinstance(proposals, list) and proposals:
-        try:
-            return _strategy_result_path(settings), TradeProposal.model_validate(proposals[-1])
-        except ValueError as exc:
-            warnings.append(f"Could not read latest strategy proposal from SOTA result: {exc}")
-    return None, None
+    definition = current_sota_definition()
+    target_day = latest_monthly_target_date(day)
+    active = approved_target(store, definition, target_day, day)
+    if active is not None:
+        return None, active
+    try:
+        plan = build_sota_live_rebalance_plan(store=store, broker=InteractiveBrokersAdapter(settings),
+            account_snapshot=LiveAccountSnapshotInput(as_of=day, cash=[CashBalance(currency=Currency.CNH, amount=1)]),
+            decision_date=day, target_decision_date=target_day, queue=False)
+        warnings.append(f"Scheduled target reconstructed for {target_day}; no approved target in the current episode.")
+        return None, plan.proposal
+    except ValueError as exc:
+        warnings.append(f"Active strategy target unavailable: {exc}")
+        return None, None
 
 
 def _dashboard_as_of(
@@ -1904,14 +1991,9 @@ def _value_account_snapshot(
         instrument = instruments.get(symbol)
         if input_position.quantity == 0:
             continue
-        price = _latest_price(store, symbol, as_of)
+        price = observed_price(store, symbol, as_of, warnings)
         if price is None:
-            if input_position.average_cost > 0:
-                price = input_position.average_cost
-                warnings.append(f"{symbol}: missing market price on or before {as_of}; average cost was used for valuation.")
-            else:
-                warnings.append(f"{symbol}: missing market price on or before {as_of}; position was not valued.")
-                return None, position_values, price_map
+            return None, position_values, price_map
         currency = input_position.currency
         currencies.add(currency)
         price_map[symbol] = price
@@ -1953,18 +2035,8 @@ def _fx_to_cnh(
     as_of: date,
     warnings: list[str],
 ) -> dict[Currency, Decimal] | None:
-    rates: dict[Currency, Decimal] = {Currency.CNH: Decimal("1")}
-    for currency in sorted(currencies):
-        if currency == Currency.CNH:
-            continue
-        stored_rates = store.list_fx_rates(currency, end_date=as_of)
-        if not stored_rates:
-            warnings.append(f"Missing {currency}/CNH FX rate on or before {as_of}; account NAV was not valued.")
-            return None
-        if (as_of - stored_rates[-1].rate_date).days > 4:
-            warnings.append(f"{currency.value}/CNH FX is stale on {as_of}: last observation {stored_rates[-1].rate_date}.")
-        rates[currency] = stored_rates[-1].rate
-    return rates
+    rates = {currency: fx_rate(store, currency, as_of, warnings) for currency in currencies}
+    return None if any(value is None for value in rates.values()) else rates
 
 
 def _latest_market_data_date(store: TradingStore) -> date | None:
@@ -1987,46 +2059,30 @@ def _execution_slippage_rows(
 ) -> tuple[list[DashboardExecutionSlippageRow], list[str]]:
     warnings: list[str] = []
     rows: list[DashboardExecutionSlippageRow] = []
-    for record in store.list_broker_order_records():
-        if record.filled_quantity <= 0 or record.average_fill_price is None:
+    from systematic_trading.live.pnl import _broker_record_fills
+    context = portfolio_context(store)
+    records = {record.local_order_id: record for record in store.list_broker_order_records()
+               if record.environment.value == context.environment}
+    fills = _broker_record_fills(store, warnings, records=list(records.values()))
+    for fill in fills:
+        if fill.traded_at.astimezone(NY).date() > as_of or not context.includes(fill.traded_at):
             continue
-        filled_at = _record_trade_time(record)
-        if filled_at.date() > as_of:
-            continue
-        quantity = Decimal(record.filled_quantity)
-        currency = record.order.currency
-        fx = _single_fx_to_cnh(store, currency, filled_at.date(), warnings)
-        reference_notional = None
-        actual_notional = None
-        execution_gain = None
-        execution_gain_bps = None
-        if fx is not None:
-            reference_notional = record.order.reference_price * quantity * fx
-            actual_notional = record.average_fill_price * quantity * fx
-            if record.order.side == OrderSide.BUY:
-                execution_gain = (record.order.reference_price - record.average_fill_price) * quantity * fx
-            else:
-                execution_gain = (record.average_fill_price - record.order.reference_price) * quantity * fx
-            if reference_notional > 0:
-                execution_gain_bps = _quantize_bps((execution_gain / reference_notional) * Decimal("10000"))
-        rows.append(
-            DashboardExecutionSlippageRow(
-                local_order_id=record.local_order_id,
-                proposal_id=record.proposal_id,
-                order_index=record.order_index,
-                symbol=record.order.symbol.upper(),
-                side=record.order.side,
-                filled_quantity=record.filled_quantity,
-                reference_price=record.order.reference_price,
-                average_fill_price=record.average_fill_price,
-                currency=currency,
-                reference_notional_cnh=quantize_money(reference_notional) if reference_notional is not None else None,
-                actual_notional_cnh=quantize_money(actual_notional) if actual_notional is not None else None,
-                execution_gain_cnh=quantize_money(execution_gain) if execution_gain is not None else None,
-                execution_gain_bps=execution_gain_bps,
-                filled_at=filled_at,
-            )
-        )
+        record = records[fill.fill_id.split(":", 1)[0]]
+        quantity = Decimal(fill.quantity)
+        fx = fx_rate(store, fill.currency, fill.traded_at.astimezone(NY).date(), warnings)
+        reference_notional = record.order.reference_price * quantity * fx if fx is not None else None
+        actual_notional = fill.price * quantity * fx if fx is not None else None
+        gain = ((reference_notional - actual_notional) * (1 if fill.side == OrderSide.BUY else -1)
+                if fx is not None else None)
+        rows.append(DashboardExecutionSlippageRow(local_order_id=record.local_order_id,
+            proposal_id=record.proposal_id, order_index=record.order_index, symbol=fill.symbol,
+            side=fill.side, filled_quantity=fill.quantity, reference_price=record.order.reference_price,
+            average_fill_price=fill.price, currency=fill.currency,
+            reference_notional_cnh=quantize_money(reference_notional) if reference_notional is not None else None,
+            actual_notional_cnh=quantize_money(actual_notional) if actual_notional is not None else None,
+            execution_gain_cnh=quantize_money(gain) if gain is not None else None,
+            execution_gain_bps=_quantize_bps(gain/reference_notional*10000) if reference_notional else None,
+            filled_at=fill.traded_at))
     rows.sort(key=lambda row: (row.filled_at, row.local_order_id))
     return rows, _dedupe_messages(warnings)
 
@@ -2051,13 +2107,19 @@ def _record_trade_time(record: BrokerOrderRecord) -> datetime:
 def _pnl_comparison_history(store: TradingStore, limit: int) -> list[DashboardPnlComparisonPoint]:
     points: list[DashboardPnlComparisonPoint] = []
     for actual in _active_pnl_snapshots(store, limit):
-        theoretical = build_reference_pnl_snapshot(store, as_of=actual.as_of.date())
+        if actual.reference_total_pnl_cnh is not None:
+            reference_total = actual.reference_total_pnl_cnh
+        else:
+            theoretical = build_reference_pnl_snapshot(store, as_of=actual.as_of.date())
+            if not theoretical.valuation_complete:
+                continue
+            reference_total = theoretical.total_pnl_cnh
         points.append(
             DashboardPnlComparisonPoint(
                 as_of=actual.as_of,
                 actual_pnl_cnh=actual.total_pnl_cnh,
-                theoretical_pnl_cnh=theoretical.total_pnl_cnh,
-                execution_gain_cnh=quantize_money(actual.total_pnl_cnh - theoretical.total_pnl_cnh),
+                theoretical_pnl_cnh=reference_total,
+                execution_gain_cnh=quantize_money(actual.total_pnl_cnh - reference_total),
             )
         )
     points.sort(key=lambda point: point.as_of)
@@ -2069,16 +2131,20 @@ def _active_pnl_snapshots(store: TradingStore, limit: int):
     reset_at = baseline.account_reset_at if baseline else None
     if baseline and not reset_at and baseline.source == "ib_broker_authoritative_reset":
         reset_at = baseline.cutoff_at
-    return [snapshot for snapshot in store.list_pnl_snapshots(limit=limit)
+    eligible = [snapshot for snapshot in store.list_pnl_snapshots(limit=limit)
             if reset_at is None or (snapshot.as_of > reset_at and snapshot.baseline_cutoff_at is not None
                                    and snapshot.baseline_cutoff_at >= reset_at)]
+    daily = {}
+    for snapshot in sorted(eligible, key=lambda item: item.created_at):
+        daily[snapshot.as_of.astimezone(NY).date()] = snapshot
+    return list(daily.values())
 
 
 def _daily_slippage_points(rows: list[DashboardExecutionSlippageRow]) -> list[DashboardSlippagePoint]:
     daily_gain: dict[date, Decimal] = {}
     daily_notional: dict[date, Decimal] = {}
     for row in rows:
-        trade_date = row.filled_at.date()
+        trade_date = row.filled_at.astimezone(NY).date()
         daily_gain.setdefault(trade_date, Decimal("0"))
         daily_notional.setdefault(trade_date, Decimal("0"))
         if row.execution_gain_cnh is not None:

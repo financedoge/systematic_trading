@@ -204,7 +204,7 @@ def publish_strategies(settings, store, analytics):
     trackers = {key: item[0] for key, item in calculated.items()}
     catalog["strategies"] = [row for row in catalog["strategies"] if row["strategy_id"] not in trackers]
     catalog["strategies"].extend({key: value for key, value in item.items()
-        if key not in ("nav_series", "benchmark_series", "comparison")} for item in trackers.values())
+        if key not in ("nav_series", "benchmark_series", "comparison", "model_training")} for item in trackers.values())
     if trackers:
         catalog["monitoring_notes"] = "Application-calculated signals, rebalances, NAV and weights on audited histories. Tracking is separate from promotion and broker execution."
     documents = [dict(point_key="catalog", media_type="application/json", payload=encode(catalog))]
@@ -242,16 +242,16 @@ def publish_dashboard(settings, store, analytics):
     from systematic_trading.web import api
     baseline = store.latest_pnl_baseline()
     baseline_token = digest(baseline.model_dump_json()) if baseline else "none"
-    inputs = {"baseline": baseline_token, "market": analytics.market_revision(),
+    inputs = {"contract": "portfolio-context-v3", "baseline": baseline_token, "market": analytics.market_revision(),
               "account": (analytics.latest("account-history") or {}).get("version"),
               "strategy": (analytics.latest("strategy-serving") or {}).get("version")}
-    if not inputs["account"] or not inputs["strategy"]:
-        raise RuntimeError("Account and Strategy publications are required for the performance chart")
+    if not inputs["account"]:
+        raise RuntimeError("Account publication is required for the performance chart")
     version = digest(encode(inputs))
     if (analytics.latest("dashboard-serving") or {}).get("version") == version:
         return False
     request = SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(
-        settings=settings, store=StrategyMarketDataView(store), strategy_analytics=analytics)))
+        settings=settings, store=StrategyMarketDataView(store), strategy_analytics=analytics, disable_legacy_strategy=True)))
     payload = api.dashboard_performance(request).model_dump(mode="json")
     current = store.latest_pnl_baseline()
     if (digest(current.model_dump_json()) if current else "none") != baseline_token:

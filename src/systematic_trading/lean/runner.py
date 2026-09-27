@@ -68,6 +68,7 @@ def docker_command(*, image: str, bundle: Path, output: Path, name: str, memory=
             '--cap-drop', 'ALL', '--security-opt', 'no-new-privileges', '--pids-limit', '512',
             '--memory', memory, '--cpus', cpus, '--tmpfs', '/tmp:rw,size=512m',
             '-e', 'PYTHONDONTWRITEBYTECODE=1', '-e', 'DOTNET_CLI_HOME=/tmp',
+            '-e', 'OMP_NUM_THREADS=1', '-e', 'OPENBLAS_NUM_THREADS=1', '-e', 'MKL_NUM_THREADS=1', '-e', 'NUMEXPR_NUM_THREADS=1',
             '--mount', f'type=bind,src={bundle.resolve()},dst=/input,readonly',
             '--mount', f'type=bind,src={output.resolve()},dst=/output',
             image, '--config', '/output/config.json']
@@ -95,19 +96,20 @@ def lean_config() -> dict:
     }
 
 
-def run_bundle(*, bundle: Path, output: Path, image: str, timeout_seconds=900) -> dict:
+def run_bundle(*, bundle: Path, output: Path, image: str, timeout_seconds=900, cpus="2", memory="4g") -> dict:
     verified = verify_bundle(bundle)
     if output.exists():
         raise FileExistsError(f'Run artifacts are immutable: {output}')
     output.mkdir(parents=True)
     name = 'st-lean-' + uuid4().hex[:12]
     receipt = {'run_id': name, 'status': 'running', 'image': image, 'bundle': str(bundle.resolve()),
-               'manifest_sha256': sha256(bundle / 'manifest.json'), 'promotion_eligible': False}
+               'manifest_sha256': sha256(bundle / 'manifest.json'), 'promotion_eligible': False,
+               'resources': {'cpus':str(cpus), 'memory':memory, 'numerical_threads':1}}
     write_json(output / 'run.json', receipt)
     write_json(output / 'config.json', lean_config())
     started = time.perf_counter()
     try:
-        command = docker_command(image=image, bundle=bundle, output=output, name=name)
+        command = docker_command(image=image, bundle=bundle, output=output, name=name, cpus=str(cpus), memory=memory)
         # The oracle needs the interpreter/runtime, not inherited app credentials.
         runtime_keys = {'PATH', 'PATHEXT', 'SYSTEMROOT', 'WINDIR', 'SYSTEMDRIVE', 'COMSPEC',
                         'TEMP', 'TMP', 'LANG', 'LC_ALL'}
@@ -115,6 +117,7 @@ def run_bundle(*, bundle: Path, output: Path, image: str, timeout_seconds=900) -
         environment['PYTHONPATH'] = str(bundle.resolve() / 'source')
         environment['PYTHONDONTWRITEBYTECODE'] = '1'
         environment['PYTHONUTF8'] = '1'
+        environment.update(OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1', MKL_NUM_THREADS='1', NUMEXPR_NUM_THREADS='1')
         with (output / 'reference.log').open('w', encoding='utf-8') as log:
             subprocess.run([sys.executable, '-B', '-m', 'systematic_trading.lean.reference', str(bundle.resolve()),
                             str(output.resolve() / 'reference.json')], cwd=output, env=environment,
@@ -164,6 +167,7 @@ def run_python_bundle(*, bundle: Path, output: Path, timeout_seconds=900) -> dic
     runtime_keys = {'PATH', 'PATHEXT', 'SYSTEMROOT', 'WINDIR', 'SYSTEMDRIVE', 'COMSPEC', 'TEMP', 'TMP', 'LANG', 'LC_ALL'}
     environment = {k: v for k, v in os.environ.items() if k.upper() in runtime_keys}
     environment.update(PYTHONPATH=str(bundle.resolve()/'source'), PYTHONDONTWRITEBYTECODE='1', PYTHONUTF8='1')
+    environment.update(OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1', MKL_NUM_THREADS='1', NUMEXPR_NUM_THREADS='1')
     started = time.perf_counter()
     try:
         with (output/'reference.log').open('w', encoding='utf8') as log:

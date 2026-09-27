@@ -11,6 +11,8 @@ from systematic_trading.domain.enums import Currency, OrderEnvironment
 
 
 class AppSettings(BaseSettings):
+    require_governed_decision_inputs: bool = True
+    governed_refresh_enabled: bool = True
     model_config = SettingsConfigDict(
         env_file=".env",
         env_prefix="ST_",
@@ -33,6 +35,7 @@ class AppSettings(BaseSettings):
     ib_fx_client_id: int | None = None
     ib_benchmark_client_id: int | None = None
     ib_pnl_enabled: bool = True
+    health_monitor_enabled: bool = True
     ib_pnl_client_id: int | None = None
     ib_pnl_account: str | None = None
     ib_pnl_stale_seconds: int = Field(default=15, ge=2)

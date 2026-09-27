@@ -60,12 +60,13 @@ def reset_paper_pnl_before_session(*, settings, store, trade_date, opening_repor
         parent_baseline_id=previous.baseline_id if previous else None,
         warnings=[f"Operator reset before {trade_date} using a verified flat opening paper snapshot. Earlier experiments remain in audit history."])
     # This is an explicit opening reference, not a fabricated earlier broker observation.
-    reference = snapshot.model_copy(update={"as_of": previous_us_trading_day(trade_date)})
+    reference = snapshot.model_copy(update={"as_of": previous_us_trading_day(trade_date), "observation_kind": "opening_reference"})
     reference_path = settings.data_dir / "live" / "account_snapshots" / f"pnl_opening_{trade_date}_{baseline.baseline_id}.json"
     reference_path.parent.mkdir(parents=True, exist_ok=True)
     reference_path.write_text(json.dumps({**reference.model_dump(mode="json"), "reference_for_session":str(trade_date),
         "observed_snapshot_path":str(source), "note":"Opening cash reference assigned to previous close; captured_at retains actual observation time."},indent=2),encoding="utf-8")
     baseline.account_snapshot_path = str(reference_path)
+    baseline.account_id = opening.managed_accounts[0]
     audit_path = settings.data_dir / "live" / f"pnl_opening_reset_{baseline.baseline_id}.json"
     audit = dict(operator=operator, reason=reason, opening_report_path=str(opening_report_path),
         opening_snapshot_path=str(source), previous_baseline=previous.model_dump(mode="json") if previous else None,

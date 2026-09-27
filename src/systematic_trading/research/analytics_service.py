@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
+import json
 from threading import Event, Lock, Thread
 
 from systematic_trading.market_data.analytics_store import digest, encode
@@ -66,14 +67,29 @@ class AnalyticsService:
         self._stop, self._lock = Event(), Lock()
         self._wake = Event()
         self._thread = None
+        self._account_thread = None
+        self._lane_errors = {}
         self._status = {"running": False, "last_completed_at": None, "errors": {}}
 
     def status(self):
+        compute = None
+        try:
+            compute = json.loads((self.settings.data_dir / "run/strategy-compute.json").read_text(encoding="utf8"))
+        except (OSError, ValueError):
+            pass
         with self._lock:
-            return {**self._status, "running": bool(self._thread and self._thread.is_alive())}
+            research = bool(self._thread and self._thread.is_alive())
+            operations = bool(self._account_thread and self._account_thread.is_alive())
+            completed = self._status.get("operations_completed_at")
+            stale = not completed or (datetime.now(UTC) - datetime.fromisoformat(completed)).total_seconds() > max(300, self.settings.analytics_refresh_seconds * 3)
+            return {**self._status, "running": research and operations,
+                    "research_running": research, "operations_running": operations,
+                    "operations_stale": stale, "compute": compute}
 
     def start(self):
-        self._thread = Thread(target=self._run, name="analytics-projection", daemon=True)
+        self._thread = Thread(target=self._run, args=("research",), name="analytics-research", daemon=True)
+        self._account_thread = Thread(target=self._run, args=("operations",), name="analytics-operations", daemon=True)
+        self._account_thread.start()
         self._thread.start()
 
     def stop(self):
@@ -81,16 +97,19 @@ class AnalyticsService:
         self._wake.set()
         if self._thread:
             self._thread.join(timeout=5)
+        if self._account_thread:
+            self._account_thread.join(timeout=5)
 
     def request_refresh(self):
         self._wake.set()
         return {"queued": True, "owner": "application"}
 
-    def refresh(self):
+    def refresh(self, lane="all"):
         self.analytics.initialize()
         errors, changed = {}, []
         root = self.settings.data_dir
         jobs = [
+            ("governed-publication", lambda: self._refresh_governed()),
             ("tracked-strategies", lambda: refresh_tracked_strategies(self.settings, self.store, self.analytics)),
             ("strategy-serving", lambda: publish_strategies(self.settings, self.store, self.analytics)),
             ("research-history", lambda: import_json_group(self.analytics, "research-history",
@@ -105,14 +124,20 @@ class AnalyticsService:
             ("lean-history", lambda: import_lean_histories(self.analytics, self.store)),
             ("market-raw", lambda: import_raw_market_data(self.settings, self.analytics)),
         ]
+        research = {"governed-publication", "tracked-strategies", "strategy-serving", "research-history", "lean-history"}
+        jobs.sort(key=lambda item: item[0] in research)
         for name, job in jobs:
+            if lane != "all" and ((name in research) != (lane == "research")):
+                continue
             if self._stop.is_set():
                 break
-            if "tracked-strategies" in errors and name in ("strategy-serving", "dashboard-serving"):
+            if "tracked-strategies" in errors and name == "strategy-serving":
                 continue
             try:
                 with self._lock:
-                    self._status["current_job"] = name
+                    self._status[lane + "_job"] = name
+                    if lane != "operations":
+                        self._status["current_job"] = name
                 if job():
                     changed.append(name)
             except Exception as exc:
@@ -121,16 +146,31 @@ class AnalyticsService:
                 # required monitored calculation failed on this refresh.
                 # Other account/execution/raw-data projections can still refresh.
         with self._lock:
-            self._status = dict(running=bool(self._thread and self._thread.is_alive()),
-                                last_completed_at=datetime.now(UTC).isoformat(), errors=errors, changed=changed)
+            self._lane_errors[lane] = errors
+            self._status.update(last_completed_at=datetime.now(UTC).isoformat(),
+                errors={k:v for values in self._lane_errors.values() for k,v in values.items()}, changed=changed)
+            self._status[lane + "_completed_at"] = datetime.now(UTC).isoformat()
+            self._status.pop(lane + "_job", None)
+            if lane != "operations":
+                self._status.pop("current_job", None)
         return self.status()
 
-    def _run(self):
+    def _run(self, lane):
         while not self._stop.is_set():
             try:
-                self.refresh()
+                self.refresh(lane)
             except Exception as exc:
                 with self._lock:
-                    self._status = dict(running=True, last_completed_at=None, errors={"worker": str(exc)})
-            self._wake.wait(self.settings.analytics_refresh_seconds)
-            self._wake.clear()
+                    self._lane_errors[lane] = {lane + "_worker": str(exc)}
+                    self._status["errors"] = {k:v for values in self._lane_errors.values() for k,v in values.items()}
+            if lane == "operations":
+                self._stop.wait(self.settings.analytics_refresh_seconds)
+            else:
+                self._wake.wait(self.settings.analytics_refresh_seconds)
+                self._wake.clear()
+
+    def _refresh_governed(self):
+        if not self.settings.governed_refresh_enabled:
+            return False
+        from systematic_trading.research.governed_refresh import refresh_governed_etfs
+        return refresh_governed_etfs(self.settings, self.analytics)

@@ -67,6 +67,11 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
             app.state.analytics_service = AnalyticsService(resolved_settings, store, app.state.analytics)
             app.state.analytics_service.start()
         app.state.provider_registry = provider_registry
+        app.state.broker_health = None
+        if resolved_settings.health_monitor_enabled:
+            from systematic_trading.services.broker_monitor import BrokerHealthMonitor
+            app.state.broker_health = BrokerHealthMonitor(resolved_settings)
+            app.state.broker_health.start()
         app.state.broker = broker
         app.state.twap_benchmarks = TwapBenchmarkService(resolved_settings)
         app.state.broker_pnl = BrokerPnlService(resolved_settings)
@@ -79,6 +84,8 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
                 message="Trading management automation loop started.",
             )
         yield
+        if app.state.broker_health is not None:
+            app.state.broker_health.close()
         if app.state.analytics_service is not None:
             app.state.analytics_service.stop()
         app.state.broker_pnl.close()
@@ -112,13 +119,16 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
             )
         }
         service = getattr(app.state, "trading_management_service", None)
+        broker_health = getattr(app.state, "broker_health", None)
+        if broker_health is not None and broker_health.snapshot() is not None:
+            service_overrides["ib_tws_api"] = broker_health.snapshot()
         if service is not None:
             status = service.status()
             service_overrides["trading_management_loop"] = ServiceRuntimeSnapshot(
                 running=status.running,
                 started_at=status.started_at,
                 heartbeat_at=status.heartbeat_at,
-                last_error=status.last_error,
+                last_error=status.last_error or (status.portfolio_alignment_message if status.portfolio_alignment_status == "blocked" else None),
                 message="Trading management loop status loaded from embedded worker.",
                 details={
                     "pending_eod_date": status.pending_eod_date.isoformat() if status.pending_eod_date else None,
@@ -130,11 +140,28 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
                     else None,
                 },
             )
-        return build_platform_health(
+        result = build_platform_health(
             settings=resolved_settings,
             service_overrides=service_overrides,
             now=checked_at,
         )
+        from systematic_trading.services.health import ServiceHealthState, _overall_status
+        analytics = getattr(app.state, "analytics_service", None)
+        result.services = [s for s in result.services if s.service_id not in {"analytics", "alert_delivery"}]
+        if analytics is not None:
+            state = analytics.status()
+            result.services.append(ServiceHealthState(service_id="analytics", display_name="Strategy and account calculations",
+                service_type="embedded", implementation_status="active", required=True, checked_at=checked_at,
+                status="degraded" if state.get("errors") or not state.get("running") or state.get("operations_stale") else "ok",
+                message="; ".join(state.get("errors", {}).values()) or ("Account calculations have not completed recently." if state.get("operations_stale") else "Independent account and strategy workers."), details=state))
+        if service is not None:
+            delivery = service.alert_notifier.delivery_status()
+            result.services.append(ServiceHealthState(service_id="alert_delivery", display_name="Operator alert delivery",
+                service_type="embedded", implementation_status="active", required=False, checked_at=checked_at,
+                status="error" if delivery["status"] == "failed" else "ok" if delivery["configured"] else "disabled",
+                message=delivery.get("error") or delivery.get("configuration_issue") or "Delivery channel configured; see delivery receipts.", details=delivery))
+        result.status = _overall_status(result.services)
+        return result
 
     app.include_router(operator_router)
     app.include_router(platform_router)

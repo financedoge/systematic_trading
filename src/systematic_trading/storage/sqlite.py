@@ -444,6 +444,9 @@ class SQLiteStore:
         return [PnLSnapshot.model_validate_json(row["payload"]) for row in rows]
 
     def save_pnl_baseline(self, baseline: PnLBaseline) -> PnLBaseline:
+        from systematic_trading.portfolio.context import context_from_baseline
+        if not baseline.portfolio_context:
+            baseline.portfolio_context = context_from_baseline(baseline).model_dump(mode="json")
         with self._connect() as connection:
             connection.execute("BEGIN IMMEDIATE")
             if baseline.execution_state_token is not None:
@@ -485,6 +488,11 @@ class SQLiteStore:
         if row is None:
             return None
         return PnLBaseline.model_validate_json(row["payload"])
+
+    def list_pnl_baselines(self) -> list[PnLBaseline]:
+        with self._connect() as connection:
+            rows = connection.execute("SELECT payload FROM pnl_baselines ORDER BY cutoff_at, created_at").fetchall()
+        return [PnLBaseline.model_validate_json(row["payload"]) for row in rows]
 
     def apply_decision(self, decision: ApprovalDecision, *, expected_status: ProposalStatus | None = None) -> TradeProposal:
         now = datetime.now(tz=UTC).isoformat()

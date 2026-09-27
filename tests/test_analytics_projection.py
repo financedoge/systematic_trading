@@ -116,7 +116,7 @@ def test_dashboard_accepts_app_calculated_nav_without_legacy_extension(tmp_path,
     monkeypatch.setattr(api, "_account_nav_points", lambda *a: ([], None, None))
     monkeypatch.setattr(api, "_latest_market_data_date", lambda *a: date(2026, 9, 25))
     req = SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(
-        settings=AppSettings(data_dir=tmp_path), store=object(), strategy_analytics=analytics)))
+        settings=AppSettings(data_dir=tmp_path), store=SimpleNamespace(latest_pnl_baseline=lambda:None), strategy_analytics=analytics)))
     result = dashboard_performance(req)
     assert result.latest_strategy_data_date == date(2026, 9, 25)
     assert result.latest_strategy_nav_cnh == 1250000
@@ -135,7 +135,7 @@ def test_failed_strategy_calculation_preserves_reports_and_other_projections(tmp
     service = module.AnalyticsService(AppSettings(data_dir=tmp_path), object(), SimpleNamespace(initialize=lambda: None))
     status = service.refresh()
     assert status["errors"] == {"tracked-strategies": "Invalid audited inputs"}
-    assert "publish_strategies" not in calls and "publish_dashboard" not in calls
+    assert "publish_strategies" not in calls and "publish_dashboard" in calls
     assert "import_account_histories" in calls and "import_transactional_histories" in calls
 
 

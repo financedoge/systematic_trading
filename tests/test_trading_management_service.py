@@ -132,6 +132,7 @@ def test_trading_management_service_does_not_complete_eod_from_stored_snapshot_w
     (snapshot_dir / f"ib_paper_account_snapshot_{as_of:%Y%m%d}_235900.json").write_text(
         LiveAccountSnapshotInput(
             as_of=as_of,
+            captured_at=datetime.combine(as_of,time(20),tzinfo=UTC),
             cash=[CashBalance(currency=Currency.CNH, amount=Decimal("1000000"))],
         ).model_dump_json(indent=2),
         encoding="utf-8",
@@ -163,7 +164,7 @@ def test_trading_management_service_does_not_complete_eod_from_stored_snapshot_w
     assert status.last_eod_date is None
     assert status.pending_eod_date == as_of
     assert status.last_rebalance_proposal_id is None
-    assert "IB account snapshot unavailable" in (status.last_error or "")
+    assert status.last_error  # Fresh reconciliation is unavailable; current holdings cannot be backdated.
     assert any(event.status == "warning" and "stored same-day account snapshot" in event.message for event in status.events)
     assert any("reconciliation is unresolved" in event.message for event in status.events)
     staged = [
@@ -353,6 +354,7 @@ def test_trading_management_service_opens_ib_circuit_after_repeated_failures(tmp
             enabled=True,
             running=False,
             last_eod_date=date(2026, 5, 26),
+            last_eod_input_revision=__import__('systematic_trading.portfolio.revision',fromlist=['accounting_revision']).accounting_revision(store,date(2026,5,26)),
             last_eod_pnl_date=date(2026, 5, 26),
             last_eod_pnl_snapshot_id="already-saved",
             last_eod_pnl_total_cnh="0.00",
@@ -381,10 +383,17 @@ def test_trading_management_service_opens_ib_circuit_after_repeated_failures(tmp
     assert sum(1 for event in notifier.events if event.event_type == "ib_connection") == 1
 
 
-def test_trading_management_service_filters_non_sota_positions_for_rebalance(tmp_path) -> None:
+def test_trading_management_service_filters_non_sota_positions_for_rebalance(tmp_path, monkeypatch) -> None:
     store = SQLiteStore(tmp_path / "non_sota_position.db")
     store.initialize()
     as_of = _seed_sota_history(store)
+    from systematic_trading.execution import reconciliation
+    class ObservedClock(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return datetime.combine(as_of,time(16),tzinfo=ZoneInfo("America/New_York")).astimezone(tz or UTC)
+    monkeypatch.setattr(reconciliation, "datetime", ObservedClock)
+    store.upsert_price_bar("DBB",PriceBar(trade_date=as_of,open="20",high="20",low="20",close="20",volume=100))
     store.upsert_fx_rate(FXRate(rate_date=as_of, base_currency=Currency.USD, rate=Decimal("7.20")))
     settings = AppSettings(
         database_path=tmp_path / "non_sota_position.db",

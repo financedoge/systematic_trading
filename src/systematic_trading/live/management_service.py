@@ -24,7 +24,7 @@ from systematic_trading.live.alerts import AutomationAlertNotifier
 from systematic_trading.live.auto_approval import PaperAutoApproval
 from systematic_trading.live.initial_allocation import InitialAllocationResult, stage_portfolio_alignment
 from systematic_trading.live.market_data import DailyBarProvider, MarketDataRefreshResult, refresh_sota_market_data
-from systematic_trading.live.pnl import build_dashboard_pnl_snapshot
+from systematic_trading.live.pnl import build_dashboard_pnl_snapshot, build_reference_pnl_snapshot
 from systematic_trading.live.sota import LiveAccountSnapshotInput, build_sota_live_rebalance_plan, write_sota_live_plan_artifacts
 from systematic_trading.live.trading_calendar import is_us_trading_day, next_us_trading_day, previous_us_trading_day, us_trading_dates_after
 from systematic_trading.research import current_sota_definition
@@ -64,6 +64,7 @@ class TradingServiceStatus(BaseModel):
     last_eod_pnl_date: date | None = None
     last_eod_pnl_snapshot_id: str | None = None
     last_eod_pnl_total_cnh: str | None = None
+    last_eod_input_revision: str | None = None
     last_market_data_refresh_at: datetime | None = None
     last_market_data_date: date | None = None
     last_market_data_symbols_updated: int | None = None
@@ -205,8 +206,13 @@ class TradingManagementService:
             self._save_status_locked()
 
     def status(self) -> TradingServiceStatus:
+        from systematic_trading.execution.reconciliation import load_latest_ib_reconciliation
+        latest = load_latest_ib_reconciliation(self.settings)
         with self._lock:
-            return self._status
+            return self._status.model_copy(update={
+                "last_reconciliation_at": latest.checked_at,
+                "last_reconciliation_status": latest.status,
+            }) if latest else self._status
 
     def run_once(self, *, now: datetime | None = None) -> TradingServiceStatus:
         started = monotonic()
@@ -417,6 +423,10 @@ class TradingManagementService:
             service_date = self._status.pending_eod_date or self._latest_eligible_eod_date(now)
         if service_date is None:
             return
+        from systematic_trading.portfolio.context import portfolio_context
+        from systematic_trading.portfolio.revision import accounting_revision
+        if not portfolio_context(self.store).includes_session(service_date):
+            return
         try:
             rebalance_due = self.settings.automation_queue_rebalance and _scheduled_rebalance_due(service_date)
         except ValueError as exc:
@@ -431,13 +441,22 @@ class TradingManagementService:
             and market_result.latest_fx_date is not None and market_result.latest_fx_date >= service_date
         )
         reconciliation_ready = self._status.last_reconciliation_status in {"matched", "reset_to_broker"}
-        pnl_ready = self._status.last_eod_pnl_date == service_date
+        input_revision = accounting_revision(self.store, service_date)
+        pnl_ready = self._status.last_eod_pnl_date == service_date and self._status.last_eod_input_revision == input_revision
         rebalance_ready = not rebalance_due or _existing_staged_proposal(self.store, service_date) is not None
 
         account_snapshot = None
         account_snapshot_path: str | None = None
         ib_open_until = self._ib_circuit_open_until(_as_utc(now))
-        if ib_open_until is not None:
+        if service_date != _as_utc(now).astimezone(ZoneInfo("America/New_York")).date():
+            # IB account/position calls are current observations, not historical
+            # queries. Catch-up may only use evidence actually captured that day.
+            fallback = _latest_stored_account_snapshot(self.settings, service_date)
+            if fallback is not None:
+                account_snapshot_path, account_snapshot = self._use_stored_account_snapshot_fallback(fallback)
+            else:
+                self._record_event("account_snapshot", "warning", f"No observed historical account snapshot for {service_date}; portfolio history remains unavailable.")
+        elif ib_open_until is not None:
             self._record_event(
                 "account_snapshot",
                 "warning",
@@ -453,6 +472,7 @@ class TradingManagementService:
                     settings=self.settings,
                     client=self.account_snapshot_client,
                     as_of=service_date,
+                    observed_at=now,
                     sota_universe_only=True,
                 )
                 account_snapshot = account_result.snapshot
@@ -473,7 +493,12 @@ class TradingManagementService:
 
         if not pnl_ready and market_ready and reconciliation_ready:
             try:
-                pnl_snapshot = self.store.save_pnl_snapshot(build_dashboard_pnl_snapshot(self.store, as_of=service_date))
+                pnl_snapshot = build_dashboard_pnl_snapshot(self.store, as_of=service_date)
+                reference = build_reference_pnl_snapshot(self.store, as_of=service_date)
+                if not pnl_snapshot.valuation_complete or not reference.valuation_complete:
+                    raise ValueError("Incomplete daily accounting: " + "; ".join(pnl_snapshot.warnings + reference.warnings))
+                pnl_snapshot.reference_total_pnl_cnh = reference.total_pnl_cnh
+                pnl_snapshot = self.store.save_pnl_snapshot(pnl_snapshot)
                 pnl_ready = True
                 with self._lock:
                     self._status = self._status.model_copy(
@@ -481,6 +506,7 @@ class TradingManagementService:
                             "last_eod_pnl_date": service_date,
                             "last_eod_pnl_snapshot_id": pnl_snapshot.snapshot_id,
                             "last_eod_pnl_total_cnh": str(pnl_snapshot.total_pnl_cnh),
+                            "last_eod_input_revision": input_revision,
                             "last_account_snapshot_path": account_snapshot_path or self._status.last_account_snapshot_path,
                         }
                     )
@@ -603,7 +629,13 @@ class TradingManagementService:
             self._save_status_locked()
 
     def _refresh_eod_backlog(self, now: datetime) -> None:
+        from systematic_trading.portfolio.context import portfolio_context
+        from systematic_trading.portfolio.revision import accounting_revision
+        context = portfolio_context(self.store)
         latest_eligible_date = self._latest_eligible_eod_date(now)
+        revision_changed = (self._status.last_eod_pnl_date is not None
+            and context.includes_session(self._status.last_eod_pnl_date)
+            and accounting_revision(self.store, self._status.last_eod_pnl_date) != self._status.last_eod_input_revision)
         with self._lock:
             pending_dates = list(self._status.pending_eod_dates)
             if self._status.pending_eod_date is not None:
@@ -616,9 +648,11 @@ class TradingManagementService:
                     pending_dates.extend(_business_dates_after(last_eod_date, latest_eligible_date))
             if last_eod_date is not None:
                 pending_dates = [pending_date for pending_date in pending_dates if pending_date > last_eod_date]
+            if revision_changed:
+                pending_dates.append(self._status.last_eod_pnl_date)
             if latest_eligible_date is not None:
                 pending_dates = [pending_date for pending_date in pending_dates if pending_date <= latest_eligible_date]
-            pending_dates = _dedupe_dates(pending_dates)
+            pending_dates = _dedupe_dates([d for d in pending_dates if context.includes_session(d)])
             self._status = self._status.model_copy(
                 update={
                     "pending_eod_date": pending_dates[0] if pending_dates else None,
@@ -909,7 +943,11 @@ def _latest_stored_account_snapshot(
         inferred_date = snapshot.as_of or _account_snapshot_date(path)
         if inferred_date != snapshot_date:
             continue
-        candidates.append((datetime.fromtimestamp(path.stat().st_mtime, tz=UTC), path, snapshot))
+        if snapshot.captured_at is None or snapshot.captured_at.astimezone(ZoneInfo("America/New_York")).date() != snapshot_date:
+            continue
+        if snapshot.observation_kind == "opening_reference":
+            continue
+        candidates.append((snapshot.captured_at, path, snapshot))
     if not candidates:
         return None
     _, path, snapshot = sorted(candidates, key=lambda item: item[0])[-1]

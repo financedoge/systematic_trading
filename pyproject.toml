@@ -24,6 +24,11 @@ research = [
 data = [
     "tushare>=1.2.10",
 ]
+rolling-research = [
+    "scikit-learn==1.8.0",
+    "xgboost==3.2.0",
+    "matplotlib==3.10.8",
+]
 ib = [
     # Install the matching official SDK with scripts/install_ib_api.py.
     "protobuf==5.29.5",

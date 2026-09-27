@@ -147,6 +147,9 @@ class MarketDataStore(Protocol):
 
 @runtime_checkable
 class PnLStore(Protocol):
+    def list_pnl_baselines(self) -> list[PnLBaseline]:
+        ...
+
     def save_pnl_snapshot(self, snapshot: PnLSnapshot) -> PnLSnapshot:
         ...
 

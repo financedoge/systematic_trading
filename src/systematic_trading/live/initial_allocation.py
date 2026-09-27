@@ -115,10 +115,8 @@ def stage_portfolio_alignment(
     target_date = decision_date if empty else latest_monthly_target_date(decision_date)
     target_source = None
     if not empty:
-        sources = [p for p in proposals if p.sleeve == definition.sleeve_name and p.targets
-            and p.status == ProposalStatus.APPROVED and target_date <= (p.target_as_of or p.as_of) <= decision_date
-            and (reset is None or p.created_at >= reset)]
-        target_source = max(sources, key=lambda p: (p.target_as_of or p.as_of, p.created_at), default=None)
+        from systematic_trading.portfolio.targets import approved_target
+        target_source = approved_target(store, definition, target_date, decision_date)
     broker = InteractiveBrokersAdapter(settings)
     try:
         plan = build_sota_live_rebalance_plan(store=store, broker=broker, account_snapshot=snapshot,

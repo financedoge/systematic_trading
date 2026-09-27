@@ -173,9 +173,13 @@ class LocalDatabases:
             self.pg("pg_dump", "--no-password", "--clean", "--if-exists", "--no-owner", "--file", target)
             files[target.name] = file_hash(target)
             fingerprints[target.name] = postgres_fingerprint(target)
-        return {"files": files, "fingerprints": fingerprints, "layout": self.layout}
+        from systematic_trading.storage.dependencies import dependency_receipt
+        return {"files": files, "fingerprints": fingerprints, "layout": self.layout,
+                "dependencies": dependency_receipt(self.settings)}
 
     def restore(self, directory: Path, manifest: dict):
+        from systematic_trading.storage.dependencies import verify_dependencies
+        verify_dependencies(self.settings, manifest.get("dependencies"))
         self.assert_quiet()
         for index, target in enumerate(self.sqlite_paths):
             if f"sqlite-{index}.db" not in manifest["files"] and target.exists():
@@ -316,6 +320,9 @@ class NasSync:
                 elif head and not self.databases.empty():
                     raise SyncConflict("Unmanaged local databases exist; preserved instead of overwritten")
                 manifest = self.download(head, temporary / "remote") if head else None
+                if manifest and head != self.state["head"] and hasattr(self.databases, "settings"):
+                    from systematic_trading.storage.dependencies import verify_dependencies
+                    verify_dependencies(self.databases.settings, manifest.get("dependencies"))
                 write_json(self.root / "owner.json", {"node": self.state["node"], "host": self.state["host"]})
                 if head and head != self.state["head"]:
                     rollback = self.local / ("before-restore-" + uuid4().hex)

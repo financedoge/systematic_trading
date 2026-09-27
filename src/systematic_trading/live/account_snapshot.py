@@ -16,6 +16,7 @@ from systematic_trading.domain.portfolio import CashBalance
 from systematic_trading.execution.broker import BrokerConnectionProfile, InteractiveBrokersAdapter
 from systematic_trading.live.sota import AccountPositionInput, LiveAccountSnapshotInput
 from systematic_trading.research import current_sota_definition, instruments_for_definition
+from systematic_trading.portfolio.context import NY
 
 
 @dataclass(frozen=True)
@@ -157,7 +158,9 @@ def fetch_and_write_account_snapshot(
     output_path: Path | None = None,
     sota_universe_only: bool = False,
     timeout_seconds: float = 20.0,
+    observed_at: datetime | None = None,
 ) -> FetchedAccountSnapshot:
+    observation_time = observed_at or datetime.now(tz=UTC)
     profile = InteractiveBrokersAdapter(settings).profile_for(OrderEnvironment.PAPER).model_copy(
         update={"client_id": settings.ib_account_snapshot_client_id or settings.ib_client_id + 40}
     )
@@ -166,11 +169,12 @@ def fetch_and_write_account_snapshot(
     result = build_live_snapshot(
         summary_rows=summary_rows,
         position_rows=position_rows,
-        as_of=as_of or date.today(),
+        as_of=observation_time.astimezone(NY).date(),
         sota_universe_only=sota_universe_only,
     )
     resolved_output_path = output_path or default_account_snapshot_path(settings)
-    result.snapshot.captured_at = datetime.now(tz=UTC)
+    result.snapshot.captured_at = observation_time
+    result.snapshot.observation_kind = "broker_live"
     resolved_output_path.parent.mkdir(parents=True, exist_ok=True)
     resolved_output_path.write_text(result.snapshot.model_dump_json(indent=2), encoding="utf-8")
     return FetchedAccountSnapshot(

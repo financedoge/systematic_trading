@@ -31,6 +31,7 @@ class AccountPositionInput(BaseModel):
 
 
 class LiveAccountSnapshotInput(BaseModel):
+    observation_kind: str = "legacy"
     as_of: date | None = None
     captured_at: datetime | None = None
     cash: list[CashBalance] = Field(default_factory=list)
@@ -77,6 +78,11 @@ def build_sota_live_rebalance_plan(
         symbol: store.list_price_bars(symbol, end_date=decision_date or account_snapshot.as_of)
         for symbol in instruments
     }
+    input_receipt, execution_marks = {"policy": "explicit_legacy_stored_inputs"}, None
+    if broker.settings.require_governed_decision_inputs:
+        from systematic_trading.portfolio.decision_inputs import decision_inputs
+        bars_by_symbol, execution_marks, input_receipt = decision_inputs(
+            broker.settings, instruments, decision_date or account_snapshot.as_of)
     effective_decision_date = decision_date or account_snapshot.as_of or _latest_trade_date(bars_by_symbol)
     latest_available_trade_date = _latest_trade_date(bars_by_symbol)
     if latest_available_trade_date < effective_decision_date:
@@ -119,6 +125,11 @@ def build_sota_live_rebalance_plan(
             cash_reserve_weight=cash_reserve_weight,
         )
     prices = _latest_prices(bars_by_symbol, effective_decision_date)
+    if execution_marks is not None:
+        prices = {s: Decimal(mark["close"]) for s, mark in execution_marks.items()
+                  if mark["trade_date"] == str(effective_decision_date)}
+        if set(prices) != set(instruments):
+            raise ValueError("Incomplete audited raw execution marks for the decision session")
     fx_to_cnh = _latest_fx_to_cnh(
         store=store,
         currencies=_required_currencies(instruments, account_snapshot),
@@ -148,6 +159,15 @@ def build_sota_live_rebalance_plan(
         targets=targets,
     )
     proposal = attach_execution_deadline(proposal, broker.settings)
+    from systematic_trading.portfolio.context import portfolio_context
+    from systematic_trading.market_data.analytics_store import digest, encode
+    from dataclasses import asdict
+    input_receipt = dict(input_receipt, fx_to_cnh={str(c): str(v) for c,v in fx_to_cnh.items()},
+                         strategy_definition=asdict(definition),
+                         target_source_inputs=target_proposal.input_provenance if target_proposal else None)
+    input_receipt["receipt_sha256"] = digest(encode(input_receipt))
+    proposal = proposal.model_copy(update={"input_provenance": input_receipt,
+        "portfolio_context": portfolio_context(store).model_dump(mode="json")})
     proposal = proposal.model_copy(update={"target_as_of": target_date,
         "target_source_proposal_id": target_proposal.proposal_id if target_proposal else None})
     validation_issues = broker.validate_orders(proposal.orders)
