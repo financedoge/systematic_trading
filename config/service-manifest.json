@@ -298,6 +298,40 @@
         "event_outbox_dispatcher"
       ],
       "notes": "Always-on scheduled worker. The initial five-symbol universe is a recorder pilot, not the investible universe. It idles outside regular US equity hours, uses historical gap-fill only after a failed stream chunk, and currently aggregates timestamped IB delayed trades into 5-second bars because reqRealTimeBars API entitlements are unavailable. Delayed data is never eligible for trading decisions."
+    },
+    {
+      "service_id": "analytics",
+      "display_name": "Strategy and account calculations",
+      "service_type": "embedded_worker",
+      "implementation_status": "active",
+      "required": true,
+      "startup_order": 45,
+      "command": [],
+      "depends_on": [
+        "operator_dashboard"
+      ],
+      "supervised_by": "operator_dashboard",
+      "health_check": {
+        "kind": "none"
+      },
+      "notes": "Runtime state is reported by the operator health endpoint."
+    },
+    {
+      "service_id": "alert_delivery",
+      "display_name": "Operator alert delivery",
+      "service_type": "embedded_worker",
+      "implementation_status": "active",
+      "required": false,
+      "startup_order": 45,
+      "command": [],
+      "depends_on": [
+        "operator_dashboard"
+      ],
+      "supervised_by": "operator_dashboard",
+      "health_check": {
+        "kind": "none"
+      },
+      "notes": "Runtime state is reported by the operator health endpoint."
     }
   ]
 }

@@ -7,6 +7,8 @@ The project goal is to evolve this repository from a Python-first research and p
 The durable target-state plan is in `docs/industrial-platform-plan.md`.
 The active execution tracker is in `docs/execution-kanban.md`.
 
+Trading monitoring now shares one portfolio start/episode across holdings, P&L, attribution, misses and EOD processing. See [application connection repairs](docs/app-connection-repairs-2026-09-28.md) for the shared UI/data/accounting contracts, validation and remaining source-evidence requirements.
+
 ## Scope
 
 - Long-only global stock and ETF portfolios across the US, Europe, HK, Japan, and Korea.
@@ -134,7 +136,7 @@ The local operator startup path now defaults to `ST_TRANSACTIONAL_STORE_BACKEND=
 
 Rebalance proposals are time-bound to preserve next-open parity with the backtest. The default execution deadline is 30 minutes after the configured TWAP start on the intended trade date. Change it with `ST_EXECUTION_REBALANCE_TIMEOUT_MINUTES`; expired pending or retryable proposals become `missed`, cannot be approved or resubmitted, and are retained in execution-quality analysis.
 
-The strategy workspace at `/strategies` separates Monitored strategies and Archived artifacts. Membership and calculation settings are configured in `config/strategy-monitoring.json`. The app calculates registered monitored strategies from audited histories, replaying signals and monthly rebalances and updating NAV, held weights and indicative latest targets. The same full report shows risk parity, URTH and SOTA comparisons, period metrics, drawdowns, holdings/contributions, signal attribution and decision charts. Select `calculation.engine` as `lean` (with Python parity) or `python` (the same frozen accounting contract); the app refreshes on input/definition changes or through its Refresh calculations button. No agent scheduler is involved. See [tracked strategy calculations](docs/etf-activity-lag20-tracking.md).
+The strategy workspace at `/strategies` separates Monitored strategies and Archived artifacts. Membership and calculation settings are configured in `config/strategy-monitoring.json`. The app calculates registered monitored strategies from audited histories, replaying signals and monthly rebalances and updating NAV, held weights and indicative latest targets. The same full report shows risk parity, URTH and SOTA comparisons, period metrics, drawdowns, holdings/contributions, signal attribution and decision charts. Select `calculation.engine` as `lean` (with Python parity) or `python` (the same frozen accounting contract); the app refreshes on input/definition changes or through its Refresh calculations button. No agent scheduler is involved. See [tracked strategy calculations](docs/etf-activity-lag20-tracking.md). The [rolling one-year XGBoost + lag-20 candidate](docs/rolling-xgboost-lag20-tracking.md) adds app-owned monthly fitting across all cores, immutable model lineage, matched controls and inspectable fitted trees; install `.[rolling-research]` for its training worker.
 
 Strategy pages and account performance now read prepared ClickHouse publications.
 A background worker refreshes analytical histories when source data changes.

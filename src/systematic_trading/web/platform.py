@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from systematic_trading.chart_navigation import with_chart_navigation
+from systematic_trading.web.shell import with_app_shell
 
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
@@ -10,7 +11,7 @@ router = APIRouter()
 
 @router.get("/platform", response_class=HTMLResponse, include_in_schema=False)
 def platform_health_portal() -> HTMLResponse:
-    return HTMLResponse(_PLATFORM_HTML)
+    return HTMLResponse(with_app_shell(_PLATFORM_HTML, "system"))
 
 
 @router.get("/platform/market-data-audit", response_class=HTMLResponse, include_in_schema=False)
@@ -18,7 +19,7 @@ def market_data_audit_portal() -> HTMLResponse:
     from systematic_trading.web.research_archive_panel import RESEARCH_ARCHIVE_HTML
     from systematic_trading.web.governed_panel import GOVERNED_HTML
     page = _MARKET_DATA_AUDIT_HTML.replace('<main>', '<main><section id="market-history-section" aria-label="Market History">'+RESEARCH_ARCHIVE_HTML+GOVERNED_HTML+'<div id="market-bars-panel" hidden>', 1)
-    return HTMLResponse(with_chart_navigation(page.replace('</main>', '</div></section></main>', 1)))
+    return HTMLResponse(with_app_shell(with_chart_navigation(page.replace('</main>', '</div></section></main>', 1)), "market"))
 
 
 _PLATFORM_HTML = """<!doctype html>
@@ -458,16 +459,17 @@ _PLATFORM_HTML = """<!doctype html>
       }
       const healthById = new Map((health.services || []).map((service) => [service.service_id, service]));
       const width = 920;
-      const height = 360;
-      const left = 92;
-      const usable = width - 184;
-      const lane = { worker: 92, api: 184, embedded_worker: 276 };
       const positions = new Map();
-      nodes.forEach((node, index) => {
-        const x = nodes.length === 1 ? width / 2 : left + (usable * index / (nodes.length - 1));
-        const y = (lane[node.service_type] || 184) + ((index % 2) * 18);
-        positions.set(node.service_id, { x, y });
+      const laneLabels = [];
+      let top = 50;
+      [ ['worker','Workers'], ['api','API'], ['embedded_worker','Embedded'] ].forEach(([type,label]) => {
+        const members = nodes.filter(node => node.service_type === type || (type === 'api' && !['worker','api','embedded_worker'].includes(node.service_type)));
+        if (!members.length) return;
+        laneLabels.push(`<text x="10" y="${top-30}" fill="#657083" font-size="12">${label}</text>`);
+        members.forEach((node,index) => positions.set(node.service_id, {x:160+(index%3)*300, y:top+Math.floor(index/3)*90}));
+        top += Math.ceil(members.length/3)*90+35;
       });
+      const height = top-20;
       const marker = `
         <defs>
           <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
@@ -485,10 +487,10 @@ _PLATFORM_HTML = """<!doctype html>
         const pos = positions.get(node.service_id);
         const serviceHealth = healthById.get(node.service_id);
         const status = statusClass(serviceHealth?.status || node.implementation_status);
-        const label = node.display_name.length > 24 ? `${node.display_name.slice(0, 23)}...` : node.display_name;
+        const label = node.display_name.length > 37 ? `${node.display_name.slice(0, 36)}...` : node.display_name;
         return `
-          <g class="node ${status}" transform="translate(${(pos.x - 70).toFixed(1)}, ${(pos.y - 28).toFixed(1)})">
-            <rect width="140" height="56" rx="7"></rect>
+          <g class="node ${status}" transform="translate(${(pos.x - 130).toFixed(1)}, ${(pos.y - 28).toFixed(1)})">
+            <rect width="260" height="56" rx="7"></rect>
             <circle cx="13" cy="16" r="4.5" fill="var(--${status === "ok" ? "good" : status === "error" ? "bad" : status === "degraded" ? "warn" : "planned"})"></circle>
             <text class="node-title" x="24" y="20">${esc(label)}</text>
             <text class="node-meta" x="12" y="40">${esc(node.service_id)}</text>
@@ -499,12 +501,7 @@ _PLATFORM_HTML = """<!doctype html>
       el("service-graph").innerHTML = `
         <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Platform service dependency graph">
           ${marker}
-          <line x1="30" x2="${width - 30}" y1="92" y2="92" stroke="#ebeff5"></line>
-          <line x1="30" x2="${width - 30}" y1="184" y2="184" stroke="#ebeff5"></line>
-          <line x1="30" x2="${width - 30}" y1="276" y2="276" stroke="#ebeff5"></line>
-          <text x="8" y="96" fill="#657083" font-size="11">Workers</text>
-          <text x="8" y="188" fill="#657083" font-size="11">API</text>
-          <text x="8" y="280" fill="#657083" font-size="11">Embedded</text>
+          ${laneLabels.join('')}
           ${edges}
           ${renderedNodes}
         </svg>

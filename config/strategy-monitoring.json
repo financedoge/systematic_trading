@@ -2,7 +2,8 @@
   "schema_version": 2,
   "monitored_strategy_ids": [
     "sota_price_volume_technical_tree_relative_adaptive_top6",
-    "research_etf_activity_lag20_v1"
+    "research_etf_activity_lag20_v1",
+    "research_rolling_xgboost_1y_lag20_v1"
   ],
   "method": "app_native_signal_rebalance_lean_replay",
   "notes": "App-calculated strategies on audited histories; full signal/rebalance replay, current held and target weights, matched benchmarks. Tracking confers no execution or promotion authority.",
@@ -22,7 +23,7 @@
     "legacy_fx_through": "2026-09-24",
     "image": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
     "limitations": [
-      "Before 2023, annual expanding trees use only completed historical labels. From 2023 onward the deployed SOTA tree is frozen. This declared historical reconstruction differs from the earlier all-years annual-refit research study.",
+      "SOTA and the activity-only candidate use annual causal trees before 2023 and the deployed frozen tree thereafter. The rolling candidate refits monthly over one calendar year throughout the history. The 2023 split is a retrospective comparison boundary, not an untouched validation set for the newly selected candidate.",
       "Provider-adjusted price vintages are audited but not historical publication vintages. Legacy FX through 2026-09-24 remains uncertified; later rates require validated observed USD/CNH evidence.",
       "Adjusted CNH units, next-session open fills, 5 bps transaction costs, no modeled slippage; returns are simulated, not account PnL."
     ],

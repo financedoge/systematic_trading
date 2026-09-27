@@ -137,6 +137,7 @@ def reconcile_ib_paper_account(
         settings=settings,
         client=account_snapshot_client,
         as_of=as_of or checked_at.date(),
+        observed_at=checked_at,
         sota_universe_only=False,
     )
     local_history = [
@@ -229,6 +230,7 @@ def reconcile_ib_paper_account(
             filled_trade_count=len(local_filled_history),
         )
         baseline.account_reset_at = checked_at
+        baseline.account_id = snapshot_result.managed_accounts[0] if len(snapshot_result.managed_accounts) == 1 else None
         baseline.execution_state_token = execution_state_token(all_history)
         baseline.parent_baseline_id = parent_baseline_id
         baseline.account_snapshot_path = str(snapshot_result.output_path)

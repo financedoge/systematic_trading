@@ -34,6 +34,8 @@ class PnLSnapshot(BaseModel):
     snapshot_id: str = Field(default_factory=lambda: uuid4().hex[:12])
     as_of: datetime
     source: str = "broker_order_records"
+    portfolio_context: dict = Field(default_factory=dict)
+    reference_total_pnl_cnh: Decimal | None = None
     baseline_id: str | None = None
     baseline_cutoff_at: datetime | None = None
     realized_pnl_cnh: Decimal = Decimal("0")
@@ -50,9 +52,13 @@ class PnLSnapshot(BaseModel):
 
 
 class PnLBaseline(BaseModel):
+    account_id: str | None = None
     baseline_id: str = Field(default_factory=lambda: uuid4().hex[:12])
     cutoff_at: datetime
     source: str = "broker_order_records"
+    portfolio_context: dict = Field(default_factory=dict)
+    reference_open_lots: list[PnLOpenLot] | None = None
+    reference_realized_pnl_by_symbol_cnh: dict[str, Decimal] | None = None
     execution_state_token: str | None = None
     parent_baseline_id: str | None = None
     account_reset_at: datetime | None = None

@@ -95,11 +95,12 @@ def test_alignment_starts_with_positions_and_values_non_sota_currency(dashboard)
     snapshot(root, "invested.json", positions=[{"symbol": "OUTSIDE", "quantity": 2,
         "average_cost": "50", "currency": "HKD"}])
     client.put("/api/v1/market-data/fx-rates", json={"rate_date": "2026-07-14", "base_currency": "HKD", "quote_currency": "CNH", "rate": "0.9"})
+    client.put("/api/v1/market-data/bars/OUTSIDE", json={"trade_date":"2026-07-14", "open":"50", "high":"50", "low":"50", "close":"50", "volume":100})
     payload = performance(client)
     assert payload["account_tracking_start_date"] == payload["account_alignment_date"] == "2026-07-14"
     assert Decimal(payload["account_alignment_nav_cnh"]) == Decimal("190")
     assert Decimal(payload["account_alignment_strategy_index"]) == Decimal("110")
-    assert any("average cost" in warning for warning in payload["warnings"])
+    assert not any("average cost" in warning for warning in payload["warnings"])
 
 
 def test_unpriced_position_does_not_turn_into_a_cash_only_nav(dashboard):
@@ -108,7 +109,7 @@ def test_unpriced_position_does_not_turn_into_a_cash_only_nav(dashboard):
     payload = performance(client)
     assert payload["account"] == []
     assert payload["account_alignment_date"] is None
-    assert any("position was not valued" in warning for warning in payload["warnings"])
+    assert any("valuation unavailable" in warning for warning in payload["warnings"])
 
 
 def test_strategy_history_skips_invalid_nav_and_deduplicates_dates(dashboard):

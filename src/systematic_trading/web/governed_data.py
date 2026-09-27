@@ -34,7 +34,18 @@ def context(request,batch=None):
 
 
 def scope(store,batch,symbol):
+    batch=storage_batch(store,batch,symbol)
     return 'workspace='+_sql_string(store.workspace)+' AND batch='+_sql_string(batch)+' AND symbol='+_sql_string(symbol)
+
+
+def storage_batch(store,batch,symbol):
+    rows=_query(store,"SELECT payload FROM analytics.observations FINAL WHERE workspace="+_sql_string(store.workspace)
+        +" AND source_id='governance/catalog' AND version="+_sql_string(batch)
+        +" AND family='governed_series_catalog' AND entity="+_sql_string(symbol)+" LIMIT 1")
+    resolved=json.loads(rows[0]['payload']).get('storage_batch',batch) if rows else batch
+    if not re.fullmatch('[0-9a-f]{64}',resolved):
+        raise HTTPException(503,'Invalid governed storage receipt')
+    return resolved
 
 
 @router.get('/catalog')
@@ -49,9 +60,10 @@ def catalog(request:Request,batch:str|None=None):
 @router.get('/audit')
 def audit(request:Request,symbol:str=Query(...,min_length=1,max_length=50),batch:str|None=None):
     store,batch=context(request,batch)
-    source='governance-batch/'+batch+'/'+symbol
+    physical=storage_batch(store,batch,symbol)
+    source='governance-batch/'+physical+'/'+symbol
     rows=_query(store,'SELECT payload FROM analytics.documents FINAL WHERE workspace='+_sql_string(store.workspace)
-        +' AND source_id='+_sql_string(source)+' AND version='+_sql_string(batch)+" AND point_key='audit' LIMIT 1")
+        +' AND source_id='+_sql_string(source)+' AND version='+_sql_string(physical)+" AND point_key='audit' LIMIT 1")
     if not rows:
         raise HTTPException(404,'Unknown symbol in this batch')
     return dict(batch=batch,audit=json.loads(rows[0]['payload']))
@@ -93,9 +105,10 @@ def series(request:Request,symbol:str=Query(...,min_length=1,max_length=50),batc
 @router.get('/actions')
 def actions(request:Request,symbol:str=Query(...,min_length=1,max_length=50),batch:str|None=None):
     store,batch=context(request,batch)
-    source='governance-batch/'+batch+'/'+symbol
+    physical=storage_batch(store,batch,symbol)
+    source='governance-batch/'+physical+'/'+symbol
     rows=_query(store,'SELECT payload FROM analytics.observations FINAL WHERE workspace='+_sql_string(store.workspace)
-        +' AND source_id='+_sql_string(source)+' AND version='+_sql_string(batch)+" AND family='governed_corporate_action' ORDER BY observed_at,point_key LIMIT 10000")
+        +' AND source_id='+_sql_string(source)+' AND version='+_sql_string(physical)+" AND family='governed_corporate_action' ORDER BY observed_at,point_key LIMIT 10000")
     return dict(batch=batch,actions=[json.loads(r['payload']) for r in rows],
                 basis_note='Original provider event units and vintages. Dividend amounts may be split-adjusted; they are not certified as-traded cash distributions.')
 
@@ -104,12 +117,13 @@ def actions(request:Request,symbol:str=Query(...,min_length=1,max_length=50),bat
 def source(request:Request,symbol:str=Query(...,min_length=1,max_length=50),source_id:str=Query(...,max_length=300),batch:str|None=None):
     store,batch=context(request,batch)
     record=audit(request,symbol,batch)['audit']
+    physical=storage_batch(store,batch,symbol)
     allowed={s['source_id'] for s in record.get('sources',[])}|{s['source_id'] for s in record.get('identity_exclusions',[])}
     if source_id not in allowed:
         raise HTTPException(404,'Source does not belong to this symbol')
     # Newly collected exact documents have stable keys under the committed batch.
     docs=_query(store,'SELECT payload,media_type FROM analytics.documents FINAL WHERE workspace='+_sql_string(store.workspace)
-        +' AND source_id='+_sql_string('governance-batch/'+batch+'/'+symbol)+' AND version='+_sql_string(batch)
+        +' AND source_id='+_sql_string('governance-batch/'+physical+'/'+symbol)+' AND version='+_sql_string(physical)
         +' AND point_key='+_sql_string(source_id)+' LIMIT 1')
     if not docs:
         return dict(source_id=source_id,archived_in='Raw Data source archive',research_url='/platform/market-data-audit?view=raw')

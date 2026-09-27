@@ -91,7 +91,9 @@ def test_fetch_and_write_account_snapshot_uses_dedicated_client_id(tmp_path) -> 
     )
 
     assert result.output_path.exists()
-    assert result.snapshot.as_of == date(2026, 5, 20)
+    from systematic_trading.portfolio.context import NY
+    assert result.snapshot.as_of == result.snapshot.captured_at.astimezone(NY).date()
+    assert result.snapshot.observation_kind == "broker_live"
     assert result.snapshot.captured_at is not None
     assert result.snapshot.captured_at.utcoffset() == timedelta(0)
     assert json.loads(result.output_path.read_text())["captured_at"] == result.snapshot.model_dump(mode="json")["captured_at"]

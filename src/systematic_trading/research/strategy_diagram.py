@@ -23,6 +23,14 @@ def decision_diagrams(definition):
         p = overlays["decision_tree"]
         steps += [("Select the model permitted at the decision date", "Before 2023: causal annual fit; from 2023: deployed frozen tree below."),
                   ("Forecast each ETF and rank the predicted excess return", f"Tilt {p['tilt']}; active cap {p['maxActiveWeight']}; preserve invested weight.")]
+    if 'rolling_model' in overlays:
+        p = overlays['rolling_model']
+        steps += [('Select the model fitted at the previous month’s final session',
+                   'Refit monthly; training origins within one calendar year; completed labels strictly before fit close.'),
+                  ('Fit 100 XGBoost trees, depth ≤ 3, learning rate 0.03',
+                   '26 inputs; next-month USD return minus ETF cross-section mean; at least 100 complete rows.'),
+                  ('Sum tree contributions; rank forecasts across the ETF universe',
+                   f"Tilt {p['tilt']}; delta cap {p['maxActiveWeight']} before restoring gross exposure.")]
     if "relative_momentum" in overlays:
         p = overlays["relative_momentum"]
         steps += [("Relative momentum and risk regime", f"45% × 20d + 55% × 60d momentum; tilt {p['calmTilt']}/{p['riskTilt']}; cap {p['maxActiveWeight']}.")]

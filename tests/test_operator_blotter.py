@@ -7,8 +7,8 @@ import pytest
 from systematic_trading.web.trading_workspace import WORKSPACE_HTML, WORKSPACE_JS
 
 
-def test_default_blotter_keeps_todays_completed_orders_visible():
-    assert '<option value="today" selected>Today</option>' in WORKSPACE_HTML
+def test_default_blotter_keeps_portfolio_period_completed_orders_visible():
+    assert '<option value="portfolio" selected>Portfolio period</option>' in WORKSPACE_HTML
     assert '<option value="all" selected>All statuses</option>' in WORKSPACE_HTML
     assert 'id="order-date-start"' in WORKSPACE_HTML
     assert 'id="order-date-end"' in WORKSPACE_HTML

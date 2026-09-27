@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from systematic_trading.chart_navigation import with_chart_navigation
+from systematic_trading.web.shell import with_app_shell
 
 from systematic_trading.web.trading_workspace import WORKSPACE_CSS, WORKSPACE_HTML, WORKSPACE_DIALOG, WORKSPACE_JS
 
@@ -21,18 +22,18 @@ def operator_dashboard() -> HTMLResponse:
     html = html.replace('<main>', '<main>' + WORKSPACE_HTML, 1)
     html = html.replace('<script>', WORKSPACE_DIALOG + '<script>', 1)
     html = html.replace('    Promise.all([loadProposals(), loadDashboardData()])', WORKSPACE_JS + '\n    Promise.all([loadProposals(), loadDashboardData()])', 1)
-    return HTMLResponse(with_chart_navigation(html))
+    return HTMLResponse(with_app_shell(with_chart_navigation(html), "trading"))
 
 
 @router.get("/strategies", response_class=HTMLResponse, include_in_schema=False)
 def strategy_portal() -> HTMLResponse:
-    return HTMLResponse(_STRATEGIES_HTML)
+    return HTMLResponse(with_app_shell(_STRATEGIES_HTML, "strategies"))
 
 
 @router.get("/strategies/{strategy_id}", response_class=HTMLResponse, include_in_schema=False)
 def strategy_detail_portal(strategy_id: str) -> HTMLResponse:
     html = _STRATEGY_DETAIL_HTML.replace("join('\n')", "join(String.fromCharCode(10))")
-    return HTMLResponse(with_chart_navigation(html))
+    return HTMLResponse(with_app_shell(with_chart_navigation(html), "strategies"))
 
 
 _OPERATOR_HTML = """<!doctype html>
@@ -1294,7 +1295,7 @@ _OPERATOR_HTML = """<!doctype html>
       if (!payload.valuation_complete) warnings.push("PnL valuation is incomplete because one or more symbols could not be marked.");
       el("pnl-warnings").textContent = warnings.join("\\n");
       renderPnlTable(payload.symbols || []);
-      const points = [...(history || [])].sort((a, b) => Date.parse(a.as_of) - Date.parse(b.as_of));
+      const points = [...(history || [])].map(p=>({...p,as_of:String(p.as_of).slice(0,10)})).sort((a, b) => Date.parse(a.as_of) - Date.parse(b.as_of));
       if (!points.length) {
         el("pnl-chart").innerHTML = '<div class="empty">No saved PnL snapshots</div>';
         el("pnl-legend").innerHTML = "";
@@ -1305,6 +1306,7 @@ _OPERATOR_HTML = """<!doctype html>
     }
 
     function renderExecutionQuality(payload) {
+      if(payload.valuation_complete===false) payload={...payload,actual_pnl_cnh:null,theoretical_pnl_cnh:null,execution_gain_cnh:null,execution_gain_bps:null,history:[],slippage:[]};
       el("exec-theoretical-pnl").textContent = fmtSignedMoney(payload.theoretical_pnl_cnh);
       el("exec-actual-pnl").textContent = fmtSignedMoney(payload.actual_pnl_cnh);
       el("exec-gain").textContent = fmtSignedMoney(payload.execution_gain_cnh);
@@ -1313,13 +1315,13 @@ _OPERATOR_HTML = """<!doctype html>
       el("exec-missed-notional").textContent = fmtMoney(payload.missed_notional_cnh);
       el("execution-quality-warnings").textContent = (payload.warnings || []).join("\\n");
       const currentPoint = {
-        as_of: payload.as_of,
+        as_of: String(payload.as_of).slice(0,10),
         actual_pnl_cnh: payload.actual_pnl_cnh,
         theoretical_pnl_cnh: payload.theoretical_pnl_cnh,
         execution_gain_cnh: payload.execution_gain_cnh
       };
-      const history = [...(payload.history || [])];
-      if (payload.as_of && !history.some((point) => String(point.as_of).slice(0, 10) === String(payload.as_of).slice(0, 10))) {
+      const history = [...(payload.history || [])].map(p=>({...p,as_of:String(p.as_of).slice(0,10)}));
+      if (payload.valuation_complete!==false && payload.as_of && !history.some((point) => String(point.as_of).slice(0, 10) === String(payload.as_of).slice(0, 10))) {
         history.push(currentPoint);
       }
       const points = history.sort((a, b) => Date.parse(a.as_of) - Date.parse(b.as_of));

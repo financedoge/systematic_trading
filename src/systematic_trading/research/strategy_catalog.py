@@ -174,8 +174,26 @@ def etf_activity_lag20_definition() -> StrategyDefinition:
 
 
 def registered_strategy_definition(key: str) -> StrategyDefinition:
-    definitions = [current_sota_definition(), etf_activity_lag20_definition(), risk_parity_definition()]
+    definitions = [current_sota_definition(), etf_activity_lag20_definition(), risk_parity_definition(),
+                   rolling_xgboost_1y_definition(), rolling_xgboost_1y_definition(activity=False)]
     return next((d for d in definitions if d.key == key), None) or _unknown_strategy(key)
+
+
+def rolling_xgboost_1y_definition(*, activity=True) -> StrategyDefinition:
+    from dataclasses import replace
+    from systematic_trading.research.rolling_tracking import rolling_xgboost_spec
+    base = etf_activity_lag20_definition() if activity else current_sota_definition()
+    overlays = tuple(OverlaySpec(kind='rolling_model', parameters={
+        'spec': json.dumps(rolling_xgboost_spec(), sort_keys=True), 'tilt': o.parameters['tilt'],
+        'maxActiveWeight': o.parameters['maxActiveWeight']}) if o.kind == 'decision_tree' else o for o in base.overlays)
+    suffix = '_lag20' if activity else ''
+    return replace(base, key='research_rolling_xgboost_1y'+suffix+'_v1',
+        name='Rolling 1y XGBoost'+(' + ETF activity lag-20' if activity else ' · without activity control'),
+        sleeve_name='research-rolling-xgboost-1y'+('-lag20' if activity else ''),
+        state='tracked' if activity else 'research', promoted_on=None, overlays=overlays,
+        description='Monthly one-year causal XGBoost replaces the SOTA tree tilt'+
+        ('; the unchanged ETF activity lag-20 overlay follows the SOTA allocation stack.' if activity else '; matched control without the ETF activity overlay.')+
+        ' App-calculated research only; no execution or promotion authority.')
 
 
 def _unknown_strategy(key):
@@ -524,6 +542,10 @@ def instantiate_overlays(definition: StrategyDefinition) -> list[TargetOverlay]:
         if spec.kind == "etf_activity":
             from systematic_trading.research.flow_concentration import ActivityConcentrationOverlay, FlowConcentrationSpec
             overlays.append(ActivityConcentrationOverlay(FlowConcentrationSpec.model_validate_json(params["spec"])))
+        elif spec.kind == "rolling_model":
+            from systematic_trading.research.rolling_tracking import RollingModelOverlay, definition_training_spec
+            definition_training_spec(definition)
+            overlays.append(RollingModelOverlay(tilt=Decimal(params['tilt']), max_active_weight=Decimal(params['maxActiveWeight'])))
         elif spec.kind == "relative_momentum":
             overlays.append(
                 RegimeGatedRelativeMomentumOverlay(
@@ -836,6 +858,9 @@ def _overlay_layer(overlay: OverlaySpec, index: int) -> dict[str, str]:
             f"cap active weight {params['maxActiveWeight']}."
         )
         title = "Decision-tree signal overlay"
+    elif overlay.kind == "rolling_model":
+        detail = 'Monthly causal one-year XGBoost fit; completed labels only; 100 depth-3 boosting rounds; bounded rank tilt.'
+        title = 'Rolling one-year XGBoost'
     elif overlay.kind == "technical_tree_allocator":
         detail = (
             f"Train a max-depth {params['maxDepth']} regression tree on {params['trainingSamples']} "

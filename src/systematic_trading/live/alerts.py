@@ -36,6 +36,27 @@ class AutomationAlertNotifier:
         self._last_alert_at: dict[str, datetime] = {}
         self._last_email_at: dict[str, datetime] = {}
         self._last_email_config_warning_at: datetime | None = None
+        self._delivery = {"status": "not_attempted"}
+        receipt_path = settings.data_dir / "log" / "alert_delivery.jsonl"
+        if receipt_path.exists():
+            for line in receipt_path.read_text(encoding="utf8").splitlines():
+                try:
+                    self._delivery = json.loads(line)
+                except ValueError:
+                    continue
+
+    def delivery_status(self):
+        with self._lock:
+            return {**self._delivery, "configured": self.email_configured(), "configuration_issue": self.email_config_issue()}
+
+    def _record_delivery(self, status, error=None):
+        payload = {"status": status, "checked_at": datetime.now(UTC).isoformat(), "error": error}
+        with self._lock:
+            self._delivery = payload
+            path = self.settings.data_dir / "log" / "alert_delivery.jsonl"
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with path.open("a", encoding="utf-8") as handle:
+                handle.write(json.dumps(payload) + "\n")
 
     def notify(self, event: AutomationEvent) -> None:
         if event.status not in {"warning", "error"}:
@@ -46,6 +67,7 @@ class AutomationAlertNotifier:
         self._append_platform_alert_event(event)
         email_config_issue = self.email_config_issue()
         if email_config_issue is not None:
+            self._record_delivery("disabled", email_config_issue)
             self._append_email_config_warning_once(email_config_issue)
             return
         if not self._reserve_email_delivery(event):
@@ -143,7 +165,9 @@ class AutomationAlertNotifier:
     def _send_email_safely(self, event: AutomationEvent) -> None:
         try:
             self._send_email(event)
+            self._record_delivery("sent")
         except Exception as exc:
+            self._record_delivery("failed", str(exc))
             self._append_email_error(exc)
 
     def _send_email(self, event: AutomationEvent) -> None:

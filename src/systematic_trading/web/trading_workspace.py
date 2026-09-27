@@ -77,13 +77,14 @@ dialog .actions { margin-top:24px; justify-content:flex-end; }
 """
 
 WORKSPACE_HTML = """
+<div class="portfolio-context" id="portfolio-context" role="status">Loading portfolio context…</div>
 <div class="workspace-heading"><div><div class="eyebrow">Execution workspace</div><h2>Trading operations</h2><div class="subtle">Manage orders, reconcile holdings and review your next trade.</div></div><span class="paper-tag">PAPER ACCOUNT</span></div>
 <section class="panel"><div class="approval-control"><div><h3>Approval mode <span id="approval-mode-label" class="paper-tag">Manual</span></h3><div class="subtle">Automatic mode approves and submits new strategy TWAP proposals in the paper account.</div><div class="subtle" id="approval-policy-status" role="status">Loading approval policy…</div></div><button id="approval-mode-switch" class="approval-switch" role="switch" aria-checked="false" aria-label="Automatic paper approval and submission" disabled>Automatic: off</button></div></section>
 <section class="panel" id="gateway-orders-panel">
 <div class="panel-head"><div><h2>Order blotter</h2><span class="subtle">IB Gateway · Broker status alongside the local audit trail</span></div><button id="sync-orders-btn" class="primary">Sync orders</button></div>
 <div class="metrics-compact"><div class="mini-metric"><label>Working in date range</label><strong id="orders-working">—</strong></div><div class="mini-metric"><label>Needs review in date range</label><strong id="orders-pending">—</strong></div><div class="mini-metric"><label>Orders in date range</label><strong id="orders-total">—</strong></div><div class="mini-metric"><label>Last broker sync</label><strong id="orders-sync-time" style="font-size:12px">Not synced</strong></div></div>
 <div class="blotter-tools">
-<label class="subtle">Trade date <select id="order-date-filter"><option value="today" selected>Today</option><option value="week">Last 7 days</option><option value="range">Date range</option><option value="all">All dates</option></select></label>
+<label class="subtle">Trade date <select id="order-date-filter"><option value="portfolio" selected>Portfolio period</option><option value="today">Today</option><option value="week">Last 7 days</option><option value="range">Date range</option><option value="all">All dates</option></select></label>
 <span class="blotter-range" id="order-date-range" hidden><label class="subtle">From <input id="order-date-start" type="date"></label><label class="subtle">To <input id="order-date-end" type="date"></label></span>
 <label class="subtle">Status <select id="order-filter"><option value="all" selected>All statuses</option><option value="working">Working</option><option value="filled">Filled</option><option value="attention">Needs attention</option><option value="terminal">Completed / closed</option><option value="missed">Missed</option></select></label>
 </div>
@@ -117,6 +118,7 @@ WORKSPACE_DIALOG = """
 """
 
 WORKSPACE_JS = r"""
+    let portfolioScope = null;
     let workspace = {records:[], snapshot:null}, orderSyncBusy = false, reviewedAction = null;
     let executionAnalytics = {}, approvalPolicy = null, approvalReviewRevision = null;
     function executionPrice(value) {
@@ -152,6 +154,7 @@ WORKSPACE_JS = r"""
     }
     function orderDateBounds(now=new Date()) {
       const today=orderDateAt(now), mode=el('order-date-filter').value;
+      if(mode==='portfolio') return {start:portfolioScope?.start_date||'0001-01-01',end:today};
       if(mode==='all') return {start:'',end:''};
       if(mode==='range') return {start:el('order-date-start').value,end:el('order-date-end').value};
       const weekStart=new Date(`${today}T12:00:00Z`);
@@ -246,8 +249,14 @@ WORKSPACE_JS = r"""
       el('order-audit-history').innerHTML=rows.length ? rows.map(r=>`<details><summary>${esc(r.order.symbol)} · ${esc(orderTradeDate(r)||'Date unknown')} · ${esc(r.order_ref)} · ${esc(r.message||r.status)}</summary><pre>${esc(JSON.stringify({submitted_at:r.submitted_at,updated_at:r.updated_at,trade_date:orderTradeDate(r),broker:r.broker_observation,actions:r.management_audit,executions:r.execution_fills,issue:r.execution_sync_issue},null,2))}</pre></details>`).join('') : '<p class="subtle">No order activity matches these filters.</p>';
       el('gateway-order-table').querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>openOrderAction(b.dataset.order,b.dataset.action)));
     }
+    let economicLoading=false;
     async function loadWorkspace() {
       workspace=await api('/api/v1/execution/interactive-brokers/workspace'); renderWorkspace();
+      if(!economicLoading){economicLoading=true;api('/api/v1/dashboard/economic-reconciliation').then(bridge=>{
+        let panel=el('economic-reconciliation');
+        if(!panel){panel=document.createElement('div');panel.id='economic-reconciliation';panel.className='panel';el('portfolio-context').after(panel);}
+        panel.innerHTML=`<h3>Account reconciliation · CNH</h3><div class="subtle">NAV change ${fmtMaybeMoney(bridge.nav_change_cnh)} · Security P&amp;L ${fmtMaybeMoney(bridge.security_pnl_cnh)} · Cash FX ${fmtMaybeMoney(bridge.cash_fx_pnl_cnh)} · External flows ${fmtMaybeMoney(bridge.external_flows_cnh)} · Income ${fmtMaybeMoney(bridge.income_cnh)} · Fees / taxes ${fmtMaybeMoney(bridge.fees_and_taxes_cnh)} · Unexplained ${fmtMaybeMoney(bridge.unexplained_cnh)}</div><p>Flow-adjusted return since portfolio start: ${fmtMaybePct(bridge.flow_adjusted_return)} · ${esc(bridge.return_method)}</p><p>${esc(bridge.reconciled?'Reconciled to within CNH 0.02.':(bridge.warnings||[]).join(' '))}</p>`;
+      }).catch(error=>{el('portfolio-context').title='Account reconciliation: '+error.message;}).finally(()=>{economicLoading=false;});}
       loadExecutionAnalytics().catch(()=>{});
       loadApprovalPolicy().catch(error=>{el('approval-policy-status').textContent=error.message;el('approval-mode-switch').disabled=true;});
     }
@@ -339,6 +348,6 @@ WORKSPACE_JS = r"""
     el('order-date-start').value=orderDateAt(new Date());
     el('order-date-end').value=orderDateAt(new Date());
     ['order-date-filter','order-date-start','order-date-end'].forEach(id=>el(id).addEventListener('change',()=>{renderWorkspace();loadExecutionAnalytics().catch(()=>{});}));
-    loadWorkspace().then(()=>syncWorkspace()).catch(error=>orderMessage(error.message,true));
+    api('/api/v1/portfolio/context').then(context=>{portfolioScope=context;el('portfolio-context').textContent=`Portfolio start: ${context.start_date||'Legacy history'} · ${context.timezone} · ${context.reporting_currency} · ${context.environment}. All dates retains earlier audit history.`;}).then(()=>loadWorkspace()).then(()=>syncWorkspace()).catch(error=>orderMessage(error.message,true));
     setInterval(()=>{if(!document.hidden) syncWorkspace();},15000);
 """

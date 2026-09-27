@@ -39,6 +39,8 @@ class OrderRequest(BaseModel):
 
 
 class TradeProposal(BaseModel):
+    input_provenance: dict = Field(default_factory=dict)
+    portfolio_context: dict = Field(default_factory=dict)
     proposal_id: str = Field(default_factory=lambda: uuid4().hex[:12])
     created_at: datetime = Field(default_factory=lambda: datetime.now(tz=UTC))
     trigger: str = "scheduled_rebalance"

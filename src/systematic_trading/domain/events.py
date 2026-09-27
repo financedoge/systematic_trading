@@ -32,6 +32,7 @@ class PlatformEventType(StrEnum):
     RECONCILIATION_COMPLETED = "reconciliation.completed"
     ALERT_RAISED = "alert.raised"
     INCIDENT_RECORDED = "incident.recorded"
+    CASH_EVENT_RECORDED = "cash_event.recorded"
 
 
 class MarketDataKind(StrEnum):
@@ -277,6 +278,22 @@ class AlertRaisedEvent(PlatformEvent):
     payload: AlertRaisedPayload
 
 
+class CashEventPayload(EventModel):
+    portfolio_episode_id: str = Field(min_length=1)
+    account_id: str = Field(min_length=1)
+    external_id: str = Field(min_length=1)
+    kind: Literal["external_flow", "dividend", "interest", "fee", "tax", "cash_adjustment"]
+    currency: Currency
+    amount: Decimal = Field(allow_inf_nan=False)
+    source_ref: str = Field(min_length=1)
+    source_sha256: str = Field(pattern="^[0-9a-f]{64}$")
+
+
+class CashEventRecordedEvent(PlatformEvent):
+    event_type: Literal[PlatformEventType.CASH_EVENT_RECORDED] = PlatformEventType.CASH_EVENT_RECORDED
+    payload: CashEventPayload
+
+
 class IncidentRecordedEvent(PlatformEvent):
     event_type: Literal[PlatformEventType.INCIDENT_RECORDED] = PlatformEventType.INCIDENT_RECORDED
     payload: IncidentRecordedPayload
@@ -292,6 +309,7 @@ AnyPlatformEvent: TypeAlias = Annotated[
     | FillRecordedEvent
     | ReconciliationCompletedEvent
     | AlertRaisedEvent
+    | CashEventRecordedEvent
     | IncidentRecordedEvent,
     Field(discriminator="event_type"),
 ]

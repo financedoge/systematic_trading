@@ -536,6 +536,9 @@ class PostgresStore:
         return [PnLSnapshot.model_validate(row["payload"]) for row in rows]
 
     def save_pnl_baseline(self, baseline: PnLBaseline) -> PnLBaseline:
+        from systematic_trading.portfolio.context import context_from_baseline
+        if not baseline.portfolio_context:
+            baseline.portfolio_context = context_from_baseline(baseline).model_dump(mode="json")
         with self._connect() as connection:
             _lock_execution_ledger(connection)
             if baseline.execution_state_token is not None:
@@ -588,6 +591,11 @@ class PostgresStore:
         if row is None:
             return None
         return PnLBaseline.model_validate(row["payload"])
+
+    def list_pnl_baselines(self) -> list[PnLBaseline]:
+        with self._connect() as connection:
+            rows = connection.execute("SELECT payload FROM portfolio.pnl_baselines ORDER BY cutoff_at, created_at").fetchall()
+        return [PnLBaseline.model_validate(row["payload"]) for row in rows]
 
     def upsert_price_bar(self, symbol: str, bar: PriceBar) -> PriceBar:
         raise _market_data_not_in_postgres("price bars")

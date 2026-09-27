@@ -1,5 +1,45 @@
 # Research State
 
+## Rolling one-year XGBoost with lag-20 selected for app tracking — 2026-09-27
+
+The user selected a third tracked candidate: `research_rolling_xgboost_1y_lag20_v1`.
+The original rolling study had no activity overlay; the new definition adds the
+unchanged lag-20 allocation overlay after XGBoost and the remaining SOTA steps.
+The application owns monthly causal fitting, portfolio calculations and the full
+shared report. All 129 models exactly match the study, and five native runs pass
+parity. Matched activity-only and XGBoost-only controls appear in the report.
+
+Full-history annualized return is 10.093%, Sharpe 0.9675, maximum drawdown -15.336%
+through September 25, versus SOTA 9.656%, 0.9492 and -15.055%. This is historical
+reconstruction selected after reviewing results; prospective tracking starts
+September 28 with zero observations at publication. SOTA and existing activity
+results are unchanged. No promotion, broker execution or paper-policy change.
+See [strategy specification and initial acceptance](rolling-xgboost-lag20-tracking.md).
+
+## Rolling tree, forest and XGBoost investigation — 2026-09-27
+
+Completed all 41 native LEAN runs with unchanged parity. Monthly one-year
+XGBoost/forest return 15.88%/15.75% CAGR from 2023 versus deployed frozen SOTA's
+14.94%; primary six-candidate adjusted p=0.014/0.020 (63-session blocks).
+However, frozen XGBoost/forest return 15.72%/15.68%, and tree-free SOTA returns
+15.49%. Rolling adds only 0.159/0.063 annual percentage points versus the same
+frozen model family; intervals include zero (adjusted p=0.529/0.692). Two-year
+ensembles lag their frozen counterparts. Cost, delay and seed checks retain
+the one-year ensemble gains versus SOTA, but gains are concentrated in 2025–26.
+Long-history forest/XGBoost CAGR 9.97%/9.94% versus reconstructed SOTA 9.63%;
+long adjusted p=0.068/0.108. No uniform stress-period improvement or clean
+evidence for rolling refitting itself. Retain SOTA; future evidence should compare
+fixed frozen and rolling ensemble recipes prospectively.
+
+All 16 logical cores were used for independent fits; eight process workers ran
+isolated two-CPU LEAN simulations. Published audited inputs, pinned FX/model
+hashes, completed-label embargo and fixed portfolio rules are retained. Revised
+vintages, fixed-universe selection and uncertified legacy FX remain limitations.
+Archived 52,749 NAV/metric observations, six documents and 41 native receipts.
+See [findings, protocol and replay](rolling-model-research-2026-09-27.md).
+Calculations were a finite application job; no tracked membership, promotion,
+paper policy or execution authority changed.
+
 ## App-owned tracked calculations — 2026-09-26
 
 The application now owns the entire calculation lifecycle for monitored executable strategies. `config/strategy-monitoring.json` selects native LEAN with Python parity (default) or the application's isolated Python engine. New audited inputs/definitions trigger signal, monthly rebalance, daily NAV, held-weight and latest indicative-target calculations; unchanged revisions are reused. Complete results and their matched benchmarks publish atomically to ClickHouse. **Refresh calculations** wakes the application worker. The Codex heartbeat was deleted and its review script retired. `AGENTS.md` and the continuous research playbook explicitly prohibit agent-scheduled strategy calculation.
