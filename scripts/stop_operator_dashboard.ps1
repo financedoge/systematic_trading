@@ -5,6 +5,8 @@ param(
 $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $RepoRoot = Resolve-Path (Join-Path $ScriptDir "..")
+& (Join-Path $RepoRoot ".venv\Scripts\python.exe") (Join-Path $ScriptDir "local_recovery.py") pause operator
+if ($LASTEXITCODE -ne 0) { throw "Could not pause operator recovery before stopping." }
 $PidPath = Join-Path $RepoRoot "var\run\operator_dashboard.pid"
 $DispatcherPidPath = Join-Path $RepoRoot "var\run\event_outbox_dispatcher.pid"
 $DispatcherStatePath = Join-Path $RepoRoot "var\run\event_outbox_dispatcher.state.json"

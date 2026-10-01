@@ -118,8 +118,11 @@ def test_account_chart_preserves_opening_anchor_and_rejects_backdating(store, tm
     bad_day=backdated.model_copy(update={"as_of":date(2026,8,4),"captured_at":cutoff+timedelta(days=2)})
     monkeypatch.setattr(api,"_account_snapshots",lambda *a:[(tmp_path/"opening.json",opening),
         (tmp_path/"bad-opening.json",backdated),(tmp_path/"bad-day.json",bad_day)])
-    points,_,start=api._account_nav_points(AppSettings(),store,[])
+    warnings=[]
+    points,_,start=api._account_nav_points(AppSettings(),store,warnings)
     assert points==[(date(2026,8,3),Decimal(1000))] and start==date(2026,8,4)
+    excluded = [message for message in warnings if "backdated" in message]
+    assert len(excluded) == 1 and "Excluded 2 backdated" in excluded[0]
 
 
 def test_cash_events_are_idempotent_scoped_and_bridge_explains_flow(store):

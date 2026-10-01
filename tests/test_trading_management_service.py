@@ -231,6 +231,24 @@ def test_trading_management_service_replays_missed_eod_dates_on_restart(tmp_path
     assert any(str(as_of) in message for message in completed_messages)
 
 
+def test_blocked_historical_eod_still_acquires_latest_completed_market_data(tmp_path, monkeypatch):
+    store = SQLiteStore(tmp_path / "catchup.db")
+    store.initialize()
+    as_of = _seed_sota_history(store)
+    historical = _previous_business_day(as_of)
+    service = TradingManagementService(settings=AppSettings(data_dir=tmp_path, automation_enabled=True), store=store,
+        execution_sync_client=_FakeExecutionSyncClient([]), account_snapshot_client=_FailingAccountSnapshotClient(),
+        market_data_provider=_FakeMarketDataProvider({}), fx_market_data_provider=_FakeMarketDataProvider({}))
+    service._status = service._status.model_copy(update={"pending_eod_date": historical, "pending_eod_dates": [historical, as_of]})
+    calls = []
+    monkeypatch.setattr(service, "_sync_executions", lambda _: None)
+    monkeypatch.setattr(service, "_refresh_market_data", lambda day: calls.append(day))
+    service._run_eod(datetime.combine(as_of, time(18), tzinfo=ZoneInfo("America/New_York")))
+    assert calls == [as_of]
+    assert service._status.pending_eod_date == historical
+    assert not store.list_proposals()  # No data/reconciliation gate was bypassed.
+
+
 def test_trading_management_service_start_retries_pending_eod_immediately_after_restart(tmp_path) -> None:
     store = SQLiteStore(tmp_path / "restart_retry.db")
     store.initialize()

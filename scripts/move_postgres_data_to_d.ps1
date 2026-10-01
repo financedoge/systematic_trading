@@ -28,11 +28,10 @@ if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administra
 }
 $repo = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $python = Join-Path $repo '.venv\Scripts\python.exe'
-# SMB sessions can differ between normal and elevated Windows logons. Check from
-# this exact process before interrupting any application service.
+# Check local restore safety before interrupting application services.
 & $python (Join-Path $PSScriptRoot 'sync_databases.py') preflight
 if ($LASTEXITCODE -ne 0) {
-    throw 'NAS preflight failed; no services were stopped. Connect to \\192.168.1.32\Public from this same Administrator PowerShell and retry. Do not disable NAS sync or remove ownership records.'
+    throw 'Database preflight failed; no services were stopped. Inspect local restore state and database sync logs.'
 }
 $sourcePath = (Resolve-Path -LiteralPath $Source).Path.TrimEnd('\')
 $targetPath = [IO.Path]::GetFullPath($Destination).TrimEnd('\')
@@ -61,11 +60,11 @@ if (Get-ChildItem -LiteralPath $sourcePath -Recurse -Force | Where-Object { $_.A
 }
 $sourceBytes = (Get-ChildItem -LiteralPath $sourcePath -Recurse -File -Force | Measure-Object Length -Sum).Sum
 if ((Get-PSDrive D).Free -lt ($sourceBytes * 2 + 1GB)) { throw "Insufficient D: free space." }
-# This performs the normal final snapshot and NAS ownership release, preserving guards.
+# Stop writers and checkpoint locally; optional NAS failures do not block relocation.
 & (Join-Path $PSScriptRoot 'stop_local_platform.ps1') -KeepInfrastructure
 if ($LASTEXITCODE -ne 0) { throw "Clean platform stop failed." }
 $state = Get-Content -LiteralPath (Join-Path $repo 'var\database-sync\state.json') -Raw | ConvertFrom-Json
-if ($state.phase -ne 'clean') { throw "A clean NAS handoff is required before relocating." }
+if ($state.phase -ne 'clean') { throw "A clean local database shutdown is required before relocating." }
 $changed = $false
 try {
     Stop-Service -Name $ServiceName
@@ -106,7 +105,7 @@ try {
     Start-Service -Name $ServiceName -ErrorAction Continue
     throw $failure
 }
-# The standard startup verifies fingerprints and reacquires NAS ownership.
+# Standard startup compares verified revisions and tolerates unavailable NAS.
 & (Join-Path $PSScriptRoot 'start_local_platform.ps1')
 if ($LASTEXITCODE -ne 0) { throw "Postgres moved; platform startup failed. Inspect health; do not revert an active ledger." }
 Write-Output "PostgreSQL is using $targetPath. Original copy retained at $sourcePath; do not reuse it after new writes."

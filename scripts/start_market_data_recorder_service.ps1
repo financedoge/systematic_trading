@@ -1,4 +1,5 @@
 param(
+    [switch]$Recovery,
     [string[]]$RecorderSymbols = @("SPY", "QQQ", "TLT", "GLD", "IWM"),
     [int]$RecorderRealtimeChunkSeconds = 300,
     [int]$RecorderGapFillLookbackMinutes = 60,
@@ -22,6 +23,11 @@ $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $RepoRoot = Resolve-Path (Join-Path $ScriptDir "..")
 $Python = Join-Path $RepoRoot ".venv\Scripts\python.exe"
+if (-not $Recovery) {
+    & $Python (Join-Path $ScriptDir "local_recovery.py") pause recorder
+    if ($LASTEXITCODE -ne 0) { throw "Could not pause recorder recovery for startup." }
+}
+try {
 $RunDir = Join-Path $RepoRoot "var\run"
 $LogDir = Join-Path $RepoRoot "var\log"
 $ResolvedOperationLogPath = if ([System.IO.Path]::IsPathRooted($OperationLogPath)) { $OperationLogPath } else { Join-Path $RepoRoot $OperationLogPath }
@@ -150,3 +156,9 @@ Write-OperationLog `
         client_id = $RecorderClientId
         state_path = $statePath
     }
+
+} finally {
+    if (-not $Recovery) {
+        & $Python (Join-Path $ScriptDir "local_recovery.py") resume recorder
+    }
+}

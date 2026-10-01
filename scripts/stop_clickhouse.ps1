@@ -5,6 +5,8 @@ param(
 $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $RepoRoot = Resolve-Path (Join-Path $ScriptDir "..")
+& (Join-Path $RepoRoot ".venv\Scripts\python.exe") (Join-Path $ScriptDir "local_recovery.py") pause clickhouse
+if ($LASTEXITCODE -ne 0) { throw "Could not pause ClickHouse recovery before stopping." }
 $ResolvedComposeFile = Resolve-Path (Join-Path $RepoRoot $ComposeFile)
 
 if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {

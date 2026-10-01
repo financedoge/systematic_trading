@@ -84,7 +84,8 @@ def sha256(path: Path) -> str:
 
 
 def write_json(path: Path, data) -> None:
-    path.write_text(json.dumps(data, sort_keys=True, indent=2, default=str) + '\n', encoding='utf-8')
+    from systematic_trading.runtime_io import atomic_json
+    atomic_json(path, data)
 
 
 def verify_bundle(root: Path) -> dict:

@@ -1,4 +1,5 @@
 import re
+import json
 import shutil
 import subprocess
 from pathlib import Path
@@ -20,12 +21,33 @@ EXPECTED_HEADER_LINKS = [
 ]
 
 
+def test_open_strategy_pages_update_when_complete_publication_changes():
+    from systematic_trading.web.operator import _STRATEGIES_HTML
+    from systematic_trading.web.strategy_refresh import report_refresh_banner
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("Node.js is required for UI behavior checks.")
+    payload = dict(catalog=_STRATEGIES_HTML, report=report_refresh_banner(
+        {"version": "v1", "published_at": "2026-09-25"}, {}))
+    subprocess.run([node, str(Path(__file__).with_name("strategy_refresh_checks.cjs"))],
+                   input=json.dumps(payload), text=True, encoding="utf-8", capture_output=True, check=True, timeout=20)
+
+
 def test_dashboard_panels_render_independently_and_recover():
     from systematic_trading.web.operator import _OPERATOR_HTML
     node = shutil.which('node')
     if node is None:
         pytest.skip('Node.js is required for UI behavior checks.')
     subprocess.run([node, str(Path(__file__).with_name('operator_pnl_loading_checks.cjs'))],
+                   input=_OPERATOR_HTML, text=True, encoding='utf-8', capture_output=True, check=True, timeout=20)
+
+
+def test_attribution_retains_complete_history_and_bounds_diagnostics():
+    from systematic_trading.web.operator import _OPERATOR_HTML
+    node = shutil.which('node')
+    if node is None:
+        pytest.skip('Node.js is required for UI behavior checks.')
+    subprocess.run([node, str(Path(__file__).with_name('operator_attribution_checks.cjs'))],
                    input=_OPERATOR_HTML, text=True, encoding='utf-8', capture_output=True, check=True, timeout=20)
 
 

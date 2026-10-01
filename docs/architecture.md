@@ -6,7 +6,7 @@ The [connection repair record](app-connection-repairs-2026-09-28.md) documents t
 
 Production decisions and strategy tracking consume hash-pinned published governed inputs. The application-owned `research/governed_refresh.py` producer audits and verifies a complete supported ETF batch before publishing its catalog pointer. Research and operations projections run independently and expose their errors/freshness. The economic cash ledger bridges NAV to security P&L, flows, income, costs and cash FX; unresolved differences remain visible and suppress reconciled flow-adjusted returns.
 
-`web/shell.py` owns the shared workspace presentation. Application health includes recurring broker probes, calculation workers and durable delivery receipts. NAS SQL snapshots carry external dependency manifests; missing analytical data/artifacts block restore before ownership or database mutation. These checks preserve the existing paper/live and single-writer gates.
+`web/shell.py` owns the shared workspace presentation. Application health includes recurring broker probes, calculation workers and durable delivery receipts. NAS SQL snapshots carry external dependency manifests; missing analytical data/artifacts defer incoming restore before database mutation. Paper/live gates and checks preventing replacement of active local databases remain mandatory.
 
 The governed historical-price research layer is documented in
 `docs/price-governance-2026-09-26.md`. Immutable batches in
@@ -17,10 +17,12 @@ verification. The read-only Market Data governance API serves committed
 workspace-scoped batches. This layer does not change the production daily-bar
 reader, broker execution contracts or strategy selection.
 
-Local two-PC operation uses the [NAS database handoff protocol](database-sync.md):
-one active workspace, local PostgreSQL/SQLite engines, verified immutable NAS
-snapshots, startup conflict detection, and a final stopped-service backup before
-ownership release. It does not replicate ClickHouse, broker configuration or raw
+Local two-PC operation uses [optional NAS backups](database-sync.md):
+local PostgreSQL/SQLite engines, local recovery checkpoints and verified immutable
+NAS snapshots. Latest observed database revisions win; unchanged copies retain
+their age, publication is serialized and incoming restores require stopped services.
+NAS failures defer sync without blocking startup/shutdown. Interrupted local
+restores still block application access. It does not replicate ClickHouse, broker configuration or raw
 market-data files, and it does not change execution approval or reconciliation gates.
 
 ## Target State
@@ -63,6 +65,14 @@ research evidence only. No broker credentials, approvals or executable events
 cross this boundary. Legacy history remains uncertified for promotion.
 
 ## Principles
+
+Local recovery is a separate process owned by platform startup. It restores
+missing desired services through existing guarded entry points and honors
+explicit stops. Embedded trading/broker workers survive transient iteration
+failures; isolated calculations use locked, immutable attempts and atomic bundle
+publication. The event outbox retains bounded at-least-once delivery. See the
+[robustness review](robustness-review-2026-09-30.md) for failure tests and remaining
+operator dependencies. Recovery confers no trading authority.
 
 Registered monitored strategies are application-owned analytical calculations. The analytics worker reads committed audited batches, verifies source hashes and FX evidence, freezes complete strategy definitions, and runs either the internal Python engine or isolated LEAN with Python parity. A single ClickHouse publication commits matched results, current weights and report data only after all calculations succeed; failures retain the previous complete publication with an error status. No broker credentials or order authorization enter this boundary. The shared report renderer serves both SOTA and tracked challengers. Codex/agent schedules are not calculation infrastructure.
 

@@ -32,6 +32,18 @@ from systematic_trading.messaging import EventOutboxDispatcher, InMemoryPlatform
 from systematic_trading.storage.sqlite import SQLiteStore
 
 
+def test_slow_dispatch_batch_yields_for_heartbeat_without_losing_pending_events(tmp_path, monkeypatch):
+    from systematic_trading.messaging import outbox
+    store = _store(tmp_path)
+    for i in range(3):
+        store.append_platform_event(_market_event(f"slow-{i}", "SPY"))
+    ticks = iter([0, 21])
+    monkeypatch.setattr(outbox, "monotonic", lambda: next(ticks))
+    result = EventOutboxDispatcher(store, InMemoryPlatformEventPublisher()).dispatch_pending(max_batch_seconds=20)
+    assert result.attempted == result.published == 1
+    assert len(store.list_pending_platform_events()) == 2
+
+
 def test_sqlite_event_outbox_appends_event_idempotently(tmp_path) -> None:
     store = _store(tmp_path)
     event = _market_event("evt-001", "SPY")

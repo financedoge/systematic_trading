@@ -16,7 +16,8 @@ The machine-readable manifest is `config/service-manifest.json`.
 | IB TWS Paper API | Active external session | `scripts/probe_ib_tws_health.py` | External TWS/Gateway login | `var/run/ib_tws_api.state.json` | State file health in platform portal |
 | ClickHouse columnar store | Active | `scripts/start_clickhouse.ps1` | Docker Compose | Docker logs plus `D:/systematic_trading_data/clickhouse/logs` | `http://127.0.0.1:8123/ping` |
 | Market data recorder | Active scheduled worker | `scripts/start_local_platform.ps1` | `var/run/market_data_recorder.pid` | `var/log/market_data_recorder.*.log` | `var/run/market_data_recorder.state.json` and freshness metrics |
-| Local platform watchdog | Active operator script | Manual now; Windows Task Scheduler later | `var/run/local_platform_watchdog.state.json` | `var/log/platform_operations.jsonl` | Checks NATS, Postgres, ClickHouse, operator API, and optional recorder state |
+| Local platform watchdog | Active diagnostic script | One-shot/manual | `var/run/local_platform_watchdog.state.json` | `var/log/platform_operations.jsonl` | Checks NATS, Postgres, ClickHouse, operator API, and optional recorder state |
+| Local service recovery | Active background worker | Platform startup | `var/run/local_recovery.pid` | `var/log/local_recovery.*.log` | `var/run/local_recovery.state.json`; desired services, retries and disk space |
 
 The recorder implementation follows `docs/market-data-recorder-contract.md` and the source/capacity plan in `docs/market-data-recorder-source-plan.md`. The scheduled service entry point is `scripts/run_market_data_recorder_service.py`; it stays alive, runs ClickHouse daily-bar backfill on startup/interval, idles outside regular US equity hours, and delegates bounded captures to `scripts/record_ib_market_data.py`. Prospective capture starts before recovery work; synchronous historical gap-fill runs only after a failed stream chunk.
 
@@ -98,16 +99,16 @@ Attempt repair of required local services:
 .\scripts\watch_local_platform.ps1 -Repair
 ```
 
-The repair path may recreate NATS JetStream and ClickHouse through their Docker Compose files, reconfigure the `ST_EVENTS` stream, and restart the operator dashboard if its health endpoint is unavailable. It does not auto-start the market-data recorder because recorder startup consumes disk space, broker data lines, and IB session capacity.
+The one-shot repair path may recreate NATS JetStream and ClickHouse through their Docker Compose files, reconfigure the `ST_EVENTS` stream, and restart the operator dashboard if its health endpoint is unavailable. Separately, the automatic recovery worker restores only services selected by platform startup, including the recorder when selected. It waits for an existing capture child and retains the configured symbols/feed/client ID.
 
 If TWS or IB Gateway logs out, the platform must not spin indefinitely. The trading management loop now opens an IB automation circuit breaker after repeated IB failures, backs off recurring execution/account-snapshot retries, records the circuit state in `var/live/trading_management_service_state.json`, and requires a human relogin before IB-dependent work can become healthy again.
 
 ## Stop Order
 
-1. Optional market data recorder.
-2. Event outbox dispatcher.
-3. Operator dashboard API.
-4. ClickHouse and NATS when using the full local platform script.
+1. Local recovery worker (prevents restart racing shutdown).
+2. Optional market data recorder.
+3. Event outbox dispatcher and operator dashboard API.
+4. Local backup worker/checkpoint, then ClickHouse and NATS for full shutdown.
 
 The stop script removes PID files only after the target process exits or is confirmed absent.
 
@@ -121,7 +122,15 @@ Postgres is not stopped by the platform stop script because it is managed as an 
 
 ## Restart Policy
 
-Current local policy is manual restart. This is deliberate while service contracts are still changing.
+Current local policy restores missing desired services automatically, polling every
+30 seconds and persisting exponential retry delays capped at 15 minutes. Service
+stop scripts pause recovery for that target; normal start scripts resume it.
+`start_local_platform.ps1 -SkipRecovery` omits this worker. The profile is local
+runtime state, not a new Windows scheduled task. No recovery runs while the
+machine is asleep or powered off. Running but unresponsive processes are reported
+for investigation rather than killed. Gateway login and external Postgres/OS
+recovery remain operator responsibilities. Details and fault-injection evidence:
+[September 30 robustness review](robustness-review-2026-09-30.md).
 
 Use the watchdog as the first local recovery command after VPN, Wi-Fi, Docker Desktop, or TWS disruptions. For true 24x7 operation, migrate NATS, ClickHouse, and IB Gateway to a supervised server or native service path; Docker Desktop plus an idle-sensitive VPN is not a production-grade dependency chain.
 

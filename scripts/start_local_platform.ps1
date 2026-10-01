@@ -4,6 +4,7 @@ param(
     [switch]$SkipNats,
     [switch]$SkipClickHouse,
     [switch]$SkipOperator,
+    [switch]$SkipRecovery,
     [switch]$SkipMarketDataRecorder,
     [switch]$StartMarketDataRecorder,
     [string[]]$RecorderSymbols = @("SPY", "QQQ", "TLT", "GLD", "IWM"),
@@ -250,7 +251,7 @@ try {
     Write-OperationLog -Event "postgres_ready" -Message "Postgres readiness check passed." -Details @{ host = "127.0.0.1"; port = 5432 }
 
     & $Python ".\scripts\sync_databases.py" prepare
-    if ($LASTEXITCODE -ne 0) { throw "NAS database handoff failed; application services were not started." }
+    if ($LASTEXITCODE -ne 0) { throw "Local database preparation failed; inspect local restore state and backup logs." }
     $syncConfig = Get-Content (Join-Path $RepoRoot "config\database-sync.json") -Raw | ConvertFrom-Json
     if ($syncConfig.enabled) {
         $syncProcess = Start-Process -FilePath $Python -ArgumentList @(".\scripts\sync_databases.py", "worker") `
@@ -260,7 +261,9 @@ try {
         $syncDeadline = (Get-Date).AddSeconds(15)
         while (-not (Test-Path (Join-Path $RunDir "database_sync.pid"))) {
             if ($syncProcess.HasExited -or (Get-Date) -gt $syncDeadline) {
-                throw "NAS backup worker failed to start; check var/log/database_sync.err.log."
+                if (-not $syncConfig.optional) { throw "NAS backup worker failed to start; check var/log/database_sync.err.log." }
+                Write-Warning "Optional backup worker did not start; local services will continue. Check var/log/database_sync.err.log."
+                break
             }
             Start-Sleep -Milliseconds 200
         }
@@ -292,6 +295,20 @@ try {
     } else {
         Write-Output "Market data recorder service not started because -SkipMarketDataRecorder was passed."
         Write-OperationLog -Event "recorder_service_not_started" -Message "Market data recorder service was not started by request." -Details @{}
+    }
+
+    if (-not $SkipRecovery) {
+        $recoveryProfile = @{
+            schema_version = 1
+            enabled = @{ nats = -not $SkipNats; clickhouse = -not $SkipClickHouse; operator = -not $SkipOperator; recorder = -not $SkipMarketDataRecorder; backup = [bool]$syncConfig.enabled }
+            operator = @{ HostName = $HostName; Port = $Port; EventPublisher = $EventPublisher; NatsUrl = $NatsUrl; TransactionalStoreBackend = $TransactionalStoreBackend; MarketDataStoreBackend = $MarketDataStoreBackend; OperationLogPath = $ResolvedOperationLogPath }
+            recorder = @{ RecorderSymbols = $RecorderSymbols; RecorderRealtimeChunkSeconds = $RecorderRealtimeChunkSeconds; RecorderGapFillLookbackMinutes = $RecorderGapFillLookbackMinutes; RecorderPollSeconds = $RecorderPollSeconds; RecorderClientId = $RecorderClientId; RecorderIntradayFeed = $RecorderIntradayFeed; RecorderMarketDataMode = $RecorderMarketDataMode; OperationLogPath = $ResolvedOperationLogPath }
+        }
+        $profilePath = Join-Path $RunDir "local_recovery.profile.json"
+        $recoveryProfile | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath ($profilePath + ".tmp") -Encoding utf8
+        Move-Item -LiteralPath ($profilePath + ".tmp") -Destination $profilePath -Force
+        & $Python (Join-Path $ScriptDir "local_recovery.py") start
+        if ($LASTEXITCODE -ne 0) { throw "Local recovery worker failed to start." }
     }
 
     Write-Output "Local platform startup completed."

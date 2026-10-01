@@ -58,6 +58,62 @@ The target rollout path is defined in `docs/industrial-platform-plan.md`. This d
 
 ## SOTA Nightly Job
 
+### Daily refresh and laptop recovery (2026-09-30)
+
+The application owns acquisition, audited publication, strategy calculations and
+account replay whenever the local platform is running. Startup catches up after
+sleep/offline periods. NAS backup is optional and cannot block normal local
+startup/shutdown; see [optional snapshot synchronization](database-sync.md).
+
+The analytics worker acquires complete Yahoo ETF histories with bounded retries
+across the provider's chart hosts, retains source evidence, checks identity,
+coverage and adjustment revisions, and publishes only a fully verified batch.
+Failed acquisition retries after five minutes. A separate strategy-FX job
+requests missing observed USD/CNH history from the earliest evidence gap,
+independently of account reconciliation or the oldest pending accounting day.
+Raw IB midpoint legs must pass existing evidence validation before use.
+
+Daily signals/latest indicative targets follow the latest audited prices. Daily
+CNH NAV and held weights require matching supported FX. The catalog, full report
+and System health explicitly show expected session, price date and valuation
+date; a running worker does not establish freshness. Calculation failures retain
+the last complete report and surface immediately. Older EOD accounting is replayed
+in order, while trading-market acquisition advances to the latest eligible session.
+
+Strategy updates preserve the registered monthly rebalance schedule and the
+separately authorized 2-percentage-point portfolio-drift policy. September 30's
+monthly decision executes October 1, subject to existing data, account, approval
+and execution-window checks. Indicative daily targets do not become deployed
+monthly targets merely by being displayed.
+
+Incident evidence: September 28–29 refreshes encountered Yahoo HTTP 403 and IB
+timeouts. After repair, the app published audited September 29 prices and three
+refreshed target sets; five native runs passed parity. At acceptance, Gateway
+still reported code 2110/server disconnection, so September 28–29 FX, CNH NAV/held
+weights and account reconciliation remained incomplete. The health probe now
+reports that failure even when the local API returns `nextValidId`. Reconnect
+paper Gateway; normal app retries then resume. Code meanings follow
+[IB's connectivity messages](https://interactivebrokers.github.io/tws-api/message_codes.html).
+No stale marks/FX are promoted to current data and no approval/routing gate is bypassed.
+
+Gateway recovery is now an application event: the recurring read-only health
+probe wakes strategy acquisition/calculation and the trading management loop
+when it changes from unavailable to healthy (also when first healthy at startup).
+The probe runs every 60 seconds. A fresh recovery permits one normal retry before
+the previous connection cooldown expires; an older probe cannot clear a newer
+IB failure. Reconciliation and order approval checks still run normally. If a
+calculation is already running, the refresh is queued for its next pass.
+
+Recovered job errors clear as soon as their dependency succeeds. Open strategy
+reports show calculation progress, poll every 10 seconds and reload only when a
+new complete serving publication appears. The catalog refreshes every 15 seconds
+while preserving its lifecycle filter. Pages opened before this deployment need
+one reload to load that behavior. On September 30, observed September 28–29 FX
+arrived after Gateway reconnection; all five native runs passed parity and all
+three monitored reports advanced to September 29, including NAV and held weights.
+After deployment, fresh broker reconciliation matched and the app completed both
+pending EOD sessions. Evidence: `var/research/gateway-reconnect-catchup-runtime.json`.
+
 The first live bridge separates proposal generation from broker submission:
 
 1. Backfill/validate latest adjusted ETF prices and USD/CNH FX after the market close.
@@ -271,5 +327,5 @@ Current controls:
 - TWS down or not logged in is an operator-visible health error, not a silent recorder/execution failure.
 - Reconciliation after a paper-account reset is report-first. Local broker order records remain audit history; a broker-authoritative PnL baseline can only be written by the explicit Trading-page confirmation or `--record-pnl-reset-baseline --confirm-paper-reset`.
 - The platform does not attempt to automate TWS login or 2FA recovery.
-- After any TWS relogin, run `scripts/test_ib_paper_connection.py` before restarting IB-dependent recorder or paper-execution work.
+- After TWS/Gateway relogin, the app health monitor wakes normal recovery automatically. Verify healthy broker status and fresh matched reconciliation; `scripts/test_ib_paper_connection.py` remains available for manual connection diagnosis.
 - For server or 24x7 operation, prefer IB Gateway under an explicit process supervisor and keep VPN dependency out of the critical network path.

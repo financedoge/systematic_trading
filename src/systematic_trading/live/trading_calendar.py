@@ -1,6 +1,13 @@
 from __future__ import annotations
 
-from datetime import date, time, timedelta
+from datetime import date, datetime, time, timedelta
+from zoneinfo import ZoneInfo
+
+
+def latest_completed_us_session(now: datetime | None = None) -> date:
+    local = (now or datetime.now(ZoneInfo("America/New_York"))).astimezone(ZoneInfo("America/New_York"))
+    close = us_equity_market_close(local.date())
+    return local.date() if close and local.time() >= close else previous_us_trading_day(local.date())
 
 
 def is_us_trading_day(value: date) -> bool:

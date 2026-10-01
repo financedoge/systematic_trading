@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Protocol
+from time import monotonic
 
 from pydantic import BaseModel, Field
 
@@ -35,11 +36,15 @@ class EventOutboxDispatcher:
         self.store = store
         self.publisher = publisher
 
-    def dispatch_pending(self, *, limit: int = 100) -> EventOutboxDispatchResult:
+    def dispatch_pending(self, *, limit: int = 100, max_batch_seconds: float = 20) -> EventOutboxDispatchResult:
         records = self.store.list_pending_platform_events(limit=limit)
         failures: list[EventOutboxDispatchFailure] = []
         published = 0
+        started, attempted = monotonic(), 0
         for record in records:
+            if attempted and monotonic() - started >= max_batch_seconds:
+                break
+            attempted += 1
             try:
                 self.publisher.publish(record.payload, subject=record.subject)
             except Exception as exc:
@@ -56,7 +61,7 @@ class EventOutboxDispatcher:
             self.store.mark_platform_event_published(record.event_id)
             published += 1
         return EventOutboxDispatchResult(
-            attempted=len(records),
+            attempted=attempted,
             published=published,
             failed=len(failures),
             failures=failures,

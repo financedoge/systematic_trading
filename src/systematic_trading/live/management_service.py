@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import json
+import logging
 import re
 from datetime import UTC, date, datetime, time, timedelta
 from pathlib import Path
@@ -77,10 +77,15 @@ class TradingServiceStatus(BaseModel):
     portfolio_alignment_proposal_id: str | None = None
     portfolio_alignment: InitialAllocationResult | None = None
     rebalance_drift_threshold: str = "0.02"
+    scheduled_decision_date: date | None = None
+    scheduled_trade_date: date | None = None
     ib_automation_consecutive_errors: int = 0
     ib_automation_circuit_open_until: datetime | None = None
     ib_automation_circuit_reason: str | None = None
+    ib_automation_last_failure_at: datetime | None = None
     last_error: str | None = None
+    worker_last_error: str | None = None
+    worker_consecutive_failures: int = 0
     events: list[TradingServiceEvent] = Field(default_factory=list)
 
 
@@ -154,6 +159,8 @@ class TradingManagementService:
         self.state_path = trading_service_state_path(settings)
         self._lock = Lock()
         self._stop = Event()
+        self._wake = Event()
+        self._broker_recovery_at: datetime | None = None
         self._thread: Thread | None = None
         self._status = load_trading_service_status(settings).model_copy(
             update={
@@ -192,6 +199,7 @@ class TradingManagementService:
 
     def stop(self) -> None:
         self._stop.set()
+        self._wake.set()
         thread = self._thread
         if thread is not None:
             thread.join(timeout=5)
@@ -209,14 +217,16 @@ class TradingManagementService:
         from systematic_trading.execution.reconciliation import load_latest_ib_reconciliation
         latest = load_latest_ib_reconciliation(self.settings)
         with self._lock:
-            return self._status.model_copy(update={
+            state = self._status.model_copy(update={"running": bool(self._thread and self._thread.is_alive())})
+            return state.model_copy(update={
                 "last_reconciliation_at": latest.checked_at,
                 "last_reconciliation_status": latest.status,
-            }) if latest else self._status
+            }) if latest else state
 
     def run_once(self, *, now: datetime | None = None) -> TradingServiceStatus:
         started = monotonic()
         current = _as_utc(now or datetime.now(tz=UTC))
+        self._consume_broker_recovery(current)
         with self._lock:
             self._status = self._status.model_copy(update={"heartbeat_at": current, "running": self._thread is not None and self._thread.is_alive()})
             self._save_status_locked()
@@ -296,8 +306,32 @@ class TradingManagementService:
                     details=result.model_dump(mode="json"), notify=False)
 
     def _run(self) -> None:
-        while not self._stop.wait(max(self.settings.automation_loop_interval_seconds, 1)):
-            self.run_once()
+        delay = max(self.settings.automation_loop_interval_seconds, 1)
+        while not self._stop.is_set():
+            self._wake.wait(delay)
+            self._wake.clear()
+            if self._stop.is_set():
+                break
+            try:
+                self.run_once()
+                with self._lock:
+                    self._status = self._status.model_copy(update={"worker_last_error": None,
+                        "worker_consecutive_failures": 0})
+                delay = max(self.settings.automation_loop_interval_seconds, 1)
+            except Exception as exc:
+                # A failed DB/state write must not silently terminate trading
+                # supervision. Each retry follows the usual reconciliation and
+                # idempotent proposal/order checks; no operation is force-replayed.
+                logging.getLogger(__name__).exception("Trading worker iteration failed; retrying")
+                with self._lock:
+                    failures = self._status.worker_consecutive_failures + 1
+                    self._status = self._status.model_copy(update={"worker_last_error": str(exc),
+                        "worker_consecutive_failures": failures, "heartbeat_at": datetime.now(UTC)})
+                    try:
+                        self._save_status_locked()
+                    except Exception:
+                        logging.getLogger(__name__).exception("Could not persist worker failure")
+                delay = min(300, max(self.settings.automation_loop_interval_seconds, 5) * 2**min(failures-1, 6))
 
     def _execution_sync_due(self, now: datetime) -> bool:
         with self._lock:
@@ -434,7 +468,9 @@ class TradingManagementService:
             return
         self._record_event("eod", "started", f"Started after-close workflow for {service_date}.")
         self._sync_executions(now)
-        market_result = self._refresh_market_data(service_date)
+        # Accounting replay remains oldest-first, but a blocked old account day
+        # must not pin daily market acquisition behind the latest closed session.
+        market_result = self._refresh_market_data(max(service_date, self._latest_eligible_eod_date(now) or service_date))
         market_ready = (
             market_result is not None
             and market_result.latest_bar_date is not None and market_result.latest_bar_date >= service_date
@@ -812,6 +848,7 @@ class TradingManagementService:
             self._save_status_locked()
 
     def _record_ib_failure_locked(self, now: datetime, *, source: str, reason: str) -> None:
+        self._status = self._status.model_copy(update={"ib_automation_last_failure_at": _as_utc(now)})
         threshold = max(self.settings.automation_ib_error_breaker_threshold, 1)
         cooldown_seconds = max(self.settings.automation_ib_error_breaker_cooldown_seconds, 60)
         consecutive_errors = self._status.ib_automation_consecutive_errors + 1
@@ -866,6 +903,31 @@ class TradingManagementService:
             )
             self._save_status_locked()
 
+    def request_broker_recovery(self, checked_at: datetime) -> None:
+        """Wake one normal read/reconciliation attempt; confer no route authority."""
+        with self._lock:
+            self._broker_recovery_at = checked_at
+        self._wake.set()
+
+    def _consume_broker_recovery(self, now: datetime) -> None:
+        with self._lock:
+            checked_at, self._broker_recovery_at = self._broker_recovery_at, None
+            if checked_at is None or checked_at.tzinfo is None:
+                return
+            age = (now - checked_at).total_seconds()
+            failure = self._status.ib_automation_last_failure_at
+            if not 0 <= age <= 120 or (failure is not None and checked_at <= failure):
+                return
+            self._status = self._status.model_copy(update={
+                "ib_automation_consecutive_errors": 0, "ib_automation_circuit_open_until": None,
+                "ib_automation_circuit_reason": None, "next_execution_sync_at": now,
+                "next_eod_attempt_at": None,
+            })
+            self._next_fx_readiness_refresh = None
+            self._record_event("ib_connection", "ok", "Gateway reconnected; retrying observed data and broker reconciliation.",
+                               save=False, notify=False)
+            self._save_status_locked()
+
     def _record_event(
         self,
         event_type: str,
@@ -895,11 +957,8 @@ class TradingManagementService:
             pass
 
     def _save_status_locked(self) -> None:
-        self.state_path.parent.mkdir(parents=True, exist_ok=True)
-        self.state_path.write_text(
-            json.dumps(self._status.model_dump(mode="json"), indent=2),
-            encoding="utf-8",
-        )
+        from systematic_trading.runtime_io import atomic_json
+        atomic_json(self.state_path, self._status.model_dump(mode="json"))
 
     def _market_data_fallback_provider(self) -> DailyBarProvider | None:
         if self.market_data_fallback_provider is not None:
@@ -917,6 +976,16 @@ def _scheduled_rebalance_due(decision_date: date) -> bool:
     return is_us_trading_day(decision_date) and (next_session.year, next_session.month) != (
         decision_date.year, decision_date.month,
     )
+
+
+def scheduled_rebalance_dates(today: date) -> tuple[date | None, date | None]:
+    """Expose the registered monthly calendar without staging or authorizing trades."""
+    if current_sota_definition().scheduler != "static_monthly":
+        return None, None
+    decision = previous_us_trading_day(today)
+    while not _scheduled_rebalance_due(decision) or next_us_trading_day(decision) < today:
+        decision = next_us_trading_day(decision)
+    return decision, next_us_trading_day(decision)
 
 
 def _existing_staged_proposal(store: TradingStore, decision_date: date) -> TradeProposal | None:

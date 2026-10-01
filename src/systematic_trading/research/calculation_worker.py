@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 import sys
+from uuid import uuid4
 
 from systematic_trading.lean.bundle import freeze_bundle
 from systematic_trading.lean.contracts import sha256, verify_bundle
@@ -19,10 +20,17 @@ def prepare(request_path):
     inputs = checked_input(request["inputs"])
     models = checked_input(request["models"]) if request["models"] else None
     bundle = Path(request["bundle"])
-    if not bundle.exists():
-        freeze_bundle(root=bundle, bars=inputs["bars"], fx=inputs["fx"], provenance=inputs["provenance"],
-            base_tree_models=models, spec_values=request["spec"])
-    verify_bundle(bundle)
+    from systematic_trading.runtime_io import exclusive_lock
+    with exclusive_lock(bundle.with_name(bundle.name + ".lock")):
+        if not bundle.exists():
+            # An interrupted build stays as evidence in a unique staging folder;
+            # it cannot poison the next retry's immutable final bundle path.
+            staging = bundle.with_name(bundle.name + ".preparing-" + uuid4().hex)
+            freeze_bundle(root=staging, bars=inputs["bars"], fx=inputs["fx"], provenance=inputs["provenance"],
+                base_tree_models=models, spec_values=request["spec"])
+            verify_bundle(staging)
+            staging.rename(bundle)
+        verify_bundle(bundle)
 
 
 if __name__ == "__main__":

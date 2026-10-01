@@ -73,10 +73,11 @@ See [database consolidation](docs/database-consolidation.md) for SQLite retireme
 
 Recommended local foundation startup:
 
-For switching PCs, the startup/stop scripts now coordinate PostgreSQL and SQLite
-snapshots through `\\192.168.1.32\Public\systematic-trading`. Read the
-[NAS database handoff guide](docs/database-sync.md) for first-time setup. Stop the
-old PC cleanly before starting the other. A new PC still needs local infrastructure
+Startup and shutdown work without NAS access. PostgreSQL/SQLite checkpoints stay
+local and optionally synchronize through `\\192.168.1.32\Public\systematic-trading`.
+The latest verified snapshot revision wins; unchanged backups retain their revision
+time, and incoming restores wait for stopped services. Read the
+[optional NAS backup guide](docs/database-sync.md). A new PC still needs local infrastructure
 and credentials; ClickHouse and raw market-data files require separate migration.
 
 ```powershell
@@ -87,7 +88,12 @@ This starts NATS JetStream, verifies Postgres, starts ClickHouse, starts the ope
 
 Structured operational logs are written to `var/log/platform_operations.jsonl`.
 
-Check and optionally repair the required local services after Docker, VPN, Wi-Fi, or TWS disruptions:
+Startup also runs local service recovery: missing services restart through their
+normal guarded launchers, with bounded backoff. Explicit stop scripts pause the
+corresponding target; full shutdown stops recovery first. Use `-SkipRecovery` to
+omit it. See the [recovery review and limits](docs/robustness-review-2026-09-30.md).
+
+Inspect or request a one-shot repair after Docker, VPN, Wi-Fi, or TWS disruptions:
 
 ```powershell
 .\scripts\watch_local_platform.ps1
@@ -140,6 +146,11 @@ The strategy workspace at `/strategies` separates Monitored strategies and Archi
 
 Strategy pages and account performance now read prepared ClickHouse publications.
 A background worker refreshes analytical histories when source data changes.
+Daily ETF acquisition retries across Yahoo chart hosts and passes the existing
+audit/publication gates; independent USD/CNH evidence catch-up runs before strategy
+calculations even when account reconciliation/EOD is blocked. Reports and health
+show stale price/NAV dates explicitly. The app catches up when running after a
+laptop outage; Gateway connectivity remains necessary for observed FX and trading.
 See [analytical time-series migration](docs/analytics-migration.md) for coverage,
 verification, freshness, rollback and backup requirements.
 

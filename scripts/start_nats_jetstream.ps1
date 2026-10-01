@@ -1,10 +1,15 @@
 param(
+    [switch]$Recovery,
     [string]$ComposeFile = "deploy\nats\docker-compose.yml"
 )
 
 $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $RepoRoot = Resolve-Path (Join-Path $ScriptDir "..")
+if (-not $Recovery) {
+    & (Join-Path $RepoRoot ".venv\Scripts\python.exe") (Join-Path $ScriptDir "local_recovery.py") resume nats
+    if ($LASTEXITCODE -ne 0) { throw "Could not resume NATS recovery." }
+}
 $ResolvedComposeFile = Resolve-Path (Join-Path $RepoRoot $ComposeFile)
 
 if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {

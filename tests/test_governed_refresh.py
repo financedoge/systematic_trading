@@ -73,3 +73,16 @@ def test_failed_symbol_cannot_publish_partial_catalog(governed):
         module.refresh_governed_etfs(settings,analytics,now=datetime(2026,8,4,22,tzinfo=UTC),fetch=failing)
     assert analytics.latest("governance/catalog")["version"]==old and written==[]
     assert json.loads((settings.data_dir/"governance/refresh-state.json").read_text())["error"]=="Provider unavailable"
+
+
+def test_acquisition_retries_after_reconnection_without_waiting_an_hour(governed):
+    from datetime import timedelta
+    settings, analytics, fetch, written = governed
+    now = datetime(2026,8,4,22,tzinfo=UTC)
+    def offline(*args):
+        raise OSError("offline")
+    with pytest.raises(OSError,match="offline"):
+        module.refresh_governed_etfs(settings,analytics,now=now,fetch=offline)
+    with pytest.raises(ValueError,match="offline"):
+        module.refresh_governed_etfs(settings,analytics,now=now+timedelta(seconds=60),fetch=fetch)
+    assert module.refresh_governed_etfs(settings,analytics,now=now+timedelta(seconds=301),fetch=fetch)

@@ -406,6 +406,9 @@ _OPERATOR_HTML = """<!doctype html>
     #performance-chart .strategy-dot, #performance-chart .account-dot { stroke: none; }
     #performance-chart .strategy-line, #performance-chart .account-line { vector-effect: non-scaling-stroke; stroke-linejoin: round; }
     .performance-note { padding: 6px 12px; color: var(--muted); font-size: 12px; }
+    .performance-diagnostics { padding: 10px 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    .performance-diagnostics summary { cursor: pointer; }
+    .performance-diagnostics .warnings { max-height: 220px; overflow: auto; overflow-wrap: anywhere; }
     #performance-hover { min-height: 34px; font-variant-numeric: tabular-nums; }
     .perf-crosshair { stroke: #657083; stroke-dasharray: 3 3; pointer-events: none; }
     .perf-selection { fill: #2456a622; stroke: #2456a6; pointer-events: none; }
@@ -655,7 +658,10 @@ _OPERATOR_HTML = """<!doctype html>
         <div class="performance-note">Account NAV changes include deposits and withdrawals; cash flows are not adjusted. Statistics use available observations. Gaps longer than seven days appear as breaks in the chart.</div>
         <div id="performance-legend" class="legend"></div>
         <div id="performance-analysis" class="analysis-table"></div>
-        <div id="performance-warnings" class="warnings"></div>
+        <details class="performance-diagnostics" id="performance-diagnostics">
+          <summary id="performance-diagnostics-summary">Performance notes and data checks</summary>
+          <div id="performance-warnings" class="warnings"></div>
+        </details>
       </section>
       <section class="panel">
         <div class="panel-head">
@@ -682,7 +688,7 @@ _OPERATOR_HTML = """<!doctype html>
       <section class="panel">
         <div class="panel-head">
           <h2>PnL Attribution</h2>
-          <span class="status-line">Reference fills</span>
+          <span class="status-line" id="execution-quality-as-of">Reference fills</span>
         </div>
         <div class="metrics-compact" aria-label="PnL attribution summary">
           <div class="mini-metric"><label>Reference Fill PnL</label><strong id="exec-theoretical-pnl">n/a</strong></div>
@@ -811,7 +817,7 @@ _OPERATOR_HTML = """<!doctype html>
           if (history.status === "rejected") payload.warnings = [...(payload.warnings || []), `Snapshot history unavailable: ${history.reason.message}`];
           return [payload, history.status === "fulfilled" ? history.value : []];
         }, ([pnl, history]) => renderPnl(pnl, history), warning("pnl-warnings")),
-        loadDashboardPanel("attribution", () => read("/api/v1/dashboard/execution-quality?history_limit=1"), renderExecutionQuality, warning("execution-quality-warnings"))
+        loadDashboardPanel("attribution", () => read("/api/v1/dashboard/execution-quality?history_limit=100"), renderExecutionQuality, warning("execution-quality-warnings"))
       ]);
     }
 
@@ -886,8 +892,9 @@ _OPERATOR_HTML = """<!doctype html>
         : "n/a";
       el("auto-proposal").textContent = payload.last_rebalance_proposal_id || "n/a";
       el("auto-portfolio-alignment").textContent = `Portfolio alignment: ${payload.portfolio_alignment_message || "Waiting for a fresh portfolio check."}`;
-      el("proposal-readiness").textContent = payload.portfolio_alignment_status === "blocked"
-        ? payload.portfolio_alignment_message : "";
+      const schedule = payload.scheduled_decision_date && payload.scheduled_trade_date
+        ? `Monthly schedule: decision after ${payload.scheduled_decision_date} close; execution ${payload.scheduled_trade_date} (New York).` : "";
+      el("proposal-readiness").textContent = [payload.portfolio_alignment_message, schedule].filter(Boolean).join(" ");
       const alignment = payload.portfolio_alignment || {};
       el("auto-portfolio-valuation").textContent = `Trigger: ${(Number(payload.rebalance_drift_threshold || 0.02) * 100).toFixed(2)} percentage points per holding. Prices: ${alignment.valuation_date || "unavailable"} daily close. Targets: ${alignment.target_as_of || "unavailable"}.`;
       const driftView = el("auto-portfolio-drift");
@@ -944,7 +951,7 @@ _OPERATOR_HTML = """<!doctype html>
       el("perf-strategy-return").textContent = fmtMaybePct(payload.strategy_total_return);
       el("perf-account-nav").textContent = fmtMaybeMoney(payload.latest_account_nav_cnh);
       el("perf-account-return").textContent = fmtMaybePct(payload.account_total_return);
-      el("performance-warnings").textContent = (payload.warnings || []).join("\\n");
+      renderPerformanceDiagnostics(payload.warnings || []);
       const strategyAll = normalizedPerformanceSeries(payload.strategy || []);
       const accountAll = normalizedPerformanceSeries(payload.account || []);
       const extent = performanceExtent(strategyAll, accountAll);
@@ -1289,13 +1296,23 @@ _OPERATOR_HTML = """<!doctype html>
       finally { livePnlLoading = false; }
     }
 
+    function renderPerformanceDiagnostics(messages) {
+      // Older complete publications may still contain one warning per snapshot.
+      const repeated = messages.filter(message => message.startsWith("Ignored backdated account observation:"));
+      const notes = [...new Set(messages.filter(message => !message.startsWith("Ignored backdated account observation:")))];
+      if (repeated.length) notes.push(`Excluded ${repeated.length} backdated account observations from performance. Original evidence is retained.`);
+      el("performance-diagnostics-summary").textContent = `Performance notes and data checks (${notes.length})`;
+      el("performance-warnings").textContent = notes.join("\\n\\n");
+    }
+
     function renderPnl(payload, history) {
       const warnings = [...(payload.warnings || [])];
+      if (payload.as_of) warnings.unshift(`Daily accounting through ${String(payload.as_of).slice(0,10)} close (New York).`);
       if (payload.baseline_cutoff_at) warnings.push(`Accounting baseline cutoff: ${new Intl.DateTimeFormat('en-GB',{timeZone:'America/New_York',dateStyle:'medium',timeStyle:'medium',hourCycle:'h23'}).format(new Date(payload.baseline_cutoff_at))} New York.`);
       if (!payload.valuation_complete) warnings.push("PnL valuation is incomplete because one or more symbols could not be marked.");
       el("pnl-warnings").textContent = warnings.join("\\n");
       renderPnlTable(payload.symbols || []);
-      const points = [...(history || [])].map(p=>({...p,as_of:String(p.as_of).slice(0,10)})).sort((a, b) => Date.parse(a.as_of) - Date.parse(b.as_of));
+      const points = [...(history || [])].filter(p=>p.valuation_complete!==false).map(p=>({...p,as_of:String(p.as_of).slice(0,10)})).sort((a, b) => Date.parse(a.as_of) - Date.parse(b.as_of));
       if (!points.length) {
         el("pnl-chart").innerHTML = '<div class="empty">No saved PnL snapshots</div>';
         el("pnl-legend").innerHTML = "";
@@ -1306,14 +1323,22 @@ _OPERATOR_HTML = """<!doctype html>
     }
 
     function renderExecutionQuality(payload) {
-      if(payload.valuation_complete===false) payload={...payload,actual_pnl_cnh:null,theoretical_pnl_cnh:null,execution_gain_cnh:null,execution_gain_bps:null,history:[],slippage:[]};
-      el("exec-theoretical-pnl").textContent = fmtSignedMoney(payload.theoretical_pnl_cnh);
-      el("exec-actual-pnl").textContent = fmtSignedMoney(payload.actual_pnl_cnh);
-      el("exec-gain").textContent = fmtSignedMoney(payload.execution_gain_cnh);
-      el("exec-bps").textContent = fmtMaybeBps(payload.execution_gain_bps);
+      const latest = [...(payload.history || [])].sort((a,b)=>Date.parse(a.as_of)-Date.parse(b.as_of)).at(-1);
+      const summary = payload.valuation_complete === false
+        ? (latest ? {...latest,execution_gain_bps:null} : {}) : payload;
+      const day = summary.as_of ? String(summary.as_of).slice(0,10) : null;
+      el("execution-quality-as-of").textContent = day
+        ? `Through ${day} close · CNH${payload.valuation_complete === false ? " · last complete valuation" : ""}`
+        : "Daily attribution awaiting complete marks";
+      el("exec-theoretical-pnl").textContent = fmtSignedMoney(summary.theoretical_pnl_cnh);
+      el("exec-actual-pnl").textContent = fmtSignedMoney(summary.actual_pnl_cnh);
+      el("exec-gain").textContent = fmtSignedMoney(summary.execution_gain_cnh);
+      el("exec-bps").textContent = fmtMaybeBps(summary.execution_gain_bps);
       el("exec-missed-count").textContent = payload.missed_order_count || 0;
       el("exec-missed-notional").textContent = fmtMoney(payload.missed_notional_cnh);
-      el("execution-quality-warnings").textContent = (payload.warnings || []).join("\\n");
+      const warnings = [...(payload.warnings || [])];
+      if (payload.valuation_complete === false) warnings.unshift(`Valuation for ${String(payload.as_of).slice(0,10)} is incomplete. ${day ? `Totals retain ${day};` : "No complete totals yet;"} recorded execution slippage remains available below.`);
+      el("execution-quality-warnings").textContent = warnings.join("\\n");
       const currentPoint = {
         as_of: String(payload.as_of).slice(0,10),
         actual_pnl_cnh: payload.actual_pnl_cnh,
@@ -1427,6 +1452,7 @@ _OPERATOR_HTML = """<!doctype html>
           <text x="${width - pad.right - 70}" y="${height - 8}" fill="#657083" font-size="11">${esc(endDate)}</text>
           ${valid.length > 1 ? `<path class="actual-line" d="${pathFor("actual")}"></path>` : ""}
           ${valid.length > 1 ? `<path class="theoretical-line" d="${pathFor("theoretical")}"></path>` : ""}
+          ${valid.map(point => `<circle cx="${x(point.as_of).toFixed(2)}" cy="${y(point.actual).toFixed(2)}" r="3.5" fill="#7c4a03"><title>${esc(point.as_of)} stored-price PnL ${fmtSignedMoney(point.actual)}</title></circle><circle cx="${x(point.as_of).toFixed(2)}" cy="${y(point.theoretical).toFixed(2)}" r="3.5" fill="#2563eb"><title>${esc(point.as_of)} reference-fill PnL ${fmtSignedMoney(point.theoretical)}</title></circle>`).join("")}
         </svg>
       `;
     }
@@ -1946,7 +1972,7 @@ _STRATEGIES_HTML = """<!doctype html><html lang="en"><head><meta charset="utf-8"
 <style>:root{--bg:#f6f7f9;--panel:#fff;--text:#1d2433;--muted:#667085;--line:#d9dee7;--focus:#2456a6;--good:#087f5b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px Inter,Segoe UI,Arial,sans-serif}header{height:56px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--line)}h1,h2{margin:0;letter-spacing:0}h1{font-size:18px}h2{font-size:15px}.actions,.segments{display:flex;gap:8px;align-items:center}.button,button{min-height:32px;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--text);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}.segments button.active{background:#e9f0fb;border-color:#b8c7e6;color:#183b73;font-weight:650}main{padding:16px 18px 28px}.panel{background:#fff;border:1px solid var(--line);border-radius:7px;overflow:hidden}.head{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;justify-content:space-between}.note{color:var(--muted);font-size:12px}.table-wrap{overflow:auto;max-height:calc(100vh - 170px)}table{border-collapse:collapse;width:100%;font-size:12px}th,td{padding:10px;border-bottom:1px solid #edf0f4;text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#f8fafc;color:var(--muted)}td.num,th.num{text-align:right}.strategy-link{border:0;padding:0;min-height:0;background:transparent;color:var(--focus);font-weight:650}.strategy-link:hover{text-decoration:underline}.badge{display:inline-block;margin-left:6px;padding:2px 6px;border:1px solid #c7cdd6;border-radius:999px;color:#667085;font-size:10px}.badge.sota,.badge.monitored{border-color:#9cd6cd;background:#ecf9f6;color:var(--good)}@media(max-width:700px){header{height:auto;align-items:flex-start;flex-direction:column;padding:10px 12px}.actions{width:100%;flex-wrap:wrap}.actions .button{flex:1 1 110px}.head{align-items:flex-start;flex-direction:column}.table-wrap{max-height:none}}</style></head>
 <body><header><h1>Strategies</h1><div class="actions"><a class="button" href="/operator">Trading</a><a class="button" href="/strategies">Strategies</a><a class="button" href="/platform">System</a><a class="button" href="/platform/market-data-audit">Market Data</a></div></header>
 <main><section class="panel"><div class="head"><div><h2>Strategy Registry</h2><div id="catalog-note" class="note">Loading strategy artifacts</div></div><div class="segments"><button class="active" data-lifecycle="monitored">Monitored <span id="monitored-count">0</span></button><button data-lifecycle="archived">Archived <span id="archived-count">0</span></button></div></div><div class="table-wrap"><table><thead><tr><th>Strategy</th><th>Lifecycle</th><th>Artifact End</th><th>Data Through</th><th class="num">Return</th><th class="num">Ann. Return</th><th class="num">Sharpe</th><th class="num">Max DD</th></tr></thead><tbody id="strategy-list"></tbody></table></div></section></main>
-<script>const state={items:[],lifecycle:"monitored"};const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const pct=v=>v==null?"n/a":`${(Number(v)*100).toFixed(2)}%`;const ratio=v=>v==null?"n/a":Number(v).toFixed(2);function render(){const items=state.items.filter(x=>x.lifecycle===state.lifecycle);document.getElementById("strategy-list").innerHTML=items.length?items.map(item=>`<tr><td><button class="strategy-link" data-id="${esc(item.strategy_id)}" data-strategy-lifecycle="${esc(item.lifecycle)}">${esc(item.name)}</button>${item.is_sota?'<span class="badge sota">SOTA</span>':''}${item.app_tracking&&!item.is_sota?'<span class="badge">Tracked · not promoted</span>':''}<div class="note">${esc(item.strategy_id)}</div></td><td><span class="badge ${esc(item.lifecycle)}">${esc(item.lifecycle)}</span></td><td>${esc(item.artifact_end_date)}</td><td>${esc(item.end_date)}</td><td class="num">${pct(item.total_return)}</td><td class="num">${pct(item.annualized_return)}</td><td class="num">${ratio(item.sharpe)}</td><td class="num">${pct(item.max_drawdown)}</td></tr>`).join(""):'<tr><td colspan="8" class="note">No strategies in this lifecycle.</td></tr>';document.querySelectorAll(".strategy-link").forEach(button=>button.onclick=()=>location.href=button.dataset.strategyLifecycle==="monitored"?`/api/v1/strategies/${encodeURIComponent(button.dataset.id)}/report`:`/strategies/${encodeURIComponent(button.dataset.id)}`);document.querySelectorAll("[data-lifecycle]").forEach(button=>button.classList.toggle("active",button.dataset.lifecycle===state.lifecycle))}document.querySelectorAll("[data-lifecycle]").forEach(button=>button.onclick=()=>{state.lifecycle=button.dataset.lifecycle;render()});fetch("/api/v1/strategies").then(r=>r.json()).then(payload=>{state.items=payload.strategies||[];document.getElementById("monitored-count").textContent=state.items.filter(x=>x.lifecycle==="monitored").length;document.getElementById("archived-count").textContent=state.items.filter(x=>x.lifecycle==="archived").length;document.getElementById("catalog-note").textContent=payload.monitoring_notes||payload.theoretical_performance_source;render()}).catch(error=>document.getElementById("catalog-note").textContent=`Catalog error: ${error.message}`);</script></body></html>"""
+<script>const state={items:[],lifecycle:"monitored"};const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const pct=v=>v==null?"n/a":`${(Number(v)*100).toFixed(2)}%`;const ratio=v=>v==null?"n/a":Number(v).toFixed(2);function render(){const items=state.items.filter(x=>x.lifecycle===state.lifecycle);document.getElementById("strategy-list").innerHTML=items.length?items.map(item=>`<tr><td><button class="strategy-link" data-id="${esc(item.strategy_id)}" data-strategy-lifecycle="${esc(item.lifecycle)}">${esc(item.name)}</button>${item.is_sota?'<span class="badge sota">SOTA</span>':''}${item.app_tracking&&!item.is_sota?'<span class="badge">Tracked · not promoted</span>':''}<div class="note">${esc(item.strategy_id)}</div></td><td><span class="badge ${esc(item.lifecycle)}">${esc(item.lifecycle)}</span></td><td>${esc(item.artifact_end_date)}</td><td>${esc(item.end_date)}</td><td class="num">${pct(item.total_return)}</td><td class="num">${pct(item.annualized_return)}</td><td class="num">${ratio(item.sharpe)}</td><td class="num">${pct(item.max_drawdown)}</td></tr>`).join(""):'<tr><td colspan="8" class="note">No strategies in this lifecycle.</td></tr>';document.querySelectorAll(".strategy-link").forEach(button=>button.onclick=()=>location.href=button.dataset.strategyLifecycle==="monitored"?`/api/v1/strategies/${encodeURIComponent(button.dataset.id)}/report`:`/strategies/${encodeURIComponent(button.dataset.id)}`);document.querySelectorAll("[data-lifecycle]").forEach(button=>button.classList.toggle("active",button.dataset.lifecycle===state.lifecycle))}document.querySelectorAll("[data-lifecycle]").forEach(button=>button.onclick=()=>{state.lifecycle=button.dataset.lifecycle;render()});async function refreshCatalog(){try{const response=await fetch("/api/v1/strategies",{cache:"no-store"});if(!response.ok)throw new Error(response.statusText);const payload=await response.json();state.items=payload.strategies||[];document.getElementById("monitored-count").textContent=state.items.filter(x=>x.lifecycle==="monitored").length;document.getElementById("archived-count").textContent=state.items.filter(x=>x.lifecycle==="archived").length;document.getElementById("catalog-note").textContent=[payload.monitoring_notes||payload.theoretical_performance_source,...(payload.warnings||[])].filter(Boolean).join(" ");render()}catch(error){document.getElementById("catalog-note").textContent=`Catalog error: ${error.message}`}finally{window.setTimeout(refreshCatalog,15000)}}refreshCatalog();</script></body></html>"""
 
 
 _STRATEGY_DETAIL_HTML = """<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Strategy Detail</title>

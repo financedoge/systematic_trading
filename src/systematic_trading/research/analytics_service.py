@@ -11,6 +11,7 @@ from systematic_trading.research.analytics_projection import (
     publish_strategies, publish_dashboard, import_account_histories,
 )
 from systematic_trading.research.tracked_runtime import refresh_tracked_strategies
+from systematic_trading.research.tracked_freshness import freshness, refresh_tracked_fx
 
 
 def import_raw_market_data(settings, analytics):
@@ -68,8 +69,10 @@ class AnalyticsService:
         self._wake = Event()
         self._thread = None
         self._account_thread = None
+        self._archive_thread = None
         self._lane_errors = {}
         self._status = {"running": False, "last_completed_at": None, "errors": {}}
+        self._strategy_inputs = {}
 
     def status(self):
         compute = None
@@ -80,17 +83,27 @@ class AnalyticsService:
         with self._lock:
             research = bool(self._thread and self._thread.is_alive())
             operations = bool(self._account_thread and self._account_thread.is_alive())
+            archives = bool(self._archive_thread and self._archive_thread.is_alive())
             completed = self._status.get("operations_completed_at")
             stale = not completed or (datetime.now(UTC) - datetime.fromisoformat(completed)).total_seconds() > max(300, self.settings.analytics_refresh_seconds * 3)
+            started = self._status.get("research_job_started_at") or self._status.get("research_completed_at")
+            budget = 7200 if self._status.get("research_job") == "tracked-strategies" else max(900, self.settings.analytics_refresh_seconds * 3)
+            research_stale = bool(started and (datetime.now(UTC) - datetime.fromisoformat(started)).total_seconds() > budget)
+            archive_started = self._status.get("archives_job_started_at") or self._status.get("archives_completed_at")
+            archives_stale = bool(archive_started and (datetime.now(UTC) - datetime.fromisoformat(archive_started)).total_seconds() > max(3600, self.settings.analytics_refresh_seconds * 3))
             return {**self._status, "running": research and operations,
+                    **freshness(self._strategy_inputs),
                     "research_running": research, "operations_running": operations,
-                    "operations_stale": stale, "compute": compute}
+                    "archives_running": archives, "archives_stale": archives_stale,
+                    "operations_stale": stale, "research_stale": research_stale, "compute": compute}
 
     def start(self):
         self._thread = Thread(target=self._run, args=("research",), name="analytics-research", daemon=True)
         self._account_thread = Thread(target=self._run, args=("operations",), name="analytics-operations", daemon=True)
+        self._archive_thread = Thread(target=self._run, args=("archives",), name="analytics-archives", daemon=True)
         self._account_thread.start()
         self._thread.start()
+        self._archive_thread.start()
 
     def stop(self):
         self._stop.set()
@@ -99,17 +112,24 @@ class AnalyticsService:
             self._thread.join(timeout=5)
         if self._account_thread:
             self._account_thread.join(timeout=5)
+        if self._archive_thread:
+            self._archive_thread.join(timeout=5)
 
-    def request_refresh(self):
+    def request_refresh(self, *, reason="operator"):
+        with self._lock:
+            self._status.update(refresh_requested_at=datetime.now(UTC).isoformat(), refresh_reason=reason)
         self._wake.set()
         return {"queued": True, "owner": "application"}
 
     def refresh(self, lane="all"):
         self.analytics.initialize()
+        if lane in {"all", "research"}:
+            self._load_strategy_freshness()
         errors, changed = {}, []
         root = self.settings.data_dir
         jobs = [
             ("governed-publication", lambda: self._refresh_governed()),
+            ("strategy-fx", lambda: refresh_tracked_fx(self.settings, self.store)),
             ("tracked-strategies", lambda: refresh_tracked_strategies(self.settings, self.store, self.analytics)),
             ("strategy-serving", lambda: publish_strategies(self.settings, self.store, self.analytics)),
             ("research-history", lambda: import_json_group(self.analytics, "research-history",
@@ -124,10 +144,13 @@ class AnalyticsService:
             ("lean-history", lambda: import_lean_histories(self.analytics, self.store)),
             ("market-raw", lambda: import_raw_market_data(self.settings, self.analytics)),
         ]
-        research = {"governed-publication", "tracked-strategies", "strategy-serving", "research-history", "lean-history"}
-        jobs.sort(key=lambda item: item[0] in research)
+        research = {"governed-publication", "strategy-fx", "tracked-strategies", "strategy-serving"}
+        archives = {"research-history", "lean-history", "market-raw"}
+        def owner(name):
+            return "research" if name in research else "archives" if name in archives else "operations"
+        jobs.sort(key=lambda item: {"operations": 0, "research": 1, "archives": 2}[owner(item[0])])
         for name, job in jobs:
-            if lane != "all" and ((name in research) != (lane == "research")):
+            if lane != "all" and owner(name) != lane:
                 continue
             if self._stop.is_set():
                 break
@@ -136,38 +159,61 @@ class AnalyticsService:
             try:
                 with self._lock:
                     self._status[lane + "_job"] = name
-                    if lane != "operations":
+                    self._status[lane + "_job_started_at"] = datetime.now(UTC).isoformat()
+                    if lane in {"all", "research"}:
                         self._status["current_job"] = name
                 if job():
                     changed.append(name)
+                # Clear a recovered dependency as soon as it succeeds, even
+                # while the subsequent native calculations are still running.
+                with self._lock:
+                    self._lane_errors.get(lane, {}).pop(name, None)
+                    self._status["errors"] = {k:v for values in self._lane_errors.values() for k,v in values.items()}
+                if name in {"tracked-strategies", "strategy-serving"}:
+                    self._load_strategy_freshness()
             except Exception as exc:
                 errors[name] = str(exc)
+                with self._lock:
+                    self._lane_errors[lane] = dict(errors)
+                    self._status["errors"] = {k:v for values in self._lane_errors.values() for k,v in values.items()}
                 # Never fall through to the legacy static SOTA marks if a
                 # required monitored calculation failed on this refresh.
                 # Other account/execution/raw-data projections can still refresh.
+        if lane in {"all", "research"}:
+            self._load_strategy_freshness()
         with self._lock:
             self._lane_errors[lane] = errors
             self._status.update(last_completed_at=datetime.now(UTC).isoformat(),
                 errors={k:v for values in self._lane_errors.values() for k,v in values.items()}, changed=changed)
             self._status[lane + "_completed_at"] = datetime.now(UTC).isoformat()
             self._status.pop(lane + "_job", None)
-            if lane != "operations":
+            self._status.pop(lane + "_job_started_at", None)
+            if lane in {"all", "research"}:
                 self._status.pop("current_job", None)
         return self.status()
 
+    def _load_strategy_freshness(self):
+        saved = self.analytics.latest("tracked-strategies/calculations")
+        serving = self.analytics.latest("strategy-serving")
+        inputs = json.loads(saved["provenance"]).get("inputs", {}) if saved else {}
+        with self._lock:
+            self._strategy_inputs = inputs
+            self._status["strategy_serving_version"] = serving["version"] if serving else None
+
     def _run(self, lane):
         while not self._stop.is_set():
+            if lane == "research":
+                self._wake.clear()
             try:
                 self.refresh(lane)
             except Exception as exc:
                 with self._lock:
                     self._lane_errors[lane] = {lane + "_worker": str(exc)}
                     self._status["errors"] = {k:v for values in self._lane_errors.values() for k,v in values.items()}
-            if lane == "operations":
-                self._stop.wait(self.settings.analytics_refresh_seconds)
+            if lane != "research":
+                self._stop.wait(max(300, self.settings.analytics_refresh_seconds) if lane == "archives" else self.settings.analytics_refresh_seconds)
             else:
                 self._wake.wait(self.settings.analytics_refresh_seconds)
-                self._wake.clear()
 
     def _refresh_governed(self):
         if not self.settings.governed_refresh_enabled:

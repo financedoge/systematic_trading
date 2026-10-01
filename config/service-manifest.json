@@ -37,11 +37,12 @@
         "ST_MARKET_DATA_STORE_BACKEND": "clickhouse"
       },
       "restart_policy": {
-        "mode": "manual",
+        "mode": "on_missing_with_backoff",
         "max_restarts": 0
       },
       "depends_on": [],
-      "notes": "Started by scripts/start_operator_dashboard.ps1."
+      "notes": "Started by scripts/start_operator_dashboard.ps1.",
+      "supervised_by": "local_recovery"
     },
     {
       "service_id": "event_outbox_dispatcher",
@@ -82,13 +83,14 @@
         "ST_TRANSACTIONAL_STORE_BACKEND": "postgres"
       },
       "restart_policy": {
-        "mode": "manual",
+        "mode": "on_missing_with_backoff",
         "max_restarts": 0
       },
       "depends_on": [
         "nats_jetstream"
       ],
-      "notes": "Started by scripts/start_operator_dashboard.ps1 unless -DisableEventDispatcher is passed. Recommended local platform startup publishes to NATS."
+      "notes": "Started by scripts/start_operator_dashboard.ps1 unless -DisableEventDispatcher is passed. Recommended local platform startup publishes to NATS.",
+      "supervised_by": "local_recovery"
     },
     {
       "service_id": "trading_management_loop",
@@ -291,13 +293,14 @@
         "ST_MARKET_DATA_STORE_BACKEND": "clickhouse"
       },
       "restart_policy": {
-        "mode": "manual",
+        "mode": "on_missing_with_backoff",
         "max_restarts": 0
       },
       "depends_on": [
         "event_outbox_dispatcher"
       ],
-      "notes": "Always-on scheduled worker. The initial five-symbol universe is a recorder pilot, not the investible universe. It idles outside regular US equity hours, uses historical gap-fill only after a failed stream chunk, and currently aggregates timestamped IB delayed trades into 5-second bars because reqRealTimeBars API entitlements are unavailable. Delayed data is never eligible for trading decisions."
+      "notes": "Always-on scheduled worker. The initial five-symbol universe is a recorder pilot, not the investible universe. It idles outside regular US equity hours, uses historical gap-fill only after a failed stream chunk, and currently aggregates timestamped IB delayed trades into 5-second bars because reqRealTimeBars API entitlements are unavailable. Delayed data is never eligible for trading decisions.",
+      "supervised_by": "local_recovery"
     },
     {
       "service_id": "analytics",
@@ -332,6 +335,32 @@
         "kind": "none"
       },
       "notes": "Runtime state is reported by the operator health endpoint."
+    },
+    {
+      "service_id": "local_recovery",
+      "display_name": "Local service recovery",
+      "service_type": "worker",
+      "implementation_status": "active",
+      "required": false,
+      "startup_order": 70,
+      "command": [
+        ".venv/Scripts/python.exe",
+        "scripts/local_recovery.py",
+        "run"
+      ],
+      "pid_file": "var/run/local_recovery.pid",
+      "stdout_log": "var/log/local_recovery.out.log",
+      "stderr_log": "var/log/local_recovery.err.log",
+      "health_check": {
+        "kind": "state_file",
+        "target": "var/run/local_recovery.state.json",
+        "stale_after_seconds": 300
+      },
+      "restart_policy": {
+        "mode": "local_platform_start",
+        "max_restarts": 0
+      },
+      "notes": "Started with the local platform. Checks desired services every 30 seconds; retries guarded startup with persisted bounded backoff. Explicit stops are honored. Broker login, reconciliation breaks, corrupt data and live authority are never bypassed."
     }
   ]
 }

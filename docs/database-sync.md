@@ -1,161 +1,102 @@
-# Two-PC database handoff through the NAS
+# Optional NAS backups and PC handoff
 
-The standard local platform launchers use `config/database-sync.json` and
-`\\192.168.1.32\Public\systematic-trading`. PostgreSQL and the configured SQLite
-files stay on local disks. The NAS holds immutable snapshots, checksums, the
-current snapshot pointer and a persistent owner record. Only one workspace may
-own the handoff. This is sequential PC switching, not multi-master replication.
+The platform runs on local PostgreSQL, ClickHouse and local files. NAS access is
+optional. Standard start/stop scripts work away from home; the dashboard launcher
+checks local restore safety without contacting NAS or requiring a backup worker.
 
-## First use and switching PCs
+`config/database-sync.json` selects `optional: true` and
+`conflict_policy: latest_snapshot`. The destination remains
+`\\192.168.1.32\Public\systematic-trading`. Set `enabled: false` to disable backups.
+Old configurations without `optional` retain strict single-owner behavior; update
+both PCs to the same policy/code.
 
-### Prepared handoff: 2026-09-25
-
-The WD My Cloud holds a verified PostgreSQL/SQLite snapshot at
-`\\192.168.1.32\Public\systematic-trading\snapshots\218c1db999494848abcfaf47944e5a35`.
-The current `latest.json` points to it, and ownership was released for the next
-PC. A disposable PostgreSQL restore matched all 14 source tables by row counts
-and normalized content hashes; SQLite's 12 tables passed integrity and logical
-content checks. The verification report is at
-`\\192.168.1.32\Public\systematic-trading\verification\218c1db999494848abcfaf47944e5a35.json`.
-Use `latest.json` rather than hard-coding this historical snapshot for subsequent
-handoffs. The old PC's application services remain stopped.
-
-On the new Windows PC, pull this code and create a local environment if needed:
+## Daily operation
 
 ```powershell
-git pull --ff-only
-py -3.12 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -e ".[ib,queue]" tzdata
-if (-not (Test-Path .env)) { Copy-Item .env.example .env }
+.\scripts\start_local_platform.ps1
+.\scripts\stop_local_platform.ps1 -KeepInfrastructure
 ```
 
-Provision PostgreSQL and its roles as described below, configure local `.env`
-credentials, install/start Docker Desktop, and configure paper TWS/IB Gateway.
-Then run `scripts/start_local_platform.ps1`. The snapshot restores automatically
-into an empty local PostgreSQL database and the configured SQLite path. This
-backup does not include ClickHouse: follow the separate market-data migration
-notes below before expecting complete charts or paper-execution readiness.
+Preparation, five-minute backups and shutdown first create a local checkpoint.
+When NAS is unavailable, services continue and the next backup retries. UNC paths
+receive a two-second SMB TCP connection probe before filesystem access. A backup
+worker startup failure is a warning in optional mode.
 
-1. On the existing PC, stop the platform with `scripts/stop_local_platform.ps1
-   -KeepInfrastructure`, then start with `scripts/start_local_platform.ps1`.
-   Close other database clients and research scripts first. The first start
-   publishes the existing local databases when the NAS has no history.
-2. Before switching PCs, run `scripts/stop_local_platform.ps1 -KeepInfrastructure`
-   and wait for success. This stops application writers and the backup worker,
-   publishes a final verified snapshot, and releases NAS ownership.
-3. On the other PC, clone the same code revision, install the Python dependencies
-   and local infrastructure, configure its local `.env`, then run
-   `scripts/start_local_platform.ps1`. A new empty database receives the latest
-   snapshot before application services start. A previously used workspace is
-   updated only if its databases still match its last clean handoff.
-
-Do not copy `var/database-sync` or `var/run` between PCs. They contain local
-identity, checkpoints and process state. Credentials and `.env` are never copied
-to the NAS. Both PCs must use the same database name and SQLite path list. Add
-additional SQLite files explicitly to `sqlite_paths`; files are not discovered
-from arbitrary directories. The configured `ST_DATABASE_PATH` must be included.
-
-### PostgreSQL provisioning on a new PC
-
-Install a compatible PostgreSQL server and clients (the same major version as
-the source is recommended). Create an **empty dedicated** `systematic_trading`
-database owned by `st_owner`; create the project roles `st_app`, `st_migrator`
-and `st_readonly`, with `st_migrator` allowed to `SET ROLE st_owner`. Configure
-their local passwords securely. Set `ST_POSTGRES_MIGRATOR_PASSWORD` and
-`ST_POSTGRES_APP_PASSWORD` in the local `.env` (legacy password aliases also work).
-The sync uses the migrator with the owner role for dump/restore. Database roles,
-passwords and PostgreSQL server installation are not part of a database dump.
-Do not initialize application tables on the new PC before the first restore.
-
-`pg_dump`/`psql` are discovered on PATH or under `C:/Program Files/PostgreSQL`;
-set `postgres_bin` in the sync config for another install location. PostgreSQL
-must be local. Its database name is part of the snapshot layout contract.
-Restores replace **all user schemas** in this dedicated database, including
-objects deleted on the other PC, in one transaction. Restore errors roll back
-that transaction. Existing unmanaged databases are refused before any restore.
-
-## Backups and operational behavior
-
-- A background worker snapshots every 300 seconds. Configure `interval_seconds`
-  to change the interval (minimum 30 seconds).
-- SQLite uses its online backup API, including committed WAL contents, followed
-  by an integrity check. PostgreSQL uses a consistent logical `pg_dump`.
-- Each snapshot is copied from local staging, read back and checked with SHA-256.
-  `latest.json` advances only after all files and the manifest are complete.
-- Online PostgreSQL and SQLite backups are individually consistent; they are not
-  one distributed transaction. The final stopped-service snapshot is the handoff.
-- Existing data is snapshotted under `var/database-sync/before-restore-*` before
-  replacement. An interrupted multi-database restore stays blocked for recovery.
-- Snapshots are retained without automatic deletion. Plan NAS capacity for full
-  snapshots at the selected interval; archive/prune older generations deliberately,
-  keeping `latest.json`'s target and any generation needed for recovery.
-- NAS unavailability blocks startup and clean handoff. During an active session,
-  failed periodic backups record an error and retry on the next interval. Local
-  services continue and ownership remains reserved; the other PC cannot take over.
-- Ownership never expires automatically. A crashed/disconnected PC cannot cause
-  a second PC to silently start from an old snapshot.
-
-Inspect status and the backup worker's last result:
+Two recent checkpoints remain under `var/database-sync/checkpoints`. Explicit
+`before-restore-*` rollback copies and immutable NAS generations are retained
+separately. Inspect `var/run/database_sync.state.json` and worker logs. `local_only`
+means NAS has not confirmed the local state; its checkpoint/error fields distinguish
+successful local checkpoints from local backup failures. The original local
+database remains available in either case.
 
 ```powershell
 .\.venv\Scripts\python.exe scripts/sync_databases.py status
 Get-Content var/run/database_sync.state.json
 ```
 
-The worker logs are in `var/log/database_sync.*.log`. Use the standard platform
-start/stop scripts for handoffs. The standalone dashboard launcher verifies NAS
-ownership and the worker; direct Python/research commands are not a distributed
-lock enforcement boundary. Never run writers on the inactive PC. Stop/restart
-through the platform scripts after changing the sync configuration.
+## Latest revision wins
 
-For a deliberately independent installation, set `enabled` to `false` in the
-sync config **only after a clean handoff**. Disabling it bypasses NAS coordination
-and does not make concurrent trading safe. Paper/live gates are unchanged.
+The newer complete database generation wins as requested by the operator. Revision
+time is the UTC time when the snapshot process observes a changed logical database
+fingerprint. Unchanged backups retain that time; copying an old PC does not make
+unchanged data newer. Equal times are ordered by node ID. Keep PC clocks synchronized.
+These are observed snapshot revisions, not per-row transaction timestamps.
 
-## Conflicts and crash recovery
+An empty new workspace receives the verified NAS generation. Newer local changes
+publish on reconnect. Newer remote changes restore during startup while local
+services are stopped. A running worker never replaces an active database: it
+records `newer_remote_pending_restart`. Local changes observed subsequently receive
+a new revision under the same policy.
 
-A changed local database, another owner, changed NAS history, corrupt snapshot,
-layout mismatch or interrupted restore blocks automatic replacement. Keep both
-copies and inspect them; there is no last-write-wins or row merge for approvals,
-orders or audit records. Logical fingerprints can conservatively flag differences
-after a PostgreSQL version change or physical row reordering.
+There is no row-level merge. The losing local generation is retained before
+replacement; previous NAS generations remain available. The cross-PC
+`operation.lock` serializes comparison/publication and a local OS file lock
+serializes checkpoint writers. Busy/stale NAS locks defer sync without preventing
+local operation. Latest-generation selection does not make simultaneous trading
+on disconnected PCs safe: operate one trading PC at a time and retain normal
+broker reconciliation and approval checks.
 
-If the owner PC restarts after an ordinary crash, stop any remaining local
-services and backup worker, then use the normal startup. It resumes its local
-active databases without restoring over newer changes. A stale `operation.lock`
-requires operator review: verify no sync process is running on either PC before
-removing that empty lock directory. Never delete `owner.json` just because a PC
-is unreachable. Recover the owner and complete a clean stop whenever possible.
+Do not copy `var/database-sync` or `var/run` between PCs: these hold local identity,
+checkpoints and process state. Credentials and `.env` never go to NAS. Both PCs
+must use the same database name and SQLite path list. `ST_DATABASE_PATH` must
+remain included in `sqlite_paths`.
 
-If a restore was interrupted (`phase: restoring`) or the NAS head advanced but
-the local checkpoint could not be saved, startup remains blocked. Preserve the
-NAS snapshot and local `before-restore-*` copies and reconcile the checkpoints
-with the actual database contents before resetting state. Cross-database rollback
-and forced takeover are intentionally not automatic.
+## Verification and recovery
 
-## What still needs separate migration
+SQLite uses its online backup API, including committed WAL data, plus integrity
+checks. PostgreSQL uses a consistent logical `pg_dump`. These are individually
+consistent; final checkpoints run after application writers stop. SHA-256 readback
+precedes atomic publication of `latest.json`. Snapshot IDs, layout, allowed files
+and analytical prerequisites are verified before restore. Failed verification
+defers sync and preserves local data.
 
-New snapshots include a versioned `dependencies` receipt covering configured model/FX inputs, tracked calculation artifacts, hash-verified governed roots and current ClickHouse publication versions. Incoming restore validates this receipt **before** changing the databases or NAS ownership. Missing files, changed hashes, a different analytical namespace or absent publication revisions stop restore with the offending prerequisite. Legacy SQL-only snapshots cannot establish ClickHouse recovery readiness and are blocked for a ClickHouse-configured incoming workstation until the source makes a new backup.
+PostgreSQL restore replaces all user schemas in the dedicated database inside
+one transaction. Interrupted multi-database restore remains a hard local integrity
+block (`phase: restoring`). Preserve rollback copies and recover local databases
+before starting services; never bypass it by deleting checkpoint state.
 
-This inventory verifies separately restored prerequisites; it does not package ClickHouse or the immutable artifact trees into the SQL snapshot. Recorded paths must resolve on the destination. See [connection repairs](app-connection-repairs-2026-09-28.md) for the scope and verification evidence.
+NAS generations are not automatically pruned. Plan capacity for full snapshots.
+A stale NAS `operation.lock` may be removed only after verifying neither PC is
+synchronizing; removal is unnecessary for offline operation. Legacy `owner.json`
+is not an authority gate under the optional latest policy.
 
-This feature covers PostgreSQL and the listed SQLite databases. ClickHouse,
-NATS streams, raw recorder files, untracked research artifacts and local broker
-configuration are not included. Git transfers tracked strategy configuration;
-TWS/IB Gateway and credentials must be configured on each PC.
+## New PC prerequisites
 
-ClickHouse can be seeded from the restored SQLite data using the existing
-`scripts/sync_sqlite_daily_bars_to_clickhouse.py` and
-`scripts/sync_sqlite_fx_rates_to_clickhouse.py` commands after starting ClickHouse.
-Provider backfill can repair newer daily bars. This does not reproduce data found
-only in the original ClickHouse instance, its full provenance, or raw intraday
-history; preserve those separately before decommissioning a PC. The recorder's
-normal startup backfill is not a complete ClickHouse migration. Fresh broker
-reconciliation and current market data remain required for paper execution.
+Install compatible PostgreSQL server/client tools and a dedicated
+`systematic_trading` database with roles `st_owner`, `st_app`, `st_migrator` and
+`st_readonly`. Configure local passwords and allow the migrator to assume the owner
+role. Roles/passwords are not in SQL dumps. `pg_dump`/`psql` are discovered on PATH
+or under `C:/Program Files/PostgreSQL`; `postgres_bin` can select another location.
+Install Docker and paper Gateway separately.
 
-Implementation references: [PostgreSQL pg_dump](https://www.postgresql.org/docs/18/app-pgdump.html)
-and [SQLite online backup API](https://www.sqlite.org/backup.html).
+SQL snapshots do not contain ClickHouse or immutable model/market-data artifacts.
+Manifests retain hashes of governed roots, model/FX inputs, tracked outputs and
+ClickHouse publications. Restore these dependencies separately at the recorded
+paths before incoming SQL restore can succeed. Missing prerequisites defer that
+restore; they neither replace local data nor establish trading readiness. See
+[analytical migration](analytics-migration.md) and
+[database consolidation](database-consolidation.md).
 
-## SQLite retirement compatibility
-
-Application/research/reporting paths now default to PostgreSQL/ClickHouse. The SQLite file remains in this backup layout solely for recovery compatibility between PCs; its full content is also verified in PostgreSQL `legacy` tables. Do not remove `sqlite_paths` or bypass its guard during a normal restart. See [database consolidation](database-consolidation.md) for evidence and the pending coordinated layout-version transition.
+The administrator-only PostgreSQL directory move uses the same local restore
+safety check and clean shutdown. NAS availability is no longer a prerequisite;
+its stopped-server, copy-hash and rollback checks remain mandatory.

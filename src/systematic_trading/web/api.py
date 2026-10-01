@@ -274,12 +274,12 @@ class DashboardExecutionQuality(BaseModel):
     portfolio_context: dict = Field(default_factory=dict)
     valuation_complete: bool = True
     filled_order_count: int = 0
-    actual_pnl_cnh: Decimal
-    theoretical_pnl_cnh: Decimal
-    execution_gain_cnh: Decimal
+    actual_pnl_cnh: Decimal | None
+    theoretical_pnl_cnh: Decimal | None
+    execution_gain_cnh: Decimal | None
     execution_gain_bps: Decimal | None = None
     execution_rows_gain_cnh: Decimal = Decimal("0")
-    execution_reconciliation_difference_cnh: Decimal = Decimal("0")
+    execution_reconciliation_difference_cnh: Decimal | None = None
     filled_notional_cnh: Decimal = Decimal("0")
     filled_trade_count: int = 0
     missed_order_count: int = 0
@@ -408,10 +408,11 @@ def platform_service_graph() -> ServiceGraph:
 
 @router.get("/automation/status", response_model=TradingServiceStatus)
 def automation_status(request: Request) -> TradingServiceStatus:
+    from systematic_trading.live.management_service import scheduled_rebalance_dates
     service = getattr(request.app.state, "trading_management_service", None)
-    if service is not None:
-        return service.status()
-    return load_trading_service_status(_settings(request))
+    status = service.status() if service is not None else load_trading_service_status(_settings(request))
+    decision, trade = scheduled_rebalance_dates(datetime.now(NY).date())
+    return status.model_copy(update={"scheduled_decision_date": decision, "scheduled_trade_date": trade})
 
 
 @router.get("/data-sources", response_model=list[DataSourceManifest])
@@ -818,8 +819,9 @@ def dashboard_pnl(
     request: Request,
     as_of: date | None = Query(default=None),
 ) -> PnLSnapshot:
+    from systematic_trading.live.trading_calendar import latest_completed_us_session
     try:
-        return build_dashboard_pnl_snapshot(_store(request), as_of=as_of)
+        return build_dashboard_pnl_snapshot(_store(request), as_of=as_of or latest_completed_us_session())
     except ValueError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
 
@@ -1028,13 +1030,14 @@ def _published_strategy(request, key, *, html=False):
                 "version": publication["version"], "refresh": status}
     if html:
         from systematic_trading.web.shell import with_app_shell
-        banner = ("<div style='padding:8px;background:#edf2f7;color:#334155;font:13px sans-serif'>"
-                  f"Saved analytical report · calculated {publication['published_at']} UTC"
-                  + (" · refresh needs attention" if status.get("errors") else "") + "</div>")
+        from systematic_trading.web.strategy_refresh import report_refresh_banner
+        banner = report_refresh_banner(publication, status)
         body = with_app_shell(document["payload"], "strategies").replace("<body>", "<body>" + banner, 1)
         return HTMLResponse(body, headers={"X-Analytics-Published-At": publication["published_at"],
                                            "X-Analytics-Version": publication["version"]})
     payload = {**json.loads(document["payload"]), "analytics": metadata}
+    if status.get("strategy_stale"):
+        payload.setdefault("warnings", []).append(status["strategy_freshness_message"])
     if status.get("errors"):
         payload.setdefault("warnings", []).append("Analytical refresh needs attention; displaying the last complete saved publication. "
                                                    + "; ".join(f"{key}: {value}" for key, value in status["errors"].items()))
@@ -1104,10 +1107,12 @@ def dashboard_execution_quality(
     as_of: date | None = Query(default=None),
     history_limit: int = Query(default=60, ge=1, le=1000),
 ) -> DashboardExecutionQuality:
+    from systematic_trading.live.trading_calendar import latest_completed_us_session
     store = PnlReadView(_store(request))
+    valuation_date = as_of or latest_completed_us_session()
     try:
-        actual = build_dashboard_pnl_snapshot(store, as_of=as_of)
-        theoretical = build_reference_pnl_snapshot(store, as_of=as_of)
+        actual = build_dashboard_pnl_snapshot(store, as_of=valuation_date)
+        theoretical = build_reference_pnl_snapshot(store, as_of=valuation_date)
     except ValueError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
     rows, slippage_warnings = _execution_slippage_rows(store, as_of=actual.as_of.date())
@@ -1138,20 +1143,21 @@ def dashboard_execution_quality(
         (row.execution_gain_cnh for row in rows if row.execution_gain_cnh is not None),
         Decimal("0"),
     )
-    execution_gain = quantize_money(actual.total_pnl_cnh - theoretical.total_pnl_cnh)
-    gain_bps = _quantize_bps((execution_gain / filled_notional) * Decimal("10000")) if filled_notional > 0 else None
-    history = _pnl_comparison_history(store, history_limit)
+    complete = actual.valuation_complete and theoretical.valuation_complete
+    execution_gain = quantize_money(actual.total_pnl_cnh - theoretical.total_pnl_cnh) if complete else None
+    gain_bps = _quantize_bps((execution_gain / filled_notional) * Decimal("10000")) if complete and filled_notional > 0 else None
+    history = [point for point in _pnl_comparison_history(store, history_limit) if point.as_of <= actual.as_of]
     return DashboardExecutionQuality(
         as_of=actual.as_of,
         portfolio_context=context.model_dump(mode="json"),
-        valuation_complete=actual.valuation_complete and theoretical.valuation_complete,
+        valuation_complete=complete,
         filled_order_count=len({row.local_order_id for row in rows}),
-        actual_pnl_cnh=actual.total_pnl_cnh,
-        theoretical_pnl_cnh=theoretical.total_pnl_cnh,
+        actual_pnl_cnh=actual.total_pnl_cnh if complete else None,
+        theoretical_pnl_cnh=theoretical.total_pnl_cnh if complete else None,
         execution_gain_cnh=execution_gain,
         execution_gain_bps=gain_bps,
         execution_rows_gain_cnh=row_gain,
-        execution_reconciliation_difference_cnh=execution_gain-row_gain,
+        execution_reconciliation_difference_cnh=execution_gain-row_gain if complete else None,
         filled_notional_cnh=quantize_money(filled_notional),
         filled_trade_count=len(rows),
         missed_order_count=len(missed_records),
@@ -1789,6 +1795,8 @@ def _account_nav_points(
     daily: dict[date, LiveAccountSnapshotInput] = {}
     episode_start = portfolio_context(store).start_date
     tracking_start: date | None = episode_start
+    backdated_count = 0
+    backdated_examples: list[str] = []
     for snapshot_path, snapshot in sorted(snapshots, key=lambda item: _snapshot_capture_time(*item)):
         as_of = snapshot.as_of or _account_snapshot_date(snapshot_path)
         if as_of is None:
@@ -1796,7 +1804,9 @@ def _account_nav_points(
             continue
         if (snapshot_path.name != reset_name and snapshot.captured_at is not None
                 and utc(snapshot.captured_at).astimezone(NY).date() != as_of):
-            warnings.append(f"Ignored backdated account observation: {snapshot_path.name}.")
+            backdated_count += 1
+            if len(backdated_examples) < 3:
+                backdated_examples.append(snapshot_path.name)
             continue
         if reset_at is not None:
             if as_of < reset_day:
@@ -1809,6 +1819,12 @@ def _account_nav_points(
         if episode_start is None and any(position.quantity > 0 for position in snapshot.positions):
             tracking_start = min(tracking_start or as_of, as_of)
         daily[as_of] = snapshot
+    if backdated_count:
+        warnings.append(
+            f"Excluded {backdated_count} backdated account observations from performance; "
+            "capture dates do not match their stated sessions. Original evidence is retained. "
+            f"Examples: {', '.join(backdated_examples)}."
+        )
     points: list[tuple[date, Decimal]] = []
     for as_of, snapshot in sorted(daily.items()):
         valuation, _, _ = _value_account_snapshot(
@@ -2107,6 +2123,8 @@ def _record_trade_time(record: BrokerOrderRecord) -> datetime:
 def _pnl_comparison_history(store: TradingStore, limit: int) -> list[DashboardPnlComparisonPoint]:
     points: list[DashboardPnlComparisonPoint] = []
     for actual in _active_pnl_snapshots(store, limit):
+        if not actual.valuation_complete:
+            continue
         if actual.reference_total_pnl_cnh is not None:
             reference_total = actual.reference_total_pnl_cnh
         else:
