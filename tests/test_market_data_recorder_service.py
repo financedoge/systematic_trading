@@ -158,6 +158,42 @@ def _interrupt(*args):
     raise KeyboardInterrupt
 
 
+def test_recorder_child_timeout_is_reported_and_only_its_process_tree_is_stopped(monkeypatch, tmp_path):
+    import subprocess
+    from types import SimpleNamespace
+    service, _, _, _ = _service_harness(monkeypatch, tmp_path, "2026-09-30T14:00:00+00:00")
+    waits, kills = [], []
+    def communicate(*, timeout):
+        waits.append(timeout)
+        if len(waits) == 1:
+            raise subprocess.TimeoutExpired("fixture", timeout)
+        return "partial source log", ""
+    child = SimpleNamespace(pid=4567, communicate=communicate)
+    monkeypatch.setattr(service.subprocess, "Popen", lambda *a, **kw: child)
+    if service.os.name == "nt":
+        monkeypatch.setattr(service.subprocess, "run", lambda command, **kw: kills.append(command))
+    else:
+        monkeypatch.setattr(service.os, "killpg", lambda pid, signal: kills.append(pid))
+    result = service._bounded_child(["fixture"], timeout_seconds=420)
+    assert result.returncode == 124 and "retry scheduled" in result.stderr
+    assert waits == [420, 15]
+    assert kills == ([["taskkill", "/PID", "4567", "/T", "/F"]] if service.os.name == "nt" else [4567])
+
+
+def test_failed_daily_backfill_retries_within_five_minutes(monkeypatch, tmp_path):
+    service, clock, args, _ = _service_harness(monkeypatch, tmp_path, "2026-09-30T22:00:00+00:00")
+    calls = []
+    def backfill(**kw):
+        calls.append(clock.value)
+        if len(calls) == 2:
+            raise KeyboardInterrupt
+        return {"returncode": 124}
+    monkeypatch.setattr(service, "_run_daily_backfill_child", backfill)
+    monkeypatch.setattr(service.time, "sleep", lambda seconds: setattr(clock, "value", clock.value+timedelta(seconds=seconds)))
+    assert service.main(args) == 130
+    assert calls[1]-calls[0] <= timedelta(minutes=5)
+
+
 def _service_harness(monkeypatch, tmp_path, start):
     script = Path(__file__).resolve().parents[1] / "scripts" / "run_market_data_recorder_service.py"
     spec = importlib.util.spec_from_file_location("recorder_service_under_test", script)

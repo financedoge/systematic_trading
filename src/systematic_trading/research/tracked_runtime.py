@@ -45,7 +45,8 @@ def calculation_code_hashes():
     root = Path(__file__).resolve().parents[1]
     paths = [root / "research" / n for n in ("tracked_runtime.py", "tracked_inputs.py", "flow_concentration.py",
              "strategy_catalog.py", "sota_models.py", "chronological_tree.py", "rolling_models.py",
-             "rolling_tracking.py", "rolling_training.py", "rolling_report.py", "strategy_diagram.py", "compute.py", "calculation_worker.py")]
+             "rolling_tracking.py", "rolling_training.py", "rolling_report.py", "strategy_diagram.py", "compute.py", "calculation_worker.py", "run_recovery.py")]
+    paths.append(root / "runtime_io.py")
     paths += [p for folder in ("lean", "signals", "portfolio", "backtest")
               for p in (root / folder).glob("*.py")]
     return {str(p.relative_to(root)): sha256(p) for p in paths}
@@ -64,25 +65,45 @@ def calculation_revision(config, inputs, definitions):
 def verified_run(bundle, output, image, engine="lean", *, cpus="2", memory="4g"):
     if engine not in ("lean", "python"):
         raise ValueError("Unsupported tracked calculation engine")
+    from systematic_trading.runtime_io import exclusive_lock
+    with exclusive_lock(output.with_name(output.name + ".lock")):
+        return _verified_attempt(bundle, output, image, engine, cpus=cpus, memory=memory)
+
+
+def _verified_attempt(bundle, output, image, engine, *, cpus, memory):
+    from systematic_trading.research.run_recovery import select_attempt, record_failure
+    verify_bundle(bundle)
+    output, state_path, state = select_attempt(output, bundle, engine)
     if not (output / "run.json").exists():
-        if engine == "lean":
-            run_bundle(bundle=bundle, output=output, image=image, cpus=cpus, memory=memory)
-        else:
-            run_python_bundle(bundle=bundle, output=output)
+        try:
+            if engine == "lean":
+                run_bundle(bundle=bundle, output=output, image=image, cpus=cpus, memory=memory)
+            else:
+                run_python_bundle(bundle=bundle, output=output)
+        except Exception as exc:
+            record_failure(state_path, state, output, exc)
+            raise
     verified = verify_bundle(bundle)
     receipt = json.loads((output / "run.json").read_text(encoding="utf8"))
     if receipt["status"] != "succeeded" or receipt["manifest_sha256"] != sha256(bundle / "manifest.json"):
         raise ValueError("Tracked native run is incomplete or changed; keep last publication")
     for name, expected in receipt["artifacts"].items():
-        if sha256(output / name) != expected:
+        path = (output / name).resolve()
+        if not path.is_relative_to(output.resolve()) or sha256(path) != expected:
             raise ValueError("Tracked run artifact changed: " + name)
+    inventory = {p.relative_to(output).as_posix() for p in output.rglob("*") if p.is_file() and p.name != "run.json"}
+    if inventory != set(receipt["artifacts"]):
+        raise ValueError("Tracked run artifact inventory changed")
     if engine == "lean":
         parity = json.loads((output / "parity.json").read_text(encoding="utf8"))
         if not parity["passed"] or parity["differences"]:
             raise ValueError("Tracked LEAN parity failed")
     elif receipt.get("engine") != "python":
         raise ValueError("Python calculation receipt has a different engine")
-    return json.loads((output / "economic.json").read_text(encoding="utf8")), verified, receipt
+    from systematic_trading.runtime_io import atomic_json
+    if not state.get("complete_receipt_sha256"):
+        atomic_json(state_path, dict(state, attempt=str(output.resolve()), complete_receipt_sha256=sha256(output / "run.json")))
+    return json.loads((output / "economic.json").read_text(encoding="utf8")), verified, dict(receipt, artifact_path=str(output.resolve()))
 
 
 def report_result(economic, quotes, initial, anchor):
@@ -245,7 +266,7 @@ def _refresh_tracked_strategies(settings, store, analytics):
         bundle, output = jobs[key]
         transactional = getattr(store, "transactional_store", store)
         if transactional.__class__.__name__ == "PostgresStore" and p.get("engine", "lean") == "lean":
-            register_run(transactional, output)
+            register_run(transactional, Path(receipt["artifact_path"]))
         quotes = json.loads((bundle / "quotes.json").read_text(encoding="utf8"))
         economics[key], receipts[key], quotes_by_key[key] = economic, receipt, quotes
         results[key] = report_result(economic, quotes, p["initial_cash_cnh"], anchor)

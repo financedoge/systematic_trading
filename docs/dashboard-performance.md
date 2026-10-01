@@ -1,5 +1,26 @@
 # Dashboard performance
 
+## Daily attribution and diagnostics
+
+The Trading page defaults stored PnL and reference-fill attribution to the latest
+completed US session, using the shared holiday and early-close calendar. For
+example, during September 28's session the daily totals remain explicitly dated
+September 25. Live broker PnL continues to use its separate broker stream.
+An explicit `as_of` request retains strict dated mark/FX checks; incomplete
+attribution totals are null. Missing new valuations retain the last complete
+dated chart/summary and observed execution slippage. The chart requests up to
+100 saved snapshots and renders dots even when only the first session exists.
+
+Research limitations and performance data checks are available in a collapsed,
+scrollable disclosure. Backdated account captures are still excluded; their count
+and three examples replace hundreds of repeated lines. Original snapshots remain
+available as audit evidence. These messages describe data exclusions and research
+assumptions; broker connection failures remain in the operational status panels.
+
+The proposal queue shows the registered monthly decision and execution dates plus
+the current portfolio-alignment result. Automatic approval acts on eligible
+proposals; it does not change the monthly schedule or the drift threshold.
+
 With the default ClickHouse backend, Strategy catalog/detail/reports and account
 performance are prepared in the background and read from verified publications.
 They are not recalculated on each page load. Reports show calculation time;

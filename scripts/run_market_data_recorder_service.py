@@ -118,7 +118,9 @@ def main(argv: list[str] | None = None) -> int:
             if not args.disable_daily_backfill and _should_gap_fill(
                 now,
                 last_daily_backfill_at,
-                args.daily_backfill_interval_minutes,
+                min(5, args.daily_backfill_interval_minutes)
+                if last_daily_backfill_status and last_daily_backfill_status.get("returncode") != 0
+                else args.daily_backfill_interval_minutes,
             ):
                 _write_state(
                     state_path,
@@ -338,7 +340,7 @@ def _run_child(
         )
     started_at = datetime.now(tz=UTC)
     logger.info("recorder_service_child_starting", message="Starting recorder child capture.", mode=mode, symbols=symbols)
-    result = subprocess.run(command, cwd=REPO_ROOT, capture_output=True, text=True, check=False)
+    result = _bounded_child(command, timeout_seconds=(duration_seconds + 120) if duration_seconds is not None else 900)
     completed_at = datetime.now(tz=UTC)
     status = {
         "mode": mode,
@@ -400,7 +402,7 @@ def _run_daily_backfill_child(
         start_date=start_date,
         refresh_existing=refresh_existing,
     )
-    result = subprocess.run(command, cwd=REPO_ROOT, capture_output=True, text=True, check=False)
+    result = _bounded_child(command, timeout_seconds=900)
     completed_at = datetime.now(tz=UTC)
     status = {
         "mode": "daily_backfill",
@@ -417,6 +419,25 @@ def _run_daily_backfill_child(
         **status,
     )
     return status
+
+
+def _bounded_child(command, *, timeout_seconds):
+    """Bound acquisition children, including Windows virtualenv descendants."""
+    process = subprocess.Popen(command, cwd=REPO_ROOT, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+        creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0, start_new_session=os.name != "nt")
+    try:
+        stdout, stderr = process.communicate(timeout=timeout_seconds)
+        return subprocess.CompletedProcess(command, process.returncode, stdout, stderr)
+    except subprocess.TimeoutExpired:
+        if os.name == "nt":
+            subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"], capture_output=True,
+                           timeout=15, check=True, creationflags=subprocess.CREATE_NO_WINDOW)
+        else:
+            import signal
+            os.killpg(process.pid, signal.SIGKILL)
+        stdout, stderr = process.communicate(timeout=15)
+        return subprocess.CompletedProcess(command, 124, stdout,
+            stderr + f"\nAcquisition exceeded {timeout_seconds}s; child stopped and retry scheduled.")
 
 
 def _write_state(

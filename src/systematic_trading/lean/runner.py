@@ -142,7 +142,8 @@ def run_bundle(*, bundle: Path, output: Path, image: str, timeout_seconds=900, c
         verify_bundle(bundle)
         receipt.update(status='succeeded', economic_sha256=parity['economic_sha256'])
     except BaseException as exc:
-        receipt.update(status='failed', error=f'{type(exc).__name__}: {exc}')
+        receipt.update(status='failed', error=f'{type(exc).__name__}: {exc}',
+                       retryable=isinstance(exc, (OSError, subprocess.SubprocessError)))
         try:
             subprocess.run(['docker', 'rm', '-f', name], capture_output=True, timeout=30)
         except (OSError, subprocess.SubprocessError) as cleanup_error:
@@ -181,7 +182,8 @@ def run_python_bundle(*, bundle: Path, output: Path, timeout_seconds=900) -> dic
         receipt.update(status='succeeded', economic_sha256=sha256(output/'economic.json'),
                        validation='Python replay; no native LEAN parity claimed for this run')
     except BaseException as exc:
-        receipt.update(status='failed', error=f'{type(exc).__name__}: {exc}')
+        receipt.update(status='failed', error=f'{type(exc).__name__}: {exc}',
+                       retryable=isinstance(exc, (OSError, subprocess.SubprocessError)))
         raise
     finally:
         receipt['elapsed_seconds'] = time.perf_counter()-started

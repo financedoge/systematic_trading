@@ -5,6 +5,8 @@ param(
 $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $RepoRoot = Resolve-Path (Join-Path $ScriptDir "..")
+& (Join-Path $RepoRoot ".venv\Scripts\python.exe") (Join-Path $ScriptDir "local_recovery.py") pause recorder
+if ($LASTEXITCODE -ne 0) { throw "Could not pause recorder recovery before stopping." }
 $PidPath = Join-Path $RepoRoot "var\run\market_data_recorder.pid"
 $ChildPidPath = Join-Path $RepoRoot "var\run\market_data_recorder.child.pid"
 $StatePath = Join-Path $RepoRoot "var\run\market_data_recorder.state.json"

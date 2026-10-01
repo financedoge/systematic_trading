@@ -1,6 +1,7 @@
 param(
     [string]$HostName = "127.0.0.1",
     [int]$Port = 8000,
+    [switch]$Recovery,
     [switch]$DisableEventDispatcher,
     [int]$EventDispatcherIntervalSeconds = 5,
     [ValidateSet("jsonl", "nats")]
@@ -18,6 +19,11 @@ $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $RepoRoot = Resolve-Path (Join-Path $ScriptDir "..")
 $Python = Join-Path $RepoRoot ".venv\Scripts\python.exe"
+if (-not $Recovery) {
+    & $Python (Join-Path $ScriptDir "local_recovery.py") pause operator
+    if ($LASTEXITCODE -ne 0) { throw "Could not pause operator recovery for startup." }
+}
+try {
 $RunDir = Join-Path $RepoRoot "var\run"
 $LogDir = Join-Path $RepoRoot "var\log"
 $PidPath = Join-Path $RunDir "operator_dashboard.pid"
@@ -43,7 +49,7 @@ $env:ST_TRANSACTIONAL_STORE_BACKEND = $TransactionalStoreBackend
 $env:ST_MARKET_DATA_STORE_BACKEND = $MarketDataStoreBackend
 
 & $Python (Join-Path $ScriptDir "sync_databases.py") guard
-if ($LASTEXITCODE -ne 0) { throw "NAS handoff is not ready. Start through start_local_platform.ps1." }
+if ($LASTEXITCODE -ne 0) { throw "Database safety check failed. Inspect local restore state or start through start_local_platform.ps1." }
 
 function Test-ProcessOwnsPort {
     param(
@@ -162,8 +168,6 @@ function Start-EventOutboxDispatcher {
     Write-Output "Dispatcher errors: $DispatcherErrLog"
 }
 
-Update-IbTwsHealthState
-
 if (Test-Path $PidPath) {
     $existingPidText = (Get-Content -LiteralPath $PidPath -Raw).Trim()
     if ($existingPidText) {
@@ -182,6 +186,8 @@ if (Test-Path $PidPath) {
     }
     Remove-Item -LiteralPath $PidPath -Force
 }
+
+Update-IbTwsHealthState
 
 try {
     $client = [System.Net.Sockets.TcpClient]::new()
@@ -240,3 +246,9 @@ do {
 } while ((Get-Date) -lt $deadline)
 
 throw "Dashboard process started but health did not respond before timeout. Check $ErrLog"
+
+} finally {
+    if (-not $Recovery) {
+        & $Python (Join-Path $ScriptDir "local_recovery.py") resume operator
+    }
+}

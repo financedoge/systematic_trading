@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import time as time_module
 from datetime import UTC, date, datetime, time, timedelta
 from decimal import Decimal
 from urllib.parse import urlencode
@@ -9,6 +8,25 @@ from urllib.request import Request, urlopen
 
 from systematic_trading.domain.market import PriceBar
 from systematic_trading.daily_quality import completed_session
+
+
+def fetch_chart_bytes(symbol: str, query: str) -> bytes:
+    """Bounded transport retries across Yahoo's two chart hosts.
+
+    Both hosts return the same provider contract. Callers still audit identity,
+    adjustments, dates and coverage; this function never substitutes data.
+    """
+    from urllib.parse import quote
+    errors = []
+    for host in ("query1", "query2"):
+        request = Request(f"https://{host}.finance.yahoo.com/v8/finance/chart/{quote(symbol, safe='')}?{query}",
+                          headers={"User-Agent": "Mozilla/5.0"})
+        try:
+            with urlopen(request, timeout=20) as response:
+                return response.read()
+        except (OSError, ValueError) as exc:
+            errors.append(f"{host}: {exc}")
+    raise OSError("Yahoo chart acquisition failed: " + "; ".join(errors))
 
 
 class YahooChartProvider:
@@ -27,16 +45,7 @@ class YahooChartProvider:
                 "events": "history",
             }
         )
-        url = f"{self.base_url}/{symbol}?{query}"
-        request = Request(url, headers={"User-Agent": self.user_agent})
-        try:
-            response = urlopen(request, timeout=30)
-        except Exception:
-            time_module.sleep(2)
-            response = urlopen(request, timeout=30)
-
-        with response:
-            payload = json.loads(response.read().decode("utf-8"))
+        payload = json.loads(fetch_chart_bytes(symbol, query))
 
         result = payload.get("chart", {}).get("result")
         if not result:

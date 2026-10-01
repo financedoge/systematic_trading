@@ -102,6 +102,22 @@ function Test-TcpEndpoint {
     }
 }
 
+function Get-EmbeddedWorkerChecks {
+    param([string]$HealthContent)
+    try {
+        $payload = $HealthContent | ConvertFrom-Json
+        foreach ($service in $payload.services) {
+            if ($service.service_id -in @("trading_management_loop", "analytics", "local_recovery")) {
+                New-Check -ServiceId $service.service_id -Required ([bool]$service.required) `
+                    -Status $service.status -Message $service.message
+            }
+        }
+    } catch {
+        New-Check -ServiceId "application_readiness" -Required $true -Status "error" `
+            -Message "API responded but application health could not be parsed."
+    }
+}
+
 function Get-ContainerStatus {
     param([string]$Name)
 
@@ -249,6 +265,12 @@ try {
         -Status $(if ($operatorHealth.ok) { "ok" } else { "error" }) `
         -Message $operatorHealth.message `
         -Repaired $operatorRepaired
+
+    if ($operatorHealth.ok) {
+        # HTTP 200 is API liveness, not proof that calculations/trading workers
+        # are healthy. Preserve their readiness failures in the watchdog result.
+        $checks += @(Get-EmbeddedWorkerChecks -HealthContent $operatorHealth.content)
+    }
 
     $checks += Test-RecorderState
 

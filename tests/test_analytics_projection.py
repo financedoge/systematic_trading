@@ -65,6 +65,8 @@ def test_strategy_http_reads_publication_without_touching_sources():
     assert catalog["analytics"]["storage"] == "clickhouse"
     report = strategy_report("x", request(analytics))
     assert b"saved result" in report.body
+    assert b"/api/v1/analytics/status" in report.body
+    assert b'const version="v1"' in report.body
     assert report.headers["x-analytics-version"] == "v1"
     with pytest.raises(HTTPException) as error:
         strategy_report("missing", request(analytics))
@@ -76,6 +78,19 @@ def test_initial_publication_missing_is_retryable_not_on_demand_recalculation():
         strategy_catalog(request(MemoryAnalytics()))
     assert error.value.status_code == 503
     assert error.value.headers["Retry-After"] == "5"
+
+
+def test_saved_strategy_reports_expose_stale_dates_even_without_job_errors():
+    analytics = MemoryAnalytics()
+    analytics.publish("strategy-serving", "v1", [], [
+        dict(point_key="catalog", payload=encode({"strategies": []})),
+        dict(point_key="report/x", payload="<html><body>saved result</body></html>"),
+    ])
+    req = request(analytics)
+    req.app.state.analytics_service = SimpleNamespace(status=lambda: {
+        "strategy_stale": True, "strategy_freshness_message": "Expected 2026-09-29; NAV 2026-09-25", "errors": {}})
+    assert "NAV 2026-09-25" in strategy_catalog(req)["warnings"][0]
+    assert b"Expected 2026-09-29; NAV 2026-09-25" in strategy_report("x", req).body
 
 
 def test_account_reset_rejects_previously_published_performance():
@@ -132,7 +147,8 @@ def test_failed_strategy_calculation_preserves_reports_and_other_projections(tmp
     for name in ("publish_strategies", "publish_dashboard", "import_json_group", "import_account_histories",
                  "import_transactional_histories", "import_lean_histories", "import_raw_market_data"):
         monkeypatch.setattr(module, name, lambda *args, label=name: calls.append(label))
-    service = module.AnalyticsService(AppSettings(data_dir=tmp_path), object(), SimpleNamespace(initialize=lambda: None))
+    monkeypatch.setattr(module, "refresh_tracked_fx", lambda *args: False)
+    service = module.AnalyticsService(AppSettings(data_dir=tmp_path), object(), SimpleNamespace(initialize=lambda: None, latest=lambda _: None))
     status = service.refresh()
     assert status["errors"] == {"tracked-strategies": "Invalid audited inputs"}
     assert "publish_strategies" not in calls and "publish_dashboard" in calls

@@ -264,27 +264,33 @@ def test_cli_refuses_handoff_with_running_service(tmp_path, monkeypatch):
         main()
 
 
-def test_real_postgres_handoff_and_restore_rollback(tmp_path, isolated_postgres):
+@pytest.mark.parametrize("optional", [False, True])
+def test_real_postgres_handoff_and_restore_rollback(tmp_path, isolated_postgres, optional):
     cfg = isolated_postgres
-    names = ["nas_a", "nas_b"]
+    suffix = "_latest" if optional else ""
+    names = ["nas_a" + suffix, "nas_b" + suffix]
+    owner_role, migrator_role, app_role = ("nas_owner" + suffix, "nas_migrator" + suffix, "nas_app" + suffix)
     with psycopg.connect(**cfg, dbname="postgres", autocommit=True) as db:
-        db.execute("CREATE ROLE nas_owner NOLOGIN")
-        db.execute(sql.SQL("CREATE ROLE nas_migrator LOGIN PASSWORD {}").format(sql.Literal(cfg["password"])))
-        db.execute("CREATE ROLE nas_app NOLOGIN")
-        db.execute("GRANT nas_owner TO nas_migrator")
+        db.execute(sql.SQL("CREATE ROLE {} NOLOGIN").format(sql.Identifier(owner_role)))
+        db.execute(sql.SQL("CREATE ROLE {} LOGIN PASSWORD {}").format(sql.Identifier(migrator_role), sql.Literal(cfg["password"])))
+        db.execute(sql.SQL("CREATE ROLE {} NOLOGIN").format(sql.Identifier(app_role)))
+        db.execute(sql.SQL("GRANT {} TO {}").format(sql.Identifier(owner_role), sql.Identifier(migrator_role)))
         for name in names:
-            db.execute(sql.SQL("CREATE DATABASE {} OWNER nas_owner").format(sql.Identifier(name)))
+            db.execute(sql.SQL("CREATE DATABASE {} OWNER {}").format(sql.Identifier(name), sql.Identifier(owner_role)))
     settings = [AppSettings(_env_file=None, postgres_host=cfg["host"], postgres_port=cfg["port"],
-                            postgres_database=name, postgres_migrator_user="nas_migrator",
-                            postgres_migrator_password=cfg["password"], postgres_owner_role="nas_owner") for name in names]
+                            postgres_database=name, postgres_migrator_user=migrator_role,
+                            postgres_migrator_password=cfg["password"], postgres_owner_role=owner_role) for name in names]
     a, b = [make_sync(tmp_path, node, True, setting) for node, setting in zip(["a", "b"], settings)]
+    if optional:
+        from systematic_trading.storage.optional_sync import OptionalNasSync
+        a, b = [OptionalNasSync(s.workspace, s.config, s.databases) for s in (a, b)]
     # Real PCs have identical database names on different servers. Use a shared
     # logical layout here while the fixture uses two databases on one server.
     b.databases.settings = settings[1]
     with a.databases.connection() as db:
         db.execute("CREATE TABLE audit (id integer PRIMARY KEY, value text)")
         db.execute("INSERT INTO audit VALUES (1, 'approved')")
-        db.execute("GRANT SELECT ON audit TO nas_app")
+        db.execute(sql.SQL("GRANT SELECT ON audit TO {}").format(sql.Identifier(app_role)))
     a.prepare()
     first = a.state["fingerprints"]
     a.backup()
@@ -292,12 +298,12 @@ def test_real_postgres_handoff_and_restore_rollback(tmp_path, isolated_postgres)
     a.release()
     manifest_path = a.root / "snapshots" / a.head() / "manifest.json"
     manifest = read_json(manifest_path)
-    manifest["layout"]["database"] = "nas_b"
+    manifest["layout"]["database"] = names[1]
     write_json(manifest_path, manifest)
     b.prepare()
     with b.databases.connection() as db:
         assert db.execute("SELECT value FROM audit").fetchone() == ("approved",)
-        assert db.execute("SELECT has_table_privilege('nas_app', 'audit', 'SELECT')").fetchone() == (True,)
+        assert db.execute("SELECT has_table_privilege(%s, 'audit', 'SELECT')", (app_role,)).fetchone() == (True,)
         db.execute("CREATE TABLE obsolete (id integer)")
     b.databases.restore(manifest_path.parent, manifest)
     with b.databases.connection() as db:

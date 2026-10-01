@@ -36,6 +36,24 @@ class IBTwsHealthProbeResult(BaseModel):
         )
 
 
+def gateway_connection_issue(messages: list[str]) -> str | None:
+    """A local API handshake is not proof of Gateway-to-IB connectivity.
+
+    IB message codes: https://interactivebrokers.github.io/tws-api/message_codes.html
+    Restore notifications clear earlier server disconnects in the same probe.
+    """
+    issue = None
+    for message in messages:
+        parts = message.split(":", 2)
+        if len(parts) != 3:
+            continue
+        if parts[1] in {"1100", "1300", "2110", "504"}:
+            issue = message
+        elif parts[1] in {"1101", "1102"}:
+            issue = None
+    return issue
+
+
 def probe_ib_tws_health(
     settings: AppSettings,
     *,
@@ -110,14 +128,16 @@ def _probe_profile(
             )
         app.reqCurrentTime()
         app.server_time_seen.wait(min(timeout_seconds, 2.0))
+        issue = gateway_connection_issue(app.errors)
         return IBTwsHealthProbeResult(
             environment=profile.environment,
             host=profile.host,
             port=profile.port,
             client_id=profile.client_id,
             checked_at=checked_at,
-            ok=True,
-            message="IB TWS API responded to nextValidId.",
+            ok=issue is None,
+            message=("IB Gateway local API responds, but its server connection is unavailable: " + issue
+                     if issue else "IB TWS API responded to nextValidId."),
             next_valid_order_id=app.next_valid_order_id,
             managed_accounts=app.managed_accounts,
             server_time=app.server_time,

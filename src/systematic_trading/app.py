@@ -70,8 +70,12 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         app.state.broker_health = None
         if resolved_settings.health_monitor_enabled:
             from systematic_trading.services.broker_monitor import BrokerHealthMonitor
-            app.state.broker_health = BrokerHealthMonitor(resolved_settings)
-            app.state.broker_health.start()
+            def broker_available(result):
+                if app.state.analytics_service is not None:
+                    app.state.analytics_service.request_refresh(reason="broker_reconnected")
+                if trading_management_service is not None:
+                    trading_management_service.request_broker_recovery(result.checked_at)
+            app.state.broker_health = BrokerHealthMonitor(resolved_settings, on_available=broker_available)
         app.state.broker = broker
         app.state.twap_benchmarks = TwapBenchmarkService(resolved_settings)
         app.state.broker_pnl = BrokerPnlService(resolved_settings)
@@ -83,6 +87,8 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
                 "automation_loop_started",
                 message="Trading management automation loop started.",
             )
+        if app.state.broker_health is not None:
+            app.state.broker_health.start()
         yield
         if app.state.broker_health is not None:
             app.state.broker_health.close()
@@ -128,7 +134,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
                 running=status.running,
                 started_at=status.started_at,
                 heartbeat_at=status.heartbeat_at,
-                last_error=status.last_error or (status.portfolio_alignment_message if status.portfolio_alignment_status == "blocked" else None),
+                last_error=status.worker_last_error or status.last_error or (status.portfolio_alignment_message if status.portfolio_alignment_status == "blocked" else None),
                 message="Trading management loop status loaded from embedded worker.",
                 details={
                     "pending_eod_date": status.pending_eod_date.isoformat() if status.pending_eod_date else None,
@@ -152,8 +158,8 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
             state = analytics.status()
             result.services.append(ServiceHealthState(service_id="analytics", display_name="Strategy and account calculations",
                 service_type="embedded", implementation_status="active", required=True, checked_at=checked_at,
-                status="degraded" if state.get("errors") or not state.get("running") or state.get("operations_stale") else "ok",
-                message="; ".join(state.get("errors", {}).values()) or ("Account calculations have not completed recently." if state.get("operations_stale") else "Independent account and strategy workers."), details=state))
+                status="degraded" if state.get("errors") or not state.get("running") or not state.get("archives_running") or state.get("archives_stale") or state.get("operations_stale") or state.get("research_stale") or state.get("strategy_stale") else "ok",
+                message="; ".join(state.get("errors", {}).values()) or ("Archive worker is unavailable or overdue." if not state.get("archives_running") or state.get("archives_stale") else "Strategy worker has exceeded its progress deadline." if state.get("research_stale") else state.get("strategy_freshness_message") if state.get("strategy_stale") else "Account calculations have not completed recently." if state.get("operations_stale") else "Independent account, strategy and archive workers."), details=state))
         if service is not None:
             delivery = service.alert_notifier.delivery_status()
             result.services.append(ServiceHealthState(service_id="alert_delivery", display_name="Operator alert delivery",

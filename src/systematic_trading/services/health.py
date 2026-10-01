@@ -195,9 +195,8 @@ def write_service_state_file(
         "message": message,
         "details": dict(details or {}),
     }
-    state_path = Path(path)
-    state_path.parent.mkdir(parents=True, exist_ok=True)
-    state_path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
+    from systematic_trading.runtime_io import atomic_json
+    atomic_json(path, payload)
 
 
 def _evaluate_http(
@@ -517,11 +516,20 @@ def _pid_is_running(pid: int) -> bool:
 
 def _windows_pid_is_running(pid: int) -> bool:
     process_query_limited_information = 0x1000
-    handle = ctypes.windll.kernel32.OpenProcess(process_query_limited_information, False, pid)
+    kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+    kernel.OpenProcess.restype = ctypes.c_void_p
+    kernel.CloseHandle.argtypes = [ctypes.c_void_p]
+    kernel.GetExitCodeProcess.argtypes = [ctypes.c_void_p, ctypes.POINTER(ctypes.c_ulong)]
+    handle = kernel.OpenProcess(process_query_limited_information, False, pid)
     if not handle:
-        return False
-    ctypes.windll.kernel32.CloseHandle(handle)
-    return True
+        return ctypes.get_last_error() == 5  # Access denied is not proof of death.
+    try:
+        exit_code = ctypes.c_ulong()
+        if not kernel.GetExitCodeProcess(handle, ctypes.byref(exit_code)):
+            return True  # Unknown state must not authorize a duplicate start.
+        return exit_code.value == 259  # STILL_ACTIVE; an open handle can outlive exit.
+    finally:
+        kernel.CloseHandle(handle)
 
 
 def _parse_datetime(value: Any) -> datetime | None:

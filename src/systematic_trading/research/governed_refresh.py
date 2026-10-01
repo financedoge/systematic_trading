@@ -7,8 +7,7 @@ from datetime import UTC, datetime
 import gzip
 import json
 from pathlib import Path
-from urllib.parse import urlencode, quote
-from urllib.request import Request, urlopen
+from urllib.parse import urlencode
 from uuid import uuid4
 
 import numpy as np
@@ -26,11 +25,9 @@ from systematic_trading.research.price_governance import POLICY, governed_sessio
 
 
 def acquire(symbol, now):
+    from systematic_trading.data.yahoo import fetch_chart_bytes
     query = urlencode(dict(period1=-631152000, period2=int(now.timestamp()), interval="1d", events="div,splits,capitalGains"))
-    request = Request("https://query1.finance.yahoo.com/v8/finance/chart/" + quote(symbol, safe="") + "?" + query,
-                      headers={"User-Agent": "SystematicTrading/1.0 market-data-audit"})
-    with urlopen(request, timeout=30) as response:
-        return response.read()
+    return fetch_chart_bytes(symbol, query)
 
 
 def _write(root, name, value):
@@ -82,11 +79,11 @@ def refresh_governed_etfs(settings, analytics, *, now=None, fetch=acquire):
     old_rows = {s: prior.rows(s, "1950-01-01", cutoff) for s in symbols}
     if all(rows and rows[-1]["trade_date"] == cutoff for rows in old_rows.values()):
         return False
-    # Failed acquisitions are retained, and retries are bounded to once/hour.
+    # Failed acquisitions are retained; retry within five minutes after reconnect.
     state = settings.data_dir / "governance/refresh-state.json"
     if state.exists():
         last = json.loads(state.read_text(encoding="utf8"))
-        if last.get("cutoff") == cutoff and (now - datetime.fromisoformat(last["attempted_at"])).total_seconds() < 3600:
+        if last.get("cutoff") == cutoff and (now - datetime.fromisoformat(last["attempted_at"])).total_seconds() < 300:
             if last.get("error"):
                 raise ValueError(last["error"])
             return False

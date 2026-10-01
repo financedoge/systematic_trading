@@ -37,6 +37,8 @@ def test_nats_jetstream_publisher_publishes_event_payload_and_headers() -> None:
     assert published["subject"] == "systematic_trading.events.v1.market_data.recorded"
     assert b'"event_id":"evt-nats-1"' in published["payload"]
     assert published["headers"]["event_id"] == "evt-nats-1"
+    assert published["headers"]["Nats-Msg-Id"] == "evt-nats-1"
+    assert fake_connection.connect_kwargs["allow_reconnect"] is False
     assert published["headers"]["event_type"] == "market_data.recorded"
 
 
@@ -59,3 +61,23 @@ class _FakeJetStream:
 
     async def publish(self, subject, payload, headers=None):
         self.published.append({"subject": subject, "payload": payload, "headers": headers or {}})
+
+
+def test_stalled_nats_publish_is_bounded_and_connection_closed():
+    import asyncio
+    import pytest
+    from test_event_outbox import _market_event
+    closed = []
+    class Connection(_FakeNatsConnection):
+        async def close(self):
+            closed.append(True)
+    async def stalled(*args, **kw):
+        await asyncio.Event().wait()
+    connection = Connection()
+    connection.jetstream_client.publish = stalled
+    async def connect(**kw):
+        return connection
+    publisher = NatsJetStreamPublisher(connect=connect, publish_timeout_seconds=.01)
+    with pytest.raises(TimeoutError):
+        publisher.publish(_market_event("timeout", "SPY"), subject="fixture")
+    assert closed and connection.drained

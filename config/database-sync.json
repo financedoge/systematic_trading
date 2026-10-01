@@ -1,5 +1,7 @@
 {
   "enabled": true,
+  "optional": true,
+  "conflict_policy": "latest_snapshot",
   "root": "\\\\192.168.1.32\\Public\\systematic-trading",
   "interval_seconds": 300,
   "postgres": true,
