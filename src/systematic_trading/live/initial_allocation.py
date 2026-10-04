@@ -84,7 +84,8 @@ def stage_portfolio_alignment(
         return InitialAllocationResult(status="blocked", message=f"{label} requires investable assets without cash liabilities.")
 
     decision_date, start, end = initial_allocation_window(settings, now)
-    definition = current_sota_definition()
+    from systematic_trading.portfolio.strategy_allocation import trading_definition
+    definition = trading_definition(store)
     baseline = store.latest_pnl_baseline()
     records = [record for record in store.list_broker_order_records() if record.environment == OrderEnvironment.PAPER]
     proposals = store.list_proposals()
@@ -130,7 +131,10 @@ def stage_portfolio_alignment(
     evidence = dict(valuation_date=decision_date, target_as_of=plan.proposal.target_as_of, holdings=holdings)
     threshold = settings.automation_rebalance_drift_threshold
     breached = any(abs(Decimal(row["drift"])) >= threshold and Decimal(row["drift"]) != 0 for row in holdings)
-    if not plan.proposal.orders or (not empty and not breached):
+    intent = plan.proposal.input_provenance.get('allocation', {}).get('intent', {})
+    capital_due = bool(intent.get('capital_reset'))
+    virtual_change = capital_due and bool(intent.get('crosses') or any(Decimal(v) for v in intent.get('cash_transfers', {}).values()))
+    if (not plan.proposal.orders and not virtual_change) or (not empty and not breached and not virtual_change and not capital_due):
         return InitialAllocationResult(status="aligned", message=f"Holdings are within the {threshold * 100:g} percentage point tolerance, or remaining differences are below one share.", **evidence)
 
     if not empty:
@@ -140,6 +144,9 @@ def stage_portfolio_alignment(
     prefix = ("initial-" if empty else "drift-") + sha256(episode.encode()).hexdigest()[:12] + "-"
     proposal_id = prefix + start.strftime("%Y%m%d")
     for proposal in proposals:
+        from systematic_trading.portfolio.strategy_allocation import allocation_binding_issues
+        if allocation_binding_issues(store, proposal):
+            continue
         if proposal.proposal_id.startswith(prefix) and proposal.status in {ProposalStatus.APPROVED, ProposalStatus.REJECTED}:
             return InitialAllocationResult(status="review", proposal_id=proposal.proposal_id,
                 message=f"{label} {proposal.proposal_id} is {proposal.status.value}; manage that decision before building again.", **evidence)

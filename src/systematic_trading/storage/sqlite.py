@@ -37,13 +37,18 @@ from systematic_trading.execution.fills import merge_execution_fills, preserve_e
 from systematic_trading.execution.recovery import ExecutionRecoveryRequest, recover_execution_record
 
 
-class SQLiteStore:
+from systematic_trading.storage.strategy_control import StrategyControlStore
+
+
+class SQLiteStore(StrategyControlStore):
     def __init__(self, database_path: Path) -> None:
         self.database_path = Path(database_path)
 
     def initialize(self) -> None:
         self.database_path.parent.mkdir(parents=True, exist_ok=True)
         with self._connect() as connection:
+            from systematic_trading.storage.strategy_control import SQLITE_CONTROL_SCHEMA
+            connection.executescript(SQLITE_CONTROL_SCHEMA)
             connection.executescript(
                 """
                 CREATE TABLE IF NOT EXISTS instruments (

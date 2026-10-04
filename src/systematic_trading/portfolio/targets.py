@@ -4,9 +4,10 @@ from systematic_trading.portfolio.context import portfolio_context
 
 
 def approved_target(store, definition, first_decision, through):
+    from systematic_trading.portfolio.strategy_allocation import allocation_binding_issues
     context = portfolio_context(store)
     candidates = [p for p in store.list_proposals()
-        if p.sleeve == definition.sleeve_name and p.targets and p.status == ProposalStatus.APPROVED
+        if not allocation_binding_issues(store, p) and p.sleeve == definition.sleeve_name and p.targets and p.status == ProposalStatus.APPROVED
         and all(order.environment.value == context.environment for order in p.orders)
         and first_decision <= (p.target_as_of or p.as_of) <= through
         and context.includes(p.created_at)]

@@ -18,7 +18,8 @@ def platform_health_portal() -> HTMLResponse:
 def market_data_audit_portal() -> HTMLResponse:
     from systematic_trading.web.research_archive_panel import RESEARCH_ARCHIVE_HTML
     from systematic_trading.web.governed_panel import GOVERNED_HTML
-    page = _MARKET_DATA_AUDIT_HTML.replace('<main>', '<main><section id="market-history-section" aria-label="Market History">'+RESEARCH_ARCHIVE_HTML+GOVERNED_HTML+'<div id="market-bars-panel" hidden>', 1)
+    from systematic_trading.web.usd_panel import USD_HTML
+    page = _MARKET_DATA_AUDIT_HTML.replace('<main>', '<main><section id="market-history-section" aria-label="Market History">'+RESEARCH_ARCHIVE_HTML+GOVERNED_HTML+USD_HTML+'<div id="market-bars-panel" hidden>', 1)
     return HTMLResponse(with_app_shell(with_chart_navigation(page.replace('</main>', '</div></section></main>', 1)), "market"))
 
 
@@ -1076,7 +1077,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
     function applySymbolOptions(labelFor) {
       const current = selectedSymbol();
       el("golden-symbol").innerHTML = state.symbols.map((item) =>
-        `<option value="${esc(item.symbol)}">${esc(item.symbol)} | ${esc(labelFor(item))}</option>`
+        `<option value="${esc(item.symbol)}">${esc(AssetNames.label(item.symbol))} | ${esc(labelFor(item))}</option>`
       ).join("");
       if (!state.symbols.length) return;
       const selected = state.symbols.find((item) => item.symbol === current)
@@ -1273,7 +1274,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
         : `<span class="${change >= 0 ? "ok" : "bad"}">${esc(number(change, 4))} (${esc(number(changePct, 2))}%)</span>`;
       el("metric-volume").textContent = last ? number(last.volume, 0) : "n/a";
       el("metric-source").textContent = (summary.source_names || []).join(", ") || "n/a";
-      el("chart-meta").textContent = `${summary.symbol || selectedSymbol()} | ${bars.length} bars`;
+      el("chart-meta").textContent = `${AssetNames.label(summary.symbol || selectedSymbol())} | ${bars.length} bars`;
       el("table-meta").textContent = `${bars.length} rows`;
       renderGoldenChart(bars);
       renderGoldenTable(bars);
@@ -1424,7 +1425,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
           <thead>
             <tr>
               <th style="width: 18%;">Time</th>
-              <th style="width: 10%;">Symbol</th>
+              <th>Ticker</th><th class="asset-name">Asset name</th>
               <th style="width: 18%;">OHLC</th>
               <th style="width: 12%;">Volume</th>
               <th style="width: 12%;">Hash</th>
@@ -1439,7 +1440,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
               const dupe = row.duplicate_raw_event_id ? ' <span class="warn">duplicate id</span>' : "";
               return `<tr>
                 <td>${esc(fmtDateTime(row.exchange_timestamp || row.received_at))}</td>
-                <td>${esc(row.symbol || "")}<br><span class="muted">${esc(row.capture_mode)}</span></td>
+                <td>${esc(row.symbol || "")}<br><span class="muted">${esc(row.capture_mode)}</span></td>${AssetNames.cell(row.symbol)}
                 <td>${esc(ohlc)}${flags}${dupe}</td>
                 <td class="numeric">${esc(number(payload.volume, 0))}</td>
                 <td class="${row.hash_ok ? "ok" : "bad"}">${row.hash_ok ? "ok" : "bad"}</td>
@@ -1872,7 +1873,7 @@ _RAW_MARKET_DATA_AUDIT_HTML = """<!doctype html>
         if (!response.ok) throw new Error(`symbol endpoint returned ${response.status}`);
         const data = await response.json();
         const symbols = data.symbols || [];
-        el("symbol-options").innerHTML = symbols.map((symbol) => `<option value="${esc(symbol)}"></option>`).join("");
+        el("symbol-options").innerHTML = symbols.map((symbol) => `<option value="${esc(symbol)}">${esc(AssetNames.name(symbol))}</option>`).join("");
         const current = el("symbol").value.trim().toUpperCase();
         if (!current && symbols.length) {
           el("symbol").value = symbols[0];
@@ -1915,7 +1916,7 @@ _RAW_MARKET_DATA_AUDIT_HTML = """<!doctype html>
       el("metric-dupes").textContent = summary.duplicate_raw_event_ids ?? 0;
       el("metric-invalid").textContent = summary.records_invalid ?? 0;
       el("metric-range").textContent = `${shortTime(summary.first_exchange_timestamp)} - ${shortTime(summary.last_exchange_timestamp)}`;
-      el("chart-meta").textContent = `${summary.symbol || "all"} | ${summary.recorder_date || "all dates"}`;
+      el("chart-meta").textContent = `${summary.symbol ? AssetNames.label(summary.symbol) : "all"} | ${summary.recorder_date || "all dates"}`;
       el("table-meta").textContent = `${rows.length} rows`;
       renderChart(bars);
       renderTable(rows);
@@ -1988,7 +1989,7 @@ _RAW_MARKET_DATA_AUDIT_HTML = """<!doctype html>
         <thead>
           <tr>
             <th style="width: 19%;">Time</th>
-            <th style="width: 10%;">Symbol</th>
+            <th>Ticker</th><th class="asset-name">Asset name</th>
             <th style="width: 18%;">OHLC</th>
             <th style="width: 12%;">Volume</th>
             <th style="width: 12%;">Hash</th>
@@ -2004,7 +2005,7 @@ _RAW_MARKET_DATA_AUDIT_HTML = """<!doctype html>
             const dupe = row.duplicate_raw_event_id ? ' <span class="warn">duplicate id</span>' : "";
             return `<tr>
               <td>${esc(fmtTime(row.exchange_timestamp || row.received_at))}</td>
-              <td>${esc(row.symbol || "")}<br><span class="muted">${esc(row.capture_mode)}</span></td>
+              <td>${esc(row.symbol || "")}<br><span class="muted">${esc(row.capture_mode)}</span></td>${AssetNames.cell(row.symbol)}
               <td>${esc(ohlc)}${flags}${dupe}</td>
               <td>${esc(number(payload.volume, 0))}</td>
               <td class="${hashClass}">${row.hash_ok ? "ok" : "bad"}</td>

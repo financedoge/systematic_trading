@@ -960,6 +960,21 @@ def render_backtest_report_html(report: dict[str, Any]) -> str:
     return _render_html(report)
 
 
+def render_saved_backtest_report_html(html: str) -> str:
+    """Refresh a saved report's presentation using only its embedded frozen data."""
+    import re
+
+    match = re.search(r"\bconst report\s*=\s*", html)
+    if match:
+        try:
+            report, _ = json.JSONDecoder().raw_decode(html[match.end():])
+        except (ValueError, TypeError):
+            return html
+        if isinstance(report, dict) and {"chart", "summary", "allocationOrder"} <= report.keys():
+            return render_backtest_report_html(report)
+    return html
+
+
 HTML_TEMPLATE = """<!doctype html>
 <html lang="en">
 <head>
@@ -1347,6 +1362,14 @@ HTML_TEMPLATE = """<!doctype html>
       <div class="meta" id="refreshStatus" style="padding:0 16px 12px" role="status"></div>
     </section>
 
+    <section class="table-panel" id="usdModelPanel" hidden style="margin-bottom:14px">
+      <div class="panel-head"><h2>USD Prediction Layer</h2><a href="/platform/market-data-audit?view=usd">USD index history</a></div>
+      <div style="padding:12px 16px"><p id="usdModelMeta"></p><p class="meta" id="usdModelExplanation"></p>
+        <div class="table-scroll"><table id="usdForecasts"></table></div>
+        <details><summary>Inputs, coefficients and publication lineage</summary><pre id="usdModelDetails" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre></details>
+      </div>
+    </section>
+
     <section class="table-panel" id="modelTrainingPanel" hidden style="margin-bottom:14px">
       <div class="panel-head"><h2>Rolling Model and ETF Activity</h2><button id="downloadRollingModel">Download current model</button></div>
       <div style="padding:12px 16px"><p id="rollingModelMeta"></p><p class="meta" id="rollingModelExplanation"></p>
@@ -1526,14 +1549,22 @@ HTML_TEMPLATE = """<!doctype html>
     function setupTrackedStrategy() {
       const a=report.currentAllocation,m=report.monitoring;
       const training=report.modelTraining;
+      const usd=report.usdModel;
+      if(usd){
+        document.getElementById('usdModelPanel').hidden=false;
+        document.getElementById('usdModelMeta').textContent=`Monthly fit: ${usd.fit_close}. USD vintage: ${usd.snapshot.vintage_date}; last index observation: ${usd.snapshot.observation_date}. 21-observation USD change: ${fmtPct(usd.snapshot.features.USD21)}; 63-observation change: ${fmtPct(usd.snapshot.features.USD63)}.`;
+        document.getElementById('usdModelExplanation').textContent=usd.explanation;
+        document.getElementById('usdForecasts').innerHTML=`<thead><tr><th>Ticker</th><th class="asset-name">Asset name</th><th>Ridge forecast score</th></tr></thead><tbody>${Object.entries(usd.predictions).sort((a,b)=>b[1]-a[1]).map(([s,v])=>`<tr><td>${escapeHtml(s)}</td>${AssetNames.cell(s)}<td>${fmtPct(v)}</td></tr>`).join('')}</tbody>`;
+        const {snapshot,...details}=usd;document.getElementById('usdModelDetails').textContent=JSON.stringify({...details,vintage:snapshot.vintage_date,available_at:snapshot.available_at},null,2);
+      }
       if(training){
         document.getElementById('modelTrainingPanel').hidden=false;
         const t=training.training,r=training.receipt;
         document.getElementById('rollingModelMeta').textContent=`Fitted through ${training.fitAsOf}. One-year window starts ${t.window_start}; ${t.training_samples} ETF-month observations across ${t.training_months} months. Latest completed training label: ${t.max_label_end}. Monthly refits; latest features through ${a.target_known_through}.`;
         document.getElementById('rollingModelExplanation').textContent=training.explanation;
-        document.getElementById('rollingForecasts').innerHTML=`<thead><tr><th>ETF</th><th>Model score</th><th>Activity z</th><th>Activity signal</th><th>Activity slope</th><th>20d return</th><th>Signed volume</th></tr></thead><tbody>${training.forecasts.map(f=>`<tr><td>${escapeHtml(f.symbol)}</td><td>${fmtPct(f.forecast)}</td><td>${fmtNum(f.activity?.z)}</td><td>${f.activity?.signal??'—'}</td><td>${fmtNum(f.activity?.velocity,6)}</td><td>${fmtPct(f.activity?.momentum_20)}</td><td>${fmtNum(f.activity?.signed_volume_20)}</td></tr>`).join('')}</tbody>`;
-        document.getElementById('rollingStages').innerHTML=`<thead><tr><th>ETF</th>${training.allocationStages.map(s=>`<th>${escapeHtml(s.name.replaceAll('_',' '))}</th>`).join('')}</tr></thead><tbody>${[...training.forecasts.map(f=>f.symbol),'Cash'].map(symbol=>`<tr><td>${escapeHtml(symbol)}</td>${training.allocationStages.map(s=>`<td>${fmtPct(symbol==='Cash'?1-Object.values(s.weights).reduce((x,y)=>x+y,0):s.weights[symbol]||0)}</td>`).join('')}</tr>`).join('')}</tbody>`;
-        document.getElementById('rollingFeatures').innerHTML=`<p class="meta">ETF activity lag-20 is applied after XGBoost, relative momentum, and adaptive trend. It is not one of the model’s 26 training inputs. Valuation and macro scores are neutral zeros.</p><div class="table-scroll"><table><thead><tr><th>Feature</th><th>Meaning</th><th>Lookback</th>${training.forecasts.map(f=>`<th>${escapeHtml(f.symbol)}</th>`).join('')}</tr></thead><tbody>${training.features.map(f=>`<tr><td>${escapeHtml(f.featureId)}</td><td>${escapeHtml(f.description)}</td><td>${f.lookbackBars??'Neutral'}</td>${training.forecasts.map(row=>`<td>${fmtNum(row.inputs[f.featureId],5)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+        document.getElementById('rollingForecasts').innerHTML=`<thead><tr><th>Ticker</th><th class="asset-name">Asset name</th><th>Model score</th><th>Activity z</th><th>Activity signal</th><th>Activity slope</th><th>20d return</th><th>Signed volume</th></tr></thead><tbody>${training.forecasts.map(f=>`<tr><td>${escapeHtml(f.symbol)}</td>${AssetNames.cell(f.symbol)}<td>${fmtPct(f.forecast)}</td><td>${fmtNum(f.activity?.z)}</td><td>${f.activity?.signal??'—'}</td><td>${fmtNum(f.activity?.velocity,6)}</td><td>${fmtPct(f.activity?.momentum_20)}</td><td>${fmtNum(f.activity?.signed_volume_20)}</td></tr>`).join('')}</tbody>`;
+        document.getElementById('rollingStages').innerHTML=`<thead><tr><th>Ticker</th><th class="asset-name">Asset name</th>${training.allocationStages.map(s=>`<th>${escapeHtml(s.name.replaceAll('_',' '))}</th>`).join('')}</tr></thead><tbody>${[...training.forecasts.map(f=>f.symbol),'Cash'].map(symbol=>`<tr><td>${escapeHtml(symbol)}</td>${AssetNames.cell(symbol)}${training.allocationStages.map(s=>`<td>${fmtPct(symbol==='Cash'?1-Object.values(s.weights).reduce((x,y)=>x+y,0):s.weights[symbol]||0)}</td>`).join('')}</tr>`).join('')}</tbody>`;
+        document.getElementById('rollingFeatures').innerHTML=`<p class="meta">ETF activity lag-20 is applied after XGBoost, relative momentum, and adaptive trend. It is not one of the model’s 26 training inputs. Valuation and macro scores are neutral zeros.</p><div class="table-scroll"><table><thead><tr><th>Feature</th><th>Meaning</th><th>Lookback</th>${training.forecasts.map(f=>`<th>${escapeHtml(f.symbol)}<span class="asset-name-caption">${escapeHtml(AssetNames.name(f.symbol))}</span></th>`).join('')}</tr></thead><tbody>${training.features.map(f=>`<tr><td>${escapeHtml(f.featureId)}</td><td>${escapeHtml(f.description)}</td><td>${f.lookbackBars??'Neutral'}</td>${training.forecasts.map(row=>`<td>${fmtNum(row.inputs[f.featureId],5)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
         document.getElementById('rollingProvenance').textContent=JSON.stringify({recipe:training.recipe,training:t,model_sha256:training.modelSha256,audited_batch:training.batch,receipt:r},null,2);
         document.getElementById('downloadRollingModel').onclick=()=>{const url=URL.createObjectURL(new Blob([JSON.stringify({recipe:training.recipe,training:t,model:training.model,model_sha256:training.modelSha256},null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download='rolling-xgboost-'+training.fitAsOf+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
         const selector=document.getElementById('rollingTreeSelect'),box=document.getElementById('rollingTreeChart');let scale=1;
@@ -1546,7 +1577,7 @@ HTML_TEMPLATE = """<!doctype html>
         document.getElementById('currentStatePanel').hidden=false;
         document.getElementById('calculationMeta').textContent=`Calculated by the application using ${m.engine==='lean'?'LEAN with Python parity':'Python'}. Valuation: ${a.valuation_date}. Price inputs: ${m.priceThrough}. Updated: ${m.computedAt}.`;
         document.getElementById('allocationMeta').textContent=`${report.modelRegime}. Last scheduled rebalance: ${a.last_rebalance}; next: ${a.next_rebalance}. Latest signal targets use data through ${a.target_known_through}. ${a.notes}`;
-        document.getElementById('currentWeightsTable').innerHTML=`<thead><tr><th>Asset</th><th>Adjusted units</th><th>Value CNH</th><th>Held weight</th><th>Last scheduled target</th><th>Latest signal target</th></tr></thead><tbody>${a.holdings.map(r=>`<tr><td>${escapeHtml(r.symbol)}</td><td>${r.quantity==null?'—':fmtNum(r.quantity,0)}</td><td>${fmtMoney(r.value_cnh)}</td><td>${fmtPct(r.weight)}</td><td>${fmtPct(r.scheduled_weight)}</td><td>${fmtPct(r.target_weight)}</td></tr>`).join('')}</tbody>`;
+        document.getElementById('currentWeightsTable').innerHTML=`<thead><tr><th>Ticker</th><th class="asset-name">Asset name</th><th>Adjusted units</th><th>Value CNH</th><th>Held weight</th><th>Last scheduled target</th><th>Latest signal target</th></tr></thead><tbody>${a.holdings.map(r=>`<tr><td>${escapeHtml(r.symbol)}</td>${AssetNames.cell(r.symbol)}<td>${r.quantity==null?'—':fmtNum(r.quantity,0)}</td><td>${fmtMoney(r.value_cnh)}</td><td>${fmtPct(r.weight)}</td><td>${fmtPct(r.scheduled_weight)}</td><td>${fmtPct(r.target_weight)}</td></tr>`).join('')}</tbody>`;
         document.getElementById('exposureMeta').textContent=`Gross exposure: ${fmtMoney(a.gross_exposure_cnh)} (${fmtPct(a.gross_exposure_cnh/a.nav_cnh)} of NAV); cash: ${fmtMoney(a.cash_cnh)}. Country exposure: ${Object.entries(a.country_exposure_cnh).map(([k,v])=>k+' '+fmtPct(v/a.nav_cnh)).join(' · ')}. Accounting currency: CNH; ETF quote currency: USD. Forward window starts ${m.prospectiveStart}; ${m.prospectiveObservations} simulated sessions since that date.`;
         document.getElementById('refreshCalculations').onclick=async()=>{
           const button=document.getElementById('refreshCalculations'),status=document.getElementById('refreshStatus');button.disabled=true;
@@ -1573,7 +1604,7 @@ HTML_TEMPLATE = """<!doctype html>
         [currentBenchmarkOption().name, benchmarkColor],
         ["Drawdown periods", "#b91c1c"],
         ...(report.splitDate ? [[report.splitLabel || "OOS period", "#0f766e"]] : []),
-        ...report.allocationOrder.map((symbol) => [symbol, report.colors[symbol]])
+        ...report.allocationOrder.map((symbol) => [AssetNames.label(symbol), report.colors[symbol]])
       ];
       document.getElementById("legend").innerHTML = items.map(([label, color]) => `
         <span class="legend-item"><span class="swatch" style="background:${escapeHtml(color)}"></span>${escapeHtml(label)}</span>
@@ -1786,7 +1817,7 @@ HTML_TEMPLATE = """<!doctype html>
           .filter(([, value]) => value > 0.01)
           .sort((a, b) => b[1] - a[1])
           .slice(0, 5)
-          .map(([symbol, value]) => `<div class="tooltip-row"><span>${escapeHtml(symbol)}</span><strong>${fmtPct(value, 1)}</strong></div>`)
+          .map(([symbol, value]) => `<div class="tooltip-row"><span>${escapeHtml(AssetNames.label(symbol))}</span><strong>${fmtPct(value, 1)}</strong></div>`)
           .join("");
         tooltip.innerHTML = `
           <div class="tooltip-title">${escapeHtml(point.date)}</div>
@@ -1881,7 +1912,7 @@ HTML_TEMPLATE = """<!doctype html>
         <thead>
           <tr>
             <th>Period</th>
-            <th>Symbol</th>
+            <th>Ticker</th><th class="asset-name">Asset name</th>
             <th>Start Wt</th>
             <th>Avg Wt</th>
             <th>End Wt</th>
@@ -1894,7 +1925,7 @@ HTML_TEMPLATE = """<!doctype html>
           ${rows.map(({ period, holding }) => `
             <tr>
               <td>${escapeHtml(period.period)}</td>
-              <td>${escapeHtml(holding.symbol)}</td>
+              <td>${escapeHtml(holding.symbol)}</td>${AssetNames.cell(holding.symbol)}
               <td>${fmtPct(holding.startWeight, 1)}</td>
               <td>${fmtPct(holding.averageWeight, 1)}</td>
               <td>${fmtPct(holding.endWeight, 1)}</td>
@@ -1904,7 +1935,7 @@ HTML_TEMPLATE = """<!doctype html>
             </tr>
           `).join("") || `
             <tr>
-              <td colspan="8">No contribution rows are available. Stored prices and FX rates are required.</td>
+              <td colspan="9">No contribution rows are available. Stored prices and FX rates are required.</td>
             </tr>
           `}
         </tbody>
@@ -1986,7 +2017,7 @@ HTML_TEMPLATE = """<!doctype html>
         <ul>
           ${changes.map((item) => `
             <li>
-              ${escapeHtml(item.symbol)} ${escapeHtml(item.action)}:
+              ${escapeHtml(AssetNames.label(item.symbol))} ${escapeHtml(item.action)}:
               ${fmtPct(item.baselineWeight, 1)} to ${fmtPct(item.candidateWeight, 1)},
               asset ${fmtPct(item.assetReturn, 2)},
               contribution <span class="${cls(item.estimatedContribution)}">${fmtPct(item.estimatedContribution, 2)}</span>
@@ -1998,7 +2029,7 @@ HTML_TEMPLATE = """<!doctype html>
 
     function impactLabel(item) {
       if (!item) return "n/a";
-      return `${escapeHtml(item.symbol)} ${escapeHtml(item.action)} ${fmtPct(item.estimatedContribution, 1)}`;
+      return `${escapeHtml(AssetNames.label(item.symbol))} ${escapeHtml(item.action)} ${fmtPct(item.estimatedContribution, 1)}`;
     }
 
     function setupSegments() {

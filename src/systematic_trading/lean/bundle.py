@@ -15,6 +15,7 @@ from systematic_trading.lean.contracts import BacktestRunSpec, sha256, write_jso
 from systematic_trading.lean.strategy import targets_for_day
 from systematic_trading.live.trading_calendar import us_equity_market_close, is_us_trading_day
 from systematic_trading.research import current_sota_definition, instruments_for_definition
+from systematic_trading.research.strategy_catalog import legacy_sota_definition
 from systematic_trading.research.flow_concentration import FlowConcentrationSpec
 from systematic_trading.research.constituent_signals import ConstituentOverlaySpec
 
@@ -69,7 +70,8 @@ def export_bundle(*, store, root: Path, start: date, end: date, warmup_start: da
 
 
 def freeze_bundle(*, root: Path, bars: dict, fx: dict, provenance: dict, spec_values: dict,
-                  constituent_features: dict | None = None, base_tree_models: dict | None = None) -> Path:
+                  constituent_features: dict | None = None, base_tree_models: dict | None = None,
+                  usd_models: dict | None = None) -> Path:
     if root.exists():
         raise FileExistsError(root)
     days = [row['trade_date'] for row in next(iter(bars.values()))]
@@ -98,6 +100,8 @@ def freeze_bundle(*, root: Path, bars: dict, fx: dict, provenance: dict, spec_va
         raise ValueError('Constituent configuration and frozen features must be supplied together')
     if bool(spec_values.get('base_tree_model_schedule')) != (base_tree_models is not None):
         raise ValueError('Dated base-tree configuration and models must be supplied together')
+    if bool(spec_values.get('usd_model_schedule')) != (usd_models is not None):
+        raise ValueError('USD configuration and models must be supplied together')
     flow_state = {}
     registered = None
     if spec_values.get('strategy_definition'):
@@ -116,7 +120,7 @@ def freeze_bundle(*, root: Path, bars: dict, fx: dict, provenance: dict, spec_va
                                       flow_overlay=flow_config, flow_state=flow_state,
                                       constituent_overlay=constituent_config, constituent_features=constituent_features,
                                       base_tree_models=base_tree_models, fixed_model_from=spec_values.get('fixed_model_from'),
-                                      definition=registered)
+                                      definition=registered, usd_models=usd_models)
             execution_index = run_days.index(day) + spec_values.get('execution_delay_sessions', 0)
             if execution_index >= len(run_days):
                 continue
@@ -135,7 +139,7 @@ def freeze_bundle(*, root: Path, bars: dict, fx: dict, provenance: dict, spec_va
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(path, destination)
         source_hash.update(relative.as_posix().encode() + path.read_bytes())
-    definition = current_sota_definition().to_dict()
+    definition = legacy_sota_definition().to_dict()
     if registered:
         definition = registered.to_dict()
     if spec_values.get('strategy') == 'benchmark':
@@ -146,6 +150,9 @@ def freeze_bundle(*, root: Path, bars: dict, fx: dict, provenance: dict, spec_va
     if base_tree_models is not None:
         write_json(root / 'base_tree_models.json', base_tree_models)
         definition = dict(recipe=definition, research_base_models_sha256=sha256(root / 'base_tree_models.json'), promotion_eligible=False)
+    if usd_models is not None:
+        write_json(root / 'usd_models.json', usd_models)
+        definition = dict(recipe=definition, usd_models_sha256=sha256(root / 'usd_models.json'))
     if flow_config is not None:
         definition = dict(base=definition, research_overlay=flow_config.model_dump(), promotion_eligible=False)
     if constituent_config is not None:

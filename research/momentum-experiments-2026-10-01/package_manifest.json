@@ -1,0 +1,12 @@
+{
+  "diagnostics.json": "d7675382369ad2201f272c8eae77aefec539dbbe5dd3c3660b2988b591fdb4b0",
+  "environment.json": "13d52214e653fb867f8e0a745f7b1d9f50cb349e95fbfcd9cbb98b9f5bfe60c4",
+  "monthly-comparisons.png": "f80d4f109d012ddedfb496f99d4332cb110540620d565808fa064f448d447dc0",
+  "paired_results.json": "10d15bad9fb4c4a1dacefeb4a121453d27f8b630ff6173c802e08870e3005df7",
+  "protocol.json": "c15df3289583658509063ed2f018c91f15a73a13f0524c0e67c4e73134e74e19",
+  "summary.json": "38be32c133b94acedbef555d7284b9aa2d3a65511d7a49bb50fb22b894944181",
+  "transfer_registration.json": "a77e2c105532d2e593e1d97297ea4eb55664ac5aa24158b661f63be2c34254b8",
+  "usd-ablation.png": "6b247fb04c81588c000f8a936d79abfb9d9fddd925bfbd9c4e698a6f38954d03",
+  "usd_registration.json": "011ef9987eb0db568fba67514ba8044343d8aee322db696400815a5239fa5df9",
+  "verification.json": "a6f08f4b53207384fea0745be41531a44b4bde7c7699b1176536576a1d5958b8"
+}

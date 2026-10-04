@@ -3,6 +3,8 @@ from decimal import Decimal
 
 import pytest
 
+pytestmark = pytest.mark.usefixtures('neutral_usd_publication')
+
 from systematic_trading.config import AppSettings
 from systematic_trading.domain.enums import Currency, OrderEnvironment, OrderType
 from systematic_trading.domain.market import FXRate, PriceBar
@@ -32,7 +34,7 @@ def test_sota_live_rebalance_plan_generates_and_queues_paper_orders(tmp_path) ->
     )
 
     assert plan.queued is True
-    assert plan.strategy_key == "sota_price_volume_technical_tree_relative_adaptive_top6"
+    assert plan.strategy_key == current_sota_definition().key
     assert plan.validation_issues == []
     assert plan.proposal.orders
     assert {order.environment for order in plan.proposal.orders} == {OrderEnvironment.PAPER}

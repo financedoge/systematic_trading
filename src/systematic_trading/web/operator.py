@@ -544,51 +544,50 @@ _OPERATOR_HTML = """<!doctype html>
     </div>
   </header>
   <div class="shell">
-    <aside>
-      <div class="toolbar">
+    <main>
+      <section id="approval-workspace" class="panel" aria-labelledby="approval-heading">
+      <div class="panel-head"><div><div class="eyebrow">Proposal review</div><h2 id="approval-heading">Order approval</h2><div class="subtle">Review the trade, its timing and target portfolio before submitting.</div></div><button id="refresh-btn">Refresh proposals</button></div>
+      <div class="toolbar approval-toolbar">
         <div class="tabs" role="tablist" aria-label="Proposal status">
           <button class="tab active" data-filter="">All</button>
           <button class="tab" data-filter="pending">Pending</button>
           <button class="tab" data-filter="approved">Approved</button>
           <button class="tab" data-filter="rejected">Rejected</button>
+          <button class="tab" data-filter="missed">Missed</button>
         </div>
+        <span id="proposal-count" class="subtle" role="status"></span>
       </div>
       <div id="proposal-readiness" class="warnings" role="status"></div>
-      <div class="list" id="proposal-list"></div>
+      <div class="list" id="proposal-list" aria-label="Choose a proposal"></div>
+      <div class="approval-selected"><div class="eyebrow">Selected proposal</div><h3 id="metric-proposal">No proposal selected</h3></div>
       <section class="execution-summary" aria-label="Execution summary">
-        <div class="metric"><label>Selected</label><strong id="metric-proposal">n/a</strong></div>
         <div class="metric"><label>Status</label><strong id="metric-status">n/a</strong></div>
         <div class="metric"><label>Orders</label><strong id="metric-orders">0</strong></div>
-        <div class="metric"><label>Notional CNH</label><strong id="metric-notional">0.00</strong></div>
+        <div class="metric"><label>Gross notional · CNH</label><strong id="metric-notional">0.00</strong></div>
         <div class="metric"><label>Completion</label><strong id="metric-completion">n/a</strong></div>
         <div class="metric"><label>Filled Qty</label><strong id="metric-filled">0 / 0</strong></div>
       </section>
-      <section class="rail-panel">
-        <div class="panel-head"><h2>Trading</h2></div>
-        <div class="actions">
-          <button id="refresh-btn">Refresh</button>
-          <button id="approve-btn" class="good">Approve</button>
-          <button id="reject-btn" class="bad">Reject</button>
-          <button id="resubmit-failed-btn" class="warn" hidden>Resubmit Failed/Missing</button>
+      <div class="approval-review">
+        <div id="proposal-detail"></div>
+        <div class="approval-decision">
+          <h3>Decision</h3>
+          <p class="subtle">Approval submits this proposal's orders to the paper account using TWAP. Broker, risk and execution-window checks apply.</p>
+          <label for="decision-comment">Decision comment <span class="subtle">(optional)</span></label>
+          <textarea id="decision-comment" rows="3" placeholder="Record the reason for your decision"></textarea>
+          <div id="decision-readiness" class="subtle" role="status"></div>
+          <div class="actions">
+            <button id="approve-btn" class="good" disabled>Approve &amp; submit paper orders</button>
+            <button id="reject-btn" class="bad" disabled>Reject</button>
+            <button id="resubmit-failed-btn" class="warn" hidden disabled>Resubmit Failed/Missing</button>
+          </div>
         </div>
-        <textarea id="decision-comment" placeholder="Decision comment"></textarea>
-        <div id="proposal-detail" class="body"></div>
-        <div id="action-log" class="log"></div>
+      </div>
+      <div id="action-log" class="log" role="status" aria-live="polite"></div>
+      <div class="approval-orders-head"><h3>Proposed orders</h3><span class="subtle">Reference prices in the asset currency · gross order values in CNH</span></div>
+      <div id="orders-table" class="approval-table" role="region" aria-label="Proposed orders" tabindex="0"></div>
+      <details class="approval-disclosure"><summary>Target portfolio</summary><div id="targets-table" class="approval-table" role="region" aria-label="Target portfolio" tabindex="0"></div></details>
+      <details class="approval-disclosure"><summary>Broker Records · execution progress</summary><div id="broker-records" class="approval-table" role="region" aria-label="Proposal broker records" tabindex="0"></div></details>
       </section>
-      <section class="rail-panel">
-        <div class="panel-head"><h2>Orders</h2></div>
-        <div id="orders-table"></div>
-      </section>
-      <section class="rail-panel">
-        <div class="panel-head"><h2>Broker Records</h2></div>
-        <div id="broker-records"></div>
-      </section>
-      <section class="rail-panel">
-        <div class="panel-head"><h2>Targets</h2></div>
-        <div id="targets-table"></div>
-      </section>
-    </aside>
-    <main>
       <section id="reconciliation-panel" class="panel">
         <div class="panel-head">
           <h2>IB portfolio & reconciliation</h2>
@@ -648,6 +647,8 @@ _OPERATOR_HTML = """<!doctype html>
             <button type="button" data-perf-range="1y">1Y</button>
             <button type="button" data-perf-range="all">All</button>
             <button type="button" data-perf-range="tracking">Tracking</button>
+            <button type="button" data-perf-range="current-allocation">Current allocation</button>
+            <button type="button" data-perf-range="previous-allocation">Previous allocation</button>
           </div>
           <label class="date-field">Start <input id="perf-range-start" type="date"></label>
           <label class="date-field">End <input id="perf-range-end" type="date"></label>
@@ -723,6 +724,11 @@ _OPERATOR_HTML = """<!doctype html>
       selectedId: null,
       filter: "",
       brokerRecords: [],
+      brokerRecordsLoading: false,
+      brokerRecordsError: null,
+      brokerRecordsRequest: 0,
+      decisionBusy: false,
+      decisionDrafts: {},
       reconciliation: null,
       performance: { payload: null, rangeKey: "all", start: null, end: null }
     };
@@ -828,7 +834,7 @@ _OPERATOR_HTML = """<!doctype html>
           Date.parse(payload.checked_at) < Date.parse(state.reconciliation.checked_at)) return;
       state.reconciliation = payload;
       const positions = payload.broker_positions || [];
-      el("broker-portfolio").innerHTML = positions.length ? `<table><thead><tr><th>IB holding</th><th class="num">Quantity</th><th class="num">Average cost</th><th>Currency</th></tr></thead><tbody>${positions.map(p => `<tr><td class="order-symbol">${esc(p.symbol)}</td><td class="num">${esc(p.quantity)}</td><td class="num">${fmtMoney(p.average_cost)}</td><td>${esc(p.currency)}</td></tr>`).join("")}</tbody></table>` : '<div class="empty-state"><strong>No open positions at IB</strong>Cash balances above are from the latest broker snapshot.</div>';
+      el("broker-portfolio").innerHTML = positions.length ? `<table><thead><tr><th>IB holding</th><th class="asset-name">Asset name</th><th class="num">Quantity</th><th class="num">Average cost</th><th>Currency</th></tr></thead><tbody>${positions.map(p => `<tr><td class="order-symbol">${esc(p.symbol)}</td>${AssetNames.cell(p.symbol)}<td class="num">${esc(p.quantity)}</td><td class="num">${fmtMoney(p.average_cost)}</td><td>${esc(p.currency)}</td></tr>`).join("")}</tbody></table>` : '<div class="empty-state"><strong>No open positions at IB</strong>Cash balances above are from the latest broker snapshot.</div>';
       const hasBreaks = Boolean(payload.has_breaks);
       const hasExecutionIssues = Boolean((payload.execution_issues || []).length);
       const hasPendingSync = Boolean((payload.execution_sync_pending || []).length);
@@ -850,8 +856,8 @@ _OPERATOR_HTML = """<!doctype html>
       const rows = payload.position_differences || [];
       el("reconciliation-table").innerHTML = rows.length ? `
         <table>
-          <thead><tr><th>Symbol</th><th class="num">Local Qty</th><th class="num">IB Qty</th><th class="num">Difference</th></tr></thead>
-          <tbody>${rows.map((row) => `<tr><td>${esc(row.symbol)}</td><td class="num">${esc(row.local_quantity)}</td><td class="num">${esc(row.ib_quantity)}</td><td class="num">${esc(row.difference)}</td></tr>`).join("")}</tbody>
+          <thead><tr><th>Ticker</th><th class="asset-name">Asset name</th><th class="num">Local Qty</th><th class="num">IB Qty</th><th class="num">Difference</th></tr></thead>
+          <tbody>${rows.map((row) => `<tr><td>${esc(row.symbol)}</td>${AssetNames.cell(row.symbol)}<td class="num">${esc(row.local_quantity)}</td><td class="num">${esc(row.ib_quantity)}</td><td class="num">${esc(row.difference)}</td></tr>`).join("")}</tbody>
         </table>
       ` : '<div class="empty">No position differences</div>';
       const warnings = [...(payload.warnings || [])];
@@ -902,14 +908,14 @@ _OPERATOR_HTML = """<!doctype html>
       if ((alignment.holdings || []).length) {
         const table = document.createElement("table");
         const header = table.createTHead().insertRow();
-        for (const label of ["Holding", "Shares", "Actual weight", "Target weight", "Difference (pp)"]) {
-          const cell = document.createElement("th"); cell.textContent = label; header.appendChild(cell);
+        for (const label of ["Ticker", "Asset name", "Shares", "Actual weight", "Target weight", "Difference (pp)"]) {
+          const cell = document.createElement("th"); cell.textContent = label; if (label === "Asset name") cell.className = "asset-name"; header.appendChild(cell);
         }
         const body = table.createTBody();
         for (const holding of alignment.holdings) {
           const row = body.insertRow();
-          for (const value of [holding.symbol, holding.quantity, fmtPct(holding.actual_weight), fmtPct(holding.target_weight), (Number(holding.drift) * 100).toFixed(2)]) {
-            row.insertCell().textContent = value;
+          for (const value of [holding.symbol, AssetNames.name(holding.symbol), holding.quantity, fmtPct(holding.actual_weight), fmtPct(holding.target_weight), (Number(holding.drift) * 100).toFixed(2)]) {
+            const cell = row.insertCell(); cell.textContent = value; if (row.cells.length === 2) cell.className = "asset-name";
           }
         }
         driftView.appendChild(table);
@@ -997,7 +1003,7 @@ _OPERATOR_HTML = """<!doctype html>
         ? `Aligned on ${payload.account_alignment_date}: account CNH ${fmtMoney(payload.account_alignment_nav_cnh)} = strategy index ${Number(payload.account_alignment_strategy_index).toFixed(2)}. The alignment stays fixed when zooming. Strategy uses the left axis; account CNH uses the right.`
         : `Account has ${payload.account_tracking_start_date ? "no shared strategy date yet" : "not built a position since the reset"}. Axes are independent until tracking begins. Account history starts ${accountAll[0]?.trade_date || "n/a"}.`;
       el("performance-legend").innerHTML = `
-        <span class="legend-item"><span class="swatch"></span>Theoretical strategy · left index</span>
+        <span class="legend-item"><span class="swatch"></span>${esc(payload.comparison_label || "Standalone strategy comparison")} · left index</span>
         <span class="legend-item"><span class="swatch account"></span>Actual account · right CNH</span>
       `;
       renderPerformanceAnalysis(strategy, account);
@@ -1006,6 +1012,7 @@ _OPERATOR_HTML = """<!doctype html>
     function normalizedPerformanceSeries(series) {
       return series
         .map((point) => ({
+          allocation_label: point.allocation_label || "Legacy / unknown",
           trade_date: String(point.trade_date || "").slice(0, 10),
           index: Number(point.index),
           nav_cnh: Number(point.nav_cnh),
@@ -1048,8 +1055,11 @@ _OPERATOR_HTML = """<!doctype html>
     }
 
     function applyPerformanceRangeKey(extent, rangeKey) {
-      const end = extent.maxDate;
+      let end = extent.maxDate;
       let start = extent.minDate;
+      const epochs = state.performance.payload.allocation_timeline || [];
+      if (rangeKey === "current-allocation" && epochs.length) start = epochs.at(-1).effective_close;
+      if (rangeKey === "previous-allocation" && epochs.length) {start = epochs.length > 1 ? epochs.at(-2).effective_close : start; end = epochs.at(-1).effective_close;}
       if (rangeKey === "1m") start = shiftDateText(end, { months: -1 });
       if (rangeKey === "3m") start = shiftDateText(end, { months: -3 });
       if (rangeKey === "6m") start = shiftDateText(end, { months: -6 });
@@ -1117,6 +1127,7 @@ _OPERATOR_HTML = """<!doctype html>
           <text x="${pad.left}" y="14" fill="#2456a6" font-size="12">Strategy index</text>
           <text x="${width-pad.right}" y="14" fill="#0f766e" font-size="12" text-anchor="end">Account CNH</text>
           ${grid}
+          ${(payload.allocation_timeline || []).filter(e=>Date.parse(e.effective_close)>=g.minTime&&Date.parse(e.effective_close)<=g.maxTime).map(e=>`<g><title>${esc(e.effective_close+' · '+e.label)}</title><line x1="${x(Date.parse(e.effective_close))}" x2="${x(Date.parse(e.effective_close))}" y1="${pad.top}" y2="${height-pad.bottom}" stroke="#93691e" stroke-dasharray="4 4"/><text x="${x(Date.parse(e.effective_close))+4}" y="${pad.top+12}" fill="#93691e" font-size="10">Allocation change</text></g>`).join('')}
           <text x="${pad.left}" y="${height-7}" fill="#657083" font-size="11">${dateTextFromTime(g.minTime)}</text>
           <text x="${width-pad.right}" y="${height-7}" text-anchor="end" fill="#657083" font-size="11">${dateTextFromTime(g.maxTime)}</text>
           ${strategy.length > 1 ? `<path class="strategy-line" d="${pathFor(strategy,g.strategyY)}"></path>` : ""}
@@ -1144,7 +1155,7 @@ _OPERATOR_HTML = """<!doctype html>
         cursor = index;
         const time = dates[index], s = strategyMap.get(time), a = accountMap.get(time);
         crosshair.setAttribute("x1",g.x(time)); crosshair.setAttribute("x2",g.x(time)); crosshair.setAttribute("visibility","visible");
-        el("performance-hover").textContent = `${dateTextFromTime(time)} · Strategy ${s ? `index ${s.index.toFixed(2)} / CNH ${fmtMoney(s.nav_cnh)}` : "no observation"} · Account ${a ? `CNH ${fmtMoney(a.nav_cnh)}` : "no observation"}`;
+        el("performance-hover").textContent = `${dateTextFromTime(time)} · ${a?.allocation_label || s?.allocation_label || "Legacy / unknown"} · Strategy ${s ? `index ${s.index.toFixed(2)} / CNH ${fmtMoney(s.nav_cnh)}` : "no observation"} · Account ${a ? `CNH ${fmtMoney(a.nav_cnh)}` : "no observation"}`;
       };
       hit.addEventListener("pointermove", event => {show(nearest(timeAt(pointerX(event))))});
       hit.addEventListener("click", event => {show(nearest(timeAt(pointerX(event))))});
@@ -1247,11 +1258,11 @@ _OPERATOR_HTML = """<!doctype html>
       }
       el("holdings-table").innerHTML = `
         <table>
-          <thead><tr><th>Symbol</th><th class="num">Account Qty</th><th class="num">Account %</th><th class="num">Strategy %</th><th class="num">Target - Account</th><th>Trade</th><th class="num">Target CNH</th></tr></thead>
+          <thead><tr><th>Ticker</th><th class="asset-name">Asset name</th><th class="num">Account Qty</th><th class="num">Account %</th><th class="num">Strategy %</th><th class="num">Target - Account</th><th>Trade</th><th class="num">Target CNH</th></tr></thead>
           <tbody>
             ${rows.map((row) => `
               <tr>
-                <td>${esc(row.symbol)}</td>
+                <td>${esc(row.symbol)}</td>${AssetNames.cell(row.symbol)}
                 <td class="num">${row.account_quantity ?? ""}</td>
                 <td class="num">${fmtMaybePct(row.account_weight)}</td>
                 <td class="num">${fmtPct(row.strategy_weight)}</td>
@@ -1275,7 +1286,7 @@ _OPERATOR_HTML = """<!doctype html>
       el("pnl-total").textContent = payload.currency ? money(payload.daily_pnl) : "n/a";
       el("pnl-open-value").textContent = payload.currency || "unknown";
       el("live-pnl-warnings").textContent = (payload.warnings || []).join(" ");
-      el("live-pnl-table").innerHTML = `<table><thead><tr><th>Symbol</th><th>Currency</th><th>Quantity</th><th>Daily PnL</th><th>Unrealized</th><th>Realized</th><th>Value</th><th>Update</th></tr></thead><tbody>${(payload.positions || []).map(row => `<tr><td>${esc(row.symbol)}</td><td>${esc(row.currency)}</td><td>${esc(row.quantity)}</td>${[row.daily_pnl,row.unrealized_pnl,row.realized_pnl,row.market_value].map(v => `<td class="num">${row.currency ? money(v) : "n/a"}</td>`).join("")}<td>${row.received_at ? `${row.stale ? "Last received · stale · " : ""}${esc(fmtDateTime(row.received_at))}` : "waiting for broker"}</td></tr>`).join("")}</tbody></table>`;
+      el("live-pnl-table").innerHTML = `<table><thead><tr><th>Ticker</th><th class="asset-name">Asset name</th><th>Currency</th><th>Quantity</th><th>Daily PnL</th><th>Unrealized</th><th>Realized</th><th>Value</th><th>Update</th></tr></thead><tbody>${(payload.positions || []).map(row => `<tr><td>${esc(row.symbol)}</td>${AssetNames.cell(row.symbol)}<td>${esc(row.currency)}</td><td>${esc(row.quantity)}</td>${[row.daily_pnl,row.unrealized_pnl,row.realized_pnl,row.market_value].map(v => `<td class="num">${row.currency ? money(v) : "n/a"}</td>`).join("")}<td>${row.received_at ? `${row.stale ? "Last received · stale · " : ""}${esc(fmtDateTime(row.received_at))}` : "waiting for broker"}</td></tr>`).join("")}</tbody></table>`;
     }
 
     let livePnlLoading = false;
@@ -1350,7 +1361,7 @@ _OPERATOR_HTML = """<!doctype html>
         history.push(currentPoint);
       }
       const points = history.sort((a, b) => Date.parse(a.as_of) - Date.parse(b.as_of));
-      el("pnl-comparison-chart").innerHTML = pnlComparisonSvg(points);
+      el("pnl-comparison-chart").innerHTML = pnlComparisonSvg(points, payload.allocation_timeline || []);
       el("slippage-chart").innerHTML = slippageSvg(payload.slippage || []);
       el("execution-quality-legend").innerHTML = `
         <span class="legend-item"><span class="swatch pnl"></span>Real PnL</span>
@@ -1370,8 +1381,8 @@ _OPERATOR_HTML = """<!doctype html>
       el("execution-missed-table").innerHTML = `
         <div class="panel-head"><h2>Missed Rebalances</h2><span class="status-line">Not eligible for resubmission</span></div>
         <table>
-          <thead><tr><th>Missed At</th><th>Proposal</th><th>Symbol</th><th>Side</th><th class="num">Qty</th><th class="num">Reference CNH</th></tr></thead>
-          <tbody>${rows.map((row) => `<tr><td>${esc(fmtDateTime(row.missed_at))}</td><td>${esc(row.proposal_id)}</td><td>${esc(row.symbol)}</td><td>${esc(row.side)}</td><td class="num">${esc(row.quantity)}</td><td class="num">${fmtMoney(row.reference_notional_cnh)}</td></tr>`).join("")}</tbody>
+          <thead><tr><th>Missed At</th><th>Proposal</th><th>Ticker</th><th class="asset-name">Asset name</th><th>Side</th><th class="num">Qty</th><th class="num">Reference CNH</th></tr></thead>
+          <tbody>${rows.map((row) => `<tr><td>${esc(fmtDateTime(row.missed_at))}</td><td>${esc(row.proposal_id)}</td><td>${esc(row.symbol)}</td>${AssetNames.cell(row.symbol)}<td>${esc(row.side)}</td><td class="num">${esc(row.quantity)}</td><td class="num">${fmtMoney(row.reference_notional_cnh)}</td></tr>`).join("")}</tbody>
         </table>`;
     }
 
@@ -1382,12 +1393,13 @@ _OPERATOR_HTML = """<!doctype html>
       }
       el("execution-slippage-table").innerHTML = `
         <table>
-          <thead><tr><th>Time</th><th>Symbol</th><th>Side</th><th class="num">Qty</th><th class="num">Ref</th><th class="num">Fill</th><th class="num">Gain</th><th class="num">Bps</th></tr></thead>
+          <thead><tr><th>Time</th><th>Ticker</th><th class="asset-name">Asset name</th><th>Originating strategy</th><th>Side</th><th class="num">Qty</th><th class="num">Ref</th><th class="num">Fill</th><th class="num">Gain</th><th class="num">Bps</th></tr></thead>
           <tbody>
             ${rows.slice().reverse().map((row) => `
               <tr>
                 <td>${esc(fmtDateTime(row.filled_at))}</td>
-                <td>${esc(row.symbol)}</td>
+                <td>${esc(row.symbol)}</td>${AssetNames.cell(row.symbol)}
+                <td>${esc(row.allocation_label || "Legacy / unknown")}</td>
                 <td>${esc(row.side)}</td>
                 <td class="num">${esc(row.filled_quantity)}</td>
                 <td class="num">${fmtMoney(row.reference_price)}</td>
@@ -1401,7 +1413,7 @@ _OPERATOR_HTML = """<!doctype html>
       `;
     }
 
-    function pnlComparisonSvg(points) {
+    function pnlComparisonSvg(points, timeline = []) {
       const width = 760;
       const height = 260;
       const pad = { left: 64, right: 16, top: 16, bottom: 28 };
@@ -1414,7 +1426,7 @@ _OPERATOR_HTML = """<!doctype html>
         }))
         .filter((point) => Number.isFinite(point.time) && Number.isFinite(point.actual) && Number.isFinite(point.theoretical));
       let chartView=null;
-      if(typeof ChartNavigation!=='undefined'){chartView=ChartNavigation.view('pnl-comparison-chart',valid,p=>p.time,()=>{el('pnl-comparison-chart').innerHTML=pnlComparisonSvg(points)},{left:pad.left,right:width-pad.right,top:pad.top,bottom:height-pad.bottom});valid=chartView.rows}
+      if(typeof ChartNavigation!=='undefined'){chartView=ChartNavigation.view('pnl-comparison-chart',valid,p=>p.time,()=>{el('pnl-comparison-chart').innerHTML=pnlComparisonSvg(points, timeline)},{left:pad.left,right:width-pad.right,top:pad.top,bottom:height-pad.bottom});valid=chartView.rows}
       if (!valid.length) return '<div class="empty">No saved PnL comparison history</div>';
       const times = valid.map((point) => point.time);
       const values = valid.flatMap((point) => [point.actual, point.theoretical]);
@@ -1447,12 +1459,13 @@ _OPERATOR_HTML = """<!doctype html>
       return `
         <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Real and reference-fill PnL comparison">
           ${grid}
+          ${timeline.filter(e=>Date.parse(e.effective_close)>=minTime&&Date.parse(e.effective_close)<=maxTime).map(e=>`<line x1="${x(e.effective_close)}" x2="${x(e.effective_close)}" y1="${pad.top}" y2="${height-pad.bottom}" stroke="#93691e" stroke-dasharray="4 4"><title>${esc(e.effective_close+' '+e.label)}</title></line>`).join('')}
           <line class="axis-line" x1="${pad.left}" x2="${width - pad.right}" y1="${height - pad.bottom}" y2="${height - pad.bottom}"></line>
           <text x="${pad.left}" y="${height - 8}" fill="#657083" font-size="11">${esc(startDate)}</text>
           <text x="${width - pad.right - 70}" y="${height - 8}" fill="#657083" font-size="11">${esc(endDate)}</text>
           ${valid.length > 1 ? `<path class="actual-line" d="${pathFor("actual")}"></path>` : ""}
           ${valid.length > 1 ? `<path class="theoretical-line" d="${pathFor("theoretical")}"></path>` : ""}
-          ${valid.map(point => `<circle cx="${x(point.as_of).toFixed(2)}" cy="${y(point.actual).toFixed(2)}" r="3.5" fill="#7c4a03"><title>${esc(point.as_of)} stored-price PnL ${fmtSignedMoney(point.actual)}</title></circle><circle cx="${x(point.as_of).toFixed(2)}" cy="${y(point.theoretical).toFixed(2)}" r="3.5" fill="#2563eb"><title>${esc(point.as_of)} reference-fill PnL ${fmtSignedMoney(point.theoretical)}</title></circle>`).join("")}
+          ${valid.map(point => `<circle cx="${x(point.as_of).toFixed(2)}" cy="${y(point.actual).toFixed(2)}" r="3.5" fill="#7c4a03"><title>${esc(point.as_of)} ${esc(timeline.filter(e=>e.effective_close<point.as_of).at(-1)?.label || 'Legacy / unknown')} stored-price PnL ${fmtSignedMoney(point.actual)}</title></circle><circle cx="${x(point.as_of).toFixed(2)}" cy="${y(point.theoretical).toFixed(2)}" r="3.5" fill="#2563eb"><title>${esc(point.as_of)} reference-fill PnL ${fmtSignedMoney(point.theoretical)}</title></circle>`).join("")}
         </svg>
       `;
     }
@@ -1528,11 +1541,11 @@ _OPERATOR_HTML = """<!doctype html>
       }
       el("pnl-table").innerHTML = `
         <table>
-          <thead><tr><th>Symbol</th><th class="num">Qty</th><th class="num">Cost CNH</th><th class="num">Market CNH</th><th class="num">Realized</th><th class="num">Unrealized</th></tr></thead>
+          <thead><tr><th>Ticker</th><th class="asset-name">Asset name</th><th class="num">Qty</th><th class="num">Cost CNH</th><th class="num">Market CNH</th><th class="num">Realized</th><th class="num">Unrealized</th></tr></thead>
           <tbody>
             ${rows.map((row) => `
               <tr>
-                <td>${esc(row.symbol)}</td>
+                <td>${esc(row.symbol)}</td>${AssetNames.cell(row.symbol)}
                 <td class="num">${esc(row.quantity)}</td>
                 <td class="num">${fmtMaybeMoney(row.cost_basis_cnh)}</td>
                 <td class="num">${fmtMaybeMoney(row.market_value_cnh)}</td>
@@ -1596,21 +1609,23 @@ _OPERATOR_HTML = """<!doctype html>
 
     function renderList() {
       const list = el("proposal-list");
+      el("proposal-count").textContent = `${state.proposals.length} proposal${state.proposals.length === 1 ? "" : "s"}`;
       if (!state.proposals.length) {
         list.innerHTML = '<div class="empty">No proposals</div>';
         return;
       }
       list.innerHTML = state.proposals.map((proposal) => `
-        <button class="proposal-row ${proposal.status === "missed" ? "missed" : ""} ${proposal.proposal_id === state.selectedId ? "active" : ""}" data-id="${esc(proposal.proposal_id)}">
+        <button class="proposal-row ${proposal.status === "missed" ? "missed" : ""} ${proposal.proposal_id === state.selectedId ? "active" : ""}" data-id="${esc(proposal.proposal_id)}" aria-pressed="${proposal.proposal_id === state.selectedId}">
           <span>
-            <span class="proposal-title">${esc(proposal.sleeve)}</span>
-            <span class="meta">${esc(proposal.as_of)} | ${esc(proposal.proposal_id)} | ${proposal.orders.length} orders${proposal.execution_deadline_at ? ` | deadline ${esc(fmtDateTime(proposal.execution_deadline_at))}` : ""}</span>
+            <span class="proposal-title">${esc(proposal.intended_trade_date || proposal.as_of)} · ${proposal.orders.length} orders</span>
+            <span class="meta">${esc(proposal.proposal_id)}</span>
           </span>
           <span class="badge ${esc(proposal.status)}">${esc(proposal.status)}</span>
         </button>
       `).join("");
       list.querySelectorAll(".proposal-row").forEach((button) => {
         button.addEventListener("click", async () => {
+          if (state.decisionBusy) return;
           state.selectedId = button.dataset.id;
           renderList();
           await renderSelected();
@@ -1620,11 +1635,13 @@ _OPERATOR_HTML = """<!doctype html>
 
     async function renderSelected() {
       const proposal = selectedProposal();
+      el("decision-comment").value = state.decisionDrafts[state.selectedId] || "";
+      state.brokerRecordsLoading = Boolean(proposal);
       if (proposal) state.brokerRecords = [];
       setButtons(Boolean(proposal));
       if (!proposal) {
         state.brokerRecords = [];
-        el("metric-proposal").textContent = "n/a";
+        el("metric-proposal").textContent = "No proposal selected";
         el("metric-status").textContent = "n/a";
         el("metric-orders").textContent = "0";
         el("metric-notional").textContent = "0.00";
@@ -1644,17 +1661,19 @@ _OPERATOR_HTML = """<!doctype html>
       el("metric-notional").textContent = fmtMoney(total);
       updateExecutionSummary([]);
       el("proposal-detail").innerHTML = `
-        <table>
-          <tbody>
-            <tr><th>As Of</th><td>${esc(proposal.as_of)}</td></tr>
-            <tr><th>Intended Trade</th><td>${esc(proposal.intended_trade_date || "n/a")}</td></tr>
-            <tr><th>Execution Deadline</th><td>${esc(fmtDateTime(proposal.execution_deadline_at))}</td></tr>
-            ${proposal.missed_reason ? `<tr><th>Missed</th><td>${esc(proposal.missed_reason)}</td></tr>` : ""}
-            <tr><th>Summary</th><td>${esc(proposal.summary)}</td></tr>
-            <tr><th>Reasoning</th><td>${esc(proposal.reasoning?.summary || "")}</td></tr>
-            <tr><th>Drivers</th><td>${esc((proposal.reasoning?.drivers || []).join("; "))}</td></tr>
-          </tbody>
-        </table>
+        <div class="proposal-dates">
+          <div><span>Signal as of</span><strong>${esc(proposal.as_of)}</strong></div>
+          <div><span>Intended trade</span><strong>${esc(proposal.intended_trade_date || "Not scheduled")}</strong></div>
+          <div><span>Execution Deadline · your local time</span><strong>${esc(fmtDateTime(proposal.execution_deadline_at))}</strong></div>
+        </div>
+        ${proposal.missed_reason ? `<p class="warnings">${esc(proposal.missed_reason)}</p>` : ""}
+        <h3>Trade summary</h3><p>${esc(proposal.summary)}</p>
+        <p class="subtle">${esc(proposal.reasoning?.summary || "")}</p>
+        <details class="proposal-reasoning"><summary>Drivers and invalidation rules</summary>
+          <ul>${(proposal.reasoning?.drivers || []).map(value => `<li>${esc(value)}</li>`).join("")}</ul>
+          ${(proposal.reasoning?.invalidation_rules || []).length ? `<h4>Invalidation rules</h4><ul>${proposal.reasoning.invalidation_rules.map(value => `<li>${esc(value)}</li>`).join("")}</ul>` : ""}
+          <p class="subtle">Strategy / sleeve: ${esc(proposal.sleeve)}</p>
+        </details>
       `;
       renderOrders(proposal);
       renderTargets(proposal);
@@ -1668,16 +1687,17 @@ _OPERATOR_HTML = """<!doctype html>
       }
       el("orders-table").innerHTML = `
         <table>
-          <thead><tr><th>Symbol</th><th>Side</th><th class="num">Qty</th><th>Type</th><th class="num">Ref</th><th class="num">CNH</th></tr></thead>
+          <thead><tr><th>Ticker</th><th class="asset-name">Asset name / rationale</th><th>Side</th><th class="num">Qty</th><th>Requested type</th><th class="num">Reference price</th><th class="num">Gross CNH</th><th>Window · New York</th></tr></thead>
           <tbody>
             ${proposal.orders.map((order) => `
               <tr>
-                <td>${esc(order.symbol)}</td>
-                <td>${esc(order.side)}</td>
+                <td>${esc(order.symbol)}</td>${AssetNames.cell(order.symbol).replace('</td>', `${order.rationale ? `<details class="order-rationale"><summary>Order rationale</summary><p>${esc(order.rationale)}</p></details>` : ''}</td>`)}
+                <td><span class="order-side ${order.side === 'buy' ? 'buy' : 'sell'}">${esc(order.side)}</span></td>
                 <td class="num">${esc(order.quantity)}</td>
                 <td>${esc(order.order_type)}</td>
-                <td class="num">${fmtMoney(order.reference_price)}</td>
+                <td class="num">${fmtMoney(order.reference_price)}<div class="subtle">${esc(order.currency || "—")}</div></td>
                 <td class="num">${fmtMoney(order.notional_cnh)}</td>
+                <td class="order-window">${esc(order.intended_trade_date || proposal.intended_trade_date || "Not scheduled")}<div class="subtle">${esc(order.execution_start_time || "—")} – ${esc(order.execution_end_time || "—")}</div></td>
               </tr>
             `).join("")}
           </tbody>
@@ -1693,11 +1713,11 @@ _OPERATOR_HTML = """<!doctype html>
       const targets = [...proposal.targets].sort((a, b) => Number(b.target_weight) - Number(a.target_weight));
       el("targets-table").innerHTML = `
         <table>
-          <thead><tr><th>Symbol</th><th class="num">Weight</th><th>Rationale</th></tr></thead>
+          <thead><tr><th>Ticker</th><th class="asset-name">Asset name</th><th class="num">Weight</th><th>Rationale</th></tr></thead>
           <tbody>
             ${targets.map((target) => `
               <tr>
-                <td>${esc(target.symbol)}</td>
+                <td>${esc(target.symbol)}</td>${AssetNames.cell(target.symbol)}
                 <td class="num">${fmtPct(target.target_weight)}</td>
                 <td>${esc(target.rationale)}</td>
               </tr>
@@ -1708,7 +1728,25 @@ _OPERATOR_HTML = """<!doctype html>
     }
 
     async function renderBrokerRecords(proposalId) {
-      const records = await api(`/api/v1/execution/interactive-brokers/orders?proposal_id=${encodeURIComponent(proposalId)}`);
+      if (state.selectedId !== proposalId) return;
+      const request = ++state.brokerRecordsRequest;
+      state.brokerRecordsLoading = true;
+      state.brokerRecordsError = null;
+      setButtons(Boolean(selectedProposal()));
+      el("broker-records").innerHTML = '<div class="empty">Loading execution records…</div>';
+      let records;
+      try {
+        records = await api(`/api/v1/execution/interactive-brokers/orders?proposal_id=${encodeURIComponent(proposalId)}`);
+      } catch (error) {
+        if (state.selectedId !== proposalId || request !== state.brokerRecordsRequest) return;
+        state.brokerRecordsLoading = false;
+        state.brokerRecordsError = error.message;
+        el("broker-records").innerHTML = `<div class="warnings">Execution records unavailable: ${esc(error.message)}</div>`;
+        setButtons(Boolean(selectedProposal()));
+        return;
+      }
+      if (state.selectedId !== proposalId || request !== state.brokerRecordsRequest) return;
+      state.brokerRecordsLoading = false;
       state.brokerRecords = records;
       setButtons(Boolean(selectedProposal()));
       updateExecutionSummary(records);
@@ -1718,13 +1756,13 @@ _OPERATOR_HTML = """<!doctype html>
       }
       el("broker-records").innerHTML = `
         <table>
-          <thead><tr><th>Order ID</th><th>Status</th><th>Symbol</th><th class="num">Filled</th><th class="num">Done</th><th class="num">Broker ID</th></tr></thead>
+          <thead><tr><th>Order ID</th><th>Status</th><th>Ticker</th><th class="asset-name">Asset name</th><th class="num">Filled</th><th class="num">Done</th><th class="num">Broker ID</th></tr></thead>
           <tbody>
             ${records.map((record) => `
               <tr>
                 <td>${esc(record.local_order_id)}</td>
-                <td>${esc(record.status)}</td>
-                <td>${esc(record.order.symbol)}</td>
+                <td>${esc(record.status)}${record.execution_sync_issue ? `<div class="warnings">Execution review: ${esc(record.execution_sync_issue)}</div>` : ""}</td>
+                <td>${esc(record.order.symbol)}</td>${AssetNames.cell(record.order.symbol)}
                 <td class="num">${esc(record.filled_quantity || 0)} / ${esc(record.order.quantity || 0)}</td>
                 <td class="num">${fmtCompletion(record)}</td>
                 <td class="num">${esc(record.broker_order_id ?? "")}</td>
@@ -1770,12 +1808,18 @@ _OPERATOR_HTML = """<!doctype html>
     function setButtons(enabled) {
       const proposal = selectedProposal();
       const brokerReady = state.reconciliation && !state.reconciliation.has_breaks && !state.reconciliation.unavailable;
-      const canDecide = enabled && proposal && proposal.status === "pending" && brokerReady;
+      const recordsUnavailable = state.brokerRecordsLoading || Boolean(state.brokerRecordsError);
+      const canDecide = enabled && !state.decisionBusy && !recordsUnavailable && proposal && proposal.status === "pending" && brokerReady;
       el("approve-btn").disabled = !canDecide;
       el("reject-btn").disabled = !canDecide;
+      el("approve-btn").textContent = proposal?.orders.length ? 'Approve & submit paper orders' : 'Approve proposal';
+      el("decision-comment").disabled = state.decisionBusy || !proposal;
+      const recordedCount = new Set(state.brokerRecords.map(record => record.order_index)).size;
+      const recordedNote = proposal?.orders.length ? ` ${recordedCount} of ${proposal.orders.length} orders have broker records.${recordedCount < proposal.orders.length ? ' Review execution progress before retrying missing orders.' : ''}` : '';
+      el("decision-readiness").textContent = state.decisionBusy ? 'Saving decision…' : !proposal ? 'Choose a proposal to review.' : state.brokerRecordsLoading ? 'Checking execution records…' : state.brokerRecordsError ? 'Execution records unavailable. Refresh proposals to retry.' : !brokerReady ? 'Approval blocked: portfolio reconciliation must be available and matched.' : proposal.status !== 'pending' ? `This proposal is ${proposal.status}.${recordedNote}` : 'Ready for review. Submission rechecks broker and execution eligibility.';
       const retryable = retryableOrderIndexes();
-      el("resubmit-failed-btn").hidden = !retryable.length;
-      el("resubmit-failed-btn").disabled = !enabled || !retryable.length || !brokerReady;
+      el("resubmit-failed-btn").hidden = recordsUnavailable || !retryable.length;
+      el("resubmit-failed-btn").disabled = !enabled || state.decisionBusy || recordsUnavailable || !retryable.length || !brokerReady;
     }
 
     function retryableOrderIndexes() {
@@ -1807,9 +1851,15 @@ _OPERATOR_HTML = """<!doctype html>
       el("action-log").textContent = message;
     }
 
-    function submitResultMessage(result, prefix) {
+    function submitResultMessage(result, prefix, expectedCount = null) {
       const records = result.records || [];
+      const uncertain = records.filter(record => record.status === 'pending_submit');
       const rejected = records.filter((record) => ["rejected", "cancelled"].includes(record.status));
+      const missing = Math.max(0, (expectedCount ?? records.length) - records.length);
+      if (uncertain.length || missing) {
+        const confirmed = records.length - uncertain.length - rejected.length;
+        return `Submission incomplete: ${confirmed} of ${expectedCount ?? records.length} orders confirmed submitted; ${uncertain.length} uncertain, ${rejected.length} failed, ${missing} not attempted. Sync broker orders and review recorded outcomes before retrying.`;
+      }
       if (rejected.length) {
         return `${prefix} ${records.length} TWAP paper order(s); ${rejected.length} failed and can be resubmitted`;
       }
@@ -1818,17 +1868,20 @@ _OPERATOR_HTML = """<!doctype html>
 
     async function decide(status) {
       const proposal = selectedProposal();
-      if (!proposal) return;
+      if (!proposal || state.decisionBusy || (status === 'approved' ? el('approve-btn') : el('reject-btn')).disabled) return;
+      state.decisionBusy = true;
       try {
         setButtons(false);
         const comment = el("decision-comment").value;
-        if (status === "approved") {
+        if (status === "approved" && proposal.orders.length) {
           log(`Approving ${proposal.proposal_id}; submitting TWAP paper orders...`);
           const result = await api(`/api/v1/proposals/${encodeURIComponent(proposal.proposal_id)}/approve-and-submit`, {
             method: "POST",
             body: JSON.stringify({ comment })
           });
-          log(submitResultMessage(result.broker_submission || {}, "Approved and submitted"));
+          const submission = result.broker_submission || {};
+          const incomplete = (submission.records || []).length !== proposal.orders.length || (submission.records || []).some(record => record.status === 'pending_submit');
+          log(submitResultMessage(submission, "Approved and submitted", proposal.orders.length), incomplete);
           await renderBrokerRecords(proposal.proposal_id);
         } else {
           await api(`/api/v1/proposals/${encodeURIComponent(proposal.proposal_id)}/decisions`, {
@@ -1842,25 +1895,33 @@ _OPERATOR_HTML = """<!doctype html>
         log(error.message, true);
         await loadProposals();
         await renderBrokerRecords(proposal.proposal_id);
+      } finally {
+        state.decisionBusy = false;
+        setButtons(Boolean(selectedProposal()));
       }
     }
 
     async function resubmitFailed() {
       const proposal = selectedProposal();
-      if (!proposal) return;
+      if (!proposal || state.decisionBusy || el('resubmit-failed-btn').disabled) return;
       const retryable = retryableOrderIndexes();
       if (!retryable.length) return;
       if (!confirm(`Resubmit ${retryable.length} failed or missing TWAP paper orders for ${proposal.proposal_id}?`)) return;
+      state.decisionBusy = true;
+      setButtons(false);
       try {
         const result = await api(`/api/v1/execution/interactive-brokers/proposals/${encodeURIComponent(proposal.proposal_id)}/submit`, {
           method: "POST",
           body: JSON.stringify({ environment: "paper", confirm_submit: true, failed_only: true, route_order_type: "twap" })
         });
-        log(`Resubmitted ${result.records.length} failed or missing TWAP paper orders`);
+        log(submitResultMessage(result, "Resubmitted", retryable.length), result.records.length !== retryable.length || result.records.some(record => record.status === 'pending_submit'));
         await renderBrokerRecords(proposal.proposal_id);
         await loadDashboardData();
       } catch (error) {
         log(error.message, true);
+      } finally {
+        state.decisionBusy = false;
+        setButtons(Boolean(selectedProposal()));
       }
     }
 
@@ -1889,12 +1950,16 @@ _OPERATOR_HTML = """<!doctype html>
 
     document.querySelectorAll(".tab").forEach((button) => {
       button.addEventListener("click", async () => {
+        if (state.decisionBusy) return;
         document.querySelectorAll(".tab").forEach((item) => item.classList.remove("active"));
         button.classList.add("active");
         state.filter = button.dataset.filter || "";
         state.selectedId = null;
         await loadProposals();
       });
+    });
+    el("decision-comment").addEventListener("input", () => {
+      if (state.selectedId) state.decisionDrafts[state.selectedId] = el("decision-comment").value;
     });
     el("refresh-btn").addEventListener("click", async () => {
       await loadProposals();
@@ -1963,7 +2028,7 @@ _STRATEGIES_HTML = """<!doctype html>
 <script>
 const state={items:[],selected:null};const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const pct=v=>v===null||v===undefined?"n/a":`${(Number(v)*100).toFixed(2)}%`;const ratio=v=>v===null||v===undefined?"n/a":Number(v).toFixed(2);const money=v=>v===null||v===undefined?"n/a":Number(v).toLocaleString(undefined,{maximumFractionDigits:0});
 function renderList(){document.getElementById("strategy-count").textContent=state.items.length;document.getElementById("strategy-list").innerHTML=state.items.map((item,index)=>`<tr class="strategy-row ${index===state.selected?'active':''}" data-index="${index}"><td>${esc(item.name)}${item.is_sota?'<span class="sota">SOTA</span>':''}<div class="note">${esc(item.strategy_id)}</div></td><td>${esc(item.end_date)}</td><td class="num">${pct(item.total_return)}</td><td class="num">${pct(item.annualized_return)}</td><td class="num">${ratio(item.sharpe)}</td><td class="num">${pct(item.max_drawdown)}</td></tr>`).join("");document.querySelectorAll("[data-index]").forEach(row=>row.onclick=()=>{state.selected=Number(row.dataset.index);renderList();renderDetail()})}
-function renderDetail(){const item=state.items[state.selected];const target=document.getElementById("strategy-detail");if(!item){target.className="empty";target.textContent="No strategy artifacts found";return}target.className="details";target.innerHTML=`<h2>${esc(item.name)}${item.is_sota?'<span class="sota">CURRENT SOTA</span>':''}</h2><p class="note">Theoretical performance from stored backtest NAV. It is not actual account PnL.</p><div class="metrics"><div class="metric"><label>Period</label><strong>${esc(item.start_date)} to ${esc(item.end_date)}</strong></div><div class="metric"><label>Observations</label><strong>${item.observations}</strong></div><div class="metric"><label>Final NAV (CNH)</label><strong>${money(item.final_nav_cnh)}</strong></div><div class="metric"><label>Annual volatility</label><strong>${pct(item.annualized_volatility)}</strong></div><div class="metric"><label>Calmar</label><strong>${ratio(item.calmar)}</strong></div><div class="metric"><label>Max drawdown</label><strong>${pct(item.max_drawdown)}</strong></div></div><div class="path">${esc(item.artifact_path)}</div><div class="alloc"><h2>Final backtest allocation</h2>${item.allocation.length?item.allocation.sort((a,b)=>b.weight-a.weight).map(row=>`<div class="metric"><label>${esc(row.symbol)}</label><strong>${pct(row.weight)}</strong><div class="bar"><div class="fill" style="width:${Math.max(0,Math.min(100,Number(row.weight)*100))}%"></div></div></div>`).join(""):'<div class="empty">No final allocation in this artifact</div>'}</div>`}
+function renderDetail(){const item=state.items[state.selected];const target=document.getElementById("strategy-detail");if(!item){target.className="empty";target.textContent="No strategy artifacts found";return}target.className="details";target.innerHTML=`<h2>${esc(item.name)}${item.is_sota?'<span class="sota">CURRENT SOTA</span>':''}</h2><p class="note">Theoretical performance from stored backtest NAV. It is not actual account PnL.</p><div class="metrics"><div class="metric"><label>Period</label><strong>${esc(item.start_date)} to ${esc(item.end_date)}</strong></div><div class="metric"><label>Observations</label><strong>${item.observations}</strong></div><div class="metric"><label>Final NAV (CNH)</label><strong>${money(item.final_nav_cnh)}</strong></div><div class="metric"><label>Annual volatility</label><strong>${pct(item.annualized_volatility)}</strong></div><div class="metric"><label>Calmar</label><strong>${ratio(item.calmar)}</strong></div><div class="metric"><label>Max drawdown</label><strong>${pct(item.max_drawdown)}</strong></div></div><div class="path">${esc(item.artifact_path)}</div><div class="alloc"><h2>Final backtest allocation</h2>${item.allocation.length?item.allocation.sort((a,b)=>b.weight-a.weight).map(row=>`<div class="metric"><label>${esc(AssetNames.label(row.symbol))}</label><strong>${pct(row.weight)}</strong><div class="bar"><div class="fill" style="width:${Math.max(0,Math.min(100,Number(row.weight)*100))}%"></div></div></div>`).join(""):'<div class="empty">No final allocation in this artifact</div>'}</div>`}
 fetch("/api/v1/strategies").then(r=>{if(!r.ok)throw new Error(r.statusText);return r.json()}).then(payload=>{state.items=payload.strategies||[];state.selected=state.items.length?0:null;document.getElementById("catalog-note").textContent=`${payload.registry_type}; theoretical source: ${payload.theoretical_performance_source}`;renderList();renderDetail()}).catch(error=>{document.getElementById("catalog-note").textContent=`Catalog error: ${error.message}`});
 </script></body></html>"""
 
@@ -1971,11 +2036,11 @@ fetch("/api/v1/strategies").then(r=>{if(!r.ok)throw new Error(r.statusText);retu
 _STRATEGIES_HTML = """<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Strategies</title>
 <style>:root{--bg:#f6f7f9;--panel:#fff;--text:#1d2433;--muted:#667085;--line:#d9dee7;--focus:#2456a6;--good:#087f5b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px Inter,Segoe UI,Arial,sans-serif}header{height:56px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--line)}h1,h2{margin:0;letter-spacing:0}h1{font-size:18px}h2{font-size:15px}.actions,.segments{display:flex;gap:8px;align-items:center}.button,button{min-height:32px;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--text);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}.segments button.active{background:#e9f0fb;border-color:#b8c7e6;color:#183b73;font-weight:650}main{padding:16px 18px 28px}.panel{background:#fff;border:1px solid var(--line);border-radius:7px;overflow:hidden}.head{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;justify-content:space-between}.note{color:var(--muted);font-size:12px}.table-wrap{overflow:auto;max-height:calc(100vh - 170px)}table{border-collapse:collapse;width:100%;font-size:12px}th,td{padding:10px;border-bottom:1px solid #edf0f4;text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#f8fafc;color:var(--muted)}td.num,th.num{text-align:right}.strategy-link{border:0;padding:0;min-height:0;background:transparent;color:var(--focus);font-weight:650}.strategy-link:hover{text-decoration:underline}.badge{display:inline-block;margin-left:6px;padding:2px 6px;border:1px solid #c7cdd6;border-radius:999px;color:#667085;font-size:10px}.badge.sota,.badge.monitored{border-color:#9cd6cd;background:#ecf9f6;color:var(--good)}@media(max-width:700px){header{height:auto;align-items:flex-start;flex-direction:column;padding:10px 12px}.actions{width:100%;flex-wrap:wrap}.actions .button{flex:1 1 110px}.head{align-items:flex-start;flex-direction:column}.table-wrap{max-height:none}}</style></head>
 <body><header><h1>Strategies</h1><div class="actions"><a class="button" href="/operator">Trading</a><a class="button" href="/strategies">Strategies</a><a class="button" href="/platform">System</a><a class="button" href="/platform/market-data-audit">Market Data</a></div></header>
-<main><section class="panel"><div class="head"><div><h2>Strategy Registry</h2><div id="catalog-note" class="note">Loading strategy artifacts</div></div><div class="segments"><button class="active" data-lifecycle="monitored">Monitored <span id="monitored-count">0</span></button><button data-lifecycle="archived">Archived <span id="archived-count">0</span></button></div></div><div class="table-wrap"><table><thead><tr><th>Strategy</th><th>Lifecycle</th><th>Artifact End</th><th>Data Through</th><th class="num">Return</th><th class="num">Ann. Return</th><th class="num">Sharpe</th><th class="num">Max DD</th></tr></thead><tbody id="strategy-list"></tbody></table></div></section></main>
-<script>const state={items:[],lifecycle:"monitored"};const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const pct=v=>v==null?"n/a":`${(Number(v)*100).toFixed(2)}%`;const ratio=v=>v==null?"n/a":Number(v).toFixed(2);function render(){const items=state.items.filter(x=>x.lifecycle===state.lifecycle);document.getElementById("strategy-list").innerHTML=items.length?items.map(item=>`<tr><td><button class="strategy-link" data-id="${esc(item.strategy_id)}" data-strategy-lifecycle="${esc(item.lifecycle)}">${esc(item.name)}</button>${item.is_sota?'<span class="badge sota">SOTA</span>':''}${item.app_tracking&&!item.is_sota?'<span class="badge">Tracked · not promoted</span>':''}<div class="note">${esc(item.strategy_id)}</div></td><td><span class="badge ${esc(item.lifecycle)}">${esc(item.lifecycle)}</span></td><td>${esc(item.artifact_end_date)}</td><td>${esc(item.end_date)}</td><td class="num">${pct(item.total_return)}</td><td class="num">${pct(item.annualized_return)}</td><td class="num">${ratio(item.sharpe)}</td><td class="num">${pct(item.max_drawdown)}</td></tr>`).join(""):'<tr><td colspan="8" class="note">No strategies in this lifecycle.</td></tr>';document.querySelectorAll(".strategy-link").forEach(button=>button.onclick=()=>location.href=button.dataset.strategyLifecycle==="monitored"?`/api/v1/strategies/${encodeURIComponent(button.dataset.id)}/report`:`/strategies/${encodeURIComponent(button.dataset.id)}`);document.querySelectorAll("[data-lifecycle]").forEach(button=>button.classList.toggle("active",button.dataset.lifecycle===state.lifecycle))}document.querySelectorAll("[data-lifecycle]").forEach(button=>button.onclick=()=>{state.lifecycle=button.dataset.lifecycle;render()});async function refreshCatalog(){try{const response=await fetch("/api/v1/strategies",{cache:"no-store"});if(!response.ok)throw new Error(response.statusText);const payload=await response.json();state.items=payload.strategies||[];document.getElementById("monitored-count").textContent=state.items.filter(x=>x.lifecycle==="monitored").length;document.getElementById("archived-count").textContent=state.items.filter(x=>x.lifecycle==="archived").length;document.getElementById("catalog-note").textContent=[payload.monitoring_notes||payload.theoretical_performance_source,...(payload.warnings||[])].filter(Boolean).join(" ");render()}catch(error){document.getElementById("catalog-note").textContent=`Catalog error: ${error.message}`}finally{window.setTimeout(refreshCatalog,15000)}}refreshCatalog();</script></body></html>"""
+<main><section class="panel"><div class="head"><div><h2>Strategy Registry</h2><div id="catalog-note" class="note">Loading strategy artifacts</div></div><div class="segments"><button class="active" data-lifecycle="monitored">Monitored <span id="monitored-count">0</span></button><button data-lifecycle="archived">Archived <span id="archived-count">0</span></button></div></div><div class="table-wrap"><table><thead><tr><th>Strategy</th><th>Lifecycle</th><th>Artifact End</th><th>Data Through</th><th class="num">Return</th><th class="num">Ann. Return</th><th class="num">Sharpe</th><th class="num">Max DD</th><th>Actions</th></tr></thead><tbody id="strategy-list"></tbody></table></div></section></main>
+<script>const state={items:[],lifecycle:"monitored"};const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const pct=v=>v==null?"n/a":`${(Number(v)*100).toFixed(2)}%`;const ratio=v=>v==null?"n/a":Number(v).toFixed(2);function render(){const items=state.items.filter(x=>x.lifecycle===state.lifecycle);document.getElementById("strategy-list").innerHTML=items.length?items.map(item=>`<tr><td><button class="strategy-link" data-id="${esc(item.strategy_id)}" data-strategy-lifecycle="${esc(item.lifecycle)}">${esc(item.name)}</button>${item.is_sota?'<span class="badge sota">SOTA</span>':''}${item.app_tracking&&!item.is_sota?'<span class="badge">Tracked · not promoted</span>':''}<div class="note">${esc(item.strategy_id)}</div></td><td><span class="badge ${esc(item.lifecycle)}">${esc(item.lifecycle)}</span></td><td>${esc(item.artifact_end_date)}</td><td>${esc(item.end_date)}</td><td class="num">${pct(item.total_return)}</td><td class="num">${pct(item.annualized_return)}</td><td class="num">${ratio(item.sharpe)}</td><td class="num">${pct(item.max_drawdown)}</td><td>${item.lifecycle==="monitored"?`<a class="button sc-promote" data-strategy="${esc(item.strategy_id)}" href="/strategies?allocate=${encodeURIComponent(item.strategy_id)}">Promote / allocate</a>`:""}</td></tr>`).join(""):'<tr><td colspan="9" class="note">No strategies in this lifecycle.</td></tr>';document.querySelectorAll(".strategy-link").forEach(button=>button.onclick=()=>location.href=button.dataset.strategyLifecycle==="monitored"?`/api/v1/strategies/${encodeURIComponent(button.dataset.id)}/report`:`/strategies/${encodeURIComponent(button.dataset.id)}`);document.querySelectorAll("[data-lifecycle]").forEach(button=>button.classList.toggle("active",button.dataset.lifecycle===state.lifecycle))}document.querySelectorAll("[data-lifecycle]").forEach(button=>button.onclick=()=>{state.lifecycle=button.dataset.lifecycle;render()});async function refreshCatalog(){try{const response=await fetch("/api/v1/strategies",{cache:"no-store"});if(!response.ok)throw new Error(response.statusText);const payload=await response.json();state.items=payload.strategies||[];document.getElementById("monitored-count").textContent=state.items.filter(x=>x.lifecycle==="monitored").length;document.getElementById("archived-count").textContent=state.items.filter(x=>x.lifecycle==="archived").length;document.getElementById("catalog-note").textContent=[payload.monitoring_notes||payload.theoretical_performance_source,...(payload.warnings||[])].filter(Boolean).join(" ");render()}catch(error){document.getElementById("catalog-note").textContent=`Catalog error: ${error.message}`}finally{window.setTimeout(refreshCatalog,15000)}}refreshCatalog();</script></body></html>"""
 
 
 _STRATEGY_DETAIL_HTML = """<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Strategy Detail</title>
 <style>:root{--bg:#f6f7f9;--panel:#fff;--text:#1d2433;--muted:#667085;--line:#d9dee7;--focus:#2456a6;--good:#087f5b;--benchmark:#111827}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px Inter,Segoe UI,Arial,sans-serif}header{height:56px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--line)}h1,h2{margin:0;letter-spacing:0}h1{font-size:18px}h2{font-size:15px}.actions{display:flex;gap:8px;align-items:center}.button{min-height:32px;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--text);text-decoration:none;display:inline-flex;align-items:center;justify-content:center}main{padding:16px 18px 28px}.titlebar{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}.note{color:var(--muted);font-size:12px}.badge{display:inline-block;margin-left:6px;padding:2px 7px;border:1px solid #9cd6cd;border-radius:999px;background:#ecf9f6;color:var(--good);font-size:10px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}.metric,.panel{background:#fff;border:1px solid var(--line);border-radius:7px}.metric{padding:11px}.metric label{display:block;color:var(--muted);font-size:11px}.metric strong{display:block;margin-top:4px;font-size:16px}.grid{display:grid;grid-template-columns:1.4fr .6fr;gap:12px;margin-bottom:12px}.panel{overflow:hidden}.head{padding:11px 13px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.body{padding:12px}.chart{min-height:300px}.chart svg{display:block;width:100%;height:auto}table{border-collapse:collapse;width:100%;font-size:12px}th,td{padding:8px 9px;border-bottom:1px solid #edf0f4;text-align:left}td.num,th.num{text-align:right}.line{fill:none;stroke:#2456a6;stroke-width:2}.bench{fill:none;stroke:var(--benchmark);stroke-width:1.5}.axis{stroke:#ccd3dd;stroke-width:1}.legend{display:flex;gap:14px;color:var(--muted);font-size:12px}.swatch{width:18px;height:3px;background:#2456a6;display:inline-block}.swatch.bench{background:#111827}.exposures{display:grid;grid-template-columns:1fr 1fr;gap:12px}.warning{white-space:pre-wrap;color:#9a5b09}@media(max-width:900px){header{height:auto;align-items:flex-start;flex-direction:column;padding:10px 12px}.actions{width:100%;flex-wrap:wrap}.actions .button{flex:1 1 110px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.grid,.exposures{grid-template-columns:1fr}}@media(max-width:520px){.metrics{grid-template-columns:1fr}}</style></head>
 <body><header><h1>Strategy Detail</h1><div class="actions"><a class="button" href="/operator">Trading</a><a class="button" href="/strategies">Strategies</a><a class="button" href="/platform">System</a><a class="button" href="/platform/market-data-audit">Market Data</a></div></header><main><div class="titlebar"><div><h1 id="name">Loading strategy</h1><div id="method" class="note"></div></div><div class="actions"><a class="button" href="/strategies">Back to registry</a><a id="report-link" class="button" hidden target="_blank">Full backtest report</a></div></div><section id="metrics" class="metrics"></section><div class="grid"><section class="panel"><div class="head"><h2>Performance vs Benchmark</h2><div class="legend"><span><i class="swatch"></i> Strategy</span><span><i class="swatch bench"></i> Benchmark</span></div></div><div id="chart" class="body chart"></div></section><section class="panel"><div class="head"><h2>Current Holdings</h2></div><div id="holdings" class="body"></div></section></div><section class="panel" style="margin-bottom:12px"><div class="head"><h2>Benchmark Comparison</h2></div><div id="comparison" class="body"></div></section><section class="panel"><div class="head"><h2>Exposure and Performance Attribution</h2></div><div class="body exposures"><div><h2>Country Exposure</h2><div id="country"></div></div><div><h2>Currency Exposure</h2><div id="currency"></div></div></div></section><div id="warnings" class="warning"></div></main>
-<script>const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const pct=v=>v==null?"n/a":`${(Number(v)*100).toFixed(2)}%`;const ratio=v=>v==null?"n/a":Number(v).toFixed(2);const money=v=>v==null?"n/a":Number(v).toLocaleString(undefined,{maximumFractionDigits:0});function metric(label,value){return `<div class="metric"><label>${label}</label><strong>${value}</strong></div>`}function table(rows,headers){return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table>`}function exposureTable(values){const rows=Object.entries(values||{}).sort((a,b)=>Number(b[1])-Number(a[1])).map(([key,value])=>`<tr><td>${esc(key)}</td><td class="num">${money(value)}</td></tr>`);return table(rows,["Exposure","CNH"])}function chartSvg(strategy,benchmark){let s=strategy.map(x=>({d:x.trade_date,v:Number(x.nav_cnh)})).filter(x=>x.v>0),b=benchmark.map(x=>({d:x.trade_date,v:Number(x.nav_cnh)})).filter(x=>x.v>0);if(!s.length)return '<div class="note">No NAV series</div>';const baseS=s[0].v,baseB=b[0]?.v||1;const view=ChartNavigation.view('chart',[...s,...b],q=>Date.parse(q.d),()=>{document.getElementById('chart').innerHTML=chartSvg(strategy,benchmark)},{left:50,right:805,top:15,bottom:272});s=s.filter(q=>Date.parse(q.d)>=view.range[0]&&Date.parse(q.d)<=view.range[1]);b=b.filter(q=>Date.parse(q.d)>=view.range[0]&&Date.parse(q.d)<=view.range[1]);if(!s.length&&!b.length)return '<div class="note">No observations in this period. Use Full history to reset.</div>';const all=[...s.map(x=>({...x,i:x.v/baseS*100})),...b.map(x=>({...x,i:x.v/baseB*100}))],vals=all.map(x=>x.i),w=820,h=300,p={l:50,r:15,t:15,b:28},minX=view.range[0],maxX=view.range[1],minY=Math.min(...vals)*.98,maxY=Math.max(...vals)*1.02,x=d=>p.l+(Date.parse(d)-minX)/(maxX-minX||1)*(w-p.l-p.r),y=v=>h-p.b-(v-minY)/(maxY-minY||1)*(h-p.t-p.b),path=(rows,base)=>rows.map((q,i)=>`${i?'L':'M'} ${x(q.d).toFixed(1)} ${y(q.v/base*100).toFixed(1)}`).join(' ');return `<svg viewBox="0 0 ${w} ${h}"><line class="axis" x1="${p.l}" x2="${w-p.r}" y1="${h-p.b}" y2="${h-p.b}"/><path class="line" d="${path(s,baseS)}"/>${b.length?`<path class="bench" d="${path(b,baseB)}"/>`:''}<text x="${p.l}" y="${h-8}" fill="#667085" font-size="11">${esc(new Date(minX).toISOString().slice(0,10))}</text><text x="${w-90}" y="${h-8}" fill="#667085" font-size="11">${esc(new Date(maxX).toISOString().slice(0,10))}</text></svg>`}function comparisonTable(c){if(!c?.metrics)return '<div class="note">No structured benchmark comparison artifact is available for this run.</div>';const labels={full:'Full',in_sample:'In sample',out_of_sample:'Out of sample'},rows=Object.entries(c.metrics).map(([key,v])=>`<tr><td>${labels[key]||esc(key)}</td><td class="num">${pct(v.candidate?.return)}</td><td class="num">${pct(v.baseline?.return)}</td><td class="num">${pct(v.delta?.return)}</td><td class="num">${ratio(v.candidate?.sharpe)}</td><td class="num">${ratio(v.active?.informationRatio)}</td><td class="num">${pct(v.candidate?.maxDrawdown)}</td></tr>`);return table(rows,["Window","Strategy","Benchmark","Alpha","Sharpe","Info Ratio","Max DD"])}const id=decodeURIComponent(location.pathname.split('/').filter(Boolean).pop());fetch(`/api/v1/strategies/${encodeURIComponent(id)}`).then(r=>{if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);return r.json()}).then(d=>{if(d.lifecycle==='monitored'&&d.report_url){location.replace(d.report_url);return}document.title=d.name;document.getElementById('name').innerHTML=`${esc(d.name)}${d.is_sota?'<span class="badge">CURRENT SOTA</span>':''}<span class="badge">${esc(d.lifecycle)}</span>`;document.getElementById('method').textContent=d.lifecycle==='monitored'?`Data through ${d.end_date}; artifact ended ${d.artifact_end_date}. ${d.monitoring_notes}`:`Archived artifact through ${d.artifact_end_date}.`;document.getElementById('metrics').innerHTML=metric('Total Return',pct(d.total_return))+metric('Annual Return',pct(d.annualized_return))+metric('Annual Volatility',pct(d.annualized_volatility))+metric('Sharpe',ratio(d.sharpe))+metric('Max Drawdown',pct(d.max_drawdown))+metric('Calmar',ratio(d.calmar))+metric('Leverage',ratio(d.leverage))+metric('Final NAV CNH',money(d.final_nav_cnh));document.getElementById('chart').innerHTML=chartSvg(d.nav_series||[],d.benchmark_series||[]);document.getElementById('holdings').innerHTML=table((d.holdings||[]).map(x=>`<tr><td>${esc(x.symbol)}</td><td class="num">${pct(x.weight)}</td><td class="num">${money(x.value_cnh)}</td></tr>`),['Symbol','Weight','CNH']);document.getElementById('comparison').innerHTML=comparisonTable(d.comparison);document.getElementById('country').innerHTML=exposureTable(d.country_exposure_cnh);document.getElementById('currency').innerHTML=exposureTable(d.currency_exposure_cnh);document.getElementById('warnings').textContent=(d.warnings||[]).join('\n');if(d.report_url){const a=document.getElementById('report-link');a.href=d.report_url;a.hidden=false}}).catch(e=>{document.getElementById('name').textContent='Strategy unavailable';document.getElementById('warnings').textContent=e.message});</script></body></html>"""
+<script>const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));const pct=v=>v==null?"n/a":`${(Number(v)*100).toFixed(2)}%`;const ratio=v=>v==null?"n/a":Number(v).toFixed(2);const money=v=>v==null?"n/a":Number(v).toLocaleString(undefined,{maximumFractionDigits:0});function metric(label,value){return `<div class="metric"><label>${label}</label><strong>${value}</strong></div>`}function table(rows,headers){return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table>`}function exposureTable(values){const rows=Object.entries(values||{}).sort((a,b)=>Number(b[1])-Number(a[1])).map(([key,value])=>`<tr><td>${esc(key)}</td><td class="num">${money(value)}</td></tr>`);return table(rows,["Exposure","CNH"])}function chartSvg(strategy,benchmark){let s=strategy.map(x=>({d:x.trade_date,v:Number(x.nav_cnh)})).filter(x=>x.v>0),b=benchmark.map(x=>({d:x.trade_date,v:Number(x.nav_cnh)})).filter(x=>x.v>0);if(!s.length)return '<div class="note">No NAV series</div>';const baseS=s[0].v,baseB=b[0]?.v||1;const view=ChartNavigation.view('chart',[...s,...b],q=>Date.parse(q.d),()=>{document.getElementById('chart').innerHTML=chartSvg(strategy,benchmark)},{left:50,right:805,top:15,bottom:272});s=s.filter(q=>Date.parse(q.d)>=view.range[0]&&Date.parse(q.d)<=view.range[1]);b=b.filter(q=>Date.parse(q.d)>=view.range[0]&&Date.parse(q.d)<=view.range[1]);if(!s.length&&!b.length)return '<div class="note">No observations in this period. Use Full history to reset.</div>';const all=[...s.map(x=>({...x,i:x.v/baseS*100})),...b.map(x=>({...x,i:x.v/baseB*100}))],vals=all.map(x=>x.i),w=820,h=300,p={l:50,r:15,t:15,b:28},minX=view.range[0],maxX=view.range[1],minY=Math.min(...vals)*.98,maxY=Math.max(...vals)*1.02,x=d=>p.l+(Date.parse(d)-minX)/(maxX-minX||1)*(w-p.l-p.r),y=v=>h-p.b-(v-minY)/(maxY-minY||1)*(h-p.t-p.b),path=(rows,base)=>rows.map((q,i)=>`${i?'L':'M'} ${x(q.d).toFixed(1)} ${y(q.v/base*100).toFixed(1)}`).join(' ');return `<svg viewBox="0 0 ${w} ${h}"><line class="axis" x1="${p.l}" x2="${w-p.r}" y1="${h-p.b}" y2="${h-p.b}"/><path class="line" d="${path(s,baseS)}"/>${b.length?`<path class="bench" d="${path(b,baseB)}"/>`:''}<text x="${p.l}" y="${h-8}" fill="#667085" font-size="11">${esc(new Date(minX).toISOString().slice(0,10))}</text><text x="${w-90}" y="${h-8}" fill="#667085" font-size="11">${esc(new Date(maxX).toISOString().slice(0,10))}</text></svg>`}function comparisonTable(c){if(!c?.metrics)return '<div class="note">No structured benchmark comparison artifact is available for this run.</div>';const labels={full:'Full',in_sample:'In sample',out_of_sample:'Out of sample'},rows=Object.entries(c.metrics).map(([key,v])=>`<tr><td>${labels[key]||esc(key)}</td><td class="num">${pct(v.candidate?.return)}</td><td class="num">${pct(v.baseline?.return)}</td><td class="num">${pct(v.delta?.return)}</td><td class="num">${ratio(v.candidate?.sharpe)}</td><td class="num">${ratio(v.active?.informationRatio)}</td><td class="num">${pct(v.candidate?.maxDrawdown)}</td></tr>`);return table(rows,["Window","Strategy","Benchmark","Alpha","Sharpe","Info Ratio","Max DD"])}const id=decodeURIComponent(location.pathname.split('/').filter(Boolean).pop());fetch(`/api/v1/strategies/${encodeURIComponent(id)}`).then(r=>{if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);return r.json()}).then(d=>{if(d.lifecycle==='monitored'&&d.report_url){location.replace(d.report_url);return}document.title=d.name;document.getElementById('name').innerHTML=`${esc(d.name)}${d.is_sota?'<span class="badge">CURRENT SOTA</span>':''}<span class="badge">${esc(d.lifecycle)}</span>`;document.getElementById('method').textContent=d.lifecycle==='monitored'?`Data through ${d.end_date}; artifact ended ${d.artifact_end_date}. ${d.monitoring_notes}`:`Archived artifact through ${d.artifact_end_date}.`;document.getElementById('metrics').innerHTML=metric('Total Return',pct(d.total_return))+metric('Annual Return',pct(d.annualized_return))+metric('Annual Volatility',pct(d.annualized_volatility))+metric('Sharpe',ratio(d.sharpe))+metric('Max Drawdown',pct(d.max_drawdown))+metric('Calmar',ratio(d.calmar))+metric('Leverage',ratio(d.leverage))+metric('Final NAV CNH',money(d.final_nav_cnh));document.getElementById('chart').innerHTML=chartSvg(d.nav_series||[],d.benchmark_series||[]);document.getElementById('holdings').innerHTML=table((d.holdings||[]).map(x=>`<tr><td>${esc(x.symbol)}</td>${AssetNames.cell(x.symbol)}<td class="num">${pct(x.weight)}</td><td class="num">${money(x.value_cnh)}</td></tr>`),['Ticker','Asset name','Weight','CNH']);document.getElementById('comparison').innerHTML=comparisonTable(d.comparison);document.getElementById('country').innerHTML=exposureTable(d.country_exposure_cnh);document.getElementById('currency').innerHTML=exposureTable(d.currency_exposure_cnh);document.getElementById('warnings').textContent=(d.warnings||[]).join('\n');if(d.report_url){const a=document.getElementById('report-link');a.href=d.report_url;a.hidden=false}}).catch(e=>{document.getElementById('name').textContent='Strategy unavailable';document.getElementById('warnings').textContent=e.message});</script></body></html>"""

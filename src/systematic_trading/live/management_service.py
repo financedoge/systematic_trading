@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from systematic_trading.portfolio.strategy_allocation import trading_definition
 import re
 from datetime import UTC, date, datetime, time, timedelta
 from pathlib import Path
@@ -73,6 +74,7 @@ class TradingServiceStatus(BaseModel):
     last_rebalance_proposal_id: str | None = None
     last_rebalance_artifact_path: str | None = None
     portfolio_alignment_status: str | None = None
+    strategy_change_status: str | None = None
     portfolio_alignment_message: str | None = None
     portfolio_alignment_proposal_id: str | None = None
     portfolio_alignment: InitialAllocationResult | None = None
@@ -221,24 +223,34 @@ class TradingManagementService:
             return state.model_copy(update={
                 "last_reconciliation_at": latest.checked_at,
                 "last_reconciliation_status": latest.status,
+                "last_reconciliation_break_count": (len(latest.position_differences) + len(latest.unmatched_local_orders)
+                    + len(latest.unmatched_ib_fills) + len(latest.execution_issues) + len(latest.execution_sync_pending)),
             }) if latest else state
 
     def run_once(self, *, now: datetime | None = None) -> TradingServiceStatus:
         started = monotonic()
         current = _as_utc(now or datetime.now(tz=UTC))
         self._consume_broker_recovery(current)
+        from systematic_trading.live.strategy_control import activate_pending
+        try:
+            strategy_change_status = activate_pending(self.settings, self.store, now=current, order_client=self.order_management_client)
+        except Exception as exc:
+            strategy_change_status = 'Handover blocked: '+str(exc)
+            logging.getLogger(__name__).exception('Scheduled strategy handover is blocked; current allocation retained.')
         with self._lock:
-            self._status = self._status.model_copy(update={"heartbeat_at": current, "running": self._thread is not None and self._thread.is_alive()})
+            self._status = self._status.model_copy(update={"strategy_change_status": strategy_change_status, "heartbeat_at": current, "running": self._thread is not None and self._thread.is_alive()})
             self._save_status_locked()
 
+        # Broker execution evidence and approval bindings still need maintenance
+        # while exchanges are closed, especially across midnight/restarts.
+        self.auto_approval.invalidate_stale_binding()
+        if self._execution_sync_due(current):
+            self._sync_executions(current)
         if not self._is_monitoring_day(current):
-            self._stage_portfolio_alignment(current)
-            self._defer_until_next_trading_day(current)
+            self._stage_portfolio_alignment(current + timedelta(seconds=monotonic() - started))
             with self._lock:
                 return self._status
 
-        if self._execution_sync_due(current):
-            self._sync_executions(current)
         self._stage_portfolio_alignment(current + timedelta(seconds=monotonic() - started))
         self.auto_approval.tick(now=current + timedelta(seconds=monotonic() - started))
         self._refresh_eod_backlog(current)
@@ -588,7 +600,7 @@ class TradingManagementService:
                         order_type=OrderType.TWAP,
                         queue=False,
                     )
-                    automatic_proposal = plan.proposal.model_copy(update={"automation_strategy_key": current_sota_definition().key})
+                    automatic_proposal = plan.proposal.model_copy(update={"automation_strategy_key": trading_definition(self.store).key})
                     if plan.validation_issues:
                         raise ValueError("Cannot queue proposal with validation issues: " + "; ".join(plan.validation_issues))
                     self.store.save_proposal(automatic_proposal)
@@ -768,22 +780,6 @@ class TradingManagementService:
 
     def _is_monitoring_day(self, now: datetime) -> bool:
         return is_us_trading_day(self._local_now(now).date())
-
-    def _defer_until_next_trading_day(self, now: datetime) -> None:
-        local_now = self._local_now(now)
-        next_local = datetime.combine(
-            next_us_trading_day(local_now.date()),
-            time(hour=9, minute=30),
-            tzinfo=local_now.tzinfo,
-        )
-        with self._lock:
-            self._status = self._status.model_copy(
-                update={
-                    "next_execution_sync_at": next_local.astimezone(UTC),
-                    "last_error": None,
-                }
-            )
-            self._save_status_locked()
 
     def _record_error(self, event_type: str, message: str) -> None:
         with self._lock:
@@ -989,7 +985,8 @@ def scheduled_rebalance_dates(today: date) -> tuple[date | None, date | None]:
 
 
 def _existing_staged_proposal(store: TradingStore, decision_date: date) -> TradeProposal | None:
-    sleeve_name = current_sota_definition().sleeve_name
+    from systematic_trading.portfolio.strategy_allocation import trading_definition
+    sleeve_name = trading_definition(store).sleeve_name
     for proposal in store.list_proposals():
         if proposal.as_of == decision_date and proposal.sleeve == sleeve_name:
             return proposal

@@ -8,7 +8,7 @@ header { background:#13243b; color:#fff; height:68px; padding:0 28px; }
 header h1 { font-size:17px; letter-spacing:.02em; }
 header .button { background:transparent; color:#c5d2e5; border-color:transparent; }
 header .button[href="/operator"] { background:#28415e; color:#fff; }
-.shell { grid-template-columns:minmax(0,1fr) 350px; max-width:1920px; margin:auto; }
+.shell { display:block; max-width:1920px; margin:auto; }
 main { padding:26px; }
 aside { background:#f8fafc; border-left:1px solid var(--line); top:0; height:calc(100vh - 68px); }
 .panel { border-radius:12px; border:1px solid var(--line); box-shadow:0 2px 5px #162b4305; margin-bottom:20px; }
@@ -71,14 +71,64 @@ dialog .actions { margin-top:24px; justify-content:flex-end; }
 #amend-fields { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
 #amend-fields[hidden] { display:none; }
 .rail-panel { margin:12px; border:1px solid var(--line); border-radius:9px; background:white; overflow:hidden; }
-@media(max-width:1200px) { .shell{grid-template-columns:minmax(0,1fr) 300px;} main{padding:18px;} }
-@media(max-width:950px) { .shell{display:flex;flex-direction:column;} main{order:0;} aside{order:1;height:auto;position:static;width:100%;} }
+/* Approval review uses the full content width; only the tables scroll sideways. */
+#approval-workspace { scroll-margin-top:24px; }
+#approval-workspace h3 { margin:0 0 10px; font-size:15px; }
+#approval-workspace .approval-toolbar { justify-content:space-between; padding:12px 20px; flex-wrap:wrap; }
+#approval-workspace .tabs { display:flex; flex-wrap:wrap; width:auto; gap:6px; }
+#approval-workspace .tab { padding:8px 15px; }
+#proposal-readiness:empty,#action-log:empty { display:none; }
+#proposal-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:8px; max-height:180px; padding:12px 20px; background:#f7f9fc; border-bottom:1px solid var(--line); overflow-y:auto; }
+#proposal-list .proposal-row { display:flex; gap:12px; align-items:center; border:1px solid var(--line); border-radius:8px; background:#fff; padding:12px; text-align:left; }
+#proposal-list .proposal-row.active { border-color:#255bce; box-shadow:inset 3px 0 #255bce; background:#edf3ff; }
+#proposal-list .proposal-title { font-size:13px; white-space:normal; }
+#proposal-list .meta { font-size:11px; white-space:normal; overflow-wrap:anywhere; margin-top:5px; }
+.approval-selected { padding:20px 20px 0; }
+#approval-workspace .approval-selected h3 { font-size:18px; margin-top:6px; overflow-wrap:anywhere; }
+#approval-workspace .execution-summary { grid-template-columns:repeat(5,minmax(0,1fr)); padding:12px 20px 20px; gap:12px; border:0; }
+#approval-workspace .execution-summary .metric { border:0; border-left:2px solid #dfe6ee; border-radius:0; background:#f7f9fc; }
+#approval-workspace .execution-summary strong { font-size:19px; }
+.approval-review { display:grid; grid-template-columns:minmax(0,1fr) minmax(280px,340px); gap:28px; padding:0 20px 20px; }
+#proposal-detail { min-width:0; font-size:13px; line-height:1.65; overflow-wrap:anywhere; }
+.proposal-dates { display:grid; grid-template-columns:1fr 1fr 1.5fr; gap:16px; margin-bottom:20px; }
+.proposal-dates span { display:block; font-size:11px; color:#738297; margin-bottom:5px; }
+.proposal-dates strong { font-size:13px; font-weight:600; }
+.proposal-reasoning { border-top:1px solid var(--line); padding-top:12px; }
+.proposal-reasoning summary,.approval-disclosure summary,.order-rationale summary { cursor:pointer; }
+.proposal-reasoning li { margin:6px 0; }
+.approval-decision { background:#f7f9fc; border:1px solid var(--line); border-radius:10px; padding:18px; align-self:start; }
+.approval-decision label { font-size:12px; font-weight:600; }
+.approval-decision textarea { display:block; margin:8px 0; padding:10px; min-height:78px; border:1px solid #cbd5e1; border-radius:6px; font:inherit; font-size:13px; }
+.approval-decision .actions { margin-top:12px; }
+.approval-decision #approve-btn { flex:1 1 100%; background:#176445; color:#fff; }
+.approval-decision #reject-btn { background:#fff; color:#a02323; }
+#decision-readiness { font-size:11px; }
+.approval-orders-head { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:8px; padding:16px 20px 8px; border-top:1px solid var(--line); }
+.approval-table { overflow-x:auto; width:100%; }
+.approval-table table { table-layout:auto; min-width:850px; }
+.approval-table th,.approval-table td { padding:13px 16px; white-space:nowrap; overflow-wrap:normal; vertical-align:top; }
+.approval-table td { font-size:13px; }
+.approval-table th.asset-name,.approval-table td.asset-name { min-width:210px; max-width:310px; white-space:normal; }
+.approval-table td:last-child { white-space:normal; min-width:170px; }
+.approval-table .num { font-variant-numeric:tabular-nums; }
+.order-rationale { font-size:11px; color:#667991; margin-top:6px; }
+.order-rationale p { color:#344b66; line-height:1.6; }
+.order-side { font-size:11px; font-weight:700; text-transform:uppercase; border-radius:4px; padding:4px 7px; background:#f1ede6; color:#885c22; }
+.order-side.buy { color:#176445; background:#e4f2ec; }
+.order-window { font-size:12px !important; }
+.approval-disclosure { border-top:1px solid var(--line); }
+.approval-disclosure > summary { padding:16px 20px; font-size:13px; font-weight:600; }
+#targets-table td:last-child { min-width:320px; max-width:700px; line-height:1.65; }
+#broker-records td:first-child { white-space:normal; overflow-wrap:anywhere; max-width:220px; }
+@media(max-width:1200px) { main{padding:18px;} }
+@media(max-width:900px) { .approval-review{grid-template-columns:1fr;} #approval-workspace .execution-summary{grid-template-columns:repeat(3,minmax(0,1fr));} }
+@media(max-width:560px) { #proposal-list{grid-template-columns:1fr;max-height:170px;} .approval-review{padding:0 12px 16px;gap:16px;} #approval-workspace .execution-summary{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px;} .proposal-dates{grid-template-columns:1fr 1fr;} .proposal-dates>div:last-child{grid-column:1/-1;} .approval-selected{padding:16px 12px 0;} .approval-control{flex-wrap:wrap;} }
 @media(max-width:560px) { header{height:auto;padding:14px;} main{padding:12px;} .workspace-heading{align-items:flex-start;} .workspace-heading h2{font-size:23px;} .panel-head,.blotter-tools{padding:12px;flex-wrap:wrap;} .metrics-compact{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px;} .mini-metric strong{font-size:16px;overflow-wrap:anywhere;} .workspace-heading .subtle{max-width:220px;} }
 """
 
 WORKSPACE_HTML = """
 <div class="portfolio-context" id="portfolio-context" role="status">Loading portfolio context…</div>
-<div class="workspace-heading"><div><div class="eyebrow">Execution workspace</div><h2>Trading operations</h2><div class="subtle">Manage orders, reconcile holdings and review your next trade.</div></div><span class="paper-tag">PAPER ACCOUNT</span></div>
+<div class="workspace-heading"><div><div class="eyebrow">Execution workspace</div><h2>Trading operations</h2><div class="subtle">Manage orders, reconcile holdings and review your next trade.</div></div><div class="actions"><a class="button" href="#approval-workspace">Review approvals</a><span class="paper-tag">PAPER ACCOUNT</span></div></div>
 <section class="panel"><div class="approval-control"><div><h3>Approval mode <span id="approval-mode-label" class="paper-tag">Manual</span></h3><div class="subtle">Automatic mode approves and submits new strategy TWAP proposals in the paper account.</div><div class="subtle" id="approval-policy-status" role="status">Loading approval policy…</div></div><button id="approval-mode-switch" class="approval-switch" role="switch" aria-checked="false" aria-label="Automatic paper approval and submission" disabled>Automatic: off</button></div></section>
 <section class="panel" id="gateway-orders-panel">
 <div class="panel-head"><div><h2>Order blotter</h2><span class="subtle">IB Gateway · Broker status alongside the local audit trail</span></div><button id="sync-orders-btn" class="primary">Sync orders</button></div>
@@ -230,11 +280,11 @@ WORKSPACE_JS = r"""
         const observed=currentlyObserved(r);
         const active=observed && workingStates.includes(b.status) && r.status!=='filled' && b.status!=='PendingCancel' && !r.pending_action && r.environment==='paper';
         const retry=observed && ['Cancelled','ApiCancelled'].includes(b.status) && ['cancelled','rejected'].includes(r.status) && !r.pending_action && r.filled_quantity===0 && Number(b.filled)===0 && b.filled!=null;
-        const status=r.pending_action ? `${r.pending_action.action} pending` : r.status==='filled'?'Filled':(b.status || r.status);
+        const status=r.execution_sync_issue ? `${r.status==='filled'?'Filled · ':''}Execution review` : r.pending_action ? `${r.pending_action.action} pending` : r.status==='filled'?'Filled':(b.status || r.status);
         const timing=`<div>${r.submitted_at?esc(orderTimestamp(r.submitted_at)):'Not submitted'}</div><div class="subtle">Updated ${esc(orderTimestamp(r.updated_at))}</div><div class="subtle">Trade date ${esc(orderTradeDate(r)||'unknown')}</div>`;
         return `<tr>
-          <td><span class="order-symbol">${esc(r.order.symbol)}</span><div class="subtle">${esc(r.order_ref)}</div></td>
-          <td><span class="order-status ${category(r)}">${esc(status)}</span><div class="subtle">${r.pending_action?'Awaiting broker confirmation':observed?'IB confirmed':r.status==='missed'?'Not routed · missed window':r.status==='filled'?'Recorded execution history':'Last known · sync required'}</div></td>
+          <td><span class="order-symbol">${esc(r.order.symbol)}</span><div class="subtle">${esc(r.order_ref)}</div></td>${AssetNames.cell(r.order.symbol)}
+          <td><span class="order-status ${category(r)}">${esc(status)}</span><div class="subtle">${r.execution_sync_issue?esc(r.execution_sync_issue):r.pending_action?'Awaiting broker confirmation':observed?'IB confirmed':r.status==='missed'?'Not routed · missed window':r.status==='filled'?'Recorded execution history':'Last known · sync required'}</div></td>
           <td class="num">${esc(r.status==='filled'?r.filled_quantity:(b.filled??r.filled_quantity))} / ${esc(displayedOrderQuantity(r))}</td>
           ${benchmarkCells(r)}
           <td class="order-timing">${timing}</td>
@@ -244,9 +294,9 @@ WORKSPACE_JS = r"""
           <td><div class="row-actions"><button data-action="cancel" data-order="${esc(r.local_order_id)}" ${active?'':'disabled'}>Cancel</button><button title="Amend a working plain limit order within approved quantity and price limits" data-action="amend" data-order="${esc(r.local_order_id)}" ${active&&b.order_type==='LMT'&&!b.algo_strategy?'':'disabled'}>Amend</button><button title="Requires confirmed cancellation, zero fills, a current approval and matched reconciliation" data-action="resubmit" data-order="${esc(r.local_order_id)}" ${retry?'':'disabled'}>Resubmit</button></div></td>
         </tr>`;
       }).join('');
-      html+=externalRows.map(b=>`<tr><td class="order-symbol">${esc(b.symbol)}</td><td><span class="order-status">${esc(b.status)}</span></td><td class="num">${esc(b.filled??'?')} / ${Number(b.quantity)>0?esc(b.quantity):'?'}</td><td class="num">${executionPrice(b.average_fill_price)}</td><td>—</td><td>—</td><td class="order-timing">Submission unknown<div class="subtle">Observed ${esc(orderTimestamp(b.checked_at))}</div></td><td>${esc(b.side)}</td><td class="num">${fmtMaybeMoney(b.limit_price)}</td><td>${esc(b.broker_order_id)}</td><td class="subtle">External / unlinked · view only</td></tr>`).join('');
-      el('gateway-order-table').innerHTML=html ? `<table><thead><tr><th>Instrument / reference</th><th>Status</th><th class="num">Filled / total</th><th class="num">Avg fill</th><th class="num">TWAP estimate</th><th class="num">Slippage / price cost</th><th>Submitted / updated</th><th>Side / type</th><th class="num">Limit</th><th>IB order</th><th>Manage</th></tr></thead><tbody>${html}</tbody></table>` : `<div class="empty-state"><strong>No orders match these filters</strong>${filter==='working'&&dateRows.some(r=>matchesOrderStatus(r,'filled'))?'Filled orders remain available under All statuses or Filled.':'Choose All statuses or All dates to see more history.'}</div>`;
-      el('order-audit-history').innerHTML=rows.length ? rows.map(r=>`<details><summary>${esc(r.order.symbol)} · ${esc(orderTradeDate(r)||'Date unknown')} · ${esc(r.order_ref)} · ${esc(r.message||r.status)}</summary><pre>${esc(JSON.stringify({submitted_at:r.submitted_at,updated_at:r.updated_at,trade_date:orderTradeDate(r),broker:r.broker_observation,actions:r.management_audit,executions:r.execution_fills,issue:r.execution_sync_issue},null,2))}</pre></details>`).join('') : '<p class="subtle">No order activity matches these filters.</p>';
+      html+=externalRows.map(b=>`<tr><td class="order-symbol">${esc(b.symbol)}</td>${AssetNames.cell(b.symbol)}<td><span class="order-status">${esc(b.status)}</span></td><td class="num">${esc(b.filled??'?')} / ${Number(b.quantity)>0?esc(b.quantity):'?'}</td><td class="num">${executionPrice(b.average_fill_price)}</td><td>—</td><td>—</td><td class="order-timing">Submission unknown<div class="subtle">Observed ${esc(orderTimestamp(b.checked_at))}</div></td><td>${esc(b.side)}</td><td class="num">${fmtMaybeMoney(b.limit_price)}</td><td>${esc(b.broker_order_id)}</td><td class="subtle">External / unlinked · view only</td></tr>`).join('');
+      el('gateway-order-table').innerHTML=html ? `<table><thead><tr><th>Ticker / reference</th><th class="asset-name">Asset name</th><th>Status</th><th class="num">Filled / total</th><th class="num">Avg fill</th><th class="num">TWAP estimate</th><th class="num">Slippage / price cost</th><th>Submitted / updated</th><th>Side / type</th><th class="num">Limit</th><th>IB order</th><th>Manage</th></tr></thead><tbody>${html}</tbody></table>` : `<div class="empty-state"><strong>No orders match these filters</strong>${filter==='working'&&dateRows.some(r=>matchesOrderStatus(r,'filled'))?'Filled orders remain available under All statuses or Filled.':'Choose All statuses or All dates to see more history.'}</div>`;
+      el('order-audit-history').innerHTML=rows.length ? rows.map(r=>`<details><summary>${esc(AssetNames.label(r.order.symbol))} · ${esc(orderTradeDate(r)||'Date unknown')} · ${esc(r.order_ref)} · ${esc(r.message||r.status)}</summary><pre>${esc(JSON.stringify({submitted_at:r.submitted_at,updated_at:r.updated_at,trade_date:orderTradeDate(r),broker:r.broker_observation,actions:r.management_audit,executions:r.execution_fills,issue:r.execution_sync_issue,conflicts:r.execution_conflicts,recoveries:r.execution_recoveries},null,2))}</pre></details>`).join('') : '<p class="subtle">No order activity matches these filters.</p>';
       el('gateway-order-table').querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>openOrderAction(b.dataset.order,b.dataset.action)));
     }
     let economicLoading=false;
@@ -299,7 +349,7 @@ WORKSPACE_JS = r"""
     function openOrderAction(id,action) {
       const record=workspace.records.find(r=>r.local_order_id===id); if(!record) return;
       reviewedAction={record,action};
-      el('order-action-title').textContent=`${action[0].toUpperCase()+action.slice(1)} ${record.order.symbol}`;
+      el('order-action-title').textContent=`${action[0].toUpperCase()+action.slice(1)} ${AssetNames.label(record.order.symbol)}`;
       el('order-action-summary').textContent=`Paper ${record.order.side.toUpperCase()} · ${record.order.quantity} shares · IB #${record.broker_order_id} · ${record.order_ref}. ${action==='resubmit'?'This sends a new order with the stored approved terms.':'The broker may fill an order before accepting a change.'}`;
       el('amend-fields').hidden=action!=='amend'; el('amend-note').hidden=action!=='amend';
       el('amend-quantity').required=action==='amend'; el('amend-price').required=action==='amend';

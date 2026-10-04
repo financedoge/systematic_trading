@@ -1,0 +1,15 @@
+{
+  "cores": 16,
+  "executable": "D:\\projects\\systematic_trading\\.venv\\Scripts\\python.exe",
+  "packages": {
+    "beautifulsoup4": "4.15.0",
+    "matplotlib": "3.10.8",
+    "numpy": "2.5.3",
+    "pydantic": "2.13.5",
+    "pydantic-settings": "2.15.0",
+    "pytest": "9.1.1",
+    "scikit-learn": "1.8.0",
+    "xgboost": "3.2.0"
+  },
+  "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]"
+}

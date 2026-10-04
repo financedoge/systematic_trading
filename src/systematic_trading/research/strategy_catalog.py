@@ -76,7 +76,7 @@ def risk_parity_definition() -> StrategyDefinition:
     )
 
 
-def current_sota_definition() -> StrategyDefinition:
+def legacy_sota_definition() -> StrategyDefinition:
     return StrategyDefinition(
         key="sota_price_volume_technical_tree_relative_adaptive_top6",
         name="SOTA: price/volume top 6 + technical tree + relative/adaptive",
@@ -161,11 +161,26 @@ def current_sota_definition() -> StrategyDefinition:
     )
 
 
+def current_sota_definition() -> StrategyDefinition:
+    return usd_strategy_definition(legacy_sota_definition())
+
+
+def usd_strategy_definition(base: StrategyDefinition) -> StrategyDefinition:
+    """Version the tested U1 recipe after the complete, unchanged parent."""
+    from dataclasses import replace
+    return replace(base, key=base.key + "_usd_v1", name=base.name + " + USD",
+        sleeve_name=base.sleeve_name + "-usd-v1",
+        promoted_on="2026-10-02" if base.state == "sota" else None,
+        description=base.description + " U1 expanding per-ETF ridge: short/older momentum, volatility and "
+            "21/63-observation broad-dollar changes; separate final allocation tilt. Operator selected 2026-10-02.",
+        overlays=(*base.overlays, OverlaySpec(kind="usd_ridge", parameters={"version": "usd-ridge-u1-v1"})))
+
+
 def etf_activity_lag20_definition() -> StrategyDefinition:
     """Complete tracked challenger; registration never confers execution authority."""
     from dataclasses import replace
     from systematic_trading.research.flow_concentration import FlowConcentrationSpec
-    base = current_sota_definition()
+    base = legacy_sota_definition()
     return replace(base, key="research_etf_activity_lag20_v1", name="ETF activity lag-20",
         sleeve_name="research-etf-activity-lag20", state="tracked", promoted_on=None,
         description="SOTA allocation followed by the frozen lag-20 ETF activity tilt; tracked without promotion.",
@@ -174,15 +189,16 @@ def etf_activity_lag20_definition() -> StrategyDefinition:
 
 
 def registered_strategy_definition(key: str) -> StrategyDefinition:
-    definitions = [current_sota_definition(), etf_activity_lag20_definition(), risk_parity_definition(),
-                   rolling_xgboost_1y_definition(), rolling_xgboost_1y_definition(activity=False)]
+    parents = [legacy_sota_definition(), etf_activity_lag20_definition(), rolling_xgboost_1y_definition()]
+    definitions = [*parents, *(usd_strategy_definition(d) for d in parents), risk_parity_definition(),
+                   rolling_xgboost_1y_definition(activity=False)]
     return next((d for d in definitions if d.key == key), None) or _unknown_strategy(key)
 
 
 def rolling_xgboost_1y_definition(*, activity=True) -> StrategyDefinition:
     from dataclasses import replace
     from systematic_trading.research.rolling_tracking import rolling_xgboost_spec
-    base = etf_activity_lag20_definition() if activity else current_sota_definition()
+    base = etf_activity_lag20_definition() if activity else legacy_sota_definition()
     overlays = tuple(OverlaySpec(kind='rolling_model', parameters={
         'spec': json.dumps(rolling_xgboost_spec(), sort_keys=True), 'tilt': o.parameters['tilt'],
         'maxActiveWeight': o.parameters['maxActiveWeight']}) if o.kind == 'decision_tree' else o for o in base.overlays)
@@ -539,7 +555,12 @@ def instantiate_overlays(definition: StrategyDefinition) -> list[TargetOverlay]:
     overlays: list[TargetOverlay] = []
     for spec in definition.overlays:
         params = spec.parameters
-        if spec.kind == "etf_activity":
+        if spec.kind == "usd_ridge":
+            from systematic_trading.research.usd_tracking import UsdRidgeOverlay
+            if params != {"version": "usd-ridge-u1-v1"}:
+                raise ValueError("Unsupported USD overlay recipe")
+            overlays.append(UsdRidgeOverlay())
+        elif spec.kind == "etf_activity":
             from systematic_trading.research.flow_concentration import ActivityConcentrationOverlay, FlowConcentrationSpec
             overlays.append(ActivityConcentrationOverlay(FlowConcentrationSpec.model_validate_json(params["spec"])))
         elif spec.kind == "rolling_model":
@@ -799,7 +820,10 @@ def _model_layers(definition: StrategyDefinition) -> list[dict[str, str]]:
 
 def _overlay_layer(overlay: OverlaySpec, index: int) -> dict[str, str]:
     params = overlay.parameters
-    if overlay.kind == "relative_momentum":
+    if overlay.kind == "usd_ridge":
+        title = "USD prediction overlay"
+        detail = "Monthly per-ETF expanding ridge; price momentum, volatility, broad-dollar 21/63 observations. 12% rank tilt, 3pp bound after the complete parent."
+    elif overlay.kind == "relative_momentum":
         detail = (
             f"Score = 45% {params['mediumLookbackBars']}d momentum + 55% {params['longLookbackBars']}d momentum; "
             f"regime drawdown trigger {params['drawdownTrigger']}, vol-ratio trigger {params['volatilityRatioTrigger']}; "
@@ -979,6 +1003,11 @@ def _sota_dynamic_commodity_guard_tree(overlays: tuple[OverlaySpec, ...]) -> str
 
 def _overlay_decision_tree(overlay: OverlaySpec) -> str:
     params = overlay.parameters
+    if overlay.kind == 'usd_ridge':
+        return '\n'.join(['flowchart TD', '  A["Published prior-day USD vintage"] --> B["21/63-observation changes in one vintage"]',
+            '  B --> C["Price momentum + volatility + USD; per-ETF ridge"]',
+            '  C --> D["Monthly fit; 60 completed months; labels before fit close"]',
+            '  D --> E["12% forecast rank tilt; +/-3pp; preserve cash and selections"]'])
     if overlay.kind == "relative_momentum":
         return "\n".join(
             [

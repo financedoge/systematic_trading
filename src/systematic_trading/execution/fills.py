@@ -7,6 +7,12 @@ import json
 
 from systematic_trading.domain import BrokerExecutionFill, BrokerOrderRecord
 from systematic_trading.domain.enums import BrokerOrderStatus
+from systematic_trading.domain.execution import ExecutionConflictAudit
+
+
+def execution_values(fill: BrokerExecutionFill, *, mode="python") -> dict:
+    """Compare economics/identity, not client-scoped IDs or capture paths."""
+    return fill.model_dump(mode=mode, exclude={"broker_order_id", "evidence_ref"})
 
 
 def match_execution(
@@ -27,7 +33,22 @@ def merge_execution_fills(
     try:
         return _merge(record, incoming)
     except ValueError as exc:
-        return record.model_copy(update={"execution_sync_issue": str(exc)})
+        previous = {fill.execution_id: fill for fill in record.execution_fills}
+        differences = {}
+        for fill in incoming:
+            old = previous.get(fill.execution_id)
+            if old is not None:
+                old_values, new_values = execution_values(old), execution_values(fill)
+                old_json, new_json = execution_values(old, mode="json"), execution_values(fill, mode="json")
+                changed = {key: {"stored": old_json[key], "incoming": new_json[key]}
+                           for key in old_values if old_values[key] != new_values[key]}
+                if changed:
+                    differences[fill.execution_id] = changed
+        audit = ExecutionConflictAudit(reason=str(exc), previous_fills=record.execution_fills,
+                                       incoming_fills=incoming, differences=differences)
+        return record.model_copy(update={"execution_sync_issue": str(exc), "updated_at": audit.detected_at,
+            "message": f"Execution history requires review: {exc}",
+            "execution_conflicts": [*record.execution_conflicts, audit]})
 
 
 def _merge(record: BrokerOrderRecord, incoming: list[BrokerExecutionFill]) -> BrokerOrderRecord:
@@ -44,13 +65,15 @@ def _merge(record: BrokerOrderRecord, incoming: list[BrokerExecutionFill]) -> Br
         previous = executions.get(fill.execution_id)
         if previous is not None:
             # Order numbers may change when TWS binds an order to a new client.
-            if previous.model_dump(exclude={"broker_order_id"}) != fill.model_dump(exclude={"broker_order_id"}):
-                raise ValueError(f"Execution {fill.execution_id} was replayed with conflicting evidence.")
+            old_values, new_values = execution_values(previous), execution_values(fill)
+            changed = [key for key in old_values if old_values[key] != new_values[key]]
+            if changed:
+                raise ValueError(f"Execution {fill.execution_id} was replayed with conflicting evidence: {', '.join(changed)}.")
             continue
         superseded = [old for audit in record.execution_recoveries for old in audit.previous_fills
                       if old.execution_id == fill.execution_id and old.execution_id not in executions]
         if superseded:
-            if fill.model_dump(exclude={"broker_order_id"}) != superseded[-1].model_dump(exclude={"broker_order_id"}):
+            if execution_values(fill) != execution_values(superseded[-1]):
                 raise ValueError(f"Superseded execution {fill.execution_id} was replayed with conflicting evidence.")
             continue
         if any(_correction_family(old_id) == _correction_family(fill.execution_id) for old_id in executions):
@@ -105,6 +128,9 @@ def preserve_execution_evidence(previous: BrokerOrderRecord, update: BrokerOrder
                                            "execution_sync_issue": previous.execution_sync_issue})
     if previous.execution_sync_issue:
         update = update.model_copy(update={"execution_sync_issue": previous.execution_sync_issue})
+    # Delayed broker callbacks cannot erase retained diagnostic history.
+    if len(update.execution_conflicts) < len(previous.execution_conflicts):
+        update = update.model_copy(update={"execution_conflicts": previous.execution_conflicts})
     previous_ids = {fill.execution_id for fill in previous.execution_fills}
     update_ids = {fill.execution_id for fill in update.execution_fills}
     if previous_ids and not previous_ids < update_ids:

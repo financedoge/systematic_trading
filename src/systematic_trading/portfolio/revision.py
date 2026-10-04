@@ -9,7 +9,8 @@ def accounting_revision(store, day):
     records = store.list_broker_order_records()
     symbols = set(instruments_for_definition(current_sota_definition())) | {r.order.symbol for r in records if r.filled_quantity}
     baseline = store.latest_pnl_baseline()
-    inputs = dict(baseline=baseline.model_dump(mode="json") if baseline else None,
+    from systematic_trading.portfolio.allocation_analytics import allocation_revision
+    inputs = dict(allocation=allocation_revision(store), baseline=baseline.model_dump(mode="json") if baseline else None,
         executions=[dict(id=r.local_order_id, quantity=r.filled_quantity, price=r.average_fill_price,
             fills=[f.model_dump(mode="json") for f in r.execution_fills], issue=r.execution_sync_issue)
             for r in sorted(records, key=lambda r:r.local_order_id) if r.filled_quantity or r.execution_sync_issue],

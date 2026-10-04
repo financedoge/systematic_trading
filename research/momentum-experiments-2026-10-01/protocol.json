@@ -1,0 +1,672 @@
+{
+  "accounting": "USD cash and adjusted units; prior-close sizing; next-session open fills; cents; whole units; sells first; proportional affordability; no leverage; no interest",
+  "annual_cost_budget_bps": 25,
+  "approval": "Research only. No strategy promotion, monitoring registration, trading-policy change, orders or live enablement.",
+  "authorization": "User: Let's do that. If you can use all cores available for the backtesting.",
+  "clock": "First session of month or ISO week; prior session close; weekly model refits remain monthly; first sample session is a declared initial deployment",
+  "comparisons": [
+    {
+      "id": "A1-parent-M",
+      "terms": {
+        "A1-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "A2-parent-M",
+      "terms": {
+        "A2-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "A3-parent-M",
+      "terms": {
+        "A3-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "A4-parent-M",
+      "terms": {
+        "A4-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "A5-parent-M",
+      "terms": {
+        "A5-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "A6-parent-M",
+      "terms": {
+        "A6-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "A7-parent-M",
+      "terms": {
+        "A7-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "A8-parent-M",
+      "terms": {
+        "A8-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "B1-parent-M",
+      "terms": {
+        "B1-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "B2-parent-M",
+      "terms": {
+        "B2-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "B3-parent-M",
+      "terms": {
+        "B3-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "B4-parent-M",
+      "terms": {
+        "B4-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "C0-parent-M",
+      "terms": {
+        "C0-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "C1-parent-M",
+      "terms": {
+        "C1-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "C2-parent-M",
+      "terms": {
+        "C2-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "U0-parent-M",
+      "terms": {
+        "U0-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "U1-parent-M",
+      "terms": {
+        "U1-M": 1,
+        "parent-M": -1
+      }
+    },
+    {
+      "id": "B1-A6",
+      "terms": {
+        "A6-M": -1,
+        "B1-M": 1
+      }
+    },
+    {
+      "id": "B1-A7",
+      "terms": {
+        "A7-M": -1,
+        "B1-M": 1
+      }
+    },
+    {
+      "id": "B1-A8",
+      "terms": {
+        "A8-M": -1,
+        "B1-M": 1
+      }
+    },
+    {
+      "id": "B2-A6",
+      "terms": {
+        "A6-M": -1,
+        "B2-M": 1
+      }
+    },
+    {
+      "id": "B2-A7",
+      "terms": {
+        "A7-M": -1,
+        "B2-M": 1
+      }
+    },
+    {
+      "id": "B2-A8",
+      "terms": {
+        "A8-M": -1,
+        "B2-M": 1
+      }
+    },
+    {
+      "id": "B3-A6",
+      "terms": {
+        "A6-M": -1,
+        "B3-M": 1
+      }
+    },
+    {
+      "id": "B3-A7",
+      "terms": {
+        "A7-M": -1,
+        "B3-M": 1
+      }
+    },
+    {
+      "id": "B3-A8",
+      "terms": {
+        "A8-M": -1,
+        "B3-M": 1
+      }
+    },
+    {
+      "id": "B4-A6",
+      "terms": {
+        "A6-M": -1,
+        "B4-M": 1
+      }
+    },
+    {
+      "id": "B4-A7",
+      "terms": {
+        "A7-M": -1,
+        "B4-M": 1
+      }
+    },
+    {
+      "id": "B4-A8",
+      "terms": {
+        "A8-M": -1,
+        "B4-M": 1
+      }
+    },
+    {
+      "id": "C1-C0-M",
+      "terms": {
+        "C0-M": -1,
+        "C1-M": 1
+      }
+    },
+    {
+      "id": "C2-C0-M",
+      "terms": {
+        "C0-M": -1,
+        "C2-M": 1
+      }
+    },
+    {
+      "id": "C1-C2-M",
+      "terms": {
+        "C1-M": 1,
+        "C2-M": -1
+      }
+    },
+    {
+      "id": "A6-A7-M",
+      "terms": {
+        "A6-M": 1,
+        "A7-M": -1
+      }
+    },
+    {
+      "id": "U1-U0-M",
+      "terms": {
+        "U0-M": -1,
+        "U1-M": 1
+      }
+    },
+    {
+      "id": "parent-W-M",
+      "terms": {
+        "parent-M": -1,
+        "parent-W": 1
+      }
+    },
+    {
+      "id": "A1-parent-W",
+      "terms": {
+        "A1-W": 1,
+        "parent-W": -1
+      }
+    },
+    {
+      "id": "A1-clock-interaction",
+      "terms": {
+        "A1-M": -1,
+        "A1-W": 1,
+        "parent-M": 1,
+        "parent-W": -1
+      }
+    },
+    {
+      "id": "A2-parent-W",
+      "terms": {
+        "A2-W": 1,
+        "parent-W": -1
+      }
+    },
+    {
+      "id": "A2-clock-interaction",
+      "terms": {
+        "A2-M": -1,
+        "A2-W": 1,
+        "parent-M": 1,
+        "parent-W": -1
+      }
+    },
+    {
+      "id": "A7-parent-W",
+      "terms": {
+        "A7-W": 1,
+        "parent-W": -1
+      }
+    },
+    {
+      "id": "A7-clock-interaction",
+      "terms": {
+        "A7-M": -1,
+        "A7-W": 1,
+        "parent-M": 1,
+        "parent-W": -1
+      }
+    },
+    {
+      "id": "A8-parent-W",
+      "terms": {
+        "A8-W": 1,
+        "parent-W": -1
+      }
+    },
+    {
+      "id": "A8-clock-interaction",
+      "terms": {
+        "A8-M": -1,
+        "A8-W": 1,
+        "parent-M": 1,
+        "parent-W": -1
+      }
+    },
+    {
+      "id": "C0-parent-W",
+      "terms": {
+        "C0-W": 1,
+        "parent-W": -1
+      }
+    },
+    {
+      "id": "C0-clock-interaction",
+      "terms": {
+        "C0-M": -1,
+        "C0-W": 1,
+        "parent-M": 1,
+        "parent-W": -1
+      }
+    },
+    {
+      "id": "C1-parent-W",
+      "terms": {
+        "C1-W": 1,
+        "parent-W": -1
+      }
+    },
+    {
+      "id": "C1-clock-interaction",
+      "terms": {
+        "C1-M": -1,
+        "C1-W": 1,
+        "parent-M": 1,
+        "parent-W": -1
+      }
+    },
+    {
+      "id": "C2-parent-W",
+      "terms": {
+        "C2-W": 1,
+        "parent-W": -1
+      }
+    },
+    {
+      "id": "C2-clock-interaction",
+      "terms": {
+        "C2-M": -1,
+        "C2-W": 1,
+        "parent-M": 1,
+        "parent-W": -1
+      }
+    },
+    {
+      "id": "C1-C0-W",
+      "terms": {
+        "C0-W": -1,
+        "C1-W": 1
+      }
+    },
+    {
+      "id": "C2-C0-W",
+      "terms": {
+        "C0-W": -1,
+        "C2-W": 1
+      }
+    },
+    {
+      "id": "C1-C2-W",
+      "terms": {
+        "C1-W": 1,
+        "C2-W": -1
+      }
+    },
+    {
+      "id": "transfer-1-activity",
+      "terms": {
+        "parent-activity": -1,
+        "transfer-1-activity": 1
+      }
+    },
+    {
+      "id": "transfer-1-rolling",
+      "terms": {
+        "parent-rolling": -1,
+        "transfer-1-rolling": 1
+      }
+    },
+    {
+      "id": "transfer-2-activity",
+      "terms": {
+        "parent-activity": -1,
+        "transfer-2-activity": 1
+      }
+    },
+    {
+      "id": "transfer-2-rolling",
+      "terms": {
+        "parent-rolling": -1,
+        "transfer-2-rolling": 1
+      }
+    },
+    {
+      "id": "transfer-3-activity",
+      "terms": {
+        "parent-activity": -1,
+        "transfer-3-activity": 1
+      }
+    },
+    {
+      "id": "transfer-3-rolling",
+      "terms": {
+        "parent-rolling": -1,
+        "transfer-3-rolling": 1
+      }
+    }
+  ],
+  "cost_bps": [
+    5,
+    10,
+    20
+  ],
+  "end": "2026-09-30",
+  "family_size": 58,
+  "inference": {
+    "blocks": [
+      6,
+      3,
+      12
+    ],
+    "endpoint": "12*mean(paired calendar-month net returns)",
+    "intervals": "95% marginal percentile; no simultaneous interval claim",
+    "method": "joint circular calendar-block bootstrap; centered two-sided null; Holm over frozen full ledger",
+    "replications": 20000,
+    "sample": "all 129 complete months; 2023 split and subperiods descriptive",
+    "seed": 20261001,
+    "unavailable_p": 1
+  },
+  "inherited_volume_basis": "Published audited split-adjusted source volume, retained solely to reproduce parent ratio features and frozen models. Not raw dollar turnover or net ETF flows; no new traded-activity feature is introduced.",
+  "initial_cash_usd": "1000000",
+  "limitations": [
+    "Reused history; not untouched validation.",
+    "Auditing prices does not certify historical publication vintages.",
+    "Earlier unrecorded research trials are outside the computable correction; selection bias remains.",
+    "Parent fitted models retain their original feature basis; activity-transfer evidence remains a legacy proxy, not audited traded dollar volume."
+  ],
+  "membership": {
+    "confirmation_sessions": 5,
+    "counter": "daily from first decision; no trade between scheduled rebalances",
+    "floor": "fill highest-ranked eligible to six, record delayed-entry overrides; four/five select all; below four neutral overlay and reset",
+    "hard_exit": "positive-252 gate failure forces exit at next scheduled rebalance; no intraperiod discretionary trades",
+    "margin": "0.10",
+    "seed": "eligible top six on first scheduled date; seed exception recorded"
+  },
+  "momentum_pool": "Replace only 75% trend category; retain 25% volume and positive 252-session gate. Tied ranks [-1,1].",
+  "net_return_materiality_hurdle": null,
+  "price_basis": "Published audited dividend/split-adjusted OHLC; revised vintages, not historical publication vintages",
+  "recipe_definitions": {
+    "A1": "rank(P[t]/P[t-5]-1)",
+    "A2": "rank(P[t]/P[t-10]-1)",
+    "A3": "rank(P[t]/P[t-21]-1)",
+    "A4": "rank(P[t-21]/P[t-42]-1)",
+    "A5": "rank(P[t-21]/P[t-63]-1)",
+    "A6": "S=(A1+A2)/2",
+    "A7": "L=(A4+A5)/2",
+    "A8": "(S+L)/2",
+    "B1": "a=.75 up / .25 down / .5 neutral; a*S+(1-a)*L",
+    "B2": "B1 mirrored",
+    "B3": "a=.75 right / .25 left / .5 neutral; a*S+(1-a)*L",
+    "B4": "B3 mirrored",
+    "C0": "D={eligible:q>=q6-.10}; enter and exit immediately on scheduled dates",
+    "C1": "enter D immediately; exit after 5 consecutive completed sessions outside D",
+    "C2": "enter after 5 consecutive completed sessions in D; exit immediately"
+  },
+  "recipes": [
+    {
+      "cadence": "monthly",
+      "id": "parent-M",
+      "recipe": "parent"
+    },
+    {
+      "cadence": "monthly",
+      "id": "A1-M",
+      "recipe": "A1"
+    },
+    {
+      "cadence": "monthly",
+      "id": "A2-M",
+      "recipe": "A2"
+    },
+    {
+      "cadence": "monthly",
+      "id": "A3-M",
+      "recipe": "A3"
+    },
+    {
+      "cadence": "monthly",
+      "id": "A4-M",
+      "recipe": "A4"
+    },
+    {
+      "cadence": "monthly",
+      "id": "A5-M",
+      "recipe": "A5"
+    },
+    {
+      "cadence": "monthly",
+      "id": "A6-M",
+      "recipe": "A6"
+    },
+    {
+      "cadence": "monthly",
+      "id": "A7-M",
+      "recipe": "A7"
+    },
+    {
+      "cadence": "monthly",
+      "id": "A8-M",
+      "recipe": "A8"
+    },
+    {
+      "cadence": "monthly",
+      "id": "B1-M",
+      "recipe": "B1"
+    },
+    {
+      "cadence": "monthly",
+      "id": "B2-M",
+      "recipe": "B2"
+    },
+    {
+      "cadence": "monthly",
+      "id": "B3-M",
+      "recipe": "B3"
+    },
+    {
+      "cadence": "monthly",
+      "id": "B4-M",
+      "recipe": "B4"
+    },
+    {
+      "cadence": "monthly",
+      "id": "C0-M",
+      "recipe": "C0"
+    },
+    {
+      "cadence": "monthly",
+      "id": "C1-M",
+      "recipe": "C1"
+    },
+    {
+      "cadence": "monthly",
+      "id": "C2-M",
+      "recipe": "C2"
+    },
+    {
+      "cadence": "weekly",
+      "id": "parent-W",
+      "recipe": "parent"
+    },
+    {
+      "cadence": "weekly",
+      "id": "A1-W",
+      "recipe": "A1"
+    },
+    {
+      "cadence": "weekly",
+      "id": "A2-W",
+      "recipe": "A2"
+    },
+    {
+      "cadence": "weekly",
+      "id": "A7-W",
+      "recipe": "A7"
+    },
+    {
+      "cadence": "weekly",
+      "id": "A8-W",
+      "recipe": "A8"
+    },
+    {
+      "cadence": "weekly",
+      "id": "C0-W",
+      "recipe": "C0"
+    },
+    {
+      "cadence": "weekly",
+      "id": "C1-W",
+      "recipe": "C1"
+    },
+    {
+      "cadence": "weekly",
+      "id": "C2-W",
+      "recipe": "C2"
+    },
+    {
+      "cadence": "monthly",
+      "id": "U0-M",
+      "prerequisite": "published_pit_broad_usd",
+      "recipe": "U0"
+    },
+    {
+      "cadence": "monthly",
+      "id": "U1-M",
+      "prerequisite": "published_pit_broad_usd",
+      "recipe": "U1"
+    }
+  ],
+  "regime": {
+    "daily_return": "equal-weight mean",
+    "equities": [
+      "SPY",
+      "VGK",
+      "EWJ",
+      "EWH",
+      "EWY",
+      "MCHI"
+    ],
+    "lookback": 126,
+    "skew": "adjusted Fisher-Pearson; thresholds +/-0.25; zero variance neutral",
+    "trend": "sign of compounded returns"
+  },
+  "registered_at": "2026-10-01T14:31:56.952649+00:00",
+  "slippage_bps": 0,
+  "start": "2016-01-04",
+  "stresses": {
+    "2018": [
+      "2018-01-01",
+      "2018-12-31"
+    ],
+    "2022": [
+      "2022-01-01",
+      "2022-12-31"
+    ],
+    "covid": [
+      "2020-02-01",
+      "2020-04-30"
+    ]
+  },
+  "transfer_selection": "At most three. Require positive full-history and 2023+ paired mean at 5bp, positive full-history mean at 20bp, drawdown worsening <=2pp. Sort by full-history 5bp paired mean descending, id lexical tie-break. Transfer unchanged rules and cadence. Descriptive stress check only: same-data adaptive selection invalidates confirmatory transfer p-values; report p=1 for reserved slots and descriptive intervals only.",
+  "usd_model": {
+    "extra_features": [
+      "USD21",
+      "USD63"
+    ],
+    "features": [
+      "S",
+      "L",
+      "vol63"
+    ],
+    "label": "next-month return minus universe mean; completed strictly before fit close",
+    "minimum_completed_months": 60,
+    "model": "per-ETF ridge; mean squared error plus 1.0*sum(beta^2); unpenalized intercept; no tuning",
+    "standardization": "training means/std only",
+    "tilt": "rank predictions, 12% proportional tilt, +/-3pp active, preserve parent gross and zero weights, 45% cap unless inherited larger",
+    "unavailable": "U0 and U1 both unavailable without release/vintage-audited broad USD; no proxy substitution",
+    "window": "expanding"
+  },
+  "version": "momentum-20261001-v1",
+  "warmup_start": "2012-01-05"
+}

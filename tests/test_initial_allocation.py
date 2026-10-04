@@ -8,6 +8,8 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
+pytestmark = pytest.mark.usefixtures('neutral_usd_publication')
+
 from systematic_trading.config import AppSettings
 from systematic_trading.domain import FXRate, PnLBaseline
 from systematic_trading.domain.enums import BrokerOrderStatus, Currency, OrderType, ProposalStatus

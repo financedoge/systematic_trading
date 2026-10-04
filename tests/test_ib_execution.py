@@ -79,11 +79,14 @@ class FakeExecutionSyncClient:
         return []
 
 
-def test_ib_router_submits_approved_paper_proposal_and_persists_records(tmp_path) -> None:
+@pytest.mark.parametrize('warning', [None, '2111:Algorithm time adjusted to next trading date'])
+def test_ib_router_submits_approved_paper_proposal_and_persists_records(tmp_path, warning) -> None:
     store = _store(tmp_path)
     proposal = _proposal(status=ProposalStatus.APPROVED)
     store.save_proposal(proposal)
     fake_client = FakeIBClient(first_order_id=200)
+    if warning:
+        fake_client.warnings_for_order = lambda order_id: [f'{order_id}:{warning}']
     router = InteractiveBrokersOrderRouter(AppSettings(database_path=tmp_path / "ib.db"), client=fake_client)
 
     result = router.submit_approved_proposal(
@@ -115,6 +118,7 @@ def test_ib_router_submits_approved_paper_proposal_and_persists_records(tmp_path
     stored = store.list_broker_order_records(proposal.proposal_id)
     assert [record.broker_order_id for record in stored] == [200, 201]
     assert [record.status for record in stored] == [BrokerOrderStatus.SUBMITTED, BrokerOrderStatus.SUBMITTED]
+    assert [record.message for record in stored] == ([f'{i}:{warning}' for i in [200, 201]] if warning else [None, None])
 
 
 def test_ib_router_requires_approved_proposal_before_any_connection(tmp_path) -> None:

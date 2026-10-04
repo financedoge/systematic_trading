@@ -45,6 +45,10 @@ def decision_diagrams(definition):
                   (f"z > {p['threshold']} AND slope, 20d return, signed volume > 0?", f"Yes: +1. Otherwise z < -{p['threshold']}: -1. Otherwise: 0."),
                   (f"Apply {p['relative_tilt']:.0%} tilt to already selected assets", f"Project to ±{p['active_cap']:.0%} active bounds; preserve gross exposure and cash; no new selections."),
                   ("45% ceiling on increases", "An inherited base weight above 45% may be retained but cannot increase.")]
+    if "usd_ridge" in overlays:
+        steps += [("Read the published USD vintage available before the signal close", "Broad-dollar 21/63-observation changes use one vintage; missing/stale inputs stop publication."),
+                  ("Monthly expanding per-ETF ridge model, separate from the trees", "Short/older momentum + volatility + USD; 60 completed months; labels strictly before fit close."),
+                  ("Rank forecasts and apply the final 12% tilt", "±3 percentage point bound; preserve cash and selected assets; no increase of inherited weights above 45%.")]
     steps += [("Freeze targets; simulate next-session open fills", "Whole adjusted CNH units; sells before buys; 5 bps fee; cash constrained."),
               ("Daily portfolio value, held weights and benchmark comparison", "Risk parity · URTH · matched SOTA. Tracking never authorizes broker orders.")]
     height = len(steps)*100+30

@@ -281,7 +281,7 @@ def test_live_plan_rejects_stale_inputs_even_when_another_symbol_is_current(tmp_
             ))
     store.upsert_fx_rate(FXRate(rate_date=day - timedelta(days=1) if problem == "stale_fx" else day,
                                base_currency=Currency.USD, rate=D(7)))
-    monkeypatch.setattr(sota, "current_sota_definition", lambda: SimpleNamespace(key="test", name="test", sleeve_name="test"))
+    monkeypatch.setattr(sota, "current_sota_definition", lambda: SimpleNamespace(key="test", name="test", sleeve_name="test", overlays=()))
     monkeypatch.setattr(sota, "instruments_for_definition", lambda definition: instruments)
     monkeypatch.setattr(sota, "instantiate_overlays", lambda definition: [])
     snapshot = sota.LiveAccountSnapshotInput(

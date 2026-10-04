@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from fastapi import APIRouter, HTTPException, Query, Request
-from fastapi.responses import FileResponse, HTMLResponse, Response
+from fastapi.responses import HTMLResponse, Response
 from pydantic import BaseModel, Field
 
 from systematic_trading.backtest.accounting import FxConverter, PortfolioValuationService, quantize_money
@@ -158,12 +158,18 @@ class ProposalApprovalSubmissionResult(BaseModel):
 
 
 class DashboardSeriesPoint(BaseModel):
+    allocation_version: str = "legacy"
+    allocation_label: str = "Legacy / unverified strategy assignment"
     trade_date: date
     nav_cnh: Decimal
     index: Decimal
 
 
 class DashboardPerformance(BaseModel):
+    allocation_timeline: list[dict] = Field(default_factory=list)
+    allocation_revision: str | None = None
+    comparison_label: str = "Standalone strategy comparison"
+    account_return_basis: str = "NAV change; external cash flows are not classified"
     portfolio_context: dict = Field(default_factory=dict)
     strategy_name: str
     strategy_source: str | None = None
@@ -242,6 +248,8 @@ class DashboardSlippagePoint(BaseModel):
 
 
 class DashboardExecutionSlippageRow(BaseModel):
+    allocation_label: str = "Legacy / unverified strategy assignment"
+    allocation_version: str = "legacy"
     local_order_id: str
     proposal_id: str
     order_index: int
@@ -270,6 +278,7 @@ class DashboardMissedOrderRow(BaseModel):
 
 
 class DashboardExecutionQuality(BaseModel):
+    allocation_timeline: list[dict] = Field(default_factory=list)
     as_of: datetime
     portfolio_context: dict = Field(default_factory=dict)
     valuation_complete: bool = True
@@ -544,7 +553,10 @@ def dashboard_performance(request: Request) -> DashboardPerformance:
             raise HTTPException(status_code=503, detail="Account analytical history unavailable.") from exc
         baseline = store.latest_pnl_baseline()
         baseline_token = digest(baseline.model_dump_json()) if baseline else "none"
-        if saved is None or json.loads(saved[1]["provenance"])["baseline"] != baseline_token:
+        from systematic_trading.portfolio.allocation_analytics import allocation_revision, allocation_ledger_revision
+        if (saved is None or json.loads(saved[1]['provenance'])['baseline'] != baseline_token
+                or json.loads(saved[1]['provenance']).get('allocation') != allocation_revision(store)
+                or json.loads(saved[1]['provenance']).get('allocation_ledger') != allocation_ledger_revision(store)):
             raise HTTPException(status_code=503, detail="Performance publication is refreshing for the current account baseline.",
                                 headers={"Retry-After": "5"})
         payload = json.loads(saved[0]["payload"])
@@ -555,7 +567,8 @@ def dashboard_performance(request: Request) -> DashboardPerformance:
         payload["warnings"].append(f"Saved analytical performance calculated at {saved[1]['published_at']} UTC.")
         return DashboardPerformance.model_validate(payload)
     warnings: list[str] = []
-    definition = current_sota_definition()
+    from systematic_trading.portfolio.strategy_allocation import sota_definition
+    definition = sota_definition(store)
     strategy_path = _strategy_result_path(settings)
     strategy_analytics = getattr(request.app.state, "strategy_analytics", None)
     published_strategy = strategy_analytics.document("strategy-serving", f"detail/{definition.key}") if strategy_analytics else None
@@ -575,16 +588,29 @@ def dashboard_performance(request: Request) -> DashboardPerformance:
     else:
         strategy_raw = []
     account_raw, reset_at, tracking_start = _account_nav_points(settings, store, warnings)
+    allocation = getattr(request.app.state, 'allocation_analytics', {})
+    from systematic_trading.portfolio.allocation_analytics import period_for
+    if allocation.get('timeline'):
+        strategy_raw = [(date.fromisoformat(r['trade_date']), Decimal(r['nav_cnh'])) for r in allocation['reference']]
+        strategy_base_date = strategy_raw[-1][0] if strategy_raw else None
+        warnings.extend(allocation['warnings'])
+    else:
+        warnings.append('The strategy curve is a standalone comparison. Historical account strategy assignments are not inferred from the current SOTA.')
     strategy_series = _indexed_series(strategy_raw)
     account_series = _indexed_series(account_raw)
+    for point in [*strategy_series, *account_series]:
+        period = period_for(allocation.get('timeline', []), point.trade_date)
+        point.allocation_version, point.allocation_label = period['version'], period['label']
     strategy_by_date = {point.trade_date: point for point in strategy_series}
     anchor = next((point for point in account_series if tracking_start is not None
                    and point.trade_date >= tracking_start and point.trade_date in strategy_by_date), None)
     latest_market_data_date = _latest_market_data_date(store)
     return DashboardPerformance(
+        allocation_timeline=allocation.get('timeline', []), allocation_revision=allocation.get('revision'),
+        comparison_label=allocation['reference_label'] if allocation.get('timeline') else 'Standalone strategy comparison - '+definition.name,
         portfolio_context=portfolio_context(store).model_dump(mode="json"),
-        strategy_name=definition.name,
-        strategy_source=str(strategy_path) if strategy_path.exists() else None,
+        strategy_name="Trading allocation history" if allocation.get("timeline") else definition.name,
+        strategy_source="allocation-history" if allocation.get("timeline") else ("strategy-serving/"+definition.key if published_strategy else str(strategy_path) if strategy_path.exists() else None),
         latest_strategy_data_date=strategy_base_date,
         latest_market_data_date=latest_market_data_date,
         strategy_extension_count=strategy_extension_count,
@@ -835,6 +861,13 @@ def dashboard_portfolio_context(request: Request):
 def strategy_catalog(request: Request) -> dict[str, Any]:
     saved = _published_strategy(request, "catalog")
     if saved is not None:
+        from systematic_trading.portfolio.strategy_allocation import control_state
+        roles = control_state(_store(request))
+        saved['current_sota_id'] = roles['sota_key']
+        weights = {r['strategy_key']:r['weight'] for r in roles['active']['allocations']}
+        for row in saved['strategies']:
+            row['is_sota'] = row['strategy_id'] == roles['sota_key']
+            row['trading_capital_weight'] = weights.get(row['strategy_id'], '0')
         return saved
     settings = _settings(request)
     store = StrategyMarketDataView(_store(request))
@@ -954,7 +987,10 @@ def strategy_report(strategy_id: str, request: Request) -> Response:
     if lifecycle == "archived":
         if not report_path.exists():
             raise HTTPException(status_code=404, detail=f"No generated report is available for {strategy_id}.")
-        return FileResponse(report_path, media_type="text/html")
+        from systematic_trading.backtest.reporting import render_saved_backtest_report_html
+        from systematic_trading.web.shell import with_app_shell
+        return HTMLResponse(with_app_shell(render_saved_backtest_report_html(
+            report_path.read_text(encoding="utf-8")), "strategies"))
 
     warnings: list[str] = []
     result_path = settings.data_dir / "backtests" / artifact.artifact_path
@@ -1147,7 +1183,9 @@ def dashboard_execution_quality(
     execution_gain = quantize_money(actual.total_pnl_cnh - theoretical.total_pnl_cnh) if complete else None
     gain_bps = _quantize_bps((execution_gain / filled_notional) * Decimal("10000")) if complete and filled_notional > 0 else None
     history = [point for point in _pnl_comparison_history(store, history_limit) if point.as_of <= actual.as_of]
+    from systematic_trading.portfolio.allocation_analytics import allocation_timeline
     return DashboardExecutionQuality(
+        allocation_timeline=allocation_timeline(_store(request)),
         as_of=actual.as_of,
         portfolio_context=context.model_dump(mode="json"),
         valuation_complete=complete,
@@ -1335,6 +1373,8 @@ def decide_proposal(proposal_id: str, decision: ProposalDecisionInput, request: 
         raise HTTPException(status_code=404, detail=f"Unknown proposal: {proposal_id}")
     if proposal_is_expired(proposal, _settings(request)):
         raise HTTPException(status_code=409, detail=f"{proposal_id}: execution window expired; proposal is missed.")
+    if decision.status == ProposalStatus.APPROVED:
+        _validate_allocation_approval(request, proposal)
     try:
         return store.apply_decision(
             ApprovalDecision(proposal_id=proposal_id, status=decision.status, comment=decision.comment)
@@ -1357,6 +1397,7 @@ def approve_and_submit_proposal(
         raise HTTPException(status_code=404, detail=f"Unknown proposal: {proposal_id}")
     if proposal_is_expired(existing, _settings(request)):
         raise HTTPException(status_code=409, detail=f"{proposal_id}: execution window expired; proposal is missed.")
+    _validate_allocation_approval(request, existing)
     try:
         proposal = store.apply_decision(
             ApprovalDecision(proposal_id=proposal_id, status=ProposalStatus.APPROVED, comment=approval.comment)
@@ -1373,6 +1414,19 @@ def approve_and_submit_proposal(
         request=request,
     )
     return ProposalApprovalSubmissionResult(proposal=proposal, broker_submission=broker_submission)
+
+
+def _validate_allocation_approval(request, proposal):
+    from systematic_trading.portfolio.strategy_allocation import allocation_binding_issues
+    issues = allocation_binding_issues(_store(request), proposal)
+    if issues:
+        raise HTTPException(409, '; '.join(issues))
+    if not proposal.orders and proposal.input_provenance.get('allocation'):
+        from systematic_trading.live.allocated_plan import validate_internal_proposal
+        try:
+            validate_internal_proposal(_settings(request), _store(request), proposal, datetime.now(UTC))
+        except ValueError as exc:
+            raise HTTPException(409, str(exc)) from exc
 
 
 def _retryable_order_indexes(proposal: TradeProposal, records: list[BrokerOrderRecord]) -> set[int]:
@@ -1960,14 +2014,22 @@ def _latest_strategy_proposal(
     if day is None:
         warnings.append("No complete market session is available for active strategy targets.")
         return None, None
-    definition = current_sota_definition()
+    from systematic_trading.portfolio.strategy_allocation import trading_definition, control_state
+    definition = trading_definition(store)
     target_day = latest_monthly_target_date(day)
+    active_state = control_state(store)['active']
+    if active_state.get('effective_close'):
+        target_day = max(target_day, date.fromisoformat(active_state['effective_close']))
     active = approved_target(store, definition, target_day, day)
     if active is not None:
         return None, active
     try:
+        snapshot = LiveAccountSnapshotInput(as_of=day, cash=[CashBalance(currency=Currency.CNH, amount=1)])
+        if active_state['version'] != 'legacy':
+            from systematic_trading.live.strategy_control import snapshot_for
+            snapshot = snapshot_for(settings, day)
         plan = build_sota_live_rebalance_plan(store=store, broker=InteractiveBrokersAdapter(settings),
-            account_snapshot=LiveAccountSnapshotInput(as_of=day, cash=[CashBalance(currency=Currency.CNH, amount=1)]),
+            account_snapshot=snapshot,
             decision_date=day, target_decision_date=target_day, queue=False)
         warnings.append(f"Scheduled target reconstructed for {target_day}; no approved target in the current episode.")
         return None, plan.proposal
@@ -2080,6 +2142,7 @@ def _execution_slippage_rows(
     records = {record.local_order_id: record for record in store.list_broker_order_records()
                if record.environment.value == context.environment}
     fills = _broker_record_fills(store, warnings, records=list(records.values()))
+    proposals = {p.proposal_id:p for p in store.list_proposals()}
     for fill in fills:
         if fill.traded_at.astimezone(NY).date() > as_of or not context.includes(fill.traded_at):
             continue
@@ -2090,7 +2153,17 @@ def _execution_slippage_rows(
         actual_notional = fill.price * quantity * fx if fx is not None else None
         gain = ((reference_notional - actual_notional) * (1 if fill.side == OrderSide.BUY else -1)
                 if fx is not None else None)
+        proposal = proposals.get(record.proposal_id)
+        allocation = proposal.input_provenance.get('allocation', {}) if proposal else {}
+        from systematic_trading.research.strategy_catalog import registered_strategy_definition
+        label = ' + '.join(f"{Decimal(r['weight'])*100:g}% {registered_strategy_definition(r['strategy_key']).name}"
+            for r in allocation.get('allocations', []))
+        if not label and proposal:
+            recipe = proposal.input_provenance.get('strategy_definition', {})
+            label = recipe.get('name') or proposal.automation_strategy_key
         rows.append(DashboardExecutionSlippageRow(local_order_id=record.local_order_id,
+            allocation_version=allocation.get('version', 'legacy'),
+            allocation_label=label or 'Legacy / unverified strategy assignment',
             proposal_id=record.proposal_id, order_index=record.order_index, symbol=fill.symbol,
             side=fill.side, filled_quantity=fill.quantity, reference_price=record.order.reference_price,
             average_fill_price=fill.price, currency=fill.currency,

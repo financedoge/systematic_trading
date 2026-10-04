@@ -175,7 +175,9 @@ def strategy_inputs(settings, analytics):
     if settings.strategy_monitoring_config_path.exists():
         files.append(settings.strategy_monitoring_config_path)
     code_root = Path(__file__).resolve().parents[1]
-    files += [code_root / name for name in ("web/api.py", "backtest/reporting.py", "chart_navigation.py", "research/catalog.py",
+    files += [code_root / name for name in ("web/api.py", "web/asset_names.py", "web/shell.py",
+                                          "research/etf_universe.py", "research/all_weather_universe.py", "research/stock_universe.py",
+                                          "backtest/reporting.py", "chart_navigation.py", "research/catalog.py",
                                           "research/analytics_projection.py", "research/market_data_view.py",
                                           "research/tracked_runtime.py", "research/strategy_diagram.py")]
     return digest(encode({"files": file_signature(files), "market": analytics.market_revision(),
@@ -242,7 +244,10 @@ def publish_dashboard(settings, store, analytics):
     from systematic_trading.web import api
     baseline = store.latest_pnl_baseline()
     baseline_token = digest(baseline.model_dump_json()) if baseline else "none"
-    inputs = {"contract": "portfolio-context-v3", "baseline": baseline_token, "market": analytics.market_revision(),
+    from systematic_trading.portfolio.allocation_analytics import allocation_revision, allocation_ledger_revision, build_allocation_analytics
+    allocation_token = allocation_revision(store)
+    ledger_token = allocation_ledger_revision(store)
+    inputs = {"allocation": allocation_token, "allocation_ledger": ledger_token, "contract": "portfolio-context-v4", "baseline": baseline_token, "market": analytics.market_revision(),
               "account": (analytics.latest("account-history") or {}).get("version"),
               "strategy": (analytics.latest("strategy-serving") or {}).get("version")}
     if not inputs["account"]:
@@ -252,10 +257,23 @@ def publish_dashboard(settings, store, analytics):
         return False
     request = SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(
         settings=settings, store=StrategyMarketDataView(store), strategy_analytics=analytics, disable_legacy_strategy=True)))
+    allocation = build_allocation_analytics(settings, store, analytics)
+    request.app.state.allocation_analytics = allocation
     payload = api.dashboard_performance(request).model_dump(mode="json")
+    account_marks = {r['trade_date']:r['nav_cnh'] for r in payload['account']}
+    from decimal import Decimal
+    allocation['account_reconciliation'] = [dict(trade_date=r['trade_date'], version=r['version'],
+        account_nav_cnh=account_marks[r['trade_date']], sleeve_nav_cnh=r['total'],
+        shared_residual_cnh=str(Decimal(account_marks[r['trade_date']])-Decimal(r['total'])))
+        for r in allocation['sleeve_series'] if r['trade_date'] in account_marks]
+    if allocation_revision(store) != allocation_token:
+        raise RuntimeError('Allocation changed during performance calculation')
+    if allocation_ledger_revision(store) != ledger_token:
+        raise RuntimeError('Execution or approval evidence changed during performance calculation')
     current = store.latest_pnl_baseline()
     if (digest(current.model_dump_json()) if current else "none") != baseline_token:
         raise RuntimeError("Account reset changed during performance calculation")
     rows = extract_series(payload, family="account_performance", entity="account", prefix="performance")
     return analytics.publish("dashboard-serving", version, rows,
-        [dict(point_key="performance", media_type="application/json", payload=encode(payload))], provenance=inputs)
+        [dict(point_key="performance", media_type="application/json", payload=encode(payload)),
+         dict(point_key="allocation-attribution", media_type="application/json", payload=encode(allocation))], provenance=inputs)

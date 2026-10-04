@@ -37,11 +37,15 @@ assert.match(el('performance-warnings').textContent,/Excluded 1000 backdated/);
 assert.equal(el('performance-diagnostics-summary').textContent,'Performance notes and data checks (2)');
 assert.ok(el('performance-warnings').textContent.length < 250);
 assert.match(html,/<details class="performance-diagnostics" id="performance-diagnostics">/);
-start = html.indexOf('function pnlComparisonSvg(points) {');
-const chart = new Function('fmtSignedMoney','esc','points',
-  html.slice(start,html.indexOf('function slippageSvg(points)',start)) + ';return pnlComparisonSvg(points);');
+start = html.indexOf('function pnlComparisonSvg(points, timeline = []) {');
+const chart = new Function('fmtSignedMoney','esc','points','timeline',
+  html.slice(start,html.indexOf('function slippageSvg(points)',start)) + ';return pnlComparisonSvg(points,timeline);');
 const onePoint = chart(fmtSignedMoney,String,history);
 assert.equal((onePoint.match(/<circle /g)||[]).length,2);
 assert.match(onePoint,/977.08/);
 assert.match(onePoint,/1960.12/);
 assert.match(html,/execution-quality\?history_limit=100"/);
+
+const marked=chart(fmtSignedMoney,String,[...history,{...history[0],as_of:'2026-09-28'}],[{effective_close:'2026-09-27',label:'60% A + 40% B'}]);
+assert.match(marked,/60% A \+ 40% B/);
+assert.match(marked,/stroke-dasharray/);

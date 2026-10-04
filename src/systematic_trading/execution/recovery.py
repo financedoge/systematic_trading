@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field, field_validator
 from systematic_trading.domain import BrokerExecutionFill, BrokerOrderRecord, PnLBaseline
 from systematic_trading.domain.enums import BrokerOrderStatus, OrderEnvironment
 from systematic_trading.domain.execution import ExecutionRecoveryAudit
-from systematic_trading.execution.fills import _correction_family, merge_execution_fills
+from systematic_trading.execution.fills import _correction_family, execution_values, merge_execution_fills
 
 
 class ExecutionRecoveryRequest(BaseModel):
@@ -102,7 +102,7 @@ def _validated_replacement(record, request, baseline):
         if replacement is None:
             raise ValueError(f"Recovery omits existing execution {old.execution_id}.")
         if replacement.execution_id == old.execution_id:
-            if replacement.model_dump(exclude={"broker_order_id"}) != old.model_dump(exclude={"broker_order_id"}):
+            if execution_values(replacement) != execution_values(old):
                 raise ValueError("An existing execution ID cannot be rewritten; supply the broker correction ID.")
         elif int(replacement.execution_id.rsplit(".", 1)[1]) <= int(old.execution_id.rsplit(".", 1)[1]):
             raise ValueError("Recovery cannot replace an execution with an older correction revision.")

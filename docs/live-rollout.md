@@ -329,3 +329,19 @@ Current controls:
 - The platform does not attempt to automate TWS login or 2FA recovery.
 - After TWS/Gateway relogin, the app health monitor wakes normal recovery automatically. Verify healthy broker status and fresh matched reconciliation; `scripts/test_ib_paper_connection.py` remains available for manual connection diagnosis.
 - For server or 24x7 operation, prefer IB Gateway under an explicit process supervisor and keep VPN dependency out of the critical network path.
+
+
+## Strategy changes and multiple trading strategies (2026-10-03)
+
+Strategies and Trading now provide reviewed, dated paper allocation changes.
+SOTA designation is independent of trading capital. Manual capital weights,
+monthly resets, immutable history, virtual ownership, net account orders and
+marked performance attribution are described in [Trading allocations](trading-allocations.md).
+Migration `005_strategy_control.sql` is required before deploying these controls.
+
+A new trading allocation invalidates the prior automatic paper approval binding.
+The existing order approval, environment and reconciliation checks remain in
+force. Deployment retains the existing SOTA at 100%; no XGBoost promotion or
+trading allocation change has been approved through these controls. Resolve the
+existing IB reconciliation/open-order issues before an actual handover. No PnL
+reset or broker order is part of deployment.

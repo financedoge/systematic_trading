@@ -239,22 +239,23 @@ def test_reconciliation_checks_new_execution_batch_as_a_whole(store, tmp_path):
     assert store.list_broker_order_records()[0].execution_sync_issue is None
 
 
-def test_ib_callback_uses_execution_price_and_captures_identity(monkeypatch):
+def test_ib_callback_uses_execution_price_and_captures_identity(monkeypatch, tmp_path):
     client = pytest.importorskip("ibapi.client").EClient
     monkeypatch.setattr(client, "connect", lambda self, *args: self.nextValidId(1))
     monkeypatch.setattr(client, "run", lambda self: None)
     monkeypatch.setattr(client, "disconnect", lambda self: None)
+    monkeypatch.setattr(client, "serverVersion", lambda self: 223)
 
     def request(self, *args):
-        self.execDetails(1, SimpleNamespace(symbol="SPY", currency="USD"), SimpleNamespace(
+        self.execDetails(91001, SimpleNamespace(symbol="SPY", currency="USD"), SimpleNamespace(
             execId="trade-b.01", acctNumber="DU123", orderId=10, orderRef="st-proposal-00",
             side="BOT", shares=6, price=110, avgPrice=106, cumQty=10, time="20260804 15:00:00 UTC",
         ))
-        self.execDetailsEnd(1)
+        self.execDetailsEnd(91001)
 
     monkeypatch.setattr(client, "reqExecutions", request)
     profile = SimpleNamespace(host="unused", port=0, client_id=1)
-    result = IbApiExecutionSyncClient().fetch_fills(profile)
+    result = IbApiExecutionSyncClient(evidence_dir=tmp_path).fetch_fills(profile)
     assert result[0].average_price == Decimal(110)
     assert result[0].execution_id == "trade-b.01"
     assert result[0].account == "DU123"

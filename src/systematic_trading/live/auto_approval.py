@@ -19,7 +19,8 @@ from systematic_trading.execution.window import proposal_is_expired
 from systematic_trading.live.initial_allocation import NY
 from systematic_trading.live.sota import LiveAccountSnapshotInput, build_sota_live_rebalance_plan
 from systematic_trading.live.trading_calendar import previous_us_trading_day, us_equity_market_close
-from systematic_trading.research import current_sota_definition, instruments_for_definition
+from systematic_trading.research import instruments_for_definition
+from systematic_trading.portfolio.strategy_allocation import trading_definition
 
 
 class PaperApprovalPolicy(BaseModel):
@@ -60,7 +61,7 @@ class PaperAutoApproval:
             except (ValueError, OSError):
                 self.policy.message = "Unreadable approval policy; automatic routing is off."
         if self.policy.enabled and (self.policy.binding != self._binding() or
-                self.policy.strategy_key != current_sota_definition().key or not self.policy.enabled_at):
+                self.policy.strategy_key != trading_definition(self.store).key or not self.policy.enabled_at):
             self.policy.enabled = False
             self.policy.message = "Machine, broker profile or strategy changed. Enable paper automation again after review."
 
@@ -119,7 +120,7 @@ class PaperAutoApproval:
             updated = self.policy.model_copy(update=dict(enabled=change.enabled, revision=self.policy.revision + 1,
                 enabled_at=now if change.enabled else None, updated_at=now, operator=change.operator.strip(),
                 reason=change.reason.strip(), account=account, binding=self._binding(),
-                strategy_key=current_sota_definition().key, max_batch_notional_cnh=change.max_batch_notional_cnh,
+                strategy_key=trading_definition(self.store).key, max_batch_notional_cnh=change.max_batch_notional_cnh,
                 history=[*self.policy.history, audit], message="Waiting for a new eligible strategy proposal." if change.enabled
                 else "Manual approval. Existing broker orders continue; no new automatic submissions."))
             previous, self.policy = self.policy, updated
@@ -132,15 +133,20 @@ class PaperAutoApproval:
                 self.store.append_platform_event(event)
             return self.status()
 
-    def tick(self, *, now=None):
-        now = now or datetime.now(UTC)
+    def invalidate_stale_binding(self):
+        """Disable obsolete authority without running any approval or order path."""
         with ORDER_CONNECTION_LOCK:
-            if not self.policy.enabled:
-                return
-            if self.policy.binding != self._binding() or self.policy.strategy_key != current_sota_definition().key:
+            if self.policy.enabled and (self.policy.binding != self._binding()
+                    or self.policy.strategy_key != trading_definition(self.store).key):
                 self.policy.enabled = False
                 self.policy.message = "Configuration changed; automatic routing disabled."
                 self._save()
+
+    def tick(self, *, now=None):
+        now = now or datetime.now(UTC)
+        with ORDER_CONNECTION_LOCK:
+            self.invalidate_stale_binding()
+            if not self.policy.enabled:
                 return
             for proposal in sorted(self.store.list_proposals(ProposalStatus.PENDING), key=lambda p: p.created_at):
                 if (proposal.created_at < self.policy.enabled_at or proposal.created_at > now or
@@ -161,6 +167,11 @@ class PaperAutoApproval:
                     approved = self.store.apply_decision(ApprovalDecision(proposal_id=proposal.proposal_id,
                         status=ProposalStatus.APPROVED, comment=f"Automatic paper policy revision {self.policy.revision}; enabled by {self.policy.operator}."),
                         expected_status=ProposalStatus.PENDING)
+                    if not approved.orders:
+                        self.policy.attempts[proposal.proposal_id].update(outcome='internal_transfer_approved')
+                        self.policy.message = f'{proposal.proposal_id}: virtual capital transfer approved; no broker order needed.'
+                        self._save()
+                        return
                     result = self.router.submit_approved_proposal(proposal=approved, store=self.store,
                         environment=OrderEnvironment.PAPER, allow_resubmit=False)
                     complete = (not result.validation_issues and len(result.records) == len(proposal.orders) and
@@ -182,7 +193,11 @@ class PaperAutoApproval:
     def _preflight(self, proposal, now):
         from systematic_trading.execution.management import TERMINAL, sync_orders
         from systematic_trading.execution.reconciliation import load_latest_ib_reconciliation
-        definition = current_sota_definition()
+        definition = trading_definition(self.store)
+        if not proposal.orders:
+            from systematic_trading.live.allocated_plan import validate_internal_proposal
+            validate_internal_proposal(self.settings, self.store, proposal, now)
+            return True
         if proposal.sleeve != definition.sleeve_name or proposal.trigger not in {"empty_portfolio", "portfolio_drift", "scheduled_rebalance"}:
             raise ValueError("Proposal is outside the enabled strategy policy.")
         today = now.astimezone(NY).date()
@@ -227,7 +242,7 @@ class PaperAutoApproval:
         snapshot = LiveAccountSnapshotInput(as_of=proposal.as_of, captured_at=report.checked_at, cash=cash, positions=report.broker_positions)
         plan = build_sota_live_rebalance_plan(store=self.store, broker=InteractiveBrokersAdapter(self.settings),
             account_snapshot=snapshot, decision_date=proposal.as_of, intended_trade_date=today,
-            target_proposal=proposal, queue=False)
+            target_proposal=proposal, queue=False, reuse_proposal_intent=True)
         terms = lambda p: sorted((o.symbol, o.side, o.quantity, o.reference_price, o.currency, o.notional_cnh) for o in p.orders)
         if plan.validation_issues or terms(plan.proposal) != terms(proposal):
             raise ValueError("Portfolio, prices or order quantities changed; review the proposal manually.")

@@ -34,7 +34,7 @@ def tree_diagram(tree, features, number):
         f'aria-label="XGBoost tree {number}">'+''.join(edges+nodes)+'</svg>')
 
 
-def rolling_model_report(definition, inputs, schedule, receipt, allocation):
+def rolling_model_report(definition, inputs, schedule, receipt, allocation, usd_models=None):
     day = date.fromisoformat(allocation['target_session'])
     histories = {s: [PriceBar.model_validate(r) for r in rows if r['trade_date'] < str(day)]
         for s, rows in inputs['latest_bars'].items()}
@@ -55,7 +55,7 @@ def rolling_model_report(definition, inputs, schedule, receipt, allocation):
         prefix = replace(definition, overlays=definition.overlays[:count])
         has_model = any(o.kind == 'rolling_model' for o in prefix.overlays)
         targets = targets_for_day(inputs['latest_bars'], day, definition=prefix,
-            base_tree_models=schedule if has_model else None)
+            base_tree_models=schedule if has_model else None, usd_models=usd_models)
         stages.append(dict(name='Risk parity' if not count else definition.overlays[count-1].kind,
             weights={t.symbol: float(t.target_weight) for t in targets}))
     final_weights = {r['symbol']: r['target_weight'] for r in allocation['holdings']}

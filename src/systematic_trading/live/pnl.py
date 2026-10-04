@@ -34,6 +34,9 @@ class PnlReadView:
     """
 
     def __init__(self, store: TradingStore) -> None:
+        self._store = store
+        if hasattr(store, "list_proposals"):
+            self.list_proposals = cache(store.list_proposals)
         # Instance-owned caches are released with the calculation (no global TTL).
         self.latest_pnl_baseline = cache(store.latest_pnl_baseline)
         self.list_broker_order_records = cache(store.list_broker_order_records)
@@ -42,6 +45,9 @@ class PnlReadView:
         self.list_pnl_snapshots = cache(store.list_pnl_snapshots)
         if hasattr(store, "list_pnl_baselines"):
             self.list_pnl_baselines = cache(store.list_pnl_baselines)
+
+    def __getattr__(self, name):
+        return getattr(self._store, name)
 
 
 @dataclass(frozen=True)

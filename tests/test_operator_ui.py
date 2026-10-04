@@ -42,6 +42,19 @@ def test_dashboard_panels_render_independently_and_recover():
                    input=_OPERATOR_HTML, text=True, encoding='utf-8', capture_output=True, check=True, timeout=20)
 
 
+def test_approval_review_preserves_selection_and_execution_guards():
+    from systematic_trading.web.operator import _OPERATOR_HTML
+
+    node = shutil.which('node')
+    if node is None:
+        pytest.skip('Node.js is required for UI behavior checks.')
+    result = subprocess.run(
+        [node, str(Path(__file__).with_name('operator_approval_checks.cjs'))],
+        input=_OPERATOR_HTML, text=True, encoding='utf-8', capture_output=True, timeout=20,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
 def test_attribution_retains_complete_history_and_bounds_diagnostics():
     from systematic_trading.web.operator import _OPERATOR_HTML
     node = shutil.which('node')
@@ -110,7 +123,11 @@ def test_operator_dashboard_is_served(tmp_path) -> None:
     assert "Trading Operator" in html
     assert "proposal-list" in html
     assert "Trading" in html
-    assert "rail-panel" in html
+    assert 'id="approval-workspace"' in html
+    assert "<aside>" not in html
+    assert html.index("<main>") < html.index('id="approval-workspace"')
+    assert 'href="#approval-workspace"' in html
+    assert 'aria-label="Proposed orders" tabindex="0"' in html
     assert "Execution summary" in html
     assert "metric-completion" in html
     assert "Filled Qty" in html
@@ -198,9 +215,10 @@ def test_root_redirects_to_operator_dashboard(tmp_path) -> None:
 
 
 def test_strategy_catalog_portal_and_api_are_served(tmp_path) -> None:
+    strategy_key = current_sota_definition().key
     backtests = tmp_path / "backtests" / "sota_current"
     backtests.mkdir(parents=True)
-    (backtests / "sota_price_volume_technical_tree_relative_adaptive_top6.json").write_text(
+    (backtests / (strategy_key + '.json')).write_text(
         '{"nav_series":[{"trade_date":"2025-01-02","nav_cnh":"100"},'
         '{"trade_date":"2025-01-03","nav_cnh":"101"}]}',
         encoding="utf-8",
@@ -209,11 +227,11 @@ def test_strategy_catalog_portal_and_api_are_served(tmp_path) -> None:
     with TestClient(create_app(settings)) as client:
         page = client.get("/strategies")
         payload = client.get("/api/v1/strategies")
-        detail_page = client.get("/strategies/sota_price_volume_technical_tree_relative_adaptive_top6")
+        detail_page = client.get('/strategies/' + strategy_key)
         report_page = client.get(
-            "/api/v1/strategies/sota_price_volume_technical_tree_relative_adaptive_top6/report"
+            '/api/v1/strategies/' + strategy_key + '/report'
         )
-        detail = client.get("/api/v1/strategies/sota_price_volume_technical_tree_relative_adaptive_top6")
+        detail = client.get('/api/v1/strategies/' + strategy_key)
 
     assert page.status_code == 200
     assert "Strategy Registry" in page.text

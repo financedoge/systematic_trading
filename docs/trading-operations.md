@@ -1,16 +1,34 @@
 # Gateway trading operations
 
-Open [Trading operations](http://127.0.0.1:8000/operator). The page keeps the existing proposal approval queue and performance reporting, with an order blotter and broker portfolio at the top.
+Open [Trading operations](http://127.0.0.1:8000/operator). The page includes the trading allocation, order blotter, full-width proposal review, broker portfolio and performance reporting.
+
+## Reviewing proposals
+
+Choose **Review approvals** near the page heading to jump to **Order approval**. Filter the compact proposal queue by All, Pending, Approved, Rejected or Missed, then select a proposal. Its status, gross CNH notional, order count and execution progress appear above the review.
+
+The order table uses the full page width. It shows asset names, side, quantity, requested type, reference price and currency, gross CNH value, and the scheduled New York execution window. Expand an order's rationale or the proposal's drivers and invalidation rules when needed. **Target portfolio** and **Broker Records · execution progress** expand below the orders. On narrow screens, the review controls stack and the tables scroll horizontally without shrinking their columns.
+
+The optional comment stays with its proposal while switching selections or refreshing within the page; it is not saved until a decision is submitted and does not survive a page reload. **Approve & submit paper orders** retains the existing approve-and-submit TWAP workflow. A proposal without orders shows **Approve proposal**. Matched reconciliation, broker evidence, risk limits and execution eligibility remain enforced. Decisions stay disabled while execution records load or are unavailable, and while a submission is in progress. A late response for another proposal cannot replace the selected proposal's records. No approval or submission is implied by selecting or reviewing a proposal.
 
 ## Order visibility
 
-The blotter defaults to **Today · All statuses**, so filled TWAP orders remain visible after leaving Working. Filter **Today**, **Last 7 days** (including today), an inclusive **Date range**, or **All dates**, independently of status. **Filled**, **Working**, **Needs attention**, **Completed / closed**, and **Missed** are separate views; missed proposals do not appear in Completed / closed. Rows are newest trading date/submission first, and counts/audit details follow the date selection.
+The blotter defaults to **Portfolio period · All statuses**, so filled TWAP orders remain visible after leaving Working. Filter **Today**, **Last 7 days** (including today), an inclusive **Date range**, or **All dates**, independently of status. **Filled**, **Working**, **Needs attention**, **Completed / closed**, and **Missed** are separate views; missed proposals do not appear in Completed / closed. Rows are newest trading date/submission first, and counts/audit details follow the date selection.
 
 Trading dates use the intended New York session, falling back to the actual submission date in New York for unscheduled legacy orders. Bulk updates of old missed records never make them today's orders. Submitted and updated timestamps use the browser's local timezone, named above the table. Missing submission times are explicitly marked **Not submitted**. Undated history is accessible under All dates. Unlinked working broker orders remain visible even when their trading date is unknown; an explicit notice identifies working local orders outside the selected date range. Gateway retention does not remove completed records from the durable local blotter.
 
 **Sync portfolio** and the management loop save the exact execution batch retrieved for reconciliation before comparing holdings. This prevents an earlier fill-sync response from lagging behind new TWAP slices. The page refreshes the latest reconciliation every 15 seconds and ignores older responses. **Syncing fills** means new execution evidence awaits persistence; new routing and position resets remain blocked until it catches up, while existing IB orders continue. **Execution history needs review** is reserved for conflicting or incomplete evidence requiring audited recovery. Synchronization never clears a durable execution conflict.
 
 The blotter queries IB open orders and broker-retained completed orders every 15 seconds while the page is visible. Use **Sync orders** for an immediate snapshot. Filter working orders, orders needing attention, terminal records or all history. Each linked row shows broker status, total/filled quantity, limit, account, broker order ID and reference. Expand the audit history for execution evidence, broker observations and operator actions. Broker callbacks and locally accumulated executions are separate evidence; a missing order is never treated as cancelled. Old local history remains visible after the broker's completed-order retention window ends.
+
+### Execution replay safeguards
+
+Execution synchronization requests seven calendar days, the maximum supported by the [IB execution filter](https://www.interactivebrokers.com/docs/tws-api/protobuf/execution-filter). The management loop continues these read-only checks on weekends and holidays; trading-day routing restrictions remain in place. An unsupported Gateway version, interrupted request, missing end callback or malformed execution fails the read instead of returning a successful partial history. An outage beyond the broker's retention still requires investigation against retained evidence or broker statements.
+
+Raw callbacks and completion/error metadata are retained before normalization under `var/broker_evidence/executions/` (relative to the configured data directory). Immutable JSON files are keyed by SHA-256; identical responses share the same file. `latest-<client>.json` records the most recent capture, and normalized fills link their evidence file. Archive write/verification failure fails the sync. Retain these files alongside the execution ledger for incident review.
+
+Timestamps must resolve to an explicit instant. Unsupported or missing values are rejected; they are never replaced by the current time. Ambiguous/nonexistent daylight-saving times are rejected. Duplicate execution IDs must agree on economic identity, quantity, price, cumulative quantity and timestamp. Different evidence-file paths or reconnect-assigned broker order IDs alone do not create an economic conflict. Conflicting evidence retains both versions and the differing fields in `execution_conflicts`, exposed in the order audit history. A filled order with such a conflict is labelled **Filled · Execution review** and remains blocked until audited recovery; consistent later callbacks never silently clear it.
+
+The October 2 incident's original rejected payload was discarded by the old implementation, so its exact mismatching field cannot be proven. These changes close the observed timestamp-fallback, history-window and diagnostic gaps and make future discrepancies replayable; they do not assert that every future broker discrepancy can be resolved automatically.
 
 External/unlinked orders are view-only. Changes require a positively matched paper account, the application's submitting client ID, symbol/side/reference, and current broker evidence. Completed callbacks from the installed IB API omit API client/order IDs: the previously observed permanent ID must match that exact attempt. The UI indicates stale observations and disables unsafe controls.
 
@@ -23,6 +41,8 @@ Each action requires a review dialog with operator name and reason. The review b
 - **Resubmit:** sends the stored routed terms only after a fresh broker snapshot confirms cancellation and zero fills, and the proposal is still approved and inside its execution deadline. Filled, partly filled, uncertain or expired orders cannot be resubmitted. Permanent identity and prior attempt details remain in the audit. Rejections that lack definitive broker cancellation evidence require investigation rather than a blind retry.
 
 The normal routing API and database reservations also reject nonzero/unknown broker fill evidence before execution-history synchronization completes. Polling and management actions do not emit duplicate fill events for unchanged executions. Live routing remains disabled.
+
+IB message **2111** reports an algorithm window adjusted to the next trading date ([IB error-code reference](https://ibkrcampus.eu/docs/tws-api/doc/error-handling/error-codes)). The router retains it as a warning and still waits for an actual order acknowledgement; the warning alone cannot establish acceptance. Other order errors and acknowledgement timeouts still stop uncertain batches. A partial submission is labelled **Submission incomplete**, with confirmed, uncertain, failed and unattempted counts. Review and reconcile before retrying; no missing order is sent automatically.
 
 ## Portfolio synchronization
 

@@ -4,7 +4,8 @@ from decimal import Decimal
 
 from systematic_trading.backtest.stored import _target_schedule
 from systematic_trading.domain.market import PriceBar
-from systematic_trading.research import current_sota_definition, instruments_for_definition, instantiate_overlays
+from systematic_trading.research import instruments_for_definition, instantiate_overlays
+from systematic_trading.research.strategy_catalog import legacy_sota_definition
 from systematic_trading.research.flow_concentration import (
     FlowConcentrationSpec, concentration_features, apply_concentration_targets,
 )
@@ -17,12 +18,14 @@ def targets_for_day(rows: dict, day: date, *, benchmark: bool = False, lookback_
                     flow_overlay: FlowConcentrationSpec | None = None, flow_state: dict | None = None,
                     constituent_overlay: ConstituentOverlaySpec | None = None, constituent_features: dict | None = None,
                     base_tree_models: dict | None = None, fixed_model_from: str | None = None,
-                    definition=None):
+                    definition=None, usd_models=None):
     if constituent_overlay is not None and (benchmark or flow_overlay is not None or constituent_features is None):
         raise ValueError('Constituent overlay needs frozen features and an unmodified SOTA base')
     if benchmark and flow_overlay is not None:
         raise ValueError('Flow overlay requires the SOTA base')
-    definition = definition or current_sota_definition()
+    # Schema-v1 implicit 'sota' bundles retain their original recipe. New SOTA
+    # runs use the explicit, versioned registered definition and USD inputs.
+    definition = definition or legacy_sota_definition()
     instruments = instruments_for_definition(definition)
     histories = {
         symbol: [PriceBar.model_validate(row) for row in values if date.fromisoformat(row['trade_date']) < day]
@@ -31,6 +34,9 @@ def targets_for_day(rows: dict, day: date, *, benchmark: bool = False, lookback_
     if min(len(bars) for bars in histories.values()) < 253:
         raise ValueError(f'Insufficient warmup before {day}; 253 prior observations required')
     overlays = list(instantiate_overlays(definition))
+    for overlay, spec in zip(overlays, definition.overlays, strict=True):
+        if spec.kind == 'usd_ridge':
+            overlay.schedule = usd_models
     rolling = [o for o, s in zip(overlays, definition.overlays, strict=True) if s.kind == 'rolling_model']
     if rolling and (base_tree_models is None or fixed_model_from is not None):
         raise ValueError('Rolling strategy requires a model schedule for the entire history')

@@ -1,5 +1,98 @@
 # Research State
 
+## Active SOTA and paper allocation — 2026-10-04
+
+The operator approved 100% Rolling 1y XGBoost + ETF activity lag-20 + USD
+(`research_rolling_xgboost_1y_lag20_v1_usd_v1`) through the strategy controls.
+After evidence-preserving recovery of five completed-order conflict flags and
+fresh matched IB reconciliation, the app activated that allocation and SOTA
+designation at 08:56:12 +08:00 on October 4 (control revision 2). The approved
+handover follows October 2 close; next execution session is October 5.
+This is the existing monitored version and separate USD layer, with no model
+recipe change. New routing approval remains required. Prior strategy periods,
+holdings, execution history and the portfolio baseline are retained.
+
+## USD promotion decision — 2026-10-02
+
+The operator reviewed the momentum results and selected the tested U1 USD layer
+for SOTA and both monitored portfolios. The new strategy IDs append `_usd_v1`
+to the original SOTA, ETF activity lag-20 and rolling one-year XGBoost IDs.
+The complete original definitions remain registered and serve as matched
+benchmarks and rollback parents. This decision supersedes the earlier instruction
+to retain those parents unchanged.
+
+U1 is a separate final allocation layer: per-ETF expanding ridge with short and
+older momentum, 63-return volatility, and same-vintage broad-dollar changes over
+21/63 valid observations. Monthly fits require 60 completed monthly labels ending
+strictly before the fit close. It preserves selected assets and gross exposure,
+using the tested 12% rank tilt and 3 percentage point bounds. XGBoost keeps its
+existing 26 inputs and training recipe; including USD inside the trees would
+require a separately versioned, matched refit comparison. No such comparison has
+been run, so the integration preserves the tested separate model.
+
+The statistical conclusion has not changed: the USD-specific U1-minus-U0 gain is
+about 14 bp/year over 30 months, with an interval including zero and Holm p=1.
+U1 also contains price features; its full improvement cannot all be attributed to
+USD. Prospective tracking of these selected versions begins October 2, 2026.
+The inherited 45% setting remains a base allocation limit; it is not a final
+holdings cap. The USD layer cannot increase an inherited overweight above 45%.
+The requested addition does not alter broker risk limits or increase capital.
+
+Market Data now includes a USD index tab for published DTWEXBGS history, index
+levels, 21/63-observation changes, vintage dates, missing observations and export.
+The chart uses one revised vintage; historical models use their own archived
+vintages. The application acquires, audits and publishes new required snapshots,
+fits models and calculates complete portfolios on refresh. Daily ALFRED archives
+do not certify intraday dissemination. Revised ETF histories and legacy CNH FX
+retain their existing availability limitations. USD/CNH remains unhedged.
+
+Decision and rollback contract: `config/strategy-promotions/usd-ridge-u1-2026-10-02.json`.
+The existing paper policy is bound to the previous strategy ID and therefore
+disables automatic approval on restart. It must be reviewed and re-enabled for
+the new version through the normal controls; live remains disabled. Paper/live
+proposal calculation uses the same published USD model receipt as monitoring and
+requires its ETF batch to match the audited decision inputs.
+
+## Momentum horizon, membership and USD round — 2026-10-01
+
+User authorized the revised research plan and all-core backtesting. Completed
+102 USD replays: 24 new SOTA recipes, two parent clocks, two benchmarks, two
+other-parent controls and four USD transfers, each at 5/10/20 bp per traded dollar.
+All 34 base-cost portfolios plus two high-cost stress cases pass native LEAN
+parity. Monthly targets reproduce all three monitored parents exactly across
+129 decisions. No monitored strategy, execution policy or live setting changed.
+
+Current monthly SOTA returns 9.17% net USD CAGR in this accounting scenario.
+One/two-week momentum gives 4.17%/5.61%; the older-window blend gives 6.95%.
+All four trend/skew gates trail the parent. Membership C1/C2 reduce annual cost
+from 31.8 bp to 26.0/28.5 bp, but CAGR falls to 8.32%/8.41%. These are USD
+adjusted-unit research results, not the existing CNH-accounting dashboard series.
+
+Downloaded 92 ALFRED DTWEXBGS vintages and the Fed's revised daily history.
+Audited same-vintage snapshots and verified analytical readback before publication
+under `governance/usd-broad-index`, batch
+`ddb5624ba023c71b9ca41ff0571318eb48f390ad4131ab20858d7eaafdae006b`.
+The fixed 60-month ridge training requirement leaves April 2024–September 2026
+for evaluation. USD adds 13.9 bp/year versus the matched price-only model;
+the marginal six-month-block 95% interval is [-11.4, 33.7] bp, Holm p=1 over
+the frozen 58-comparison family. Selected same-data transfers add 13.1/14.2 bp
+on activity/rolling parents; these are correlated descriptive evidence.
+Retain the USD hypothesis for discussion; no candidate clears promotion criteria.
+
+Risk finding: the inherited 45% cap applies before pool reallocation; the
+monthly parent reached 54.68% held weight and the weekly parent 61.52%.
+A separately versioned final-weight constraint is needed before advancement.
+Parent volume features remain legacy normalized proxies; audited prices are
+revised vintages, and ALFRED availability is daily archive evidence with a
+conservative prior-day cutoff. Legacy historical USD/CNH was excluded, so no
+full historical CNH bridge is claimed. No prospective performance is claimed.
+
+Full results: [review report](../research/momentum-results-2026-10-01.md).
+Artifacts: `var/research/momentum-20261001-v1b`; earlier failed engineering
+attempts and the transfer-selection correction are preserved. Tests: 48 passed,
+one environment-dependent PostgreSQL integration test skipped. Source checks
+and native parity retain paper-first controls.
+
 ## Rolling one-year XGBoost with lag-20 selected for app tracking — 2026-09-27
 
 The user selected a third tracked candidate: `research_rolling_xgboost_1y_lag20_v1`.
@@ -227,20 +320,22 @@ promote a replacement. See [audit findings](platform-audit-2026-09-26.md) and
 
 Paper operations now include separately tagged initial-allocation and 2 percentage point drift-maintenance proposals. Monthly signal calculation is preserved; intraday TWAP timing and additional turnover are not represented in the existing monthly benchmark. Keep attribution separate and validate execution/cost effects before live promotion.
 
+### Original parent record — superseded by the October 2 USD version
+
 - Name: SOTA: price/volume top 6 + technical tree + relative/adaptive
 - Promoted on: 2026-05-26
-- Registry: `systematic_trading.research.current_sota_definition`
-- Backtest hurdle: new multi-asset research candidates should compare against this SOTA by default, not against plain risk parity.
+- Registry: `systematic_trading.research.strategy_catalog.legacy_sota_definition`; `current_sota_definition` now returns the USD version described above.
+- Backtest hurdle: future candidates should compare against the current USD SOTA and preserve this parent as a matched control.
 - Canonical artifact folder: `var/backtests/sota_current/`
 - Model HTML: `var/backtests/sota_current/sota_model.html`
 - Promotion source artifact: `var/backtests/monthly_allweather_sleeve_variant_floor_search_20260525/`
 - Prior SOTA artifact: `var/backtests/sota_current/history/2026-05-17_sota_dynamic_sleeve_commodity_guard_55/`
 
-## Model Summary
+## Original Parent Model Summary
 
-The SOTA now uses the expanded multi-asset ETF universe and static monthly rebalancing. It keeps inverse-volatility beta weights as the foundation, then applies the best stability-adjusted daily research stack:
+The original parent uses the expanded multi-asset ETF universe and static monthly rebalancing. The current SOTA appends the USD layer described above to this stack:
 
-- Base: monthly multi-asset ETF universe, 63-bar inverse-volatility risk parity, 45% max weight, 2% cash reserve.
+- Base: monthly multi-asset ETF universe, 63-bar inverse-volatility risk parity, 45% base weight cap before subsequent reallocation, 2% cash reserve.
 - Pool filter: rank assets using 63/126/252-bar price momentum and 21/126-bar volume pressure; keep the top 6, require at least 4 selected assets, require positive 252-bar momentum, and reallocate residual weight.
 - Technical tree: frozen pre-2023 regression tree, max depth 3, min leaf 25, trained on 1,572 in-sample asset-month observations with MACD, Bollinger, RSI, price trend, volume pressure, drawdown, valuation, and macro features. Tilt is 16%, with active changes capped at 6% per ETF.
 - Relative momentum: 20/60-bar relative momentum overlay, 12% calm and 12% risk tilt, with active changes capped at 5% per ETF.

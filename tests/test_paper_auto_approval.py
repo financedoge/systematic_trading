@@ -3,6 +3,8 @@ from decimal import Decimal
 from types import SimpleNamespace
 
 import pytest
+
+pytestmark = pytest.mark.usefixtures('neutral_usd_publication')
 from fastapi.testclient import TestClient
 
 from systematic_trading.app import create_app

@@ -74,7 +74,8 @@ def test_held_quantities_and_latest_targets_are_separate(fixture_bundle):
     bars = json.loads((fixture_bundle/"bars.json").read_text())
     quotes = json.loads((fixture_bundle/"quotes.json").read_text())
     inputs = dict(latest_bars=bars, provenance=dict(price_through="2025-01-15"))
-    result = latest_allocation(current_sota_definition(), inputs, economic, quotes)
+    from systematic_trading.research.strategy_catalog import legacy_sota_definition
+    result = latest_allocation(legacy_sota_definition(), inputs, economic, quotes)
     assert result["target_known_through"] == "2025-01-15"
     assert result["next_rebalance"] == "2025-02-03"
     assert sum(r["value_cnh"] for r in result["holdings"]) == pytest.approx(result["nav_cnh"], abs=.01)

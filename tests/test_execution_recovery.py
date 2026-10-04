@@ -129,6 +129,33 @@ def test_recovery_rejects_stale_order_evidence_and_baseline(backend_store):
         store.recover_broker_executions(request, review_token=plan.review_token)
 
 
+def test_verified_identical_fills_clear_conflict_only_through_audited_recovery(backend_store):
+    store = backend_store
+    verified = fill(quantity=10, cumulative_quantity=10)
+    sync(store, [verified])
+    sync(store, [verified.model_copy(update={"average_price": Decimal("101")})])
+    blocked = store.list_broker_order_records()[0]
+    assert blocked.execution_sync_issue
+    assert blocked.execution_conflicts[-1].differences['trade-a.01']['average_price'] == {
+        'stored': '100', 'incoming': '101'}
+    sync(store, [verified])
+    assert store.list_broker_order_records()[0].execution_sync_issue
+    request = request_for(verified)
+    plan = preview(store, request)
+    assert plan.previous_quantity == plan.recovered_quantity == 10
+    assert Decimal(plan.previous_average_price) == Decimal(plan.recovered_average_price)
+    recovered = store.recover_broker_executions(request, review_token=plan.review_token)
+    assert recovered.execution_sync_issue is None
+    assert recovered.execution_fills == blocked.execution_fills
+    assert recovered.status == blocked.status == BrokerOrderStatus.FILLED
+    assert recovered.remaining_quantity == blocked.remaining_quantity == 0
+    assert recovered.execution_recoveries[-1].previous_issue == blocked.execution_sync_issue
+    assert recovered.execution_recoveries[-1].previous_fills == recovered.execution_fills
+    assert recovered.execution_conflicts == blocked.execution_conflicts
+    sync(store, [verified])
+    assert store.list_broker_order_records()[0] == recovered
+
+
 @pytest.mark.parametrize("bad, message", [
     (request_for(fill(cumulative_quantity=None)), "cumulative"),
     (request_for(fill(account="DU999", cumulative_quantity=4)), "expected account"),

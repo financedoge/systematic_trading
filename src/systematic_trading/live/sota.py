@@ -70,8 +70,21 @@ def build_sota_live_rebalance_plan(
     cash_reserve_weight: Decimal = Decimal("0.02"),
     target_decision_date: date | None = None,
     target_proposal: TradeProposal | None = None,
+    definition=None,
+    explicit_targets=None,
+    allocation_receipt=None,
+    reuse_proposal_intent=False,
 ) -> SotaLiveRebalancePlan:
-    definition = current_sota_definition()
+    if definition is None:
+        from systematic_trading.portfolio.strategy_allocation import control_state
+        active = control_state(store)['active']
+        if active['version'] != 'legacy':
+            from systematic_trading.live.allocated_plan import build_allocated_plan
+            return build_allocated_plan(store=store, broker=broker, account_snapshot=account_snapshot,
+                decision_date=decision_date, intended_trade_date=intended_trade_date, environment=environment,
+                order_type=order_type, queue=queue, target_decision_date=target_decision_date,
+                target_proposal=target_proposal, reuse_proposal_intent=reuse_proposal_intent)
+        definition = current_sota_definition()
     overlays = instantiate_overlays(definition)
     instruments = instruments_for_definition(definition)
     bars_by_symbol = {
@@ -102,7 +115,9 @@ def build_sota_live_rebalance_plan(
     target_date = target_decision_date or effective_decision_date
     if target_date > effective_decision_date:
         raise ValueError("Target decision date cannot be later than the valuation date.")
-    if target_proposal is not None:
+    if explicit_targets is not None:
+        targets, eligible_symbols = explicit_targets, sorted(t.symbol for t in explicit_targets)
+    elif target_proposal is not None:
         if target_proposal.sleeve != definition.sleeve_name or not target_proposal.targets:
             raise ValueError("Active target proposal must belong to the current strategy and contain targets.")
         target_date = target_proposal.target_as_of or target_proposal.as_of
@@ -113,6 +128,19 @@ def build_sota_live_rebalance_plan(
         if any(target.symbol not in instruments or target.target_weight < 0 for target in targets) or sum(target.target_weight for target in targets) > 1:
             raise ValueError("Active strategy target weights are invalid.")
     else:
+        if any(o.kind == 'rolling_model' for o in definition.overlays):
+            from systematic_trading.live.strategy_models import bind_rolling_model
+            input_receipt['rolling_model'] = bind_rolling_model(broker.settings, definition,
+                input_receipt.get('batch'), overlays,
+                {s: [b for b in bars if b.trade_date <= target_date] for s, bars in bars_by_symbol.items()},
+                next_us_trading_day(target_date))
+        if any(o.kind == 'usd_ridge' for o in definition.overlays):
+            from systematic_trading.research.usd_tracking import published_live_schedule
+            schedule, usd_receipt = published_live_schedule(broker.settings, definition, input_receipt.get('batch'))
+            input_receipt['usd'] = usd_receipt
+            for overlay, spec in zip(overlays, definition.overlays, strict=True):
+                if spec.kind == 'usd_ridge':
+                    overlay.schedule = schedule
         targets, eligible_symbols = _sota_targets_as_of(
             instruments=instruments,
             bars_by_symbol={symbol: [bar for bar in bars if bar.trade_date <= target_date] for symbol, bars in bars_by_symbol.items()},
@@ -165,6 +193,8 @@ def build_sota_live_rebalance_plan(
     input_receipt = dict(input_receipt, fx_to_cnh={str(c): str(v) for c,v in fx_to_cnh.items()},
                          strategy_definition=asdict(definition),
                          target_source_inputs=target_proposal.input_provenance if target_proposal else None)
+    if allocation_receipt is not None:
+        input_receipt['allocation'] = allocation_receipt
     input_receipt["receipt_sha256"] = digest(encode(input_receipt))
     proposal = proposal.model_copy(update={"input_provenance": input_receipt,
         "portfolio_context": portfolio_context(store).model_dump(mode="json")})
@@ -239,7 +269,9 @@ def _sota_targets_as_of(
     ]
     eligible_instruments = {state.instrument.symbol: state.instrument for state in states}
     context = SignalContext(
-        as_of=decision_date,
+        # SignalContext excludes its as_of session. A completed-close decision
+        # therefore uses the next session, exactly as the shared backtest does.
+        as_of=next_us_trading_day(decision_date),
         instruments=eligible_instruments,
         bars_by_symbol=bars_by_symbol,
         trade_dates=trade_dates,

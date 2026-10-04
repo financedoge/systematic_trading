@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "monitored_strategy_ids": [
-    "sota_price_volume_technical_tree_relative_adaptive_top6",
-    "research_etf_activity_lag20_v1",
-    "research_rolling_xgboost_1y_lag20_v1"
+    "sota_price_volume_technical_tree_relative_adaptive_top6_usd_v1",
+    "research_etf_activity_lag20_v1_usd_v1",
+    "research_rolling_xgboost_1y_lag20_v1_usd_v1"
   ],
   "method": "app_native_signal_rebalance_lean_replay",
   "notes": "App-calculated strategies on audited histories; full signal/rebalance replay, current held and target weights, matched benchmarks. Tracking confers no execution or promotion authority.",
@@ -12,7 +12,7 @@
     "start": "2016-01-04",
     "warmup_start": "2012-01-05",
     "fixed_model_from": "2023-01-01",
-    "prospective_start": "2026-09-28",
+    "prospective_start": "2026-10-02",
     "initial_cash_cnh": "1000000",
     "transaction_cost_bps": "5",
     "slippage_bps": "0",

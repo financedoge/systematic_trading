@@ -1,0 +1,36 @@
+[
+  {
+    "id": "U01",
+    "title": "The US dollar and capital flows to EMEs",
+    "source_url": "https://www.bis.org/publications/us-dollar-and-capital-flows-emes_1.pdf",
+    "retrieved_at": "2026-10-01T13:39:31.908691+00:00",
+    "final_url": "https://www.bis.org/publications/us-dollar-and-capital-flows-emes_1.pdf",
+    "file": "U01_the_us_dollar_and_capital_flows_to_emes.pdf",
+    "status": "downloaded",
+    "sha256": "15e61effe8b84d2f913af5dc0bd7a993f961bdaf392d8b1dbced2c624a68391f",
+    "bytes": 333878,
+    "pages": 17,
+    "identity_check": "Title, authors and journal/date checked in downloaded PDF",
+    "authors": "Gaston Gelos; Pietro Patelli; Ilhyock Shim",
+    "downloaded_version": "BIS Quarterly Review, September 2024",
+    "read_pdf_pages": "1,5-6,11",
+    "reading_status": "Initial firsthand pass through selected sections, not a full appendix review"
+  },
+  {
+    "id": "U02",
+    "title": "Commodity prices, the dollar and stagflation risk",
+    "source_url": "https://www.bis.org/publications/commodity-prices-dollar-and-stagflation-risk_1.pdf",
+    "retrieved_at": "2026-10-01T13:39:31.909691+00:00",
+    "final_url": "https://www.bis.org/publications/commodity-prices-dollar-and-stagflation-risk_1.pdf",
+    "file": "U02_commodity_prices_the_dollar_and_stagflation_risk.pdf",
+    "status": "downloaded",
+    "sha256": "d4b0a2a99ba78de91fbfbfdf51e8ae0e79c50b2bf9432ac9763b3e1d5a1a0e69",
+    "bytes": 241922,
+    "pages": 13,
+    "identity_check": "Title, authors and journal/date checked in downloaded PDF",
+    "authors": "Boris Hofmann; Taejin Park; Albert Pierres Tejada",
+    "downloaded_version": "BIS Quarterly Review, March 2023",
+    "read_pdf_pages": "1-5,9",
+    "reading_status": "Initial firsthand pass through selected sections, not a full appendix review"
+  }
+]

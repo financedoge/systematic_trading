@@ -2,7 +2,8 @@
 from AlgorithmImports import *  # noqa: F403
 import json
 import sys
-from datetime import datetime
+from datetime import UTC, datetime
+from zoneinfo import ZoneInfo
 from decimal import Decimal as D, ROUND_HALF_UP
 from pathlib import Path
 
@@ -71,11 +72,27 @@ class FrozenPortfolioAlgorithm(QCAlgorithm):  # noqa: F405
         self.rows = json.loads((self.root / 'bars.json').read_text())
         self.constituent_features = json.loads((self.root / 'constituent_features.json').read_text()) if self.spec.constituent_overlay else None
         self.base_tree_models = json.loads((self.root / 'base_tree_models.json').read_text()) if self.spec.base_tree_model_schedule else None
+        self.usd_models = json.loads((self.root / 'usd_models.json').read_text()) if self.spec.usd_model_schedule else None
         self.instruments = {k: v.model_copy(update={'quote_currency': Currency.CNH}) for k, v in
                             instruments_for_definition(current_sota_definition()).items()}
         self.set_time_zone(TimeZones.NEW_YORK)  # noqa: F405
         self.set_start_date(datetime.fromisoformat(self.spec.start_date))
-        self.set_end_date(datetime.fromisoformat(self.spec.end_date))
+        end = datetime.fromisoformat(self.spec.end_date)
+        # The verified bundle contains the calendar-checked final close timestamp.
+        final_quote = (self.root / 'quotes' / (sorted(self.quotes)[0]+'.csv')).read_text().splitlines()[-1].split(',')
+        close = datetime.fromisoformat(final_quote[0]).replace(tzinfo=ZoneInfo('America/New_York'))
+        if (final_quote[2] != 'close' or close.date() != end.date()
+                or datetime.now(UTC) < close):
+            raise ValueError('Native replay requires a completed US market session.')
+        # LEAN clamps end dates to yesterday in the algorithm timezone. Our
+        # audited, complete close may be today in New York. Set this boundary
+        # in UTC+14, then restore New York before subscriptions or any replay.
+        # Quotes, decisions and all economic timestamps remain unchanged.
+        self.set_time_zone('Pacific/Kiritimati')
+        self.set_end_date(end)
+        self.set_time_zone(TimeZones.NEW_YORK)  # noqa: F405
+        if self.end_date.date() != end.date():
+            raise ValueError('LEAN could not retain the completed requested end session.')
         self.set_account_currency('CNH')
         self.set_cash(float(self.spec.initial_cash_cnh))
         self.set_benchmark(lambda stamp: 1.0)
@@ -112,7 +129,7 @@ class FrozenPortfolioAlgorithm(QCAlgorithm):  # noqa: F405
                                           flow_overlay=self.spec.flow_overlay, flow_state=self.flow_state,
                                           constituent_overlay=self.spec.constituent_overlay,
                                           constituent_features=self.constituent_features, base_tree_models=self.base_tree_models,
-                                          fixed_model_from=self.spec.fixed_model_from,
+                                          fixed_model_from=self.spec.fixed_model_from, usd_models=self.usd_models,
                                           definition=StrategyDefinition.from_dict(self.spec.strategy_definition) if self.spec.strategy_definition else None)
             else:
                 targets = [AllocationTarget.model_validate(t) for t in expected['targets']]

@@ -116,7 +116,7 @@ def reconcile_ib_paper_account(
     profile = InteractiveBrokersAdapter(settings).profile_for(OrderEnvironment.PAPER).model_copy(
         update={"client_id": settings.ib_reconciliation_client_id or settings.ib_client_id + 60}
     )
-    fill_client = execution_client or IbApiExecutionSyncClient()
+    fill_client = execution_client or IbApiExecutionSyncClient(evidence_dir=settings.data_dir / 'broker_evidence' / 'executions')
     ib_fills = fill_client.fetch_fills(profile)
     all_history = store.list_broker_order_records()
     if sync_new_fills:

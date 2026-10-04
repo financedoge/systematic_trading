@@ -1,6 +1,8 @@
 """Shared visual contract for every application workspace and strategy report."""
 import re
 
+from systematic_trading.web.asset_names import with_asset_names
+
 CSS = """
 :root{--bg:#edf1f6;--panel:#fff;--text:#1b2b42;--muted:#65748a;--line:#dfe6ee;--line-soft:#edf1f6;--focus:#315bc2;--good:#246b52;--warn:#93691e;--bad:#a83232}
 body{margin:0;background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;font-variant-numeric:tabular-nums}
@@ -20,6 +22,8 @@ main{min-width:0}.panel{background:var(--panel);border:1px solid var(--line);bor
 
 
 def with_app_shell(html: str, page: str) -> str:
+    from systematic_trading.web.strategy_control_ui import with_strategy_controls
+    html = with_strategy_controls(with_asset_names(html), page)
     if 'id="application-shell-style"' in html:
         return html
     titles = {"trading":"Trading operations", "strategies":"Strategies", "system":"System", "market":"Market Data"}

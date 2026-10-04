@@ -3,6 +3,27 @@
 import pytest
 
 
+@pytest.fixture
+def neutral_usd_publication(monkeypatch):
+    """Synthetic neutral published models for existing order/approval unit fixtures.
+
+    These tests exercise execution gates without external databases. Dedicated
+    test_usd_promotion tests verify real inference, publication binding and failure.
+    """
+    from datetime import date, timedelta
+    from systematic_trading.research import instruments_for_definition, current_sota_definition
+    from systematic_trading.research import usd_tracking
+    symbols = instruments_for_definition(current_sota_definition())
+    model = dict(features=['S','L','vol63','USD21','USD63'], coefficients=[0]*5,
+        means=[0]*5, scales=[1]*5, intercept=0, training_months=60, max_label_end='2010-01-01')
+    dates = [str(date(2024,1,1)+timedelta(days=i)) for i in range(4*366)]
+    schedule = dict(version=usd_tracking.VERSION,
+        models={d:dict(models={s:model for s in symbols},fit_close=d) for d in dates},
+        snapshots=[dict(known_through=d,vintage_date=str(date.fromisoformat(d)-timedelta(days=1)),
+            observation_date=str(date.fromisoformat(d)-timedelta(days=2)),features=dict(USD21=0,USD63=0)) for d in dates])
+    monkeypatch.setattr(usd_tracking, 'published_live_schedule', lambda *args: (schedule, {'synthetic_test_publication': True}))
+
+
 @pytest.fixture(autouse=True)
 def isolated_application_defaults(tmp_path, monkeypatch):
     from systematic_trading.config import get_settings

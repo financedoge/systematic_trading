@@ -203,6 +203,21 @@ class PlatformEventOutboxReplayStore(Protocol):
 
 
 @runtime_checkable
+class StrategyControlStore(Protocol):
+    def strategy_control_state(self, scope: str) -> dict | None:
+        ...
+
+    def strategy_control_events(self, scope: str) -> list[dict]:
+        ...
+
+    def commit_strategy_control(self, scope: str, expected_revision: int, state: dict, event: dict) -> dict:
+        ...
+
+    def strategy_approval_times(self) -> dict[str, str]:
+        ...
+
+
+@runtime_checkable
 class TradingStore(
     InitializableStore,
     WatchlistStore,
@@ -210,6 +225,7 @@ class TradingStore(
     BrokerOrderStore,
     MarketDataStore,
     PnLStore,
+    StrategyControlStore,
     PlatformEventAppendStore,
     PlatformEventOutboxStore,
     PlatformEventOutboxReplayStore,

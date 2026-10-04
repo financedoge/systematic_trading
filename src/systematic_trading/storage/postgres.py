@@ -53,7 +53,10 @@ class PostgresConnectionConfig:
     application_name: str = "systematic-trading"
 
 
-class PostgresStore:
+from systematic_trading.storage.strategy_control import StrategyControlStore
+
+
+class PostgresStore(StrategyControlStore):
     def __init__(self, config: PostgresConnectionConfig) -> None:
         self.config = config
 

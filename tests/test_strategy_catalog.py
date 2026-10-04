@@ -20,7 +20,7 @@ def test_current_sota_definition_instantiates_overlay_and_diagrams() -> None:
     card = strategy_model_card(definition)
 
     assert definition.state == "sota"
-    assert definition.key == "sota_price_volume_technical_tree_relative_adaptive_top6"
+    assert definition.key == "sota_price_volume_technical_tree_relative_adaptive_top6_usd_v1"
     assert definition.universe_key == "multi_asset"
     assert definition.scheduler == "static_monthly"
     assert isinstance(overlays[0], AssetPoolFilterOverlay)
@@ -36,6 +36,8 @@ def test_current_sota_definition_instantiates_overlay_and_diagrams() -> None:
     assert "Decision-tree signal overlay" in card["layerDiagram"]
     assert "Relative momentum overlay" in card["layerDiagram"]
     assert "Adaptive trend overlay" in card["layerDiagram"]
+    assert definition.overlays[-1].kind == 'usd_ridge'
+    assert 'USD prediction overlay' in card['layerDiagram']
     assert "Freeze tree before OOS starts" in card["decisionTree"]
 
 

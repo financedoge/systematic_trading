@@ -18,6 +18,9 @@ class StrategyMarketDataView:
         self._prices: dict[str, tuple[list[date], list[PriceBar]]] = {}
         self._fx: dict[tuple[Currency, Currency], tuple[list[date], list[FXRate]]] = {}
 
+    def __getattr__(self, name):
+        return getattr(self._store, name)
+
     def latest_pnl_baseline(self):
         return self._store.latest_pnl_baseline()
 

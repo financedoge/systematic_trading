@@ -1,0 +1,53 @@
+{
+  "eligible": [
+    "U1-M",
+    "U0-M"
+  ],
+  "jobs": [
+    {
+      "cadence": "monthly",
+      "id": "parent-activity-M",
+      "parent": "activity",
+      "recipe": "parent"
+    },
+    {
+      "cadence": "monthly",
+      "id": "parent-rolling-M",
+      "parent": "rolling",
+      "recipe": "parent"
+    },
+    {
+      "cadence": "monthly",
+      "id": "transfer-1-activity",
+      "parent": "activity",
+      "recipe": "U1",
+      "selected_from": "U1-M"
+    },
+    {
+      "cadence": "monthly",
+      "id": "transfer-1-rolling",
+      "parent": "rolling",
+      "recipe": "U1",
+      "selected_from": "U1-M"
+    },
+    {
+      "cadence": "monthly",
+      "id": "transfer-2-activity",
+      "parent": "activity",
+      "recipe": "U0",
+      "selected_from": "U0-M"
+    },
+    {
+      "cadence": "monthly",
+      "id": "transfer-2-rolling",
+      "parent": "rolling",
+      "recipe": "U0",
+      "selected_from": "U0-M"
+    }
+  ],
+  "rule": "At most three. Require positive full-history and 2023+ paired mean at 5bp, positive full-history mean at 20bp, drawdown worsening <=2pp. Sort by full-history 5bp paired mean descending, id lexical tie-break. Transfer unchanged rules and cadence. Descriptive stress check only: same-data adaptive selection invalidates confirmatory transfer p-values; report p=1 for reserved slots and descriptive intervals only.",
+  "selected": [
+    "U1-M",
+    "U0-M"
+  ]
+}

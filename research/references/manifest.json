@@ -1,0 +1,1645 @@
+[
+  {
+    "id": "R01",
+    "title": "False (and Missed) Discoveries in Financial Economics",
+    "citation_as_supplied": "Harvey, C. R. & Liu, Y. (2020). Journal of Finance, 75(5), 2503–2553.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://people.duke.edu/~charvey/Research/Published_Papers/P143_False_and_missed.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://people.duke.edu/~charvey/Research/Published_Papers/P143_False_and_missed.pdf",
+        "retrieved_at": "2026-10-01T02:56:25.154306+00:00",
+        "final_url": "https://people.duke.edu/~charvey/Research/Published_Papers/P143_False_and_missed.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R01_false_and_missed_discoveries_in_financial_economics.pdf",
+    "bytes": 598507,
+    "sha256": "384c08facf8bf55db3f9a72a35b088a70c66aa74551f7558d14cd5515a6929a4",
+    "pages": 51,
+    "source_url": "https://people.duke.edu/~charvey/Research/Published_Papers/P143_False_and_missed.pdf",
+    "final_url": "https://people.duke.edu/~charvey/Research/Published_Papers/P143_False_and_missed.pdf",
+    "retrieved_at": "2026-10-01T02:56:25.154306+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, Journal of Finance 2020",
+    "read_pdf_pages": "3,10-13",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R02",
+    "title": "The Probability of Backtest Overfitting",
+    "citation_as_supplied": "Bailey, D. H., Borwein, J. M., López de Prado, M. & Zhu, Q. J. (2017). Journal of Computational Finance, 20(4), 39–69.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.davidhbailey.com/dhbpapers/backtest-prob.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.davidhbailey.com/dhbpapers/backtest-prob.pdf",
+        "retrieved_at": "2026-10-01T02:56:25.157409+00:00",
+        "final_url": "https://www.davidhbailey.com/dhbpapers/backtest-prob.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R02_the_probability_of_backtest_overfitting.pdf",
+    "bytes": 1145522,
+    "sha256": "d8bfbadaaedb430d9dec929646d92f3580fdf18238f34121ae7738fa1c69a63d",
+    "pages": 34,
+    "source_url": "https://www.davidhbailey.com/dhbpapers/backtest-prob.pdf",
+    "final_url": "https://www.davidhbailey.com/dhbpapers/backtest-prob.pdf",
+    "retrieved_at": "2026-10-01T02:56:25.157409+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Working paper, February 2015; cited journal publication is 2017",
+    "read_pdf_pages": "9-11",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R03",
+    "title": "A Backtesting Protocol in the Era of Machine Learning",
+    "citation_as_supplied": "Arnott, R. D., Harvey, C. R. & Markowitz, H. (2019). Journal of Financial Data Science, 1(1), 64–74.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://people.duke.edu/~charvey/Research/Published_Papers/G138_A_backtesting_protocol.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://people.duke.edu/~charvey/Research/Published_Papers/G138_A_backtesting_protocol.pdf",
+        "retrieved_at": "2026-10-01T02:56:25.157991+00:00",
+        "final_url": "https://people.duke.edu/~charvey/Research/Published_Papers/G138_A_backtesting_protocol.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R03_a_backtesting_protocol_in_the_era_of_machine_learning.pdf",
+    "bytes": 270696,
+    "sha256": "3922b42a29176ffe6d8d230c776313d03de220b71083c7d9440c7ccbd2a2bb62",
+    "pages": 11,
+    "source_url": "https://people.duke.edu/~charvey/Research/Published_Papers/G138_A_backtesting_protocol.pdf",
+    "final_url": "https://people.duke.edu/~charvey/Research/Published_Papers/G138_A_backtesting_protocol.pdf",
+    "retrieved_at": "2026-10-01T02:56:25.157991+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "2019 journal author draft marked Author Draft for Review only",
+    "read_pdf_pages": "2-4,8-9",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R04",
+    "title": "Replicating Anomalies",
+    "citation_as_supplied": "Hou, K., Xue, C. & Zhang, L. (2020). Review of Financial Studies, 33(5), 2019–2133.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.nber.org/system/files/working_papers/w23394/w23394.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.nber.org/system/files/working_papers/w23394/w23394.pdf",
+        "retrieved_at": "2026-10-01T02:56:25.157991+00:00",
+        "final_url": "https://www.nber.org/system/files/working_papers/w23394/w23394.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R04_replicating_anomalies.pdf",
+    "bytes": 821858,
+    "sha256": "8d00169a4cf6b4895587b054b41fe934b600ea501f210f02433cfe4db316f163",
+    "pages": 130,
+    "source_url": "https://www.nber.org/system/files/working_papers/w23394/w23394.pdf",
+    "final_url": "https://www.nber.org/system/files/working_papers/w23394/w23394.pdf",
+    "retrieved_at": "2026-10-01T02:56:25.157991+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "NBER working paper, May 2017; 447 anomalies; predates cited 2020 publication",
+    "read_pdf_pages": "2-5,8-9",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R05",
+    "title": "Is There a Replication Crisis in Finance?",
+    "citation_as_supplied": "Jensen, T. I., Kelly, B. & Pedersen, L. H. (2023). Journal of Finance, 78(5), 2465–2518.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.nber.org/system/files/working_papers/w28432/w28432.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.nber.org/system/files/working_papers/w28432/w28432.pdf",
+        "retrieved_at": "2026-10-01T02:56:25.158995+00:00",
+        "final_url": "https://www.nber.org/system/files/working_papers/w28432/w28432.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R05_is_there_a_replication_crisis_in_finance.pdf",
+    "bytes": 589961,
+    "sha256": "95807b0cc26262dad87be2f9b50d653d71f236b669e3d5c5d45f64b0729ce693",
+    "pages": 54,
+    "source_url": "https://www.nber.org/system/files/working_papers/w28432/w28432.pdf",
+    "final_url": "https://www.nber.org/system/files/working_papers/w28432/w28432.pdf",
+    "retrieved_at": "2026-10-01T02:56:25.158995+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "NBER working paper, February 2021; predates cited 2023 publication",
+    "read_pdf_pages": "2-5,8-9",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R06",
+    "title": "Open Source Cross-Sectional Asset Pricing",
+    "citation_as_supplied": "Chen, A. Y. & Zimmermann, T. (2022). Critical Finance Review, 11(2), 207–264.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.cfr-cologne.de/download/workingpaper/cfr-20-04.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.cfr-cologne.de/download/workingpaper/cfr-20-04.pdf",
+        "retrieved_at": "2026-10-01T02:58:50.927555+00:00",
+        "final_url": "https://www.cfr-cologne.de/download/workingpaper/cfr-20-04.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R06_open_source_cross_sectional_asset_pricing.pdf",
+    "bytes": 3379281,
+    "sha256": "d4bf34188a91fe819f6a5df53a4a62fdcd1dd30266e079851e064ba72783da1b",
+    "pages": 71,
+    "source_url": "https://www.cfr-cologne.de/download/workingpaper/cfr-20-04.pdf",
+    "final_url": "https://www.cfr-cologne.de/download/workingpaper/cfr-20-04.pdf",
+    "retrieved_at": "2026-10-01T02:58:50.927555+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "CFR manuscript dated May 2021; cited publication is 2022",
+    "read_pdf_pages": "2-4,8-9",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R07",
+    "title": "Empirical Asset Pricing via Machine Learning",
+    "citation_as_supplied": "Gu, S., Kelly, B. & Xiu, D. (2020). Review of Financial Studies, 33(5), 2223–2273.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://dachxiu.chicagobooth.edu/download/ML.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://dachxiu.chicagobooth.edu/download/ML.pdf",
+        "retrieved_at": "2026-10-01T02:56:25.158995+00:00",
+        "final_url": "https://dachxiu.chicagobooth.edu/download/ML.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R07_empirical_asset_pricing_via_machine_learning.pdf",
+    "bytes": 1146229,
+    "sha256": "05e4ef8a1c830c9f33a0f461f07c145f6e6be30fbd7996a09d0672de1413bd61",
+    "pages": 51,
+    "source_url": "https://dachxiu.chicagobooth.edu/download/ML.pdf",
+    "final_url": "https://dachxiu.chicagobooth.edu/download/ML.pdf",
+    "retrieved_at": "2026-10-01T02:56:25.158995+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, Review of Financial Studies 2020",
+    "read_pdf_pages": "4-5,10-11,22-23,26-27",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R08",
+    "title": "Shrinking the Cross-Section",
+    "citation_as_supplied": "Kozak, S., Nagel, S. & Santosh, S. (2020). Journal of Financial Economics, 135(2), 271–292.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.nber.org/papers/w24070.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.nber.org/papers/w24070.pdf",
+        "retrieved_at": "2026-10-01T02:58:50.928551+00:00",
+        "final_url": "https://www.nber.org/system/files/working_papers/w24070/w24070.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R08_shrinking_the_cross_section.pdf",
+    "bytes": 3651515,
+    "sha256": "4058efa0eb3c2f4e14af3b33584df259966fae9dc867096c2bb933024b8e776a",
+    "pages": 58,
+    "source_url": "https://www.nber.org/papers/w24070.pdf",
+    "final_url": "https://www.nber.org/system/files/working_papers/w24070/w24070.pdf",
+    "retrieved_at": "2026-10-01T02:58:50.928551+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "NBER working paper, November 2017; cited publication is 2020",
+    "read_pdf_pages": "3-5,41",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R09",
+    "title": "Volatility-Managed Portfolios",
+    "citation_as_supplied": "Moreira, A. & Muir, T. (2017). Journal of Finance, 72(4), 1611–1644.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.nber.org/system/files/working_papers/w22208/w22208.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.nber.org/system/files/working_papers/w22208/w22208.pdf",
+        "retrieved_at": "2026-10-01T02:56:28.411869+00:00",
+        "final_url": "https://www.nber.org/system/files/working_papers/w22208/w22208.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R09_volatility_managed_portfolios.pdf",
+    "bytes": 1013730,
+    "sha256": "be1ea92102e1394e9ddec9545489902f45e5a07b42bd4c42faf8ee372e99fa7a",
+    "pages": 57,
+    "source_url": "https://www.nber.org/system/files/working_papers/w22208/w22208.pdf",
+    "final_url": "https://www.nber.org/system/files/working_papers/w22208/w22208.pdf",
+    "retrieved_at": "2026-10-01T02:56:28.411869+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "NBER working paper, April 2016; cited publication is 2017",
+    "read_pdf_pages": "7-9,27",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R10",
+    "title": "On the Performance of Volatility-Managed Portfolios",
+    "citation_as_supplied": "Cederburg, S., O’Doherty, M. S., Wang, F. & Yan, X. S. (2020). Journal of Financial Economics, 138(1), 95–117.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.lehigh.edu/~xuy219/research/COWY.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.lehigh.edu/~xuy219/research/COWY.pdf",
+        "retrieved_at": "2026-10-01T02:56:28.838493+00:00",
+        "final_url": "https://www.lehigh.edu/~xuy219/research/COWY.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R10_on_the_performance_of_volatility_managed_portfolios.pdf",
+    "bytes": 974329,
+    "sha256": "5f82689700a360bed1fd371637d4a62090c6715d0cc9bd85c36fc78bc6129919",
+    "pages": 23,
+    "source_url": "https://www.lehigh.edu/~xuy219/research/COWY.pdf",
+    "final_url": "https://www.lehigh.edu/~xuy219/research/COWY.pdf",
+    "retrieved_at": "2026-10-01T02:56:28.838493+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, Journal of Financial Economics 2020",
+    "read_pdf_pages": "2-3,12,17,19",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R11",
+    "title": "Do Stocks Outperform Treasury Bills?",
+    "citation_as_supplied": "Bessembinder, H. (2018). Journal of Financial Economics, 129(3), 440–457.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://r.jordan.im/download/investing/bessembinder2018.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://r.jordan.im/download/investing/bessembinder2018.pdf",
+        "retrieved_at": "2026-10-01T03:04:35.788366+00:00",
+        "final_url": "https://r.jordan.im/download/investing/bessembinder2018.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R11_do_stocks_outperform_treasury_bills.pdf",
+    "bytes": 4025734,
+    "sha256": "663b324b49119aea6bb958eff68a76cb40625a543d2d18f9b694d1de4b3a26b1",
+    "pages": 53,
+    "source_url": "https://r.jordan.im/download/investing/bessembinder2018.pdf",
+    "final_url": "https://r.jordan.im/download/investing/bessembinder2018.pdf",
+    "retrieved_at": "2026-10-01T03:04:35.788366+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Accepted manuscript; cited publication is 2018",
+    "read_pdf_pages": "3-4,7-8",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R12",
+    "title": "Factor Momentum and the Momentum Factor",
+    "citation_as_supplied": "Ehsani, S. & Linnainmaa, J. T. (2022). Journal of Finance, 77(3), 1877–1919.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.nber.org/papers/w25551.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.nber.org/papers/w25551.pdf",
+        "retrieved_at": "2026-10-01T02:56:28.995731+00:00",
+        "final_url": "https://www.nber.org/system/files/working_papers/w25551/w25551.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R12_factor_momentum_and_the_momentum_factor.pdf",
+    "bytes": 713285,
+    "sha256": "00af3d637aedf63d0c10023ec474614335d807c72b547fdecbe2dc2da634fdd3",
+    "pages": 54,
+    "source_url": "https://www.nber.org/papers/w25551.pdf",
+    "final_url": "https://www.nber.org/system/files/working_papers/w25551/w25551.pdf",
+    "retrieved_at": "2026-10-01T02:56:28.995731+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "NBER working paper, February 2019; cited publication is 2022",
+    "read_pdf_pages": "3-5,7-11,17-20,36",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R13",
+    "title": "Time-Uniform, Nonparametric, Nonasymptotic Confidence Sequences",
+    "citation_as_supplied": "Howard, S. R., Ramdas, A., McAuliffe, J. & Sekhon, J. (2021). Annals of Statistics, 49(2), 1055–1080.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://arxiv.org/pdf/1810.08240"
+    ],
+    "attempts": [
+      {
+        "url": "https://arxiv.org/pdf/1810.08240",
+        "retrieved_at": "2026-10-01T02:58:50.929550+00:00",
+        "final_url": "https://arxiv.org/pdf/1810.08240",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R13_time_uniform_nonparametric_nonasymptotic_confidence_sequences.pdf",
+    "bytes": 1494142,
+    "sha256": "eb3efd547349adfbff25514ae0854c142cd29b96b398be38c9000d69a2f64ca8",
+    "pages": 48,
+    "source_url": "https://arxiv.org/pdf/1810.08240",
+    "final_url": "https://arxiv.org/pdf/1810.08240",
+    "retrieved_at": "2026-10-01T02:58:50.929550+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "arXiv v9, August 2022; later than cited 2021 publication",
+    "read_pdf_pages": "1-3,9",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R14",
+    "title": "Automating Large-Scale Data Quality Verification",
+    "citation_as_supplied": "Schelter, S. et al. (2018). Proceedings of the VLDB Endowment, 11(12), 1781–1794.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.vldb.org/pvldb/vol11/p1781-schelter.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.vldb.org/pvldb/vol11/p1781-schelter.pdf",
+        "retrieved_at": "2026-10-01T02:56:29.044794+00:00",
+        "final_url": "https://www.vldb.org/pvldb/vol11/p1781-schelter.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R14_automating_large_scale_data_quality_verification.pdf",
+    "bytes": 1049733,
+    "sha256": "d451ecf77b0fdc0756f91ec82aaa511c86bdb18229af13ab943c0f9e89a350cc",
+    "pages": 14,
+    "source_url": "https://www.vldb.org/pvldb/vol11/p1781-schelter.pdf",
+    "final_url": "https://www.vldb.org/pvldb/vol11/p1781-schelter.pdf",
+    "retrieved_at": "2026-10-01T02:56:29.044794+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, PVLDB 2018",
+    "read_pdf_pages": "2-3,11",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R15",
+    "title": "Data Validation for Machine Learning",
+    "citation_as_supplied": "Breck, E. et al. (2019). Proceedings of Machine Learning and Systems, 1, 334–347.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://mlsys.org/Conferences/2019/doc/2019/167.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://mlsys.org/Conferences/2019/doc/2019/167.pdf",
+        "retrieved_at": "2026-10-01T02:56:29.823747+00:00",
+        "final_url": "https://mlsys.org/Conferences/2019/doc/2019/167.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R15_data_validation_for_machine_learning.pdf",
+    "bytes": 435587,
+    "sha256": "4c26718460681e3cd8a2be65308f85352af1be46aef84cf749903f9387381f53",
+    "pages": 14,
+    "source_url": "https://mlsys.org/Conferences/2019/doc/2019/167.pdf",
+    "final_url": "https://mlsys.org/Conferences/2019/doc/2019/167.pdf",
+    "retrieved_at": "2026-10-01T02:56:29.823747+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, MLSys 2019",
+    "read_pdf_pages": "2-3,7,10",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R16",
+    "title": "Improving Reproducibility in Machine Learning Research (A Report from the NeurIPS 2019  Reproducibility Program)",
+    "citation_as_supplied": "Pineau, J. et al. (2021). Journal of Machine Learning Research, 22(164), 1–20.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://jmlr.org/papers/volume22/20-303/20-303.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://jmlr.org/papers/volume22/20-303/20-303.pdf",
+        "retrieved_at": "2026-10-01T02:56:30.076075+00:00",
+        "final_url": "https://jmlr.org/papers/volume22/20-303/20-303.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R16_improving_reproducibility_in_machine_learning_research_a_report_from_the_neurips_2019_reproducibility_pro.pdf",
+    "bytes": 1550385,
+    "sha256": "09e3ba1d1c3dc7111bc3dc112f40c5d0f3d9dbc4b8198ef8bdc48eb852f4da29",
+    "pages": 20,
+    "source_url": "https://jmlr.org/papers/volume22/20-303/20-303.pdf",
+    "final_url": "https://jmlr.org/papers/volume22/20-303/20-303.pdf",
+    "retrieved_at": "2026-10-01T02:56:30.076075+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, JMLR 2021",
+    "read_pdf_pages": "3-4,12",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R17",
+    "title": "Characteristic-Sorted Portfolios: Estimation and Inference",
+    "citation_as_supplied": "Cattaneo, M. D., Crump, R. K., Farrell, M. H. & Schaumburg, E. (2020). Review of Economics and Statistics, 102(3), 531–551.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://mdcattaneo.github.io/papers/Cattaneo-Crump-Farrell-Schaumburg_2020_RESTAT.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://mdcattaneo.github.io/papers/Cattaneo-Crump-Farrell-Schaumburg_2020_RESTAT.pdf",
+        "retrieved_at": "2026-10-01T02:58:50.930572+00:00",
+        "final_url": "https://mdcattaneo.github.io/papers/Cattaneo-Crump-Farrell-Schaumburg_2020_RESTAT.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R17_characteristic_sorted_portfolios_estimation_and_inference.pdf",
+    "bytes": 777189,
+    "sha256": "af25a14c7ceeaa8e674b36f9eeedfc6a6bd933ff1f010b6641fb874315a8c64f",
+    "pages": 21,
+    "source_url": "https://mdcattaneo.github.io/papers/Cattaneo-Crump-Farrell-Schaumburg_2020_RESTAT.pdf",
+    "final_url": "https://mdcattaneo.github.io/papers/Cattaneo-Crump-Farrell-Schaumburg_2020_RESTAT.pdf",
+    "retrieved_at": "2026-10-01T02:58:50.930572+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, Review of Economics and Statistics 2020",
+    "read_pdf_pages": "5,17",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R18",
+    "title": "Presidential Address: The Scientific Outlook in Financial Economics",
+    "citation_as_supplied": "Harvey, C. R. (2017). Journal of Finance, 72(4), 1399–1440.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://people.duke.edu/~charvey/Research/Published_Papers/P131_The_scientific_outlook.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://people.duke.edu/~charvey/Research/Published_Papers/P131_The_scientific_outlook.pdf",
+        "retrieved_at": "2026-10-01T02:58:50.930572+00:00",
+        "final_url": "https://people.duke.edu/~charvey/Research/Published_Papers/P131_The_scientific_outlook.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R18_presidential_address_the_scientific_outlook_in_financial_economics.pdf",
+    "bytes": 1347840,
+    "sha256": "befb49096bedfc450a453d33c1a7db763f325679885fdab9d53601c7d915fa64",
+    "pages": 43,
+    "source_url": "https://people.duke.edu/~charvey/Research/Published_Papers/P131_The_scientific_outlook.pdf",
+    "final_url": "https://people.duke.edu/~charvey/Research/Published_Papers/P131_The_scientific_outlook.pdf",
+    "retrieved_at": "2026-10-01T02:58:50.930572+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, Journal of Finance 2017, with introductory portrait",
+    "read_pdf_pages": "3-4",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R19",
+    "title": "The History of the Cross-Section of Stock Returns",
+    "citation_as_supplied": "Linnainmaa, J. T. & Roberts, M. R. (2018). Review of Financial Studies, 31(7), 2606–2649.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.nber.org/papers/w22894.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.nber.org/papers/w22894.pdf",
+        "retrieved_at": "2026-10-01T02:58:50.931578+00:00",
+        "final_url": "https://www.nber.org/system/files/working_papers/w22894/w22894.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R19_the_history_of_the_cross_section_of_stock_returns.pdf",
+    "bytes": 780302,
+    "sha256": "248f0a2ce0f28ce60e14de362d5b7fdf301187c4bc17ffb1c2e5d2f59117ea18",
+    "pages": 74,
+    "source_url": "https://www.nber.org/papers/w22894.pdf",
+    "final_url": "https://www.nber.org/system/files/working_papers/w22894/w22894.pdf",
+    "retrieved_at": "2026-10-01T02:58:50.931578+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "NBER working paper, December 2016; cited publication is 2018",
+    "read_pdf_pages": "3-4,7",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R20",
+    "title": "Anomalies across the Globe: Once Public, No Longer Existent?",
+    "citation_as_supplied": "Jacobs, H. & Müller, S. (2020). Journal of Financial Economics, 135(1), 213–230.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.unicreditgroup.eu/content/dam/unicreditgroup-eu/ucfoundation/WorkingPapers/2019/wp-135-Jacobs-e-Mueller.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.unicreditgroup.eu/content/dam/unicreditgroup-eu/ucfoundation/WorkingPapers/2019/wp-135-Jacobs-e-Mueller.pdf",
+        "retrieved_at": "2026-10-01T02:58:54.160545+00:00",
+        "final_url": "https://www.unicreditgroup.eu/content/dam/unicreditgroup-eu/ucfoundation/WorkingPapers/2019/wp-135-Jacobs-e-Mueller.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R20_anomalies_across_the_globe_once_public_no_longer_existent.pdf",
+    "bytes": 690453,
+    "sha256": "e81679037f3865d47d82d40fc4b55af73339633f3069f5c81fbaff90c315eaa4",
+    "pages": 18,
+    "source_url": "https://www.unicreditgroup.eu/content/dam/unicreditgroup-eu/ucfoundation/WorkingPapers/2019/wp-135-Jacobs-e-Mueller.pdf",
+    "final_url": "https://www.unicreditgroup.eu/content/dam/unicreditgroup-eu/ucfoundation/WorkingPapers/2019/wp-135-Jacobs-e-Mueller.pdf",
+    "retrieved_at": "2026-10-01T02:58:54.160545+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, Journal of Financial Economics 2020",
+    "read_pdf_pages": "2,4,17",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R21",
+    "title": "Long-Term Shareholder Returns: Evidence from 64,000 Global Stocks",
+    "citation_as_supplied": "Bessembinder, H., Chen, T.-F., Choi, G. & Wei, K. C. J. (2023). Financial Analysts Journal, 79(3), 33–63.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://covestreetcapital.com/wp-content/uploads/2023/07/Long-Term-Shareholder-Returns-Evidence-from-64-000-Global-Stocks.pdf",
+      "https://r.jordan.im/download/investing/bessembinder2023.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://covestreetcapital.com/wp-content/uploads/2023/07/Long-Term-Shareholder-Returns-Evidence-from-64-000-Global-Stocks.pdf",
+        "retrieved_at": "2026-10-01T03:03:21.157505+00:00",
+        "final_url": "https://covestreetcapital.com/wp-content/uploads/2023/07/Long-Term-Shareholder-Returns-Evidence-from-64-000-Global-Stocks.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R21_long_term_shareholder_returns_evidence_from_64_000_global_stocks.pdf",
+    "bytes": 1398904,
+    "sha256": "0439ecf4479f1b254f34fb737564fb67952298ec91cbd2633df52e5ce3d43943",
+    "pages": 32,
+    "source_url": "https://covestreetcapital.com/wp-content/uploads/2023/07/Long-Term-Shareholder-Returns-Evidence-from-64-000-Global-Stocks.pdf",
+    "final_url": "https://covestreetcapital.com/wp-content/uploads/2023/07/Long-Term-Shareholder-Returns-Evidence-from-64-000-Global-Stocks.pdf",
+    "retrieved_at": "2026-10-01T03:03:21.157505+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, Financial Analysts Journal 2023, with cover",
+    "read_pdf_pages": "2-4",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R22",
+    "title": "Anomalies and False Rejections",
+    "citation_as_supplied": "Chordia, T., Goyal, A. & Saretto, A. (2020). Review of Financial Studies, 33(5), 2134–2179.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://papers.ssrn.com/sol3/Delivery.cfm/SSRN_ID3477343_code623849.pdf?abstractid=3017677",
+      "https://drive.google.com/uc?export=download&id=1bKjGRlvtSugND_QH1HVWB9RIobY7UxbQ"
+    ],
+    "attempts": [
+      {
+        "url": "https://papers.ssrn.com/sol3/Delivery.cfm/SSRN_ID3477343_code623849.pdf?abstractid=3017677",
+        "retrieved_at": "2026-10-01T03:03:21.158504+00:00",
+        "result": "unavailable",
+        "error": "HTTPError: HTTP Error 403: Forbidden"
+      },
+      {
+        "url": "https://drive.google.com/uc?export=download&id=1bKjGRlvtSugND_QH1HVWB9RIobY7UxbQ",
+        "retrieved_at": "2026-10-01T03:06:23.865730+00:00",
+        "final_url": "https://drive.usercontent.google.com/download?id=1bKjGRlvtSugND_QH1HVWB9RIobY7UxbQ&export=download",
+        "content_type": "application/octet-stream",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R22_anomalies_and_false_rejections.pdf",
+    "bytes": 452590,
+    "sha256": "47706e7d82b8657e558aebbac9964f6d9094c22909626a8ef2c9c1a1b185b656",
+    "pages": 46,
+    "source_url": "https://drive.google.com/uc?export=download&id=1bKjGRlvtSugND_QH1HVWB9RIobY7UxbQ",
+    "final_url": "https://drive.usercontent.google.com/download?id=1bKjGRlvtSugND_QH1HVWB9RIobY7UxbQ&export=download",
+    "retrieved_at": "2026-10-01T03:06:23.865730+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, Review of Financial Studies 2020",
+    "read_pdf_pages": "2-3",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R23",
+    "title": "Dissecting Characteristics Nonparametrically",
+    "citation_as_supplied": "Freyberger, J., Neuhierl, A. & Weber, M. (2020). Review of Financial Studies, 33(5), 2326–2377.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://bfi.uchicago.edu/wp-content/uploads/we6b7o-WP_2018-50.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://bfi.uchicago.edu/wp-content/uploads/we6b7o-WP_2018-50.pdf",
+        "retrieved_at": "2026-10-01T02:58:54.723334+00:00",
+        "final_url": "https://bfi.uchicago.edu/wp-content/uploads/we6b7o-WP_2018-50.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R23_dissecting_characteristics_nonparametrically.pdf",
+    "bytes": 3134383,
+    "sha256": "faed12a95ad17aa2feb73abfd62b06a093db5cd2bff25614e91bd0028acb4dc7",
+    "pages": 106,
+    "source_url": "https://bfi.uchicago.edu/wp-content/uploads/we6b7o-WP_2018-50.pdf",
+    "final_url": "https://bfi.uchicago.edu/wp-content/uploads/we6b7o-WP_2018-50.pdf",
+    "retrieved_at": "2026-10-01T02:58:54.723334+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "BFI working paper, July 2018; cited publication is 2020",
+    "read_pdf_pages": "3-5",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R24",
+    "title": "Momentum Crashes",
+    "citation_as_supplied": "Daniel, K. & Moskowitz, T. J. (2016). Journal of Financial Economics, 122(2), 221–247（2016 年 11 月刊期）.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.kentdaniel.net/papers/published/jfe_16.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.kentdaniel.net/papers/published/jfe_16.pdf",
+        "retrieved_at": "2026-10-01T02:56:31.692125+00:00",
+        "final_url": "https://www.kentdaniel.net/papers/published/jfe_16.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R24_momentum_crashes.pdf",
+    "bytes": 3402992,
+    "sha256": "e262c26de63add1e9eadf70a3c440157f572f64e1f75a2948f7426f84aa60075",
+    "pages": 27,
+    "source_url": "https://www.kentdaniel.net/papers/published/jfe_16.pdf",
+    "final_url": "https://www.kentdaniel.net/papers/published/jfe_16.pdf",
+    "retrieved_at": "2026-10-01T02:56:31.692125+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, Journal of Financial Economics 2016",
+    "read_pdf_pages": "2-3,5,12-13,16,22",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R25",
+    "title": "Low-Risk Anomalies?",
+    "citation_as_supplied": "Schneider, P., Wagner, C. & Zechner, J. (2020). Journal of Finance, 75(5), 2673–2718.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://research.cbs.dk/files/65573325/christian_wagner_et_al_low_risk_anomalies_publishersversion.pdf",
+      "https://epub.wu.ac.at/7673/1/jofi.12910.pdf",
+      "https://www.econstor.eu/bitstream/10419/147147/1/871020750.pdf",
+      "https://research.wu.ac.at/files/18602631/jofi.12910.pdf",
+      "https://research-api.cbs.dk/ws/portalfiles/portal/65573325/christian_wagner_et_al_low_risk_anomalies_publishersversion.pdf",
+      "https://wp.lancs.ac.uk/fofi2018/files/2018/04/FoFI-2018-0166-Christian-Wagner.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://research.cbs.dk/files/65573325/christian_wagner_et_al_low_risk_anomalies_publishersversion.pdf",
+        "retrieved_at": "2026-10-01T02:56:32.279369+00:00",
+        "result": "unavailable",
+        "error": "HTTPError: HTTP Error 403: Forbidden"
+      },
+      {
+        "url": "https://epub.wu.ac.at/7673/1/jofi.12910.pdf",
+        "retrieved_at": "2026-10-01T03:03:21.158504+00:00",
+        "result": "unavailable",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
+      },
+      {
+        "url": "https://www.econstor.eu/bitstream/10419/147147/1/871020750.pdf",
+        "retrieved_at": "2026-10-01T03:03:24.014492+00:00",
+        "final_url": "https://www.econstor.eu/bitstream/10419/147147/1/871020750.pdf",
+        "content_type": "text/html; charset=utf-8",
+        "result": "unavailable",
+        "error": "ValueError: Response is not a PDF, or exceeds 35 MB"
+      },
+      {
+        "url": "https://research.wu.ac.at/files/18602631/jofi.12910.pdf",
+        "retrieved_at": "2026-10-01T03:06:23.865730+00:00",
+        "result": "unavailable",
+        "error": "HTTPError: HTTP Error 403: Forbidden"
+      },
+      {
+        "url": "https://research-api.cbs.dk/ws/portalfiles/portal/65573325/christian_wagner_et_al_low_risk_anomalies_publishersversion.pdf",
+        "retrieved_at": "2026-10-01T03:07:53.777539+00:00",
+        "final_url": "https://research-api.cbs.dk/ws/portalfiles/portal/65573325/christian_wagner_et_al_low_risk_anomalies_publishersversion.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R25_low_risk_anomalies.pdf",
+    "bytes": 4480904,
+    "sha256": "fd48db5402dfd72a7bf54e7241e9ac026a6655c078061154d2517bfc165f9d90",
+    "pages": 47,
+    "source_url": "https://research-api.cbs.dk/ws/portalfiles/portal/65573325/christian_wagner_et_al_low_risk_anomalies_publishersversion.pdf",
+    "final_url": "https://research-api.cbs.dk/ws/portalfiles/portal/65573325/christian_wagner_et_al_low_risk_anomalies_publishersversion.pdf",
+    "retrieved_at": "2026-10-01T03:07:53.777539+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, Journal of Finance 2020, with repository cover",
+    "read_pdf_pages": "3-4,18,41",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R26",
+    "title": "A Lottery-Demand-Based Explanation of the Beta Anomaly",
+    "citation_as_supplied": "Bali, T. G., Brown, S. J., Murray, S. & Tang, Y. (2017). Journal of Financial and Quantitative Analysis, 52(6), 2369–2397.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://assets.super.so/e46b77e7-ee08-445e-b43f-4ffd88ae0a0e/files/6a163e98-bd8c-49ad-86c7-3aad6d2ffe9b.pdf",
+      "https://4c2fbf95-cd10-40e9-8bf8-f71417d8f87e.filesusr.com/ugd/c124ce_bcfc84cba3a9484183936867d97995de.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://assets.super.so/e46b77e7-ee08-445e-b43f-4ffd88ae0a0e/files/6a163e98-bd8c-49ad-86c7-3aad6d2ffe9b.pdf",
+        "retrieved_at": "2026-10-01T03:03:21.158504+00:00",
+        "result": "unavailable",
+        "error": "HTTPError: HTTP Error 403: Forbidden"
+      },
+      {
+        "url": "https://4c2fbf95-cd10-40e9-8bf8-f71417d8f87e.filesusr.com/ugd/c124ce_bcfc84cba3a9484183936867d97995de.pdf",
+        "retrieved_at": "2026-10-01T03:06:23.865730+00:00",
+        "final_url": "https://4c2fbf95-cd10-40e9-8bf8-f71417d8f87e.filesusr.com/ugd/c124ce_bcfc84cba3a9484183936867d97995de.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R26_a_lottery_demand_based_explanation_of_the_beta_anomaly.pdf",
+    "bytes": 463328,
+    "sha256": "dff6957d2bf2b97f529b14f5de63be5b468b7884a85468d954cee37b97dc1925",
+    "pages": 29,
+    "source_url": "https://4c2fbf95-cd10-40e9-8bf8-f71417d8f87e.filesusr.com/ugd/c124ce_bcfc84cba3a9484183936867d97995de.pdf",
+    "final_url": "https://4c2fbf95-cd10-40e9-8bf8-f71417d8f87e.filesusr.com/ugd/c124ce_bcfc84cba3a9484183936867d97995de.pdf",
+    "retrieved_at": "2026-10-01T03:06:23.865730+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, Journal of Financial and Quantitative Analysis 2017",
+    "read_pdf_pages": "2-3,27",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R27",
+    "title": "Understanding Alpha Decay",
+    "citation_as_supplied": "Pénasse, J. (2022). Management Science, 68(5), 3966–3973.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://wp.lancs.ac.uk/fofi2018/files/2018/03/FoFI-2018-0089-Julien-Penasse.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://wp.lancs.ac.uk/fofi2018/files/2018/03/FoFI-2018-0089-Julien-Penasse.pdf",
+        "retrieved_at": "2026-10-01T02:58:55.205851+00:00",
+        "final_url": "https://wp.lancs.ac.uk/fofi2018/files/2018/03/FoFI-2018-0089-Julien-Penasse.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R27_understanding_alpha_decay.pdf",
+    "bytes": 322805,
+    "sha256": "a0625f1598bcff23afedbb131993dd6a540a1200f94d6bcb74f8c75a6b85f7ed",
+    "pages": 27,
+    "source_url": "https://wp.lancs.ac.uk/fofi2018/files/2018/03/FoFI-2018-0089-Julien-Penasse.pdf",
+    "final_url": "https://wp.lancs.ac.uk/fofi2018/files/2018/03/FoFI-2018-0089-Julien-Penasse.pdf",
+    "retrieved_at": "2026-10-01T02:58:55.205851+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Working paper, December 2017; cited publication is 2022",
+    "read_pdf_pages": "2-3,11,15",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R28",
+    "title": "When Do Systematic Strategies Decay?",
+    "citation_as_supplied": "Falck, A., Rej, A. & Thesmar, D. (2022). Quantitative Finance, 22(11), 1955–1969.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://dspace.mit.edu/bitstreams/90821bfa-3c4c-4682-9773-b588e272590a/download",
+      "https://dspace.mit.edu/bitstream/1721.1/163650/2/When%20do%20systematic%20strategies%20decay%20.pdf",
+      "https://www.tandfonline.com/doi/pdf/10.1080/14697688.2022.2098810"
+    ],
+    "attempts": [
+      {
+        "url": "https://dspace.mit.edu/bitstreams/90821bfa-3c4c-4682-9773-b588e272590a/download",
+        "retrieved_at": "2026-10-01T02:58:57.060662+00:00",
+        "result": "unavailable",
+        "error": "HTTPError: HTTP Error 405: Not Allowed"
+      },
+      {
+        "url": "https://dspace.mit.edu/bitstream/1721.1/163650/2/When%20do%20systematic%20strategies%20decay%20.pdf",
+        "retrieved_at": "2026-10-01T03:03:21.159507+00:00",
+        "result": "unavailable",
+        "error": "HTTPError: HTTP Error 405: Not Allowed"
+      },
+      {
+        "url": "https://www.tandfonline.com/doi/pdf/10.1080/14697688.2022.2098810",
+        "retrieved_at": "2026-10-01T03:06:23.866751+00:00",
+        "result": "unavailable",
+        "error": "HTTPError: HTTP Error 403: Forbidden"
+      },
+      {
+        "url": "https://dspace.mit.edu/server/api/core/bitstreams/90821bfa-3c4c-4682-9773-b588e272590a/content",
+        "result": "downloaded_pdf",
+        "method": "curl with default Windows TLS verification"
+      }
+    ],
+    "file": "R28_decay.pdf",
+    "bytes": 1189595,
+    "sha256": "17fe827f217025c932e60193120ca6b753630c0b0c303670f23653ae90a4b582",
+    "pages": 16,
+    "source_url": "https://dspace.mit.edu/server/api/core/bitstreams/90821bfa-3c4c-4682-9773-b588e272590a/content",
+    "final_url": "https://dspace.mit.edu/server/api/core/bitstreams/90821bfa-3c4c-4682-9773-b588e272590a/content",
+    "retrieved_at": "2026-10-01T03:07:38.754499+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, Quantitative Finance 2022, with repository cover",
+    "read_pdf_pages": "3-4,10,12",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R29",
+    "title": "Nonstandard Errors",
+    "citation_as_supplied": "Menkveld, A. J. et al. (2024). Journal of Finance, 79(3), 2339–2390.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.pure.ed.ac.uk/ws/portalfiles/portal/431586790/MenkveldEtal2024JFNonstandardErrors.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.pure.ed.ac.uk/ws/portalfiles/portal/431586790/MenkveldEtal2024JFNonstandardErrors.pdf",
+        "retrieved_at": "2026-10-01T02:58:58.039439+00:00",
+        "final_url": "https://www.pure.ed.ac.uk/ws/portalfiles/portal/431586790/MenkveldEtal2024JFNonstandardErrors.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R29_nonstandard_errors.pdf",
+    "bytes": 1434182,
+    "sha256": "625dde823a9580f29426ccbe95a51b8359845fe7c9af2516092f2d7dd27514b0",
+    "pages": 54,
+    "source_url": "https://www.pure.ed.ac.uk/ws/portalfiles/portal/431586790/MenkveldEtal2024JFNonstandardErrors.pdf",
+    "final_url": "https://www.pure.ed.ac.uk/ws/portalfiles/portal/431586790/MenkveldEtal2024JFNonstandardErrors.pdf",
+    "retrieved_at": "2026-10-01T02:58:58.039439+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published publisher PDF, 2024, with repository cover; online pagination",
+    "read_pdf_pages": "5-7,12,36-37",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R30",
+    "title": "Computational Reproducibility in Finance: Evidence from 1,000 Tests",
+    "citation_as_supplied": "Pérignon, C. et al. (2024). Review of Financial Studies, 37(11), 3558–3593.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://affi2023.eventsadmin.com/Papers/ViewContribution?cid=9409&h=0A9E36F506D8DB446BBA763B10757256"
+    ],
+    "attempts": [
+      {
+        "url": "https://affi2023.eventsadmin.com/Papers/ViewContribution?cid=9409&h=0A9E36F506D8DB446BBA763B10757256",
+        "retrieved_at": "2026-10-01T02:58:58.307167+00:00",
+        "final_url": "https://affi2023.eventsadmin.com/Papers/ViewContribution?cid=9409&h=0A9E36F506D8DB446BBA763B10757256",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R30_computational_reproducibility_in_finance_evidence_from_1_000_tests.pdf",
+    "bytes": 1248860,
+    "sha256": "f8ea7a4a7e355ec8bda3ed2601806a288a82b035259a0b98128c4b02f4f81e72",
+    "pages": 57,
+    "source_url": "https://affi2023.eventsadmin.com/Papers/ViewContribution?cid=9409&h=0A9E36F506D8DB446BBA763B10757256",
+    "final_url": "https://affi2023.eventsadmin.com/Papers/ViewContribution?cid=9409&h=0A9E36F506D8DB446BBA763B10757256",
+    "retrieved_at": "2026-10-01T02:58:58.307167+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Working paper, April 14, 2023; cited publication is 2024",
+    "read_pdf_pages": "1,8,23,36",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R31",
+    "title": "Detection of False Investment Strategies Using Unsupervised Learning Methods",
+    "citation_as_supplied": "López de Prado, M. & Lewis, M. J. (2019). Quantitative Finance, 19(9), 1555–1565.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://smallake.kr/wp-content/uploads/2020/04/SSRN-id3167017.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://smallake.kr/wp-content/uploads/2020/04/SSRN-id3167017.pdf",
+        "retrieved_at": "2026-10-01T03:03:21.160505+00:00",
+        "final_url": "https://smallake.kr/wp-content/uploads/2020/04/SSRN-id3167017.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R31_detection_of_false_investment_strategies_using_unsupervised_learning_methods.pdf",
+    "bytes": 933592,
+    "sha256": "96eff093f41ddd050f92dfb570f1a74ccafd4e1038157d6df10550965e9ed68b",
+    "pages": 25,
+    "source_url": "https://smallake.kr/wp-content/uploads/2020/04/SSRN-id3167017.pdf",
+    "final_url": "https://smallake.kr/wp-content/uploads/2020/04/SSRN-id3167017.pdf",
+    "retrieved_at": "2026-10-01T03:03:21.160505+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Working paper, November 2018; cited publication is 2019",
+    "read_pdf_pages": "5,8,13",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "R32",
+    "title": "Alice’s Adventures in Factorland: Three Blunders That Plague Factor Investing",
+    "citation_as_supplied": "Arnott, R. D., Harvey, C. R., Kalesnik, V. & Linnainmaa, J. T. (2019). Journal of Portfolio Management, 45(4), 18–36.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.econ.queensu.ca/sites/econ.queensu.ca/files/Econ%20870/Arnott%2C%20et%20al%20Alices%20Adventures%20in%20Factorland%2C%202019.pdf",
+      "https://people.duke.edu/~charvey/Research/Published_Papers/P139_Alices_adventures_in.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.econ.queensu.ca/sites/econ.queensu.ca/files/Econ%20870/Arnott%2C%20et%20al%20Alices%20Adventures%20in%20Factorland%2C%202019.pdf",
+        "retrieved_at": "2026-10-01T02:58:58.558022+00:00",
+        "result": "unavailable",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
+      },
+      {
+        "url": "https://people.duke.edu/~charvey/Research/Published_Papers/P139_Alices_adventures_in.pdf",
+        "retrieved_at": "2026-10-01T03:03:22.597928+00:00",
+        "final_url": "https://people.duke.edu/~charvey/Research/Published_Papers/P139_Alices_adventures_in.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "R32_alice_s_adventures_in_factorland_three_blunders_that_plague_factor_investing.pdf",
+    "bytes": 1618414,
+    "sha256": "4632c345c3f733705ff25dcc231e82b7638cb8839eabd22a546cd1181280c402",
+    "pages": 19,
+    "source_url": "https://people.duke.edu/~charvey/Research/Published_Papers/P139_Alices_adventures_in.pdf",
+    "final_url": "https://people.duke.edu/~charvey/Research/Published_Papers/P139_Alices_adventures_in.pdf",
+    "retrieved_at": "2026-10-01T03:03:22.597928+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, Journal of Portfolio Management 2019",
+    "read_pdf_pages": "2-4,16",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "F01",
+    "title": "… and the Cross-Section of Expected Returns",
+    "citation_as_supplied": "Harvey, C. R., Liu, Y. & Zhu, H. (2016). Review of Financial Studies, 29(1), 5–68（1 月，窗口外）.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://people.duke.edu/~charvey/Research/Published_Papers/P118_and_the_cross.PDF"
+    ],
+    "attempts": [
+      {
+        "url": "https://people.duke.edu/~charvey/Research/Published_Papers/P118_and_the_cross.PDF",
+        "retrieved_at": "2026-10-01T02:58:58.727134+00:00",
+        "final_url": "https://people.duke.edu/~charvey/Research/Published_Papers/P118_and_the_cross.PDF",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "F01_and_the_cross_section_of_expected_returns.pdf",
+    "bytes": 969629,
+    "sha256": "15e407e31867dcd5bae6cf843200a85d1409180e1340322554ab3fcf88fb13bf",
+    "pages": 64,
+    "source_url": "https://people.duke.edu/~charvey/Research/Published_Papers/P118_and_the_cross.PDF",
+    "final_url": "https://people.duke.edu/~charvey/Research/Published_Papers/P118_and_the_cross.PDF",
+    "retrieved_at": "2026-10-01T02:58:58.727134+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, Review of Financial Studies 2016",
+    "read_pdf_pages": "2-3,32-33",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "F02",
+    "title": "The Deflated Sharpe Ratio: Correcting for Selection Bias, Backtest Overfitting, and Non-Normality",
+    "citation_as_supplied": "Bailey, D. H. & López de Prado, M. (2014). Journal of Portfolio Management, 40(5), 94–107（窗口外）.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.davidhbailey.com/dhbpapers/deflated-sharpe.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.davidhbailey.com/dhbpapers/deflated-sharpe.pdf",
+        "retrieved_at": "2026-10-01T02:56:32.906215+00:00",
+        "final_url": "https://www.davidhbailey.com/dhbpapers/deflated-sharpe.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "F02_the_deflated_sharpe_ratio_correcting_for_selection_bias_backtest_overfitting_and_non_normality.pdf",
+    "bytes": 1048118,
+    "sha256": "ca4a1e834a2954b84eb560776e903329cd9cef318d458aadf6d67bc8166d10b5",
+    "pages": 22,
+    "source_url": "https://www.davidhbailey.com/dhbpapers/deflated-sharpe.pdf",
+    "final_url": "https://www.davidhbailey.com/dhbpapers/deflated-sharpe.pdf",
+    "retrieved_at": "2026-10-01T02:56:32.906215+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Forthcoming manuscript, July 2014",
+    "read_pdf_pages": "8-10",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "F03",
+    "title": "Does Academic Research Destroy Stock Return Predictability?",
+    "citation_as_supplied": "McLean, R. D. & Pontiff, J. (2016). Journal of Finance, 71(1), 5–32.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://counterpointfunds.com/wp-content/uploads/2017/07/PredictabilityMcleanPontiff.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://counterpointfunds.com/wp-content/uploads/2017/07/PredictabilityMcleanPontiff.pdf",
+        "retrieved_at": "2026-10-01T03:03:22.691439+00:00",
+        "final_url": "https://counterpointfunds.com/wp-content/uploads/2017/07/PredictabilityMcleanPontiff.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "F03_does_academic_research_destroy_stock_return_predictability.pdf",
+    "bytes": 408317,
+    "sha256": "7711cc0732240364fc6d0b6a0392a3c88942a18d0d61a29c6c6e7279132ccd40",
+    "pages": 47,
+    "source_url": "https://counterpointfunds.com/wp-content/uploads/2017/07/PredictabilityMcleanPontiff.pdf",
+    "final_url": "https://counterpointfunds.com/wp-content/uploads/2017/07/PredictabilityMcleanPontiff.pdf",
+    "retrieved_at": "2026-10-01T03:03:22.691439+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Forthcoming Journal of Finance manuscript; cited publication is 2016",
+    "read_pdf_pages": "7,10,27-28",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "F04",
+    "title": "A Taxonomy of Anomalies and Their Trading Costs",
+    "citation_as_supplied": "Novy-Marx, R. & Velikov, M. (2016). Review of Financial Studies, 29(1), 104–147.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://mysimon.rochester.edu/novy-marx/research/ToAatTC.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://mysimon.rochester.edu/novy-marx/research/ToAatTC.pdf",
+        "retrieved_at": "2026-10-01T02:56:33.483171+00:00",
+        "final_url": "https://mysimon.rochester.edu/novy-marx/research/ToAatTC.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "F04_a_taxonomy_of_anomalies_and_their_trading_costs.pdf",
+    "bytes": 975887,
+    "sha256": "af18adac3aec357d7ce7c323e020e5e1d002c3cb44413b4f27b18f434d39b76f",
+    "pages": 64,
+    "source_url": "https://mysimon.rochester.edu/novy-marx/research/ToAatTC.pdf",
+    "final_url": "https://mysimon.rochester.edu/novy-marx/research/ToAatTC.pdf",
+    "retrieved_at": "2026-10-01T02:56:33.483171+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Working paper, August 2015; cited publication is 2016",
+    "read_pdf_pages": "2-4,8-10,24,26,41",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "F05",
+    "title": "Momentum Has Its Moments",
+    "citation_as_supplied": "Barroso, P. & Santa-Clara, P. (2015). Journal of Financial Economics, 116(1), 111–120（窗口外）.",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.snifferquant.com/gyantal/Incode/papers/Momentum%20Has%20Its%20Moments%28scaling%20Momentum%20by%20vol%29%2C2014.pdf",
+      "https://citeseerx.ist.psu.edu/document?doi=a6e52ac1a1e49f4b3a8d2a7490a3b1401aad925c&repid=rep1&type=pdf",
+      "http://www.snifferquant.com/gyantal/Incode/papers/Momentum%20Has%20Its%20Moments%28scaling%20Momentum%20by%20vol%29%2C2014.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.snifferquant.com/gyantal/Incode/papers/Momentum%20Has%20Its%20Moments%28scaling%20Momentum%20by%20vol%29%2C2014.pdf",
+        "retrieved_at": "2026-10-01T03:03:23.448920+00:00",
+        "result": "unavailable",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1010)>"
+      },
+      {
+        "url": "https://citeseerx.ist.psu.edu/document?doi=a6e52ac1a1e49f4b3a8d2a7490a3b1401aad925c&repid=rep1&type=pdf",
+        "retrieved_at": "2026-10-01T03:04:35.790358+00:00",
+        "final_url": "https://web.archive.org/web/20240503105324/https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=a6e52ac1a1e49f4b3a8d2a7490a3b1401aad925c",
+        "content_type": "text/html",
+        "result": "unavailable",
+        "error": "ValueError: Response is not a PDF, or exceeds 35 MB"
+      },
+      {
+        "url": "http://www.snifferquant.com/gyantal/Incode/papers/Momentum%20Has%20Its%20Moments%28scaling%20Momentum%20by%20vol%29%2C2014.pdf",
+        "retrieved_at": "2026-10-01T03:06:23.867741+00:00",
+        "final_url": "http://www.snifferquant.com/gyantal/Incode/papers/Momentum%20Has%20Its%20Moments%28scaling%20Momentum%20by%20vol%29%2C2014.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "F05_momentum_has_its_moments.pdf",
+    "bytes": 444689,
+    "sha256": "5daba218b55f6294a21be34f1565c875dd1373a2d79b12429cdb3a93f5592ee8",
+    "pages": 39,
+    "source_url": "http://www.snifferquant.com/gyantal/Incode/papers/Momentum%20Has%20Its%20Moments%28scaling%20Momentum%20by%20vol%29%2C2014.pdf",
+    "final_url": "http://www.snifferquant.com/gyantal/Incode/papers/Momentum%20Has%20Its%20Moments%28scaling%20Momentum%20by%20vol%29%2C2014.pdf",
+    "retrieved_at": "2026-10-01T03:06:23.867741+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Forthcoming manuscript, November 2014; cited publication is 2015; mirror contains reader annotations",
+    "read_pdf_pages": "3-4,7-14,20",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "M01",
+    "title": "Returns to Buying Winners and Selling Losers: Implications for Stock Market Efficiency",
+    "citation_as_supplied": "Jegadeesh and Titman (1993)",
+    "cited_in": [
+      "report_1"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://citeseerx.ist.psu.edu/document?doi=c1ca543bc96d051d7d7b83024d74e1892604312d&repid=rep1&type=pdf",
+      "https://www.wallstreetcourier.com/wp-content/uploads/data_download/research/Returns_to_Buying_Winners_and_Selling_Losers.pdf",
+      "https://www.smallake.kr/wp-content/uploads/2015/01/Jegadeesh_Titman_1993.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://citeseerx.ist.psu.edu/document?doi=c1ca543bc96d051d7d7b83024d74e1892604312d&repid=rep1&type=pdf",
+        "retrieved_at": "2026-10-01T03:03:23.759888+00:00",
+        "result": "unavailable",
+        "error": "HTTPError: HTTP Error 404: NOT FOUND"
+      },
+      {
+        "url": "https://www.wallstreetcourier.com/wp-content/uploads/data_download/research/Returns_to_Buying_Winners_and_Selling_Losers.pdf",
+        "retrieved_at": "2026-10-01T03:03:26.956158+00:00",
+        "final_url": "https://www.wallstreetcourier.com/wp-content/uploads/data_download/research/Returns_to_Buying_Winners_and_Selling_Losers.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "M01_returns_to_buying_winners_and_selling_losers_implications_for_stock_market_efficiency.pdf",
+    "bytes": 695626,
+    "sha256": "b28c3e4fd7f04790a39b4f9e7b1f295b42bb834bca1d7eac42daa6b6f871ee31",
+    "pages": 27,
+    "source_url": "https://www.wallstreetcourier.com/wp-content/uploads/data_download/research/Returns_to_Buying_Winners_and_Selling_Losers.pdf",
+    "final_url": "https://www.wallstreetcourier.com/wp-content/uploads/data_download/research/Returns_to_Buying_Winners_and_Selling_Losers.pdf",
+    "retrieved_at": "2026-10-01T03:03:26.956158+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, Journal of Finance 1993",
+    "read_pdf_pages": "3-6,24",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "M02",
+    "title": "Evidence of Predictable Behavior of Security Returns",
+    "citation_as_supplied": "Jegadeesh (1990)",
+    "cited_in": [
+      "report_1"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://finance.martinsewell.com/stylized-facts/dependence/Jegadeesh1990.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://finance.martinsewell.com/stylized-facts/dependence/Jegadeesh1990.pdf",
+        "retrieved_at": "2026-10-01T03:03:25.081127+00:00",
+        "final_url": "https://finance.martinsewell.com/stylized-facts/dependence/Jegadeesh1990.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "M02_evidence_of_predictable_behavior_of_security_returns.pdf",
+    "bytes": 1969147,
+    "sha256": "7f4107c01596615df106312d7ba1378fc32064cd6b39bfec5a5016db1305901a",
+    "pages": 19,
+    "source_url": "https://finance.martinsewell.com/stylized-facts/dependence/Jegadeesh1990.pdf",
+    "final_url": "https://finance.martinsewell.com/stylized-facts/dependence/Jegadeesh1990.pdf",
+    "retrieved_at": "2026-10-01T03:03:25.081127+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Scanned published Journal of Finance 1990 PDF; OCR used, title page visually verified",
+    "read_pdf_pages": "2-4,9,17",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "M03",
+    "title": "The Cross-Section of Volatility and Expected Returns",
+    "citation_as_supplied": "Ang, Hodrick, Xing and Zhang (2006)",
+    "cited_in": [
+      "report_1"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.ruf.rice.edu/~yxing/vol.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.ruf.rice.edu/~yxing/vol.pdf",
+        "retrieved_at": "2026-10-01T02:58:59.830987+00:00",
+        "final_url": "https://www.ruf.rice.edu/~yxing/vol.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "M03_the_cross_section_of_volatility_and_expected_returns.pdf",
+    "bytes": 200731,
+    "sha256": "4972434fe11c91a625ed450b721a186abcbebb2cccdf0e8f10abf89c62a5f6dc",
+    "pages": 43,
+    "source_url": "https://www.ruf.rice.edu/~yxing/vol.pdf",
+    "final_url": "https://www.ruf.rice.edu/~yxing/vol.pdf",
+    "retrieved_at": "2026-10-01T02:58:59.830987+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Early working paper, August 13, 2003; substantially predates cited 2006 publication",
+    "read_pdf_pages": "1,4-5,27",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "M04",
+    "title": "Betting Against Beta",
+    "citation_as_supplied": "Frazzini and Pedersen (2014)",
+    "cited_in": [
+      "report_1"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://pages.stern.nyu.edu/~afrazzin/pdf/Betting%20Against%20Beta%20-%20Frazzini%20and%20Pedersen.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://pages.stern.nyu.edu/~afrazzin/pdf/Betting%20Against%20Beta%20-%20Frazzini%20and%20Pedersen.pdf",
+        "retrieved_at": "2026-10-01T02:59:00.353301+00:00",
+        "final_url": "https://pages.stern.nyu.edu/~afrazzin/pdf/Betting%20Against%20Beta%20-%20Frazzini%20and%20Pedersen.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "M04_betting_against_beta.pdf",
+    "bytes": 1012493,
+    "sha256": "037989a17e89d3977cc11b7de8d568a66482d92b3505b2644c53a3fb1f699968",
+    "pages": 25,
+    "source_url": "https://pages.stern.nyu.edu/~afrazzin/pdf/Betting%20Against%20Beta%20-%20Frazzini%20and%20Pedersen.pdf",
+    "final_url": "https://pages.stern.nyu.edu/~afrazzin/pdf/Betting%20Against%20Beta%20-%20Frazzini%20and%20Pedersen.pdf",
+    "retrieved_at": "2026-10-01T02:59:00.353301+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Published, Journal of Financial Economics 2014",
+    "read_pdf_pages": "2,6,20",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "M05",
+    "title": "Does the Stock Market Overreact?",
+    "citation_as_supplied": "De Bondt and Thaler (1985)",
+    "cited_in": [
+      "report_1"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://fac.comtech.depaul.edu/wdebondt/Publications/DoesStockM.pdf",
+      "https://www-2.rotman.utoronto.ca/~kan/3032/pdf/TestsOfMarketEfficiency/DeBondt_Thaler_JF_1985.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://fac.comtech.depaul.edu/wdebondt/Publications/DoesStockM.pdf",
+        "retrieved_at": "2026-10-01T03:03:25.091163+00:00",
+        "result": "unavailable",
+        "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
+      },
+      {
+        "url": "https://www-2.rotman.utoronto.ca/~kan/3032/pdf/TestsOfMarketEfficiency/DeBondt_Thaler_JF_1985.pdf",
+        "retrieved_at": "2026-10-01T03:03:26.423770+00:00",
+        "result": "unavailable",
+        "error": "URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>"
+      },
+      {
+        "url": "https://fac.comtech.depaul.edu/wdebondt/Publications/DoesStockM.pdf",
+        "result": "downloaded_pdf",
+        "method": "curl with default Windows TLS verification"
+      }
+    ],
+    "file": "M05_debondt.pdf",
+    "bytes": 756775,
+    "sha256": "1534374173ea1fb8efc6c626eea0cc425511b22f9b09d8afcbe45bd7f6e30fc4",
+    "pages": 14,
+    "source_url": "https://fac.comtech.depaul.edu/wdebondt/Publications/DoesStockM.pdf",
+    "final_url": "https://fac.comtech.depaul.edu/wdebondt/Publications/DoesStockM.pdf",
+    "retrieved_at": "2026-10-01T03:07:38.749270+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Scanned published Journal of Finance 1985 PDF; OCR used, title page visually verified",
+    "read_pdf_pages": "2-4,6,13",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "S01",
+    "title": "基于经典技术指标构建选股多因子框架",
+    "citation_as_supplied": "中银国际 (2023-09), as cited; bibliographic identity unverified",
+    "cited_in": [
+      "report_1"
+    ],
+    "status": "unresolved",
+    "candidate_urls": [
+      "https://bigdata-s3.wmcloud.com/researchreport/2023-09/bb34eb0f6d4fe0ce637e8e7e95736dc1.pdf",
+      "https://file.iyanbao.com/pdf/2aee7-6489ab67-bbc5-4f14-9fcf-383b28b6aa7f.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://bigdata-s3.wmcloud.com/researchreport/2023-09/bb34eb0f6d4fe0ce637e8e7e95736dc1.pdf",
+        "retrieved_at": "2026-10-01T02:59:01.178302+00:00",
+        "result": "unavailable",
+        "error": "HTTPError: HTTP Error 403: Forbidden"
+      },
+      {
+        "url": "https://file.iyanbao.com/pdf/2aee7-6489ab67-bbc5-4f14-9fcf-383b28b6aa7f.pdf",
+        "retrieved_at": "2026-10-01T03:03:25.213688+00:00",
+        "final_url": "https://file.iyanbao.com/pdf/2aee7-6489ab67-bbc5-4f14-9fcf-383b28b6aa7f.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "excluded_downloads": [
+      {
+        "file": "excluded/S01_morning_briefing_NOT_cited_study.pdf",
+        "sha256": "fd83cfcfed128dd8adbffa180eb9b52a4b56f5367f34a7cffa3d7b1c356c6ee2",
+        "source_url": "https://file.iyanbao.com/pdf/2aee7-6489ab67-bbc5-4f14-9fcf-383b28b6aa7f.pdf",
+        "pages": 8,
+        "reason": "Morning briefing mentioning the cited study, not the cited study itself."
+      }
+    ],
+    "access_note": "Exact study identified as 中银国际 郭策 2023-09-13, 23 pages. Direct wmcloud PDF returned AccessDenied; other located full copies were gated. Excluded morning briefing is not the study.",
+    "reading_status": "not read: full cited document not acquired"
+  },
+  {
+    "id": "S02",
+    "title": "多因子量化投资框架梳理",
+    "citation_as_supplied": "浙商证券 (2024-02), as cited; bibliographic identity unverified",
+    "cited_in": [
+      "report_1"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://upfile.haotouxt.com/1723536616345/20240222-%E6%B5%99%E5%95%86%E8%AF%81%E5%88%B8-%E9%87%91%E8%9E%8D%E5%B7%A5%E7%A8%8B%E6%B7%B1%E5%BA%A6%EF%BC%9A%E5%A4%9A%E5%9B%A0%E5%AD%90%E9%87%8F%E5%8C%96%E6%8A%95%E8%B5%84%E6%A1%86%E6%9E%B6%E6%A2%B3%E7%90%86.pdf?1723536616581="
+    ],
+    "attempts": [
+      {
+        "url": "https://upfile.haotouxt.com/1723536616345/20240222-%E6%B5%99%E5%95%86%E8%AF%81%E5%88%B8-%E9%87%91%E8%9E%8D%E5%B7%A5%E7%A8%8B%E6%B7%B1%E5%BA%A6%EF%BC%9A%E5%A4%9A%E5%9B%A0%E5%AD%90%E9%87%8F%E5%8C%96%E6%8A%95%E8%B5%84%E6%A1%86%E6%9E%B6%E6%A2%B3%E7%90%86.pdf?1723536616581=",
+        "retrieved_at": "2026-10-01T03:03:25.718520+00:00",
+        "final_url": "https://upfile.haotouxt.com/1723536616345/20240222-%E6%B5%99%E5%95%86%E8%AF%81%E5%88%B8-%E9%87%91%E8%9E%8D%E5%B7%A5%E7%A8%8B%E6%B7%B1%E5%BA%A6%EF%BC%9A%E5%A4%9A%E5%9B%A0%E5%AD%90%E9%87%8F%E5%8C%96%E6%8A%95%E8%B5%84%E6%A1%86%E6%9E%B6%E6%A2%B3%E7%90%86.pdf?1723536616581=",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "S02_multifactor_framework_20240222.pdf",
+    "bytes": 1153758,
+    "sha256": "9df5f10c1510f97394f51052f7aa54df7adba46a97ecd3eeb1cc6f905cbae9bf",
+    "pages": 21,
+    "source_url": "https://upfile.haotouxt.com/1723536616345/20240222-%E6%B5%99%E5%95%86%E8%AF%81%E5%88%B8-%E9%87%91%E8%9E%8D%E5%B7%A5%E7%A8%8B%E6%B7%B1%E5%BA%A6%EF%BC%9A%E5%A4%9A%E5%9B%A0%E5%AD%90%E9%87%8F%E5%8C%96%E6%8A%95%E8%B5%84%E6%A1%86%E6%9E%B6%E6%A2%B3%E7%90%86.pdf?1723536616581=",
+    "final_url": "https://upfile.haotouxt.com/1723536616345/20240222-%E6%B5%99%E5%95%86%E8%AF%81%E5%88%B8-%E9%87%91%E8%9E%8D%E5%B7%A5%E7%A8%8B%E6%B7%B1%E5%BA%A6%EF%BC%9A%E5%A4%9A%E5%9B%A0%E5%AD%90%E9%87%8F%E5%8C%96%E6%8A%95%E8%B5%84%E6%A1%86%E6%9E%B6%E6%A2%B3%E7%90%86.pdf?1723536616581=",
+    "retrieved_at": "2026-10-01T03:03:25.718520+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "浙商证券研究所, 陈奥林, 2024-02-22, 21 pages",
+    "read_pdf_pages": "2,4-6,8-9,11,17-18",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "S03",
+    "title": "多因子及 AI 量化选股框架",
+    "citation_as_supplied": "国金证券 (2025-03), as cited; bibliographic identity unverified",
+    "cited_in": [
+      "report_1"
+    ],
+    "status": "unresolved",
+    "candidate_urls": [],
+    "attempts": [],
+    "access_note": "国金证券 高智威, March 2025, 54 pages. Located catalogues/full copies require login or payment. Catalogue dates differ March 28/29; original date unverified.",
+    "reading_status": "not read: full cited document not acquired"
+  },
+  {
+    "id": "N01",
+    "title": "Revised Guidance on Model Risk Management SR 26-2",
+    "citation_as_supplied": "Federal Reserve/OCC/FDIC (2026), as cited",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.federalreserve.gov/supervisionreg/srletters/SR2602a1.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.federalreserve.gov/supervisionreg/srletters/SR2602a1.pdf",
+        "retrieved_at": "2026-10-01T02:56:33.551317+00:00",
+        "final_url": "https://www.federalreserve.gov/supervisionreg/srletters/SR2602a1.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "N01_revised_guidance_on_model_risk_management_sr_26_2.pdf",
+    "bytes": 212935,
+    "sha256": "209ce4c14cea8aab3dc2f27bae1293efb6e1b60f9577a68d9595f85e4b94b0af",
+    "pages": 12,
+    "source_url": "https://www.federalreserve.gov/supervisionreg/srletters/SR2602a1.pdf",
+    "final_url": "https://www.federalreserve.gov/supervisionreg/srletters/SR2602a1.pdf",
+    "retrieved_at": "2026-10-01T02:56:33.551317+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "Federal Reserve/OCC/FDIC SR 26-2 attachment, April 17, 2026",
+    "read_pdf_pages": "1-2,6-7",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  },
+  {
+    "id": "N02",
+    "title": "GIPS Sample Error Correction Policy for Firms",
+    "citation_as_supplied": "CFA Institute, as cited",
+    "cited_in": [
+      "report_3"
+    ],
+    "status": "downloaded",
+    "candidate_urls": [
+      "https://www.gipsstandards.org/wp-content/uploads/2025/04/sample_error_correction_policy_firms-1.pdf"
+    ],
+    "attempts": [
+      {
+        "url": "https://www.gipsstandards.org/wp-content/uploads/2025/04/sample_error_correction_policy_firms-1.pdf",
+        "retrieved_at": "2026-10-01T02:56:33.641253+00:00",
+        "final_url": "https://www.gipsstandards.org/wp-content/uploads/2025/04/sample_error_correction_policy_firms-1.pdf",
+        "content_type": "application/pdf",
+        "result": "downloaded_pdf"
+      }
+    ],
+    "file": "N02_gips_sample_error_correction_policy_for_firms.pdf",
+    "bytes": 639965,
+    "sha256": "e109a68a6d82f0e00dc6f6f0649967f42c5514cf8b7ef93369e84f5c120fe98c",
+    "pages": 7,
+    "source_url": "https://www.gipsstandards.org/wp-content/uploads/2025/04/sample_error_correction_policy_firms-1.pdf",
+    "final_url": "https://www.gipsstandards.org/wp-content/uploads/2025/04/sample_error_correction_policy_firms-1.pdf",
+    "retrieved_at": "2026-10-01T02:56:33.641253+00:00",
+    "identity_check": "Title and authors/issuing body checked in downloaded document; version differences recorded.",
+    "downloaded_version": "CFA Institute sample policy, copyright 2021; URL directory year is not publication year",
+    "read_pdf_pages": "2-3,6",
+    "reading_status": "Initial firsthand pass of selected methods, evidence and discussion; not a complete appendix/proof review.",
+    "verified_on": "2026-10-01"
+  }
+]

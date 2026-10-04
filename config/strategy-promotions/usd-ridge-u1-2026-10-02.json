@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "decision_date": "2026-10-02",
+  "decision": "Operator authorized U1 promotion into SOTA and both monitored strategies",
+  "authority": "User reviewed the momentum study and explicitly requested the USD addition",
+  "recipe": "usd-ridge-u1-v1",
+  "placement": "Separate overlay after each complete parent; XGBoost inputs and training recipe unchanged",
+  "training": "Per-ETF ridge, standardized on expanding training data, penalty 1, minimum 60 completed monthly labels strictly before fit close; monthly refits",
+  "features": ["mean ranked 5/10-session momentum", "mean ranked P[-21]/P[-42] and P[-21]/P[-63]", "63-return sample volatility", "same-vintage USD21", "same-vintage USD63"],
+  "portfolio": "12% forecast-rank tilt, at most 3 percentage points from parent per asset, preserve gross and selections; inherited weights above 45% cannot increase",
+  "sota": "sota_price_volume_technical_tree_relative_adaptive_top6_usd_v1",
+  "monitored": ["research_etf_activity_lag20_v1_usd_v1", "research_rolling_xgboost_1y_lag20_v1_usd_v1"],
+  "rollback_parents": ["sota_price_volume_technical_tree_relative_adaptive_top6", "research_etf_activity_lag20_v1", "research_rolling_xgboost_1y_lag20_v1"],
+  "evidence": "research/momentum-results-2026-10-01.md; research/momentum-experiments-2026-10-01; var/research/usd-promotion-model-parity.json",
+  "statistical_limit": "USD-specific U1 minus U0 about 13.9 bp/year over 30 months, 95% interval [-11.4,33.7] bp, Holm p=1; operator selection does not establish statistical significance",
+  "risk_contract": "Preserve tested parent economics. The 45% setting caps inverse-volatility base weights, not final holdings; final cap research remains pending. Existing broker order limits, cash checks and capital approval limits remain authoritative.",
+  "execution_authority": "New strategy identity does not inherit the old paper auto-approval binding. Existing policy disables automatic approval on strategy change. Live remains disabled; no capital limit or order authority changed.",
+  "prospective_start": "2026-10-02",
+  "availability": "Before April 2024 retain the parent, as registered; thereafter missing/stale USD inputs or monthly fits block publication and proposal calculation",
+  "rollback": "Restore the previous source/configuration version and its three monitored IDs, restart through guarded launchers and verify the complete prior publication. Review the strategy-bound paper policy before resuming automatic approval. Do not delete current or prior artifacts."
+}

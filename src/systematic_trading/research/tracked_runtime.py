@@ -25,7 +25,7 @@ from systematic_trading.market_data.analytics_store import digest, encode
 from systematic_trading.research import current_sota_definition, instruments_for_definition
 from systematic_trading.research.strategy_catalog import (
     registered_strategy_definition, risk_parity_definition, rolling_xgboost_1y_definition,
-    etf_activity_lag20_definition,
+    etf_activity_lag20_definition, legacy_sota_definition,
 )
 from systematic_trading.research.rolling_tracking import definition_training_spec, prepare_model_schedule
 from systematic_trading.research.tracked_inputs import load_tracked_inputs
@@ -45,7 +45,8 @@ def calculation_code_hashes():
     root = Path(__file__).resolve().parents[1]
     paths = [root / "research" / n for n in ("tracked_runtime.py", "tracked_inputs.py", "flow_concentration.py",
              "strategy_catalog.py", "sota_models.py", "chronological_tree.py", "rolling_models.py",
-             "rolling_tracking.py", "rolling_training.py", "rolling_report.py", "strategy_diagram.py", "compute.py", "calculation_worker.py", "run_recovery.py")]
+             "rolling_tracking.py", "rolling_training.py", "rolling_report.py", "strategy_diagram.py", "compute.py", "calculation_worker.py", "run_recovery.py",
+             "usd_data.py", "usd_tracking.py", "usd_index_governance.py", "usd_momentum_model.py", "momentum_signals.py")]
     paths.append(root / "runtime_io.py")
     paths += [p for folder in ("lean", "signals", "portfolio", "backtest")
               for p in (root / folder).glob("*.py")]
@@ -138,10 +139,10 @@ def buy_hold_benchmark(rows, fx, sessions, initial, anchor, cost_bps):
         nav_cnh=float(cash + quantity * quantize_money(Decimal(by_day[d]["close"]) * Decimal(fx[d])))) for d in sessions]
 
 
-def latest_allocation(definition, inputs, economic, quotes, models=None):
+def latest_allocation(definition, inputs, economic, quotes, models=None, usd_models=None):
     known = inputs["provenance"]["price_through"]
     hypothetical_day = next_session(known)
-    latest = targets_for_day(inputs["latest_bars"], hypothetical_day, definition=definition, base_tree_models=models)
+    latest = targets_for_day(inputs["latest_bars"], hypothetical_day, definition=definition, base_tree_models=models, usd_models=usd_models)
     last_day = max(economic["decisions"])
     scheduled = {t["symbol"]: float(t["target_weight"]) for t in economic["decisions"][last_day]["targets"]}
     target = {t.symbol: float(t.target_weight) for t in latest}
@@ -198,10 +199,29 @@ def _refresh_tracked_strategies(settings, store, analytics):
     sota = current_sota_definition()
     risk = replace(risk_parity_definition(), universe_key="multi_asset")
     all_definitions = {d.key: d for d in [sota, risk, *definitions]}
+    has_usd = any(o.kind == 'usd_ridge' for d in definitions for o in d.overlays)
+    if has_usd:
+        for parent in (legacy_sota_definition(), etf_activity_lag20_definition(), rolling_xgboost_1y_definition()):
+            all_definitions[parent.key] = parent
     if any(definition_training_spec(d) for d in definitions):
         for control in (rolling_xgboost_1y_definition(activity=False), etf_activity_lag20_definition()):
             all_definitions[control.key] = control
     inputs = load_tracked_inputs(settings, analytics, config)
+    usd_models = None
+    if has_usd:
+        from systematic_trading.research.usd_data import load_usd, refresh_usd
+        from systematic_trading.research.usd_tracking import prepare_usd_schedule
+        from systematic_trading.live.trading_calendar import next_us_trading_day
+        snapshots, _ = load_usd(analytics)
+        known_dates = {r['known_through'] for r in snapshots}
+        needed = [r['trade_date'] for r in inputs['latest_bars']['SPY'] if r['trade_date'] >= '2019-02-28'
+            and next_us_trading_day(date.fromisoformat(r['trade_date'])).month != date.fromisoformat(r['trade_date']).month]
+        needed.append(inputs['provenance']['price_through'])
+        for known in sorted(set(needed)):
+            if known not in known_dates or known == inputs['provenance']['price_through']:
+                refresh_usd(settings, analytics, known)
+        snapshots, inputs['provenance']['usd'] = load_usd(analytics)
+        usd_models = prepare_usd_schedule(inputs['latest_bars'], snapshots)
     revision = calculation_revision(config, inputs, definitions)
     current = analytics.latest(SOURCE)
     if current and current["version"] == revision:
@@ -230,6 +250,7 @@ def _refresh_tracked_strategies(settings, store, analytics):
     anchor = days[days.index(sessions[0])-1]
     jobs = {}
     preparation = root / "preparation"
+    usd_input = frozen_input(preparation / 'usd.models.json', usd_models) if usd_models else None
     shared = frozen_input(preparation / "inputs.json", {k:inputs[k] for k in ("bars", "fx", "provenance")})
     model_inputs = {}
     progress("preparing_bundles")
@@ -242,10 +263,12 @@ def _refresh_tracked_strategies(settings, store, analytics):
         if models is not None and model_key not in model_inputs:
             model_inputs[model_key] = frozen_input(preparation / (model_key+".models.json"), models)
         frozen_input(preparation / (key+".json"), dict(inputs=shared, models=model_inputs.get(model_key) if models is not None else None,
+            usd_models=usd_input if any(o.kind == 'usd_ridge' for o in definition.overlays) else None,
             bundle=str(bundle.resolve()), spec=dict(strategy="registered", strategy_definition=definition.to_dict(), mode="shared",
                     start_date=p["start"], end_date=sessions[-1], warmup_start=p["warmup_start"],
                     initial_cash_cnh=p["initial_cash_cnh"], transaction_cost_bps=p["transaction_cost_bps"],
                     slippage_bps=p["slippage_bps"], base_tree_model_schedule=tree or recipe is not None,
+                    usd_model_schedule=any(o.kind == 'usd_ridge' for o in definition.overlays),
                     fixed_model_from=p["fixed_model_from"] if tree else None,
                     fx_policy="legacy_carry_max7", limitations=p["limitations"])))
         jobs[key] = (bundle, output)
@@ -291,6 +314,9 @@ def _refresh_tracked_strategies(settings, store, analytics):
             split_date=date.fromisoformat(p["fixed_model_from"]), signal_name=signal_name)
         extra_benchmarks = [dict(id='urth', name='URTH · MSCI World', nav_series=urth),
             dict(id='sota', name='Current SOTA · matched model history', nav_series=results[sota.key]['nav_series'])]
+        if key.endswith('_usd_v1'):
+            parent_key = key.removesuffix('_usd_v1')
+            extra_benchmarks.append(dict(id=parent_key, name='Same strategy before USD', nav_series=results[parent_key]['nav_series']))
         if recipe:
             for control, label in ((etf_activity_lag20_definition(), 'ETF activity lag-20 · frozen SOTA tree'),
                     (rolling_xgboost_1y_definition(activity=False), 'Rolling 1y XGBoost · without activity')):
@@ -301,7 +327,7 @@ def _refresh_tracked_strategies(settings, store, analytics):
             extra_benchmarks=extra_benchmarks,
             market_prices=prices, market_fx_rates={d: 1.0 for d in [anchor, *sessions]}, signal_diagnostics=diagnostics)
         current_allocation = latest_allocation(definition, inputs, economics[key], quotes_by_key[key],
-            schedules[recipe['version']] if recipe else None)
+            schedules[recipe['version']] if recipe else None, usd_models=usd_models)
         from systematic_trading.research.strategy_diagram import decision_diagrams
         report.update(title=definition.name, database="Published audited histories / ClickHouse",
             signalBenchmark="Risk parity" if key == sota.key else "Current SOTA",
@@ -323,10 +349,22 @@ def _refresh_tracked_strategies(settings, store, analytics):
         if recipe:
             from systematic_trading.research.rolling_report import rolling_model_report
             report['modelTraining'] = rolling_model_report(definition, inputs, schedules[recipe['version']],
-                model_receipts[recipe['version']], current_allocation)
+                model_receipts[recipe['version']], current_allocation, usd_models=usd_models)
             report['warnings'] += [
                 'The candidate was selected after inspecting the historical study. Prospective tracking starts 2026-09-28; historical improvements do not establish future performance.',
                 'ETF activity lag-20 is a separate allocation overlay after the model tilt. It measures adjusted-price × source-volume activity, not net fund flows or audited raw turnover.']
+        if any(o.kind == 'usd_ridge' for o in definition.overlays):
+            from systematic_trading.research.usd_tracking import usd_prediction
+            from systematic_trading.domain.market import PriceBar
+            histories = {s: [PriceBar.model_validate(r) for r in rows] for s, rows in inputs['latest_bars'].items()}
+            prediction = usd_prediction(usd_models, histories, date.fromisoformat(current_allocation['target_session']))
+            report['usdModel'] = dict(version=usd_models['version'], **prediction,
+                receipt=usd_input, batch=inputs['provenance']['usd']['batch'],
+                explanation='Separate U1 per-ETF ridge after the complete parent: short/older momentum, volatility and USD21/USD63. Monthly expanding fits use at least 60 completed months, labels strictly before fit close. Rank tilt 12%, final change bounded by 3 percentage points; preserves cash and selections. USD is a predictive input, not a currency hedge.')
+            report['warnings'] += [
+                'USD selected by the operator on 2026-10-02. Historical incremental U1-minus-price-only gain was about 14 bp/year over 30 months; interval includes zero and Holm p=1. Historical results are not prospective evidence.',
+                '45% is an inverse-volatility base cap, not a final portfolio cap. Pool reallocation can exceed it. The USD layer cannot increase an inherited weight above 45%.',
+                *inputs['provenance']['usd']['limitations']]
         if inputs["provenance"]["first_missing_fx"]:
             report["warnings"].append("Valuation stops before missing supported FX on " + inputs["provenance"]["first_missing_fx"])
         summary = report["summary"]
@@ -345,7 +383,7 @@ def _refresh_tracked_strategies(settings, store, analytics):
             promotion_eligible=False, execution_enabled=False, strategy_definition=definition.to_dict(),
             nav_series=results[key]["nav_series"], benchmark_series=results[risk.key]["nav_series"],
             warnings=report["warnings"], input_provenance=inputs["provenance"], lean_receipts=receipts,
-            model_training=report.get('modelTraining'))
+            model_training=report.get('modelTraining'), usd_model=report.get('usdModel'))
         documents += [dict(point_key="detail/"+key, media_type="application/json", payload=encode(detail)),
                       dict(point_key="report/"+key, media_type="application/json", payload=encode(report))]
         observations += [dict(point_key=key+"/"+row["trade_date"], family="tracked_strategy_nav", entity=key,

@@ -86,6 +86,16 @@ class BrokerExecutionFill(BaseModel):
     cumulative_quantity: int | None = Field(default=None, ge=1)
     filled_at: datetime = Field(default_factory=lambda: datetime.now(tz=UTC))
     currency: Currency | None = None
+    # Capture provenance is not part of an execution's economic identity.
+    evidence_ref: str | None = None
+
+
+class ExecutionConflictAudit(BaseModel):
+    detected_at: datetime = Field(default_factory=lambda: datetime.now(tz=UTC))
+    reason: str
+    previous_fills: list[BrokerExecutionFill]
+    incoming_fills: list[BrokerExecutionFill]
+    differences: dict[str, dict[str, dict]] = Field(default_factory=dict)
 
 
 class ExecutionRecoveryAudit(BaseModel):
@@ -126,6 +136,7 @@ class BrokerOrderRecord(BaseModel):
     execution_fills: list[BrokerExecutionFill] = Field(default_factory=list)
     execution_sync_issue: str | None = None
     execution_recoveries: list[ExecutionRecoveryAudit] = Field(default_factory=list)
+    execution_conflicts: list[ExecutionConflictAudit] = Field(default_factory=list)
 
 
 class BrokerSubmissionResult(BaseModel):

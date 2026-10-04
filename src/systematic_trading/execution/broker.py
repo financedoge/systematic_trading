@@ -4,9 +4,10 @@ from systematic_trading.execution.ib_compat import compatible_ib_errors
 
 from abc import ABC, abstractmethod
 from datetime import UTC, date, datetime, tzinfo
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from hashlib import sha1
 import logging
+from pathlib import Path
 from threading import Event, Thread
 from typing import Protocol
 from zoneinfo import ZoneInfo
@@ -253,6 +254,8 @@ class InteractiveBrokersOrderRouter:
                 record = record.model_copy(
                     update={
                         "status": BrokerOrderStatus.SUBMITTED,
+                        "message": "; ".join(client.warnings_for_order(broker_order_id))
+                        if hasattr(client, "warnings_for_order") else None,
                         "updated_at": datetime.now(tz=UTC),
                     }
                 )
@@ -312,7 +315,8 @@ class InteractiveBrokersOrderRouter:
         allow_resubmit: bool,
         order_indexes: set[int] | None = None,
     ) -> list[str]:
-        issues: list[str] = []
+        from systematic_trading.portfolio.strategy_allocation import allocation_binding_issues
+        issues: list[str] = allocation_binding_issues(store, proposal)
         order_items = _selected_order_items(proposal, order_indexes)
         if proposal.status != ProposalStatus.APPROVED:
             issues.append(f"{proposal.proposal_id}: proposal status must be approved before routing.")
@@ -391,7 +395,7 @@ class InteractiveBrokersExecutionSynchronizer:
         profile = self.adapter.profile_for(environment).model_copy(
             update={"client_id": self.settings.ib_execution_sync_client_id or self.settings.ib_client_id + 30}
         )
-        client = self.client or IbApiExecutionSyncClient()
+        client = self.client or IbApiExecutionSyncClient(evidence_dir=self.settings.data_dir / 'broker_evidence' / 'executions')
         fills = client.fetch_fills(profile)
         existing_records = [
             record
@@ -451,6 +455,7 @@ class IbApiOrderClient:
                 self.errors: list[str] = []
                 self.order_events: dict[int, Event] = {}
                 self.order_errors: dict[int, list[str]] = {}
+                self.order_warnings: dict[int, list[str]] = {}
 
             def nextValidId(self, orderId: int) -> None:  # noqa: N802 - IB API callback name
                 self.next_order_id = orderId
@@ -480,6 +485,12 @@ class IbApiOrderClient:
                 message = f"{reqId}:{errorCode}:{errorString}"
                 self.errors.append(message)
                 if reqId >= 0:
+                    if errorCode == 2111:
+                        # IB's documented algo-date adjustment notice. It is
+                        # neither a rejection nor proof of acceptance: wait for
+                        # openOrder/orderStatus, retaining the warning for audit.
+                        self.order_warnings.setdefault(reqId, []).append(message)
+                        return
                     self.order_errors.setdefault(reqId, []).append(message)
                     self.order_events.setdefault(reqId, Event()).set()
 
@@ -510,6 +521,9 @@ class IbApiOrderClient:
         if errors:
             raise RuntimeError("; ".join(errors))
 
+    def warnings_for_order(self, order_id: int) -> list[str]:
+        return list(self._app.order_warnings.get(order_id, [])) if self._app else []
+
     def disconnect(self) -> None:
         thread = self._thread
         if self._app is not None:
@@ -521,14 +535,20 @@ class IbApiOrderClient:
 
 
 class IbApiExecutionSyncClient:
-    def __init__(self, *, connection_timeout_seconds: float = 10.0, execution_timeout_seconds: float = 15.0) -> None:
+    def __init__(self, *, connection_timeout_seconds: float = 10.0, execution_timeout_seconds: float = 15.0,
+                 evidence_dir: Path = Path('var/broker_evidence/executions'), history_days: int = 7) -> None:
         self.connection_timeout_seconds = connection_timeout_seconds
         self.execution_timeout_seconds = execution_timeout_seconds
+        if not 1 <= history_days <= 7:
+            raise ValueError('IB execution history must cover between one and seven days.')
+        self.evidence_dir = evidence_dir
+        self.history_days = history_days
 
     def fetch_fills(self, profile: BrokerConnectionProfile) -> list[BrokerExecutionFill]:
         try:
             from ibapi.client import EClient
             from ibapi.execution import ExecutionFilter
+            from ibapi.server_versions import MIN_SERVER_VER_PARAMETRIZED_DAYS_OF_EXECUTIONS
             from ibapi.wrapper import EWrapper
         except ImportError as exc:
             raise RuntimeError("IB execution sync requires the ibapi package. Install the optional IB dependency first.") from exc
@@ -539,67 +559,105 @@ class IbApiExecutionSyncClient:
                 self.ready = Event()
                 self.done = Event()
                 self.errors: list[str] = []
-                self.fills: list[BrokerExecutionFill] = []
+                self.rows: list[dict] = []
+                self.completed = False
+                self.request_error = None
 
             def nextValidId(self, orderId: int) -> None:  # noqa: N802 - IB API callback name
                 self.ready.set()
 
             def execDetails(self, reqId: int, contract: object, execution: object) -> None:  # noqa: N802
-                side_text = str(getattr(execution, "side", "")).upper()
-                if side_text.startswith("BOT"):
-                    side = OrderSide.BUY
-                elif side_text.startswith("SLD"):
-                    side = OrderSide.SELL
-                else:
+                if reqId != 91001:
                     return
-                quantity = int(Decimal(str(getattr(execution, "shares", "0"))))
-                avg_price = Decimal(str(getattr(execution, "price", "0")))
-                if quantity <= 0 or avg_price <= 0:
-                    return
-                broker_order_id = int(getattr(execution, "orderId")) if getattr(execution, "orderId", None) is not None else None
-                order_ref = str(getattr(execution, "orderRef", "") or "") or None
-                symbol = str(getattr(contract, "symbol", "") or "").upper()
-                currency_text = str(getattr(contract, "currency", "") or "")
-                currency = Currency(currency_text) if currency_text in Currency._value2member_map_ else None
-                self.fills.append(
-                    BrokerExecutionFill(
-                        execution_id=str(getattr(execution, "execId", "") or "") or None,
-                        account=str(getattr(execution, "acctNumber", "") or "") or None,
-                        broker_order_id=broker_order_id,
-                        order_ref=order_ref,
-                        symbol=symbol,
-                        side=side,
-                        quantity=quantity,
-                        cumulative_quantity=int(Decimal(str(getattr(execution, "cumQty", "0")))) or None,
-                        average_price=avg_price,
-                        filled_at=_parse_ib_execution_time(str(getattr(execution, "time", "") or "")),
-                        currency=currency,
-                    )
-                )
+                # Retain the callback before parsing. Never substitute receipt
+                # time for an unsupported broker timestamp or truncate shares.
+                self.rows.append(dict(
+                    contract={key: str(getattr(contract, key, '') or '') for key in ('symbol', 'currency', 'conId', 'secType')},
+                    execution={key: str(getattr(execution, key, '') or '') for key in (
+                        'execId', 'acctNumber', 'orderId', 'orderRef', 'permId', 'clientId',
+                        'side', 'shares', 'price', 'cumQty', 'time', 'pendingPriceRevision')}))
 
             def execDetailsEnd(self, reqId: int) -> None:  # noqa: N802
-                self.done.set()
+                if reqId == 91001:
+                    self.completed = True
+                    self.done.set()
+
+            def connectionClosed(self) -> None:  # noqa: N802
+                if not self.completed:
+                    self.request_error = 'IB disconnected before execution snapshot completion.'
+                    self.done.set()
 
             @compatible_ib_errors
             def error(self, reqId: int, errorCode: int, errorString: str, advancedOrderRejectJson: str = "") -> None:  # noqa: N802
                 self.errors.append(f"{reqId}:{errorCode}:{errorString}")
+                if reqId == 91001 or errorCode in {1100, 1300, 502, 504}:
+                    self.request_error = self.errors[-1]
+                    self.done.set()
 
         app = _App()
-        app.connect(profile.host, profile.port, profile.client_id)
-        thread = Thread(target=app.run, daemon=True)
-        thread.start()
+        thread = None
+        failure = None
+        server_version = None
         try:
+            app.connect(profile.host, profile.port, profile.client_id)
+            thread = Thread(target=app.run, daemon=True)
+            thread.start()
             if not app.ready.wait(self.connection_timeout_seconds):
                 raise TimeoutError(f"Timed out waiting for IB nextValidId callback for client_id {profile.client_id}.")
-            app.reqExecutions(91001, ExecutionFilter())
+            server_version = app.serverVersion()
+            query = ExecutionFilter()
+            if self.history_days > 1:
+                if (server_version or 0) < MIN_SERVER_VER_PARAMETRIZED_DAYS_OF_EXECUTIONS:
+                    raise ValueError('IB Gateway must support multi-day executions (server version 200 or newer).')
+                query.lastNDays = self.history_days
+            app.reqExecutions(91001, query)
             if not app.done.wait(self.execution_timeout_seconds):
                 recent_errors = app.errors[-5:]
                 suffix = f" Recent IB messages: {'; '.join(recent_errors)}" if recent_errors else ""
                 raise TimeoutError(f"Timed out waiting for IB execution details.{suffix}")
-            return app.fills
+            if app.request_error or not app.completed:
+                raise RuntimeError(app.request_error or 'IB execution snapshot did not complete.')
+        except Exception as exc:
+            failure = exc
         finally:
             app.disconnect()
-            thread.join(timeout=2)
+            if thread:
+                thread.join(timeout=2)
+        from systematic_trading.execution.evidence import retain_execution_response
+        reference = retain_execution_response(self.evidence_dir, dict(
+            client_id=profile.client_id, server_version=server_version, requested_days=self.history_days,
+            completed=app.completed and failure is None, request_error=str(failure) if failure else None,
+            errors=app.errors, rows=app.rows), client_id=profile.client_id, captured_at=datetime.now(UTC).isoformat())
+        if failure:
+            raise RuntimeError(f'IB execution snapshot failed: {failure} Evidence: {reference}') from failure
+        try:
+            return [_execution_from_callback(row, reference) for row in app.rows]
+        except (ValueError, InvalidOperation) as exc:
+            raise ValueError(f'IB execution snapshot rejected: {exc} Evidence: {reference}') from exc
+
+
+def _execution_from_callback(row, reference):
+    execution, contract = row['execution'], row['contract']
+    identifier = execution['execId']
+    def whole(key):
+        value = Decimal(execution[key])
+        if not value.is_finite() or value <= 0 or value != value.to_integral_value():
+            raise ValueError(f'Execution {identifier}: unsupported {key}={execution[key]!r}; whole positive shares required.')
+        return int(value)
+    side = {'BOT': OrderSide.BUY, 'SLD': OrderSide.SELL}.get(execution['side'].upper())
+    if not side or not identifier or not execution['acctNumber'] or not contract['symbol']:
+        raise ValueError(f'Execution {identifier}: missing or unsupported identity/side.')
+    if execution['pendingPriceRevision'].lower() == 'true':
+        raise ValueError(f'Execution {identifier}: broker price revision is pending; retry synchronization.')
+    price = Decimal(execution['price'])
+    if not price.is_finite() or price <= 0:
+        raise ValueError(f'Execution {identifier}: invalid price {execution["price"]!r}.')
+    return BrokerExecutionFill(execution_id=identifier, account=execution['acctNumber'],
+        broker_order_id=int(execution['orderId']) if execution['orderId'] else None,
+        order_ref=execution['orderRef'] or None, symbol=contract['symbol'].upper(), side=side,
+        quantity=whole('shares'), cumulative_quantity=whole('cumQty'),
+        average_price=price, currency=Currency(contract['currency']),
+        filled_at=_parse_ib_execution_time(execution['time']), evidence_ref=reference)
 
 
 def order_spec_for(order: OrderRequest, *, order_ref: str) -> IBOrderSpec:
@@ -751,27 +809,30 @@ def _normalize_hhmmss(value: str) -> str:
 
 
 def _parse_ib_execution_time(value: str, *, default_timezone: tzinfo | None = None) -> datetime:
-    text = value.strip()
-    timezone = default_timezone or datetime.now().astimezone().tzinfo or UTC
-    suffix_timezones = {
-        " US/Eastern": ZoneInfo("America/New_York"),
-        " US/Central": ZoneInfo("America/Chicago"),
-        " US/Pacific": ZoneInfo("America/Los_Angeles"),
-        " UTC": UTC,
-    }
-    for suffix, suffix_timezone in suffix_timezones.items():
-        if text.endswith(suffix):
-            text = text[: -len(suffix)].strip()
-            timezone = suffix_timezone
-            break
-    text = " ".join(text.split())
-    for fmt in ("%Y%m%d %H:%M:%S", "%Y%m%d"):
+    text = ' '.join(value.split())
+    try:
+        return datetime.strptime(text, '%Y%m%d-%H:%M:%S').replace(tzinfo=UTC)
+    except ValueError:
+        pass
+    parts = text.split(' ')
+    timezone = default_timezone
+    if len(parts) == 3:
         try:
-            parsed = datetime.strptime(text, fmt)
-            return parsed.replace(tzinfo=timezone).astimezone(UTC)
-        except ValueError:
-            continue
-    return datetime.now(tz=UTC)
+            timezone = ZoneInfo(parts.pop())
+        except (KeyError, ValueError) as exc:
+            raise ValueError(f'Unsupported IB execution timezone: {value!r}') from exc
+    if timezone is None or len(parts) != 2:
+        raise ValueError(f'IB execution time requires a full timestamp and explicit timezone: {value!r}')
+    try:
+        parsed = datetime.strptime(' '.join(parts), '%Y%m%d %H:%M:%S')
+    except ValueError as exc:
+        raise ValueError(f'Invalid IB execution timestamp: {value!r}') from exc
+    local = parsed.replace(tzinfo=timezone)
+    utc = local.astimezone(UTC)
+    if (utc.astimezone(timezone).replace(tzinfo=None) != parsed
+            or local.utcoffset() != local.replace(fold=1).utcoffset()):
+        raise ValueError(f'Ambiguous or nonexistent IB execution timestamp: {value!r}')
+    return utc
 
 
 def _selected_order_items(

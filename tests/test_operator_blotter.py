@@ -5,6 +5,7 @@ import subprocess
 import pytest
 
 from systematic_trading.web.trading_workspace import WORKSPACE_HTML, WORKSPACE_JS
+from systematic_trading.web.asset_names import asset_names_javascript
 
 
 def test_default_blotter_keeps_portfolio_period_completed_orders_visible():
@@ -19,5 +20,5 @@ def test_blotter_filters_and_completed_order_history():
     if not node:
         pytest.skip("Node.js is required for blotter behavior checks.")
     result = subprocess.run([node, str(Path(__file__).with_name("operator_blotter_checks.cjs"))],
-                            input=WORKSPACE_JS, text=True, encoding="utf-8", capture_output=True, timeout=20)
+                            input=asset_names_javascript() + WORKSPACE_JS, text=True, encoding="utf-8", capture_output=True, timeout=20)
     assert result.returncode == 0, result.stderr

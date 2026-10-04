@@ -3,6 +3,8 @@ from decimal import Decimal
 import json
 import pytest
 
+pytestmark = pytest.mark.usefixtures('neutral_usd_publication')
+
 from systematic_trading.config import AppSettings
 from systematic_trading.data.ib_fx import IbFxDailyBarProvider
 from systematic_trading.domain import Currency, PriceBar

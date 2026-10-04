@@ -1,5 +1,13 @@
 # Architecture
 
+## Dated trading allocations
+
+The operator can designate SOTA separately from a dated paper trading allocation.
+Transactional state and immutable events own approvals and handovers; the app's
+management and analytics services own activation, virtual strategy accounting and
+replay. Proposals bind to allocation versions and verified model/data publications.
+See [Trading allocations](trading-allocations.md) for contracts and limitations.
+
 ## Shared application contracts
 
 The [connection repair record](app-connection-repairs-2026-09-28.md) documents the portfolio, data and recovery boundaries. `portfolio/context.py` resolves the monitoring episode independently of accounting compaction. `portfolio/targets.py` selects approved deployed targets; `portfolio/valuation.py` applies observed mark/FX freshness; `portfolio/revision.py` invalidates derived EOD results. Paired actual/reference checkpoints and dated executions support replay without future-baseline leakage. Broker capture time cannot be reassigned to a historical session.

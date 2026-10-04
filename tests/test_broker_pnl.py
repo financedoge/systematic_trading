@@ -102,6 +102,7 @@ def test_live_pnl_ui_retains_timestamped_stale_values_and_independent_rows():
     import shutil
     import subprocess
     from systematic_trading.web.operator import _OPERATOR_HTML
+    from systematic_trading.web.asset_names import asset_names_javascript
     node = shutil.which('node')
     if not node:
         pytest.skip('Node unavailable')
@@ -130,7 +131,7 @@ assert.equal(el('pnl-unrealized').textContent,'3.00');
 renderLivePnl({status:'unavailable'});
 assert.equal(el('pnl-total').textContent,'n/a');
 '''
-    subprocess.run([node, '-e', script], input=_OPERATOR_HTML, text=True, encoding='utf-8',
+    subprocess.run([node, '-e', asset_names_javascript() + script], input=_OPERATOR_HTML, text=True, encoding='utf-8',
                    capture_output=True, check=True, timeout=20)
 
 

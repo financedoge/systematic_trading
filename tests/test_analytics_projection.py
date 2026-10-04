@@ -61,7 +61,7 @@ def test_strategy_http_reads_publication_without_touching_sources():
     ])
     # No settings, broker or filesystem store is available on this request.
     catalog = strategy_catalog(request(analytics))
-    assert catalog["strategies"] == [{"strategy_id": "x"}]
+    assert catalog["strategies"] == [{"strategy_id": "x", "is_sota": False, "trading_capital_weight": "0"}]
     assert catalog["analytics"]["storage"] == "clickhouse"
     report = strategy_report("x", request(analytics))
     assert b"saved result" in report.body

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "report_1",
+    "file": "[总报告] 美股截面动量策略的实证检验与泛化性研究_20260919.pdf",
+    "pages": 42,
+    "sha256": "302877fc944c5b811fcb30ec5f29bfc1d0241dd3f2606892dd917caf0d02d2a8"
+  },
+  {
+    "id": "report_2",
+    "file": "美股动量策略-评论V5.pdf",
+    "pages": 5,
+    "sha256": "a4129ec13eb408d8091241ed49d4da153167b061dfbdca24d8fcf92ab7bacbf1"
+  },
+  {
+    "id": "report_3",
+    "file": "美股截面动量策略_开放问题与相关文献研究_最终版.pdf",
+    "pages": 29,
+    "sha256": "950a226f13e852ae56e486a8d8b68114c5992c9f49ce4b93eff60fe394985e73"
+  }
+]

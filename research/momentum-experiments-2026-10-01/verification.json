@@ -1,0 +1,220 @@
+{
+  "analysis_code": {
+    "D:\\projects\\systematic_trading\\scripts\\report_momentum_research.py": "b7886b08b3a0d351ea14e6d7f7ec6096516c992d34a8ba893fe384777a7f2688",
+    "scripts\\analyze_momentum_research.py": "fdb1e4ac3e79a07fc8cf3610bb3a0534e9acc4ad98b2b2e5352e8f29fae19d2c",
+    "src\\systematic_trading\\research\\momentum_analysis.py": "5a8f050a3e54c4036a584a6bb150c495379b06d1367623541876689ce657ee0a"
+  },
+  "baseline": {
+    "decision_count": 129,
+    "maximum_weight_difference": "0",
+    "passed": true
+  },
+  "created_at": "2026-10-01T15:09:07.259656+00:00",
+  "failed_native_attempts": [
+    {
+      "error": "CalledProcessError(137, ['docker', 'run', '--rm', '--name', 'st-momentum-ebec514dcc19', '--network', 'none', '--read-only', '--cap-drop', 'ALL', '--security-opt', 'no-new-privileges', '--pids-limit', '512', '--memory', '4g', '--cpus', '5', '--tmpfs', '/tmp:rw,size=512m', '-e', 'PYTHONDONTWRITEBYTECODE=1', '-e', 'DOTNET_CLI_HOME=/tmp', '-e', 'OMP_NUM_THREADS=1', '-e', 'OPENBLAS_NUM_THREADS=1', '-e', 'MKL_NUM_THREADS=1', '-e', 'NUMEXPR_NUM_THREADS=1', '--mount', 'type=bind,src=D:\\\\projects\\\\systematic_trading\\\\var\\\\research\\\\momentum-20261001-v1b\\\\bundles\\\\parent-W-cost5,dst=/input,readonly', '--mount', 'type=bind,src=D:\\\\projects\\\\systematic_trading\\\\var\\\\research\\\\momentum-20261001-v1b\\\\native\\\\parent-W-cost5,dst=/output', 'quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59', '--config', '/output/config.json'])",
+      "path": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\parent-W-cost5\\run.json"
+    }
+  ],
+  "native": {
+    "A1-M-cost5": {
+      "parity_sha256": "99518d13fdcdd530a3d245bf90c8095864eab0efde15543c6304385c0eae2a2e",
+      "receipt_sha256": "e7e7fb23279a32f0086dc663c91844e64846be2fd061567c5805c63d6aa6f351",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\A1-M-cost5\\run.json"
+    },
+    "A1-W-cost20": {
+      "parity_sha256": "b431cbb53329d0bd4768c2624149daf33b24e0c9ce613e1cc84543d324c10992",
+      "receipt_sha256": "db35612fcd0740f487a06e41a62af1a127fb2501e3a60ce9768f743523b5fb81",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\A1-W-cost20\\run.json"
+    },
+    "A1-W-cost5": {
+      "parity_sha256": "330528fe8846ad72985a3d1f1f1e9ad378a339feeac12c71d1e06220a9752538",
+      "receipt_sha256": "e7350a2083fad9f54551fee3f4db4cd8ae781f8419c26b230d913c35b5a6b06a",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\A1-W-cost5\\run.json"
+    },
+    "A2-M-cost5": {
+      "parity_sha256": "6bfdfe873f86456f0ea18c09d6cd54f2d0104f58c82af6b3fc3b4d4241ced8aa",
+      "receipt_sha256": "3b2bbc24904102b696ca92c37bdcef1156e23a7b44ed6a2ff4e6a0dd36feab5c",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\A2-M-cost5\\run.json"
+    },
+    "A2-W-cost5": {
+      "parity_sha256": "afee32385f42488daf65f5787a670b3062e47b66347f1b46bb72e425ee66e013",
+      "receipt_sha256": "bca15eb0828ffc85ab47b1c66258ff208712c2ab9a43046ecab8f13ae794bb00",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\A2-W-cost5\\run.json"
+    },
+    "A3-M-cost5": {
+      "parity_sha256": "48eb5591f9bb9e34ca10490f08bbd1240f1ac804bb99a50f6bb7618d83075e01",
+      "receipt_sha256": "b8dca7077e381824443123d12c97098e2ea5b5a88c1a645165f26bc9a7496c2e",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\A3-M-cost5\\run.json"
+    },
+    "A4-M-cost5": {
+      "parity_sha256": "41de69cbc774d5342d685bc120383251b77a6470a9eae30d3e86f7971ebb1e32",
+      "receipt_sha256": "ed3b382578f55662bce200fd096647aac0dcd754fca64f636bdd11392d608643",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\A4-M-cost5\\run.json"
+    },
+    "A5-M-cost5": {
+      "parity_sha256": "704ea59d975e15dd6a4b5f334da6e3e2ca947e217c6341eb6d64bf547209da77",
+      "receipt_sha256": "a833810daa9b86a7c0ef78f025abe48931dba6612dabf7dcd2c543b6813ad957",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\A5-M-cost5\\run.json"
+    },
+    "A6-M-cost5": {
+      "parity_sha256": "3a02040f1b7b255a0baff450ddf87f064299bcd003605cba4c9899c543234091",
+      "receipt_sha256": "80bf8bd3094d5d4cc422e34d025e4205a505e3a69fcedc4329a4a428401e270c",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\A6-M-cost5\\run.json"
+    },
+    "A7-M-cost5": {
+      "parity_sha256": "37d948605db0e1093c7a2aeccc25e4b189812d34fbfe1fafa7fad905180e4683",
+      "receipt_sha256": "afd2ae3df41cb017ea7f924de8bdbd325c6dbbbc3d0138feaceacdc288e6a01e",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\A7-M-cost5\\run.json"
+    },
+    "A7-W-cost5": {
+      "parity_sha256": "f88159c2b214c1f669d08b684568265a9ee37d2a7a1ba25a8c46da7edcb8c50c",
+      "receipt_sha256": "0f281fe1ba02c0d1934b01a5704109feb234a27a7303b3d9ed782aee5462d8d6",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\A7-W-cost5\\run.json"
+    },
+    "A8-M-cost5": {
+      "parity_sha256": "bad98e3c58d01b8e94d50bef5bbf501e85fdb0664139d6ab190d549867a9ca9d",
+      "receipt_sha256": "356b58769a62a4b5c278bcd1872088184180f6bcbe50a045fed576204d0652c6",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\A8-M-cost5\\run.json"
+    },
+    "A8-W-cost5": {
+      "parity_sha256": "051d63ac8ea8ecf51f24a4e5ae5e77c9cff4ef383d16bac63222035e376ffb0f",
+      "receipt_sha256": "4c486677fb4a453c5d62ec8dd998fcbff2ebf196aa973083b0c8d9c132b9cdf1",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\A8-W-cost5\\run.json"
+    },
+    "B1-M-cost5": {
+      "parity_sha256": "51f03e7d1b3782007b38475d78d41cf80f83411b25eb95eece640e70df1cbe33",
+      "receipt_sha256": "b3258d43e6841ccc7eaf3e0a9917de2efb44a02441257f595928c80c34fceb11",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\B1-M-cost5\\run.json"
+    },
+    "B2-M-cost5": {
+      "parity_sha256": "0bee0fd3b34bd781a8b43676c790174a087cf884cf77b3407b7f6c0bdf01112e",
+      "receipt_sha256": "0f8a172209ab8b27d53478d521ed27a4796098e576f0e6be3b9a89ece65a10b9",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\B2-M-cost5\\run.json"
+    },
+    "B3-M-cost5": {
+      "parity_sha256": "c0d36ac8e988fa3971f2fb305229ad5a15a2f3fbf2490f9a6c13e24171930bab",
+      "receipt_sha256": "0a0dd522d23cfec30cb44911a41bb425dd5228838977b2c3443fa1f837aee4fa",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\B3-M-cost5\\run.json"
+    },
+    "B4-M-cost5": {
+      "parity_sha256": "9721d41cc069aa31e321aebe7815b14da0b30a2a524552a35170638e3340bb16",
+      "receipt_sha256": "d613470f48a07d629f6611e226c4ec4026e0506df54fcf15d055c4782616e931",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\B4-M-cost5\\run.json"
+    },
+    "C0-M-cost5": {
+      "parity_sha256": "e546fa2c7cc1172522b0199d4cec2cdcfc94a20ac308fef020a77b4e543d3e71",
+      "receipt_sha256": "40cf419b9bc69e6b2734984768d6f9c897acba016f0bb66ecc89b54bb5852f4d",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\C0-M-cost5\\run.json"
+    },
+    "C0-W-cost5": {
+      "parity_sha256": "7227f3deed3d7e989c7fbcc677a5564154b0be39dbcb1b44628f537140a82b96",
+      "receipt_sha256": "bdf00d60407bb1ed588d73cdeb345b5f34c67a7ef0bf34f83501a40f66c41993",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\C0-W-cost5\\run.json"
+    },
+    "C1-M-cost5": {
+      "parity_sha256": "537cc72dd5dad2679ff352ed46a5d7cda00b3be40564809f776d6ef49a342dde",
+      "receipt_sha256": "409688729f6fcfc0d4db8df74700d8f1528d251cc8eb6ce3bd002fb2bb2b3950",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\C1-M-cost5\\run.json"
+    },
+    "C1-W-cost5": {
+      "parity_sha256": "682faf5a58c18634899c8146a9cb54d57331afc114725af862a3ca5b4e13b929",
+      "receipt_sha256": "ccc749663c823c939d82f9110f9af7f598737473e9ae1d2b7d46bb098096b1ad",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\C1-W-cost5\\run.json"
+    },
+    "C2-M-cost5": {
+      "parity_sha256": "0f452c1dbffd205344cd837acc56f04e5d62d43684b45f905b90c474f66e8009",
+      "receipt_sha256": "abeb307bb02136d285031320b4767d381272c8c3ecbbaba980017664ee675b22",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\C2-M-cost5\\run.json"
+    },
+    "C2-W-cost5": {
+      "parity_sha256": "2475bf6520914dffd61bb69bd25bf02a15803cfdbcbe74a01ee49a786f5cf9dd",
+      "receipt_sha256": "4cb1c07dc3c48739783397c92c4e466c1bd837bd00ce4f7b147638a06f68f478",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\C2-W-cost5\\run.json"
+    },
+    "U0-M-cost5": {
+      "parity_sha256": "4035f49823729b0061545e8847f500bdffd1ad925e869ff92e0be93cc72bf1f5",
+      "receipt_sha256": "02d7698bb6eb81a61668d0c25cba97d7c07e4bbc65f348a16d22571b77e45701",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\U0-M-cost5\\run.json"
+    },
+    "U1-M-cost5": {
+      "parity_sha256": "0a7cb47792a24bd7b636a49dec705d376eaafcaa1611ea162c7f56dc22163ff3",
+      "receipt_sha256": "7117a2fc1e4ba548473e4d1d0806792fb0f520e8e2c24c23c5055f2df918bd60",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\U1-M-cost5\\run.json"
+    },
+    "parent-M-cost20": {
+      "parity_sha256": "04425f65af5d3f397fc331d88e6050a99174c5741873fa78ee981d47b30b9382",
+      "receipt_sha256": "5cd0237edba64297487a8ce0159f8914846d3f447513ba9d012a3e189340de5f",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\parent-M-cost20\\run.json"
+    },
+    "parent-M-cost5": {
+      "parity_sha256": "0f96f98d5680a4812457cda8ed8f42bb52f0f78fbf2c58f43fc755eb298f497e",
+      "receipt_sha256": "496a3b72c3b5e2edb5842de1f8098ca3e46612e93c43aef881173c26f98e1592",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\parent-M-cost5\\run.json"
+    },
+    "parent-W-cost5": {
+      "parity_sha256": "f601c60fa4a85add42bef8a5a63460d070363ec233777604d8b588c9db40f6a2",
+      "receipt_sha256": "13fd0f094c78a07fb40c71e6eb08289974a89c14d42222fddc163dfc6f811345",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\parent-W-cost5-retry1\\run.json"
+    },
+    "parent-activity-M-cost5": {
+      "parity_sha256": "f5d748d8a899a1a5ce3623bc8e7c1583ee5579bc87085eb49d44fa5e3652b309",
+      "receipt_sha256": "da1ddea55faec7b669a7318879136cca4e95ec1eb4e4a5eb444e7a9c04b8279c",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\parent-activity-M-cost5\\run.json"
+    },
+    "parent-rolling-M-cost5": {
+      "parity_sha256": "90af465c5ee74e83de3671a74935479d49402b6faf7f86cd9fb1195160533656",
+      "receipt_sha256": "3d763dccdb552d3fe5d9648ca2061f5bffff91a36675852c904646de9082f0fb",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\parent-rolling-M-cost5\\run.json"
+    },
+    "risk-M-cost5": {
+      "parity_sha256": "417ae693bc513872340cdc8041c888c4bb0fa958b53c78de8d7de8d1cd7f582a",
+      "receipt_sha256": "81d66518823ce934e3bc43b2024f5d679201c5decd5d1030af941afc0c133d8b",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\risk-M-cost5\\run.json"
+    },
+    "transfer-1-activity-cost5": {
+      "parity_sha256": "3cdc3046611c29d3296e56321fb026ae4a9e9404f68a807ed21ef3a9241ea46e",
+      "receipt_sha256": "13357bbcd52acd0ddc592b6fa73e2de0b668ed7699f61b8b3200d5eebbd32c40",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\transfer-1-activity-cost5\\run.json"
+    },
+    "transfer-1-rolling-cost5": {
+      "parity_sha256": "d82c320ec52096780dd8cbebb58f014b29f6666bae2686af66d4d98b3020af32",
+      "receipt_sha256": "3b7e91ee5bf0ed01636caa735d8674d77e4f05cd7fe38f49e424cb3d3307a404",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\transfer-1-rolling-cost5\\run.json"
+    },
+    "transfer-2-activity-cost5": {
+      "parity_sha256": "28890397e177701e1ed84bcad307d196f895b251ba45fbdd5b246aa2eeac9b3b",
+      "receipt_sha256": "d950c3d487377b8b358d0b8dfc390bce47d83c086a382c6851840fe5597febb1",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\transfer-2-activity-cost5\\run.json"
+    },
+    "transfer-2-rolling-cost5": {
+      "parity_sha256": "9cfea129e2e3536e78d3a25c95359b2a0b8f75912054f5c687698c0fb6adda48",
+      "receipt_sha256": "74cbd4dc12ba581e8346b8340864bb612105b2e9d22415d3a3ac2ab7e992dda7",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\transfer-2-rolling-cost5\\run.json"
+    },
+    "urth-cost5": {
+      "parity_sha256": "0f9be41290e978ab780555b1eb4434a39eac61778f5673ca8ed4b62e9bb56649",
+      "receipt_sha256": "c23f7636f73398fa96c6a05bf07fc8ec9a5749b79da37cb2df1f6f75cb1c93c6",
+      "run": "D:\\projects\\systematic_trading\\var\\research\\momentum-20261001-v1b\\native\\urth-cost5\\run.json"
+    }
+  },
+  "native_passed": 36,
+  "paired_results_sha256": "10d15bad9fb4c4a1dacefeb4a121453d27f8b630ff6173c802e08870e3005df7",
+  "portfolios": 34,
+  "promotion_eligible": false,
+  "protocol_sha256": "c15df3289583658509063ed2f018c91f15a73a13f0524c0e67c4e73134e74e19",
+  "python_replays": 102,
+  "results_sha256": "33db4d96c75712031f8057449c45a99a25d3d1c4ded5266a1d69f8f54b127689",
+  "transfer_parents": {
+    "parent-activity-M": {
+      "decisions": 129,
+      "maximum_weight_difference": "0E-28",
+      "passed": true
+    },
+    "parent-rolling-M": {
+      "decisions": 129,
+      "maximum_weight_difference": "0E-28",
+      "passed": true
+    }
+  }
+}

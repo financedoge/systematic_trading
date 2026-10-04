@@ -1,6 +1,9 @@
 from datetime import UTC, date, datetime, time, timedelta
 from decimal import Decimal
 from zoneinfo import ZoneInfo
+import pytest
+
+pytestmark = pytest.mark.usefixtures('neutral_usd_publication')
 
 from systematic_trading.config import AppSettings
 from systematic_trading.domain.enums import BrokerOrderStatus, Currency, OrderEnvironment, OrderSide, OrderType
@@ -312,7 +315,7 @@ def test_trading_management_service_notifies_on_eod_warning(tmp_path) -> None:
     assert any(event.event_type == "rebalance_stage" and event.status == "warning" for event in notifier.events)
 
 
-def test_trading_management_service_skips_market_closed_holiday_without_alerts(tmp_path) -> None:
+def test_holiday_keeps_reconciliation_running_without_market_jobs_or_routing(tmp_path, monkeypatch) -> None:
     store = SQLiteStore(tmp_path / "holiday.db")
     store.initialize()
     settings = AppSettings(
@@ -338,21 +341,43 @@ def test_trading_management_service_skips_market_closed_holiday_without_alerts(t
     service = TradingManagementService(
         settings=settings,
         store=store,
-        execution_sync_client=_FailingExecutionSyncClient(),
-        account_snapshot_client=_FailingAccountSnapshotClient(),
+        execution_sync_client=_FakeExecutionSyncClient([]),
+        account_snapshot_client=_FakeAccountSnapshotClient(),
         market_data_provider=market_provider,
         fx_market_data_provider=_FakeMarketDataProvider({}),
         alert_notifier=notifier,
     )
 
-    status = service.run_once(now=datetime(2026, 5, 25, 16, 30, tzinfo=ZoneInfo("America/New_York")))
+    monkeypatch.setattr(service.auto_approval, 'tick', lambda **kwargs: pytest.fail('Holiday must not run order routing'))
+    now = datetime(2026, 5, 25, 16, 30, tzinfo=ZoneInfo("America/New_York"))
+    status = service.run_once(now=now)
 
     assert not is_us_trading_day(date(2026, 5, 25))
     assert status.last_eod_date == date(2026, 5, 22)
     assert status.pending_eod_date is None
     assert market_provider.requests == []
-    assert notifier.events == []
-    assert status.next_execution_sync_at == datetime(2026, 5, 26, 13, 30, tzinfo=UTC)
+    assert status.last_execution_sync_at == now.astimezone(UTC)
+    assert status.next_execution_sync_at == now.astimezone(UTC) + timedelta(seconds=settings.automation_execution_poll_seconds)
+    assert not store.list_broker_order_records()
+
+
+def test_closed_market_alignment_uses_time_after_broker_sync(tmp_path, monkeypatch) -> None:
+    import systematic_trading.live.management_service as management
+
+    store = SQLiteStore(tmp_path / "weekend-clock.db")
+    store.initialize()
+    settings = AppSettings(database_path=tmp_path / "weekend-clock.db", data_dir=tmp_path)
+    service = TradingManagementService(settings=settings, store=store)
+    elapsed = [100.0]
+    monkeypatch.setattr(management, "monotonic", lambda: elapsed[0])
+    monkeypatch.setattr(service, "_execution_sync_due", lambda now: True)
+    monkeypatch.setattr(service, "_sync_executions", lambda now: elapsed.__setitem__(0, 107.0))
+    observed = []
+    monkeypatch.setattr(service, "_stage_portfolio_alignment", observed.append)
+    now = datetime(2026, 10, 4, 1, 0, tzinfo=UTC)
+    service.run_once(now=now)
+    # A snapshot collected during the seven-second sync is not future-dated.
+    assert observed == [now + timedelta(seconds=7)]
 
 
 def test_trading_management_service_opens_ib_circuit_after_repeated_failures(tmp_path) -> None:

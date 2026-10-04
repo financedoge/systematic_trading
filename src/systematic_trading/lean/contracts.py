@@ -20,6 +20,7 @@ class BacktestRunSpec(BaseModel):
     flow_overlay: FlowConcentrationSpec | None = None
     constituent_overlay: ConstituentOverlaySpec | None = None
     base_tree_model_schedule: bool = False
+    usd_model_schedule: bool = False
     fixed_model_from: str | None = None
     mode: Literal['targets', 'shared'] = 'shared'
     start_date: str
