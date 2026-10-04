@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import json
+import heapq
 import os
 import time
 from collections import Counter
+from contextlib import contextmanager
 from datetime import UTC, date, datetime
 from decimal import Decimal
 from enum import StrEnum
@@ -22,6 +24,7 @@ from systematic_trading.domain.events import (
 )
 from systematic_trading.services import OperationalLogger, write_service_state_file
 from systematic_trading.storage.interfaces import PlatformEventAppendStore
+from systematic_trading.runtime_io import exclusive_lock
 
 
 SERVICE_ID = "market_data_recorder"
@@ -163,7 +166,7 @@ class CapturedMarketDataBar(BaseModel):
 
     def raw_payload(self) -> dict[str, Any]:
         return {
-            "bar_source": "ibapi",
+            "bar_source": "ibapi_sampled_quotes" if "ib_delayed_trade_aggregate" in self.quality_flags else "ibapi",
             "bar_size_seconds": self.bar_size_seconds,
             "market_data_mode": self.market_data_mode.value,
             "open": str(self.open),
@@ -229,6 +232,7 @@ class RawCatalogEntry(BaseModel):
     received_at: datetime
     available_at: datetime
     capture_mode: str
+    bar_size_seconds: int | None = None
     request_id: str | None = None
     raw_event_id: str
     raw_ref: str
@@ -300,6 +304,7 @@ class RawCatalogQueryResult(BaseModel):
     records_read: int = 0
     records_invalid: int = 0
     duplicate_raw_refs: int = 0
+    matched_entries: int = 0
     errors: list[str] = Field(default_factory=list)
 
 
@@ -411,7 +416,9 @@ class RawDataCatalog:
         manifest_path.parent.mkdir(parents=True, exist_ok=True)
         line = json.dumps(entry.model_dump(mode="json"), sort_keys=True, separators=(",", ":"), ensure_ascii=True)
         encoded = f"{line}\n".encode("utf-8")
-        with manifest_path.open("ab") as handle:
+        # Stream and historical workers share this append-only manifest. Lock
+        # around offset + append so neither writer can reuse an offset.
+        with _catalog_append_lock(manifest_path), manifest_path.open("ab") as handle:
             byte_offset = handle.tell()
             handle.write(encoded)
             handle.flush()
@@ -436,7 +443,14 @@ class RawDataCatalog:
         symbol: str | None = None,
         day: date | None = None,
         raw_schema_version: int | None = None,
+        start_date: date | None = None,
+        end_date: date | None = None,
+        limit: int | None = None,
+        summarize: bool = False,
+        entry_filter: Callable[[RawCatalogEntry], bool] | None = None,
     ) -> RawCatalogQueryResult:
+        if limit is not None and limit < 1:
+            raise ValueError("Catalog limit must be positive")
         manifest_paths = _manifest_paths(self.root, day=day)
         entries: list[RawCatalogEntry] = []
         seen_raw_refs: set[str] = set()
@@ -444,9 +458,12 @@ class RawDataCatalog:
         records_read = 0
         invalid = 0
         errors: list[str] = []
+        matched_entries = 0
+        latest = []
+        representatives = {}
         for manifest_path in manifest_paths:
             try:
-                lines = manifest_path.read_text(encoding="utf-8").splitlines()
+                lines = manifest_path.open(encoding="utf-8")
             except OSError as exc:
                 errors.append(f"{manifest_path}: {exc}")
                 continue
@@ -458,12 +475,11 @@ class RawDataCatalog:
                     entry = RawCatalogEntry.model_validate_json(line)
                 except ValueError as exc:
                     invalid += 1
-                    errors.append(f"{manifest_path}#{line_number}: {exc}")
+                    if len(errors) < 50:
+                        errors.append(f"{manifest_path}#{line_number}: {exc}")
                     continue
-                if entry.raw_ref in seen_raw_refs:
-                    duplicate_raw_refs += 1
+                if start_date and entry.recorder_date < start_date or end_date and entry.recorder_date > end_date:
                     continue
-                seen_raw_refs.add(entry.raw_ref)
                 if not _catalog_entry_matches(
                     entry,
                     source=source,
@@ -474,18 +490,32 @@ class RawDataCatalog:
                     raw_schema_version=raw_schema_version,
                 ):
                     continue
-                entries.append(entry)
-        entries.sort(
-            key=lambda item: (
-                item.recorder_date,
-                item.source_name,
-                item.environment,
-                item.data_kind,
-                item.symbol or "",
-                item.exchange_timestamp or item.received_at,
-                item.byte_offset,
-            )
-        )
+                if summarize:
+                    representatives[(entry.recorder_date, entry.source_name, entry.environment,
+                                     entry.data_kind, entry.symbol)] = entry
+                    matched_entries += 1
+                    continue
+                if entry.raw_ref in seen_raw_refs:
+                    duplicate_raw_refs += 1
+                    continue
+                seen_raw_refs.add(entry.raw_ref)
+                matched_entries += 1
+                if entry_filter and not entry_filter(entry):
+                    continue
+                if limit is None:
+                    entries.append(entry)
+                else:
+                    item = (_catalog_sort_key(entry), records_read, entry)
+                    if len(latest) < limit:
+                        heapq.heappush(latest, item)
+                    else:
+                        heapq.heappushpop(latest, item)
+            lines.close()
+        if summarize:
+            entries = list(representatives.values())
+        elif limit is not None:
+            entries = [item[2] for item in latest]
+        entries.sort(key=_catalog_sort_key)
         return RawCatalogQueryResult(
             root=str(self.root),
             entries=entries,
@@ -493,6 +523,7 @@ class RawDataCatalog:
             records_read=records_read,
             records_invalid=invalid,
             duplicate_raw_refs=duplicate_raw_refs,
+            matched_entries=matched_entries,
             errors=errors[:50],
         )
 
@@ -582,6 +613,7 @@ class MarketDataRecorder:
         software_version: str | None = None,
         operation_logger: OperationalLogger | None = None,
         log_every_records: int = 100,
+        state_interval_seconds: float = 0,
     ) -> None:
         self.writer = writer
         self.catalog = catalog
@@ -594,6 +626,8 @@ class MarketDataRecorder:
         self.software_version = software_version
         self.operation_logger = operation_logger
         self.log_every_records = max(1, int(log_every_records))
+        self.state_interval_seconds = max(0, state_interval_seconds)
+        self._last_bar_state_at = float("-inf")
         self.records_received = 0
         self.records_written = 0
         self.catalog_entries_appended = 0
@@ -637,7 +671,9 @@ class MarketDataRecorder:
             self.event_store.append_platform_event(event)
             self.events_appended += 1
         self.last_event_id = event.event_id
-        self.write_state(running=True, message="Market data recorder heartbeat.")
+        if time.monotonic() - self._last_bar_state_at >= self.state_interval_seconds:
+            self.write_state(running=True, message="Market data recorder heartbeat.")
+            self._last_bar_state_at = time.monotonic()
         if self.records_written == 1 or self.records_written % self.log_every_records == 0 or envelope.quality_flags:
             self._log_info(
                 "market_data_bar_recorded",
@@ -1008,6 +1044,7 @@ def raw_catalog_entry_for(envelope: RawMarketDataEnvelope, append: RawAppendResu
         received_at=envelope.received_at,
         available_at=envelope.available_at,
         capture_mode=envelope.capture_mode,
+        bar_size_seconds=envelope.payload.get("bar_size_seconds"),
         request_id=envelope.request_id,
         raw_event_id=envelope.raw_event_id,
         raw_ref=append.raw_ref,
@@ -1028,6 +1065,11 @@ def query_raw_catalog(
     symbol: str | None = None,
     day: date | None = None,
     raw_schema_version: int | None = None,
+    start_date: date | None = None,
+    end_date: date | None = None,
+    limit: int | None = None,
+    summarize: bool = False,
+    entry_filter: Callable[[RawCatalogEntry], bool] | None = None,
 ) -> RawCatalogQueryResult:
     return RawDataCatalog(root).query(
         source=source,
@@ -1036,7 +1078,31 @@ def query_raw_catalog(
         symbol=symbol,
         day=day,
         raw_schema_version=raw_schema_version,
+        start_date=start_date, end_date=end_date, limit=limit, summarize=summarize, entry_filter=entry_filter,
     )
+
+
+def _catalog_sort_key(item):
+    return (item.recorder_date, item.source_name, item.environment, item.data_kind,
+            item.symbol or "", item.exchange_timestamp or item.received_at, item.byte_offset)
+
+
+@contextmanager
+def _catalog_append_lock(path):
+    deadline = time.monotonic() + 30
+    while True:
+        lock = exclusive_lock(path.with_suffix(".lock"))
+        try:
+            lock.__enter__()
+            break
+        except OSError:
+            if time.monotonic() >= deadline:
+                raise
+            time.sleep(0.01)
+    try:
+        yield
+    finally:
+        lock.__exit__(None, None, None)
 
 
 def rebuild_raw_catalog(

@@ -127,17 +127,12 @@ def test_service_rechecks_session_after_daily_backfill(monkeypatch, tmp_path, st
         assert idle[-1]["session"].reason == "after_market_close"
 
 
-@pytest.mark.parametrize("recovery_seconds,expected_durations", [(40, [30]), (25, [30, 5])])
-def test_service_rechecks_session_after_gap_recovery(monkeypatch, tmp_path, recovery_seconds, expected_durations) -> None:
+def test_failed_stream_retries_without_synchronous_history_blocking_capture(monkeypatch, tmp_path) -> None:
     service, clock, args, states = _service_harness(monkeypatch, tmp_path, "2026-11-27T17:59:30+00:00")
     captures = []
-    recoveries = []
 
     def capture(**kwargs):
-        if kwargs["mode"] == "historical-smoke":
-            recoveries.append(kwargs)
-            clock.value += timedelta(seconds=recovery_seconds)
-            return {"returncode": 0}
+        assert kwargs["mode"] != "historical-smoke"
         captures.append(kwargs["duration_seconds"])
         if len(captures) > 1:
             raise KeyboardInterrupt
@@ -150,8 +145,25 @@ def test_service_rechecks_session_after_gap_recovery(monkeypatch, tmp_path, reco
     monkeypatch.setattr(service, "_run_child", capture)
     monkeypatch.setattr(service.time, "sleep", sleep)
     assert service.main([*args, "--disable-daily-backfill"]) == 130
-    assert captures == expected_durations
-    assert len(recoveries) == 1
+    assert captures == [30, 30]
+
+
+def test_recovery_starts_on_weekend_before_daily_work_and_restarts_on_failure(monkeypatch, tmp_path):
+    from types import SimpleNamespace
+    service, clock, args, states = _service_harness(monkeypatch, tmp_path, "2026-10-04T14:00:00+00:00")
+    starts = []
+    def start(*args):
+        starts.append(clock.value)
+        return SimpleNamespace(poll=lambda: 1)
+    def sleep(seconds):
+        if len(starts) == 2:
+            raise KeyboardInterrupt
+        clock.value += timedelta(seconds=seconds)
+    monkeypatch.setattr(service, "_start_recovery_worker", start)
+    monkeypatch.setattr(service.time, "sleep", sleep)
+    monkeypatch.setattr(service, "_run_child", lambda **kw: pytest.fail("Weekend streaming must stay idle"))
+    assert service.main([*args, "--disable-daily-backfill"]) == 130
+    assert len(starts) == 2 and (starts[1]-starts[0]).total_seconds() >= 60
 
 
 def _interrupt(*args):
@@ -162,6 +174,10 @@ def test_recorder_child_timeout_is_reported_and_only_its_process_tree_is_stopped
     import subprocess
     from types import SimpleNamespace
     service, _, _, _ = _service_harness(monkeypatch, tmp_path, "2026-09-30T14:00:00+00:00")
+    # This check exercises the real process-tree cleanup, not the loop fixture.
+    spec = importlib.util.spec_from_file_location("recorder_timeout_under_test", service.__file__)
+    service = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(service)
     waits, kills = [], []
     def communicate(*, timeout):
         waits.append(timeout)
@@ -195,6 +211,7 @@ def test_failed_daily_backfill_retries_within_five_minutes(monkeypatch, tmp_path
 
 
 def _service_harness(monkeypatch, tmp_path, start):
+    from types import SimpleNamespace
     script = Path(__file__).resolve().parents[1] / "scripts" / "run_market_data_recorder_service.py"
     spec = importlib.util.spec_from_file_location("recorder_service_under_test", script)
     service = importlib.util.module_from_spec(spec)
@@ -215,6 +232,8 @@ def _service_harness(monkeypatch, tmp_path, start):
 
     monkeypatch.setattr(service, "datetime", Clock)
     monkeypatch.setattr(service, "_write_state", write_state)
+    monkeypatch.setattr(service, "_start_recovery_worker", lambda *args: SimpleNamespace(poll=lambda: None))
+    monkeypatch.setattr(service, "_stop_process_tree", lambda process: None)
     args = [
         "--state-path", str(tmp_path / "state.json"),
         "--pid-path", str(tmp_path / "service.pid"),

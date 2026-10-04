@@ -26,6 +26,7 @@ The live profile remains disabled in code. A configured live port does not enabl
 | --- | ---: | --- |
 | Order router | 101 | Approved paper orders only |
 | Recorder / market-data adapter | 121 | Market data; avoid concurrent ad hoc requests on the same ID |
+| Intraday historical recovery | 221 | Paced 5-second acquisition and durable outage backlog, including weekends |
 | Execution sync | 131 | Broker fill retrieval |
 | Account snapshot | 141 | Cash and positions |
 | Health | 151 | API readiness |
@@ -48,7 +49,7 @@ Use the normal `scripts/stop_local_platform.ps1 -KeepInfrastructure` and `script
 
 The connection smoke only connects/disconnects; it does not place an order. Reconciliation reports must be checked for breaks. Do not reset the PnL baseline or erase historical fills to make a report pass.
 
-For a bounded recorder check, use a separate state/PID file and unused client ID. Historical bars verify connectivity/storage but do not prove continuous streaming. A stream canary must show advancing exchange timestamps, raw/catalog records and matching payload hashes. The five-symbol delayed pilot is testing data, not an approved realtime decision feed. Its scheduled service records US regular sessions and idles outside them.
+For a bounded recorder check, use a separate state/PID file and unused client ID. Historical bars verify connectivity/storage but do not prove continuous streaming. A stream canary must show advancing exchange timestamps, raw/catalog records and matching payload hashes. The five-symbol delayed pilot is testing data, not an approved realtime decision feed. Prospective capture runs during US regular sessions; [historical recovery](intraday-recovery.md) continues after hours and weekends.
 
 IB warning 2176 means an older API client received rounded fractional volume. The recorder retains the warning and marks subsequent bars for that request `ib_fractional_volume_rounded`, while allowing collection to continue. Other request failures still terminate/degrade the request. The receiving PC now uses official IB API 10.45.1; a fractional-volume storage contract remains follow-up work, and historical rounded bars must not be represented as exact fractional-volume data.
 

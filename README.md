@@ -84,7 +84,7 @@ and credentials; ClickHouse and raw market-data files require separate migration
 .\scripts\start_local_platform.ps1
 ```
 
-This starts NATS JetStream, verifies Postgres, starts ClickHouse, starts the operator dashboard plus event dispatcher, and starts the always-on market-data recorder service. The recorder idles outside regular US equity market hours and only records during the configured session. Open `http://127.0.0.1:8000/platform` for service health and `http://127.0.0.1:8000/operator` for the trading operator UI.
+This starts NATS JetStream, verifies Postgres, starts ClickHouse, starts the operator dashboard plus event dispatcher, and starts the always-on market-data recorder service. Prospective capture runs during regular US equity sessions; historical recovery continues outside market hours. Open `http://127.0.0.1:8000/platform` for service health and `http://127.0.0.1:8000/operator` for the trading operator UI.
 
 Structured operational logs are written to `var/log/platform_operations.jsonl`.
 
@@ -134,7 +134,7 @@ Skip the market-data recorder service for maintenance:
 .\scripts\start_local_platform.ps1 -SkipMarketDataRecorder
 ```
 
-The recorder service starts with the five-symbol `SPY/QQQ/TLT/GLD/IWM` pilot and `-RecorderIntradayFeed delayed-trades`. It aggregates timestamped IB delayed trade callbacks into raw 5-second bars, tags them as delayed, and never exposes them as trading-decision data. The paid `reqRealTimeBars` path remains available with `-RecorderIntradayFeed realtime` after API market-data subscriptions are verified. The service stays idle after hours and on weekends; synchronous historical gap-fill runs only after a failed stream chunk so it cannot block a healthy prospective feed.
+The recorder service starts with the five-symbol `SPY/QQQ/TLT/GLD/IWM` pilot and `-RecorderIntradayFeed delayed-trades`. That channel retains incomplete sampled quotes in five-second buckets, not complete interval OHLCV or market volume; it is raw inspection evidence only. Recorded Bars excludes these samples and defaults to actual IB historical OHLCV candles. The paid `reqRealTimeBars` path remains available with `-RecorderIntradayFeed realtime` after API market-data subscriptions are verified. A separate paced worker recovers up to six months of IB 5-second history, resumes persisted gaps after outages and keeps running after hours. See [intraday recovery](docs/intraday-recovery.md) for progress, limits and configuration.
 
 The recorder service also runs ClickHouse daily-bar backfill on startup and then on an interval, including after-hours/weekends. The default path repairs `market_data.daily_bars` directly from Yahoo adjusted daily bars, with IB historical daily bars as fallback.
 

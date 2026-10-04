@@ -236,7 +236,75 @@ def test_fractional_volume_warning_keeps_capture_alive_and_flags_affected_bars(m
     if channel == "delayed":
         assert captured[0].market_data_mode == IBMarketDataMode.DELAYED
         assert "ib_delayed_trade_aggregate" in captured[0].quality_flags
+        assert "ib_sampled_quotes_incomplete_ohlcv" in captured[0].quality_flags
+        assert captured[0].raw_payload()["bar_source"] == "ibapi_sampled_quotes"
     # Subscription failures must still terminate their request.
     app.error(2, 10089, "Requested market data requires additional subscription")
     assert 2 in app.request_errors
     assert app.done_events[2].is_set()
+
+
+def test_historical_freshness_warning_waits_for_end_and_preserves_available_data(monkeypatch):
+    from types import SimpleNamespace
+    from ibapi.client import EClient
+    monkeypatch.setattr(EClient, "connect", lambda app, *args: app.nextValidId(1))
+    monkeypatch.setattr(EClient, "run", lambda app: None)
+    recorder = _RecorderNotes()
+    captured = []
+    recorder.record_bar = captured.append
+    app = IbApiMarketDataRecorderClient()._connect_app(_profile(), recorder=recorder)
+    app.request_symbols[1] = "SPY"
+    app.error(1, 2188, "Up-to-the-second historical data requires additional subscription for the API.")
+    assert not app.request_errors and not app.done_events
+    app.historicalData(1, SimpleNamespace(date="1790970900", open=100, high=101, low=99,
+        close=100, volume=10, average=100, barCount=2))
+    assert len(captured) == 1
+    assert "ib_historical_freshness_subscription_limited" in captured[0].quality_flags
+    assert not app.done_events
+    app.historicalDataEnd(1, "", "")
+    assert app.done_events[1].is_set()
+    app.error(2, 162, "Historical data service error")
+    assert 2 in app.request_errors
+
+
+def test_historical_write_failure_marks_request_failed_and_late_cancelled_bars_are_ignored(monkeypatch):
+    from types import SimpleNamespace
+    from ibapi.client import EClient
+    monkeypatch.setattr(EClient, "connect", lambda app, *args: app.nextValidId(1))
+    monkeypatch.setattr(EClient, "run", lambda app: None)
+    recorder = _RecorderNotes()
+    def fail(bar):
+        raise OSError("disk full")
+    recorder.record_bar = fail
+    app = IbApiMarketDataRecorderClient()._connect_app(_profile(), recorder=recorder)
+    app.request_symbols[1] = "SPY"
+    bar = SimpleNamespace(date="1790970900", open=100, high=101, low=99, close=100, volume=10, average=100, barCount=2)
+    app.historicalData(1, bar)
+    assert "disk full" in app.request_errors[1]
+    assert app.done_events[1].is_set()
+    assert not app.recorded_bar_fingerprints
+    recorder.record_bar = lambda bar: pytest.fail("Cancelled data must not write")
+    app.cancelled_request_ids.add(1)
+    app.historicalData(1, bar)
+
+
+def test_official_sdk_historical_fields_survive_unchanged(monkeypatch):
+    from decimal import Decimal
+    from ibapi.client import EClient
+    from ibapi.common import BarData
+    monkeypatch.setattr(EClient, "connect", lambda app, *args: app.nextValidId(1))
+    monkeypatch.setattr(EClient, "run", lambda app: None)
+    recorder = _RecorderNotes()
+    captured = []
+    recorder.record_bar = captured.append
+    app = IbApiMarketDataRecorderClient()._connect_app(_profile(), recorder=recorder)
+    app.request_symbols[1] = "SPY"
+    app.bar_size_seconds_by_request[1] = 5
+    bar = BarData()
+    bar.date, bar.open, bar.high, bar.low, bar.close = "1790970900", 769.54, 769.72, 769.51, 769.57
+    bar.volume, bar.wap, bar.barCount = Decimal(59944), Decimal("769.625"), 574
+    app.historicalData(1, bar)
+    result = captured[0]
+    assert [result.open, result.high, result.low, result.close] == list(map(Decimal, ["769.54", "769.72", "769.51", "769.57"]))
+    assert result.volume == 59944 and result.count == 574 and result.bar_size_seconds == 5
+    assert result.wap == Decimal("769.625")

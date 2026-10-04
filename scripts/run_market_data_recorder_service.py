@@ -16,7 +16,6 @@ sys.path.insert(0, str(REPO_ROOT / "src"))
 from systematic_trading.config import AppSettings
 from systematic_trading.recorders import (
     IBMarketDataMode,
-    ib_end_datetime,
     load_recorder_source_policy,
     market_session_state,
 )
@@ -36,7 +35,7 @@ def main(argv: list[str] | None = None) -> int:
         "--intraday-feed",
         choices=["delayed-trades", "historical-live", "realtime"],
         default="delayed-trades",
-        help="IB 5-second feed channel. delayed-trades aggregates timestamped delayed trade callbacks.",
+        help="IB feed channel. delayed-trades retains sampled quotes; complete OHLCV comes from recovery.",
     )
     parser.add_argument("--client-id", type=int, default=None)
     parser.add_argument("--timezone", default="America/New_York", help="Timezone of the configured capture window; calendar dates follow New York.")
@@ -47,6 +46,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--gap-fill-lookback-minutes", type=int, default=60)
     parser.add_argument("--gap-fill-interval-minutes", type=int, default=15)
     parser.add_argument("--gap-fill-max-bars-per-symbol", type=int, default=2000)
+    parser.add_argument("--disable-intraday-recovery", action="store_true")
+    parser.add_argument("--recovery-client-id", type=int, default=221)
+    parser.add_argument("--recovery-start-date", default=None)
     parser.add_argument("--historical-bar-size", default="5 secs")
     parser.add_argument("--historical-live-initial-duration", default="3600 S")
     parser.add_argument("--historical-live-write-lookback-seconds", type=int, default=60)
@@ -75,6 +77,8 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit("--daily-backfill-lookback-days must be non-negative")
     if args.daily_backfill_interval_minutes <= 0:
         raise SystemExit("--daily-backfill-interval-minutes must be positive")
+    if not args.disable_intraday_recovery and (args.historical_bar_size != "5 secs" or args.what_to_show != "TRADES"):
+        raise SystemExit("Automatic recovery supports 5 secs TRADES; disable recovery for a different capture contract")
 
     settings = AppSettings()
     source_policy = load_recorder_source_policy(_resolve_repo_path(args.source_policy))
@@ -91,6 +95,8 @@ def main(argv: list[str] | None = None) -> int:
     last_daily_backfill_at: datetime | None = None
     last_child_status: dict[str, object] | None = None
     last_daily_backfill_status: dict[str, object] | None = None
+    recovery_process = None
+    last_recovery_start = None
     logger.info(
         "recorder_service_started",
         message="Market data recorder service started.",
@@ -109,6 +115,15 @@ def main(argv: list[str] | None = None) -> int:
     try:
         while True:
             now = datetime.now(tz=UTC)
+            if recovery_process is not None and recovery_process.poll() is None and last_recovery_start:
+                if _recovery_worker_stale(state_path, now, last_recovery_start):
+                    _stop_process_tree(recovery_process)
+                    recovery_process.wait(timeout=15)
+            if not args.disable_intraday_recovery and (
+                recovery_process is None or recovery_process.poll() is not None
+            ) and _should_gap_fill(now, last_recovery_start, 1):
+                recovery_process = _start_recovery_worker(args, symbols, state_path)
+                last_recovery_start = now
             session = market_session_state(
                 now,
                 timezone=args.timezone,
@@ -168,45 +183,8 @@ def main(argv: list[str] | None = None) -> int:
                 time.sleep(args.poll_seconds)
                 continue
 
-            # Keep the prospective feed primary. A synchronous historical pull can
-            # take minutes because every raw record is durably written before the
-            # next callback; use it only to recover after a failed stream chunk.
-            if (
-                last_child_status is not None
-                and last_child_status.get("returncode") not in (None, 0)
-                and _should_gap_fill(now, last_gap_fill_at, args.gap_fill_interval_minutes)
-            ):
-                _write_state(
-                    state_path,
-                    running=True,
-                    mode="gap_fill",
-                    message="Market data recorder service running historical gap fill.",
-                    symbols=symbols,
-                    session=session,
-                    last_gap_fill_at=last_gap_fill_at,
-                    last_daily_backfill_at=last_daily_backfill_at,
-                    last_child_status=last_child_status,
-                    last_daily_backfill_status=last_daily_backfill_status,
-                )
-                duration_seconds = max(args.gap_fill_lookback_minutes * 60, int(args.realtime_chunk_seconds))
-                last_child_status = _run_child(
-                    mode="historical-smoke",
-                    symbols=symbols,
-                    market_data_mode=args.market_data_mode,
-                    client_id=args.client_id,
-                    historical_duration=f"{duration_seconds} S",
-                    historical_bar_size=args.historical_bar_size,
-                    historical_end_datetime=ib_end_datetime(now, timezone=args.timezone),
-                    max_bars_per_symbol=args.gap_fill_max_bars_per_symbol,
-                    what_to_show=args.what_to_show,
-                    child_state_path=child_state_path,
-                    child_pid_path=child_pid_path,
-                    logger=logger,
-                )
-                last_gap_fill_at = datetime.now(tz=UTC)
-                # Re-evaluate the session after synchronous historical recovery.
-                continue
-
+            # Historical recovery is a separate, paced process. Never pause the
+            # prospective stream to drain an outage or a bootstrap backlog.
             chunk_seconds = min(args.realtime_chunk_seconds, session.seconds_until_close)
             _write_state(
                 state_path,
@@ -215,7 +193,7 @@ def main(argv: list[str] | None = None) -> int:
                 message=(
                     "Market data recorder service running IB historical live-update 5-second feed."
                     if args.intraday_feed == "historical-live"
-                    else "Market data recorder service running IB delayed trade 5-second feed."
+                    else "Recording incomplete delayed quote samples; IB OHLCV recovery runs separately."
                     if args.intraday_feed == "delayed-trades"
                     else "Market data recorder service running IB realtime 5-second feed."
                 ),
@@ -270,6 +248,8 @@ def main(argv: list[str] | None = None) -> int:
         logger.warning("recorder_service_interrupted", message="Market data recorder service interrupted by operator.")
         return 130
     finally:
+        if recovery_process is not None and recovery_process.poll() is None:
+            _stop_process_tree(recovery_process)
         _remove_pid(pid_path)
         _write_state(
             state_path,
@@ -284,6 +264,46 @@ def main(argv: list[str] | None = None) -> int:
             last_daily_backfill_status=last_daily_backfill_status,
         )
         logger.info("recorder_service_stopped", message="Market data recorder service stopped.")
+
+
+def _start_recovery_worker(args, symbols, state_path):
+    settings = AppSettings()
+    occupied = {value for key, value in settings.model_dump().items() if "client_id" in key and value is not None}
+    occupied.add(args.client_id or settings.ib_market_data_client_id or settings.ib_client_id + 20)
+    if args.recovery_client_id in occupied:
+        raise ValueError("Recovery must use a separate IB client ID from other configured broker clients")
+    command = [sys.executable, str(REPO_ROOT / "scripts/recover_ib_intraday.py"),
+        "--symbols", ",".join(symbols), "--client-id", str(args.recovery_client_id),
+        "--parent-pid", str(os.getpid()),
+        "--checkpoint", str(state_path.with_name("market_data_recorder.recovery.json")),
+        "--state-path", str(state_path.with_name("market_data_recorder.recovery.state.json")),
+        "--pid-path", str(state_path.with_name("market_data_recorder.recovery.pid"))]
+    if args.recovery_start_date:
+        command.extend(["--start-date", args.recovery_start_date])
+    log_path = state_path.with_name("market_data_recorder.recovery.worker.log")
+    with log_path.open("a", encoding="utf8") as output:
+        return subprocess.Popen(command, cwd=REPO_ROOT, stdout=output, stderr=output,
+            creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0, start_new_session=os.name != "nt")
+
+
+def _recovery_worker_stale(state_path, now, started):
+    if (now - started).total_seconds() < 600:
+        return False
+    try:
+        state = json.loads(state_path.with_name("market_data_recorder.recovery.state.json").read_text(encoding="utf8"))
+        heartbeat = datetime.fromisoformat(state["heartbeat_at"])
+        return (now - heartbeat).total_seconds() > 600
+    except (OSError, ValueError, KeyError, TypeError):
+        return True
+
+
+def _stop_process_tree(process):
+    if os.name == "nt":
+        subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"], capture_output=True,
+                       timeout=15, check=True, creationflags=subprocess.CREATE_NO_WINDOW)
+    else:
+        import signal
+        os.killpg(process.pid, signal.SIGKILL)
 
 
 def _run_child(
@@ -429,12 +449,7 @@ def _bounded_child(command, *, timeout_seconds):
         stdout, stderr = process.communicate(timeout=timeout_seconds)
         return subprocess.CompletedProcess(command, process.returncode, stdout, stderr)
     except subprocess.TimeoutExpired:
-        if os.name == "nt":
-            subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"], capture_output=True,
-                           timeout=15, check=True, creationflags=subprocess.CREATE_NO_WINDOW)
-        else:
-            import signal
-            os.killpg(process.pid, signal.SIGKILL)
+        _stop_process_tree(process)
         stdout, stderr = process.communicate(timeout=15)
         return subprocess.CompletedProcess(command, 124, stdout,
             stderr + f"\nAcquisition exceeded {timeout_seconds}s; child stopped and retry scheduled.")
@@ -463,6 +478,12 @@ def _write_state(
         "last_daily_backfill_status": last_daily_backfill_status,
         "intraday_feed": intraday_feed,
     }
+    recovery_path = path.with_name("market_data_recorder.recovery.state.json")
+    if recovery_path.exists():
+        try:
+            details["intraday_recovery"] = json.loads(recovery_path.read_text(encoding="utf8"))
+        except (OSError, ValueError) as exc:
+            details["intraday_recovery"] = {"last_error": str(exc), "running": False}
     if session is not None:
         details.update(
             {

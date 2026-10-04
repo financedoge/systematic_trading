@@ -111,7 +111,7 @@ CHART_NAVIGATION_HTML = r'''
     const times=rows.map(timeOf).filter(Number.isFinite);
     const extent=times.length?[Math.min(...times),Math.max(...times)]:null;
     if(!c)return {rows,range:extent,extent};
-    if(c.key!==options.key){finish(c);c.range=null;c.key=options.key}
+    if(c.key!==options.key){finish(c);c.range=clamp(options.initialRange,extent);c.key=options.key}
     c.extent=extent;c.options=options;c.bounds=bounds;c.redraw=redraw;
     if(Object.hasOwn(options,'range'))c.range=clamp(options.range,extent);else c.range=clamp(c.range,extent);
     controls(c);

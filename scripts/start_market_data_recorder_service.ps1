@@ -5,6 +5,9 @@ param(
     [int]$RecorderGapFillLookbackMinutes = 60,
     [int]$RecorderPollSeconds = 60,
     [int]$RecorderClientId = 121,
+    [int]$RecorderRecoveryClientId = 221,
+    [string]$RecorderRecoveryStartDate = "",
+    [switch]$DisableIntradayRecovery,
     [ValidateSet("delayed-trades", "historical-live", "realtime")]
     [string]$RecorderIntradayFeed = "delayed-trades",
     [ValidateSet("live", "frozen", "delayed", "delayed_frozen")]
@@ -100,6 +103,8 @@ $recorderArgs = @(
     $RecorderIntradayFeed,
     "--client-id",
     [string]$RecorderClientId,
+    "--recovery-client-id",
+    [string]$RecorderRecoveryClientId,
     "--daily-backfill-lookback-days",
     [string]$DailyBackfillLookbackDays,
     "--daily-backfill-interval-minutes",
@@ -117,6 +122,12 @@ $recorderArgs = @(
 )
 if ($DisableDailyBackfill) {
     $recorderArgs += "--disable-daily-backfill"
+}
+if ($DisableIntradayRecovery) {
+    $recorderArgs += "--disable-intraday-recovery"
+}
+if ($RecorderRecoveryStartDate) {
+    $recorderArgs += @("--recovery-start-date", $RecorderRecoveryStartDate)
 }
 $process = Start-Process `
     -FilePath $Python `

@@ -59,6 +59,31 @@ const minuteDraw=()=>minuteView=nav.view('minutes',minutes,p=>p.t,minuteDraw,{le
 const minuteHost=get('minutes');minuteHost.events.pointerdown({clientX:10,clientY:100,button:0,pointerId:2,preventDefault(){}});
 minuteHost.events.pointerup({clientX:110,clientY:100,button:0,pointerId:2,preventDefault(){}});
 assert.equal(minuteView.range[1]-minuteView.range[0],60000);assert.equal(view.range,null);
+// An initial viewport is applied once, and never overrides explicit full-range reset.
+let initialView,initialKey='SPY';
+const initialDraw=()=>initialView=nav.view('initial',minutes,p=>p.t,initialDraw,{left:0,right:100,top:0,bottom:200},{key:initialKey,initialRange:[base+60000,base+120000]});
+initialDraw();assert.equal(initialView.rows.length,2);
+nav.reset('initial');assert.equal(initialView.rows.length,3);
+initialDraw();assert.equal(initialView.rows.length,3);
+initialKey='QQQ';initialDraw();assert.equal(initialView.rows.length,2);
+// Exercise actual Recorded Bars candle geometry with all four independent price fields.
+const candleSource=input.pages[2].match(/function renderGoldenChart[\s\S]*?(?=function renderGoldenTable)/)[0];
+let candleOptions;
+const candleContext=vm.createContext({el:get,isIntraday:()=>true,selectedSymbol:()=> 'SPY',esc:String,number:String,
+  ChartNavigation:{view:(id,rows,time,redraw,bounds,options)=>{candleOptions=options;return {rows,range:[time(rows[0]),time(rows.at(-1))]}}}});
+vm.runInContext(candleSource,candleContext);
+const candleRows=Array.from({length:121},(_,i)=>({exchange_timestamp:new Date(base+i*5000).toISOString(),trade_date:'test '+i,bar_size_seconds:5,open:100,high:103,low:99,close:i%2?101:100,volume:1000}));
+candleContext.renderGoldenChart(candleRows);
+const candleSvg=get('golden-chart').innerHTML;
+assert.equal((candleSvg.match(/class="wick /g)||[]).length,121);
+assert.match(candleSvg,/body up/);assert.match(candleSvg,/body flat/);
+assert.doesNotMatch(candleSvg,/close-line|NaN|Infinity/);
+const wick=candleSvg.match(/class="wick flat"[^>]+y1="([\d.]+)" y2="([\d.]+)"/);
+assert(Number(wick[1])<Number(wick[2]));
+assert.deepEqual(Array.from(candleOptions.initialRange),[base+5000,base+120*5000]);
+assert.match(input.pages[2],/value="historical_backfill" selected>IB historical OHLCV/);
+vm.runInContext(input.pages[2].match(/function fmtCompactDateTime[\s\S]*?(?=function parseIsoDate)/)[0],candleContext);
+assert.equal(candleContext.fmtCompactDateTime('2026-10-03T03:55:00+08:00'),'2026-10-02 19:55:00');
 // Exercise the actual archived chart adapter. Its denominator stays at the full-series origin.
 const archived=input.pages[1].match(/function chartSvg[\s\S]*?(?=function comparisonTable)/)[0];
 let selectedRange=[base+day,base+2*day];

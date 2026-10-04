@@ -754,7 +754,6 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
     .wick.down, .body.down { stroke: var(--bad); fill: var(--bad); }
     .wick.flat, .body.flat { stroke: #5b6472; fill: #5b6472; }
     .volume-bar { fill: var(--volume); opacity: .48; }
-    .close-line { stroke: var(--focus); stroke-width: 1.2; fill: none; opacity: .78; }
     .table-wrap {
       max-height: 560px;
       overflow: auto;
@@ -835,9 +834,9 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       <label>Symbol<select id="golden-symbol" class="symbol" aria-label="Symbol"></select></label>
       <label class="daily-control">Start<input id="start-date" type="date"></label>
       <label class="daily-control">End<input id="end-date" type="date"></label>
-      <label class="intraday-control">Start Session<input id="intraday-start-date" type="date"></label>
-      <label class="intraday-control">End Session<input id="intraday-end-date" type="date"></label>
-      <label class="intraday-control">Capture<select id="intraday-capture-mode"><option value="stream" selected>stream</option><option value="">all</option><option value="historical_backfill">historical backfill</option></select></label>
+      <label class="intraday-control">Captured From<input id="intraday-start-date" type="date"></label>
+      <label class="intraday-control">Captured Through<input id="intraday-end-date" type="date"></label>
+      <label class="intraday-control">Capture<select id="intraday-capture-mode"><option value="historical_backfill" selected>IB historical OHLCV</option><option value="stream">IB streaming OHLCV</option><option value="">All IB OHLCV</option></select></label>
       <label class="intraday-control">Bar Size<input id="intraday-bar-size" class="small" type="number" min="1" value="5"></label>
       <label>Limit<input id="golden-limit" class="small" type="number" min="1" max="50000" value="5000"></label>
       <div id="daily-range-controls" class="range-buttons daily-control" aria-label="Date range controls">
@@ -862,6 +861,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       <button id="refresh-btn" type="button">Refresh</button>
       <span id="status" class="status-line">Loading</span>
     </form>
+    <p id="intraday-source-note" class="intraday-control muted">Candles use IB OHLCV bars. Incomplete delayed quote samples are retained in Raw Evidence only. Capture dates can contain older recovered sessions; the chart uses exchange timestamps (UTC).</p>
     <section class="summary" aria-label="Market-data summary">
       <div class="metric"><label>Bars</label><strong id="metric-bars">0</strong></div>
       <div class="metric"><label>Range</label><strong id="metric-range">n/a</strong></div>
@@ -939,13 +939,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       if (!value) return "n/a";
       const parsed = new Date(value);
       if (Number.isNaN(parsed.getTime())) return String(value);
-      return parsed.toLocaleString(undefined, {
-        month: "short",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      });
+      return parsed.toISOString().slice(0, 19).replace("T", " ");
     }
 
     function parseIsoDate(value) {
@@ -1184,7 +1178,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
     }
 
     function intradayParams() {
-      const params = new URLSearchParams({ source: "interactive-brokers", data_kind: "bar" });
+      const params = new URLSearchParams({ source: "interactive-brokers", data_kind: "bar", bar_origin: "ib_ohlcv" });
       const symbol = selectedSymbol();
       if (symbol) params.set("symbol", symbol);
       if (el("intraday-start-date").value) params.set("recorder_start_date", el("intraday-start-date").value);
@@ -1223,20 +1217,21 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
           ...bar,
           trade_date: fmtCompactDateTime(timestamp),
           adjustment: `${bar.capture_mode || "unknown"} | ${bar.bar_size_seconds || "?"}s`,
-          source_name: `${row.source_name || "interactive-brokers"} | ${bar.market_data_mode || "unknown"}`,
+          source_name: bar.capture_mode === "historical_backfill" ? "IB historical OHLCV"
+            : `${row.source_name || "interactive-brokers"} | ${bar.market_data_mode || "unknown"}`,
           available_at: bar.received_at,
           payload_hash: row.payload_hash || bar.raw_event_id,
           raw_ref: row.raw_ref || "",
         };
       });
-      const modes = [...new Set(uniqueBars.map((bar) => bar.market_data_mode).filter(Boolean))];
+      const sources = [...new Set(bars.map((bar) => bar.source_name))];
       renderGolden({
         summary: {
           symbol: summary.symbol || symbol,
           rows_returned: bars.length,
           first_trade_date: fmtCompactDateTime(summary.first_exchange_timestamp),
           last_trade_date: fmtCompactDateTime(summary.last_exchange_timestamp),
-          source_names: modes.map((mode) => `IB ${mode}`),
+          source_names: sources,
         },
         bars,
       });
@@ -1246,10 +1241,11 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       el("raw-recorder-date").value = exactDate;
       el("raw-bar-size").value = el("intraday-bar-size").value;
       const sessions = selectedRecorderSessionCount();
-      el("chart-meta").textContent = `${symbol} | ${bars.length} bars | ${sessions} recorded session${sessions === 1 ? "" : "s"} | ${intradayRangeLabel()}`;
+      el("chart-meta").textContent = `${symbol} | ${bars.length} IB OHLCV bars | ${sessions} capture day${sessions === 1 ? "" : "s"} | ${intradayRangeLabel()}`;
+      el("intraday-source-note").textContent = `Candles use IB OHLCV bars. ${summary.sampled_quote_records_excluded || 0} incomplete delayed quote samples excluded by these filters; inspect samples in Raw Evidence. Capture dates can contain older recovered sessions. Chart times are UTC; initially showing the latest 120 loaded bars, with Full loaded range available.`;
       renderRaw(data);
       el("raw-status").textContent = "Loaded";
-      el("status").textContent = modes.length ? `Loaded | ${modes.join(", ")}` : "Loaded";
+      el("status").textContent = bars.length ? "Loaded IB OHLCV" : "No IB OHLCV bars";
     }
 
     async function loadActive() {
@@ -1281,12 +1277,14 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
     }
 
     function renderGoldenChart(allBars) {
+      const initialRange = isIntraday() && allBars.length > 120
+        ? [Date.parse(allBars[allBars.length - 120].exchange_timestamp), Date.parse(allBars[allBars.length - 1].exchange_timestamp)] : null;
       const view = ChartNavigation.view('golden-chart', allBars, b=>Date.parse(b.exchange_timestamp||b.trade_date),
         ()=>renderGoldenChart(allBars), {left:62,right:922,top:18,bottom:404},
-        {key:selectedSymbol()+'|'+el('store').value+'|'+(isIntraday()?el('intraday-start-date').value+'|'+el('intraday-end-date').value:el('start-date').value+'|'+el('end-date').value),intraday:isIntraday(),resetLabel:'Full loaded range',scope:'Recorded bars · loaded range'});
+        {key:selectedSymbol()+'|'+el('store').value+'|'+(isIntraday()?el('intraday-start-date').value+'|'+el('intraday-end-date').value+'|'+el('intraday-capture-mode').value:el('start-date').value+'|'+el('end-date').value),initialRange,intraday:isIntraday(),resetLabel:'Full loaded range',scope:'Recorded bars · loaded range'});
       const bars = view.rows;
       if (!bars.length) {
-        el("golden-chart").innerHTML = `<div class="empty">No ${isIntraday() ? "intraday" : "daily"} bars</div>`;
+        el("golden-chart").innerHTML = `<div class="empty">${isIntraday() ? "No IB OHLCV bars in this selection. Delayed quote samples are not complete bars; inspect Raw Evidence or select IB historical OHLCV while recovery progresses." : "No daily bars"}</div>`;
         return;
       }
       const width = 940;
@@ -1306,7 +1304,8 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       const maxVolume = Math.max(...volumes, 1);
       const x = index => pad.left + (view.range[0]===view.range[1] ? plotW/2 : (Date.parse(bars[index].exchange_timestamp||bars[index].trade_date)-view.range[0])/(view.range[1]-view.range[0])*plotW);
       const y = (value) => priceTop + ((max - value) / span) * priceH;
-      const candleW = Math.max(1, Math.min(12, plotW / Math.max(bars.length, 1) * 0.58));
+      const interval = isIntraday() ? Number(bars[0].bar_size_seconds || 5) * 1000 : 86400000;
+      const candleW = Math.max(1, Math.min(12, plotW * interval / Math.max(view.range[1] - view.range[0], interval) * 0.58));
       const grid = [0, 0.25, 0.5, 0.75, 1].map((ratio) => {
         const gy = priceTop + ratio * priceH;
         const price = max - ratio * span;
@@ -1336,7 +1335,6 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
           <title>${esc(bar.trade_date)} O ${esc(bar.open)} H ${esc(bar.high)} L ${esc(bar.low)} C ${esc(bar.close)} V ${esc(bar.volume)}</title>
         </g>`;
       }).join("");
-      const closeLine = bars.map((bar, index) => `${index === 0 ? "M" : "L"} ${x(index).toFixed(1)} ${y(Number(bar.close)).toFixed(1)}`).join(" ");
       const first = bars[0]?.trade_date;
       const last = bars[bars.length - 1]?.trade_date;
       el("golden-chart").innerHTML = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Market data OHLCV chart">
@@ -1346,7 +1344,6 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
         <line class="axis" x1="${pad.left}" x2="${width - pad.right}" y1="${volumeTop + volumeH}" y2="${volumeTop + volumeH}"></line>
         <text class="axis-label" x="7" y="${volumeTop + 12}">Vol</text>
         ${volumeBars}
-        <path class="close-line" d="${closeLine}"></path>
         ${candles}
         <text class="axis-label" x="${pad.left}" y="${height - 14}">${esc(first)}</text>
         <text class="axis-label" text-anchor="end" x="${width - pad.right}" y="${height - 14}">${esc(last)}</text>
@@ -1440,7 +1437,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
               const dupe = row.duplicate_raw_event_id ? ' <span class="warn">duplicate id</span>' : "";
               return `<tr>
                 <td>${esc(fmtDateTime(row.exchange_timestamp || row.received_at))}</td>
-                <td>${esc(row.symbol || "")}<br><span class="muted">${esc(row.capture_mode)}</span></td>${AssetNames.cell(row.symbol)}
+                <td>${esc(row.symbol || "")}<br><span class="muted">${esc(row.observation_kind === "sampled_quotes" ? "Incomplete quote sample" : row.capture_mode)}</span></td>${AssetNames.cell(row.symbol)}
                 <td>${esc(ohlc)}${flags}${dupe}</td>
                 <td class="numeric">${esc(number(payload.volume, 0))}</td>
                 <td class="${row.hash_ok ? "ok" : "bad"}">${row.hash_ok ? "ok" : "bad"}</td>

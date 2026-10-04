@@ -10,6 +10,12 @@ See [Trading allocations](trading-allocations.md) for contracts and limitations.
 
 ## Shared application contracts
 
+Intraday acquisition has a separate app-owned recovery worker with a durable
+per-window ledger, raw-first writes, transactional outbox batches and bounded
+IB pacing. It runs alongside streaming and resumes six-month 5-second history
+after outages, including closed-market days. Recovery has no order authority;
+its observations remain unapproved raw evidence. See [intraday recovery](intraday-recovery.md).
+
 The [connection repair record](app-connection-repairs-2026-09-28.md) documents the portfolio, data and recovery boundaries. `portfolio/context.py` resolves the monitoring episode independently of accounting compaction. `portfolio/targets.py` selects approved deployed targets; `portfolio/valuation.py` applies observed mark/FX freshness; `portfolio/revision.py` invalidates derived EOD results. Paired actual/reference checkpoints and dated executions support replay without future-baseline leakage. Broker capture time cannot be reassigned to a historical session.
 
 Production decisions and strategy tracking consume hash-pinned published governed inputs. The application-owned `research/governed_refresh.py` producer audits and verifies a complete supported ETF batch before publishing its catalog pointer. Research and operations projections run independently and expose their errors/freshness. The economic cash ledger bridges NAV to security P&L, flows, income, costs and cash FX; unresolved differences remain visible and suppress reconciled flow-adjusted returns.

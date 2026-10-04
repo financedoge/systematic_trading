@@ -706,6 +706,15 @@ class PostgresStore(StrategyControlStore):
             raise RuntimeError(f"failed to append platform event {event.event_id}")
         return record
 
+    def append_platform_events(self, events: list[AnyPlatformEvent]) -> None:
+        """Atomically append a bounded raw-first acquisition batch, idempotently."""
+        if not events:
+            return
+        now = datetime.now(tz=UTC)
+        with self._connect() as connection:
+            for event in events:
+                _insert_platform_event(connection, event, created_at=now)
+
     def get_platform_event_outbox_record(self, event_id: str) -> PlatformEventOutboxRecord | None:
         with self._connect() as connection:
             row = connection.execute(

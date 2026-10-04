@@ -4,7 +4,7 @@ from collections import Counter
 from datetime import date, datetime
 from decimal import Decimal
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from fastapi import APIRouter, HTTPException, Query, Request
 from pydantic import BaseModel, Field
@@ -63,6 +63,7 @@ class MarketDataAuditRow(BaseModel):
     quality_flags: list[str] = Field(default_factory=list)
     payload: dict[str, Any] = Field(default_factory=dict)
     error: str | None = None
+    observation_kind: str | None = None
 
 
 class MarketDataAuditSummary(BaseModel):
@@ -81,6 +82,8 @@ class MarketDataAuditSummary(BaseModel):
     duplicate_raw_refs: int
     duplicate_raw_event_ids: int
     payload_hash_mismatches: int
+    sampled_quote_records: int = 0
+    sampled_quote_records_excluded: int = 0
     first_exchange_timestamp: datetime | None = None
     last_exchange_timestamp: datetime | None = None
     quality_flag_counts: dict[str, int] = Field(default_factory=dict)
@@ -225,6 +228,7 @@ def market_data_audit_symbols(
         environment=environment,
         data_kind=data_kind,
         day=recorder_date,
+        start_date=recorder_start_date, end_date=recorder_end_date, summarize=True,
     )
     entries = [
         entry
@@ -262,11 +266,31 @@ def market_data_audit(
     recorder_end_date: date | None = Query(default=None),
     capture_mode: str | None = Query(default=None),
     bar_size_seconds: int | None = Query(default=None, ge=1),
+    bar_origin: Literal["ib_ohlcv", "sampled_quotes"] | None = Query(default=None),
     limit: int = Query(default=500, ge=1, le=5000),
 ) -> MarketDataAuditResponse:
     _validate_recorder_range(recorder_start_date, recorder_end_date)
     settings = request.app.state.settings
     storage_policy = _load_storage_policy(settings.market_data_storage_policy_path)
+    sampled_excluded = 0
+    def matching_kind(entry):
+        nonlocal sampled_excluded
+        if capture_mode is not None and entry.capture_mode != capture_mode:
+            return False
+        if bar_size_seconds is not None:
+            size = entry.bar_size_seconds
+            if size is None:  # Older manifests predate the size index.
+                envelope, _ = _read_envelope(entry)
+                size = _int_or_none(envelope.payload.get("bar_size_seconds")) if envelope else None
+            if size != bar_size_seconds:
+                return False
+        sampled = _is_sampled_quote(entry.quality_flags)
+        if bar_origin == "ib_ohlcv" and sampled:
+            sampled_excluded += 1
+            return False
+        if bar_origin == "sampled_quotes" and not sampled:
+            return False
+        return True
     catalog_result = query_raw_catalog(
         storage_policy.hot_spool_root,
         source=source,
@@ -274,6 +298,8 @@ def market_data_audit(
         data_kind=data_kind,
         symbol=symbol,
         day=recorder_date,
+        start_date=recorder_start_date, end_date=recorder_end_date,
+        limit=limit, entry_filter=matching_kind,
     )
     matching_entries = [
         entry
@@ -287,6 +313,7 @@ def market_data_audit(
     errors = list(catalog_result.errors)
     rows: list[MarketDataAuditRow] = []
     bars: list[MarketDataAuditBar] = []
+    sampled_records = 0
     first_exchange_timestamp: datetime | None = None
     last_exchange_timestamp: datetime | None = None
 
@@ -313,6 +340,8 @@ def market_data_audit(
         if read_error is not None:
             errors.append(read_error)
         quality_flags = list(envelope.quality_flags if envelope is not None else entry.quality_flags)
+        sampled = _is_sampled_quote(quality_flags)
+        sampled_records += sampled
         for flag in quality_flags:
             quality_counts[flag] += 1
         timestamp = envelope.exchange_timestamp if envelope is not None else entry.exchange_timestamp
@@ -344,6 +373,7 @@ def market_data_audit(
             quality_flags=quality_flags,
             payload=payload,
             error=read_error,
+            observation_kind="sampled_quotes" if sampled else "ib_ohlcv" if entry.data_kind == "bar" else entry.data_kind,
         )
         rows.append(row)
         if entry.data_kind == "bar" and envelope is not None:
@@ -363,13 +393,15 @@ def market_data_audit(
             recorder_date=recorder_date,
             recorder_start_date=recorder_start_date,
             recorder_end_date=recorder_end_date,
-            entry_count=len(matching_entries),
+            entry_count=catalog_result.matched_entries,
             rows_returned=len(rows),
             records_read=catalog_result.records_read,
             records_invalid=catalog_result.records_invalid,
             duplicate_raw_refs=catalog_result.duplicate_raw_refs,
             duplicate_raw_event_ids=duplicate_event_ids,
             payload_hash_mismatches=hash_mismatches,
+            sampled_quote_records=sampled_records,
+            sampled_quote_records_excluded=sampled_excluded,
             first_exchange_timestamp=first_exchange_timestamp,
             last_exchange_timestamp=last_exchange_timestamp,
             quality_flag_counts=dict(quality_counts),
@@ -426,7 +458,14 @@ def _read_envelope(entry: RawCatalogEntry) -> tuple[RawMarketDataEnvelope | None
         return None, f"{entry.raw_ref}: {exc}"
 
 
+def _is_sampled_quote(flags: list[str]) -> bool:
+    # Recognize legacy records without rewriting their hashed raw evidence.
+    return bool({"ib_delayed_trade_aggregate", "ib_sampled_quotes_incomplete_ohlcv"}.intersection(flags))
+
+
 def _bar_from_envelope(envelope: RawMarketDataEnvelope) -> MarketDataAuditBar | None:
+    if _is_sampled_quote(envelope.quality_flags):
+        return None  # Inspectable raw evidence, not complete interval OHLCV.
     payload = envelope.payload
     try:
         return MarketDataAuditBar(

@@ -383,6 +383,7 @@ class IbApiMarketDataRecorderClient:
                     app.errors.append(message)
                     app.request_errors[request_id] = message
                     recorder.note_error("historical_timeout", message)
+                    app.cancelled_request_ids.add(request_id)
                     try:
                         app.cancelHistoricalData(request_id)
                     except Exception:  # pragma: no cover - defensive IB cleanup
@@ -414,7 +415,8 @@ class IbApiMarketDataRecorderClient:
         started_at = time.monotonic()
         while not app.done_events[request_id].wait(self.sleep_seconds):
             last_activity = app.last_activity_monotonic_by_request.get(request_id, started_at)
-            if time.monotonic() - last_activity >= self.historical_timeout_seconds:
+            if (time.monotonic() - last_activity >= self.historical_timeout_seconds
+                    or time.monotonic() - started_at >= max(120, self.historical_timeout_seconds)):
                 return False
         return True
 
@@ -511,6 +513,8 @@ class IbApiMarketDataRecorderClient:
                     recorder.note_error("record_bar", message)
 
             def historicalData(self, reqId: int, bar: object) -> None:  # noqa: N802
+                if reqId in self.cancelled_request_ids:
+                    return
                 self.last_activity_monotonic_by_request[reqId] = time.monotonic()
                 if reqId in self.historical_live_requests:
                     max_bars = self.historical_initial_max_bars_by_request.get(reqId, 13)
@@ -654,7 +658,8 @@ class IbApiMarketDataRecorderClient:
                             wap=bar.wap,
                             count=bar.count,
                             bar_size_seconds=5,
-                            quality_flags=["ib_delayed_trade_aggregate", *self.request_quality_flags.get(reqId, [])],
+                            quality_flags=["ib_delayed_trade_aggregate", "ib_sampled_quotes_incomplete_ohlcv",
+                                           *self.request_quality_flags.get(reqId, [])],
                         )
                     )
                     self.bars_seen += 1
@@ -690,12 +695,11 @@ class IbApiMarketDataRecorderClient:
                         str(getattr(bar, "low", "0")),
                         str(getattr(bar, "close", "0")),
                         str(getattr(bar, "volume", "0")),
-                        str(getattr(bar, "average", "0")),
+                        str(getattr(bar, "wap", getattr(bar, "average", "0"))),
                         str(getattr(bar, "barCount", "0")),
                     )
                     if fingerprint in self.recorded_bar_fingerprints:
                         return
-                    self.recorded_bar_fingerprints.add(fingerprint)
                     recorder.record_bar(
                         CapturedMarketDataBar(
                             environment=profile.environment,
@@ -710,19 +714,22 @@ class IbApiMarketDataRecorderClient:
                             low=Decimal(str(getattr(bar, "low", "0"))),
                             close=Decimal(str(getattr(bar, "close", "0"))),
                             volume=int(Decimal(str(getattr(bar, "volume", "0") or "0"))),
-                            wap=Decimal(str(getattr(bar, "average", "0") or "0")) or None,
+                            wap=Decimal(str(getattr(bar, "wap", getattr(bar, "average", "0")) or "0")) or None,
                             count=int(Decimal(str(getattr(bar, "barCount", "0") or "0"))),
                             bar_size_seconds=self.bar_size_seconds_by_request.get(reqId)
                             or _bar_size_to_seconds(str(getattr(bar, "barSize", "") or "")),
                             quality_flags=[*(quality_flags or []), *self.request_quality_flags.get(reqId, [])],
                         )
                     )
+                    self.recorded_bar_fingerprints.add(fingerprint)
                     self.bars_seen += 1
                     self.bars_by_request[reqId] = seen + 1
                     self.bars_by_symbol[symbol] = self.bars_by_symbol.get(symbol, 0) + 1
                 except Exception as exc:  # pragma: no cover - defensive callback isolation
                     message = f"{reqId}:historicalData:{type(exc).__name__}: {exc}"
                     self.errors.append(message)
+                    self.request_errors[reqId] = message
+                    self.done_events.setdefault(reqId, Event()).set()
                     recorder.note_error("historicalData", message)
 
             def historicalDataEnd(self, reqId: int, start: str, end: str) -> None:  # noqa: N802
@@ -745,6 +752,13 @@ class IbApiMarketDataRecorderClient:
                 message = f"{reqId}:{errorCode}:{errorString}"
                 self.errors.append(message)
                 if errorCode == 10167:
+                    return
+                if reqId >= 0 and errorCode == 2188:
+                    # HMDS still supplies older bars/ticks after this freshness
+                    # warning. Only historicalDataEnd establishes completion.
+                    flags = self.request_quality_flags.setdefault(reqId, [])
+                    if "ib_historical_freshness_subscription_limited" not in flags:
+                        flags.append("ib_historical_freshness_subscription_limited")
                     return
                 recorder.note_error(errorCode, errorString)
                 if reqId >= 0 and errorCode == 2176:

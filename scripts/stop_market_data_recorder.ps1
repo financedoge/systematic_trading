@@ -63,6 +63,17 @@ function Write-StoppedState {
 }
 
 function Stop-RecorderChild {
+    $recoveryPidPath = Join-Path $RepoRoot "var\run\market_data_recorder.recovery.pid"
+    if (Test-Path $recoveryPidPath) {
+        $recoveryPidText = (Get-Content -LiteralPath $recoveryPidPath -Raw).Trim()
+        if ($recoveryPidText) {
+            $recoveryProcess = Get-CimInstance Win32_Process -Filter "ProcessId = $recoveryPidText" -ErrorAction SilentlyContinue
+            if ($recoveryProcess -and $recoveryProcess.CommandLine -like "*recover_ib_intraday.py*") {
+                Stop-Process -Id ([int]$recoveryPidText) -Force -ErrorAction Stop
+            }
+        }
+        Remove-Item -LiteralPath $recoveryPidPath -Force -ErrorAction SilentlyContinue
+    }
     if (-not (Test-Path $ChildPidPath)) {
         return
     }

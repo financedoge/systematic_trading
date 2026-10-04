@@ -283,6 +283,40 @@ def _write_storage_policy(tmp_path, hot_root):
     return policy_path
 
 
+def test_sampled_quotes_are_raw_evidence_only_and_do_not_hide_broker_bars(tmp_path):
+    hot_root = tmp_path / "hot"
+    recorder = MarketDataRecorder(
+        writer=RawMarketDataWriter(hot_root, part_id="sources", fsync=False),
+        catalog=RawDataCatalog(hot_root, fsync=False),
+        state_path=tmp_path / "recorder.json",
+    )
+    # A genuine flat IB bar remains a candle; provenance, not equality, matters.
+    genuine = _bar(datetime(2026, 7, 10, 19, 30, tzinfo=UTC), "512.34").model_copy(update={
+        "open": Decimal("512.34"), "high": Decimal("512.34"), "low": Decimal("512.34"),
+        "volume": 0, "count": 0,
+    })
+    recorder.record_bar(genuine)
+    for second, flags in [(5, ["ib_delayed_trade_aggregate"]), (10, ["ib_sampled_quotes_incomplete_ohlcv"])]:
+        recorder.record_bar(_bar(datetime(2026, 7, 10, 19, 30, second, tzinfo=UTC), "512.56").model_copy(update={
+            "quality_flags": flags,
+            "received_at": datetime(2026, 7, 11, 3, 30, second + 10, tzinfo=UTC),
+        }))
+    settings = AppSettings(database_path=tmp_path / "platform.db", data_dir=tmp_path,
+                          market_data_storage_policy_path=_write_storage_policy(tmp_path, hot_root))
+    with TestClient(create_app(settings)) as client:
+        all_data = client.get("/api/v1/market-data/audit", params={"symbol": "SPY"}).json()
+        filtered = client.get("/api/v1/market-data/audit", params={"symbol": "SPY", "bar_origin": "ib_ohlcv", "limit": 1}).json()
+        samples = client.get("/api/v1/market-data/audit", params={"symbol": "SPY", "bar_origin": "sampled_quotes"}).json()
+    assert len(all_data["rows"]) == 3 and len(all_data["bars"]) == 1
+    assert all(row["hash_ok"] for row in all_data["rows"])
+    assert all_data["summary"]["sampled_quote_records"] == 2
+    assert filtered["bars"][0]["volume"] == 0
+    assert filtered["summary"]["sampled_quote_records_excluded"] == 2
+    assert len(filtered["rows"]) == 1  # Filter before the bounded latest-row selection.
+    assert not samples["bars"] and len(samples["rows"]) == 2
+    assert all(row["observation_kind"] == "sampled_quotes" for row in samples["rows"])
+
+
 def _bar(
     exchange_timestamp: datetime,
     close: str,
