@@ -158,6 +158,12 @@ class ProposalApprovalSubmissionResult(BaseModel):
 
 
 class DashboardSeriesPoint(BaseModel):
+    switch_anchor: bool = False
+    is_theoretical: bool = False
+    break_before: bool = False
+    return_break: bool = False
+    period_start: str | None = None
+    period_growth: Decimal | None = None
     allocation_version: str = "legacy"
     allocation_label: str = "Legacy / unverified strategy assignment"
     trade_date: date
@@ -166,6 +172,12 @@ class DashboardSeriesPoint(BaseModel):
 
 
 class DashboardPerformance(BaseModel):
+    spot_basis: dict = Field(default_factory=dict)
+    theoretical_contract: str | None = None
+    theoretical_base_nav_cnh: Decimal | None = None
+    theoretical_periods: list[dict] = Field(default_factory=list)
+    theoretical_sources: dict = Field(default_factory=dict)
+    strategy_actual_rebased: list[DashboardSeriesPoint] = Field(default_factory=list)
     allocation_timeline: list[dict] = Field(default_factory=list)
     allocation_revision: str | None = None
     comparison_label: str = "Standalone strategy comparison"
@@ -590,15 +602,23 @@ def dashboard_performance(request: Request) -> DashboardPerformance:
     account_raw, reset_at, tracking_start = _account_nav_points(settings, store, warnings)
     allocation = getattr(request.app.state, 'allocation_analytics', {})
     from systematic_trading.portfolio.allocation_analytics import period_for
+    if strategy_analytics:
+        from systematic_trading.portfolio.allocation_performance import comparison_timeline
+        allocation = dict(allocation, timeline=comparison_timeline(store, allocation.get('timeline', []), account_raw))
+    comparison = {}
     if allocation.get('timeline'):
-        strategy_raw = [(date.fromisoformat(r['trade_date']), Decimal(r['nav_cnh'])) for r in allocation['reference']]
-        strategy_base_date = strategy_raw[-1][0] if strategy_raw else None
+        from systematic_trading.portfolio.allocation_performance import build_strategy_comparison
+        comparison = build_strategy_comparison(allocation['timeline'], strategy_analytics, account_raw)
+        strategy_raw = []
+        strategy_base_date = date.fromisoformat(comparison['strategy'][-1]['trade_date']) if comparison['strategy'] else None
+        warnings.extend(comparison['warnings'])
         warnings.extend(allocation['warnings'])
     else:
         warnings.append('The strategy curve is a standalone comparison. Historical account strategy assignments are not inferred from the current SOTA.')
-    strategy_series = _indexed_series(strategy_raw)
+    strategy_series = ([DashboardSeriesPoint.model_validate(r) for r in comparison['strategy']]
+                       if comparison else _indexed_series(strategy_raw))
     account_series = _indexed_series(account_raw)
-    for point in [*strategy_series, *account_series]:
+    for point in account_series + ([] if comparison else strategy_series):
         period = period_for(allocation.get('timeline', []), point.trade_date)
         point.allocation_version, point.allocation_label = period['version'], period['label']
     strategy_by_date = {point.trade_date: point for point in strategy_series}
@@ -606,8 +626,13 @@ def dashboard_performance(request: Request) -> DashboardPerformance:
                    and point.trade_date >= tracking_start and point.trade_date in strategy_by_date), None)
     latest_market_data_date = _latest_market_data_date(store)
     return DashboardPerformance(
+        theoretical_contract=comparison.get('contract'),
+        theoretical_base_nav_cnh=comparison.get('base_nav_cnh'),
+        theoretical_periods=comparison.get('periods', []),
+        theoretical_sources=comparison.get('sources', {}),
+        strategy_actual_rebased=comparison.get('actual_rebased', []),
         allocation_timeline=allocation.get('timeline', []), allocation_revision=allocation.get('revision'),
-        comparison_label=allocation['reference_label'] if allocation.get('timeline') else 'Standalone strategy comparison - '+definition.name,
+        comparison_label='Allocation theoretical · published strategy NAVs' if comparison else 'Standalone strategy comparison - '+definition.name,
         portfolio_context=portfolio_context(store).model_dump(mode="json"),
         strategy_name="Trading allocation history" if allocation.get("timeline") else definition.name,
         strategy_source="allocation-history" if allocation.get("timeline") else ("strategy-serving/"+definition.key if published_strategy else str(strategy_path) if strategy_path.exists() else None),
@@ -622,7 +647,7 @@ def dashboard_performance(request: Request) -> DashboardPerformance:
         account_alignment_strategy_index=strategy_by_date[anchor.trade_date].index if anchor else None,
         latest_strategy_nav_cnh=strategy_series[-1].nav_cnh if strategy_series else None,
         latest_account_nav_cnh=account_series[-1].nav_cnh if account_series else None,
-        strategy_total_return=_series_return(strategy_series),
+        strategy_total_return=Decimal(0) if comparison and len(strategy_series) == 1 else _series_return(strategy_series),
         account_total_return=_series_return(account_series),
         strategy=strategy_series,
         account=account_series,
@@ -837,7 +862,10 @@ def _reconciliation_break_signature(report: IBPaperReconciliationReport | None) 
 @router.get("/dashboard/pnl/live")
 async def dashboard_live_pnl(request: Request):
     """Read the cached broker stream without connecting per HTTP request."""
-    return request.app.state.broker_pnl.snapshot()
+    from systematic_trading.research.spot_performance import mark_spot_performance
+    service = getattr(request.app.state, 'analytics_service', None)
+    return mark_spot_performance(request.app.state.broker_pnl.snapshot(),
+        service.performance_payload() if service else None)
 
 
 @router.get("/dashboard/pnl", response_model=PnLSnapshot)

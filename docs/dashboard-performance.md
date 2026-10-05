@@ -1,5 +1,86 @@
 # Dashboard performance
 
+## Allocation theoretical comparison (2026-10-05)
+
+Recorded trading allocation periods now compare actual account P&L with the
+capital-weighted NAVs calculated by the app's strategy service. Each strategy's
+switch-close NAV buys a fixed number of virtual units; the outgoing allocation
+earns the return through that close and the new allocation earns later returns.
+For weights `w`, period growth is `1 - sum(w) + sum(w * NAV(date) / NAV(switch))`.
+Capital weights drift until the next allocation switch; residual capital is flat
+CNH cash. Strategy NAV already includes its own scheduled rebalances and modeled
+costs. This comparison does not add handover costs or model the execution book's
+monthly capital resets. It is separate from the holdings/reference-fill ledger.
+
+The **Rebase at allocation switches** selector has two modes:
+
+- **Theoretical value · continuous** carries the previous period's theoretical
+  closing value into the next allocation. The first period starts at actual capital.
+- **Actual portfolio value · each switch** starts each period at that switch's
+  observed account value (or its recorded opening valuation). A line break marks
+  the reset. Rescaling is excluded from Strategy Return and return statistics.
+
+Both lines use the same CNH P&L scale and original starting capital, fixed during
+zooming. The allocation-period table shows matched-date actual NAV changes,
+strategy returns and period P&L. Actual NAV changes still include external flows.
+An opening-only period reports 0% with an explicit pending-first-session note;
+volatility and risk ratios remain unavailable until sufficient observations exist.
+
+Only app-calculated strategy documents with audited batch/file lineage are used.
+The dashboard publication pins the strategy publication version, document hashes
+and original input provenance. Missing components or exact switch-close NAVs stay
+unavailable; missing sessions stop a period, with no price fallback or interpolation.
+Missing handovers stop continuous compounding, while a later fully supported
+actual-rebased period can restart independently. Historical FX and publication
+availability limitations remain visible. Earlier unverified allocation history
+is not reconstructed from today's SOTA.
+
+## Reset history and intraday endpoints (2026-10-05 follow-up)
+
+Cumulative theoretical and account NAVs start at the confirmed P&L reset opening.
+An allocation switch never resets the headline cumulative return. The display-only
+legacy timeline uses registered strategy identity in retained executed proposals,
+with account-scoped fill evidence; pending proposals and today's SOTA cannot assign
+past history. Daily comparisons use the close before first execution and disclose
+that intraday switch timing and handover costs are approximated. If a reset occurs
+after an explicit allocation activation, its opening clips that active period.
+Unknown history remains unavailable rather than assigned retrospectively.
+
+The original pre-USD SOTA has a full app-calculated NAV as the exact named parent
+benchmark in its monitored USD report. This source is pinned by calculation
+publication, report/lineage document hashes, and audited input provenance. It is
+not a provider archive or a manually rerun study. The confirmed reset opening is the shared 0% starting point. The recovered pre-switch daily path carries into the later explicit allocation handover.
+
+The two-second broker P&L refresh supplies an optional **provisional** current-day
+endpoint. The background analytics worker prepares verified prior-close raw prices,
+held strategy weights (not latest signal targets), drifted capital shares, dated FX,
+and the latest observed account holdings/cash. The HTTP request only reads caches. Startup warms this cache from a validated publication before the slower capture import, then republishes after that import.
+A spot mark is IB position market value / quantity. Holding Daily % is that mark /
+previous audited raw close - 1, in contract currency; it is not daily P&L divided
+by position value and excludes dividends. Stale callbacks retain their stale label.
+
+Strategy spot growth is the capital-weighted change in its published held assets;
+CNH reserve and FX are fixed at the prior close. The account endpoint revalues its
+captured cash plus holdings with the same dated FX and current broker marks. A
+lightweight application worker checks the latest app-written broker snapshot every
+five seconds, retaining its document hash and capture time independently of the
+slower historical import. This reads observed holdings/cash only, not price archives. It
+requires matching quantities, an identified account, cash captured within ten
+minutes, unambiguous USD equity contracts and fresh callbacks. A missing required
+mark, mismatched publication/day, overdue scheduled strategy rebalance or stale
+connection withholds the affected endpoint. Unsupported currencies remain missing.
+New cash flows since capture, dividends, fees, corporate actions and intraday FX
+are not modeled by this provisional price preview; completed publications remain
+authoritative. Callback freshness is not exchange quote age or data entitlement.
+The preview is restricted to regular US trading hours, including early closes.
+
+After a brief callback pause, the last valid same-session endpoint remains visible with a stale label and its original timestamp; it is never called current or carried into a new session.
+
+Provisional values replace just the final current-day chart point and update
+cumulative totals and the current allocation row. They never rewrite daily NAVs,
+signals, accounting, allocation events, approvals or orders. The rebasing selector
+still controls period levels; the headline theoretical NAV/return stays cumulative.
+
 ## Daily attribution and diagnostics
 
 The Trading page defaults stored PnL and reference-fill attribution to the latest
@@ -28,9 +109,9 @@ refresh errors retain the last complete result with a warning. Account resets
 invalidate an incompatible saved performance chart immediately. The
 [analytical migration guide](analytics-migration.md) lists coverage and rollback.
 
-The Trading dashboard compares the saved strategy NAV history with daily account observations. Strategy values use the left index axis; account values use the right CNH axis. The first shared observation on or after the account first holds a position establishes the alignment. Selecting another period does not change that alignment. The Tracking preset starts at the alignment date, or the first available account observation if no shared date exists.
+Before dated allocation records exist, the Trading dashboard compares the standalone saved strategy NAV history with daily account observations. In that legacy view, strategy values use the left index axis; account values use the right CNH axis. The first shared observation on or after the account first holds a position establishes the alignment. Selecting another period does not change that alignment. The Tracking preset starts at the alignment date, or the first available account observation if no shared date exists.
 
-Hover, tap or focus the chart and use the arrow keys to inspect dates and values. Drag within the plot to select a period; Escape restores All. Date inputs and presets update the summary values and statistics to the selected observations. Month/year presets clamp to the last valid day of the destination month. Dense history retains all line and hover observations while reducing visible markers. Empty and single-series views remain usable, and chart geometry follows the available width.
+Hover, tap or focus the chart and use the arrow keys to inspect dates and values. Drag within the plot to select a period; Escape restores All. Date inputs and presets update the chart and selected-period statistics. Headline NAVs and cumulative returns remain anchored to the reset across zoom and rebasing changes. Month/year presets clamp to the last valid day of the destination month. Dense history retains all line and hover observations while reducing visible markers. Empty and single-series views remain usable, and chart geometry follows the available width.
 
 ## Account history and reset boundaries
 
@@ -60,4 +141,4 @@ The performance API adds optional reset, tracking and alignment fields while ret
 
 ## Verification
 
-Run `tests/test_dashboard_performance.py`, `tests/test_ib_account_snapshot.py` and `tests/test_ib_reconciliation.py` for history, valuation, metadata and chart regressions. The chart behavior test runs the shipped JavaScript using Node.js when available. Browser verification uses a separate synthetic preview with no broker requests or operational service restart.
+Run `tests/test_allocation_performance.py`, `tests/test_spot_performance.py`, `tests/test_broker_pnl.py`, `tests/test_dashboard_performance.py`, `tests/test_ib_account_snapshot.py` and `tests/test_ib_reconciliation.py` for history, valuation, metadata and chart regressions. The chart behavior test runs the shipped JavaScript using Node.js when available. Browser verification uses a separate synthetic preview with no broker requests or operational service restart.

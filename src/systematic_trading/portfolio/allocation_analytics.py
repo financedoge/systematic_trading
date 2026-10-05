@@ -18,10 +18,8 @@ def allocation_revision(store):
 
 def allocation_ledger_revision(store):
     """Late fills and virtual-only approvals must invalidate saved attribution."""
-    if control_state(store)['active']['version'] == 'legacy':
-        return 'legacy'
     proposals = [p.model_dump(mode='json') for p in store.list_proposals()
-        if p.input_provenance.get('allocation') and p.status.value == 'approved']
+        if p.status.value in {'approved', 'missed'}]
     records = [dict(id=r.local_order_id, proposal=r.proposal_id, quantity=r.filled_quantity,
         price=str(r.average_fill_price), issue=r.execution_sync_issue,
         reference_price=str(r.order.reference_price),
@@ -35,6 +33,8 @@ def allocation_timeline(store):
     events = [e for e in control_events(store) if e['kind'] == 'allocation_activated']
     return [dict(version=e['active']['version'], effective_close=e['effective_close'],
         activated_at=e['at'], approved_at=e['active']['approved_at'],
+        opening_nav_cnh=str(sum(book_value(v, e['active']['opening']['prices'], e['active']['opening']['fx'])
+            for v in e['active']['opening']['book'].values())),
         label=' + '.join(f"{D(r['weight'])*100:g}% {registered_strategy_definition(r['strategy_key']).name}"
             for r in e['active']['allocations']), allocations=e['active']['allocations'],
         operator=e['operator'], reason=e['reason']) for e in events]

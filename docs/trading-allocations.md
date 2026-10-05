@@ -50,6 +50,8 @@ configuration and automatic allocation optimizers are outside version 1.
 
 ## Dates, performance and attribution
 
+Cumulative strategy/account returns are anchored to the confirmed P&L reset, including evidenced earlier strategy periods. Changing allocations does not reset these returns. Legacy comparisons may use executed proposal identity and the audited app-published parent benchmark, with the preceding-close timing convention disclosed. The Trading page can append a provisional broker-mark endpoint during the session; see [performance contracts](dashboard-performance.md) for freshness, FX, cash and rebasing rules.
+
 - Immutable events are scoped to the portfolio's paper episode. Account identity
   is pinned in the reviewed trading change and checked against reconciliation,
   portfolio context and retained execution evidence. Old contexts without an
@@ -68,6 +70,13 @@ configuration and automatic allocation optimizers are outside version 1.
   USD cash conversion at observed FX, and a 25 bp/year model cost accrued over
   252 sessions. It never concatenates standalone strategy NAV curves. This
   convention differs from actual fills and from proposal-price execution PnL.
+- The Performance panel separately compares published strategy NAV units at each
+  dated capital allocation. Its selector compounds theoretical value continuously
+  or rebases each switch to actual capital; reset jumps are excluded from returns.
+  This comparison lets capital weights drift until the next allocation switch,
+  with flat CNH reserve, and retains strategy-level costs/rebalances already in NAV.
+  It does not replace the monthly-reset holdings reference or actual-fill ledger.
+  See [dashboard performance](dashboard-performance.md) for the formula and gaps.
 - The account chart retains observed NAV change. Missing cash-flow classification
   prevents a fully flow-adjusted return claim. Unclassified dividends, fees,
   external cash movements and other cash differences remain a disclosed shared

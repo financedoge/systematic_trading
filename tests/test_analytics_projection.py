@@ -49,6 +49,28 @@ class MemoryAnalytics:
         return changed
 
 
+def test_dashboard_cache_warms_before_capture_import_and_recovers_initial_failure(tmp_path, monkeypatch):
+    from systematic_trading.research import analytics_service as module
+    analytics = MemoryAnalytics()
+    analytics.initialize = lambda: None
+    calls = []
+    def dashboard(*args):
+        calls.append('dashboard')
+        if 'account' not in calls:
+            raise ValueError('Awaiting first account publication')
+        return analytics.publish('dashboard-serving', 'v1', [], [dict(point_key='performance', payload='{"spot_basis":{"id":"verified"}}')])
+    monkeypatch.setattr(module, 'publish_dashboard', dashboard)
+    monkeypatch.setattr(module, 'import_account_histories', lambda *args: calls.append('account'))
+    for name in ('import_json_group', 'import_transactional_histories'):
+        monkeypatch.setattr(module, name, lambda *args: False)
+    service = module.AnalyticsService(AppSettings(data_dir=tmp_path), object(), analytics)
+    result = service.refresh('operations')
+    assert calls == ['dashboard', 'account', 'dashboard']
+    assert result['errors'] == {}
+    analytics.document = lambda *args: (_ for _ in ()).throw(AssertionError('HTTP must not query storage'))
+    assert service.performance_payload()['spot_basis']['id'] == 'verified'
+
+
 def request(analytics, store=None):
     return SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(analytics=analytics, store=store)))
 
@@ -148,7 +170,7 @@ def test_failed_strategy_calculation_preserves_reports_and_other_projections(tmp
                  "import_transactional_histories", "import_lean_histories", "import_raw_market_data"):
         monkeypatch.setattr(module, name, lambda *args, label=name: calls.append(label))
     monkeypatch.setattr(module, "refresh_tracked_fx", lambda *args: False)
-    service = module.AnalyticsService(AppSettings(data_dir=tmp_path), object(), SimpleNamespace(initialize=lambda: None, latest=lambda _: None))
+    service = module.AnalyticsService(AppSettings(data_dir=tmp_path), object(), SimpleNamespace(initialize=lambda: None, latest=lambda _: None, document=lambda *_: None))
     status = service.refresh()
     assert status["errors"] == {"tracked-strategies": "Invalid audited inputs"}
     assert "publish_strategies" not in calls and "publish_dashboard" in calls

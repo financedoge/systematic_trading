@@ -70,9 +70,16 @@ class AnalyticsService:
         self._thread = None
         self._account_thread = None
         self._archive_thread = None
+        self._spot_thread = None
         self._lane_errors = {}
         self._status = {"running": False, "last_completed_at": None, "errors": {}}
         self._strategy_inputs = {}
+        self._performance_payload = None
+
+    def performance_payload(self):
+        """Immutable published inputs, cached by the background operations lane."""
+        with self._lock:
+            return self._performance_payload
 
     def status(self):
         compute = None
@@ -92,6 +99,7 @@ class AnalyticsService:
             archive_started = self._status.get("archives_job_started_at") or self._status.get("archives_completed_at")
             archives_stale = bool(archive_started and (datetime.now(UTC) - datetime.fromisoformat(archive_started)).total_seconds() > max(3600, self.settings.analytics_refresh_seconds * 3))
             return {**self._status, "running": research and operations,
+                    "spot_running": bool(self._spot_thread and self._spot_thread.is_alive()),
                     **freshness(self._strategy_inputs),
                     "research_running": research, "operations_running": operations,
                     "archives_running": archives, "archives_stale": archives_stale,
@@ -101,9 +109,11 @@ class AnalyticsService:
         self._thread = Thread(target=self._run, args=("research",), name="analytics-research", daemon=True)
         self._account_thread = Thread(target=self._run, args=("operations",), name="analytics-operations", daemon=True)
         self._archive_thread = Thread(target=self._run, args=("archives",), name="analytics-archives", daemon=True)
+        self._spot_thread = Thread(target=self._run_spot, name="analytics-spot-cash", daemon=True)
         self._account_thread.start()
         self._thread.start()
         self._archive_thread.start()
+        self._spot_thread.start()
 
     def stop(self):
         self._stop.set()
@@ -114,6 +124,25 @@ class AnalyticsService:
             self._account_thread.join(timeout=5)
         if self._archive_thread:
             self._archive_thread.join(timeout=5)
+        if self._spot_thread:
+            self._spot_thread.join(timeout=5)
+
+    def _run_spot(self):
+        from systematic_trading.research.spot_performance import refresh_spot_cash
+        while not self._stop.is_set():
+            try:
+                payload = self.performance_payload()
+                refreshed = refresh_spot_cash(self.settings, payload)
+                with self._lock:
+                    if self._performance_payload is payload:
+                        self._performance_payload = refreshed
+                    self._lane_errors['spot'] = {}
+            except (OSError, ValueError, KeyError) as exc:
+                with self._lock:
+                    self._lane_errors['spot'] = {'spot-cash': str(exc)}
+            with self._lock:
+                self._status['errors'] = {k:v for values in self._lane_errors.values() for k,v in values.items()}
+            self._stop.wait(5)
 
     def request_refresh(self, *, reason="operator"):
         with self._lock:
@@ -148,6 +177,12 @@ class AnalyticsService:
         archives = {"research-history", "lean-history", "market-raw"}
         def owner(name):
             return "research" if name in research else "archives" if name in archives else "operations"
+        # Serve the last verified account publication promptly at startup; the
+        # full capture import can take minutes. The builder still checks reset,
+        # allocation and publication identities, and reruns after that import.
+        warming = self._performance_payload is None
+        if warming:
+            jobs.insert(0, ('dashboard-serving', lambda: publish_dashboard(self.settings, self.store, self.analytics)))
         jobs.sort(key=lambda item: {"operations": 0, "research": 1, "archives": 2}[owner(item[0])])
         for name, job in jobs:
             if lane != "all" and owner(name) != lane:
@@ -164,6 +199,12 @@ class AnalyticsService:
                         self._status["current_job"] = name
                 if job():
                     changed.append(name)
+                errors.pop(name, None)
+                if name == 'dashboard-serving':
+                    saved = self.analytics.document('dashboard-serving', 'performance')
+                    payload = json.loads(saved[0]['payload']) if saved else None
+                    with self._lock:
+                        self._performance_payload = payload
                 # Clear a recovered dependency as soon as it succeeds, even
                 # while the subsequent native calculations are still running.
                 with self._lock:
@@ -174,6 +215,8 @@ class AnalyticsService:
             except Exception as exc:
                 errors[name] = str(exc)
                 with self._lock:
+                    if name == 'dashboard-serving':
+                        self._performance_payload = None
                     self._lane_errors[lane] = dict(errors)
                     self._status["errors"] = {k:v for values in self._lane_errors.values() for k,v in values.items()}
                 # Never fall through to the legacy static SOTA marks if a

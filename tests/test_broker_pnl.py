@@ -119,10 +119,12 @@ renderLivePnl({status:'live', currency:'HKD', daily_pnl:0, realized_pnl:null, un
 assert.equal(el('pnl-total').textContent,'0.00');
 assert.equal(el('pnl-realized').textContent,'n/a');
 renderLivePnl({status:'stale', currency:'HKD', daily_pnl:12, received_at:'2026-09-25T20:00:00Z',
-  positions:[{symbol:'SPY',currency:'USD',daily_pnl:9,received_at:'2026-09-25T20:01:00Z',stale:false}]});
+  positions:[{symbol:'SPY',currency:'USD',daily_pnl:9,market_price:103,daily_return:0.03,close_date:'2026-09-24',received_at:'2026-09-25T20:01:00Z',stale:false}]});
 assert.equal(el('pnl-total').textContent,'12.00');
 assert.match(el('pnl-as-of').textContent,/Last received · stale/);
 assert.match(el('live-pnl-table').innerHTML,/9.00/);
+assert.match(el('live-pnl-table').innerHTML,/3.00%/);
+assert.match(el('live-pnl-table').innerHTML,/Price change from audited 2026-09-24 close/);
 assert.match(el('live-pnl-table').innerHTML,/2026-09-25T20:01:00Z/);
 assert.equal(el('pnl-open-value').textContent,'HKD');
 renderLivePnl({status:'live',currency:'HKD',daily_pnl:Infinity,unrealized_pnl:3});
@@ -146,12 +148,14 @@ def test_browser_keeps_last_received_values_on_http_failure_and_recovers():
 const assert = require('node:assert/strict');
 const html = require('node:fs').readFileSync(0, 'utf8');
 let fail = false, output;
+const state = {performance:{payload:null}};
 const api = async () => {
   if (fail) throw new Error('timeout');
   return {status:'live', currency:'HKD', daily_pnl:12, received_at:'2026-09-25T20:00:00Z',
           positions:[{daily_pnl:3,stale:false}], warnings:[]};
 };
 const renderLivePnl = value => output = value;
+eval(html.slice(html.indexOf('function retainSpotEndpoints'),html.indexOf('function performanceWithSpot')));
 const start = html.indexOf('let livePnlLoading');
 eval(html.slice(start, html.indexOf('function renderPnl(payload',start)));
 (async () => {

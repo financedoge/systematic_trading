@@ -425,6 +425,14 @@ _OPERATOR_HTML = """<!doctype html>
       padding: 10px 12px 0;
       border-top: 1px solid var(--line-soft);
     }
+    #performance-rebase-controls[hidden] { display: none; }
+    #performance-rebase-controls .date-field { flex-wrap: wrap; }
+    #perf-rebase-mode { max-width: 100%; min-height: 32px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--text); }
+    #performance-analysis, #performance-periods { overflow-x: auto; }
+    #performance-analysis table { min-width: 760px; }
+    #performance-periods table { min-width: 900px; }
+    #live-pnl-table { overflow-x: auto; }
+    #live-pnl-table table { min-width: 1050px; }
     .segmented {
       display: inline-flex;
       flex-wrap: wrap;
@@ -634,9 +642,9 @@ _OPERATOR_HTML = """<!doctype html>
         </div>
         <div class="metrics-compact" aria-label="Performance summary">
           <div class="mini-metric"><label>Strategy NAV</label><strong id="perf-strategy-nav">n/a</strong></div>
-          <div class="mini-metric"><label>Strategy Return · selected period</label><strong id="perf-strategy-return">n/a</strong></div>
+          <div class="mini-metric"><label>Cumulative strategy return · since reset</label><strong id="perf-strategy-return">n/a</strong></div>
           <div class="mini-metric"><label>Account NAV</label><strong id="perf-account-nav">n/a</strong></div>
-          <div class="mini-metric"><label>Account NAV change · selected period</label><strong id="perf-account-return">n/a</strong></div>
+          <div class="mini-metric"><label>Cumulative account NAV change · since reset</label><strong id="perf-account-return">n/a</strong></div>
         </div>
         <div class="chart-tools" aria-label="Performance period">
           <div class="segmented" id="performance-range-buttons">
@@ -653,12 +661,23 @@ _OPERATOR_HTML = """<!doctype html>
           <label class="date-field">Start <input id="perf-range-start" type="date"></label>
           <label class="date-field">End <input id="perf-range-end" type="date"></label>
         </div>
+        <div class="chart-tools" id="performance-rebase-controls" hidden>
+          <label class="date-field">Rebase at allocation switches
+            <select id="perf-rebase-mode" aria-label="Theoretical performance rebasing">
+              <option value="theoretical">Theoretical value · continuous</option>
+              <option value="actual">Actual portfolio value · each switch</option>
+            </select>
+          </label>
+          <span class="performance-note" id="performance-rebase-note"></span>
+        </div>
         <div id="performance-chart" class="chart-wrap"></div>
         <div id="performance-hover" class="performance-note" role="status" aria-live="polite">Hover or tap for dates and values. Drag across the chart to select a period; use arrow keys to inspect points.</div>
         <div id="performance-alignment" class="performance-note"></div>
+        <div id="performance-spot-note" class="performance-note" role="status"></div>
         <div class="performance-note">Account NAV changes include deposits and withdrawals; cash flows are not adjusted. Statistics use available observations. Gaps longer than seven days appear as breaks in the chart.</div>
         <div id="performance-legend" class="legend"></div>
         <div id="performance-analysis" class="analysis-table"></div>
+        <div id="performance-periods" class="analysis-table"></div>
         <details class="performance-diagnostics" id="performance-diagnostics">
           <summary id="performance-diagnostics-summary">Performance notes and data checks</summary>
           <div id="performance-warnings" class="warnings"></div>
@@ -678,6 +697,7 @@ _OPERATOR_HTML = """<!doctype html>
           <div class="mini-metric"><label>Currency</label><strong id="pnl-open-value">n/a</strong></div>
         </div>
         <div id="live-pnl-table"></div>
+        <div class="performance-note">Daily % is the holding’s price change from the previous audited close, in its contract currency; dividends are excluded.</div>
         <div id="live-pnl-warnings" class="warnings" role="status"></div>
         <h3>Stored daily accounting — CNH</h3>
         <div class="performance-note">Daily research marks and local reset baseline; separate from current broker PnL.</div>
@@ -730,7 +750,7 @@ _OPERATOR_HTML = """<!doctype html>
       decisionBusy: false,
       decisionDrafts: {},
       reconciliation: null,
-      performance: { payload: null, rangeKey: "all", start: null, end: null }
+      performance: { payload: null, rangeKey: "all", start: null, end: null, rebaseMode: "theoretical" }
     };
     const el = (id) => document.getElementById(id);
     const fmtMoney = (value) => Number(value || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -951,20 +971,78 @@ _OPERATOR_HTML = """<!doctype html>
       `;
     }
 
+    function retainSpotEndpoints(current, previous) {
+      const spot = current.performance, prior = previous?.performance;
+      if (!spot?.basis_id || spot.basis_id !== prior?.basis_id || !current.checked_at) return current;
+      const session = new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date(current.checked_at));
+      const result = {...current,performance:{...spot}};
+      for (const key of ['strategy','account','actual_rebased']) {
+        if (!spot[key] && prior[key]?.trade_date === session) result.performance[key] = {...prior[key],stale:true};
+      }
+      return result;
+    }
+
+    function performanceWithSpot(payload, live) {
+      const spot = live?.performance;
+      if (!spot?.basis_id || spot.basis_id !== payload.spot_basis?.id) return payload;
+      const result = {...payload};
+      let applied = false;
+      for (const [key, point] of [['strategy',spot.strategy],['account',spot.account],['strategy_actual_rebased',spot.actual_rebased]]) {
+        if (point && (point.stale || (live.status === 'live' && live.connected))) {
+          result[key] = [...(payload[key] || []).filter(p=>p.trade_date < point.trade_date), point];
+          applied = true;
+        }
+      }
+      if (!applied) return payload;
+      result.warnings = [...(payload.warnings || []), ...(spot.warnings || [])];
+      if (spot.strategy && payload.theoretical_periods?.length) {
+        const periods = payload.theoretical_periods.map(p=>({...p}));
+        const current = periods.at(-1), capital = Number(current.actual_start_nav_cnh);
+        current.through = spot.strategy.trade_date;
+        current.provisional = true;
+        current.theoretical_return = Number(spot.strategy.period_growth)-1;
+        current.theoretical_pnl_cnh = capital > 0 ? capital*current.theoretical_return : null;
+        current.actual_return = spot.account && capital > 0 ? Number(spot.account.nav_cnh)/capital-1 : null;
+        current.actual_pnl_cnh = spot.account && capital > 0 ? Number(spot.account.nav_cnh)-capital : null;
+        result.theoretical_periods = periods;
+      }
+      return result;
+    }
+
     function renderPerformance(payload) {
       state.performance.payload = payload;
+      const completedPayload = payload;
+      payload = performanceWithSpot(payload, lastLivePnl);
       el("perf-strategy-nav").textContent = fmtMaybeMoney(payload.latest_strategy_nav_cnh);
       el("perf-strategy-return").textContent = fmtMaybePct(payload.strategy_total_return);
       el("perf-account-nav").textContent = fmtMaybeMoney(payload.latest_account_nav_cnh);
       el("perf-account-return").textContent = fmtMaybePct(payload.account_total_return);
       renderPerformanceDiagnostics(payload.warnings || []);
-      const strategyAll = normalizedPerformanceSeries(payload.strategy || []);
+      const allocationComparison = !!payload.theoretical_contract;
+      const actualRebase = allocationComparison && state.performance.rebaseMode === "actual";
+      el("performance-rebase-controls").hidden = !allocationComparison;
+      el("perf-rebase-mode").value = state.performance.rebaseMode;
+      el("performance-rebase-note").textContent = actualRebase
+        ? "Each period starts at actual portfolio value. Breaks mark rebasing; resets are excluded from Strategy Return."
+        : "Each new allocation starts at the previous theoretical value, preserving continuous compounding.";
+      const strategyAll = normalizedPerformanceSeries((actualRebase ? payload.strategy_actual_rebased : payload.strategy) || []);
       const accountAll = normalizedPerformanceSeries(payload.account || []);
+      const cumulative = normalizedPerformanceSeries(payload.strategy || []);
+      el("perf-strategy-nav").textContent = fmtMaybeMoney(cumulative.at(-1)?.nav_cnh);
+      el("perf-account-nav").textContent = fmtMaybeMoney(accountAll.at(-1)?.nav_cnh);
+      el("perf-strategy-return").textContent = fmtMaybePct(performanceStats("Strategy", cumulative).totalReturn);
+      el("perf-account-return").textContent = fmtMaybePct(performanceStats("Account", accountAll).totalReturn);
+      const livePoints = [cumulative.at(-1),accountAll.at(-1)].filter(p=>p?.provisional);
+      const spotWarnings = lastLivePnl?.performance?.warnings || payload.spot_basis?.warnings || [];
+      el("performance-spot-note").textContent = livePoints.length
+        ? `Provisional spot endpoint · ${livePoints.map(p=>`${p.is_theoretical?'Strategy':'Account'}${p.stale?' (last received · stale)':''} ${fmtDateTime(p.received_at)}`).join(' · ')}. ${spotWarnings.join(' ')}`
+        : `Completed / saved observations. ${spotWarnings.join(' ')}`;
       const extent = performanceExtent(strategyAll, accountAll);
       if (!extent) {
         el("performance-chart").innerHTML = '<div class="empty">No performance data</div>';
         el("performance-legend").innerHTML = "";
         el("performance-analysis").innerHTML = "";
+        el("performance-periods").innerHTML = "";
         el("performance-alignment").textContent = "";
         el("performance-hover").textContent = "No observations to inspect.";
         state.performance.start = state.performance.end = "";
@@ -983,10 +1061,12 @@ _OPERATOR_HTML = """<!doctype html>
         state.performance.end = previousStart;
       }
       updatePerformanceControls();
-      if (typeof ChartNavigation !== 'undefined') ChartNavigation.view('performance-chart', [...strategyAll,...accountAll], p=>p.time,
-        ()=>renderPerformance(payload), {left:56,right:Math.max(el('performance-chart').clientWidth-24,320)-96,top:30,bottom:272},
+      // Navigation spans whole displayed dates, including the final day's end;
+      // otherwise clamping an inclusive range shifts its start back one day.
+      if (typeof ChartNavigation !== 'undefined') ChartNavigation.view('performance-chart', [...strategyAll,...accountAll,{time:Date.parse(extent.maxDate)+86399999}], p=>p.time,
+        ()=>renderPerformance(completedPayload), {left:56,right:Math.max(el('performance-chart').clientWidth-24,320)-96,top:30,bottom:272},
         {range:state.performance.rangeKey==='all'?null:[Date.parse(state.performance.start),Date.parse(state.performance.end)+86399999],
-         onChange:range=>{state.performance.rangeKey=range?'custom':'all';if(range){state.performance.start=dateTextFromTime(range[0]);state.performance.end=dateTextFromTime(range[1])}renderPerformance(payload)}});
+         onChange:range=>{state.performance.rangeKey=range?'custom':'all';if(range){state.performance.start=dateTextFromTime(range[0]);state.performance.end=dateTextFromTime(range[1])}renderPerformance(completedPayload)}});
       const strategy = filterPerformanceSeries(strategyAll, state.performance.start, state.performance.end);
       const account = filterPerformanceSeries(accountAll, state.performance.start, state.performance.end);
       const svg = performanceSvg(strategy, account, payload);
@@ -995,23 +1075,23 @@ _OPERATOR_HTML = """<!doctype html>
       el("performance-hover").textContent = strategy.length || account.length
         ? "Hover or tap for dates and values. Drag to select a period; arrow keys inspect points."
         : "No observations in the selected period.";
-      el("perf-strategy-nav").textContent = fmtMaybeMoney(strategy.at(-1)?.nav_cnh);
-      el("perf-account-nav").textContent = fmtMaybeMoney(account.at(-1)?.nav_cnh);
-      el("perf-strategy-return").textContent = fmtMaybePct(performanceStats("Strategy", strategy).totalReturn);
-      el("perf-account-return").textContent = fmtMaybePct(performanceStats("Account", account).totalReturn);
-      el("performance-alignment").textContent = payload.account_alignment_date
+      el("performance-alignment").textContent = allocationComparison
+        ? `${Number(payload.theoretical_base_nav_cnh) > 0 ? `Both lines show CNH P&L from the same starting capital (${fmtMaybeMoney(payload.theoretical_base_nav_cnh)}).` : "Starting capital is unavailable; showing observed CNH values on a shared scale."} Cumulative returns start at the P&L reset and carry through allocation switches. Zooming changes the chart and selected-period statistics below; cumulative totals stay fixed.`
+        : payload.account_alignment_date
         ? `Aligned on ${payload.account_alignment_date}: account CNH ${fmtMoney(payload.account_alignment_nav_cnh)} = strategy index ${Number(payload.account_alignment_strategy_index).toFixed(2)}. The alignment stays fixed when zooming. Strategy uses the left axis; account CNH uses the right.`
         : `Account has ${payload.account_tracking_start_date ? "no shared strategy date yet" : "not built a position since the reset"}. Axes are independent until tracking begins. Account history starts ${accountAll[0]?.trade_date || "n/a"}.`;
       el("performance-legend").innerHTML = `
-        <span class="legend-item"><span class="swatch"></span>${esc(payload.comparison_label || "Standalone strategy comparison")} · left index</span>
-        <span class="legend-item"><span class="swatch account"></span>Actual account · right CNH</span>
+        <span class="legend-item"><span class="swatch"></span>${esc(payload.comparison_label || "Standalone strategy comparison")} · ${allocationComparison ? (Number(payload.theoretical_base_nav_cnh)>0 ? "CNH P&L" : "CNH NAV") : "left index"}</span>
+        <span class="legend-item"><span class="swatch account"></span>Actual account · ${allocationComparison ? (Number(payload.theoretical_base_nav_cnh)>0 ? "CNH P&L (includes cash flows)" : "CNH NAV") : "right CNH"}</span>
       `;
       renderPerformanceAnalysis(strategy, account);
+      renderPerformancePeriods(payload.theoretical_periods || []);
     }
 
     function normalizedPerformanceSeries(series) {
       return series
         .map((point) => ({
+          ...point,
           allocation_label: point.allocation_label || "Legacy / unknown",
           trade_date: String(point.trade_date || "").slice(0, 10),
           index: Number(point.index),
@@ -1079,7 +1159,10 @@ _OPERATOR_HTML = """<!doctype html>
     }
 
     function filterPerformanceSeries(series, start, end) {
-      return series.filter((point) => point.trade_date >= start && point.trade_date <= end);
+      const selected = series.filter((point) => point.trade_date >= start && point.trade_date <= end
+        && !(point.break_before && point.trade_date === end && start !== end));
+      const opening = selected.filter(p => p.trade_date === start).at(-1);
+      return selected.filter(p => p.trade_date !== start || p === opening);
     }
 
     function performanceGeometry(strategy, account, payload = {}) {
@@ -1097,6 +1180,14 @@ _OPERATOR_HTML = """<!doctype html>
         const margin = Math.max((high - low) * .1, Math.abs(high) * .005, .01);
         return [low - margin, high + margin];
       };
+      if (payload.theoretical_contract) {
+        const base = Number(payload.theoretical_base_nav_cnh) || 0;
+        const [low, high] = bounds(all.map(p => p.nav_cnh-base));
+        const x = time => pad.left + (maxTime === minTime ? .5 : (time-minTime)/(maxTime-minTime))*(width-pad.left-pad.right);
+        const y = p => height-pad.bottom-(p.nav_cnh-base-low)/(high-low)*(height-pad.top-pad.bottom);
+        return {width,height,pad,minTime,maxTime,leftMin:low,leftMax:high,rightMin:low,rightMax:high,x,
+          strategyY:y,accountY:y,pnl:base>0,sharedNav:true};
+      }
       const leftValues = strategy.map(p => p.index);
       if (factor) leftValues.push(...account.map(p => Number(p.nav_cnh) * factor));
       const [leftMin, leftMax] = bounds(leftValues);
@@ -1111,7 +1202,7 @@ _OPERATOR_HTML = """<!doctype html>
       const g = performanceGeometry(strategy, account, payload);
       if (!g) return '<div class="empty">No performance data in selected period</div>';
       const {width, height, pad, x} = g;
-      const pathFor = (series, y) => series.map((p, i) => `${i && p.time - series[i-1].time <= 7 * 86400000 ? "L" : "M"} ${x(p.time).toFixed(2)} ${y(p).toFixed(2)}`).join(" ");
+      const pathFor = (series, y) => series.map((p, i) => `${i && !p.break_before && p.time - series[i-1].time <= 7 * 86400000 ? "L" : "M"} ${x(p.time).toFixed(2)} ${y(p).toFixed(2)}`).join(" ");
       // Dense markers obscure the line at full history. Keep every line point and
       // every hover observation, showing markers only for short series.
       const dots = (series, y, cls) => (series.length <= 45 ? series : [series.at(-1)])
@@ -1119,20 +1210,20 @@ _OPERATOR_HTML = """<!doctype html>
       const grid = [0, .25, .5, .75, 1].map(f => {
         const yy = height - pad.bottom - f * (height - pad.top - pad.bottom);
         return `<line class="grid-line" x1="${pad.left}" x2="${width-pad.right}" y1="${yy}" y2="${yy}"></line>
-          <text x="${pad.left-8}" y="${yy+4}" text-anchor="end" fill="#2456a6" font-size="11">${strategy.length ? (g.leftMin+f*(g.leftMax-g.leftMin)).toFixed(1) : "—"}</text>
+          <text x="${pad.left-8}" y="${yy+4}" text-anchor="end" fill="#2456a6" font-size="11">${strategy.length ? (g.sharedNav ? fmtMoney(g.leftMin+f*(g.leftMax-g.leftMin)) : (g.leftMin+f*(g.leftMax-g.leftMin)).toFixed(1)) : "—"}</text>
           <text x="${width-pad.right+8}" y="${yy+4}" fill="#0f766e" font-size="11">${account.length ? fmtMoney(g.rightMin+f*(g.rightMax-g.rightMin)) : "—"}</text>`;
       }).join("");
       return `
         <svg viewBox="0 0 ${width} ${height}" role="group" tabindex="0" aria-label="Interactive strategy and account performance. Drag to select dates. Arrow keys inspect observations. Escape clears selection.">
-          <text x="${pad.left}" y="14" fill="#2456a6" font-size="12">Strategy index</text>
-          <text x="${width-pad.right}" y="14" fill="#0f766e" font-size="12" text-anchor="end">Account CNH</text>
+          <text x="${pad.left}" y="14" fill="#2456a6" font-size="12">${g.sharedNav ? (g.pnl ? "Actual / theoretical P&L · CNH" : "Actual / theoretical NAV · CNH") : "Strategy index"}</text>
+          ${g.sharedNav ? '' : `<text x="${width-pad.right}" y="14" fill="#0f766e" font-size="12" text-anchor="end">Account CNH</text>`}
           ${grid}
           ${(payload.allocation_timeline || []).filter(e=>Date.parse(e.effective_close)>=g.minTime&&Date.parse(e.effective_close)<=g.maxTime).map(e=>`<g><title>${esc(e.effective_close+' · '+e.label)}</title><line x1="${x(Date.parse(e.effective_close))}" x2="${x(Date.parse(e.effective_close))}" y1="${pad.top}" y2="${height-pad.bottom}" stroke="#93691e" stroke-dasharray="4 4"/><text x="${x(Date.parse(e.effective_close))+4}" y="${pad.top+12}" fill="#93691e" font-size="10">Allocation change</text></g>`).join('')}
           <text x="${pad.left}" y="${height-7}" fill="#657083" font-size="11">${dateTextFromTime(g.minTime)}</text>
           <text x="${width-pad.right}" y="${height-7}" text-anchor="end" fill="#657083" font-size="11">${dateTextFromTime(g.maxTime)}</text>
           ${strategy.length > 1 ? `<path class="strategy-line" d="${pathFor(strategy,g.strategyY)}"></path>` : ""}
           ${account.length > 1 ? `<path class="account-line" d="${pathFor(account,g.accountY)}"></path>` : ""}
-          ${dots(strategy,g.strategyY,"strategy-dot")}${dots(account,g.accountY,"account-dot")}
+          ${dots(account,g.accountY,"account-dot")}${dots(strategy,g.strategyY,"strategy-dot")}
           <rect class="perf-selection" y="${pad.top}" height="${height-pad.top-pad.bottom}" width="0" visibility="hidden"></rect>
           <line class="perf-crosshair" y1="${pad.top}" y2="${height-pad.bottom}" visibility="hidden"></line>
           <rect class="perf-hit-area" x="${pad.left}" y="${pad.top}" width="${width-pad.left-pad.right}" height="${height-pad.top-pad.bottom}" fill="transparent" style="cursor:crosshair"></rect>
@@ -1155,7 +1246,8 @@ _OPERATOR_HTML = """<!doctype html>
         cursor = index;
         const time = dates[index], s = strategyMap.get(time), a = accountMap.get(time);
         crosshair.setAttribute("x1",g.x(time)); crosshair.setAttribute("x2",g.x(time)); crosshair.setAttribute("visibility","visible");
-        el("performance-hover").textContent = `${dateTextFromTime(time)} · ${a?.allocation_label || s?.allocation_label || "Legacy / unknown"} · Strategy ${s ? `index ${s.index.toFixed(2)} / CNH ${fmtMoney(s.nav_cnh)}` : "no observation"} · Account ${a ? `CNH ${fmtMoney(a.nav_cnh)}` : "no observation"}`;
+        const base = Number(state.performance.payload.theoretical_base_nav_cnh);
+        el("performance-hover").textContent = `${dateTextFromTime(time)} · ${s?.allocation_label || a?.allocation_label || "Legacy / unknown"} · Strategy ${s ? `CNH ${fmtMoney(s.nav_cnh)}${g.pnl ? ` / P&L ${fmtSignedMoney(s.nav_cnh-base)}` : ` / index ${s.index.toFixed(2)}`}` : "no observation"} · Account ${a ? `CNH ${fmtMoney(a.nav_cnh)}${g.pnl ? ` / P&L ${fmtSignedMoney(a.nav_cnh-base)}` : ""}` : "no observation"}`;
       };
       hit.addEventListener("pointermove", event => {show(nearest(timeAt(pointerX(event))))});
       hit.addEventListener("click", event => {show(nearest(timeAt(pointerX(event))))});
@@ -1196,7 +1288,7 @@ _OPERATOR_HTML = """<!doctype html>
     }
 
     function performanceStats(label, series) {
-      const points = [...series].sort((a, b) => a.time - b.time);
+      const points = [...new Map(series.map(p => [p.time,p])).values()].sort((a, b) => a.time - b.time);
       const stats = {
         label,
         points: points.length,
@@ -1208,7 +1300,8 @@ _OPERATOR_HTML = """<!doctype html>
         maxDrawdown: null,
         calmar: null
       };
-      if (points.length < 2) return stats;
+      if (points.length === 1 && points[0].is_theoretical && (points[0].switch_anchor || points[0].trade_date === points[0].period_start)) stats.totalReturn = 0;
+      if (points.length < 2 || points.slice(1).some(p => p.return_break)) return stats;
       const first = points[0];
       const last = points[points.length - 1];
       const days = Math.max((last.time - first.time) / 86400000, 1);
@@ -1242,6 +1335,13 @@ _OPERATOR_HTML = """<!doctype html>
         : null;
       stats.calmar = annualReturn !== null && maxDrawdown < 0 ? annualReturn / Math.abs(maxDrawdown) : null;
       return stats;
+    }
+
+    function renderPerformancePeriods(periods) {
+      const visible = periods.filter(p => p.start <= state.performance.end && (p.end || p.through || p.start) >= state.performance.start);
+      el("performance-periods").innerHTML = visible.length ? `<p class="performance-note">Allocation periods · full-period results through the last supported strategy date. P&L starts at each period's actual capital; account changes include cash flows.</p><table>
+        <thead><tr><th>Allocation</th><th>Switch close</th><th>Valued through</th><th class="num">Theoretical return</th><th class="num">Actual NAV change</th><th class="num">Theoretical P&L · CNH</th><th class="num">Actual P&L · CNH</th></tr></thead>
+        <tbody>${visible.map(p=>`<tr><td>${esc(p.label)}${(p.warnings || []).length ? `<div class="performance-note">${esc(p.warnings.join(' '))}</div>` : ''}</td><td>${esc(p.start)}</td><td>${esc(p.through || 'Unavailable')}${p.provisional ? ' · provisional spot' : p.observations === 1 ? ' · opening only' : ''}</td><td class="num">${fmtMaybePct(p.theoretical_return)}</td><td class="num">${fmtMaybePct(p.actual_return)}</td><td class="num">${fmtSignedMoney(p.theoretical_pnl_cnh)}</td><td class="num">${fmtSignedMoney(p.actual_pnl_cnh)}</td></tr>`).join('')}</tbody></table>` : '';
     }
 
     function fmtMaybeRatio(value) {
@@ -1286,7 +1386,7 @@ _OPERATOR_HTML = """<!doctype html>
       el("pnl-total").textContent = payload.currency ? money(payload.daily_pnl) : "n/a";
       el("pnl-open-value").textContent = payload.currency || "unknown";
       el("live-pnl-warnings").textContent = (payload.warnings || []).join(" ");
-      el("live-pnl-table").innerHTML = `<table><thead><tr><th>Ticker</th><th class="asset-name">Asset name</th><th>Currency</th><th>Quantity</th><th>Daily PnL</th><th>Unrealized</th><th>Realized</th><th>Value</th><th>Update</th></tr></thead><tbody>${(payload.positions || []).map(row => `<tr><td>${esc(row.symbol)}</td>${AssetNames.cell(row.symbol)}<td>${esc(row.currency)}</td><td>${esc(row.quantity)}</td>${[row.daily_pnl,row.unrealized_pnl,row.realized_pnl,row.market_value].map(v => `<td class="num">${row.currency ? money(v) : "n/a"}</td>`).join("")}<td>${row.received_at ? `${row.stale ? "Last received · stale · " : ""}${esc(fmtDateTime(row.received_at))}` : "waiting for broker"}</td></tr>`).join("")}</tbody></table>`;
+      el("live-pnl-table").innerHTML = `<table><thead><tr><th>Ticker</th><th class="asset-name">Asset name</th><th>Currency</th><th>Quantity</th><th>Spot</th><th>Daily %</th><th>Daily PnL</th><th>Unrealized</th><th>Realized</th><th>Value</th><th>Update</th></tr></thead><tbody>${(payload.positions || []).map(row => `<tr><td>${esc(row.symbol)}</td>${AssetNames.cell(row.symbol)}<td>${esc(row.currency)}</td><td>${esc(row.quantity)}</td><td class="num">${money(row.market_price)}</td><td class="num" title="${esc(row.close_date ? `Price change from audited ${row.close_date} close; excludes dividends` : 'Previous close unavailable')}">${row.daily_return == null ? "n/a" : (Number(row.daily_return)*100).toFixed(2)+"%"}</td>${[row.daily_pnl,row.unrealized_pnl,row.realized_pnl,row.market_value].map(v => `<td class="num">${row.currency ? money(v) : "n/a"}</td>`).join("")}<td>${row.received_at ? `${row.stale ? "Last received · stale · " : ""}${esc(fmtDateTime(row.received_at))}` : "waiting for broker"}</td></tr>`).join("")}</tbody></table>`;
     }
 
     let livePnlLoading = false;
@@ -1295,14 +1395,20 @@ _OPERATOR_HTML = """<!doctype html>
       if (livePnlLoading) return;
       livePnlLoading = true;
       try {
-        lastLivePnl = await api("/api/v1/dashboard/pnl/live", {signal: AbortSignal.timeout(5000)});
+        const refreshed = await api("/api/v1/dashboard/pnl/live", {signal: AbortSignal.timeout(5000)});
+        lastLivePnl = retainSpotEndpoints(refreshed, lastLivePnl);
         renderLivePnl(lastLivePnl);
+        if (state.performance.payload) renderPerformance(state.performance.payload);
       } catch (error) {
         const previous = lastLivePnl || {};
-        renderLivePnl({...previous, status:"unavailable", connected:false,
+        lastLivePnl = retainSpotEndpoints({...previous, status:"unavailable", connected:false,
+          checked_at: new Date().toISOString(),
+          performance:{...previous.performance,strategy:null,account:null,actual_rebased:null},
           age_seconds: previous.received_at ? Math.max(0, (Date.now() - Date.parse(previous.received_at)) / 1000) : null,
           positions:(previous.positions || []).map(row => ({...row, stale:true})),
-          warnings:[...(previous.warnings || []), `Feed refresh failed: ${error.message}. Values shown are last received, not current.`]});
+          warnings:[...(previous.warnings || []), `Feed refresh failed: ${error.message}. Values shown are last received, not current.`]},previous);
+        renderLivePnl(lastLivePnl);
+        if (state.performance.payload) renderPerformance(state.performance.payload);
       }
       finally { livePnlLoading = false; }
     }
@@ -1991,6 +2097,10 @@ _OPERATOR_HTML = """<!doctype html>
     loadLivePnl();
     setInterval(loadLivePnl, 2000);
 
+    el("perf-rebase-mode").addEventListener("change", event => {
+      state.performance.rebaseMode = event.target.value;
+      if (state.performance.payload) renderPerformance(state.performance.payload);
+    });
     let performanceResizeFrame = null;
     window.addEventListener("resize", () => {
       cancelAnimationFrame(performanceResizeFrame);

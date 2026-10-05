@@ -247,7 +247,8 @@ def publish_dashboard(settings, store, analytics):
     from systematic_trading.portfolio.allocation_analytics import allocation_revision, allocation_ledger_revision, build_allocation_analytics
     allocation_token = allocation_revision(store)
     ledger_token = allocation_ledger_revision(store)
-    inputs = {"allocation": allocation_token, "allocation_ledger": ledger_token, "contract": "portfolio-context-v4", "baseline": baseline_token, "market": analytics.market_revision(),
+    from systematic_trading.portfolio.allocation_performance import CONTRACT
+    inputs = {"allocation": allocation_token, "allocation_ledger": ledger_token, "contract": CONTRACT, "baseline": baseline_token, "market": analytics.market_revision(),
               "account": (analytics.latest("account-history") or {}).get("version"),
               "strategy": (analytics.latest("strategy-serving") or {}).get("version")}
     if not inputs["account"]:
@@ -260,6 +261,10 @@ def publish_dashboard(settings, store, analytics):
     allocation = build_allocation_analytics(settings, store, analytics)
     request.app.state.allocation_analytics = allocation
     payload = api.dashboard_performance(request).model_dump(mode="json")
+    from systematic_trading.research.spot_performance import prepare_spot_basis
+    payload['spot_basis'] = prepare_spot_basis(settings, request.app.state.store, analytics, payload)
+    if (analytics.latest('strategy-serving') or {}).get('version') != inputs['strategy']:
+        raise RuntimeError('Strategy publication changed during performance calculation')
     account_marks = {r['trade_date']:r['nav_cnh'] for r in payload['account']}
     from decimal import Decimal
     allocation['account_reconciliation'] = [dict(trade_date=r['trade_date'], version=r['version'],

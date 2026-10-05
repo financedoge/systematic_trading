@@ -1,7 +1,7 @@
 """Read-only IB portfolio P&L. Never substitute research marks for broker values."""
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from decimal import Decimal, InvalidOperation
 from threading import Event, RLock, Thread
 
@@ -26,16 +26,22 @@ class PositionPnl(BaseModel):
     contract_id: int
     symbol: str
     currency: str
+    security_type: str | None = None
     quantity: Decimal | None = None
     daily_pnl: Decimal | None = None
     unrealized_pnl: Decimal | None = None
     realized_pnl: Decimal | None = None
     market_value: Decimal | None = None
+    market_price: Decimal | None = None
+    previous_close: Decimal | None = None
+    close_date: date | None = None
+    daily_return: Decimal | None = None
     received_at: datetime | None = None
     stale: bool = True
 
 
 class BrokerPnlSnapshot(BaseModel):
+    performance: dict = Field(default_factory=dict)
     source: str = 'ib_portfolio_pnl'
     environment: str = 'paper'
     status: str = 'unavailable'
@@ -98,6 +104,7 @@ class BrokerPnlService:
             'stale' if result.received_at else 'unavailable'
         )
         for row in result.positions:
+            row.market_price = row.market_value / row.quantity if row.market_value is not None and row.quantity else None
             row.stale = not connected or row.received_at is None or (
                 now - row.received_at
             ).total_seconds() > self.settings.ib_pnl_stale_seconds
@@ -203,6 +210,7 @@ class BrokerPnlService:
                         self.requests[request] = con_id
                         service.data.positions.append(PositionPnl(
                             contract_id=con_id, symbol=contract.symbol, currency=contract.currency, quantity=quantity,
+                            security_type=getattr(contract, 'secType', None),
                         ))
                         self.reqPnLSingle(request, self.account, '', con_id)
                     else:
