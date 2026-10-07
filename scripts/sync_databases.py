@@ -45,7 +45,7 @@ def main():
     os.chdir(ROOT)
     settings = AppSettings()
     databases = LocalDatabases(ROOT, config, settings)
-    if settings.database_path.resolve() not in databases.sqlite_paths:
+    if settings.transactional_store_backend.strip().lower() == "sqlite" and settings.database_path.resolve() not in databases.sqlite_paths:
         raise SyncConflict("Configured ST_DATABASE_PATH is missing from sqlite_paths")
     optional = config.get("optional", False)
     if optional and config.get("conflict_policy") != "latest_snapshot":
@@ -72,6 +72,8 @@ def main():
                     raise SyncConflict("Use start_local_platform.ps1 to prepare NAS sync and start its backup worker")
     elif args.action == "stop-worker":
         stop_path.touch()
+        from system_backup import stop_worker
+        stop_worker(ROOT)
         deadline = time.monotonic() + 330
         while pid_path.exists() and process_exists(int(pid_path.read_text())):
             if time.monotonic() > deadline:
@@ -87,7 +89,15 @@ def main():
         pid_path.write_text(str(os.getpid()))
         try:
             next_backup = time.monotonic() + config["interval_seconds"]
+            next_system_check = 0
             while not stop_path.exists():
+                if config.get("system_backup_config") and time.monotonic() >= next_system_check:
+                    try:
+                        from system_backup import start_worker
+                        start_worker(ROOT, ROOT / config["system_backup_config"])
+                    except Exception as error:
+                        print(f"Optional system backup worker startup deferred: {error}", file=sys.stderr, flush=True)
+                    next_system_check = time.monotonic() + 30
                 if time.monotonic() >= next_backup:
                     try:
                         sync.backup()
@@ -98,6 +108,8 @@ def main():
                     next_backup = time.monotonic() + config["interval_seconds"]
                 time.sleep(1)
         finally:
+            if config.get("system_backup_config"):
+                (run / "system_backup.stop").touch()
             pid_path.unlink(missing_ok=True)
             worker_lock.__exit__(None, None, None)
     else:

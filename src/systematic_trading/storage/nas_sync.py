@@ -8,6 +8,7 @@ from __future__ import annotations
 from contextlib import closing, contextmanager
 from datetime import UTC, datetime
 import hashlib
+import gzip
 import json
 import os
 from pathlib import Path
@@ -171,8 +172,15 @@ class LocalDatabases:
         if self.config["postgres"]:
             target = directory / "postgres.sql"
             self.pg("pg_dump", "--no-password", "--clean", "--if-exists", "--no-owner", "--file", target)
-            files[target.name] = file_hash(target)
             fingerprints[target.name] = postgres_fingerprint(target)
+            if self.config.get("postgres_compression") == "gzip":
+                compressed = directory / "postgres.sql.gz"
+                with target.open("rb") as source, compressed.open("wb") as output:
+                    with gzip.GzipFile(filename="", fileobj=output, mode="wb", compresslevel=1, mtime=0) as archive:
+                        shutil.copyfileobj(source, archive, 1024*1024)
+                target.unlink()
+                target = compressed
+            files[target.name] = file_hash(target)
         from systematic_trading.storage.dependencies import dependency_receipt
         return {"files": files, "fingerprints": fingerprints, "layout": self.layout,
                 "dependencies": dependency_receipt(self.settings)}
@@ -194,8 +202,18 @@ class LocalDatabases:
                 END $$;
                 CREATE SCHEMA public AUTHORIZATION pg_database_owner;
                 GRANT USAGE ON SCHEMA public TO PUBLIC;"""
-            self.pg("psql", "--no-password", "-X", "--single-transaction", "--set", "ON_ERROR_STOP=1",
-                    "--command", clear_schemas, "--file", directory / "postgres.sql")
+            # Decode into a private temporary file; never modify the incoming
+            # immutable capture or send a compressed stream to psql.
+            if "postgres.sql.gz" in manifest["files"]:
+                with tempfile.TemporaryDirectory(dir=directory.parent) as unpacked:
+                    sql_path = Path(unpacked) / "postgres.sql"
+                    with gzip.open(directory / "postgres.sql.gz", "rb") as source, sql_path.open("wb") as output:
+                        shutil.copyfileobj(source, output, 1024*1024)
+                    self.pg("psql", "--no-password", "-X", "--single-transaction", "--set", "ON_ERROR_STOP=1",
+                            "--command", clear_schemas, "--file", sql_path)
+            else:
+                self.pg("psql", "--no-password", "-X", "--single-transaction", "--set", "ON_ERROR_STOP=1",
+                        "--command", clear_schemas, "--file", directory / "postgres.sql")
         for index, target in enumerate(self.sqlite_paths):
             name = f"sqlite-{index}.db"
             if name not in manifest["files"]:
@@ -279,12 +297,27 @@ class NasSync:
             raise SyncConflict("Invalid snapshot ID")
         source = self.root / "snapshots" / head
         manifest = read_json(source / "manifest.json")
+        # One explicit, verified retirement bridge: never discard SQLite edits
+        # from a peer that still writes it. Its exact frozen logical fingerprint
+        # must match the archive already preserved in PostgreSQL.
+        retired = self.config.get("retired_sqlite_paths", [])
+        legacy_layout = dict(self.databases.layout, sqlite_paths=retired)
+        bridge = bool(retired and not self.databases.sqlite_paths and manifest["layout"] == legacy_layout)
+        if bridge:
+            expected_retired = self.config.get("retired_sqlite_fingerprints", {})
+            if not set(expected_retired).issubset(manifest["files"]) or set(expected_retired) != {f"sqlite-{i}.db" for i in range(len(retired))} or any(
+                manifest["fingerprints"].get(name) != expected for name, expected in expected_retired.items()
+            ):
+                raise SyncConflict("Retired SQLite changed; preserve and reconcile the peer's legacy data")
         if manifest["layout"] != self.databases.layout:
-            raise SyncConflict("Database layout differs from NAS snapshot")
+            if not bridge:
+                raise SyncConflict("Database layout differs from NAS snapshot")
         allowed = {f"sqlite-{i}.db" for i in range(len(self.databases.sqlite_paths))}
+        if bridge:
+            allowed.update(expected_retired)
         if self.config["postgres"]:
-            allowed.add("postgres.sql")
-            if "postgres.sql" not in manifest["files"]:
+            allowed.update({"postgres.sql", "postgres.sql.gz"})
+            if len({"postgres.sql", "postgres.sql.gz"}.intersection(manifest["files"])) != 1:
                 raise SyncConflict("PostgreSQL snapshot missing")
         if not set(manifest["files"]).issubset(allowed):
             raise SyncConflict("Unexpected snapshot file")
@@ -293,6 +326,10 @@ class NasSync:
             shutil.copyfile(source / name, destination / name)
             if file_hash(destination / name) != expected:
                 raise SyncConflict(f"Snapshot checksum mismatch: {name}")
+        if bridge:
+            manifest = dict(manifest, layout=self.databases.layout,
+                files={k: v for k, v in manifest["files"].items() if k not in expected_retired},
+                fingerprints={k: v for k, v in manifest["fingerprints"].items() if k not in expected_retired})
         return manifest
 
     def prepare(self):

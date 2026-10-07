@@ -1,5 +1,11 @@
 # Optional NAS backups and PC handoff
 
+The October 7 upgrade adds [full recovery backups](full-system-backup.md) for
+ClickHouse, NATS and durable model/research/raw files. Frequent SQL handoff now
+snapshots PostgreSQL only, with gzip compression. SQLite has no active production
+functions: its frozen rows remain in PostgreSQL and its original file is retained.
+Both PCs must upgrade before handoff; changed old-PC SQLite files are rejected.
+
 The platform runs on local PostgreSQL, ClickHouse and local files. NAS access is
 optional. Standard start/stop scripts work away from home; the dashboard launcher
 checks local restore safety without contacting NAS or requiring a backup worker.
@@ -58,8 +64,8 @@ broker reconciliation and approval checks.
 
 Do not copy `var/database-sync` or `var/run` between PCs: these hold local identity,
 checkpoints and process state. Credentials and `.env` never go to NAS. Both PCs
-must use the same database name and SQLite path list. `ST_DATABASE_PATH` must
-remain included in `sqlite_paths`.
+must use the same database name and active layout. `ST_DATABASE_PATH` must be
+included in `sqlite_paths` only when the explicit SQLite backend is selected.
 
 ## Verification and recovery
 
@@ -89,10 +95,10 @@ role. Roles/passwords are not in SQL dumps. `pg_dump`/`psql` are discovered on P
 or under `C:/Program Files/PostgreSQL`; `postgres_bin` can select another location.
 Install Docker and paper Gateway separately.
 
-SQL snapshots do not contain ClickHouse or immutable model/market-data artifacts.
+SQL handoff snapshots do not contain ClickHouse or immutable model/market-data artifacts.
 Manifests retain hashes of governed roots, model/FX inputs, tracked outputs and
 ClickHouse publications. Restore these dependencies separately at the recorded
-paths before incoming SQL restore can succeed. Missing prerequisites defer that
+paths from the separate full-system backup before incoming SQL restore can succeed. Missing prerequisites defer that
 restore; they neither replace local data nor establish trading readiness. See
 [analytical migration](analytics-migration.md) and
 [database consolidation](database-consolidation.md).

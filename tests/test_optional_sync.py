@@ -99,3 +99,24 @@ def test_snapshot_retention_is_bounded_and_legacy_owner_does_not_block(tmp_path)
         insert(a, str(i))
         assert a.backup() == "published_local"
     assert len(list((a.local/"checkpoints").iterdir())) == 2
+
+
+def test_verified_sqlite_retirement_accepts_frozen_peer_but_rejects_new_edits(tmp_path):
+    from systematic_trading.storage.nas_sync import LocalDatabases
+    from systematic_trading.config import AppSettings
+    old = node(tmp_path, "old")
+    insert(old, "already archived in Postgres")
+    old.prepare()
+    fingerprint = old.state["fingerprints"]["sqlite-0.db"]
+    target = tmp_path / "retired"
+    target.mkdir()
+    config = dict(old.config, sqlite_paths=[], retired_sqlite_paths=["data.db"],
+                  retired_sqlite_fingerprints={"sqlite-0.db":fingerprint})
+    new = OptionalNasSync(target, config, LocalDatabases(target, config, AppSettings(_env_file=None)))
+    manifest = new.download(old.head(), target/"verified")
+    assert manifest["layout"]["sqlite_paths"] == [] and manifest["fingerprints"] == {}
+    assert (target/"verified/sqlite-0.db").exists()  # Old bytes verified, not silently discarded.
+    insert(old, "unarchived old-PC change")
+    old.backup()
+    with pytest.raises(SyncConflict, match="Retired SQLite changed"):
+        new.download(old.head(), target/"rejected")

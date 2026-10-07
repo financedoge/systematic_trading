@@ -264,10 +264,10 @@ def test_cli_refuses_handoff_with_running_service(tmp_path, monkeypatch):
         main()
 
 
-@pytest.mark.parametrize("optional", [False, True])
-def test_real_postgres_handoff_and_restore_rollback(tmp_path, isolated_postgres, optional):
+@pytest.mark.parametrize("optional,compression", [(False, None), (True, None), (True, "gzip")])
+def test_real_postgres_handoff_and_restore_rollback(tmp_path, isolated_postgres, optional, compression):
     cfg = isolated_postgres
-    suffix = "_latest" if optional else ""
+    suffix = ("_latest" if optional else "") + ("_gzip" if compression else "")
     names = ["nas_a" + suffix, "nas_b" + suffix]
     owner_role, migrator_role, app_role = ("nas_owner" + suffix, "nas_migrator" + suffix, "nas_app" + suffix)
     with psycopg.connect(**cfg, dbname="postgres", autocommit=True) as db:
@@ -281,6 +281,9 @@ def test_real_postgres_handoff_and_restore_rollback(tmp_path, isolated_postgres,
                             postgres_database=name, postgres_migrator_user=migrator_role,
                             postgres_migrator_password=cfg["password"], postgres_owner_role=owner_role) for name in names]
     a, b = [make_sync(tmp_path, node, True, setting) for node, setting in zip(["a", "b"], settings)]
+    if compression:
+        for sync in (a, b):
+            sync.config["postgres_compression"] = compression
     if optional:
         from systematic_trading.storage.optional_sync import OptionalNasSync
         a, b = [OptionalNasSync(s.workspace, s.config, s.databases) for s in (a, b)]
@@ -298,6 +301,7 @@ def test_real_postgres_handoff_and_restore_rollback(tmp_path, isolated_postgres,
     a.release()
     manifest_path = a.root / "snapshots" / a.head() / "manifest.json"
     manifest = read_json(manifest_path)
+    assert ("postgres.sql.gz" in manifest["files"]) == bool(compression)
     manifest["layout"]["database"] = names[1]
     write_json(manifest_path, manifest)
     b.prepare()

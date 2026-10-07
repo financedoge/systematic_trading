@@ -31,14 +31,16 @@ const fixture = {
   audit: {symbol: 'TEST', name: 'Test', rows: 101, raw_rows: 101, status: 'available', gaps: [], sources: [{source_id: 'archive'}], overlaps: []},
   rows, comparisons: rows.map(r => ({...r, rebased_adjusted_close: r.adjusted_close})), next_after: null
 };
+const listeners = {};
+const usdFixture={batch:'usd-batch',vintage_date:'2026-10-01',published_vintages:93,features:{USD21:.01,USD63:-.02},observations:[{date:date(0),value:'100.0000'},{date:date(1),value:null},{date:date(2),value:'102.0000'}],basis:'Index levels'};
 const context = vm.createContext({
   assert, console, URL, URLSearchParams, setTimeout, Date,
   document: {getElementById: el, createElement: () => el('new'), querySelector: () => ({insertBefore() {}})},
   location: {href: 'http://localhost/?view=bars'}, history: {replaceState() {}},
-  window: {addEventListener() {}},
+  window: {MarketHistory:{debug:true,register(){}},addEventListener:(event,handler)=>{listeners[event]=handler}},
   requestAnimationFrame: fn => {frames.set(++frameId, fn);return frameId;},
   cancelAnimationFrame: id => frames.delete(id),
-  fetch: async url => {requests.push(url);return {ok: true, json: async () => url.includes('/audit?') ? {audit: fixture.audit} : fixture};}
+  fetch: async url => {requests.push(url);return {ok: true, json: async () => url.includes('/usd/history') ? usdFixture : url.includes('/audit?') ? {audit: fixture.audit} : fixture};}
 });
 const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
 vm.runInContext(script.replace('})();', `window.test = {
@@ -128,5 +130,27 @@ seed({rows: rows.slice(20), comparisons: fixture.comparisons});assert.equal(wind
   assert.equal(windowDates(), `${date(0)}/${date(100)}`);
   const current = api.state().page;await api.loadSeries(api.state().generation - 1);
   assert.equal(api.state().page, current); // stale response cannot override current view
+  // Debug off immediately removes comparisons and prevents requesting source history.
+  context.window.MarketHistory.debug=false;listeners['market-debug-change']();
+  assert.equal(el('governed-source-chart').innerHTML,'');
+  assert.equal(line('governed-chart','comparison-line'),'');
+  assert.equal(el('governed-basis').value,'adjusted');
+  el('governed-source').value='archive';await api.loadSeries(api.state().generation);
+  assert.equal(new URL(requests.at(-1),'http://localhost').searchParams.get('comparison_source'),'');
+  // USD uses its published endpoint, preserves gaps, and has no stock price/volume fields.
+  el('governed-symbol').value='USD';await el('governed-filters').onsubmit({preventDefault(){}});
+  assert.equal(requests.at(-1),'/api/v1/market-data/usd/history');
+  assert.equal(api.state().page.kind,'usd_index');
+  assert.equal(api.state().page.rows[1].index_level,null);
+  assert.equal(api.state().page.rows[0].index_level,100);
+  assert(!Object.hasOwn(api.state().page.rows[0],'adjusted_close'));
+  assert.equal((line('governed-chart','history-line').match(/M/g)||[]).length,2);
+  assert.match(el('governed-records').innerHTML,/Index level/);
+  assert.doesNotMatch(el('governed-records').innerHTML,/raw close|volume|Lineage/);
+  assert(el('governed-source').disabled&&el('governed-basis').disabled);
+  api.setWindow([start+DAY,start+2*DAY]);api.renderCharts();assert.match(windowDates(),/2000-01-02\/2000-01-03/);
+  el('governed-symbol').value='TEST';await api.load();
+  assert(!el('governed-source').disabled&&!el('governed-basis').disabled);
+  assert.equal(api.state().page.kind,undefined);
   console.log('Governed chart navigation, synchronization, gaps, date controls and loading checks passed');
 })().catch(error => {console.error(error);process.exitCode = 1;});

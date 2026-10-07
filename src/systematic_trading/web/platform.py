@@ -2,24 +2,35 @@ from __future__ import annotations
 
 from systematic_trading.chart_navigation import with_chart_navigation
 from systematic_trading.web.shell import with_app_shell
+from systematic_trading.web.backup_panel import BACKUP_PANEL_HTML
+from systematic_trading.storage.backup_status import backup_status
+from pathlib import Path
 
 from fastapi import APIRouter
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 
 router = APIRouter()
+REPO_ROOT = Path(__file__).resolve().parents[3]
+
+
+@router.get("/api/v1/platform/backups")
+def platform_backups() -> JSONResponse:
+    return JSONResponse(backup_status(REPO_ROOT), headers={"Cache-Control": "no-store"})
 
 
 @router.get("/platform", response_class=HTMLResponse, include_in_schema=False)
 def platform_health_portal() -> HTMLResponse:
-    return HTMLResponse(with_app_shell(_PLATFORM_HTML, "system"))
+    page = _PLATFORM_HTML.replace('    <div class="layout">', BACKUP_PANEL_HTML + '\n    <div class="layout">', 1)
+    return HTMLResponse(with_app_shell(page, "system"))
 
 
 @router.get("/platform/market-data-audit", response_class=HTMLResponse, include_in_schema=False)
 def market_data_audit_portal() -> HTMLResponse:
     from systematic_trading.web.research_archive_panel import RESEARCH_ARCHIVE_HTML
     from systematic_trading.web.governed_panel import GOVERNED_HTML
-    from systematic_trading.web.usd_panel import USD_HTML
-    page = _MARKET_DATA_AUDIT_HTML.replace('<main>', '<main><section id="market-history-section" aria-label="Market History">'+RESEARCH_ARCHIVE_HTML+GOVERNED_HTML+USD_HTML+'<div id="market-bars-panel" hidden>', 1)
+    from systematic_trading.web.market_history_ui import MARKET_HISTORY_UI_HTML
+    page = _MARKET_DATA_AUDIT_HTML.replace('<main>', '<main><section id="market-history-section" aria-label="Market History">'+MARKET_HISTORY_UI_HTML+RESEARCH_ARCHIVE_HTML+GOVERNED_HTML+'<div id="market-bars-panel" data-market-view="bars" hidden>', 1)
+    page = page.replace('<body>', '<body class="market-data-page">', 1)
     return HTMLResponse(with_app_shell(with_chart_navigation(page.replace('</main>', '</div></section></main>', 1)), "market"))
 
 
@@ -830,15 +841,15 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
   </header>
   <main>
     <form id="golden-filters" class="filters panel">
-      <label>Store<select id="store"><option value="intraday-bars" selected>Intraday Bars</option><option value="daily-bars">Daily Bars</option></select></label>
+      <label>Data type<select id="store"><option value="intraday-bars" selected>Intraday Bars</option><option value="daily-bars">Daily Bars</option></select></label>
       <label>Symbol<select id="golden-symbol" class="symbol" aria-label="Symbol"></select></label>
       <label class="daily-control">Start<input id="start-date" type="date"></label>
       <label class="daily-control">End<input id="end-date" type="date"></label>
       <label class="intraday-control">Captured From<input id="intraday-start-date" type="date"></label>
       <label class="intraday-control">Captured Through<input id="intraday-end-date" type="date"></label>
-      <label class="intraday-control">Capture<select id="intraday-capture-mode"><option value="historical_backfill" selected>IB historical OHLCV</option><option value="stream">IB streaming OHLCV</option><option value="">All IB OHLCV</option></select></label>
-      <label class="intraday-control">Bar Size<input id="intraday-bar-size" class="small" type="number" min="1" value="5"></label>
-      <label>Limit<input id="golden-limit" class="small" type="number" min="1" max="50000" value="5000"></label>
+      <label class="intraday-control">Source<select id="intraday-capture-mode"><option value="historical_backfill" selected>IB historical OHLCV</option><option value="stream">IB streaming OHLCV</option><option value="">All IB OHLCV</option></select></label>
+      <label class="intraday-control compact-field">Interval (sec)<input id="intraday-bar-size" class="small" type="number" min="1" value="5"></label>
+      <label class="compact-field">Max. bars<input id="golden-limit" class="small" type="number" min="1" max="50000" value="5000"></label>
       <div id="daily-range-controls" class="range-buttons daily-control" aria-label="Date range controls">
         <button type="button" data-range="1m">1M</button>
         <button type="button" data-range="3m">3M</button>
@@ -857,17 +868,18 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
         <button type="button" data-sessions="10" aria-pressed="false">10D</button>
         <button type="button" data-sessions="all" aria-pressed="false">All</button>
       </div>
-      <button class="primary" type="submit">Run</button>
+      <button class="primary" type="submit">View bars</button>
       <button id="refresh-btn" type="button">Refresh</button>
       <span id="status" class="status-line">Loading</span>
     </form>
-    <p id="intraday-source-note" class="intraday-control muted">Candles use IB OHLCV bars. Incomplete delayed quote samples are retained in Raw Evidence only. Capture dates can contain older recovered sessions; the chart uses exchange timestamps (UTC).</p>
+    <p class="intraday-control muted">Five-second IB candles · times in UTC. Capture dates can include older recovered sessions.</p>
+    <p id="intraday-source-note" class="intraday-control muted market-debug-only">Candles use IB OHLCV bars. Incomplete delayed quote samples are retained in Raw Evidence only.</p>
     <section class="summary" aria-label="Market-data summary">
       <div class="metric"><label>Bars</label><strong id="metric-bars">0</strong></div>
       <div class="metric"><label>Range</label><strong id="metric-range">n/a</strong></div>
       <div class="metric"><label>Last Close</label><strong id="metric-close">n/a</strong></div>
       <div class="metric"><label>Change</label><strong id="metric-change">n/a</strong></div>
-      <div class="metric"><label>Volume</label><strong id="metric-volume">n/a</strong></div>
+      <div class="metric"><label>Last bar volume</label><strong id="metric-volume">n/a</strong></div>
       <div class="metric"><label>Source</label><strong id="metric-source">n/a</strong></div>
     </section>
     <div class="grid">
@@ -886,7 +898,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
         <div id="golden-table" class="table-wrap"></div>
       </section>
     </div>
-    <section class="panel raw-section">
+    <section class="panel raw-section market-debug-only">
       <div class="panel-head">
         <h2>Raw Evidence</h2>
         <span id="raw-status" class="status-line">Idle</span>
@@ -1241,7 +1253,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       el("raw-recorder-date").value = exactDate;
       el("raw-bar-size").value = el("intraday-bar-size").value;
       const sessions = selectedRecorderSessionCount();
-      el("chart-meta").textContent = `${symbol} | ${bars.length} IB OHLCV bars | ${sessions} capture day${sessions === 1 ? "" : "s"} | ${intradayRangeLabel()}`;
+      el("chart-meta").textContent = `${symbol} · ${number(bars.length, 0)} IB bars · ${sessions} capture day${sessions === 1 ? "" : "s"} · ${intradayRangeLabel()}`;
       el("intraday-source-note").textContent = `Candles use IB OHLCV bars. ${summary.sampled_quote_records_excluded || 0} incomplete delayed quote samples excluded by these filters; inspect samples in Raw Evidence. Capture dates can contain older recovered sessions. Chart times are UTC; initially showing the latest 120 loaded bars, with Full loaded range available.`;
       renderRaw(data);
       el("raw-status").textContent = "Loaded";
@@ -1262,7 +1274,7 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
       const prev = bars.length > 1 ? bars[bars.length - 2] : null;
       const change = last && prev ? (Number(last.close) - Number(prev.close)) : null;
       const changePct = last && prev && Number(prev.close) ? (change / Number(prev.close) * 100) : null;
-      el("metric-bars").textContent = summary.rows_returned ?? bars.length;
+      el("metric-bars").textContent = number(summary.rows_returned ?? bars.length, 0);
       el("metric-range").textContent = `${fmtDate(summary.first_trade_date || first?.trade_date)} to ${fmtDate(summary.last_trade_date || last?.trade_date)}`;
       el("metric-close").textContent = last ? number(last.close, 4) : "n/a";
       el("metric-change").innerHTML = change === null
@@ -1270,8 +1282,8 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
         : `<span class="${change >= 0 ? "ok" : "bad"}">${esc(number(change, 4))} (${esc(number(changePct, 2))}%)</span>`;
       el("metric-volume").textContent = last ? number(last.volume, 0) : "n/a";
       el("metric-source").textContent = (summary.source_names || []).join(", ") || "n/a";
-      el("chart-meta").textContent = `${AssetNames.label(summary.symbol || selectedSymbol())} | ${bars.length} bars`;
-      el("table-meta").textContent = `${bars.length} rows`;
+      el("chart-meta").textContent = `${AssetNames.label(summary.symbol || selectedSymbol())} · ${number(bars.length, 0)} bars`;
+      el("table-meta").textContent = `${number(bars.length, 0)} rows`;
       renderGoldenChart(bars);
       renderGoldenTable(bars);
     }
@@ -1281,10 +1293,10 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
         ? [Date.parse(allBars[allBars.length - 120].exchange_timestamp), Date.parse(allBars[allBars.length - 1].exchange_timestamp)] : null;
       const view = ChartNavigation.view('golden-chart', allBars, b=>Date.parse(b.exchange_timestamp||b.trade_date),
         ()=>renderGoldenChart(allBars), {left:62,right:922,top:18,bottom:404},
-        {key:selectedSymbol()+'|'+el('store').value+'|'+(isIntraday()?el('intraday-start-date').value+'|'+el('intraday-end-date').value+'|'+el('intraday-capture-mode').value:el('start-date').value+'|'+el('end-date').value),initialRange,intraday:isIntraday(),resetLabel:'Full loaded range',scope:'Recorded bars · loaded range'});
+        {key:selectedSymbol()+'|'+el('store').value+'|'+(isIntraday()?el('intraday-start-date').value+'|'+el('intraday-end-date').value+'|'+el('intraday-capture-mode').value:el('start-date').value+'|'+el('end-date').value),initialRange,intraday:isIntraday(),resetLabel:'Full loaded range',scope:(isIntraday()?'Intraday bars':'Daily bars')+' · loaded range'});
       const bars = view.rows;
       if (!bars.length) {
-        el("golden-chart").innerHTML = `<div class="empty">${isIntraday() ? "No IB OHLCV bars in this selection. Delayed quote samples are not complete bars; inspect Raw Evidence or select IB historical OHLCV while recovery progresses." : "No daily bars"}</div>`;
+        el("golden-chart").innerHTML = `<div class="empty">${isIntraday() ? "No IB OHLCV bars in this selection. Try another capture date or source; historical recovery may still be in progress." : "No daily bars"}</div>`;
         return;
       }
       const width = 940;
@@ -1365,19 +1377,19 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
             <th class="numeric" style="width: 12%;">Close</th>
             <th class="numeric" style="width: 13%;">Volume</th>
             <th style="width: 13%;">Source</th>
-            <th>Flags</th>
+            <th class="market-debug-only">Flags</th>
           </tr>
         </thead>
         <tbody>
           ${bars.map((bar) => `<tr>
-            <td>${esc(bar.trade_date)}<br><span class="muted">${esc(bar.adjustment)}</span></td>
+            <td>${esc(bar.trade_date)}<span class="muted market-debug-only"><br>${esc(bar.adjustment)}</span></td>
             <td class="numeric">${esc(number(bar.open, 4))}</td>
             <td class="numeric">${esc(number(bar.high, 4))}</td>
             <td class="numeric">${esc(number(bar.low, 4))}</td>
             <td class="numeric">${esc(number(bar.close, 4))}</td>
             <td class="numeric">${esc(number(bar.volume, 0))}</td>
-            <td>${esc(bar.source_name)}<br><span class="muted">${esc(fmtDateTime(bar.available_at))}</span></td>
-            <td>${esc((bar.quality_flags || []).join(", ") || "none")}<br><span class="muted">${esc(bar.raw_ref || String(bar.payload_hash || "").slice(0, 24))}</span></td>
+            <td>${esc(bar.source_name)}<br><span class="muted market-debug-only">${esc(fmtDateTime(bar.available_at))}</span></td>
+            <td class="market-debug-only">${esc((bar.quality_flags || []).join(", ") || "none")}<br><span class="muted">${esc(bar.raw_ref || String(bar.payload_hash || "").slice(0, 24))}</span></td>
           </tr>`).join("")}
         </tbody>
       </table>`;
@@ -1531,7 +1543,10 @@ _MARKET_DATA_AUDIT_HTML = """<!doctype html>
         });
       });
     }
-    start();
+    let barsStarted = false;
+    window.MarketHistory.register('bars', () => {
+      if (!barsStarted) { barsStarted = true; start(); }
+    });
   </script>
 </body>
 </html>

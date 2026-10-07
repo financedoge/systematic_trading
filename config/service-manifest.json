@@ -337,6 +337,24 @@
       "notes": "Runtime state is reported by the operator health endpoint."
     },
     {
+      "service_id": "system_backup",
+      "display_name": "Full-system NAS backup",
+      "service_type": "worker",
+      "implementation_status": "active",
+      "required": false,
+      "startup_order": 69,
+      "command": [".venv/Scripts/python.exe", "scripts/system_backup.py", "worker"],
+      "pid_file": "var/run/system_backup.pid",
+      "stdout_log": "var/log/system_backup.worker.log",
+      "health_check": {
+        "kind": "state_file",
+        "target": "var/run/system_backup.health.json",
+        "stale_after_seconds": 300
+      },
+      "supervised_by": "local_recovery",
+      "notes": "Optional hourly native database/queue and durable-file backups; retries every five minutes and resumes interrupted uploads. Offline NAS never gates trading or startup."
+    },
+    {
       "service_id": "local_recovery",
       "display_name": "Local service recovery",
       "service_type": "worker",

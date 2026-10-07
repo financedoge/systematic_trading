@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "repository": "\\\\192.168.1.32\\Public\\systematic-trading\\full-system-restic",
+  "restic_binary": "var/dependencies/restic/restic.exe",
+  "password_file": "var/private/system-backup-recovery-key.txt",
+  "staging_root": "D:/systematic_trading_data/backups/system-backup-staging",
+  "interval_seconds": 3600,
+  "retry_seconds": 300,
+  "command_timeout_seconds": 21600,
+  "clickhouse_container": "systematic-trading-clickhouse",
+  "nats_url": "nats://127.0.0.1:4222",
+  "required_paths": [
+    "src", "scripts", "config", "docs", "tests", ".agents", "research", "var",
+    "README.md", "AGENTS.md", "log.md", "pyproject.toml", ".env.example", "deploy",
+    "D:/systematic_trading_data/research", "D:/systematic_trading_data/lean"
+  ],
+  "exclude": [
+    "**/.env", "**/.env.*", "**/*_key.txt", "**/*_token.txt", "**/credentials*",
+    "**/*.pem", "**/*.key", "**/secrets/**", "**/private/**",
+    "**/__pycache__/**", "**/.venv/**", "**/.pytest_cache/**", "**/.ruff_cache/**",
+    "**/*.pyc", "**/var/run/**", "**/var/database-sync/checkpoints/**",
+    "**/var/database-sync/tmp*/**", "**/var/database-sync/state.json", "**/var/system-backup/**",
+    "**/var/dependencies/**", "**/rolling-model-deps/**", "**/*.tmp", "**/*.lock"
+  ]
+}

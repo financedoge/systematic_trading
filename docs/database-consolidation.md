@@ -1,5 +1,20 @@
 # Database consolidation and D: storage
 
+## October 7 active SQLite retirement
+
+The application already uses PostgreSQL and ClickHouse; no additional production
+SQLite function was found. Reverified all 145,836 legacy rows and schema/sequence
+metadata against the existing PostgreSQL archive (same snapshot ID below).
+Production checkpoints now have `sqlite_paths: []`; PostgreSQL startup/backup
+does not require the SQLite file. Explicit SQLite support remains for isolated
+tests and inspection, and the original artifact is retained in full file backups.
+
+The new reader accepts an old SQLite-bearing NAS generation only if its frozen
+logical fingerprint matches the verified archive. Changed old-PC files are
+rejected; no stale approvals or orders are replayed. Upgrade both PCs before
+handoff. This verified layout transition supersedes the earlier prohibition on
+removing SQLite from active NAS snapshots. See [full backups](full-system-backup.md).
+
 Scope: 2026-09-25. PostgreSQL for operational state; ClickHouse for market data,
 as explicitly selected by the operator. SQLite is retired from default application,
 research, multiprocessing worker and reporting paths. Explicit SQLite backends

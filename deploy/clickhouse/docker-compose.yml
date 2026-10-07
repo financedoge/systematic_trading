@@ -12,6 +12,7 @@ services:
       - "127.0.0.1:9000:9000"
     volumes:
       - clickhouse_data:/var/lib/clickhouse
+      - ./backup.xml:/etc/clickhouse-server/config.d/system-backup.xml:ro
       - "${ST_CLICKHOUSE_LOG_ROOT:-D:/systematic_trading_data/clickhouse/logs}:/var/log/clickhouse-server"
     ulimits:
       nofile:

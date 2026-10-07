@@ -6,5 +6,11 @@
   "interval_seconds": 300,
   "postgres": true,
   "postgres_bin": "",
-  "sqlite_paths": ["var/systematic_trading.db"]
+  "postgres_compression": "gzip",
+  "sqlite_paths": [],
+  "retired_sqlite_paths": ["var/systematic_trading.db"],
+  "retired_sqlite_fingerprints": {
+    "sqlite-0.db": "6f6611cd8848feb9d3acda34295d38f62c9c6c78d17896c0252c7092d3f4585b"
+  },
+  "system_backup_config": "config/system-backup.json"
 }

@@ -18,6 +18,8 @@ var/live/account_snapshots/*
 var/log/
 var/run/
 var/database-sync/
+var/system-backup/
+var/private/
 var/dependencies/
 var/market_data/fx_observations/
 dist/

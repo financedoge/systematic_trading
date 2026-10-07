@@ -73,12 +73,14 @@ See [database consolidation](docs/database-consolidation.md) for SQLite retireme
 
 Recommended local foundation startup:
 
-Startup and shutdown work without NAS access. PostgreSQL/SQLite checkpoints stay
+Startup and shutdown work without NAS access. PostgreSQL checkpoints stay
 local and optionally synchronize through `\\192.168.1.32\Public\systematic-trading`.
 The latest verified snapshot revision wins; unchanged backups retain their revision
 time, and incoming restores wait for stopped services. Read the
 [optional NAS backup guide](docs/database-sync.md). A new PC still needs local infrastructure
-and credentials; ClickHouse and raw market-data files require separate migration.
+and credentials. The optional [full-system backup worker](docs/full-system-backup.md)
+captures ClickHouse, NATS and durable raw/audited/model/research files with encrypted
+deduplicated snapshots and automatic reconnect retries.
 
 ```powershell
 .\scripts\start_local_platform.ps1
@@ -191,4 +193,4 @@ pip install -e ".[data]"
 
 ## Local state
 
-The recommended local platform startup uses Postgres for transactional state and ClickHouse for market data. `var/systematic_trading.db` is retained only for recovery and existing NAS snapshot-layout compatibility. All source rows are verified in the PostgreSQL legacy archive; default research/reporting paths no longer open it. See [migration evidence and storage locations](docs/database-consolidation.md).
+The local platform uses PostgreSQL for relational state and ClickHouse for time series. `var/systematic_trading.db` is a frozen historical artifact preserved in file backups. All source rows are verified in the PostgreSQL archive; active application and SQL backup paths do not require SQLite. Explicit SQLite tests remain supported. See [migration evidence and storage locations](docs/database-consolidation.md).

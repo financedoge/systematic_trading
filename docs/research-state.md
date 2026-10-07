@@ -38,7 +38,7 @@ The inherited 45% setting remains a base allocation limit; it is not a final
 holdings cap. The USD layer cannot increase an inherited overweight above 45%.
 The requested addition does not alter broker risk limits or increase capital.
 
-Market Data now includes a USD index tab for published DTWEXBGS history, index
+Market Data includes USD in Historical Daily Price for published DTWEXBGS history, index
 levels, 21/63-observation changes, vintage dates, missing observations and export.
 The chart uses one revised vintage; historical models use their own archived
 vintages. The application acquires, audits and publishes new required snapshots,
