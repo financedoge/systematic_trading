@@ -645,7 +645,7 @@ _OPERATOR_HTML = """<!doctype html>
         </div>
         <div class="metrics-compact" aria-label="Performance summary">
           <div class="mini-metric"><label>Strategy NAV</label><strong id="perf-strategy-nav">n/a</strong></div>
-          <div class="mini-metric"><label>Cumulative strategy return · since reset</label><strong id="perf-strategy-return">n/a</strong></div>
+          <div class="mini-metric"><label id="perf-strategy-return-label">Cumulative strategy return · since reset</label><strong id="perf-strategy-return">n/a</strong></div>
           <div class="mini-metric"><label>Account NAV</label><strong id="perf-account-nav">n/a</strong></div>
           <div class="mini-metric"><label>Cumulative account NAV change · since reset</label><strong id="perf-account-return">n/a</strong></div>
         </div>
@@ -1018,6 +1018,9 @@ _OPERATOR_HTML = """<!doctype html>
       payload = performanceWithSpot(payload, lastLivePnl);
       el("perf-strategy-nav").textContent = fmtMaybeMoney(payload.latest_strategy_nav_cnh);
       el("perf-strategy-return").textContent = fmtMaybePct(payload.strategy_total_return);
+      el("perf-strategy-return-label").textContent = payload.strategy_comparison_start_date
+        ? `Cumulative strategy return · since ${payload.strategy_comparison_start_date}`
+        : "Cumulative strategy return · since reset";
       el("perf-account-nav").textContent = fmtMaybeMoney(payload.latest_account_nav_cnh);
       el("perf-account-return").textContent = fmtMaybePct(payload.account_total_return);
       renderPerformanceDiagnostics(payload.warnings || []);
@@ -1028,8 +1031,16 @@ _OPERATOR_HTML = """<!doctype html>
       el("performance-rebase-note").textContent = actualRebase
         ? "Each period starts at actual portfolio value. Breaks mark rebasing; resets are excluded from Strategy Return."
         : "Each new allocation starts at the previous theoretical value, preserving continuous compounding.";
-      const strategyAll = normalizedPerformanceSeries((actualRebase ? payload.strategy_actual_rebased : payload.strategy) || []);
+      const strategyRaw = normalizedPerformanceSeries((actualRebase ? payload.strategy_actual_rebased : payload.strategy) || []);
+      const strategyAll = allocationComparison && payload.strategy_comparison_start_date
+        ? strategyRaw.filter(point => point.trade_date >= payload.strategy_comparison_start_date)
+        : strategyRaw;
       const accountAll = normalizedPerformanceSeries(payload.account || []);
+      // The aligned chart begins at the strategy's verified account-NAV anchor.
+      // Keep the full reset-to-date account series for its summary above.
+      const chartAccountAll = allocationComparison && payload.strategy_comparison_start_date
+        ? accountAll.filter(point => point.trade_date >= payload.strategy_comparison_start_date)
+        : accountAll;
       const cumulative = normalizedPerformanceSeries(payload.strategy || []);
       el("perf-strategy-nav").textContent = fmtMaybeMoney(cumulative.at(-1)?.nav_cnh);
       el("perf-account-nav").textContent = fmtMaybeMoney(accountAll.at(-1)?.nav_cnh);
@@ -1040,7 +1051,7 @@ _OPERATOR_HTML = """<!doctype html>
       el("performance-spot-note").textContent = livePoints.length
         ? `Provisional spot endpoint · ${livePoints.map(p=>`${p.is_theoretical?'Strategy':'Account'}${p.stale?' (last received · stale)':''} ${fmtDateTime(p.received_at)}`).join(' · ')}. ${spotWarnings.join(' ')}`
         : `Completed / saved observations. ${spotWarnings.join(' ')}`;
-      const extent = performanceExtent(strategyAll, accountAll);
+      const extent = performanceExtent(strategyAll, chartAccountAll);
       if (!extent) {
         el("performance-chart").innerHTML = '<div class="empty">No performance data</div>';
         el("performance-legend").innerHTML = "";
@@ -1066,12 +1077,12 @@ _OPERATOR_HTML = """<!doctype html>
       updatePerformanceControls();
       // Navigation spans whole displayed dates, including the final day's end;
       // otherwise clamping an inclusive range shifts its start back one day.
-      if (typeof ChartNavigation !== 'undefined') ChartNavigation.view('performance-chart', [...strategyAll,...accountAll,{time:Date.parse(extent.maxDate)+86399999}], p=>p.time,
+      if (typeof ChartNavigation !== 'undefined') ChartNavigation.view('performance-chart', [...strategyAll,...chartAccountAll,{time:Date.parse(extent.maxDate)+86399999}], p=>p.time,
         ()=>renderPerformance(completedPayload), {left:56,right:Math.max(el('performance-chart').clientWidth-24,320)-96,top:30,bottom:272},
         {range:state.performance.rangeKey==='all'?null:[Date.parse(state.performance.start),Date.parse(state.performance.end)+86399999],
          onChange:range=>{state.performance.rangeKey=range?'custom':'all';if(range){state.performance.start=dateTextFromTime(range[0]);state.performance.end=dateTextFromTime(range[1])}renderPerformance(completedPayload)}});
       const strategy = filterPerformanceSeries(strategyAll, state.performance.start, state.performance.end);
-      const account = filterPerformanceSeries(accountAll, state.performance.start, state.performance.end);
+      const account = filterPerformanceSeries(chartAccountAll, state.performance.start, state.performance.end);
       const svg = performanceSvg(strategy, account, payload);
       el("performance-chart").innerHTML = svg;
       bindPerformanceInteraction(strategy, account);
@@ -1079,7 +1090,7 @@ _OPERATOR_HTML = """<!doctype html>
         ? "Hover or tap for dates and values. Drag to select a period; arrow keys inspect points."
         : "No observations in the selected period.";
       el("performance-alignment").textContent = allocationComparison
-        ? `${Number(payload.theoretical_base_nav_cnh) > 0 ? `Both lines show CNH P&L from the same starting capital (${fmtMaybeMoney(payload.theoretical_base_nav_cnh)}).` : "Starting capital is unavailable; showing observed CNH values on a shared scale."} Cumulative returns start at the P&L reset and carry through allocation switches. Zooming changes the chart and selected-period statistics below; cumulative totals stay fixed.`
+        ? `${Number(payload.theoretical_base_nav_cnh) > 0 ? `Both lines show CNH P&L from the same starting capital (${fmtMaybeMoney(payload.theoretical_base_nav_cnh)}).` : "Starting capital is unavailable; showing observed CNH values on a shared scale."} ${payload.strategy_comparison_start_date ? `The verified strategy comparison starts ${payload.strategy_comparison_start_date}; earlier allocation history is unavailable, and the aligned chart starts on this date.` : "Cumulative returns start at the account reset when complete strategy history is available."} Zooming changes the chart and selected-period statistics below; cumulative totals stay fixed. The account summary above remains since reset.`
         : payload.account_alignment_date
         ? `Aligned on ${payload.account_alignment_date}: account CNH ${fmtMoney(payload.account_alignment_nav_cnh)} = strategy index ${Number(payload.account_alignment_strategy_index).toFixed(2)}. The alignment stays fixed when zooming. Strategy uses the left axis; account CNH uses the right.`
         : `Account has ${payload.account_tracking_start_date ? "no shared strategy date yet" : "not built a position since the reset"}. Axes are independent until tracking begins. Account history starts ${accountAll[0]?.trade_date || "n/a"}.`;

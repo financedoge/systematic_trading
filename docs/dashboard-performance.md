@@ -35,6 +35,15 @@ actual-rebased period can restart independently. Historical FX and publication
 availability limitations remain visible. Earlier unverified allocation history
 is not reconstructed from today's SOTA.
 
+When an earlier allocation has no exact audited strategy NAV, the cumulative
+comparison starts at the first later allocation close that has both an exact
+published strategy NAV and an observed account NAV. That account value is the
+strategy's opening NAV (index 100); the anchor date is shown beside Strategy
+Return. Earlier history remains explicitly unavailable, and recorded opening
+estimates cannot bridge the gap. The comparison chart is aligned to this anchor,
+while the account NAV and return headline continue from the confirmed account
+reset.
+
 ## Reset history and intraday endpoints (2026-10-05 follow-up)
 
 Cumulative theoretical and account NAVs start at the confirmed P&L reset opening.

@@ -83,6 +83,30 @@ def test_missing_actual_switch_value_never_reuses_earlier_account_mark():
     assert any('no observed account NAV' in w for w in result['warnings'])
 
 
+def test_cumulative_comparison_reanchors_after_unverified_history_at_observed_account_nav():
+    analytics = publication({'legacy':[('2026-09-24','100')],
+                             'verified':[('2026-10-01','500'),('2026-10-02','510')]})
+    timeline = [epoch('2026-09-24','unavailable',{'missing':'1'}),
+                epoch('2026-10-01','verified',{'verified':'1'},'999')]
+    result = build_strategy_comparison(timeline, analytics,
+        [('2026-10-01',D(2000)),('2026-10-02',D(2100))])
+    assert result['comparison_start_date'] == '2026-10-01'
+    assert D(result['base_nav_cnh']) == 2000
+    assert [D(p['nav_cnh']) for p in result['strategy']] == [2000,2040]
+    assert D(result['strategy'][0]['index']) == 100
+    assert any('earlier allocation history is excluded' in w for w in result['warnings'])
+
+
+def test_opening_value_cannot_recover_continuous_series_after_history_gap():
+    analytics = publication({'verified':[('2026-10-01','500'),('2026-10-02','510')]})
+    timeline = [epoch('2026-09-24','unavailable',{'missing':'1'}),
+                epoch('2026-10-01','verified',{'verified':'1'},'999')]
+    result = build_strategy_comparison(timeline, analytics, [])
+    assert result['comparison_start_date'] is None
+    assert result['base_nav_cnh'] is None
+    assert result['strategy'] == []
+
+
 @pytest.mark.parametrize('value',['NaN','Infinity','0','-1','bad'])
 def test_invalid_published_values_are_rejected(value):
     with pytest.raises(ValueError,match='Invalid or duplicate'):
@@ -120,6 +144,7 @@ def test_dashboard_uses_strategy_nav_not_empty_reference_and_exposes_zero_openin
     snapshot(root,'switch.json',day='2026-10-02',captured='2026-10-02T21:00:00Z',cash='900')
     result = performance(client)
     assert D(result['strategy_total_return']) == 0
+    assert result['strategy_comparison_start_date'] == '2026-10-02'
     assert D(result['strategy'][0]['nav_cnh']) == 900
     assert result['theoretical_contract']
     assert len(result['strategy_actual_rebased']) == 1

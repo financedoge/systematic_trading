@@ -50,7 +50,8 @@ assert.equal((svg.match(/class="strategy-dot"/g)||[]).length,1);
 assert.doesNotMatch(svg, /NaN|Infinity/);
 const gap = [{...points[0]}, {...points[1],time:points[0].time+10*86400000}];
 assert.match(performanceSvg(gap,[],{}), /class="strategy-line" d="M [^"]+ M /);
-const comparison = {theoretical_contract:'v1',theoretical_base_nav_cnh:'1000',theoretical_periods:[],
+const comparison = {theoretical_contract:'v1',theoretical_base_nav_cnh:'1000',strategy_comparison_start_date:'2026-10-02',
+  account_total_return:'-0.1',theoretical_periods:[],
   strategy:[{trade_date:'2026-10-01',index:100,nav_cnh:1000,is_theoretical:true,period_start:'2026-10-01'},
     {trade_date:'2026-10-02',index:110,nav_cnh:1100,is_theoretical:true,period_start:'2026-10-01'},
     {trade_date:'2026-10-05',index:132,nav_cnh:1320,is_theoretical:true,period_start:'2026-10-02'}],
@@ -63,10 +64,13 @@ state.performance.rangeKey='all';
 state.performance.rebaseMode='theoretical';
 renderPerformance(comparison);
 assert.equal(el('perf-strategy-return').textContent,'32.00%');
+assert.match(el('perf-strategy-return-label').textContent,/Cumulative strategy return.*since 2026-10-02/);
+assert.equal(el('perf-account-return').textContent,'-10.00%','Account headline remains reset-to-date');
+assert.doesNotMatch(el('performance-chart').innerHTML,/2026-10-01/,'Aligned chart excludes pre-anchor dates');
 assert.equal(el('perf-strategy-nav').textContent,fmtMaybeMoney(1320));
 assert.match(el('performance-chart').innerHTML,/theoretical P&L/i);
 state.performance.rebaseMode='actual';
-renderPerformance(comparison);
+renderPerformance({...comparison,strategy_comparison_start_date:undefined});
 assert.equal(el('perf-strategy-return').textContent,'32.00%');
 assert.equal(el('perf-strategy-nav').textContent,fmtMaybeMoney(1320));
 assert.match(el('performance-chart').innerHTML,/class="strategy-line" d="M [^"]+ M /);

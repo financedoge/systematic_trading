@@ -175,6 +175,7 @@ class DashboardPerformance(BaseModel):
     spot_basis: dict = Field(default_factory=dict)
     theoretical_contract: str | None = None
     theoretical_base_nav_cnh: Decimal | None = None
+    strategy_comparison_start_date: date | None = None
     theoretical_periods: list[dict] = Field(default_factory=list)
     theoretical_sources: dict = Field(default_factory=dict)
     strategy_actual_rebased: list[DashboardSeriesPoint] = Field(default_factory=list)
@@ -628,6 +629,7 @@ def dashboard_performance(request: Request) -> DashboardPerformance:
     return DashboardPerformance(
         theoretical_contract=comparison.get('contract'),
         theoretical_base_nav_cnh=comparison.get('base_nav_cnh'),
+        strategy_comparison_start_date=comparison.get('comparison_start_date'),
         theoretical_periods=comparison.get('periods', []),
         theoretical_sources=comparison.get('sources', {}),
         strategy_actual_rebased=comparison.get('actual_rebased', []),

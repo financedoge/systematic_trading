@@ -1,5 +1,10 @@
 # Project Log
 
+## 2026-10-08 - Anchor allocation performance at first verified account NAV
+
+- User requested the strategy NAV begin at account NAV on the first available verified results date, with later normalization using that date as 1.0. Implemented recovery after an unverified allocation gap: require exact app-published audited strategy NAV and observed account NAV on the same allocation close, set strategy NAV/index to account NAV/100, expose the comparison date and exclude earlier missing history with a warning. Recorded opening estimates cannot recover a chain after a gap.
+- Aligned both chart lines to the anchor and labeled cumulative Strategy Return with its start date. The account summary remains cumulative from reset. Validation: allocation/dashboard/operator UI suite 37 passed; Ruff and `git diff --check` passed.
+
 ## 2026-10-07 - Economic context ridge monitored and financial challengers completed
 
 - User requested the combined leading + payroll/inflation linear model in Monitored, then new economic inputs and ETF-specific combinations. Added the exact frozen CR recipe as `research_economic_context_ridge_v1`, with the unchanged F3 pipeline, final 45% target cap, thirteen original economic features, expanding per-ETF ridge alpha 1 and fixed availability/tilt rules. App-owned calculation includes historical/current signals, scheduled rebalances, holdings, targets, NAV, benchmarks, native parity and complete decision flow. Shared model receipts bind any later proposal preparation. Prospective decisions from October 8 require actual capture before the cutoff; archived catch-up cannot backdate economic knowledge. Missing features show a yellow capped-parent abstention notice.

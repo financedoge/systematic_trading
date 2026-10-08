@@ -116,7 +116,7 @@ actual-rebased periods may resume at the next verified switch, but an interrupte
 continuous chain cannot resume without its missing handover value.
     """
     result = dict(strategy=[], actual_rebased=[], periods=[], sources={}, warnings=[],
-                  base_nav_cnh=None, contract=CONTRACT)
+                  base_nav_cnh=None, comparison_start_date=None, contract=CONTRACT)
     if not timeline:
         return result
     publication = analytics.latest("strategy-serving") if analytics else None
@@ -144,17 +144,15 @@ continuous chain cannot resume without its missing handover value.
         result['sources'][key] = dict(source, input_provenance=provenance)
         result['warnings'].extend(detail.get('warnings', []))
 
-    carried, base = None, None
+    carried, base, anchored = None, None, False
     for i, epoch in enumerate(timeline):
         start = epoch['effective_close']
         end = timeline[i+1]['effective_close'] if i+1 < len(timeline) else None
         weights = {r['strategy_key']: Decimal(r['weight']) for r in epoch['allocations']}
         if not weights or any(not w.is_finite() or w <= 0 for w in weights.values()) or sum(weights.values()) > 1:
             raise ValueError('Invalid capital weights in allocation history.')
-        actual_base = positive(account_values.get(start)) or positive(epoch.get('opening_nav_cnh'))
-        if i == 0:
-            carried = base = actual_base
-            result['base_nav_cnh'] = str(base) if base else None
+        observed_account_nav = positive(account_values.get(start))
+        actual_base = observed_account_nav or positive(epoch.get('opening_nav_cnh'))
         period = dict(version=epoch['version'], label=epoch['label'], start=start, end=end,
                       through=None, observations=0, theoretical_return=None, actual_return=None,
                       actual_start_nav_cnh=str(actual_base) if actual_base else None,
@@ -166,6 +164,24 @@ continuous chain cannot resume without its missing handover value.
             period['warnings'].append(f"Missing exact switch-date NAV on {start}: {', '.join(missing)}.")
             carried = None
             continue
+        anchored_now = False
+        # Once an earlier allocation could not be verified, only a matched
+        # observed account NAV may establish the recovery anchor. Recorded
+        # opening values remain valid for an uninterrupted first allocation,
+        # but cannot bridge a later historical gap.
+        anchor_base = observed_account_nav if i > 0 else actual_base
+        if not anchored and anchor_base is not None:
+            # Do not invent a link through an unavailable historical allocation.
+            # Begin at the first later close with both audited strategy NAV and
+            # an observed account value; use its NAV as the explicit 1.0 base.
+            carried = base = anchor_base
+            anchored = anchored_now = True
+            result['base_nav_cnh'] = str(base)
+            result['comparison_start_date'] = start
+            if i:
+                result['warnings'].append(
+                    f"Cumulative strategy comparison starts at the verified account NAV on {start}; "
+                    "earlier allocation history is excluded because its exact audited strategy NAV is unavailable.")
         # Each strategy keeps its own scheduled rebalances and costs already in
         # NAV. No daily reset of capital weights or extra model fees are implied.
         last_available = min(max(histories[k]) for k in weights)
@@ -192,7 +208,7 @@ continuous chain cannot resume without its missing handover value.
             if actual_base is not None:
                 result['actual_rebased'].append(dict(common, nav_cnh=str(actual_base*growth),
                     index=str(carried*growth/base*100) if carried is not None else str(growth*100),
-                    break_before=day == start and i > 0,
+                    break_before=day == start and i > 0 and not anchored_now,
                     return_break=day == start and i > 0 and carried is None))
             period.update(through=day, observations=period['observations']+1, theoretical_return=str(growth-1))
         if period['through']:
