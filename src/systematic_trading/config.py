@@ -15,6 +15,7 @@ class AppSettings(BaseSettings):
     governed_refresh_enabled: bool = True
     research_etf_recorder_config_path: Path = Path("config/research-etf-recorders.json")
     economic_recorder_config_path: Path = Path("config/economic-recorders.json")
+    positioning_recorder_config_path: Path = Path("config/positioning-recorders.json")
     model_config = SettingsConfigDict(
         env_file=".env",
         env_prefix="ST_",

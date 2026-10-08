@@ -148,13 +148,14 @@ MARKET_HISTORY_UI_HTML = r'''
  <button id="governed-tab" type="button" aria-selected="false"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v14h14M5 13l4-5 3 2 5-6"/></svg>Historical Daily Price</button>
  <button id="market-bars-tab" type="button" aria-selected="false"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2v3m0 8v5M14 2v7m0 6v3"/><rect x="4" y="5" width="4" height="8" rx=".7"/><rect x="12" y="9" width="4" height="6" rx=".7"/></svg>Intraday Bars</button>
  <button id="economic-tab" type="button" aria-selected="false">Economic Data</button>
+ <button id="positioning-tab" type="button" aria-selected="false">Fund Positioning</button>
  <button id="research-tab" class="market-debug-only" type="button" aria-selected="false">Raw Data</button>
 </nav>
  <span id="research-catalog-status" class="muted market-debug-only">Source archives</span>
 </div>
 <script>
 (() => {
- const initial=new URL(location.href),views={history:['governed-panel','governed-tab'],bars:['market-bars-panel','market-bars-tab'],economics:['economic-panel','economic-tab'],raw:['research-panel','research-tab']};
+ const initial=new URL(location.href),views={history:['governed-panel','governed-tab'],bars:['market-bars-panel','market-bars-tab'],economics:['economic-panel','economic-tab'],positioning:['positioning-panel','positioning-tab'],raw:['research-panel','research-tab']};
  const handlers=new Map();let active=null,debug=initial.searchParams.get('debug')==='1';
  const writeUrl=()=>{const u=new URL(location.href);u.searchParams.set('view',active||'history');if(debug)u.searchParams.set('debug','1');else u.searchParams.delete('debug');history.replaceState(null,'',u)};
  function activate(view){

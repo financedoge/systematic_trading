@@ -26,6 +26,7 @@ from systematic_trading.web.research_data import router as research_data_router
 from systematic_trading.web.governed_data import router as governed_data_router
 from systematic_trading.web.usd_data import router as usd_data_router
 from systematic_trading.web.economic_data import router as economic_data_router
+from systematic_trading.web.positioning_data import router as positioning_data_router
 from systematic_trading.web.operator import router as operator_router
 from systematic_trading.web.platform_actions import router as platform_actions_router
 from systematic_trading.web.platform import router as platform_router
@@ -187,6 +188,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
     app.include_router(governed_data_router)
     app.include_router(usd_data_router)
     app.include_router(economic_data_router)
+    app.include_router(positioning_data_router)
     app.include_router(platform_actions_router)
     return app
 

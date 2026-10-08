@@ -1,0 +1,24 @@
+{
+  "version": "cftc-disaggregated-futures-only-v1",
+  "enabled": true,
+  "dataset_id": "72hh-3qpy",
+  "history_start": "2020-01-01",
+  "reference_url": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm",
+  "source_url": "https://publicreporting.cftc.gov/resource/72hh-3qpy.json",
+  "historical_availability": "The dataset has a Tuesday report date but does not expose original dissemination timestamps in each row. The app records first-seen time and does not backdate availability; do not use rows in backtests before first-seen time.",
+  "markets": [
+    {"code": "067411", "name": "WTI light sweet crude oil", "group": "Energy", "related_etfs": ["DBC", "XLE"]},
+    {"code": "023651", "name": "Henry Hub natural gas", "group": "Energy", "related_etfs": ["UNG"]},
+    {"code": "088691", "name": "COMEX gold", "group": "Metals", "related_etfs": ["GLD", "IAU"]},
+    {"code": "084691", "name": "COMEX silver", "group": "Metals", "related_etfs": ["SLV"]},
+    {"code": "085692", "name": "COMEX copper", "group": "Metals", "related_etfs": ["CPER"]},
+    {"code": "191691", "name": "LME aluminum", "group": "Metals", "related_etfs": []}
+  ],
+  "limitations": [
+    "COT reports futures positioning, not ETF holdings or direct fund flows; linked ETFs are economic proxies only.",
+    "Tuesday positions are normally released Friday at 3:30 p.m. Eastern, with holiday delays; app first-seen time is the only availability timestamp used.",
+    "Disaggregated classifications are not historical point-in-time trader identities and can be revised or suppressed.",
+    "Aluminum is an LME contract and may not be an investable IB product; it is a reference indicator only.",
+    "These features are research-only and cannot add an ETF to an eligible strategy universe."
+  ]
+}

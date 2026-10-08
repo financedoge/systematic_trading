@@ -42,6 +42,39 @@ Retain financial ridge as research evidence without changing monitored CR.
 All 51 replays and eleven native validations passed on all 16 CPUs. See the
 [financial-condition findings](../research/economic-financial-2026-10-07/findings.html).
 
+## Commodity futures positioning recorder — 2026-10-08
+
+Added an application-owned recorder for the CFTC Public Reporting Environment's
+Disaggregated Futures Only dataset. It captures WTI, Henry Hub gas, COMEX gold,
+silver and copper, plus LME aluminum as an indicator-only reference. The
+normalized observations expose managed-money, producer/merchant and swap-dealer
+net positions as shares of open interest, with the original source rows, hashes,
+configuration version and first-app-seen timestamps retained. The first audited
+publication contains 1,903 reports from 2020 onward: 352 each for the first five
+markets and 143 for aluminum, ending June 9, 2026. The other five series end
+September 29, 2026. The application refresh lane checks for updates every six
+hours, and Market Data → Fund Positioning displays the published history.
+
+CFTC report dates are Tuesdays; reports are normally released Friday at 3:30
+p.m. Eastern and may be delayed by holidays. The API rows do not carry their
+actual historical dissemination timestamps, so every row keeps its first time
+captured by this app. No history has been backdated into earlier decisions and
+this batch is not eligible for historical strategy backtests. COT describes
+futures trader positioning, not ETF holdings or fund flows; linked funds are
+economic proxies only. CFTC trader classifications can change, and the LME
+aluminum code has materially shorter coverage. These records cannot qualify or
+add any ETF to a tradable universe. Source: [CFTC COT reports and release
+schedule](https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm),
+[disaggregated report notes](https://www.cftc.gov/MarketReports/CommitmentsofTraders/DisaggregatedExplanatoryNotes/index.htm).
+
+Recorder batch `406d59e27de2c63addef7ee832720ebb05102e9b3ebdad9c37993532f47ac9a6`;
+the unchanged second capture was idempotent. Focused recorder/economic tests
+pass (28), Ruff passes. Do not backtest the captured history. Next qualify an
+energy supply/demand source with explicit release times (EIA weekly petroleum
+and natural-gas balances), then build dated issuer-fund snapshots and ETF
+price/identity admissions. Revisit positioning only under a prospective
+availability contract and after the energy/metal ETF candidates are qualified.
+
 National manufacturing/services PMI, permitted corporate bond spreads and
 release-time consensus remain source-access work; regional Fed expectations and
 NFCI credit conditions are separately labelled. Country/sector fundamentals still

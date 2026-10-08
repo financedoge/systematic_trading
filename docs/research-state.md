@@ -1,5 +1,35 @@
 # Research State
 
+## 2026-10-08 — CFTC positioning recorder published; no historical backtest
+
+Market Data → Fund Positioning now includes an app-owned, raw-first recorder for
+the CFTC disaggregated futures-only reports. Six contracts cover WTI and natural
+gas positioning plus COMEX gold/silver/copper and LME aluminum. The normalized
+features report managed-money, producer/merchant and swap-dealer net-to-open-
+interest ratios; original rows and publication hashes are retained. The audited
+batch contains 1,903 reports beginning 2020-01-07 through September 29, 2026 for
+five contracts. Aluminum has 143 reports through June 9, 2026. Initial catalog
+revision: `406d59e27de2c63addef7ee832720ebb05102e9b3ebdad9c37993532f47ac9a6`.
+
+The report date is Tuesday, while CFTC normally releases on Friday at 3:30 p.m.
+Eastern and may delay around holidays. The API data rows do not prove their
+actual historical release timestamps. Each row is therefore available to this
+app only from its recorded `first_seen_at`; these first-captured historical rows
+are not admissible for earlier strategy decisions or walk-forward training.
+The repeat capture was byte-stable and idempotent. The CFTC classification is
+managed futures trader positioning, not fund flows or ETF holdings. Linked ETFs
+are not yet admitted by audited price coverage or IB account qualification, and
+LME aluminum is only an indicator reference. No strategy inputs, backtest,
+monitored strategy, allocation, or execution authority changed.
+
+Files: `config/positioning-recorders.json`,
+`src/systematic_trading/recorders/positioning.py`,
+`research/etf-research-expansion-roadmap.md`. Next: qualify a point-in-time EIA
+energy supply/demand recorder, then prospective issuer holdings/shares/NAV and
+ETF price/identity records; only then freeze an ETF positioning/fundamental
+comparison. National PMI, corporate bond spread rights, and dated consensus
+remain separate source gaps.
+
 ## 2026-10-07 - Context ridge monitored; financial-condition combinations completed
 
 On the user's explicit instruction, `research_economic_context_ridge_v1`

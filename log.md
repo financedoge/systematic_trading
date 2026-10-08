@@ -1185,3 +1185,30 @@ The focused regression suite passes 140 tests with one optional integration skip
 Independent broker records confirm all four previously authorized paper orders filled: buy 76 DBC (last fill 14:24:54 UTC), sell 97 EWH (14:25:56), buy 2 EWJ (14:19:01), sell 2 EWY (14:19:00), all with zero remaining quantity. These broker-managed orders continued while the host slept. `filled-orders.json` preserves their execution evidence. No additional orders were submitted in this repair; live routing and approval/reconciliation/input gates remain unchanged. Host power settings were not modified. The operator must keep the host awake for uninterrupted local work; local monitoring can report suspension only on resume. Existing email configuration remains absent; verified alerts use dashboard, local log and platform events. Historical ClickHouse projections remain retained and have no automatic retention policy. No commit or push was requested.
 
 Final deployment verification: operator PID 19148 and dispatcher PID 42932 are running through the normal guarded startup. All three analytics lanes completed their first refresh after restart; the unchanged archive completed at 14:57:33 UTC without advancing or rewriting the accepted manifest. Final API checks report no analytics errors, no stale lane/data/watchdog flags, `calculation_status=ok`, no pending allocation, and both analytics/trading-management health `ok`. Saved `analytics-after-hardening.json`, `control-after-hardening.json` and `health-after-hardening.json` record this state. The skipped test requires an explicitly disposable ClickHouse workspace; production publication readback verification completed for all 356 registered archive runs.
+## 2026-10-08 — CFTC disaggregated positioning source admitted to Market Data
+
+Added the app-owned CFTC Disaggregated Futures Only recorder and a Fund
+Positioning view within Market Data. The recorder preserves raw source rows,
+configuration/version hashes, report dates and the app's first-seen time, and
+publishes auditable normalized net-position/open-interest ratios for WTI, Henry
+Hub natural gas, COMEX gold/silver/copper and LME aluminum. The API/recorder
+refresh runs in the application's research analytics lane with a six-hour
+source-check interval; no separate task or manual card is used.
+
+Initial publication: 1,903 reports starting 2020-01-07 through 2026-09-29 for
+five contracts, plus 143 aluminum reports through 2026-06-09. Accepted batch:
+`406d59e27de2c63addef7ee832720ebb05102e9b3ebdad9c37993532f47ac9a6`. A
+subsequent capture produced the same version and was idempotent. Twenty-eight
+focused positioning/economic recorder tests pass; Ruff and `git diff --check`
+pass.
+
+The CFTC row contains the Tuesday position date, not its original dissemination
+timestamp. Reports are usually released Friday at 3:30 p.m. Eastern, subject to
+holiday delays. Every row is available in the app only from `first_seen_at`;
+none is backfilled into an earlier strategy decision. Do not use this history in
+historical backtests or model-training rows before its first capture. Positioning
+measures futures trader categories, not direct ETF holdings/flows; related ETFs
+are proxies only. No ETF admission, strategy calculation, allocation, promotion
+or execution authority changed. Next: qualify an EIA energy balance recorder
+with release-time semantics, then prospective issuer holdings/shares/NAV and ETF
+identity/price histories.
