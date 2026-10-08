@@ -22,10 +22,10 @@ from systematic_trading.lean.runner import run_bundle, run_python_bundle
 from systematic_trading.lean.strategy import targets_for_day
 from systematic_trading.live.trading_calendar import is_us_trading_day
 from systematic_trading.market_data.analytics_store import digest, encode
-from systematic_trading.research import current_sota_definition, instruments_for_definition
+from systematic_trading.research import instruments_for_definition
 from systematic_trading.research.strategy_catalog import (
     registered_strategy_definition, risk_parity_definition, rolling_xgboost_1y_definition,
-    etf_activity_lag20_definition, legacy_sota_definition,
+    etf_activity_lag20_definition,
 )
 from systematic_trading.research.rolling_tracking import definition_training_spec, prepare_model_schedule
 from systematic_trading.research.tracked_inputs import load_tracked_inputs
@@ -47,6 +47,10 @@ def calculation_code_hashes():
              "strategy_catalog.py", "sota_models.py", "chronological_tree.py", "rolling_models.py",
              "rolling_tracking.py", "rolling_training.py", "rolling_report.py", "strategy_diagram.py", "compute.py", "calculation_worker.py", "run_recovery.py",
              "usd_data.py", "usd_tracking.py", "usd_index_governance.py", "usd_momentum_model.py", "momentum_signals.py")]
+    paths += [root/'research'/n for n in ('strategy_lifecycle.py','usd_monitored.py','momentum_replay.py','momentum_lean.py')]
+    paths += [root/'research'/n for n in ('economic_tracking.py','economic_response.py','economic_models.py',
+        'economic_leading_features.py','construction_controls.py')]
+    paths.append(root/'recorders'/'economics.py')
     paths.append(root / "runtime_io.py")
     paths += [p for folder in ("lean", "signals", "portfolio", "backtest")
               for p in (root / folder).glob("*.py")]
@@ -139,10 +143,11 @@ def buy_hold_benchmark(rows, fx, sessions, initial, anchor, cost_bps):
         nav_cnh=float(cash + quantity * quantize_money(Decimal(by_day[d]["close"]) * Decimal(fx[d])))) for d in sessions]
 
 
-def latest_allocation(definition, inputs, economic, quotes, models=None, usd_models=None):
+def latest_allocation(definition, inputs, economic, quotes, models=None, usd_models=None, economic_models=None):
     known = inputs["provenance"]["price_through"]
     hypothetical_day = next_session(known)
-    latest = targets_for_day(inputs["latest_bars"], hypothetical_day, definition=definition, base_tree_models=models, usd_models=usd_models)
+    latest = targets_for_day(inputs["latest_bars"], hypothetical_day, definition=definition, base_tree_models=models,
+        usd_models=usd_models, economic_models=economic_models)
     last_day = max(economic["decisions"])
     scheduled = {t["symbol"]: float(t["target_weight"]) for t in economic["decisions"][last_day]["targets"]}
     target = {t.symbol: float(t.target_weight) for t in latest}
@@ -187,8 +192,9 @@ def refresh_tracked_strategies(settings, store, analytics):
 
 
 def _refresh_tracked_strategies(settings, store, analytics):
-    path = settings.strategy_monitoring_config_path
-    config = json.loads(path.read_text(encoding="utf8")) if path.exists() else {}
+    from systematic_trading.research.strategy_lifecycle import effective_config
+    from systematic_trading.research.usd_monitored import USD_KEYS
+    config = effective_config(settings,store)
     if config.get("schema_version") != 2:
         return False
     p = config["calculation"]
@@ -196,17 +202,20 @@ def _refresh_tracked_strategies(settings, store, analytics):
     definitions = [registered_strategy_definition(k) for k in keys]
     if any(d.universe_key != "multi_asset" or d.scheduler != "static_monthly" for d in definitions):
         raise ValueError("Tracked definitions must implement the monthly multi-asset contract")
-    sota = current_sota_definition()
+    requested_definitions = definitions
+    usd_definitions = [d for d in definitions if d.key in USD_KEYS]
+    definitions = [d for d in definitions if d.key not in USD_KEYS]
+    from systematic_trading.portfolio.strategy_allocation import sota_definition
+    selected_sota=sota_definition(store)
+    sota = selected_sota
     risk = replace(risk_parity_definition(), universe_key="multi_asset")
-    all_definitions = {d.key: d for d in [sota, risk, *definitions]}
-    has_usd = any(o.kind == 'usd_ridge' for d in definitions for o in d.overlays)
-    if has_usd:
-        for parent in (legacy_sota_definition(), etf_activity_lag20_definition(), rolling_xgboost_1y_definition()):
-            all_definitions[parent.key] = parent
-    if any(definition_training_spec(d) for d in definitions):
-        for control in (rolling_xgboost_1y_definition(activity=False), etf_activity_lag20_definition()):
-            all_definitions[control.key] = control
-    inputs = load_tracked_inputs(settings, analytics, config)
+    all_definitions = {d.key: d for d in [risk, *definitions]} if definitions else {}
+    has_usd = any(o.kind == 'usd_ridge' for d in requested_definitions for o in d.overlays)
+    if definitions:
+        inputs = load_tracked_inputs(settings, analytics, config)
+    else:
+        from systematic_trading.research.usd_monitored import load_inputs
+        inputs=dict(load_inputs(settings,analytics,config),fx={})
     usd_models = None
     if has_usd:
         from systematic_trading.research.usd_data import load_usd, refresh_usd
@@ -222,12 +231,18 @@ def _refresh_tracked_strategies(settings, store, analytics):
                 refresh_usd(settings, analytics, known)
         snapshots, inputs['provenance']['usd'] = load_usd(analytics)
         usd_models = prepare_usd_schedule(inputs['latest_bars'], snapshots)
-    revision = calculation_revision(config, inputs, definitions)
+    if any(o.kind == 'economic_ridge' for d in requested_definitions for o in d.overlays):
+        from systematic_trading.research.economic_tracking import economic_inputs
+        inputs['economic'] = economic_inputs(analytics,inputs['latest_bars'],p['start'])
+        inputs['provenance']['economic'] = inputs['economic']['provenance']
+    fx_publication=analytics.latest('governance/fx-usd-cnh') if usd_definitions else None
+    revision=digest(encode([calculation_revision(config, inputs, requested_definitions),
+        selected_sota.to_dict(),(fx_publication or {}).get('version')]))
     current = analytics.latest(SOURCE)
     if current and current["version"] == revision:
         return False
     root = settings.data_dir / "tracked_strategies" / revision
-    resources = available_resources(len(all_definitions), p.get("engine", "lean"))
+    resources = available_resources(max(1,len(all_definitions)), p.get("engine", "lean"))
     compute = dict(revision=revision, resources=resources, phase="preparing_models", completed=[], prepared=[],
         started_at=datetime.now(UTC).isoformat())
     compute_path = settings.data_dir / "run" / "strategy-compute.json"
@@ -280,6 +295,8 @@ def _refresh_tracked_strategies(settings, store, analytics):
         progress("preparing_bundles")
     compute["preparation_wall_seconds"] = perf_counter()-started
     def calculate(key):
+        if effective_config(settings,store)!=config:
+            raise ValueError('Monitoring changed during calculation; discard this batch and replay the current membership')
         bundle, output = jobs[key]
         return verified_run(bundle, output, p["image"], p.get("engine", "lean"),
             cpus=str(resources["cpus_per_run"]), memory="4g")
@@ -298,7 +315,7 @@ def _refresh_tracked_strategies(settings, store, analytics):
         progress("running_backtests")
     compute["backtest_wall_seconds"] = perf_counter()-started
     progress("building_reports")
-    urth = buy_hold_benchmark(inputs["urth"], inputs["fx"], sessions, p["initial_cash_cnh"], anchor, p["transaction_cost_bps"])
+    urth = buy_hold_benchmark(inputs["urth"], inputs["fx"], sessions, p["initial_cash_cnh"], anchor, p["transaction_cost_bps"]) if definitions else []
     documents, observations = [], []
     for definition in definitions:
         key = definition.key
@@ -308,19 +325,21 @@ def _refresh_tracked_strategies(settings, store, analytics):
         prices = {s: {d: float(q["close"]) for d, q in values.items()} for s, values in quotes_by_key[key].items()}
         for s in prices:
             prices[s][anchor] = float(quantize_money(Decimal(next(r for r in inputs["bars"][s] if r["trade_date"] == anchor)["close"])*Decimal(inputs["fx"][anchor])))
-        attribution_baseline = risk.key if key == sota.key else sota.key
+        attribution_baseline = risk.key if key == sota.key or sota.key not in results else sota.key
         diagnostics = build_signal_diagnostics(baseline=results[attribution_baseline], candidate=results[key],
             prices_by_symbol={s: {date.fromisoformat(d): v for d, v in rows.items()} for s, rows in prices.items()},
             split_date=date.fromisoformat(p["fixed_model_from"]), signal_name=signal_name)
-        extra_benchmarks = [dict(id='urth', name='URTH · MSCI World', nav_series=urth),
-            dict(id='sota', name='Current SOTA · matched model history', nav_series=results[sota.key]['nav_series'])]
-        if key.endswith('_usd_v1'):
+        extra_benchmarks = [dict(id='urth', name='URTH · MSCI World', nav_series=urth)]
+        if sota.key in results:
+            extra_benchmarks.append(dict(id='sota', name='Current SOTA · matched model history', nav_series=results[sota.key]['nav_series']))
+        if key.endswith('_usd_v1') and key.removesuffix('_usd_v1') in results:
             parent_key = key.removesuffix('_usd_v1')
             extra_benchmarks.append(dict(id=parent_key, name='Same strategy before USD', nav_series=results[parent_key]['nav_series']))
         if recipe:
             for control, label in ((etf_activity_lag20_definition(), 'ETF activity lag-20 · frozen SOTA tree'),
                     (rolling_xgboost_1y_definition(activity=False), 'Rolling 1y XGBoost · without activity')):
-                extra_benchmarks.append(dict(id=control.key, name=label, nav_series=results[control.key]['nav_series']))
+                if control.key in results:
+                    extra_benchmarks.append(dict(id=control.key, name=label, nav_series=results[control.key]['nav_series']))
         report, warnings = build_backtest_report_data(result=results[key], result_path=root / (key+".json"),
             split_date=p["fixed_model_from"], benchmark_name="Risk parity · matched ETF universe",
             benchmark_nav_series=results[risk.key]["nav_series"],
@@ -330,7 +349,7 @@ def _refresh_tracked_strategies(settings, store, analytics):
             schedules[recipe['version']] if recipe else None, usd_models=usd_models)
         from systematic_trading.research.strategy_diagram import decision_diagrams
         report.update(title=definition.name, database="Published audited histories / ClickHouse",
-            signalBenchmark="Risk parity" if key == sota.key else "Current SOTA",
+            signalBenchmark="Risk parity" if attribution_baseline == risk.key else "Current SOTA",
             modelRegime=('Monthly XGBoost refits on one trailing calendar year throughout the history' if recipe else
                 '2016–2022 causal annual fits; deployed frozen tree from 2023'),
             splitLabel='2023 comparison boundary' if recipe else 'Deployed frozen model begins',
@@ -339,6 +358,7 @@ def _refresh_tracked_strategies(settings, store, analytics):
             currentAllocation=current_allocation, strategyDefinition=definition.to_dict(),
             decisionDiagrams=decision_diagrams(definition),
             monitoring=dict(lifecycle="monitored", method=config["method"], artifactEndDate=sessions[-1],
+                generation=config.get('monitoring_generations',{}).get(key,0),
                 monitoredThrough=sessions[-1], calculationOwner="application", computedAt=datetime.now(UTC).isoformat(),
                 engine=p.get("engine", "lean"),
                 priceThrough=inputs["provenance"]["price_through"], revision=revision, prospectiveStart=p["prospective_start"],
@@ -367,10 +387,13 @@ def _refresh_tracked_strategies(settings, store, analytics):
                 *inputs['provenance']['usd']['limitations']]
         if inputs["provenance"]["first_missing_fx"]:
             report["warnings"].append("Valuation stops before missing supported FX on " + inputs["provenance"]["first_missing_fx"])
+        if sota.key not in results:
+            report['warnings'].append('Current SOTA uses USD accounting. No matched full-history CNH SOTA comparison is available; see its USD report. Risk parity remains the primary benchmark.')
         summary = report["summary"]
         nav = [float(r["nav_cnh"]) for r in results[key]["nav_series"]]
         volatility = stdev([b/a-1 for a, b in zip(nav, nav[1:])])*math.sqrt(252)
         detail = dict(strategy_id=key, name=definition.name, is_sota=key == sota.key, lifecycle="monitored",
+            monitoring_generation=config.get('monitoring_generations',{}).get(key,0),accounting_currency='CNH',
             app_tracking=True, report_available=True, report_url=f"/api/v1/strategies/{key}/report",
             artifact_path=str(root), artifact_end_date=sessions[-1], start_date=sessions[0], end_date=sessions[-1],
             observations=len(sessions), initial_nav_cnh=float(p["initial_cash_cnh"]),
@@ -390,13 +413,40 @@ def _refresh_tracked_strategies(settings, store, analytics):
             observed_at=row["trade_date"], available_at=datetime.now(UTC).isoformat(), payload=encode(row)) for row in results[key]["nav_series"]]
         observations += [dict(point_key=key+"/allocation", family="tracked_strategy_allocation", entity=key,
             observed_at=current_allocation["target_known_through"], available_at=datetime.now(UTC).isoformat(), payload=encode(current_allocation))]
+    if usd_definitions:
+        progress('replaying_usd_strategies')
+        from systematic_trading.research.usd_monitored import calculate as calculate_usd
+        usd_documents,usd_observations,usd_provenance=calculate_usd(settings,analytics,config,usd_definitions,
+            selected_sota,root,_LOADED_CODE_HASHES,economic_inputs=inputs.get('economic'))
+        documents.extend(usd_documents);observations.extend(usd_observations)
+        if usd_provenance['usd'] != inputs['provenance']['usd']:
+            raise ValueError('USD publication changed during calculation')
+    # Keep the last complete report for archived entries. Their portfolios are not extended.
+    previous=published_strategies(analytics)
+    archive_keys=[]
+    for key,(detail,report) in previous.items():
+        if key in keys:
+            continue
+        detail=dict(detail,lifecycle='archived')
+        report=dict(report,monitoring=dict(report.get('monitoring',{}),lifecycle='archived'))
+        documents.extend([dict(point_key='detail/'+key,media_type='application/json',payload=encode(detail)),
+                          dict(point_key='report/'+key,media_type='application/json',payload=encode(report))])
+        archive_keys.append(key)
     # Commit all strategies and benchmarks together. Readers retain the previous
     # complete version on failure; an incomplete native run never becomes NAV.
     if analytics.latest("governance/catalog")["version"] != inputs["provenance"]["batch"]:
         raise ValueError("Audited batch changed during calculation; retry against the new publication")
-    if calculation_revision(config, inputs, definitions) != revision:
+    if effective_config(settings,store)!=config:
+        raise ValueError('Monitoring changed during calculation; catch-up must replay the current membership')
+    if sota_definition(store)!=selected_sota:
+        raise ValueError('SOTA changed during calculation; refresh matched benchmarks')
+    if calculation_code_hashes()!=_LOADED_CODE_HASHES:
         raise ValueError("Calculation implementation changed before publication")
-    documents.append(dict(point_key="catalog", media_type="application/json", payload=encode(keys)))
+    if inputs.get('economic'):
+        from systematic_trading.research.economic_tracking import economic_inputs
+        if economic_inputs(analytics,inputs['latest_bars'],p['start'])['provenance'] != inputs['provenance']['economic']:
+            raise ValueError('Economic decision inputs changed during calculation; retry publication')
+    documents.append(dict(point_key="catalog", media_type="application/json", payload=encode([*keys,*archive_keys])))
     published = analytics.publish(SOURCE, revision, observations, documents,
         provenance=dict(owner="application", inputs=inputs["provenance"], config=config,
                         native_runs={k: r["run_id"] for k, r in receipts.items()}, model_training=model_receipts,

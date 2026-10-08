@@ -1,5 +1,415 @@
 # Research State
 
+## 2026-10-07 - Context ridge monitored; financial-condition combinations completed
+
+On the user's explicit instruction, `research_economic_context_ridge_v1`
+(Leading + payroll/inflation context · linear model) is now Monitored, generation
+1. The exact economic-response v2 CR recipe is app-owned and remains frozen until
+the ETF-universe revisit. Its full report is current through October 6: all 130
+historical model decisions, 795 fills, 2,705 daily values and final positions
+exactly match the prior study. Nine native monitored/control runs passed. Accepted
+calculation revision:
+`3ac2ba32ec1413383b849c589e7ccd7d593955e4adee3c7626025a57e169cc38`.
+All five monitored strategies are current and allocation-ready. Monitoring did
+not alter SOTA, capital, approvals or orders; allocation control revision remains
+3 and the user's pending F3 handover is unchanged.
+
+Latest economic features are incomplete, so CR correctly abstains to capped F3
+and shows a yellow notice. Future decisions from October 8 require actual app
+capture before the cutoff; archive restoration cannot backdate late observations.
+During the first app calculation, the required October 5 vintages finished
+publishing. The publication guard rejected the older calculation; the normal
+retry completed on the final input subset. Both immutable attempts are retained.
+
+Added Treasury slopes T10Y3M/T10Y2Y, Chicago Fed NFCICREDIT and SLOOS
+DRTSCILM/DRTSCIS to the app recorder and Economic Data. Published all 2,112 planned
+snapshots, preserving the original 1,441 entries exactly. Batch:
+`9fb6784447635430354fa0547e8787f37d0e7c69d60a62053a65b0279ff8b8b4`.
+The Treasury histories omit the initial January 2, 2006 holiday; it is disclosed
+as unsupported, never filled. Internal gaps remain audit failures. NFCI is a
+credit composite, not a corporate bond spread; corporate-spread storage rights,
+national PMI and pre-release consensus remain access gaps.
+
+The user additionally authorized combinations of the new economic inputs per
+ETF. Frozen financial v1 tests eight financial features alone and all 21 original
+plus financial features, each with separate per-ETF ridge and depth-two trees.
+An original-context ridge matches the augmented training rows and availability.
+All tilts apply to capped F3 directly and preserve its gross, cash and positive
+membership. Prices remain on audited batch
+`a95bf6a48a79c338b63774a87f0b4bea21a97120ddfa5d987cb5f243ae44fbe2`;
+vintages and labels obey the declared ex-ante contract with historical archive
+availability limitations. No parameter or ETF search was performed.
+
+January 2021–October 6, 2026, 5bp costs, USD, zero-interest cash:
+
+| Recipe | CAGR | Sharpe | Calmar | Maximum drawdown |
+| --- | ---: | ---: | ---: | ---: |
+| Frozen context ridge (CR) | 11.000% | 1.1027 | 0.9740 | -11.293% |
+| Financial-only ridge (FR) | 11.102% | 1.1057 | 0.9798 | -11.332% |
+| Financial-only tree (FT) | 11.066% | 1.0992 | 0.9534 | -11.606% |
+| Augmented ridge (AR) | 11.040% | 1.1029 | 0.9753 | -11.320% |
+| Augmented tree (AT) | 10.901% | 1.0877 | 0.9527 | -11.442% |
+
+FR passes the fixed retention screen but its six-month-block Sharpe and Calmar
+difference intervals versus CR include zero. No mean contrast passes 5% Holm
+with three- or six-month blocks; FT versus P3 passes only the twelve-month-block
+sensitivity (p=0.0204), while FT fails its linear and delay hurdles. AR fails
+delayed Calmar. Both trees fail replacement screens. Full-history FR Sharpe
+1.0619/Calmar 0.5845 trail CR 1.0703/0.5977, with drawdown 17.13% versus 16.83%.
+All model combinations have worse prediction MAE than the ETF-specific training
+mean. Retain FR as research evidence, no additional monitoring or promotion.
+
+Financial features are ready on 130/130 historical decisions and models on
+70/70 evaluation decisions. Augmented/matched models remain ready 58/70; matched
+ridge reproduces CR exactly. FR changes 42/70 allocations: it increases SPY in
+29 months, EWJ in 23 and DBC in 18, while also reducing assets conditionally.
+These are model associations, not identified causal shock sensitivities.
+
+Completed 51 replays, eleven native validations and 27 inference jobs on all 16
+logical CPUs, with three memory-bounded native lanes. F0/F3/P3/CR full-period
+controls reproduce exactly. 121 distinct focused monitoring, recorder, model,
+reporting and integration tests passed; Ruff/whitespace and browser checks passed.
+Evidence: `var/research/economic-monitoring-20261007/` and
+`var/research/economic-financial-20261007-v1/`. Protocol SHA-256:
+`7744d4585a435d4a5781d84eab4de0f7757e75e7198e00de9f8db83d1cd7d4fd`.
+[Findings](../research/economic-financial-2026-10-07/findings.html) and
+[complete assessment / reports](../research/economic-financial-2026-10-07/assessment.html).
+
+Next: admit an expanded ETF universe through issuer identity and audited price
+coverage; build prospective issuer holdings, shares outstanding and NAV records,
+then a sector activity/growth/valuation/positioning pilot. Energy balances and
+futures positioning require separate source and release-history qualification.
+Revisit economic combinations once that universe exists; single stocks remain
+out of scope. The independent legacy `lean-history` archive import is still
+retrying a connection timeout; accepted monitored reports and economic
+publications are complete. This is a separate archive-ingestion follow-up.
+
+## 2026-10-07 - Completed economic asset-response experiment
+
+Completed the broader eleven-series experiment after fixing allocation
+preparation and deferred approval. Seven leading indicators and separate
+payroll/output/headline/core inflation context feed per-ETF shallow trees and
+ridge models. Original daily economic vintages, completed training labels,
+training-only transforms and matched sample/availability controls enforce the
+declared ex-ante contract. All inputs use published audited price batch
+`a95bf6a48a79c338b63774a87f0b4bea21a97120ddfa5d987cb5f243ae44fbe2`
+and economic batch
+`25088ea74e961b25e43a998035743d1483fe9b2e800d5253b1da3d9073f72460`.
+Historical dissemination limitations remain; app first capture is October 2026.
+
+Primary evaluation: January 2021–October 6, 2026, USD, 5bp costs, zero-interest
+cash. P3 (F3 with a 45% final target cap) gives CAGR 10.778%, Sharpe 1.0811,
+Calmar 0.9220 and maximum drawdown 11.690%. Leading ridge gives
+10.995% / 1.0896 / 0.9702 / 11.333%; combined ridge gives
+11.000% / 1.1027 / 0.9740 / 11.293%. Both pass the finite cost/delay retention
+screen. Trees fail to beat their paired linear models; combined tree also fails
+delayed Sharpe. Original F3 remains reported at 10.740% / 1.0765 / 0.9185.
+
+No paired mean-return contrast passes 5% Holm for any predeclared block length.
+Combined ridge versus P3 has a positive marginal Sharpe interval but a Calmar
+interval crossing zero. Combined ridge versus sample-matched leading ridge
+adds only about 6bp CAGR and 0.0085 Sharpe. Full 2016-onward context lowers
+combined ridge Calmar (0.5977 versus P3 0.6059); leading ridge lowers both ratios.
+Forecast MAE worsens with context despite its small portfolio gain. Preserve
+these limitations; retain linear candidates for further evidence, no promotion.
+
+Leading features support 66/70 evaluation decisions; combined/matched support
+58/70 and abstain November 2025–October 2026. No missing CPI observation was
+filled from a later vintage. Models learn different signed associations and
+increase as well as decrease ETF weights, but cannot add a beneficiary excluded
+by parent eligibility or spend parent cash. Country-specific fundamentals,
+national PMI, consensus surprises and expanded eligibility remain untested.
+
+All 51 price/cost/delay replays, eleven primary native checks and 30 inference
+jobs completed using the 16-CPU budget. Original full F0/F3 fills, NAV and final
+positions reproduce exactly. Twenty-one focused tests passed. The retained v1
+attempt stopped before portfolio replays on a 1e-28 Decimal sum difference;
+v2 fixes arithmetic precision only, with no model or threshold change.
+
+[Findings](../research/economic-response-2026-10-07/findings.html),
+[complete assessment and eleven reports](../research/economic-response-2026-10-07/assessment.html),
+[contract](economic-response-research.md); frozen receipts under
+`var/research/economic-response-20261007-v2/`. Protocol SHA-256
+`bd405774bb76310d0b8ddb9e2926435740a7088ba87f1dd80a224d09ed11165c`.
+No new source, monitored recipe, funding or execution authority was introduced.
+The user's separately saved F3 allocation remains pending for October 7 close,
+control revision 3. Next: public yield/credit/lending vintage recorders, then
+prospective issuer holdings/shares/NAV and a bounded sector-fundamental pilot.
+Do not tune this batch further or use manually maintained monitoring cards.
+
+## 2026-10-07 - Leading economic panel expansion
+
+User broadened the economic work before the three-series portfolio experiment
+was frozen or run: prioritize leading indicators, exclude GDP, use ex-ante
+nonlinear predictions and allow different assets to benefit or suffer. Expanded
+the app recorder from three to eleven series with 1,441 verified captures (131
+per series). Preserved all original 393 captures and their hashes through an
+explicit additive registry migration.
+
+Seven leading candidates: claims, permits, manufacturing hours, temporary help,
+core capital-goods orders, and Philadelphia Fed future orders/employment. Four
+separate context series: payrolls, manufacturing output, headline CPI and core
+CPI. Regional surveys are not national PMI; a leading business-cycle measure is
+not automatically predictive of asset prices. User confirmed no existing data
+subscription. Continue public-source work; national PMI and pre-release consensus
+remain explicit access/availability gaps, alongside upcoming credit-condition,
+country and sector recorders.
+
+Published catalog `25088ea74e961b25e43a998035743d1483fe9b2e800d5253b1da3d9073f72460`.
+Readiness across 130 frozen decisions: leading group 126, context group 118,
+combined group 118. Preserve unavailable readings. The conservative complete
+13-month CPI window excludes ten 2026 decisions per CPI series because an
+interior observation is missing; do not fill it from later history. Compare
+context additions against leading models with matched training/availability
+controls so differences in usable samples are not mistaken for feature value.
+
+[Readiness report](../research/economic-leading-data-2026-10-07/assessment.html).
+Frozen source, features and acceptance:
+`var/research/economic-leading-panel-20261007-v2/`. The v1 attempt is retained as
+incomplete after an audit adapter passed extra provenance fields to the reader;
+the v2 repair did not change any source or feature formula. One transient source
+404 recovered after the declared retry interval. 68 tests passed, one optional
+skip; 22 real API history checks, source hashes, browser coverage and unchanged
+four allocation-ready monitored strategies passed. Analytics errors cleared;
+tracked revision and control revision 2 remain unchanged.
+
+Next: implement the broader, bounded leading-only versus leading-plus-context
+asset-specific tree/linear experiment on the pinned panel, with original-vintage
+features, completed training labels, all-core replay, costs/delays and full shared
+reports. The three-series overlay/model/study files remain an unfinished draft,
+not a backtest result or registered strategy. No economic performance improvement,
+promotion or funding change is claimed.
+
+## 2026-10-07 — Economic vintage panel and revision sensitivity
+
+The app now records ICSA (jobless claims), PERMIT (housing permits) and IPMAN
+(manufacturing output), with 393 verified captures / 131 vintages per series in
+**Market Data → Economic Data**. Catalog batch
+`bd5668b74622858a88bdc0619ce02cc27a6f26b3d13570b55e61fea1da3c0682`
+is pinned in `var/research/economic-panel-20261007-v1/input_pin.json`.
+
+Against the frozen 130 monthly strategy decisions, five readings exceed freshness
+limits (claims November 2025; permits December 2025–February 2026; manufacturing
+December 2025). Preserve these as unavailable. There are 385 usable same-vintage
+features; later revisions change the weakening flag in 13/129 claims, 4/127 permits
+and 34/129 manufacturing measurements. Latest revised histories would therefore
+change 51 flags in this fixed diagnostic. This is not a stock-return forecasting
+result. No economic overlay was backtested or promoted.
+
+Report: [economic data readiness](../research/economic-data-2026-10-07/assessment.html).
+Contract: [economic vintage recorder](economic-vintage-recorder.md). The app owns
+daily capture and catch-up; archive end-of-day availability and actual first capture
+remain separate, with an explicit archive assumption required for historical use.
+61 tests passed / one optional skip, source/API/browser acceptance passed; existing
+SOTA, F3 monitoring and paper capital remain unchanged. Next freeze the small US-only
+overlay, stale-data behavior and exposure/cost controls before outcome inspection.
+Continue issuer holdings/shares/NAV and country/industry recorders separately.
+
+## Treasury-bill recorder and F4 parking — 2026-10-07
+
+Completed recorder-first BIL qualification and one predeclared F4 ablation.
+Application-owned research ETF acquisition now captures issuer identity and
+provider price/action evidence, audits complete coverage and revisions, verifies
+ClickHouse rows/documents and commits the shared Market Data catalog. Failed
+captures remain quarantined and retry after five minutes. Subsequent active-ETF
+refreshes preserve the newly admitted series and its pinned storage batch.
+Initial BIL coverage is 4,870 sessions, May 30, 2007–October 6, 2026; issuer
+inception is May 25, 2007 and the unsupported initial days remain missing.
+Published batch: `a95bf6a48a79c338b63774a87f0b4bea21a97120ddfa5d987cb5f243ae44fbe2`.
+The price/action audit is single-provider reconstruction, not certification of
+historical dissemination, holdings, broker eligibility or interest terms.
+
+Frozen `bill-parking-v1` retains F1's final risky ETF weights, adds BIL only below
+four positive-momentum qualifiers, caps its target at 45% and reserves at least
+2% cash. BIL exits on normal monthly breadth; no ranking/model change, cap search
+or F3/BIL combination. Seven primary portfolios, 25 cost/delay replays and all
+seven native accounting checks passed. F0/F1/F3 decisions, fills, daily NAV and
+positions exactly reproduce all 12 matched prior cost/delay controls. Used 16
+Python workers and three native lanes sharing 16 CPUs.
+
+| Full 2016–October 6, 2026 / 5bp | CAGR | Sharpe, zero reference rate | Calmar | Maximum drawdown |
+| --- | ---: | ---: | ---: | ---: |
+| F0 current SOTA | 9.779% | 0.9783 | 0.4425 | 22.097% |
+| F1 qualifying ETFs + cash | 9.702% | 1.0339 | 0.5715 | 16.976% |
+| F4 F1 + capped BIL | 9.841% | 1.0474 | 0.5856 | 16.804% |
+| F3 qualifying defensive ETFs + cash | 9.931% | 1.0581 | 0.6048 | 16.420% |
+
+F4 adds 13.9bp annualized return versus F1 at 5bp trading costs, 9.6bp at 20bp,
+and 13.9bp with one extra execution session. It passes the fixed economic screen
+but remains weaker than F3 overall. Eighteen decisions form only three episodes;
+the largest benefit is in 2022–23, while early 2016 slightly loses after costs.
+Holm-adjusted paired mean-return p-values versus F1 are 0.093/0.251/0.396 for
+3/6/12-month blocks. Twelve-month ratio intervals include zero. Retain parking as
+a modest cash-management component for future research, not an established alpha
+improvement or replacement for F3. Cash earns zero; distributions enter through
+adjusted prices; no broker cash-yield or untouched out-of-sample claim.
+
+Assessment and seven full reports: `research/bill-parking-2026-10-07/assessment.html`.
+Frozen inputs/economics/inference: `var/research/bill-parking-20261007-v1/`.
+Protocol SHA-256: `4ac477e45428bf49704b28b5fcde306b9d8003fe0a510dacc544e8ac4af0f0a8`.
+Relevant regression suite: 98 passed / one optional skip. Current SOTA, monitored
+membership and capital remain unchanged. Next: macro release vintages and issuer
+holdings/shares/NAV recorders, then a finite country/energy/sector fundamental
+pilot. ETFs remain the trading boundary; no more unregistered ranking search.
+
+## XGBoost ranking, exposure attribution and final target caps — 2026-10-07
+
+Completed a second finite batch after the user asked to use XGBoost predictions
+for top-6/8/10 selection instead of only a weight tilt. Protocol
+`fallback-ranking-construction-v1` was frozen before the new outcomes: 16 primary
+portfolios, 66 cost/delay/context replays and 15 registered contrasts. The model
+target remains next-month adjusted USD return relative to the universe mean;
+training, features and monthly model schedule were held fixed. All ranking arms
+use the F3 defensive/cash fallback, the same positive 252-session eligibility gate
+and later overlays. Price/volume rankings at each N and no-XGBoost-tilt controls
+separate basket size, ranking and tilt removal. Top N is a maximum, never a
+forced investment in rejected assets.
+
+Common evaluation window: January 4, 2021–October 6, 2026, starting with USD 1m,
+5bp trading costs, zero cash interest/reference rate. This window was already
+inspected; no untouched holdout claim is made.
+
+| Integration | CAGR | Sharpe | Calmar | Max drawdown |
+| --- | ---: | ---: | ---: | ---: |
+| F3 price/volume top 6 + XGBoost tilt | 10.74% | 1.076 | 0.919 | 11.69% |
+| Forecast ranking top 6, no XGBoost tilt | 9.88% | 1.014 | 0.794 | 12.43% |
+| Forecast ranking top 8, no XGBoost tilt | 7.69% | 0.888 | 0.626 | 12.28% |
+| Forecast ranking top 10, no XGBoost tilt | 5.96% | 0.781 | 0.484 | 12.31% |
+| Price/volume top 8 + XGBoost tilt | 7.46% | 0.864 | 0.616 | 12.10% |
+| Price/volume top 10 + XGBoost tilt | 6.10% | 0.798 | 0.503 | 12.12% |
+
+Forecast top 6 increases turnover from 5.87× to 7.93× annually and remains weaker
+at 10/20bp and with an extra execution-session delay. Removing the XGBoost tilt
+alone gives top-6 Sharpe 1.067; prediction-driven selection itself supplies no
+improvement here. Average eligible-universe rank IC is 0.110 for XGBoost versus
+0.233 for price/volume over 57 complete eligible months, a descriptive diagnostic.
+All 15 paired mean-return tests fail the 5% Holm-adjusted threshold across
+3/6/12-month block sensitivities. The six-month Sharpe-difference interval for
+forecast top 6 minus F3 is [-0.189, +0.060]. Preserve the negative result;
+do not replace the monitored recipe or widen its basket on this evidence.
+
+The exposure control calibrated on 2016–2020 freezes its scale at 0.9151117.
+It does not reproduce F3 protection (Sharpe 0.861, drawdown 20.40%). Matching
+F3's monthly invested budget while keeping F0 composition produces almost the
+same result as F3 (Sharpe 1.077 versus 1.076). Exposure timing explains much more
+than defensive selection in this window, which contains only one fallback episode.
+Neither result establishes future timing skill.
+
+A separately tested 45% final target cap sends excess weight to cash. Full
+2016–October 2026 F3 Sharpe changes only from 1.058 to 1.061 and CAGR from 9.931%
+to 9.949%, while maximum held weight falls from 53.65% to 46.64%. Target weights
+are capped at 45%; holding drift and execution gaps remain possible. Retain as a
+risk-control candidate, not a demonstrated alpha improvement or an approved
+portfolio change. No cap/ranking winner combination was searched.
+
+All 130 original monthly targets reproduced exactly; full-history F0/F3 NAV,
+fills and final positions match the prior study. All 16 primary native parity
+checks passed. Used 16 Python workers (18.77 seconds) and three memory-bounded
+native lanes sharing 16 CPUs (127.21 seconds). 39 focused tests passed. Inputs
+remain the pinned audited adjusted-price batch
+`9d05d12524221f562ed949926e78ba00bf126e427ee9de704ccdb0578d79655e`, with verified
+model/USD artifacts and explicit historical availability/volume/FX limitations.
+No new source, recorder, monitored membership, SOTA, allocation or execution
+authority change. The app's previous archive-ingestion warning has cleared.
+
+Findings and all 16 standard reports:
+[research assessment](../research/ranking-construction-2026-10-07/assessment.html).
+Frozen evidence: `var/research/ranking-construction-20261007-v1/`.
+Next: recorder-first Treasury-bill parking and macro/issuer/industry inputs from
+the roadmap. A new momentum target or ranking-specific training objective needs
+a separately frozen experiment; it was not tested here. Prospective F3 tracking
+and operator promotion remain separate.
+
+## Defensive-cash monitoring and strategy lifecycle — 2026-10-07
+
+At the operator's request, **Qualifying defensive ETFs + cash** (`research_fallback_f3_v1`)
+is now the fourth monitored strategy, with a complete application-calculated shared
+report through October 6. Monitoring is separate from SOTA promotion, capital and
+execution authority. Existing rolling XGBoost + activity + USD remains the SOTA
+and 100% paper allocation at control revision 2; no pending change was added.
+
+The new USD replay uses pinned published adjusted histories and verified model/USD
+inputs, avoiding uncertified historical currency conversion. All 130 decisions,
+2,705 daily values, 795 fills and final positions match the frozen F3 study exactly.
+Four USD native runs passed execution/accounting parity. Standard report Sharpe is
+1.0581, Calmar 0.6042 and maximum drawdown 16.42%; its calendar/anchor annualization
+is 9.9207%, explaining the small rounding difference from the study's 9.93%.
+These remain retrospective results from only three fallback episodes. Prospective
+monitoring starts October 8, with no prospective observations yet. CNH portfolio
+comparison uses only a separate exact-date verified FX bridge; raw USD NAV cannot
+be substituted for CNH. No new data source was required.
+
+Archive now pauses ongoing app calculations and retains the complete report.
+Restore replays missed signals, scheduled trades, cash, holdings and daily NAV;
+allocation remains blocked until the current membership generation is fully
+published. Current SOTA, funded or pending-allocation strategies must be released
+from those roles before archiving. Historical artifacts without an executable
+recipe remain viewable but cannot be restored by merely relabelling them.
+
+Publication: `19bcca6e344472ec1187f95635513e7c11de43f486636f21dc6ee937a72ef099`;
+acceptance evidence: `var/research/strategy-lifecycle-20261007-*` and the publication's
+`usd/study_comparison.json`. Next: operator promotion/allocation if desired, followed
+by the already recorded prospective, matched-exposure and recorder-first F4 work.
+
+## Fallback implementation and first results — 2026-10-07
+
+Completed the authorized F0–F3 batch on the active rolling XGBoost/activity/USD
+baseline, with 16-core independent calculations, 19 Python replays and four
+native execution-parity checks. All 130 baseline monthly target schedules
+reproduce exactly. Versioned cash/defensive fallback parameters and downstream
+membership/gross-budget protection now use the shared backtest and paper target
+pipeline; existing definitions retain the neutral policy.
+
+At 5 bp costs and zero cash interest, USD Sharpe improves from 0.978 to
+1.034/1.058/1.058 and Calmar from 0.443 to 0.572/0.604/0.605. Maximum drawdown
+falls from 22.10% to 16.98%/16.42%/16.42%; CAGR is 9.78% versus
+9.70%/9.92%/9.93%. Only three fallback episodes drive these results, with gains
+concentrated in 2022–23 and missed gains in the earlier episodes. Paired return
+uncertainty includes zero after multiple-comparison adjustment. Retain the
+active strategy; preserve challengers for further validation, with no monitoring,
+capital or execution-authority change.
+
+Full interpretation, constraints, source hashes, costs, delayed execution,
+episode attribution and next steps: [fallback results](../research/fallback-results-2026-10-07.md).
+Immutable artifacts: `var/research/fallback-20261007-v1/`.
+
+F4 remains unrun: neither BIL nor SGOV has admitted published history. The next
+new-data task must implement the recorder and make its audited publication
+inspectable in Market Data before features or backtests consume it. Existing
+audited ETF and dollar-index sources sufficed for F0–F3. Exposure-matched controls,
+final portfolio caps, cash remuneration and prospective validation remain open.
+
+## ETF research expansion proposal — 2026-10-07
+
+The user set an ETF-only boundary for the ongoing strategy-improvement work,
+with country leading indicators, better momentum/crash handling, broader asset
+exposures and sector-specific activity, growth, valuation, sentiment and
+positioning information as research directions. Constituent financial statements
+may inform ETF signals; single-stock trading remains outside this workstream.
+
+The [research and data roadmap](etf-research-expansion-roadmap.md) proposes staged
+universe/signal comparisons against the active October 4 rolling XGBoost +
+activity + USD strategy. Priorities are a separately versioned final-weight risk
+contract, dated ETF holdings/issuance, macro release vintages and macro/energy
+pilots, followed by validated sector financials and selected narrow industries.
+Existing SEC parsing and macro score hooks do not establish an audited sector
+panel. The proposal includes recorder/source priorities, availability controls,
+matched benchmarks and app-owned calculations. Experiment recipes, paid sources
+and acceptance tolerances remain proposals; no experiments, recorder deployment,
+new tracking, promotion or allocation changes were performed in this session.
+
+October 7 follow-up: the user requested explicit near-total cash and alternative
+fallback tests. The pool code confirms that fewer than four positive-momentum
+qualifiers cause the original basket to pass through, before subsequent layers.
+The roadmap now prioritizes F1 qualified base weights plus residual cash, F2
+cash only, F3 qualified IEF/TLT/GLD base weights plus cash, and F4 an explicitly
+specified Treasury-bill ETF parking alternative, against the unchanged F0.
+Zero qualifiers may target 100% cash; no minimum investment is imposed.
+Cash budgets must survive downstream overlays. Missing-data/model failures are
+separate blockers, with matched cash/FX economics, re-entry and fallback-episode
+attribution required. This is a research specification, not a tested improvement
+or a change to the active strategy.
+
 ## Active SOTA and paper allocation — 2026-10-04
 
 The operator approved 100% Rolling 1y XGBoost + ETF activity lag-20 + USD

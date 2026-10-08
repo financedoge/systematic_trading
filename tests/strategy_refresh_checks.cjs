@@ -41,7 +41,7 @@ async function catalogChecks() {
   let reject=false;
   let payload={strategies:[{strategy_id:'tracked',name:'Tracked',lifecycle:'monitored',artifact_end_date:'2026-09-25'}],
     warnings:['Waiting for FX']};
-  const context=vm.createContext({document:{getElementById:get,querySelectorAll:() => []},
+  const context=vm.createContext({document:{getElementById:get,querySelectorAll:() => [],addEventListener:()=>{}},
     window:{setTimeout:fn => timers.push(fn)},
     fetch:async () => {if(reject) throw new Error('offline');return {ok:true,json:async () => payload};}});
   vm.runInContext(script(input.catalog), context);

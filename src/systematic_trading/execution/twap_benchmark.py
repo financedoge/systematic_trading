@@ -14,8 +14,11 @@ from systematic_trading.execution.broker import InteractiveBrokersAdapter, Inter
 from systematic_trading.execution.ib_compat import compatible_ib_errors
 
 
-def benchmark_window(record):
+def benchmark_window(record, *, original_intent=False):
     order = record.order
+    if original_intent and order.slippage_trade_date:
+        order = order.model_copy(update=dict(intended_trade_date=order.slippage_trade_date,
+            execution_start_time=order.slippage_start_time, execution_end_time=order.slippage_end_time))
     if order.order_type != OrderType.TWAP or not all((order.intended_trade_date, order.execution_start_time, order.execution_end_time)):
         raise ValueError("No explicit TWAP window is recorded for this order.")
     zone = ZoneInfo("America/New_York")
@@ -123,11 +126,11 @@ class TwapBenchmarkService:
     def get(self, record, *, now=None):
         now = now or datetime.now(UTC)
         base = dict(average_fill_price=str(record.average_fill_price) if record.average_fill_price else None,
-                    currency=record.order.currency.value, method='Time-weighted 1-minute trade closes over the scheduled TWAP window; includes approval delay, excludes fees.')
+                    currency=record.order.currency.value, method='Time-weighted 1-minute trade closes over the original intended TWAP window; includes approval and rescheduling delay, excludes fees.')
         if record.execution_sync_issue:
             return dict(base, status='unavailable', message='Execution history requires review before calculating slippage.')
         try:
-            start, end = benchmark_window(record)
+            start, end = benchmark_window(record, original_intent=True)
         except ValueError as exc:
             return dict(base, status='unavailable', message=str(exc))
         base.update(window_start=start.isoformat(), window_end=end.isoformat())

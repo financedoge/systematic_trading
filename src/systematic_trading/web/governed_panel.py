@@ -28,6 +28,7 @@ GOVERNED_HTML = r'''
 </style>
 <section id="governed-panel" class="panel" data-market-view="history" hidden>
  <div class="panel-head"><h2>Historical Daily Price</h2><span id="governed-status">Loading catalog</span></div>
+ <details><summary>Research data recorders</summary><div id="research-recorder-status" class="note">Checking coverage…</div></details>
  <div class="note market-debug-only">One published history per symbol. Raw prices are reconstructed from reported splits; dividend-adjusted prices follow the provider’s back-adjustment convention. Neither is certified exchange tape. Missing observations remain missing.</div>
  <form id="governed-filters" class="filters">
   <label class="series-field">Series<input id="governed-symbol" aria-label="Historical daily series" list="governed-symbols" value="AAPL" placeholder="Symbol"></label><datalist id="governed-symbols"><option value="USD">Federal Reserve broad dollar index</option></datalist>
@@ -253,6 +254,7 @@ GOVERNED_HTML = r'''
   audit={symbol:'USD',gaps:[],sources:[],overlaps:[]};extent=fullExtent();render();
  }
  async function refresh(){
+  try{const r=await get('recorders');$('research-recorder-status').innerHTML=r.enabled?r.funds.map(f=>`<p><a href="/platform/market-data-audit?view=history&series=${encodeURIComponent(f.symbol)}">${esc(f.symbol)}</a> · ${esc(f.status)}${f.last?' · '+esc(f.first)+' to '+esc(f.last)+' · '+fmt(f.rows)+' sessions':''}<br>${esc(f.message)}</p>`).join(''):'Research recorders are disabled'}catch(e){$('research-recorder-status').textContent='Recorder status is unavailable; published histories remain below.'}
   try{const c=await get('catalog');batch=c.batch;catalog=c.series;$('governed-symbols').innerHTML='<option value="USD">Federal Reserve broad dollar index</option>'+catalog.map(r=>`<option value="${esc(r.symbol)}">${esc(r.name||'unavailable')}</option>`).join('');$('governed-catalog-summary').textContent=`All ${fmt(catalog.length)} underlyings · ${fmt(catalog.filter(r=>!r.rows).length)} without governed history · inspect unresolved work`;renderCatalog()}
   catch(e){if(!['USD','DTWEXBGS'].includes($('governed-symbol').value.trim().toUpperCase()))throw e}
   await load();

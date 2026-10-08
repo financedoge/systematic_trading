@@ -7,19 +7,20 @@ from systematic_trading.research.compute import resource_plan, parallel_results
 
 def test_native_workers_use_cpu_budget_without_overcommitting_docker_memory():
     plan=resource_plan(5,host_cpus=16,engine="lean",docker_cpus=16,docker_memory_bytes=16527273984)
-    assert plan["workers"]==3 and plan["cpus_per_run"]==5
+    assert plan["workers"]==3 and plan["cpus_per_run"]==pytest.approx(16/3,abs=0.000001)
     assert plan["preparation_workers"]==5
-    assert plan["workers"]*plan["cpus_per_run"]==plan["cpu_budget"]==15
+    assert plan["cpu_budget"]==16
+    assert plan["workers"]*plan["cpus_per_run"]==pytest.approx(16,abs=0.000002)
     assert plan["workers"]*plan["memory_per_run_gib"]+2 <= plan["docker_memory_gib"]
     limited=resource_plan(5,host_cpus=16,engine="lean",docker_cpus=4,docker_memory_bytes=8*1024**3)
-    assert limited["workers"]==1 and limited["cpus_per_run"]==3
+    assert limited["workers"]==1 and limited["cpus_per_run"]==4
     with pytest.raises(ValueError,match="headroom"):
         resource_plan(5,host_cpus=16,engine="lean",docker_cpus=16,docker_memory_bytes=4*1024**3)
 
 
 def test_python_pool_respects_available_cpu_count_and_job_count():
     assert resource_plan(5,host_cpus=16,engine="python")["workers"]==5
-    assert resource_plan(5,host_cpus=2,engine="python")["workers"]==1
+    assert resource_plan(5,host_cpus=2,engine="python")["workers"]==2
     assert resource_plan(5,host_cpus=1,engine="python")["workers"]==1
 
 

@@ -15,11 +15,16 @@ from systematic_trading.portfolio.strategy_allocation import AllocationChange, c
 from systematic_trading.portfolio.strategy_book import initial_book
 from systematic_trading.portfolio.context import portfolio_context
 from systematic_trading.research.strategy_catalog import registered_strategy_definition
+from systematic_trading.research.strategy_lifecycle import require_monitored, SCOPE, required_generation
 
 NY = ZoneInfo('America/New_York')
 
 
-def candidate_evidence(settings, key):
+def candidate_evidence(settings, key, *, store=None):
+    if store is None:
+        from systematic_trading.storage import create_trading_store
+        store=create_trading_store(settings)
+    monitoring_state=require_monitored(settings,store,[key])
     definition = registered_strategy_definition(key)
     if definition.universe_key != 'multi_asset' or definition.scheduler != 'static_monthly':
         raise ValueError('Trading allocations currently support the monitored monthly multi-asset strategies.')
@@ -30,8 +35,16 @@ def candidate_evidence(settings, key):
     if report['strategyDefinition'] != definition.to_dict():
         raise ValueError('Published strategy definition differs from the registered version.')
     monitoring = report['monitoring']
+    if (monitoring.get('lifecycle')!='monitored'
+            or monitoring.get('generation',0)!=required_generation(monitoring_state,key)):
+        raise ValueError('This strategy is catching up. Wait for its complete replay before allocating.')
+    latest=AnalyticsStore.from_settings(settings).latest('governance/catalog')
+    if latest and provenance['inputs']['batch']!=latest['version']:
+        raise ValueError('This strategy is catching up to the current audited data batch.')
     if monitoring.get('calculationOwner') != 'application' or not provenance['inputs'].get('batch'):
         raise ValueError('Application calculation and pinned audited inputs are required.')
+    if monitoring['monitoredThrough'] < provenance['inputs']['price_through']:
+        raise ValueError('Valuation is catching up. Complete the missing calculations before allocating.')
     return dict(strategy_key=key, name=definition.name, definition=definition.to_dict(),
         report_url='/api/v1/strategies/'+key+'/report', calculation_revision=document[1]['version'],
         price_batch=provenance['inputs']['batch'], through=monitoring['monitoredThrough'],
@@ -39,7 +52,7 @@ def candidate_evidence(settings, key):
         summary=report['summary'], warnings=report['warnings'],
         model_fit=report.get('modelTraining', {}).get('fitAsOf'),
         model_hash=report.get('modelTraining', {}).get('modelSha256'),
-        usd_batch=report.get('usdModel', {}).get('batch'))
+        usd_batch=report.get('usdModel', {}).get('batch'),monitoring_generation=required_generation(monitoring_state,key))
 
 
 def next_handover(now):
@@ -68,8 +81,14 @@ def account_binding_issues(store, account):
 
 
 def activation_issues(settings, store, now):
-    issues = submission_reconciliation_issues(settings, now=now)
+    # Preparing a configuration never requires an open broker connection.
+    # Snapshot identity/integrity and known uncertain executions still matter.
+    issues = []
     report = load_latest_ib_reconciliation(settings)
+    if report and (report.environment != OrderEnvironment.PAPER or report.has_breaks):
+        issues.append('Resolve account reconciliation breaks before preparing the allocation.')
+    if report and (report.checked_at-now).total_seconds() > 5:
+        issues.append('The account snapshot is future-dated. Check the capture clock.')
     if settings.default_environment != OrderEnvironment.PAPER:
         issues.append('Strategy changes are available for the paper portfolio only.')
     if not report or len(report.managed_accounts) != 1 or not report.managed_accounts[0].startswith('DU'):
@@ -107,8 +126,9 @@ def preview_change(settings, store, change, *, now=None):
     if state.get('pending'):
         raise ValueError('Cancel the pending change before scheduling another.')
     keys = sorted({r.strategy_key for r in change.allocations or []} | ({change.sota_key} if change.sota_key else set()))
-    evidence = {k:candidate_evidence(settings,k) for k in keys}
-    result = dict(change=change.model_dump(mode='json'), evidence=evidence,
+    monitoring_state=require_monitored(settings,store,keys)
+    evidence = {k:candidate_evidence(settings,k,store=store) for k in keys}
+    result = dict(change=change.model_dump(mode='json'), evidence=evidence, membership_revision=monitoring_state['revision'],
         current=state['active'], previewed_at=now.isoformat(), blockers=[],
         rollback=state['active']['allocations'], effects='SOTA designation only',
         approval_policy='A new trading allocation requires a new paper automatic-approval opt-in.')
@@ -137,6 +157,8 @@ def preview_change(settings, store, change, *, now=None):
         result.update(proposal=plan.proposal.model_dump(mode='json'), account_id=account_id,
             account=dict(positions=snapshot.model_dump(mode='json')['positions'], cash=snapshot.model_dump(mode='json')['cash']),
             valuation_date=str(day), active=active, blockers=sorted(set(activation_issues(settings, store, now)+plan.validation_issues)),
+            routing_warnings=submission_reconciliation_issues(settings, now=now),
+            account_observed_at=snapshot.captured_at.isoformat(),
             effects='After-close handover; net ETF orders require approval for the next US trading session.',
             intended_trade_date=str(next_us_trading_day(effective)),
             reserve_weight=str(1-sum(r.weight for r in change.allocations)))
@@ -174,7 +196,8 @@ def schedule_change(settings, store, change, review_token, *, evidence_reviewed,
         event = dict(event_id=change.event_id, request_hash=request_hash, kind=kind, at=now.isoformat(),
             operator=change.operator, reason=change.reason, evidence=preview['evidence'],
             rollback=preview['rollback'], review_token=review_token)
-        return store.commit_strategy_control(scope_for(store), change.expected_revision, state, event)
+        return store.commit_strategy_control(scope_for(store), change.expected_revision, state, event,
+            guard_revisions={SCOPE:preview['membership_revision']})
 
 
 def cancel_pending(store, expected_revision, operator, reason, *, now=None):
@@ -197,25 +220,42 @@ def activate_pending(settings, store, *, now=None, order_client=None):
         state = control_state(store)
         pending = state.get('pending')
         if not pending:
+            # Transactional state also carries an outbox copy. Recover a crash
+            # between the handover commit and approval-queue persistence.
+            saved = state['active'].get('opening', {}).get('rebalance_proposal')
+            if saved and store.get_proposal(saved['proposal_id']) is None:
+                from systematic_trading.domain import TradeProposal
+                store.queue_proposal_once(TradeProposal.model_validate(saved))
+                return 'Allocation rebalance restored to the approval queue.'
             return None
         change = AllocationChange.model_validate(pending['change'])
+        try:
+            monitoring_state=require_monitored(settings,store,
+                [r.strategy_key for r in change.allocations or []]+([change.sota_key] if change.sota_key else []))
+        except ValueError as exc:
+            return str(exc)
         day = date.fromisoformat(change.effective_close)
         close = datetime.combine(day, us_equity_market_close(day), NY)
         next_open = datetime.combine(next_us_trading_day(day), time(9, 30), NY)
         if now < close:
             return 'Waiting for the approved session close.'
         if now >= next_open:
-            return 'Handover window missed. Cancel and review a new date; history will not be backdated.'
+            day = next_handover(now)
+            close = datetime.combine(day, us_equity_market_close(day), NY)
+            if now < close:
+                return f'Handover window missed; retained for {day} close. History will not be backdated.'
         issues = activation_issues(settings, store, now)
         if issues:
             return '; '.join(issues)
-        from systematic_trading.execution.management import TERMINAL, sync_orders
-        broker = sync_orders(settings, store, client=order_client)
-        if any(r.get('status') not in TERMINAL for r in broker['orders']):
-            return 'Broker open or uncertain orders block the handover.'
         from systematic_trading.live.allocated_plan import build_allocated_plan
         snapshot = snapshot_for(settings, day)
+        report = load_latest_ib_reconciliation(settings)
+        recorded = (LiveAccountSnapshotInput(as_of=day, captured_at=report.checked_at,
+            positions=report.broker_positions, cash=report.broker_cash) if report else None)
+        if recorded is None or (snapshot.positions, snapshot.cash) != (recorded.positions, recorded.cash):
+            return 'Account changed during preparation; retrying with the new snapshot.'
         active = dict(pending['preview']['active'], activated_at=now.isoformat(), approved_at=pending['approved_at'],
+            effective_close=str(day), requested_effective_close=change.effective_close,
             capital_rebalance='monthly', history_label='Operator-approved allocation',
             opening=dict(at=now.isoformat(), snapshot=snapshot.model_dump(mode='json'),
                 book=initial_book(snapshot.model_dump(mode='json'), pending['preview']['active']['allocations'])))
@@ -230,17 +270,29 @@ def activate_pending(settings, store, *, now=None, order_client=None):
         # Normal app refreshes may advance prices and scheduled model fits. The
         # approved recipe is frozen; execution receipts bind the fresh audited inputs.
         for key,evidence in pending['preview']['evidence'].items():
-            if candidate_evidence(settings,key)['definition'] != evidence['definition']:
+            if candidate_evidence(settings,key,store=store)['definition'] != evidence['definition']:
                 return 'Strategy recipe changed since approval. Cancel and review the updated evidence.'
         latest = snapshot_for(settings, day)
-        if (latest.positions,latest.cash) != (snapshot.positions,snapshot.cash):
+        from systematic_trading.live.deferred_rebalance import account_evidence, prepared_proposal
+        latest_report = load_latest_ib_reconciliation(settings)
+        if ((latest.positions,latest.cash) != (snapshot.positions,snapshot.cash)
+                or latest_report is None or account_evidence(latest_report) != account_evidence(report)):
             return 'Account changed during activation; waiting for reconciliation.'
+        issues = activation_issues(settings, store, now)
+        if issues:
+            return '; '.join(issues)
         active['opening'].update(targets=[t.model_dump(mode='json') for t in plan.proposal.targets], prices=plan.proposal.input_provenance['allocation']['intent']['prices'],
             fx=plan.proposal.input_provenance['allocation']['intent']['fx'],
             input_provenance=plan.proposal.input_provenance)
+        proposal = prepared_proposal(plan.proposal, report).model_copy(update=dict(
+            proposal_id='handover-'+change.event_id, created_at=now, trigger='allocation_handover',
+            automation_strategy_key=None))
+        active['opening']['rebalance_proposal'] = proposal.model_dump(mode='json')
         event = dict(event_id='activate-'+change.event_id, request_hash=digest(encode(pending)),
             kind='allocation_activated', at=now.isoformat(), effective_close=str(day),
             operator=change.operator, reason=change.reason, previous=state['active'], active=active)
         updated = dict(state, active=active, pending=None, sota_key=change.sota_key or state['sota_key'])
-        store.commit_strategy_control(scope_for(store), state['revision'], updated, event)
-        return 'Trading allocation activated. A fresh proposal and routing approval are required.'
+        store.commit_strategy_control(scope_for(store), state['revision'], updated, event,
+            guard_revisions={SCOPE:monitoring_state['revision']})
+        store.queue_proposal_once(proposal)
+        return 'Trading allocation activated; rebalance queued for order approval. Routing rechecks fresh account evidence.'

@@ -151,7 +151,7 @@ def replay_book(store, active, *, through=None, reference=False):
             if record.proposal_id not in approvals:
                 warnings.append('Execution approval evidence is unavailable.')
                 continue
-            events.append((fill.filled_at, 1, str(identity), 'fill', (allocation['intent'], fill, record.order.reference_price)))
+            events.append((fill.filled_at, 1, str(identity), 'fill', (allocation['intent'], fill, getattr(record.order, 'benchmark_reference_price', record.order.reference_price))))
     for _, _, _, kind, payload in sorted(events, key=lambda row:row[:3]):
         if kind == 'internal':
             apply_internal(book, payload)

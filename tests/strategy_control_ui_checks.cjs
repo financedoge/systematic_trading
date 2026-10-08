@@ -4,7 +4,7 @@ const assert = require('assert');
 const source = fs.readFileSync(0, 'utf8').replace(/\r\n/g,'\n');
 const nodes = new Map();
 const weights = [{value:'100',dataset:{weight:'A'}}];
-let focused, responseKind='ok';
+let focused, responseKind='ok', finishPreview;
 const requests=[];
 const previewResponse={effects:'test',approval_policy:'test',blockers:[],evidence:{},rollback:[]};
 function node(id) {
@@ -21,6 +21,7 @@ const context = {document:{createElement:()=>root,querySelector:()=>({prepend(){
   location:{pathname:'/strategies'}, setInterval(){}, URLSearchParams,
   crypto:{randomUUID:()=>'test-event'},
   fetch:async(url,options)=>{calls++;requests.push({url,body:JSON.parse(options.body)});
+    if(responseKind==='delayed')return new Promise(resolve=>finishPreview=()=>resolve({ok:true,json:async()=>previewResponse}));
     return responseKind==='ok'?{ok:true,json:async()=>previewResponse}:{ok:false,json:async()=>({detail:[
       {type:'string_too_short',loc:['body','change','reason'],msg:'String should have at least 1 character',input:''}]})};}};
 vm.createContext(context);
@@ -75,4 +76,19 @@ assert.strictEqual(node('sc-confirm').disabled,true,'Rechecking cannot revive an
   await node('sc-cancel-confirm').onclick();assert.strictEqual(calls,beforeCancel);assert.strictEqual(focused,'sc-cancel-reason');
   assert.doesNotThrow(()=>node('sc-editor').oninput({target:{id:'sc-cancel-reason'}}));
   assert.strictEqual(node('sc-cancel-reason-error').hidden,true);
+  // A second editor opening or input change can happen while the preview API is
+  // still running. The stale response must neither dereference null change nor
+  // approve the newly entered form with the previous form's review token.
+  context.reviewTest.setup();node('sc-operator').value='Tester';node('sc-reason').value='Reason';
+  node('sc-preview-result').innerHTML='';responseKind='delayed';
+  const stale=context.reviewTest.preview();context.reviewTest.setup();
+  node('sc-preview-result').innerHTML='new editor';finishPreview();await stale;
+  assert.strictEqual(node('sc-preview-result').innerHTML,'new editor');
+  assert.strictEqual(node('sc-message').textContent,'');
+  const edited=context.reviewTest.preview();node('sc-editor').oninput({target:{id:'sc-cap'}});
+  finishPreview();await edited;assert.strictEqual(node('sc-preview-result').innerHTML,'new editor');
+  responseKind='ok';previewResponse.routing_warnings=['IB snapshot is stale'];
+  await context.reviewTest.preview();
+  assert.match(node('sc-preview-result').innerHTML,/sc-warning/);
+  assert.ok(!node('sc-preview-result').innerHTML.includes('sc-error'), 'Non-blocking routing readiness must be yellow');
 })().catch(error=>{console.error(error);process.exitCode=1;});

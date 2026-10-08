@@ -20,9 +20,35 @@ On **Strategies**, use **Promote / allocate** for a monitored strategy, or open
 
 An unresolved reconciliation break, uncertain order, wrong account, missing
 audited input, changed model recipe or exceeded capital cap blocks activation.
-A missed handover window requires cancelling and reviewing a new date. The app
-shows the pending status. History records the request, activation and first fill
+A missed handover window retains the approved configuration for the next available
+after-close handover; the effective close is recorded separately from the requested
+close and history is never backdated. The app shows the pending status. History records the request, activation and first fill
 separately. Cancel and rollback append events; rollback requires a new review.
+
+IB connectivity and a snapshot older than 180 seconds are **yellow routing
+warnings**, not allocation-preparation blockers. Preparation uses the last recorded
+verified paper-account balances, with the capture time retained. These are indicative
+holdings, not proof of the current broker position. Account mismatch, a future-dated
+capture, known reconciliation breaks and uncertain executions still block preparation
+and are shown in red. Routing still requires fresh matching account evidence.
+
+Activation persists the handover's pending rebalance in its immutable event before
+adding it to the proposal queue. The worker recovers an interrupted queue write by
+proposal ID. Configuration approval never authorizes those orders. On Trading,
+**Refresh for approval** prepares a successor when the window is missed or balances
+have changed, then the operator uses the usual order approval. The original proposal
+and any approval remain in history; a successor invalidates the old route. Renewed
+proposals do not inherit approval or automatic execution authority. Known broker
+attempts, partial fills and uncertain outcomes require reconciliation/management;
+this button never blindly resends them.
+
+Renewal retains the original target intent and original price/TWAP benchmarks while
+recalculating whole-share quantities from current available marks and recorded
+balances. Direction/asset changes require a new allocation review. Total price
+slippage includes approval and rescheduling delay for executed quantities, using the
+original benchmark; unfilled orders remain missed-order evidence, not fictitious
+slippage. TWAP statistics remain unavailable when complete original-window minute
+bars are unavailable. Fees and unclassified cash movements remain separate.
 
 ## Multiple strategies
 

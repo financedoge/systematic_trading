@@ -134,7 +134,7 @@ continuous chain cannot resume without its missing handover value.
             result['warnings'].append(f"Theoretical performance: {key} has no app-calculated, audited NAV publication.")
             continue
         rows = {}
-        for row in detail.get('nav_series', []):
+        for row in detail.get('cnh_nav_series' if detail.get('accounting_currency')=='USD' else 'nav_series', []):
             day = date.fromisoformat(row['trade_date']).isoformat()
             nav = positive(row.get('nav_cnh'))
             if day in rows or nav is None:

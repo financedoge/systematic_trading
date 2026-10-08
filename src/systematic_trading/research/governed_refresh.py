@@ -7,6 +7,7 @@ from datetime import UTC, datetime
 import gzip
 import json
 from pathlib import Path
+import shutil
 from urllib.parse import urlencode
 from uuid import uuid4
 
@@ -97,15 +98,38 @@ def refresh_governed_etfs(settings, analytics, *, now=None, fetch=acquire):
         raise
 
 
-def _build_publish(analytics, prior, publication, output, symbols, old_rows, cutoff, now, fetch):
+def inherit_series(prior, output, catalog):
+    """Keep a bounded parent chain without losing subsequently admitted series.
+
+    Carry forward each delta's verified files, including updated existing funds.
+    The original immutable publication still owns its source documents in CH.
+    """
+    parent = prior.parent or prior
+    _write(output, "parent.json", dict(root=str(parent.root), batch=sha256(parent.root / "manifest.json")))
+    copied = {}
+    for item in catalog:
+        symbol = item["symbol"]
+        for folder, suffix in (("bars", ".jsonl.gz"), ("comparisons", ".jsonl.gz"),
+                               ("actions", ".jsonl.gz"), ("audits", ".json")):
+            name = f"{folder}/{symbol}{suffix}"
+            if name not in prior.manifest or prior.manifest[name] == parent.manifest.get(name):
+                continue
+            source = prior.checked(name)
+            destination = output / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, destination)
+            copied[name] = sha256(source)
+    _write(output, "inherited.json", dict(root=str(prior.root), batch=sha256(prior.root / "manifest.json"), files=copied))
+
+
+def _build_publish(analytics, prior, publication, output, symbols, old_rows, cutoff, now, fetch, *, admissions=None):
     sessions, calendar = governed_sessions("1950-01-01", cutoff)
     catalog = json.loads(prior.checked("catalog.json").read_text(encoding="utf8"))
     inherited = [dict(item, storage_batch=item.get("storage_batch", publication["version"]))
                  for item in catalog if item["symbol"] not in symbols]
     # The same complete ETF set is replaced each run; untouched histories remain
     # pinned to the original parent instead of accumulating an unbounded chain.
-    parent = prior.parent or prior
-    _write(output, "parent.json", dict(root=str(parent.root), batch=sha256(parent.root / "manifest.json")))
+    inherit_series(prior, output, inherited)
     _write(output, "policy.json", POLICY)
     _write(output, "calendar.json", dict(**calendar, sessions=sorted(sessions)))
     prepared, index = {}, []
@@ -121,7 +145,16 @@ def _build_publish(analytics, prior, publication, output, symbols, old_rows, cut
             raise ValueError("Provider ETF identity changed: " + symbol)
         source.metadata["identity_eligible"] = True
         bars, audit, actions = consolidate(symbol, [source], sessions, cutoff)
-        validate_revision(symbol, old_rows[symbol], bars, prior.audit(symbol), audit, cutoff)
+        # Retain the failed audit as evidence even when admission is rejected.
+        _write(output, f"audits/{symbol}.json", audit)
+        if admissions and symbol in admissions:
+            from systematic_trading.recorders.research_etfs import validate_admission
+            validate_admission(admissions[symbol], source, bars, audit, sessions, cutoff)
+            audit["research_recorder"] = admissions[symbol]
+        if old_rows.get(symbol):
+            validate_revision(symbol, old_rows[symbol], bars, prior.audit(symbol), audit, cutoff)
+        elif not admissions or symbol not in admissions:
+            raise ValueError("New fund requires explicit admission: " + symbol)
         audit["requested_cutoff"] = cutoff
         accepted_days = {b["trade_date"] for b in bars}
         comparisons = [dict(symbol=symbol, trade_date=d, source_id=source_id, source_hash=source.raw_hash,
@@ -150,13 +183,16 @@ def _build_publish(analytics, prior, publication, output, symbols, old_rows, cut
         governance.insert_verified("governance_comparisons", batch, symbol, comparisons)
         docs = [dict(point_key="audit", media_type="application/json", payload=encode(audit)),
                 dict(point_key=source_id, media_type="application/json", payload=raw)]
+        if admissions and symbol in admissions:
+            evidence = output / "issuer" / (symbol + ".html")
+            docs.append(dict(point_key="issuer_reference", media_type="text/html", payload=evidence.read_text(encoding="utf8")))
         analytics.publish(f"governance-batch/{batch}/{symbol}", batch,
             [observation(str(i), "governed_corporate_action", symbol, row, row["date"]) for i,row in enumerate(actions)], docs,
             provenance=dict(symbol=symbol, manifest_sha256=batch, rows=len(bars), owner="application"))
     if analytics.latest("governance/catalog")["version"] != publication["version"]:
         raise ValueError("Catalog changed during refresh; retaining newer committed publication")
     docs = [dict(point_key=name, media_type="application/json", payload=(output/name).read_text(encoding="utf8"))
-            for name in ("manifest.json", "parent.json", "policy.json", "producer.json")]
+            for name in ("manifest.json", "parent.json", "inherited.json", "policy.json", "producer.json")]
     analytics.publish("governance/catalog", batch,
         [observation(r["symbol"], "governed_series_catalog", r["symbol"], r) for r in inherited], docs,
         provenance=dict(root=str(output), parent=publication["version"], cutoff=cutoff, owner="application", policy=POLICY))

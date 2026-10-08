@@ -1,0 +1,17 @@
+{
+  "files": {
+    "assessment.html": "3d28e2a474ec48b8663e1e8edd67b0f9dbe6a96d30418537032e91ac15911121",
+    "comparison.png": "a4d0e2dfdb999bc62cdb4fabf93df33efecbe29140989bd23b39f499f9055624",
+    "index.html": "eccdcafd385e077500b0e6d1f42396518fc654a4a90daa2b5028f594fb25646d",
+    "reports/BIL.html": "b1d3498bd5d953c7af4ba20aee5249eaa058f9a75f571b233429322fd0282c53",
+    "reports/F0.html": "3217720408f01221d39c1644618bf4ee26f8d183fcfb979da211a06cf35b971a",
+    "reports/F1.html": "77cd498257cdc55f55c669e1cdb57a310c5412d830353b8e57e4757a7a0795d2",
+    "reports/F3.html": "28ceacbff25921b47eb8d59ed2a18753d50d3a1423e1a05845ef7a2dd57e9e8a",
+    "reports/F4.html": "9d46e3787ffaf53a85b48df1cd8cbfac3adddc7ce0cda1414eb1deb79f42d990",
+    "reports/RP.html": "a198d5b75220ef1391546969b35856ba59813f8b7f874b4596dcbc5fec67ad07",
+    "reports/URTH.html": "bcac3f19dc685924909b3824d9aed0d668425de4eb06d17e91971e5b874825b4"
+  },
+  "protocol_sha256": "4ac477e45428bf49704b28b5fcde306b9d8003fe0a510dacc544e8ac4af0f0a8",
+  "report_sha256": "fd9579d6353469954c739bab6ddd7f2c37cf10d5fc4f73b95026d98c98549728",
+  "study": "D:\\projects\\systematic_trading\\var\\research\\bill-parking-20261007-v1"
+}

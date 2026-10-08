@@ -1,0 +1,19 @@
+{
+  "version": "research-etf-recorders-v1",
+  "enabled": true,
+  "funds": [
+    {
+      "symbol": "BIL",
+      "name": "State Street SPDR Bloomberg 1-3 Month T-Bill ETF",
+      "isin": "US78468R6633",
+      "currency": "USD",
+      "inception": "2007-05-25",
+      "required_start": "2012-01-05",
+      "purpose": "F4 Treasury-bill parking research; no trading authority",
+      "issuer_url": "https://www.ssga.com/us/en/intermediary/etfs/state-street-spdr-bloomberg-1-3-month-t-bill-etf-bil",
+      "issuer_required_text": ["US78468R6633", "May 25 2007", "1-3 Month", "BIL"],
+      "rights": "Public source evidence for internal research; no redistribution or paid entitlement assumed",
+      "historical_availability": "Reconstructed price history; download and audit do not certify historical dissemination"
+    }
+  ]
+}

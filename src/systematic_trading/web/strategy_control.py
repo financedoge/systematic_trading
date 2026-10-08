@@ -10,6 +10,7 @@ from systematic_trading.live.strategy_control import (
 )
 from systematic_trading.portfolio.strategy_allocation import AllocationChange, control_events, control_state
 from systematic_trading.research.strategy_catalog import registered_strategy_definition
+from systematic_trading.research.strategy_lifecycle import membership, change_membership, calculation_ready
 
 router = APIRouter(prefix='/api/v1/portfolio/strategy-control', tags=['strategy-control'])
 
@@ -26,15 +27,43 @@ class CancelChange(BaseModel):
     reason: str = Field(min_length=1,max_length=1000)
 
 
+class MonitoringChange(BaseModel):
+    strategy_key: str = Field(min_length=1,max_length=160)
+    lifecycle: str = Field(pattern='^(monitored|archived)$')
+    expected_revision: int = Field(ge=0)
+    event_id: str = Field(min_length=8,max_length=100,pattern='^[a-zA-Z0-9_-]+$')
+    operator: str = Field(min_length=1,max_length=100)
+    reason: str = Field(min_length=1,max_length=1000)
+
+
+@router.post('/monitoring')
+def update_monitoring(body: MonitoringChange, request: Request):
+    try:
+        result=change_membership(request.app.state.settings,request.app.state.store,
+            key=body.strategy_key,**body.model_dump(exclude={'strategy_key'}))
+    except ValueError as exc:
+        raise HTTPException(409,str(exc)) from exc
+    service=getattr(request.app.state,'analytics_service',None)
+    if service:
+        service.request_refresh(reason='strategy_membership_changed')
+    return result
+
+
 @router.get('')
 def status(request: Request):
     store, settings = request.app.state.store, request.app.state.settings
     state = control_state(store)
-    config = json.loads(settings.strategy_monitoring_config_path.read_text(encoding='utf8'))
+    monitoring = membership(settings,store)
     candidates = []
-    for key in config['monitored_strategy_ids']:
+    analytics = getattr(request.app.state,'analytics',None)
+    publication=analytics.latest('tracked-strategies/calculations') if analytics else None
+    through=json.loads(publication['provenance']).get('inputs',{}).get('price_through') if publication else None
+    for key in monitoring['monitored']:
         definition = registered_strategy_definition(key)
-        candidates.append(dict(strategy_key=key,name=definition.name,report_url='/api/v1/strategies/'+key+'/report'))
+        saved=analytics.document('tracked-strategies/calculations','detail/'+key) if analytics else None
+        detail=json.loads(saved[0]['payload']) if saved else {}
+        if detail and calculation_ready(detail,monitoring,through):
+            candidates.append(dict(strategy_key=key,name=definition.name,report_url='/api/v1/strategies/'+key+'/report'))
     now = datetime.now(UTC)
     history = control_events(store)
     proposals = {p.proposal_id:p for p in store.list_proposals()}
@@ -61,8 +90,10 @@ def status(request: Request):
             capital = dict(as_of=latest['trade_date'], weights={k:str(Decimal(v)/total) for k,v in latest['values'].items()} if total else {})
     service = getattr(request.app.state,'trading_management_service',None)
     pending_status = service.status().strategy_change_status if service else None
+    from systematic_trading.execution.reconciliation import submission_reconciliation_issues
     return dict(state=state, candidates=candidates, history=history, capital=capital, pending_status=pending_status,
         suggested_close=str(next_handover(now)), activation_blockers=activation_issues(settings, store, now),
+        routing_warnings=submission_reconciliation_issues(settings, now=now),
         rules=dict(capital_rebalance='Monthly; actual sleeve weights drift between capital rebalances.',
             reserve='Unassigned capital remains reserve cash; each strategy also retains its own cash.',
             history='Earlier dates without verified assignment evidence are labelled Legacy / unknown.',
@@ -72,7 +103,7 @@ def status(request: Request):
 @router.get('/evidence/{strategy_key}')
 def evidence(strategy_key: str, request: Request):
     try:
-        return candidate_evidence(request.app.state.settings,strategy_key)
+        return candidate_evidence(request.app.state.settings,strategy_key,store=request.app.state.store)
     except (ValueError,KeyError,OSError) as exc:
         raise HTTPException(409,str(exc)) from exc
 

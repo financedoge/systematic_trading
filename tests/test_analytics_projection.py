@@ -72,18 +72,22 @@ def test_dashboard_cache_warms_before_capture_import_and_recovers_initial_failur
 
 
 def request(analytics, store=None):
-    return SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(analytics=analytics, store=store)))
+    return SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(analytics=analytics, store=store, settings=AppSettings())))
 
 
-def test_strategy_http_reads_publication_without_touching_sources():
+def test_strategy_http_reads_publication_without_touching_sources(monkeypatch):
+    from systematic_trading.research import strategy_lifecycle
+    monkeypatch.setattr(strategy_lifecycle,"membership",lambda *args:dict(revision=0,overrides={},monitored=[]))
     analytics = MemoryAnalytics()
     analytics.publish("strategy-serving", "v1", [], [
         dict(point_key="catalog", payload=encode({"strategies": [{"strategy_id": "x"}]})),
         dict(point_key="report/x", payload="<html><body>saved result</body></html>"),
     ])
-    # No settings, broker or filesystem store is available on this request.
+    # Membership is read separately; no broker or price-history reads are available.
     catalog = strategy_catalog(request(analytics))
-    assert catalog["strategies"] == [{"strategy_id": "x", "is_sota": False, "trading_capital_weight": "0"}]
+    assert catalog["strategies"][0]["strategy_id"] == "x"
+    assert catalog["strategies"][0]["lifecycle"] == "archived"
+    assert catalog["strategies"][0]["allocation_ready"] is False
     assert catalog["analytics"]["storage"] == "clickhouse"
     report = strategy_report("x", request(analytics))
     assert b"saved result" in report.body

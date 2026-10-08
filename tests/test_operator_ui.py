@@ -27,7 +27,8 @@ def test_open_strategy_pages_update_when_complete_publication_changes():
     node = shutil.which("node")
     if node is None:
         pytest.skip("Node.js is required for UI behavior checks.")
-    payload = dict(catalog=_STRATEGIES_HTML, report=report_refresh_banner(
+    from systematic_trading.web.strategy_lifecycle_ui import HTML, JS
+    payload = dict(catalog=_STRATEGIES_HTML.replace("<script>", HTML+"<script>"+JS, 1), report=report_refresh_banner(
         {"version": "v1", "published_at": "2026-09-25"}, {}))
     subprocess.run([node, str(Path(__file__).with_name("strategy_refresh_checks.cjs"))],
                    input=json.dumps(payload), text=True, encoding="utf-8", capture_output=True, check=True, timeout=20)
@@ -296,8 +297,10 @@ def test_market_data_audit_portal_is_served(tmp_path) -> None:
     assert "/api/v1/market-data/daily-bars" in html
     assert "/api/v1/market-data/audit" in html
     assert "latest_recorder_date" in html
-    assert "Start Session" in html
-    assert "End Session" in html
+    assert "Captured From" in html
+    assert "Captured Through" in html
+    assert 'id="economic-tab"' in html
+    assert 'data-market-view="economics"' in html
     assert 'data-sessions="1"' in html
     assert 'data-sessions="5"' in html
     assert 'data-sessions="10"' in html

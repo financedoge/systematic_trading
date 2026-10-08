@@ -61,7 +61,8 @@ def statistics(economic,quotes,initial=1000000):
     yearly=defaultdict(lambda:1.)
     for month,r in monthly.items():yearly[month[:4]]*=1+r
     return dict(cagr=float((nav[-1]/initial)**(1/years)-1),volatility=float(np.std(returns,ddof=1)*math.sqrt(252)),
-        sharpe_zero_cash=float(np.mean(returns)/np.std(returns,ddof=1)*math.sqrt(252)),
+        sharpe_zero_cash=(float(np.mean(returns)/np.std(returns,ddof=1)*math.sqrt(252))
+                          if np.std(returns,ddof=1)>0 else None),
         max_drawdown=float(np.min(nav/np.maximum.accumulate(nav)-1)),terminal_nav=float(nav[-1]),
         annual_cost_bps=cost/years,annual_turnover=turnover/years,total_fees_usd=fees,
         calendar_cost_bps=dict(annual_cost),calendar_turnover=dict(annual_turnover),calendar_returns={y:v-1 for y,v in yearly.items()},

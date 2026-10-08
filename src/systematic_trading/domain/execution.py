@@ -36,6 +36,15 @@ class OrderRequest(BaseModel):
     intended_trade_date: date | None = None
     execution_start_time: str | None = None
     execution_end_time: str | None = None
+    # Original intent survives a new execution window; routing still uses current marks.
+    slippage_reference_price: Decimal | None = Field(default=None, gt=0)
+    slippage_trade_date: date | None = None
+    slippage_start_time: str | None = None
+    slippage_end_time: str | None = None
+
+    @property
+    def benchmark_reference_price(self):
+        return self.slippage_reference_price or self.reference_price
 
 
 class TradeProposal(BaseModel):

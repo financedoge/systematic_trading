@@ -3,7 +3,9 @@
   "monitored_strategy_ids": [
     "sota_price_volume_technical_tree_relative_adaptive_top6_usd_v1",
     "research_etf_activity_lag20_v1_usd_v1",
-    "research_rolling_xgboost_1y_lag20_v1_usd_v1"
+    "research_rolling_xgboost_1y_lag20_v1_usd_v1",
+    "research_fallback_f3_v1",
+    "research_economic_context_ridge_v1"
   ],
   "method": "app_native_signal_rebalance_lean_replay",
   "notes": "App-calculated strategies on audited histories; full signal/rebalance replay, current held and target weights, matched benchmarks. Tracking confers no execution or promotion authority.",

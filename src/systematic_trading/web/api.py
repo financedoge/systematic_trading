@@ -890,20 +890,24 @@ def strategy_catalog(request: Request) -> dict[str, Any]:
     saved = _published_strategy(request, "catalog")
     if saved is not None:
         from systematic_trading.portfolio.strategy_allocation import control_state
-        roles = control_state(_store(request))
+        from systematic_trading.web.strategy_catalog_view import CatalogControlView
+        control_store=CatalogControlView(_store(request))
+        roles = control_state(control_store)
         saved['current_sota_id'] = roles['sota_key']
         weights = {r['strategy_key']:r['weight'] for r in roles['active']['allocations']}
         for row in saved['strategies']:
             row['is_sota'] = row['strategy_id'] == roles['sota_key']
             row['trading_capital_weight'] = weights.get(row['strategy_id'], '0')
-        return saved
+        from systematic_trading.research.strategy_lifecycle import decorate_catalog
+        saved['expected_through']=saved.get('analytics',{}).get('refresh',{}).get('strategy_price_through')
+        return decorate_catalog(saved,_settings(request),control_store)
     settings = _settings(request)
     store = StrategyMarketDataView(_store(request))
     artifacts = discover_strategy_artifacts(
         settings.data_dir / "backtests",
         current_sota_definition().key,
     )
-    monitored_ids, monitoring_method, monitoring_notes = _strategy_monitoring_config(settings)
+    monitored_ids, monitoring_method, monitoring_notes = _strategy_monitoring_config(settings, _store(request))
     rows: list[dict[str, Any]] = []
     warnings: list[str] = []
     for artifact in artifacts:
@@ -911,7 +915,7 @@ def strategy_catalog(request: Request) -> dict[str, Any]:
             continue
         row = artifact.as_dict()
         row["artifact_end_date"] = row["end_date"]
-        row["lifecycle"] = "monitored" if artifact.is_sota or artifact.strategy_id in monitored_ids else "archived"
+        row["lifecycle"] = "monitored" if artifact.strategy_id in monitored_ids else "archived"
         row["monitoring_method"] = monitoring_method if row["lifecycle"] == "monitored" else None
         path = settings.data_dir / "backtests" / artifact.artifact_path
         row["report_available"] = row["lifecycle"] == "monitored" or path.with_suffix(".html").exists()
@@ -937,7 +941,10 @@ def strategy_catalog(request: Request) -> dict[str, Any]:
 def strategy_detail(strategy_id: str, request: Request) -> dict[str, Any]:
     saved = _published_strategy(request, f"detail/{strategy_id}")
     if saved is not None:
-        return saved
+        from systematic_trading.research.strategy_lifecycle import decorate_catalog
+        from systematic_trading.web.strategy_catalog_view import CatalogControlView
+        return decorate_catalog(dict(strategies=[saved],expected_through=saved.get('analytics',{}).get('refresh',{}).get('strategy_price_through')),
+            _settings(request),CatalogControlView(_store(request)))['strategies'][0]
     settings = _settings(request)
     store = StrategyMarketDataView(_store(request))
     artifacts = discover_strategy_artifacts(settings.data_dir / "backtests", current_sota_definition().key)
@@ -949,8 +956,8 @@ def strategy_detail(strategy_id: str, request: Request) -> dict[str, Any]:
     payload = _load_json(path, warnings)
     if payload is None:
         raise HTTPException(status_code=422, detail=f"Could not load strategy artifact: {artifact.artifact_path}")
-    monitored_ids, monitoring_method, monitoring_notes = _strategy_monitoring_config(settings)
-    lifecycle = "monitored" if artifact.is_sota or artifact.strategy_id in monitored_ids else "archived"
+    monitored_ids, monitoring_method, monitoring_notes = _strategy_monitoring_config(settings, _store(request))
+    lifecycle = "monitored" if artifact.strategy_id in monitored_ids else "archived"
     raw_points, artifact_end, extension_count = _strategy_nav_points(payload, store, warnings) if lifecycle == "monitored" else (
         _raw_nav_points(payload), artifact.end_date, 0
     )
@@ -1010,8 +1017,8 @@ def strategy_report(strategy_id: str, request: Request) -> Response:
     if artifact is None:
         raise HTTPException(status_code=404, detail=f"Unknown strategy: {strategy_id}")
     report_path = (settings.data_dir / "backtests" / artifact.artifact_path).with_suffix(".html")
-    monitored_ids, monitoring_method, monitoring_notes = _strategy_monitoring_config(settings)
-    lifecycle = "monitored" if artifact.is_sota or artifact.strategy_id in monitored_ids else "archived"
+    monitored_ids, monitoring_method, monitoring_notes = _strategy_monitoring_config(settings, _store(request))
+    lifecycle = "monitored" if artifact.strategy_id in monitored_ids else "archived"
     if lifecycle == "archived":
         if not report_path.exists():
             raise HTTPException(status_code=404, detail=f"No generated report is available for {strategy_id}.")
@@ -1095,7 +1102,14 @@ def _published_strategy(request, key, *, html=False):
     if html:
         from systematic_trading.web.shell import with_app_shell
         from systematic_trading.web.strategy_refresh import report_refresh_banner
-        banner = report_refresh_banner(publication, status)
+        from systematic_trading.research.strategy_lifecycle import decorate_catalog
+        from systematic_trading.web.strategy_catalog_view import CatalogControlView
+        saved_detail=analytics.document('strategy-serving','detail/'+key.removeprefix('report/'))
+        detail=json.loads(saved_detail[0]['payload']) if saved_detail else None
+        if detail:
+            detail=decorate_catalog(dict(strategies=[detail],expected_through=status.get('strategy_price_through')),
+                _settings(request),CatalogControlView(_store(request)))['strategies'][0]
+        banner = report_refresh_banner(publication, status, detail=detail)
         body = with_app_shell(document["payload"], "strategies").replace("<body>", "<body>" + banner, 1)
         return HTMLResponse(body, headers={"X-Analytics-Published-At": publication["published_at"],
                                            "X-Analytics-Version": publication["version"]})
@@ -1411,6 +1425,16 @@ def decide_proposal(proposal_id: str, decision: ProposalDecisionInput, request: 
         raise HTTPException(status_code=404, detail=f"Unknown proposal: {proposal_id}") from exc
 
 
+@router.post("/proposals/{proposal_id}/refresh-rebalance", response_model=TradeProposal)
+@serialized_orders
+def refresh_proposal_rebalance(proposal_id: str, request: Request):
+    from systematic_trading.live.deferred_rebalance import refresh_rebalance
+    try:
+        return refresh_rebalance(_settings(request), _store(request), proposal_id)
+    except (ValueError, OSError) as exc:
+        raise HTTPException(409, str(exc)) from exc
+
+
 @router.post("/proposals/{proposal_id}/approve-and-submit", response_model=ProposalApprovalSubmissionResult)
 @serialized_orders
 def approve_and_submit_proposal(
@@ -1447,6 +1471,8 @@ def approve_and_submit_proposal(
 def _validate_allocation_approval(request, proposal):
     from systematic_trading.portfolio.strategy_allocation import allocation_binding_issues
     issues = allocation_binding_issues(_store(request), proposal)
+    from systematic_trading.live.deferred_rebalance import prepared_submission_issues
+    issues += prepared_submission_issues(_settings(request), _store(request), proposal)
     if issues:
         raise HTTPException(409, '; '.join(issues))
     if not proposal.orders and proposal.input_provenance.get('allocation'):
@@ -1507,7 +1533,7 @@ def _strategy_result_path(settings: AppSettings) -> Path:
     return settings.data_dir / "backtests" / "sota_current" / f"{current_sota_definition().key}.json"
 
 
-def _strategy_monitoring_config(settings: AppSettings) -> tuple[set[str], str, str]:
+def _strategy_monitoring_config(settings: AppSettings, store=None) -> tuple[set[str], str, str]:
     path = settings.strategy_monitoring_config_path
     if not path.is_absolute():
         path = Path.cwd() / path
@@ -1516,7 +1542,11 @@ def _strategy_monitoring_config(settings: AppSettings) -> tuple[set[str], str, s
     except (OSError, json.JSONDecodeError):
         payload = {}
     monitored = {str(item) for item in payload.get("monitored_strategy_ids", [])}
-    monitored.add(current_sota_definition().key)
+    if store is not None and payload.get("schema_version") == 2:
+        from systematic_trading.research.strategy_lifecycle import membership
+        monitored = set(membership(settings, store)["monitored"])
+    elif store is None or payload.get("schema_version") != 2:
+        monitored.add(current_sota_definition().key)
     return (
         monitored,
         str(payload.get("method") or "daily_mark_to_market_final_holdings"),
@@ -2177,7 +2207,7 @@ def _execution_slippage_rows(
         record = records[fill.fill_id.split(":", 1)[0]]
         quantity = Decimal(fill.quantity)
         fx = fx_rate(store, fill.currency, fill.traded_at.astimezone(NY).date(), warnings)
-        reference_notional = record.order.reference_price * quantity * fx if fx is not None else None
+        reference_notional = record.order.benchmark_reference_price * quantity * fx if fx is not None else None
         actual_notional = fill.price * quantity * fx if fx is not None else None
         gain = ((reference_notional - actual_notional) * (1 if fill.side == OrderSide.BUY else -1)
                 if fx is not None else None)
@@ -2193,7 +2223,7 @@ def _execution_slippage_rows(
             allocation_version=allocation.get('version', 'legacy'),
             allocation_label=label or 'Legacy / unverified strategy assignment',
             proposal_id=record.proposal_id, order_index=record.order_index, symbol=fill.symbol,
-            side=fill.side, filled_quantity=fill.quantity, reference_price=record.order.reference_price,
+            side=fill.side, filled_quantity=fill.quantity, reference_price=record.order.benchmark_reference_price,
             average_fill_price=fill.price, currency=fill.currency,
             reference_notional_cnh=quantize_money(reference_notional) if reference_notional is not None else None,
             actual_notional_cnh=quantize_money(actual_notional) if actual_notional is not None else None,

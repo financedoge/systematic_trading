@@ -320,6 +320,7 @@ class AssetPoolFilterOverlay:
         require_positive_long_momentum: bool = True,
         min_long_momentum: Decimal = Decimal("0"),
         reallocate_selected: bool = True,
+        fallback_policy: str = "neutral",
     ) -> None:
         lookbacks = [
             short_momentum_bars,
@@ -351,6 +352,10 @@ class AssetPoolFilterOverlay:
         self.require_positive_long_momentum = require_positive_long_momentum
         self.min_long_momentum = Decimal(min_long_momentum)
         self.reallocate_selected = reallocate_selected
+        if fallback_policy not in {"neutral", "eligible_cash", "all_cash", "defensive_cash"}:
+            raise ValueError("Unsupported asset-pool fallback policy")
+        self.fallback_policy = fallback_policy
+        self.cash_budget_active = False
         self.lookback_bars = max(lookbacks)
         self.threshold = self.min_long_momentum
         mode = "reallocate" if reallocate_selected else "cash"
@@ -359,13 +364,23 @@ class AssetPoolFilterOverlay:
             f"asset-pool-filter-top{top_n}-{short_momentum_bars}-{medium_momentum_bars}-"
             f"{long_momentum_bars}d-{momentum_gate}-{mode}"
         )
+        if fallback_policy != "neutral":
+            self.name += "-fallback-" + fallback_policy
 
     def apply(self, targets: Sequence[AllocationTarget], context: SignalContext) -> list[AllocationTarget]:
         target_list = list(targets)
+        self.cash_budget_active = False
         if len(target_list) < 2:
+            if self.fallback_policy != "neutral":
+                raise ValueError("Incomplete asset-pool universe; no fallback decision authorized")
             return target_list
 
         scores = self._selection_scores(target_list, context)
+        if self.fallback_policy != "neutral":
+            required = {"shortMomentum", "mediumMomentum", "longMomentum", "upVolumeShare", "signedVolumePressure"}
+            if (scores is None or set(scores) != {t.symbol for t in target_list}
+                    or any(not required.issubset(s.raw_metrics) for s in scores.values())):
+                raise ValueError("Incomplete asset-pool features; no fallback decision authorized")
         if scores is None:
             return [
                 target.model_copy(
@@ -392,6 +407,19 @@ class AssetPoolFilterOverlay:
             key=lambda symbol: (-scores[symbol].total, symbol),
         )
         if len(ranked_symbols) < self.min_selected:
+            if self.fallback_policy != "neutral":
+                selected = set(ranked_symbols)
+                if self.fallback_policy == "all_cash":
+                    selected = set()
+                elif self.fallback_policy == "defensive_cash":
+                    selected &= {"IEF", "TLT", "GLD"}
+                self.cash_budget_active = True
+                return [target.model_copy(update={
+                    "target_weight": target.target_weight if target.symbol in selected else Decimal("0"),
+                    "rationale": (f"{target.rationale} Asset-pool fallback {self.fallback_policy}: "
+                                  f"{len(ranked_symbols)} eligible below {self.min_selected}; "
+                                  "retain eligible incoming weights without gross-up; residual cash protected."),
+                }) for target in target_list]
             return [
                 target.model_copy(
                     update={

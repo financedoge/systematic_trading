@@ -230,7 +230,7 @@ def _broker_record_fills(
                     symbol=record.order.symbol.upper(),
                     side=record.order.side,
                     quantity=execution.quantity,
-                    price=record.order.reference_price if use_reference_prices else execution.average_price,
+                    price=record.order.benchmark_reference_price if use_reference_prices else execution.average_price,
                     currency=record.order.currency,
                     traded_at=_ensure_aware(execution.filled_at),
                 )
@@ -243,7 +243,7 @@ def _broker_record_fills(
             warnings.append(
                 f"{record.local_order_id}: using filled_quantity despite broker status {record.status.value}."
             )
-        price = record.order.reference_price if use_reference_prices else record.average_fill_price
+        price = record.order.benchmark_reference_price if use_reference_prices else record.average_fill_price
         fills.append(
             _LedgerFill(
                 fill_id=record.local_order_id,

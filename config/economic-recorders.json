@@ -1,0 +1,233 @@
+{
+  "version": "us-financial-conditions-v3",
+  "enabled": true,
+  "observation_start": "2006-01-01",
+  "decision_start": "2016-01-01",
+  "prospective_start": "2026-10-06",
+  "max_captures_per_cycle": 6,
+  "capture_latest_signal_vintage": true,
+  "series": [
+    {
+      "id": "ICSA",
+      "name": "US initial jobless claims",
+      "frequency": "weekly_saturday",
+      "units": "Number, seasonally adjusted",
+      "role": "Labor deterioration / leading activity",
+      "min": 1,
+      "max": 20000000,
+      "max_age_days": 21,
+      "minimum_rows": 53,
+      "reference_url": "https://fred.stlouisfed.org/series/ICSA"
+    },
+    {
+      "id": "PERMIT",
+      "name": "US housing permits",
+      "frequency": "monthly",
+      "units": "Thousands of units, seasonally adjusted annual rate",
+      "role": "Leading housing activity",
+      "min": 1,
+      "max": 10000,
+      "max_age_days": 100,
+      "minimum_rows": 13,
+      "reference_url": "https://fred.stlouisfed.org/series/PERMIT"
+    },
+    {
+      "id": "IPMAN",
+      "name": "US manufacturing output",
+      "frequency": "monthly",
+      "units": "Seasonally adjusted index; base varies by vintage",
+      "role": "Coincident activity confirmation; within-vintage growth only",
+      "min": 1,
+      "max": 1000,
+      "max_age_days": 100,
+      "minimum_rows": 13,
+      "reference_url": "https://fred.stlouisfed.org/series/IPMAN"
+    },
+    {
+      "id": "AWHMAN",
+      "name": "US manufacturing weekly hours",
+      "frequency": "monthly",
+      "units": "Hours, production and nonsupervisory employees, seasonally adjusted",
+      "role": "Leading labor adjustment / manufacturing workweek",
+      "min": 1,
+      "max": 100,
+      "max_age_days": 75,
+      "minimum_rows": 13,
+      "reference_url": "https://fred.stlouisfed.org/series/AWHMAN"
+    },
+    {
+      "id": "TEMPHELPS",
+      "name": "US temporary help employment",
+      "frequency": "monthly",
+      "units": "Thousands of persons, seasonally adjusted",
+      "role": "Leading labor demand candidate; structural changes can weaken the relationship",
+      "min": 1,
+      "max": 20000,
+      "max_age_days": 75,
+      "minimum_rows": 13,
+      "reference_url": "https://fred.stlouisfed.org/series/TEMPHELPS"
+    },
+    {
+      "id": "NEWORDER",
+      "name": "US core capital goods new orders",
+      "frequency": "monthly",
+      "units": "Millions of dollars, seasonally adjusted",
+      "role": "Leading investment demand; excludes defense and aircraft; nominal, not inflation-adjusted",
+      "min": 1,
+      "max": 1000000,
+      "max_age_days": 100,
+      "minimum_rows": 13,
+      "reference_url": "https://fred.stlouisfed.org/series/NEWORDER"
+    },
+    {
+      "id": "NOFDFSA066MSFRBPHI",
+      "name": "Philadelphia Fed future new orders",
+      "frequency": "monthly",
+      "units": "Diffusion index, seasonally adjusted",
+      "role": "Leading six-month expectations; regional manufacturing survey, not national PMI",
+      "min": -100,
+      "max": 100,
+      "max_age_days": 65,
+      "minimum_rows": 13,
+      "reference_url": "https://fred.stlouisfed.org/series/NOFDFSA066MSFRBPHI"
+    },
+    {
+      "id": "NEFDFSA066MSFRBPHI",
+      "name": "Philadelphia Fed future employment",
+      "frequency": "monthly",
+      "units": "Diffusion index, seasonally adjusted",
+      "role": "Leading six-month hiring intentions; regional manufacturing survey, not national PMI",
+      "min": -100,
+      "max": 100,
+      "max_age_days": 65,
+      "minimum_rows": 13,
+      "reference_url": "https://fred.stlouisfed.org/series/NEFDFSA066MSFRBPHI"
+    },
+    {
+      "id": "PAYEMS",
+      "name": "US nonfarm payroll employment",
+      "frequency": "monthly",
+      "units": "Thousands of persons, seasonally adjusted",
+      "role": "Coincident labor confirmation; monthly changes and revisions, not a leading indicator",
+      "min": 1,
+      "max": 1000000,
+      "max_age_days": 75,
+      "minimum_rows": 13,
+      "reference_url": "https://fred.stlouisfed.org/series/PAYEMS"
+    },
+    {
+      "id": "CPIAUCSL",
+      "name": "US headline consumer prices",
+      "frequency": "monthly",
+      "units": "Index 1982-1984=100, seasonally adjusted",
+      "role": "Lagging inflation / policy context; growth within vintage, not a leading activity indicator",
+      "min": 1,
+      "max": 10000,
+      "max_age_days": 90,
+      "minimum_rows": 13,
+      "reference_url": "https://fred.stlouisfed.org/series/CPIAUCSL"
+    },
+    {
+      "id": "CPILFESL",
+      "name": "US core consumer prices",
+      "frequency": "monthly",
+      "units": "Index 1982-1984=100, seasonally adjusted",
+      "role": "Lagging inflation / policy context, excluding food and energy",
+      "min": 1,
+      "max": 10000,
+      "max_age_days": 90,
+      "minimum_rows": 13,
+      "reference_url": "https://fred.stlouisfed.org/series/CPILFESL"
+    },
+    {
+      "id": "T10Y3M",
+      "name": "US Treasury 10-year minus 3-month yield",
+      "frequency": "daily_weekday",
+      "units": "Percent, not seasonally adjusted",
+      "role": "Yield-curve slope; financial leading candidate, not a recession probability",
+      "min": -20,
+      "max": 20,
+      "max_age_days": 10,
+      "minimum_rows": 252,
+      "reference_url": "https://fred.stlouisfed.org/series/T10Y3M"
+    },
+    {
+      "id": "T10Y2Y",
+      "name": "US Treasury 10-year minus 2-year yield",
+      "frequency": "daily_weekday",
+      "units": "Percent, not seasonally adjusted",
+      "role": "Yield-curve slope; nominal rates with different maturities",
+      "min": -20,
+      "max": 20,
+      "max_age_days": 10,
+      "minimum_rows": 252,
+      "reference_url": "https://fred.stlouisfed.org/series/T10Y2Y"
+    },
+    {
+      "id": "NFCICREDIT",
+      "name": "Chicago Fed credit conditions",
+      "frequency": "weekly_friday",
+      "units": "Index, not seasonally adjusted",
+      "role": "Credit-conditions composite; positive means tighter than average; revised standardized index, not a corporate bond spread",
+      "min": -20,
+      "max": 30,
+      "max_age_days": 28,
+      "minimum_rows": 53,
+      "reference_url": "https://fred.stlouisfed.org/series/NFCICREDIT"
+    },
+    {
+      "id": "DRTSCILM",
+      "name": "US bank lending standards: large and medium firms",
+      "frequency": "quarterly",
+      "units": "Net percentage tightening, not seasonally adjusted",
+      "role": "SLOOS credit supply; positive is tightening, negative easing; quarter date is not publication date",
+      "min": -100,
+      "max": 100,
+      "max_age_days": 160,
+      "minimum_rows": 5,
+      "reference_url": "https://fred.stlouisfed.org/series/DRTSCILM"
+    },
+    {
+      "id": "DRTSCIS",
+      "name": "US bank lending standards: small firms",
+      "frequency": "quarterly",
+      "units": "Net percentage tightening, not seasonally adjusted",
+      "role": "SLOOS credit supply; preserve release-vintage availability, never use quarter start as release date",
+      "min": -100,
+      "max": 100,
+      "max_age_days": 160,
+      "minimum_rows": 5,
+      "reference_url": "https://fred.stlouisfed.org/series/DRTSCIS"
+    }
+  ],
+  "compatible_config_sha256": [
+    "5226e9a5057982aba788f6df35f9969a73682c04683615db93ef197050676f83",
+    "bed4b2774e170aa71b0faaf3ec69043a16d4fc689b70521610bb36bf89d90e92"
+  ],
+  "source_gaps": [
+    {
+      "name": "National manufacturing and services PMI",
+      "status": "Source access and archive verification pending",
+      "detail": "ISM series were removed from FRED in 2016. ISM archival use requires appropriate permission; S&P Global offers subscribed PMI histories. Obtain a permitted feed with original releases, subcomponents and timestamps before historical use. Regional Fed surveys are separate inputs.",
+      "reference_url": "https://news.research.stlouisfed.org/2016/06/institute-for-supply-management-data-to-be-removed-from-fred/"
+    },
+    {
+      "name": "Corporate credit spreads",
+      "status": "Source rights and archive qualification pending",
+      "detail": "Treasury yield curves, Chicago Fed credit conditions and SLOOS recorders are admitted. NFCICREDIT is a composite, not a corporate spread. The BAA10Y source notes restrict reproduction and storage; qualify a permitted source separately before capture.",
+      "reference_url": "https://fred.stlouisfed.org/series/BAA10Y"
+    },
+    {
+      "name": "Release-time consensus and economic surprises",
+      "status": "No historical consensus feed",
+      "detail": "Do not call a month-on-month change a surprise. Record forecasts timestamped before release, first print, revisions and market expectations separately.",
+      "reference_url": "https://www.bls.gov/schedule/"
+    },
+    {
+      "name": "Country and sector fundamentals",
+      "status": "Separate source qualification pending",
+      "detail": "Country PMI/orders and inflation, EIA energy balances and CFTC positioning need local publication timestamps and separate vintage audits; US data alone are not country coverage.",
+      "reference_url": "https://www.eia.gov/opendata/"
+    }
+  ]
+}

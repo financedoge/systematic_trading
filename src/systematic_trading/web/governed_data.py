@@ -14,6 +14,12 @@ from systematic_trading.web.research_data import _store, _query
 router=APIRouter(prefix='/api/v1/market-data/governed')
 
 
+@router.get('/recorders')
+def recorders(request: Request):
+    from systematic_trading.recorders.research_etfs import recorder_status
+    return recorder_status(request.app.state.settings)
+
+
 def context(request,batch=None):
     store=_store(request)
     if batch is None:

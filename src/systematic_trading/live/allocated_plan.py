@@ -16,6 +16,8 @@ def build_allocated_plan(*, store, broker, account_snapshot, decision_date, inte
     from systematic_trading.market_data.analytics_store import digest, encode
     from dataclasses import replace
     active = active_override or control_state(store)['active']
+    from systematic_trading.research.strategy_lifecycle import require_monitored
+    require_monitored(broker.settings,store,[r['strategy_key'] for r in active['allocations']])
     definition = trading_definition(store)
     if active_override:
         first = registered_strategy_definition(active['allocations'][0]['strategy_key'])
@@ -124,6 +126,8 @@ def validate_internal_proposal(settings, store, proposal, now):
     from zoneinfo import ZoneInfo
     today = now.astimezone(ZoneInfo('America/New_York')).date()
     issues = allocation_binding_issues(store, proposal) + activation_issues(settings, store, now)
+    from systematic_trading.execution.reconciliation import submission_reconciliation_issues
+    issues += submission_reconciliation_issues(settings, now=now)
     if issues:
         raise ValueError('; '.join(issues))
     if (proposal.orders or not proposal.input_provenance.get('allocation', {}).get('intent')

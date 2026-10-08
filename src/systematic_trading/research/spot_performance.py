@@ -44,7 +44,8 @@ def prepare_spot_basis(settings, store, analytics, payload):
             if (not detail.get('app_tracking') or held.get('valuation_date') != day
                     or detail.get('input_provenance', {}).get('batch') != publication['version']):
                 raise ValueError('Held strategy weights and audited closes are not from the same completed session and batch.')
-            navs = {r['trade_date']: D(str(r['nav_cnh'])) for r in detail['nav_series']}
+            navs = {r['trade_date']: D(str(r['nav_cnh'])) for r in detail.get(
+                'cnh_nav_series' if detail.get('accounting_currency')=='USD' else 'nav_series', [])}
             weight = D(allocation['weight']) * navs[day] / navs[period['start']] / growth
             holdings = {r['symbol']:str(r['weight']) for r in held['holdings'] if D(str(r['weight'])) != 0}
             if any(D(w) < 0 for w in holdings.values()) or abs(sum(D(w) for w in holdings.values())-1) > D('.00001'):

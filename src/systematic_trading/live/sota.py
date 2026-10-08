@@ -141,6 +141,13 @@ def build_sota_live_rebalance_plan(
             for overlay, spec in zip(overlays, definition.overlays, strict=True):
                 if spec.kind == 'usd_ridge':
                     overlay.schedule = schedule
+        if any(o.kind == 'economic_ridge' for o in definition.overlays):
+            from systematic_trading.research.economic_tracking import published_live_schedule
+            schedule, economic_receipt = published_live_schedule(broker.settings, definition, input_receipt.get('batch'))
+            input_receipt['economic'] = economic_receipt
+            for overlay, spec in zip(overlays, definition.overlays, strict=True):
+                if spec.kind == 'economic_ridge':
+                    overlay.schedule = schedule
         targets, eligible_symbols = _sota_targets_as_of(
             instruments=instruments,
             bars_by_symbol={symbol: [bar for bar in bars if bar.trade_date <= target_date] for symbol, bars in bars_by_symbol.items()},
@@ -276,8 +283,8 @@ def _sota_targets_as_of(
         bars_by_symbol=bars_by_symbol,
         trade_dates=trade_dates,
     )
-    for overlay in overlays:
-        targets = overlay.apply(targets, context)
+    from systematic_trading.signals.base import apply_target_overlays
+    targets = apply_target_overlays(targets, overlays, context)
     return targets, sorted(eligible_instruments)
 
 

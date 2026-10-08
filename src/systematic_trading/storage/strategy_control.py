@@ -43,12 +43,13 @@ class StrategyControlStore:
                 'SELECT payload FROM strategy_control_events WHERE scope = ? ORDER BY revision'), (scope,)).fetchall()
         return [json.loads(row['payload']) for row in rows]
 
-    def commit_strategy_control(self, scope, expected_revision, state, event):
+    def commit_strategy_control(self, scope, expected_revision, state, event, *, guard_revisions=None):
         """Idempotent retry returns the original state, never silently overwrites it."""
         with self._connect() as connection:
             if hasattr(self, 'database_path'):
                 connection.execute('BEGIN IMMEDIATE')
             else:
+                connection.execute('SELECT pg_advisory_xact_lock(hashtextextended(%s, 0))', ('strategy-lifecycle-allocation',))
                 connection.execute('SELECT pg_advisory_xact_lock(hashtextextended(%s, 0))', (scope,))
             previous = connection.execute(self._control_sql(
                 'SELECT payload FROM strategy_control_events WHERE scope = ? AND event_id = ?'),
@@ -58,6 +59,11 @@ class StrategyControlStore:
                 if recorded['request_hash'] != event['request_hash']:
                     raise ValueError('Idempotency key was already used for a different change.')
                 return recorded['state']
+            for guarded_scope, expected in (guard_revisions or {}).items():
+                guarded = connection.execute(self._control_sql(
+                    'SELECT revision FROM strategy_control_state WHERE scope = ?'), (guarded_scope,)).fetchone()
+                if (guarded['revision'] if guarded else 0) != expected:
+                    raise ValueError('Strategy membership or allocation changed. Refresh and try again.')
             row = connection.execute(self._control_sql(
                 'SELECT revision FROM strategy_control_state WHERE scope = ?'), (scope,)).fetchone()
             revision = row['revision'] if row else 0

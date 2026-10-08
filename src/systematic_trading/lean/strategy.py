@@ -18,7 +18,7 @@ def targets_for_day(rows: dict, day: date, *, benchmark: bool = False, lookback_
                     flow_overlay: FlowConcentrationSpec | None = None, flow_state: dict | None = None,
                     constituent_overlay: ConstituentOverlaySpec | None = None, constituent_features: dict | None = None,
                     base_tree_models: dict | None = None, fixed_model_from: str | None = None,
-                    definition=None, usd_models=None):
+                    definition=None, usd_models=None, economic_models=None):
     if constituent_overlay is not None and (benchmark or flow_overlay is not None or constituent_features is None):
         raise ValueError('Constituent overlay needs frozen features and an unmodified SOTA base')
     if benchmark and flow_overlay is not None:
@@ -37,6 +37,8 @@ def targets_for_day(rows: dict, day: date, *, benchmark: bool = False, lookback_
     for overlay, spec in zip(overlays, definition.overlays, strict=True):
         if spec.kind == 'usd_ridge':
             overlay.schedule = usd_models
+        elif spec.kind == 'economic_ridge':
+            overlay.schedule = economic_models
     rolling = [o for o, s in zip(overlays, definition.overlays, strict=True) if s.kind == 'rolling_model']
     if rolling and (base_tree_models is None or fixed_model_from is not None):
         raise ValueError('Rolling strategy requires a model schedule for the entire history')

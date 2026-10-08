@@ -65,6 +65,21 @@ def stage_portfolio_alignment(
     started = monotonic()
     if not settings.automation_queue_rebalance:
         return InitialAllocationResult(status="disabled", message="Automatic proposal staging is disabled.")
+    # A handover already prepared its approval-only proposal, including when IB
+    # was offline. Retain that intent instead of replacing its price benchmark.
+    from systematic_trading.portfolio.strategy_allocation import allocation_binding_issues
+    prepared = [p for p in store.list_proposals() if p.input_provenance.get('prepared_account')
+        and not allocation_binding_issues(store, p)]
+    replaced = {p.input_provenance.get('deferred_rebalance', {}).get('previous_proposal_id') for p in prepared}
+    for proposal in sorted(prepared, key=lambda p:p.created_at, reverse=True):
+        if proposal.proposal_id in replaced or proposal.status == ProposalStatus.REJECTED:
+            continue
+        attempts = store.list_broker_order_records(proposal.proposal_id)
+        if not attempts or all(r.status == BrokerOrderStatus.MISSED for r in attempts):
+            missed = proposal_is_expired(proposal, settings, now=now)
+            return InitialAllocationResult(status='review' if missed else 'pending', proposal_id=proposal.proposal_id,
+                message='Rebalance retained. Refresh for approval to choose a new window; the original slippage benchmark is preserved.'
+                if missed else 'Prepared rebalance awaits order approval. IB readiness is checked at submission.')
     issues = submission_reconciliation_issues(settings, now=now)
     if issues:
         return InitialAllocationResult(status="blocked", message=issues[0])

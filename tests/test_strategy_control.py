@@ -166,7 +166,7 @@ def test_schedule_requires_concrete_preview_token_and_does_not_activate(store,mo
     state=control_state(store)
     change=AllocationChange(expected_revision=0,event_id='pending-event',operator='Me',reason='Reviewed evidence',
         allocations=[dict(strategy_key=state['sota_key'],weight='1')],effective_close='2026-10-02')
-    preview=dict(review_token='reviewed',active=dict(version='new'),evidence={},rollback=state['active']['allocations'])
+    preview=dict(membership_revision=0,review_token='reviewed',active=dict(version='new'),evidence={},rollback=state['active']['allocations'])
     monkeypatch.setattr(module,'preview_change',lambda *a,**k:preview)
     with pytest.raises(ValueError,match='Preview again'):
         module.schedule_change(AppSettings(),store,change,'stale',evidence_reviewed=True)
@@ -193,8 +193,8 @@ def test_reference_carries_positions_across_switch_instead_of_splicing_nav():
 
 def test_control_ui_has_review_gate_and_asset_names():
     from systematic_trading.web.strategy_control_ui import with_strategy_controls
-    from systematic_trading.web.operator import _STRATEGIES_HTML
-    html=with_strategy_controls(_STRATEGIES_HTML,'strategies')
+    from systematic_trading.web.operator import strategy_portal
+    html=strategy_portal().body.decode()
     assert 'Promote / allocate' in html and 'sc-reviewed' in html
     assert 'AssetNames.name' in html and 'review_token' in html
     assert "call('/schedule'" in html
@@ -238,7 +238,8 @@ def test_delayed_partial_fill_replay_uses_execution_time_and_deduplicates():
     assert sum(D(v['cash']['USD']) for v in reference.values())==900
 
 
-def test_activation_is_atomic_blocks_uncertainty_and_invalidates_old_policy(store,tmp_path,monkeypatch):
+@pytest.mark.parametrize('activation_day', [2, 5])
+def test_activation_is_atomic_blocks_uncertainty_and_invalidates_old_policy(store,tmp_path,monkeypatch,activation_day):
     from systematic_trading.live import strategy_control as module
     from systematic_trading.live import allocated_plan
     from systematic_trading.live.auto_approval import PaperAutoApproval
@@ -256,24 +257,36 @@ def test_activation_is_atomic_blocks_uncertainty_and_invalidates_old_policy(stor
     store.commit_strategy_control(scope_for(store),0,dict(state,pending=pending),dict(event_id='pending-event',request_hash='pending'))
     policy=PaperAutoApproval(settings,store)
     policy.policy=policy.policy.model_copy(update=dict(enabled=True,strategy_key=state['active']['key'],binding=policy._binding()))
-    now=datetime(2026,10,2,21,tzinfo=UTC)
+    now=datetime(2026,10,activation_day,21,tzinfo=UTC)
     monkeypatch.setattr(module,'activation_issues',lambda *args:['Open order'])
     assert module.activate_pending(settings,store,now=now)=='Open order'
     assert control_state(store)['active']==state['active']
     monkeypatch.setattr(module,'activation_issues',lambda *args:[])
-    monkeypatch.setattr(management,'sync_orders',lambda *args,**kwargs:dict(orders=[]))
-    snapshot=LiveAccountSnapshotInput(as_of=date(2026,10,2),captured_at=now,cash=[dict(currency='USD',amount=1000)])
+    monkeypatch.setattr(management,'sync_orders',lambda *args,**kwargs:pytest.fail('Allocation preparation must not contact IB'))
+    snapshot=LiveAccountSnapshotInput(as_of=now.date(),captured_at=now,cash=[dict(currency='USD',amount=1000)])
     monkeypatch.setattr(module,'snapshot_for',lambda *args:snapshot)
-    proposal=TradeProposal(as_of=date(2026,10,2),sleeve=active['key'],summary='Test',reasoning=ProposalReasoning(summary='Test'),
+    monkeypatch.setattr(module,'load_latest_ib_reconciliation',lambda *args:SimpleNamespace(
+        managed_accounts=['DU123'],checked_at=now,broker_positions=[],broker_cash=[dict(currency='USD',amount='1000')]))
+    proposal=TradeProposal(as_of=now.date(),sleeve=active['key'],summary='Test',reasoning=ProposalReasoning(summary='Test'),
         input_provenance=dict(allocation=dict(intent=dict(prices={'SPY':'100'},fx={'USD':'1'}))))
     monkeypatch.setattr(allocated_plan,'build_allocated_plan',lambda **kwargs:SimpleNamespace(proposal=proposal,validation_issues=[]))
     assert 'activated' in module.activate_pending(settings,store,now=now)
     changed=control_state(store)
     assert changed['revision']==2 and changed['pending'] is None
     assert changed['active']['version']==change.event_id
-    assert not store.list_proposals() and not store.list_broker_order_records()
+    assert changed['active']['effective_close'] == str(now.date())
+    assert changed['active']['requested_effective_close'] == '2026-10-02'
+    assert len(store.list_proposals()) == 1 and not store.list_broker_order_records()
+    assert store.list_proposals()[0].status.value == 'pending'
     policy.tick(now=now)
     assert policy.policy.enabled is False
+    assert module.activate_pending(settings,store,now=now) is None
+    # Simulate a queue-write interruption after the atomic configuration commit.
+    # The persisted outbox copy restores exactly one pending proposal.
+    with store._connect() as connection:
+        connection.execute('DELETE FROM proposals')
+    assert 'restored' in module.activate_pending(settings,store,now=now)
+    assert len(store.list_proposals()) == 1
     assert module.activate_pending(settings,store,now=now) is None
 
 

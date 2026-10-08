@@ -191,7 +191,7 @@ def etf_activity_lag20_definition() -> StrategyDefinition:
 def registered_strategy_definition(key: str) -> StrategyDefinition:
     parents = [legacy_sota_definition(), etf_activity_lag20_definition(), rolling_xgboost_1y_definition()]
     definitions = [*parents, *(usd_strategy_definition(d) for d in parents), risk_parity_definition(),
-                   rolling_xgboost_1y_definition(activity=False)]
+                   rolling_xgboost_1y_definition(activity=False), defensive_cash_definition(), economic_context_definition()]
     return next((d for d in definitions if d.key == key), None) or _unknown_strategy(key)
 
 
@@ -214,6 +214,32 @@ def rolling_xgboost_1y_definition(*, activity=True) -> StrategyDefinition:
 
 def _unknown_strategy(key):
     raise ValueError(f"Tracked strategy needs an executable definition: {key}")
+
+
+def defensive_cash_definition():
+    from dataclasses import replace
+    base = usd_strategy_definition(rolling_xgboost_1y_definition())
+    pool = base.overlays[0]
+    return replace(base, key='research_fallback_f3_v1', name='Qualifying defensive ETFs + cash',
+        state='tracked', promoted_on=None,
+        description='Rolling one-year XGBoost, ETF activity and USD allocation. With fewer than four positive '
+                    '252-session momentum qualifiers, retain only qualifying IEF, TLT and GLD incoming weights; '
+                    'hold the rest in cash and protect that budget through all later overlays.',
+        overlays=(OverlaySpec(pool.kind, dict(pool.parameters, fallbackPolicy='defensive_cash')), *base.overlays[1:]))
+
+
+def economic_context_definition():
+    from dataclasses import replace
+    from systematic_trading.research.economic_tracking import KEY, PARAMETERS
+    base = defensive_cash_definition()
+    return replace(base, key=KEY, name='Leading + payroll/inflation context · linear model',
+        sleeve_name='research-economic-context-ridge-v1',
+        description='Frozen CR recipe: qualifying defensive ETFs + cash, final 45% target cap, '
+            'then per-ETF expanding standardized ridge using seven leading and six payroll/output/inflation features. '
+            'Original vintages and completed labels only; missing inputs abstain to the capped parent. '
+            'Preserve cash and eligibility. Monitoring only; no promotion or execution authority.',
+        overlays=(*base.overlays, OverlaySpec('final_weight_cap', {'cap':'0.45'}),
+            OverlaySpec('economic_ridge',dict(PARAMETERS))))
 
 
 def strategy_definition_from_overlay(overlay: TargetOverlay) -> StrategyDefinition:
@@ -304,6 +330,7 @@ def strategy_definition_from_overlay(overlay: TargetOverlay) -> StrategyDefiniti
                         "volumeWeight": str(overlay.volume_weight),
                         "topN": str(overlay.top_n),
                         "minSelected": str(overlay.min_selected),
+                        **({"fallbackPolicy": overlay.fallback_policy} if overlay.fallback_policy != "neutral" else {}),
                         "requirePositiveLongMomentum": str(overlay.require_positive_long_momentum).lower(),
                         "minLongMomentum": str(overlay.min_long_momentum),
                         "reallocateSelected": str(overlay.reallocate_selected).lower(),
@@ -555,7 +582,15 @@ def instantiate_overlays(definition: StrategyDefinition) -> list[TargetOverlay]:
     overlays: list[TargetOverlay] = []
     for spec in definition.overlays:
         params = spec.parameters
-        if spec.kind == "usd_ridge":
+        if spec.kind == 'final_weight_cap':
+            from systematic_trading.research.construction_controls import FinalWeightCapOverlay
+            overlays.append(FinalWeightCapOverlay(Decimal(params['cap'])))
+        elif spec.kind == 'economic_ridge':
+            from systematic_trading.research.economic_tracking import EconomicRidgeOverlay, PARAMETERS
+            if params != PARAMETERS:
+                raise ValueError('Unsupported economic CR recipe')
+            overlays.append(EconomicRidgeOverlay())
+        elif spec.kind == "usd_ridge":
             from systematic_trading.research.usd_tracking import UsdRidgeOverlay
             if params != {"version": "usd-ridge-u1-v1"}:
                 raise ValueError("Unsupported USD overlay recipe")
@@ -659,6 +694,7 @@ def instantiate_overlays(definition: StrategyDefinition) -> list[TargetOverlay]:
                     volume_weight=Decimal(params["volumeWeight"]),
                     top_n=int(params["topN"]),
                     min_selected=int(params["minSelected"]),
+                    fallback_policy=params.get("fallbackPolicy", "neutral"),
                     require_positive_long_momentum=_bool(params["requirePositiveLongMomentum"]),
                     min_long_momentum=Decimal(params["minLongMomentum"]),
                     reallocate_selected=_bool(params["reallocateSelected"]),
@@ -865,6 +901,7 @@ def _overlay_layer(overlay: OverlaySpec, index: int) -> dict[str, str]:
             f"{params['longMomentumBars']}d momentum and {params['volumeBars']}d volume pressure; "
             f"select top {params['topN']} with minimum {params['minSelected']}; {gate}; {mode}."
         )
+        detail += " Below the minimum: " + params.get("fallbackPolicy", "neutral") + "."
         title = "Asset-pool filter overlay"
     elif overlay.kind == "trend_quality_filter":
         mode = "reallocate selected assets" if _bool(params["reallocateSelected"]) else "hold filtered weight in cash"
@@ -1069,6 +1106,18 @@ def _overlay_decision_tree(overlay: OverlaySpec) -> str:
             ]
         )
     if overlay.kind == "asset_pool_filter":
+        if params.get("fallbackPolicy", "neutral") != "neutral":
+            return "\n".join([
+                "flowchart TD",
+                '  A["Inverse-volatility base targets"] --> B{"Complete price and volume features?"}',
+                '  B -- "No" --> C["Stop calculation; no liquidation authorized"]',
+                f'  B -- "Yes" --> D{{"At least {params["minSelected"]} eligible assets?"}}',
+                f'  D -- "Yes" --> E["Original top {params["topN"]} allocation and overlays"]',
+                f'  D -- "No" --> F["{params["fallbackPolicy"]}: retained incoming weights; residual cash"]',
+                '  F --> G["Later overlays cannot restore rejected assets or increase released cash budget"]',
+                '  E --> H["Final filtered multi-asset targets"]',
+                '  G --> H',
+            ])
         mode = "Reallocate removed weight to selected assets" if _bool(params["reallocateSelected"]) else "Leave removed weight in cash"
         gate_label = (
             f"{params['longMomentumBars']}d momentum > {params['minLongMomentum']}?"

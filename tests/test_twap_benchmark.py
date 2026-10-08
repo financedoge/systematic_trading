@@ -67,3 +67,21 @@ def test_failed_provider_withholds_estimate_and_does_not_retry_immediately(store
     assert result['status'] == 'unavailable'
     assert 'twap_price' not in result
     assert result['average_fill_price'] == '116'
+
+
+def test_rescheduled_order_benchmarks_original_window_and_total_delay(store, tmp_path):
+    class Provider:
+        def fetch(self, symbol, start, end):
+            assert start == START
+            return BARS
+    service = TwapBenchmarkService(AppSettings(data_dir=tmp_path), Provider())
+    r = record(store)
+    r.order = r.order.model_copy(update=dict(intended_trade_date=(START+timedelta(days=3)).date(),
+        slippage_trade_date=START.date(),slippage_start_time='09:35',slippage_end_time='10:05'))
+    assert benchmark_window(r)[0] == START+timedelta(days=3)
+    assert benchmark_window(r, original_intent=True)[0] == START
+    service.get(r, now=START+timedelta(days=4))
+    service.pool.shutdown(wait=True)
+    result = service.get(r, now=START+timedelta(days=4))
+    assert result['price_cost'] == '6.0'
+    assert result['window_start'] == START.isoformat()

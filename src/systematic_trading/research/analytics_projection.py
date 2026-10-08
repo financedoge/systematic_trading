@@ -168,7 +168,7 @@ def import_transactional_histories(analytics, store):
     return analytics.publish("transactional-history", version, rows, provenance={"authority": "postgresql"})
 
 
-def strategy_inputs(settings, analytics):
+def strategy_inputs(settings, analytics, store=None):
     from systematic_trading.research.tracked_runtime import SOURCE
     files = list((settings.data_dir / "backtests").rglob("*.json"))
     files += list((settings.data_dir / "backtests").rglob("*.html"))
@@ -180,7 +180,9 @@ def strategy_inputs(settings, analytics):
                                           "backtest/reporting.py", "chart_navigation.py", "research/catalog.py",
                                           "research/analytics_projection.py", "research/market_data_view.py",
                                           "research/tracked_runtime.py", "research/strategy_diagram.py")]
+    from systematic_trading.research.strategy_lifecycle import membership
     return digest(encode({"files": file_signature(files), "market": analytics.market_revision(),
+                          "membership": membership(settings,store) if store is not None else None,
                           "research_tracking": (analytics.latest(SOURCE) or {}).get("version"),
                           "day": datetime.now(UTC).date().isoformat()}))
 
@@ -191,7 +193,7 @@ def publish_strategies(settings, store, analytics):
     from systematic_trading.research.tracked_runtime import published_strategies
     from systematic_trading.backtest.reporting import render_backtest_report_html
 
-    version = strategy_inputs(settings, analytics)
+    version = strategy_inputs(settings, analytics, store)
     latest = analytics.latest("strategy-serving")
     if latest and latest["version"] == version:
         return False
@@ -200,13 +202,14 @@ def publish_strategies(settings, store, analytics):
     # No analytics reader on this builder request: computation is confined to
     # this background worker, while ordinary HTTP requests only read documents.
     calculated = published_strategies(analytics)
+    from systematic_trading.research.strategy_lifecycle import membership
     request = SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(settings=settings, store=read_view,
-        calculated_strategy_ids=set(calculated))))
+        calculated_strategy_ids=set(calculated)|set(membership(settings,store)['monitored']))))
     catalog = api.strategy_catalog(request)
     trackers = {key: item[0] for key, item in calculated.items()}
     catalog["strategies"] = [row for row in catalog["strategies"] if row["strategy_id"] not in trackers]
     catalog["strategies"].extend({key: value for key, value in item.items()
-        if key not in ("nav_series", "benchmark_series", "comparison", "model_training")} for item in trackers.values())
+        if key not in ("nav_series", "cnh_nav_series", "benchmark_series", "comparison", "model_training")} for item in trackers.values())
     if trackers:
         catalog["monitoring_notes"] = "Application-calculated signals, rebalances, NAV and weights on audited histories. Tracking is separate from promotion and broker execution."
     documents = [dict(point_key="catalog", media_type="application/json", payload=encode(catalog))]
@@ -222,7 +225,12 @@ def publish_strategies(settings, store, analytics):
         rows.extend(extract_series(detail["benchmark_series"], family="benchmark_nav", entity=strategy_id, prefix=f"benchmark/{strategy_id}"))
         if item["report_available"]:
             if strategy_id in calculated:
-                body = render_backtest_report_html(calculated[strategy_id][1])
+                report_data=dict(calculated[strategy_id][1])
+                if report_data.get('monitoring',{}).get('method')=='app_usd_full_replay':
+                    # This service's diagnostics always use the matched USD SOTA,
+                    # independently of the chart's selectable primary benchmark.
+                    report_data['signalBenchmark']='Current SOTA · matched USD accounting'
+                body = render_backtest_report_html(report_data)
             else:
                 response = api.strategy_report(strategy_id, request)
                 body = response.body.decode() if hasattr(response, "body") else Path(response.path).read_text(encoding="utf-8")
@@ -233,7 +241,7 @@ def publish_strategies(settings, store, analytics):
                 for section in ("chart", "metricsByBenchmark", "holdingContributions", "signalDiagnostics", "drawdownPeriods"):
                     rows.extend(extract_series(report.get(section), family=section, entity=strategy_id,
                                                prefix=f"report/{strategy_id}/{section}"))
-    if strategy_inputs(settings, analytics) != version:
+    if strategy_inputs(settings, analytics, store) != version:
         raise RuntimeError("Strategy inputs changed during calculation; retaining previous publication")
     return analytics.publish("strategy-serving", version, rows, documents,
                              provenance={"method": "app_calculated_tracked_strategies_and_archived_artifacts",

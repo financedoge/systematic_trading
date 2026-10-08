@@ -317,6 +317,8 @@ class InteractiveBrokersOrderRouter:
     ) -> list[str]:
         from systematic_trading.portfolio.strategy_allocation import allocation_binding_issues
         issues: list[str] = allocation_binding_issues(store, proposal)
+        from systematic_trading.live.deferred_rebalance import prepared_submission_issues
+        issues.extend(prepared_submission_issues(self.settings, store, proposal))
         order_items = _selected_order_items(proposal, order_indexes)
         if proposal.status != ProposalStatus.APPROVED:
             issues.append(f"{proposal.proposal_id}: proposal status must be approved before routing.")

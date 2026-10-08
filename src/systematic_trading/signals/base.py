@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date
+from decimal import Decimal
 from typing import Mapping, Protocol, Sequence
 
 from systematic_trading.domain.market import Instrument, PriceBar
@@ -30,3 +31,33 @@ class TargetOverlay(Protocol):
 
     def apply(self, targets: Sequence[AllocationTarget], context: SignalContext) -> list[AllocationTarget]:
         """Return adjusted allocation targets for one rebalance date."""
+
+
+def apply_target_overlays(targets, overlays, context):
+    """Preserve an explicit fallback's membership and released cash downstream.
+
+    Legacy chains are unchanged. A cash fallback sets a maximum gross budget;
+    later reductions tighten it and later tilts may redistribute only inside it.
+    """
+    targets = list(targets)
+    allowed = None
+    budget = None
+    for overlay in overlays:
+        before = {t.symbol for t in targets}
+        targets = overlay.apply(targets, context)
+        if getattr(overlay, "cash_budget_active", False):
+            allowed = {t.symbol for t in targets if t.target_weight > 0}
+            budget = sum((t.target_weight for t in targets), Decimal(0))
+        if allowed is not None:
+            if (len(targets) != len(before) or {t.symbol for t in targets} != before
+                    or any(not t.target_weight.is_finite() or t.target_weight < 0 for t in targets)):
+                raise ValueError("Invalid downstream targets after cash fallback")
+            targets = [t.model_copy(update={"target_weight": Decimal(0)})
+                       if t.symbol not in allowed else t for t in targets]
+            gross = sum((t.target_weight for t in targets), Decimal(0))
+            if gross > budget:
+                scale = budget / gross
+                targets = [t.model_copy(update={"target_weight": t.target_weight * scale,
+                    "rationale": t.rationale + " Protected fallback cash budget."}) for t in targets]
+            budget = min(budget, sum((t.target_weight for t in targets), Decimal(0)))
+    return targets

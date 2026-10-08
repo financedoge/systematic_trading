@@ -13,7 +13,7 @@ from systematic_trading.domain.market import Instrument, PriceBar
 from systematic_trading.domain.portfolio import AllocationTarget, CashBalance
 from systematic_trading.portfolio.beta import BetaInstrumentState, RiskParityBetaSleeve
 from systematic_trading.backtest.engine import BacktestResult, DailyBacktestEngine
-from systematic_trading.signals.base import SignalContext, TargetOverlay
+from systematic_trading.signals.base import SignalContext, TargetOverlay, apply_target_overlays
 if TYPE_CHECKING:
     from systematic_trading.storage.interfaces import MarketDataStore
 
@@ -293,8 +293,7 @@ def _target_schedule(
                 bars_by_symbol=bars_by_symbol,
                 trade_dates=trade_dates,
             )
-            for overlay in target_overlays:
-                targets = overlay.apply(targets, context)
+            targets = apply_target_overlays(targets, target_overlays, context)
             schedule[trade_date] = targets
 
     if not schedule:
@@ -419,8 +418,7 @@ def _dynamic_target_schedule(
             bars_by_symbol=bars_by_symbol,
             trade_dates=trade_dates,
         )
-        for overlay in target_overlays:
-            targets = overlay.apply(targets, context)
+        targets = apply_target_overlays(targets, target_overlays, context)
         schedule[trade_date] = targets
 
     if not schedule:

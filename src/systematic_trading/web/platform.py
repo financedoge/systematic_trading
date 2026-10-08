@@ -28,8 +28,9 @@ def platform_health_portal() -> HTMLResponse:
 def market_data_audit_portal() -> HTMLResponse:
     from systematic_trading.web.research_archive_panel import RESEARCH_ARCHIVE_HTML
     from systematic_trading.web.governed_panel import GOVERNED_HTML
+    from systematic_trading.web.economic_panel import ECONOMIC_HTML
     from systematic_trading.web.market_history_ui import MARKET_HISTORY_UI_HTML
-    page = _MARKET_DATA_AUDIT_HTML.replace('<main>', '<main><section id="market-history-section" aria-label="Market History">'+MARKET_HISTORY_UI_HTML+RESEARCH_ARCHIVE_HTML+GOVERNED_HTML+'<div id="market-bars-panel" data-market-view="bars" hidden>', 1)
+    page = _MARKET_DATA_AUDIT_HTML.replace('<main>', '<main><section id="market-history-section" aria-label="Market History">'+MARKET_HISTORY_UI_HTML+RESEARCH_ARCHIVE_HTML+GOVERNED_HTML+ECONOMIC_HTML+'<div id="market-bars-panel" data-market-view="bars" hidden>', 1)
     page = page.replace('<body>', '<body class="market-data-page">', 1)
     return HTMLResponse(with_app_shell(with_chart_navigation(page.replace('</main>', '</div></section></main>', 1)), "market"))
 

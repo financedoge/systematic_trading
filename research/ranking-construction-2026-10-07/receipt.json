@@ -1,0 +1,27 @@
+{
+  "acceptance_sha256": "4d5914e97eb718cdce8069c1fb92a50540193c789cfe0695dbeb4f051d6907b4",
+  "files": {
+    "assessment.html": "0fd586b138ba94da665e6e2cc8d4d8dbeb63e432b7ebe9761410d89334e2947f",
+    "comparison.png": "2dd7bd1ed46f786d8b9edd865b319b50d76a14800cd3e26628d5442788585742",
+    "index.html": "6835c668c3d7b6da6eb40bfa2236d6c5bd2fcb9772ced14bafd90f42ed5782d8",
+    "reports/C0.html": "05c675a877c0fffd2078feb4d3484a3c4f9a946dc651dfb53791f46133babe3f",
+    "reports/C3.html": "07f1680b2a9bbc96ee790e1e9c8ccb77f1e8440be1475a51203dc8f3c5e1cff3",
+    "reports/E0.html": "166396c9fd1ce02edca472933543787ce1078e4e54d009f4f8a98e988330f89b",
+    "reports/E1.html": "5a7f8ba11b1c333900afb3dbcebea941214c880a24ee154965d1328875e71609",
+    "reports/F0.html": "06beb24f2e67504aca665ef68449a5dd28a083943b794699d6c2ec5bb13b7739",
+    "reports/F3.html": "88de2bf06a2cff1653feb8ca95c04513f05154e93c2c44a5bd8294e2324d2686",
+    "reports/N10.html": "b56892ce1d128fe338553fdf8fbe1bb1cc0678738edf94493d7cb05dcdd02e8b",
+    "reports/N6.html": "307aa7a5477d8923d0630044abc6ccfa982c12c583e4938b5e8767c30616e156",
+    "reports/N8.html": "52fc00748cce9a85d429522830ffc721ec604361af866d90e0471abdf992531f",
+    "reports/P10.html": "50eca6146fd63d1bffdcf6b7beb84379e8405a31804f05b4e1aa02f45a1a4e1b",
+    "reports/P8.html": "b07e4f48efa3aa42f9184b5b3007eb0eec8bc7e9be41cc531fd2c305ab0b7a3a",
+    "reports/RP.html": "78a3c25539dbee271dba9143f1d59250c8faf986ff08e385706b58d33700f598",
+    "reports/URTH.html": "06d2eea77209df3263e94e28ec96d7dedf872f8cf131a8a28d9a2f4829c7f8c1",
+    "reports/X10.html": "dc9d121aa80797aebdf2aa30a0f90086a88ededc28587c671f8b023ca12a809b",
+    "reports/X6.html": "aa36d414632dd1b387a76cd0baab7fea450c7d952a2bee2e5cdbd84c6805eeb6",
+    "reports/X8.html": "913aa31a61430fd40532f164e0830929506bc5f354259c49bba3635cb9b0a35c"
+  },
+  "protocol_sha256": "87170ad71831222e50845de82421fe69bae34dd6ec7d4a00c9f2bfbfb97178d4",
+  "report_sha256": "9735841ed948499b06972d8f59f7d778a1d8f976ed9d8f49e8c2960c1c2e35ad",
+  "study": "D:\\projects\\systematic_trading\\var\\research\\ranking-construction-20261007-v1"
+}

@@ -10,6 +10,21 @@ See [Trading allocations](trading-allocations.md) for contracts and limitations.
 
 ## Shared application contracts
 
+The [economic vintage recorder](economic-vintage-recorder.md) extends Market Data
+with app-owned ALFRED acquisition and independently committed snapshots/catalogs.
+Raw evidence, date-level archive availability and actual first capture are separate.
+Pinned readers verify hashes, require explicit historical availability assumptions,
+reject stale inputs and never substitute a later vintage. This research-only panel
+does not alter active strategy inputs or execution authority.
+
+The expanded eleven-series registry distinguishes seven leading candidates from
+payroll, production and inflation context. Named predecessor hashes permit only
+additive series extensions with unchanged existing definitions and schedules;
+old publications remain addressable by their original catalog and snapshot hashes.
+Feature groups have independent readiness, no fills and explicit daily-archive
+availability. Regional forward surveys retain their own identity; national PMI
+and consensus feeds are visible source gaps, not inferred data.
+
 Intraday acquisition has a separate app-owned recovery worker with a durable
 per-window ledger, raw-first writes, transactional outbox batches and bounded
 IB pacing. It runs alongside streaming and resumes six-month 5-second history
@@ -19,6 +34,14 @@ its observations remain unapproved raw evidence. See [intraday recovery](intrada
 The [connection repair record](app-connection-repairs-2026-09-28.md) documents the portfolio, data and recovery boundaries. `portfolio/context.py` resolves the monitoring episode independently of accounting compaction. `portfolio/targets.py` selects approved deployed targets; `portfolio/valuation.py` applies observed mark/FX freshness; `portfolio/revision.py` invalidates derived EOD results. Paired actual/reference checkpoints and dated executions support replay without future-baseline leakage. Broker capture time cannot be reassigned to a historical session.
 
 Production decisions and strategy tracking consume hash-pinned published governed inputs. The application-owned `research/governed_refresh.py` producer audits and verifies a complete supported ETF batch before publishing its catalog pointer. Research and operations projections run independently and expose their errors/freshness. The economic cash ledger bridges NAV to security P&L, flows, income, costs and cash FX; unresolved differences remain visible and suppress reconciled flow-adjusted returns.
+
+The research analytics lane also owns recorder-first ETF admissions through
+`recorders/research_etfs.py`, using the same verified publisher. Research-source
+failures retain the last complete catalog and do not suppress independent jobs.
+Verified inherited delta files and their physical publication receipts survive
+subsequent active-universe refreshes without an unbounded parent chain. Market
+Data exposes recorder coverage and quarantine status. See the
+[bill recorder and parking contract](bill-recorder-and-parking.md).
 
 `web/shell.py` owns the shared workspace presentation. Application health includes recurring broker probes, calculation workers and durable delivery receipts. NAS SQL snapshots carry external dependency manifests; missing analytical data/artifacts defer incoming restore before database mutation. Paper/live gates and checks preventing replacement of active local databases remain mandatory.
 
@@ -149,3 +172,30 @@ Registered monitored strategies are application-owned analytical calculations. T
 - Add Grafana-class dashboards and multi-channel alerts.
 
 The [database consolidation record](database-consolidation.md) documents the server-store defaults and physical storage relocation. The [LEAN integration plan](lean-backtest-integration-plan.md) defines an isolated backtest worker with frozen input bundles and no brokerage access.
+
+
+## Strategy monitoring lifecycle
+
+Monitoring membership is application state in the transactional strategy-control tables, under the global `strategy-monitoring-v1` scope. The versioned config seeds membership; immutable operator events override it across account resets. Each archive/restore increments a generation and uses compare-and-swap, with guarded allocation revisions. PostgreSQL serializes lifecycle and allocation commits with a shared advisory lock; SQLite tests use an immediate transaction.
+
+Strategies shows Archive beneath each monitored name and Restore to monitored for supported archived definitions. Archiving removes a recipe from ongoing calculation jobs and keeps its last complete report. It is blocked for the designated SOTA, an actively funded strategy, or a pending allocation reference. Historical artifacts without a registered monthly multi-asset execution recipe cannot be restored until that recipe exists.
+
+Restoring requests an application refresh. It replays every supported session from the pinned initial state, including all scheduled signals, fills, fees, cash, quantities, daily NAV, benchmark reports and current targets. This deliberately uses full replay rather than an unverified incremental checkpoint. The prior report stays readable with Catching up status. Only a complete publication bearing the required generation unlocks allocation. Failed jobs retain the previous complete evidence; membership and data changes during a batch prevent publication. This is simulated history and never places catch-up orders in a broker account.
+
+`research_fallback_f3_v1` (Qualifying defensive ETFs + cash) is an executable registered strategy, calculated by `research/usd_monitored.py` inside the regular analytics service and published in the common tracked-strategy/report sources. Its USD replay uses audited adjusted ETF prices, pinned inputs and source hashes, causal rolling model schedules and published USD vintages. Its standard report explicitly labels USD; matched benchmarks also use USD. The report adapter retains existing internal money-field names, but CNH allocation comparisons consume only its separate `cnh_nav_series`, using exact dates from the published verified observed FX series. Missing FX is never filled. If this strategy becomes SOTA, CNH reports disclose the unavailable matched comparison instead of substituting another SOTA or mixing currency returns.
+
+Membership is independent of funding, promotion and execution authority. Portfolio preview, scheduling, activation and proposal assembly enforce monitored membership; a restored strategy must finish its generation before allocation evidence is accepted. Existing paper-only approval, account, reconciliation and routing checks still apply.
+
+### Monitored economic context ridge
+
+`research_economic_context_ridge_v1` is the frozen CR recipe from economic-response v2: the unchanged F3 pipeline, a final 45% target cap with excess left in cash, then standardized per-ETF ridge (alpha 1) using the original seven leading and six context features. It uses at least 36 completed monthly return labels, expands chronologically, and preserves parent gross, cash and positive membership. Missing features or insufficient training abstain to capped F3. Settings are fixed until the requested ETF-universe revisit.
+
+The analytics service owns the exact economic input subset, model schedule, monthly signals, replay, native parity, full benchmark report and indicative next-session targets. Publication binds the strategy definition, source hashes, price batch and the original eleven-series economic subset. Unrelated financial recorder extensions do not invalidate this recipe. A changed used vintage or calculation generation does. Model receipts are verified again when a later operator-approved allocation prepares targets; monitoring itself grants no execution authority.
+
+Historical evaluation explicitly assumes daily ALFRED archive availability one calendar day before the prior trading close. Decisions from October 8, 2026 additionally require actual app first capture before that cutoff. Restoring an archived strategy replays missed calculations using those capture times; late recorder catch-up cannot backdate economic knowledge. The shared report shows available model predictions, coefficients, feature lineage, readiness and the full decision flow. Unavailable economic signals have a yellow abstention notice.
+
+### Financial-condition recorder extension
+
+The economic recorder supports weekday daily Treasury slopes (T10Y3M/T10Y2Y), Friday weekly Chicago Fed credit conditions (NFCICREDIT), and quarterly SLOOS lending standards (DRTSCILM/DRTSCIS). These extend the original eleven definitions through an audited additive registry migration. Original bytes, publication-vintage boundaries, actual capture timestamps, missing values and source attribution remain separate. The recorder also captures the vintage required by the latest indicative decision. Only omitted initial closed-market weekdays may be disclosed as unsupported prefix dates; no observations are inserted. Internal calendar gaps and missing initial open dates fail audit. Missing endpoint/window values remain unusable for research.
+
+NFCICREDIT is a revised standardized composite, not a corporate bond spread. Corporate-spread storage rights, national PMI and pre-release consensus remain source gaps. New financial inputs are visible under Market Data → Economic Data but never silently enter the monitored CR feature set. Separate finite challenger studies use published snapshots and frozen manifests, with original-context sample/availability controls.

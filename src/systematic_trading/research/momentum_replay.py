@@ -51,7 +51,8 @@ def verify_usd_bundle(root):
 
 
 def usd_instruments():
-    return {**instruments_for_definition(current_sota_definition()), **BENCHMARK_INSTRUMENTS}
+    from systematic_trading.research.parking_fallback import BILL
+    return {**instruments_for_definition(current_sota_definition()), **BENCHMARK_INSTRUMENTS, BILL.symbol: BILL}
 
 
 def freeze_usd_bundle(root, study, recipe, decisions, quotes, sessions, cost):

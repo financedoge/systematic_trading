@@ -952,7 +952,11 @@ def _render_html(report: dict[str, Any]) -> str:
     payload = json.dumps(report, ensure_ascii=True, separators=(",", ":")).replace("</", "<\\/")
     from systematic_trading.chart_navigation import with_chart_navigation
     from systematic_trading.web.shell import with_app_shell
-    return with_app_shell(with_chart_navigation(HTML_TEMPLATE.replace("__REPORT_DATA__", payload)), "strategies")
+    currency = report.get("accountingCurrency", "CNH")
+    if currency not in {"CNH", "USD"}:
+        raise ValueError("Unsupported report accounting currency")
+    template = HTML_TEMPLATE.replace("__ACCOUNTING_CURRENCY__", currency)
+    return with_app_shell(with_chart_navigation(template.replace("__REPORT_DATA__", payload)), "strategies")
 
 
 def render_backtest_report_html(report: dict[str, Any]) -> str:
@@ -1370,6 +1374,14 @@ HTML_TEMPLATE = """<!doctype html>
       </div>
     </section>
 
+    <section class="table-panel" id="economicModelPanel" hidden style="margin-bottom:14px">
+      <div class="panel-head"><h2>Leading Indicators and Payroll / Inflation Context</h2><a href="/platform/market-data-audit?view=economics">Economic data</a></div>
+      <div style="padding:12px 16px"><p id="economicModelStatus"></p><p class="meta" id="economicModelExplanation"></p>
+        <div class="table-scroll"><table id="economicForecasts"></table></div>
+        <details><summary>Inputs, coefficients, missing observations and publication lineage</summary><pre id="economicModelDetails" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre></details>
+      </div>
+    </section>
+
     <section class="table-panel" id="modelTrainingPanel" hidden style="margin-bottom:14px">
       <div class="panel-head"><h2>Rolling Model and ETF Activity</h2><button id="downloadRollingModel">Download current model</button></div>
       <div style="padding:12px 16px"><p id="rollingModelMeta"></p><p class="meta" id="rollingModelExplanation"></p>
@@ -1434,7 +1446,7 @@ HTML_TEMPLATE = """<!doctype html>
       <div class="panel-head">
         <div>
           <h2>Holdings And Contribution</h2>
-          <div class="meta">Contribution is estimated from prior-close weights and daily CNH price returns within each period.</div>
+          <div class="meta">Contribution is estimated from prior-close weights and daily __ACCOUNTING_CURRENCY__ price returns within each period.</div>
         </div>
         <div class="segments" id="contributionSegments">
           <button type="button" data-frequency="yearly">Yearly</button>
@@ -1490,7 +1502,7 @@ HTML_TEMPLATE = """<!doctype html>
 
     function fmtMoney(value) {
       if (value === null || value === undefined || !Number.isFinite(value)) return "n/a";
-      return "CNH " + new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(value);
+      return "__ACCOUNTING_CURRENCY__ " + new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(value);
     }
 
     function escapeHtml(value) {
@@ -1550,6 +1562,18 @@ HTML_TEMPLATE = """<!doctype html>
       const a=report.currentAllocation,m=report.monitoring;
       const training=report.modelTraining;
       const usd=report.usdModel;
+      const economic=report.economicModel;
+      if(economic){
+        const e=economic.latest;
+        document.getElementById('economicModelPanel').hidden=false;
+        const status=document.getElementById('economicModelStatus');
+        status.textContent=`${economic.status}. Decision: ${e.decision}; known through ${e.known_through}. ${e.training_rows} completed training months. Economic model available on ${economic.historical_ready}/${economic.historical_decisions} historical decisions.`;
+        if(!e.ready){status.style.background='#fff7db';status.style.color='#785b13';status.style.padding='12px';}
+        document.getElementById('economicModelExplanation').textContent=economic.explanation;
+        document.getElementById('economicForecasts').innerHTML=e.ready?`<thead><tr><th>ETF</th><th>Forecast return</th><th>Increment over historical mean</th></tr></thead><tbody>${Object.entries(e.models).map(([s,v])=>`<tr><td>${escapeHtml(s)}</td><td>${fmtPct(v.linear_forecast)}</td><td>${fmtPct(v.linear_increment)}</td></tr>`).join('')}</tbody>`:'<tbody><tr><td>No economic tilt while required observations are unavailable. Capped parent targets remain in force.</td></tr></tbody>';
+        const {training_labels,...latest}=e;
+        document.getElementById('economicModelDetails').textContent=JSON.stringify({...economic,latest},null,2);
+      }
       if(usd){
         document.getElementById('usdModelPanel').hidden=false;
         document.getElementById('usdModelMeta').textContent=`Monthly fit: ${usd.fit_close}. USD vintage: ${usd.snapshot.vintage_date}; last index observation: ${usd.snapshot.observation_date}. 21-observation USD change: ${fmtPct(usd.snapshot.features.USD21)}; 63-observation change: ${fmtPct(usd.snapshot.features.USD63)}.`;
@@ -1577,8 +1601,8 @@ HTML_TEMPLATE = """<!doctype html>
         document.getElementById('currentStatePanel').hidden=false;
         document.getElementById('calculationMeta').textContent=`Calculated by the application using ${m.engine==='lean'?'LEAN with Python parity':'Python'}. Valuation: ${a.valuation_date}. Price inputs: ${m.priceThrough}. Updated: ${m.computedAt}.`;
         document.getElementById('allocationMeta').textContent=`${report.modelRegime}. Last scheduled rebalance: ${a.last_rebalance}; next: ${a.next_rebalance}. Latest signal targets use data through ${a.target_known_through}. ${a.notes}`;
-        document.getElementById('currentWeightsTable').innerHTML=`<thead><tr><th>Ticker</th><th class="asset-name">Asset name</th><th>Adjusted units</th><th>Value CNH</th><th>Held weight</th><th>Last scheduled target</th><th>Latest signal target</th></tr></thead><tbody>${a.holdings.map(r=>`<tr><td>${escapeHtml(r.symbol)}</td>${AssetNames.cell(r.symbol)}<td>${r.quantity==null?'—':fmtNum(r.quantity,0)}</td><td>${fmtMoney(r.value_cnh)}</td><td>${fmtPct(r.weight)}</td><td>${fmtPct(r.scheduled_weight)}</td><td>${fmtPct(r.target_weight)}</td></tr>`).join('')}</tbody>`;
-        document.getElementById('exposureMeta').textContent=`Gross exposure: ${fmtMoney(a.gross_exposure_cnh)} (${fmtPct(a.gross_exposure_cnh/a.nav_cnh)} of NAV); cash: ${fmtMoney(a.cash_cnh)}. Country exposure: ${Object.entries(a.country_exposure_cnh).map(([k,v])=>k+' '+fmtPct(v/a.nav_cnh)).join(' · ')}. Accounting currency: CNH; ETF quote currency: USD. Forward window starts ${m.prospectiveStart}; ${m.prospectiveObservations} simulated sessions since that date.`;
+        document.getElementById('currentWeightsTable').innerHTML=`<thead><tr><th>Ticker</th><th class="asset-name">Asset name</th><th>Adjusted units</th><th>Value __ACCOUNTING_CURRENCY__</th><th>Held weight</th><th>Last scheduled target</th><th>Latest signal target</th></tr></thead><tbody>${a.holdings.map(r=>`<tr><td>${escapeHtml(r.symbol)}</td>${AssetNames.cell(r.symbol)}<td>${r.quantity==null?'—':fmtNum(r.quantity,0)}</td><td>${fmtMoney(r.value_cnh)}</td><td>${fmtPct(r.weight)}</td><td>${fmtPct(r.scheduled_weight)}</td><td>${fmtPct(r.target_weight)}</td></tr>`).join('')}</tbody>`;
+        document.getElementById('exposureMeta').textContent=`Gross exposure: ${fmtMoney(a.gross_exposure_cnh)} (${fmtPct(a.gross_exposure_cnh/a.nav_cnh)} of NAV); cash: ${fmtMoney(a.cash_cnh)}. Country exposure: ${Object.entries(a.country_exposure_cnh).map(([k,v])=>k+' '+fmtPct(v/a.nav_cnh)).join(' · ')}. Accounting currency: __ACCOUNTING_CURRENCY__; ETF quote currency: USD. Forward window starts ${m.prospectiveStart}; ${m.prospectiveObservations} simulated sessions since that date.`;
         document.getElementById('refreshCalculations').onclick=async()=>{
           const button=document.getElementById('refreshCalculations'),status=document.getElementById('refreshStatus');button.disabled=true;
           try{const r=await fetch('/api/v1/strategies/refresh',{method:'POST'});if(!r.ok)throw new Error(await r.text());status.textContent='Application refresh requested. Existing values remain visible until a complete calculation is published.';

@@ -8,17 +8,24 @@ def label(lines, x, y, size=13):
         f'<tspan x="{x}" dy="{0 if i == 0 else 19}">{html.escape(str(line))}</tspan>' for i, line in enumerate(lines)) + '</text>'
 
 
-def decision_diagrams(definition):
+def decision_diagrams(definition, accounting_currency='CNH'):
     overlays = {o.kind: o.parameters for o in definition.overlays}
     steps = [
-        ("Published audited prices, supported FX, fixed strategy definition", "Verify hashes, adjustment basis, identity and completed sessions."),
+        ("Published audited prices, fixed strategy definition" if accounting_currency=="USD" else "Published audited prices, supported FX, fixed strategy definition", "Verify hashes, adjustment basis, identity and completed sessions."),
         ("Data complete through the previous session?", "No: retain the last valid publication and report the missing input."),
         ("First trading session of the month?", "No: retain held quantities, mark NAV; calculate indicative targets separately."),
         ("Inverse-volatility risk parity", "63-session volatility; 45% base cap; 2% cash reserve."),
     ]
     if "asset_pool_filter" in overlays:
         p = overlays["asset_pool_filter"]
-        steps += [(f"Select top {p['topN']} using price and volume rank", f"63/126/252d trend + 21/126d volume. Fewer than {p['minSelected']} pass: neutral base allocation.")]
+        fallback=p.get('fallbackPolicy','neutral')
+        action={'neutral':'keep incoming basket','eligible_cash':'retain qualifying base weights; residual cash',
+            'all_cash':'target all cash','defensive_cash':'retain qualifying IEF/TLT/GLD base weights; residual cash'}[fallback]
+        steps += [(f"Select top {p['topN']} using price and volume rank", "63/126/252d trend + 21/126d volume; require positive 252d momentum."),
+                  (f"Fewer than {p['minSelected']} qualify?", f"Yes: {action}. Otherwise retain the normal selection.")]
+        if fallback!='neutral':
+            steps += [('Protect the fallback selection and cash budget through every later layer',
+                'No rejected asset can return; no later layer may refill released cash. Missing inputs stop calculation.')]
     if "decision_tree" in overlays:
         p = overlays["decision_tree"]
         steps += [("Select the model permitted at the decision date", "Before 2023: causal annual fit; from 2023: deployed frozen tree below."),
@@ -49,7 +56,20 @@ def decision_diagrams(definition):
         steps += [("Read the published USD vintage available before the signal close", "Broad-dollar 21/63-observation changes use one vintage; missing/stale inputs stop publication."),
                   ("Monthly expanding per-ETF ridge model, separate from the trees", "Short/older momentum + volatility + USD; 60 completed months; labels strictly before fit close."),
                   ("Rank forecasts and apply the final 12% tilt", "±3 percentage point bound; preserve cash and selected assets; no increase of inherited weights above 45%.")]
-    steps += [("Freeze targets; simulate next-session open fills", "Whole adjusted CNH units; sells before buys; 5 bps fee; cash constrained."),
+    if 'final_weight_cap' in overlays:
+        steps += [('Final ETF target cap: 45%', 'Clip any excess to cash before applying the economic model; holdings may drift between rebalances.')]
+    if 'economic_ridge' in overlays:
+        steps += [('Read exact original economic vintages before the previous completed close',
+                   'Seven leading + payroll/output/headline/core inflation; missing/stale observations → capped parent.'),
+                  ('Fit a separate standardized ridge model for each ETF; alpha = 1',
+                   'Expanding original-vintage monthly rows from 2016; at least 36 labels completed by the prior close.'),
+                  ('Prediction increment relative to each asset’s own training mean',
+                   '+25bp and positive absolute forecast → ×1.10; below −25bp → ×0.90; otherwise ×1.00.'),
+                  ('Redistribute only inside existing positive positions',
+                   'Preserve exact invested amount and cash; enforce final 45% ETF targets; no extra holdings.'),
+                  ('Prospective evidence from October 8, 2026',
+                   'Require actual app capture before the signal cutoff; late outage catch-up cannot backdate knowledge.')]
+    steps += [("Freeze targets; simulate next-session open fills", f"Whole adjusted {accounting_currency} units; sells before buys; 5 bps fee; cash constrained."),
               ("Daily portfolio value, held weights and benchmark comparison", "Risk parity · URTH · matched SOTA. Tracking never authorizes broker orders.")]
     height = len(steps)*100+30
     parts = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 {height}" role="img" aria-label="Complete strategy decision flow">',

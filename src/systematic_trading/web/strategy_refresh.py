@@ -3,14 +3,19 @@ from html import escape
 import json
 
 
-def report_refresh_banner(publication, status):
+def report_refresh_banner(publication, status, detail=None):
     published = str(publication["published_at"])
+    if detail and detail.get('lifecycle')=='archived':
+        return '<div role="status" style="padding:12px;background:#edf2f7">Archived · calculations paused. Last complete report through '+escape(str(detail.get('end_date','')))+'. <a href="/strategies">Restore from Strategies</a></div>'
     message = status.get("strategy_freshness_message", "")
+    if detail and not detail.get('allocation_ready'):
+        message = 'Catching up · allocation unavailable until all missed calculations are complete. '+message
     if status.get("errors"):
         message += " Refresh needs attention; retaining the last complete report."
     # JSON string escaping also prevents a publication field from ending script.
     version = json.dumps(publication["version"]).replace("<", "\\u003c")
-    label = json.dumps(f"Saved analytical report · calculated {published} UTC").replace("<", "\\u003c")
+    label = json.dumps(f"Saved analytical report · calculated {published} UTC" +
+        (' · Catching up; allocation unavailable' if detail and not detail.get('allocation_ready') else '')).replace("<", "\\u003c")
     return (
         '<div id="strategy-refresh-status" role="status" style="padding:8px;background:#edf2f7;'
         'color:#334155;font:13px sans-serif">'

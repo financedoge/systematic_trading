@@ -13,6 +13,8 @@ from systematic_trading.domain.enums import Currency, OrderEnvironment
 class AppSettings(BaseSettings):
     require_governed_decision_inputs: bool = True
     governed_refresh_enabled: bool = True
+    research_etf_recorder_config_path: Path = Path("config/research-etf-recorders.json")
+    economic_recorder_config_path: Path = Path("config/economic-recorders.json")
     model_config = SettingsConfigDict(
         env_file=".env",
         env_prefix="ST_",

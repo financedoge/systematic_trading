@@ -117,6 +117,8 @@ def test_strategy_publication_bypasses_holdings_marks_for_research(frozen, monke
         pytest.fail("Research tracker entered the normal canonical-price marking/report path")
     monkeypatch.setattr(api, "strategy_detail", forbidden)
     monkeypatch.setattr(api, "strategy_report", forbidden)
+    from systematic_trading.research import strategy_lifecycle
+    monkeypatch.setattr(strategy_lifecycle,"membership",lambda *args:dict(monitored=[]))
     projection.publish_strategies(SimpleNamespace(), None, analytics)
     catalog = json.loads(analytics.document("strategy-serving", "catalog")[0]["payload"])
     assert catalog["current_sota_id"] == "unchanged"

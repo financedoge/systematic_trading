@@ -14,14 +14,14 @@ def resource_plan(jobs, *, host_cpus, engine, docker_cpus=None, docker_memory_by
     if jobs < 1 or engine not in {"lean", "python"}:
         raise ValueError("A supported engine and at least one calculation are required")
     cores = max(1, min(host_cpus, docker_cpus) if engine == "lean" else host_cpus)
-    budget = max(1, cores-1)  # Keep operations/UI capacity outside the research pool.
+    budget = cores  # Operator requested all cores; native concurrency remains memory-bounded.
     memory_gib = (docker_memory_bytes or 0) / (1024**3)
     if engine == "lean":
         memory_workers = int(max(0, memory_gib-2)//4)
         if memory_workers < 1:
             raise ValueError("Native calculations need 4 GiB per run plus 2 GiB Docker service headroom")
         workers = min(jobs, max(1, budget//2), memory_workers)
-        per_run = max(1, budget//workers)
+        per_run = round(budget/workers, 6)
     else:
         workers, per_run = min(jobs, budget), 1
     return dict(engine=engine, logical_cpus=host_cpus, usable_cpus=cores, cpu_budget=budget,
