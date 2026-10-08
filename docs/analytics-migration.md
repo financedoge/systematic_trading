@@ -36,7 +36,7 @@ Explicit SQLite offline tests retain the original calculation path.
 | Daily prices and FX | `market_data.daily_bars`, `market_data.fx_rates` | Provider lineage/raw captures |
 | Strategy NAV, benchmarks, monitoring extensions, chart/period/attribution series | `analytics.current_observations`, source `strategy-serving` | Versioned backtest JSON/HTML |
 | Research diagnostics and nested dated candidate results | source `research-history` | All backtest JSON artifacts |
-| Registered LEAN NAV, decisions and fills | source `lean-history` | Hash-verified registered output files |
+| Registered LEAN NAV, decisions and fills | sources `lean-run/<artifact-path-hash>`; completeness manifest `lean-history` | Hash-verified registered output files |
 | Account snapshots | sources `account-history/<capture>` | Original timestamped capture files |
 | Account/strategy comparison | source `dashboard-serving` | Baselines and original observations |
 | Daily accounting P&L, execution records/fills, fundamentals | source `transactional-history` | Authoritative PostgreSQL rows |
@@ -70,6 +70,16 @@ current version, while prior evidence remains. Raw files can leave the hot spool
 after archival, so previously imported immutable raw chunks are retained.
 Repeated captures of the same raw source event retain different receipt metadata;
 identical hot/archive copies dedupe. No delayed observations become live data.
+
+Registered LEAN histories publish independently per immutable replay. Every pass
+rehashes both files against the PostgreSQL registry receipt, but unchanged runs
+are not extracted or inserted again. Interrupted imports resume at the first
+uncommitted run. The `lean-history` manifest advances only after all registered
+runs have been verified; use its explicit source/version map for a complete
+archive snapshot. The previous aggregate remains current until the first full
+manifest commits, then gets an empty current projection. Its historical rows
+and original files remain available. Migration does not affect strategy-serving
+publications or execution state.
 
 ## Operation and rollback
 

@@ -75,6 +75,8 @@ class TradingServiceStatus(BaseModel):
     last_rebalance_artifact_path: str | None = None
     portfolio_alignment_status: str | None = None
     strategy_change_status: str | None = None
+    strategy_change_phase: str = 'idle'
+    alert_delivery_error: str | None = None
     portfolio_alignment_message: str | None = None
     portfolio_alignment_proposal_id: str | None = None
     portfolio_alignment: InitialAllocationResult | None = None
@@ -231,14 +233,22 @@ class TradingManagementService:
         started = monotonic()
         current = _as_utc(now or datetime.now(tz=UTC))
         self._consume_broker_recovery(current)
-        from systematic_trading.live.strategy_control import activate_pending
+        from systematic_trading.live.strategy_control import activate_pending, handover_phase
         try:
-            strategy_change_status = activate_pending(self.settings, self.store, now=current, order_client=self.order_management_client)
+            strategy_change_status = activate_pending(self.settings, self.store, now=current, order_client=self.order_management_client,
+                clock=lambda: current+timedelta(seconds=monotonic()-started))
         except Exception as exc:
             strategy_change_status = 'Handover blocked: '+str(exc)
             logging.getLogger(__name__).exception('Scheduled strategy handover is blocked; current allocation retained.')
         with self._lock:
-            self._status = self._status.model_copy(update={"strategy_change_status": strategy_change_status, "heartbeat_at": current, "running": self._thread is not None and self._thread.is_alive()})
+            phase = handover_phase(strategy_change_status)
+            changed = (phase, strategy_change_status) != (self._status.strategy_change_phase, self._status.strategy_change_status)
+            self._status = self._status.model_copy(update={"strategy_change_status": strategy_change_status,
+                "strategy_change_phase": phase, "heartbeat_at": current, "running": self._thread is not None and self._thread.is_alive()})
+            if changed and phase in {'blocked', 'ready'}:
+                self._record_event('strategy_handover', 'error' if phase == 'blocked' else 'ok',
+                    ('Allocation handover blocked; no new handover rebalance is ready. ' if phase == 'blocked' else '')+
+                    strategy_change_status, save=False)
             self._save_status_locked()
 
         # Broker execution evidence and approval bindings still need maintenance
@@ -948,9 +958,14 @@ class TradingManagementService:
         if not notify:
             return
         try:
-            self.alert_notifier.notify(event)
-        except Exception:
-            pass
+            delivered = self.alert_notifier.notify(event)
+            if delivered is not False and self._status.alert_delivery_error:
+                self._status = self._status.model_copy(update={'alert_delivery_error': None})
+                self._save_status_locked()
+        except Exception as exc:
+            logging.getLogger(__name__).exception('Could not persist trading alert')
+            self._status = self._status.model_copy(update={'alert_delivery_error': f'Trading alert delivery failed: {exc}'})
+            self._save_status_locked()
 
     def _save_status_locked(self) -> None:
         from systematic_trading.runtime_io import atomic_json

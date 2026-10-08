@@ -177,6 +177,9 @@ def test_failed_strategy_calculation_preserves_reports_and_other_projections(tmp
     service = module.AnalyticsService(AppSettings(data_dir=tmp_path), object(), SimpleNamespace(initialize=lambda: None, latest=lambda _: None, document=lambda *_: None))
     status = service.refresh()
     assert status["errors"] == {"tracked-strategies": "Invalid audited inputs"}
+    alerts = [json.loads(line) for line in (tmp_path/'log/automation_alerts.jsonl').read_text().splitlines()]
+    assert any(event['event_type'] == 'analytics_tracked-strategies' and event['status'] == 'error'
+               and 'Invalid audited inputs' in event['message'] for event in alerts)
     assert "publish_strategies" not in calls and "publish_dashboard" in calls
     assert "import_account_histories" in calls and "import_transactional_histories" in calls
 

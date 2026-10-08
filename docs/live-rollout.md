@@ -65,6 +65,14 @@ account replay whenever the local platform is running. Startup catches up after
 sleep/offline periods. NAS backup is optional and cannot block normal local
 startup/shutdown; see [optional snapshot synchronization](database-sync.md).
 
+The analytics watchdog reports long host/process pauses on resume and retries
+all refresh lanes through their normal checks. ClickHouse transport failures
+name the endpoint and operation; an ambiguous write response is never retried
+by the transport client. Keep the host awake for uninterrupted local processing;
+local alerts also resume only when the host runs. Already accepted broker orders
+remain broker-managed. Reconciliation must determine their status before any
+further routing.
+
 The analytics worker acquires complete Yahoo ETF histories with bounded retries
 across the provider's chart hosts, retains source evidence, checks identity,
 coverage and adjustment revisions, and publishes only a fully verified batch.

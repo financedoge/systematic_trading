@@ -24,6 +24,26 @@ USD_KEYS = {'research_fallback_f3_v1', 'research_economic_context_ridge_v1'}
 _WORK = None
 
 
+def native_attempt(root, key, image, cpus):
+    """Bound attempts without hiding the failed strategy or immutable evidence."""
+    failed = []
+    for i in range(1, 4):
+        output = root/'native'/key/str(i)
+        if output.exists():
+            receipt = read_json(output/'run.json') if (output/'run.json').exists() else {}
+            if receipt.get('status') != 'succeeded':
+                log = output/'lean.log'
+                lines = log.read_text(encoding='utf8', errors='replace').splitlines() if log.exists() else []
+                reason = next((line.strip() for line in lines if 'Runtime Error:' in line), None)
+                failed.append(f'{output.resolve()}: {reason or receipt.get("error", "Interrupted attempt; no completed receipt")}')
+                continue
+        return key, dict(native_parity(root/'bundles'/key, output, image, cpus=cpus),
+                         artifact_path=str(output.resolve()))
+    raise ValueError(f'Native replay blocked for {key}: all 3 attempts exhausted. '
+        f'Last failure: {failed[-1]}. Repair the cause and run a new verified calculation; '
+        'automatic refresh cannot reuse these failed attempts. Previous publication retained.')
+
+
 def load_inputs(settings, analytics, config):
     from systematic_trading.research.governed_inputs import GovernedInputs, etf_bar
     from systematic_trading.research import instruments_for_definition, current_sota_definition
@@ -195,12 +215,7 @@ def calculate(settings, analytics, config, definitions, sota, root, code_hashes,
         resources=available_resources(len(economics),'lean');n=min(resources['workers'],len(economics))
         cpus=str(round(resources['usable_cpus']/n,6))
         def native(key):
-            for i in range(1,4):
-                output=root/'native'/key/str(i)
-                if output.exists() and (not (output/'run.json').exists() or read_json(output/'run.json')['status']!='succeeded'):
-                    continue
-                return key,dict(native_parity(root/'bundles'/key,output,p['image'],cpus=cpus),artifact_path=str(output.resolve()))
-            raise ValueError('Three native attempts failed; inspect retained evidence')
+            return native_attempt(root, key, p['image'], cpus)
         with ThreadPoolExecutor(max_workers=n) as pool:
             receipts=dict(pool.map(native,economics))
     else:

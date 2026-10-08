@@ -127,18 +127,40 @@ def import_lean_histories(analytics, store):
         if not exists["name"]:
             return False
         runs = connection.execute("SELECT artifact_path, payload FROM ops.lean_research_runs").fetchall()
-    paths = []
+    # Each registered replay is immutable and independently verified. Recopying
+    # the entire archive after every new run makes a transient connection loss
+    # restart millions of rows from the beginning. Commit one run at a time;
+    # the summary advances only once the complete registry has been checked.
+    index = analytics.publication_index('lean-run/')
+    extractor = digest(Path(__file__).read_bytes())
+    versions, changed = {}, False
     for run in runs:
         root = Path(run["artifact_path"])
+        source = 'lean-run/' + digest(str(root.resolve()))
+        artifacts = run['payload']['receipt']['artifacts']
+        expected = {name: artifacts[name] for name in ('reference.json', 'economic.json')}
+        version = digest(encode(dict(artifacts=expected, extractor=extractor)))
+        versions[source] = version
+        unchanged = (index.get(source) or {}).get('version') == version
+        rows = []
         for name in ("reference.json", "economic.json"):
             path = root / name
             if not path.is_file():
                 raise FileNotFoundError(f"Registered LEAN series unavailable: {path}")
-            expected = run["payload"]["receipt"]["artifacts"][name]
-            if digest(path.read_bytes()) != expected:
+            raw = path.read_bytes()
+            if digest(raw) != expected[name]:
                 raise ValueError(f"Registered LEAN series changed: {path}")
-            paths.append(path)
-    return import_json_group(analytics, "lean-history", paths, "lean_research")
+            if not unchanged:
+                rows.extend(extract_series(json.loads(raw.decode('utf-8-sig')), family='lean_research',
+                    entity=path.stem, prefix=str(path.resolve())))
+        if not unchanged:
+            changed |= analytics.publish(source, version, rows,
+                provenance=dict(artifacts=expected, extractor=extractor, artifact_path=str(root)))
+    # Retain the previous aggregate until every new run has committed. The
+    # immutable old versions remain evidence; the current summary has no rows.
+    changed |= analytics.publish('lean-history', digest(encode(versions)), [],
+        provenance=dict(layout='per_run_v1', count=len(versions), versions=versions))
+    return changed
 
 
 def import_transactional_histories(analytics, store):

@@ -1,6 +1,6 @@
 """Operator previews, scheduled changes and guarded after-close handovers."""
 import json
-from datetime import UTC, date, datetime, time
+from datetime import UTC, date, datetime, time, timedelta
 from uuid import uuid4
 from zoneinfo import ZoneInfo
 
@@ -18,6 +18,17 @@ from systematic_trading.research.strategy_catalog import registered_strategy_def
 from systematic_trading.research.strategy_lifecycle import require_monitored, SCOPE, required_generation
 
 NY = ZoneInfo('America/New_York')
+
+
+def handover_phase(message):
+    """Only explicit scheduled waits/successes are non-errors; unknown failures stay visible."""
+    if not message:
+        return 'idle'
+    if message == 'Waiting for the approved session close.':
+        return 'waiting'
+    if message.startswith(('Trading allocation activated;', 'Allocation rebalance restored to the approval queue.')):
+        return 'ready'
+    return 'blocked'
 
 
 def candidate_evidence(settings, key, *, store=None):
@@ -214,7 +225,40 @@ def cancel_pending(store, expected_revision, operator, reason, *, now=None):
         return store.commit_strategy_control(scope_for(store), expected_revision, dict(state,pending=None), event)
 
 
-def activate_pending(settings, store, *, now=None, order_client=None):
+def authorize_catch_up(settings, store, expected_revision, pending_event_id, operator, reason, *, now=None):
+    """Explicit, session-limited recovery of an already reviewed paper allocation."""
+    now = now or datetime.now(UTC)
+    if not operator.strip() or not reason.strip():
+        raise ValueError('Operator and reason are required.')
+    if settings.default_environment != OrderEnvironment.PAPER:
+        raise ValueError('Catch-up is available for the paper portfolio only.')
+    with ORDER_CONNECTION_LOCK:
+        state = control_state(store)
+        pending = state.get('pending')
+        if not pending or pending['change']['event_id'] != pending_event_id:
+            raise ValueError('The reviewed pending allocation changed. Refresh before authorizing catch-up.')
+        day = date.fromisoformat(pending['change']['effective_close'])
+        trade_day = next_us_trading_day(day)
+        opening = datetime.combine(trade_day, time(9,30), NY)
+        closing = datetime.combine(trade_day, us_equity_market_close(trade_day), NY)
+        if not opening <= now < closing:
+            raise ValueError('Catch-up is limited to the original next trading session while it is open.')
+        from systematic_trading.live.initial_allocation import initial_allocation_window
+        decision, start, _ = initial_allocation_window(settings, now)
+        if decision != day or start.date() != trade_day:
+            raise ValueError('No complete execution window remains in the original trading session.')
+        authorization = dict(pending_event_id=pending_event_id, decision_date=str(day),
+            trade_date=str(trade_day), authorized_at=now.isoformat(), expires_at=closing.isoformat(),
+            operator=operator, reason=reason)
+        event = dict(event_id=uuid4().hex, kind='late_handover_authorized', at=now.isoformat(),
+            operator=operator, reason=reason, authorization=authorization,
+            request_hash=digest(encode([expected_revision, authorization])))
+        return store.commit_strategy_control(scope_for(store), expected_revision,
+            dict(state,pending=dict(pending,catch_up=authorization)),event)
+
+
+def activate_pending(settings, store, *, now=None, order_client=None, clock=None):
+    clock = clock or ((lambda: datetime.now(UTC)) if now is None else (lambda: now))
     now = now or datetime.now(UTC)
     with ORDER_CONNECTION_LOCK:
         state = control_state(store)
@@ -237,14 +281,24 @@ def activate_pending(settings, store, *, now=None, order_client=None):
         day = date.fromisoformat(change.effective_close)
         close = datetime.combine(day, us_equity_market_close(day), NY)
         next_open = datetime.combine(next_us_trading_day(day), time(9, 30), NY)
+        catch_up = pending.get('catch_up')
         if now < close:
             return 'Waiting for the approved session close.'
-        if now >= next_open:
+        if catch_up:
+            session_close = datetime.combine(next_open.date(), us_equity_market_close(next_open.date()), NY)
+            if (catch_up.get('pending_event_id') != change.event_id or catch_up.get('decision_date') != str(day)
+                    or catch_up.get('trade_date') != str(next_us_trading_day(day))
+                    or datetime.fromisoformat(catch_up['authorized_at']) > now
+                    or not next_open <= now < min(session_close,datetime.fromisoformat(catch_up['expires_at']))):
+                return 'Authorized catch-up expired or no longer matches this allocation. Review the pending change again.'
+        elif now >= next_open:
             day = next_handover(now)
             close = datetime.combine(day, us_equity_market_close(day), NY)
             if now < close:
                 return f'Handover window missed; retained for {day} close. History will not be backdated.'
         issues = activation_issues(settings, store, now)
+        if catch_up:
+            issues += submission_reconciliation_issues(settings, now=now)
         if issues:
             return '; '.join(issues)
         from systematic_trading.live.allocated_plan import build_allocated_plan
@@ -259,6 +313,8 @@ def activate_pending(settings, store, *, now=None, order_client=None):
             capital_rebalance='monthly', history_label='Operator-approved allocation',
             opening=dict(at=now.isoformat(), snapshot=snapshot.model_dump(mode='json'),
                 book=initial_book(snapshot.model_dump(mode='json'), pending['preview']['active']['allocations'])))
+        if catch_up:
+            active['catch_up'] = catch_up
         try:
             plan = build_allocated_plan(store=store, broker=InteractiveBrokersAdapter(settings),
                 account_snapshot=snapshot, decision_date=day, intended_trade_date=next_us_trading_day(day),
@@ -272,6 +328,11 @@ def activate_pending(settings, store, *, now=None, order_client=None):
         for key,evidence in pending['preview']['evidence'].items():
             if candidate_evidence(settings,key,store=store)['definition'] != evidence['definition']:
                 return 'Strategy recipe changed since approval. Cancel and review the updated evidence.'
+        if catch_up:
+            now = clock()
+            if now >= min(session_close,datetime.fromisoformat(catch_up['expires_at'])):
+                return 'Authorized catch-up expired during preparation. Review the pending change again.'
+            active['activated_at'] = active['opening']['at'] = now.isoformat()
         latest = snapshot_for(settings, day)
         from systematic_trading.live.deferred_rebalance import account_evidence, prepared_proposal
         latest_report = load_latest_ib_reconciliation(settings)
@@ -279,6 +340,8 @@ def activate_pending(settings, store, *, now=None, order_client=None):
                 or latest_report is None or account_evidence(latest_report) != account_evidence(report)):
             return 'Account changed during activation; waiting for reconciliation.'
         issues = activation_issues(settings, store, now)
+        if catch_up:
+            issues += submission_reconciliation_issues(settings, now=now)
         if issues:
             return '; '.join(issues)
         active['opening'].update(targets=[t.model_dump(mode='json') for t in plan.proposal.targets], prices=plan.proposal.input_provenance['allocation']['intent']['prices'],
@@ -287,6 +350,21 @@ def activate_pending(settings, store, *, now=None, order_client=None):
         proposal = prepared_proposal(plan.proposal, report).model_copy(update=dict(
             proposal_id='handover-'+change.event_id, created_at=now, trigger='allocation_handover',
             automation_strategy_key=None))
+        if catch_up:
+            from systematic_trading.live.initial_allocation import initial_allocation_window
+            decision, start, end = initial_allocation_window(settings, now)
+            if decision != day or start.date() != next_us_trading_day(day):
+                return 'No complete catch-up execution window remains. Review the pending change again.'
+            proposal = proposal.model_copy(update=dict(
+                orders=[order.model_copy(update=dict(execution_start_time=start.strftime('%H:%M'),
+                    execution_end_time=end.strftime('%H:%M'),
+                    slippage_reference_price=order.reference_price,
+                    slippage_trade_date=order.intended_trade_date,
+                    slippage_start_time=order.execution_start_time, slippage_end_time=order.execution_end_time))
+                    for order in proposal.orders],
+                execution_deadline_at=min(end,start+timedelta(minutes=settings.execution_rebalance_timeout_minutes)).astimezone(UTC),
+                input_provenance=dict(proposal.input_provenance,late_handover=catch_up),
+                summary='Authorized late rebalance of the previously approved allocation. '+proposal.summary))
         active['opening']['rebalance_proposal'] = proposal.model_dump(mode='json')
         event = dict(event_id='activate-'+change.event_id, request_hash=digest(encode(pending)),
             kind='allocation_activated', at=now.isoformat(), effective_close=str(day),

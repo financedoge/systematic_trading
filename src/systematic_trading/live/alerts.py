@@ -26,9 +26,11 @@ class AutomationEvent(Protocol):
 
 
 class AutomationAlertNotifier:
-    def __init__(self, settings: AppSettings, *, event_store: PlatformEventAppendStore | None = None) -> None:
+    def __init__(self, settings: AppSettings, *, event_store: PlatformEventAppendStore | None = None,
+                 service_name: str = 'trading-management-service') -> None:
         self.settings = settings
         self.event_store = event_store
+        self.service_name = service_name
         self.alert_log_path = settings.data_dir / "log" / "automation_alerts.jsonl"
         self.email_error_log_path = settings.data_dir / "log" / "automation_alert_email_errors.log"
         self.event_error_log_path = settings.data_dir / "log" / "automation_alert_event_errors.log"
@@ -37,6 +39,7 @@ class AutomationAlertNotifier:
         self._last_email_at: dict[str, datetime] = {}
         self._last_email_config_warning_at: datetime | None = None
         self._delivery = {"status": "not_attempted"}
+        self._event_delivery_error = None
         receipt_path = settings.data_dir / "log" / "alert_delivery.jsonl"
         if receipt_path.exists():
             for line in receipt_path.read_text(encoding="utf8").splitlines():
@@ -44,13 +47,17 @@ class AutomationAlertNotifier:
                     self._delivery = json.loads(line)
                 except ValueError:
                     continue
+            self._event_delivery_error = self._delivery.get('event_error')
 
     def delivery_status(self):
         with self._lock:
-            return {**self._delivery, "configured": self.email_configured(), "configuration_issue": self.email_config_issue()}
+            return {**self._delivery, **({'status': 'failed', 'error': self._event_delivery_error}
+                    if self._event_delivery_error else {}),
+                    "configured": self.email_configured(), "configuration_issue": self.email_config_issue()}
 
     def _record_delivery(self, status, error=None):
-        payload = {"status": status, "checked_at": datetime.now(UTC).isoformat(), "error": error}
+        payload = {"status": status, "checked_at": datetime.now(UTC).isoformat(), "error": error,
+                   'event_error': self._event_delivery_error}
         with self._lock:
             self._delivery = payload
             path = self.settings.data_dir / "log" / "alert_delivery.jsonl"
@@ -58,21 +65,27 @@ class AutomationAlertNotifier:
             with path.open("a", encoding="utf-8") as handle:
                 handle.write(json.dumps(payload) + "\n")
 
-    def notify(self, event: AutomationEvent) -> None:
+    def notify(self, event: AutomationEvent) -> bool:
         if event.status not in {"warning", "error"}:
-            return
+            return False
         if not self._reserve_alert_record(event):
-            return
-        self._append_alert_log(event)
+            return False
+        try:
+            self._append_alert_log(event)
+        except Exception:
+            with self._lock:
+                self._last_alert_at.pop(_alert_dedupe_key(event), None)
+            raise
         self._append_platform_alert_event(event)
         email_config_issue = self.email_config_issue()
         if email_config_issue is not None:
             self._record_delivery("disabled", email_config_issue)
             self._append_email_config_warning_once(email_config_issue)
-            return
+            return True
         if not self._reserve_email_delivery(event):
-            return
+            return True
         Thread(target=self._send_email_safely, args=(event,), daemon=True).start()
+        return True
 
     def _append_alert_log(self, event: AutomationEvent) -> None:
         payload = {
@@ -96,7 +109,7 @@ class AutomationAlertNotifier:
                 AlertRaisedEvent(
                     occurred_at=_as_utc(event.timestamp),
                     source=EventSource(
-                        service="trading-management-service",
+                        service=self.service_name,
                         environment=self.settings.default_environment,
                     ),
                     payload=AlertRaisedPayload(
@@ -112,7 +125,12 @@ class AutomationAlertNotifier:
                     ),
                 )
             )
+            self._event_delivery_error = None
         except Exception as exc:
+            self._event_delivery_error = f'Alert event persistence failed: {exc}'
+            self._record_delivery('failed', self._event_delivery_error)
+            with self._lock:
+                self._last_alert_at.pop(_alert_dedupe_key(event), None)
             self._append_alert_event_error(exc)
 
     def email_config_issue(self) -> str | None:

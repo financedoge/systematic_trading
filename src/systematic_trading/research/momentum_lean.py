@@ -73,7 +73,8 @@ class FrozenPortfolioAlgorithm(QCAlgorithm):  # noqa: F405
         self.instruments = {s: usd_instruments()[s] for s in self.quotes}
         self.set_time_zone(TimeZones.NEW_YORK)  # noqa: F405
         self.set_start_date(datetime.fromisoformat(self.spec.start_date))
-        self.set_end_date(datetime.fromisoformat(self.spec.end_date))
+        from systematic_trading.lean.session_boundary import set_completed_end_date
+        set_completed_end_date(self, self.root, datetime.fromisoformat(self.spec.end_date), self.quotes)
         self.set_account_currency('USD')
         self.set_cash(float(self.spec.initial_cash_usd))
         self.set_benchmark(lambda stamp: 1.0)
@@ -142,7 +143,10 @@ class FrozenPortfolioAlgorithm(QCAlgorithm):  # noqa: F405
 
     def on_end_of_algorithm(self):
         if [r['date'] for r in self.nav_rows] != self.sessions or set(self.decisions) != set(self.expected_decisions):
-            raise ValueError('Partial LEAN output; missing session/decision')
+            raise ValueError(f'Partial LEAN output; requested through {self.spec.end_date}, '
+                f'last NAV {self.nav_rows[-1]["date"] if self.nav_rows else "unavailable"}; '
+                f'expected {len(self.sessions)} sessions, received {len(self.nav_rows)}. '
+                'Missing session/decision; publication withheld.')
         write_json(Path('/output/resources.json'), dict(process_resources(),
                    input_events=len(self.processed) * len(self.symbols_by_name), order_events=len(self.fills)))
         write_json(Path('/output/economic.json'), {'schema_version': 1, 'engine': 'lean', 'accounting_currency': 'USD', 'complete': True,

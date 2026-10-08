@@ -4,7 +4,7 @@ const assert = require('assert');
 const source = fs.readFileSync(0, 'utf8').replace(/\r\n/g,'\n');
 const nodes = new Map();
 const weights = [{value:'100',dataset:{weight:'A'}}];
-let focused, responseKind='ok', finishPreview;
+let focused, responseKind='ok', finishPreview, timeoutCallback, timerCleared=false;
 const requests=[];
 const previewResponse={effects:'test',approval_policy:'test',blockers:[],evidence:{},rollback:[]};
 function node(id) {
@@ -19,8 +19,10 @@ const root = {querySelector:s=>node(s.slice(1)),querySelectorAll:()=>weights,
 let calls=0;
 const context = {document:{createElement:()=>root,querySelector:()=>({prepend(){}}),addEventListener(){}},
   location:{pathname:'/strategies'}, setInterval(){}, URLSearchParams,
+  AbortController, setTimeout(callback){timeoutCallback=callback;timerCleared=false;return 1},clearTimeout(){timerCleared=true},
   crypto:{randomUUID:()=>'test-event'},
-  fetch:async(url,options)=>{calls++;requests.push({url,body:JSON.parse(options.body)});
+  fetch:async(url,options)=>{calls++;requests.push({url,body:options.body?JSON.parse(options.body):null});
+    if(responseKind==='timeout')return new Promise((resolve,reject)=>options.signal.addEventListener('abort',()=>reject(Error('Aborted'))));
     if(responseKind==='delayed')return new Promise(resolve=>finishPreview=()=>resolve({ok:true,json:async()=>previewResponse}));
     return responseKind==='ok'?{ok:true,json:async()=>previewResponse}:{ok:false,json:async()=>({detail:[
       {type:'string_too_short',loc:['body','change','reason'],msg:'String should have at least 1 character',input:''}]})};}};
@@ -29,11 +31,22 @@ const instrumented = source.replace('  load();\n  setInterval(', `
   globalThis.reviewTest={
     setup(){data={state:{active:{allocations:[{strategy_key:'A',weight:'1'}]},sota_key:'A'},candidates:[{strategy_key:'A',name:'A'}]};edit()},
     review(){preview={effects:'test',approval_policy:'test',blockers:[],evidence:{},rollback:[]};change={allocations:[]};renderPreview()},
-    preview:previewEditor,cancel:cancelEditor,errorText
+    preview:previewEditor,cancel:cancelEditor,errorText,call,
+    readiness:renderCalculationStatus,
+    blocked(){data={state:{sota_key:'A',active:{allocations:[]},pending:{change:{effective_close:'2026-10-07',reason:'Test'}}},candidates:[],rules:{},history:[],activation_blockers:[],pending_phase:'blocked',pending_status:'Native replay failed through 2026-10-07',calculation_status:{severity:'error',message:'F3: three attempts exhausted'}};render();return root.innerHTML}
   };
   setInterval(`);
 assert.notStrictEqual(instrumented, source);
 vm.runInContext(instrumented, context);
+assert.match(context.reviewTest.blocked(), /Allocation handover blocked/);
+assert.match(root.innerHTML, /role="alert" class="sc-error">Native replay failed/);
+assert.match(node('sc-calculation-status').innerHTML, /sc-error/);
+assert.match(node('sc-calculation-status').innerHTML, /F3: three attempts exhausted/);
+context.reviewTest.readiness({severity:'warning',message:'Expected Oct 7; FX Oct 6 <unsafe>'});
+assert.match(node('sc-calculation-status').innerHTML, /sc-warning/);
+assert.match(node('sc-calculation-status').innerHTML, /&lt;unsafe&gt;/);
+context.reviewTest.readiness({severity:'ok',message:'Current'});
+assert.strictEqual(node('sc-calculation-status').innerHTML,'');
 context.reviewTest.setup();
 context.reviewTest.review();
 assert.strictEqual(typeof node('sc-editor').oninput,'function');
@@ -91,4 +104,7 @@ assert.strictEqual(node('sc-confirm').disabled,true,'Rechecking cannot revive an
   await context.reviewTest.preview();
   assert.match(node('sc-preview-result').innerHTML,/sc-warning/);
   assert.ok(!node('sc-preview-result').innerHTML.includes('sc-error'), 'Non-blocking routing readiness must be yellow');
+  responseKind='timeout';const stalled=context.reviewTest.call();timeoutCallback();
+  await assert.rejects(stalled,/timed out after 20 seconds.*Freshness cannot be verified/);
+  assert.strictEqual(timerCleared,true);
 })().catch(error=>{console.error(error);process.exitCode=1;});

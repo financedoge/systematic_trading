@@ -6,13 +6,19 @@ import urllib.request
 from datetime import UTC, datetime
 from decimal import Decimal
 from hashlib import sha256
+from http.client import HTTPException
 from typing import Any, Iterable, Sequence
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 
 from systematic_trading.domain.market import FXRate, PriceBar
 
 DAILY_BARS_TABLE = "market_data.daily_bars"
 FX_RATES_TABLE = "market_data.fx_rates"
+
+
+class ClickHouseConnectionError(ConnectionError):
+    """A failed database exchange, with no assumption about a write's outcome."""
+
 
 DAILY_BARS_DDL = """
 CREATE DATABASE IF NOT EXISTS market_data;
@@ -87,6 +93,24 @@ class ClickHouseMarketDataClient:
         except HTTPError as exc:
             detail = exc.read().decode("utf-8", errors="replace")
             raise RuntimeError(f"ClickHouse HTTP {exc.code}: {detail}") from exc
+        except (OSError, HTTPException) as exc:
+            # Never expose credentials, SQL literals or INSERT payloads in an
+            # operator-facing error. A lost response can follow a committed
+            # INSERT, so transport failures must not automatically retry writes.
+            endpoint = urllib.parse.urlsplit(self.base_url)
+            host = endpoint.hostname or "unknown host"
+            if ":" in host:
+                host = f"[{host}]"
+            address = f"{endpoint.scheme}://{host}" + (f":{endpoint.port}" if endpoint.port else "")
+            verb = sql.lstrip().split(None, 1)[0].upper() if sql.strip() else "QUERY"
+            operation = verb if verb in {"SELECT", "INSERT", "CREATE", "ALTER", "DROP", "SHOW", "WITH"} else "QUERY"
+            reason = exc.reason if isinstance(exc, URLError) else exc
+            cause = "connection or response timed out" if isinstance(reason, TimeoutError) else type(reason).__name__
+            raise ClickHouseConnectionError(
+                f"ClickHouse {operation} failed at {address}: {cause} "
+                f"(socket timeout {self.timeout_seconds:g}s). Check ClickHouse/Docker readiness "
+                "and host sleep/resume. The exchange did not complete; writes are not automatically retried."
+            ) from exc
 
     def ensure_daily_bars_table(self) -> None:
         for statement in _split_sql_statements(DAILY_BARS_DDL):

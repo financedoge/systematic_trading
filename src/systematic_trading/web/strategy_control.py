@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, Field
 
 from systematic_trading.live.strategy_control import (
-    activation_issues, cancel_pending, candidate_evidence, next_handover, preview_change, schedule_change,
+    activation_issues, authorize_catch_up, cancel_pending, candidate_evidence, handover_phase, next_handover, preview_change, schedule_change,
 )
 from systematic_trading.portfolio.strategy_allocation import AllocationChange, control_events, control_state
 from systematic_trading.research.strategy_catalog import registered_strategy_definition
@@ -25,6 +25,10 @@ class CancelChange(BaseModel):
     expected_revision: int = Field(ge=0)
     operator: str = Field(min_length=1,max_length=100)
     reason: str = Field(min_length=1,max_length=1000)
+
+
+class CatchUpChange(CancelChange):
+    pending_event_id: str = Field(min_length=8,max_length=100)
 
 
 class MonitoringChange(BaseModel):
@@ -89,15 +93,45 @@ def status(request: Request):
             total = Decimal(latest['total'])
             capital = dict(as_of=latest['trade_date'], weights={k:str(Decimal(v)/total) for k,v in latest['values'].items()} if total else {})
     service = getattr(request.app.state,'trading_management_service',None)
-    pending_status = service.status().strategy_change_status if service else None
+    worker = service.status() if service else None
+    pending_status = worker.strategy_change_status if worker else None
+    calculation_service = getattr(request.app.state, 'analytics_service', None)
+    calculations = calculation_readiness(calculation_service.status() if calculation_service else None)
+    pending_phase = handover_phase(pending_status)
+    overdue = bool(worker and (worker.heartbeat_at is None or
+        (now-worker.heartbeat_at).total_seconds() > max(300, worker.execution_poll_seconds*3)))
+    if state.get('pending') and (worker is None or not worker.running or overdue):
+        pending_phase = 'blocked'
+        pending_status = 'Trading management worker is stopped or overdue. Inspect service health to resume the saved handover.'
     from systematic_trading.execution.reconciliation import submission_reconciliation_issues
     return dict(state=state, candidates=candidates, history=history, capital=capital, pending_status=pending_status,
+        pending_phase=pending_phase, calculation_status=calculations,
         suggested_close=str(next_handover(now)), activation_blockers=activation_issues(settings, store, now),
         routing_warnings=submission_reconciliation_issues(settings, now=now),
         rules=dict(capital_rebalance='Monthly; actual sleeve weights drift between capital rebalances.',
             reserve='Unassigned capital remains reserve cash; each strategy also retains its own cash.',
             history='Earlier dates without verified assignment evidence are labelled Legacy / unknown.',
             routing='Paper only. Allocation approval does not submit orders. A new allocation needs fresh routing authority.'))
+
+
+def calculation_readiness(state):
+    if state is None:
+        return dict(severity='error', message='Calculation worker is unavailable. Start the analytics service; strategy freshness cannot be verified.')
+    issues = [f'{name}: {error}' for name, error in state.get('errors', {}).items()]
+    worker_error = False
+    for lane in ('research', 'operations', 'archives', 'watchdog'):
+        if state.get(lane+'_running') is False or (state.get(lane+'_stale') and not state.get(lane+'_initializing')):
+            issues.append(f'{lane.title()} worker is stopped or overdue. Inspect service health and worker logs.')
+            worker_error = True
+        elif state.get(lane+'_initializing'):
+            issues.append(f'{lane.title()} worker is starting; waiting for its first complete refresh.')
+    if state.get('strategy_stale'):
+        issues.append(state['strategy_freshness_message'])
+    if not issues:
+        return dict(severity='ok', message=state.get('strategy_freshness_message', 'Calculations available.'))
+    severity = 'error' if state.get('errors') or worker_error else 'warning'
+    return dict(severity=severity, message='\n'.join(issues)+
+        '\nLast complete results are retained. Resolve the reported cause, then refresh calculations. Allocation and order checks remain enforced.')
 
 
 @router.get('/evidence/{strategy_key}')
@@ -130,6 +164,14 @@ def cancel(body: CancelChange, request: Request):
     try:
         return cancel_pending(request.app.state.store,body.expected_revision,body.operator,body.reason)
     except ValueError as exc:
+        raise HTTPException(409,str(exc)) from exc
+
+
+@router.post('/catch-up')
+def catch_up(body: CatchUpChange, request: Request):
+    try:
+        return authorize_catch_up(request.app.state.settings,request.app.state.store,**body.model_dump())
+    except (ValueError,KeyError,OSError) as exc:
         raise HTTPException(409,str(exc)) from exc
 
 

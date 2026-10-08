@@ -45,10 +45,16 @@ JS = r"""
     if(['operator','reason'].includes(key)&&['missing','string_too_short'].includes(issue.type))return requiredText(key);
     return (fieldLabels[key]?fieldLabels[key]+': ':'')+(issue.msg||'Check the entered value.').replace(/^Value error, /,'');
   }).join('\n'):typeof detail==='string'?detail:'The request could not be completed. Please try again.';
-  const call=async(path='',body)=>{const r=await fetch('/api/v1/portfolio/strategy-control'+path,
-    body?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{});
-    const d=await r.json();if(!r.ok){const error=Error(errorText(d.detail));error.detail=d.detail;throw error}return d};
-  let data, preview, change, editorRevision=0;
+  const call=async(path='',body)=>{
+    const controller=body?null:new AbortController();
+    const timer=controller?setTimeout(()=>controller.abort(),20000):null;
+    try{const r=await fetch('/api/v1/portfolio/strategy-control'+path,
+      body?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{signal:controller.signal});
+      const d=await r.json();if(!r.ok){const error=Error(errorText(d.detail));error.detail=d.detail;throw error}return d
+    }catch(e){if(controller?.signal.aborted)throw Error('Status request timed out after 20 seconds. Freshness cannot be verified; inspect service health.');throw e}
+    finally{if(timer!==null)clearTimeout(timer)}
+  };
+  let data, preview, change, editorRevision=0, loading=false;
   function invalidatePreview(){editorRevision++;preview=null;change=null}
   const name=k=>(data?.candidates.find(c=>c.strategy_key===k)?.name||k).replace(/^SOTA:\s*/, '');
   const message=t=>{root.querySelector('#sc-message').textContent=t};
@@ -80,20 +86,22 @@ JS = r"""
     first?.focus();
   }
   async function load(){
+    if(loading)return;loading=true;
     invalidatePreview();
     root.innerHTML='<h2>Trading allocation</h2><p class="sc-note">Loading strategy roles and allocation history…</p>';
-    try{data=await call();render();const key=new URLSearchParams(location.search).get('allocate');if(data.candidates.some(c=>c.strategy_key===key))edit([{strategy_key:key,weight:'1'}],'both',key)}catch(e){root.innerHTML='<h2>Trading allocation unavailable</h2><p class="sc-error">'+esc(e.message)+'</p>'}
+    try{data=await call();render();const key=new URLSearchParams(location.search).get('allocate');if(data.candidates.some(c=>c.strategy_key===key))edit([{strategy_key:key,weight:'1'}],'both',key)}catch(e){root.innerHTML='<h2>Trading allocation unavailable</h2><p role="alert" class="sc-error">'+esc(e.message)+'</p>'}finally{loading=false}
   }
   function render(){
     const s=data.state,a=s.active;
     if(!a || !Array.isArray(a.allocations))throw Error('Allocation state is unavailable. Refresh before making a change.');
     root.innerHTML=`<div class="sc-top"><div><span class="sc-tag">PAPER PORTFOLIO</span><h2>Trading allocation</h2>
       <div class="sc-note">SOTA: ${esc(name(s.sota_key))}</div></div><button id="sc-edit" class="sc-primary">Change strategies & weights</button></div>
+      <div id="sc-calculation-status" aria-live="polite"></div>
       <div class="sc-scroll"><table><thead><tr><th>Trading strategy</th><th>Capital target</th><th>Ledger share</th><th>Effective from</th><th>Report</th></tr></thead><tbody>
       ${a.allocations.map(r=>`<tr><td>${esc(name(r.strategy_key))}</td><td>${pct(r.weight)}</td><td>${data.capital?.weights[r.strategy_key]!=null?pct(data.capital.weights[r.strategy_key]):'Not yet recorded'}</td><td>${a.activated_at?esc(stamp(a.activated_at)):'Legacy · date not established'}</td><td><a href="/api/v1/strategies/${encodeURIComponent(r.strategy_key)}/report">View model & evidence</a></td></tr>`).join('')}
       <tr><td>Unassigned reserve cash</td><td>${pct(1-a.allocations.reduce((v,r)=>v+Number(r.weight),0))}</td><td>${data.capital?.weights['portfolio-reserve']!=null?pct(data.capital.weights['portfolio-reserve']):'—'}</td><td colspan="2">Strategy cash is retained in addition to this reserve.</td></tr></tbody></table></div>
       <p class="sc-note">${esc(data.rules.capital_rebalance)} ${data.capital?'Ledger marked on '+esc(data.capital.as_of)+'. ':''}${esc(data.rules.routing)}</p>
-      ${s.pending?`<div class="sc-review"><strong>Approved change pending</strong><p>Handover after ${esc(s.pending.change.effective_close)} market close. ${esc(s.pending.change.reason)}</p><p class="${data.activation_blockers.length?'sc-error':'sc-note'}">${esc(data.pending_status||data.activation_blockers.join(' ')||'Activation will recheck the account, models and market data.')}</p><button id="sc-cancel">Cancel pending change</button></div>`:''}
+      ${s.pending?`<div class="sc-review"><strong>${data.pending_phase==='blocked'?'Allocation handover blocked':'Approved change pending'}</strong><p>Requested handover after ${esc(s.pending.change.effective_close)} market close. ${esc(s.pending.change.reason)}</p><p role="${data.pending_phase==='blocked'?'alert':'status'}" class="${data.pending_phase==='blocked'||data.activation_blockers.length?'sc-error':'sc-note'}">${esc(data.pending_status||data.activation_blockers.join(' ')||'Activation will recheck the account, models and market data.')}</p><button id="sc-cancel">Cancel pending change</button></div>`:''}
       ${(data.routing_warnings||[]).length?`<p class="sc-warning">Orders waiting for routing readiness: ${esc(data.routing_warnings.join(' '))} Allocation preparation can continue.</p>`:''}
       <div id="sc-message" class="sc-error" role="alert"></div>
       <div id="sc-editor" hidden></div>
@@ -102,9 +110,14 @@ JS = r"""
       ${data.history.slice().reverse().map((e,i)=>`<tr><td>${esc(stamp(e.at))}</td><td>${esc(e.kind.replaceAll('_',' '))}</td><td>${esc(e.effective_close||e.state?.pending?.change?.effective_close||'—')}</td><td>${e.first_execution_at?esc(stamp(e.first_execution_at)):'—'}</td><td>${esc(e.operator)} · ${esc(e.reason)}</td><td>${e.kind==='allocation_activated'&&e.previous?.allocations?`<button data-rollback="${data.history.length-1-i}">Review rollback</button>`:''}</td></tr>`).join('')||'<tr><td colspan="6">No strategy change has been recorded.</td></tr>'}</tbody></table></div></details>
       <div id="sc-attribution"></div>`;
     root.querySelector('#sc-edit').onclick=()=>edit();
+    renderCalculationStatus(data.calculation_status);
     root.querySelector('#sc-cancel')?.addEventListener('click',()=>cancelEditor());
     root.querySelectorAll('[data-rollback]').forEach(b=>b.onclick=()=>edit(data.history[Number(b.dataset.rollback)].previous.allocations));
     if(location.pathname==='/operator')loadAttribution();
+  }
+  function renderCalculationStatus(state){
+    const target=root.querySelector('#sc-calculation-status');if(!target)return;
+    target.innerHTML=state && state.severity!=='ok'?`<div class="sc-${state.severity==='error'?'error':'warning'}" role="alert"><strong>${state.severity==='error'?'Strategy calculation error':'Strategy data is stale'}</strong><p>${esc(state.message)}</p><a href="/platform">Inspect service health</a></div>`:'';
   }
   function edit(allocations=data.state.active.allocations,mode='trading',sotaKey=data.state.sota_key){
     const editor=root.querySelector('#sc-editor');editor.hidden=false;invalidatePreview();message('');
@@ -173,6 +186,15 @@ JS = r"""
     }catch(e){const target=root.querySelector('#sc-attribution');if(target)target.textContent=e.message}
   }
   load();
-  setInterval(()=>{if(data?.state.pending && root.querySelector('#sc-editor')?.hidden)load()},30000);
+  setInterval(async()=>{
+    if(loading)return;
+    if(!root.querySelector('#sc-editor') || root.querySelector('#sc-editor').hidden){load();return}
+    // Keep errors visible while an operator has an editor open without erasing
+    // their draft or reviving an obsolete review.
+    loading=true;
+    try{const latest=await call();renderCalculationStatus(latest.calculation_status)}
+    catch(e){renderCalculationStatus({severity:'error',message:'Could not refresh allocation/calculation status: '+e.message})}
+    finally{loading=false}
+  },30000);
 })();
 """

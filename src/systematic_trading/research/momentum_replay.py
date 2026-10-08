@@ -145,8 +145,17 @@ def native_parity(bundle, output, image, cpus='5'):
         verify_usd_bundle(bundle)
         receipt.update(status='succeeded',economic_sha256=parity['economic_sha256'])
     except BaseException as exc:
-        receipt.update(status='failed',error=repr(exc))
-        subprocess.run(['docker','rm','-f',name],capture_output=True,timeout=30)
+        from systematic_trading.lean.runner import replay_failure_detail
+        detail = replay_failure_detail(output, exc)
+        message = (f'USD native replay failed through {spec.end_date}: {detail}. '
+                   f'Evidence: {output.resolve()}. Publication withheld.')
+        receipt.update(status='failed', error=message)
+        try:
+            subprocess.run(['docker','rm','-f',name],capture_output=True,timeout=30)
+        except (OSError, subprocess.SubprocessError) as cleanup_error:
+            receipt['cleanup_error'] = str(cleanup_error)
+        if isinstance(exc, Exception):
+            raise ValueError(message) from exc
         raise
     finally:
         receipt['elapsed_seconds']=time.time()-receipt['started']

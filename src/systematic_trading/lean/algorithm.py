@@ -2,8 +2,7 @@
 from AlgorithmImports import *  # noqa: F403
 import json
 import sys
-from datetime import UTC, datetime
-from zoneinfo import ZoneInfo
+from datetime import datetime
 from decimal import Decimal as D, ROUND_HALF_UP
 from pathlib import Path
 
@@ -78,21 +77,8 @@ class FrozenPortfolioAlgorithm(QCAlgorithm):  # noqa: F405
         self.set_time_zone(TimeZones.NEW_YORK)  # noqa: F405
         self.set_start_date(datetime.fromisoformat(self.spec.start_date))
         end = datetime.fromisoformat(self.spec.end_date)
-        # The verified bundle contains the calendar-checked final close timestamp.
-        final_quote = (self.root / 'quotes' / (sorted(self.quotes)[0]+'.csv')).read_text().splitlines()[-1].split(',')
-        close = datetime.fromisoformat(final_quote[0]).replace(tzinfo=ZoneInfo('America/New_York'))
-        if (final_quote[2] != 'close' or close.date() != end.date()
-                or datetime.now(UTC) < close):
-            raise ValueError('Native replay requires a completed US market session.')
-        # LEAN clamps end dates to yesterday in the algorithm timezone. Our
-        # audited, complete close may be today in New York. Set this boundary
-        # in UTC+14, then restore New York before subscriptions or any replay.
-        # Quotes, decisions and all economic timestamps remain unchanged.
-        self.set_time_zone('Pacific/Kiritimati')
-        self.set_end_date(end)
-        self.set_time_zone(TimeZones.NEW_YORK)  # noqa: F405
-        if self.end_date.date() != end.date():
-            raise ValueError('LEAN could not retain the completed requested end session.')
+        from systematic_trading.lean.session_boundary import set_completed_end_date
+        set_completed_end_date(self, self.root, end, self.quotes)
         self.set_account_currency('CNH')
         self.set_cash(float(self.spec.initial_cash_cnh))
         self.set_benchmark(lambda stamp: 1.0)

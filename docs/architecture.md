@@ -101,6 +101,22 @@ CNH-adjusted-unit economics. Passed artifacts enter `ops.lean_research_runs` as
 research evidence only. No broker credentials, approvals or executable events
 cross this boundary. Legacy history remains uncertified for promotion.
 
+LEAN archive projections use independent `lean-run/<artifact-path-hash>` sources.
+Each refresh verifies both registered JSON artifact hashes, including unchanged
+runs. New runs are published with payload readback verification; a retry resumes
+after the last committed run. The `lean-history` publication is a completeness
+manifest listing the run versions, advanced only after the registry is checked.
+Migration retains the previous aggregate until this manifest commits, then
+retires its current rows without deleting historical versions. These archive
+sources have no execution authority and no strategy-serving reader dependency.
+
+An independent analytics watchdog checks worker deadlines every 15 seconds.
+A monitoring gap over 90 seconds raises a durable interruption alert, wakes all
+refresh lanes, and stays visible until each lane completes a successful refresh
+started after the gap. Dead/archive/watchdog workers are exposed in dashboard
+readiness and service health. This detects a pause on resume; a sleeping host
+cannot run calculations or deliver alerts while suspended.
+
 ## Principles
 
 Local recovery is a separate process owned by platform startup. It restores

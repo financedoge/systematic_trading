@@ -136,7 +136,9 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
                 running=status.running,
                 started_at=status.started_at,
                 heartbeat_at=status.heartbeat_at,
-                last_error=status.worker_last_error or status.last_error or (status.portfolio_alignment_message if status.portfolio_alignment_status == "blocked" else None),
+                last_error=status.worker_last_error or status.alert_delivery_error or status.last_error
+                    or (status.strategy_change_status if status.strategy_change_phase == 'blocked' else None)
+                    or (status.portfolio_alignment_message if status.portfolio_alignment_status == "blocked" else None),
                 message="Trading management loop status loaded from embedded worker.",
                 details={
                     "pending_eod_date": status.pending_eod_date.isoformat() if status.pending_eod_date else None,
@@ -158,12 +160,16 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         result.services = [s for s in result.services if s.service_id not in {"analytics", "alert_delivery"}]
         if analytics is not None:
             state = analytics.status()
+            from systematic_trading.web.strategy_control import calculation_readiness
+            readiness = calculation_readiness(state)
             result.services.append(ServiceHealthState(service_id="analytics", display_name="Strategy and account calculations",
                 service_type="embedded", implementation_status="active", required=True, checked_at=checked_at,
-                status="degraded" if state.get("errors") or not state.get("running") or not state.get("archives_running") or state.get("archives_stale") or state.get("operations_stale") or state.get("research_stale") or state.get("strategy_stale") else "ok",
-                message="; ".join(state.get("errors", {}).values()) or ("Archive worker is unavailable or overdue." if not state.get("archives_running") or state.get("archives_stale") else "Strategy worker has exceeded its progress deadline." if state.get("research_stale") else state.get("strategy_freshness_message") if state.get("strategy_stale") else "Account calculations have not completed recently." if state.get("operations_stale") else "Independent account, strategy and archive workers."), details=state))
-        if service is not None:
-            delivery = service.alert_notifier.delivery_status()
+                status="degraded" if readiness['severity'] != 'ok' else "ok",
+                message=readiness['message'], details=state))
+        notifiers = [s.alert_notifier for s in (service, analytics) if s is not None]
+        if notifiers:
+            deliveries = [notifier.delivery_status() for notifier in notifiers]
+            delivery = next((d for d in deliveries if d['status'] == 'failed'), deliveries[0])
             result.services.append(ServiceHealthState(service_id="alert_delivery", display_name="Operator alert delivery",
                 service_type="embedded", implementation_status="active", required=False, checked_at=checked_at,
                 status="error" if delivery["status"] == "failed" else "ok" if delivery["configured"] else "disabled",

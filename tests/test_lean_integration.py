@@ -104,8 +104,10 @@ def test_runner_marks_engine_failure_and_retains_logs(tmp_path, monkeypatch, fai
             actual['nav'][0]['cash'] = '1'
             write_json(target / 'economic.json', actual)
     monkeypatch.setattr(runner.subprocess, 'run', failing)
-    with pytest.raises((subprocess.CalledProcessError, subprocess.TimeoutExpired, FileNotFoundError, ValueError)):
+    with pytest.raises((subprocess.SubprocessError, ValueError), match='Native replay failed through 2025-12-31') as error:
         runner.run_bundle(bundle=bundle, output=target, image='quantconnect/lean@sha256:'+'a'*64)
+    assert 'Publication withheld' in str(error.value) and str(target.resolve()) in str(error.value)
+    assert error.value.__cause__ is not None
     assert json.loads((target / 'run.json').read_text())['status'] == 'failed'
     assert (target / 'reference.log').exists()
     assert (target / 'lean.log').exists()

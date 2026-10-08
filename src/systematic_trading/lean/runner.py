@@ -14,6 +14,22 @@ from uuid import uuid4
 from systematic_trading.lean.contracts import verify_bundle, sha256, write_json
 
 
+def replay_failure_detail(output, error):
+    """Expose the engine cause instead of a Docker command and exit code."""
+    for filename in ('lean.log', 'reference.log'):
+        log = output/filename
+        if not log.exists():
+            continue
+        lines = log.read_text(encoding='utf8', errors='replace').splitlines()
+        cause = next((line.strip() for line in lines if 'Runtime Error:' in line
+            or 'ERROR:: Engine.Run()' in line or 'ERROR:: Extensions.SetRuntimeError()' in line), None)
+        if cause:
+            return cause
+        if filename == 'reference.log' and 'Traceback (most recent call last):' in lines:
+            return next((line.strip() for line in reversed(lines) if line.strip()), str(error))
+    return f'{type(error).__name__}: {error}'
+
+
 def compare_outputs(reference: dict, actual: dict, spec) -> dict:
     differences = []
     for item in (reference, actual):
@@ -142,12 +158,17 @@ def run_bundle(*, bundle: Path, output: Path, image: str, timeout_seconds=900, c
         verify_bundle(bundle)
         receipt.update(status='succeeded', economic_sha256=parity['economic_sha256'])
     except BaseException as exc:
-        receipt.update(status='failed', error=f'{type(exc).__name__}: {exc}',
+        message = (f'Native replay failed through {verified["spec"].end_date}: {replay_failure_detail(output, exc)}. '
+                   f'Evidence: {output.resolve()}. Publication withheld.')
+        receipt.update(status='failed', error=message,
                        retryable=isinstance(exc, (OSError, subprocess.SubprocessError)))
         try:
             subprocess.run(['docker', 'rm', '-f', name], capture_output=True, timeout=30)
         except (OSError, subprocess.SubprocessError) as cleanup_error:
             receipt['cleanup_error'] = str(cleanup_error)
+        if isinstance(exc, Exception):
+            failure_type = subprocess.SubprocessError if receipt['retryable'] else ValueError
+            raise failure_type(message) from exc
         raise
     finally:
         receipt['elapsed_seconds'] = time.perf_counter() - started
