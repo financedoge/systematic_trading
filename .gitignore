@@ -29,3 +29,8 @@ dist/
 build/
 *.egg-info/
 var/execution_benchmarks/
+# Scratch space. Never committed: these hold downloaded third-party documents
+# (papers, reports) and throwaway probe scripts, which must not enter the
+# repository's history or its licence surface.
+tmp/
+research_tmp/
