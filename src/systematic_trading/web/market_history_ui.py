@@ -54,6 +54,13 @@ MARKET_HISTORY_UI_HTML = r'''
  #market-history-section #governed-panel .metrics{padding:0;gap:24px;background:transparent;font-size:11px;color:#748297}
  #market-history-section #governed-panel .metrics strong{font-size:23px;color:#263b57;font-weight:600;letter-spacing:-.03em;line-height:1.4}
  #market-history-section #governed-panel .note{padding:12px 22px;font-size:12px;line-height:1.6}
+ /* Fund Positioning, Energy Data and ETF Fundamentals use <div>/<p> notes that
+    had no inset of their own, so their text sat flush against the panel edge
+    while the other views were inset by 22px. margin:0 also normalises the <p>
+    variants, which otherwise carry the browser's default paragraph margins. */
+ #market-history-section #positioning-panel .note,
+ #market-history-section #energy-panel .note,
+ #market-history-section #issuer-panel .note{padding:12px 22px;margin:0;font-size:12px;line-height:1.6}
  #market-history-section #governed-panel .chart-tools,#market-history-section .time-chart-tools{padding:10px 22px;gap:6px;margin:0;font-size:11px;color:#748297;display:flex;align-items:center;flex-wrap:wrap;border-top:1px solid #f0f3f7}
  #market-history-section .chart-tools button,#market-history-section .time-chart-tools button,#market-history-section .range-buttons button{min-height:30px;padding:5px 10px;font-size:11px;border-color:transparent;background:#f3f6fb;box-shadow:none}
  #market-history-section .chart-tools button[aria-pressed="true"],#market-history-section .time-chart-tools button[aria-pressed="true"],#market-history-section .range-buttons button[aria-pressed="true"]{background:#e7eefc;border-color:#cedbf4;color:#244d9e}

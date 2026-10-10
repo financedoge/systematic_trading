@@ -5,9 +5,12 @@ weakening or decayed, and highlights any that currently carry allocation. It
 never changes an allocation, an approval or a broker record.
 """
 HTML = '''<style>
-.signal-decay{margin:0 0 18px}
-.signal-decay .decay-head{display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;justify-content:space-between}
+/* Panels on this page carry no padding of their own; inner blocks supply the
+   inset, matching .strategy-performance-note and the registry table rhythm. */
+.signal-decay{margin:0}
+.signal-decay .decay-head{display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;justify-content:space-between;padding:10px 14px}
 .signal-decay h2{margin:0 0 4px}
+.signal-decay #decay-warnings:not(:empty){padding:4px 14px 0}
 .decay-badge{display:inline-block;padding:2px 9px;border-radius:11px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
 .decay-healthy{background:#e4f5e9;color:#1c6b36}
 .decay-weakening{background:#fdf2d8;color:#8a5b00}
@@ -19,7 +22,7 @@ HTML = '''<style>
 .decay-table td{vertical-align:top}
 .decay-table .num{text-align:right;font-variant-numeric:tabular-nums}
 .decay-flag{font-weight:700;color:#96201b}
-.decay-note{margin:6px 0 0;color:#5b6673;font-size:12px}
+.decay-note{margin:0;padding:0 14px 10px;color:#5b6673;font-size:12px}
 .decay-warn{border-left:4px solid #96201b;background:#fbe3e3;padding:10px 14px;margin:10px 0;border-radius:5px}
 .decay-warn.weakening{border-left-color:#c98a00;background:#fdf2d8}
 .decay-alert-summary{margin:8px 0 0;font-size:13px}
