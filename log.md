@@ -1,5 +1,44 @@
 # Project Log
 
+## 2026-10-10 — P4.14 protocol frozen before outcomes
+
+Froze the FR25 robustness protocol and its retention tolerance **before computing
+any robustness statistic**, as the plan requires. Recorded in
+[signal decay and alpha plan](../docs/signal-decay-and-alpha-plan.md) and in the
+P4.14 Kanban row. No analysis result exists yet, which is the point.
+
+FR25 is retained only if all four hold: excess over CP positive in at least
+two-thirds of complete calendar years; positive after dropping any single changed
+selection; a positive lower bound on the 95% block-bootstrap interval at the
+6-month block; and an excess above the 90th percentile of a matched-availability
+placebo distribution. Otherwise reject, or inconclusive where the estimate is
+positive but the interval spans zero.
+
+Recon split the item in two, and this is the substantive finding from the recon:
+
+- **Part A** — sub-period stability, the paired block bootstrap, leave-one-
+  changed-selection-out attribution and concentration measures — is analysis over
+  the published selection-blend evidence. The reference pair is FR25 versus CP on
+  the 2021+ evaluation window, 5bp, zero delay: 1,448 daily NAV rows each and 70
+  decisions, from `var/research/selection-blend-20261010-v1/python/`. Enabled
+  selections must be derived by diffing the two arms' per-decision targets, since
+  `selection_diagnostics.json` carries only aggregate counts (`changed_decisions`
+  is the integer 13, and `added_months`/`removed_months` are per-symbol totals).
+- **Part B** — placebo rank, data-through-2022 refit, and top-N / financial-weight
+  sensitivity — **cannot** be evaluated from published artifacts, because each
+  perturbation changes which assets were selected and therefore the realised path.
+  It needs its own frozen study and evidence root, and must not extend the
+  selection-blend root. Registering that as a separate step rather than pretending
+  the published evidence supports it.
+
+Also completed this session: cosmetic padding fixes. The signal-decay panel had no
+padding because panels on that page carry none and supply it from inner blocks;
+Fund Positioning, Energy Data and ETF Fundamentals had no `.note` padding rule, so
+their text sat flush while Economic Data, Governed Data and Research were inset by
+22px. Both fixed and verified on the live pages. Left alone deliberately: tables
+in Market Data have no cell padding anywhere in that section, which affects every
+tab equally and is a broader restyle than the reported issue.
+
 ## 2026-10-10 — P4.13 signal decay: IC instrumentation, dashboard panel, decay warning
 
 Completed P4.13, the first item of the [signal decay and alpha plan](../docs/signal-decay-and-alpha-plan.md),

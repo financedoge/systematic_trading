@@ -114,20 +114,69 @@ operator decision through the existing allocation workflow.
 one year?
 
 **Why now.** It de-risks the lead we would otherwise build on. If it fails, that
-is the single most valuable finding available and it costs almost nothing.
+is the single most valuable finding available and it costs almost nothing. P4.13
+found no decay in the M1 score, so the open question is robustness, not decay.
 
-**Approach.** A frozen diagnostic family on the existing published run:
-leave-one-selection-out, leave-one-ETF-out, sub-period stability, bootstrap over
-the 70 evaluation months, a matched-availability **placebo rank** (same
-availability and labelling, random ranks), a data-through-2022 refit, and
-sensitivity to top-N and to the financial-ridge weight.
+**Protocol frozen before outcomes — 2026-10-10.** These thresholds are declared
+here, before any robustness statistic is computed, and must not be revised after
+seeing results. Analysis runs against the *published* selection-blend evidence
+(`var/research/selection-blend-20261010-v1/`) with its parent protocol pinned, and
+must not re-tune FR25 or add arms to the frozen study.
 
-**Acceptance.** Predeclared retention tolerance before outcomes; report
-preserve / reject / inconclusive; every failed variant retained as evidence. No
-re-tuning of the inspected sample.
+*Reference pair:* FR25 versus **CP** (the capped-M1 control), evaluation window
+2021-01-04 onward, 5bp, zero delay — the same pair the selection study reported,
+so the comparison is like-for-like.
+
+*Predeclared retention tolerance.* FR25 is **retained** only if all of:
+
+1. its evaluation-window excess return over CP stays **positive** in at least
+   **two-thirds of complete calendar years**, and
+2. dropping any **single** changed selection leaves the aggregate excess return
+   over CP **positive**, and
+3. the 95% circular block-bootstrap interval on the monthly FR25-minus-CP return
+   difference has a **positive lower bound** at the 6-month block length, and
+4. the observed excess return exceeds the **90th percentile** of a matched-
+   availability placebo distribution (below).
+
+Otherwise the outcome is **reject**, or **inconclusive** when the point estimate
+is positive but the interval spans zero and the concentration tests pass — in
+which case the honest statement is that the sample cannot distinguish the effect
+from noise, and FR25 stays a monitored research lead without promotion.
+
+*Part A — analysis of the published evidence (no new replays).*
+Sub-period stability by complete calendar year; the paired block bootstrap on
+monthly differences at 3/6/12 months; leave-one-changed-selection-out
+attribution; and concentration measures (share of total excess return from the
+best selection, from the best year, and from the top three selections).
+
+*Part B — requires a separately frozen re-run, not analysis.* Three perturbations
+cannot be evaluated from the published artifacts because each changes which
+assets were selected and therefore the realised path:
+
+- **Matched-availability placebo rank** — replace the financial-ridge rank with a
+  random rank carrying the same availability and abstention behaviour, over a
+  predeclared number of draws, and locate the observed excess return in that
+  distribution. This is the decisive test of whether the ridge contributes at
+  all, as opposed to any perturbation of the M1 ordering.
+- **Data-through-2022 refit** — fit the ridge only on information available to the
+  end of 2022 and replay 2023 onward, testing whether the recent edge is an
+  artifact of fitting on the full sample.
+- **Top-N and financial-weight sensitivity** — top-4/5/6/7 and ridge weights
+  0.10/0.25/0.40, reported as a sensitivity surface and **not** as a search. These
+  are the same axes the study already varied, so they cannot be presented as a
+  fresh out-of-sample result.
+
+Part B must be registered as its own study with its own frozen protocol and its
+own evidence root; it must not overwrite or extend the selection-blend root.
+
+**Acceptance.** Retention tolerance predeclared before outcomes; report
+preserve / reject / inconclusive; every failed variant retained as evidence; no
+re-tuning of the inspected sample. Part A is analysis over published artifacts
+with pinned hashes; Part B is a new frozen study.
 
 **Does not authorise** re-optimising FR25, nor any change to monitoring,
-allocation or the 45% cap.
+allocation or the 45% cap. A **reject** outcome is a research finding and does not
+by itself deallocate; that remains an operator decision.
 
 ### P4.15 — Turnover and breakeven-IC gate *(standing pre-test)*
 
