@@ -1,0 +1,48 @@
+{
+  "metadata": {
+    "source": "U.S. Energy Information Administration",
+    "release_name": "Weekly Petroleum Status Report",
+    "data_description": "Commercial Crude Oil Stocks (Excluding SPR)",
+    "periodicity": "Weekly",
+    "release_date": "2026-10-07",
+    "release_time": "10:30 am",
+    "time_period": {
+      "start_date": "2026-09-18",
+      "end_date": "2026-10-02",
+      "description": "6-year rolling history"
+    },
+    "suppression_flag_codes": {
+      "description": "Describes the meaning of suppression flag values",
+      "null_behavior": "When suppression_flag is null, value exists (numeric data)",
+      "codes": {
+        "--": "Not Applicable",
+        "-": "Data Not Available",
+        "other": "Any other text marker is flagged as unknown/unexpected"
+      }
+    }
+  },
+  "data": {
+    "U.S.": {
+      "sourcekey": "WCESTUS1",
+      "description": "U.S. Weekly Crude Oil Ending Stocks Excluding SPR (thousand barrels)",
+      "units": "thousand barrels",
+      "time_series": [
+        {
+          "date": "2026-09-18",
+          "value": 426398.0,
+          "suppression_flag": null
+        },
+        {
+          "date": "2026-09-25",
+          "value": 427320.0,
+          "suppression_flag": null
+        },
+        {
+          "date": "2026-10-02",
+          "value": 424134.0,
+          "suppression_flag": null
+        }
+      ]
+    }
+  }
+}

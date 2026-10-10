@@ -1,5 +1,536 @@
 # Research State
 
+## Standing research scope — updated 2026-10-10
+
+At the user's direction, future ETF, feature and momentum research uses the full
+candidate pool. Do not repeat XLE/XLB-only model tests or make those two ETFs'
+forecast errors the basis for judging full-pool signals. Whole-portfolio asset
+attribution remains useful; preserve historical subgroup evidence without
+extending that standalone test program. Assets compete in the candidate pool;
+none is forced into the portfolio. A failed portfolio-recipe screen is distinct
+from rejecting the underlying predictive signal.
+
+## 2026-10-10 — FR25 authorized for application-owned monitoring
+
+The user authorized monitoring the frozen FR25 selector as
+`research_fr25_14_v1`. The application now fits the financial ridge monthly,
+blends 75% M1 rank with 25% financial total-return rank before the positive
+126-session gate and top-six selection, and publishes scheduled and indicative
+targets, fills, daily NAV, held weights, the matched benchmark and the full
+shared report with an inspectable rank table.
+
+Research parity was verified against the frozen selection-blend protocol
+`5399931f5267d8beceb1ff52b15d84a81547f4f1e8a285a413bace7702769276`: 130
+decisions, 898 fills, 2,707 daily NAV observations, 130 model fits and matching
+final positions. Membership generation 4, membership revision 4. Evidence:
+`var/research/fr25-monitoring-20261010/`.
+
+That parity is bound to audited price batch `4bfdef17…`; the live runtime revision
+calculates on the newer committed batch `b02d9372…`, so the two are distinct
+evidence versions of the same frozen recipe rather than bit-identical outputs.
+Parity claims must name their batch.
+
+This authorization does not upgrade the evidence. FR25 remains an
+already-inspected retrospective candidate that passed practical effect-size,
+mean-only, cost/delay and risk-budget screens but **no** 5% Holm contrast across
+the 50-comparison family, with recent substitutions concentrating its advantage.
+Monitoring is not promotion: allocation readiness stays false, the 14-ETF
+execution gate stays closed, and no capital, approval, reconciliation or broker
+authority changes. The contract is in
+[FR25 tracked strategy](../docs/fr25-selection-tracking.md).
+
+## 2026-10-10 — Predictive ranks moved into full-pool selection
+
+Executed the user's requested momentum/XGBoost/ridge selection comparison.
+The fixed full14 candidate pool ranks the existing M1 score (75% momentum,
+25% volume), causal XGBoost forecasts and context/financial ridge total-return
+forecasts on the same midrank scale. Ten predeclared blends: two M/X blends,
+four M/R or M/X/R blends for each ridge group. Positive126 eligibility,
+top6/min4, defensive fallback, inverse-volatility sizing and downstream controls
+remain fixed. Primary arms keep the existing XGBoost sizing tilt and add no
+economic sizing overlay. Final45 cap is controlled separately against exact
+M1. Eight same-availability training-mean controls, three XGBoost-placement
+controls, two matched-target-gross controls and seven references complete the
+30-arm experiment. Required-ridge gaps revert the whole selector to M1;
+missing XGBoost fails closed. No model or parameter refits after registration.
+
+| Fresh-cash 2021–2026-10-08, 5bp | CAGR | Sharpe | Calmar | Max drawdown |
+| --- | ---: | ---: | ---: | ---: |
+| CP: capped M1 control | 11.92% | 1.106 | 1.435 | -8.31% |
+| Context ridge sizing only | 12.09% | 1.122 | 1.436 | -8.42% |
+| Financial ridge sizing only | 12.03% | 1.108 | 1.425 | -8.44% |
+| CR50: 50% M1 / 50% context rank | 12.49% | 1.171 | 1.533 | -8.14% |
+| FR25: 75% M1 / 25% financial rank | 13.09% | 1.193 | 1.512 | -8.66% |
+| X25: 75% M1 / 25% XGBoost rank | 12.56% | 1.159 | 1.448 | -8.67% |
+| CEQ: equal M1/XGBoost/context | 11.10% | 1.058 | 1.288 | -8.62% |
+| FEQ: equal M1/XGBoost/financial | 12.95% | 1.192 | 1.427 | -9.07% |
+
+CR50 and FR25 pass the frozen +0.05 Sharpe/+0.05 Calmar effect-size screen,
+the CAGR/drawdown budgets, matched mean-only checks and positive cost/delay
+comparisons. CR50 improves Sharpe/Calmar +0.065/+0.099; FR25 +0.087/+0.078.
+This is a materially larger portfolio effect than the corresponding sizing
+overlays. Neither leading selection blend uses XGBoost in its selector; both
+retain XGBoost downstream. Increasing XGBoost's selection share to50% weakens
+Sharpe to1.003. Equal blending is not generally superior. Removing the existing
+XGBoost sizing tilt does not improve either equal blend.
+
+FR25 is the stronger long-history lead: 2016+ CAGR/Sharpe rise from CP's
+10.65%/1.062 to11.21%/1.109; max drawdown worsens -19.49%→-19.83%.
+CR50's full-history CAGR/Sharpe are10.55%/1.061, with -20.95% drawdown.
+FEQ's full-history drawdown reaches -30.46%, despite strong2021+ return.
+Retain CR50 as a secondary evaluation-period lead, not a stable full-history
+improvement. All results remain retrospective and the weights were chosen
+from a predeclared finite menu, not an independent holdout.
+
+FR25 changes13/70 selections, one replacement each; eight entering ETFs beat
+the displaced name in the subsequent rebalance-open interval, with mean
+entrant advantage2.60pp. Mean target gross changes only+0.040pp; annual traded
+notional drops8.59×→8.07×. July2026 TLT→XLE and August2026 HYG→EWY correspond
+to+1.974pp/+1.670pp actual calendar net outperformance. October2024 HYG→TLT
+loses-1.157pp. FR25's2026 net annual-return advantage is+4.552pp, making recent
+decision concentration a material limitation. CR50 changes35/70 selections,
+with17 positive equal-weight entrant/exit outcomes; portfolio sizing and
+timing still matter. Its+5.012pp2021 gain contrasts with-1.709pp2022 and
+-1.402pp2023. These are attribution examples within the full pool.
+
+No registered contrast passes5% Holm across the50-comparison return family at
+3/6/12-month blocks. FR25's six-month Sharpe-difference interval is
+[-0.026,+0.226], CR50's[-0.070,+0.246]. No statistically robust superiority
+claim or promotion follows from the practical screen. Equal-blend target-gross
+controls match CP on all70 evaluation decisions but do not establish matched
+volatility/factor risk. No new universe/threshold/weight search was added after
+seeing these results.
+
+Disposition: freeze FR25 as the primary selection-research candidate and CR50
+as secondary for prospective and concentration robustness evidence. Do not
+retune the inspected sample. Monitoring and funded allocation were not changed;
+any future monitored version must be a complete app-owned strategy. New sector
+release-history qualification remains separately queued; standalone SPY stays
+deferred. [Complete results and interactive rank tables](../research/selection-blend-2026-10-10/index.html).
+Evidence: `var/research/selection-blend-20261010-v1/`; protocol SHA-256
+`5399931f5267d8beceb1ff52b15d84a81547f4f1e8a285a413bace7702769276`.
+
+Validation: 240 economic replays, 30 native engine checks, 54 exact control
+reproductions, 72 inference jobs and 18 focused tests pass. Independent exact
+rational ranks verify 40,040 cells and 2,990 selection/gate/cap/label contracts.
+Poisoning current/future prices and future models does not change prior-close
+decisions. All 30 shared reports, local links, source hashes and JavaScript
+syntax pass; a local DOM harness exercises 1,540 rank-table states. Browser
+automation blocks local file URLs, so no browser-interaction pass is claimed.
+Static charts were visually inspected. Acceptance is in `acceptance.json`.
+
+## 2026-10-10 — Full-pool IC diagnosis: retain signal leads, distinguish recipe failure
+
+The user's IC challenge prompted a frozen diagnostic follow-up, using all 14
+candidates and the exact prior models/decisions/net ledgers. No refitting,
+parameter search, new strategy arm or market-data ingestion was performed.
+The earlier XLE/XLB-only MAE discussion does not decide the full-pool question.
+The original recipe-retention failure remains valid, but rejecting economic
+information itself would overstate that evidence.
+
+| Ridge model | Full-pool total IC | Training-mean IC | Macro-increment IC | Partial rank IC* |
+| --- | ---: | ---: | ---: | ---: |
+| Context | 0.1182 | 0.0435 | 0.0887 | 0.0836 |
+| Financial | 0.1188 | 0.0706 | 0.1213 | 0.0985 |
+| Combined | 0.1152 | 0.0435 | 0.1003 | 0.0960 |
+
+*Descriptive correlation after controlling ranks for training means and M1
+selection scores. Context/combined have 58 complete labels; financial has 69.
+All three total-IC marginal intervals are positive with 3/6/12-month calendar
+blocks. Financial/combined increment intervals are also individually positive.
+Paired improvement over the mean baseline remains uncertain; none of the 12
+incremental-IC tests passes 5% Holm. This is suggestive ranking evidence,
+not established incremental alpha or independent prospective validation.
+
+The implementation preserves the existing selected members and cash budget;
+it thresholds macro increments into 0.9/1.0/1.1 multipliers rather than using
+total forecast ranks. Context changes 40/70 decisions: 12 unavailable, six
+all-cash, two single-holding and ten uniform-multiplier months cannot change
+weights. Mean capital shifted is 1.74% overall, 3.04% when changed. On identical
+months with at least three positive targets, financial total IC declines from
+0.130 across all 14 to 0.049 within held assets; context declines 0.138→0.108.
+This is a selection diagnostic of the full pool, not a separate universe test.
+
+Context contributes +0.167pp CAGR, +0.0162 Sharpe and +0.0010 Calmar versus CP.
+Its Sharpe gain decomposes into +0.0137 from arithmetic mean return and +0.0025
+from lower volatility. Its Calmar gain from higher CAGR (+0.0202) is nearly
+cancelled by a worse maximum drawdown (-0.0192). Annual cost changes are near
+zero or favorable, so costs are not the primary obstacle. Financial's higher
+volatility offsets most of its mean-return Sharpe benefit.
+
+Context adds +0.625pp net calendar return in 2024, but -0.022pp in 2023.
+Financial adds +0.943pp in 2022 and subtracts -0.644pp in 2025. Context's April
+2022 SPY underweight contributes positively; its April 2025 energy overweight
+and gold underweight contribute negatively. During the common March 19–April 8,
+2025 drawdown, all asset contributions reconcile to -11.1bp relative return:
+XLE -23.9bp, partly offset by MCHI +12.0bp, GLD +3.1bp and other holdings.
+Context's worst drawdown is -8.419% versus CP -8.308%, with recovery June 24
+versus June 12. Predeclared trailing-trend/stress splits disagree across models
+and are descriptive; do not turn them into tuned trading gates.
+
+Disposition: retain context and financial ridge as signal-research leads;
+combined has no demonstrated advantage over context, and trees have weaker
+full-pool IC. The existing sizing recipes still fail their frozen screen.
+Monitored M1/14/CR12 and funded F3 remain unchanged. Next proposed full-pool
+experiment: freeze a finite comparison of rank-based selection/sizing versus
+the current threshold overlay, including a historical-mean-only control,
+matched risk/cash budgets, unchanged admission rules and prospective evidence.
+Specify the experiment before running it; do not force assets or conduct an
+open-ended search. Original-release sector-history qualification remains a
+separate queued prerequisite for new data blocks; standalone SPY stays deferred.
+
+[Diagnostic report](../research/full-pool-signal-diagnostics-2026-10-10/index.html).
+Evidence: `var/research/full-pool-signal-diagnostics-20261010-v1/`.
+Protocol SHA-256 `5f5467917cfe5bb4d46debd02bd1a2ddc73383e61244bf789073920392cf0f4a`.
+Verified 10,677 parent-manifest entries, seven replay bundles, exact NAV/cash,
+monthly asset attribution and peak/trough contribution reconciliation. Twelve
+focused tests pass; no service, strategy or execution behavior changed.
+
+## 2026-10-10 — Expanded-universe economic revisit completed
+
+Executed the queued economic revisit once XLE/XLB and M1/14 were qualified.
+The fixed M1 top-six candidate selector is unchanged. Seven overlay arms use
+existing context (13), financial (8) and combined (21) features, per-ETF ridge
+alpha 1 and depth-two/minimum-12-leaf trees. No feature, threshold or momentum
+search was added. CP separately clips M1 targets above 45% and leaves the excess
+in cash; all economic arms preserve CP's exact positive membership and cash.
+The cap changes four of 130 monthly decisions, adding 0.183% average target cash.
+No added ETF is forced into a portfolio.
+
+| 2021-01-04–2026-10-08 | CAGR | Sharpe | Calmar | Max drawdown |
+| --- | ---: | ---: | ---: | ---: |
+| Unchanged M1/14 | 11.91% | 1.104 | 1.433 | -8.31% |
+| CP: explicit cap-only control | 11.92% | 1.106 | 1.435 | -8.31% |
+| Context ridge (CR) | 12.09% | 1.122 | 1.436 | -8.42% |
+| Context tree (CT) | 11.94% | 1.109 | 1.406 | -8.49% |
+| Financial ridge (FR) | 12.03% | 1.108 | 1.425 | -8.44% |
+| Financial tree (FT) | 12.00% | 1.107 | 1.401 | -8.56% |
+| Combined ridge (AR) | 12.04% | 1.115 | 1.443 | -8.34% |
+| Combined tree (AT) | 11.83% | 1.094 | 1.331 | -8.88% |
+
+USD, 5bp per traded dollar, zero-interest cash, fresh-cash evaluation. MR's
+matched-context models/economics reproduce CR exactly; financial availability
+does not remove further context-ready rows in this sample. The common October
+8 cutoff is deliberately pinned to the preceding M1 study; later app prices
+are not injected into this comparison. All history was previously inspected,
+and M1 itself was selected retrospectively.
+
+CR's matched-control gain is +0.167 percentage points CAGR, +0.0162 Sharpe and
+about +0.0010 Calmar, below the registered +0.05 Sharpe/+0.05 Calmar threshold.
+Its positive cost/delay comparisons do not override that shortfall. The
+six-month-block 95% Sharpe-difference interval is [-0.0086,+0.0418]. The
+twelve-month marginal Sharpe interval is positive, but Calmar and jointly
+adjusted mean returns do not establish robust superiority. None of the 18
+mean-return contrasts passes 5% Holm at 3/6/12-month blocks. Trees do not beat
+their paired ridge controls; combined models do not beat matched context on
+both risk ratios. No candidate passes the predeclared retention screen.
+
+Prediction evidence also remains weak. XLE/XLB next-month return MAE is 5.79%
+for context ridge versus 5.01% for the ETF-specific training mean, 5.39% versus
+5.02% for financial ridge, and 6.53% versus 5.01% for combined ridge. These
+paired samples differ by availability and are not interchangeable. Context and
+combined models are ready on 58/70 evaluation decisions; financial models on
+70/70. November 2025–October 2026 context abstentions remain intact, including
+incomplete CPI windows. The latest capture never repairs an earlier gap.
+Context ridge changes 40/70 allocations; XLE rises/falls in 6/10 months and XLB
+in 3/17. Response signs are learned per ETF, not assumed from economic growth.
+
+Full-history CR CAGR/Sharpe/DD are 10.73%/1.070/-19.59%, versus M1's
+10.64%/1.061/-19.48%. FR weakens to 10.59%/1.051/-20.36%. Preserve these small
+and inconsistent effects rather than retuning the same sample. Disposition:
+reject these recipes for additional monitoring/promotion under the frozen
+screen; keep monitored M1/14 and CR12 unchanged, and F3 funded. Next qualify
+original-release sector/energy history before introducing new feature blocks.
+
+Evidence: [13 complete shared reports and diagnostics](../research/expanded-economics-2026-10-10/index.html),
+`var/research/expanded-economics-20261010-v1/`. Protocol SHA-256:
+`9265c4e96c0a48bc17815b422eeab40f8de29e21a3c45b33e0ffb4950916100a`.
+Audited price batch `4bfdef171ba1d180f2191c589d269a9ad42e2f497b9f069b80e1e9043668f3fd`;
+economic batch `9fb6784447635430354fa0547e8787f37d0e7c69d60a62053a65b0279ff8b8b4`.
+All 104 replays, 13 native checks, 57 inference jobs (10,000 draws each), 57
+focused tests and 910 selection/cash/cap/label checks pass. All 130 feature
+states reproduce from the original published snapshots; five portfolio controls
+reproduce exactly. There are 520 model evaluations, of which 336 have sufficient
+data to fit. Input/output/report hashes, links, JavaScript and plot checks pass.
+Control revision 5, membership and all 270 order records are unchanged. The
+independent app has advanced through October 9 with empty analytics errors.
+
+## 2026-10-10 — Deferred standalone SPY idea
+
+User requested continuing the next item and deferred SPY dip-buying for a later
+standalone strategy study. Preserve it separately from the completed bounded
+F3 cash-sleeve experiment; the latter is not a test of an independent SPY
+strategy. No additional SPY threshold search or monitoring is authorized now.
+
+The economic-model revisit after universe expansion is now completed above.
+Historical EIA/CFTC/issuer feature qualification remains the next separate
+data-dependent work item; its missing availability evidence is not bypassed.
+
+## 2026-10-09 — P4.11 cash reserve and loser-basket study completed
+
+Tested the user-authorized separate stress sleeve, including assets rejected
+by F3's positive-momentum gate. Parent F3 and its original 12-ETF pool remain
+exactly frozen. SPY, bottom three and top three use identical cash limits and
+stress/confirmation rules; baskets freeze at first deployment. Bottom/top
+ranking uses the existing pure 63/126/252-session momentum blend, without
+volume or a positive gate. These are mixed-asset ETFs, not stock-level losers.
+
+Monthly SPY drawdowns of 10/20/30% trigger equal tranches from one locked
+dollar budget. Confirmation requires SMA63 and positive 21-session return.
+Exit occurs at 95% of the entry peak or after twelve monthly intervals;
+spent tranches cannot re-arm. Stage A uses existing F3 cash, capped at 20%
+NAV. Separate Stage B cases scale F3 to 90%/80% and reserve 10%/20%. Both
+ZERO cash and audited BIL parking are tested, with BIL capped at 45% and a
+2% operational cash floor. No final cap is silently imposed on inherited F3.
+
+| ZERO cash, 2021-01-04–2026-10-08 | CAGR | Sharpe | Max drawdown |
+| --- | ---: | ---: | ---: |
+| Exact F3 | 10.58% | 1.062 | -11.69% |
+| Existing cash, scheduled SPY | 10.79% | 1.068 | -10.75% |
+| Existing cash, stress SPY | 10.76% | 1.072 | -10.84% |
+| Existing cash, confirmed SPY | 10.65% | 1.064 | -11.36% |
+| Existing cash, stress bottom three | 10.52% | 1.053 | -11.98% |
+| Existing cash, stress top three | 10.58% | 1.059 | -11.70% |
+| 10% fixed reserve / stress reserve | 9.51% / 9.60% | 1.060 / 1.067 | -10.57% / -10.14% |
+| 20% fixed reserve / stress reserve | 8.45% / 8.63% | 1.059 / 1.070 | -9.44% / -8.57% |
+
+USD, 5bp per traded dollar, fresh-cash evaluation; retrospective previously
+inspected history. Fixed reserves cost 1.07/2.14pp CAGR; stress deployment
+recovers only 0.09/0.18pp. BIL lowers the 10%/20% fixed-reserve drag to
+0.79/1.58pp versus the same-parking parent, still outside the registered
+0.5pp return-sacrifice budget for protection. Existing-cash SPY does not beat
+scheduled deployment, so its modest parent improvement is not timing evidence.
+Full-history Stage A drawdown stays near -16.42%; stress SPY CAGR is 10.01%
+versus F3's 9.85%. Bottom-three full CAGR is 9.89%, weaker in evaluation.
+
+Only three monthly market-stress episodes occur: January 2019, March 2020
+and May 2022. Existing F3 cash funds two, and only the 2022 episode falls in
+evaluation. It funds no 2020 sleeve because the parent had already invested.
+In the 2022 full-history cycle, bottom-three MCHI/TLT/EWJ loses about $5,175
+on a $323,152 locked budget, after falling as much as 13.57% of that budget;
+SPY earns about $15,205 after a 5.91% budget loss. Budget denominators include
+unused cash; these are sleeve P&L diagnostics, not asset-return drawdowns.
+
+Disposition: reject the tested extra-reserve and loser-basket recipes for
+progression under the frozen thresholds. Existing-cash SPY remains a small,
+inconclusive effect below the worthwhile-improvement threshold. No comparison
+passes either effect-size/protection screen or 5% Holm across the 46 contrasts
+at 3/6/12-month blocks. This does not establish that reversal never works.
+Do not optimize thresholds from these few episodes or promote a cash variant.
+Retain M1/14 only under the separate monitoring authorization below. Next
+research returns to unresolved data qualification and the already queued
+information-signal work; combining failed cash recipes is not the next step.
+
+Evidence: [complete study and 30 shared reports](../research/cash-stress-losers-2026-10-09/index.html),
+`var/research/cash-stress-losers-20261009-v1/`. All 232 dynamic/frozen replays,
+30 independent native checks and 141 inference jobs pass; 10,000 draws per
+job. Exact F3 reproduction, paired phase-dollar reconciliation, lower-frequency
+episode sensitivity, costs/delay, cash-proxy Sharpe and risk-matched URTH are
+included. Protocol SHA-256:
+`cc19d9f608c8484aedbf81afae41d3db9e696daed1f7f0b8be07d86760e10b4a`.
+Audited price histories are reconstructed vintages, not proof of historical
+publication availability. BIL is not broker interest; no uncertified FX is
+used. Settlement timing/product permissions remain unqualified live inputs.
+
+## 2026-10-09 — M1/14 added to app-owned monitoring
+
+User authorized monitoring `research_m1_14_v1`: XLE/XLB join the original 12
+candidates, with 21/63/126-session momentum and a positive 126-session gate.
+Top six, minimum four and the F3 defensive-cash fallback remain unchanged.
+No asset is mandatory. Audited raw dollar activity uses adjusted direction;
+rolling XGBoost and USD models refit for this distinct pool.
+
+The app's own service now publishes monthly rebalances, daily NAV/held weights,
+October 9 indicative targets and the complete shared report/decision chart.
+All 130 decisions, 907 fills and 2,707 daily values exactly reproduce the
+registered research result. Nine native app checks pass, including the new
+M1/14 and 14-ETF inverse-volatility benchmark. Existing USD economics remain
+unchanged; all currently monitored entries are Current through October 8.
+Monitoring is not promotion: M1/14 is ineligible for capital allocation until
+its separate 14-ETF execution contract and promotion evidence are approved.
+F3 remains funded at control revision 5; all 270 order records are unchanged.
+
+Acceptance: `var/research/m114-monitoring-20261009/runtime-final.json`;
+calculation revision `baad7794e23ccaeee3d359fd6c6ee0565d6873cfd60c67e9cc31ffb5e9e991c6`.
+The historical candidate report below remains the selection evidence; its
+earlier no-monitoring disposition is superseded only by this explicit user
+authorization, not by a new claim of statistical superiority.
+
+## 2026-10-09 — Corrected candidate-pool and momentum experiment completed
+
+The user meant candidate-pool expansion throughout. The previous all-asset
+inverse-volatility experiment answers a different question and cannot reject
+adding XLE/XLB to the top-six selector. The corrected study adds no mandatory
+allocation: four predeclared momentum policies × original 12 / expanded 14
+candidates, retaining the six-slot limit and F3 defensive-cash fallback.
+
+M0 is the existing 63/126/252-session ranking and positive 252-session gate.
+M1 uses 21/63/126 and a positive 126-session gate. M2 excludes the most recent
+21 sessions; M3 divides momentum by 63-session volatility. Ranking blend,
+volume weight and other overlay parameters stay fixed. Shared XGBoost and USD
+models refit causally for each pool, with one model schedule per pool reused
+by all four policies. Audited raw dollar activity is used consistently in all
+eight new arms; frozen legacy F3 is reproduced separately. That basis/refit
+bridge moves full-history CAGR from 9.8458% to 9.8306%, not a pool effect.
+
+| Rule / pool | 2016–2026 CAGR | Sharpe | Max drawdown | 2021+ CAGR | Sharpe | Max drawdown |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| M0 / 12 | 9.83% | 1.047 | -16.42% | 10.52% | 1.054 | -11.63% |
+| M0 / 14 | 9.56% | 0.924 | -16.33% | 10.14% | 0.897 | -12.89% |
+| M1 / 12 | 9.56% | 1.072 | -18.79% | 9.34% | 1.033 | -8.02% |
+| M1 / 14 | 10.64% | 1.061 | -19.48% | 11.91% | 1.104 | -8.31% |
+| M2 / 14 | 8.99% | 0.863 | -21.10% | 10.70% | 0.953 | -10.79% |
+| M3 / 14 | 8.40% | 0.980 | -14.33% | 8.49% | 0.943 | -9.72% |
+
+USD, 5bp per traded dollar, zero-interest cash, through October 8. The 2021+
+period restarts from cash and is the registered chronological evaluation;
+all history was previously inspected, so this is not an untouched holdout.
+M0 selects XLE in 48/130 months (36.9%) and XLB in 59/130 (45.4%). Their
+average held weights are 4.44% and 6.62%. M1 selects them in 48 and 63 months.
+New candidates therefore enter often enough to matter, and can also change
+cross-sectional ranks and model labels when not selected.
+
+Disposition: unchanged-momentum expansion does not improve the observed
+risk-adjusted results. M1/14 is a useful research lead, with a cost/delay-stable
+2021+ advantage over M0/14, but deeper full-history drawdown and no convincing
+paired evidence. Six-month block 95% interval for its Sharpe improvement over
+M0/14 is [-0.083, +0.526]; all 11 mean-return contrasts fail 5% Holm across
+3/6/12-month blocks. Its expansion benefit versus M1/12 also fails the combined
+cost/delay Sharpe-and-Calmar check. No variant establishes a robust replacement;
+no monitoring, promotion, strategy allocation or execution change.
+
+Validation: 260 causal XGBoost fits, 94 accounting replays, 12 frozen-target
+native LEAN parity checks, 36 uncertainty jobs (10,000 draws each), exact legacy
+F3 fills/NAV/targets/positions reproduction, 65 focused tests, Ruff and input /
+model / decision / output hashes. Control revision 5 and 270 order records
+unchanged; analytics errors empty. Report assembly initially withheld publication
+while native checks were pending, then finalized after all 12 passed.
+
+[Complete comparison, selection frequencies, uncertainty and 12 full reports](../research/candidate-pool-momentum-2026-10-09/index.html).
+Frozen evidence: `var/research/candidate-pool-momentum-20261009-v1/`.
+Protocol SHA-256: `8242daf88c16cf28c8f12f16f68aafd84ff4ec71dfbc85d37cc0aa32acdfce60`.
+
+Specification correction: current `research_fallback_f3_v1` does **not** include
+a final 45% cap; that cap exists in some economic-study controls. F3 has the
+incoming inverse-volatility cap and later active-weight constraints, but selection
+and downstream overlays can produce final weights above 45%. This study preserves
+the exact rule and reports concentration. P4.11 remains next on the original pool;
+freeze exact current F3 as R0 and label any added cap as a separate intervention.
+
+## 2026-10-09 — XLE/XLB admitted; first universe control rejected
+
+Published common-cutoff XLE/XLB histories through October 8, 6,991 sessions each,
+with issuer identity/listing validation and full hash readback. XOP is quarantined:
+issuer listing June 23, 2006 conflicts with provider metadata/first bar June 22.
+An explicit hold preserves the failed evidence without blocking other funds.
+Read-only IB ISIN discovery verifies BIL/XLE/XOP/XLB identities; account/product
+permission and settlement eligibility remain unverified. Holdings residuals and
+split-aware issuance remain unresolved. [Admission evidence and study](issuer-etf-recorder.md#price-admission-and-first-universe-control--completed-2026-10-09).
+
+Frozen 12-versus-14 ETF inverse-volatility control: adding XLE/XLB changes CAGR
+5.73%→6.16%, Sharpe 0.748→0.753, Calmar 0.255→0.311 and maximum drawdown
+-22.46%→-19.81% over 2016-01-04–2026-10-08 (USD, 5bp costs, zero cash interest).
+The predeclared +0.05 Sharpe threshold fails; all paired block intervals include
+zero. Cost/delay consistency passes, but does not override the failed screen.
+Reject unchanged-sizing expansion; no claim about expanded F3/ranking follows.
+Current F3 is a matched benchmark, exactly reproducing app economics.
+All 14 replays, four native checks and three 10,000-draw uncertainty jobs passed.
+Full shared reports include held/target weights, NAV, benchmarks and decision flow:
+[research results](../research/energy-materials-universe-2026-10-09/index.html).
+
+This previously inspected history and present-day ETF selection are retrospective,
+not an untouched holdout. New arms use audited adjusted prices only; F3 retains
+its disclosed inherited volume proxy. No new issuer/EIA/CFTC data is backdated,
+and uncertified historical FX is excluded. Next: P4.11 on the retained current F3
+and original universe, freezing cash economics and full-cycle deployment rules
+before outcomes. Monitored definitions, capital and execution authority stay fixed.
+
+Final runtime acceptance: all eight app native replays pass; five monitored
+strategies are current through October 8 on revision
+`1ef8c43dd057b1a0ed3c38dd2b331528da54be174e9985860cbd5a704cf4617d`.
+Analytics is error-free with no freshness/startup flags; allocation calculation
+status is OK, control revision 5 and 270 order records are unchanged. The separate
+IB market-data recorder reports competing-session error 10197; no login/session
+was changed to suppress it. Email delivery remains unconfigured.
+
+## 2026-10-09 — Cash reserve and stress-deployment study queued
+
+The user requested research on whether buying during market stress compensates
+for cash drag and falling-knife risk. Execution item **P4.11** is Pending in the
+[ETF roadmap](etf-research-expansion-roadmap.md#cash-reserve-and-stress-deployment--queued-2026-10-09),
+after the current ETF admission and frozen universe-control milestone. First test
+redeployment of existing capped-F3 defensive cash against unchanged and scheduled
+re-entry controls; then compare 10%/20% additional reserves with ordinary
+rebalancing, staged stress buying and recovery-confirmed deployment.
+
+Freeze complete rules and acceptance tolerances before outcomes. Required evidence
+covers full-cycle waiting/deployment/replenishment economics, matched exposure,
+cash yield/FX qualification, crisis dependence, costs/delays, audited pinned inputs,
+shared app calculations and native parity. Return enhancement and protection with
+a return sacrifice are separate conclusions. This is queued research, not a new
+backtest result, monitored definition, promotion or allocation change. Existing
+issuer/ETF work continues and economic ridge retains its current freeze.
+
+## 2026-10-09 — Prospective issuer ETF fundamentals recorded
+
+The next recorder-first milestone is implemented for XLE, XOP and XLB. The app
+captures issuer holdings, NAV/shares/AUM, valuation/growth statistics and industry
+allocation every six hours, with independent fund publications and Market Data
+→ ETF Fundamentals inspection. Eight statistics per ETF retain separate section
+dates and actual capture times. First captures occurred October 8 at
+16:21:59–16:22:06 UTC (October 9 local); October 7 issuer dates never grant earlier
+availability. Hash-verified readers enforce strict cutoffs and feature-group
+freshness/missing-data checks. See the [recorder and admission evidence](issuer-etf-recorder.md).
+
+NAV/share/AUM reconciliation passes. All three holdings files have small
+unexplained residuals to 100%, exceeding displayed-precision rounding. Preserve
+their exact signed weights and missing sectors; show yellow warnings and reject
+holdings-based features until reconciled. Shares are recorded, not labeled flows.
+The issuer aggregates are not original historical analyst forecast vintages.
+
+The current price catalog already contains XLE/XLB through September 25 with
+explicit identity/availability/raw-basis limitations; XOP is absent. Next: common
+cutoff price publication, issuer/security identity reconciliation, read-only IB
+contract qualification, then a frozen expanded-universe control. No new backtest,
+allocation or monitored-strategy change was made at this milestone.
+
+Validation: 83 distinct focused tests pass; one opt-in disposable ClickHouse test
+is skipped. Ruff, diff checks and browser selection/holdings inspection pass,
+with no browser warnings/errors. Live publications, strict cutoff rejection,
+feature-group isolation and preserved pins across application refresh were
+verified. The guarded restart leaves analytics error-free and strategies current
+through the latest completed US session, October 7.
+
+## 2026-10-08 — EIA energy context recorded and published
+
+The app now captures free official petroleum and natural-gas releases hourly
+and exposes them in Market Data → Energy Data. The first publication contains
+12 petroleum indicators (inventories, supply, demand and refinery activity) and
+five Lower 48 gas-storage indicators, including separate net change and implied
+flow. Both cover October 2. Petroleum was released October 7 at 14:30 UTC and
+captured October 8 at 15:44:22 UTC; gas was released October 8 at 14:30 UTC and
+captured at 15:44:30 UTC. Original raw bytes, revision flags, config/code hashes
+and independently verified publication pins are retained.
+
+The petroleum release's 314-row crude history is one current snapshot. It is
+available only from capture, not from each observation date. The inspected
+historical archive page had inconsistent date metadata, so original-release
+archive admission remains unresolved. These inputs are physical context, not
+proven leading signals or consensus surprises. Pinned readers enforce actual
+first-seen cutoffs, freshness and missing-value checks. No historical return
+experiment or Sharpe/Calmar claim has been made with this data.
+
+The [recorder contract and next research stage](energy-fundamentals-recorder.md)
+contains source qualification, exact publication pins and the proposed finite
+per-ETF linear/tree comparison. Next: prospective issuer holdings/shares/NAV,
+ETF identity/price admission, then a frozen expanded-universe control. Economic
+ridge stays frozen until that universe revisit; single-stock trading is excluded.
+
+Validation: 65 distinct focused recorder, publication, recovery and navigation
+tests pass; Ruff and browser checks pass. Application-owned publications are
+visible and source checks have no recorded error. No strategy allocation or
+execution authority changed.
+
 ## 2026-10-08 — CFTC positioning recorder published; no historical backtest
 
 Market Data → Fund Positioning now includes an app-owned, raw-first recorder for

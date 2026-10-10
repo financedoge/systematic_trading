@@ -33,7 +33,11 @@ def decision_inputs(settings, symbols, through, *, analytics=None):
             raise ValueError(f"Unsupported audited raw execution mark: {symbol}")
         prices[symbol] = dict(trade_date=row["trade_date"], close=str(raw))
     receipt = dict(batch=publication["version"], files=reader.used,
-        signal_price_basis="dividend_split_adjusted", signal_volume_basis="split_adjusted_source",
+        signal_price_basis="dividend_split_adjusted",
+        signal_volume_basis="provider_reported_split_adjusted_source_volume",
+        signal_volume_note="Provider-reported volume, split-adjusted by the source. "
+            "This is not the reconstructed raw-volume basis (raw_volume); a signal that "
+            "needs traded activity must declare which basis it consumed.",
         execution_price_basis="audited_raw", execution_marks=prices,
         historical_availability="Revised provider vintages; historical publication availability is not certified")
     receipt["sha256"] = digest(encode(receipt))

@@ -1,0 +1,49 @@
+{
+  "version": "ssga-sector-snapshots-v1",
+  "enabled": true,
+  "refresh_seconds": 21600,
+  "max_age_days": 7,
+  "availability": "Prospective observations only: issuer as-of dates do not establish historical availability. Use the actual first capture strictly before a decision.",
+  "limitations": [
+    "Issuer statistics are current-vintage aggregates, not reconstructed constituent financial statements or historical analyst forecasts.",
+    "Holdings weights include cash and derivative valuation weights; these are not derivative notional exposures. Missing constituent sectors remain missing.",
+    "Shares outstanding are rounded. Changes are not certified fund flows; split-aware share history and distributions are still required.",
+    "Issuer identity is verified separately from audited adjusted/raw price coverage and IB contract/account eligibility. These snapshots do not admit funds to a strategy."
+  ],
+  "rights": "Public issuer evidence retained for internal research inspection only. No redistribution entitlement or licensed historical holdings/estimates feed is assumed.",
+  "funds": [
+    {
+      "symbol": "XLE",
+      "name": "State Street Energy Select Sector SPDR ETF",
+      "name_tokens": ["Energy", "Select Sector", "SPDR", "ETF"],
+      "isin": "US81369Y5069", "cusip": "81369Y506", "currency": "USD", "exchange": "NYSE ARCA",
+      "exposure": "Broad energy equities; oil producers, integrated firms, refiners and services",
+      "files": {
+        "fund.html": "https://www.ssga.com/us/en/individual/etfs/state-street-energy-select-sector-spdr-etf-xle",
+        "holdings.xlsx": "https://www.ssga.com/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx"
+      }
+    },
+    {
+      "symbol": "XOP",
+      "name": "State Street SPDR S&P Oil & Gas Exploration & Production ETF",
+      "name_tokens": ["SPDR", "Oil & Gas", "Exploration & Production", "ETF"],
+      "isin": "US78468R5569", "cusip": "78468R556", "currency": "USD", "exchange": "NYSE ARCA",
+      "exposure": "Oil and gas equities; exploration/production, refining/marketing and integrated firms",
+      "files": {
+        "fund.html": "https://www.ssga.com/us/en/individual/etfs/state-street-spdr-sp-oil-gas-exploration-production-etf-xop",
+        "holdings.xlsx": "https://www.ssga.com/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xop.xlsx"
+      }
+    },
+    {
+      "symbol": "XLB",
+      "name": "State Street Materials Select Sector SPDR ETF",
+      "name_tokens": ["Materials", "Select Sector", "SPDR", "ETF"],
+      "isin": "US81369Y1001", "cusip": "81369Y100", "currency": "USD", "exchange": "NYSE ARCA",
+      "exposure": "Materials equities including chemicals, metals/mining, packaging and construction materials; not a pure chemicals fund",
+      "files": {
+        "fund.html": "https://www.ssga.com/us/en/individual/etfs/state-street-materials-select-sector-spdr-etf-xlb",
+        "holdings.xlsx": "https://www.ssga.com/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx"
+      }
+    }
+  ]
+}

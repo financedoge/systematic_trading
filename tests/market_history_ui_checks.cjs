@@ -7,7 +7,7 @@ function boot(url){
  const context=vm.createContext({URL,location,window,CustomEvent:class{constructor(type,options){this.type=type;this.detail=options.detail}},
   document:{documentElement:root,getElementById:node},history:{replaceState:(_,__,url)=>{location.href=String(url)}}});
  vm.runInContext(input.controller.match(/<script>([\s\S]*?)<\/script>/)[1],context);
- for(const view of ['history','bars','economics','raw'])window.MarketHistory.register(view,()=>calls.push(['load',view]));
+ for(const view of ['history','bars','economics','positioning','energy','issuer','raw'])window.MarketHistory.register(view,()=>calls.push(['load',view]));
  events.get('DOMContentLoaded')();
  return {node,window,calls,root,location};
 }
@@ -36,6 +36,13 @@ app=boot('http://localhost/?view=economics');assert.equal(app.window.MarketHisto
 assert.equal(app.node('economic-panel').hidden,false);assert.equal(app.node('governed-panel').hidden,true);
 assert.deepEqual(app.calls,[['load','economics']]);app.node('market-bars-tab').onclick();
 assert.equal(app.node('economic-panel').hidden,true);assert.equal(app.node('market-bars-panel').hidden,false);
+for(const view of ['positioning','energy','issuer']){
+ app=boot('http://localhost/?view='+view);assert.equal(app.window.MarketHistory.active,view);
+ assert.equal(app.node(view+'-panel').hidden,false);assert.equal(app.node('governed-panel').hidden,true);
+ assert.deepEqual(app.calls,[['load',view]]);
+ assert.equal(new URL(app.location.href).searchParams.get('view'),view);
+}
+app=boot('http://localhost/?view=__proto__');assert.equal(app.window.MarketHistory.active,'history');
 // Public archive data is fetched only after explicit activation in Debug mode.
 const nodes=new Map(),callbacks=new Map(),requests=[];
 const archiveContext=vm.createContext({

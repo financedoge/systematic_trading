@@ -1,5 +1,56 @@
 # Architecture
 
+## FR25 monitoring contract — 2026-10-10
+
+`research_fr25_14_v1` is a versioned `multi_asset_14` strategy: the full 14-ETF
+candidate pool, a 75% M1 / 25% financial-ridge rank blend applied *before* the
+positive 126-session eligibility gate and top-six selection, six slots, the
+existing defensive-cash fallback and a final 45% target cap that leaves excess
+in cash. The financial ridge uses five published series (T10Y3M, T10Y2Y,
+NFCICREDIT, DRTSCILM, DRTSCIS) expanded to eight features with a per-ETF
+standardized expanding ridge. XGBoost holds zero selection weight and keeps only
+its downstream sizing role. Missing financial inputs revert the whole selector to
+original M1 ranking and eligibility; downstream sizing and the final cap remain.
+
+The application owns the calculation: model fitting, scheduled and indicative
+targets, replay, daily NAV and held weights, the matched benchmark and the shared
+report with its inspectable rank table. `research/fr25_tracking.py` supplies the
+audited input contract and `research/selection_blend.py` the frozen blend.
+Candidate and parent strategies share one price publication and one atomic
+ClickHouse commit. Calculation revisions bind code, inputs and the monitoring
+generation; obsolete work is discarded, and a failed recalculation retains the
+previous complete publication.
+
+Historical financial inputs assume ALFRED archive availability one day before the
+prior close, an explicit retrospective assumption. From October 10, 2026 a
+decision additionally requires actual application capture before its cutoff; late
+catch-up cannot backdate economic knowledge and an unavailable series abstains.
+
+Allocation readiness remains false and the existing 14-ETF execution gate stays
+closed. Monitoring conveys no promotion, funding or broker authority. See
+[FR25 tracked strategy](fr25-selection-tracking.md).
+
+## M1/14 monitoring contract — 2026-10-09
+
+`research_m1_14_v1` is a versioned `multi_asset_14` strategy: original 12 plus
+XLE/XLB, 21/63/126-session momentum, positive 126-session gate, six slots and
+the existing defensive-cash fallback. It uses the shared strategy evaluator,
+causal per-pool XGBoost/USD model services, whole-unit accounting and full
+SOTA report. `research/m1_monitoring.py` supplies a separate audited adjusted
+price/raw-activity input contract and matched 14-asset benchmark; it does not
+change the original pool or reuse a manually maintained research target file.
+Raw activity requires prior-session audited raw close/volume and adjusted
+direction, with no fallback when that basis is missing. Benchmark coverage
+requires its actual prior-close anchor and valuation sessions; URTH's January
+2012 inception does not require invented pre-inception strategy-warmup bars.
+
+Calculation revisions include code, input publications and monitoring
+generation. The existing atomic publication guard discards obsolete work.
+Monthly held weights and latest indicative targets remain distinct. Lifecycle
+monitor/archive/restore is supported, while allocation readiness remains
+false and the existing original-universe execution gate remains closed for
+this strategy. Monitoring conveys no promotion, funding or broker authority.
+
 ## Dated trading allocations
 
 The operator can designate SOTA separately from a dated paper trading allocation.
@@ -9,6 +60,22 @@ replay. Proposals bind to allocation versions and verified model/data publicatio
 See [Trading allocations](trading-allocations.md) for contracts and limitations.
 
 ## Shared application contracts
+
+The [issuer ETF recorder](issuer-etf-recorder.md) captures XLE/XOP/XLB official
+pages and holdings in the analytics research lane, independently per fund. It
+publishes immutable capture catalogs, preserving raw bytes, section dates,
+first-seen times, config and code. Pinned feature readers check hashes, strict
+capture cutoffs, freshness and group-specific coverage; unreconciled holdings
+remain visible but unavailable to feature construction. Market Data exposes
+the dated statistics/holdings and publication warnings. This adds data coverage,
+not strategy membership, recurring agent work or broker execution authority.
+
+The [EIA energy recorder](energy-fundamentals-recorder.md) independently captures
+petroleum and natural-gas releases in the application research lane. Immutable
+raw responses precede audit; versioned catalogs bind original and revised
+snapshots. Source release clocks and actual capture times remain separate.
+Pinned readers reject pre-capture, stale, missing or tampered inputs. Market
+Data exposes Energy Data; current rolling histories are not historical vintages.
 
 The [economic vintage recorder](economic-vintage-recorder.md) extends Market Data
 with app-owned ALFRED acquisition and independently committed snapshots/catalogs.

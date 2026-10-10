@@ -2,6 +2,49 @@
 
 Discussion proposal dated October 7, 2026. The objective is to improve net Sharpe and Calmar through economically distinct ETF exposures, country and industry information, and portfolio risk control. No improvement is assumed in advance. The trading boundary is ETFs only; constituent company data may inform ETF analysis without introducing single-stock trades.
 
+## Latest disposition — October 10, 2026
+
+**User scope:** all future candidate/feature/momentum tests use the full
+supported candidate pool. Stop standalone XLE/XLB-only tests; assets compete
+for selection and are never forced into portfolios.
+
+**Selection experiment completed:** ten registered momentum/XGBoost/ridge rank
+blends now act before full-pool top-six selection. FR25 (75% M1 / 25% financial
+ridge) and CR50 (50% M1 / 50% context ridge) pass the practical effect-size,
+mean-only, cost/delay and risk-budget screen. Their 2021+ CAGR/Sharpe/Calmar are
+13.09%/1.193/1.512 and 12.49%/1.171/1.533, versus CP's 11.92%/1.106/1.435.
+No result establishes family-adjusted superiority across 50 comparisons.
+FR25 is the stronger full-history lead; CR50 weakens over 2016+ and equal
+three-way blends are not consistently better. Freeze the two recipes for
+prospective/concentration robustness; do not keep tuning the inspected sample.
+[Complete experiment and inspectable rank tables](../research/selection-blend-2026-10-10/index.html).
+Monitoring and allocation remain unchanged. Original-release qualification
+remains separately queued for any new feature block.
+
+The [preceding full-pool diagnosis](../research/full-pool-signal-diagnostics-2026-10-10/index.html)
+explained why 0.115–0.119 ridge IC could merit research despite failure of the
+older sizing recipes. The selection experiment above executes that follow-up.
+
+The expanded-pool economic revisit is complete: existing context, financial and
+combined per-ETF ridge/tree models were tested on fixed M1/14 selection, with
+an explicit cap-only control and matched availability. Context ridge improves
+2021+ CAGR from 11.91% to 12.09% and Sharpe from 1.104 to 1.122, but the
+matched-control Sharpe/Calmar gains fail the frozen effect-size thresholds.
+None of the 18 comparisons passes joint mean-return adjustment; no candidate
+is retained for additional monitoring or promotion. All 104 replays and 13
+native checks pass. [Complete study](../research/expanded-economics-2026-10-10/index.html).
+Monitored M1/14 and original CR remain unchanged, with F3 funded. Next is
+original-release sector/energy history qualification, followed by a separately
+frozen feature experiment when coverage permits it.
+
+**Deferred by the user:** SPY dip-buying as a standalone strategy. Revisit later
+with independent SPY buy-and-hold, cash and matched-exposure controls. The F3
+cash-sleeve test does not decide this different strategy question. No SPY
+experiment, monitoring entry or schedule is started by this note.
+
+The dated milestones below retain the original sequence and their historical
+next-step wording; this latest disposition governs the current queue.
+
 The original three-series vintage milestone remains preserved as data evidence.
 The user then broadened the scope before any economic portfolio test: prioritize
 leading indicators, test payroll/CPI as separate context, use nonlinear models,
@@ -43,6 +86,30 @@ All 51 replays and eleven native validations passed on all 16 CPUs. See the
 [financial-condition findings](../research/economic-financial-2026-10-07/findings.html).
 
 ## Commodity futures positioning recorder — 2026-10-08
+
+October 9 update: the [audited price admission and first frozen universe control](issuer-etf-recorder.md#price-admission-and-first-universe-control--completed-2026-10-09)
+are complete for XLE/XLB through October 8. XOP remains quarantined over conflicting
+listing-date evidence. Read-only IB identity checks pass for BIL/XLE/XOP/XLB;
+account permission and settlement eligibility remain unverified. Adding XLE/XLB
+under unchanged inverse-volatility sizing improves CAGR/drawdown but fails the
+predeclared Sharpe screen; paired uncertainty includes zero. Keep the original
+universe and capped F3 unchanged for the next P4.11 cash/stress study. Expanded
+ranking and new information models remain separate future experiments.
+
+The subsequent [issuer ETF snapshot pilot](issuer-etf-recorder.md) is implemented
+for XLE/XOP/XLB (October 9 local). Eight dated statistics, industry allocation and
+raw holdings are now prospectively recorded in Market Data → ETF Fundamentals.
+NAV/share/AUM reconciliation passes; unexplained holdings weight residuals keep
+holdings-derived features blocked. Shares are not yet certified issuance/flows.
+The initial price/control milestone is recorded above; current issuer/EIA/CFTC captures cannot be
+backfilled into historical decisions. Existing monitored economic ridge stays fixed.
+
+The following EIA stage is now implemented: 12 petroleum and five natural-gas
+indicators are captured, audited and published through the app, with an Energy
+Data view and strict first-seen readers. The current six-year crude history is
+not an original-release archive. See the [energy recorder and research design](energy-fundamentals-recorder.md).
+Next is issuer holdings/shares/NAV capture and a small ETF admission pilot;
+historical energy vintages and consensus surprises remain unqualified.
 
 Added an application-owned recorder for the CFTC Public Reporting Environment's
 Disaggregated Futures Only dataset. It captures WTI, Henry Hub gas, COMEX gold,
@@ -163,6 +230,131 @@ Freeze four challengers plus F0 before outcomes, with costs/delays treated as de
 
 Implementation acceptance includes zero, one, two, three and four qualifying-asset cases; all-zero target handling; no forced min-holdings fill; no survivor renormalization under F1; no rejected-symbol resurrection downstream; source/model failures; unavailable defensive/parking assets; re-entry and settlement/cash accounting; and shared Python/native LEAN target, fill, cash and NAV parity. Publish complete strategies and reports through the app if selected for tracking. Current production fallback is unchanged by this roadmap edit, and no new performance result is claimed.
 
+## Cash reserve and stress deployment — queued 2026-10-09
+
+**Execution item P4.11: Done (2026-10-09).** The user authorized a separate
+broad-market sleeve and bottom-momentum comparison. The frozen study added
+bottom/top-three controls using the original pool's pure momentum rank,
+explicitly bypassing the positive gate only inside the bounded sleeve.
+All 232 replays, 30 native checks and 141 inference jobs completed. No policy
+passes the frozen effect/protection screen; no joint mean-return test passes
+5% Holm. Extra cash drag exceeds stress gains; losers trail SPY in evaluation.
+See the [complete study](../research/cash-stress-losers-2026-10-09/index.html)
+and [research disposition](research-state.md). The sequence below records the
+pre-execution design; do not interpret its original future tense as pending work.
+
+The user requested this study for execution.
+The XLE/XLB admission and corrected top-six candidate-pool/momentum study are
+complete; see the [matched comparison](../research/candidate-pool-momentum-2026-10-09/index.html).
+XOP remains quarantined. Next freeze this study on exact current F3 and the
+original 12-ETF universe, separately from new fundamental
+signals. Begin with redeployment of cash already generated by the current F3
+defensive policy. Test an additional permanent reserve in a second finite batch.
+The monitored economic ridge remains frozen through its existing universe revisit.
+Current F3 has no final 45% cap after its selection/overlays. The earlier shorthand
+"capped F3" was inaccurate for this parent; any added final cap must be an explicit
+separate intervention, never silently included in R0.
+
+The question is whether stress buying compensates for the return forgone while
+waiting, after cash income and all implementation costs, and whether any remaining
+return sacrifice buys useful drawdown protection. A profitable crisis purchase
+alone is insufficient. Evaluate the complete cycle: reserve formation, waiting,
+deployment, further declines, recovery and reserve replenishment. Keep return
+enhancement and risk reduction with a return cost as separate conclusions.
+
+### Finite comparison family
+
+| Arm | Policy | Attribution purpose |
+| --- | --- | --- |
+| R0 | Exact current F3 parent, including its existing cash and monthly re-entry | Unchanged strategy control; pin the complete definition, models and inputs. No silently added final cap. |
+| R1 | Redeploy an explicitly bounded portion of parent-generated cash through scheduled, equal tranches | Timing-free staged re-entry control, with the same eligible instrument set and operational limits as R2/R3. |
+| R2 | Deploy the same bounded budget in predefined drawdown stages | Test whether waiting for stress improves on R1 after the opportunity cost. |
+| R3 | Use the same stress stages, with a predefined recovery confirmation before deployment | Test the falling-knife versus missed-rebound trade-off against R2. |
+
+Stage A adds no permanent reserve. Use one predeclared broad equity ETF or fixed
+diversified ETF basket from the admitted universe; do not select the best rebound
+asset after each crisis. Register one recipe per arm, not a threshold grid. R2
+versus R1 is the primary timing contrast; R3 versus R2 and each challenger versus
+R0 are secondary contrasts, with one declared multiple-comparison family.
+
+Stage B measures the extra cost of maintaining cash throughout normal markets.
+Freeze separate reserve sleeves of 10% and 20% of NAV as two sensitivity cases,
+not inferred optimal allocations. Fund each sleeve by proportionally scaling the
+parent portfolio to 90% or 80%; the scaled parent's own cash remains distinct.
+These are additional sleeves, not floors on total portfolio cash. For each sleeve,
+compare a fixed-reserve portfolio with
+scheduled rebalancing, staged stress deployment, and confirmation-based deployment.
+All three start with identical capital/reserves and use the same parking treatment,
+deployment limits and replenishment convention; stress purchases use only that
+sleeve. Keep R0 as the no-extra-reserve
+reference. Complete and retain all six cases; do not choose a reserve size from
+its best historical crisis or automatically combine it with the Stage A winner.
+
+Before either batch runs, save a versioned executable specification fixing the
+parent hash, basket/weights, cash source, deployment cap, operational cash floor,
+stress index and trailing peak window, drawdown thresholds, tranche sizes,
+confirmation lookback, signal/decision clock, holding/exit rules and replenishment.
+Use completed observations and next-session executable prices. Start with the
+parent's monthly decision schedule to isolate the allocation policy; a faster
+decision schedule requires a separately registered comparison.
+
+Define episode entry/reset, thresholds crossed together, repeated triggers,
+unfinished recoveries, a reserve exhausted before the bottom, and competition
+between normal parent re-entry and stress purchases. No leverage, double funding,
+unbounded averaging down or retrospective bottom labels. Any permission to buy an
+asset rejected by F3's momentum gate must be explicit in the candidate definition;
+it must not arise from a downstream overlay accidentally restoring exposure.
+Preserve final concentration/cash limits and data/model-error blocking behavior.
+
+### Inputs, evidence and execution acceptance
+
+- Pin published audited continuous histories and verify all input hashes. Use
+  dividend/split-adjusted prices for return research and declare the supported
+  basis for stress signals. Preserve inception, identity, missing coverage and
+  historical publication limitations; no provider archives or online prices as
+  direct inputs, no splicing and no hindsight-defined crisis sample.
+- Separate zero-interest cash sensitivity, evidenced broker-cash remuneration,
+  and audited BIL parking. Treasury-bill ETF returns are not broker interest;
+  include fund costs/spreads and distributions without double counting. Compare
+  every arm on the same supported window and cash convention. Qualify missing
+  inputs through recorder/audit/publication before use. Report USD first if FX
+  remains unresolved; a CNH comparison requires qualified USD/CNH evidence and
+  explicit cash-currency exposure, with remaining limitations disclosed.
+- Report net CAGR/terminal wealth, excess-cash Sharpe, Calmar, maximum drawdown,
+  expected shortfall, recovery duration, turnover, average exposure, reserve
+  duration and cash income. Attribute waiting-period drag, initial losses avoided,
+  incremental deployment P&L, losses after deployment, missed recoveries and
+  replenishment costs against matched controls without counting the same benefit
+  twice. Include still-open episodes and long periods without a crash.
+- Include current SOTA, relevant-universe risk parity and URTH on matched inputs,
+  plus a fixed-exposure/risk control calibrated using training data only. Keep any
+  full-sample exposure matching explicitly diagnostic, not an executable strategy.
+  Report chronological walk-forward and all supported stress regimes, costs and
+  delayed execution; preserve already-inspected historical periods as such.
+  Use dependence-aware paired uncertainty, episode counts and leave-one-crisis-out
+  diagnostics. A few crisis episodes cannot establish reliable timing alpha.
+- At specification freeze, set the minimum worthwhile return gain and maximum
+  acceptable CAGR sacrifice for drawdown reduction before looking at outcomes.
+  Retain a challenger only for credible net improvement at comparable risk, or
+  meaningful protection within that stated return budget across periods/costs.
+  Report reject, inconclusive or retain-for-observation, including negative results;
+  do not relax tolerances or expand the search after seeing a failure.
+- Implement through shared strategy/analytics contracts, with deterministic tests
+  for tranche state, repeat/gap triggers, no-stress paths, prolonged declines,
+  confirmation/false starts, exhausted reserves, replenishment, parent re-entry,
+  missing inputs and cash/settlement constraints. Verify Python/native LEAN target,
+  fill, cash and NAV parity. Save specification/input/output hashes and complete
+  SOTA-format reports with the full decision flow, targets/held weights, NAV and
+  benchmarks. If selected for monitoring, the app owns recurring calculations;
+  no agent, reminder or manually refreshed card is the calculation service.
+
+Deliverables are the frozen experiment manifest, cash/FX coverage assessment,
+complete arm reports, full-cycle attribution and a retention decision. Tracking,
+promotion, paper capital and execution authority remain separate; existing
+approval/reconciliation/broker checks and live-disabled defaults continue to apply.
+The original entry queued research. The completed results above supersede its
+pending status; they authorize no promotion or allocation decision.
+
 ## Country economic information
 
 Model the **change in the economic outlook and its relationship to expectations**, rather than assuming strong GDP growth predicts strong stock returns. A country fund's sector mix, foreign revenues, currency exposure and starting valuation can dominate its domestic cycle. Retain a common global component and test the additional country-specific information.
@@ -263,6 +455,7 @@ The application owns recorders, availability checks, features, scheduled rebalan
 1. **Freeze the baseline, fallback and constraints.** Pin the active strategy, data/feature/model versions, report economics and comparison dates. Prove replay parity and count valid weak-signal fallback episodes separately from data failures. Freeze F0–F4, downstream cash preservation and re-entry/cash economics before tests. Specify final weights, overlap and drift controls as a separate candidate, with the unchanged baseline preserved.
 2. **Qualify data and exposures.** Establish a dated ETF inventory and coverage matrix. Choose sources by the hypotheses they can test; publish acquisitions before any research input is consumed.
 3. **Separate universe value from signal value.** Compare old universe/old signal, expanded universe/same signal, old universe/new signal and expanded universe/new signal, wherever coverage supports a genuinely matched comparison. Use the same group budgets, timing and costs; show a price-only control on exactly the new signal's eligible dates.
+   **P4.11 completed October 9** using the [cash reserve and stress-deployment sequence](#cash-reserve-and-stress-deployment--queued-2026-10-09): existing-cash deployment, separate loser/winner controls and additional reserves. No recipe cleared the registered retention screen. Preserve these results and proceed to qualified information signals without automatically adding a cash sleeve.
 4. **Test a small initial family.** First compare cash and alternative fallback policies on the existing universe, adding F4 only after parking-asset coverage qualifies. Then test a country macro tilt, an energy fundamental overlay, and a broad-sector or semiconductor fundamental pilot. Each new information model faces a simple composite or regularized control before XGBoost. Do not automatically combine the best observed variants or cross all fallback policies with all new signals.
 5. **Validate stability and forward behavior.** Use chronological walk-forward fits with completed-label embargoes, dependence-aware uncertainty, a declared comparison ledger, costs and delayed-execution sensitivity. Stress cases should cover prolonged declines, sharp rebounds, inflation/rate shocks and liquidity stress where supported data exist. Preserve all failed trials. Freeze accepted recipes for prospective tracking; do not relabel the repeatedly inspected post-2023 period as untouched.
 
@@ -274,4 +467,4 @@ Advancement requires either credible return improvement at comparable risk or me
 
 Deliver the fallback episode audit and versioned F0–F4 specification, cash-preservation/parity checks and cash-economics coverage assessment; an ETF coverage/overlap inventory; the versioned final-weight candidate specification; reusable release/vintage and issuer-snapshot recorders; a corrected and audited financial-statement normalization contract; and a small macro/energy feature catalog with explicit missing-data behavior. Source acceptance should include replay of a known historical release, revision/as-of tests, duplicate and outage recovery, source hash verification and a complete published batch.
 
-After coverage is established, freeze the experiment recipes and comparison budget for review. Actual candidate calculations belong in the app and its standard report. No new backtests, recorders, paid acquisitions, schedules or portfolio changes were performed in this discussion session.
+After coverage is established, freeze each new experiment recipe and comparison budget. Actual candidate calculations belong in the app and its standard report. The original planning discussion made no implementation changes; the dated completion sections above record subsequent authorized work, including M1/14 monitoring and the completed P4.11 study.

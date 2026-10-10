@@ -16,16 +16,32 @@ def decision_diagrams(definition, accounting_currency='CNH'):
         ("First trading session of the month?", "No: retain held quantities, mark NAV; calculate indicative targets separately."),
         ("Inverse-volatility risk parity", "63-session volatility; 45% base cap; 2% cash reserve."),
     ]
+    if definition.universe_key == 'multi_asset_14':
+        steps.insert(2, ('Fourteen candidates; never compulsory holdings',
+            'Original 12 ETFs plus XLE and XLB; fit models on this pool; XOP remains excluded.'))
     if "asset_pool_filter" in overlays:
         p = overlays["asset_pool_filter"]
         fallback=p.get('fallbackPolicy','neutral')
         action={'neutral':'keep incoming basket','eligible_cash':'retain qualifying base weights; residual cash',
             'all_cash':'target all cash','defensive_cash':'retain qualifying IEF/TLT/GLD base weights; residual cash'}[fallback]
-        steps += [(f"Select top {p['topN']} using price and volume rank", "63/126/252d trend + 21/126d volume; require positive 252d momentum."),
+        steps += [(f"Select top {p['topN']} using price and volume rank", f"{p['shortMomentumBars']}/{p['mediumMomentumBars']}/{p['longMomentumBars']}d trend + {p['volumeBars']}/{p['slowVolumeBars']}d volume; require positive {p['longMomentumBars']}d momentum."),
                   (f"Fewer than {p['minSelected']} qualify?", f"Yes: {action}. Otherwise retain the normal selection.")]
         if fallback!='neutral':
             steps += [('Protect the fallback selection and cash budget through every later layer',
                 'No rejected asset can return; no later layer may refill released cash. Missing inputs stop calculation.')]
+    if 'financial_rank_selection' in overlays:
+        steps += [('Read five financial series at the exact prior-day vintage',
+                   'Treasury slopes, NFCI credit and SLOOS; eight features; no fill or nearest-vintage substitution.'),
+                  ('Fit expanding standardized ridge per ETF, alpha 1',
+                   'At least 36 completed monthly open-to-open labels; total forecast = training mean + ridge increment.'),
+                  ('Blend 75% M1 rank + 25% financial forecast rank',
+                   'M1 = 75% 21/63/126d momentum + 25% volume. Midranks across all 14; alphabetic ties.'),
+                  ('Financial data unavailable or captured too late?',
+                   'Revert to original M1 selection. From October 10, 2026 enforce actual capture before cutoff.'),
+                  ('Positive 126d momentum gate; top six, minimum four',
+                   'Below minimum: qualifying IEF/TLT/GLD incoming weights; residual cash. No mandatory holding.'),
+                  ('Protect selected membership and fallback cash through later layers',
+                   'XGBoost has zero selection weight; its existing downstream sizing follows.')]
     if "decision_tree" in overlays:
         p = overlays["decision_tree"]
         steps += [("Select the model permitted at the decision date", "Before 2023: causal annual fit; from 2023: deployed frozen tree below."),
@@ -45,19 +61,24 @@ def decision_diagrams(definition, accounting_currency='CNH'):
         p = overlays["adaptive_trend"]
         steps += [("Adaptive trend exposure", "63/126/252d trend, 21d rebound/up-volume, 21/252d volatility shock."),
                   (f"Select exposure scale: {p['defensiveScale']} / {p['weakScale']} / {p['neutralScale']} / {p['reboundScale']}", "Shock, weak, neutral or recovery/strong trend; redistribute residual as specified.")]
-    if "etf_activity" in overlays:
-        p = json.loads(overlays["etf_activity"]["spec"])
-        steps += [("Relative ETF dollar-activity shares", f"Adjusted close × source volume / prior {p['normalization_bars']}d mean; normalize across ETFs."),
+    if "etf_activity" in overlays or 'audited_etf_activity' in overlays:
+        raw = 'audited_etf_activity' in overlays
+        p = json.loads(overlays['audited_etf_activity' if raw else "etf_activity"]["spec"])
+        basis = 'Audited raw close × raw volume' if raw else 'Adjusted close × source volume'
+        steps += [("Relative ETF dollar-activity shares", f"{basis} / prior {p['normalization_bars']}d mean; normalize across ETFs."),
                   (f"EMA({p['smoothing_span']}) → second difference, lag {p['difference_lag']}", f"z = acceleration / prior {p['noise_bars']}-session derivative noise; Hurst filter disabled."),
                   (f"z > {p['threshold']} AND slope, 20d return, signed volume > 0?", f"Yes: +1. Otherwise z < -{p['threshold']}: -1. Otherwise: 0."),
                   (f"Apply {p['relative_tilt']:.0%} tilt to already selected assets", f"Project to ±{p['active_cap']:.0%} active bounds; preserve gross exposure and cash; no new selections."),
                   ("45% ceiling on increases", "An inherited base weight above 45% may be retained but cannot increase.")]
+        if raw:
+            steps += [('Adjusted-price direction confirms raw activity',
+                       'Audited adjusted returns and raw-volume signed pressure; split jumps are not price momentum.')]
     if "usd_ridge" in overlays:
         steps += [("Read the published USD vintage available before the signal close", "Broad-dollar 21/63-observation changes use one vintage; missing/stale inputs stop publication."),
                   ("Monthly expanding per-ETF ridge model, separate from the trees", "Short/older momentum + volatility + USD; 60 completed months; labels strictly before fit close."),
                   ("Rank forecasts and apply the final 12% tilt", "±3 percentage point bound; preserve cash and selected assets; no increase of inherited weights above 45%.")]
     if 'final_weight_cap' in overlays:
-        steps += [('Final ETF target cap: 45%', 'Clip any excess to cash before applying the economic model; holdings may drift between rebalances.')]
+        steps += [('Final ETF target cap: 45%', 'Clip excess to cash; holdings may drift between rebalances.'+(' Economic sizing follows.' if 'economic_ridge' in overlays else ''))]
     if 'economic_ridge' in overlays:
         steps += [('Read exact original economic vintages before the previous completed close',
                    'Seven leading + payroll/output/headline/core inflation; missing/stale observations → capped parent.'),

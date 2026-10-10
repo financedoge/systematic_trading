@@ -1,0 +1,62 @@
+{
+  "release_name": "Weekly Natural Gas Storage Report",
+  "release_date": "2026-Oct-08 00:00:00",
+  "current_week": "2026-10-02",
+  "week_ago": "2026-09-25",
+  "year_ago": "2025-10-02",
+  "5yr_avg": "5-year (2021-25) average",
+  "fuel_type": "natural gas",
+  "process": "storage",
+  "periodicity": "weekly",
+  "series": [
+    {
+      "series_id": "png.nw2_epg0_swo_r48_bcf.w",
+      "name": "total lower 48 states",
+      "source": "U.S. Energy Information Administration",
+      "iso1366": "USA",
+      "units": "billion cubic feet",
+      "unitsshort": "bcf",
+      "calculated": {
+        "5yr-avg": 3432,
+        "revision_flag_5yr-avg": "false",
+        "reclassification_flag_5yr-avg": "false",
+        "net_change": 85,
+        "revision_flag_net_change": "false",
+        "reclassification_flag_net_change": "false",
+        "implied_flow": 85,
+        "revision_flag_implied_flow": "false",
+        "reclassification_flag_implied_flow": "false",
+        "pct-change_yrago": -3.6,
+        "revision_flag_pct-change_yrago": "false",
+        "reclassification_flag_pct-change_yrago": "false",
+        "pct-chg_5yr-avg": 2.0,
+        "revision_flag_pct-chg_5yr-avg": "false",
+        "reclassification_flag_pct-chg_5yr-avg": "false"
+      },
+      "data": [
+        [
+          "2026-10-02",
+          3500
+        ],
+        [
+          "2026-09-25",
+          3415
+        ],
+        [
+          "2025-10-02",
+          3630
+        ]
+      ],
+      "revision_flag": [
+        "false",
+        "false",
+        "false"
+      ],
+      "reclassification_flag": [
+        "false",
+        "false",
+        "false"
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "version": "research-etf-recorders-v1",
+  "version": "research-etf-recorders-v2",
   "enabled": true,
   "funds": [
     {
@@ -12,6 +12,49 @@
       "purpose": "F4 Treasury-bill parking research; no trading authority",
       "issuer_url": "https://www.ssga.com/us/en/intermediary/etfs/state-street-spdr-bloomberg-1-3-month-t-bill-etf-bil",
       "issuer_required_text": ["US78468R6633", "May 25 2007", "1-3 Month", "BIL"],
+      "rights": "Public source evidence for internal research; no redistribution or paid entitlement assumed",
+      "historical_availability": "Reconstructed price history; download and audit do not certify historical dissemination"
+    },
+    {
+      "symbol": "XLE",
+      "name": "State Street Energy Select Sector SPDR ETF",
+      "isin": "US81369Y5069",
+      "currency": "USD",
+      "inception": "1998-12-16",
+      "listing_date": "1998-12-22",
+      "required_start": "2012-01-05",
+      "purpose": "Energy/materials universe comparison; no trading authority",
+      "issuer_url": "https://www.ssga.com/us/en/individual/etfs/state-street-energy-select-sector-spdr-etf-xle",
+      "issuer_required_text": ["US81369Y5069", "Dec 16 1998", "Dec 22 1998", "Energy Select Sector", "XLE"],
+      "rights": "Public source evidence for internal research; no redistribution or paid entitlement assumed",
+      "historical_availability": "Reconstructed price history; download and audit do not certify historical dissemination"
+    },
+    {
+      "symbol": "XOP",
+      "admission_hold": "Issuer listing date is 2006-06-23 but provider firstTradeDate and first observation are 2006-06-22. Retain quarantine until independent dated evidence resolves the boundary; do not trim or relabel the source.",
+      "name": "State Street SPDR S&P Oil & Gas Exploration & Production ETF",
+      "isin": "US78468R5569",
+      "currency": "USD",
+      "inception": "2006-06-19",
+      "listing_date": "2006-06-23",
+      "required_start": "2012-01-05",
+      "purpose": "Energy/materials universe comparison; no trading authority",
+      "issuer_url": "https://www.ssga.com/us/en/individual/etfs/state-street-spdr-sp-oil-gas-exploration-production-etf-xop",
+      "issuer_required_text": ["US78468R5569", "Jun 19 2006", "Jun 23 2006", "Exploration", "Production", "XOP"],
+      "rights": "Public source evidence for internal research; no redistribution or paid entitlement assumed",
+      "historical_availability": "Reconstructed price history; download and audit do not certify historical dissemination"
+    },
+    {
+      "symbol": "XLB",
+      "name": "State Street Materials Select Sector SPDR ETF",
+      "isin": "US81369Y1001",
+      "currency": "USD",
+      "inception": "1998-12-16",
+      "listing_date": "1998-12-22",
+      "required_start": "2012-01-05",
+      "purpose": "Energy/materials universe comparison; no trading authority",
+      "issuer_url": "https://www.ssga.com/us/en/individual/etfs/state-street-materials-select-sector-spdr-etf-xlb",
+      "issuer_required_text": ["US81369Y1001", "Dec 16 1998", "Dec 22 1998", "Materials Select Sector", "XLB"],
       "rights": "Public source evidence for internal research; no redistribution or paid entitlement assumed",
       "historical_availability": "Reconstructed price history; download and audit do not certify historical dissemination"
     }

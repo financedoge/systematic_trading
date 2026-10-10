@@ -16,6 +16,8 @@ class AppSettings(BaseSettings):
     research_etf_recorder_config_path: Path = Path("config/research-etf-recorders.json")
     economic_recorder_config_path: Path = Path("config/economic-recorders.json")
     positioning_recorder_config_path: Path = Path("config/positioning-recorders.json")
+    energy_recorder_config_path: Path = Path("config/energy-recorders.json")
+    issuer_etf_recorder_config_path: Path = Path("config/issuer-etf-recorders.json")
     model_config = SettingsConfigDict(
         env_file=".env",
         env_prefix="ST_",

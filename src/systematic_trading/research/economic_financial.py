@@ -23,8 +23,10 @@ FEATURE_SPEC = dict(version='economic-financial-features-v1', series=SERIES, fea
     combinations='Financial only (8 features); original leading/context plus financial (21 features). Matched original-context control isolates added information from sample and decision availability.')
 
 
-def panel(reader, vintage, known_at):
-    state = original_panel(reader,vintage,known_at)
+def panel(reader, vintage, known_at, *, include_context=True):
+    state = original_panel(reader,vintage,known_at) if include_context else dict(
+        vintage=vintage, known_at=known_at.isoformat(), features={}, sources={},
+        unavailable=[], leading_ready=False, context_ready=False)
     for s in SERIES:
         snap = reader.snapshot(s,vintage)
         if known_at <= datetime.fromisoformat(snap['archive_available_at']):

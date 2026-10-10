@@ -1,0 +1,35 @@
+{
+  "version": "eia-energy-first-seen-v1",
+  "enabled": true,
+  "refresh_seconds": 3600,
+  "max_age_days": 14,
+  "availability": "Actual app capture only; source release timestamps do not backdate revised files.",
+  "limitations": [
+    "These are physical activity and inventory context, not proven leading signals or consensus surprises.",
+    "Current rolling histories and comparison values can include revisions. They are usable only after this app captured this version.",
+    "Historical original-release vintages are not qualified. No pre-capture strategy backtest is permitted.",
+    "Products supplied estimates apparent demand. Weekly production may be re-benchmarked. Natural gas net change can differ from implied flow because of reclassification.",
+    "ETF sensitivity, futures roll costs, issuer identity, audited prices and IB account eligibility require separate research."
+  ],
+  "products": [
+    {
+      "id": "petroleum",
+      "name": "Weekly petroleum balances",
+      "source_page": "https://www.eia.gov/petroleum/supply/weekly/",
+      "files": {
+        "stocks.json": "https://ir.eia.gov/wpsr/psw00.json",
+        "balance.csv": "https://ir.eia.gov/wpsr/table1.csv",
+        "estimates.csv": "https://ir.eia.gov/wpsr/table9.csv"
+      }
+    },
+    {
+      "id": "natural-gas",
+      "name": "Weekly natural gas storage",
+      "source_page": "https://ir.eia.gov/ngs/ngs.html",
+      "files": {
+        "storage.json": "https://ir.eia.gov/ngs/wngsr.json",
+        "release.html": "https://ir.eia.gov/ngs/ngs.html"
+      }
+    }
+  ]
+}

@@ -60,7 +60,37 @@ def test_producer_commits_after_all_symbols_and_readers_share_receipt(governed):
     bars,marks,receipt=decision_inputs(settings,["X"],date(2026,8,4),analytics=analytics)
     assert bars["X"][-1].trade_date==date(2026,8,4)
     assert marks["X"]["trade_date"]=="2026-08-04" and receipt["batch"]==publication["version"]
+    assert receipt["signal_price_basis"]=="dividend_split_adjusted"
+    assert receipt["execution_price_basis"]=="audited_raw"
+    assert receipt["signal_volume_basis"]=="provider_reported_split_adjusted_source_volume"
+    assert "not the reconstructed raw-volume basis" in receipt["signal_volume_note"]
     assert not module.refresh_governed_etfs(settings,analytics,now=now,fetch=lambda *a:pytest.fail("Unnecessary fetch"))
+
+
+def test_vanished_catalog_publication_fails_closed(governed):
+    """A missing committed catalog raises the intended error, not a TypeError."""
+    settings,analytics,fetch,written=governed
+    original=analytics.latest
+    def latest(source):
+        if source=="governance/catalog" and written:
+            return None
+        return original(source)
+    analytics.latest=latest
+    with pytest.raises(ValueError,match="Catalog publication disappeared during refresh"):
+        module.refresh_governed_etfs(settings,analytics,now=datetime(2026,8,4,22,tzinfo=UTC),fetch=fetch)
+
+
+def test_newer_catalog_retains_its_publication(governed):
+    """The optimistic commit guard refuses to overwrite a newer committed catalog."""
+    settings,analytics,fetch,written=governed
+    original=analytics.latest
+    def latest(source):
+        if source=="governance/catalog" and written:
+            return dict(original(source),version="newer-committed-publication")
+        return original(source)
+    analytics.latest=latest
+    with pytest.raises(ValueError,match="Catalog changed during refresh"):
+        module.refresh_governed_etfs(settings,analytics,now=datetime(2026,8,4,22,tzinfo=UTC),fetch=fetch)
 
 
 def test_failed_symbol_cannot_publish_partial_catalog(governed):

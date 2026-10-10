@@ -42,8 +42,11 @@ class GovernanceStore:
             expected[identity]=digest(payload)
             rows.append(dict(workspace=self.analytics.workspace,batch=batch,symbol=symbol,trade_date=r['trade_date'],
                 payload=payload,payload_hash=expected[identity],**(dict(source_id=r['source_id']) if comparison else {})))
-        for i in range(0,len(rows),10000):
-            self.analytics.client.execute(f'INSERT INTO market_data.{table} FORMAT JSONEachRow\n'+'\n'.join(encode(r) for r in rows[i:i+10000]))
+        # Bound HTTP request size like other analytical publishers. Smaller
+        # chunks recovered a timeout uploading one entire ETF history.
+        # Keep full-batch hash readback below; never retry an uncertain INSERT.
+        for i in range(0,len(rows),1000):
+            self.analytics.client.execute(f'INSERT INTO market_data.{table} FORMAT JSONEachRow\n'+'\n'.join(encode(r) for r in rows[i:i+1000]))
         fields='source_id,' if comparison else ''
         result=self.analytics.query(f'SELECT {fields}trade_date,lower(hex(SHA256(payload))) AS hash FROM market_data.{table} FINAL WHERE '
             +'workspace='+_sql_string(self.analytics.workspace)+' AND batch='+_sql_string(batch)+' AND symbol='+_sql_string(symbol))

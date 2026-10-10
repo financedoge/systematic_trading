@@ -18,7 +18,7 @@ def targets_for_day(rows: dict, day: date, *, benchmark: bool = False, lookback_
                     flow_overlay: FlowConcentrationSpec | None = None, flow_state: dict | None = None,
                     constituent_overlay: ConstituentOverlaySpec | None = None, constituent_features: dict | None = None,
                     base_tree_models: dict | None = None, fixed_model_from: str | None = None,
-                    definition=None, usd_models=None, economic_models=None):
+                    definition=None, usd_models=None, economic_models=None, raw_rows=None):
     if constituent_overlay is not None and (benchmark or flow_overlay is not None or constituent_features is None):
         raise ValueError('Constituent overlay needs frozen features and an unmodified SOTA base')
     if benchmark and flow_overlay is not None:
@@ -39,6 +39,14 @@ def targets_for_day(rows: dict, day: date, *, benchmark: bool = False, lookback_
             overlay.schedule = usd_models
         elif spec.kind == 'economic_ridge':
             overlay.schedule = economic_models
+        elif spec.kind == 'financial_rank_selection':
+            overlay.schedule = economic_models
+            overlay.rolling_schedule = base_tree_models
+        elif spec.kind == 'audited_etf_activity':
+            if raw_rows is None:
+                raise ValueError('Audited raw activity input required for this strategy')
+            overlay.raw = {s:[PriceBar.model_validate(r) for r in values if date.fromisoformat(r['trade_date']) < day]
+                           for s,values in raw_rows.items()}
     rolling = [o for o, s in zip(overlays, definition.overlays, strict=True) if s.kind == 'rolling_model']
     if rolling and (base_tree_models is None or fixed_model_from is not None):
         raise ValueError('Rolling strategy requires a model schedule for the entire history')
@@ -47,12 +55,13 @@ def targets_for_day(rows: dict, day: date, *, benchmark: bool = False, lookback_
             raise ValueError('A benchmark cannot use a tree schedule')
         from systematic_trading.research.chronological_tree import select_base_tree
         trees = [o for o, s in zip(overlays, definition.overlays, strict=True) if s.kind in ('decision_tree', 'rolling_model')]
-        if len(trees) != 1:
+        selection_only = not trees and any(s.kind == 'financial_rank_selection' for s in definition.overlays)
+        if len(trees) != 1 and not selection_only:
             raise ValueError('Dated base-tree schedule requires exactly one decision-tree overlay')
         if rolling:
             from systematic_trading.research.rolling_tracking import select_rolling_model
             trees[0].model = select_rolling_model(base_tree_models, histories, day)
-        else:
+        elif not selection_only:
             trees[0].model = select_base_tree(base_tree_models, str(histories['SPY'][-1].trade_date))
     targets = _target_schedule(
         instruments=instruments, bars_by_symbol=histories, trade_dates=[day],

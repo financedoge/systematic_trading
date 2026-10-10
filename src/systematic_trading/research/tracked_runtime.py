@@ -41,20 +41,29 @@ def next_session(day):
     return day
 
 
+CALCULATION_PACKAGES = ("research", "lean", "signals", "portfolio", "backtest")
+CALCULATION_EXTRA_SOURCES = ("recorders/economics.py", "runtime_io.py")
+
+
 def calculation_code_hashes():
+    """Hash every calculation-relevant source file.
+
+    The file set is derived from package contents instead of a hand-maintained
+    name list, so a new calculation module cannot be left out of the revision
+    identity and silently fail to invalidate a published calculation.
+    """
     root = Path(__file__).resolve().parents[1]
-    paths = [root / "research" / n for n in ("tracked_runtime.py", "tracked_inputs.py", "flow_concentration.py",
-             "strategy_catalog.py", "sota_models.py", "chronological_tree.py", "rolling_models.py",
-             "rolling_tracking.py", "rolling_training.py", "rolling_report.py", "strategy_diagram.py", "compute.py", "calculation_worker.py", "run_recovery.py",
-             "usd_data.py", "usd_tracking.py", "usd_index_governance.py", "usd_momentum_model.py", "momentum_signals.py")]
-    paths += [root/'research'/n for n in ('strategy_lifecycle.py','usd_monitored.py','momentum_replay.py','momentum_lean.py')]
-    paths += [root/'research'/n for n in ('economic_tracking.py','economic_response.py','economic_models.py',
-        'economic_leading_features.py','construction_controls.py')]
-    paths.append(root/'recorders'/'economics.py')
-    paths.append(root / "runtime_io.py")
-    paths += [p for folder in ("lean", "signals", "portfolio", "backtest")
-              for p in (root / folder).glob("*.py")]
-    return {str(p.relative_to(root)): sha256(p) for p in paths}
+    paths: list[Path] = []
+    for folder in CALCULATION_PACKAGES:
+        found = [p for p in (root / folder).rglob("*.py") if "__pycache__" not in p.parts]
+        if not any(p.is_file() for p in found):
+            raise ValueError(f"Calculation package is empty or missing: {folder}")
+        paths.extend(found)
+    paths.extend(root / name for name in CALCULATION_EXTRA_SOURCES)
+    missing = sorted(str(p.relative_to(root)) for p in paths if not p.is_file())
+    if missing:
+        raise ValueError("Calculation source is missing: " + ", ".join(missing))
+    return {str(p.relative_to(root)): sha256(p) for p in sorted(paths)}
 
 
 _LOADED_CODE_HASHES = calculation_code_hashes()
@@ -147,7 +156,7 @@ def latest_allocation(definition, inputs, economic, quotes, models=None, usd_mod
     known = inputs["provenance"]["price_through"]
     hypothetical_day = next_session(known)
     latest = targets_for_day(inputs["latest_bars"], hypothetical_day, definition=definition, base_tree_models=models,
-        usd_models=usd_models, economic_models=economic_models)
+        usd_models=usd_models, economic_models=economic_models, raw_rows=inputs.get('raw_bars'))
     last_day = max(economic["decisions"])
     scheduled = {t["symbol"]: float(t["target_weight"]) for t in economic["decisions"][last_day]["targets"]}
     target = {t.symbol: float(t.target_weight) for t in latest}
@@ -200,9 +209,11 @@ def _refresh_tracked_strategies(settings, store, analytics):
     p = config["calculation"]
     keys = list(dict.fromkeys(config["monitored_strategy_ids"]))
     definitions = [registered_strategy_definition(k) for k in keys]
-    if any(d.universe_key != "multi_asset" or d.scheduler != "static_monthly" for d in definitions):
+    if any(d.universe_key not in ("multi_asset", "multi_asset_14") or d.scheduler != "static_monthly" for d in definitions):
         raise ValueError("Tracked definitions must implement the monthly multi-asset contract")
     requested_definitions = definitions
+    m1_definitions = [d for d in definitions if d.key in {'research_m1_14_v1','research_fr25_14_v1'}]
+    definitions = [d for d in definitions if d.key not in {'research_m1_14_v1','research_fr25_14_v1'}]
     usd_definitions = [d for d in definitions if d.key in USD_KEYS]
     definitions = [d for d in definitions if d.key not in USD_KEYS]
     from systematic_trading.portfolio.strategy_allocation import sota_definition
@@ -235,6 +246,17 @@ def _refresh_tracked_strategies(settings, store, analytics):
         from systematic_trading.research.economic_tracking import economic_inputs
         inputs['economic'] = economic_inputs(analytics,inputs['latest_bars'],p['start'])
         inputs['provenance']['economic'] = inputs['economic']['provenance']
+    m1_inputs = None
+    if m1_definitions:
+        from systematic_trading.research.m1_monitoring import load_inputs as load_m1_inputs
+        m1_inputs = load_m1_inputs(settings,analytics,config)
+        if m1_inputs['provenance']['batch'] != inputs['provenance']['batch']:
+            raise ValueError('Candidate and parent price publications differ')
+        if any(d.key=='research_fr25_14_v1' for d in m1_definitions):
+            from systematic_trading.research.fr25_tracking import economic_inputs as financial_inputs
+            m1_inputs['financial']=financial_inputs(analytics,m1_inputs['bars'],p['start'])
+            m1_inputs['provenance']['financial']=m1_inputs['financial']['provenance']
+        inputs['provenance']['m1_14'] = m1_inputs['provenance']
     fx_publication=analytics.latest('governance/fx-usd-cnh') if usd_definitions else None
     revision=digest(encode([calculation_revision(config, inputs, requested_definitions),
         selected_sota.to_dict(),(fx_publication or {}).get('version')]))
@@ -421,6 +443,14 @@ def _refresh_tracked_strategies(settings, store, analytics):
         documents.extend(usd_documents);observations.extend(usd_observations)
         if usd_provenance['usd'] != inputs['provenance']['usd']:
             raise ValueError('USD publication changed during calculation')
+    if m1_definitions:
+        progress('replaying_m1_14')
+        from systematic_trading.research.m1_monitoring import calculate as calculate_m1
+        candidate_documents,candidate_observations,candidate_provenance = calculate_m1(
+            settings,analytics,config,m1_definitions,selected_sota,root,_LOADED_CODE_HASHES,m1_inputs)
+        documents.extend(candidate_documents);observations.extend(candidate_observations)
+        if candidate_provenance['usd'] != inputs['provenance']['usd']:
+            raise ValueError('Candidate USD publication changed during calculation')
     # Keep the last complete report for archived entries. Their portfolios are not extended.
     previous=published_strategies(analytics)
     archive_keys=[]
@@ -446,6 +476,10 @@ def _refresh_tracked_strategies(settings, store, analytics):
         from systematic_trading.research.economic_tracking import economic_inputs
         if economic_inputs(analytics,inputs['latest_bars'],p['start'])['provenance'] != inputs['provenance']['economic']:
             raise ValueError('Economic decision inputs changed during calculation; retry publication')
+    if m1_inputs and m1_inputs.get('financial'):
+        from systematic_trading.research.fr25_tracking import economic_inputs as financial_inputs
+        if financial_inputs(analytics,m1_inputs['bars'],p['start'])['provenance']!=m1_inputs['financial']['provenance']:
+            raise ValueError('FR25 financial inputs changed during calculation; retry publication')
     documents.append(dict(point_key="catalog", media_type="application/json", payload=encode([*keys,*archive_keys])))
     published = analytics.publish(SOURCE, revision, observations, documents,
         provenance=dict(owner="application", inputs=inputs["provenance"], config=config,

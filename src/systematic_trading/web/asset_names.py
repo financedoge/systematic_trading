@@ -5,7 +5,7 @@ import json
 
 def registered_asset_names() -> dict[str, str]:
     from systematic_trading.research.all_weather_universe import ALL_WEATHER_ETF_UNIVERSE
-    from systematic_trading.research.etf_universe import BENCHMARK_INSTRUMENTS, MULTI_ASSET_ETF_UNIVERSE
+    from systematic_trading.research.etf_universe import BENCHMARK_INSTRUMENTS, MULTI_ASSET_ETF_UNIVERSE, RESEARCH_SECTOR_ETFS
     from systematic_trading.research.stock_universe import US_STOCK_REPLACEMENT_UNIVERSE
 
     instruments = {
@@ -13,6 +13,7 @@ def registered_asset_names() -> dict[str, str]:
         **MULTI_ASSET_ETF_UNIVERSE,
         **ALL_WEATHER_ETF_UNIVERSE,
         **BENCHMARK_INSTRUMENTS,
+        **RESEARCH_SECTOR_ETFS,
     }
     # Recorder canary outside the trading universes; issuer display name checked
     # 2026-10-02: https://www.invesco.com/qqq-etf/en/home.html

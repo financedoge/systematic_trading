@@ -1,5 +1,567 @@
 # Project Log
 
+## 2026-10-10 — FR25 close-out, calculation identity and governed-data hardening
+
+Closed out the FR25 monitoring item and repaired four hazards found in a
+repository review. No funding, approval, reconciliation or execution-authority
+change.
+
+FR25 (`research_fr25_14_v1`) was already implemented, registered and verified
+before this session: membership generation 4, membership revision 4, and research
+parity against the frozen selection-blend protocol
+`5399931f5267d8beceb1ff52b15d84a81547f4f1e8a285a413bace7702769276` with 130
+decisions, 898 fills, 2,707 daily NAV observations, 130 model fits and matching
+final positions. This session supplied the missing durable bookkeeping: the
+architecture contract, `docs/fr25-selection-tracking.md`, a research-state entry,
+the Kanban transition to Done and a written runtime acceptance receipt. The
+report is served with its current-state, USD model, financial-ridge selection
+rank, model-training, signal-attribution and full-decision-chart panels.
+
+That registration-time parity is bound to audited price batch `4bfdef17…`. The
+live runtime revision now calculates on the newer committed batch `b02d9372…`, so
+the two are distinct evidence versions of the same frozen recipe and are not
+bit-identical: the first differing NAV is 2016-02-25 (about 48 CNH) and recent
+rebalances differ by about one share. This is the documented "new audited
+revision produces a separate reproducible calculation version" behaviour, not a
+code, definition or contract change. `runtime-final.json` records both batches and
+re-verifies 11 native parity receipts; the four existing USD strategy replays are
+byte-identical to the previous revision, and allocation revision 5 with all 270
+order records is unchanged.
+
+The calculation code-hash identity is now derived from package contents instead of
+a hand-maintained file list. `calculation_code_hashes()` globs the `research`,
+`lean`, `signals`, `portfolio` and `backtest` packages plus
+`recorders/economics.py` and `runtime_io.py`; a new calculation module can no
+longer be omitted from the revision identity, and a missing declared source or an
+empty calculation package fails loudly. The on-disk key format is unchanged. The
+restart produced a distinct revision, confirming the identity changed as
+intended.
+
+The XOP admission hold moved out of configuration alone into
+`research/etf_admission.py`, consulted by the research-ETF recorder, M1/14
+constituent validation and the universe control. Deleting the `admission_hold`
+configuration key can no longer release the hold; the quarantined state records
+the evidence reference. Configuration-only holds keep their previous behaviour.
+
+Three further hazards were repaired. The catalog re-read in `_build_publish` now
+raises the intended `ValueError` when the committed publication is missing rather
+than a `TypeError`. The two divergent `canonical_payload_hash` implementations
+collapsed into one shared definition in `systematic_trading/canonical.py`; 735
+recorded raw envelopes re-verified with zero hash mismatches, and the previous
+key order, separators, escaping and naive-timestamp handling are pinned by test.
+The paper/live decision receipt now states
+`provider_reported_split_adjusted_source_volume` and records explicitly that it
+is not the reconstructed raw-volume basis.
+
+Tracker drift was swept: the monitoring-configuration header now states that the
+ID list is a baseline seed and that durable overrides are authoritative;
+`log.md` is consistently newest-first (the 2026-10-09/10 sessions had been
+appended at the end); the roadmap's stated work order and the stale P-table rows
+were corrected against verified code.
+
+Validation: 39 focused tests across the four repaired areas, then a 143-test
+regression batch (one optional skip) passed; Ruff and whitespace checks pass.
+The dashboard and event dispatcher restarted on the new code and recalculated all
+monitored strategies. Allocation revision 5, the 100% F3 allocation, approvals,
+reconciliation and the live-disabled posture are unchanged.
+
+## 2026-10-10 — Momentum/XGBoost/ridge ranks at the asset-selection stage
+
+Executed the user's request to combine predictor rankings before selecting
+the portfolio from the full 14-candidate pool. Corrected one terminology point:
+the original M1 score is 75% momentum and 25% volume, not pure momentum. That
+score, XGBoost forecasts and context/financial total-return ridge forecasts are
+converted into comparable midranks and blended. No ETF is forced into a slot.
+Positive126 momentum eligibility, top6/min4 and the defensive fallback remain.
+
+Froze ten main blends before running: M/X 75/25 and 50/50; M/R 75/25 and 50/50,
+M/X/R 50/25/25 and equal weights for each ridge group. Eight mean-only controls
+match every ridge blend's availability. Three controls remove the downstream
+XGBoost tilt; two match the equal blends to CP target gross; seven references
+include exact M1, cap-only CP, earlier sizing-only ridge, funded F3, RP14 and
+URTH. Primary arms retain the original downstream sizing and add no economic
+weight tilt. Required ridge gaps revert to original selection; missing XGBoost
+fails closed. Reused pinned models without refits or new prices. Protocol hash:
+5399931f5267d8beceb1ff52b15d84a81547f4f1e8a285a413bace7702769276.
+
+FR25 (75% M1 /25% financial ridge) and CR50 (50% M1 /50% context ridge) pass
+the practical +0.05 Sharpe/+0.05 Calmar screen, risk budgets, paired mean-only
+controls and cost/delay checks. Evaluation CAGR/Sharpe/Calmar are
+13.09%/1.193/1.512 and 12.49%/1.171/1.533, versus CP's11.92%/1.106/1.435.
+Corresponding earlier sizing-only results are12.03%/1.108/1.425 and
+12.09%/1.122/1.436. Selection therefore produces larger effects in this sample,
+without establishing that selection always dominates sizing. Neither leading
+selector uses XGBoost in its blend; both retain its existing downstream tilt.
+Equal predictor weights and a50% XGBoost selection share are not consistently
+better. No contrast passes5% Holm across the50-comparison return family at
+3/6/12-month blocks; recipe-screen passes are not promotion decisions.
+
+FR25 is the stronger full-history lead: CAGR/Sharpe11.21%/1.109 versus
+CP10.65%/1.062; drawdown-19.83% versus-19.49%. CR50's full-history drawdown
+is-20.95%, and equal financial blending reaches-30.46%. FR25 changes13/70
+selections, one asset each time; eight entrants outperform displaced ETFs
+over the next rebalance-open interval. Average target gross rises only0.040pp
+and annual traded notional falls8.59×→8.07×. Gains are materially concentrated
+in2026: July TLT→XLE and August HYG→EWY correspond to+1.974pp/+1.670pp net
+calendar outperformance; October2024 HYG→TLT loses-1.157pp. CR50's strong2021
+gain is followed by weaker2022/2023. All episodes and assets remain visible in
+the report; no new regime rules or weight search were added after outcomes.
+
+Disposition: freeze FR25 as primary research candidate, CR50 secondary, for
+prospective/concentration robustness evidence. Any future monitored strategy
+must use the full app-owned service contract. No monitoring, funding, broker,
+approval, reconciliation or paper/live controls changed. Sector-release
+qualification remains queued; standalone SPY dip-buying remains deferred.
+
+Implementation caught and fixed Decimal tie noise before protocol registration:
+blend scores canonicalize to18 decimal places so exact rank ties resolve by
+the declared symbol ordering. Six new behavior tests cover eligibility,
+missing-model fallback, mean controls, tie handling and cap capacity. Alongside
+existing tests,18 focused tests pass. All240 replays,30 native checks,54 exact
+controls and72 inference jobs pass. Independently verified40,040 rank cells,
+2,990 gate/cap/label contracts and unchanged decisions after poisoning future
+prices/models. Thirty complete shared reports include full decision flows,
+targets/held weights and benchmark comparisons. Local links, JavaScript,
+source/artifact hashes, Ruff and whitespace pass. Browser automation blocks
+file URLs; used direct source checks,1,540 DOM render states and visual chart
+inspection without bypassing that restriction.
+
+Evidence: research/selection-blend-2026-10-10/index.html;
+var/research/selection-blend-20261010-v1/{protocol,report,acceptance}.json.
+Preserved existing studies and unrelated repository/application work.
+
+## 2026-10-10 — Full-pool IC challenge and portfolio-contribution diagnosis
+
+User directs future research to the full candidate pool and asks whether IC
+above 0.1 warrants deeper analysis. Recorded the standing full-pool rule in
+AGENTS, research state and roadmap. No further standalone XLE/XLB-only tests;
+individual-asset attribution remains part of explaining the full portfolio.
+
+Froze a diagnostic protocol before new calculations. Reused the exact audited
+price/economic pins, expanding-window models, decisions and trade ledgers of
+expanded-economics-20261010-v1. No refits, parameter search, new strategy arms,
+new prices or app/execution changes. Diagnostic protocol SHA-256:
+5f5467917cfe5bb4d46debd02bd1a2ddc73383e61244bf789073920392cf0f4a.
+
+The original interpretation was too broad: failure of the threshold-sizing
+recipe is not rejection of the underlying economic ranking signal. Context,
+financial and combined ridge total ICs are 0.1182/0.1188/0.1152, versus matched
+training-mean ICs 0.0435/0.0706/0.0435. Macro-increment ICs are
+0.0887/0.1213/0.1003. Marginal total-IC intervals are positive under every
+3/6/12-month block length; financial/combined increment intervals also are
+individually positive. Paired improvement over mean-only ranking is uncertain,
+and none of 12 incremental contrasts passes Holm. Dependent months/assets,
+inspected history, retrospective M1 selection and economic-vintage availability
+limitations remain disclosed. Whole-pool MAE does not invalidate ranking merit.
+
+Forecast IC uses total return predictions, while the overlay thresholds macro
+increments at +/-25bp into +/-10% sizing and preserves membership/cash. Context
+changes 40/70 decisions: 12 unavailable, six cash, two single holding, ten
+uniform multiplier. Average capital shifted is 1.74% overall and 3.04% when
+changed. Financial IC on the same months falls from 0.130 across 14 candidates
+to 0.049 within held assets. These are transfer diagnostics, not restricted
+universe tests or evidence that removing selection constraints would help.
+
+Context adds +0.167pp CAGR/+0.0162 Sharpe/+0.0010 Calmar versus the cap-only
+control. Its higher CAGR contributes +0.0202 Calmar and worse maximum drawdown
+subtracts -0.0192. Costs are near neutral/favorable. Context adds +0.625pp in
+2024, financial +0.943pp in 2022, but financial loses -0.644pp relative return
+in 2025. During March 19-April 8, 2025, context adds -11.1bp to the drawdown;
+all-asset attribution reconciles (XLE -23.9bp, MCHI +12.0bp, GLD +3.1bp, others
+the balance). Context recovers June 24 versus CP June 12. Descriptive trend
+splits disagree across models and are not promoted into new regime rules.
+
+Retain context/financial ridge as signal-research leads. The exact sizing
+recipes still fail the original +0.05 Sharpe/+0.05 Calmar screen; monitoring and
+funded F3 are unchanged. Proposed next experiment: separately specify and
+freeze a finite full-pool rank-based selection/sizing comparison, with
+mean-only forecasts, matched cash/risk controls and prospective evidence where
+available. New sector-release history qualification remains separately queued;
+standalone SPY dip buying remains deferred.
+
+Evidence: research/full-pool-signal-diagnostics-2026-10-10/index.html and
+var/research/full-pool-signal-diagnostics-20261010-v1/. Verified 10,677 parent
+manifest entries, seven replay bundles and exact NAV/cash/asset PnL. All prior
+total ICs reproduce; 1,110 independent SciPy correlations and 414 monthly
+active-weight return attributions pass. Twelve focused tests, Ruff, source/
+artifact hashes, report links/anchors and static figure inspection pass.
+Shared complete strategy reports remain linked from the frozen original study.
+Preserved unrelated strategy-table work and all historical study artifacts.
+
+## 2026-10-10 — Strategy comparison period returns and frozen names/actions
+
+Added 1M, YTD and 1Y cumulative performance to the strategy registry, including
+archived rows. Returns end at each row's Data Through date in its displayed
+accounting currency. 1M/1Y use calendar offsets with month-end clamping; YTD
+uses prior year-end. Each anchor is the last observed close on/before the
+boundary. Missing anchors and invalid window values remain unavailable, with
+no since-inception substitute, provider fetch, FX conversion or annualization.
+The serving projection summarizes existing verified tracked NAVs; no strategy
+retraining/replay or new historical research is required. Archived artifacts
+retain their existing legacy-evidence status.
+
+The table scrolls horizontally while the strategy name, report link and
+monitoring/allocation buttons stay fixed together on the left. Headers remain
+sticky, narrow layouts use a smaller frozen column, and the scroll region is
+keyboard accessible. Automatic catalog refresh retains horizontal position.
+
+Validation: 37 focused tests passed, one disposable-ClickHouse test skipped;
+Ruff and whitespace checks passed. Browser checks covered narrow and desktop
+layouts and real published values. All five monitored rows independently
+reconcile to their October 9 NAVs. Restarted through the normal guarded local
+launcher; allocation revision 5, active weights and pending state are unchanged.
+Evidence: var/strategy-columns-tests.xml, var/strategy-columns-expected.json,
+var/strategy-columns-acceptance.json. Preserved unrelated working-tree edits;
+no commit or push requested. Paper/live, approval and reconciliation controls
+are unchanged.
+
+## 2026-10-10 — Expanded-pool economics completed; standalone SPY deferred
+
+User explicitly deferred standalone SPY dip-buying and requested the next
+research item. Recorded the independent SPY hypothesis without starting a new
+experiment or automation. Executed the existing queued economic revisit after
+ETF-universe admission, using M1/14's fixed candidate selection. Historical
+energy/CFTC/issuer availability remains unqualified and was not bypassed.
+
+Froze protocol `9265c4e96c0a48bc17815b422eeab40f8de29e21a3c45b33e0ffb4950916100a`
+before model/portfolio outcomes. Pinned the October 8 audited price batch and
+the original published sixteen-series economic batch. Recomputed all 130
+monthly feature states and matched the previous frozen features exactly. All
+new signals use those vintage-specific observations and completed monthly
+labels, with inherited retrospective archive/price-availability limitations.
+No online prices, source-archive research reads or missing-value substitutions.
+
+The M1 parent has no final cap. Added CP as an explicit 45% final-target-cap
+control, leaving clipped amounts in cash. Only four monthly decisions change,
+with 0.183% average target cash added. Economic arms preserve exact CP gross,
+cash and positive membership; no forced XLE/XLB allocation. Tested context,
+financial and combined feature groups with the existing ridge/tree capacities,
+plus matched-context availability. No threshold/grid search or monitored recipe
+change. Shared 14-ETF and global-equity benchmarks accompany every report.
+
+All 104 portfolio replays and 13 independent native full-history validations
+passed. M1/F3/CR12/RP14/URTH controls reproduce exact original NAV, fills and
+positions. All 57 inference jobs completed 10,000 paired calendar-block draws;
+no 18-family mean-return contrast passes 5% Holm at any block length. Evaluated
+520 monthly group models, with 336 ready group fits; insufficient history
+abstains. Matched-context models reproduce original-context outputs exactly.
+
+2021–October 8, USD/5bp/zero cash interest: M1 CAGR/Sharpe/Calmar/DD are
+11.91%/1.104/1.433/-8.31%; CP 11.92%/1.106/1.435/-8.31%; context ridge
+12.09%/1.122/1.436/-8.42%; financial ridge 12.03%/1.108/1.425/-8.44%;
+combined ridge 12.04%/1.115/1.443/-8.34%. Context-ridge gains over CP are
+only +0.0162 Sharpe/+0.0010 Calmar, below +0.05/+0.05 requirements. Its
+six-month Sharpe interval includes zero; the positive twelve-month marginal
+Sharpe interval does not establish joint return or Calmar superiority. Trees
+fail paired linear comparisons; augmented candidates fail their stronger
+matched-context hurdle. None passes retention.
+
+XLE/XLB ridge forecast MAE is worse than the training-mean predictor in every
+feature group: context 5.79% versus 5.01%, financial 5.39% versus 5.02%,
+combined 6.53% versus 5.01%, on their respective availability-matched samples.
+Context/combined ready 58/70 evaluation decisions, financial 70/70; prior
+missing/stale observations and CPI windows remain unavailable. Context ridge
+changes 40 decisions but its full-history gain is small and drawdown is worse.
+Reject these variants for additional monitoring/promotion; preserve M1/14,
+monitored CR12 and funded F3. Next is original-release sector/energy source
+qualification, not another tuned combination of the same economic inputs.
+
+Verification: 57 focused tests passed; initial test invocation named a
+nonexistent test file and collected no tests, then the corrected complete set
+passed. Ruff, immutable hashes, 910 selection/cash/cap/label checks, matched
+samples, 13 shared report payloads, local links/embedded JavaScript and visual
+plot checks passed. Control revision 5, monitoring membership and 270 order
+records match the before snapshot. The app independently advanced to October
+9 prices with empty analytics errors; this finite study retains its preregistered
+October 8 common cutoff. No app restart, broker action, allocation or approval
+change was needed. Paper/live safeguards and pre-existing dirty files preserved.
+
+Evidence: `var/research/expanded-economics-20261010-v1/acceptance.json`;
+full reports: `research/expanded-economics-2026-10-10/index.html`. Added isolated
+research orchestration/analysis and tests; existing model and trading services
+are unchanged. Execution Kanban P4.12 and research state are complete. No commit
+or push requested.
+
+## 2026-10-09 — M1/14 monitored; cash/stress and loser-basket research completed
+
+User authorized monitoring the exact M1/14 candidate, then explicitly requested
+a separate broad-market stress sleeve and bottom-momentum comparison. Registered
+`research_m1_14_v1` on a distinct 14-ETF pool, with the shared selector/overlays,
+audited raw-dollar activity and causal per-pool XGBoost/USD models. App-owned
+signals, scheduled and indicative targets, held weights/NAV and full decision
+reports now calculate through October 8. No manual research card or Codex
+automation performs recurring calculations. The original execution-universe
+gate stays closed for M1/14; monitoring is not capital approval.
+
+Development and app replays exactly reproduce 130 monthly decisions, 907 fills,
+2,707 NAV values and final positions. Nine app native checks passed. Current
+revision is `baad7794e23ccaeee3d359fd6c6ee0565d6873cfd60c67e9cc31ffb5e9e991c6`;
+the five currently monitored entries are Current. Membership was concurrently
+changed to archive the former SOTA at 15:28 UTC, after our M1 addition; retained
+that newer state. The generation guard discarded obsolete work and the next
+complete publication passed. F3 control revision 5 and 270 order records are
+unchanged. Acceptance: `var/research/m114-monitoring-20261009/runtime-final.json`.
+
+Recovered development diagnostics without weakening gates: the first parity
+bundle omitted required limitations metadata and was retained; its corrected
+successor passed. The first app load demanded URTH before its January 12, 2012
+inception. Corrected benchmark coverage to require the real anchor/valuation
+calendar, while all 14 strategy histories retain full warmup requirements and
+actual gaps still fail closed. No pre-inception rows were filled. Acceptance
+hash validation uses the native runner's canonical economic digest, not a raw
+JSON byte hash; source/native artifact checks remain intact.
+
+Froze cash protocol `cc19d9f608c8484aedbf81afae41d3db9e696daed1f7f0b8be07d86760e10b4a`
+before outcomes, on the current published audited batch and exact F3 targets.
+Fourteen fixed policies × ZERO/BIL parking cover scheduled/stress/confirmed SPY,
+bottom/top-three momentum and separate 10%/20% additional reserves. Stages are
+10/20/30% drawdowns, one-third locked-budget tranches; recovery or twelve-month
+exit, no repeated stage spending, parent funding priority and no added leverage.
+An evaluation-only URTH control freezes its volatility match using 2016–2020.
+Adjusted histories only for new signals, no direct provider archive prices or
+unqualified FX; legacy parent limitations are explicit.
+
+All 232 dynamic-to-frozen replays and 30 independent native checks passed.
+Paired phase-dollar P&L reconciles terminal wealth; actual virtual ownership
+cannot exceed held quantities. Diagnostic deployment counts exclude clipped
+attempts with no material purchase. Nine initial cash-state/causality tests
+plus a hand-calculated entry/exit fee-attribution test pass. The combined
+focused regression covers 89 distinct tests, with Ruff and whitespace checks.
+All 141 inference jobs completed 10,000 draws. Finalization initially withheld
+publication while native runs continued; saved inference was reused unchanged
+after the last parity check, with no resampling or frozen-input modification.
+
+2021+ ZERO-cash CAGR: F3 10.58%, scheduled SPY 10.79%, stress SPY 10.76%,
+confirmed SPY 10.65%, bottom-three 10.52%, top-three 10.58%. Bottom-three DD
+is -11.98%, versus SPY -10.84% and F3 -11.69%. Extra fixed 10%/20% reserves
+cost 1.07/2.14pp CAGR; stress buying recovers 0.09/0.18pp. BIL reduces fixed
+reserve drag to 0.79/1.58pp, still beyond the 0.5pp sacrifice tolerance.
+No effect/protection screen passes; no 46-family Holm result at any block size.
+Only two existing-cash cycles are funded in full history and one in evaluation;
+the 2020 parent had already invested its cash. Full-period Stage A drawdown is
+effectively unchanged near -16.42%. Preserve these negative/inconclusive results;
+do not promote, add a permanent reserve or optimize the bottom-rank rule from
+this sample. This is not evidence against all possible reversal strategies.
+
+Artifacts: `var/research/cash-stress-losers-20261009-v1/` and
+`research/cash-stress-losers-2026-10-09/` (30 full shared reports, benchmark
+comparisons, decision flows, targets/held weights, attribution and uncertainty).
+Report/source hashes are retained separately from frozen economics. Settlement
+timing, broker cash remuneration and account/product eligibility remain outside
+qualified historical inputs. Existing paper/live-disabled approval, broker and
+reconciliation checks are unchanged. Independent IB recorder competing-session
+and unconfigured-email issues remain visible; no login or notification change.
+Next: continue queued data qualification/information-signal research; preserve
+M1/14 monitoring and F3 funding. No commit or push requested.
+
+Final artifact acceptance verifies all frozen input/output hashes, nonnegative
+cash, target cash floors and 22,960 actual-ownership events across the 232
+replays. All 30 report payloads contain decision diagrams and matched benchmarks;
+local links and embedded JavaScript syntax pass. The shared template's app
+navigation links were made absolute for local-file reports. The comparison plot
+was visually checked. Receipt: `var/research/cash-stress-losers-20261009-v1/acceptance.json`.
+Final app read shows empty analytics errors, current October 8 prices and the
+same accepted serving revision. Documentation and P4.11 status are complete.
+
+## 2026-10-09 — Candidate-pool correction and finite momentum rerun
+
+User clarified that ETF additions always meant the candidate pool, with no forced
+allocation. Preserved the earlier all-asset inverse-volatility study as evidence
+for a different question; its rejection cannot reject candidate-pool expansion.
+Completed four predeclared selectors on matched 12/14 pools: existing 63/126/252,
+faster 21/63/126, 21-session-skipped momentum and volatility-normalized momentum.
+Each retains top six, positive gate, minimum-four breadth and defensive-cash
+fallback. No new ETF is exempt from selection or revived by downstream layers.
+
+Pinned published catalog 4bfdef171ba1d180f2191c589d269a9ad42e2f497b9f069b80e1e9043668f3fd;
+XOP still quarantined. Adjusted OHLC for returns/direction, raw volume for activity,
+raw close × raw volume for dollar turnover. New arms consistently use this basis;
+exact legacy F3 benchmark retains its older activity proxy. The 12-pool bridge
+changes CAGR only 9.8458%→9.8306%, and is not attributed to pool expansion.
+Causal monthly one-year XGBoost schedules refit per pool; USD U1 also refits per
+pool from already published snapshots. Architecture/parameters unchanged; momentum
+variants share the same pool's model schedules. Unsupported inputs fail closed.
+
+Findings (USD, 5bp, zero cash interest, through October 8): M0 12→14 full-history
+CAGR 9.83%→9.56%, Sharpe 1.047→0.924, max drawdown -16.42%→-16.33%.
+XLE selected 48/130 months, XLB 59/130; mean held weights 4.44%/6.62%.
+M1/14 full CAGR/Sharpe/DD 10.64%/1.061/-19.48%; 2021+ 11.91%/1.104/-8.31%.
+M0/14 2021+ is 10.14%/0.897/-12.89%. Faster momentum retains its 2021+ advantage
+over M0/14 at 10/20bp and delayed execution, but the six-month-block Sharpe-delta
+95% interval is [-0.083, +0.526]. All eleven paired mean-return contrasts fail
+5% Holm across the three block lengths. Expansion under M1 versus M1/12 also
+fails the combined cost/delay Sharpe-and-Calmar condition. M2/M3 do not establish
+a superior replacement. Keep M1/14 as a finite research lead only; no promotion,
+new monitoring, capital or execution authority. These previously inspected periods
+are retrospective, not untouched out-of-sample evidence.
+
+Found and corrected a specification description error: exact current F3 has no
+final 45% cap; incoming inverse-volatility and later active bounds do not imply
+one. Some economic-study controls do impose that cap. Preserved the exact F3
+recipe and exposed concentration; corrected P4.11 R0 wording so an added cap
+cannot be silently confounded with cash/stress deployment.
+
+Evidence: var/research/candidate-pool-momentum-20261009-v1/.
+Protocol SHA-256: 8242daf88c16cf28c8f12f16f68aafd84ff4ec71dfbc85d37cc0aa32acdfce60.
+Report: research/candidate-pool-momentum-2026-10-09/index.html, with 12 complete
+shared strategy reports, decision flow, latest scheduled targets/held weights,
+selection frequencies, cost/delay, yearly/context metrics and uncertainty.
+260 XGBoost fits, 94 accounting replays, 12 frozen-target native LEAN parity
+checks, 36 inference jobs with 10,000 draws, exact legacy economics, 65 focused
+tests and Ruff passed. Report finalization first withheld publication because
+native checks were still running; inference was preserved and finalization
+succeeded after all native checks passed. Frozen source/evidence are unchanged;
+analysis/presentation editions and the unused-import cleanup are recorded separately.
+
+Read-only acceptance: control revision 5 and 270 order records/statuses unchanged;
+analytics errors empty and no changed strategies. No app restart or broker write.
+Preserved pre-existing dirty files. P4.11 remains next on current F3/original pool,
+with cash income, complete-cycle deployment/replenishment and falling-knife risk
+explicitly registered before execution. No commit or push requested.
+
+## 2026-10-09 — Audited sector ETF admission and frozen universe control
+
+Continued the next research milestone before P4.11. Extended the app-owned
+research ETF recorder with issuer ISIN/inception/exact-listing checks for
+XLE/XOP/XLB. Published 6,991 sessions each for XLE/XLB through October 8 under
+catalog `4bfdef171ba1d180f2191c589d269a9ad42e2f497b9f069b80e1e9043668f3fd`.
+BIL is also current. XOP failed its listing-date gate: issuer June 23, 2006
+versus provider first-trade metadata and first bar June 22. Preserved the
+original capture, added a visible explicit admission hold, and excluded XOP
+before portfolio outcomes. No trimming, relabeling or substitute history.
+
+Read-only paper IB ISIN discovery verified BIL/XLE/XOP/XLB contract identities.
+Account/product permissions and settlement eligibility remain unverified; no
+order preview or order call was used. Issuer holdings residuals were inspected
+without fabricating balancing entries. Holdings-derived features and split-aware
+issuance remain blocked; no new issuer/EIA/CFTC record was backdated.
+
+XLB publication twice hit a 30-second HTTP INSERT timeout. ClickHouse was healthy;
+no rows or catalog publication from either failed attempt were persisted. The
+exact transport cause is unproven. Bounded inserts to 1,000 rows instead of 10,000
+while preserving full-batch SHA-256 readback and no uncertain-write retries.
+The subsequent real publication succeeded. Multi-chunk corruption rejection is
+covered by regression tests. Failed evidence and diagnostics remain in
+`var/research/etf-admission-20261009/` and the referenced governance roots.
+
+Froze a four-arm universe control: original 12 versus original plus XLE/XLB with
+identical monthly inverse-63-session-volatility sizing, 45% target cap and 2%
+cash floor; current capped F3 and URTH are separate benchmarks. One primary
+contrast, 5/10/20bp costs, one-session delay and predeclared economic thresholds.
+Verified the current app F3 parent through October 8 before freeze; an older
+candidate input failed exact price equality and was not used. Published adjusted
+prices are the only inputs to the two new arms. Original F3 prices/quotes,
+decisions, NAV, fills and final positions reproduce exactly. Existing F3 retains
+its inherited source-volume proxy limitation; no new activity signal is added.
+
+Completed 14 replays, four full native parity checks and three block-bootstrap
+jobs (10,000 draws each) with all 16 CPUs and bounded native memory. Added ETFs
+change CAGR 5.73% to 6.16%, Sharpe 0.748 to 0.753, Calmar 0.255 to 0.311 and max
+drawdown -22.46% to -19.81%. The +0.05 Sharpe threshold fails. Other economic and
+cost/delay checks pass, but paired 3/6/12-month confidence intervals all include
+zero; return p-values 0.224–0.265. Reject unchanged-sizing expansion under the
+frozen screen. This does not establish the result of an expanded F3/model study.
+
+Protocol SHA-256: `0d25e4fb623a25cbe52cceb0e5ae1e3c76b5244f3c961c1a3bfc424d0335ff7a`.
+Frozen evidence/acceptance: `var/research/energy-materials-universe-20261009-v1/`.
+Shared strategy reports/decision flows and comparison:
+`research/energy-materials-universe-2026-10-09/index.html`.
+Retained the initial presentation separately; corrected asset labels and made
+annualization conventions explicit without changing any frozen calculation.
+The report edition includes the exact presentation source and file hashes.
+
+Validation: 68 focused tests pass, input/output/native hashes and exact parent
+parity pass, Ruff/whitespace pass, and browser reports render with no errors or
+warnings. No allocation/control/order change: revision 5, current SOTA F3 and
+270 broker-order records match the initial snapshot. Preserved pre-existing
+issuer/EIA changes and unrelated working files. No commit or push requested.
+Next: P4.11 on retained capped F3 and the original 12 ETFs; freeze cash/parking
+assumptions and complete-cycle stress/deployment/replenishment rules before
+outcomes. XOP evidence and prospective holdings/account qualification remain
+separate unresolved work, not reasons to assume additional admission.
+
+Final guarded runtime acceptance: all eight app native runs passed hashes/parity;
+new tracked revision `1ef8c43dd057b1a0ed3c38dd2b331528da54be174e9985860cbd5a704cf4617d`
+is published. Five monitored strategies are current through October 8, analytics
+errors/startup/freshness flags are clear, and allocation calculation status is OK.
+Rechecked unchanged control revision 5 and all 270 order records. Application
+acceptance is in `var/research/etf-admission-20261009/runtime-final.json` and
+`app-native-acceptance.json`. Overall platform health remains degraded solely by
+the separate IB market-data recorder's competing-session error 10197; no account
+login/session was altered. Email alerts remain unconfigured. The temporary
+report preview server and browser tab were closed after verification.
+
+## 2026-10-09 — Cash reserve and stress-deployment research queued
+
+The user requested adding the cash-for-market-stress idea to the research plan
+for execution. Added P4.11 to the execution Kanban and the ETF expansion roadmap,
+sequenced after the current ETF admission and frozen universe-control milestone.
+Stage A compares unchanged capped F3 with scheduled, stress-staged and
+recovery-confirmed deployment of existing defensive cash. Stage B separately
+tests additional 10%/20% reserve sleeves against ordinary scheduled rebalancing;
+it must retain every case rather than choose a historical winner.
+
+The plan requires a frozen complete policy and predeclared economic tolerances,
+full-cycle waiting/deployment/replenishment attribution, matched exposure and
+benchmarks, audited pinned prices, explicit cash income and FX limitations,
+dependence-aware crisis evidence, costs/delays and application/native replay
+parity. Buying below a peak is not evidence of compensating for earlier cash drag.
+Protection bought with lower return must be reported separately from return alpha.
+
+Next: complete the current admission/control work, then pin one parent/universe,
+qualify cash/FX coverage and freeze the finite P4.11 execution manifest before
+calculating outcomes. Existing issuer/EIA changes are preserved. This session
+changes planning documents only; it starts no backtest, recurring automation,
+monitored strategy, promotion, capital allocation or order.
+
+Validation: added local links and heading anchors resolve, P4.11 is unique and
+belongs to the research Kanban table, pre-session document content is preserved,
+and changed-file whitespace checks pass. No behavior changed, so no runtime
+tests or service restart were needed. Planning is complete; study execution is
+Pending under P4.11.
+
+## 2026-10-09 — Issuer ETF fundamentals pilot recorded and inspected
+
+Continued the next authorized research item: prospective issuer holdings,
+shares/NAV and valuation/growth snapshots for XLE, XOP and XLB. Added the
+six-hour application recorder, strict HTML/OOXML parsers, independent per-fund
+raw-first publication, manifest-verified readers and Market Data → ETF
+Fundamentals. Each capture preserves issuer section dates, actual completion
+timestamps, original responses, normalized data, config and parser/recorder code.
+The CLI uses the same service; recurring work belongs to the app.
+
+First captures were October 8 16:21:59.873391 / 16:22:03.036322 /
+16:22:06.157480 UTC, October 9 local. Statistics and holdings are dated October 7;
+listing metadata October 8. The exact catalog pins and source links are in
+`docs/issuer-etf-recorder.md`. NAV × rounded shares reconciles to displayed AUM.
+Holding weight sums are 100.000861%, 99.977651% and 99.915674%. Their unexplained
+residuals exceed displayed-precision rounding; the records remain inspectable
+with yellow warnings, while holdings features are blocked. No balancing cash,
+renormalization or constituent-sector substitution was introduced. Separate
+NAV/characteristics/allocation groups can qualify prospectively. Rounded share
+counts are not labeled flows and futures valuation weights are not notionals.
+
+Strict first-capture cutoffs, unchanged-capture deduplication, same-date
+revisions, naive/future/regressing/stale times, missing values, unit/identity
+failures, publication retry, raw/hash tampering and independent-fund recovery
+are covered. 83 distinct focused tests pass; one opt-in disposable ClickHouse
+test skipped. Ruff and diff checks pass. Verified actual publications/readers,
+then performed guarded app restart and browser checks for all funds, negative
+holdings weights, missing sectors and warning colors. Browser errors/warnings
+are empty; application analytics is error-free and strategies current through
+October 7. Source/replay/admission/runtime evidence and screenshot are local in
+`var/research/issuer-source-qualification-20261009/`.
+
+The inspected price catalog already publishes 6,982 XLE/XLB sessions through
+September 25 with explicit identity, historical availability and reconstructed
+raw-basis limitations. XOP is absent. Next: common-cutoff price audit/publication,
+security identity and read-only IB contract/account qualification, followed by a
+frozen expanded-universe control. Historical issuer/estimates/share-action data,
+holdings accounting residuals and additional industry activity remain gaps.
+No new historical backtest, return-ratio claim, monitored definition, allocation
+or execution authority changed. Existing EIA edits and unrelated runtime state
+were preserved; no commit/push was requested in this implementation session.
+
 ## 2026-10-08 - Anchor allocation performance at first verified account NAV
 
 - User requested the strategy NAV begin at account NAV on the first available verified results date, with later normalization using that date as 1.0. Implemented recovery after an unverified allocation gap: require exact app-published audited strategy NAV and observed account NAV on the same allocation close, set strategy NAV/index to account NAV/100, expose the comparison date and exclude earlier missing history with a warning. Recorded opening estimates cannot recover a chain after a gap.
@@ -1212,3 +1774,44 @@ are proxies only. No ETF admission, strategy calculation, allocation, promotion
 or execution authority changed. Next: qualify an EIA energy balance recorder
 with release-time semantics, then prospective issuer holdings/shares/NAV and ETF
 identity/price histories.
+
+## 2026-10-08 — EIA energy recorder and source qualification
+
+Continued the authorized recorder-first ETF expansion research. Added independent
+hourly petroleum and natural-gas capture jobs to the application analytics lane,
+with raw bytes saved before validation, immutable revision snapshots, verified
+ClickHouse publications, pinned ex-ante readers and Market Data → Energy Data.
+The service uses free official release files; no subscription or broker connection
+is required. Original data/metadata, response completion times, code/config hashes
+and failed attempts remain replay evidence under `var/governance/eia-energy/`.
+
+First publication covers October 2: 12 petroleum indicators and five gas indicators.
+Petroleum source release October 7 14:30 UTC / capture October 8 15:44:22.128948 UTC;
+gas source release October 8 14:30 UTC / capture 15:44:30.583014 UTC. Catalog pins
+are `e9dc9194fb3da76491a7e63b47a17a7ed19bfab316485be86259538c45d87d91` and
+`f0654328d09b8bdf05b900e4cb512483ca5c78e6e4f705d2fcf4a4bc73b0d355`, respectively.
+The current crude-stock JSON contains 314 observations, but all belong to the
+newly captured current vintage. No old decision or model-training row may use
+them before capture. Source-date/URL inconsistency in an inspected historical
+archive page keeps historical release admission unresolved. Inventory/activity
+context is not asserted to be a leading predictor or an analyst-consensus surprise.
+
+Pinned readers reject pre-capture/equal-cutoff decisions, naive times, missing or
+stale current data, and altered evidence. Tests exercise revisions with unchanged
+nominal release clocks, mixed reports, DST, changing averaging windows, history
+gaps, failed publication/retry and independent-source recovery. 65 distinct focused
+tests pass (49 existing recorder/recovery tests, 15 new energy tests and one
+navigation suite); Ruff passes. Browser verification found and fixed a direct-link
+bug affecting Energy Data and Fund Positioning. Yellow availability notices remain
+separate from actual publication faults. Both source views and their dates/values
+were checked after guarded application restart; no browser console errors.
+
+Source samples, publication summary and runtime checks are retained in
+`var/research/energy-source-qualification-20261008/`. The app retained the initial
+pins across normal refreshes. No historical energy return backtest was run and
+no new Sharpe/Calmar result is claimed. Monitored strategy definitions, funding
+and routing authority were not changed. Next: prospective issuer holdings/shares/
+NAV and a small ETF identity/audited-price/IB admission pilot. The finite subsequent
+linear/tree, positive/negative asset-response design and additional data gaps are
+recorded in `docs/energy-fundamentals-recorder.md`. Single-stock trading stays out
+of scope; existing economic ridge stays frozen until the universe revisit.

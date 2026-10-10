@@ -36,6 +36,10 @@ def instruments_for_definition(definition: StrategyDefinition):
         return ALL_WEATHER_ETF_UNIVERSE
     if universe_key == "multi_asset":
         return MULTI_ASSET_ETF_UNIVERSE
+    if universe_key == 'multi_asset_14':
+        from systematic_trading.research.etf_universe import RESEARCH_SECTOR_ETFS
+        pool = {**MULTI_ASSET_ETF_UNIVERSE, **RESEARCH_SECTOR_ETFS}
+        return {s:pool[s] for s in sorted(pool)}
     return GLOBAL_ETF_UNIVERSE
 
 __all__ = [

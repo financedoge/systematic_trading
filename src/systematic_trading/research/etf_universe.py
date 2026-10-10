@@ -131,3 +131,14 @@ BENCHMARK_INSTRUMENTS = {
         country="Global multi-asset",
     ),
 }
+
+# Research instrument metadata only. This does not change any active universe,
+# monitored strategy, admission state or broker permission.
+RESEARCH_SECTOR_ETFS = {
+    "XLE": Instrument(symbol="XLE", name="State Street Energy Select Sector SPDR ETF",
+        asset_class=AssetClass.ETF, exchange=Exchange.NYSE, quote_currency=Currency.USD,
+        country="US", sector="Energy"),
+    "XLB": Instrument(symbol="XLB", name="State Street Materials Select Sector SPDR ETF",
+        asset_class=AssetClass.ETF, exchange=Exchange.NYSE, quote_currency=Currency.USD,
+        country="US", sector="Materials"),
+}

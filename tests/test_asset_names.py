@@ -19,6 +19,10 @@ def test_registered_names_cover_strategy_and_benchmark_assets():
         assert names[symbol] == instrument.name
     assert names['URTH'] == 'iShares MSCI World ETF'
     assert names['CASH'] == 'Cash balance'
+    from systematic_trading.research.etf_universe import RESEARCH_SECTOR_ETFS, MULTI_ASSET_ETF_UNIVERSE
+    for symbol,instrument in RESEARCH_SECTOR_ETFS.items():
+        assert names[symbol] == instrument.name
+        assert symbol not in MULTI_ASSET_ETF_UNIVERSE
 
 
 def test_report_labels_are_standalone_and_leave_calculations_unchanged():

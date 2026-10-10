@@ -191,7 +191,7 @@ def etf_activity_lag20_definition() -> StrategyDefinition:
 def registered_strategy_definition(key: str) -> StrategyDefinition:
     parents = [legacy_sota_definition(), etf_activity_lag20_definition(), rolling_xgboost_1y_definition()]
     definitions = [*parents, *(usd_strategy_definition(d) for d in parents), risk_parity_definition(),
-                   rolling_xgboost_1y_definition(activity=False), defensive_cash_definition(), economic_context_definition()]
+                   rolling_xgboost_1y_definition(activity=False), defensive_cash_definition(), economic_context_definition(), m1_14_definition(), fr25_definition()]
     return next((d for d in definitions if d.key == key), None) or _unknown_strategy(key)
 
 
@@ -240,6 +240,40 @@ def economic_context_definition():
             'Preserve cash and eligibility. Monitoring only; no promotion or execution authority.',
         overlays=(*base.overlays, OverlaySpec('final_weight_cap', {'cap':'0.45'}),
             OverlaySpec('economic_ridge',dict(PARAMETERS))))
+
+
+def m1_14_definition():
+    """Exact M1/14 research recipe; new universe and raw activity, no forced holdings."""
+    from dataclasses import replace
+    base = defensive_cash_definition()
+    overlays = []
+    for spec in base.overlays:
+        if spec.kind == 'asset_pool_filter':
+            spec = OverlaySpec(spec.kind, dict(spec.parameters, shortMomentumBars='21',
+                mediumMomentumBars='63', longMomentumBars='126'))
+        elif spec.kind == 'etf_activity':
+            spec = OverlaySpec('audited_etf_activity', dict(spec.parameters, basis='raw_dollar_adjusted_direction_v1'))
+        overlays.append(spec)
+    return replace(base, key='research_m1_14_v1', name='M1/14 · faster momentum, 14 candidates',
+        sleeve_name='research-m1-14-v1', universe_key='multi_asset_14', overlays=tuple(overlays),
+        description='Original 12 ETFs plus XLE/XLB compete for six slots using 21/63/126-session momentum '
+            'and a positive 126-session gate. Defensive cash fallback, causal per-pool one-year XGBoost, '
+            'relative/adaptive tilts, audited raw dollar activity and USD ridge. No mandatory asset or final cap. '
+            'Monitoring only; no promotion, funding or execution authority.')
+
+
+def fr25_definition():
+    from dataclasses import replace
+    from systematic_trading.research.fr25_tracking import KEY, PARAMETERS
+    base = m1_14_definition()
+    return replace(base, key=KEY, name='FR25 · 75% M1 / 25% financial ridge',
+        sleeve_name='research-fr25-14-v1',
+        description='Full 14-ETF candidate pool; blend 75% M1 score rank and 25% financial-ridge total-forecast rank '
+            'before the positive 126-session gate and top-six selection. M1 includes 75% momentum and 25% volume. '
+            'Missing ridge abstains to M1 selection. Preserve downstream XGBoost sizing, relative/adaptive trend, '
+            'audited raw activity and USD ridge; final 45% cap leaves excess in cash. Monitoring only.',
+        overlays=(OverlaySpec('financial_rank_selection', dict(PARAMETERS)), *base.overlays[1:],
+                  OverlaySpec('final_weight_cap', {'cap':'0.45'})))
 
 
 def strategy_definition_from_overlay(overlay: TargetOverlay) -> StrategyDefinition:
@@ -585,6 +619,14 @@ def instantiate_overlays(definition: StrategyDefinition) -> list[TargetOverlay]:
         if spec.kind == 'final_weight_cap':
             from systematic_trading.research.construction_controls import FinalWeightCapOverlay
             overlays.append(FinalWeightCapOverlay(Decimal(params['cap'])))
+        elif spec.kind == 'financial_rank_selection':
+            from systematic_trading.research.fr25_tracking import FinancialRankSelection, PARAMETERS
+            from dataclasses import replace
+            if params != PARAMETERS:
+                raise ValueError('Unsupported FR25 selection recipe')
+            base = m1_14_definition()
+            parent = instantiate_overlays(replace(base, overlays=base.overlays[:1]))[0]
+            overlays.append(FinancialRankSelection(parent))
         elif spec.kind == 'economic_ridge':
             from systematic_trading.research.economic_tracking import EconomicRidgeOverlay, PARAMETERS
             if params != PARAMETERS:
@@ -598,6 +640,12 @@ def instantiate_overlays(definition: StrategyDefinition) -> list[TargetOverlay]:
         elif spec.kind == "etf_activity":
             from systematic_trading.research.flow_concentration import ActivityConcentrationOverlay, FlowConcentrationSpec
             overlays.append(ActivityConcentrationOverlay(FlowConcentrationSpec.model_validate_json(params["spec"])))
+        elif spec.kind == 'audited_etf_activity':
+            from systematic_trading.research.candidate_pool import AuditedActivity
+            from systematic_trading.research.flow_concentration import FlowConcentrationSpec
+            if params.get('basis') != 'raw_dollar_adjusted_direction_v1':
+                raise ValueError('Unsupported audited activity basis')
+            overlays.append(AuditedActivity(FlowConcentrationSpec.model_validate_json(params['spec']), None))
         elif spec.kind == "rolling_model":
             from systematic_trading.research.rolling_tracking import RollingModelOverlay, definition_training_spec
             definition_training_spec(definition)
@@ -856,9 +904,15 @@ def _model_layers(definition: StrategyDefinition) -> list[dict[str, str]]:
 
 def _overlay_layer(overlay: OverlaySpec, index: int) -> dict[str, str]:
     params = overlay.parameters
-    if overlay.kind == "usd_ridge":
+    if overlay.kind == 'financial_rank_selection':
+        title = 'FR25 financial-ridge asset selection'
+        detail = '75% M1 rank + 25% financial total-return forecast rank across 14 candidates; positive 126-session gate, top six/minimum four. Unavailable financial features revert to M1; XGBoost remains downstream.'
+    elif overlay.kind == "usd_ridge":
         title = "USD prediction overlay"
         detail = "Monthly per-ETF expanding ridge; price momentum, volatility, broad-dollar 21/63 observations. 12% rank tilt, 3pp bound after the complete parent."
+    elif overlay.kind == 'audited_etf_activity':
+        title = 'Audited raw ETF trading activity'
+        detail = 'Raw close × raw volume, normalized over 63 sessions; EMA 10 and lag-20 second difference. Adjusted price direction confirms the signal; 15% tilt within selected assets and ±3pp bounds.'
     elif overlay.kind == "relative_momentum":
         detail = (
             f"Score = 45% {params['mediumLookbackBars']}d momentum + 55% {params['longLookbackBars']}d momentum; "

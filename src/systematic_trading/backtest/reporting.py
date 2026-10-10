@@ -1375,9 +1375,10 @@ HTML_TEMPLATE = """<!doctype html>
     </section>
 
     <section class="table-panel" id="economicModelPanel" hidden style="margin-bottom:14px">
-      <div class="panel-head"><h2>Leading Indicators and Payroll / Inflation Context</h2><a href="/platform/market-data-audit?view=economics">Economic data</a></div>
+      <div class="panel-head"><h2 id="economicModelTitle">Leading Indicators and Payroll / Inflation Context</h2><a href="/platform/market-data-audit?view=economics">Economic data</a></div>
       <div style="padding:12px 16px"><p id="economicModelStatus"></p><p class="meta" id="economicModelExplanation"></p>
         <div class="table-scroll"><table id="economicForecasts"></table></div>
+        <div class="table-scroll"><table id="selectionRanks" hidden></table></div>
         <details><summary>Inputs, coefficients, missing observations and publication lineage</summary><pre id="economicModelDetails" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre></details>
       </div>
     </section>
@@ -1566,11 +1567,16 @@ HTML_TEMPLATE = """<!doctype html>
       if(economic){
         const e=economic.latest;
         document.getElementById('economicModelPanel').hidden=false;
+        if(economic.title)document.getElementById('economicModelTitle').textContent=economic.title;
         const status=document.getElementById('economicModelStatus');
         status.textContent=`${economic.status}. Decision: ${e.decision}; known through ${e.known_through}. ${e.training_rows} completed training months. Economic model available on ${economic.historical_ready}/${economic.historical_decisions} historical decisions.`;
         if(!e.ready){status.style.background='#fff7db';status.style.color='#785b13';status.style.padding='12px';}
         document.getElementById('economicModelExplanation').textContent=economic.explanation;
-        document.getElementById('economicForecasts').innerHTML=e.ready?`<thead><tr><th>ETF</th><th>Forecast return</th><th>Increment over historical mean</th></tr></thead><tbody>${Object.entries(e.models).map(([s,v])=>`<tr><td>${escapeHtml(s)}</td><td>${fmtPct(v.linear_forecast)}</td><td>${fmtPct(v.linear_increment)}</td></tr>`).join('')}</tbody>`:'<tbody><tr><td>No economic tilt while required observations are unavailable. Capped parent targets remain in force.</td></tr></tbody>';
+        document.getElementById('economicForecasts').innerHTML=e.ready?`<thead><tr><th>ETF</th><th>Forecast return</th><th>Increment over historical mean</th></tr></thead><tbody>${Object.entries(e.models).map(([s,v])=>`<tr><td>${escapeHtml(s)}</td><td>${fmtPct(v.linear_forecast)}</td><td>${fmtPct(v.linear_increment)}</td></tr>`).join('')}</tbody>`:`<tbody><tr><td>${escapeHtml(economic.abstention||'No economic tilt while required observations are unavailable. Capped parent targets remain in force.')}</td></tr></tbody>`;
+        if(economic.selectionRanks){
+          const table=document.getElementById('selectionRanks');table.hidden=false;
+          table.innerHTML=`<caption>Latest indicative selection · scores use −1 to +1 midranks; held weights follow scheduled rebalances</caption><thead><tr><th>ETF</th><th>M1 rank</th><th>Financial rank</th><th>Combined score</th><th>Eligible</th><th>Selected</th></tr></thead><tbody>${economic.selectionRanks.map(r=>`<tr><td>${escapeHtml(r.symbol)}</td><td>${Number(r.momentum).toFixed(3)}</td><td>${r.ridge===null?'Unavailable':Number(r.ridge).toFixed(3)}</td><td>${Number(r.combined).toFixed(3)}</td><td>${r.eligible?'Yes':'No'}</td><td>${r.selected?'Yes':'No'}</td></tr>`).join('')}</tbody>`;
+        }
         const {training_labels,...latest}=e;
         document.getElementById('economicModelDetails').textContent=JSON.stringify({...economic,latest},null,2);
       }

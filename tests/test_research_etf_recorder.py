@@ -108,3 +108,91 @@ def test_carry_forward_hash_failure_stops_publication(setup):
     with pytest.raises(ValueError, match="Changed or unmanifested"):
         producer.inherit_series(r, root.parent/"bad-copy", [dict(symbol="BIL")])
     assert sha256(root/"manifest.json") == p["version"]
+
+
+def test_explicit_issuer_listing_date_rejects_later_provider_boundary(setup):
+    settings, analytics, _, written = setup
+    path = settings.research_etf_recorder_config_path
+    config = json.loads(path.read_text(encoding="utf8"))
+    # Both dates satisfy the old inception/required-start bounds, but the
+    # independently captured issuer listing date must still agree exactly.
+    config["funds"][0].update(inception="2025-12-01", listing_date="2025-12-31")
+    producer._write(path.parent, path.name, config)
+    before = analytics.latest("governance/catalog")
+    with pytest.raises(ValueError, match="listing date disagreement"):
+        run(setup)
+    assert analytics.latest("governance/catalog") == before and not written
+    assert recorder.recorder_status(settings)["funds"][0]["status"] == "quarantined"
+
+
+def test_explicit_issuer_listing_date_can_be_published(setup):
+    settings, _, _, _ = setup
+    path = settings.research_etf_recorder_config_path
+    config = json.loads(path.read_text(encoding="utf8"))
+    config["funds"][0]["listing_date"] = "2026-01-02"
+    producer._write(path.parent, path.name, config)
+    assert run(setup)
+
+
+def test_explicit_admission_hold_preserves_evidence_and_other_funds_progress(setup):
+    settings, _, fetch, _ = setup
+    path = settings.research_etf_recorder_config_path
+    config = json.loads(path.read_text(encoding="utf8"))
+    config["funds"].append(dict(config["funds"][0], symbol="XOP", admission_hold="Unresolved listing boundary"))
+    producer._write(path.parent, path.name, config)
+    state = settings.data_dir / "governance/research-recorder-state.json"
+    producer._write(state.parent, state.name, {"XOP": {"evidence_root": "immutable-failed-attempt"}})
+    seen = []
+    def checked_fetch(symbol, now):
+        seen.append(symbol)
+        assert symbol != "XOP"
+        return fetch(symbol, now)
+    assert recorder.refresh_research_etfs(settings, setup[1], fetch=checked_fetch,
+        issuer_fetch=lambda u:b"BIL TESTID", now=datetime(2026,8,4,22,tzinfo=UTC))
+    assert seen == ["BIL"]
+    held = recorder.recorder_status(settings)["funds"][1]
+    assert held["status"] == "quarantined" and held["admission_held"]
+    assert held["evidence_root"] == "immutable-failed-attempt"
+
+
+def test_code_level_admission_hold_survives_configuration_removal(setup):
+    """A recorded hold is enforced in code; deleting the config key cannot release it."""
+    from systematic_trading.research.etf_admission import ADMISSION_HOLDS, admission_hold
+    assert "XOP" in ADMISSION_HOLDS
+    assert admission_hold("XOP") == ADMISSION_HOLDS["XOP"]["reason"]
+    assert admission_hold("XOP", "configured reason") == ADMISSION_HOLDS["XOP"]["reason"]
+    assert admission_hold("BIL", "configured reason") == "configured reason"
+    assert admission_hold("BIL") is None
+
+
+def test_configuration_only_admission_hold_still_quarantines(setup):
+    """A configuration hold with no code entry keeps its earlier behaviour."""
+    settings, analytics, fetch, _ = setup
+    path = settings.research_etf_recorder_config_path
+    config = json.loads(path.read_text(encoding="utf8"))
+    config["funds"].append(dict(config["funds"][0], symbol="XLE", admission_hold="Unresolved evidence"))
+    producer._write(path.parent, path.name, config)
+    seen = []
+    def checked_fetch(symbol, now):
+        seen.append(symbol)
+        return fetch(symbol, now)
+    assert recorder.refresh_research_etfs(settings, analytics, fetch=checked_fetch,
+        issuer_fetch=lambda u: b"BIL TESTID", now=datetime(2026, 8, 4, 22, tzinfo=UTC))
+    assert seen == ["BIL"]
+    held = recorder.recorder_status(settings)["funds"][1]
+    assert held["status"] == "quarantined" and held["admission_held"]
+    assert held["message"] == "Unresolved evidence"
+
+
+def test_recorder_state_records_code_level_hold_evidence(setup):
+    """The quarantined state carries the recorded evidence for the code-level hold."""
+    settings, analytics, fetch, _ = setup
+    path = settings.research_etf_recorder_config_path
+    config = json.loads(path.read_text(encoding="utf8"))
+    config["funds"].append(dict(config["funds"][0], symbol="XOP"))
+    producer._write(path.parent, path.name, config)
+    assert recorder.refresh_research_etfs(settings, analytics, fetch=fetch,
+        issuer_fetch=lambda u: b"<p>BIL TESTID</p>", now=datetime(2026, 8, 4, 22, tzinfo=UTC))
+    held = recorder.recorder_status(settings)["funds"][1]
+    assert held["status"] == "quarantined" and held["admission_held"]
+    assert held["hold_record"]["evidence"].startswith("var/governance/")

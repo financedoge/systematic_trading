@@ -14,6 +14,7 @@ from systematic_trading.daily_quality import completed_session
 from systematic_trading.lean.contracts import sha256
 from systematic_trading.live.trading_calendar import previous_us_trading_day
 from systematic_trading.portfolio.context import NY
+from systematic_trading.research.etf_admission import admission_hold, hold_record
 from systematic_trading.research.governed_inputs import GovernedInputs
 from systematic_trading.research.governed_refresh import acquire, _build_publish, _write
 from systematic_trading.research.price_governance import names_agree
@@ -31,6 +32,8 @@ def validate_admission(fund, source, rows, audit, sessions, cutoff):
     boundary = source.metadata.get("listing_boundary_date")
     if not boundary or boundary < fund["inception"] or boundary > fund["required_start"]:
         raise ValueError("Unsupported fund listing boundary: " + symbol)
+    if fund.get("listing_date") and boundary != fund["listing_date"]:
+        raise ValueError("Issuer/provider listing date disagreement: " + symbol)
     expected = sorted(d for d in sessions if fund["required_start"] <= d <= cutoff)
     observed = [r["trade_date"] for r in rows if r["trade_date"] >= fund["required_start"]]
     if not expected or observed != expected or audit["status"] != "audited_with_limitations":
@@ -73,6 +76,12 @@ def refresh_research_etfs(settings, analytics, *, now=None, fetch=acquire, issue
     changed, errors = False, []
     for fund in funds:
         symbol = fund["symbol"]
+        hold = admission_hold(symbol, fund.get("admission_hold"))
+        if hold:
+            state[symbol] = dict(state.get(symbol, {}), status="quarantined", admission_held=True,
+                                 message=hold, hold_record=hold_record(symbol), config_sha256=sha256(path))
+            _write(state_path.parent, state_path.name, state)
+            continue
         publication = analytics.latest("governance/catalog")
         if not publication:
             raise ValueError("Research recorder requires the initial audited catalog")

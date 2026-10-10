@@ -5,11 +5,11 @@ import urllib.parse
 import urllib.request
 from datetime import UTC, datetime
 from decimal import Decimal
-from hashlib import sha256
 from http.client import HTTPException
 from typing import Any, Iterable, Sequence
 from urllib.error import HTTPError, URLError
 
+from systematic_trading.canonical import canonical_payload_hash
 from systematic_trading.domain.market import FXRate, PriceBar
 
 DAILY_BARS_TABLE = "market_data.daily_bars"
@@ -340,14 +340,3 @@ def _iso_utc(value: datetime) -> str:
     if value.tzinfo is None or value.utcoffset() is None:
         value = value.replace(tzinfo=UTC)
     return value.astimezone(UTC).isoformat(timespec="milliseconds").replace("+00:00", "Z")
-
-
-def canonical_payload_hash(payload: dict[str, Any]) -> str:
-    encoded = json.dumps(
-        payload,
-        sort_keys=True,
-        separators=(",", ":"),
-        ensure_ascii=True,
-        default=str,
-    ).encode("utf-8")
-    return f"sha256:{sha256(encoded).hexdigest()}"

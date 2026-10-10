@@ -46,6 +46,15 @@ def rolling_model_report(definition, inputs, schedule, receipt, allocation, usd_
     activity_spec = next((FlowConcentrationSpec.model_validate_json(o.parameters['spec'])
         for o in definition.overlays if o.kind == 'etf_activity'), None)
     activity = concentration_features(histories, activity_spec) if activity_spec else {}
+    raw_spec = next((FlowConcentrationSpec.model_validate_json(o.parameters['spec'])
+        for o in definition.overlays if o.kind == 'audited_etf_activity'), None)
+    if raw_spec:
+        from systematic_trading.research.candidate_pool import audited_activity_features
+        if not inputs.get('raw_bars'):
+            raise ValueError('Raw activity report requires the same audited inputs as targets')
+        raw = {s:[PriceBar.model_validate(r) for r in rows if r['trade_date'] < str(day)]
+               for s,rows in inputs['raw_bars'].items()}
+        activity = audited_activity_features(histories,raw,raw_spec)
     features = {s: compute_signal_features(symbol=s, context=context) for s in histories}
     forecasts = {s: model.predict(values) for s, values in features.items()}
     # Call the same target service for every prefix; each column is an actual
@@ -53,9 +62,10 @@ def rolling_model_report(definition, inputs, schedule, receipt, allocation, usd_
     stages = []
     for count in range(len(definition.overlays)+1):
         prefix = replace(definition, overlays=definition.overlays[:count])
-        has_model = any(o.kind == 'rolling_model' for o in prefix.overlays)
+        has_model = any(o.kind in ('rolling_model', 'financial_rank_selection') for o in prefix.overlays)
         targets = targets_for_day(inputs['latest_bars'], day, definition=prefix,
-            base_tree_models=schedule if has_model else None, usd_models=usd_models, economic_models=economic_models)
+            base_tree_models=schedule if has_model else None, usd_models=usd_models, economic_models=economic_models,
+            raw_rows=inputs.get('raw_bars'))
         stages.append(dict(name='Risk parity' if not count else definition.overlays[count-1].kind,
             weights={t.symbol: float(t.target_weight) for t in targets}))
     final_weights = {r['symbol']: r['target_weight'] for r in allocation['holdings']}

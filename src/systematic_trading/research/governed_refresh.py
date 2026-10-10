@@ -189,7 +189,10 @@ def _build_publish(analytics, prior, publication, output, symbols, old_rows, cut
         analytics.publish(f"governance-batch/{batch}/{symbol}", batch,
             [observation(str(i), "governed_corporate_action", symbol, row, row["date"]) for i,row in enumerate(actions)], docs,
             provenance=dict(symbol=symbol, manifest_sha256=batch, rows=len(bars), owner="application"))
-    if analytics.latest("governance/catalog")["version"] != publication["version"]:
+    committed = analytics.latest("governance/catalog")
+    if committed is None:
+        raise ValueError("Catalog publication disappeared during refresh; this batch is retained uncommitted")
+    if committed["version"] != publication["version"]:
         raise ValueError("Catalog changed during refresh; retaining newer committed publication")
     docs = [dict(point_key=name, media_type="application/json", payload=(output/name).read_text(encoding="utf8"))
             for name in ("manifest.json", "parent.json", "inherited.json", "policy.json", "producer.json")]

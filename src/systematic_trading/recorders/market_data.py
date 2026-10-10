@@ -9,12 +9,13 @@ from contextlib import contextmanager
 from datetime import UTC, date, datetime
 from decimal import Decimal
 from enum import StrEnum
-from hashlib import sha1, sha256
+from hashlib import sha1
 from pathlib import Path
-from typing import Any, Callable, Iterable, Literal, Mapping
+from typing import Any, Callable, Iterable, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+from systematic_trading.canonical import canonical_payload_hash
 from systematic_trading.domain.enums import Currency, OrderEnvironment
 from systematic_trading.domain.events import (
     EventSource,
@@ -933,17 +934,6 @@ def deterministic_raw_event_id(
     return f"raw_{sha1(seed.encode('utf-8')).hexdigest()}"
 
 
-def canonical_payload_hash(payload: Mapping[str, Any]) -> str:
-    encoded = json.dumps(
-        payload,
-        sort_keys=True,
-        separators=(",", ":"),
-        ensure_ascii=True,
-        default=_json_default,
-    ).encode("utf-8")
-    return f"sha256:{sha256(encoded).hexdigest()}"
-
-
 def dry_run_raw_replay(
     root: Path | str,
     *,
@@ -1199,16 +1189,6 @@ def _as_utc(value: datetime) -> datetime:
     if value.tzinfo is None or value.utcoffset() is None:
         return value.replace(tzinfo=UTC)
     return value.astimezone(UTC)
-
-
-def _json_default(value: object) -> object:
-    if isinstance(value, Decimal):
-        return str(value)
-    if isinstance(value, datetime):
-        return _as_utc(value).isoformat()
-    if isinstance(value, date):
-        return value.isoformat()
-    raise TypeError(f"Object of type {type(value).__name__} is not JSON serializable")
 
 
 def _min_datetime(left: datetime | None, right: datetime) -> datetime:

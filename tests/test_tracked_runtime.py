@@ -129,3 +129,36 @@ def test_source_changes_require_restart_before_calculation(monkeypatch):
     monkeypatch.setattr(tracked_runtime, "_LOADED_CODE_HASHES", {})
     with pytest.raises(ValueError, match="restart the application"):
         tracked_runtime.calculation_revision({}, {}, [])
+
+
+def test_calculation_code_hashes_cover_every_calculation_module():
+    """The revision identity must not depend on a hand-maintained file list."""
+    import systematic_trading
+    from systematic_trading.research.tracked_runtime import CALCULATION_PACKAGES, calculation_code_hashes
+    root = Path(systematic_trading.__file__).resolve().parent
+    expected = {str(p.relative_to(root)) for folder in CALCULATION_PACKAGES
+                for p in (root / folder).rglob("*.py") if "__pycache__" not in p.parts}
+    hashes = calculation_code_hashes()
+    assert expected <= set(hashes)
+    assert all(len(value) == 64 for value in hashes.values())
+
+
+def test_calculation_code_hashes_include_each_registered_calculation_module():
+    """Modules that decide monitored strategies stay inside the revision identity."""
+    from systematic_trading.research.tracked_runtime import calculation_code_hashes
+    hashed = {name.replace("\\", "/") for name in calculation_code_hashes()}
+    for name in ("research/tracked_runtime.py", "research/strategy_catalog.py",
+                 "research/fr25_tracking.py", "research/m1_monitoring.py",
+                 "research/selection_blend.py", "research/etf_admission.py",
+                 "recorders/economics.py", "runtime_io.py",
+                 "lean/runner.py", "signals/library.py", "portfolio/strategy_book.py",
+                 "backtest/reporting.py"):
+        assert name in hashed
+
+
+def test_calculation_code_hashes_reject_a_missing_calculation_source(monkeypatch):
+    """A missing declared source fails loudly instead of silently narrowing the set."""
+    from systematic_trading.research import tracked_runtime
+    monkeypatch.setattr(tracked_runtime, "CALCULATION_EXTRA_SOURCES", ("recorders/absent.py",))
+    with pytest.raises(ValueError, match="Calculation source is missing"):
+        tracked_runtime.calculation_code_hashes()

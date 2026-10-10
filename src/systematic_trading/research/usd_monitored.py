@@ -104,6 +104,7 @@ def worker_init(path):
     data=read_json(root/'worker.json')
     data['root']=root
     data['typed']={s:[PriceBar.model_validate(r) for r in rows] for s,rows in data['bars'].items()}
+    data['raw_typed']={s:[PriceBar.model_validate(r) for r in rows] for s,rows in data.get('raw_bars',{}).items()}
     data['days']=[r['trade_date'] for r in data['bars']['SPY']]
     _WORK=data
 
@@ -127,6 +128,13 @@ def targets_worker(day):
                 o.schedule=data['usd']
             elif spec.kind=='economic_ridge':
                 o.schedule=data['economic']
+            elif spec.kind=='financial_rank_selection':
+                o.schedule=data['economic']
+                o.rolling_schedule=data['rolling']
+            elif spec.kind=='audited_etf_activity':
+                if not data['raw_typed']:
+                    raise ValueError('Published raw activity histories required')
+                o.raw={s:b[max(0,i-500):i] for s,b in data['raw_typed'].items()}
         targets=_target_schedule(instruments=instruments_for_definition(definition),bars_by_symbol=history,
             trade_dates=[as_of],rebalance_frequency='daily',lookback_bars=63,max_weight=D('.45'),cash_reserve_weight=D('.02'),
             sleeve_name=definition.sleeve_name,target_overlays=overlays)[as_of]
@@ -245,13 +253,17 @@ def build_reports(settings,analytics,config,definitions,sota,root,inputs,compari
     for d in definitions:
         key=d.key;economic=economics[key]
         has_economic = any(o.kind=='economic_ridge' for o in d.overlays)
+        has_raw_activity = any(o.kind=='audited_etf_activity' for o in d.overlays)
+        has_selection = any(o.kind=='financial_rank_selection' for o in d.overlays)
         diagnostics=build_signal_diagnostics(baseline=results[sota.key],candidate=results[key],
             prices_by_symbol={s:{date.fromisoformat(day):v for day,v in rows.items()} for s,rows in prices.items()},
-            split_date=date(2023,1,1),signal_name='Economic ridge, final cap and defensive cash' if has_economic else 'Defensive ETF and cash fallback')
+            split_date=date(2021,1,4) if has_raw_activity else date(2023,1,1),signal_name='FR25 selection and 14-candidate pipeline versus funded SOTA' if has_selection else 'Faster momentum and 14-candidate selection' if has_raw_activity else 'Economic ridge, final cap and defensive cash' if has_economic else 'Defensive ETF and cash fallback')
+        selection_benchmarks=[dict(id=k,name=comparisons[k].name+' · USD',nav_series=results[k]['nav_series'])
+            for k in ('research_m1_14_v1','fr25_cap_control') if has_selection and k in results]
         report,warnings=build_backtest_report_data(result=results[key],result_path=root/'python'/(key+'.json'),
-            split_date='2023-01-01',benchmark_name='Risk parity · matched USD accounting',benchmark_nav_series=results['risk_parity']['nav_series'],
+            split_date='2021-01-04' if has_raw_activity else '2023-01-01',benchmark_name=f'Risk parity · {len(inputs["bars"])} ETFs · matched USD accounting',benchmark_nav_series=results['risk_parity']['nav_series'],
             extra_benchmarks=[dict(id='urth',name='URTH · USD',nav_series=results['URTH']['nav_series']),
-                dict(id='sota',name='Current SOTA · matched USD accounting',nav_series=results[sota.key]['nav_series'])],
+                dict(id='sota',name='Current SOTA · matched USD accounting',nav_series=results[sota.key]['nav_series']),*selection_benchmarks],
             market_prices=prices,market_fx_rates={day:1. for day in [anchor,*next(iter(quotes.values()))]},signal_diagnostics=diagnostics)
         allocation=latest_allocation(d,inputs,economic,quotes,rolling,usd_models=usd,economic_models=economic_models)
         allocation['currency_exposure_cnh']={'USD':allocation['gross_exposure_cnh']}
@@ -284,6 +296,16 @@ def build_reports(settings,analytics,config,definitions,sota,root,inputs,compari
                 'Historical economic availability assumes end-of-day ALFRED archives. From October 8, 2026 require actual app capture before the decision cutoff; late catch-up inputs abstain.']
             if not current['ready']:
                 report['warnings'].append(report['economicModel']['status']+': '+current['reason'])
+        if has_raw_activity:
+            report.update(modelRegime='M1/14: 21/63/126 momentum, positive 126-session gate, top six; per-pool monthly one-year XGBoost and USD ridge; audited raw activity',
+                sampleLabels={'in_sample':'2016–2020 retrospective','out_of_sample':'2021 onward retrospective'})
+            report['monitoring'].update(prospectiveStart='2026-10-09',prospectiveObservations=sum(day>='2026-10-09' for day in days))
+            report['warnings']=[w for w in report['warnings'] if not w.startswith('Only three historical fallback episodes')]
+            report['warnings'] += ['M1/14 was selected after retrospective comparisons. Improvements are statistically inconclusive and full-history drawdown exceeds F3. Monitoring grants no trading authority.',
+                'XLE/XLB are candidates only; no mandatory asset. USD and XGBoost models are fitted to this exact 14-ETF pool.']
+        if has_selection:
+            from systematic_trading.research.fr25_tracking import enrich_report
+            enrich_report(report,d,inputs,economic,economic_models,economic_receipt,rolling,days)
         histories={s:[PriceBar.model_validate(r) for r in rows] for s,rows in inputs['bars'].items()}
         prediction=usd_prediction(usd,histories,date.fromisoformat(allocation['target_session']))
         report['usdModel']=dict(version=usd['version'],**prediction,receipt=usd_receipt,batch=inputs['provenance']['usd']['batch'],

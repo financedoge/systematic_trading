@@ -287,6 +287,8 @@ class AnalyticsService:
             ("strategy-serving", lambda: publish_strategies(self.settings, self.store, self.analytics)),
             ("economic-recorder", lambda: self._refresh_economics()),
             ("positioning-recorder", lambda: self._refresh_positioning()),
+            ("energy-recorder", lambda: self._refresh_energy()),
+            ("issuer-etf-recorder", lambda: self._refresh_issuer_etfs()),
             ("research-history", lambda: import_json_group(self.analytics, "research-history",
                 (root / "backtests").rglob("*.json"), "research")),
             ("account-history", lambda: import_account_histories(self.settings, self.analytics)),
@@ -299,7 +301,7 @@ class AnalyticsService:
             ("lean-history", lambda: import_lean_histories(self.analytics, self.store)),
             ("market-raw", lambda: import_raw_market_data(self.settings, self.analytics)),
         ]
-        research = {"governed-publication", "research-etf-recorder", "strategy-fx", "tracked-strategies", "strategy-serving", "economic-recorder", "positioning-recorder"}
+        research = {"governed-publication", "research-etf-recorder", "strategy-fx", "tracked-strategies", "strategy-serving", "economic-recorder", "positioning-recorder", "energy-recorder", "issuer-etf-recorder"}
         archives = {"research-history", "lean-history", "market-raw"}
         def owner(name):
             return "research" if name in research else "archives" if name in archives else "operations"
@@ -407,3 +409,11 @@ class AnalyticsService:
     def _refresh_positioning(self):
         from systematic_trading.recorders.positioning import refresh_positioning
         return refresh_positioning(self.settings, self.analytics)
+
+    def _refresh_energy(self):
+        from systematic_trading.recorders.energy import refresh_energy
+        return refresh_energy(self.settings, self.analytics)
+
+    def _refresh_issuer_etfs(self):
+        from systematic_trading.recorders.issuer_etfs import refresh_issuer_etfs
+        return refresh_issuer_etfs(self.settings, self.analytics)
