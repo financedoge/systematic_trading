@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 import math
+from bisect import bisect_right
+from calendar import monthrange
 from dataclasses import dataclass
 from datetime import date
 from functools import lru_cache
@@ -27,6 +29,9 @@ class StrategyArtifact:
     max_drawdown: float | None
     calmar: float | None
     allocation: tuple[dict[str, Any], ...]
+    return_1m: float | None = None
+    return_ytd: float | None = None
+    return_1y: float | None = None
 
     def as_dict(self) -> dict[str, Any]:
         return {
@@ -108,6 +113,7 @@ def _read_artifact(path: Path, root: Path, sota_key: str) -> StrategyArtifact | 
         max_drawdown=max_drawdown,
         calmar=calmar,
         allocation=tuple(_allocation(payload)),
+        **summarize_period_returns(points),
     )
 
 
@@ -166,6 +172,7 @@ def summarize_nav_points(points: list[tuple[date, float]]) -> dict[str, Any]:
     volatility = _sample_std(returns)
     max_drawdown = _max_drawdown([point[1] for point in clean])
     return {
+        **summarize_period_returns(points),
         "start_date": clean[0][0].isoformat(),
         "end_date": clean[-1][0].isoformat(),
         "observations": len(clean),
@@ -178,6 +185,44 @@ def summarize_nav_points(points: list[tuple[date, float]]) -> dict[str, Any]:
         "max_drawdown": max_drawdown,
         "calmar": annualized_return / abs(max_drawdown) if max_drawdown < 0 else None,
     }
+
+
+def summarize_period_returns(points: list[tuple[date, float]]) -> dict[str, float | None]:
+    """Cumulative returns through the last published NAV, in its own currency.
+
+    1M/1Y use calendar-month/year offsets (clamped at month end); YTD starts
+    at the prior year end. The anchor is the last observed close on/before
+    that boundary. No anchor means unavailable, never a since-inception
+    substitute. Invalid observations in a window also leave it unavailable.
+    Publication coverage checks remain responsible for absent sessions.
+    """
+    result = dict.fromkeys(("return_1m", "return_ytd", "return_1y"))
+    if len(points) < 2:
+        return result
+    ordered = sorted(points)
+    end, final = ordered[-1]
+    if not math.isfinite(final) or final <= 0:
+        return result
+    dates = [day for day, _ in ordered]
+    month_year, month = (end.year, end.month - 1) if end.month > 1 else (end.year - 1, 12)
+    boundaries = {
+        "return_1m": date(month_year, month, min(end.day, monthrange(month_year, month)[1])),
+        "return_ytd": date(end.year - 1, 12, 31),
+        "return_1y": date(end.year - 1, end.month, min(end.day, monthrange(end.year - 1, end.month)[1])),
+    }
+    for key, boundary in boundaries.items():
+        index = bisect_right(dates, boundary) - 1
+        if index < 0:
+            continue
+        if index > 0 and dates[index - 1] == dates[index]:
+            continue
+        window = ordered[index:]
+        if any(not math.isfinite(value) or value <= 0 for _, value in window):
+            continue
+        if len({day for day, _ in window}) != len(window):
+            continue
+        result[key] = final / ordered[index][1] - 1
+    return result
 
 
 def _max_drawdown(values: list[float]) -> float:

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import json
 import re
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -211,7 +211,7 @@ def strategy_inputs(settings, analytics, store=None):
 
 def publish_strategies(settings, store, analytics):
     from systematic_trading.web import api
-    from systematic_trading.research.catalog import discover_strategy_artifacts
+    from systematic_trading.research.catalog import discover_strategy_artifacts, summarize_period_returns
     from systematic_trading.research.tracked_runtime import published_strategies
     from systematic_trading.backtest.reporting import render_backtest_report_html
 
@@ -229,6 +229,13 @@ def publish_strategies(settings, store, analytics):
         calculated_strategy_ids=set(calculated)|set(membership(settings,store)['monitored']))))
     catalog = api.strategy_catalog(request)
     trackers = {key: item[0] for key, item in calculated.items()}
+    # Derive comparison windows from the already verified NAV publication.
+    # This presentation projection does not retrain or replay strategies.
+    for key, detail in trackers.items():
+        trackers[key] = {**detail, **summarize_period_returns([
+            (date.fromisoformat(row["trade_date"]), float(row["nav_cnh"]))
+            for row in detail["nav_series"]
+        ])}
     catalog["strategies"] = [row for row in catalog["strategies"] if row["strategy_id"] not in trackers]
     catalog["strategies"].extend({key: value for key, value in item.items()
         if key not in ("nav_series", "cnh_nav_series", "benchmark_series", "comparison", "model_training")} for item in trackers.values())

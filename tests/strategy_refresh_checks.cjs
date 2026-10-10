@@ -39,7 +39,8 @@ async function catalogChecks() {
     return elements.get(id);
   };
   let reject=false;
-  let payload={strategies:[{strategy_id:'tracked',name:'Tracked',lifecycle:'monitored',artifact_end_date:'2026-09-25'}],
+  let payload={strategies:[{strategy_id:'tracked',name:'Tracked',lifecycle:'monitored',artifact_end_date:'2026-09-25',
+    return_1m:.0123,return_ytd:-.025,return_1y:0}],
     warnings:['Waiting for FX']};
   const context=vm.createContext({document:{getElementById:get,querySelectorAll:() => [],addEventListener:()=>{}},
     window:{setTimeout:fn => timers.push(fn)},
@@ -47,6 +48,8 @@ async function catalogChecks() {
   vm.runInContext(script(input.catalog), context);
   await settle();
   assert.match(get('strategy-list').innerHTML,/2026-09-25/);
+  assert.match(get('strategy-list').innerHTML,/<td class="num">1.23%<\/td><td class="num">-2.50%<\/td><td class="num">0.00%<\/td>/);
+  for(const label of ['1M performance','YTD performance','1Y performance'])assert.ok(input.catalog.includes(label));
   assert.match(get('catalog-note').textContent,/Waiting for FX/);
   assert.equal(timers.length,1);
   reject=true;
@@ -56,10 +59,12 @@ async function catalogChecks() {
   payload={strategies:[{strategy_id:'tracked',name:'Tracked',lifecycle:'monitored',artifact_end_date:'2026-09-29'}]};
   await timers.shift()();
   assert.match(get('strategy-list').innerHTML,/2026-09-29/);
+  assert.match(get('strategy-list').innerHTML,/<td class="num">n\/a<\/td><td class="num">n\/a<\/td><td class="num">n\/a<\/td>/);
   assert.doesNotMatch(get('catalog-note').textContent,/Waiting for FX/);
   vm.runInContext("state.lifecycle='archived'",context);
   await timers.shift()();
   assert.match(get('strategy-list').innerHTML,/No strategies in this lifecycle/); // Preserve filter.
+  assert.match(get('strategy-list').innerHTML,/colspan="11"/);
   assert.equal(timers.length,1);
 }
 

@@ -200,3 +200,55 @@ def test_discovers_backtest_artifact_metrics_and_allocation(tmp_path) -> None:
     assert artifacts[0].total_return == pytest.approx(0.1)
     assert artifacts[0].allocation[0]["symbol"] == "SPY"
     assert artifacts[0].allocation[0]["weight"] == 0.6
+    assert artifacts[0].as_dict()["return_1m"] is None
+    assert artifacts[0].as_dict()["return_ytd"] is None
+    assert artifacts[0].as_dict()["return_1y"] is None
+
+
+def test_period_returns_use_calendar_boundaries_and_prior_closes():
+    from datetime import date
+    import pytest
+    from systematic_trading.research.catalog import summarize_period_returns, summarize_nav_points
+
+    # 1Y boundary falls on Sunday; the next Monday must not become the anchor.
+    points = [(date.fromisoformat(day), value) for day, value in [
+        ("2025-03-28", 80), ("2025-03-31", 90), ("2025-12-31", 100),
+        ("2026-02-27", 120), ("2026-03-02", 125), ("2026-03-30", 126),
+    ]]
+    expected = {"return_1m": .05, "return_ytd": .26, "return_1y": .575}
+    assert summarize_period_returns(list(reversed(points))) == pytest.approx(expected)
+    summary = summarize_nav_points(points)
+    for key, value in expected.items():
+        assert summary[key] == pytest.approx(value)
+
+
+def test_period_returns_clamp_leap_day_and_cross_january_boundary():
+    from datetime import date
+    import pytest
+    from systematic_trading.research.catalog import summarize_period_returns
+
+    def periods(rows):
+        return summarize_period_returns([(date.fromisoformat(day), nav) for day, nav in rows])
+
+    leap = periods([("2023-02-28", 100), ("2023-12-29", 120),
+                    ("2024-01-29", 125), ("2024-02-29", 150)])
+    assert leap == pytest.approx({"return_1m": .2, "return_ytd": .25, "return_1y": .5})
+    january = periods([("2024-01-31", 100), ("2024-12-31", 150), ("2025-01-31", 135)])
+    assert january == pytest.approx({"return_1m": -.1, "return_ytd": -.1, "return_1y": .35})
+
+
+def test_period_returns_do_not_substitute_short_history_or_invalid_values():
+    from datetime import date
+    from systematic_trading.research.catalog import summarize_period_returns
+
+    unavailable = dict(return_1m=None, return_ytd=None, return_1y=None)
+    assert summarize_period_returns([]) == unavailable
+    assert summarize_period_returns([(date(2026, 1, 2), 100)]) == unavailable
+    assert summarize_period_returns([(date(2026, 1, 2), 100), (date(2026, 1, 15), 110)]) == unavailable
+    points = [(date(2025, 1, 15), 100), (date(2025, 12, 15), 120), (date(2025, 12, 31), 150)]
+    for invalid in (0, -1, float('nan'), float('inf')):
+        assert summarize_period_returns([*points, (date(2026, 1, 15), invalid)]) == unavailable
+        assert summarize_period_returns([*points, (date(2026, 1, 5), invalid),
+                                         (date(2026, 1, 15), 160)]) == unavailable
+    assert summarize_period_returns([*points, (date(2025, 12, 31), 155),
+                                     (date(2026, 1, 15), 160)]) == unavailable

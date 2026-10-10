@@ -1,5 +1,19 @@
 """Archive/restore controls; membership changes have no execution authority."""
-HTML = '''<style>.strategy-name-cell{min-width:280px;max-width:360px;white-space:normal}.strategy-name-cell .note{overflow-wrap:anywhere}.strategy-name-cell .strategy-link{text-align:left}.strategy-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.strategy-actions button:disabled{cursor:not-allowed;opacity:.55}.strategy-actions .button,.strategy-actions button{font-size:12px}</style><dialog id="monitoring-dialog" style="width:min(480px,94vw);border:1px solid #ccd3dd;border-radius:9px;padding:22px">
+HTML = '''<style>
+.strategy-table-scroll{isolation:isolate;max-width:100%;overflow:auto}
+.strategy-table-scroll:focus-visible{outline:3px solid #7695de;outline-offset:-3px}
+.strategy-registry-table{border-collapse:separate;border-spacing:0;min-width:1380px}
+.strategy-registry-table th{z-index:2}
+.strategy-registry-table .strategy-name-cell{position:sticky;left:0;z-index:1;background:var(--panel,#fff);box-shadow:3px 0 5px #13243b12;width:320px;min-width:320px;max-width:320px;white-space:normal}
+.strategy-registry-table th.strategy-name-cell{z-index:3;background:#f8fafc}
+.strategy-name-cell .note,.strategy-name-cell .strategy-link{overflow-wrap:anywhere}
+.strategy-name-cell .strategy-link{text-align:left}
+.strategy-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.strategy-actions button:disabled{cursor:not-allowed;opacity:.55}
+.strategy-actions .button,.strategy-actions button{font-size:12px}
+.strategy-performance-note{padding:10px 14px;margin:0;border-bottom:1px solid var(--line)}
+@media(max-width:700px){.strategy-registry-table .strategy-name-cell{width:180px;min-width:180px;max-width:180px}.strategy-name-cell .badge{margin-left:0}}
+</style><dialog id="monitoring-dialog" style="width:min(480px,94vw);border:1px solid #ccd3dd;border-radius:9px;padding:22px">
 <form id="monitoring-form"><h2 id="monitoring-title"></h2><p id="monitoring-description"></p>
 <label>Operator <input id="monitoring-operator" required maxlength="100" autocomplete="name"></label>
 <p><label>Reason <input id="monitoring-reason" required maxlength="1000" style="width:100%"></label></p>

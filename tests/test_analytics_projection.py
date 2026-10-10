@@ -106,6 +106,41 @@ def test_initial_publication_missing_is_retryable_not_on_demand_recalculation():
     assert error.value.headers["Retry-After"] == "5"
 
 
+def test_strategy_publication_adds_period_returns_from_existing_tracked_nav(tmp_path, monkeypatch):
+    from systematic_trading.research import analytics_projection, tracked_runtime, strategy_lifecycle
+    from systematic_trading.web import api
+
+    analytics = MemoryAnalytics()
+    details = {
+        key: dict(strategy_id=key, lifecycle=lifecycle, report_available=False,
+                  accounting_currency="USD", benchmark_series=[], nav_series=[
+                      dict(trade_date=day, nav_cnh=nav) for day, nav in [
+                          ("2025-10-08", "100"), ("2025-12-31", "120"),
+                          ("2026-09-08", "150"), ("2026-10-08", "180")]])
+        for key, lifecycle in (("tracked", "monitored"), ("paused", "archived"))
+    }
+    monkeypatch.setattr(analytics_projection, "strategy_inputs", lambda *args: "periods-v1")
+    monkeypatch.setattr(tracked_runtime, "published_strategies", lambda *args: {
+        key: (detail, {}) for key, detail in details.items()})
+    monkeypatch.setattr(strategy_lifecycle, "membership", lambda *args: {"monitored": ["tracked"]})
+    monkeypatch.setattr(api, "strategy_catalog", lambda *args: {"strategies": []})
+    monkeypatch.setattr(tracked_runtime, "refresh_tracked_strategies",
+                        lambda *args: pytest.fail("Period summaries must not replay strategies"))
+
+    assert analytics_projection.publish_strategies(AppSettings(data_dir=tmp_path), object(), analytics)
+    catalog = json.loads(analytics.document("strategy-serving", "catalog")[0]["payload"])
+    for row in catalog["strategies"]:
+        assert row["return_1m"] == pytest.approx(.2)
+        assert row["return_ytd"] == pytest.approx(.5)
+        assert row["return_1y"] == pytest.approx(.8)
+        assert "nav_series" not in row
+        detail = json.loads(analytics.document("strategy-serving", "detail/"+row["strategy_id"])[0]["payload"])
+        assert detail["return_1m"] == row["return_1m"]
+        assert detail["accounting_currency"] == "USD"
+    assert "return_1m" not in details["tracked"]  # Preserve the source publication.
+    assert not analytics_projection.publish_strategies(AppSettings(data_dir=tmp_path), object(), analytics)
+
+
 def test_saved_strategy_reports_expose_stale_dates_even_without_job_errors():
     analytics = MemoryAnalytics()
     analytics.publish("strategy-serving", "v1", [], [
