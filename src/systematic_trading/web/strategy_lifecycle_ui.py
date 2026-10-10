@@ -23,10 +23,25 @@ HTML = '''<style>
 
 JS = '''
 let monitoringRevision=0, monitoringChange=null;
+/* Allocation readiness has two independent causes and they must not be shown as
+   one. "Catching up" is transient: the calculation has not finished. "Not
+   allocatable" is a policy state: the calculation is current but this strategy
+   has no approved execution contract. Labelling the second as the first made a
+   deliberate gate look like a stuck calculation. */
+function allocationAction(item){
+  if(item.allocation_ready){
+    return `<a class="button sc-promote" data-strategy="${esc(item.strategy_id)}" href="/strategies?allocate=${encodeURIComponent(item.strategy_id)}">Promote / allocate</a>`;
+  }
+  if(item.calculation_status!=='Current'){
+    return `<button disabled title="Wait for the complete calculation">Catching up</button>`;
+  }
+  const reason=item.allocation_unavailable_reason||'Allocation is not available for this strategy.';
+  return `<button disabled title="${esc(reason)}">Not allocatable</button>`;
+}
 function monitoringActions(item){
   const key=esc(item.strategy_id);
   if(item.lifecycle==='monitored'){
-    const allocation=item.allocation_ready?`<a class="button sc-promote" data-strategy="${key}" href="/strategies?allocate=${encodeURIComponent(item.strategy_id)}">Promote / allocate</a>`:`<button disabled title="Wait for the complete calculation">Catching up</button>`;
+    const allocation=allocationAction(item);
     return allocation+` <button data-monitoring-key="${key}" data-monitoring-action="archived" ${item.archive_blocker?'disabled':''} title="${esc(item.archive_blocker||'Pause calculations; retain the complete report')}">Archive</button>`;
   }
   return `<button data-monitoring-key="${key}" data-monitoring-action="monitored" ${item.can_restore?'':'disabled'} title="${item.can_restore?'Replay all missed sessions':'This historical artifact needs an executable strategy definition before it can be monitored'}">Restore to monitored</button>`;

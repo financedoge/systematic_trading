@@ -169,3 +169,62 @@ def test_full_replay_includes_missed_trades_instead_of_marking_archived_holdings
     assert len(result['nav'])==3 and {f['date'] for f in result['fills']}==set(days)
     assert result['fills'][1]['quantity']<0 and result['fills'][2]['quantity']>0
     assert Decimal(result['nav'][-1]['nav']) != Decimal(paused_result['nav'][-1]['cash'])+paused_result['final_positions']['SPY']*Decimal(30)
+
+
+# --- allocation readiness has two independent causes -------------------------
+#
+# allocation_ready is false both when the calculation has not finished and when
+# the strategy has no approved execution contract. Only the first is transient.
+# Reporting the second as "Catching up" made a deliberate gate look like a stuck
+# calculation.
+
+GATE = "Monitoring only; the separate 14-ETF execution contract has not been approved."
+
+
+def test_policy_gate_is_not_reported_as_catching_up():
+    from systematic_trading.web.strategy_refresh import _allocation_note
+    note, label = _allocation_note(dict(allocation_ready=False, calculation_status="Current",
+                                        allocation_unavailable_reason=GATE))
+    assert "Not allocatable" in note and "Catching up" not in note
+    assert GATE in note
+    assert label == "Not allocatable"
+
+
+def test_unfinished_calculation_is_still_reported_as_catching_up():
+    from systematic_trading.web.strategy_refresh import _allocation_note
+    note, label = _allocation_note(dict(allocation_ready=False, calculation_status="Catching up"))
+    assert note.startswith("Catching up")
+    assert label == "Catching up; allocation unavailable"
+
+
+def test_allocatable_strategy_gets_no_allocation_note():
+    from systematic_trading.web.strategy_refresh import _allocation_note
+    assert _allocation_note(dict(allocation_ready=True, calculation_status="Current")) == (None, None)
+    assert _allocation_note(None) == (None, None)
+
+
+def test_refresh_banner_separates_the_two_states():
+    from systematic_trading.web.strategy_refresh import report_refresh_banner
+    publication = dict(published_at="2026-10-10T02:00:00+00:00", version="v1")
+    status = dict(strategy_freshness_message="Daily strategies current through 2026-10-09.")
+    gated = report_refresh_banner(publication, status,
+        dict(allocation_ready=False, calculation_status="Current", allocation_unavailable_reason=GATE))
+    catching = report_refresh_banner(publication, status,
+        dict(allocation_ready=False, calculation_status="Catching up"))
+    assert "Not allocatable" in gated and "Catching up" not in gated
+    assert "Catching up" in catching
+
+
+def test_lifecycle_actions_distinguish_a_gate_from_a_pending_calculation():
+    """The actions column must branch on calculation_status, not allocation_ready alone."""
+    from systematic_trading.web.strategy_lifecycle_ui import JS
+    assert "function allocationAction" in JS
+    assert "item.calculation_status!=='Current'" in JS
+    assert "item.allocation_unavailable_reason" in JS
+    assert "allocationAction(item)" in JS
+    # Assert on the emitted labels, not on prose: the catching-up button may only
+    # be produced after the calculation-status guard.
+    guard = JS.index("item.calculation_status!=='Current'")
+    catching = JS.index(">Catching up</button>")
+    assert guard < catching, "the catching-up label must sit behind the calculation-status guard"
+    assert ">Not allocatable</button>" in JS
