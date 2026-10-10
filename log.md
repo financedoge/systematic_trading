@@ -1,5 +1,35 @@
 # Project Log
 
+## 2026-10-10 — Strategies page called a policy gate "Catching up"
+
+The user reported that FR25 and M1/14 were stuck showing "Catching up" and could
+not be promoted or allocated, suspecting a build fault. Investigated: the
+strategies were **not** stuck. Both reported `calculation_status = Current`
+through 2026-10-09 with complete reports, and both carried an explicit
+`allocation_unavailable_reason`: "Monitoring only; the separate 14-ETF execution
+contract has not been approved."
+
+So `allocation_ready = false` was correct and deliberate — it is the 14-ETF
+execution gate recorded when FR25 was closed out. The fault was in the **UI**,
+which had one condition for two unrelated causes:
+
+- `strategy_lifecycle_ui.py` rendered a disabled "Catching up" button whenever
+  `allocation_ready` was false, without consulting `calculation_status`.
+- `strategy_refresh.py` prefixed the saved-report banner with "Catching up" on
+  the same condition.
+
+A transient calculation state and a permanent policy state were therefore
+indistinguishable to the operator. Fixed by branching on `calculation_status` for
+the transient case and otherwise showing "Not allocatable" with the recorded
+reason. **The gate is unchanged**: both strategies remain unallocatable, the
+button stays disabled, and no approval, reconciliation or execution check was
+weakened. Only the label now matches the cause.
+
+Worth remembering: `allocation_ready` is false both when a calculation has not
+finished and when a strategy has no approved execution contract. Any future UI
+must branch on `calculation_status` for the first and
+`allocation_unavailable_reason` for the second.
+
 ## 2026-10-10 — P4.14 Part A: FR25 attribution, positive mechanism, inconclusive verdict
 
 Completed Part A of the FR25 robustness stress against the retention tolerance
