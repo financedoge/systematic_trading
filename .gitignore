@@ -8,9 +8,12 @@ __pycache__/
 openai_key.txt
 tushare_token.txt
 var/*.db
-var/backtests/*
-!var/backtests/sota_current/
-!var/backtests/sota_current/**
+# Legacy backtest archive and rendered research output are reproducible
+# artifacts kept on local disk and in the NAS full-system backup, not in git.
+# Study metadata (markdown, receipt.json, protocol/acceptance JSON) stays.
+var/backtests/
+research/**/*.html
+research/**/*.png
 var/live/*
 !var/live/account_snapshots/
 var/live/account_snapshots/*
