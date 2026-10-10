@@ -1,5 +1,40 @@
 # Research State
 
+## 2026-10-10 — P4.13 signal decay measured; no decay in the funded selection score
+
+First item of the [signal decay and alpha plan](signal-decay-and-alpha-plan.md)
+completed, including the dashboard panel and the allocation-aware warning.
+Full method, numbers and limitations: [signal decay findings](signal-decay-findings.md).
+
+130 monthly decisions, 2016-01-04 to 2026-10-01, 14 candidates, batch
+`b02d9372…`. **Measured** annual one-way turnover 3.97x; 21-session return
+dispersion 5.22%; cost gate at 5bp.
+
+| Signal | Long-run IC | Recent IC | IR | Status |
+| --- | ---: | ---: | ---: | --- |
+| `m1_total` (selection score) | 0.0548 | **0.0943** | 0.13 | healthy |
+| `m1_volume` (quarter of the score) | 0.0141 | −0.0110 | 0.04 | **decayed** |
+| `momentum_63` | 0.0696 | 0.1245 | 0.16 | healthy |
+| `drawdown_252` | −0.0085 | −0.1639 | −0.02 | **decayed** |
+
+**No decay is visible in the funded strategy's selection score**, and its recent
+IC is above its long-run mean. However the 95% block-bootstrap interval for
+`m1_total` spans zero at every block length ([−0.016, +0.127] at 3 months), so
+this sample cannot establish that the ranking edge is nonzero. The breakeven IC at
+the measured turnover is 0.0032, about 17x below the observed IC: the current
+signal is not cost-constrained on this pool.
+
+Two things follow. First, the FR25 concentration concern is not a *decay* problem
+in the M1 component, so P4.14's robustness stress remains the right next test.
+Second, the same gate applied to Alpha101's own turnover gives a breakeven IC of
+0.100 at the median — above every signal measured here — so P4.15's turnover gate,
+not the signal construction, is the binding constraint on P4.17.
+
+**Coverage gap, published not hidden:** the financial ridge, context ridge,
+rolling XGBoost and USD ridge forecasts are not yet measured; their per-decision
+values are not published. The FR25 and CR warnings therefore rest on the M1
+component only until that is closed.
+
 ## Next research phase — registered 2026-10-10
 
 The next phase is the [signal decay and alpha plan](signal-decay-and-alpha-plan.md),

@@ -939,6 +939,50 @@ def strategy_catalog(request: Request) -> dict[str, Any]:
     }
 
 
+@router.get("/strategies/signal-decay")
+def strategy_signal_decay(request: Request) -> dict[str, Any]:
+    """Signal decay and IC diagnostics for the monitored strategies.
+
+    Read-only decision support: it reports whether a strategy's key signal is
+    decaying or decayed and whether that strategy currently holds allocation. It
+    never changes a target, an allocation, an approval or a broker record.
+    """
+    from systematic_trading.portfolio.strategy_allocation import control_state
+    from systematic_trading.research import signal_health
+    from systematic_trading.research.strategy_catalog import registered_strategy_definition
+
+    analytics = getattr(request.app.state, "analytics", None)
+    store = getattr(request.app.state, "store", None)
+    if analytics is None:
+        return {"available": False, "message": "Analytical store is not enabled.", "strategies": []}
+    data = signal_health.report(analytics)
+    if not data:
+        return {"available": False, "strategies": [],
+                "message": signal_health.headline(None, [])["message"]}
+    state = control_state(store) if store is not None else {}
+    names = {}
+    for key in data.get("key_signals") or {}:
+        try:
+            names[key] = registered_strategy_definition(key).name
+        except (KeyError, ValueError):
+            names[key] = key
+    rows = signal_health.health(data, state, names)
+    return {
+        "available": True,
+        "headline": signal_health.headline(data, rows),
+        "strategies": rows,
+        "warnings": signal_health.warnings(rows),
+        "coverage_gaps": signal_health.coverage_gaps(data),
+        "method": data.get("method"),
+        "horizons": data.get("horizons"),
+        "turnover": data.get("turnover"),
+        "forward_return_sigma_21": data.get("forward_return_sigma_21"),
+        "cost_bps": data.get("cost_bps"),
+        "batch": data.get("batch"),
+        "limitations": data.get("limitations"),
+    }
+
+
 @router.get("/strategies/{strategy_id}")
 def strategy_detail(strategy_id: str, request: Request) -> dict[str, Any]:
     saved = _published_strategy(request, f"detail/{strategy_id}")

@@ -12,6 +12,7 @@ from systematic_trading.research.analytics_projection import (
     file_signature, import_json_group, import_transactional_histories, import_lean_histories, observation,
     publish_strategies, publish_dashboard, import_account_histories,
 )
+from systematic_trading.research.signal_decay_job import refresh_signal_decay
 from systematic_trading.research.tracked_runtime import refresh_tracked_strategies
 from systematic_trading.research.tracked_freshness import freshness, refresh_tracked_fx
 
@@ -114,6 +115,7 @@ class AnalyticsService:
             self._report_issue('strategy_freshness', state['strategy_freshness_message']+
                 ' New allocations and orders must wait for complete verified inputs. '
                 'Inspect calculation errors and refresh after resolving the cause.', severity='warning')
+        self._check_signal_decay()
         for lane in ('research', 'operations', 'archives'):
             if self._started_at and not state.get(lane+'_running'):
                 self._report_issue(lane+'_stopped', f'{lane.title()} worker has stopped. '
@@ -121,6 +123,32 @@ class AnalyticsService:
             elif state.get(lane+'_stale') and not state.get(lane+'_initializing'):
                 self._report_issue(lane+'_overdue', f'{lane.title()} worker has exceeded its progress deadline. '
                     'Inspect worker logs and retained replay evidence; last published results may be stale.')
+
+    def _check_signal_decay(self):
+        """Alert when a funded strategy's key signal is decaying or decayed.
+
+        Decision support only: this raises an operator-visible warning and never
+        changes an allocation, an approval or a broker record. Unfunded
+        strategies are reported on the dashboard but do not raise an alert,
+        because nothing is at risk until capital is committed.
+        """
+        from systematic_trading.portfolio.strategy_allocation import control_state
+        from systematic_trading.research import signal_health
+        try:
+            data = signal_health.report(self.analytics)
+            if not data:
+                return
+            rows = signal_health.health(data, control_state(self.store))
+            for warning in signal_health.warnings(rows):
+                self._report_issue(
+                    'signal_decay_' + warning['strategy_key'],
+                    f"Signal decay: {warning['message']} Monitored through the signal-decay "
+                    "diagnostic on Strategy health. Review whether to switch or deallocate; no "
+                    "allocation, approval or broker record has been changed.",
+                    severity='warning')
+        except Exception as exc:  # never let a diagnostic break readiness reporting
+            self._report_issue('signal_decay_check',
+                f'Signal-decay check failed: {type(exc).__name__}: {exc}', severity='warning')
 
     def _watchdog_tick(self, *, now=None):
         now = now or datetime.now(UTC)
@@ -285,6 +313,10 @@ class AnalyticsService:
             ("strategy-fx", lambda: refresh_tracked_fx(self.settings, self.store)),
             ("tracked-strategies", lambda: refresh_tracked_strategies(self.settings, self.store, self.analytics)),
             ("strategy-serving", lambda: publish_strategies(self.settings, self.store, self.analytics)),
+            # Independent of the tracked calculation: the decay diagnostic keeps
+            # working even when a strategy refuses to compute, so a decayed
+            # signal stays visible during a calculation failure.
+            ("signal-decay", lambda: refresh_signal_decay(self.settings, self.analytics)),
             ("economic-recorder", lambda: self._refresh_economics()),
             ("positioning-recorder", lambda: self._refresh_positioning()),
             ("energy-recorder", lambda: self._refresh_energy()),
@@ -301,7 +333,7 @@ class AnalyticsService:
             ("lean-history", lambda: import_lean_histories(self.analytics, self.store)),
             ("market-raw", lambda: import_raw_market_data(self.settings, self.analytics)),
         ]
-        research = {"governed-publication", "research-etf-recorder", "strategy-fx", "tracked-strategies", "strategy-serving", "economic-recorder", "positioning-recorder", "energy-recorder", "issuer-etf-recorder"}
+        research = {"governed-publication", "research-etf-recorder", "strategy-fx", "tracked-strategies", "strategy-serving", "signal-decay", "economic-recorder", "positioning-recorder", "energy-recorder", "issuer-etf-recorder"}
         archives = {"research-history", "lean-history", "market-raw"}
         def owner(name):
             return "research" if name in research else "archives" if name in archives else "operations"

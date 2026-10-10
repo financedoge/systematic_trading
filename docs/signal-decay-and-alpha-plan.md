@@ -49,34 +49,64 @@ Data reality that constrains what can be attempted:
 
 ## The programme
 
-### P4.13 — Signal decay and IC instrumentation *(start here)*
+### P4.13 — Signal decay, IC instrumentation, dashboard and decay warning *(start here)*
 
 **Question.** What is the current predictive content of every signal the
-application already uses, and how fast does it decay?
+application already uses, how fast does it decay, and is any funded strategy
+running on a signal that has stopped working?
 
 **Why now.** The user's stated requirement is to monitor decay closely, and no
 decay instrumentation exists today. There are no new data requirements. It has an
 immediate use: FR25's edge sits almost entirely in 2026, and this is how we find
 out whether its ridge signal has already decayed.
 
-**Approach.** An app-owned diagnostic that, per signal and per candidate, computes
-forward rank IC at 1/5/10/21/63-session horizons from published audited inputs on
-a pinned batch, plus the IC decay curve, implied half-life, hit rate,
-sub-period stability and the turnover-adjusted breakeven IC at the frozen 5bp.
-Cover the existing momentum/volume score, the context and financial ridge
-forecasts, the rolling XGBoost forecast and the realised-volatility features.
-Publish it in the shared report format so it is inspectable, not a notebook.
+**Scope.** Three parts, delivered together because a number nobody sees cannot
+inform a decision:
+
+1. **Instrumentation.** Per signal and per candidate: forward rank IC at
+   1/5/10/21/63-session horizons from published audited inputs on a pinned batch,
+   the IC decay curve, implied half-life, hit rate, sub-period stability, the
+   turnover-adjusted breakeven IC at the frozen 5bp, and dependence-aware
+   confidence intervals.
+2. **Dashboard surface.** A **Signal decay** panel on `/strategies` showing, for
+   every monitored strategy, its key signal(s), current and long-run IC, decay
+   status, estimated half-life, last computed and the input batch. Readable
+   without opening a report.
+3. **Allocation-aware decay warning.** A durable warning when a strategy's key
+   signal is decaying or decayed. When that strategy **currently holds an
+   allocation**, the warning is highlighted on `/operator` with the allocation
+   weight and a link to the evidence, so the operator can decide whether to
+   switch or deallocate.
+
+**Signals covered.** The M1 selection score (75% momentum / 25% volume) and its
+components, because it drives M1/14 and FR25 selection; the financial ridge
+forecast that FR25 consumes; the context ridge forecast that CR consumes; the
+rolling XGBoost forecast; and the raw momentum, volatility and activity features.
+Model forecasts are obtained by reusing the same loaders and schedule builders the
+strategies use, so the IC measures the deployed signal rather than a
+reimplementation. Any signal that cannot be covered reproducibly must be listed as
+an explicit coverage gap in the published output, never silently omitted.
+
+**Method constraints.** Forward windows overlap at the longer horizons, so naive
+t-statistics are badly overstated; intervals must use the platform's existing
+circular block bootstrap over decision dates at 3/6/12 months. Per-date rank IC on
+a 14-asset universe is coarse, so the averaged statistic is the finding and the
+per-date dispersion must be shown, not hidden. Every signal value must be
+point-in-time at its own decision cutoff; forward returns are labels only.
 
 **Acceptance.** Reproducible from pinned published inputs with verified hashes;
-deterministic tests over horizons, alignment and missingness; a breakeven-IC table
-at 5bp; no look-ahead — every IC uses information available at its own decision
-cutoff.
+deterministic tests over horizons, alignment, missingness, the bootstrap and the
+threshold logic; a breakeven-IC table at 5bp; the panel renders real published
+values; the warning fires with dedupe and carries the allocation weight; and the
+warning **never** changes an allocation, an approval or a broker record by itself.
 
 **Stop / honesty condition.** With ~130 monthly decisions the effective sample is
 small. If IC estimates are too unstable to support a conclusion, report that
 plainly rather than promoting a noise estimate into a finding.
 
-**Does not authorise** any change to monitored strategies; this is a diagnostic.
+**Does not authorise** any change to monitored strategies, funding or execution.
+The decay warning is decision support; switching or deallocating remains an
+operator decision through the existing allocation workflow.
 
 ### P4.14 — FR25 robustness stress
 
@@ -232,7 +262,7 @@ approximation must be disclosed because it flatters stops in gap-down markets.
 
 | Order | Item | Gate to proceed |
 | ---: | --- | --- |
-| 1 | P4.13 decay instrumentation | — |
+| 1 | P4.13 decay instrumentation, dashboard panel and allocation-aware warning | — |
 | 2 | P4.14 FR25 robustness stress | — |
 | 3 | P4.15 turnover / breakeven gate | — |
 | 4 | P4.16 sleeve-aware construction | — |

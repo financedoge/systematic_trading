@@ -19,7 +19,9 @@ def root_redirect() -> RedirectResponse:
 @router.get("/operator", response_class=HTMLResponse, include_in_schema=False)
 def operator_dashboard() -> HTMLResponse:
     html = _OPERATOR_HTML.replace('</style>', WORKSPACE_CSS + '</style>', 1)
-    html = html.replace('<main>', '<main>' + WORKSPACE_HTML, 1)
+    from systematic_trading.web.signal_decay_ui import ALERT_HTML, ALERT_JS
+    html = html.replace('<main>', '<main>' + ALERT_HTML + WORKSPACE_HTML, 1)
+    html = html.replace('<script>', ALERT_JS + '<script>', 1)
     html = html.replace('<script>', WORKSPACE_DIALOG + '<script>', 1)
     html = html.replace('    Promise.all([loadProposals(), loadDashboardData()])', WORKSPACE_JS + '\n    Promise.all([loadProposals(), loadDashboardData()])', 1)
     return HTMLResponse(with_app_shell(with_chart_navigation(html), "trading"))
@@ -28,7 +30,12 @@ def operator_dashboard() -> HTMLResponse:
 @router.get("/strategies", response_class=HTMLResponse, include_in_schema=False)
 def strategy_portal() -> HTMLResponse:
     from systematic_trading.web.strategy_lifecycle_ui import HTML, JS
+    from systematic_trading.web.signal_decay_ui import HTML as DECAY_HTML, JS as DECAY_JS
     html = _STRATEGIES_HTML.replace("<script>", HTML+"<script>"+JS, 1)
+    # Placed at the top of the workspace: signal health is the first thing an
+    # operator should see before acting on any strategy row below it.
+    html = html.replace("<main>", "<main>"+DECAY_HTML, 1)
+    html = html.replace("<script>", "<script>"+DECAY_JS, 1)
     return HTMLResponse(with_app_shell(html, "strategies"))
 
 

@@ -1,5 +1,68 @@
 # Project Log
 
+## 2026-10-10 — P4.13 signal decay: IC instrumentation, dashboard panel, decay warning
+
+Completed P4.13, the first item of the [signal decay and alpha plan](../docs/signal-decay-and-alpha-plan.md),
+including the dashboard surface and the allocation-aware warning the user asked
+for. Findings are in [signal decay findings](../docs/signal-decay-findings.md).
+Decision support only: no monitored strategy, allocation, approval or broker
+record was changed.
+
+Built `research/signal_decay.py` (IC maths, block bootstrap, half-life, breakeven
+gate, status logic), `research/signal_decay_job.py` (point-in-time signal series
+and publication), `research/signal_health.py` (strategy-to-signal join and warning
+gating), a read-only `GET /api/v1/strategies/signal-decay`, a **Signal decay**
+panel at the top of `/strategies`, an operator banner on `/operator` that appears
+only when a *funded* strategy is affected, and a durable alert from the analytics
+readiness loop.
+
+Method: labels are next-open to next-open because the platform decides at the
+close and fills at the next open; rank IC uses the platform's own normalised
+ranks; intervals come from the circular block bootstrap at 3/6/12-month blocks
+because forward windows overlap; the breakeven gate scales annual cost to the
+signal's own horizon and deliberately omits the selection-intensity multiplier,
+so it is conservative.
+
+130 monthly decisions, 2016-01-04 to 2026-10-01, 14 candidates, batch
+`b02d9372…`, 5bp, **measured** annual one-way turnover 3.97x, 21-session return
+dispersion 5.22%.
+
+- **`m1_total`, the funded strategy's selection score, shows no decay.** Long-run
+  IC 0.0548, recent 24-decision IC 0.0943, hit rate 54%, IR 0.13, status healthy.
+  The FR25 concentration concern is not visible as lost ranking power in the M1
+  component.
+- **But its interval spans zero**: 95% block-bootstrap [−0.016, +0.127] at 3
+  months, [−0.023, +0.134] at 6, [−0.023, +0.136] at 12. The sign is consistent
+  across all five horizons, but 130 overlapping monthly decisions cannot establish
+  a nonzero edge. Published as such.
+- **Two signals are decayed**: `m1_volume` (a quarter of the M1 score) has
+  long-run IC 0.0141 and recent −0.0110, the weakest IR in the family; and
+  `drawdown_252` is negative throughout and strongly negative recently.
+- `momentum_63` has the best IR (0.16, mean IC 0.070).
+- **Cost headroom is large**: at the measured 3.97x turnover the breakeven IC is
+  0.0032, about 17x below the observed `m1_total` IC.
+
+Consequence for P4.15 and P4.17: the identical gate applied to Alpha101's own
+turnover gives a breakeven IC of 0.100 at the median and 0.337 at the fastest.
+0.100 exceeds every signal measured here, so the turnover gate is no longer a
+formality — it decides whether the restricted Alpha101 subset is viable at all.
+
+Coverage gaps are published rather than hidden: FR25's financial ridge, CR's
+context ridge, the rolling XGBoost and the USD ridge forecasts are **not** yet
+measured, because their per-decision values are not published and reproducing
+them means re-running the frozen model schedules. The practical consequence is
+that the FR25 warning currently rests on the M1 component only; closing that is
+the next increment of P4.13.
+
+Verification: 29 focused tests in `tests/test_signal_decay.py`, plus a wide
+regression batch over the strategy, API, UI, recorder and governed-refresh suites.
+Node is not installed here, so the repository's `.cjs` browser checks skip; the
+panel and banner were verified against the served HTML of the live application and
+by an element-id agreement test. That regression batch caught one integration
+fault: the job originally raised a missing-audited-history error into the research
+lane, so it now skips quietly when nothing is published yet while still raising on
+any other error.
+
 ## 2026-10-10 — Next research phase registered: signal decay, alpha overlays, robustness
 
 Reviewed the existing research plan and results and read Kakushadze's *101
