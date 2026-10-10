@@ -1,5 +1,61 @@
 # Project Log
 
+## 2026-10-10 — Execution generality planned: capability general, admission narrow
+
+The user asked for the execution path to stop being tied to the original 12 ETFs
+and to support any tradable asset on IB, explicitly so that future underlyings do
+not require rebuilding it. Registered as a new **P8** phase with its plan in
+`docs/execution-generality-plan.md`. Planning only; no code changed.
+
+The design principle is that **capability and admission are separated**. Capability
+— routing any contract whose identity and market rules are verified — should be
+general and need no code change per instrument. Admission — which contracts may
+trade now — should stay narrow, explicit and evidence-bound. Today they are fused:
+`universe_key` selects a hand-written `Instrument` dict, and
+`strategy_lifecycle.py:113` hard-codes which strategies may be allocated, so
+capability is exactly as narrow as admission and every widening is a code change.
+Lifting admission to "everything IB lists" is not the goal and would be unsafe.
+
+Constraints verified in the code rather than assumed:
+
+- Universes are literal dicts in `research/etf_universe.py`,
+  `all_weather_universe.py` and `stock_universe.py`, selected by `universe_key`.
+- `execution/broker.py:299-302` and `:345` reject any symbol outside the
+  caller-supplied `instruments` mapping.
+- `IBContractSpec` carries only symbol, security type, exchange, currency and
+  primary exchange — no `conId`, ISIN, local symbol or multiplier, so identity is
+  a ticker guess.
+- `research/governed_refresh.py:144` requires `currency == "USD"` and
+  `instrumentType == "ETF"`, so no non-USD or non-ETF series can be admitted.
+- Routing assumes US sessions and a US/Eastern window (`live/sota.py:113,281`).
+- **No lot size, board lot or contract multiplier exists anywhere**, so HKEX and
+  TSE quantities would be wrong.
+
+Work items P8.1-P8.10 cover the contract identity registry, disambiguation-aware
+resolution, registry-backed universes, the admission gate, the capability check,
+per-currency CNH FX, per-venue calendars and windows, lot and tick enforcement,
+the multi-currency data lane, and generalised exposure and reporting.
+
+Two things are worth stating plainly. **Ambiguity is the hard correctness
+problem**: `BHP` is an ADR on NYSE and a listing on LSE and ASX, so resolution
+needs explicit disambiguation keys and must fail closed rather than silently
+picking a match — a ticker-only lookup is the failure being retired and must not
+return as the new default. And **P8.6 and P8.9 are blocked on data and commercial
+decisions, not engineering**: FX remains an unresolved input class and non-US
+price history needs source and licence choices. Until FX is resolved, "any IB
+tradable" silently means "any USD tradable".
+
+Sequencing targets the user's actual complaint first and deliberately narrowly:
+the only allocation blocked today is the 14-ETF pair, and it needs exactly XLE and
+XLB admitted. Those are US-listed USD ETFs, so critical path P8.1-P8.5 opens the
+gate through the general mechanism without any FX, calendar or data widening —
+and proves the general path on a real case rather than building it speculatively.
+It also removes the hard-coded strategy set, so the next strategy needs no code
+edit at all.
+
+Research is not blocked by this and continues in parallel; the next research step
+is P4.14 Part B.
+
 ## 2026-10-10 — Strategies page called a policy gate "Catching up"
 
 The user reported that FR25 and M1/14 were stuck showing "Catching up" and could
@@ -35,7 +91,7 @@ must branch on `calculation_status` for the first and
 Completed Part A of the FR25 robustness stress against the retention tolerance
 frozen earlier the same day, before any statistic was computed. Analysis over the
 published selection-blend evidence; no portfolio was re-run. Findings:
-[FR25 robustness findings](../docs/fr25-robustness-findings.md).
+[FR25 robustness findings](docs/fr25-robustness-findings.md).
 
 FR25 versus CP on the 2021+ evaluation window: +105.98% against +93.98%, a
 difference of +12.00pp (+0.0600 log), across 1,448 sessions and 70 decisions.
@@ -93,7 +149,7 @@ Verification: 15 focused tests plus Ruff.
 
 Froze the FR25 robustness protocol and its retention tolerance **before computing
 any robustness statistic**, as the plan requires. Recorded in
-[signal decay and alpha plan](../docs/signal-decay-and-alpha-plan.md) and in the
+[signal decay and alpha plan](docs/signal-decay-and-alpha-plan.md) and in the
 P4.14 Kanban row. No analysis result exists yet, which is the point.
 
 FR25 is retained only if all four hold: excess over CP positive in at least
@@ -130,9 +186,9 @@ tab equally and is a broader restyle than the reported issue.
 
 ## 2026-10-10 — P4.13 signal decay: IC instrumentation, dashboard panel, decay warning
 
-Completed P4.13, the first item of the [signal decay and alpha plan](../docs/signal-decay-and-alpha-plan.md),
+Completed P4.13, the first item of the [signal decay and alpha plan](docs/signal-decay-and-alpha-plan.md),
 including the dashboard surface and the allocation-aware warning the user asked
-for. Findings are in [signal decay findings](../docs/signal-decay-findings.md).
+for. Findings are in [signal decay findings](docs/signal-decay-findings.md).
 Decision support only: no monitored strategy, allocation, approval or broker
 record was changed.
 

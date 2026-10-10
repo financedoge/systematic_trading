@@ -2,7 +2,9 @@
 
 This is the durable build tracker for the industrial trading platform. Update it at the start and end of every implementation session.
 
-- **In Progress: P4.14 FR25 robustness stress (2026-10-10).** Protocol and retention tolerance frozen before outcomes; Part A analysis over the published selection-blend evidence is the current step. Part B (placebo rank, 2022 refit, sensitivity) needs its own frozen re-run. Research only; no allocation or monitoring change.
+- **Next: resume P4.14 Part B (2026-10-10).** FR25 placebo rank, data-through-2022 refit, top-N and financial-weight sensitivity. Needs its own frozen study and evidence root. Part A returned inconclusive.
+
+- **Registered: P8 execution generality (2026-10-10).** The 12-ETF assumption in the execution path is to be removed by separating capability (general) from admission (narrow, evidence-bound), so a new underlying or strategy costs a registry entry rather than a code edit. Critical path P8.1-P8.5 opens the 14-ETF allocation gate via the general mechanism using XLE/XLB as the first customer. [Plan](execution-generality-plan.md). Platform workstream; research is not blocked by it.
 
 - **Done: P4.13 signal decay, dashboard panel and allocation-aware warning (2026-10-10).** Decay instrumentation for every priced signal the app uses, surfaced on `/strategies`, with an operator banner on `/operator` when a funded strategy's key signal is decaying or decayed. The funded strategy's selection score shows no decay, but its interval spans zero. 29 focused tests plus a wide regression batch. Decision support only. [Findings](signal-decay-findings.md).
 
@@ -447,17 +449,44 @@ Review follow-ups (not closed by this batch):
 | P7.5 | Pending | Automated Kanban reminder | Daily loop reports include open `In Progress`, `Blocked`, and high-priority `Pending` items. | Keeps execution tracker current. |
 | P7.6 | Pending | Disaster recovery drill | Backup and restore check for trading-critical local state. | Required before live. |
 
+## P8: Execution Generality
+
+Registered 2026-10-10. The execution path must not be rebuilt each time a new
+underlying joins a strategy. The separating principle, the current constraints
+with file references, the target design, the blockers and the sequencing are in
+[execution generality](execution-generality-plan.md). Capability becomes general;
+admission stays narrow, explicit and evidence-bound. No gate is weakened.
+
+| ID | Status | Work Item | Acceptance Criteria | Evidence / Notes |
+| --- | --- | --- | --- | --- |
+| P8.1 | Pending | Contract identity registry | IB `reqContractDetails` captured raw, audited and published as an immutable hash-versioned registry carrying `conId`, `secType`, `localSymbol`, exchanges, currency, multiplier, `minTick` and trading class. Ambiguity fails closed. Re-derivable from retained raw evidence. | Foundation for everything else. Uses the existing raw-first, audit, publish discipline rather than a new pattern. |
+| P8.2 | Pending | Symbol to contract resolution | Resolution requires explicit disambiguation keys (ISIN, or exchange plus currency hint) and rejects ambiguity instead of guessing. Deterministic and recorded per decision. | The hard correctness problem: `BHP` is an ADR on NYSE and a listing on LSE and ASX. A ticker-only lookup is the failure being retired and must not return as the new default. |
+| P8.3 | Pending | Registry-backed universe selectors | Universes become declared selectors over the registry plus explicit membership, replacing the literal `Instrument` dicts in `research/etf_universe.py`, `all_weather_universe.py` and `stock_universe.py`. Existing universes resolve identically to today. | A new instrument then costs a registry entry, not a code edit. Research definitions keep their frozen membership. |
+| P8.4 | Pending | Instrument admission gate | A contract is tradable only when identity is verified, an audited price history exists, a CNH FX path exists, IB reports it tradable for this account, and its market rules are registered. Admission is an immutable event and every instrument can answer "why not tradable". | Admission stays narrow and reviewed; capability is what generalises. |
+| P8.5 | Pending | Capability check replacing the hard-coded allocation gate | `research/strategy_lifecycle.py:113`'s literal set is replaced by a computed check: a strategy is allocation-supported when every instrument in its resolved universe is admitted for execution and its execution contract is registered. FR25 and M1/14 become allocatable by admitting XLE and XLB, with no code change. | This is the user's actual complaint. First customer is deliberately XLE/XLB, which are US-listed USD ETFs, so P8.1-P8.5 need no FX, calendar or data widening. |
+| P8.6 | Blocked | Per-currency CNH FX path | Non-USD instruments valued and reconciled in CNH with point-in-time discipline and a declared authoritative source per pair. | **Blocked on data, not engineering:** FX is a documented unresolved input class. Until it is resolved, "any IB tradable" silently means "any USD tradable". |
+| P8.7 | Pending | Per-venue calendars and execution windows | Each listing venue has its own session calendar and an execution window in its own timezone, with a defined convention for asynchronous sessions and an explicit valuation date. | `exchange-calendars` is already a dependency. Today routing assumes US sessions only (`live/sota.py:113,281`). |
+| P8.8 | Pending | Lot size, tick and minimum-size enforcement | HKEX board lots and TSE hundred-share lots cannot produce an invalid quantity; venue tick regimes enforced at sizing. | Verified absent today: no lot size, board lot or multiplier anywhere in the codebase. Whole-unit accounting exists; lot multiples do not. |
+| P8.9 | Blocked | Multi-currency governed price lane | Non-USD and non-ETF series admitted through the existing audit and publication process, with per-venue sources, retention rights, basis and corporate-action coverage. | **Blocked on source and licence decisions.** `research/governed_refresh.py:144` currently requires `currency == "USD"` and `instrumentType == "ETF"`. |
+| P8.10 | Pending | Generalised exposure, staleness and reporting | Country and currency aggregation, staleness checks and reports correct across venues and calendars. | Reconciliation itself matches on `order_ref` and is already symbol-agnostic, so this is mostly free. |
+
 ## Next Recommended Work Order
 
 Rewritten 2026-10-10. The research queue is now governed by the
 [signal decay and alpha plan](signal-decay-and-alpha-plan.md); the items below
 are the cross-cutting platform work that runs alongside it.
 
-**Research, one item at a time with a review between items.** Start with **P4.13**
-(signal decay and IC instrumentation), then **P4.14** (FR25 robustness stress).
-Neither needs new data, both serve the stated decay-monitoring goal, and P4.14
-de-risks the strategy that is actually funded. Do not start an item while the
-previous item's report is unreviewed.
+**Research, one item at a time with a review between items.** Resume at **P4.14
+Part B** (FR25 placebo rank, data-through-2022 refit, top-N and financial-weight
+sensitivity), which needs its own frozen study and evidence root. Part A is
+complete and returned *inconclusive*. Do not start an item while the previous
+item's report is unreviewed.
+
+**Platform, in parallel:** the new **P8** execution-generality phase
+([plan](execution-generality-plan.md)) removes the 12-ETF assumption. Its critical
+path P8.1–P8.5 is deliberately narrow — XLE and XLB are US-listed USD ETFs, so
+opening the 14-ETF allocation gate needs no FX, calendar or data widening — and
+it replaces the hard-coded strategy gate so the next strategy needs no code edit.
 
 Platform and data work, in parallel:
 
