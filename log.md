@@ -1,5 +1,47 @@
 # Project Log
 
+## 2026-10-10 — P4.14 Part B protocol frozen; placebo shown to have full power
+
+Reconnaissance for Part B, recorded as a frozen protocol before any Part B
+outcome. Three findings changed the shape of the work.
+
+**All three perturbations are selection-layer operations.** The frozen study
+preserved `selection.json` (per-decision rank tables) and `forecasts.json`
+(per-decision, per-symbol forecasts), so the placebo and the top-N / weight
+sensitivity variants need **no model re-fit** — only the data-through-2022 refit
+does. That is a far smaller job than the plan originally assumed.
+
+**The injection hook is exact.** `selection.json[day]['FR25']['rank_table']`
+already carries the normalised `momentum`, `xgb`, `ridge` and `combined` ranks per
+symbol per decision, so the blend is reproducible from frozen evidence. Replacing
+`SelectionBlend.ridge` (`models[symbol]['linear_forecast']` plus `ready`) with a
+permuted assignment regenerates the blended rank **through the engine's own
+`_selection_scores`**, which preserves eligibility, abstention and downstream
+sizing by construction. Re-implementing the downstream sizing outside the engine
+is explicitly forbidden: a placebo must differ from FR25 in exactly one respect.
+
+**The placebo has full power.** FR25 **abstained on 0 of 70** evaluation
+decisions — the financial ridge was available at every one — so the placebo acts
+on the whole sample. For contrast CR25 abstained on 12 of 70, which is why the
+same test for CR would have materially less power. FR25 changed 13 selections;
+its mean-only control FR25M changed 21.
+
+Randomisation is a **permutation of the ridge rank values across the available
+symbols** at each decision: that preserves the marginal rank distribution and
+destroys only the assignment, which is precisely the information the ridge claims
+to supply. 200 draws, fixed seed, declared before running. Every draw is retained,
+including any that beat FR25.
+
+Frozen protocol details are in
+[docs/signal-decay-and-alpha-plan.md](docs/signal-decay-and-alpha-plan.md), with a
+new evidence root `var/research/fr25-placebo-20261010-v1/` pinning the parent
+protocol hash and input manifest. It must not extend or overwrite the
+selection-blend root. The decision rule is unchanged: Part B can move the verdict
+between *preserve* and *inconclusive* only, and cannot rescue a failed year or
+interval test.
+
+Also registered this session: the **P8 execution-generality plan**.
+
 ## 2026-10-10 — Execution generality planned: capability general, admission narrow
 
 The user asked for the execution path to stop being tied to the original 12 ETFs

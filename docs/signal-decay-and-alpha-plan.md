@@ -153,6 +153,47 @@ best selection, from the best year, and from the top three selections).
 cannot be evaluated from the published artifacts because each changes which
 assets were selected and therefore the realised path:
 
+**Part B protocol — frozen 2026-10-10, before any Part B outcome.** Reconnaissance
+established that all three perturbations are **selection-layer** operations, so
+none of them needs a model re-fit except the 2022 refit.
+
+- **Evidence root.** A new root, `var/research/fr25-placebo-20261010-v1/`, pinning
+  the parent selection-blend protocol hash and input manifest. It must not extend
+  or overwrite the selection-blend root.
+- **Reused frozen inputs.** The parent's `bars.json`, `macro.json`, `xgb_usd.json`,
+  `selection.json` (per-decision rank tables) and `forecasts.json`, each with
+  verified hashes.
+- **Injection hook.** `SelectionBlend.ridge` is a mapping with `ready` plus
+  `models[symbol]['linear_forecast']`. Replacing those forecasts with a permuted
+  assignment regenerates the blended rank through the engine's own
+  `_selection_scores`, so eligibility, abstention and downstream sizing are
+  preserved by construction rather than re-implemented. Re-implementing the
+  downstream sizing outside the engine is explicitly forbidden: a placebo must
+  differ from FR25 in exactly one respect.
+- **Placebo randomisation.** At each decision, **permute the ridge rank values
+  across the available symbols**. A permutation preserves the marginal
+  distribution of ranks and destroys only the *assignment*, which is precisely the
+  information the ridge claims to supply. Draws: 200, fixed seed, declared here.
+- **Statistic and threshold.** FR25's evaluation-window excess over CP, located in
+  the placebo distribution. Retention requires exceeding the **90th percentile**,
+  as already declared. Every draw is retained as evidence, including the ones that
+  beat FR25.
+- **Power, established during recon and recorded because it bounds the test.**
+  FR25 **abstained on 0 of 70** evaluation decisions, so the placebo acts on the
+  full sample. By contrast CR25 abstained on 12 of 70, which is why the same
+  placebo for CR would have less power. FR25 changed 13 selections; its mean-only
+  control FR25M changed 21.
+- **Top-N and financial-weight sensitivity.** Slots 4/5/6/7 and ridge weights
+  0.10/0.25/0.40, on the same frozen rank tables, reported as a sensitivity
+  surface. This is **not** a search and **not** out-of-sample evidence: these are
+  the axes the study already varied.
+- **Data-through-2022 refit.** The only perturbation needing a genuine re-fit:
+  train the ridge on labels completed by end-2022 and replay 2023 onward. If it
+  cannot be run reproducibly, report it as not run rather than approximated.
+- **Decision rule.** Unchanged from the frozen retention tolerance above. Part B
+  can only move the verdict between *preserve* and *inconclusive*; it cannot
+  rescue a failed year or interval test.
+
 - **Matched-availability placebo rank** — replace the financial-ridge rank with a
   random rank carrying the same availability and abstention behaviour, over a
   predeclared number of draws, and locate the observed excess return in that
