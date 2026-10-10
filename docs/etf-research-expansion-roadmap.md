@@ -4,6 +4,18 @@ Discussion proposal dated October 7, 2026. The objective is to improve net Sharp
 
 ## Latest disposition — October 10, 2026
 
+**Next research phase registered.** The plan for signal decay, alpha overlays and
+portfolio robustness is now in
+[signal decay and alpha plan](signal-decay-and-alpha-plan.md), covering `P4.13`–`P4.21`
+in the execution Kanban. It starts with signal-decay instrumentation and an FR25
+robustness stress — neither needs new data — before any Alpha101 work, and it
+restricts Alpha101 to the 16 formulaic alphas that are both computable with the
+held data and free of a cross-sectional operator. Intraday signal activation and
+stop-loss execution is registered as a platform workstream, not research, because
+no published intraday data and no intraday execution stack exist. Work proceeds
+**one item at a time with a review and reflection between items**; the plan
+authorises no promotion, funding or execution change.
+
 **User scope:** all future candidate/feature/momentum tests use the full
 supported candidate pool. Stop standalone XLE/XLB-only tests; assets compete
 for selection and are never forced into portfolios.

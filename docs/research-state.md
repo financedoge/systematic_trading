@@ -1,5 +1,29 @@
 # Research State
 
+## Next research phase — registered 2026-10-10
+
+The next phase is the [signal decay and alpha plan](signal-decay-and-alpha-plan.md),
+registered as `P4.13`–`P4.21`. It starts with **signal decay and IC
+instrumentation** and an **FR25 robustness stress**, neither of which needs new
+data, before any Alpha101 work.
+
+Two conclusions from reviewing the Alpha101 paper are frozen into that plan.
+First, of the 101 formulaic alphas, 49 cannot be computed with the data we hold
+(43 need `vwap`, 18 an industry classification, one market capitalisation), 83
+contain a cross-sectional operator, and only **16 are both implementable and free
+of a cross-sectional operator**. Second, the paper's own Table 1 puts the median
+alpha at a 2.10-session holding period and ~120× annual one-way turnover —
+roughly **6.0% a year at our frozen 5bp**, against the current strategy's ~8× and
+~0.4% — and its published figures exclude transaction costs. Alpha101 is
+therefore usable only as a restricted feature set at the selection layer, behind
+measured turnover and decay, never as an unconditional daily overlay.
+
+Intraday signal activation and stop-loss execution is registered as a platform
+workstream (`P5.11`), not research. There is no published intraday data and no
+intraday execution stack.
+
+Work proceeds **one item at a time, with a review and reflection between items**.
+
 ## Standing research scope — updated 2026-10-10
 
 At the user's direction, future ETF, feature and momentum research uses the full

@@ -1,5 +1,53 @@
 # Project Log
 
+## 2026-10-10 — Next research phase registered: signal decay, alpha overlays, robustness
+
+Reviewed the existing research plan and results and read Kakushadze's *101
+Formulaic Alphas* first-hand, then registered the next phase as
+`P4.13`-`P4.21` in the execution Kanban, documented in
+`docs/signal-decay-and-alpha-plan.md`. No promotion, funding or execution change.
+
+The plan is governed by three regularities in our own record: selection-layer
+changes work (FR25/CR50 +0.087/+0.065 Sharpe) while sizing and timing overlays do
+not (+0.016 and below); nothing has ever passed 5% Holm at any registered block
+length; and the strongest lead is fragile, since FR25 changes 13 of 70 evaluation
+selections with a +4.552pp 2026 advantage concentrated in recent substitutions.
+
+Alpha101 was assessed against the data we actually hold. Extracting and
+classifying all 101 formulas verbatim, and corroborating the counts against
+DolphinDB's independently written implementation, gives: 43 alphas need `vwap`,
+18 need an industry classification and one needs market capitalisation, so **49
+of 101 cannot be computed at all**; 83 contain a cross-sectional operator; and
+only **16 are both implementable and free of a cross-sectional operator**
+(6, 7, 9, 12, 21, 23, 24, 26, 35, 43, 46, 49, 51, 53, 54, 101). The paper's own
+Table 1 puts the median alpha at a 2.10-session holding period and 0.475 daily
+turnover — roughly **120x annual one-way turnover, about 6.0% a year at our frozen
+5bp** against the current strategy's ~8x and ~0.4% — and states its published
+figures exclude transaction costs. The alphas are also survivor-selected (80 in
+production when written, one sample window, no out-of-sample split) and were
+validated on the top ~2,500 US stocks, roughly 700 times our universe breadth.
+
+Disposition: use Alpha101 only as a restricted feature set at the selection layer,
+behind measured turnover and decay, and never as an unconditional daily overlay.
+Registered order: P4.13 decay instrumentation and P4.14 FR25 robustness stress
+first (neither needs new data), then P4.15 turnover/breakeven gate, P4.16
+sleeve-aware construction, and P4.17 the restricted Alpha101 subset. P4.18
+volatility targeting and P4.19 execution timing cover the risk and execution
+axes; P4.20 registers a decay-based promotion gate; P4.21 (look-through
+constituent alpha) is deferred pending P4.16.
+
+The "activate on an intraday alpha signal, exit on a signal flip or a predefined
+stop" design is registered as **P5.11, a platform workstream rather than
+research**: there are no intraday tables in ClickHouse, the recorder holds only
+raw five-second sampled quotes for five ETFs flagged `research_approved: false`,
+and routing is a single monthly TWAP window. Until audited intraday data and an
+intraday execution stack exist, stop research is limited to a disclosed
+daily-resolution approximation.
+
+Working cadence agreed with the user: **one item at a time, with a review and
+reflection between items**. Do not start an item while the previous item's report
+is unreviewed. Recorded in the plan and in the Kanban work order.
+
 ## 2026-10-10 — Governed-data `review` status: decision and triage
 
 The user decided to leave the decision gate unchanged for now and to spend effort
