@@ -1,5 +1,46 @@
 # Project Log
 
+## 2026-10-10 — Governed-data `review` status: decision and triage
+
+The user decided to leave the decision gate unchanged for now and to spend effort
+later promoting `review` series to `audited_with_limitations` by investigating and
+filling or fixing the underlying gaps. Registered as P3.8 in the execution Kanban
+with the triage below; no code or schema changed.
+
+`portfolio/decision_inputs.py` continues to hard-fail only on `unavailable` and
+`complex_identity_requires_review`, so `review` series remain admissible to
+paper/live decisions. That is acceptable today because no traded or benchmark
+instrument carries `review`.
+
+Triage of the current catalog batch `b02d9372…` (5,341 series: 1,056
+`audited_with_limitations`, 3,482 `review`, 803 `unavailable`), read from the
+latest published audit document per symbol:
+
+- All 3,482 `review` series share the same four certification gaps —
+  `identity_not_certified`, `raw_tape_not_certified`,
+  `listing_boundary_not_certified`, `listing_history_not_certified`. Only 11 have
+  no other gap.
+- 3,471 also carry at least one data gap: `volume_conflicts` 2,818,
+  `cross_source_conflicts` 2,401, `stale_tail` 1,303, `pre_listing_observations`
+  681, `source_gaps` 269, `internal_gaps` 269, `unresolved_names` 153,
+  `source_seams` 4.
+- By research role the population is `underlying-sector-hhi-20260926-v1` (3,460)
+  and `ivv-constituents-2012-2026-v1` (680, partly overlapping): research-only
+  constituent stocks, not trading instruments.
+- **Only four `review` series are ETFs, and none is in the trading universe:**
+  IVV (1,014 cross-source conflicts), XLF (890), XLRE (2 volume conflicts) and
+  HYXU (delisted, stale tail, 1,304 conflicts).
+
+Consequence for the deferred work: certification is not achievable for the
+constituent bulk with current sources — it needs a security master, the same
+access gap recorded for CRSP — so the tractable work is (1) the four ETFs,
+including reclassifying delisted HYXU instead of leaving it `review`; (2) the two
+data-gap classes, which likely share a few systemic root causes such as provider
+volume conventions and source precedence and may therefore flip in bulk from one
+rule fix; (3) certification, which stays blocked. A useful outcome of tier 2 is
+splitting `review` so it stops conflating a fixable data gap with a series that
+was never certified, which is what would make the decision gate meaningful.
+
 ## 2026-10-10 — FR25 close-out, calculation identity and governed-data hardening
 
 Closed out the FR25 monitoring item and repaired four hazards found in a
