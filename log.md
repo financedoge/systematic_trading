@@ -1,5 +1,64 @@
 # Project Log
 
+## 2026-10-10 — P4.14 Part A: FR25 attribution, positive mechanism, inconclusive verdict
+
+Completed Part A of the FR25 robustness stress against the retention tolerance
+frozen earlier the same day, before any statistic was computed. Analysis over the
+published selection-blend evidence; no portfolio was re-run. Findings:
+[FR25 robustness findings](../docs/fr25-robustness-findings.md).
+
+FR25 versus CP on the 2021+ evaluation window: +105.98% against +93.98%, a
+difference of +12.00pp (+0.0600 log), across 1,448 sessions and 70 decisions.
+
+**The mechanism does what it claims.** Tiling the window at the 13 changed
+selections shows they account for **96%** of the difference (+0.0576 of +0.0600);
+only +0.0024 arises before the first changed selection. FR25's advantage is
+attributable to the substitutions the recipe makes, not to something else in the
+sample.
+
+**But it is concentrated.** The two 2026 substitutions together are 58% of the
+changed total; the largest single tile is 31.3%; the top three are 79.3%. The
+2024-10-01 substitution into EWH/GLD/LQD and out of HYG is the largest tile in
+absolute terms and it **lost** 1.50 log points. By complete calendar year only
+2021 (+2.20pp) and the partial 2026 (+4.49pp) matter: 2022 is a rounding error,
+2023 is negative, 2024 and 2025 are +0.32pp and +0.26pp.
+
+**Verdict: inconclusive.** Three of four frozen checks resolved. Complete-year
+positivity passes at 4 of 5 (80%, threshold two-thirds); leave-one-selection-out
+passes, with the worst tile at −1.50%; the 6-month block-bootstrap interval
+**fails** at [−0.12%, +2.51%] on an annualised mean of +1.06%. The fourth check,
+the matched-availability placebo, is Part B and has not run, so the item can never
+be reported as preserved and the absence of a placebo result is not evidence in
+FR25's favour.
+
+Method note worth keeping: a first pass used single-month intervals after each
+changed selection and reported the changed selections as only 5% of the
+difference. That was an artefact of the framing, not a finding — a changed
+selection alters share counts and cash, and the difference persists through later
+intervals after the arms realign their target weights. The tiled decomposition,
+each tile running from a changed selection to the next, keeps a selection's full
+downstream footprint in its own tile and is exact and additive in log terms. The
+findings document states plainly that the attribution is path-dependent and must
+be read as "when did the difference accumulate", not "how much did this decision
+cause".
+
+Two further faults were caught by running the analysis rather than reading it: the
+completeness test originally counted the partial final year as complete, which
+would have let a strong stub year carry the verdict, and the tile boundaries were
+mis-assigned.
+
+Part A is analysis of published artifacts with pinned input hashes and no
+re-run. Part B — placebo rank, data-through-2022 refit, top-N and
+financial-ridge-weight sensitivity — cannot be evaluated from those artifacts
+because each perturbation changes which assets were selected and therefore the
+realised path. It needs its own frozen study and evidence root and must not extend
+the selection-blend root.
+
+FR25 remains a monitored research lead. This is not promotion evidence and does
+not by itself deallocate; that remains an operator decision through the existing
+allocation workflow. No change to monitoring, allocation or the 45% cap.
+Verification: 15 focused tests plus Ruff.
+
 ## 2026-10-10 — P4.14 protocol frozen before outcomes
 
 Froze the FR25 robustness protocol and its retention tolerance **before computing

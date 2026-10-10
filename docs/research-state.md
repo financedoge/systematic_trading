@@ -1,5 +1,34 @@
 # Research State
 
+## 2026-10-10 — P4.14 Part A: FR25's edge is real but concentrated and not significant
+
+Robustness attribution of FR25 versus CP over the 2021+ evaluation window
+(+12.00pp, +0.0600 log), against a retention tolerance frozen before the
+statistics were computed. Full detail: [FR25 robustness findings](fr25-robustness-findings.md).
+
+**Verdict: inconclusive.** Three of four frozen checks resolved: complete-year
+positivity passes (4 of 5, 80%), leave-one-selection-out passes, and the
+**6-month bootstrap interval fails** at [−0.12%, +2.51%]. The placebo test belongs
+to Part B and has not run, so the result can never be reported as preserved.
+
+**The mechanism does what it claims.** Tiling the window at the 13 changed
+selections shows they account for **96%** of the difference — the advantage is
+attributable to the substitutions the recipe makes, not to something else in the
+sample.
+
+**But it is concentrated.** The two 2026 substitutions are 58% of the changed
+total; the largest single tile is 31.3%; the top three are 79.3%. The 2024-10-01
+substitution into EWH/GLD/LQD and out of HYG is the biggest tile in absolute terms
+and it **lost** 1.50 log points. Outside 2021 and the partial 2026, FR25 and CP are
+effectively the same portfolio: 2022 is a rounding error and 2023 is negative.
+
+Consequence for the plan: FR25 stays a monitored research lead. It is not
+promotion evidence, and this does not by itself deallocate — that remains an
+operator decision. Part B (placebo rank, data-through-2022 refit, top-N and
+financial-weight sensitivity) is the outstanding work and needs its own frozen
+study, because each perturbation changes the selected assets and therefore the
+realised path.
+
 ## 2026-10-10 — P4.13 signal decay measured; no decay in the funded selection score
 
 First item of the [signal decay and alpha plan](signal-decay-and-alpha-plan.md)
