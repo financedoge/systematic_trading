@@ -1,5 +1,35 @@
 # Project Log
 
+## 2026-10-11 — Session committed and pushed (`80ff109`), with a GitHub routing workaround on the way
+
+Committed the session's work and pushed it: `80ff109` — "Research: Alpha101 tilt promoted to monitoring, exit
+rules, and faster calculations" — 71 files, +13,575/-38, on `master` and on `origin`. The full test suite was
+green immediately before the commit.
+
+**What was staged, and what was deliberately not.** `git status` reports about 15.5k untracked files in this
+working copy: research reference PDFs, generated report directories, and the `var/` evidence roots. Committing
+those as a side effect of "commit and push" would have been wrong, so I staged explicitly — `src`, `scripts`,
+`tests`, `docs`, `config` and `log.md` — which is exactly the session's code, tests and records. The runtime
+artifact `var/reconciliation/ib_paper_reconciliation_latest.json` (tracked, modified by the platform, not by me)
+was left unstaged for the same reason. If those 15.5k files should be versioned, that is its own decision with
+its own `.gitignore` discussion, not a rider on this commit.
+
+**The push failed twice, for a network reason rather than a git one.** The first attempt died with
+`RPC failed; curl 55 Send failure: Connection was reset`; retries then failed with `Failed to connect to
+github.com:443`. Diagnosis: DNS resolves `github.com` to `20.205.243.166`, which does not accept connections
+from this machine, while `140.82.121.4`, another GitHub edge, is reachable — and `github.com:22` and
+`ssh.github.com:443` are reachable too, but no SSH key exists on this machine, so SSH was not an option. I had
+already set `http.postBuffer` and `http.version=HTTP/1.1` as the usual transport mitigations, which did not help
+because the problem was routing, not packet size.
+
+**Workaround.** A temporary localhost-only CONNECT relay (`tmp/connect_relay.py`) that accepts the `CONNECT
+github.com:443` git sends and dials the reachable edge instead. TLS, SNI and certificate verification are
+untouched: git still believes it is talking to `github.com`, and the relay just forwards bytes. `git -c
+http.proxy=http://127.0.0.1:8899 push origin master` then completed cleanly (`6a7e997..80ff109`). The relay was
+stopped afterwards and both temporary git config knobs were reverted, so the repository configuration is
+exactly as it was found. If this recurs, that is the recipe — and the durable fix is a hosts entry or a working
+proxy on this machine, which needs the operator.
+
 ## 2026-10-11 — The 5%-HOLD tilt becomes a monitored strategy
 
 The operator asked to build the measured best configuration into a proper strategy with a full spec sheet and
