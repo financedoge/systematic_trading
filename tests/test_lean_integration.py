@@ -90,22 +90,61 @@ def test_runner_marks_engine_failure_and_retains_logs(tmp_path, monkeypatch, fai
     bundle.mkdir()
     write_json(bundle / 'spec.json', spec().model_dump())
     write_json(bundle / 'manifest.json', {'schema_version':1, 'files':{'spec.json':sha256(bundle / 'spec.json')}})
+
+    class FakeProcess:
+        """The engines are launched with Popen now, so the fixture drives them through poll()."""
+
+        def __init__(self, args, *, engine):
+            self.args = args
+            self.engine = engine
+            self.returncode = None
+            self.terminated = False
+            self._settled = False
+
+        def poll(self):
+            if self.returncode is not None or self._settled:
+                return self.returncode
+            self._settled = True
+            if self.engine == 'reference':
+                write_json(target / 'reference.json', output())
+                self.returncode = 0
+            elif failure == 'nonzero':
+                self.returncode = 1
+            elif failure == 'timeout':
+                self.returncode = None                      # never finishes; the caller times out
+            elif failure == 'parity':
+                actual = output()
+                actual['nav'][0]['cash'] = '1'
+                write_json(target / 'economic.json', actual)
+                self.returncode = 0
+            else:                                           # missing-output: exits without writing
+                self.returncode = 0
+            return self.returncode
+
+        def terminate(self):
+            self.terminated = True
+            self.returncode = -1 if self.returncode is None else self.returncode
+
+        def kill(self):
+            self.terminate()
+
+        def wait(self, timeout=None):
+            return self.returncode if self.returncode is not None else -1
+
+    def fake_popen(args, **kwargs):
+        return FakeProcess(args, engine='reference' if args[0] != 'docker' else 'lean')
+
     def failing(args, **kwargs):
         if args[0] == 'docker' and args[1] == 'rm': return None
-        if args[0] != 'docker':
-            write_json(target / 'reference.json', output())
-            return None
         if args[1] == 'image':
             return SimpleNamespace(stdout=json.dumps([{'Id': 'fixture'}]))
-        if failure == 'nonzero': raise subprocess.CalledProcessError(1, args)
-        if failure == 'timeout': raise subprocess.TimeoutExpired(args, 1)
-        if failure == 'parity':
-            actual = output()
-            actual['nav'][0]['cash'] = '1'
-            write_json(target / 'economic.json', actual)
+        raise AssertionError('unexpected subprocess.run: ' + repr(args))
+
     monkeypatch.setattr(runner.subprocess, 'run', failing)
+    monkeypatch.setattr(runner.subprocess, 'Popen', fake_popen)
     with pytest.raises((subprocess.SubprocessError, ValueError), match='Native replay failed through 2025-12-31') as error:
-        runner.run_bundle(bundle=bundle, output=target, image='quantconnect/lean@sha256:'+'a'*64)
+        runner.run_bundle(bundle=bundle, output=target, image='quantconnect/lean@sha256:'+'a'*64,
+                          timeout_seconds=0.5)
     assert 'Publication withheld' in str(error.value) and str(target.resolve()) in str(error.value)
     assert error.value.__cause__ is not None
     assert json.loads((target / 'run.json').read_text())['status'] == 'failed'

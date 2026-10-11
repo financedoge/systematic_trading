@@ -1,5 +1,352 @@
 # Research State
 
+## 2026-10-11 — The Alpha101 family tilt is now a monitored strategy
+
+The measured best configuration (5% family tilt, held from each monthly decision to the next) is built into a
+registered strategy and added to the monitored set: **`research_fr25_alpha_tilt_5_v1` — "FR25 + 5% Alpha101
+family tilt"**, USD accounting, calculated by the app's own services with the standard full spec sheet.
+
+- **Deployed as a real overlay.** `alpha101_tilt_overlay.Alpha101FamilyTiltOverlay` ranks the names the book
+  already holds by the equal-weight mean of the sixteen registered alphas' rank scores, moves 5% of NAV from the
+  bottom of that ranking to the top, and shrinks as a whole so no name breaches the 45% cap or goes negative. It
+  is appended **last** in the FR25 chain and preserves the symbol set and gross that the defensive fallback
+  protects. The catalog validates the recipe against one registered parameter set, so a strategy cannot be
+  registered with a budget, alpha list or cap that was never measured.
+- **Parity verified.** LEAN and the reference engine run the same code; the native attempt passed with **0
+  differences**, and a test asserts the deployed rule reproduces the measured study rule exactly (that test
+  caught one missing diagnostic during the build).
+- **Posture.** `promotion_eligible=False`, `execution_enabled=False`, `allocation_ready=False` with the
+  platform's own reason: *"Monitoring only; the separate 14-ETF execution contract has not been approved."*
+- **Disclosure travels with the strategy.** The definition and spec-sheet diagram state that the evidence is
+  **not established** — 0 of 20 family-adjusted contrasts against the untouched book, the 5% arm slightly below
+  its control on total return with a better Calmar and drawdown, and the 5% budget an in-sample optimum.
+- **Integration lesson worth keeping:** a new 14-candidate recipe must join the M1/14 family in five places —
+  `tracked_runtime`'s family partition and its financial-input check, `m1_monitoring`'s recipe guard and its
+  financial requirement, and `strategy_lifecycle`'s USD-currency and allocation-supported sets. Missing any of
+  them routes the strategy through the 12-ETF pool and the model fit fails with "Training universe/order differs
+  from the versioned strategy".
+
+## 2026-10-11 — P4.17f exit rules: holding beats exiting, and half the rules never fire
+
+Operator direction: holding to the next monthly rebalance is not optimal — remove the tilt when the signal
+disappears or stops; cost is not a constraint, the objective is the optimum. Frozen study
+`var/research/alpha101-tilt-exit-20261011-v1/` (protocol `db40c5e1…`): FR25 and the SOTA, 42 arms, 252 replays,
+monthly entry with declared intra-month exits, **no cost filter** (arms to 84.3bp all replayed), ranked on net
+outcomes. [Findings](alpha101-tilt-exit-findings.md) ·
+[Report](../research/alpha101-tilt-exit-2026-10-11/index.html).
+
+**Holding beats exiting.** FR25's best net configuration is **X = 5% held** — 104.9% total return, 13.27% CAGR,
+1.204 Sharpe, 1.598 Calmar, −8.30% max drawdown, 40.9bp — and the SOTA's is **X = 10% held** — 77.3%, 10.46%,
+0.922, 0.839, −12.46%, 38.3bp. Four of the six metric optima across the two books are plain HOLD arms.
+
+**Three of the six rules are no-ops on this data, which is the direct answer to the question.** EXIT-NOSIG never
+fires in 1,448 sessions because this alpha family never stops ranking the held book; the −2% stop and the +1%
+take-profit never fire; the −0.5% stop fires once. At a 5–20% tilt the tilt's own weighted return does not
+travel that far inside a month, so the P&L form of the idea has no traction at these sizes. What does fire is
+the **flip (61 exits)**, and acting on it is worse: it forgoes the tilt's remaining edge and pays a round trip,
+adding +2.4bp at X = 5% and +4.6bp at X = 10% while leaving Sharpe unchanged and Calmar lower; the re-entry
+variant costs +10 to +25bp for the same or worse return.
+
+**The mechanism:** the monthly design already rotates the tilt at the next decision — 54 flips, 2 closes and 2
+opens across FR25's 70 decisions — so an early exit is an extra trade against a rotation the rebalance pays for
+anyway. **Nothing is established:** 0 of 20 contrasts per book differ from the untouched book at Holm p < 0.05.
+
+**On LEAN:** each arm is one target vector per session, which is exactly what a daily-rebalancing strategy
+submits, and the replay engine's LEAN parity is already verified at 0 differences. A native algorithm would add
+promotion-grade parity evidence rather than different numbers, and is the right artefact if a tilt is ever taken
+toward promotion. **Next: P4.18 volatility targeting.**
+
+## 2026-10-11 — P4.17d/P4.17e: the tilt has no high-X regime and no profitable high-frequency one
+
+**P4.17d — the budget surface** (operator-requested): FR25 and the SOTA tilted monthly at X up to 150%, every arm
+replayed irrespective of cost. `var/research/alpha101-tilt-surface-20261011-v1/` (protocol `99cd55a8…`), 16 arms,
+96 replays. [Findings](alpha101-tilt-surface-findings.md).
+
+| FR25 | Total return | CAGR | Sharpe | Calmar | Max DD | Cost |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| untouched | **106.0%** | **13.37%** | **1.218** | 1.545 | −8.66% | 41.0bp |
+| X = 10% | 104.1% | 13.20% | 1.196 | **1.608** | **−8.21%** | 41.7bp |
+| X = 50% | 94.9% | 12.29% | 1.059 | 1.105 | −11.12% | 51.7bp |
+| X = 150% | 96.2% | 12.42% | 1.028 | 1.070 | −11.61% | 56.5bp |
+
+**There is no higher-X regime**: on FR25 every measure degrades as the budget rises, and on the SOTA the return
+peaks at 10% while every risk ratio worsens above it. **The tilt saturates at ~51% of NAV** — declared 100% gives
+50.6% effective and 150% gives 50.7%, for identical cost — because one shrink factor holds every name inside the
+45% cap and above zero. Cost: X ≤ 20% passes the 44.0bp ceiling, X ≥ 30% is rejected. No optimal X is declared;
+the best X is an in-sample maximum.
+
+**P4.17e — daily, threshold-triggered** (operator-requested): 1,448 sessions, X ∈ {5, 10, 20}%, band ∈ {daily,
+50%, 100%, 200%, 300%} of the budget. `var/research/alpha101-tilt-daily-20261011-v1/` (protocol `725aa02b…`),
+34 arms, 204 replays. [Findings](alpha101-tilt-daily-findings.md).
+
+**Every daily arm is worse than doing nothing and costs 2–5.5× more** — FR25 daily at 5/10/20% returns 101.1% /
+96.5% / 87.6% against the untouched 105.8%, with Sharpe 1.174 / 1.131 / 1.042 against 1.214, at 91.8 / 142.8 /
+243.3bp; the SOTA behaves the same way. **The band works exactly as proposed, and that is the problem:** a 300%
+band cuts re-tilts from 1,269 to 64 a year and cost to 37–44bp, but fitting the 44.0bp ceiling requires a
+200–300% band, where the arm trades **64–86 times a year — the monthly arm's own 70**. Daily monitoring behind a
+wide deadband is the monthly tilt with extra bookkeeping, and every band arm that clears the ceiling is
+statistically indistinguishable from doing nothing (intervals spanning zero, Holm p = 1.000).
+
+**Why:** the family's information lives at the 21-session horizon (rank IC 0.05–0.075), so daily re-tilting
+trades one-session noise while paying linearly in cost. A genuinely higher-frequency use would need a signal
+whose information is measured at one to five sessions. **Next: P4.18 volatility targeting**, with the drawdown
+question untouched by all of this.
+
+## 2026-10-11 — P4.17c: the 10% tilt baked into the SOTA is nearly free and nearly neutral
+
+Operator request: bake the tested alpha into the current SOTA with a 10% tilt and report return, Sharpe,
+Calmar and max drawdown. Frozen study `var/research/alpha101-tilt-replay-20261011-v1/` (protocol
+`bb7dba31…`), 36 replays, every arm gated before any replay. The tilt is appended **last** in the SOTA's own
+overlay chain, so it ranks only what the strategy holds and keeps the symbol set and gross the defensive
+fallback protects. [Findings](alpha101-tilt-replay-findings.md) ·
+[Report](../research/alpha101-tilt-replay-2026-10-11/index.html).
+
+| Arm | Total return | CAGR | Sharpe | Calmar | Max DD | Incremental cost |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| SOTA (`research_fallback_f3_v1`), untouched | 76.4% | 10.36% | 0.916 | 0.805 | −12.88% | — |
+| SOTA + 10% tilt of alpha 53 | 77.0% | 10.42% | 0.913 | 0.818 | −12.75% | +2.08bp |
+| SOTA + 10% family tilt | **77.5%** | **10.48%** | **0.922** | **0.840** | **−12.47%** | +1.53bp |
+
+**Verdict: inconclusive.** Every measure moves the right way — return up 0.6–1.1pp cumulatively, Calmar up
+1.6–4.3%, maximum drawdown 0.13–0.41pp better — but the annualised differences are **+0.07% and +0.12%**
+with 95% intervals spanning zero at 3, 6 and 12 months and **Holm p = 1.000**. Sharpe is flat. The tilt is
+**nearly free and nearly neutral**: it costs 1.5–2.1bp a year and returns 7–12bp a year.
+
+**The gate passed all three arms before any replay:** SOTA 7.03×/35.14bp, +tilt-53 7.45×/37.23bp, +family
+7.33×/36.67bp, all inside the 44.0bp ceiling — the SOTA leaves about 8.9bp of headroom and the tilt uses a
+fifth of it.
+
+**The family tilt beats the best-information single alpha at lower cost** (+0.12% for 1.53bp against +0.07%
+for 2.08bp). Since alpha 53 had the strongest measured information in the screened family, this is direct
+evidence that its apparent superiority was in-sample noise — the argument for tilting on the family rather
+than on a selected alpha.
+
+**A measured engine property:** the final 45% clamp runs *after* the overlay chain, so the SOTA's book can
+arrive at the tilt already above the cap on 4–6 of 130 decisions. The declared single-shrink-factor rule then
+shrinks the tilt to a no-op for that decision instead of pushing an over-cap name further up, so the tilt
+applied on 115 of 130 decisions and the rule guarantees "never worse" rather than "always inside the cap".
+
+**Why the effect is small, and expected:** a 10% budget moves each held weight by a few percent of NAV
+against a forward rank IC of 0.05–0.075, so the expected edge is tens of basis points a year. P4.17b already
+measured 20% as the point where cost binds, so there is no cheap way to make it larger.
+
+**Next: P4.18 volatility-targeted exposure.** The SOTA stays `research_fallback_f3_v1`, monitored and
+unchanged; nothing here re-tunes X, touches the 45% cap or the cash reserve, or creates promotion authority.
+
+## 2026-10-11 — P4.17b tactical tilt: the balance is 5–10%, and the IC bar falls 100× with it
+
+Operator proposal after P4.17 closed the mapping family: use the alphas to overweight and underweight the
+holdings already in the book rather than to choose the book. Measured in
+`var/research/alpha101-tilt-20261011-v1/` (protocol `1fa318f9…`), 48 declared candidates gated before any
+replay. [Findings](alpha101-tilt-findings.md) ·
+[Report](../research/alpha101-tilt-2026-10-11/index.html).
+
+| Budget X | Alphas passing | Incremental turnover | Incremental cost | Worst candidate vs 3.65bp headroom |
+| --- | ---: | ---: | ---: | ---: |
+| **5%** | **12 of 16** | 0.00×–0.10× | **0.00–0.48bp** | **13%** |
+| **10%** | **12 of 16** | 0.00×–0.34× | 0.00–1.69bp | 46% |
+| 20% | 5 of 16 | 0.00×–1.03× | 0.00–5.17bp | 142% |
+
+The headroom is derived, not assumed: the published ceiling of 44.0bp minus the monitored book's own measured
+**40.35bp** drag leaves **3.65bp**. A 5% monthly tilt spends at most **0.48bp** of it. P4.17's top-six
+mappings needed 44.7–76.5bp; the tilt needs a rounding error.
+
+**The breakeven IC falls by two orders of magnitude** — 0.0061–0.0122 for the full mappings to
+**0.00000–0.00008** at a 5% tilt — because it scales with turnover. The operator's "the IC threshold does not
+need to be that high" is therefore a property of the design, not a relaxation: the frozen 3× margin and the
+cost ceiling are applied unchanged.
+
+**The three rejections are information failures, not cost failures**: alpha 101's tilt is inverted (−0.0749,
+interval excluding zero) and alphas 23 and 12 are negative, so a long tilt points the wrong way; alpha 7
+remains degenerate. That is the exact inversion of P4.17, where cost killed every alpha.
+
+A false-pass defect — tilting a constant held cross-section on the alphabetical tie-break, then reading the
+near-zero cost as a pass — was caught by the test bench and fixed before publication, with two rules frozen in
+the protocol: a cross-section with fewer than two distinct values cannot rank and is left untilted, and a
+candidate that never ranked the book is reported *insufficient* rather than passed. Re-measured: 29 passes
+instead of 28, the ternary alphas cheaper, because days on which they express no view no longer trade.
+
+**Next: P4.17c, the tilt replay** (equal-weight composite at 5% and 10% against the matched untilted control,
+family-adjusted, judged on drawdown across episodes), then P4.18. Nothing was replayed, promoted or changed
+in the monitored book.
+
+## 2026-10-11 — P4.17 Alpha101 screen: the information is real, the turnover is not payable
+
+The sixteen registered pure time-series alphas (6, 7, 9, 12, 21, 23, 24, 26, 35, 43, 46, 49, 51, 53,
+54, 101), implemented from the paper's own formulas and screened for turnover, cost and decay
+**before any portfolio result**, as the plan required. Frozen study
+`var/research/alpha101-screen-20261011-v1/` (protocol `7865c485…`, pre-registered).
+[Findings](alpha101-screen-findings.md) ·
+[Report](../research/alpha101-screen-2026-10-11/index.html).
+
+**Verdict: none of the sixteen clears the P4.15 gate — 15 rejected, 1 not judged (alpha 7 is a
+constant).** The family closes before any portfolio work, so there is no satellite sleeve and no
+modelling stage: the plan's next step was conditional on something surviving.
+
+**The failure is turnover, not information.** Translated to this programme's monthly decision
+frequency, the mappings turn over **7.62×–15.29×** against the monitored book's 8.07×, costing
+**38.1bp–76.5bp** against the 44.0bp ceiling. P4.15 rejected the *daily* archetypes by 5×–46×; at
+the frequency actually traded the gap is 1.0–1.9×. Only **alpha 21** is inside the ceiling (38.1bp,
+at 70% coverage) and it fails on information (IC margin 2.22× against the required 3×).
+
+**What the programme gains is the information measurement.** At 21 sessions alpha 53 shows rank IC
+**+0.0747** with a 95% interval [+0.0016, +0.1522] and alpha 26 **+0.0572** with [+0.0106, +0.1052] —
+both excluding zero — while alpha 101 shows **−0.0749** with [−0.1313, −0.0140], i.e. real but
+*inverted* information. This is the first evidence here that a simple published formula carries
+measurable forward rank IC on this universe.
+
+**Two disclosures.** The paper defines `adv{d}` as average daily *dollar* volume while `volume` is
+share volume, so alpha 7's `adv20 < volume` never holds and the formula collapses to its constant
+branch as published — reported, not repaired. And a first-run wiring defect was found by inspecting
+the output: a candidate with no measurable IC was judged against the programme reference IC, so alpha
+7 was reported as passing with a 102.77× margin. Two rules were added before publication and frozen
+in the protocol: a cross-section with fewer than two distinct values cannot rank and forms no mapping,
+and a candidate with no measurable IC is reported *insufficient* and never passed on the reference IC.
+Pre-correction 1 pass / 15 reject; post-correction 0 pass / 15 reject / 1 insufficient.
+
+**Next: P4.18 volatility-targeted exposure**, with a matched-average-exposure control and the P4.15
+gate first. A lower-turnover use of the surviving information would be a different, declared study.
+
+## 2026-10-11 — P4.16b hierarchical construction: the operator's rule works, risk is untouched
+
+Operator-proposed follow-up to P4.16: a class must **qualify** (at least one member above
+the pooled control's 126-session momentum gate) before it can be chosen, the top K
+qualifying classes share the budget equally, and each picks its best two names. Frozen
+study `var/research/hierarchical-construction-20261011-v1/` (protocol `af9bb329…`), gated
+by P4.15 before any replay. **Post-hoc on the inspected sample.**
+[Findings](hierarchical-construction-findings.md).
+
+| Arm | CAGR | Sharpe | Calmar | Max DD | Cost | Mean names |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| CP — published pooled control | 11.92% | **1.106** | **1.435** | **−8.31%** | 43.0bp | 5.19 |
+| POOL — construction-matched pooled | 9.50% | 0.754 | 0.455 | −20.89% | 45.3bp | 5.39 |
+| **HIER-K2** — top 2 classes | **15.07%** | 0.941 | 0.680 | −22.18% | 45.2bp | **2.91** |
+| HIER-K3 — top 3 classes | 13.44% | 0.938 | 0.640 | −21.01% | **40.0bp** | 4.17 |
+
+**The mechanism works exactly as proposed.** Neither arm held a fixed-income instrument in
+any month of 2022; bonds are chosen 13% of the time under K=2 against 46% pooled, and one
+decision was entirely cash because no class qualified. Both are regression tests. **K=3
+reverses part of it**: with three slots fixed income is chosen 64% of the time, more often
+than pooled.
+
+**The return effect is the largest measured here and still not established.** HIER-K2 is
+**+5.32pp annualised** against the matched pooled control with a 95% interval excluding zero
+at 3, 6 and 12 months ([+0.69%, +10.41%] at 6m), and both risk ratios improve against that
+control — but the family-adjusted Holm p is **0.164**, so under the frozen rule it is
+inconclusive.
+
+**Risk is orthogonal.** HIER-K2 holds 2.91 names with two 45% positions; its drawdown
+(−22.18%) is *worse* than the diversified arm it beats on return and far worse than CP's
+(−8.31%), and its Sharpe (0.941) is below CP's (1.106). This reproduces P4.16's conclusion
+from the other direction: a better selection rule does not substitute for the exposure
+rule. **Parked at the operator's request:** the class question is probably not answerable at
+this granularity, so P4.16c is deferred behind P4.16d (granular classes on a wider universe).
+**Gate:** K=3 passes at 40.7bp implied, cheaper than the pooled control's 43.6bp; K=2 is a
+boundary case at 45.5bp. No promotion, no monitoring or allocation change.
+
+## 2026-10-10 — P4.16 sleeve construction: the fallback matters more than the partition
+
+Does within-sleeve selection beat the pooled top-six over fourteen heterogeneous
+instruments? Frozen study in `var/research/sleeve-construction-20261010-v1/` (protocol
+`dc73d46d…`), screened by the P4.15 gate before any replay.
+[Findings](sleeve-construction-findings.md).
+
+| Arm | CAGR | Sharpe | Calmar | Max DD | Turnover | Cost |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| CP — published pooled control | 11.92% | **1.106** | **1.435** | **−8.31%** | 8.59× | 43.0bp |
+| POOL — construction-matched pooled | 9.50% | 0.754 | 0.455 | −20.89% | 9.05× | 45.3bp |
+| SLV-COMP — composition budgets | 10.89% | 0.792 | 0.697 | −15.64% | 9.24× | 46.2bp |
+| SLV-EQ — equal budgets | **12.00%** | 0.983 | 0.705 | −17.02% | 6.64× | 33.2bp |
+
+1. **Sleeve construction is directionally better than pooled selection under a matched
+   construction but not established.** +1.39pp / +2.50pp of CAGR with 5.2pp / 3.9pp less
+   maximum drawdown, yet all six contrasts have 95% intervals spanning zero at 3/6/12
+   months with Holm p = 1.000. The pooled cross-section is acceptable and not shown worse —
+   the answer P4.17 needed.
+2. **The published control's advantage is its defensive-cash fallback, not its pooling.**
+   The construction-matched arm makes the same decision on **119 of 130** days; all 11
+   differences are fallback days, with zero weight-only differences. The entire gap (CAGR
+   11.92% vs 9.50%, drawdown −8.31% vs −20.89%, mean invested 86.6% vs 95.0%) is that one
+   contract — and P4.14's FR25-versus-CP contrast is unaffected because both arms share it.
+   **Qualified by an episode attribution:** all seven evaluation-window episodes are 2022
+   (+13.69 log points, of which **+8.94 is a single month** and +3.96 a compounding tail),
+   while **all four pre-2021 episodes are net negative (−2.18pp over five years)**, and
+   within 2022 the rule lost 2.92pp de-risking too early. The value is a **one-episode
+   statistic from one bear market**; only the drawdown property plausibly generalises.
+   Receipt: `var/research/sleeve-construction-20261010-v1/followup/fallback-episodes.json`.
+
+Also measured: composition budgets hold `DBC` and `GLD` in **all 70** evaluation decisions
+(36/70 pooled) — for two of four sleeves, within-sleeve selection is permanent allocation —
+and budgets constrain selection, not realised weights. The P4.15 gate passes equal budgets
+at 34.0bp and records composition budgets as a boundary case at 46.8bp.
+
+## 2026-10-10 — P4.15 turnover gate: Alpha101's daily archetypes cannot pay for themselves
+
+The standing pre-test every later item must clear. Thresholds and usage contract:
+[turnover gate](turnover-gate.md).
+
+**Frozen thresholds.** A **40bp** annual cost ceiling at the frozen 5bp (the monitored
+book's own 40.4bp drag, plus a disclosed 10% tolerance) and an **IC margin of 3×** the
+breakeven IC; both required. The breakeven definition is delegated to
+`signal_decay.breakeven_ic`, so the programme keeps exactly one.
+
+**Calibrated, and the expectation was wrong.** Over **217** frozen replays the implied
+mapping tracks measured traded-notional turnover to within 3.5% and is *slightly
+conservative* — median measured/implied **0.9854**, range 0.9653–0.9886, conservative in
+every replay — because the engine trades only in whole adjusted units and beyond its target
+tolerance. The raw implied value is therefore the screening basis: **zero false passes**,
+where a median-ratio correction would have admitted one arm the replay rejects.
+
+**Registered candidates.** All three Alpha101 turnover archetypes from the plan's Appendix A
+are rejected before any portfolio work: fastest 2,020bp (46× the ceiling), median 600bp
+(14×), slowest 200bp (5×) — decided by the cost test alone. The monitored book passes at
+40.4bp with a 14.6× IC margin. **A measurement discrepancy reconciled:** P4.13's published
+3.97× is the selection-change proxy (19.8bp at 5bp), not the traded-notional drag (8.07×,
+40.4bp), so the decay panel's cost headroom is about half what that figure implies. Both
+conventions are now named and reported side by side, and the gate reproduces P4.13's proxy
+and dispersion exactly (3.9690×, 0.052190).
+
+Consequence: an unconditional daily Alpha101 overlay of the whole book is a measured
+impossibility rather than an assumption, so P4.17 must first slow its candidates to a cost
+profile inside the ceiling. P4.16–P4.19 must call the gate before producing any portfolio
+result. No monitoring, allocation or authority change.
+
+## 2026-10-10 — P4.14 Part B: the ridge rank contributes, but retention still fails
+
+Part B of the FR25 robustness stress, run as its own frozen study in
+`var/research/fr25-placebo-20261010-v1/` (protocol `429ec002…`): 200 declared
+matched-availability placebo draws, a data-through-2022 ridge refit, and the top-N /
+ridge-weight sensitivity surface, all replayed at 5bp with zero delay and fresh cash.
+[Findings](fr25-placebo-findings.md) ·
+[report](../research/fr25-placebo-2026-10-10/index.html).
+
+**Placebo check passes; retention does not.** FR25's +12.00pp evaluation excess over CP sits
+at the **96.50th percentile** of the 200 draws (+6.0008 log against a 4.095pp hurdle), beaten
+by **7** random assignments. The typical draw is slightly *negative* (median −0.26pp, 45%
+above zero), so the ridge's rank assignment does carry information — any permutation of the
+M1 ordering does **not** do as well. But the frozen 6-month interval still fails at
+[−0.12%, +2.51%], Part B may not rescue a failed interval test, and the verdict is
+**inconclusive** with retention **not preserved**, identically under both readings of the
+plan's verdict sentence. The positive tail of the placebo distribution comes from churn, not
+information: the seven winning draws differ from CP on ~23 of 70 decisions against FR25's 13.
+
+**About 60% of the recent edge survives without hindsight.** A ridge fitted only on the 83
+labels completed by 2022-12-31 and replayed from 2023-01-03 keeps **+4.20pp of FR25's
++7.06pp** excess over CP, with a lower maximum drawdown (−8.31% vs −8.66%) and a better
+Calmar. Refitting on the parent's frozen training rows reproduces the published forecasts
+exactly, so this is a re-fit, not an approximation.
+
+**The sensitivity surface has no stable winner.** Top-N 4/5/6/7 × ridge weight 10/25/40%:
+the frozen Top-6 · 25% cell is not the best; the high-excess Top-4 corner carries −10.6% to
+−12.4% drawdowns and a Calmar below CP's at 40%; and the surface is non-monotone in ridge
+weight (2 / 13 / 31 changed decisions at six slots), which is path luck rather than a
+dose-response relationship.
+
+Consequence: FR25 stays a monitored research lead. The mechanism now has a positive answer
+to "does the ridge contribute at all?" and a negative answer to "is the advantage
+distinguishable from noise at the frozen tolerance?", and the second governs retention. No
+re-tuning, no monitoring, allocation or cap change.
+
 ## 2026-10-10 — P4.14 Part A: FR25's edge is real but concentrated and not significant
 
 Robustness attribution of FR25 versus CP over the 2021+ evaluation window

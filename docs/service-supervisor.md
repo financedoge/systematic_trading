@@ -23,6 +23,14 @@ The recorder implementation follows `docs/market-data-recorder-contract.md` and 
 
 ## Rules
 
+- The tracked-strategy calculation hashes its own source (`research`, `lean`, `signals`,
+  `portfolio`, `backtest`, plus `recorders/economics.py` and `runtime_io.py`) when the
+  dashboard starts, and refuses to calculate or publish if any of those files changed
+  since. A running calculation is therefore aborted by any edit to them, keeping the last
+  complete publication. Do not edit calculation code while a calculation is running;
+  restart the dashboard afterwards with `stop_operator_dashboard.ps1` and
+  `start_operator_dashboard.ps1` so the new revision is loaded.
+
 - Every long-running process gets a PID file under `var/run/`.
 - Every long-running process writes stdout and stderr under `var/log/`.
 - Every operationally important lifecycle event writes a structured JSONL record to `var/log/platform_operations.jsonl`.

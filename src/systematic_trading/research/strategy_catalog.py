@@ -191,7 +191,7 @@ def etf_activity_lag20_definition() -> StrategyDefinition:
 def registered_strategy_definition(key: str) -> StrategyDefinition:
     parents = [legacy_sota_definition(), etf_activity_lag20_definition(), rolling_xgboost_1y_definition()]
     definitions = [*parents, *(usd_strategy_definition(d) for d in parents), risk_parity_definition(),
-                   rolling_xgboost_1y_definition(activity=False), defensive_cash_definition(), economic_context_definition(), m1_14_definition(), fr25_definition()]
+                   rolling_xgboost_1y_definition(activity=False), defensive_cash_definition(), economic_context_definition(), m1_14_definition(), fr25_definition(), alpha101_tilt_definition()]
     return next((d for d in definitions if d.key == key), None) or _unknown_strategy(key)
 
 
@@ -274,6 +274,32 @@ def fr25_definition():
             'audited raw activity and USD ridge; final 45% cap leaves excess in cash. Monitoring only.',
         overlays=(OverlaySpec('financial_rank_selection', dict(PARAMETERS)), *base.overlays[1:],
                   OverlaySpec('final_weight_cap', {'cap':'0.45'})))
+
+
+def alpha101_tilt_definition():
+    """FR25 plus the measured Alpha101 family tilt at a 5% budget, held to each monthly decision.
+
+    The evidence is disclosed in the definition itself so it travels with the spec sheet: P4.17b-P4.17f
+    measured the tilt as nearly neutral, 0 of 20 family-adjusted contrasts against the untouched book,
+    and the 5% arm slightly below its control on total return with a better Calmar and drawdown. The
+    budget is an in-sample optimum, and the strategy carries no allocation or execution authority.
+    """
+    from dataclasses import replace
+    from systematic_trading.research.alpha101_tilt_overlay import PARAMETERS
+    base = fr25_definition()
+    return replace(base, key='research_fr25_alpha_tilt_5_v1', name='FR25 + 5% Alpha101 family tilt',
+        sleeve_name='research-fr25-alpha-tilt-5-v1',
+        description='FR25 selection, sizing and 45% cap unchanged, with a 5% NAV-neutral tilt of the sixteen '
+            'registered Alpha101 time-series alphas applied last: the names already held are ranked by the '
+            'equal-weight mean of each alpha\u2019s rank scores, weight moves from the bottom of that ranking to '
+            'the top, no instrument is added or removed and the gross is unchanged. Held from each monthly '
+            'decision to the next; P4.17f measured that closing early on the signal was worse than holding. '
+            'Evidence status: not established. 0 of 20 family-adjusted contrasts differed from the untouched '
+            'book, the 5% arm was slightly below its control on total return with a better Calmar and shallower '
+            'drawdown, and the 5% budget is an in-sample optimum on an inspected window. Monitored for '
+            'prospective evidence only: no allocation, approval or execution authority, and every calculation '
+            'is recorded as promotion-eligible false.',
+        overlays=(*base.overlays, OverlaySpec('alpha101_tilt', dict(PARAMETERS))))
 
 
 def strategy_definition_from_overlay(overlay: TargetOverlay) -> StrategyDefinition:
@@ -627,6 +653,14 @@ def instantiate_overlays(definition: StrategyDefinition) -> list[TargetOverlay]:
             base = m1_14_definition()
             parent = instantiate_overlays(replace(base, overlays=base.overlays[:1]))[0]
             overlays.append(FinancialRankSelection(parent))
+        elif spec.kind == 'alpha101_tilt':
+            from systematic_trading.research.alpha101_tilt_overlay import (Alpha101FamilyTiltOverlay,
+                                                                          PARAMETERS)
+            if params != PARAMETERS:
+                raise ValueError('Unsupported Alpha101 tilt recipe')
+            overlays.append(Alpha101FamilyTiltOverlay(budget=params['budget'], alphas=tuple(params['alphas']),
+                                                      lookback=params['lookback'],
+                                                      max_weight=params['maxWeight']))
         elif spec.kind == 'economic_ridge':
             from systematic_trading.research.economic_tracking import EconomicRidgeOverlay, PARAMETERS
             if params != PARAMETERS:

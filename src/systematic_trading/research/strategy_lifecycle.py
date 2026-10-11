@@ -105,12 +105,13 @@ def decorate_catalog(payload, settings, store):
         definition=registered_strategy_definition(key)
         payload['strategies'].append(dict(strategy_id=key,name=definition.name,lifecycle='monitored',
             app_tracking=False,report_available=False,report_url=None,allocation=[],
-            accounting_currency='USD' if key in {'research_fallback_f3_v1','research_economic_context_ridge_v1','research_m1_14_v1','research_fr25_14_v1'} else 'CNH'))
+            accounting_currency='USD' if key in {'research_fallback_f3_v1','research_economic_context_ridge_v1','research_m1_14_v1','research_fr25_14_v1','research_fr25_alpha_tilt_5_v1'} else 'CNH'))
     for row in payload['strategies']:
         key=row['strategy_id'];ready=calculation_ready(row,state,through)
         # Monitoring a new pool does not extend the separately guarded broker
         # allocation contract. The 14-ETF recipe is observation-only for now.
-        allocation_supported = key not in {'research_m1_14_v1', 'research_fr25_14_v1'}
+        allocation_supported = key not in {'research_m1_14_v1', 'research_fr25_14_v1',
+                                           'research_fr25_alpha_tilt_5_v1'}
         row.update(lifecycle='monitored' if key in state['monitored'] else 'archived',
             calculation_status='Current' if ready else 'Catching up' if key in state['monitored'] else 'Paused',
             allocation_ready=ready and allocation_supported,can_restore=replay_supported(key),archive_blocker=archive_blocker(store,key))

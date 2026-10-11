@@ -71,11 +71,14 @@ def calculate(settings,analytics,config,definitions,sota,root,code_hashes,inputs
     from systematic_trading.research.usd_tracking import prepare_usd_schedule
     from systematic_trading.research.strategy_catalog import risk_parity_definition, m1_14_definition, OverlaySpec
     from systematic_trading.research.fr25_tracking import KEY as FR25_KEY, prepare_schedule
+    # Every 14-ETF recipe that selects through the financial-ridge blend needs the same pinned
+    # economic inputs and the same base tree schedule.
+    fr25_family = {FR25_KEY, 'research_fr25_alpha_tilt_5_v1'}
     from systematic_trading.research.momentum_calculation import quotes_for_data
     from systematic_trading.research.momentum_signals import decision_sessions
     from systematic_trading.research.compute import available_resources
     from systematic_trading.research.usd_monitored import worker_init,targets_worker,economics_worker,native_attempt,build_reports
-    if not definitions or any(d.key not in {KEY,FR25_KEY} for d in definitions):raise ValueError('M1/14 calculator received a different recipe')
+    if not definitions or any(d.key not in {KEY,*fr25_family} for d in definitions):raise ValueError('M1/14 calculator received a different recipe')
     d=definitions[0];p=config['calculation'];parent=root/'usd';root=root/'m1_14'
     checked_files(parent,'input_manifest.json')
     snapshots,usd_provenance=load_usd(analytics)
@@ -85,7 +88,7 @@ def calculate(settings,analytics,config,definitions,sota,root,code_hashes,inputs
     risk=replace(risk_parity_definition(),universe_key='multi_asset_14')
     comparisons={v.key:v for v in [risk,*definitions]}
     economic_models=None
-    if any(v.key==FR25_KEY for v in definitions):
+    if any(v.key in fr25_family for v in definitions):
         if 'financial' not in inputs:raise ValueError('FR25 requires pinned economic inputs')
         if root.exists():
             checked_files(root,'input_manifest.json')

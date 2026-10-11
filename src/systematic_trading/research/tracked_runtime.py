@@ -212,8 +212,11 @@ def _refresh_tracked_strategies(settings, store, analytics):
     if any(d.universe_key not in ("multi_asset", "multi_asset_14") or d.scheduler != "static_monthly" for d in definitions):
         raise ValueError("Tracked definitions must implement the monthly multi-asset contract")
     requested_definitions = definitions
-    m1_definitions = [d for d in definitions if d.key in {'research_m1_14_v1','research_fr25_14_v1'}]
-    definitions = [d for d in definitions if d.key not in {'research_m1_14_v1','research_fr25_14_v1'}]
+    # The 14-candidate family shares one universe, one model recipe and one set of pinned inputs.
+    # A new 14-ETF recipe must join this set, or it is prepared against the 12-ETF pool and fails.
+    m1_family = {'research_m1_14_v1', 'research_fr25_14_v1', 'research_fr25_alpha_tilt_5_v1'}
+    m1_definitions = [d for d in definitions if d.key in m1_family]
+    definitions = [d for d in definitions if d.key not in m1_family]
     usd_definitions = [d for d in definitions if d.key in USD_KEYS]
     definitions = [d for d in definitions if d.key not in USD_KEYS]
     from systematic_trading.portfolio.strategy_allocation import sota_definition
@@ -252,7 +255,7 @@ def _refresh_tracked_strategies(settings, store, analytics):
         m1_inputs = load_m1_inputs(settings,analytics,config)
         if m1_inputs['provenance']['batch'] != inputs['provenance']['batch']:
             raise ValueError('Candidate and parent price publications differ')
-        if any(d.key=='research_fr25_14_v1' for d in m1_definitions):
+        if any(d.key in {'research_fr25_14_v1', 'research_fr25_alpha_tilt_5_v1'} for d in m1_definitions):
             from systematic_trading.research.fr25_tracking import economic_inputs as financial_inputs
             m1_inputs['financial']=financial_inputs(analytics,m1_inputs['bars'],p['start'])
             m1_inputs['provenance']['financial']=m1_inputs['financial']['provenance']

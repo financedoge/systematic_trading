@@ -42,6 +42,16 @@ def decision_diagrams(definition, accounting_currency='CNH'):
                    'Below minimum: qualifying IEF/TLT/GLD incoming weights; residual cash. No mandatory holding.'),
                   ('Protect selected membership and fallback cash through later layers',
                    'XGBoost has zero selection weight; its existing downstream sizing follows.')]
+    if 'alpha101_tilt' in overlays:
+        p = overlays['alpha101_tilt']
+        steps += [('Read the sixteen registered Alpha101 time-series alphas',
+                   f"{len(p['alphas'])} formulas on adjusted prices and audited raw volume, {p['lookback']} sessions of history, all strictly before the decision."),
+                  ('Rank only the names the book already holds',
+                   'Equal-weight mean of each alpha\u2019s rank scores across the held names; scale-free, alphabetic ties.'),
+                  (f"Tilt {p['budget']} of NAV from the bottom of that ranking to the top",
+                   f"Total overweight equals total underweight equals half of {p['budget']}; one shrink factor keeps every name inside the {p['maxWeight']} cap and above zero. No instrument is added or removed and the gross is unchanged."),
+                  ('Hold until the next monthly decision',
+                   'Opened and held at each decision; P4.17f measured that closing early on the signal was worse than holding.')]
     if "decision_tree" in overlays:
         p = overlays["decision_tree"]
         steps += [("Select the model permitted at the decision date", "Before 2023: causal annual fit; from 2023: deployed frozen tree below."),

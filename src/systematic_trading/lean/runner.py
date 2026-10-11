@@ -112,6 +112,55 @@ def lean_config() -> dict:
     }
 
 
+def _spawn_logged(command, *, cwd, environment, log_path):
+    """Launch one engine writing to its own log, and hand back the handle to close later."""
+    log = log_path.open('w', encoding='utf-8')
+    try:
+        process = subprocess.Popen(command, cwd=cwd, env=environment, stdout=log, stderr=subprocess.STDOUT)
+    except BaseException:
+        log.close()
+        raise
+    return process, log
+
+
+def _terminate(processes, *, exclude=()):
+    for label, process in processes.items():
+        if label in exclude or process.poll() is not None:
+            continue
+        process.terminate()
+        try:
+            process.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait(timeout=10)
+
+
+def _await_processes(launched, timeout_seconds):
+    """Wait for engines started together, returning each one's own wall time.
+
+    A non-zero exit terminates its partner and raises ``CalledProcessError``, so a failed engine
+    can never leave the other running; a timeout terminates both and raises ``TimeoutExpired``.
+    Both are ``SubprocessError``s, exactly as the sequential implementation produced.
+    """
+    processes = {label: process for label, (process, _) in launched.items()}
+    done, deadline = {}, time.perf_counter() + timeout_seconds
+    while len(done) < len(processes):
+        for label, (process, started_at) in launched.items():
+            if label in done or process.poll() is None:
+                continue
+            done[label] = time.perf_counter() - started_at
+            if process.returncode != 0:
+                _terminate(processes, exclude=(label,))
+                raise subprocess.CalledProcessError(process.returncode, process.args)
+        if len(done) == len(processes):
+            break
+        if time.perf_counter() > deadline:
+            _terminate(processes)
+            raise subprocess.TimeoutExpired(list(processes), timeout_seconds)
+        time.sleep(0.1)
+    return done
+
+
 def run_bundle(*, bundle: Path, output: Path, image: str, timeout_seconds=900, cpus="2", memory="4g") -> dict:
     verified = verify_bundle(bundle)
     if output.exists():
@@ -124,6 +173,8 @@ def run_bundle(*, bundle: Path, output: Path, image: str, timeout_seconds=900, c
     write_json(output / 'run.json', receipt)
     write_json(output / 'config.json', lean_config())
     started = time.perf_counter()
+    reference_process = lean_process = None
+    reference_log = lean_log = None
     try:
         command = docker_command(image=image, bundle=bundle, output=output, name=name, cpus=str(cpus), memory=memory)
         # The oracle needs the interpreter/runtime, not inherited app credentials.
@@ -134,21 +185,26 @@ def run_bundle(*, bundle: Path, output: Path, image: str, timeout_seconds=900, c
         environment['PYTHONDONTWRITEBYTECODE'] = '1'
         environment['PYTHONUTF8'] = '1'
         environment.update(OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1', MKL_NUM_THREADS='1', NUMEXPR_NUM_THREADS='1')
-        with (output / 'reference.log').open('w', encoding='utf-8') as log:
-            subprocess.run([sys.executable, '-B', '-m', 'systematic_trading.lean.reference', str(bundle.resolve()),
-                            str(output.resolve() / 'reference.json')], cwd=output, env=environment,
-                           stdout=log, stderr=subprocess.STDOUT, timeout=timeout_seconds, check=True)
-        receipt['reference_wall_seconds'] = time.perf_counter() - started
+        # The two engines are independent: LEAN writes economic.json, the oracle writes reference.json,
+        # and parity compares them only once both exist. Starting them together costs the slower engine
+        # instead of their sum. Each stays single-threaded, so no reported number changes.
+        reference_process, reference_log = _spawn_logged(
+            [sys.executable, '-B', '-m', 'systematic_trading.lean.reference', str(bundle.resolve()),
+             str(output.resolve() / 'reference.json')],
+            cwd=output, environment=environment, log_path=output / 'reference.log')
+        reference_launched = time.perf_counter()
+        lean_process, lean_log = _spawn_logged(command, cwd=output, environment=None,
+                                               log_path=output / 'lean.log')
+        lean_launched = time.perf_counter()
         inspected = subprocess.run(['docker', 'image', 'inspect', image], capture_output=True,
                                    text=True, timeout=30, check=True)
         metadata = json.loads(inspected.stdout)[0]
         receipt['engine'] = {'image_id': metadata['Id'], 'repo_digests': metadata.get('RepoDigests'),
                              'labels': metadata.get('Config', {}).get('Labels', {})}
-        lean_started = time.perf_counter()
-        with (output / 'lean.log').open('w', encoding='utf-8') as log:
-            subprocess.run(command,
-                           stdout=log, stderr=subprocess.STDOUT, timeout=timeout_seconds, check=True)
-        receipt['lean_wall_seconds'] = time.perf_counter() - lean_started
+        wall = _await_processes({'reference': (reference_process, reference_launched),
+                                 'lean': (lean_process, lean_launched)}, timeout_seconds)
+        receipt['reference_wall_seconds'] = wall['reference']
+        receipt['lean_wall_seconds'] = wall['lean']
         actual = json.loads((output / 'economic.json').read_text(encoding='utf-8'))
         reference = json.loads((output / 'reference.json').read_text(encoding='utf-8'))
         parity = compare_outputs(reference, actual, verified['spec'])
@@ -171,6 +227,9 @@ def run_bundle(*, bundle: Path, output: Path, image: str, timeout_seconds=900, c
             raise failure_type(message) from exc
         raise
     finally:
+        for handle in (reference_log, lean_log):
+            if handle is not None and not handle.closed:
+                handle.close()
         receipt['elapsed_seconds'] = time.perf_counter() - started
         receipt['artifacts'] = {p.relative_to(output).as_posix(): sha256(p) for p in output.rglob('*')
                                 if p.is_file() and p != output / 'run.json'}
