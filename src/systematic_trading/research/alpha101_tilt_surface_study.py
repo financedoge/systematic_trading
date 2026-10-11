@@ -43,9 +43,9 @@ from systematic_trading.research.momentum_replay import freeze_usd_bundle, read_
 from systematic_trading.research.turnover_gate import implied_turnover, screen
 
 STUDY = 'alpha101-tilt-surface-v1'
-DEFAULT_ROOT = Path('var/research/alpha101-tilt-surface-20261011-v1')
+DEFAULT_ROOT = Path('var/research/alpha101-tilt-surface-20261011-v2')
 FR25_ROOT = Path('var/research/fr25-placebo-20261010-v1')
-SOTA_ROOT = Path('var/research/alpha101-tilt-replay-20261011-v1')
+SOTA_ROOT = Path('var/research/alpha101-tilt-replay-20261011-v2')
 BASES = {
     'FR25': dict(root=FR25_ROOT, bars_root=FR25_ROOT, arm='FR25',
                  label='FR25 · 75% M1 / 25% financial ridge', source='research_fr25_14_v1'),
@@ -92,6 +92,7 @@ def plan(arm):
 
 def protocol():
     return dict(
+        peer_review_20261011=('Corrected after peer review found four implementation defects: (1) the hold/exit arms re-submitted an unchanged target vector every session, which rebalances on price drift instead of holding shares, so rows are now emitted only when the target changes; (2) the exit-and-re-enter branch sat behind a guard an exit had already emptied and could never re-enter; (3) the profit/loss exits read the close of the session they traded, which is look-ahead, and now read only closes strictly before it; (4) alpha 43 divided every historical volume by the latest rolling average dollar volume instead of each date\'s own, and rank IC ranked tied values in ticker order instead of averaging them. The v1 root is superseded and kept as the historical record.'),
         study=STUDY, version=STUDY + '-v1', bases={k: dict(v, root=str(v['root'])) for k, v in BASES.items()},
         budgets=list(BUDGETS), alphas=list(ALPHAS), arms=list(arms()),
         window=dict(start=START, evaluation_start=EVALUATION_START, windows=list(WINDOWS)),

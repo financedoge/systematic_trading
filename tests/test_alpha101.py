@@ -8,7 +8,7 @@ import pytest
 from systematic_trading.research import alpha101 as lib
 from systematic_trading.research import alpha101_screen as screening
 
-ROOT = Path('var/research/alpha101-screen-20261011-v1')
+ROOT = Path('var/research/alpha101-screen-20261011-v2')
 PAPER = Path('research_tmp/101_formulaic_alphas.pdf')
 BUILT = pytest.mark.skipif(not (ROOT / 'screen.json').exists(), reason='frozen alpha screen not built')
 
@@ -192,6 +192,65 @@ def test_rank_ic_needs_enough_instruments_and_variation():
     assert screening.rank_ic(values, returns) == pytest.approx(1.0)
     assert screening.rank_ic(values, {f'S{i}': 0.01 for i in range(6)}) is None
     assert screening.rank_ic(dict(list(values.items())[:5]), returns) is None
+
+
+def test_rank_ic_averages_ties_instead_of_ranking_them_in_ticker_order():
+    """Ordinal ranks made the statistic depend on instrument labels. Peer review, 2026-10-11."""
+    values = {'A': 1.0, 'B': 2.0, 'C': 2.0, 'D': 4.0, 'E': 5.0, 'F': 5.0}
+    returns = {'A': 0.10, 'B': 0.20, 'C': 0.90, 'D': 0.30, 'E': 0.40, 'F': 0.80}
+    # the same pairs with the tied members renamed so their alphabetical order swaps
+    renamed_values = {'Z': 1.0, 'B': 2.0, 'A': 2.0, 'D': 4.0, 'Y': 5.0, 'C': 5.0}
+    renamed_returns = {'Z': 0.10, 'B': 0.20, 'A': 0.90, 'D': 0.30, 'Y': 0.40, 'C': 0.80}
+    plain = screening.rank_ic(values, returns)
+    renamed = screening.rank_ic(renamed_values, renamed_returns)
+    assert plain == pytest.approx(renamed), 'rank IC must not depend on ticker labels'
+    # and it must equal the textbook mid-rank Spearman correlation
+    def midranks(series):
+        order = sorted(series)
+        ranks, index = {}, 0
+        while index < len(order):
+            end = index
+            while end + 1 < len(order) and order[end + 1] == order[index]:
+                end += 1
+            for position in range(index, end + 1):
+                ranks[order[position]] = (index + end) / 2 + 1
+            index = end + 1
+        return ranks
+    left, right = midranks(list(values.values())), midranks(list(returns.values()))
+    symbols = sorted(values)
+    expected = float(np.corrcoef([left[values[s]] for s in symbols],
+                                 [right[returns[s]] for s in symbols])[0, 1])
+    assert plain == pytest.approx(expected)
+    # a tied cross-section carries no view at all
+    assert screening.rank_ic({f'S{i}': 1.0 for i in range(6)}, returns) is None
+
+
+def test_alpha_43_divides_by_each_dates_own_rolling_dollar_volume():
+    """The published formula is ts_rank(volume / adv20, 20) with adv20 rolling per date.
+
+    Dividing the whole volume series by the *latest* average (as the implementation did until
+    2026-10-11) computes a different quantity. Peer review reported 1.00 against 0.05 on a simple
+    case; this test recomputes the published formula independently and pins the equality.
+    """
+    size = 300
+    generator = np.random.default_rng(11)
+    close = 100 + np.cumsum(generator.normal(0, 1, size))
+    volume = 1_000_000 * np.exp(np.cumsum(generator.normal(0, 0.05, size)))
+    history = lib.History(symbol='X', date='2026-10-09', open=close * 0.999, high=close * 1.01,
+                          low=close * 0.99, close=close, volume=volume)
+    dollar = close * volume
+    rolling = np.array([np.mean(dollar[max(0, index - 19):index + 1]) for index in range(size)])
+    published = (lib.ts_rank(volume / rolling, 20)
+                 * lib.ts_rank(-(close[7:] - close[:-7]), 8))
+    assert lib.alpha_43(history) == pytest.approx(published)
+    # the element-wise helper carries each date's own window, and nothing else
+    rolling_helper = lib.rolling_adv(close, volume, 20)
+    assert len(rolling_helper) == size - 19
+    assert rolling_helper[0] == pytest.approx(np.mean(dollar[:20]))
+    assert rolling_helper[-1] == pytest.approx(np.mean(dollar[-20:]))
+    # the wrong (flat, latest-average) divisor genuinely differs on this series
+    flat = lib.ts_rank(volume / np.mean(dollar[-20:]), 20) * lib.ts_rank(-(close[7:] - close[:-7]), 8)
+    assert abs(flat - published) > 1e-6
 
 
 def test_the_block_interval_is_deterministic_and_brackets_the_mean():

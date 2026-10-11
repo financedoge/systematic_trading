@@ -1,3 +1,11 @@
+> **Corrected 2026-10-11 after peer review.** The band arms and the control originally re-submitted
+> their target vector every session, which rebalanced on price drift rather than holding shares; the
+> control wrote 1,448 rows where the strategy has 65 decisions. The corrected study is
+> `var/research/alpha101-tilt-daily-20261011-v2`. Its conclusion **survives**: FR25 X = 10% costs
+> 142.7bp at no band for 96.5%, 112.7bp at a 100% band for 100.3%, and 41.6bp at a 300% band for
+> 103.9% — statistically the monthly arm at 41.7bp and 104.1%. Record:
+> [alpha101-peer-review-corrections.md](alpha101-peer-review-corrections.md).
+
 # P4.17e — Daily, threshold-triggered tilting: high frequency destroys value
 
 Operator clarification, 2026-10-11: *not the monthly rebalance — monitor daily, and whenever the alpha

@@ -1,3 +1,24 @@
+> **Corrected 2026-10-11 after peer review.** This study had four implementation defects: the arms
+> re-submitted an unchanged target vector every session (a daily-rebalanced process, not a held
+> position), the exit-and-re-enter branch could never fire after an exit, the profit/loss exits read
+> the close of the session they traded, and alpha 43 divided by the latest rather than each date's own
+> rolling average dollar volume. Every number below was produced by the defective code and is
+> **superseded**. The corrected study is `var/research/alpha101-tilt-exit-20261011-v2` and its headline
+> finding **reverses**:
+>
+> | FR25 arm | Total return | CAGR | Sharpe | Calmar | Cost |
+> | --- | ---: | ---: | ---: | ---: | ---: |
+> | untouched book | 106.0% | 13.37% | 1.218 | 1.545 | 41.0bp |
+> | **X = 5%, flip-exit + re-enter** | **105.4%** | **13.32%** | **1.212** | 1.553 | 53.2bp |
+> | X = 5%, held | 105.0% | 13.28% | 1.207 | **1.609** | 41.0bp |
+> | X = 5%, flip-exit without re-entry | 103.9% | 13.17% | 1.201 | 1.525 | 43.5bp |
+>
+> So "holding beats exiting" is **withdrawn**: with a working re-entry, exiting-and-re-entering is the
+> best in-sample FR25 arm on three of five metrics. Holding still wins on Calmar, plain exiting without
+> re-entry is still worse, the SOTA still prefers holding outright, and **0 of 20 contrasts are
+> significant on either book**, so none of it is established. Full record:
+> [alpha101-peer-review-corrections.md](alpha101-peer-review-corrections.md).
+
 # P4.17f — Closing the tilt when the signal stops: exit rules measured
 
 Operator direction, 2026-10-11: *holding until the next monthly rebalance is of course not optimal —

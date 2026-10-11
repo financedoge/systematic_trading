@@ -1,5 +1,75 @@
 # Project Log
 
+## 2026-10-11 — Peer review of the Alpha101 work: five findings, all confirmed, all fixed, studies re-run
+
+The operator had a second agent check my work. It reported five implementation defects. I reproduced every one
+against the code before touching anything, and **all five were real** — this entry records them, the fixes, the
+re-runs and the one conclusion that reverses.
+
+**The findings and what I reproduced.**
+
+1. *The hold arms were not holding.* The daily and exit studies — and both of their controls — wrote a decision
+   row every session with the same target weights, which rebalances back to those weights as prices drift. The exit
+   study's HOLD arm wrote 1,448 rows where the monthly strategy has 70 decisions, so the arms were a daily
+   rebalanced process, not the monthly strategy they were compared against. The reviewer was right that this makes
+   the study measure something else.
+2. *Re-entry was unreachable.* The branch sat behind an `elif held:` guard, and the exit had just set `held = {}`,
+   so it could never fire. A synthetic run showed the book staying untilted while the signal re-aligned, and the
+   211 "re-entries" the arm reported were re-tilts of a position that was still on.
+3. *Look-ahead in the P&L exits.* `should_exit` read the close of the very session whose target it produced: a
+   decision for today's open using today's close.
+4. *Alpha 43.* It divided every historical volume by the **latest** 20-session average dollar volume rather than
+   each date's own: 0.450000 against 0.600000 on a synthetic series. I audited all sixteen alphas against their
+   published formulas; 43 was the only defective one, and it is the one the monitored strategy runs, so this was
+   the finding that reached production.
+5. *Rank IC ties.* `argsort(argsort(...))` gave tied values ordinal ranks in sorted-ticker order, so identical
+   signal/return pairs scored 0.657143 or 0.371429 depending only on labels, and the statistic disagreed with
+   textbook mid-rank Spearman (0.371429 against 0.441367).
+
+**Fixes.** `rolling_adv` supplies alpha 43 with each date's own rolling window; `midranks` gives rank IC averaged
+ties; both studies and both controls emit a row **only when the target changes**, so between events the engine
+holds shares and drift trades nothing; re-entry is evaluated when no tilt is held; the P&L exits read only closes
+strictly **before** the session they trade, with the entry base taken from the entry session's own close (known
+before every later decision, so not look-ahead). Six regression tests pin these, including equality with the
+published alpha-43 formula and label-invariance of rank IC. The audit cleared the other three `adv20` users and
+confirmed `signal_decay.rank_ic`, which feeds the monitored decay panel, already averaged ties.
+
+**Re-runs, because annotations would not have been enough.** The code changes invalidate the artifacts, so the
+affected studies were re-frozen under **v2** roots whose protocols record the correction, with the cross-study
+chain aligned: the measurement now reads the corrected screen, the surface reads the corrected replay, the daily
+study reads the corrected surface. The v1 roots are kept and marked superseded. Screen v2: 0 pass, 15 reject, 1
+insufficient — unchanged. Daily v2: the frontier is reproduced, 142.7bp at no band for 96.5% against 41.6bp at a
+300% band for 103.9%, statistically the monthly arm at 41.7bp and 104.1% — unchanged. The monitored strategy
+recalculated under revision `c519e86cd455` with **0 parity differences** on all five M1-family runs; its published
+figures barely move (11.17%/1.1025/−20.28% against 11.18%/1.103/−20.28%), because one alpha of sixteen enters a
+rank average, but the code behind them is now right.
+
+**The conclusion that reverses.** *"Exiting early is worse than holding" is withdrawn.* With a working re-entry,
+FR25's best in-sample arm on total return, CAGR and Sharpe is **X = 5% with flip-exit-and-re-enter** — 105.4% /
+13.32% / 1.212 at 53.2bp — against **X = 5% held** at 105.0% / 13.28% / 1.207 / **1.609 Calmar** at 41.0bp and the
+untouched book at 106.0% / 13.37% / 1.218 at 41.0bp. So the re-entering rule buys about +0.4pp of net return for
+about +12bp/yr of cost, plain exiting without re-entry is still clearly worse (103.9% at 43.5bp), and the SOTA
+still prefers holding outright. My earlier claim held only because the re-entry arm could not re-enter — an
+error I shipped and the reviewer caught. *"5% HOLD is the best configuration" is qualified*: it remains the best
+on Calmar and drawdown, and the corrected best on the other three metrics is 5% with re-entry. *Nothing is
+established*: 0 of 20 family-adjusted contrasts differ from the untouched book on either base at Holm p < 0.05,
+exactly as before.
+
+**The monitored strategy keeps the operator's chosen recipe.** `research_fr25_alpha_tilt_5_v1` is still the X = 5%
+held arm, still monitored, still `promotion_eligible=False`, `execution_enabled=False`, with the 14-ETF execution
+contract reason. Its spec sheet already disclosed that the evidence was not established; it now also sits behind
+this record, which states that it is no longer the single best in-sample arm on three of five metrics. Switching
+the recipe is a one-line parameter change and the operator's decision — it is not made here, because the corrected
+advantage carries no statistical support.
+
+**Lesson worth keeping.** The frozen-study discipline did part of its job: the artifact tests failed the moment
+the code changed. What it did not catch was a *modelling* error — a row schema that silently meant "rebalance
+daily" rather than "hold", and a helper (`adv`) whose scalar return invited the wrong use in one of sixteen
+alphas. The fixes add tests at that level: what a submitted target means, and each alpha against its published
+formula.
+
+Full record: `docs/alpha101-peer-review-corrections.md`.
+
 ## 2026-10-11 — Session committed and pushed (`80ff109`), with a GitHub routing workaround on the way
 
 Committed the session's work and pushed it: `80ff109` — "Research: Alpha101 tilt promoted to monitoring, exit

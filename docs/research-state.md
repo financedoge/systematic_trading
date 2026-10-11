@@ -1,5 +1,51 @@
 # Research State
 
+## 2026-10-11 — Peer review found five real defects in the Alpha101 work; all confirmed, fixed, re-run
+
+A second agent reviewed the P4.17 screen, the tilt studies and the deployed overlay. Every finding was reproduced
+against the code before anything changed, and **all five were real**:
+
+1. **Hold semantics.** The daily and exit arms — *and both of their controls* — re-submitted the same target
+   vector every session, which rebalances back to the target weights as prices drift instead of holding shares.
+   The exit study's HOLD arm wrote 1,448 decision rows where the monthly strategy has 70, so the studies measured
+   a different trading process from the strategy being compared.
+2. **Unreachable re-entry.** The exit-and-re-enter branch sat behind an `elif held:` guard that the exit had just
+   emptied, so the arm could never re-enter; its diagnostic counted re-tilts of a position still on.
+3. **Look-ahead in the P&L exits.** `should_exit` read the close of the same session whose target it produced.
+4. **Alpha 43.** Every historical volume was divided by the **latest** rolling average dollar volume instead of
+   each date's own: 0.450000 (published formula) against 0.600000 (implementation). An audit of the other fifteen
+   alphas confirmed 43 was the only defective one — and it is the one the monitored strategy runs.
+5. **Rank IC ties.** Tied values took ordinal ranks in ticker order, so identical signal/return pairs scored
+   0.657143 versus 0.371429 under relabelling, and 0.371429 against 0.441367 for textbook mid-rank Spearman.
+
+**Fixes.** `rolling_adv` gives alpha 43 each date's own window; `midranks` gives rank IC averaged ties; both
+studies and both controls emit a decision row **only when the target vector changes**, so a held position is held;
+re-entry is evaluated when no tilt is held; the P&L exits read only closes strictly before the session they trade,
+with the entry base taken from the entry session's own close. Six regression tests pin each defect, including the
+published-formula equality for alpha 43 and label-invariance for rank IC. The audit also cleared the other three
+`adv20` users (7, 21, 43's siblings) and `signal_decay.rank_ic`, which already averaged ties.
+
+**Re-runs.** Artifacts were invalidated rather than annotated, so the affected studies were re-frozen under **v2**
+roots that record the correction in their protocols, with the chain aligned (the measurement points at the
+corrected screen, the surface at the corrected replay, the daily study at the corrected surface). The v1 roots are
+kept as the historical record and marked superseded. The monitored strategy recalculated under revision
+`c519e86cd455` with **0 parity differences** on all five M1-family runs; its published figures barely move
+(11.17%/1.1025/−20.28% against 11.18%/1.103/−20.28%) because one alpha of sixteen enters a rank average.
+
+**Corrected conclusions.** *Withdrawn:* "exiting early is worse than holding" — with a working re-entry, FR25's
+best in-sample arm on total return, CAGR and Sharpe is X = 5% with flip-exit-and-re-enter (105.4% / 13.32% /
+1.212 at 53.2bp) against X = 5% held (105.0% / 13.28% / 1.207 / **1.609** Calmar at 41.0bp), so it buys ~+0.4pp of
+net return for ~+12bp/yr of cost; plain exiting without re-entry is still clearly worse (103.9% at 43.5bp), and the
+SOTA still prefers holding outright. *Qualified:* "5% HOLD is the best configuration" — it remains best on Calmar
+and drawdown, but not on the other three metrics. *Unchanged:* nothing is statistically established (0 of 20
+contrasts), high frequency destroys value (the 300% band reproduces the monthly arm at 41.6bp / 103.9%), and the
+screen still rejects the family (0 pass, 15 reject, 1 insufficient).
+
+**The monitored strategy keeps the recipe the operator chose**, still with `promotion_eligible=False`,
+`execution_enabled=False` and the 14-ETF execution-contract reason. Switching to the corrected in-sample best is a
+one-line parameter change and an operator decision; it is not made here because the advantage has no statistical
+support. Full record: [alpha101-peer-review-corrections.md](alpha101-peer-review-corrections.md).
+
 ## 2026-10-11 — The Alpha101 family tilt is now a monitored strategy
 
 The measured best configuration (5% family tilt, held from each monthly decision to the next) is built into a

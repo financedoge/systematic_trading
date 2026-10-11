@@ -34,9 +34,9 @@ from systematic_trading.research.turnover_gate import implied_turnover, screen
 
 STUDY = 'alpha101-tilt-v1'
 PARENT = Path('var/research/sleeve-construction-20261010-v1')
-SCREEN_ROOT = Path('var/research/alpha101-screen-20261011-v1')
+SCREEN_ROOT = Path('var/research/alpha101-screen-20261011-v2')
 CALIBRATION = Path('var/research/turnover-gate-20261010-v1/calibration.json')
-DEFAULT_ROOT = Path('var/research/alpha101-tilt-20261011-v1')
+DEFAULT_ROOT = Path('var/research/alpha101-tilt-20261011-v2')
 
 BUDGETS = (0.05, 0.10, 0.20)
 MAX_WEIGHT = 0.45
@@ -208,6 +208,7 @@ def measure(alpha, budget, *, sigma, thresholds, values_by_day=None):
 def protocol():
     configured = calibration()
     return dict(
+        peer_review_20261011=('Re-run after peer review corrected alpha 43 (each date now divides by its own rolling average dollar volume), the hold semantics (targets are submitted only when they change, so a held position is not rebalanced daily), the exit-and-re-enter branch and the look-ahead in the profit/loss exits. The v1 root is superseded and kept as the historical record.'),
         study=STUDY, version=STUDY + '-v1', parent=str(PARENT), screen_root=str(SCREEN_ROOT),
         registration='P4.17b in docs/signal-decay-and-alpha-plan.md, operator-proposed 2026-10-11',
         family=dict(alphas=list(screening.lib.REGISTERED), budgets=list(BUDGETS),

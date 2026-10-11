@@ -6,7 +6,7 @@ import pytest
 
 from systematic_trading.research import alpha101_tilt_exit_study as study
 
-ROOT = Path('var/research/alpha101-tilt-exit-20261011-v1')
+ROOT = Path('var/research/alpha101-tilt-exit-20261011-v2')
 BUILT = pytest.mark.skipif(not (ROOT / 'analysis.json').exists(), reason='frozen exit study not built')
 DAY = ['2026-01-{:02d}'.format(n) for n in range(1, 11)]
 
@@ -30,9 +30,9 @@ def test_arm_names_and_the_two_declared_families():
 
 def test_hold_never_closes_and_no_signal_closes_when_the_book_cannot_be_ranked():
     held = {'a': 0.05, 'b': -0.05}
-    assert study.should_exit('HOLD', held, {}, state(), DAY[0], None, {}) is False
-    assert study.should_exit('EXIT-NOSIG', held, {}, state(), DAY[0], None, {}) is True
-    assert study.should_exit('EXIT-NOSIG', held, {'a': 1.0, 'b': -1.0}, state(), DAY[0], None, {}) is False
+    assert study.should_exit('HOLD', held, {}, state(), DAY[0]) is False
+    assert study.should_exit('EXIT-NOSIG', held, {}, state(), DAY[0]) is True
+    assert study.should_exit('EXIT-NOSIG', held, {'a': 1.0, 'b': -1.0}, state(), DAY[0]) is False
 
 
 def test_flip_closes_only_when_the_signal_turns_against_the_held_tilt():
@@ -40,26 +40,26 @@ def test_flip_closes_only_when_the_signal_turns_against_the_held_tilt():
     aligned = {'a': 0.03, 'b': -0.03}
     opposed = {'a': -0.01, 'b': 0.01}
     assert study.alignment(held, aligned) > 0 and study.alignment(held, opposed) < 0
-    assert study.should_exit('EXIT-FLIP', held, aligned, state(), DAY[0], None, {}) is False
-    assert study.should_exit('EXIT-FLIP', held, opposed, state(), DAY[0], None, {}) is True
-    assert study.should_exit('EXIT-FLIP-REENTER', held, opposed, state(), DAY[0], None, {}) is True
+    assert study.should_exit('EXIT-FLIP', held, aligned, state(), DAY[0]) is False
+    assert study.should_exit('EXIT-FLIP', held, opposed, state(), DAY[0]) is True
+    assert study.should_exit('EXIT-FLIP-REENTER', held, opposed, state(), DAY[0]) is True
 
 
 def test_fade_closes_when_the_signal_has_decayed_below_half_its_entry_size():
     held = {'a': 0.05, 'b': -0.05}
-    assert study.should_exit('EXIT-FADE', held, {'a': 0.024, 'b': -0.024}, state(0.10), DAY[0], None, {}) is True
-    assert study.should_exit('EXIT-FADE', held, {'a': 0.03, 'b': -0.03}, state(0.10), DAY[0], None, {}) is False
+    assert study.should_exit('EXIT-FADE', held, {'a': 0.024, 'b': -0.024}, state(0.10), DAY[0]) is True
+    assert study.should_exit('EXIT-FADE', held, {'a': 0.03, 'b': -0.03}, state(0.10), DAY[0]) is False
 
 
 def test_the_profit_and_loss_rules_read_the_tilts_own_return():
     held = {'a': 0.05, 'b': -0.05}
-    richer = {'a': {'2026-01-01': 100.0, '2026-01-05': 130.0}, 'b': {'2026-01-01': 100.0, '2026-01-05': 100.0}}
-    poorer = {'a': {'2026-01-01': 100.0, '2026-01-05': 80.0}, 'b': {'2026-01-01': 100.0, '2026-01-05': 100.0}}
-    assert study.tilt_return(held, state(), '2026-01-05', richer) == pytest.approx(0.05 * 0.30)
-    assert study.should_exit('EXIT-TP-1', held, {}, state(), '2026-01-05', None, richer) is True
-    assert study.should_exit('EXIT-SL-05', held, {}, state(), '2026-01-05', None, richer) is False
-    assert study.should_exit('EXIT-SL-05', held, {}, state(), '2026-01-05', None, poorer) is True
-    assert study.should_exit('EXIT-PNL', held, {}, state(), '2026-01-05', None, poorer) is False  # -1% > -2%
+    richer = {'a': 130.0, 'b': 100.0}
+    poorer = {'a': 80.0, 'b': 100.0}
+    assert study.tilt_return(held, state(), richer) == pytest.approx(0.05 * 0.30)
+    assert study.should_exit('EXIT-TP-1', held, {}, state(), richer) is True
+    assert study.should_exit('EXIT-SL-05', held, {}, state(), richer) is False
+    assert study.should_exit('EXIT-SL-05', held, {}, state(), poorer) is True
+    assert study.should_exit('EXIT-PNL', held, {}, state(), poorer) is False   # -1% > -2%
 
 
 def test_re_entry_needs_the_entry_direction_and_the_entry_magnitude():
@@ -78,14 +78,64 @@ def test_simulate_opens_monthly_holds_and_closes_on_the_rule():
     closed = {'a': {day: 100.0 for day in DAY}, 'b': {day: 100.0 for day in DAY}}
     rows, events = study.simulate(books, rebals, 0.10, 'EXIT-FLIP', desired, closed)
     assert events['entries'] == 1 and events['exits'] == 1
-    assert rows[DAY[3]] == {'a': 0.55, 'b': 0.45}          # held through the month
+    # Only the entry and the exit are submitted: between them the engine holds shares, so no session
+    # re-submits an unchanged target (re-submitting is a daily-rebalanced process, not a held one).
+    assert sorted(rows) == [DAY[0], DAY[4]]
+    assert events['submitted'] == 2
+    assert rows[DAY[0]] == {'a': 0.55, 'b': 0.45}          # entered at the monthly decision
     assert rows[DAY[4]] == {'a': 0.5, 'b': 0.5}            # flipped against it, so the tilt is off
-    assert rows[DAY[9]] == {'a': 0.5, 'b': 0.5}            # and stays off until the next decision
     held, events = study.simulate(books, rebals, 0.10, 'HOLD', desired, closed)
-    assert events['exits'] == 0
-    # HOLD keeps the tilt exactly as entered and never rotates inside the month: the rotation the
-    # monthly study measured happens at the next monthly decision, not between decisions.
-    assert held[DAY[9]] == {'a': 0.55, 'b': 0.45}
+    assert events['exits'] == 0 and events['submitted'] == 1
+    assert held[DAY[0]] == {'a': 0.55, 'b': 0.45}          # held exactly as entered all month
+
+
+def test_the_submitted_targets_change_only_when_the_tilt_or_the_book_changes():
+    books = {day: {'a': 0.5, 'b': 0.5} for day in DAY}
+    desired = {day: {'a': 0.05, 'b': -0.05} for day in DAY}
+    rows, events = study.simulate(books, {DAY[0]}, 0.10, 'HOLD', desired, {})
+    assert sorted(rows) == [DAY[0]] and events['submitted'] == 1
+    # a strategy rebalance must always be submitted, and the book reverting afterwards is a change too
+    books[DAY[5]] = {'a': 0.4, 'b': 0.6}
+    rows, events = study.simulate(books, {DAY[0], DAY[5]}, 0.10, 'HOLD', desired, {})
+    assert sorted(rows) == [DAY[0], DAY[5], DAY[6]] and events['submitted'] == 3
+    assert rows[DAY[5]] == pytest.approx({'a': 0.45, 'b': 0.55})   # rebalanced book plus the tilt
+    assert rows[DAY[6]] == pytest.approx({'a': 0.55, 'b': 0.45})   # back to the base book plus the tilt
+    # unchanged sessions in between are not re-submitted
+    assert DAY[1] not in rows and DAY[7] not in rows
+
+
+def test_re_entry_happens_after_an_exit_not_only_while_still_held():
+    """The branch used to sit behind a `held` guard an exit had already emptied, so it never fired."""
+    books = {day: {'a': 0.5, 'b': 0.5} for day in DAY}
+    desired = {day: {'a': 0.05, 'b': -0.05} for day in DAY}
+    desired.update({DAY[2]: {'a': -0.05, 'b': 0.05}, DAY[3]: {'a': -0.05, 'b': 0.05}})  # against
+    desired.update({day: {'a': 0.05, 'b': -0.05} for day in DAY[4:]})                  # aligned again
+    closed = {'a': {day: 100.0 for day in DAY}, 'b': {day: 100.0 for day in DAY}}
+    rows, events = study.simulate(books, {DAY[0]}, 0.10, 'EXIT-FLIP-REENTER', desired, closed)
+    assert events['exits'] == 1 and events['reentries'] == 1
+    assert rows[DAY[0]] == {'a': 0.55, 'b': 0.45}     # entry
+    assert rows[DAY[2]] == {'a': 0.5, 'b': 0.5}       # exit
+    assert rows[DAY[4]] == {'a': 0.55, 'b': 0.45}     # genuine re-entry inside the month
+
+
+def test_the_profit_and_loss_rules_cannot_see_the_session_they_trade_on():
+    """A target executed at day D's open may only be decided with closes before D."""
+    books = {day: {'a': 0.5, 'b': 0.5} for day in DAY}
+    desired = {day: {'a': 0.05, 'b': -0.05} for day in DAY}
+    calm = {day: 100.0 for day in DAY}
+    flat = {day: 100.0 for day in DAY}
+    # 'a' collapses on the last session only: a look-ahead stop would exit on that same session
+    rows, events = study.simulate(books, {DAY[0]}, 0.10, 'EXIT-SL-05', desired,
+                                  {'a': dict(calm, **{DAY[-1]: 10.0}), 'b': flat})
+    assert events['exits'] == 0, 'the stop must not react to the close of the session it trades'
+    assert set(rows) == {DAY[0]}
+    # the same collapse one session earlier is knowable, so the stop fires on the following session
+    rows, events = study.simulate(books, {DAY[0]}, 0.10, 'EXIT-SL-05', desired,
+                                  {'a': dict(calm, **{DAY[-2]: 10.0}), 'b': flat})
+    assert events['exits'] == 1 and DAY[-1] in rows
+    assert rows[DAY[-1]] == {'a': 0.5, 'b': 0.5}
+    # and the entry base is the entry session's own close, so a later loss is measurable at all
+    assert events['exit_days'] == [DAY[-1]]
 
 
 # --- the frozen study ---------------------------------------------------------

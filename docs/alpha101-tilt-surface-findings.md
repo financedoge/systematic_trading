@@ -1,3 +1,9 @@
+> **Corrected 2026-10-11 after peer review.** Re-run as `var/research/alpha101-tilt-surface-20261011-v2`
+> after the alpha 43 and hold-semantics fixes, with the SOTA base now taken from the corrected replay root.
+> The verdicts are **unchanged in shape**: X = 10% and X = 20% pass the gate on FR25 and X = 30% upward is
+> rejected, with the same monotone cost degradation as the budget rises. Record:
+> [alpha101-peer-review-corrections.md](alpha101-peer-review-corrections.md).
+
 # P4.17d — The tilt budget surface: how far the envelope goes
 
 Operator request, 2026-10-11: *also add it to the FR25 strategy and see how much further we can push

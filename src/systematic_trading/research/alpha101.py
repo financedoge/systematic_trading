@@ -121,9 +121,24 @@ def ts_rank(x: np.ndarray, d: int) -> float | None:
 
 
 def adv(close: np.ndarray, volume: np.ndarray, d: int) -> float | None:
+    """The latest d-session mean dollar volume. For a rolling series use ``rolling_adv``."""
     if len(close) < d or len(volume) < d:
         return None
     return float(np.mean(close[-d:] * volume[-d:]))
+
+
+def rolling_adv(close: np.ndarray, volume: np.ndarray, d: int) -> np.ndarray:
+    """Each session's own trailing d-session mean dollar volume, aligned to the input.
+
+    Published formulas that divide one series by another (``volume / adv20``) need every date's own
+    average. Dividing a series by the *latest* average is a different and wrong quantity, so the
+    element-wise form lives here and is what the alphas use.
+    """
+    dollar = close * volume
+    if len(dollar) < d:
+        return np.array([])
+    cumulative = np.concatenate([[0.0], np.cumsum(dollar)])
+    return (cumulative[d:] - cumulative[:-d]) / d
 
 
 def sign(value: float | None) -> float | None:
@@ -269,11 +284,17 @@ def alpha_35(h: History) -> float | None:
 
 
 def alpha_43(h: History) -> float | None:
-    """(ts_rank((volume / adv20), 20) * ts_rank((-1 * delta(close, 7)), 8))"""
-    average = adv(h.close, h.volume, 20)
-    if average is None or average == 0:
+    """(ts_rank((volume / adv20), 20) * ts_rank((-1 * delta(close, 7)), 8))
+
+    The ratio is element-wise against **each date's own** rolling average dollar volume. Dividing the
+    whole volume series by the latest average (as this function did until 2026-10-11) computes a
+    different quantity and changes the ts_rank; it was caught in peer review and is covered by a test
+    that recomputes the published formula independently.
+    """
+    average = rolling_adv(h.close, h.volume.astype(float), 20)
+    if not len(average) or np.any(average == 0):
         return None
-    ratio = h.volume.astype(float) / average
+    ratio = h.volume[-len(average):].astype(float) / average
     first = ts_rank(ratio, 20)
     if len(h.close) < 8:
         return None

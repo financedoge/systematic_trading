@@ -42,7 +42,7 @@ from systematic_trading.research.turnover_gate import implied_turnover, screen
 
 STUDY = 'alpha101-screen-v1'
 PARENT = Path('var/research/sleeve-construction-20261010-v1')
-DEFAULT_ROOT = Path('var/research/alpha101-screen-20261011-v1')
+DEFAULT_ROOT = Path('var/research/alpha101-screen-20261011-v2')
 PAPER = Path('research_tmp/101_formulaic_alphas.pdf')
 PAPER_SHA256 = '1f9c21afe32dcb3ee77b31548acdaea00451fbfa1c0ee10c907867bcc736fce9'
 GATE_ROOT = Path('var/research/turnover-gate-20261010-v1')
@@ -195,18 +195,42 @@ def forward_returns(day, horizon):
     return out
 
 
+def midranks(values):
+    """Average ranks, so tied values share a rank instead of taking an arbitrary order."""
+    order = sorted(values)
+    ranks = {}
+    index = 0
+    while index < len(order):
+        end = index
+        while end + 1 < len(order) and order[end + 1] == order[index]:
+            end += 1
+        average = (index + end) / 2 + 1
+        for position in range(index, end + 1):
+            ranks[order[position]] = average
+        index = end + 1
+    return ranks
+
+
 def rank_ic(values, returns):
-    """Spearman rank correlation of the alpha's cross-section against forward returns."""
+    """Spearman rank correlation of the alpha's cross-section against forward returns.
+
+    Ties take averaged ranks. Ranked ordinal positions (``argsort(argsort(...))``, used here until
+    2026-10-11) give tied observations different ranks in ticker order, which makes the statistic
+    depend on instrument labels rather than on the data; peer review reproduced that and this
+    implementation is covered by a label-invariance test.
+    """
     symbols = sorted(set(values) & set(returns))
     if len(symbols) < MIN_INSTRUMENTS:
         return None
-    left = np.array([values[s] for s in symbols])
-    right = np.array([returns[s] for s in symbols])
+    left, right = np.array([values[s] for s in symbols]), np.array([returns[s] for s in symbols])
     if np.std(left) == 0 or np.std(right) == 0:
         return None
-    ranked_left = np.argsort(np.argsort(left)).astype(float)
-    ranked_right = np.argsort(np.argsort(right)).astype(float)
-    return float(np.corrcoef(ranked_left, ranked_right)[0, 1])
+    ranked_left, ranked_right = midranks(list(left)), midranks(list(right))
+    left_ranks = np.array([ranked_left[value] for value in left])
+    right_ranks = np.array([ranked_right[value] for value in right])
+    if np.std(left_ranks) == 0 or np.std(right_ranks) == 0:
+        return None
+    return float(np.corrcoef(left_ranks, right_ranks)[0, 1])
 
 
 def ic_series(alpha, horizon, days=None):
@@ -286,6 +310,7 @@ def clean_formula(text):
 
 def protocol():
     return dict(
+        peer_review_20261011=('Corrected after peer review found four implementation defects: (1) the hold/exit arms re-submitted an unchanged target vector every session, which rebalances on price drift instead of holding shares, so rows are now emitted only when the target changes; (2) the exit-and-re-enter branch sat behind a guard an exit had already emptied and could never re-enter; (3) the profit/loss exits read the close of the session they traded, which is look-ahead, and now read only closes strictly before it; (4) alpha 43 divided every historical volume by the latest rolling average dollar volume instead of each date\'s own, and rank IC ranked tied values in ticker order instead of averaging them. The v1 root is superseded and kept as the historical record.'),
         study=STUDY, version=STUDY + '-v1', parent=str(PARENT),
         paper=dict(path=str(PAPER), sha256=PAPER_SHA256),
         registered=list(lib.REGISTERED), family_size=len(lib.REGISTERED),

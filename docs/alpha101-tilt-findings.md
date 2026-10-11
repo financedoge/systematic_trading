@@ -1,3 +1,10 @@
+> **Corrected 2026-10-11 after peer review.** This measurement used the defective alpha 43 and the
+> pre-fix rank IC. The corrected study is `var/research/alpha101-tilt-20261011-v2`: 48 candidates,
+> **29 pass / 16 reject / 3 insufficient**, i.e. 12 passing alphas at X = 5%, **11 at X = 10%** (one
+> fewer than before) and 6 at X = 20%. The shape of the finding — wide at 5%, slightly narrower at 10%,
+> deeply broken at 20% — is unchanged. Record:
+> [alpha101-peer-review-corrections.md](alpha101-peer-review-corrections.md).
+
 # P4.17b — Alpha101 as a tactical tilt: the cost/alpha balance
 
 Operator proposal, 2026-10-11, after [P4.17](alpha101-screen-findings.md) closed the family at the

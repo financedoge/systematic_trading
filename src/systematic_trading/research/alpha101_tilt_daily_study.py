@@ -43,8 +43,8 @@ from systematic_trading.research.momentum_replay import freeze_usd_bundle, read_
 from systematic_trading.research.turnover_gate import implied_turnover, screen
 
 STUDY = 'alpha101-tilt-daily-v1'
-DEFAULT_ROOT = Path('var/research/alpha101-tilt-daily-20261011-v1')
-MONTHLY_REFERENCE = Path('var/research/alpha101-tilt-surface-20261011-v1')
+DEFAULT_ROOT = Path('var/research/alpha101-tilt-daily-20261011-v2')
+MONTHLY_REFERENCE = Path('var/research/alpha101-tilt-surface-20261011-v2')
 BUDGETS = (0.05, 0.10, 0.20)
 # theta is the deadband as a multiple of the budget. 0 re-tilts every session; 1.0 needs a whole
 # budget's worth of movement; 2.0 and 3.0 are declared to locate where the cost ceiling starts to
@@ -97,6 +97,7 @@ def plan(arm):
 
 def protocol():
     return dict(
+        peer_review_20261011=('Corrected after peer review found four implementation defects: (1) the hold/exit arms re-submitted an unchanged target vector every session, which rebalances on price drift instead of holding shares, so rows are now emitted only when the target changes; (2) the exit-and-re-enter branch sat behind a guard an exit had already emptied and could never re-enter; (3) the profit/loss exits read the close of the session they traded, which is look-ahead, and now read only closes strictly before it; (4) alpha 43 divided every historical volume by the latest rolling average dollar volume instead of each date\'s own, and rank IC ranked tied values in ticker order instead of averaging them. The v1 root is superseded and kept as the historical record.'),
         study=STUDY, version=STUDY + '-v1',
         bases={k: dict(v, root=str(v['root']), bars_root=str(v['bars_root'])) for k, v in BASES.items()},
         budgets=list(BUDGETS), thresholds=list(THRESHOLDS), reference_budget=REFERENCE_BUDGET,
@@ -232,8 +233,16 @@ def rebalance_days(base):
 
 
 def simulate(books, rebals, budget, threshold, desired):
-    """Daily rows for one arm: hold the tilt until the signal moves far enough to re-trade."""
+    """Daily rows for one arm: hold the tilt until the signal moves far enough to re-trade.
+
+    A row is emitted **only when the target vector changes**. Emitting the same targets every session
+    (as this did until 2026-10-11) does not hold a position: the replay rebalances back to the target
+    weights on every session, so price drift alone generates trades and the arm stops being comparable
+    with the monthly strategy that holds its shares between decisions. Peer review caught that, and
+    ``test_alpha101_tilt_daily`` now pins the emission rule.
+    """
     held_tilt, rows, trades, distances = {}, {}, 0, []
+    last_submitted = None
     for day, weights in books.items():
         wanted = desired.get(day) or {}
         distance = sum(abs(wanted.get(s, 0.0) - held_tilt.get(s, 0.0)) for s in set(wanted) | set(held_tilt))
@@ -247,8 +256,11 @@ def simulate(books, rebals, budget, threshold, desired):
         combined = {}
         for symbol in set(weights) | set(held_tilt):
             combined[symbol] = weights.get(symbol, 0.0) + held_tilt.get(symbol, 0.0)
-        rows[day] = {symbol: weight for symbol, weight in combined.items() if abs(weight) > 1e-12}
-    return rows, dict(days=len(books), trades=trades,
+        combined = {symbol: weight for symbol, weight in combined.items() if abs(weight) > 1e-12}
+        if combined != last_submitted:
+            rows[day] = combined
+            last_submitted = dict(combined)
+    return rows, dict(days=len(books), trades=trades, submitted=len(rows),
                       trade_share=trades / len(books) if books else 0.0,
                       mean_distance=sum(distances) / len(distances) if distances else 0.0)
 
@@ -288,14 +300,20 @@ def freeze(root=DEFAULT_ROOT):
         for key, row in sorted(source_rows.items()):
             if key >= EVALUATION_START:
                 templates.setdefault(key[:7], row)
-        rows = {}
+        rows, last = {}, None
         for day, weights in books.items():
             template = templates.get(day[:7])
             if template is None:
                 raise ValueError('No monthly decision template for ' + day)
-            rows[day] = tilt_row(template, weights)
+            # The control submits only when its own book changes, i.e. at each monthly decision.
+            # Writing one row per session rebalanced the control every day, which is not the
+            # strategy being controlled for.
+            if weights != last:
+                rows[day] = tilt_row(template, weights)
+                last = dict(weights)
         write_json(root / 'decisions' / (base + '.json'), rows)
-        diagnostics[base] = dict(mode='control', days=len(rows), trades=0, trade_share=0.0, mean_distance=0.0)
+        diagnostics[base] = dict(mode='control', days=len(books), submitted=len(rows), trades=0,
+                                 trade_share=0.0, mean_distance=0.0)
         monthly = read_json(MONTHLY_REFERENCE / 'decisions' / f'{base}-TILT-{int(100 * REFERENCE_BUDGET)}.json')
         write_json(root / 'decisions' / (monthly_arm(base) + '.json'), monthly)
         diagnostics[monthly_arm(base)] = dict(mode='monthly', days=len(monthly), trades=len(monthly),

@@ -42,7 +42,7 @@ from systematic_trading.research.turnover_gate import implied_turnover, screen
 
 STUDY = 'alpha101-tilt-replay-v1'
 PARENT = base.DEFAULT_ROOT
-DEFAULT_ROOT = Path('var/research/alpha101-tilt-replay-20261011-v1')
+DEFAULT_ROOT = Path('var/research/alpha101-tilt-replay-20261011-v2')
 SOTA_KEY = 'research_fallback_f3_v1'
 BUDGET = D('0.10')
 MAX_WEIGHT = D('0.45')
@@ -383,6 +383,12 @@ def economics_resumable(root, job):
 
 def protocol():
     return dict(study=STUDY, version=STUDY + '-v1', parent=str(PARENT), base_strategy=SOTA_KEY,
+                peer_review_20261011=('Re-run after peer review corrected alpha 43 (each date now divides by '
+                                      'its own rolling average dollar volume), the hold semantics (targets are '
+                                      'submitted only when they change, so a held position is not rebalanced '
+                                      'daily), the exit-and-re-enter branch and the look-ahead in the '
+                                      'profit/loss exits. The v1 root is superseded and kept as the historical '
+                                      'record.'),
                 base_strategy_label=base.CONTROL_LABELS.get('CP', 'capped pooled control'),
                 initial_cash_usd=1_000_000,
                 limitations=[

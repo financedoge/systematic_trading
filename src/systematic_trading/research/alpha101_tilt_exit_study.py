@@ -37,7 +37,7 @@ from systematic_trading.research import alpha101_tilt_daily_study as daily
 from systematic_trading.research.momentum_replay import read_json
 
 STUDY = 'alpha101-tilt-exit-v1'
-DEFAULT_ROOT = Path('var/research/alpha101-tilt-exit-20261011-v1')
+DEFAULT_ROOT = Path('var/research/alpha101-tilt-exit-20261011-v2')
 BASES = daily.BASES
 BUDGETS = (0.05, 0.10, 0.20)
 # Primary family: the signal-based exits the operator asked for.
@@ -90,6 +90,7 @@ def plan(arm):
 
 def protocol():
     return dict(
+        peer_review_20261011=('Corrected after peer review found four implementation defects: (1) the hold/exit arms re-submitted an unchanged target vector every session, which rebalances on price drift instead of holding shares, so rows are now emitted only when the target changes; (2) the exit-and-re-enter branch sat behind a guard an exit had already emptied and could never re-enter; (3) the profit/loss exits read the close of the session they traded, which is look-ahead, and now read only closes strictly before it; (4) alpha 43 divided every historical volume by the latest rolling average dollar volume instead of each date\'s own, and rank IC ranked tied values in ticker order instead of averaging them. The v1 root is superseded and kept as the historical record.'),
         study=STUDY, version=STUDY + '-v1',
         bases={k: dict(v, root=str(v['root']), bars_root=str(v['bars_root'])) for k, v in BASES.items()},
         budgets=list(BUDGETS), rules=list(RULES), arms=list(arms()), pnl_stop=PNL_STOP,
@@ -142,18 +143,24 @@ def closes_by_day(base):
             for symbol, rows in bars.items()}
 
 
-def tilt_return(held, state, day, closes):
-    """The tilt's own weighted return since entry: a declared proxy for its contribution."""
+def tilt_return(held, state, known):
+    """The tilt's own weighted return since entry, using only closes known before the decision session.
+
+    ``known`` is the last close **strictly before** the session being decided. Reading the same
+    session's close (as this did until 2026-10-11) decides a trade at today's open with information
+    from today's close — look-ahead bias that peer review reproduced and that
+    ``test_alpha101_tilt_exit`` now covers.
+    """
     contribution = 0.0
     for symbol, tilt in held.items():
         entry_price = state['entry_prices'].get(symbol)
-        now = closes.get(symbol, {}).get(day)
+        now = known.get(symbol)
         if entry_price and now:
             contribution += tilt * (now / entry_price - 1.0)
     return contribution
 
 
-def should_exit(rule_name, held, wanted, state, day, day_index, closes):
+def should_exit(rule_name, held, wanted, state, known):
     if rule_name == 'HOLD':
         return False
     if rule_name == 'EXIT-NOSIG':
@@ -163,11 +170,11 @@ def should_exit(rule_name, held, wanted, state, day, day_index, closes):
     if rule_name == 'EXIT-FADE':
         return l1(wanted) < FADE_FRACTION * state['entry_magnitude']
     if rule_name == 'EXIT-PNL':
-        return tilt_return(held, state, day, closes) <= PNL_STOP
+        return tilt_return(held, state, known) <= PNL_STOP
     if rule_name == 'EXIT-SL-05':
-        return tilt_return(held, state, day, closes) <= PNL_STOP_TIGHT
+        return tilt_return(held, state, known) <= PNL_STOP_TIGHT
     if rule_name == 'EXIT-TP-1':
-        return tilt_return(held, state, day, closes) >= TAKE_PROFIT
+        return tilt_return(held, state, known) >= TAKE_PROFIT
     raise ValueError('Unregistered exit rule: ' + str(rule_name))
 
 
@@ -179,29 +186,65 @@ def should_reenter(held_direction, wanted, state):
 
 
 def simulate(books, rebals, budget, rule_name, desired, closes):
-    """Daily rows for one arm: monthly entry, declared intra-month exits, same book and gross."""
-    held, rows, events = {}, {}, {'entries': 0, 'exits': 0, 'reentries': 0, 'exit_days': []}
+    """Daily targets for one arm: monthly entry, declared intra-month exits, same book and gross.
+
+    Two rules matter and are both pinning tests:
+
+    * A row is emitted **only when the target vector changes**, so between events the engine holds
+      shares and price drift generates no trade. Re-submitting the same targets every session (as this
+      did until 2026-10-11) is a daily-rebalanced process, not the monthly strategy being compared.
+    * The exit test may only read closes **strictly before** the session it trades. ``known`` carries
+      the previous close, never today's.
+
+    Re-entry is evaluated when no tilt is held, so an exited arm can genuinely re-enter; before the
+    fix the branch sat behind a ``held`` guard that an exit had already emptied, which made it
+    unreachable and made its diagnostic count re-tilts of a position that was still on.
+    """
+    held, rows, events = {}, {}, {'entries': 0, 'exits': 0, 'reentries': 0, 'exit_days': [],
+                                  'submitted': 0}
     state = {'entry_magnitude': 0.0, 'entry_prices': {}, 'entry_direction': {}}
+    known, last_submitted = {}, None
+    pending_entry = False
     for day in sorted(books):
         weights = books[day]
         wanted = desired.get(day) or {}
+        changed = False
         if day in rebals:
             held = dict(wanted)
             events['entries'] += 1
-            state = {'entry_magnitude': l1(held),
-                     'entry_prices': {symbol: closes.get(symbol, {}).get(day) for symbol in held},
-                     'entry_direction': direction(held)}
-        elif held:
-            if should_exit(rule_name, held, wanted, state, day, None, closes):
-                held = {}
-                events['exits'] += 1
-                events['exit_days'].append(day)
+            # The entry base is the entry session's own close, which is known before every later
+            # decision. Only the *exit* rules must avoid the session they trade.
+            state = {'entry_magnitude': l1(held), 'entry_prices': {}, 'entry_direction': direction(held)}
+            pending_entry = True
+            changed = True
+        else:
+            if pending_entry and held:
+                state['entry_prices'] = {symbol: known.get(symbol) for symbol in held}
+                pending_entry = False
+            if held:
+                if should_exit(rule_name, held, wanted, state, known):
+                    held = {}
+                    events['exits'] += 1
+                    events['exit_days'].append(day)
+                    changed = True
             elif rule_name == 'EXIT-FLIP-REENTER' and should_reenter(state['entry_direction'], wanted, state):
                 held = dict(wanted)
                 events['reentries'] += 1
+                state = {'entry_magnitude': l1(held), 'entry_prices': {},
+                         'entry_direction': direction(held)}
+                pending_entry = True
+                changed = True
         combined = {symbol: weights.get(symbol, 0.0) + held.get(symbol, 0.0)
                     for symbol in set(weights) | set(held)}
-        rows[day] = {symbol: weight for symbol, weight in combined.items() if abs(weight) > 1e-12}
+        combined = {symbol: weight for symbol, weight in combined.items() if abs(weight) > 1e-12}
+        if changed or combined != last_submitted:
+            rows[day] = combined
+            last_submitted = dict(combined)
+            events['submitted'] += 1
+        for symbol, series in closes.items():
+            value = series.get(day)
+            if value is not None:
+                known[symbol] = value
     events['days'] = len(books)
     return rows, events
 
@@ -227,7 +270,13 @@ def freeze(root=DEFAULT_ROOT):
         for key, row in sorted(source_rows.items()):
             if key >= daily.EVALUATION_START:
                 templates.setdefault(key[:7], row)
-        control = {day: daily.tilt_row(templates[day[:7]], weights) for day, weights in books.items()}
+        control = {}
+        for day, weights in books.items():
+            row = daily.tilt_row(templates[day[:7]], weights)
+            if control.get('last') != weights:
+                control[day] = row
+                control['last'] = dict(weights)
+        control.pop('last', None)
         write_json(root / 'decisions' / (base + '.json'), control)
         diagnostics[base] = dict(entries=0, exits=0, reentries=0, days=len(books))
         for budget in BUDGETS:

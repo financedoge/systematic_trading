@@ -9,7 +9,7 @@ from systematic_trading.research import alpha101_tilt_study as study
 from systematic_trading.research.alpha101_tilt_replay_analysis import (at, contrast, load_all, metrics_from,
                                                                       uncertainty)
 
-ROOT = Path('var/research/alpha101-tilt-replay-20261011-v1')
+ROOT = Path('var/research/alpha101-tilt-replay-20261011-v2')
 BUILT = pytest.mark.skipif(not (ROOT / 'analysis.json').exists(), reason='frozen tilt replay not built')
 
 

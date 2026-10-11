@@ -1,3 +1,10 @@
+> **Corrected 2026-10-11 after peer review.** Re-run as `var/research/alpha101-tilt-replay-20261011-v2`
+> after the alpha 43, hold-semantics, re-entry and look-ahead fixes. The verdict is **unchanged**: alpha 53
+> changes the annualised return by +0.07% against the untouched SOTA with Holm p = 1.000 over three
+> contrasts, the family-adjusted interval spans zero, and the status is inconclusive; costs are 35.14bp
+> for the SOTA, 37.23bp for the single-alpha tilt and 36.60bp for the family. Record:
+> [alpha101-peer-review-corrections.md](alpha101-peer-review-corrections.md).
+
 # P4.17c — Baking the Alpha101 tilt into the current SOTA
 
 Operator request, 2026-10-11: *can we bake the tested alpha into the current SOTA with a 10% tilt,

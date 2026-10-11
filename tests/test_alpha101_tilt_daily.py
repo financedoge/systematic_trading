@@ -6,7 +6,7 @@ import pytest
 
 from systematic_trading.research import alpha101_tilt_daily_study as study
 
-ROOT = Path('var/research/alpha101-tilt-daily-20261011-v1')
+ROOT = Path('var/research/alpha101-tilt-daily-20261011-v2')
 BUILT = pytest.mark.skipif(not (ROOT / 'analysis.json').exists(), reason='frozen daily tilt not built')
 
 

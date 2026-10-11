@@ -1,3 +1,9 @@
+> **Corrected 2026-10-11 after peer review.** The rank IC ranked tied values in ticker order instead
+> of averaging them, so the statistic depended on instrument labels (identical pairs scored 0.657143
+> vs 0.371429). The corrected study is `var/research/alpha101-screen-20261011-v2`. The verdict is
+> **unchanged**: 0 pass, 15 reject, 1 insufficient. Record:
+> [alpha101-peer-review-corrections.md](alpha101-peer-review-corrections.md).
+
 # P4.17 — Alpha101 restricted time-series subset: the per-alpha screen
 
 Registered 2026-10-10 in [the plan](signal-decay-and-alpha-plan.md), run 2026-10-11. The
