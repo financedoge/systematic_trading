@@ -1,5 +1,91 @@
 # Research State
 
+## 2026-10-11 — P4.19a automatic benchmark collection deployed
+
+The operator authorized the next prerequisite. The [app-owned collector](execution-benchmark-collection.md)
+now scans paper orders independently of the blotter, retains original/routed windows and immutable
+attempt evidence, and publishes validated observations and explicit coverage. At 14:28 UTC, **34
+windows were hash-verified against their source captures and identical ClickHouse documents**, covering
+30 paper TWAP orders. Two other explicit windows are USO/DBB, outside the configured IB contract
+universe; ten legacy TWAP orders have no explicit window. No missing window or execution detail was
+inferred. The initial IB 2188 rejection of complete older historical responses was corrected; failed
+attempts are retained and natural retries recovered the supported windows.
+
+This delivers the collection mechanism, not the entire timing comparison. Captures carry
+`research_approved: false`; trading-time raw-unit, matched raw-close and full-session VWAP qualification
+remain P4.19a prerequisites. Bar volume/WAP is retained, but order-window bars are not full-session
+evidence. Preserve the earlier frozen P4.19 audit. Next: qualify those input contracts and publish a
+versioned matched cohort before running a new timing study. P6.15 and the substantial ETF-universe
+programme remain in the plan; no worker-resource setting or universe admission changed here.
+
+Validation: 96 focused tests passed, one explicit disposable-ClickHouse test skipped, Ruff passed;
+deployment publication/readback verified against actual ClickHouse. Receipts are
+`var/research/benchmark-collection-20261011-before.json` and `...-after.json`. Paper control state is
+unchanged at revision 5, F3 100%, no pending allocation; order counts remain 270 total / 45 filled.
+
+## 2026-10-11 — P4.19 coverage audit; worker resource review queued
+
+At the operator's request, moved to P4.19 after recording the agreed plan. The frozen
+[execution-timing audit](execution-timing-findings.md) contains 270 paper order records, 45 filled
+orders (42 TWAP), 27 complete execution histories and zero published benchmark documents. Of 42 TWAP
+orders, 32 have explicit windows. No supported cost comparison exists; slippage remains unavailable.
+The audit is complete and reproducible, but P4.19's timing comparison is blocked. Registered P4.19a
+app-owned collection/publication, including matched raw-close and intraday traded-value/volume evidence.
+No inferred VWAP, provider-archive study, execution-style ranking or policy change. 25 focused tests
+and Ruff pass; offline verification preserves the frozen files.
+
+The operator also requested a future fix for Docker-constrained research concurrency. Registered
+P6.15 in the Kanban and [calculation-performance plan](calculation-performance.md): benchmark actual
+working sets and host-native/container alternatives before changing the fixed 4 GiB/run rule.
+Read-only inspection confirms all 16 CPUs are visible to Docker, but its 15.39 GiB limit produces
+three LEAN workers; the host has 31.55 GiB and most Python calculation processes already run there.
+ClickHouse memory is not a shared research-worker heap. No runtime or Docker settings changed.
+
+## 2026-10-11 — Operator accepted priorities and substantial ETF expansion
+
+The operator accepted the second-review recommendations and requested a much larger tradable ETF
+universe. The [research plan](signal-decay-and-alpha-plan.md) records the minimum paper execution
+contract, conditional 5% FR25 / 95% F3 paper preview, retained execution-cost evidence, and staged
+P4.16d expansion through inventory, audited admission, app/execution readiness and full-pool research.
+It also retains horizon-specific incremental alpha tests and fill-based TP/SL requirements. This is
+planning only: no new instrument admission, allocation or order. The first expansion deliverable is
+the candidate inventory, dated taxonomy and data/contract gap matrix; it is not blocked on having
+already published the expanded pool.
+
+## 2026-10-11 — Second review: corrected evidence and paper-allocation decision
+
+This entry supersedes conflicting P4.17 conclusions below; older entries remain the historical record.
+The [complete review](strategy-review-2026-10-11.md) reconciles the supplied DOCX against the code,
+repairs the remaining defects, and records the evidence and research recommendations.
+
+- Corrected FR25 versus 5% monthly Alpha101: **13.091% versus 12.988% CAGR**, Sharpe **1.193 versus
+  1.182**, max drawdown **−8.656% versus −8.253%**, on 2021-01-04–2026-10-08 at 5 bp. The tilt
+  trails in return and Sharpe in all six cost/delay scenarios; the paired six-month interval spans zero.
+  No incremental edge is established. Twelve replays, 70 app/research monthly decisions with exact
+  holdings/cash/fee parity, and native LEAN parity for both arms: `strategy-review-20261011-v3`.
+- Corrected screen: **0/16** standalone passes; matched-payoff tilt passes **4/16, 3/16, 3/16** at
+  5/10/20%, not the previous 12/12/5. Full-pool IC no longer finances a tiny overlay. Zero-cost mappings
+  need positive information. Screen/tilt verification is read-only, and audited raw inputs reach the app.
+- The fixed-through-2022 FR25 comparison is **retraining sensitivity**, not a hindsight test. Daily event
+  counts are totals over the study, not annual frequencies. Nonsignificance is not equivalence.
+- Paper-first confirmed by operator. M1/14, FR25 and Alpha101 stay monitored; their 14-ETF execution
+  contract remains incomplete. IB Gateway and reconciliation were initially blocked, then passed after operator login. Shared UI/backend
+  gating now explains these blockers. F3 retains 100% paper strategy capital at revision 5; no orders.
+- **P4.18 executed and rejected for this fixed rule.** A preregistered 10% volatility target / 63-session
+  monthly rule earned 10.170% CAGR, 1.113 Sharpe and −8.719% maxDD, versus FR25's 13.091% / 1.193 /
+  −8.656%. A matched constant scale performed better. All six scenarios fail the risk/return limits;
+  18 replays and native parity completed in `volatility-target-20261011-v1`. No tuning or promotion.
+
+Next: minimum verified 14-ETF paper contract (P8.1–P8.5), retained execution evidence (P4.19), and
+comparable audited ETF breadth (P4.16d), followed by a preregistered horizon/peer-group alpha test.
+The operator manually confirmed likely XLE/XLB trading permission; that is recorded and is not
+treated as a denial. Independent FR25 model/input binding, mixed-universe allocation and the
+execution contracts remain the relevant blockers. Paper API/reconciliation now pass, with XLE/XLB
+contract identities independently verified after login.
+TP/SL should use explicit risk units, actual fill attribution and gap/session rules; it is not an assumed
+cure for weak signals. 309 focused tests pass; changed Python passes Ruff. App refresh is recorded in log.
+
+
 ## 2026-10-11 — Peer review found five real defects in the Alpha101 work; all confirmed, fixed, re-run
 
 A second agent reviewed the P4.17 screen, the tilt studies and the deployed overlay. Every finding was reproduced
@@ -128,7 +214,7 @@ the best X is an in-sample maximum.
 **Every daily arm is worse than doing nothing and costs 2–5.5× more** — FR25 daily at 5/10/20% returns 101.1% /
 96.5% / 87.6% against the untouched 105.8%, with Sharpe 1.174 / 1.131 / 1.042 against 1.214, at 91.8 / 142.8 /
 243.3bp; the SOTA behaves the same way. **The band works exactly as proposed, and that is the problem:** a 300%
-band cuts re-tilts from 1,269 to 64 a year and cost to 37–44bp, but fitting the 44.0bp ceiling requires a
+band cuts re-tilts from 1,269 to 64 over the study (about 221 to 11 per year) and cost to 37–44bp, but fitting the 44.0bp ceiling requires a
 200–300% band, where the arm trades **64–86 times a year — the monthly arm's own 70**. Daily monitoring behind a
 wide deadband is the monthly tilt with extra bookkeeping, and every band arm that clears the ceiling is
 statistically indistinguishable from doing nothing (intervals spanning zero, Holm p = 1.000).
@@ -376,7 +462,7 @@ M1 ordering does **not** do as well. But the frozen 6-month interval still fails
 plan's verdict sentence. The positive tail of the placebo distribution comes from churn, not
 information: the seven winning draws differ from CP on ~23 of 70 decisions against FR25's 13.
 
-**About 60% of the recent edge survives without hindsight.** A ridge fitted only on the 83
+**The frozen-through-2022 fit retains about 60% of the recent expanding-fit edge.** A ridge fitted only on the 83
 labels completed by 2022-12-31 and replayed from 2023-01-03 keeps **+4.20pp of FR25's
 +7.06pp** excess over CP, with a lower maximum drawdown (−8.31% vs −8.66%) and a better
 Calmar. Refitting on the parent's frozen training rows reproduces the published forecasts

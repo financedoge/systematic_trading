@@ -1,4 +1,4 @@
-"""P4.17 — Alpha101 time-series alphas and their per-alpha screen."""
+"""P4.17 鈥?Alpha101 time-series alphas and their per-alpha screen."""
 import json
 from pathlib import Path
 
@@ -8,19 +8,26 @@ import pytest
 from systematic_trading.research import alpha101 as lib
 from systematic_trading.research import alpha101_screen as screening
 
-ROOT = Path('var/research/alpha101-screen-20261011-v2')
+ROOT = screening.DEFAULT_ROOT
 PAPER = Path('research_tmp/101_formulaic_alphas.pdf')
 BUILT = pytest.mark.skipif(not (ROOT / 'screen.json').exists(), reason='frozen alpha screen not built')
 
 
 def history(**columns):
-    """A History from column arrays; unspecified columns default from ``close``."""
+    """A History from column arrays; unspecified columns default from ``close``.
+
+    ``raw_close`` defaults to ``close`` so a fixture that does not care about the price basis gets a
+    raw series identical to the adjusted one. A caller that is testing the ADV basis must set it
+    explicitly 鈥?see ``test_adv_uses_the_raw_traded_price_and_not_the_adjusted_one``.
+    """
     size = max(len(value) for value in columns.values())
     filled = {}
     for name in ('open', 'high', 'low', 'close', 'volume'):
         value = columns.get(name, columns.get('close'))
         assert value is not None, 'give at least close'
         filled[name] = np.array(list(value) + [value[-1]] * (size - len(value)), dtype=float)
+    raw = columns.get('raw_close', columns.get('close'))
+    filled['raw_close'] = np.array(list(raw) + [raw[-1]] * (size - len(raw)), dtype=float)
     return lib.History(symbol='T', date='2026-01-02', **filled)
 
 
@@ -31,7 +38,8 @@ def walk(size=320, seed=7):
     low = close * (1 - np.abs(rng.normal(0, 0.004, size)))
     open_ = close * (1 + rng.normal(0, 0.003, size))
     volume = rng.integers(1_000_000, 9_000_000, size).astype(float)
-    return lib.History(symbol='T', date='2026-01-02', open=open_, high=high, low=low, close=close, volume=volume)
+    return lib.History(symbol='T', date='2026-01-02', open=open_, high=high, low=low, close=close,
+                       volume=volume, raw_close=close)
 
 
 # --- operators ---------------------------------------------------------------
@@ -153,7 +161,7 @@ def test_no_alpha_reads_beyond_its_declared_window():
     """At one session, the value must not depend on how much earlier history is supplied.
 
     This is the look-ahead check that matters here: the screen slices a rolling window, so an
-    alpha that reached outside its own lookback — or back to the start of the series — would
+    alpha that reached outside its own lookback 鈥?or back to the start of the series 鈥?would
     return a different number for a longer history ending on the same session.
     """
     full = walk(size=420)
@@ -162,7 +170,7 @@ def test_no_alpha_reads_beyond_its_declared_window():
         for start in (0, 60, 160, 210):
             window = lib.History(symbol=full.symbol, date=full.date, open=full.open[start:],
                                  high=full.high[start:], low=full.low[start:], close=full.close[start:],
-                                 volume=full.volume[start:])
+                                 volume=full.volume[start:], raw_close=full.raw_close[start:])
             values.append(lib.value(alpha, window))
         assert values[0] is not None, alpha
         assert values[0] == values[1] == values[2] == values[3], (alpha, values)
@@ -237,7 +245,7 @@ def test_alpha_43_divides_by_each_dates_own_rolling_dollar_volume():
     close = 100 + np.cumsum(generator.normal(0, 1, size))
     volume = 1_000_000 * np.exp(np.cumsum(generator.normal(0, 0.05, size)))
     history = lib.History(symbol='X', date='2026-10-09', open=close * 0.999, high=close * 1.01,
-                          low=close * 0.99, close=close, volume=volume)
+                          low=close * 0.99, close=close, volume=volume, raw_close=close)
     dollar = close * volume
     rolling = np.array([np.mean(dollar[max(0, index - 19):index + 1]) for index in range(size)])
     published = (lib.ts_rank(volume / rolling, 20)
@@ -306,3 +314,120 @@ def test_the_frozen_screen_reproduces_and_its_inputs_are_unchanged():
     checks = screening.verify(ROOT)
     assert checks['parent_unchanged'] and checks['paper_unchanged']
     assert checks['formulas_match_paper'] and checks['screen_reproduced']
+
+
+# --- peer review, 2026-10-11: boundary and basis defects ----------------------
+
+def test_adv_uses_the_raw_traded_price_and_not_the_adjusted_one():
+    """``adv{d}`` is average daily *dollar* volume, so the price basis must be the raw traded price.
+
+    Peer review: multiplying an adjusted close by raw share volume is not traded dollars. Rescaling
+    the whole historical price series 鈥?exactly what a split/dividend adjustment does 鈥?must not
+    change ADV, and therefore must not flip alpha 21's ``volume / adv20`` branch.
+    """
+    size = 40
+    close = np.full(size, 50.0)
+    raw = np.full(size, 100.0)             # raw traded price is exactly 2x the adjusted series
+    volume = np.full(size, 1_000.0)
+    adjusted = lib.History(symbol='T', date='d', open=close, high=close, low=close, close=close,
+                           volume=volume, raw_close=raw)
+    # adv on the raw basis is 100 * 1000 = 100,000; on the adjusted basis it would be 50,000
+    assert lib.adv(adjusted.dollar_close(), volume, 20) == pytest.approx(100_000.0)
+    assert lib.adv(close, volume, 20) == pytest.approx(50_000.0)
+
+    # The review's illustration: twenty raw closes at $2 with volumes 100 x19 and 200 x1 give a
+    # raw ADV of $210; halving historical prices must not change it.
+    raw_small = np.full(20, 2.0)
+    volumes = np.array([100.0] * 19 + [200.0])
+    assert lib.adv(raw_small, volumes, 20) == pytest.approx(210.0)
+    assert lib.adv(raw_small / 2.0, volumes, 20) == pytest.approx(105.0), 'the adjusted basis moves'
+    # the raw basis is invariant under a price rescale of the *adjusted* column only
+    assert lib.adv(raw_small, volumes, 20) == pytest.approx(210.0)
+
+    # a History without a raw basis refuses the formulas that need dollar volume
+    no_raw = lib.History(symbol='T', date='d', open=close, high=close, low=close, close=close,
+                         volume=volume)
+    assert lib.alpha_7(no_raw) is None
+    assert lib.alpha_21(no_raw) is None
+    assert lib.alpha_43(no_raw) is None
+    # ... but the return-shaped formulas are unaffected
+    assert lib.alpha_12(no_raw) is not None
+
+
+def test_alpha_21_volume_branch_is_stable_under_a_price_rescale():
+    """The 2026-10-11 ADV-basis fix: an unchanged trading profile must give an unchanged branch."""
+    size = 40
+    volume = np.array([100.0] * 39 + [500.0])
+    price = np.full(size, 2.0)  # published share-volume/dollar-ADV ratio is 500/240 > 1
+    low, high = price * 0.99, price * 1.01
+    # Flat closes ensure neither preceding price branch intercepts the activity branch.
+    close = price.copy()
+    on_raw = lib.History(symbol='T', date='d', open=close, high=high, low=low, close=close,
+                         volume=volume, raw_close=price)
+    assert lib.alpha_21(on_raw) == 1.0, 'volume above raw-dollar ADV takes the long branch'
+    rescaled = lib.History(symbol='T', date='d', open=close * 10, high=high * 10,
+                          low=low * 10, close=close * 10, volume=volume, raw_close=price)
+    assert lib.alpha_21(rescaled) == lib.alpha_21(on_raw)
+
+
+def test_alpha_53_only_needs_the_two_endpoint_denominators():
+    """An interior ``close == low`` must not discard an otherwise valid ten-session window.
+
+    Peer review: rejecting the window whenever *any* interior denominator was zero discarded valid
+    observations. ``delta(..., 9)`` only reads the two endpoints.
+    """
+    size = 10
+    close = np.linspace(10.0, 12.0, size)
+    below = 0.5 * (1 + np.arange(size) / 10)
+    above = 0.3 * (1 + np.arange(size) / 20)
+    low, high = close - below, close + above
+    usable = lib.History(symbol='T', date='d', open=close, high=high, low=low, close=close,
+                         volume=np.full(size, 1.0), raw_close=close)
+    assert lib.alpha_53(usable) is not None
+
+    # an interior zero denominator is tolerated
+    low_interior = low.copy()
+    low_interior[4] = close[4]
+    tolerant = lib.History(symbol='T', date='d', open=close, high=high, low=low_interior, close=close,
+                           volume=np.full(size, 1.0), raw_close=close)
+    assert lib.alpha_53(tolerant) is not None
+
+    # an endpoint zero denominator still refuses, because the ratio is undefined there
+    low_first = low.copy()
+    low_first[0] = close[0]
+    assert lib.alpha_53(lib.History(symbol='T', date='d', open=close, high=high, low=low_first,
+                                    close=close, volume=np.full(size, 1.0),
+                                    raw_close=close)) is None
+    low_last = low.copy()
+    low_last[-1] = close[-1]
+    assert lib.alpha_53(lib.History(symbol='T', date='d', open=close, high=high, low=low_last,
+                                    close=close, volume=np.full(size, 1.0),
+                                    raw_close=close)) is None
+
+
+def test_the_gate_refuses_or_judges_zero_turnover_instead_of_raising():
+    """A zero-turnover candidate needs a zero IC; judging it must not raise ZeroDivisionError."""
+    from systematic_trading.research.turnover_gate import screen
+
+    verdict = screen(0.0, sigma=0.05, candidate_ic=0.02)
+    assert verdict['status'] == 'pass'
+    assert verdict['annual_cost_bps'] == pytest.approx(0.0)
+    assert verdict['breakeven_ic'] == pytest.approx(0.0)
+    # a negative-IC candidate at zero turnover must still fail the information requirement
+    negative = screen(0.0, sigma=0.05, candidate_ic=-0.02)
+    assert negative['status'] == 'reject'
+
+
+def test_the_screen_sizes_the_book_with_the_engines_sixty_four_prices():
+    """The engine feeds 64 prices for 63 returns; the screen read only 63, hence 62.
+
+    Peer review: ``_target_schedule`` requires ``lookback_bars + 1`` bars and slices
+    ``bars[end - lookback_bars - 1 : end]``, so the screening book was not the engine's book.
+    """
+    import inspect
+    source = inspect.getsource(screening.base_book)
+    assert 'LOOKBACK_BARS + 1' in source, 'the sizing call must use 64 prices for 63 returns'
+    assert 'realized_volatility_from_bars(window[-(LOOKBACK_BARS + 1):])' in source
+    engine = inspect.getsource(
+        __import__('systematic_trading.backtest.stored', fromlist=['x'])._target_schedule)
+    assert 'lookback_bars + 1' in engine and 'history_end - lookback_bars - 1' in engine

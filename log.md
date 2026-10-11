@@ -1,5 +1,151 @@
 # Project Log
 
+## 2026-10-11 — P4.19a app-owned benchmark collection and verified publication
+
+Following the operator's “go ahead”, implemented the next timing-study prerequisite. Added an app
+lifecycle worker with a bounded shared IB data-request queue, separate original/routed windows,
+contract identity checks, immutable request/response/audit attempts, restart-safe retry cooldowns,
+source-hash and full-window validation, and an independently published coverage report. Its GET
+endpoint only reads state; collection does not depend on opening the blotter. Publication validates
+retained source captures before advancing the benchmark dataset. No missing observations are filled.
+Price basis remains provider historical TRADES, explicitly not independently certified trading-time
+raw units; `research_approved: false`. Volume/WAP is retained for later qualification.
+
+During guarded deployment, IB returned complete older minute bars alongside warning 2188. The former
+handler rejected them. Corrected this advisory handling only for windows ending at least 15 minutes
+earlier, still requiring historicalDataEnd and complete coverage; current-window/actual permission
+errors remain failures. Natural cooldown retries recovered supported windows. Failed and partial
+attempts remain immutable evidence. At 14:28 UTC, all 34 captured windows validated against raw hashes
+and were identical to their ClickHouse documents, covering 30 TWAP orders. Publication:
+`e17de3ea798bd689908317e13e3a62116cd944072938da589e71dc47aa6ac132`.
+Two other explicit windows are legacy USO/DBB orders with no configured IB instrument contract; ten
+legacy TWAP orders have no explicit window. The coverage service remains degraded for these real
+gaps. No new contract was admitted just to remove that status. Three filled limit orders are outside
+this TWAP collector and 225 unfilled orders are not requested.
+
+96 focused tests passed, one disposable-ClickHouse integration test skipped (no explicit disposable
+workspace); Ruff and scoped whitespace checks passed. Tests cover app lifecycle/no HTTP dependency,
+deduplication, original/routed dates, durable failure/restart, bounded queue/shutdown, tampering and
+publication withholding, filtering and IB warning/permission behavior. Actual deployment publication
+and readback were verified separately. Receipts/test XML and read-only verification script are under
+`var/research/benchmark-collection-20261011-*` and `verify_benchmark_collection_20261011.py`.
+Before/after allocation controls match exactly: revision 5, F3 100% paper capital, no pending allocation;
+270 orders / 45 filled remain unchanged. Paper Gateway, Postgres and ClickHouse health passed.
+
+The automatic research refresh after restart is separate from collection. At the publication check,
+it was still replaying tracked strategies with no analytics errors, while serving the previous complete
+publication current through October 9. Two IB SDK thread teardown traces (`serverVersion() is None`
+during disconnect) appeared in the runtime log; captured source validation and Gateway health passed.
+Retain this SDK lifecycle incident for the robustness review rather than treating it as a permission
+failure or suppressing unrelated broker errors.
+
+P4.19a is partial overall: the collector is delivered, but trading-time raw-unit, matched raw-close
+and full-session VWAP qualification remain explicit prerequisites for P4.19. No execution-style ranking
+or new return study uses these operational captures. The frozen v1 evidence audit is unchanged.
+Updated the research plan, architecture, operations guide and Kanban with this distinction.
+P6.15 worker-resource review remains queued; Docker and worker concurrency settings are unchanged.
+
+## 2026-10-11 — P4.19 evidence audit and queued worker resource redesign
+
+After accepting the revised research priorities, the operator requested the next research item.
+P4.19 preflight disproved the assumed retained benchmark coverage. Froze the protocol, source and
+read-only PostgreSQL/ClickHouse snapshot in `var/research/execution-timing-20261011-v1/`: 270 paper
+orders, 45 with fills (42 TWAP), 27 with complete execution details, 134 individual executions across
+five sessions, 32 explicit TWAP windows, zero published benchmarks. Eighteen orders lack detailed
+execution history. All costs remain null; no style ranking is possible. Added an offline analyzer
+using the existing benchmark-window/minute-price functions, validated hashes and original intent,
+explicit missingness, and gross-notional signed aggregation. Frozen output reproduced without writes;
+25 focused tests and Ruff passed. Full findings in `docs/execution-timing-findings.md`. P4.19 audit
+complete; comparison blocked, with P4.19a app-owned collection/audit/publication registered as next
+prerequisite. No broker requests, price downloads, database writes, app restart, allocation or orders.
+
+The operator also questioned Docker-limited worker concurrency and separate memory. Read-only host/
+Docker checks confirmed 16 CPUs, 31.55 GiB host RAM, 15.39 GiB Docker RAM, and ClickHouse around 2.53 GiB.
+The scheduler uses a fixed 4 GiB/run and 2 GiB service reserve, limiting native LEAN to three runs;
+model preparation and Python reference calculations already run on the host. Registered P6.15 to
+measure actual working sets, duplication, stage serialization, whole-batch throughput and service
+latency, then compare host-native LEAN and right-sized container scheduling. ClickHouse's columnar
+disk storage/cache is not a shared Python/.NET heap. No Docker/WSL setting changed. Expanded-universe
+planning now includes this scaling dependency; increasing Docker's cap is not preselected as the fix.
+
+## 2026-10-11 — Agreed research priorities and substantial ETF-universe expansion
+
+The operator accepted the second-review recommendations, asked to record them in the research plan,
+and emphasized that the tradable ETF universe should expand substantially. Updated
+`docs/signal-decay-and-alpha-plan.md` with the accepted order, the minimum paper-execution binding and
+mixed-universe prerequisites, conditional 5% FR25 / 95% F3 paper preview, zero alpha allocation pending
+incremental evidence, and fill-based exit/horizon requirements. Strengthened P4.16d into a staged
+programme: inventory/taxonomy and gap matrix, audited publication waves, scalable app/paper contracts,
+then controlled full-pool research. Hundreds of candidates is a capacity design direction, not an
+admission quota. Candidate admission and portfolio allocation remain separate. Inventory planning can
+proceed before publication; expanded-universe backtests cannot. Cross-linked the ETF roadmap and
+research state. Documentation-only follow-up; no research runs, instrument admissions, allocation or
+broker actions. Validation: reviewed the changed sections and checked local links/whitespace.
+
+## 2026-10-11 — Second research review, repairs, paper-gate assessment and P4.18
+
+The operator supplied the earlier DOCX review and requested code/research repairs, an assessment of
+higher-frequency ETF alpha and TP/SL/breadth, paper allocation readiness, and the next executable
+research item. Attached-document prose was treated as evidence, not instructions. Existing uncommitted
+repairs by the other agent were preserved. The operator explicitly chose paper allocations first.
+
+Implemented remaining monthly scheduling (including unchanged monthly targets), strict prior-close
+exit proxy/entry timing, no stale-close substitution, reachable re-entry, shared audited raw price/volume
+history wiring through studies and app workers, localized missing ADV windows, matched tilt payoff
+and 3x incremental-cost hurdle, positive information for zero-cost mappings, and calendar-matched
+turnover calibration. Retained and tested the other agent's funding-anchor, momentum-singleton,
+hierarchical score population, tied-IC, alpha-43/53, 63-return sizing and LEAN cleanup repairs.
+Screen verification no longer mutates frozen evidence. Daily event metadata is causal and its monthly
+control is regenerated from the same raw activity inputs. Source snapshots and reviewed input/output
+receipts are retained. Cost-screen presentation now reports matched payoff, not full-book IC margins.
+
+Evidence: `alpha101-screen-20261011-v4` yields 0/16 standalone passes; `alpha101-tilt-20261011-v3`
+yields 4/3/3 passes at 5/10/20%, replacing 12/12/5. `turnover-gate-20261011-v2` fixes CP/M1's
+130-versus-70 calendar mismatch. `strategy-review-20261011-v3` holds the fixed FR25/5% monthly pair:
+12 replays, all 70 target decisions reproduce the actual app worker, holdings/cash/fee equality, and
+native LEAN parity for both headline arms. FR25 13.091% CAGR / 1.193 Sharpe / -8.656% maxDD versus
+alpha 12.988% / 1.182 / -8.253%, on 2021-01-04–2026-10-08 at 5bp. Alpha trails on return and Sharpe
+at all cost/delay scenarios. Its six-month paired interval spans zero. v1's cash-padded pre-2021 window
+is withdrawn; v3 is canonical. Older P4.17c-f grids were not all rerun and are explicitly superseded.
+Full-sample/hindsight, annual-frequency and Sharpe-difference claims were corrected in current docs.
+
+P4.18 was preregistered in the plan before outcomes: monthly 10% annual-vol target, 63 prior daily
+returns, no leverage, max 1pp CAGR sacrifice/min 2pp drawdown improvement, matched-average-exposure
+control, 5/10/20bp and 0/1 delay. The shared app signal class implements the calculation. Eighteen
+replays plus native parity completed in `volatility-target-20261011-v1`: 10.170% CAGR / 1.113 Sharpe /
+-8.719% maxDD, worse than FR25 and the constant 87.404% scale control. All six scenarios fail the
+risk/return hurdles. Close this fixed rule without parameter tuning; no strategy registration/promotion.
+
+Paper gates: catalog/candidate list/backend now use a shared conservative execution-contract check.
+The operator manually checked XLE/XLB and reported permission, then logged into Gateway. Read-only
+probe at 13:12 UTC confirms the expected paper account at 127.0.0.1:4002; fresh reconciliation has
+zero breaks, six positions, 38 broker fills, no unmatched fills/orders. Read-only ISIN lookup verifies
+XLE conId 4215217 and XLB conId 4215200 (`strategy-review-20261011-ib-identity.json`). Permission
+is not presumed denied and connection/reconciliation are no longer blockers. The remaining genuine
+implementation gaps are FR25 financial-selection and audited activity binding in the paper target
+builder, and combined-universe resolution/raw sizing/reconciliation in allocations. Do not just remove
+the gate. The minimum same-venue 14-ETF contract is next; the entire multi-venue P8 vision need not
+precede two US ETFs. No broker orders, proposals, promotions or capital changes were submitted.
+F3 retains 100% paper strategy capital at control revision 5, with no pending change.
+
+Validation: 307 focused regression tests plus 2 full frozen artifact reproduction tests passed (309).
+Changed/new Python passed Ruff; `git diff --check` passed with Windows CR-at-EOL handling. Tests
+were targeted, not the entire repository suite. Guarded dashboard restart loaded the repairs. App-owned
+calculation revision `7b981dee475b11b9c849e0ed3efbf02847ca17f6fafaab742afafb6343a62d6d` completed.
+One strategy-serving ClickHouse insert timed out; the last complete publication was retained and the
+next app cycle succeeded without a manual INSERT retry. Final serving publication
+`79570b6886586f0920823cee4ef8adae62da6f85461e630fd80deab18639796d` is current through 2026-10-09;
+all seven monitored strategies have current app reports, analytics errors are empty, and routing warnings
+are empty. Snapshot: `var/research/strategy-review-20261011-deployment.json`. No source changes
+were committed. The full review is `docs/strategy-review-2026-10-11.md`.
+
+Next actions: finish minimum 14-ETF paper execution parity before a proposed small FR25 pilot;
+P4.19 from retained execution evidence; P4.16d audited comparable ETF breadth; preregister signal
+horizon and incremental contribution before more alpha/TP/SL grids. Actual fill-based sleeve exits,
+explicit risk units and gap/session treatment precede claims about tradable TP/SL. No positive
+Alpha101 incremental edge is established, and no new alpha budget is recommended.
+
+
 ## 2026-10-11 — Peer review of the Alpha101 work: five findings, all confirmed, all fixed, studies re-run
 
 The operator had a second agent check my work. It reported five implementation defects. I reproduced every one

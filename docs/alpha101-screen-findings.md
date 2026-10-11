@@ -1,4 +1,7 @@
 > **Corrected 2026-10-11 after peer review.** The rank IC ranked tied values in ticker order instead
+
+> **Superseded evidence — 2026-10-11 second review.** Earlier numerical and exit/budget conclusions on this page are historical. The prior repair was incomplete. See [the current review](strategy-review-2026-10-11.md) for the raw-activity, monthly scheduling, funding and matched-payoff fixes, accepted replacement roots, and limits. The old grids have not all been rerun and must not support promotion.
+
 > of averaging them, so the statistic depended on instrument labels (identical pairs scored 0.657143
 > vs 0.371429). The corrected study is `var/research/alpha101-screen-20261011-v2`. The verdict is
 > **unchanged**: 0 pass, 15 reject, 1 insufficient. Record:

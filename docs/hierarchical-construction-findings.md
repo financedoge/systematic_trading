@@ -10,7 +10,22 @@ Run as its own frozen study in `var/research/hierarchical-construction-20261011-
 before any replay. **The rule was proposed after P4.16's outcome was known, so it is
 post-hoc on the inspected sample and is not out-of-sample evidence.**
 
-Report: [`research/hierarchical-construction-2026-10-11/index.html`](../research/hierarchical-construction-2026-10-11/index.html).
+**Corrected evidence, 2026-10-11 peer review.** The v1 run inherited two defects from the
+shared balanced-group overlay: a one-name sleeve bypassed the positive-momentum gate
+entirely, and each class was scored from its globally top-ranked members rather than from
+the members the rule holds. Both are repaired and the study is re-published in
+`var/research/hierarchical-construction-20261011-v2/` (protocol SHA-256 `b115a5c5…`,
+parent `sleeve-construction-20261010-v2`). **Every statistic in this document was
+re-derived from that root and is numerically identical to v1**: the corrected class score
+changes which members represent a class on 35 of 130 decisions but never changes which
+classes are chosen, so the holdings and the economics do not move. The v1 root is
+preserved as published.
+
+Report: [`research/hierarchical-construction-2026-10-11/index.html`](../research/hierarchical-construction-2026-10-11/index.html)
+(v1 rendering; the corrected v2 root is read directly through `protocol.json`,
+`gate.json`, `analysis.json`, `statistics.json` and the class-score audit in
+`var/research/hierarchical-construction-20261011-v2/audit/`, because the frozen analysis
+module hard-codes the v1 presentation paths).
 
 Research finding only. Nothing here changed a monitored strategy, an allocation, an
 approval or a broker record.
@@ -40,7 +55,52 @@ raw return evidence any construction has produced in this programme — but the
 family-adjusted Holm p is 0.164, so under the frozen rule it is **not established**.
 Both risk ratios do improve against the matched pooled control (Sharpe 0.941 vs 0.754,
 Calmar 0.680 vs 0.455), so `better_risk` is satisfied; the family adjustment is what
-fails.
+fails. The corrected v2 root reproduces this table and every contrast in it exactly
+(15.07% / 13.44% / 9.50% CAGR; HIER-K2 − POOL +5.32%, Holm p 0.164), so none of the
+findings here depend on the two defects the repair removes.
+
+## The peer-review repair: what the gate and the class score actually did
+
+**A one-name sleeve bypassed the momentum gate.** `BalancedAssetGroupOverlay` forms rank
+metrics inside each sleeve, and rank metrics need at least two members. For the
+single-instrument commodity (`DBC`) and gold (`GLD`) sleeves the rank table is therefore
+always empty, and v1's overlay returned the sleeve's whole target list unchanged whenever
+that table was empty. The published sentence "each is the only instrument in its sleeve
+and its 126-session gate passed throughout" described a gate that was never consulted on
+that path. The review's reproduction — 150 falling observations, 126-session momentum
+−0.711864, still allocated 0.98 — is reproduced exactly by
+`tests/test_balanced_momentum_gate.py`. Eligibility is now an absolute per-member test,
+evaluated from each member's own price history before any ranking or rank fallback and
+independently of sleeve size. On the corrected P4.16 arms (`sleeve-construction-20261010-v2`)
+`DBC` and `GLD` are held on **49 of the 70 evaluation decisions** — exactly the days their
+126-session momentum is positive (80/130 and 94/130 over the full window) — against
+70/70 under the v1 bypass. No other instrument's admission count moves, and the pooled
+control's decisions are unchanged.
+
+**The published explanation does not survive as written.** `DBC`/`GLD` did not "qualify at
+every decision" in P4.16: their gate passed on 49 of the 70 evaluation decisions, and the
+other 21 holdings were the bypass, not a qualification. What does survive is the *class*
+claim this study is about: the hierarchical arms buy a class only when one of its members
+passes the same gate, so their `DBC`/`GLD` holdings (30–31 of 70 under K=2, 40/44 under K=3)
+are gate-passing days on a genuinely gated path. The corrected P4.16 root is
+`var/research/sleeve-construction-20261010-v2/` (protocol SHA-256 `d3c1135b…`); the
+corrected sleeve-arm numbers live in that root and in
+[P4.16](sleeve-construction-findings.md), which still carries the uncorrected reading.
+
+**The class score used a population the rule did not hold.** v1 scored a class by the mean
+of its globally top-ranked eligible members, while the members it held came from the
+parent overlay's within-sleeve reranking. The review's synthetic case scored `TLT`/`HYG`
+but held `IEF`/`TLT`; the same disagreement is present in the published evidence. Under
+the registered two-population rule the held members still come from the parent's
+within-sleeve reranking, the number attached to each held member is its **global**
+cross-section score (the only population in which a one-name class is scoreable at all),
+and the class score is the mean of exactly that held set. The audit in
+`var/research/hierarchical-construction-20261011-v2/audit/class-score-population.json`
+rebuilds the superseded population on all 260 corrected decisions: it differs from the
+held set on **35 of 130 decisions** (38 class-level pairs: fixed income 19, equity 19;
+36 of them also change the class-score value; 15 of the 70 evaluation decisions), but the
+top-K class choice **never** changes (0 of 130). `2016-07-01` is the review's case in the
+real data: v1 scored fixed income from `HYG`/`TLT` while the rule held `LQD`/`TLT`.
 
 ## The operator's mechanism works exactly as described
 
@@ -97,14 +157,18 @@ work in P4.16d comes first.
 K=3 is **cheaper than the pooled control** (40.0bp measured against CP's 43.0bp), while K=2
 sits 3% over the effective 44bp ceiling and was replayed as a boundary case under P4.15's
 published rule with its verdict recorded unchanged. Dispersion recomputed here (0.052190)
-matches the published calibration exactly.
+matches the published calibration exactly. The corrected v2 root reproduces this gate
+record and the measured costs exactly (HIER-K2 9.09×/45.5bp, HIER-K3 8.15×/40.7bp).
 
 ## What this means for the programme
 
 1. **Qualifying classes before selecting names is a real improvement over fixed sleeve
    budgets** — +5.32pp annualised against the matched pooled control, with both risk ratios
-   better, and it removes the forced-representation behaviour that P4.16 measured
-   (`DBC`/`GLD` in 70 of 70 decisions; here they are 30–31 of 70).
+   better, and it removes the forced-representation behaviour that P4.16 measured. That
+   behaviour was larger than P4.16 could see: under the repaired gate the P4.16 sleeve arms
+   hold `DBC`/`GLD` on 49 of their 70 evaluation decisions, and the hierarchical arms hold
+   them 30–31 of 70 — a genuine reduction, not the 70-of-70-versus-30-of-70 contrast the
+   first version of this document reported.
 2. **It is not established.** Raw intervals excluding zero with Holm p ≈ 0.16 is the pattern
    this programme keeps producing; the honest statement is a positive, unconfirmed effect.
 3. **It does not address drawdown.** Any further work on this family should pair the
@@ -117,14 +181,29 @@ matches the published calibration exactly.
 
 ## Verification
 
-14 focused tests in `tests/test_hierarchical_construction.py` cover the declared family and
-K values, the class-score rule, the overlay's inherited parameters, the registered
-contrasts, the post-hoc disclosure in the frozen protocol, every verdict branch, and —
-against the frozen decisions — that no arm ever holds more classes or more names per class
-than the rule allows, that every decision respects the long-only and 45% cap contracts,
-that **no fixed-income instrument is held in any month of 2022**, that an all-cash decision
-exists, and that the pinned P4.16 parent inputs are unchanged. Every pooled reference replay
-reproduces the parent's published statistics to 1e-12. Ruff passes.
+19 focused tests in `tests/test_hierarchical_construction.py` cover the declared family and
+K values, the corrected class-score rule, the overlay's inherited parameters, the registered
+contrasts, the post-hoc disclosure and the two-population registration in the frozen v2
+protocol, every verdict branch, and — against the frozen decisions — that no arm ever holds
+more classes or more names per class than the rule allows, that every decision respects the
+long-only and 45% cap contracts, that **no fixed-income instrument is held in any month of
+2022**, that **no held name fails the 126-session gate**, that the corrected arms hold
+exactly what the published arms held, and that the pinned P4.16 parent inputs are unchanged.
+Every pooled reference replay reproduces the parent's published statistics to 1e-12. Ruff
+passes.
+
+Two further focused modules pin the repair itself: 11 tests in
+`tests/test_balanced_momentum_gate.py` (the review's falling-singleton fixture allocated
+zero; zero, positive and insufficient-history singletons; the gate independent of sleeve
+size; the rank fallback restricted to gate-passers; the gate using the declared lookback)
+and 6 tests in `tests/test_hierarchical_class_score_population.py` (a synthetic
+cross-section in which the globally top-ranked members differ from the held members, the
+class score equal to the mean of the held members' global scores, the class choice
+following the held population, and the review's case in the real audit). Run with:
+
+```
+.venv\Scripts\python.exe -m pytest tests/test_balanced_momentum_gate.py tests/test_hierarchical_class_score_population.py tests/test_sleeve_construction.py tests/test_hierarchical_construction.py -q --no-header -p no:cacheprovider --basetemp=tmp\pytest
+```
 
 ## Limitations
 
@@ -136,7 +215,19 @@ reproduces the parent's published statistics to 1e-12. Ruff passes.
 - **Concentration is a new risk, not a solved one.** 2.91 names with two 45% positions is
   close to a two-asset portfolio; the 45% cap is what supplies the residual cash.
 - **The class score is member-derived, not a class index.** A class-index momentum variant
-  with its own lookback is a different, untested rule.
+  with its own lookback is a different, untested rule. The score is a class-ranking
+  statistic: it averages the global-table scores of the members the within-sleeve reranking
+  holds, so it tracks the held set but is not a weighted average of portfolio weights.
+- **The population repair is decision-neutral on this sample.** It changes the scored
+  members on 35 of 130 decisions and the class-score value on 36 class-day pairs, but never
+  the chosen classes, so the corrected run cannot discriminate between the two populations
+  on outcomes. The synthetic fixture in `tests/test_hierarchical_class_score_population.py`
+  is the counterexample in which the choice does change.
+- **The corrected root carries the frozen analysis module's own version label.** The v2
+  root's `protocol.json` records `hierarchical-construction-v2`; `analysis.json` still
+  carries the analysis module's `hierarchical-construction-v1` constant, and the module's
+  HTML presentation hard-codes the v1 evidence links. The repair's write scope excluded
+  that module, so no v2 report was rendered; the v2 root is read through its JSON evidence.
 - **The CP contrasts carry the fallback difference** established in P4.16: CP has a
   defensive fallback and none of these arms do, so the HIER-versus-CP rows mix the
   construction difference with the exposure difference. The matched contrast is against POOL.

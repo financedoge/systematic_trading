@@ -1,4 +1,7 @@
 > **Corrected 2026-10-11 after peer review.** Re-run as `var/research/alpha101-tilt-replay-20261011-v2`
+
+> **Superseded evidence — 2026-10-11 second review.** Earlier numerical and exit/budget conclusions on this page are historical. The prior repair was incomplete. See [the current review](strategy-review-2026-10-11.md) for the raw-activity, monthly scheduling, funding and matched-payoff fixes, accepted replacement roots, and limits. The old grids have not all been rerun and must not support promotion.
+
 > after the alpha 43, hold-semantics, re-entry and look-ahead fixes. The verdict is **unchanged**: alpha 53
 > changes the annualised return by +0.07% against the untouched SOTA with Holm p = 1.000 over three
 > contrasts, the family-adjusted interval spans zero, and the status is inconclusive; costs are 35.14bp

@@ -11,7 +11,7 @@ from systematic_trading.execution.reconciliation import load_latest_ib_reconcili
 from systematic_trading.live.sota import LiveAccountSnapshotInput
 from systematic_trading.live.trading_calendar import next_us_trading_day, us_equity_market_close
 from systematic_trading.market_data.analytics_store import AnalyticsStore, digest, encode
-from systematic_trading.portfolio.strategy_allocation import AllocationChange, control_events, control_state, scope_for
+from systematic_trading.portfolio.strategy_allocation import AllocationChange, control_events, control_state, scope_for, allocation_contract_issue
 from systematic_trading.portfolio.strategy_book import initial_book
 from systematic_trading.portfolio.context import portfolio_context
 from systematic_trading.research.strategy_catalog import registered_strategy_definition
@@ -37,8 +37,8 @@ def candidate_evidence(settings, key, *, store=None):
         store=create_trading_store(settings)
     monitoring_state=require_monitored(settings,store,[key])
     definition = registered_strategy_definition(key)
-    if definition.universe_key != 'multi_asset' or definition.scheduler != 'static_monthly':
-        raise ValueError('Trading allocations currently support the monitored monthly multi-asset strategies.')
+    if issue := allocation_contract_issue(definition):
+        raise ValueError(issue)
     document = AnalyticsStore.from_settings(settings).document('tracked-strategies/calculations', 'report/'+key)
     if not document:
         raise ValueError('A completed application-owned strategy report is required.')

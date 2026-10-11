@@ -39,6 +39,9 @@ class AppSettings(BaseSettings):
     ib_reconciliation_client_id: int | None = None
     ib_fx_client_id: int | None = None
     ib_benchmark_client_id: int | None = None
+    execution_benchmark_collection_enabled: bool = True
+    execution_benchmark_refresh_seconds: int = Field(default=30, ge=15)
+    execution_benchmark_max_pending: int = Field(default=4, ge=1, le=8)
     ib_pnl_enabled: bool = True
     health_monitor_enabled: bool = True
     ib_pnl_client_id: int | None = None

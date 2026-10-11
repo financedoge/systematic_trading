@@ -27,7 +27,7 @@ class Context:
 
 
 def test_the_registered_recipe_is_the_measured_one():
-    assert overlay.PARAMETERS['version'] == 'alpha101-family-tilt-v1'
+    assert overlay.PARAMETERS['version'] == 'alpha101-family-tilt-v2'
     assert overlay.PARAMETERS['budget'] == '0.05'
     assert len(overlay.PARAMETERS['alphas']) == 16
     assert overlay.PARAMETERS['maxWeight'] == '0.45'

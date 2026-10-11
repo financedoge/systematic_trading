@@ -17,26 +17,28 @@ some X% for that, and find the balance between cost and alpha.
 * **Budget family.** ``X in {5%, 10%, 20%}``, reported as a surface and never chosen from the
   outcome.
 * **Cost test.** Incremental traded notional and cost against the untilted book, judged against the
-  published headroom between the monitored book's measured drag and the P4.15 ceiling; the breakeven
-  IC is taken at the incremental turnover, and the observed IC comes from the frozen P4.17 screen.
-  Nothing is replayed until a candidate clears.
+  published headroom between the monitored book's measured drag and the P4.15 ceiling. The tilt's
+  own annualized forward payoff must be positive and cover incremental cost at least three times.
+  Full-universe IC is diagnostic only. Nothing is replayed until a candidate clears.
 
 No economics, no replay, no promotion, and no change to membership, the 45% cap or the cash reserve.
 """
 from decimal import Decimal as D
 from pathlib import Path
 
+import numpy as np
+
 from systematic_trading.lean.contracts import sha256, write_json
 from systematic_trading.research.momentum_replay import read_json
 from systematic_trading.research import alpha101_screen as screening
 from systematic_trading.research import turnover_gate as gate
-from systematic_trading.research.turnover_gate import implied_turnover, screen
+from systematic_trading.research.turnover_gate import implied_turnover
 
-STUDY = 'alpha101-tilt-v1'
+STUDY = 'alpha101-tilt-v2'
 PARENT = Path('var/research/sleeve-construction-20261010-v1')
-SCREEN_ROOT = Path('var/research/alpha101-screen-20261011-v2')
-CALIBRATION = Path('var/research/turnover-gate-20261010-v1/calibration.json')
-DEFAULT_ROOT = Path('var/research/alpha101-tilt-20261011-v2')
+SCREEN_ROOT = Path('var/research/alpha101-screen-20261011-v4')
+CALIBRATION = Path('var/research/turnover-gate-20261011-v2/calibration.json')
+DEFAULT_ROOT = Path('var/research/alpha101-tilt-20261011-v3')
 
 BUDGETS = (0.05, 0.10, 0.20)
 MAX_WEIGHT = 0.45
@@ -49,6 +51,8 @@ _DATA = None
 def calibration():
     """The published dispersion, the ceiling, and the headroom a new overlay may use."""
     payload = read_json(CALIBRATION)
+    if sha256(CALIBRATION) != read_json(CALIBRATION.with_name('acceptance.json'))['calibration_sha256']:
+        raise ValueError('Turnover calibration receipt changed')
     sigma = float(payload['sigma'])
     thresholds = payload['thresholds']
     ceiling = float(thresholds['max_annual_cost_bps']) * (1.0 + float(thresholds['cost_tolerance']))
@@ -160,35 +164,76 @@ def observed_ic(alpha):
     return None if value is None else float(value)
 
 
+def tilt_payoff(day, book, base, horizon=PRIMARY_HORIZON):
+    """The realized tilt-weighted forward return over one decision's horizon.
+
+    The review's defect 8: the gate scaled the *marginal turnover cost* by the allocated exposure
+    but kept the *full-book* ``IC x volatility`` payoff, so a 1% budget was credited with the whole
+    book's information and an arbitrary budget could be made to look safe. This measures the
+    quantity that is actually comparable to the incremental cost — the return the tilt itself
+    earns, weights times forward returns, no book-level multiplier — on the decision's own
+    point-in-time window. Returns ``None`` when the forward window is not yet observable, so a
+    decision is left out rather than filled.
+    """
+    if not book:
+        return None
+    forward = screening.forward_returns(day, horizon)
+    if not forward:
+        return None
+    changes = {symbol: book.get(symbol, 0.0) - base.get(symbol, 0.0)
+               for symbol in set(book) | set(base)}
+    active = {symbol: change for symbol, change in changes.items() if abs(change) > 1e-12}
+    if any(symbol not in forward or not np.isfinite(forward[symbol]) for symbol in active):
+        return None
+    # No-op decisions count as zero benefit; excluding them inflates annual payoff.
+    return float(sum(change * forward[symbol] for symbol, change in active.items()))
+
+
+def payoff_gate(annual_payoff_bps, cost_bps, thresholds):
+    """Compare actual tilt payoff and incremental cost at the same NAV exposure.
+
+    Full-universe rank IC is diagnostic only: it is not a calibration of this
+    held-name portfolio. Require positive payoff independently of cost savings,
+    and retain the declared 3x hurdle on positive incremental costs.
+    """
+    ceiling = float(thresholds['max_annual_cost_bps']) * (1 + float(thresholds['cost_tolerance']))
+    affordable = cost_bps <= ceiling
+    observed = annual_payoff_bps is not None and np.isfinite(annual_payoff_bps)
+    required = max(0.0, cost_bps) * float(thresholds['min_ic_margin'])
+    supported = (bool(annual_payoff_bps > 0 and annual_payoff_bps >= required) if observed else None)
+    margin = annual_payoff_bps / cost_bps if observed and cost_bps > 0 else None
+    status = ('reject' if not affordable else 'insufficient' if supported is None
+              else 'pass' if supported else 'reject')
+    return dict(version='tilt-payoff-cost-v2', status=status, cost_test=affordable,
+                margin_test=supported, annual_cost_bps=cost_bps, cost_ceiling_bps=ceiling,
+                annual_payoff_bps=annual_payoff_bps, required_payoff_bps=required,
+                payoff_cost_margin=margin, breakeven_ic=None, ic_margin=None,
+                reasons=[f'Incremental cost {cost_bps:.3f}bp; headroom {ceiling:.3f}bp.',
+                         'No measurable matched payoff.' if not observed else
+                         f'Matched annual payoff {annual_payoff_bps:.3f}bp; positive payoff and '
+                         f'{required:.3f}bp hurdle required. Exploratory estimate, not discovery evidence.'])
+
+
 def measure(alpha, budget, *, sigma, thresholds, values_by_day=None):
-    """The declared cost and information measurement for one (alpha, budget) candidate."""
+    """Affordability and held-name payoff, with no full-book IC substitution."""
     configured = calibration()
     books, diagnostics = tilted_map(alpha, budget, values_by_day)
     base_map = {day: base_weights(day) for day in decision_days()}
-    implied_base = implied_turnover(base_map)
-    implied_tilted = implied_turnover(books)
-    incremental = implied_tilted['annual_turnover'] - implied_base['annual_turnover']
+    baseline, tilted = implied_turnover(base_map), implied_turnover(books)
+    incremental = tilted['annual_turnover'] - baseline['annual_turnover']
     cost = incremental * configured['cost_bps']
     ic = observed_ic(alpha)
     applied = [row for row in diagnostics if row['applied']]
-    if incremental <= 0.0:
-        verdict = dict(version=gate.VERSION, status='pass', cost_test=True, margin_test=None,
-                       annual_turnover=incremental, annual_cost_bps=cost,
-                       cost_ceiling_bps=float(thresholds['max_annual_cost_bps']), reasons=[
-                           f'the tilt costs nothing at this budget: it offsets {abs(cost):.1f}bp of the '
-                           'book\'s own turnover rather than adding to it'])
-    elif ic is None:
-        verdict = dict(version=gate.VERSION, status='insufficient', cost_test=cost <= float(
-            thresholds['max_annual_cost_bps']), margin_test=None, annual_turnover=incremental,
-            annual_cost_bps=cost, cost_ceiling_bps=float(thresholds['max_annual_cost_bps']),
-            reasons=['the alpha has no measurable rank IC, so the requirement cannot be judged'])
-    else:
-        verdict = screen(incremental, sigma=sigma, candidate_ic=ic, thresholds=thresholds)
-    if not applied and verdict['status'] == 'pass':
-        # A zero-incremental-cost pass would be a false pass: the alpha never ranked anything, so
-        # there is nothing to be cheap about. Same rule as the P4.17 screen's no-measurable-IC case.
-        verdict = dict(verdict, status='insufficient', margin_test=None, reasons=[
-            diagnostics[0]['reason'] if diagnostics else 'the alpha never ranked the book, so nothing was tilted'])
+    payoffs = [tilt_payoff(day, book, base_map[day]) for day, book in books.items()]
+    payoffs = [value for value in payoffs if value is not None]
+    annual = float(np.mean(payoffs)) * (252 / PRIMARY_HORIZON) * 10000 if payoffs else None
+    verdict = payoff_gate(annual, cost, thresholds)
+    verdict.update(annual_turnover=incremental, candidate_ic=ic,
+                   information=dict(observations=len(payoffs), total_decisions=len(books),
+                                    annual_payoff_bps=annual, supported=verdict['margin_test']))
+    if not applied:
+        verdict.update(status='insufficient', margin_test=None)
+        verdict['reasons'].append('No applied tilt with rank spread.')
     binding = sum(1 for row in applied if row['cap_binding'])
     return dict(
         alpha=alpha, budget=budget, formula=None,
@@ -200,8 +245,8 @@ def measure(alpha, budget, *, sigma, thresholds, values_by_day=None):
                    scale_mean=(sum(row['scale'] for row in applied) / len(applied) if applied else None),
                    scale_min=min((row['scale'] for row in applied), default=None),
                    gross_tilt_mean=(sum(row['gross_tilt'] for row in applied) / len(applied) if applied else None)),
-        turnover=dict(base_annual=implied_base['annual_turnover'],
-                      tilted_annual=implied_tilted['annual_turnover'], incremental_annual=incremental),
+        turnover=dict(base_annual=baseline['annual_turnover'],
+                      tilted_annual=tilted['annual_turnover'], incremental_annual=incremental),
         gate=verdict, observed_ic=ic)
 
 
@@ -225,10 +270,13 @@ def protocol():
                                'reported insufficient and is never passed on a zero incremental cost'),
         cost_test=dict(headroom_bps=configured['headroom_bps'], ceiling_bps=configured['ceiling_bps'],
                        monitored_drag_bps=configured['monitored_drag_bps'], cost_bps=configured['cost_bps'],
-                       rule='the incremental traded notional is judged against the headroom between the '
-                            'monitored book\'s measured drag and the P4.15 ceiling; the breakeven IC is taken '
-                            'at the incremental turnover and the observed IC from the frozen P4.17 screen',
-                       margin='the frozen 3x IC margin is unchanged'),
+                       rule='Incremental cost must fit headroom. Matched tilt-weighted forward payoff '
+                            'must be positive and at least 3x positive incremental cost. Full-pool IC '
+                            'is diagnostic, never a proxy for held-name payoff.'),
+        information_test=dict(horizon=PRIMARY_HORIZON, annualisation=252 / PRIMARY_HORIZON,
+            payoff='sum((tilted-base) weight * forward return), including zero-tilt decisions',
+            missingness='omit incomplete forward windows, never partial-leg payoff',
+            limitation='Inspected-sample pre-screen; requires matched net replay and family inference.'),
         calibration=configured,
         declares=['no economics and no replay: nothing is replayed until a candidate clears the gate',
                   'a passing tilt would still need a replay, family adjustment across the grid, and decay '
@@ -237,9 +285,16 @@ def protocol():
 
 
 def prepare(root=DEFAULT_ROOT):
+    import shutil
     root = Path(root)
+    if (root / 'protocol.json').exists():
+        raise FileExistsError('Preserve frozen study; use a new evidence root')
     root.mkdir(parents=True, exist_ok=True)
     write_json(root / 'protocol.json', protocol())
+    shutil.copytree(Path(__file__).parents[1], root / 'source/systematic_trading',
+                    ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
+    write_json(root / 'source_manifest.json', {p.relative_to(root).as_posix(): sha256(p)
+               for p in (root / 'source').rglob('*.py')})
     write_json(root / 'input_manifest.json', dict(
         parent=str(PARENT),
         files={str(path): sha256(path) for path in (
@@ -257,6 +312,8 @@ def prepare(root=DEFAULT_ROOT):
 
 def run(root=DEFAULT_ROOT):
     root = Path(root)
+    if (root / 'tilt.json').exists():
+        raise FileExistsError('Preserve completed tilt screen')
     configured = calibration()
     thresholds = headroom_thresholds(configured['headroom_bps'])
     rows = []
@@ -279,12 +336,14 @@ def run(root=DEFAULT_ROOT):
 
 
 def verify(root=DEFAULT_ROOT):
+    from tempfile import TemporaryDirectory
     root = Path(root)
     if _DATA is None:
         initialize()
     manifest = read_json(root / 'input_manifest.json')
     checks = {str(path): sha256(Path(path)) == digest for path, digest in manifest['files'].items()}
     before = read_json(root / 'tilt.json')
-    run(root)
-    checks['reproduced'] = before == read_json(root / 'tilt.json')
+    with TemporaryDirectory(prefix='alpha101-verify-') as scratch:
+        run(Path(scratch))
+        checks['reproduced'] = before == read_json(Path(scratch) / 'tilt.json')
     return checks

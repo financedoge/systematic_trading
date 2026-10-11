@@ -1,5 +1,60 @@
 # Signal decay, alpha overlays and portfolio robustness — research plan
 
+## Agreed priorities after the 2026-10-11 review
+
+The [second review](strategy-review-2026-10-11.md) supersedes conflicting numerical claims in the
+historical completion notes below. No further budget/exit optimization should use those old results.
+
+**Operator agreement — 2026-10-11.** The operator accepted these recommendations and explicitly
+requested substantial expansion of the tradable ETF universe. Universe expansion is a major workstream,
+not a two-ticker extension; the staged delivery and acceptance requirements are registered in P4.16d
+below. This records the agreed direction and dependencies, not an allocation change.
+
+1. Finish the minimum P8.1–P8.5 paper execution contract for the complete 14-ETF pool; retain all
+   approval, raw-share sizing, account permission and reconciliation checks. Bind FR25 financial-model
+   schedules and audited activity inputs in the paper target builder, resolve the union of component
+   instruments, and verify target/order/reconciliation parity. This minimum delivery need not wait for
+   the full multi-venue platform. A shared gate alone does not complete the execution contract.
+2. Complete P4.19a app-owned benchmark collection/publication, then resume P4.19 on matched retained
+   evidence. The October 11 audit found zero published benchmarks, so the timing comparison is blocked.
+   Measure session/ETF cost before a faster alpha experiment; do not fetch provider prices directly
+   into a study.
+3. Deliver the substantial ETF-universe expansion under P4.16d: candidate inventory and registry,
+   staged audited admission, comparable peer groups and scalable app calculations. Include volatility
+   normalization, duplicate-exposure control, point-in-time membership and full-pool attribution.
+   More tickers alone are not independent breadth.
+4. Register one incremental alpha hypothesis with a declared horizon, training/validation split,
+   1/5/10/21-session decay diagnostics, and net contribution versus the unchanged base. Separate
+   reversal and trend families; correlated 46/49/51 passes are not independent discoveries.
+5. Before another TP/SL run, specify actual fill-based alpha-sleeve PnL, exposure/risk units, time expiry,
+   re-entry/cooldown and gap rules. The repaired legacy study is a prior-close contribution proxy;
+   it cannot establish intraday TP/SL execution. Keep a small fixed comparison and an untouched
+   prospective period instead of another inspected-sample exit grid.
+
+**Conditional paper pilot.** Once the minimum execution contract passes, prepare a concrete allocation
+preview for **5% FR25 / 95% F3 paper capital**, with combined risk limits and the existing approval flow.
+This capital share is distinct from a 5% Alpha101 tilt. Keep the alpha variant at zero allocation while
+incremental evidence is absent. Retain app-owned targets, raw-share orders, fills, cash and reconciliation;
+review the first 30 sessions for operational behavior, without treating that short sample as proof of
+alpha. A contract or reconciliation failure stops new pilot orders and invokes the reviewed rollback
+plan toward F3, subject to reconciliation and the existing controls. XLE/XLB permission was manually
+confirmed by the operator and gateway/reconciliation passed during the review; these are not presumed
+denied, and operational checks must be fresh at execution. Planning agreement does not submit orders.
+
+P4.18's registered fixed rule is now complete and rejected: 18 replays, all risk/return criteria failed,
+including against the exposure-matched diagnostic; native parity passed. See the protocol below and
+`var/research/volatility-target-20261011-v1/`. This closes that fixed rule without target/window tuning.
+P4.20 must distinguish base momentum coverage from the Alpha101 tilt's incremental diagnostic gap.
+
+**Platform dependency — P6.15, requested 2026-10-11.** Review research-worker deployment and resource
+scheduling before scaling the ETF universe: measure actual per-engine memory and CPU use, compare
+host-native and containerized LEAN, remove avoidable duplication and serial work, and replace fixed
+resource assumptions with a tested budget. The objective is useful multicore throughput with responsive
+database/operations services. Do not assume that enlarging Docker's memory cap is the solution or that
+ClickHouse supplies shared working memory to research processes. Preserve reproducible outputs and
+independent engine parity. See [resource review](calculation-performance.md#p615--worker-deployment-and-resource-budget-review).
+
+
 Registered 2026-10-10. This is the plan for the next research phase, agreed with
 the user after a review of the existing research record and a first-hand reading
 of Kakushadze's *101 Formulaic Alphas*. It authorises no promotion, funding or
@@ -200,8 +255,8 @@ none of them needs a model re-fit except the 2022 refit.
   distribution. This is the decisive test of whether the ridge contributes at
   all, as opposed to any perturbation of the M1 ordering.
 - **Data-through-2022 refit** — fit the ridge only on information available to the
-  end of 2022 and replay 2023 onward, testing whether the recent edge is an
-  artifact of fitting on the full sample.
+  end of 2022 and replay 2023 onward, measuring the incremental effect of continued causal retraining after 2022. It is not a
+  full-sample hindsight comparison.
 - **Top-N and financial-weight sensitivity** — top-4/5/6/7 and ridge weights
   0.10/0.25/0.40, reported as a sensitivity surface and **not** as a search. These
   are the same axes the study already varied, so they cannot be presented as a
@@ -393,6 +448,40 @@ already registered as a narrow-industry pilot in the
 together with energy. The operator's list is recorded verbatim above while noting this, so the
 eventual taxonomy is built from dated classifications rather than from the list's ordering.
 
+**Scope strengthened by the operator — 2026-10-11.** Substantially expand the **tradable** ETF universe,
+not merely the research watchlist. Design capacity for hundreds of candidate ETFs rather than a small
+extension of the current fourteen; the admitted count is determined by evidence, not a ticker quota.
+Cover economically distinct regional, country, sector/industry, duration, credit and commodity exposures.
+Candidate admission permits selection; it never mandates a holding or an allocation.
+
+**Staged delivery.** Preserve the one-item-at-a-time review cadence and publish an outcome for each stage:
+
+1. **Inventory and taxonomy.** Produce a versioned candidate inventory with stable identities, listing
+   venue/currency, dated peer groups, inception/closure and mandate changes, duplicate-exposure groups,
+   and per-instrument data/execution gaps. Prioritize supported USD-listed venues for the first wave;
+   additional venues/currencies depend on the corresponding P8 calendar, lot, FX and routing contracts.
+   Freeze admission, liquidity and duplicate-handling rules before comparing strategy outcomes.
+2. **Audited publication in waves.** Ingest through the existing audit/publication process; publish
+   coverage and admission/rejection reasons with pinned batches and verified hashes. Use adjusted
+   prices for returns and audited raw prices/volume for activity. Preserve missing history, point-in-time
+   eligibility and closed funds where available; disclose survivorship and historical-availability gaps.
+   Do not backfill today's surviving universe into periods before its members were eligible.
+3. **App and paper execution readiness.** Use the shared registry for calculations, reports and execution
+   without adding a hard-coded branch for every ETF. Benchmark refresh, feature, replay and report costs
+   at the expanded scale. Verify raw sizing, account permissions, mixed-universe orders, cash and
+   reconciliation for each supported contract class; show research-ready and paper-tradable states
+   separately. The existing 14-ETF pilot need not wait for completion of the entire expansion.
+4. **Controlled research on the expanded pool.** Freeze a new protocol and compare the existing strategy
+   on its original pool with the same recipe on the full newly supported pool before adding alpha changes.
+   Attribute results by constituent and peer group, control duplicate exposures, then test risk-normalized
+   ranking and one declared alpha family at matched horizons/costs. Use time/group holdouts and prospective
+   observations; report effective breadth and concentration as well as ticker count.
+
+**First executable deliverable.** A candidate inventory, taxonomy, data/contract gap matrix and proposed
+first admission wave with estimated storage/refresh costs. Review it before ingestion; the research
+comparison waits for publication, but inventory/admission planning does not require an already expanded
+pool. Actual instrument admission and strategy capital remain separate decisions.
+
 **Acceptance when it is run.** The taxonomy, its boundary rules and the risk-adjustment rule
 frozen in advance; a pinned audited publication batch with verified input hashes; the P4.15
 turnover gate applied to every candidate mapping before any replay; controls that stop
@@ -400,9 +489,10 @@ near-duplicate funds from multiplying a class's selection probability (the roadm
 rule); family-adjusted tests; and judgement on drawdown across episodes, consistent with P4.16's
 finding that exposure rules matter more than the partition.
 
-**Blocked on** universe admission, not on analysis. Registered so it is not lost; do not start
-before the larger pool is published. It does not authorise any new instrument, any download into
-research inputs, or any change to monitoring, allocation or the 45% cap.
+**Research comparison blocked on** universe admission. The inventory and admission stages above
+are the prerequisites to execute first; do not run the expanded-pool comparison before its inputs are
+published. This registration does not itself admit instruments, authorize direct provider downloads
+as research inputs, or change monitoring, allocation or the 45% cap.
 
 ### P4.17 — Alpha101 restricted time-series subset as selection features
 
@@ -646,7 +736,7 @@ monthly arm as the frequency reference. Findings:
   101.1% / 96.5% / 87.6% against the untouched 105.8%, with Sharpe 1.174 / 1.131 / 1.042 against 1.214,
   at 91.8bp / 142.8bp / 243.3bp of cost. The SOTA shows the same ordering.
 - **The threshold works exactly as proposed — which is the problem.** Raising the band from daily to
-  300% cuts re-tilts from 1,269 to 64 a year and cost from 91.8–243.3bp to 37–44bp; but fitting the
+  300% cuts re-tilts from 1,269 to 64 over the study (about 221 to 11 per year) and cost from 91.8–243.3bp to 37–44bp; but fitting the
   44.0bp ceiling requires a band of 200–300%, where the arm trades 64–86 times a year — the monthly
   design's own 70. Daily monitoring behind a wide deadband is the monthly tilt with extra bookkeeping.
 - **Nothing that clears the ceiling is distinguishable from doing nothing**: every band arm's contrast
@@ -698,6 +788,28 @@ is the right artefact if a tilt is ever taken toward promotion.
 
 ### P4.18 — Volatility-targeted exposure
 
+**Execution registration — 2026-10-11 review session, before outcomes.** Run one fixed
+FR25 overlay on the complete supported 14-ETF pool and the verified P4.14 inputs,
+2021-01-04 through 2026-10-08. At each existing monthly rebalance estimate the
+incoming book's volatility from 63 prior daily adjusted returns on an exact common
+calendar; scale all risky weights by `min(1, 10% / estimated annual volatility)`.
+No leverage, no new selection rule, no daily rebalancing and no volatility-parameter
+search. The app's shared signal service owns the calculation. Cash earns zero under
+the inherited research contract. Missing required observations stop the calculation.
+
+Compare with unchanged FR25 and a constant multiplier chosen to match the dynamic
+arm's time-weighted average target gross exposure. This last control is explicitly
+an ex-post diagnostic, not a deployable parameter estimate. Report 5/10/20 bp costs
+and zero/one additional session of delay. A useful historical result must reduce
+maximum drawdown by at least 2 percentage points, sacrifice at most 1 percentage
+point of CAGR and not reduce Sharpe versus FR25; also require better drawdown and
+Sharpe than the exposure-matched control, and at most 44 bp annual drag at 5 bp.
+Report every scenario; these hurdles must hold across scenarios for retention.
+Freeze a new protocol/input/source root before outcomes. This is inspected-sample
+research, with revised historical vintages; no promotion or paper allocation is
+authorized by a successful backtest. An inconclusive/failed result closes this
+fixed rule without tuning the 10% target or 63-session window.
+
 **Question.** Does scaling exposure to a target volatility improve drawdown
 without an unacceptable return sacrifice, against a matched-average-exposure
 control?
@@ -717,11 +829,47 @@ and the return-sacrifice budget declared before outcomes.
 and intraday VWAP execution?
 
 **Why now.** The TWAP benchmark infrastructure and retained slippage evidence
-already exist. This is real basis points with no alpha and no new data.
+were expected to support a comparison without new data. The October 11 evidence audit below disproves
+that coverage assumption: the infrastructure exists but the published benchmarks are empty.
 
 **Acceptance.** Uses retained execution evidence and the existing benchmark
 service; report per-symbol and aggregate slippage by execution style; no claim
 beyond the observed sample.
+
+**Evidence-audit protocol — registered 2026-10-11, before cost calculations.** Snapshot all retained
+paper order records and the pinned `execution-benchmarks` publication. Initial inventory has already
+identified an empty benchmark publication; this is a coverage audit, not a prospective profitability
+test. Retain input/source hashes and reproduce offline without broker calls or provider downloads.
+Include filled orders in coverage counts, but require complete, unique, consistent execution details
+before measuring costs. Use the existing benchmark-window and duration-weighted minute-close functions;
+original intent survives rescheduling. A benchmark needs matching identity, full interval coverage and
+valid published observations. Positive signed slippage means worse execution; aggregate signed price
+cost over gross benchmark notional within each currency, never average order bps or mix currencies.
+Report per-symbol and style coverage with unavailable values as null, never zero. Commissions/fees and
+market impact are not inferred. Retained minute closes cannot supply session VWAP without volume/trade
+value, and execution against different reference prices does not establish a causal timing advantage.
+If matched close/VWAP/TWAP evidence is missing, publish the gap and the app-owned collection requirements;
+do not rank execution styles or claim the research question is answered.
+
+**2026-10-11 outcome: evidence audit complete; comparison blocked.** Snapshot
+`var/research/execution-timing-20261011-v1/` retains 270 paper order records, 45 filled orders (42 TWAP),
+27 with complete execution details, and zero published benchmark documents. Thirty-two TWAP orders
+have explicit benchmark windows; none has an available published comparison. Close/VWAP costs also
+remain unavailable. No execution-style ranking or policy change. [Full audit](execution-timing-findings.md).
+
+**P4.19a — next prerequisite, registered.** Add app-owned post-trade benchmark collection independent
+of blotter visits, with idempotent window identities, retained failures and audit/publication receipts.
+Specify and publish matched raw close and intraday traded-value/volume evidence before comparing
+TWAP/close/VWAP; no substitution of unaudited recorder data or planning reference prices. Report
+per-symbol/style coverage and preserve historical gaps. A new frozen study follows adequate publication;
+benchmark collection does not require orders or allocation changes.
+
+**2026-10-11 implementation follow-up.** The app-owned TWAP collector, durable attempts/retries,
+original/routed windows, audited publication and coverage API are implemented; see the
+[collection contract](execution-benchmark-collection.md). Volume and WAP are retained where the
+provider supplies them. This completes the collection mechanism, not the timing comparison: trading-time
+raw-unit, raw-close and full-session VWAP qualification remain pending. The frozen v1 zero-coverage audit
+is retained as the pre-implementation baseline. P6.15 remains queued separately.
 
 ### P4.20 — Decay-based promotion gate *(governance)*
 
@@ -771,14 +919,15 @@ approximation must be disclosed because it flatters stops in gap-down markets.
 | 4 | P4.16 sleeve-aware construction | — (completed 2026-10-10; inconclusive, fallback dominates) |
 | 4b | P4.16b hierarchical construction *(operator-proposed)* | — (completed 2026-10-11; inconclusive, largest raw return effect, risk untouched) |
 | 4c | P4.16c hierarchical + defensive fallback | parked at the operator's request 2026-10-11 |
-| 4d | P4.16d granular classes, wider ETF pool, volatility-aware ranking *(operator-proposed)* | blocked on universe admission |
+| 4d | P4.16d substantial tradable ETF expansion, granular classes and volatility-aware ranking | inventory/taxonomy and admission planning pending; research comparison waits for audited publication |
 | 5 | P4.17 Alpha101 restricted time-series subset | — (completed 2026-10-11; no alpha clears the gate, family closed on turnover) |
 | 5b | P4.17b Alpha101 tactical tilt *(operator-proposed)* | — (completed 2026-10-11; 12 of 16 pass at a 5% budget for 0.00–0.48bp against 3.65bp of headroom) |
 | 5c | P4.17c the tilt replay *(operator-requested)* | — (completed 2026-10-11; affordable and directionally better, but +0.07–0.12% annualised and not established) |
 | 5d | P4.17d tilt budget surface on FR25 and the SOTA *(operator-requested)* | — (completed 2026-10-11; no higher-X regime, saturates at ~51% of NAV) |
 | 5e | P4.17e daily threshold-triggered tilt *(operator-requested)* | — (completed 2026-10-11; high frequency destroys value, the band that fits the ceiling is monthly) |
 | 5f | P4.17f exit rules: close when the signal stops *(operator-directed)* | — (completed 2026-10-11; holding beats exiting, and three of six rules never fire) |
-| 6 | P4.18 volatility targeting *or* P4.19 execution timing | — |
+| 6 | P4.18 fixed volatility rule | completed and rejected October 11; no parameter search |
+| 6a | P4.19 execution timing / P4.19a benchmark collection | coverage audit complete; comparison blocked on app-owned collection and published matched benchmarks |
 | 7 | P4.20 decay-based promotion gate | P4.13 |
 | 8 | P4.21 look-through constituent alpha | P4.16, constituent coverage |
 

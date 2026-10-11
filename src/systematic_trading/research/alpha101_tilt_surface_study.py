@@ -33,17 +33,15 @@ No promotion, no monitoring change, no allocation change.
 from decimal import Decimal as D
 from pathlib import Path
 
-import numpy as np
-
 from systematic_trading.lean.contracts import sha256, write_json
 from systematic_trading.research import alpha101 as lib
 from systematic_trading.research import alpha101_tilt_study as rule
 from systematic_trading.research.expanded_economics import job_name
-from systematic_trading.research.momentum_replay import freeze_usd_bundle, read_json, run_usd_reference
+from systematic_trading.research.momentum_replay import checked_files, freeze_usd_bundle, read_json, run_usd_reference
 from systematic_trading.research.turnover_gate import implied_turnover, screen
 
 STUDY = 'alpha101-tilt-surface-v1'
-DEFAULT_ROOT = Path('var/research/alpha101-tilt-surface-20261011-v2')
+DEFAULT_ROOT = Path('var/research/alpha101-tilt-surface-20261011-v3')
 FR25_ROOT = Path('var/research/fr25-placebo-20261010-v1')
 SOTA_ROOT = Path('var/research/alpha101-tilt-replay-20261011-v2')
 BASES = {
@@ -92,8 +90,11 @@ def plan(arm):
 
 def protocol():
     return dict(
-        peer_review_20261011=('Corrected after peer review found four implementation defects: (1) the hold/exit arms re-submitted an unchanged target vector every session, which rebalances on price drift instead of holding shares, so rows are now emitted only when the target changes; (2) the exit-and-re-enter branch sat behind a guard an exit had already emptied and could never re-enter; (3) the profit/loss exits read the close of the session they traded, which is look-ahead, and now read only closes strictly before it; (4) alpha 43 divided every historical volume by the latest rolling average dollar volume instead of each date\'s own, and rank IC ranked tied values in ticker order instead of averaging them. The v1 root is superseded and kept as the historical record.'),
-        study=STUDY, version=STUDY + '-v1', bases={k: dict(v, root=str(v['root'])) for k, v in BASES.items()},
+        peer_review_20261011=('Revision 3 supersedes earlier timing, raw-activity and funding results. '
+            'Monthly schedules retain unchanged rebalances; daily events have strictly prior cutoffs; '
+            'exits use a declared prior-close contribution proxy; re-entry is reachable; raw activity '
+            'is date-aligned. Legacy roots are retained and not reused as repaired evidence.'),
+        study=STUDY, version=STUDY + '-review3', bases={k: dict(v, root=str(v['root'])) for k, v in BASES.items()},
         budgets=list(BUDGETS), alphas=list(ALPHAS), arms=list(arms()),
         window=dict(start=START, evaluation_start=EVALUATION_START, windows=list(WINDOWS)),
         costs=list(COSTS), delays=list(DELAYS), initial_cash_usd=1_000_000,
@@ -120,10 +121,18 @@ def initialize():
     _VALUES = {}
     bases = {}
     for name, spec in BASES.items():
+        verify_base_inputs(name)
         rows = read_json(spec['root'] / 'decisions' / (spec['arm'] + '.json'))
         days = sorted(day for day in rows if day >= EVALUATION_START)
         bases[name] = dict(rows=rows, days=days)
     return bases
+
+
+def verify_base_inputs(base):
+    """Verify the published snapshots before consuming any prices or decisions."""
+    spec = BASES[base]
+    checked_files(spec['bars_root'], 'input_manifest.json')
+    checked_files(spec['root'], 'decision_manifest.json')
 
 
 def base_weights(base):
@@ -148,12 +157,8 @@ def values_for_day(base, alpha, day):
         window = [row for row in series if str(row['trade_date']) < day]
         if len(window) < 2:
             continue
-        history = lib.History(symbol=symbol, date=day,
-                              open=np.array([float(r['open']) for r in window]),
-                              high=np.array([float(r['high']) for r in window]),
-                              low=np.array([float(r['low']) for r in window]),
-                              close=np.array([float(r['close']) for r in window]),
-                              volume=np.array([float(r['volume']) for r in window]))
+        history = lib.history_from_rows(symbol, window, str(window[-1]['trade_date']),
+            raw_rows=_RAW[base].get(symbol, ()))
         value = lib.value(alpha, history)
         if value is not None:
             out[symbol] = value
@@ -187,13 +192,16 @@ def tilted_rows(base, budget):
 
 _DATA = None
 _BARS = None
+_RAW = None
 
 
 def freeze(root=DEFAULT_ROOT):
     """Write every arm's decisions, the diagnostics, and the manifest."""
     import shutil
-    global _DATA, _BARS
+    global _DATA, _BARS, _RAW
     root = Path(root)
+    if (root / 'protocol.json').exists():
+        raise FileExistsError('Preserve frozen study; use a new evidence root')
     root.mkdir(parents=True, exist_ok=True)
     source = root / 'source' / 'systematic_trading'
     if not source.exists():
@@ -201,6 +209,7 @@ def freeze(root=DEFAULT_ROOT):
                         ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
     _DATA = initialize()
     _BARS = {base: bar_rows(base) for base in BASES}
+    _RAW = {base: read_json(spec['bars_root'] / 'raw.json') for base, spec in BASES.items()}
     (root / 'decisions').mkdir(exist_ok=True)
     diagnostics = {}
     for base in BASES:
@@ -219,7 +228,8 @@ def freeze(root=DEFAULT_ROOT):
     write_json(root / 'input_manifest.json', dict(
         bases={name: dict(arm=spec['arm'],
                           decisions=sha256(spec['root'] / 'decisions' / (spec['arm'] + '.json')),
-                          bars=sha256(spec['bars_root'] / 'bars.json')) for name, spec in BASES.items()},
+                          bars=sha256(spec['bars_root'] / 'bars.json'),
+                          raw=sha256(spec['bars_root'] / 'raw.json')) for name, spec in BASES.items()},
         note='P4.17d adds no new data source: two frozen base books and their own audited bars'))
     write_json(root / 'data_receipt.json', dict(
         protocol_sha256=sha256(root / 'protocol.json'),
@@ -309,6 +319,7 @@ def verify(root=DEFAULT_ROOT):
     checks = {'base_inputs_unchanged': all(
         sha256(BASES[name]['root'] / 'decisions' / (spec['arm'] + '.json')) == spec['decisions']
         and sha256(BASES[name]['bars_root'] / 'bars.json') == spec['bars']
+        and sha256(BASES[name]['bars_root'] / 'raw.json') == spec.get('raw')
         for name, spec in manifest['bases'].items())}
     checks['decisions_present'] = all((root / 'decisions' / (arm + '.json')).exists() for arm in arms())
     checks['economics_complete'] = all((root / 'python' / (job_name(job) + '.json')).exists() for job in jobs())

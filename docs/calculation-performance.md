@@ -1,5 +1,37 @@
 # Tracked-calculation performance: measurements and levers
 
+## P6.15 — Worker deployment and resource-budget review
+
+**Pending, operator requested 2026-10-11.** Reconsider the deployment and scheduling architecture;
+increasing Docker Desktop's memory limit is only one candidate, not the agreed solution.
+
+Read-only checks on October 11 confirm 16 logical host CPUs and 31.55 GiB host RAM; Docker reports
+16 CPUs and 15.39 GiB RAM. ClickHouse was using about 2.53 GiB at the check. In `research/compute.py`,
+LEAN concurrency is explicitly bounded by `(docker_memory_gib - 2) // 4`, giving three runs here.
+The 4 GiB is a per-container limit and scheduler assumption, not a measurement of required resident
+memory. Preparation workers and the Python reference engine already run as host subprocesses;
+`lean/runner.py` puts the independent LEAN engine in a pinned, isolated container. Single-threaded
+numerical libraries do not preclude parallel independent jobs across host cores.
+
+ClickHouse is a disk-backed columnar database with in-memory processing/caches; its process memory
+is not a shared Python/.NET heap. Loading query results into each worker can still duplicate buffers.
+[ClickHouse storage description](https://clickhouse.com/resources/engineering/what-is-columnar-database).
+
+**First delivery:** retain a representative frozen-bundle benchmark of host and container peak working
+sets, CPU time, startup/serialization/I/O time, queue occupancy, complete-batch latency and concurrent
+ClickHouse/operator latency. Include expanded-universe sizing cases and repeated runs, not just one
+favorable job. Explain which resources are actually binding.
+
+**Compare before choosing:** right-sized container budgets; host-native LEAN with pinned dependencies;
+reduced repeated decoding/data copies and suitable immutable shared inputs; independent task scheduling
+across cores; and removing serial critical-path work. Account for the Python reference running alongside
+each LEAN job and for database/OS headroom. Use measured peak memory with a margin, not unlimited workers.
+Thread/runtime changes must enter revision identity and retain reproducibility, parity, cancellation,
+failure cleanup and rollback. Accept a change only after whole-batch throughput improves without
+degrading operations. No Docker/WSL setting or runtime deployment was changed in this planning session.
+
+The earlier measurements and recommendations below remain historical evidence, not a selected solution.
+
 Operator question, 2026-10-11: *does the research worker use all the resources available? It is
 incredibly slow, and CPU sits around 40% while it calculates.*
 

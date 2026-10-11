@@ -8,6 +8,22 @@ from systematic_trading.portfolio.context import portfolio_context
 from systematic_trading.research.strategy_catalog import current_sota_definition, registered_strategy_definition
 
 
+def allocation_contract_issue(definition):
+    """One capability boundary for catalog, candidate list and allocation review.
+
+    Research identity admission does not establish account permission or the
+    multi-strategy execution/valuation contract. P8 replaces this boundary only
+    after those contracts and evidence are implemented.
+    """
+    if definition.universe_key == 'multi_asset_14':
+        return ('Monitoring only; the 14-ETF paper execution contract is incomplete: '
+                'XLE/XLB account permission, raw-unit sizing and mixed-universe '
+                'allocation/reconciliation require verification (P8.1-P8.5).')
+    if definition.universe_key != 'multi_asset' or definition.scheduler != 'static_monthly':
+        return 'Trading allocations currently support the monitored monthly multi-asset strategies.'
+    return None
+
+
 class StrategyCapital(BaseModel):
     strategy_key: str
     weight: Decimal = Field(gt=0, le=1, allow_inf_nan=False)

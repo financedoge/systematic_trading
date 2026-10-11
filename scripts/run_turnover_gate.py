@@ -15,8 +15,8 @@ from systematic_trading.lean.contracts import write_json
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('stage', choices=['build', 'report'])
-    parser.add_argument('--root', type=Path, default=Path('var/research/turnover-gate-20261010-v1'))
-    parser.add_argument('--output', type=Path, default=Path('research/turnover-gate-2026-10-10'))
+    parser.add_argument('--root', type=Path, default=Path('var/research/turnover-gate-20261011-v2'))
+    parser.add_argument('--output', type=Path, default=Path('research/turnover-gate-review-2026-10-11'))
     args = parser.parse_args()
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'src'))
     from systematic_trading.research import turnover_gate_analysis as analysis

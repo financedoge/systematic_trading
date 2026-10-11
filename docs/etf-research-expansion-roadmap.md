@@ -2,7 +2,17 @@
 
 Discussion proposal dated October 7, 2026. The objective is to improve net Sharpe and Calmar through economically distinct ETF exposures, country and industry information, and portfolio risk control. No improvement is assumed in advance. The trading boundary is ETFs only; constituent company data may inform ETF analysis without introducing single-stock trades.
 
-## Latest disposition — October 10, 2026
+## Latest disposition — October 11, 2026
+
+The operator accepted the second-review recommendations and requested **substantial expansion of the
+tradable ETF universe**. The current priorities and staged P4.16d delivery are recorded in the
+[research plan, P4.16d](signal-decay-and-alpha-plan.md):
+inventory/taxonomy, audited admission waves, scalable app and paper-execution contracts, then controlled
+full-pool research. Design for hundreds of candidates; admit on evidence, not a ticker quota. Allocation
+remains separate from admission. The minimum 14-ETF contract and conditional FR25 paper pilot need not
+wait for the full expansion. The October 10 disposition below is retained as historical context.
+
+## Prior disposition — October 10, 2026
 
 **Next research phase registered.** The plan for signal decay, alpha overlays and
 portfolio robustness is now in

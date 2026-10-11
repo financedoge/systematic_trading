@@ -1,4 +1,7 @@
 > **Corrected 2026-10-11 after peer review.** Re-run as `var/research/alpha101-tilt-surface-20261011-v2`
+
+> **Superseded evidence — 2026-10-11 second review.** Earlier numerical and exit/budget conclusions on this page are historical. The prior repair was incomplete. See [the current review](strategy-review-2026-10-11.md) for the raw-activity, monthly scheduling, funding and matched-payoff fixes, accepted replacement roots, and limits. The old grids have not all been rerun and must not support promotion.
+
 > after the alpha 43 and hold-semantics fixes, with the SOTA base now taken from the corrected replay root.
 > The verdicts are **unchanged in shape**: X = 10% and X = 20% pass the gate on FR25 and X = 30% upward is
 > rejected, with the same monotone cost degradation as the budget rises. Record:

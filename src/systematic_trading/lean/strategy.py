@@ -42,7 +42,7 @@ def targets_for_day(rows: dict, day: date, *, benchmark: bool = False, lookback_
         elif spec.kind == 'financial_rank_selection':
             overlay.schedule = economic_models
             overlay.rolling_schedule = base_tree_models
-        elif spec.kind == 'audited_etf_activity':
+        elif spec.kind in ('audited_etf_activity', 'alpha101_tilt'):
             if raw_rows is None:
                 raise ValueError('Audited raw activity input required for this strategy')
             overlay.raw = {s:[PriceBar.model_validate(r) for r in values if date.fromisoformat(r['trade_date']) < day]

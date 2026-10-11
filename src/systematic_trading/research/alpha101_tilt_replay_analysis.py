@@ -22,30 +22,62 @@ def load_replay(root, job):
     return dict(nav=nav, decisions=len(payload['decisions']), fills=len(payload['fills']))
 
 
-def metrics_from(nav):
-    values = np.array([row['nav'] for row in nav], dtype=float)
+def declared_funding(module=None):
+    """The engine's declared funding anchor, read from the study's own protocol.
+
+    Every tilt study declares ``initial_cash_usd`` in ``protocol()``; reading it here keeps the
+    analysis tied to the declaration instead of to a number copied into the analysis module.
+    """
+    return float((study if module is None else module).protocol()['initial_cash_usd'])
+
+
+INITIAL_CAPITAL = declared_funding()          # the P4.17c study's own $1,000,000 declaration
+
+
+def metrics_from(nav, initial_capital=INITIAL_CAPITAL):
+    """Metrics for a funded account, from the funding anchor through the last end-of-day NAV.
+
+    A replay's ``nav`` series holds end-of-day values only, so its first session's return and
+    drawdown are invisible unless the funding that preceded them is included: the account is funded
+    at ``initial_capital`` and ``nav[0]`` is the first end-of-day mark. The return series therefore
+    runs funding -> nav[0] -> ... -> nav[-1], the drawdown peak starts at the funding amount, and
+    the first funded session counts in the daily, monthly, volatility, Sharpe and total-return
+    numbers. Callers must pass the study's declared funding explicitly; ``initial_capital=None``
+    raises rather than silently falling back to the first NAV.
+    """
+    if not nav:
+        raise ValueError('metrics_from needs at least one end-of-day NAV')
+    if initial_capital is None:
+        raise ValueError('metrics_from needs the funding anchor, not None')
+    funding = float(initial_capital)
+    if not funding > 0:
+        raise ValueError('Funding must be positive: ' + str(initial_capital))
     dates = [row['date'] for row in nav]
+    values = np.array([funding, *(float(row['nav']) for row in nav)], dtype=float)
     daily = values[1:] / values[:-1] - 1.0
     sessions = len(values) - 1
+    # Funding lands at the start of the first recorded session, so the first NAV date is the funding
+    # date for the annualisation.
     years = (date.fromisoformat(dates[-1]) - date.fromisoformat(dates[0])).days / 365.25
-    total = values[-1] / values[0] - 1.0
-    cagr = (values[-1] / values[0]) ** (1.0 / years) - 1.0 if years > 0 else None
+    total = values[-1] / funding - 1.0
+    cagr = (values[-1] / funding) ** (1.0 / years) - 1.0 if years > 0 else None
     volatility = float(stdev(daily)) * np.sqrt(252) if sessions > 1 else None
     sharpe = float(np.mean(daily)) / float(stdev(daily)) * np.sqrt(252) if sessions > 1 and stdev(daily) else None
-    peak, drawdown = values[0], 0.0
+    peak, drawdown = funding, 0.0
     for value in values:
         peak = max(peak, value)
         drawdown = min(drawdown, value / peak - 1.0)
+    calmar = float(cagr) / abs(drawdown) if cagr is not None and drawdown else None
     monthly = {}
-    for index in range(1, len(nav)):
+    for index in range(len(nav)):
         key = dates[index][:7]
-        monthly.setdefault(key, []).append(daily[index - 1])
+        monthly.setdefault(key, []).append(daily[index])
     monthly_returns = {key: float(np.prod([1.0 + r for r in rows]) - 1.0) for key, rows in monthly.items()}
     return dict(total_return=float(total), cagr=float(cagr) if cagr is not None else None,
                 sharpe_zero_cash=None if sharpe is None else float(sharpe),
                 volatility=None if volatility is None else float(volatility),
-                max_drawdown=float(drawdown), calmar=(float(cagr) / abs(drawdown) if drawdown else None),
-                final_nav=float(values[-1]), sessions=sessions, years=years,
+                max_drawdown=float(drawdown), calmar=calmar,
+                final_nav=float(values[-1]), initial_capital=funding, sessions=sessions, years=years,
                 monthly=monthly_returns, daily=list(daily))
 
 
@@ -55,7 +87,7 @@ def load_all(root):
         arm, cost, delay, window = job
         replay = load_replay(root, job)
         out[study.job_name(job)] = dict(arm=arm, cost=cost, delay=delay, window=window, **replay,
-                                        **metrics_from(replay['nav']))
+                                        **metrics_from(replay['nav'], initial_capital=INITIAL_CAPITAL))
     return out
 
 

@@ -1,5 +1,8 @@
 # Peer review of the Alpha101 work: five findings, all confirmed, and what changed
 
+> **Superseded evidence — 2026-10-11 second review.** Earlier numerical and exit/budget conclusions on this page are historical. The prior repair was incomplete. See [the current review](strategy-review-2026-10-11.md) for the raw-activity, monthly scheduling, funding and matched-payoff fixes, accepted replacement roots, and limits. The old grids have not all been rerun and must not support promotion.
+
+
 A second agent reviewed the P4.17 screen, the tilt studies and the deployed overlay on 2026-10-11 and
 reported five implementation defects. **All five were reproduced against the code before anything was
 changed, all five were real, and all five are fixed.** This is the record of what was wrong, what the

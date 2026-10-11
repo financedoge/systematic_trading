@@ -6,10 +6,11 @@ import numpy as np
 from systematic_trading.lean.contracts import sha256, write_json
 from systematic_trading.research.momentum_replay import read_json
 from systematic_trading.research.sleeve_construction_analysis import table
-from systematic_trading.research.alpha101_tilt_replay_analysis import metrics_from
+from systematic_trading.research.alpha101_tilt_replay_analysis import declared_funding, metrics_from
 from systematic_trading.research import alpha101_tilt_surface_study as study
 
 ROOT = study.DEFAULT_ROOT
+INITIAL_CAPITAL = declared_funding(study)      # the study's declared $1,000,000 funding anchor
 
 
 def load_all(root):
@@ -19,7 +20,7 @@ def load_all(root):
         payload = read_json(Path(root) / 'python' / (study.job_name(job) + '.json'))
         nav = [dict(date=row['date'], nav=float(row['nav'])) for row in payload['nav']]
         out[study.job_name(job)] = dict(arm=arm, cost=cost, delay=delay, window=window, nav=nav,
-                                        **metrics_from(nav))
+                                        **metrics_from(nav, initial_capital=INITIAL_CAPITAL))
     return out
 
 

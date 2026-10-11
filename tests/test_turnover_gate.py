@@ -9,10 +9,36 @@ from systematic_trading.research import turnover_gate as gate
 from systematic_trading.research import turnover_gate_analysis as analysis
 from systematic_trading.research.signal_decay import breakeven_ic
 
-CALIBRATION = Path('var/research/turnover-gate-20261010-v1/calibration.json')
-ACCEPTANCE = Path('var/research/turnover-gate-20261010-v1/acceptance.json')
-REPLAYS = Path('var/research/fr25-placebo-20261010-v1')
-BUILT = pytest.mark.skipif(not CALIBRATION.exists(), reason='frozen gate calibration not built in this workspace')
+# Artifacts resolve against the repository, never the current directory: var/research is generated
+# workspace evidence and is not committed, so a fresh checkout rebuilds it through the study's own
+# published path. Artifact-dependent checks are not skipped — they fail loudly and name that command.
+REPO_ROOT = Path(__file__).resolve().parents[1]
+GATE_ROOT = REPO_ROOT / 'var/research/turnover-gate-20261010-v1'
+CALIBRATION = GATE_ROOT / 'calibration.json'
+ACCEPTANCE = GATE_ROOT / 'acceptance.json'
+REPLAYS = REPO_ROOT / 'var/research/fr25-placebo-20261010-v1'
+REBUILD_GATE = ('.venv/Scripts/python.exe scripts/run_turnover_gate.py build\n'
+                '     (it consumes the pinned P4.14 replay root var/research/fr25-placebo-20261010-v1,\n'
+                '      which must be built first: .venv/Scripts/python.exe scripts/run_fr25_placebo.py\n'
+                '      prepare --root var/research/fr25-placebo-20261010-v1, then its calculate,\n'
+                '      economics and analyze stages)')
+REBUILD_REPLAYS = ('.venv/Scripts/python.exe scripts/run_fr25_placebo.py prepare '
+                   '--root var/research/fr25-placebo-20261010-v1\n'
+                   '     (then its calculate, economics and analyze stages)')
+
+
+def _pinned(path, *, rebuild):
+    """The artifact, or a loud failure naming the published command that rebuilds it."""
+    path = Path(path)
+    if not path.exists():
+        pytest.fail(f'Pinned evidence is missing: {path}\n'
+                    'var/research is generated workspace evidence and is not committed, so a fresh '
+                    'checkout must rebuild it through the study\'s own published path, from the '
+                    'repository root:\n'
+                    f'  {rebuild}\n'
+                    'This check is not skipped: a gate verdict without its pinned evidence is not a '
+                    'result, and there is no fallback that would make the assertion weaker.')
+    return path
 
 
 def _mapping(rows):
@@ -169,10 +195,9 @@ def test_alpha101_archetypes_fail_and_the_monitored_book_passes():
 
 # --- against the frozen evidence ----------------------------------------------
 
-@BUILT
 def test_the_published_calibration_reverifies():
-    calibration = json.loads(CALIBRATION.read_text(encoding='utf8'))
-    acceptance = json.loads(ACCEPTANCE.read_text(encoding='utf8'))
+    calibration = json.loads(_pinned(CALIBRATION, rebuild=REBUILD_GATE).read_text(encoding='utf8'))
+    acceptance = json.loads(_pinned(ACCEPTANCE, rebuild=REBUILD_GATE).read_text(encoding='utf8'))
     from systematic_trading.lean.contracts import sha256
     assert sha256(CALIBRATION) == acceptance['calibration_sha256']
     metrics = calibration['calibration']
@@ -183,9 +208,8 @@ def test_the_published_calibration_reverifies():
     assert metrics['correction'].startswith('none')
 
 
-@BUILT
 def test_the_published_verdicts_recompute_from_the_recorded_dispersion():
-    calibration = json.loads(CALIBRATION.read_text(encoding='utf8'))
+    calibration = json.loads(_pinned(CALIBRATION, rebuild=REBUILD_GATE).read_text(encoding='utf8'))
     sigma = calibration['sigma']
     recomputed = {entry['name']: entry['status'] for entry in gate.assess_archetypes(sigma=sigma)}
     published = {entry['name']: entry['status'] for entry in calibration['verdicts']['archetypes']}
@@ -194,9 +218,8 @@ def test_the_published_verdicts_recompute_from_the_recorded_dispersion():
     assert published['alpha101 median'] == 'reject'
 
 
-@BUILT
-@pytest.mark.skipif(not (REPLAYS / 'bars.json').exists(), reason='frozen histories not built in this workspace')
 def test_the_gate_and_the_decay_measurement_share_one_dispersion_definition():
-    calibration = json.loads(CALIBRATION.read_text(encoding='utf8'))
+    calibration = json.loads(_pinned(CALIBRATION, rebuild=REBUILD_GATE).read_text(encoding='utf8'))
+    _pinned(REPLAYS / 'bars.json', rebuild=REBUILD_REPLAYS)
     assert calibration['selection_change']['matches_published'] is True
     assert calibration['sigma'] == pytest.approx(calibration['selection_change']['sigma'])

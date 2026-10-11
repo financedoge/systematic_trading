@@ -15,7 +15,13 @@ or forward-filled: an unsupported observation stays missing.
 **Data basis.** Prices are the audited dividend/split-adjusted series (return research
 basis); ``volume`` is audited raw traded volume, because these formulas use traded activity.
 ``adv{d}`` follows the paper's own definition — *average daily dollar volume* — so it is
-mean(adjusted close x raw volume, d).
+mean(**raw** traded close x raw volume, d) evaluated **per date**. The raw price series is a
+second audited column set on the same calendar, carried as :attr:`History.raw_close`; it is not
+the unaudited provider archive, and a missing raw observation stays missing rather than being
+filled from the adjusted series. Using adjusted price times raw volume (as this module did until
+2026-10-11) does not recover traded dollars and drifts by the cumulative adjustment factor —
+roughly 5x across this panel's history — which peer review showed flips alpha 21's
+``volume / adv20`` branch on an unchanged trading profile.
 
 **Disclosed unit quirk in the published formulas.** The paper defines ``adv{d}`` as dollar
 volume while ``volume`` is share volume, and three registered alphas compare or divide the
@@ -45,7 +51,15 @@ WINDOW = 200  # the longest lookback any registered alpha needs
 
 @dataclass(frozen=True)
 class History:
-    """One instrument's audited history, ending at the last known session."""
+    """One instrument's audited history, ending at the last known session.
+
+    ``close`` and friends are the dividend/split-adjusted series used for return-shaped formulas.
+    ``raw_close`` is the audited **raw traded price** series, aligned row-for-row, and is required
+    by every formula that needs ``adv{d}`` — average daily *dollar* volume — because adjusted price
+    times raw share volume is not traded dollars. It may be ``None`` for a caller that never asks
+    for an ``adv`` formula, and those formulas then return ``None`` rather than silently
+    substituting an adjusted-price proxy.
+    """
 
     symbol: str
     date: str
@@ -54,9 +68,14 @@ class History:
     low: np.ndarray
     close: np.ndarray
     volume: np.ndarray
+    raw_close: np.ndarray | None = None
 
     def __len__(self) -> int:
         return len(self.close)
+
+    def dollar_close(self) -> np.ndarray | None:
+        """The price series ``adv{d}`` must use, or ``None`` when the raw basis is absent."""
+        return self.raw_close
 
 
 # --- operators (all point-in-time: index -1 is the last known session) --------
@@ -121,7 +140,12 @@ def ts_rank(x: np.ndarray, d: int) -> float | None:
 
 
 def adv(close: np.ndarray, volume: np.ndarray, d: int) -> float | None:
-    """The latest d-session mean dollar volume. For a rolling series use ``rolling_adv``."""
+    """The latest d-session mean dollar volume. For a rolling series use ``rolling_adv``.
+
+    ``close`` must be the **raw** price series: ``adv{d}`` is traded dollars, and multiplying an
+    adjusted price by raw share volume does not recover the dollars that changed hands. See
+    :func:`rolling_adv`.
+    """
     if len(close) < d or len(volume) < d:
         return None
     return float(np.mean(close[-d:] * volume[-d:]))
@@ -130,15 +154,25 @@ def adv(close: np.ndarray, volume: np.ndarray, d: int) -> float | None:
 def rolling_adv(close: np.ndarray, volume: np.ndarray, d: int) -> np.ndarray:
     """Each session's own trailing d-session mean dollar volume, aligned to the input.
 
-    Published formulas that divide one series by another (``volume / adv20``) need every date's own
-    average. Dividing a series by the *latest* average is a different and wrong quantity, so the
-    element-wise form lives here and is what the alphas use.
+    Two things this must get right, both reported by peer review on 2026-10-11:
+
+    * **Per date, not latest.** Published formulas that divide one series by another
+      (``volume / adv20``) need every date's own average. Dividing a series by the *latest*
+      average is a different quantity, and because a common positive denominator cannot change a
+      time rank, the historical ADV changes disappeared entirely.
+    * **Raw prices.** ``adv{d}`` is average daily *dollar* volume, so the price basis is the
+      audited **raw** traded price. A dividend/split-adjusted price times raw share volume is not
+      traded dollars, and it drifts by the cumulative adjustment factor — roughly 5x on this
+      panel's 2012 rows — which would flip a level comparison like alpha 21's ``volume / adv20``
+      branch purely on index age. Callers pass the raw series; :class:`History` carries it as
+      ``raw_close`` and the alphas that need ``adv`` require it.
     """
     dollar = close * volume
     if len(dollar) < d:
         return np.array([])
-    cumulative = np.concatenate([[0.0], np.cumsum(dollar)])
-    return (cumulative[d:] - cumulative[:-d]) / d
+    # Missing observations invalidate their own windows, not every subsequent
+    # window as a cumulative sum containing NaN would do.
+    return np.mean(np.lib.stride_tricks.sliding_window_view(dollar, d), axis=1)
 
 
 def sign(value: float | None) -> float | None:
@@ -167,7 +201,10 @@ def alpha_6(h: History) -> float | None:
 
 def alpha_7(h: History) -> float | None:
     """((adv20 < volume) ? ((-1 * ts_rank(abs(delta(close, 7)), 60)) * sign(delta(close, 7))) : (-1 * 1))"""
-    average = adv(h.close, h.volume, 20)
+    prices = h.dollar_close()
+    if prices is None:
+        return None
+    average = adv(prices, h.volume, 20)
     if average is None or not len(h.volume):
         return None
     if average < h.volume[-1]:
@@ -215,7 +252,10 @@ def alpha_21(h: History) -> float | None:
     mean8 = ts_mean(h.close, 8)
     mean2 = ts_mean(h.close, 2)
     spread = stddev(h.close, 8)
-    average = adv(h.close, h.volume, 20)
+    prices = h.dollar_close()
+    if prices is None:
+        return None
+    average = adv(prices, h.volume, 20)
     if mean8 is None or mean2 is None or spread is None or not average or not len(h.volume):
         return None
     if mean8 + spread < mean2:
@@ -286,13 +326,22 @@ def alpha_35(h: History) -> float | None:
 def alpha_43(h: History) -> float | None:
     """(ts_rank((volume / adv20), 20) * ts_rank((-1 * delta(close, 7)), 8))
 
-    The ratio is element-wise against **each date's own** rolling average dollar volume. Dividing the
-    whole volume series by the latest average (as this function did until 2026-10-11) computes a
-    different quantity and changes the ts_rank; it was caught in peer review and is covered by a test
-    that recomputes the published formula independently.
+    Both corrections peer review reported on 2026-10-11 are pinned here:
+
+    * the ratio is element-wise against **each date's own** rolling average dollar volume — dividing
+      the whole volume series by the latest average is a different quantity and was a vacuous time
+      rank, because a common positive denominator cannot change a rank;
+    * that average is built from the audited **raw** traded price, so it is dollars that changed
+      hands rather than an adjusted-price proxy.
+
+    The full warmup the published formula needs is 20 ratios each requiring 20 observations, i.e.
+    39 sessions; shorter history returns ``None`` rather than a partially defined rank.
     """
-    average = rolling_adv(h.close, h.volume.astype(float), 20)
-    if not len(average) or np.any(average == 0):
+    prices = h.dollar_close()
+    if prices is None:
+        return None
+    average = rolling_adv(prices, h.volume.astype(float), 20)
+    if not len(average):
         return None
     ratio = h.volume[-len(average):].astype(float) / average
     first = ts_rank(ratio, 20)
@@ -349,14 +398,27 @@ def alpha_51(h: History) -> float | None:
 
 
 def alpha_53(h: History) -> float | None:
-    """(-1 * delta((((close - low) - (high - close)) / (close - low)), 9))"""
+    """(-1 * delta((((close - low) - (high - close)) / (close - low)), 9))
+
+    ``delta(..., 9)`` is the difference between the two endpoints of a ten-session window, so
+    only those two endpoints need a defined denominator. Rejecting the whole window because an
+    *interior* session had ``close == low`` collapsed the ramp to exactly zero (an endpoint
+    denominator comes from the shared sequence) and discarded otherwise valid observations;
+    peer review, 2026-10-11.
+    """
     if len(h.close) < 10:
         return None
     close, low, high = h.close[-10:], h.low[-10:], h.high[-10:]
     denominator = close - low
-    if np.any(denominator == 0):
+    if denominator[0] == 0 or denominator[-1] == 0:
         return None
-    series = ((close - low) - (high - close)) / denominator
+    series = np.empty(len(close), dtype=float)
+    with np.errstate(divide='ignore', invalid='ignore'):
+        np.divide((close - low) - (high - close), denominator, out=series,
+                  where=denominator != 0)
+    # an interior session with close == low leaves that *interior* ratio undefined; delta(..., 9)
+    # never reads it, so the endpoints alone determine the value and the interior is left unused.
+    series[denominator == 0] = 0.0
     return -1.0 * float(series[-1] - series[-10])
 
 
@@ -416,6 +478,16 @@ def value(name: str, history: History) -> float | None:
         raise ValueError('Unregistered alpha: ' + str(name))
     if len(history) < 2:
         return None
+    activity_window = {'6': 10, '7': 20, '12': 2, '21': 20, '26': 11, '35': 32, '43': 39}.get(name)
+    if activity_window and (len(history.volume) < activity_window
+                            or not np.isfinite(history.volume[-activity_window:]).all()):
+        return None
+    if name in ('7', '21', '43'):
+        raw = history.raw_close
+        if (raw is None or len(raw) != len(history.close) or len(raw) < activity_window
+                or not np.isfinite(raw[-activity_window:]).all()
+                or np.any(raw[-activity_window:] <= 0)):
+            return None
     result = function(history)
     if result is None:
         return None
@@ -432,14 +504,37 @@ def values_for_day(name: str, histories: dict[str, History]) -> dict[str, float]
     return out
 
 
-def history_from_rows(symbol: str, rows, end: str) -> History | None:
-    """Build a history ending at ``end`` (inclusive) from audited bar rows."""
-    window = [row for row in rows if str(row['trade_date']) <= end]
+def history_from_rows(symbol: str, rows, end: str, *, raw_rows=None, lookback=260) -> History | None:
+    """Join audited adjusted OHLC and raw activity by date, through an inclusive cutoff.
+
+    Accept serialized or typed bars. Missing raw observations remain NaN, never
+    adjusted-price substitutes; an alpha requiring that observation is unavailable.
+    Callers supply the last completed session, never the execution session.
+    """
+    def field(row, key):
+        return row[key] if isinstance(row, dict) else getattr(row, key)
+
+    window = [row for row in rows if str(field(row, 'trade_date')) <= str(end)][-lookback:]
     if len(window) < 2:
         return None
+    dates = [str(field(row, 'trade_date')) for row in window]
+    if dates != sorted(set(dates)):
+        raise ValueError('Alpha history must have unique increasing dates')
+    raw = {}
+    for row in raw_rows or ():
+        day = str(field(row, 'trade_date'))
+        if day > str(end):
+            continue
+        if day in raw:
+            raise ValueError('Duplicate audited raw activity date: ' + day)
+        raw[day] = row
+
+    def activity(key):
+        return np.array([float(field(raw[day], key)) if day in raw else np.nan for day in dates])
+
     return History(symbol=symbol, date=end,
-                   open=np.array([float(r['open']) for r in window]),
-                   high=np.array([float(r['high']) for r in window]),
-                   low=np.array([float(r['low']) for r in window]),
-                   close=np.array([float(r['close']) for r in window]),
-                   volume=np.array([float(r['volume']) for r in window]))
+                   open=np.array([float(field(r, 'open')) for r in window]),
+                   high=np.array([float(field(r, 'high')) for r in window]),
+                   low=np.array([float(field(r, 'low')) for r in window]),
+                   close=np.array([float(field(r, 'close')) for r in window]),
+                   volume=activity('volume'), raw_close=activity('close'))

@@ -32,8 +32,6 @@ No promotion, no monitoring change, no allocation change.
 from decimal import Decimal as D
 from pathlib import Path
 
-import numpy as np
-
 from systematic_trading.lean.contracts import sha256, write_json
 from systematic_trading.research import alpha101 as lib
 from systematic_trading.research import alpha101_tilt_study as rule
@@ -43,7 +41,7 @@ from systematic_trading.research.momentum_replay import freeze_usd_bundle, read_
 from systematic_trading.research.turnover_gate import implied_turnover, screen
 
 STUDY = 'alpha101-tilt-daily-v1'
-DEFAULT_ROOT = Path('var/research/alpha101-tilt-daily-20261011-v2')
+DEFAULT_ROOT = Path('var/research/alpha101-tilt-daily-20261011-v3')
 MONTHLY_REFERENCE = Path('var/research/alpha101-tilt-surface-20261011-v2')
 BUDGETS = (0.05, 0.10, 0.20)
 # theta is the deadband as a multiple of the budget. 0 re-tilts every session; 1.0 needs a whole
@@ -97,11 +95,14 @@ def plan(arm):
 
 def protocol():
     return dict(
-        peer_review_20261011=('Corrected after peer review found four implementation defects: (1) the hold/exit arms re-submitted an unchanged target vector every session, which rebalances on price drift instead of holding shares, so rows are now emitted only when the target changes; (2) the exit-and-re-enter branch sat behind a guard an exit had already emptied and could never re-enter; (3) the profit/loss exits read the close of the session they traded, which is look-ahead, and now read only closes strictly before it; (4) alpha 43 divided every historical volume by the latest rolling average dollar volume instead of each date\'s own, and rank IC ranked tied values in ticker order instead of averaging them. The v1 root is superseded and kept as the historical record.'),
-        study=STUDY, version=STUDY + '-v1',
+        peer_review_20261011=('Revision 3 supersedes earlier timing, raw-activity and funding results. '
+            'Monthly schedules retain unchanged rebalances; daily events have strictly prior cutoffs; '
+            'exits use a declared prior-close contribution proxy; re-entry is reachable; raw activity '
+            'is date-aligned. Legacy roots are retained and not reused as repaired evidence.'),
+        study=STUDY, version=STUDY + '-review3',
         bases={k: dict(v, root=str(v['root']), bars_root=str(v['bars_root'])) for k, v in BASES.items()},
         budgets=list(BUDGETS), thresholds=list(THRESHOLDS), reference_budget=REFERENCE_BUDGET,
-        reference_root=str(MONTHLY_REFERENCE), alphas=list(ALPHAS), arms=list(arms()),
+        reference_root='recomputed from this study inputs', alphas=list(ALPHAS), arms=list(arms()),
         window=dict(start=EVALUATION_START, evaluation_start=EVALUATION_START, windows=list(WINDOWS)),
         costs=list(COSTS), delays=list(DELAYS), initial_cash_usd=1_000_000, lookback=LOOKBACK,
         trigger=dict(distance='L1 distance between the desired and the currently held tilt vector',
@@ -112,8 +113,9 @@ def protocol():
                      rebalance_dates='a strategy rebalance always re-derives the tilt unconditionally'),
         limitations=[
             'One inspected window, 2021-01-04 to 2026-10-01; nothing here is out-of-sample evidence.',
-            'The strategy book is held between its monthly decisions, so the daily trade flow is the '
-            'tilt itself; a book that also rebalanced daily would trade more.',
+            'Shares are held between events. Every monthly or alpha event rebalances the complete '
+            'book to base targets plus tilt; event costs include resetting base-weight drift. This is '
+            'not an overlay-only quantity trade.',
             'The threshold is the declared cost control, and the gate verdict is reported as the frontier '
             'rather than used to stop a replay, because the operator asked for the high-frequency surface.',
             'Costs are the parent studies\' 5/10/20bp with zero and one-session delay; none is re-optimised.',
@@ -127,6 +129,7 @@ def _alpha_worker(payload):
     import bisect
     bars_path, days, alpha = payload
     bars = read_json(Path(bars_path))
+    raw = read_json(Path(bars_path).with_name('raw.json'))
     series = {symbol: list(rows) for symbol, rows in bars.items()}
     dates = {symbol: [str(row['trade_date']) for row in rows] for symbol, rows in series.items()}
     out = {}
@@ -137,12 +140,8 @@ def _alpha_worker(payload):
             if cut < 1:
                 continue
             window = rows[max(0, cut - LOOKBACK + 1):cut + 1]
-            history = lib.History(symbol=symbol, date=day,
-                                  open=np.array([float(r['open']) for r in window]),
-                                  high=np.array([float(r['high']) for r in window]),
-                                  low=np.array([float(r['low']) for r in window]),
-                                  close=np.array([float(r['close']) for r in window]),
-                                  volume=np.array([float(r['volume']) for r in window]))
+            history = lib.history_from_rows(symbol, window, str(window[-1]['trade_date']),
+                raw_rows=raw.get(symbol, ()), lookback=LOOKBACK)
             value = lib.value(alpha, history)
             if value is not None:
                 values[symbol] = value
@@ -156,8 +155,13 @@ def values_path(root, base):
 
 def build_values(root, base):
     """Every alpha's daily cross-section, computed once and cached in the root."""
+    from systematic_trading.research.alpha101_tilt_surface_study import verify_base_inputs
+    verify_base_inputs(base)
     path = values_path(root, base)
     if path.exists():
+        receipt = read_json(path.with_suffix('.receipt.json'))
+        if receipt != value_receipt(path, base):
+            raise ValueError('Daily alpha cache or its audited inputs changed')
         return read_json(path)
     from concurrent.futures import ProcessPoolExecutor
     bars_path = str(BASES[base]['bars_root'] / 'bars.json')
@@ -174,7 +178,31 @@ def build_values(root, base):
                 out[day].setdefault(symbol, {})[alpha] = value
     path.parent.mkdir(parents=True, exist_ok=True)
     write_json(path, out)
+    write_json(path.with_suffix('.receipt.json'), value_receipt(path, base))
     return out
+
+
+def value_receipt(path, base):
+    source = BASES[base]['bars_root']
+    return dict(values=sha256(path), bars=sha256(source / 'bars.json'), raw=sha256(source / 'raw.json'),
+                alpha_source=sha256(Path(lib.__file__)), version='raw-activity-v2')
+
+
+def event_context(base, source_rows, days):
+    """Latest actual monthly decision and prior session for every daily event."""
+    sessions = [str(row['trade_date']) for row in read_json(BASES[base]['bars_root'] / 'bars.json')['SPY']]
+    prior = {day: sessions[i - 1] for i, day in enumerate(sessions) if i}
+    decisions = iter(sorted(source_rows))
+    following, current = next(decisions, None), None
+    templates = {}
+    for day in sorted(days):
+        while following is not None and following <= day:
+            current = source_rows[following]
+            following = next(decisions, None)
+        if current is None or day not in prior:
+            raise ValueError('Missing prior decision or session for ' + day)
+        templates[day] = current
+    return templates, prior
 
 
 def composite_scores(held, per_symbol_values):
@@ -209,20 +237,13 @@ def base_books(base):
     values = read_json(spec['bars_root'] / 'bars.json')
     sessions = [str(row['trade_date']) for row in values['SPY']]
     days = [day for day in sessions if day >= EVALUATION_START]
-    months = sorted(day for day in decisions if day >= EVALUATION_START)
-    starts = {}
-    for month in months:
-        starts.setdefault(month[:7], month)
-    out, current, rebalance = {}, None, set()
+    out, current = {}, None
     for day in days:
-        key = day[:7]
-        if key in starts:
-            current = {t['symbol']: float(t['target_weight']) for t in decisions[starts[key]]['targets']
+        if day in decisions:
+            current = {t['symbol']: float(t['target_weight']) for t in decisions[day]['targets']
                        if float(t['target_weight']) > 0}
-            rebalance.add(day)
-        if current is None:
-            continue
-        out[day] = dict(current)
+        if current is not None:
+            out[day] = dict(current)
     return out
 
 
@@ -235,7 +256,8 @@ def rebalance_days(base):
 def simulate(books, rebals, budget, threshold, desired):
     """Daily rows for one arm: hold the tilt until the signal moves far enough to re-trade.
 
-    A row is emitted **only when the target vector changes**. Emitting the same targets every session
+    A row is emitted at every scheduled monthly rebalance, including unchanged weights, and whenever
+    an alpha event changes the target vector. Emitting the same targets every session
     (as this did until 2026-10-11) does not hold a position: the replay rebalances back to the target
     weights on every session, so price drift alone generates trades and the arm stops being comparable
     with the monthly strategy that holds its shares between decisions. Peer review caught that, and
@@ -257,7 +279,7 @@ def simulate(books, rebals, budget, threshold, desired):
         for symbol in set(weights) | set(held_tilt):
             combined[symbol] = weights.get(symbol, 0.0) + held_tilt.get(symbol, 0.0)
         combined = {symbol: weight for symbol, weight in combined.items() if abs(weight) > 1e-12}
-        if combined != last_submitted:
+        if day in rebals or combined != last_submitted:
             rows[day] = combined
             last_submitted = dict(combined)
     return rows, dict(days=len(books), trades=trades, submitted=len(rows),
@@ -265,7 +287,7 @@ def simulate(books, rebals, budget, threshold, desired):
                       mean_distance=sum(distances) / len(distances) if distances else 0.0)
 
 
-def tilt_row(template, weights):
+def tilt_row(template, weights, *, day=None, known_through=None):
     """The base book's monthly decision with the daily tilt applied, in the frozen row shape."""
     targets = []
     for target in template['targets']:
@@ -276,12 +298,19 @@ def tilt_row(template, weights):
     missing = set(weights) - {t['symbol'] for t in template['targets']}
     if missing:
         raise ValueError('Daily tilt introduced a symbol outside the base universe: ' + ', '.join(sorted(missing)))
-    return dict(template, targets=targets)
+    row = dict(template, targets=targets)
+    if day is not None:
+        if known_through is None or known_through >= day:
+            raise ValueError('Daily event needs a strictly prior signal cutoff')
+        row.update(signal_session=day, known_through=known_through)
+    return row
 
 
 def freeze(root=DEFAULT_ROOT):
     import shutil
     root = Path(root)
+    if (root / 'protocol.json').exists():
+        raise FileExistsError('Preserve frozen study; use a new evidence root')
     root.mkdir(parents=True, exist_ok=True)
     source = root / 'source' / 'systematic_trading'
     if not source.exists():
@@ -296,25 +325,25 @@ def freeze(root=DEFAULT_ROOT):
         books = base_books(base)
         rebals = rebalance_days(base)
         source_rows = read_json(spec['root'] / 'decisions' / (spec['arm'] + '.json'))
-        templates = {}
-        for key, row in sorted(source_rows.items()):
-            if key >= EVALUATION_START:
-                templates.setdefault(key[:7], row)
-        rows, last = {}, None
+        templates, prior = event_context(base, source_rows, books)
+        rows = {}
         for day, weights in books.items():
-            template = templates.get(day[:7])
+            template = templates.get(day)
             if template is None:
                 raise ValueError('No monthly decision template for ' + day)
             # The control submits only when its own book changes, i.e. at each monthly decision.
             # Writing one row per session rebalanced the control every day, which is not the
             # strategy being controlled for.
-            if weights != last:
-                rows[day] = tilt_row(template, weights)
-                last = dict(weights)
+            if day in rebals:
+                rows[day] = tilt_row(template, weights, day=day, known_through=prior[day])
         write_json(root / 'decisions' / (base + '.json'), rows)
         diagnostics[base] = dict(mode='control', days=len(books), submitted=len(rows), trades=0,
                                  trade_share=0.0, mean_distance=0.0)
-        monthly = read_json(MONTHLY_REFERENCE / 'decisions' / f'{base}-TILT-{int(100 * REFERENCE_BUDGET)}.json')
+        reference_tilt = desired_tilt(base, REFERENCE_BUDGET, values, books)
+        monthly = {day: tilt_row(templates[day],
+            {s: books[day].get(s, 0) + reference_tilt[day].get(s, 0)
+             for s in set(books[day]) | set(reference_tilt[day])}, day=day, known_through=prior[day])
+            for day in books if day in rebals}
         write_json(root / 'decisions' / (monthly_arm(base) + '.json'), monthly)
         diagnostics[monthly_arm(base)] = dict(mode='monthly', days=len(monthly), trades=len(monthly),
                                               trade_share=len(monthly) / len(rows), mean_distance=0.0)
@@ -324,7 +353,8 @@ def freeze(root=DEFAULT_ROOT):
                 tilted, stats = simulate(books, rebals, budget, threshold, desired)
                 arm = daily_arm(base, budget, threshold)
                 write_json(root / 'decisions' / (arm + '.json'),
-                           {day: tilt_row(templates[day[:7]], weights) for day, weights in tilted.items()})
+                           {day: tilt_row(templates[day], weights, day=day, known_through=prior[day])
+                            for day, weights in tilted.items()})
                 diagnostics[arm] = dict(mode='daily', **stats)
     write_json(root / 'decision_diagnostics.json', diagnostics)
     write_json(root / 'decision_manifest.json',
@@ -332,8 +362,9 @@ def freeze(root=DEFAULT_ROOT):
     write_json(root / 'input_manifest.json', dict(
         bases={name: dict(arm=spec['arm'],
                           decisions=sha256(spec['root'] / 'decisions' / (spec['arm'] + '.json')),
-                          bars=sha256(spec['bars_root'] / 'bars.json')) for name, spec in BASES.items()},
-        monthly_reference=sha256(MONTHLY_REFERENCE / 'protocol.json'),
+                          bars=sha256(spec['bars_root'] / 'bars.json'),
+                          raw=sha256(spec['bars_root'] / 'raw.json')) for name, spec in BASES.items()},
+        monthly_reference='recomputed from the same raw-activity values and monthly schedule',
         note='P4.17e adds no new data source: the same two frozen base books and their audited bars'))
     write_json(root / 'data_receipt.json', dict(
         protocol_sha256=sha256(root / 'protocol.json'),
@@ -423,6 +454,7 @@ def verify(root=DEFAULT_ROOT):
     checks = {'base_inputs_unchanged': all(
         sha256(BASES[name]['root'] / 'decisions' / (spec['arm'] + '.json')) == spec['decisions']
         and sha256(BASES[name]['bars_root'] / 'bars.json') == spec['bars']
+        and sha256(BASES[name]['bars_root'] / 'raw.json') == spec.get('raw')
         for name, spec in manifest['bases'].items())}
     checks['decisions_present'] = all((root / 'decisions' / (arm + '.json')).exists() for arm in arms())
     checks['economics_complete'] = all((root / 'python' / (job_name(job) + '.json')).exists() for job in jobs())

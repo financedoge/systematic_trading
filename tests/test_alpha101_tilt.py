@@ -6,8 +6,31 @@ import pytest
 
 from systematic_trading.research import alpha101_tilt as tilt
 
-ROOT = Path('var/research/alpha101-tilt-20261011-v2')
+ROOT = tilt.DEFAULT_ROOT
 BUILT = pytest.mark.skipif(not (ROOT / 'tilt.json').exists(), reason='frozen tilt measurement not built')
+# The headroom test reads the pinned P4.15 gate calibration through ``tilt.calibration()``, which
+# resolves this workspace path against the current directory. That evidence is generated and is not
+# committed, so when it is absent the test must name the command that rebuilds it rather than die
+# with a FileNotFoundError from inside the reader.
+GATE_CALIBRATION = str(tilt.CALIBRATION)
+
+
+def _require_gate_calibration():
+    if not Path(GATE_CALIBRATION).exists():
+        pytest.fail(
+            f'tilt.calibration() needs the pinned gate calibration, which is not present at '
+            f'{Path(GATE_CALIBRATION).resolve()} (repository copy: '
+            f'{Path(__file__).resolve().parents[1] / GATE_CALIBRATION}).\n'
+            'var/research is generated workspace evidence and is not committed, so a fresh checkout '
+            'must rebuild it through the study\'s own published path, from the repository root:\n'
+            '  .venv/Scripts/python.exe scripts/run_turnover_gate.py build\n'
+            '     (it consumes the pinned P4.14 replay root var/research/fr25-placebo-20261010-v1,\n'
+            '      which must be built first: .venv/Scripts/python.exe scripts/run_fr25_placebo.py\n'
+            '      prepare --root var/research/fr25-placebo-20261010-v1, then its calculate,\n'
+            '      economics and analyze stages)\n'
+            'The headroom is only defined against that pinned artifact, so this check is not skipped '
+            'and has no fallback.')
+    return Path(GATE_CALIBRATION)
 
 
 def book(**weights):
@@ -68,6 +91,7 @@ def test_a_book_without_a_cross_section_is_left_alone():
 # --- the published headroom --------------------------------------------------
 
 def test_the_headroom_is_derived_from_the_published_ceiling_and_drag():
+    _require_gate_calibration()
     configured = tilt.calibration()
     assert configured['ceiling_bps'] == pytest.approx(44.0)
     assert configured['monitored_drag_bps'] == pytest.approx(40.4, abs=0.1)
@@ -102,38 +126,16 @@ def test_every_candidate_carries_a_verdict_and_a_reason():
 
 
 @BUILT
-def test_the_tilt_uses_a_small_fraction_of_the_headroom_at_the_small_budget():
+def test_frozen_passes_require_matched_payoff_and_affordability():
     payload = json.loads((ROOT / 'tilt.json').read_text(encoding='utf8'))
-    headroom = payload['calibration']['headroom_bps']
-    small = [row for row in payload['rows'] if row['budget'] == 0.05]
-    assert max(row['gate']['annual_cost_bps'] for row in small) < 0.2 * headroom
-    assert sum(1 for row in small if row['gate']['status'] == 'pass') >= 12
-    # the breakeven IC collapses relative to the rejected full mappings
-    assert max(row['gate'].get('breakeven_ic') or 0.0 for row in small) < 0.001
-
-
-@BUILT
-def test_the_balance_breaks_at_the_largest_budget():
-    payload = json.loads((ROOT / 'tilt.json').read_text(encoding='utf8'))
-    passes = {budget: sum(1 for row in payload['rows']
-                          if row['budget'] == budget and row['gate']['status'] == 'pass')
-              for budget in tilt.BUDGETS}
-    # Corrected 2026-10-11: after the alpha-43 fix the 10% column passes 11 rather than 12, so the
-    # test asserts the shape (wide at 5%, one fewer at 10%, deeply broken at 20%) instead of 12.
-    assert passes[0.05] >= 12 and passes[0.10] >= 10
-    assert passes[0.20] < passes[0.10] <= passes[0.05]
-    expensive = [row for row in payload['rows'] if row['budget'] == 0.20]
-    assert max(row['gate']['annual_cost_bps'] for row in expensive) > payload['calibration']['headroom_bps']
-
-
-@BUILT
-def test_negative_information_is_rejected_rather_than_tilted_long():
-    payload = json.loads((ROOT / 'tilt.json').read_text(encoding='utf8'))
-    rows = {row['alpha']: row for row in payload['rows'] if row['budget'] == 0.05}
-    for alpha in ('101', '23', '12'):
-        assert rows[alpha]['observed_ic'] < 0
-        assert rows[alpha]['gate']['status'] == 'reject'
-    assert rows['7']['gate']['status'] == 'insufficient'        # still a constant cross-section
+    for row in payload['rows']:
+        verdict = row['gate']
+        assert verdict['version'] == 'tilt-payoff-cost-v2'
+        if verdict['status'] == 'pass':
+            assert verdict['annual_cost_bps'] <= verdict['cost_ceiling_bps']
+            assert verdict['annual_payoff_bps'] > 0
+            assert verdict['annual_payoff_bps'] >= 3 * max(0, verdict['annual_cost_bps'])
+        assert verdict['ic_margin'] is None  # full-book IC cannot finance a small tilt
 
 
 @BUILT

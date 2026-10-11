@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 from systematic_trading.live.strategy_control import (
     activation_issues, authorize_catch_up, cancel_pending, candidate_evidence, handover_phase, next_handover, preview_change, schedule_change,
 )
-from systematic_trading.portfolio.strategy_allocation import AllocationChange, control_events, control_state
+from systematic_trading.portfolio.strategy_allocation import AllocationChange, control_events, control_state, allocation_contract_issue
 from systematic_trading.research.strategy_catalog import registered_strategy_definition
 from systematic_trading.research.strategy_lifecycle import membership, change_membership, calculation_ready
 
@@ -66,7 +66,7 @@ def status(request: Request):
         definition = registered_strategy_definition(key)
         saved=analytics.document('tracked-strategies/calculations','detail/'+key) if analytics else None
         detail=json.loads(saved[0]['payload']) if saved else {}
-        if detail and calculation_ready(detail,monitoring,through):
+        if detail and calculation_ready(detail,monitoring,through) and not allocation_contract_issue(definition):
             candidates.append(dict(strategy_key=key,name=definition.name,report_url='/api/v1/strategies/'+key+'/report'))
     now = datetime.now(UTC)
     history = control_events(store)

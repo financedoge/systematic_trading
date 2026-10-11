@@ -18,9 +18,9 @@ def _grid_rows(payload):
             row['alpha'], f"{100 * row['budget']:.0f}%",
             f"{row['turnover']['incremental_annual']:.2f}x",
             f"{gate['annual_cost_bps']:.2f}bp",
-            f"{gate.get('breakeven_ic', 0.0):.5f}",
+            'n/a' if gate.get('annual_payoff_bps') is None else f"{gate['annual_payoff_bps']:+.3f}bp",
             'n/a' if row['observed_ic'] is None else f"{row['observed_ic']:+.4f}",
-            'n/a' if gate.get('ic_margin') is None else f"{gate['ic_margin']:,.0f}x",
+            'n/a' if gate.get('payoff_cost_margin') is None else f"{gate['payoff_cost_margin']:.2f}x",
             gate['status'].upper(),
             'n/a' if books['cap_binding_share'] is None else f"{100 * books['cap_binding_share']:.0f}% / {books['scale_mean']:.3f}",
         ])
@@ -49,7 +49,7 @@ def _summary_rows(payload):
 def report(root=ROOT, output=None):
     root = Path(root)
     payload = read_json(root / 'tilt.json')
-    output = Path(output or 'research/alpha101-tilt-2026-10-11')
+    output = Path(output or 'research/alpha101-tilt-review-2026-10-11')
     output.mkdir(parents=True, exist_ok=True)
     calibration = payload['calibration']
     headroom = calibration['headroom_bps']
@@ -58,16 +58,13 @@ def report(root=ROOT, output=None):
         subset = [row for row in payload['rows'] if row['budget'] == budget]
         counts[budget] = sum(1 for row in subset if row['gate']['status'] == 'pass')
 
-    body = ['<section id="verdict"><h2>Verdict</h2>',
-            f'<p class="lead">Tilting the existing book works where choosing it did not. At a '
-            f'<strong>5% budget, {counts[0.05]} alphas clear the P4.15 '
-            f'gate</strong>, for an incremental cost of <strong>0.00–0.48bp</strong> against the '
-            f'<strong>{headroom:.2f}bp</strong> of headroom the monitored book leaves. The breakeven IC falls '
-            f'from 0.006–0.012 for the rejected top-six mappings to <strong>0.00000–0.00008</strong>, so the '
-            f'IC bar the operator expected to be low is low — as a consequence of the cheaper mapping, not of '
-            f'a relaxed gate. At a 20% budget cost becomes binding again and only {counts[0.20]} of 16 clear, '
-            f'so the cost/alpha balance sits at <strong>5–10%</strong>. No economics were produced: nothing is '
-            f'replayed until a candidate clears, and this is a measurement, not a promotion.</p></section>']
+    body = ['<section id="verdict"><h2>Corrected matched-payoff screen</h2>',
+            f'<p class="lead">At a 5% budget, {counts[0.05]} of 16 pass; '
+            f'at 10%, {counts[0.10]}; at 20%, {counts[0.20]}. '
+            f'Annual cost headroom is {headroom:.2f}bp. Each pass requires positive '
+            'tilt-weighted forward payoff and at least three times incremental positive cost. '
+            'Full-universe rank IC is diagnostic only. Cost savings alone cannot establish an edge. '
+            'This inspected-sample screen is not realized portfolio profit or promotion evidence.</p></section>']
 
     body.append('<section id="summary"><h2>The cost/alpha balance by budget</h2>')
     body.append(table(['Budget X', 'Alphas passing', 'Incremental turnover', 'Incremental cost',
@@ -78,37 +75,19 @@ def report(root=ROOT, output=None):
                 'trading.</p></section>')
 
     body.append('<section id="grid"><h2>The full grid, every declared candidate</h2>')
-    body.append(table(['Alpha', 'X', 'Incremental turnover', 'Incremental cost', 'Breakeven IC',
-                       'Observed IC (21)', 'IC margin', 'Verdict', 'Cap binding / mean scale'],
+    body.append(table(['Alpha', 'X', 'Incremental turnover', 'Incremental cost', 'Annual tilt payoff',
+                       'Full-pool IC (diagnostic)', 'Payoff/cost', 'Verdict', 'Cap binding / mean scale'],
                       _grid_rows(payload)))
-    body.append('<p>Every one of the sixteen registered alphas is reported at every budget; nothing is dropped '
-                'after the fact and X is never chosen from the outcome. The three rejected alphas carry '
-                '<em>negative</em> information — alpha 101 most clearly, at −0.0749 with an interval excluding '
-                'zero — so a long tilt of them points the wrong way, which is why they fail the IC test rather '
-                'than the cost test.</p></section>')
-
-    body.append('<section id="method"><h2>Method</h2>'
-                '<p>The base book is the pinned capped pooled control\'s own decisions: real membership, real '
-                'weights, unchanged. The held names carrying an alpha value are ranked; each gets a linear rank '
-                'score in [−1, +1] with zero mean; total overweight equals total underweight equals X/2 of NAV; '
-                'and one per-decision shrink factor scales the whole tilt so no name breaches the 45% cap or '
-                'goes negative. The incremental traded notional is the difference between the tilted and '
-                'untilted books on the gate\'s own implied-turnover measure; the breakeven IC is taken at that '
-                'incremental turnover at the published dispersion; and the observed IC is the frozen P4.17 '
-                'screen\'s 21-session rank IC, so the information measurement is not re-fitted here. The gate\'s '
-                'frozen 3× margin is applied unchanged.</p></section>')
-
-    body.append('<section id="evidence"><h2>Verification</h2>'
-                '<p><a href="../../var/research/alpha101-tilt-20261011-v1/protocol.json">Frozen protocol</a> · '
-                '<a href="../../var/research/alpha101-tilt-20261011-v1/tilt.json">Tilt artifact</a> · '
-                '<a href="../../var/research/alpha101-tilt-20261011-v1/input_manifest.json">Input manifest</a> · '
-                '<a href="../alpha101-screen-2026-10-11/index.html">P4.17 screen</a> · '
-                '<a href="../turnover-gate-2026-10-10/index.html">P4.15 gate</a></p>'
-                '<ul><li>The measurement re-runs to an identical artifact.</li>'
-                '<li>The pinned control decisions, the frozen P4.17 screen and the published P4.15 calibration '
-                'are re-checked by hash.</li>'
-                '<li>The monitored drag is asserted against the published 40.4bp, so a wrong arm or artifact '
-                'stops the study rather than silently changing the headroom.</li></ul></section>')
+    body.append('<p>All sixteen alphas and three budgets are retained. '
+                'Missing forward legs invalidate an observation; no-op decisions contribute zero payoff. '
+                'The forward payoff is a 21-session research proxy, not next-open fill PnL. '
+                'Affordability and information are separate tests.</p></section>')
+    body.append('<section id="proof"><h2>Frozen evidence</h2>'
+                f'<p>Evidence root: <code>{root.as_posix()}</code>. '
+                f'Tilt SHA-256: <code>{sha256(root / "tilt.json")}</code>. '
+                'The source snapshot, audited parent input hashes and matched-calendar calibration '
+                'are retained. Verification recomputes in a temporary directory and never overwrites '
+                'the frozen measurement.</p></section>')
 
     body.append('<section id="limits"><h2>Limits</h2><ul>'
                 '<li>The observed ICs come from the same inspected window as the P4.17 screen; they are not '

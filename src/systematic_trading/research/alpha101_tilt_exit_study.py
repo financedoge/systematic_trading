@@ -37,7 +37,7 @@ from systematic_trading.research import alpha101_tilt_daily_study as daily
 from systematic_trading.research.momentum_replay import read_json
 
 STUDY = 'alpha101-tilt-exit-v1'
-DEFAULT_ROOT = Path('var/research/alpha101-tilt-exit-20261011-v2')
+DEFAULT_ROOT = Path('var/research/alpha101-tilt-exit-20261011-v3')
 BASES = daily.BASES
 BUDGETS = (0.05, 0.10, 0.20)
 # Primary family: the signal-based exits the operator asked for.
@@ -90,8 +90,11 @@ def plan(arm):
 
 def protocol():
     return dict(
-        peer_review_20261011=('Corrected after peer review found four implementation defects: (1) the hold/exit arms re-submitted an unchanged target vector every session, which rebalances on price drift instead of holding shares, so rows are now emitted only when the target changes; (2) the exit-and-re-enter branch sat behind a guard an exit had already emptied and could never re-enter; (3) the profit/loss exits read the close of the session they traded, which is look-ahead, and now read only closes strictly before it; (4) alpha 43 divided every historical volume by the latest rolling average dollar volume instead of each date\'s own, and rank IC ranked tied values in ticker order instead of averaging them. The v1 root is superseded and kept as the historical record.'),
-        study=STUDY, version=STUDY + '-v1',
+        peer_review_20261011=('Revision 3 supersedes earlier timing, raw-activity and funding results. '
+            'Monthly schedules retain unchanged rebalances; daily events have strictly prior cutoffs; '
+            'exits use a declared prior-close contribution proxy; re-entry is reachable; raw activity '
+            'is date-aligned. Legacy roots are retained and not reused as repaired evidence.'),
+        study=STUDY, version=STUDY + '-review3',
         bases={k: dict(v, root=str(v['root']), bars_root=str(v['bars_root'])) for k, v in BASES.items()},
         budgets=list(BUDGETS), rules=list(RULES), arms=list(arms()), pnl_stop=PNL_STOP,
         secondary=dict(budget=SECONDARY_BUDGET, rules=list(SECONDARY_RULES), stop=PNL_STOP_TIGHT,
@@ -116,8 +119,9 @@ def protocol():
         limitations=[
             'One inspected window, 2021-01-04 to 2026-10-01; the best arm is an in-sample optimum.',
             'The tilt is opened at the strategy\'s monthly decision; only the exit is intra-month.',
-            'The P&L stop is measured on the tilt\'s weighted return, a declared proxy for its own contribution, '
-            'not on the book\'s NAV.',
+            'PnL triggers use a prior-close anchored weighted-return proxy, not fill PnL or broker stops. '
+            'They do not promise execution at a threshold. Every event resets the entire base-plus-tilt '
+            'target book; costs include base-drift reset. A pure overlay-quantity trade is a different recipe.',
             'Costs are the parents\' 5/10/20bp with zero and one-session delay; none is re-optimised.',
         ])
 
@@ -155,8 +159,9 @@ def tilt_return(held, state, known):
     for symbol, tilt in held.items():
         entry_price = state['entry_prices'].get(symbol)
         now = known.get(symbol)
-        if entry_price and now:
-            contribution += tilt * (now / entry_price - 1.0)
+        if not entry_price or not now:
+            return None
+        contribution += tilt * (now / entry_price - 1.0)
     return contribution
 
 
@@ -170,11 +175,14 @@ def should_exit(rule_name, held, wanted, state, known):
     if rule_name == 'EXIT-FADE':
         return l1(wanted) < FADE_FRACTION * state['entry_magnitude']
     if rule_name == 'EXIT-PNL':
-        return tilt_return(held, state, known) <= PNL_STOP
+        value = tilt_return(held, state, known)
+        return value is not None and value <= PNL_STOP
     if rule_name == 'EXIT-SL-05':
-        return tilt_return(held, state, known) <= PNL_STOP_TIGHT
+        value = tilt_return(held, state, known)
+        return value is not None and value <= PNL_STOP_TIGHT
     if rule_name == 'EXIT-TP-1':
-        return tilt_return(held, state, known) >= TAKE_PROFIT
+        value = tilt_return(held, state, known)
+        return value is not None and value >= TAKE_PROFIT
     raise ValueError('Unregistered exit rule: ' + str(rule_name))
 
 
@@ -190,7 +198,8 @@ def simulate(books, rebals, budget, rule_name, desired, closes):
 
     Two rules matter and are both pinning tests:
 
-    * A row is emitted **only when the target vector changes**, so between events the engine holds
+    * A row is emitted at scheduled monthly rebalances (even unchanged weights) and when an exit or
+      re-entry changes the target vector, so between events the engine holds
       shares and price drift generates no trade. Re-submitting the same targets every session (as this
       did until 2026-10-11) is a daily-rebalanced process, not the monthly strategy being compared.
     * The exit test may only read closes **strictly before** the session it trades. ``known`` carries
@@ -203,8 +212,10 @@ def simulate(books, rebals, budget, rule_name, desired, closes):
     held, rows, events = {}, {}, {'entries': 0, 'exits': 0, 'reentries': 0, 'exit_days': [],
                                   'submitted': 0}
     state = {'entry_magnitude': 0.0, 'entry_prices': {}, 'entry_direction': {}}
-    known, last_submitted = {}, None
-    pending_entry = False
+    first = min(books) if books else ''
+    prior_session = max((day for series in closes.values() for day in series if day < first), default=None)
+    known = {symbol: series[prior_session] for symbol, series in closes.items() if prior_session in series}
+    last_submitted = None
     for day in sorted(books):
         weights = books[day]
         wanted = desired.get(day) or {}
@@ -212,15 +223,13 @@ def simulate(books, rebals, budget, rule_name, desired, closes):
         if day in rebals:
             held = dict(wanted)
             events['entries'] += 1
-            # The entry base is the entry session's own close, which is known before every later
-            # decision. Only the *exit* rules must avoid the session they trade.
-            state = {'entry_magnitude': l1(held), 'entry_prices': {}, 'entry_direction': direction(held)}
-            pending_entry = True
+            # A declared prior-close contribution proxy, not realized fill P&L.
+            # It remains causal under either execution-delay arm.
+            state = {'entry_magnitude': l1(held),
+                     'entry_prices': {symbol: known.get(symbol) for symbol in held},
+                     'entry_direction': direction(held)}
             changed = True
         else:
-            if pending_entry and held:
-                state['entry_prices'] = {symbol: known.get(symbol) for symbol in held}
-                pending_entry = False
             if held:
                 if should_exit(rule_name, held, wanted, state, known):
                     held = {}
@@ -230,9 +239,9 @@ def simulate(books, rebals, budget, rule_name, desired, closes):
             elif rule_name == 'EXIT-FLIP-REENTER' and should_reenter(state['entry_direction'], wanted, state):
                 held = dict(wanted)
                 events['reentries'] += 1
-                state = {'entry_magnitude': l1(held), 'entry_prices': {},
+                state = {'entry_magnitude': l1(held),
+                         'entry_prices': {symbol: known.get(symbol) for symbol in held},
                          'entry_direction': direction(held)}
-                pending_entry = True
                 changed = True
         combined = {symbol: weights.get(symbol, 0.0) + held.get(symbol, 0.0)
                     for symbol in set(weights) | set(held)}
@@ -241,10 +250,7 @@ def simulate(books, rebals, budget, rule_name, desired, closes):
             rows[day] = combined
             last_submitted = dict(combined)
             events['submitted'] += 1
-        for symbol, series in closes.items():
-            value = series.get(day)
-            if value is not None:
-                known[symbol] = value
+        known = {symbol: series[day] for symbol, series in closes.items() if day in series}
     events['days'] = len(books)
     return rows, events
 
@@ -252,6 +258,8 @@ def simulate(books, rebals, budget, rule_name, desired, closes):
 def freeze(root=DEFAULT_ROOT):
     import shutil
     root = Path(root)
+    if (root / 'protocol.json').exists():
+        raise FileExistsError('Preserve frozen study; use a new evidence root')
     root.mkdir(parents=True, exist_ok=True)
     source = root / 'source' / 'systematic_trading'
     if not source.exists():
@@ -266,17 +274,11 @@ def freeze(root=DEFAULT_ROOT):
         rebals = daily.rebalance_days(base)
         closes = closes_by_day(base)
         source_rows = read_json(BASES[base]['root'] / 'decisions' / (BASES[base]['arm'] + '.json'))
-        templates = {}
-        for key, row in sorted(source_rows.items()):
-            if key >= daily.EVALUATION_START:
-                templates.setdefault(key[:7], row)
+        templates, prior = daily.event_context(base, source_rows, books)
         control = {}
         for day, weights in books.items():
-            row = daily.tilt_row(templates[day[:7]], weights)
-            if control.get('last') != weights:
-                control[day] = row
-                control['last'] = dict(weights)
-        control.pop('last', None)
+            if day in rebals:
+                control[day] = daily.tilt_row(templates[day], weights, day=day, known_through=prior[day])
         write_json(root / 'decisions' / (base + '.json'), control)
         diagnostics[base] = dict(entries=0, exits=0, reentries=0, days=len(books))
         for budget in BUDGETS:
@@ -285,14 +287,16 @@ def freeze(root=DEFAULT_ROOT):
                 tilted, events = simulate(books, rebals, budget, rule_name, desired, closes)
                 arm = arm_name(base, budget, rule_name)
                 write_json(root / 'decisions' / (arm + '.json'),
-                           {day: daily.tilt_row(templates[day[:7]], weights) for day, weights in tilted.items()})
+                           {day: daily.tilt_row(templates[day], weights, day=day, known_through=prior[day])
+                            for day, weights in tilted.items()})
                 diagnostics[arm] = events
         desired_secondary = daily.desired_tilt(base, SECONDARY_BUDGET, values, books)
         for rule_name in SECONDARY_RULES:
             tilted, events = simulate(books, rebals, SECONDARY_BUDGET, rule_name, desired_secondary, closes)
             arm = arm_name(base, SECONDARY_BUDGET, rule_name)
             write_json(root / 'decisions' / (arm + '.json'),
-                       {day: daily.tilt_row(templates[day[:7]], weights) for day, weights in tilted.items()})
+                       {day: daily.tilt_row(templates[day], weights, day=day, known_through=prior[day])
+                        for day, weights in tilted.items()})
             diagnostics[arm] = events
     write_json(root / 'decision_diagnostics.json', diagnostics)
     write_json(root / 'decision_manifest.json',
@@ -300,7 +304,8 @@ def freeze(root=DEFAULT_ROOT):
     write_json(root / 'input_manifest.json', dict(
         bases={name: dict(arm=spec['arm'],
                           decisions=sha256(spec['root'] / 'decisions' / (spec['arm'] + '.json')),
-                          bars=sha256(spec['bars_root'] / 'bars.json')) for name, spec in BASES.items()},
+                          bars=sha256(spec['bars_root'] / 'bars.json'),
+                          raw=sha256(spec['bars_root'] / 'raw.json')) for name, spec in BASES.items()},
         note='P4.17f adds no new data source: the same two frozen base books and their audited bars'))
     write_json(root / 'data_receipt.json', dict(
         protocol_sha256=sha256(root / 'protocol.json'),
@@ -397,6 +402,7 @@ def verify(root=DEFAULT_ROOT):
     checks = {'base_inputs_unchanged': all(
         sha256(BASES[name]['root'] / 'decisions' / (spec['arm'] + '.json')) == spec['decisions']
         and sha256(BASES[name]['bars_root'] / 'bars.json') == spec['bars']
+        and sha256(BASES[name]['bars_root'] / 'raw.json') == spec.get('raw')
         for name, spec in manifest['bases'].items())}
     checks['decisions_present'] = all((root / 'decisions' / (arm + '.json')).exists() for arm in arms())
     checks['economics_complete'] = all((root / 'python' / (daily.job_name(job) + '.json')).exists()

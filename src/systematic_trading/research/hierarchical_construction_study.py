@@ -18,22 +18,38 @@ P4.15 turnover gate before any replay.
    the same positive 126-session momentum gate the pooled control uses. A sleeve whose
    every instrument is in a downtrend is dropped outright — that is the operator's
    point, and it is a gate rather than a ranking so it needs no threshold.
-2. **Class score.** A qualifying sleeve is scored by the mean of its two best eligible
-   members' scores — the mean of what the rule would actually hold from it. A sleeve
-   with a single eligible member scores that member. This keeps one signal end to end
-   instead of introducing a second class-index momentum with its own lookback.
+2. **Class score.** A qualifying sleeve is scored by the mean of the members it will
+   **actually hold**, as scored in the global cross-section rank table. The held members
+   come from the parent overlay's own within-sleeve reranking (eligibility is the absolute
+   126-session gate per member; among the members that pass, the top two of the
+   *within-sleeve* rank table), and their numbers come from the *global* table — the only
+   population in which a one-instrument sleeve can be scored at all, and the population
+   that keeps every class on one comparable scale. This keeps one signal end to end
+   instead of introducing a second class-index momentum with its own lookback. The class
+   score is **not** the mean of the globally top-ranked members: that was v1's rule, and it
+   could score names the rule did not hold.
 3. **Choice.** The top K qualifying sleeves by class score receive equal budgets
    (`1/K` of the incoming gross each). K is 2 or 3, both declared as a family; fewer
    qualify means fewer are chosen, never a forced fill.
 4. **Within.** Inside each chosen sleeve the top two eligible instruments are selected
    (one for a single-instrument sleeve) and the sleeve's budget is split across them in
-   proportion to their incoming inverse-volatility weights.
+   proportion to their incoming inverse-volatility weights. The absolute-momentum gate is
+   decided for every member from its own price history, before any ranking or fallback and
+   independently of sleeve size.
 5. **No fill.** An unfilled slot leaves cash; a day with no qualifying class is
    entirely cash. Nothing is ever forced into the book.
 
 Reused unchanged from the pooled control: the same scoring parameters, the same
 downstream chain (XGBoost tilt, relative momentum, adaptive trend, audited raw activity,
 USD ridge), the same final 45% cap, the same execution and the same 5bp cost.
+
+**v2 repair, 2026-10-11 (peer review).** Two defects are repaired here, both inherited
+from the shared overlay rather than from the rule above: the singleton gate hole (a
+sleeve too small to form a rank table bypassed the positive-momentum gate) and the class
+score's population (v1 averaged the globally top-ranked members, which could differ from
+the members the within-sleeve reranking held). The rule, the arms, K, the slots, the
+costs, the windows, the family and the assessment are unchanged; the parent for v2 is the
+corrected P4.16 root ``sleeve-construction-20261010-v2``.
 """
 from decimal import Decimal as D
 from pathlib import Path
@@ -41,8 +57,10 @@ from pathlib import Path
 from systematic_trading.research.sleeve_construction_study import (CONTROLS, CONTROL_LABELS, COSTS, DELAYS,
     PARENT_CONTROLS, SLEEVES, WINDOWS)
 
-PARENT = Path('var/research/sleeve-construction-20261010-v1')
-DEFAULT_ROOT = Path('var/research/hierarchical-construction-20261011-v1')
+VERSION = 'hierarchical-construction-v2'
+PARENT = Path('var/research/sleeve-construction-20261010-v2')
+DEFAULT_ROOT = Path('var/research/hierarchical-construction-20261011-v2')
+SUPERSEDES = Path('var/research/hierarchical-construction-20261011-v1')
 PARENT_INPUTS = ('bars.json', 'raw.json', 'urth.json', 'xgb_usd.json', 'macro.json', 'selection.json',
                  'forecasts.json')
 PARENT_REPLAYS = ('POOL', 'CP', 'M1')
@@ -69,9 +87,16 @@ def plan(arm):
 
 
 def class_score(values):
-    """Mean of the two best eligible member scores: the mean of what would be held."""
-    ranked = sorted(values, reverse=True)[:SLOTS_PER_CLASS]
-    return sum(ranked) / len(ranked)
+    """Mean of the member scores of the members the class will actually hold.
+
+    ``values`` is the global cross-section score of each held member, one entry per
+    member the parent overlay's within-sleeve reranking selected. The population is
+    therefore the held set, not the globally top-ranked members (v1's rule).
+    """
+    members = list(values)
+    if not members:
+        raise ValueError('A class with no held member has no class score.')
+    return sum(members) / len(members)
 
 
 def hierarchical_overlay(arm):
@@ -168,7 +193,24 @@ def prepare(root, runner, parent=PARENT):
     checked_files(parent, 'input_manifest.json')
     checked_files(parent, 'decision_manifest.json')
     pp = read_json(parent / 'protocol.json')
-    p = dict(version='hierarchical-construction-v1', client_date='2026-10-11',
+    p = dict(version=VERSION, client_date='2026-10-11',
+             revision='v2 — peer-review repair of the shared overlay (singleton momentum gate and class-score '
+                      'population). The rule, the arms, K, the slots, the costs, the windows, the family and the '
+                      'assessment are unchanged from v1; the parent is the corrected P4.16 root '
+                      '"sleeve-construction-20261010-v2" so the pooled control carries the same gate repair.',
+             supersedes=dict(root=str(SUPERSEDES),
+                             defects=['A sleeve too small to form a rank table returned its whole target list '
+                                      'unchanged, so the single-instrument commodity and gold sleeves bypassed the '
+                                      'positive 126-session momentum gate, and the top-ranked fallback could select '
+                                      'a member that failed the gate.',
+                                      'The class score averaged the globally top-ranked members, which could differ '
+                                      'from the members the parent overlay\'s within-sleeve reranking held.'],
+                             fix=['Absolute-momentum eligibility is now evaluated for every member from its own '
+                                  'price history before any ranking or fallback, independently of sleeve size.',
+                                  'The class score is now the mean of the global member scores of exactly the '
+                                  'members the within-sleeve reranking holds.'],
+                             evidence='var/research/hierarchical-construction-20261011-v1 remains the published v1 '
+                                      'run; this root is the corrected run.'),
              question='Does qualifying asset classes and picking inside them beat the pooled top-six, and beat '
                       'fixed sleeve budgets that force representation?',
              origin='Operator proposal 2026-10-11, after P4.16 measured that fixed budgets force DBC and GLD into '
@@ -190,9 +232,16 @@ def prepare(root, runner, parent=PARENT):
              primary=dict(cost_bps=COST_BPS, delay=0, window='evaluation'),
              rule=dict(qualification='a sleeve qualifies only if at least one member passes the positive '
                                      '126-session momentum gate; a sleeve in a downtrend is dropped, not '
-                                     'underweighted',
-                       class_score='mean of the two best eligible member scores; a single eligible member scores '
-                                   'itself',
+                                     'underweighted. The gate is an absolute per-member test, evaluated before any '
+                                     'ranking or fallback and independently of sleeve size, so a one-instrument '
+                                     'sleeve is gated exactly like a many-instrument sleeve and a member with no '
+                                     '126-session history does not pass',
+                       class_score='mean of the member scores of exactly the members the sleeve will hold; the held '
+                                   'members come from the parent overlay\'s within-sleeve reranking and their '
+                                   'numbers from the global cross-section rank table, the only population in which '
+                                   'a one-instrument sleeve is scoreable',
+                       member_scores='global cross-section rank table over all incoming targets; a class is never '
+                                     'scored from a member it does not hold',
                        choice='top K qualifying sleeves by class score, equal budgets of 1/K of incoming gross',
                        within='top two eligible instruments per chosen sleeve, split by incoming inverse-volatility '
                               'weight',
@@ -209,7 +258,9 @@ def prepare(root, runner, parent=PARENT):
                  'The 2021 onward evaluation window was already inspected in the parent studies.',
                  'Sleeve membership is the plan\'s own four-way split, not an observed taxonomy.',
                  'The class score is member-derived, not a class index; a class-index momentum variant with its own '
-                 'lookback is a different, untested rule.',
+                 'lookback is a different, untested rule. The class score averages the members the rule holds, as '
+                 'scored in the global cross-section table, so it is a class-ranking statistic rather than a promise '
+                 'about portfolio weights.',
                  'K=2 and K=3 are both reported; choosing between them on these outcomes would be tuning on the '
                  'inspected sample.',
                  'The rule can only reduce representation relative to fixed budgets, so it trades forced exposure '

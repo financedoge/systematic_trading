@@ -13,6 +13,12 @@ ROOT = Path('var/research/sleeve-construction-20261010-v1')
 RECORD = ROOT / 'analysis.json'
 BUILT = pytest.mark.skipif(not RECORD.exists(), reason='frozen sleeve study not built in this workspace')
 
+# The corrected root published after the peer-review gate repair (defect 7).
+ROOT_V2 = study.CURRENT_ROOT
+RECORD_V2 = ROOT_V2 / 'analysis.json'
+BUILT_V2 = pytest.mark.skipif(not RECORD_V2.exists(),
+                              reason='corrected sleeve-construction study not built in this workspace')
+
 
 # --- the frozen plan ----------------------------------------------------------
 
@@ -198,3 +204,106 @@ def test_every_frozen_decision_respects_the_cap_and_the_sleeve_slot_contract():
                 continue
             for sleeve, symbols in study.SLEEVES.items():
                 assert len(held & set(symbols)) <= slots[sleeve], (arm, day, sleeve)
+
+
+# --- the corrected v2 root (peer-review gate repair) --------------------------
+
+_BARS_CACHE = {}
+
+
+def _bars_and_session_index(root):
+    key = str(root)
+    if key not in _BARS_CACHE:
+        bars = json.loads((root / 'bars.json').read_text(encoding='utf8'))
+        _BARS_CACHE[key] = (bars, {row['trade_date']: index for index, row in enumerate(bars['SPY'])})
+    return _BARS_CACHE[key]
+
+
+def _gate_momentum(root, symbol, day, lookback=126):
+    """The absolute 126-session momentum the construction overlay itself sees on ``day``."""
+    bars, session_index = _bars_and_session_index(root)
+    index = session_index[day]
+    history = bars[symbol][max(0, index - 500):index]
+    if len(history) < lookback + 1:
+        return None
+    return (Decimal(str(history[-1]['close'])) / Decimal(str(history[-(lookback + 1)]['close']))) - Decimal('1')
+
+
+@BUILT_V2
+def test_the_corrected_root_reverifies_its_own_receipts_and_records_the_repair():
+    from systematic_trading.lean.contracts import sha256
+    report = json.loads(RECORD_V2.read_text(encoding='utf8'))
+    receipt = json.loads((ROOT_V2 / 'report_receipt.json').read_text(encoding='utf8'))
+    protocol = json.loads((ROOT_V2 / 'protocol.json').read_text(encoding='utf8'))
+    assert sha256(ROOT_V2 / 'analysis.json') == receipt['sha256']
+    assert sha256(ROOT_V2 / 'gate.json') == receipt['gate_sha256']
+    assert protocol['version'] == study.VERSION == 'sleeve-construction-v2'
+    assert protocol['supersedes']['root'] == str(study.SUPERSEDES)
+    assert 'sleeve-construction-20261010-v1' in protocol['supersedes']['evidence']
+    assert 'before any ranking or rank fallback' in protocol['momentum_gate']
+    assert 'independently of' in protocol['momentum_gate']
+    assert set(report['metrics']) == {'POOL', 'SLV-COMP', 'SLV-EQ', 'CP', 'M1'}
+    assert report['verdict']['status'] in {'sleeve_supported', 'equal_budget_supported', 'inconclusive', 'rejected'}
+
+
+@BUILT_V2
+def test_the_gate_record_screened_every_corrected_arm_before_the_replays():
+    record = json.loads((ROOT_V2 / 'gate.json').read_text(encoding='utf8'))
+    assert set(record['arms']) == {'POOL', 'SLV-COMP', 'SLV-EQ', 'CP', 'M1'}
+    assert record['arms']['SLV-EQ']['status'] == 'pass'
+    assert record['arms']['SLV-COMP']['boundary_case'] is True
+    assert record['boundary_cases'] == ['SLV-COMP']
+    assert record['published']['matches_published'] is True
+    assert record['gate_rejected'] == []
+
+
+@BUILT_V2
+def test_no_corrected_decision_holds_a_name_whose_momentum_gate_failed():
+    """The regression the review asked for: the gate holds for one-name sleeves too."""
+    protocol = json.loads((ROOT_V2 / 'protocol.json').read_text(encoding='utf8'))
+    for arm in study.ARMS:
+        for day, row in analysis.decision_rows(ROOT_V2, arm).items():
+            for target in row['targets']:
+                if Decimal(target['target_weight']) <= 0:
+                    continue
+                momentum = _gate_momentum(ROOT_V2, target['symbol'], day)
+                assert momentum is not None and momentum > 0, (arm, day, target['symbol'], momentum)
+    assert protocol['evaluation_start']
+
+
+@BUILT_V2
+def test_the_single_instrument_sleeves_are_held_exactly_on_their_gate_positive_days():
+    """The published 'permanent DBC/GLD exposure' reading, re-derived under the repair."""
+    evaluation_start = json.loads((ROOT_V2 / 'protocol.json').read_text(encoding='utf8'))['evaluation_start']
+    for arm in ('SLV-COMP', 'SLV-EQ'):
+        rows = analysis.decision_rows(ROOT_V2, arm)
+        evaluation_days = sorted(day for day in rows if day >= evaluation_start)
+        admission = analysis.admission(ROOT_V2, arms=(arm,), window_days=evaluation_days)[arm]
+        assert len(evaluation_days) == 70 and len(rows) == 130
+        for symbol in ('DBC', 'GLD'):
+            held_days = {day for day, row in rows.items()
+                         if symbol in {t['symbol'] for t in row['targets'] if Decimal(t['target_weight']) > 0}}
+            gate_days = {day for day in rows
+                         if (_gate_momentum(ROOT_V2, symbol, day) or Decimal(0)) > Decimal('0')}
+            assert held_days == gate_days, (arm, symbol)
+            assert admission['held_counts'][symbol] == len(held_days & set(evaluation_days)) == 49
+            assert len(gate_days & set(evaluation_days)) < len(evaluation_days)  # not "throughout"
+            assert len(gate_days) == (80 if symbol == 'DBC' else 94)
+
+
+@BUILT_V2
+def test_the_repair_moves_only_the_single_instrument_sleeves():
+    """Every other admission count, and the pooled arm's decisions, are unchanged."""
+    v1 = analysis.admission(ROOT)
+    v2 = analysis.admission(ROOT_V2)
+    for arm in ('SLV-COMP', 'SLV-EQ', 'POOL'):
+        changed = {symbol for symbol in v1[arm]['held_counts']
+                   if v1[arm]['held_counts'][symbol] != v2[arm]['held_counts'][symbol]}
+        assert changed == ({'DBC', 'GLD'} if arm != 'POOL' else set()), (arm, changed)
+    assert analysis.pool_vs_control(ROOT_V2)['differing'] == 11
+    old = analysis.decision_rows(ROOT, 'POOL')
+    new = analysis.decision_rows(ROOT_V2, 'POOL')
+    for day in old:
+        before = {t['symbol']: Decimal(t['target_weight']) for t in old[day]['targets']}
+        after = {t['symbol']: Decimal(t['target_weight']) for t in new[day]['targets']}
+        assert before == after, ('POOL', day)

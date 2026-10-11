@@ -293,10 +293,10 @@ def alpha101_tilt_definition():
             'registered Alpha101 time-series alphas applied last: the names already held are ranked by the '
             'equal-weight mean of each alpha\u2019s rank scores, weight moves from the bottom of that ranking to '
             'the top, no instrument is added or removed and the gross is unchanged. Held from each monthly '
-            'decision to the next; P4.17f measured that closing early on the signal was worse than holding. '
-            'Evidence status: not established. 0 of 20 family-adjusted contrasts differed from the untouched '
-            'book, the 5% arm was slightly below its control on total return with a better Calmar and shallower '
-            'drawdown, and the 5% budget is an in-sample optimum on an inspected window. Monitored for '
+            'decision to the next. Recipe v2 uses audited raw close and volume for dollar activity. '
+            'Evidence status: not established. Earlier 0 of 20 family-adjusted contrasts were exploratory; '
+            'their exit ranking and optimal-budget claims are superseded by the 2026-10-11 review. '
+            'The 5% budget was selected on an inspected sample. Monitored for '
             'prospective evidence only: no allocation, approval or execution authority, and every calculation '
             'is recorded as promotion-eligible false.',
         overlays=(*base.overlays, OverlaySpec('alpha101_tilt', dict(PARAMETERS))))

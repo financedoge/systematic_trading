@@ -123,16 +123,65 @@ def _spawn_logged(command, *, cwd, environment, log_path):
     return process, log
 
 
-def _terminate(processes, *, exclude=()):
-    for label, process in processes.items():
-        if label in exclude or process.poll() is not None:
-            continue
-        process.terminate()
+def _terminate_process(process, *, grace_seconds=10):
+    """Terminate one launched engine and always wait for it.
+
+    Idempotent by construction: an engine that already exited is simply reaped, and one that was
+    already waited for returns its stored return code, so repeated cleanup is a no-op rather than
+    an error. A process that ignores the polite signal is killed and waited for as well.
+    """
+    if process.poll() is None:
         try:
-            process.wait(timeout=10)
-        except subprocess.TimeoutExpired:
-            process.kill()
-            process.wait(timeout=10)
+            process.terminate()
+        except OSError:
+            # It exited between the poll and the signal; the wait below still reaps it.
+            pass
+    try:
+        process.wait(timeout=grace_seconds)
+    except subprocess.TimeoutExpired:
+        process.kill()
+        process.wait(timeout=grace_seconds)
+
+
+def _terminate(processes, *, exclude=()):
+    """Terminate and wait for every named engine process. Safe to call again on the same set."""
+    for label, process in processes.items():
+        if label not in exclude:
+            _terminate_process(process)
+
+
+class _Engines:
+    """Every engine process launched for one run, cleaned up as a set.
+
+    ``cleanup`` terminates each process that is still running and waits for all of them, so a
+    failed second spawn, a failed image inspection, a timeout or a non-zero exit can never leave a
+    live engine behind: cleanup runs before any artifact is hashed and before the failure is
+    raised. It is idempotent and safe for processes that already exited or were already reaped.
+    """
+
+    def __init__(self):
+        self._launched = {}
+
+    def launch(self, label, command, *, cwd, environment, log_path):
+        """Start one engine and register it, so it cannot be orphaned by a later failure."""
+        process, log = _spawn_logged(command, cwd=cwd, environment=environment, log_path=log_path)
+        self._launched[label] = (process, log, time.perf_counter())
+        return process
+
+    def timings(self):
+        """The ``{label: (process, launch time)}`` mapping ``_await_processes`` consumes."""
+        return {label: (process, started)
+                for label, (process, _log, started) in self._launched.items()}
+
+    def close_logs(self):
+        for _process, log, _started in self._launched.values():
+            if not log.closed:
+                log.close()
+
+    def cleanup(self, *, exclude=()):
+        for label, (process, _log, _started) in self._launched.items():
+            if label not in exclude:
+                _terminate_process(process)
 
 
 def _await_processes(launched, timeout_seconds):
@@ -173,8 +222,7 @@ def run_bundle(*, bundle: Path, output: Path, image: str, timeout_seconds=900, c
     write_json(output / 'run.json', receipt)
     write_json(output / 'config.json', lean_config())
     started = time.perf_counter()
-    reference_process = lean_process = None
-    reference_log = lean_log = None
+    engines = _Engines()
     try:
         command = docker_command(image=image, bundle=bundle, output=output, name=name, cpus=str(cpus), memory=memory)
         # The oracle needs the interpreter/runtime, not inherited app credentials.
@@ -188,21 +236,17 @@ def run_bundle(*, bundle: Path, output: Path, image: str, timeout_seconds=900, c
         # The two engines are independent: LEAN writes economic.json, the oracle writes reference.json,
         # and parity compares them only once both exist. Starting them together costs the slower engine
         # instead of their sum. Each stays single-threaded, so no reported number changes.
-        reference_process, reference_log = _spawn_logged(
-            [sys.executable, '-B', '-m', 'systematic_trading.lean.reference', str(bundle.resolve()),
-             str(output.resolve() / 'reference.json')],
-            cwd=output, environment=environment, log_path=output / 'reference.log')
-        reference_launched = time.perf_counter()
-        lean_process, lean_log = _spawn_logged(command, cwd=output, environment=None,
-                                               log_path=output / 'lean.log')
-        lean_launched = time.perf_counter()
+        engines.launch('reference',
+                       [sys.executable, '-B', '-m', 'systematic_trading.lean.reference', str(bundle.resolve()),
+                        str(output.resolve() / 'reference.json')],
+                       cwd=output, environment=environment, log_path=output / 'reference.log')
+        engines.launch('lean', command, cwd=output, environment=None, log_path=output / 'lean.log')
         inspected = subprocess.run(['docker', 'image', 'inspect', image], capture_output=True,
                                    text=True, timeout=30, check=True)
         metadata = json.loads(inspected.stdout)[0]
         receipt['engine'] = {'image_id': metadata['Id'], 'repo_digests': metadata.get('RepoDigests'),
                              'labels': metadata.get('Config', {}).get('Labels', {})}
-        wall = _await_processes({'reference': (reference_process, reference_launched),
-                                 'lean': (lean_process, lean_launched)}, timeout_seconds)
+        wall = _await_processes(engines.timings(), timeout_seconds)
         receipt['reference_wall_seconds'] = wall['reference']
         receipt['lean_wall_seconds'] = wall['lean']
         actual = json.loads((output / 'economic.json').read_text(encoding='utf-8'))
@@ -214,6 +258,11 @@ def run_bundle(*, bundle: Path, output: Path, image: str, timeout_seconds=900, c
         verify_bundle(bundle)
         receipt.update(status='succeeded', economic_sha256=parity['economic_sha256'])
     except BaseException as exc:
+        # A failed second spawn or a failed image inspection must not orphan the engine that did
+        # start: terminate and reap every launched child before the logs are read, the receipt is
+        # written, the artifacts are hashed, or the error is raised.
+        engines.cleanup()
+        engines.close_logs()
         message = (f'Native replay failed through {verified["spec"].end_date}: {replay_failure_detail(output, exc)}. '
                    f'Evidence: {output.resolve()}. Publication withheld.')
         receipt.update(status='failed', error=message,
@@ -227,9 +276,10 @@ def run_bundle(*, bundle: Path, output: Path, image: str, timeout_seconds=900, c
             raise failure_type(message) from exc
         raise
     finally:
-        for handle in (reference_log, lean_log):
-            if handle is not None and not handle.closed:
-                handle.close()
+        # Idempotent belt-and-braces for the success path as well: the artifact hashes below are
+        # taken only once no launched engine is alive.
+        engines.cleanup()
+        engines.close_logs()
         receipt['elapsed_seconds'] = time.perf_counter() - started
         receipt['artifacts'] = {p.relative_to(output).as_posix(): sha256(p) for p in output.rglob('*')
                                 if p.is_file() and p != output / 'run.json'}

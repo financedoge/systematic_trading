@@ -31,8 +31,6 @@ No promotion, no monitoring change, no allocation change. A passing arm is a can
 from decimal import Decimal as D
 from pathlib import Path
 
-import numpy as np
-
 from systematic_trading.lean.contracts import sha256, write_json
 from systematic_trading.research import alpha101 as lib
 from systematic_trading.research import sleeve_construction_study as base
@@ -42,7 +40,7 @@ from systematic_trading.research.turnover_gate import implied_turnover, screen
 
 STUDY = 'alpha101-tilt-replay-v1'
 PARENT = base.DEFAULT_ROOT
-DEFAULT_ROOT = Path('var/research/alpha101-tilt-replay-20261011-v2')
+DEFAULT_ROOT = Path('var/research/alpha101-tilt-replay-20261011-v3')
 SOTA_KEY = 'research_fallback_f3_v1'
 BUDGET = D('0.10')
 MAX_WEIGHT = D('0.45')
@@ -72,6 +70,8 @@ def plan(arm):
 
 
 def initialize(root=PARENT):
+    from systematic_trading.research.momentum_replay import checked_files
+    checked_files(Path(root), 'input_manifest.json')
     base.initialize(Path(root))
     global _VALUES
     _VALUES = {}
@@ -100,12 +100,8 @@ def values_for_day(alpha, day):
     for symbol, rows in histories(day).items():
         if len(rows) < 2:
             continue
-        history = lib.History(symbol=symbol, date=day,
-                              open=np.array([float(r.open) for r in rows]),
-                              high=np.array([float(r.high) for r in rows]),
-                              low=np.array([float(r.low) for r in rows]),
-                              close=np.array([float(r.close) for r in rows]),
-                              volume=np.array([float(r.volume) for r in rows]))
+        history = lib.history_from_rows(symbol, rows, str(rows[-1].trade_date),
+            raw_rows=base._day(day)['raw'].get(symbol, ()))
         value = lib.value(alpha, history)
         if value is not None:
             out[symbol] = value
@@ -427,6 +423,8 @@ def protocol():
 def prepare(root=DEFAULT_ROOT):
     import shutil
     root = Path(root)
+    if (root / 'protocol.json').exists():
+        raise FileExistsError('Preserve frozen study; use a new evidence root')
     root.mkdir(parents=True, exist_ok=True)
     existing = sorted(p.name for p in (root / 'python').glob('*.json')) if (root / 'python').exists() else []
     if existing:

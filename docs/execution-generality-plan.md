@@ -1,5 +1,7 @@
 # Execution generality — routing any admitted IB contract
 
+> **2026-10-11 review update:** The operator manually checked XLE/XLB and reported trading permission. Retain that as operator evidence; permission is not presumed denied. Independent blockers remain: `live/sota.py` does not bind FR25 financial-selection schedules or audited raw-activity inputs, and `live/allocated_plan.py` resolves the combined instrument set from only one component. After operator login at 13:12 UTC, the paper API and reconciliation pass; fresh ISIN lookup verifies XLE conId 4215217 and XLB conId 4215200. These operational checks are resolved, while strategy input/model binding and mixed-universe integration remain incomplete. Implement and verify the minimum same-venue 14-ETF execution contract before allocation; the broader multi-venue architecture below need not all precede this case. UI/backend now share a conservative contract check instead of separate allowlists.
+
 Registered 2026-10-10 at the user's direction. The execution path must not have to
 be rebuilt each time a new underlying joins a strategy. Today it effectively does:
 adding an instrument means editing hand-written universe dicts, and adding a

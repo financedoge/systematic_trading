@@ -1,5 +1,7 @@
 # P4.14 Part B — FR25 placebo rank, data-through-2022 refit and sensitivity
 
+> **Interpretation correction, 2026-10-11:** FR25 uses expanding, cutoff-respecting fits. The fit frozen through 2022 tests continued retraining, not hindsight or a full-sample fit. The +4.20pp versus +7.06pp comparison remains a retraining-sensitivity result; it cannot certify publication availability. See [current review](strategy-review-2026-10-11.md).
+
 Findings for the second half of the FR25 robustness stress, run as **its own frozen
 study** in its own evidence root, `var/research/fr25-placebo-20261010-v1/`
 (protocol SHA-256 `429ec002…`). Completed 2026-10-10. The retention tolerance was
@@ -109,15 +111,15 @@ Only the ridge training sample changed; momentum and XGBoost are untouched.
 | Arm | CAGR | Sharpe | Calmar | Max DD | Total return | Excess vs CP | Log excess |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | CP | 15.18% | 1.367 | 1.828 | −8.31% | +71.40% | — | — |
-| FR25 (full-sample fit) | 16.42% | 1.447 | 1.897 | −8.66% | +78.45% | **+7.06pp** | +4.034 |
+| FR25 (expanding causal fits) | 16.42% | 1.447 | 1.897 | −8.66% | +78.45% | **+7.06pp** | +4.034 |
 | **Data-through-2022 refit** | 15.93% | 1.399 | **1.917** | **−8.31%** | +75.60% | **+4.20pp** | +2.423 |
 
 **A ridge that never saw a post-2022 label still beats CP by +4.20pp on the 2023+
 window — 59.6% of FR25's +7.06pp — with a lower maximum drawdown (−8.31% against
 −8.66%) and a slightly better Calmar (1.917 against 1.897).** So the recent edge is
-neither purely full-sample fitting nor unaffected by it: roughly 40% of FR25's
-2023-onward advantage depends on labels that only exist because the model was fitted
-with hindsight.
+sensitive to continued retraining: the frozen model retains about 60% of the
+expanding model's measured advantage. Later labels enter the expanding schedule only
+when available under its cutoff contract. This is not evidence of hindsight fitting.
 
 The refit changes **13 of 46** selections against FR25, with a mean ridge-rank
 correlation of **0.709** and a mean absolute rank gap of **0.346** — the refit is a

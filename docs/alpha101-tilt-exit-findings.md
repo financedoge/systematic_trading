@@ -1,4 +1,7 @@
 > **Corrected 2026-10-11 after peer review.** This study had four implementation defects: the arms
+
+> **Superseded evidence — 2026-10-11 second review.** Earlier numerical and exit/budget conclusions on this page are historical. The prior repair was incomplete. See [the current review](strategy-review-2026-10-11.md) for the raw-activity, monthly scheduling, funding and matched-payoff fixes, accepted replacement roots, and limits. The old grids have not all been rerun and must not support promotion.
+
 > re-submitted an unchanged target vector every session (a daily-rebalanced process, not a held
 > position), the exit-and-re-enter branch could never fire after an exit, the profit/loss exits read
 > the close of the session they traded, and alpha 43 divided by the latest rather than each date's own

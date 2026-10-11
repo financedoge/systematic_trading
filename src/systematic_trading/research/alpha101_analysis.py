@@ -57,7 +57,7 @@ def _information_rows(payload):
 def report(root=ROOT, output=None):
     root = Path(root)
     payload = read_json(root / 'screen.json')
-    output = Path(output or ('research/alpha101-screen-2026-10-11'))
+    output = Path(output or ('research/alpha101-screen-review-2026-10-11'))
     output.mkdir(parents=True, exist_ok=True)
     rows = payload['rows']
     passed = [row for row in rows if row['gate'] and row['gate']['status'] == 'pass']
@@ -68,14 +68,14 @@ def report(root=ROOT, output=None):
     if passed:
         body.append(f'<p class="lead">{len(passed)} of {len(rows)} registered alphas clear the P4.15 gate and '
                     f'move to the modelling stage: <strong>{", ".join(r["alpha"] for r in passed)}</strong>. '
-                    f'{len(rejected)} are rejected by the cost test and {len(insufficient)} cannot be judged. '
+                    f'{len(rejected)} are rejected by the combined cost/information tests and {len(insufficient)} cannot be judged. '
                     'No alpha is promoted by this screen.</p>')
     else:
         body.append(f'<p class="lead"><strong>None of the {len(rows)} registered Alpha101 time-series alphas '
                     'clears the P4.15 gate</strong>, so the family is closed before any portfolio work: '
-                    f'{len(rejected)} are rejected by the cost test and {len(insufficient)} cannot be judged. '
-                    'This is the outcome the gate was built to produce, and it is decided by measured cost '
-                    'rather than by a backtest.</p>')
+                    f'{len(rejected)} are rejected by the combined cost/information tests and {len(insufficient)} cannot be judged. '
+                    'This rejects this declared mapping, not every possible use of these signals '
+                    '; affordability alone does not establish an edge.</p>')
     body.append('</section>')
 
     body.append('<section id="cost"><h2>The cost test, per alpha</h2>')

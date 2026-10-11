@@ -36,6 +36,7 @@ def isolated_application_defaults(tmp_path, monkeypatch):
         "ST_AUTOMATION_ENABLED": "false",
         "ST_IB_PNL_ENABLED": "false",
         "ST_HEALTH_MONITOR_ENABLED": "false",
+        "ST_EXECUTION_BENCHMARK_COLLECTION_ENABLED": "false",
         # Legacy unit fixtures contain synthetic transactional bars. Dedicated
         # governed-input tests enable the production default explicitly.
         "ST_REQUIRE_GOVERNED_DECISION_INPUTS": "false",

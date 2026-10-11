@@ -12,6 +12,7 @@ from zoneinfo import ZoneInfo
 from systematic_trading.domain.enums import OrderSide, OrderType, OrderEnvironment
 from systematic_trading.execution.broker import InteractiveBrokersAdapter, InteractiveBrokersOrderRouter, _to_ib_contract
 from systematic_trading.execution.ib_compat import compatible_ib_errors
+from systematic_trading.execution.benchmark_archive import capture, retained_state, validate_ready
 
 
 def benchmark_window(record, *, original_intent=False):
@@ -71,21 +72,36 @@ class IBMinuteBars:
         class App(EWrapper, EClient):
             def __init__(self):
                 EClient.__init__(self, self)
-                self.ready, self.done = Event(), Event()
-                self.bars, self.failures, self.messages = [], [], []
+                self.ready, self.done, self.contract_done = Event(), Event(), Event()
+                self.bars, self.failures, self.messages, self.contracts = [], [], [], []
             def nextValidId(self, orderId):
                 self.ready.set()
             def historicalData(self, reqId, bar):
                 self.bars.append({'at': datetime.fromtimestamp(int(bar.date), UTC).isoformat(),
-                                  'close': str(bar.close)})
+                                  'close': str(bar.close), 'open': str(bar.open), 'high': str(bar.high),
+                                  'low': str(bar.low), 'volume': str(bar.volume), 'wap': str(bar.wap),
+                                  'trade_count': bar.barCount})
+            def contractDetails(self, reqId, details):
+                if reqId == 97100:
+                    self.contracts.append(details.contract)
+            def contractDetailsEnd(self, reqId):
+                if reqId == 97100:
+                    self.contract_done.set()
             def historicalDataEnd(self, reqId, start, end):
                 self.done.set()
             @compatible_ib_errors
             def error(self, reqId, errorCode, errorString, advancedOrderRejectJson=''):
                 self.messages.append(f"{reqId}:{errorCode}:{errorString}")
-                if reqId == 97101:
+                # IB can emit this advisory alongside complete older history.
+                # It concerns the latest 15 minutes; still await historicalDataEnd
+                # and enforce exact interval coverage before accepting any bars.
+                if (reqId == 97101 and errorCode == 2188
+                        and end <= datetime.now(UTC) - timedelta(minutes=15)):
+                    return
+                if reqId in (97100, 97101):
                     self.failures.append(f"IB {errorCode}: {errorString}")
                     self.done.set()
+                    self.contract_done.set()
 
         profile = InteractiveBrokersAdapter(self.settings).profile_for(OrderEnvironment.PAPER)
         app, thread = App(), None
@@ -96,7 +112,15 @@ class IBMinuteBars:
             if not app.ready.wait(10):
                 raise TimeoutError("Gateway benchmark connection unavailable.")
             contract = InteractiveBrokersOrderRouter(self.settings).contract_spec_for(symbol)
-            app.reqHistoricalData(97101, _to_ib_contract(contract), end.strftime('%Y%m%d-%H:%M:%S'),
+            app.reqContractDetails(97100, _to_ib_contract(contract))
+            if not app.contract_done.wait(10) or app.failures or len(app.contracts) != 1:
+                raise ValueError("Benchmark contract identity unavailable or ambiguous. " + "; ".join(app.failures))
+            resolved = app.contracts[0]
+            if (not resolved.conId or resolved.symbol != symbol or resolved.secType != contract.security_type
+                    or resolved.currency != contract.currency.value
+                    or (contract.primary_exchange and resolved.primaryExchange != contract.primary_exchange)):
+                raise ValueError("Benchmark contract details do not match the requested instrument")
+            app.reqHistoricalData(97101, resolved, end.strftime('%Y%m%d-%H:%M:%S'),
                 f"{int((end-start).total_seconds())+120} S", '1 min', 'TRADES', 1, 2, False, [])
             if not app.done.wait(25):
                 if any(':2105:' in m and 'ushmds' in m for m in app.messages):
@@ -104,7 +128,13 @@ class IBMinuteBars:
                 raise TimeoutError("Gateway minute-bar benchmark request timed out. " + "; ".join(app.messages[-4:]))
             if app.failures:
                 raise ValueError('; '.join(app.failures))
-            return app.bars
+            return dict(bars=app.bars, contract=dict(con_id=resolved.conId, symbol=resolved.symbol,
+                security_type=resolved.secType, currency=resolved.currency, exchange=resolved.exchange,
+                primary_exchange=resolved.primaryExchange, local_symbol=resolved.localSymbol),
+                request=dict(what_to_show='TRADES', bar_size='1 min', use_rth=True), messages=app.messages)
+        except Exception as exc:
+            exc.evidence = dict(bars=app.bars, messages=app.messages)
+            raise
         finally:
             app.disconnect()
             if thread:
@@ -118,22 +148,25 @@ class TwapBenchmarkService:
         self.pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='twap-benchmark')
         self.lock, self.pending = Lock(), set()
         self.cache = {}
+        self.closed = False
         self.analytics = None
         if getattr(settings, 'analytics_enabled', False) and settings.market_data_store_backend == 'clickhouse':
             from systematic_trading.market_data.analytics_store import AnalyticsStore
             self.analytics = AnalyticsStore.from_settings(settings)
 
-    def get(self, record, *, now=None):
+    def get(self, record, *, now=None, original_intent=True, schedule=True):
         now = now or datetime.now(UTC)
         base = dict(average_fill_price=str(record.average_fill_price) if record.average_fill_price else None,
                     currency=record.order.currency.value, method='Time-weighted 1-minute trade closes over the original intended TWAP window; includes approval and rescheduling delay, excludes fees.')
         if record.execution_sync_issue:
             return dict(base, status='unavailable', message='Execution history requires review before calculating slippage.')
         try:
-            start, end = benchmark_window(record, original_intent=True)
+            start, end = benchmark_window(record, original_intent=original_intent)
         except ValueError as exc:
             return dict(base, status='unavailable', message=str(exc))
         base.update(window_start=start.isoformat(), window_end=end.isoformat())
+        if not original_intent:
+            base['method'] = 'Time-weighted 1-minute trade closes over the routed TWAP window; excludes fees.'
         if now < end:
             return dict(base, status='waiting', message='Benchmark available after the scheduled TWAP window closes.')
         key = sha256(f'v1:{record.order.symbol}:{start.isoformat()}:{end.isoformat()}'.encode()).hexdigest()
@@ -145,10 +178,7 @@ class TwapBenchmarkService:
                     saved = self.analytics.document('execution-benchmarks', key)
                     if saved:
                         candidate = json.loads(saved[0]['payload'])
-                        if (candidate['status'], candidate['symbol'], candidate['window_start'], candidate['window_end']) != ('ready', record.order.symbol, start.isoformat(), end.isoformat()):
-                            raise ValueError('Published benchmark identity does not match this order.')
-                        datetime.fromisoformat(candidate['observed_at'])
-                        calculate_twap(candidate['bars'], start, end)
+                        validate_ready(candidate, root=self.settings.data_dir, symbol=record.order.symbol, start=start, end=end)
                         cached = self.cache[key] = candidate
                 except (RuntimeError, OSError, ValueError, KeyError, TypeError):
                     # Original immutable observation is retained for recovery;
@@ -157,44 +187,55 @@ class TwapBenchmarkService:
             if cached is None and path.exists():
                 try:
                     cached = json.loads(path.read_text(encoding='utf-8'))
-                    if (cached['status'], cached['symbol'], cached['window_start'], cached['window_end']) != ('ready', record.order.symbol, start.isoformat(), end.isoformat()):
-                        raise ValueError('Cached benchmark identity does not match this order.')
-                    datetime.fromisoformat(cached['observed_at'])
-                    calculate_twap(cached['bars'], start, end)
+                    validate_ready(cached, root=self.settings.data_dir, symbol=record.order.symbol, start=start, end=end)
                     self.cache[key] = cached
                 except (OSError, ValueError, KeyError, TypeError):
-                    cached = None
+                    return dict(base, status='unavailable', message='Retained benchmark failed validation; preserve and review its evidence.')
             if cached and cached['status'] == 'ready':
-                price, count = calculate_twap(cached['bars'], start, end)
+                try:
+                    price, count = validate_ready(cached, root=self.settings.data_dir, symbol=record.order.symbol, start=start, end=end)
+                except (OSError, ValueError, KeyError, TypeError):
+                    return dict(base, status='unavailable', message='Retained benchmark failed validation; preserve and review its evidence.')
                 result = dict(base, status='ready', twap_price=str(price), bar_count=count,
-                              coverage='100%', observed_at=cached['observed_at'], source='IB historical TRADES')
+                              coverage='100%', observed_at=cached['observed_at'], source='IB historical TRADES',
+                              benchmark_key=key, research_approved=False,
+                              price_basis=cached.get('price_basis', 'Legacy operational benchmark; raw basis not independently certified'))
                 if record.average_fill_price and record.filled_quantity:
                     sign = Decimal(1) if record.order.side == OrderSide.BUY else Decimal(-1)
                     difference = sign * (record.average_fill_price - price)
                     result.update(slippage_bps=str(difference / price * 10000),
                                   price_cost=str(difference * record.filled_quantity))
                 return result
-            if key not in self.pending and (not cached or now.timestamp()-cached['retry_at'] >= 300):
+            if cached is None:
+                try:
+                    state = retained_state(self.settings.data_dir, key)
+                except (OSError, ValueError):
+                    return dict(base, status='unavailable', message='Benchmark retry state is unreadable; review retained evidence.')
+                if state:
+                    cached = dict(status='unavailable', message=state.get('message', 'Previous attempt interrupted'),
+                                  next_retry_at=state.get('next_retry_at', 0))
+            due = not cached or now.timestamp() >= cached.get('next_retry_at', 0)
+            if (schedule and not self.closed and due and key not in self.pending
+                    and len(self.pending) < self.settings.execution_benchmark_max_pending):
                 self.pending.add(key)
                 self.pool.submit(self._fetch, key, path, record.order.symbol, start, end)
             return dict(base, status='loading' if key in self.pending else 'unavailable',
-                        message=cached.get('message','Loading observed market bars.') if cached else 'Loading observed market bars.')
+                        benchmark_key=key, next_retry_at=cached.get('next_retry_at') if cached else None,
+                        message=cached.get('message','Awaiting collection capacity.') if cached else 'Awaiting collection capacity.')
 
     def _fetch(self, key, path, symbol, start, end):
         try:
-            bars = self.provider.fetch(symbol, start, end)
-            calculate_twap(bars, start, end)
-            result = dict(status='ready', symbol=symbol, bars=bars, window_start=start.isoformat(),
-                          window_end=end.isoformat(), observed_at=datetime.now(UTC).isoformat())
-            path.parent.mkdir(parents=True, exist_ok=True)
-            temporary = path.with_suffix('.tmp')
-            temporary.write_text(json.dumps(result, indent=2), encoding='utf-8')
-            temporary.replace(path)
+            result = capture(self.provider, root=self.settings.data_dir, key=key, path=path,
+                             symbol=symbol, start=start, end=end)
         except Exception as exc:
-            result = dict(status='unavailable', message=str(exc), retry_at=datetime.now(UTC).timestamp())
+            result = dict(status='unavailable', message=str(exc), next_retry_at=datetime.now(UTC).timestamp() + 300)
         with self.lock:
             self.cache[key] = result
             self.pending.discard(key)
 
     def close(self):
+        with self.lock:
+            self.closed = True
         self.pool.shutdown(wait=False, cancel_futures=True)
+        with self.lock:
+            self.pending.clear()

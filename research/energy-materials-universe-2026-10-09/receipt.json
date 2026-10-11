@@ -1,0 +1,15 @@
+{
+  "files": {
+    "comparison.png": "ca844391afc780e218948184d148e643fef51b03c6cd8477814574af2244e42e",
+    "index.html": "c7e7f92c951113012f573347d525aeca6519da65300bd118112689e008077b0e",
+    "presentation_source/asset_names.py": "5799871d8ed30d5cad7f9f9656875f7103a48222bb9809788aaea1a3d45f4ea4",
+    "presentation_source/universe_control_analysis.py": "54db22336c16410b3e81d6c2f741b1699330bad056ff49c823e3329f0f45d17e",
+    "reports/F3.html": "221d2a4f14fb5f9c45b2391700c0aa12321e08488ce8769abb4c090db51b04b2",
+    "reports/RP12.html": "872a7afec577d67023f9d12cad83408b46a85965a7134a8bcfea421b326cd404",
+    "reports/RP14.html": "9d6e78cf1074e63a7d83e21bad0eba26e7e6d87004c255261eddd061b54176df",
+    "reports/URTH.html": "3528f4dfe6fdf0ada2ce5a5f58c48f4afddadaacd9986ddcca576ae9ac0d3648"
+  },
+  "protocol_sha256": "0d25e4fb623a25cbe52cceb0e5ae1e3c76b5244f3c961c1a3bfc424d0335ff7a",
+  "report_sha256": "6d820688e9178a83fca571a209933ec1fc0f8b4c0e206ed44f069290b54ab64b",
+  "study": "var\\research\\energy-materials-universe-20261009-v1"
+}

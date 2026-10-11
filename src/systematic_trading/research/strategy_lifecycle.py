@@ -4,7 +4,7 @@ import json
 
 from systematic_trading.execution.locks import ORDER_CONNECTION_LOCK
 from systematic_trading.market_data.analytics_store import digest, encode
-from systematic_trading.portfolio.strategy_allocation import control_state, scope_for
+from systematic_trading.portfolio.strategy_allocation import control_state, scope_for, allocation_contract_issue
 from systematic_trading.research.strategy_catalog import registered_strategy_definition
 
 SCOPE = 'strategy-monitoring-v1'
@@ -110,12 +110,12 @@ def decorate_catalog(payload, settings, store):
         key=row['strategy_id'];ready=calculation_ready(row,state,through)
         # Monitoring a new pool does not extend the separately guarded broker
         # allocation contract. The 14-ETF recipe is observation-only for now.
-        allocation_supported = key not in {'research_m1_14_v1', 'research_fr25_14_v1',
-                                           'research_fr25_alpha_tilt_5_v1'}
+        issue = allocation_contract_issue(registered_strategy_definition(key)) if key in state['monitored'] else None
+        allocation_supported = issue is None
         row.update(lifecycle='monitored' if key in state['monitored'] else 'archived',
             calculation_status='Current' if ready else 'Catching up' if key in state['monitored'] else 'Paused',
             allocation_ready=ready and allocation_supported,can_restore=replay_supported(key),archive_blocker=archive_blocker(store,key))
         if not allocation_supported:
-            row['allocation_unavailable_reason']='Monitoring only; the separate 14-ETF execution contract has not been approved.'
+            row['allocation_unavailable_reason']=issue
     payload['membership_revision']=state['revision']
     return payload

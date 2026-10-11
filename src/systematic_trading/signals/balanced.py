@@ -26,6 +26,23 @@ class BalancedSelectionScore:
     long_momentum: Decimal | None
 
 
+@dataclass(frozen=True)
+class SleeveSelection:
+    """One sleeve's selection together with the gate input that produced it.
+
+    ``selected`` is what the sleeve will actually hold. ``scores`` is the rank table,
+    which is empty whenever the sleeve is too small to form rank metrics (a one-name
+    sleeve never has any). ``long_momentum`` is the absolute-momentum gate input for
+    every member, measured from that member's own price history, so the gate is decided
+    independently of the ranking population. ``reason`` is the audit string.
+    """
+
+    selected: tuple[AllocationTarget, ...]
+    scores: Mapping[str, BalancedSelectionScore]
+    long_momentum: Mapping[str, Decimal | None]
+    reason: str
+
+
 class BalancedAssetGroupOverlay:
     def __init__(
         self,
@@ -111,16 +128,22 @@ class BalancedAssetGroupOverlay:
         for sleeve, sleeve_targets in targets_by_sleeve.items():
             sleeve_budget = self.sleeve_budgets.get(sleeve, Decimal("0"))
             if sleeve_budget <= Decimal("0"):
+                for target in sleeve_targets:
+                    rationale_by_symbol[target.symbol] = (
+                        f"{target.rationale} Balanced group overlay gave {sleeve} no budget on this decision; "
+                        f"sleeve budget={sleeve_budget:.2%}."
+                    )
                 continue
             sleeve_weight = original_weight * sleeve_budget / budget_total
-            selected, scores, reason = self._select_sleeve(sleeve_targets, context)
-            if not selected:
-                continue
+            selection = self._select_sleeve(sleeve_targets, context)
+            selected = list(selection.selected)
+            selected_symbols = {target.symbol for target in selected}
             base_weight = sum((target.target_weight for target in selected), Decimal("0"))
-            equal_weight = sleeve_weight / Decimal(len(selected))
+            equal_weight = sleeve_weight / Decimal(len(selected)) if selected else Decimal("0")
             for target in sleeve_targets:
-                score = scores.get(target.symbol)
-                if target in selected:
+                score = selection.scores.get(target.symbol)
+                long_momentum = selection.long_momentum.get(target.symbol)
+                if target.symbol in selected_symbols:
                     target_weight = (
                         sleeve_weight * target.target_weight / base_weight
                         if base_weight > Decimal("0")
@@ -130,12 +153,12 @@ class BalancedAssetGroupOverlay:
                     rationale_by_symbol[target.symbol] = (
                         f"{target.rationale} Balanced group overlay selected {target.symbol} in {sleeve}; "
                         f"sleeve budget={sleeve_budget:.2%}, score={_fmt_score(score)}, "
-                        f"long={_fmt_decimal_pct(score.long_momentum if score else None)}, {reason}."
+                        f"long={_fmt_decimal_pct(long_momentum)}, {selection.reason}."
                     )
                     continue
                 rationale_by_symbol[target.symbol] = (
                     f"{target.rationale} Balanced group overlay filtered out {target.symbol} in {sleeve}; "
-                    f"score={_fmt_score(score)}, long={_fmt_decimal_pct(score.long_momentum if score else None)}."
+                    f"score={_fmt_score(score)}, long={_fmt_decimal_pct(long_momentum)}, {selection.reason}."
                 )
 
         return [
@@ -152,37 +175,76 @@ class BalancedAssetGroupOverlay:
         self,
         targets: Sequence[AllocationTarget],
         context: SignalContext,
-    ) -> tuple[list[AllocationTarget], dict[str, BalancedSelectionScore], str]:
-        target_list = list(targets)
-        scores = self._scores(target_list, context)
-        if not scores:
-            return target_list, {}, "selected all sleeve assets because ranking history was incomplete"
+    ) -> SleeveSelection:
+        """Select one sleeve's members, gating absolute momentum before any rank fallback.
 
-        eligible = [
-            target
-            for target in target_list
-            if (
-                target.symbol in scores
-                and (
-                    not self.require_positive_long_momentum
-                    or (
-                        scores[target.symbol].long_momentum is not None
-                        and scores[target.symbol].long_momentum > self.min_long_momentum
-                    )
-                )
+        The rank metrics need at least two members to say anything at all, so a one-name
+        sleeve has no rank table. That is a limitation of the ranking population, not a
+        gate exemption: eligibility for the positive long-momentum gate is measured for
+        every member from that member's own price history, independently of the sleeve's
+        size and before the top-ranked fallback is considered. A sleeve whose every member
+        fails the gate therefore selects nothing and receives no weight.
+        """
+        target_list = list(targets)
+        scores = self._scores(target_list, context) or {}
+        long_momentum = {
+            target.symbol: (
+                scores[target.symbol].long_momentum
+                if target.symbol in scores
+                else _momentum(target.symbol, context, self.long_momentum_bars)
             )
-        ]
+            for target in target_list
+        }
+        momentum_eligible = {
+            target.symbol
+            for target in target_list
+            if not self.require_positive_long_momentum
+            or (
+                long_momentum[target.symbol] is not None
+                and long_momentum[target.symbol] > self.min_long_momentum
+            )
+        }
+
+        if not scores:
+            # Ranking history is too short for rank metrics. The absolute momentum gate
+            # still decides, and it decides before any ranking exists.
+            if not self.require_positive_long_momentum:
+                return SleeveSelection(tuple(target_list), {}, long_momentum,
+                                       "selected all sleeve assets because ranking history was incomplete")
+            passing = sorted((target for target in target_list if target.symbol in momentum_eligible),
+                             key=lambda target: target.symbol)
+            if not passing:
+                return SleeveSelection((), {}, long_momentum,
+                                       "the positive long-momentum gate rejected every sleeve asset while ranking "
+                                       "history was incomplete")
+            return SleeveSelection(
+                tuple(passing[: self.top_n_per_sleeve]), {}, long_momentum,
+                f"selected momentum-eligible sleeve assets without rank scores because ranking history was "
+                f"incomplete ({len(passing)} of {len(target_list)} passed the 126-session gate)")
+
         ranked_targets = sorted(
             [target for target in target_list if target.symbol in scores],
             key=lambda target: (-scores[target.symbol].total, target.symbol),
         )
-        if len(eligible) < self.min_selected_per_sleeve and self.fallback_to_top_ranked:
-            selected = ranked_targets[: min(len(ranked_targets), self.min_selected_per_sleeve)]
-            return selected, scores, "fallback selected top-ranked assets because the positive-momentum gate was too narrow"
+        eligible = [target for target in ranked_targets if target.symbol in momentum_eligible]
 
-        ranked_eligible = sorted(eligible, key=lambda target: (-scores[target.symbol].total, target.symbol))
-        selected = ranked_eligible[: self.top_n_per_sleeve]
-        return selected, scores, f"{_component_summary(scores[selected[0].symbol].components) if selected else 'components=n/a'}"
+        if len(eligible) < self.min_selected_per_sleeve and self.fallback_to_top_ranked:
+            # The fallback may widen the slot count, never the gate: every fallback
+            # candidate has already passed the same absolute momentum test.
+            if not eligible:
+                return SleeveSelection((), scores, long_momentum,
+                                       "the positive long-momentum gate rejected every sleeve asset, so no "
+                                       "top-ranked fallback was available")
+            return SleeveSelection(tuple(eligible[: self.min_selected_per_sleeve]), scores, long_momentum,
+                                   "fallback selected the top-ranked assets that passed the positive-momentum gate "
+                                   "because the gate was too narrow")
+
+        selected = tuple(eligible[: self.top_n_per_sleeve])
+        if not selected:
+            return SleeveSelection((), scores, long_momentum,
+                                   "the positive long-momentum gate rejected every sleeve asset")
+        reason = _component_summary(scores[selected[0].symbol].components) if selected else "components=n/a"
+        return SleeveSelection(selected, scores, long_momentum, reason)
 
     def _scores(
         self,

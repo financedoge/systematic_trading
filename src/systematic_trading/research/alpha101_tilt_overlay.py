@@ -6,10 +6,10 @@ NAV-neutral amount of weight from the bottom of that ranking to the top. It neve
 instrument, never changes the gross, and shrinks as a whole so no name breaches the 45% cap or goes
 negative.
 
-**Provenance and disclosure.** The measured best configuration was a 5% budget held from each monthly
-decision to the next (P4.17f). The evidence is **not established**: 0 of 20 family-adjusted contrasts
-differed from the untouched book, and on FR25 the 5% arm was slightly *below* its control on total
-return while slightly better on Calmar and drawdown. It is monitored so that prospective evidence can
+**Provenance and disclosure.** The 5% budget was selected on an already inspected sample. Earlier
+P4.17 evidence is superseded by the 2026-10-11 timing, funding and raw-activity repairs. The corrected
+fixed-pair replay still has lower return and Sharpe than FR25; it establishes implementation parity,
+not an incremental edge. It is monitored so that prospective evidence can
 accumulate; the overlay grants no allocation, approval or execution authority, and the bundle
 contracts record every calculation as `promotion_eligible: False`.
 
@@ -19,11 +19,9 @@ that was measured.
 """
 from decimal import Decimal as D
 
-import numpy as np
-
 from systematic_trading.research import alpha101 as lib
 
-VERSION = 'alpha101-family-tilt-v1'
+VERSION = 'alpha101-family-tilt-v2'
 DEFAULT_BUDGET = D('0.05')
 DEFAULT_MAX_WEIGHT = D('0.45')
 DEFAULT_LOOKBACK = 260
@@ -92,17 +90,13 @@ def tilt_vector(weights, scores, budget, max_weight=DEFAULT_MAX_WEIGHT):
         over_cap_names=len(over_cap))
 
 
-def history(symbol, bars, lookback):
+def history(symbol, bars, lookback, raw_bars=None):
     """A point-in-time history from the engine's own context bars (already truncated to before as-of)."""
     window = list(bars)[-lookback:]
     if len(window) < 2:
         return None
-    return lib.History(symbol=symbol, date=str(window[-1].trade_date),
-                       open=np.array([float(bar.open) for bar in window]),
-                       high=np.array([float(bar.high) for bar in window]),
-                       low=np.array([float(bar.low) for bar in window]),
-                       close=np.array([float(bar.close) for bar in window]),
-                       volume=np.array([float(bar.volume) for bar in window]))
+    return lib.history_from_rows(symbol, window, str(window[-1].trade_date),
+                                 raw_rows=raw_bars, lookback=lookback)
 
 
 class Alpha101FamilyTiltOverlay:
@@ -112,12 +106,13 @@ class Alpha101FamilyTiltOverlay:
     name = 'alpha101-tilt'
 
     def __init__(self, *, budget=DEFAULT_BUDGET, alphas=lib.REGISTERED, lookback=DEFAULT_LOOKBACK,
-                 max_weight=DEFAULT_MAX_WEIGHT, version=VERSION):
+                 max_weight=DEFAULT_MAX_WEIGHT, version=VERSION, raw=None):
         self.budget = D(str(budget))
         self.alphas = tuple(alphas)
         self.lookback = int(lookback)
         self.max_weight = D(str(max_weight))
         self.version = version
+        self.raw = raw
         self.diagnostics = {}
 
     def values_for(self, held, context):
@@ -129,7 +124,7 @@ class Alpha101FamilyTiltOverlay:
                 bars = context.bars_by_symbol.get(symbol)
                 if not bars:
                     continue
-                window = history(symbol, bars, self.lookback)
+                window = history(symbol, bars, self.lookback, (self.raw or {}).get(symbol))
                 if window is None:
                     continue
                 value = lib.value(alpha, window)

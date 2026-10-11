@@ -501,7 +501,7 @@ def artifacts(root, output):
     body += f'<details><summary>All {placebo["draws"]} draws</summary>'
     body += table(draw_headers, rows)
     body += '</details></section>'
-    body += f'''<section id="refit"><h2>Was the edge fitted on the full sample?</h2>
+    body += f'''<section id="refit"><h2>How much does continued causal retraining change the result?</h2>
     <p>The financial ridge was refitted using only the {refit['sample']['rows']} training labels completed by
     {refit['sample']['cutoff']} (the last of which ends {refit['sample']['last_label_end']}) and replayed from
     {refit['window_start']}. This is not a re-fit of the whole recipe: only the ridge training sample changed. All
@@ -522,7 +522,7 @@ def artifacts(root, output):
              f"{delta(100 * refit['arms'][CANDIDATE]['excess_pp'])}pp excess over CP on this window and has a lower "
              f"maximum drawdown ({pct(refit['arms'][REFIT_ARM]['max_drawdown'])} against "
              f"{pct(refit['arms'][CANDIDATE]['max_drawdown'])}), so a ridge that never saw a post-2022 label still "
-             f"beats CP, but full-sample fitting accounts for the rest. {html.escape(refit['note'])}</p></section>")
+             f"beats CP; the remaining difference measures continued retraining, not hindsight. {html.escape(refit['note'])}</p></section>")
     body += ('''<section id="sensitivity"><h2>Slots and ridge weight</h2>
     <p>FR25 selects six assets with 25% of the blended rank coming from the financial ridge. These are the two
     axes the parent study already varied. The surface is reported as a whole: it is not a search, the best cell is

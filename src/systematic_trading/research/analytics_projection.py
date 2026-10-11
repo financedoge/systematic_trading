@@ -69,6 +69,12 @@ def import_json_group(analytics, source_id, paths, family):
         hashes[str(path)] = digest(raw)
         payload = json.loads(raw.decode("utf-8-sig"))
         if family == "execution_benchmark":
+            from systematic_trading.execution.benchmark_archive import validate_ready
+            start, end = datetime.fromisoformat(payload["window_start"]), datetime.fromisoformat(payload["window_end"])
+            expected = digest(f'v1:{payload["symbol"]}:{start.isoformat()}:{end.isoformat()}')
+            if path.stem != expected:
+                raise ValueError("Execution benchmark file key does not match its identity")
+            validate_ready(payload, root=path.parent.parent, symbol=payload["symbol"], start=start, end=end)
             documents.append(dict(point_key=path.stem, media_type="application/json", payload=encode(payload)))
         identity = str(path.resolve())
         extracted = extract_series(payload, family=family, entity=path.stem, prefix=identity)

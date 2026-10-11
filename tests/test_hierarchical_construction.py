@@ -14,6 +14,12 @@ ROOT = Path('var/research/hierarchical-construction-20261011-v1')
 RECORD = ROOT / 'analysis.json'
 BUILT = pytest.mark.skipif(not RECORD.exists(), reason='frozen hierarchical study not built in this workspace')
 
+# The corrected root published after the peer-review repair (singleton gate + class-score population).
+ROOT_V2 = study.DEFAULT_ROOT
+RECORD_V2 = ROOT_V2 / 'analysis.json'
+BUILT_V2 = pytest.mark.skipif(not RECORD_V2.exists(),
+                              reason='corrected hierarchical study not built in this workspace')
+
 
 def _rows(arm):
     return json.loads((ROOT / 'decisions' / f'{arm}.json').read_text(encoding='utf8'))
@@ -38,10 +44,12 @@ def test_the_declared_family_is_two_k_values_with_two_slots_each():
         study.plan('HIER-K4')
 
 
-def test_the_class_score_is_the_mean_of_the_two_best_members():
-    assert study.class_score([Decimal('0.9'), Decimal('0.5'), Decimal('0.1')]) == Decimal('0.7')
+def test_the_class_score_is_the_mean_of_the_members_the_class_holds():
+    """v2 rule: the population is the held members, not the globally top-ranked ones."""
+    assert study.class_score([Decimal('0.9'), Decimal('0.5'), Decimal('0.1')]) == Decimal('0.5')
     assert study.class_score([Decimal('0.4')]) == Decimal('0.4')
-    assert study.class_score([Decimal('-0.2'), Decimal('-0.6')]) == Decimal('-0.4')
+    with pytest.raises(ValueError):
+        study.class_score([])
 
 
 def test_the_registered_comparisons_name_the_control_and_the_k_contrast():
@@ -176,5 +184,109 @@ def test_a_day_with_no_qualifying_class_is_cash_rather_than_a_forced_allocation(
 def test_the_pinned_parent_study_is_unchanged():
     from systematic_trading.lean.contracts import sha256
     receipt = json.loads((ROOT / 'data_receipt.json').read_text(encoding='utf8'))
+    # the root's own receipt records the parent it was frozen against, so the check does not
+    # follow the module's current default root
     for name, digest in receipt['parent_hashes'].items():
-        assert sha256(study.PARENT / name) == digest
+        assert sha256(Path(receipt['parent']) / name) == digest
+    for name, digest in receipt['parent_replay_hashes'].items():
+        assert sha256(Path(receipt['parent']) / 'decisions' / f'{name}.json') == digest
+
+
+# --- the corrected v2 root (peer-review repair) -------------------------------
+
+def _v2_rows(arm):
+    return json.loads((ROOT_V2 / 'decisions' / f'{arm}.json').read_text(encoding='utf8'))
+
+
+_BARS_CACHE = {}
+
+
+def _gate_momentum(symbol, day, lookback=126):
+    if 'data' not in _BARS_CACHE:
+        bars = json.loads((ROOT_V2 / 'bars.json').read_text(encoding='utf8'))
+        _BARS_CACHE['data'] = (bars, {row['trade_date']: index for index, row in enumerate(bars['SPY'])})
+    bars, session_index = _BARS_CACHE['data']
+    history = bars[symbol][max(0, session_index[day] - 500):session_index[day]]
+    if len(history) < lookback + 1:
+        return None
+    return (Decimal(str(history[-1]['close'])) / Decimal(str(history[-(lookback + 1)]['close']))) - Decimal('1')
+
+
+@BUILT_V2
+def test_the_corrected_root_reverifies_its_receipts_and_registers_both_populations():
+    from systematic_trading.lean.contracts import sha256
+    report = json.loads(RECORD_V2.read_text(encoding='utf8'))
+    receipt = json.loads((ROOT_V2 / 'report_receipt.json').read_text(encoding='utf8'))
+    protocol = json.loads((ROOT_V2 / 'protocol.json').read_text(encoding='utf8'))
+    assert sha256(ROOT_V2 / 'analysis.json') == receipt['sha256']
+    assert sha256(ROOT_V2 / 'gate.json') == receipt['gate_sha256']
+    assert protocol['version'] == study.VERSION == 'hierarchical-construction-v2'
+    assert protocol['parent']['root'].endswith('sleeve-construction-20261010-v2')
+    assert protocol['supersedes']['root'] == str(study.SUPERSEDES)
+    assert 'within-sleeve reranking' in protocol['rule']['class_score']
+    assert 'global cross-section rank table' in protocol['rule']['class_score']
+    assert 'never scored from a member it does not hold' in protocol['rule']['member_scores']
+    assert 'before any ranking or fallback' in protocol['rule']['qualification']
+    assert set(report['metrics']) == {'HIER-K2', 'HIER-K3', 'POOL', 'CP', 'M1'}
+    assert report['reference_parity'] == {'CP': True, 'M1': True, 'POOL': True}
+
+
+@BUILT_V2
+def test_no_corrected_hierarchical_decision_holds_a_name_that_failed_the_gate():
+    for arm in study.ARMS:
+        for day, row in _v2_rows(arm).items():
+            for target in row['targets']:
+                if Decimal(target['target_weight']) <= 0:
+                    continue
+                momentum = _gate_momentum(target['symbol'], day)
+                assert momentum is not None and momentum > 0, (arm, day, target['symbol'], momentum)
+
+
+@BUILT_V2
+def test_the_corrected_arms_hold_exactly_what_the_published_arms_held():
+    """The class-score population repair changes no choice on the pinned decisions."""
+    for arm in study.ARMS:
+        before, after = _rows(arm), _v2_rows(arm)
+        assert set(before) == set(after)
+        for day in before:
+            assert {t['symbol']: Decimal(t['target_weight']) for t in before[day]['targets']} == \
+                {t['symbol']: Decimal(t['target_weight']) for t in after[day]['targets']}, (arm, day)
+
+
+@BUILT_V2
+def test_the_class_score_audit_records_how_often_the_populations_disagreed():
+    """The audit re-derives the superseded population on the corrected decisions."""
+    from systematic_trading.lean.contracts import sha256
+    audit_path = ROOT_V2 / 'audit' / 'class-score-population.json'
+    assert audit_path.exists()
+    audit = json.loads(audit_path.read_text(encoding='utf8'))
+    assert audit['days'] == 130
+    for path, digest in audit['source_sha256'].items():
+        assert sha256(Path(path)) == digest
+    frozen_overlay = ROOT_V2 / 'source/systematic_trading/research/hierarchical_selection.py'
+    assert audit['source_sha256'][str(frozen_overlay.resolve())] == sha256(frozen_overlay)
+    assert 'mean of the global member scores of exactly the members' in \
+        frozen_overlay.read_text(encoding='utf8')
+    for arm in study.ARMS:
+        row = audit['arms'][arm]
+        assert row['decisions'] == 130
+        assert row['mismatched_days'] == 35 and row['chosen_mismatch_days'] == 0
+        assert row['member_mismatch_pairs'] == 38 and row['score_mismatch_pairs'] == 36
+        assert row['member_mismatch_by_sleeve'] == {'fixed_income': 19, 'equity': 19}
+        # the review's case is present in the published evidence, not only in a synthetic fixture
+        assert any(pair['sleeve'] == 'fixed_income' and pair['v1_members'] == ['HYG', 'TLT']
+                   and pair['held'] == ['LQD', 'TLT'] for pair in row['member_mismatch'])
+
+
+@BUILT_V2
+def test_the_corrected_arms_still_drop_the_downtrending_class():
+    for arm in study.ARMS:
+        rows = _v2_rows(arm)
+        year = [day for day in sorted(rows) if day.startswith('2022')]
+        assert year
+        for day in year:
+            assert not (_held(rows[day]) & set(SLEEVES['fixed_income'])), (arm, day)
+    report = json.loads(RECORD_V2.read_text(encoding='utf8'))
+    assert report['admission']['HIER-K2']['chosen_share']['fixed_income'] < \
+        report['admission']['POOL']['chosen_share']['fixed_income']
+    assert report['admission']['HIER-K2']['cash_only_days'] == 1

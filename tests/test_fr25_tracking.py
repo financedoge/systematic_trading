@@ -87,5 +87,5 @@ def test_financial_only_panel_never_reads_unrelated_context(monkeypatch):
 def test_fr25_cannot_be_allocated_without_separate_execution_contract(monkeypatch):
     from systematic_trading.live import strategy_control as c
     monkeypatch.setattr(c,'require_monitored',lambda *a:dict(monitored=[f.KEY]))
-    with pytest.raises(ValueError,match='Trading allocations currently support'):
+    with pytest.raises(ValueError,match='14-ETF paper execution contract is incomplete'):
         c.candidate_evidence(SimpleNamespace(),f.KEY,store=SimpleNamespace())

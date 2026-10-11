@@ -36,16 +36,16 @@ import re
 import numpy as np
 
 from systematic_trading.lean.contracts import sha256, write_json
-from systematic_trading.research.momentum_replay import read_json
+from systematic_trading.research.momentum_replay import checked_files, read_json
 from systematic_trading.research import alpha101 as lib
 from systematic_trading.research.turnover_gate import implied_turnover, screen
 
-STUDY = 'alpha101-screen-v1'
+STUDY = 'alpha101-screen-v2'
 PARENT = Path('var/research/sleeve-construction-20261010-v1')
-DEFAULT_ROOT = Path('var/research/alpha101-screen-20261011-v2')
+DEFAULT_ROOT = Path('var/research/alpha101-screen-20261011-v4')
 PAPER = Path('research_tmp/101_formulaic_alphas.pdf')
 PAPER_SHA256 = '1f9c21afe32dcb3ee77b31548acdaea00451fbfa1c0ee10c907867bcc736fce9'
-GATE_ROOT = Path('var/research/turnover-gate-20261010-v1')
+GATE_ROOT = Path('var/research/turnover-gate-20261011-v2')
 
 TOP_N = 6
 LOOKBACK_BARS = 63
@@ -64,19 +64,27 @@ _DATA = None
 def initialize(root=PARENT):
     """Load the pinned parent evidence (this study adds no new input)."""
     from systematic_trading.research import sleeve_construction_study as parent
+    checked_files(Path(root), 'input_manifest.json')
     parent.initialize(Path(root))
     global _DATA
     data = parent._DATA
-    closes = {symbol: {row['trade_date']: float(row['close']) for row in rows}
-              for symbol, rows in data['bars'].items()}
-    _DATA = dict(parent=parent, root=Path(root), bars=data['bars'], days=data['days'],
+    lower = {symbol: {row['trade_date']: float(row['close']) for row in rows}
+             for symbol, rows in data['bars'].items()}
+    raw_close = {symbol: {row.trade_date: float(row.close) for row in rows}
+                 for symbol, rows in data['raw'].items()}
+    _DATA = dict(parent=parent, root=Path(root), bars=data['bars'], raw=data['raw'], days=data['days'],
                  selection=data['selection'], instruments=data['instruments'],
-                 typed=data['typed'], closes=closes, day_cache={})
+                 typed=data['typed'], closes=lower, raw_closes=raw_close, day_cache={})
     return _DATA
 
 
 def decision_days():
     return sorted(_DATA['selection'])
+
+
+def _iso(value):
+    """A trade date as an ISO string, whether the source holds a date or a string."""
+    return value if isinstance(value, str) else value.isoformat()
 
 
 def known_through(day):
@@ -90,38 +98,41 @@ def known_through(day):
 def price_bars_for(day):
     """Audited typed bars up to the prior session, as the engine's sizing consumes them."""
     end = known_through(day)
-    index = _DATA['days'].index(end) + 1
-    return {symbol: rows[max(0, index - 300):index] for symbol, rows in _DATA['typed'].items()}
+    return {symbol: [row for row in rows if _iso(row.trade_date) <= end][-300:]
+            for symbol, rows in _DATA['typed'].items()}
 
 
 def histories_for(day):
-    """Point-in-time histories: audited bars up to the prior session, per instrument."""
+    """Point-in-time histories: audited bars up to the prior session, per instrument.
+
+    Each history carries both audited price columns the formulas need: the adjusted series for
+    return-shaped terms and the **raw** traded series for ``adv{d}``, which is dollar volume. The
+    raw window is aligned row-for-row with the adjusted one; a session missing from either series
+    is kept missing rather than filled. Peer review, 2026-10-11 (defect: an adjusted price times
+    raw volume is not traded dollars).
+    """
     if day in _DATA['day_cache']:
         return _DATA['day_cache'][day]
     end = known_through(day)
-    index = _DATA['days'].index(end) + 1
     out = {}
     for symbol, rows in _DATA['bars'].items():
-        window = rows[max(0, index - 300):index]
+        window = [row for row in rows if _iso(row['trade_date']) <= end][-300:]
         if len(window) < 2:
             continue
-        out[symbol] = lib.History(
-            symbol=symbol, date=end,
-            open=np.array([float(r['open']) for r in window]),
-            high=np.array([float(r['high']) for r in window]),
-            low=np.array([float(r['low']) for r in window]),
-            close=np.array([float(r['close']) for r in window]),
-            volume=np.array([float(r['volume']) for r in window]))
-    _DATA['day_cache'] = {day: out}
+        out[symbol] = lib.history_from_rows(symbol, window, end,
+            raw_rows=_DATA['raw'].get(symbol, ()), lookback=300)
+    _DATA['day_cache'][day] = out
     return out
 
 
 def base_book(day):
     """The engine's own incoming inverse-volatility book, before selection.
 
-    Mirrors ``backtest.stored._target_schedule``'s sizing exactly: 63-session realized
-    volatility per instrument, the risk-parity sleeve at a 45% cap, scaled by the
-    investable weight ``1 - cash_reserve``.
+    Mirrors ``backtest.stored._target_schedule``'s sizing exactly. The engine requires
+    ``lookback_bars + 1`` bars and then slices ``bars[end - lookback_bars - 1 : end]``, i.e. it
+    feeds the volatility estimator **64 prices for 63 returns** (``stored.py`` line ~277). Reading
+    only ``LOOKBACK_BARS`` prices here gave 62 returns and a slightly different annualised
+    volatility, so the screening book was not the book the engine sizes. Peer review, 2026-10-11.
     """
     cache = _DATA.setdefault('book_cache', {})
     if day in cache:
@@ -134,7 +145,7 @@ def base_book(day):
         window = histories.get(symbol)
         if window is None or len(window) < LOOKBACK_BARS + 1:
             continue
-        volatility = realized_volatility_from_bars(window[-LOOKBACK_BARS:])
+        volatility = realized_volatility_from_bars(window[-(LOOKBACK_BARS + 1):])
         if volatility <= 0:
             continue
         states.append(BetaInstrumentState(instrument=instrument, realized_volatility=volatility))
@@ -310,8 +321,21 @@ def clean_formula(text):
 
 def protocol():
     return dict(
-        peer_review_20261011=('Corrected after peer review found four implementation defects: (1) the hold/exit arms re-submitted an unchanged target vector every session, which rebalances on price drift instead of holding shares, so rows are now emitted only when the target changes; (2) the exit-and-re-enter branch sat behind a guard an exit had already emptied and could never re-enter; (3) the profit/loss exits read the close of the session they traded, which is look-ahead, and now read only closes strictly before it; (4) alpha 43 divided every historical volume by the latest rolling average dollar volume instead of each date\'s own, and rank IC ranked tied values in ticker order instead of averaging them. The v1 root is superseded and kept as the historical record.'),
-        study=STUDY, version=STUDY + '-v1', parent=str(PARENT),
+        peer_review_20261011=('Corrected after peer review. v1 fixed four implementation defects: the '
+                              'hold/exit arms re-submitted an unchanged target vector every session, which '
+                              'rebalances on price drift instead of holding shares, so rows are now emitted only '
+                              'when the target changes; the exit-and-re-enter branch sat behind a guard an exit '
+                              'had already emptied and could never re-enter; the profit/loss exits read the close '
+                              'of the session they traded, which is look-ahead, and now read only closes strictly '
+                              'before it; alpha 43 divided every historical volume by the latest rolling average '
+                              'dollar volume instead of each date\'s own, and rank IC ranked tied values in ticker '
+                              'order instead of averaging them. v2 (this root) additionally fixes two defects that '
+                              'change this screen\'s own inputs: adv{d} is now built from the audited RAW traded '
+                              'price rather than the dividend/split-adjusted close, because adjusted price times '
+                              'raw volume is not traded dollars; and the screening book now feeds the volatility '
+                              'estimator the engine\'s own 64 prices for 63 returns instead of 63 prices for 62. '
+                              'The v1 and v2 roots are superseded and kept as the historical record.'),
+        study=STUDY, version=STUDY + '-v2', parent=str(PARENT),
         paper=dict(path=str(PAPER), sha256=PAPER_SHA256),
         registered=list(lib.REGISTERED), family_size=len(lib.REGISTERED),
         family_declared='all sixteen registered alphas, no additions and no removals after outcomes',
@@ -322,13 +346,21 @@ def protocol():
             description='top six by alpha value take the engine\'s incoming inverse-volatility weights, '
                         'renormalised to the incoming gross; everything else is cash. A decision whose '
                         'cross-section is constant is skipped rather than mapped, because a constant '
-                        'cannot rank.',
+                        'cannot rank. The incoming book is the engine\'s own sizing: 64 prices for 63 '
+                        'returns (lookback_bars + 1).',
             no_ic_rule='a candidate with no measurable rank IC is reported insufficient and is never '
                        'judged against the programme reference IC'),
+        data_basis=dict(
+            prices='audited dividend/split-adjusted close, for return-shaped formula terms',
+            adv='mean(raw traded close x raw volume, d) per date, because adv{d} is average daily '
+                'DOLLAR volume; the raw series is a second audited column set on the same calendar',
+            missing='a session absent from either series stays missing; nothing is filled, spliced or '
+                    'substituted, and a history without the raw basis refuses the adv formulas'),
         information=dict(horizons=list(HORIZONS), primary_horizon=PRIMARY_HORIZON,
                          min_instruments=MIN_INSTRUMENTS, blocks=BLOCK, replications=REPLICATIONS,
                          seed=SEED,
-                         statistic='Spearman rank correlation of the cross-section against forward returns'),
+                         statistic='Spearman rank correlation of the cross-section against forward returns, '
+                                   'with tied values taking average ranks'),
         cost_test=dict(source='P4.15 turnover gate', ceiling_bps=40.0, tolerance=0.10, min_ic_margin=3.0,
                        cost_bps=5.0),
         declares=['no portfolio result is produced here',
@@ -338,9 +370,16 @@ def protocol():
 
 
 def prepare(root=DEFAULT_ROOT):
+    import shutil
     root = Path(root)
+    if (root / 'protocol.json').exists():
+        raise FileExistsError('Preserve frozen study; use a new evidence root')
     root.mkdir(parents=True, exist_ok=True)
     write_json(root / 'protocol.json', protocol())
+    shutil.copytree(Path(__file__).parents[1], root / 'source/systematic_trading',
+                    ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
+    write_json(root / 'source_manifest.json', {p.relative_to(root).as_posix(): sha256(p)
+               for p in (root / 'source').rglob('*.py')})
     formulas = extract_formulas()
     declared = {name: lib.FORMULAS[name] for name in lib.REGISTERED}
     mismatched = [name for name in lib.REGISTERED
@@ -405,6 +444,8 @@ def screen_alpha(alpha, sigma):
 
 def run_screen(root=DEFAULT_ROOT):
     root = Path(root)
+    if (root / 'screen.json').exists():
+        raise FileExistsError('Preserve completed alpha screen')
     sigma, calibration = sigma_from_calibration()
     initialize()
     rows = [screen_alpha(alpha, sigma) for alpha in lib.REGISTERED]
@@ -424,13 +465,17 @@ def verify(root=DEFAULT_ROOT):
     root = Path(root)
     checks = dict(parent_unchanged=True, paper_unchanged=sha256(PAPER) == PAPER_SHA256)
     manifest = read_json(root / 'input_manifest.json')
+    if (root / 'source_manifest.json').exists():
+        checked_files(root, 'source_manifest.json')
     for name, digest in manifest['files'].items():
         if sha256(PARENT / name) != digest:
             checks['parent_unchanged'] = False
     formulas = read_json(root / 'formulas.json')
     checks['formulas_match_paper'] = not formulas['mismatched']
     before = read_json(root / 'screen.json')
-    run_screen(root)
-    after = read_json(root / 'screen.json')
+    from tempfile import TemporaryDirectory
+    with TemporaryDirectory(prefix='alpha101-verify-') as scratch:
+        run_screen(Path(scratch))
+        after = read_json(Path(scratch) / 'screen.json')
     checks['screen_reproduced'] = before == after
     return checks

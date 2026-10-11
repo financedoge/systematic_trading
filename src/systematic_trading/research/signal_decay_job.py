@@ -46,6 +46,7 @@ SIGNALS = {
 KEY_SIGNALS = {
     "research_m1_14_v1": ["m1_total", "momentum_126"],
     "research_fr25_14_v1": ["m1_total", "momentum_126"],
+    "research_fr25_alpha_tilt_5_v1": ["m1_total", "momentum_126"],
     "research_fallback_f3_v1": ["m1_total"],
     "research_rolling_xgboost_1y_lag20_v1_usd_v1": ["m1_total"],
     "research_etf_activity_lag20_v1_usd_v1": ["m1_total"],
@@ -55,9 +56,12 @@ KEY_SIGNALS = {
 # Signals the strategies consume that this diagnostic cannot yet reproduce.
 # Published explicitly rather than silently omitted.
 COVERAGE_GAPS = [
-    dict(name="financial_ridge_forecast", used_by=["research_fr25_14_v1"],
+    dict(name="financial_ridge_forecast", used_by=["research_fr25_14_v1", "research_fr25_alpha_tilt_5_v1"],
          reason="FR25's per-decision ridge forecasts are not published; reproducing them "
                 "requires re-running the frozen monthly model schedule."),
+    dict(name="alpha101_family_tilt", used_by=["research_fr25_alpha_tilt_5_v1"],
+         reason="Base momentum coverage does not measure the Alpha101 tilt's incremental edge. "
+                "Its raw-activity features and held-book contribution need a separate diagnostic."),
     dict(name="context_ridge_forecast", used_by=["research_economic_context_ridge_v1"],
          reason="CR's per-decision ridge forecasts are not published; same reason."),
     dict(name="rolling_xgboost_forecast",

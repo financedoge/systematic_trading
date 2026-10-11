@@ -463,6 +463,11 @@ class OrderAnalyticsInput(BaseModel):
     local_order_ids: list[str] = Field(max_length=100)
 
 
+@router.get("/execution/interactive-brokers/benchmark-coverage")
+def execution_benchmark_coverage(request: Request):
+    return request.app.state.benchmark_collector.status(include_orders=True)
+
+
 @router.post("/execution/interactive-brokers/order-analytics")
 def order_analytics(selection: OrderAnalyticsInput, request: Request):
     selected = set(selection.local_order_ids)

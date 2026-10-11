@@ -1,4 +1,7 @@
 > **Corrected 2026-10-11 after peer review.** The band arms and the control originally re-submitted
+
+> **Superseded evidence — 2026-10-11 second review.** Earlier numerical and exit/budget conclusions on this page are historical. The prior repair was incomplete. See [the current review](strategy-review-2026-10-11.md) for the raw-activity, monthly scheduling, funding and matched-payoff fixes, accepted replacement roots, and limits. The old grids have not all been rerun and must not support promotion.
+
 > their target vector every session, which rebalanced on price drift rather than holding shares; the
 > control wrote 1,448 rows where the strategy has 65 decisions. The corrected study is
 > `var/research/alpha101-tilt-daily-20261011-v2`. Its conclusion **survives**: FR25 X = 10% costs
@@ -40,7 +43,7 @@ The same ordering holds on the SOTA (control 76.2% / 0.916 Sharpe / 36.7bp; dail
 137.0bp; daily 20% → 59.3% / 0.751 / 235.5bp).
 
 **The threshold works exactly as proposed — and that is the problem.** Raising the re-tilt threshold
-from daily to 300% of the budget cuts re-tilts from **1,269 to 64 a year** and cost from **92–243bp to
+from daily to 300% of the budget cuts re-tilts from **1,269 to 64 over the study** (about 221 to 11 per year) and cost from **92–243bp to
 37–51bp**. But to fit the 44.0bp ceiling the threshold has to be **200–300% of the budget**, and at that
 point the arm trades **64–86 times a year — which is the monthly design (70 a year)**. Daily monitoring
 behind a wide deadband is the monthly tilt with extra bookkeeping.
@@ -76,11 +79,11 @@ it one.
 
 ## Nothing is established even where it looks slightly better
 
-Every threshold arm that clears the cost ceiling is **statistically indistinguishable from the
-untouched book**: mean annual differences of +0.04%, +0.03%, +0.01% (FR25) and +0.00%, −0.01%, −0.18%
+Every threshold arm that clears the cost ceiling is **not statistically resolved against the
+untouched book (not an equivalence result)**: mean annual differences of +0.04%, +0.03%, +0.01% (FR25) and +0.00%, −0.01%, −0.18%
 (SOTA) at the 200% threshold, with all 95% intervals spanning zero and **Holm p = 1.000** across each
 book's registered family. The best in-sample arm (FR25, X = 5%, threshold 200%) beats the control by
-0.4pp of cumulative return and 0.02 of Sharpe — noise, and it is reported as an in-sample maximum
+0.4pp of cumulative return but trails by 0.002 of Sharpe (1.212 versus 1.214) — noise, and it is reported as an in-sample maximum
 rather than an optimum.
 
 ## What this means

@@ -160,22 +160,30 @@ def screen(
     ceiling = float(thresholds['max_annual_cost_bps']) * (1.0 + float(thresholds['cost_tolerance']))
     ic = PROGRAMME_REFERENCE_IC if candidate_ic is None else float(candidate_ic)
     breakeven = breakeven_ic(annual_turnover, sigma, cost_bps=cost_bps, period_sessions=period_sessions)
-    margin = None if breakeven in (None, 0) else ic / breakeven
+    # A zero-turnover candidate requires a zero IC, so every positive IC clears it by an unbounded
+    # multiple. Reporting an infinite margin keeps the verdict a pass while leaving the recorded
+    # margin finite-typed; dividing by the zero breakeven raised ZeroDivisionError until peer
+    # review reported it on 2026-10-11.
+    # Zero cost does not imply information. Keep JSON finite and test the sign
+    # separately instead of reporting infinity for zero or negative IC.
+    if annual_turnover == 0 and sigma is not None and sigma > 0:
+        breakeven = 0.0
+    margin = ic / breakeven if breakeven else None
     if breakeven is None or sigma is None or sigma <= 0:
         status, cost_test, margin_test = 'insufficient', cost <= ceiling, None
         reasons = ['forward-return dispersion is unavailable, so the IC requirement cannot be judged']
     else:
         cost_test = bool(cost <= ceiling)
-        margin_test = bool(margin >= float(thresholds['min_ic_margin']))
+        margin_test = bool(ic > 0 and (breakeven == 0 or margin >= float(thresholds['min_ic_margin'])))
         status = 'pass' if (cost_test and margin_test) else 'reject'
         reasons = []
         if not cost_test:
             reasons.append(f'annual cost {cost:.1f}bp exceeds the {ceiling:.1f}bp ceiling')
         if not margin_test:
-            reasons.append(f'IC margin {margin:.2f}x is below the required '
+            reasons.append(f'IC margin {format_multiple(margin)} is below the required '
                            f'{float(thresholds["min_ic_margin"]):.1f}x against a breakeven IC of {breakeven:.4f}')
         if not reasons:
-            reasons.append(f'cost {cost:.1f}bp is inside the ceiling and the IC margin {margin:.2f}x clears '
+            reasons.append(f'cost {cost:.1f}bp is inside the ceiling and positive IC clears '
                            f'the requirement')
     return dict(version=VERSION, status=status, cost_test=cost_test, margin_test=margin_test,
                 annual_turnover=float(annual_turnover), annual_cost_bps=cost, cost_ceiling_bps=ceiling,

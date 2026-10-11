@@ -162,5 +162,6 @@ def test_the_analysis_reproduces_from_the_replays():
     for block in ('3', '6', '12'):
         assert all(row['holm_p'] >= 0.0 for row in boot[block])
     assert contrast(boot, ('SOTA-TILT-FAMILY', 'SOTA'))['mean_annual'] > 0
-    manual = metrics_from([dict(date='2026-01-01', nav=100.0), dict(date='2026-01-02', nav=101.0)])
+    manual = metrics_from([dict(date='2026-01-01', nav=100.0), dict(date='2026-01-02', nav=101.0)],
+                          initial_capital=100.0)
     assert manual['total_return'] == pytest.approx(0.01)

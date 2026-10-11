@@ -33,6 +33,18 @@ Arms:
 
 Published references (``CP``, ``M1``) are read from the frozen parent evidence, not
 recomputed. Every arm is screened by the P4.15 turnover gate **before** any replay.
+
+**v2 repair, 2026-10-11 (peer-review defect 7).** The v1 root's two sleeve arms pass
+through the parent overlay's selection stage, and that stage had a gate hole: when a
+sleeve's members were too few to form a rank table — always the case for the
+single-instrument commodity and gold sleeves — the overlay returned every member
+unchanged and never consulted the positive 126-session momentum gate. The rank fallback
+had the same hole for a multi-name sleeve in which every member failed the gate. The
+parent overlay now decides absolute-momentum eligibility for every member, from that
+member's own price history, before any ranking or fallback, so a one-name sleeve is gated
+exactly like a many-name sleeve. The v1 root is preserved as published and superseded by
+``sleeve-construction-20261010-v2``; the corrected arms' admission counts, and therefore
+the published "permanent DBC/GLD exposure" reading, are re-derived there.
 """
 from decimal import Decimal as D
 from pathlib import Path
@@ -42,8 +54,16 @@ from systematic_trading.lean.contracts import sha256, write_json
 from systematic_trading.research.momentum_replay import read_json, checked_files, freeze_usd_bundle, run_usd_reference
 from systematic_trading.research.expanded_economics import job_name
 
+VERSION = 'sleeve-construction-v2'
 PARENT = Path('var/research/fr25-placebo-20261010-v1')
-DEFAULT_ROOT = Path('var/research/sleeve-construction-20261010-v1')
+SUPERSEDES = Path('var/research/sleeve-construction-20261010-v1')
+# The corrected run of this study (v2).
+CURRENT_ROOT = Path('var/research/sleeve-construction-20261010-v2')
+# Deliberately still the v1 root: ``alpha101_tilt_study.PARENT = base.DEFAULT_ROOT`` and that
+# study's data receipt pins the parent's ``report.json``. The Alpha101 studies were prepared
+# against the v1 parent, so this study's repair must not move their pinned parent underneath
+# them. The corrected run is published in ``CURRENT_ROOT`` instead.
+DEFAULT_ROOT = SUPERSEDES
 PARENT_INPUTS = ('bars.json', 'raw.json', 'urth.json', 'xgb_usd.json', 'macro.json', 'selection.json',
                  'forecasts.json')
 PARENT_CONTROLS = ('CP', 'M1')
@@ -121,7 +141,20 @@ def prepare(root, runner, parent=PARENT):
         parent_verdict = parent_report.get('verdict', {}).get('retention_verdict')
     else:
         parent_verdict = None
-    p = dict(version='sleeve-construction-v1', client_date='2026-10-10',
+    p = dict(version=VERSION, client_date='2026-10-10',
+             revision='v2 — peer-review repair of the selection stage\'s absolute-momentum gate (defect 7). '
+                      'The rule, the arms, the budgets, the slots, the costs, the windows, the family and the '
+                      'assessment are unchanged from v1; only the shared overlay\'s gate order changed, and it '
+                      'changes the two sleeve arms.',
+             supersedes=dict(root=str(SUPERSEDES),
+                             defect='In v1 the balanced-group overlay returned a sleeve\'s whole target list '
+                                    'unchanged whenever that sleeve was too small to form a rank table (always the '
+                                    'case for the single-instrument commodity and gold sleeves), and its '
+                                    'top-ranked fallback could select a member that had failed the positive '
+                                    '126-session momentum gate. The gate is now evaluated for every member from its '
+                                    'own price history before any ranking or fallback, independently of sleeve size.',
+                             evidence='var/research/sleeve-construction-20261010-v1 remains the published v1 run; '
+                                      'this root is the corrected run.'),
              question='Does selecting within asset-class sleeves beat the pooled top-six over fourteen '
                       'heterogeneous instruments?',
              parent=dict(root=str(parent), protocol_sha256=sha256(parent / 'protocol.json'),
@@ -144,6 +177,12 @@ def prepare(root, runner, parent=PARENT):
                      '0.75/0.25 trend/volume, positive 126-session gate, alphabetical ties. Its scoring code is '
                      'structurally identical to the pooled filter, so the arms differ in construction, not signal. '
                      'The POOL arm is the measured check on that equivalence.',
+             momentum_gate='The positive long-momentum gate is an absolute test on each member, evaluated from that '
+                           'member\'s own price history before any ranking or rank fallback and independently of '
+                           'how many members the sleeve holds. A one-instrument sleeve is gated exactly like an '
+                           'eight-instrument sleeve; a member with less than 127 sessions of history has no '
+                           '126-session momentum and does not pass. A member that fails the gate is never selected, '
+                           'with or without a rank fallback, so the sleeve receives nothing.',
              fallback='fallback_to_top_ranked is off: an unfilled sleeve budget stays in cash, matching the pooled '
                       'control contract of never forcing an ineligible asset into a slot.',
              slots_rule='A single declared per-sleeve slot count of 2 (the pooled arm keeps 6 over its one sleeve), '
@@ -163,8 +202,9 @@ def prepare(root, runner, parent=PARENT):
                  'choice, not an observed asset-class taxonomy, and XLE/XLB are sector equity inside the equity '
                  'sleeve.',
                  'Sleeve budgets force representation: the commodity and gold sleeves hold one instrument each, so '
-                 'those names enter whenever their gate passes. That is the mechanism under test, not a defect, but '
-                 'it makes admission counts part of the result.',
+                 'those names enter whenever their 126-session gate passes — and, after the v2 gate repair, only '
+                 'when it passes. That is the mechanism under test, not a defect, but it makes admission counts part '
+                 'of the result.',
                  'The POOL arm is the construction-matched control; CP is the published pooled control. Where they '
                  'differ, the difference is the fallback contract, and it is measured rather than assumed away.',
                  'Cost, delay, currency and cash treatment are inherited from the parent study so the comparison is '
@@ -279,7 +319,7 @@ def run_arm(day, arm, overlay_factory=None):
         bound.append(item)
     targets = _target_schedule(instruments=data['instruments'], bars_by_symbol=current['histories'],
         trade_dates=[current['asof']], rebalance_frequency='daily', lookback_bars=63, max_weight=D('.45'),
-        cash_reserve_weight=D('.02'), sleeve_name='sleeve-construction-v1',
+        cash_reserve_weight=D('.02'), sleeve_name=VERSION,
         target_overlays=bound)[current['asof']]
     targets = FinalWeightCapOverlay().apply(targets, None)
     held = {t.symbol for t in targets if t.target_weight > 0}

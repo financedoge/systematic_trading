@@ -131,7 +131,7 @@ def targets_worker(day):
             elif spec.kind=='financial_rank_selection':
                 o.schedule=data['economic']
                 o.rolling_schedule=data['rolling']
-            elif spec.kind=='audited_etf_activity':
+            elif spec.kind in ('audited_etf_activity', 'alpha101_tilt'):
                 if not data['raw_typed']:
                     raise ValueError('Published raw activity histories required')
                 o.raw={s:b[max(0,i-500):i] for s,b in data['raw_typed'].items()}

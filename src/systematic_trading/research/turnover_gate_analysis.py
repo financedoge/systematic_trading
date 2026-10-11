@@ -11,12 +11,12 @@ import numpy as np
 
 from systematic_trading.lean.contracts import sha256, write_json
 from systematic_trading.research.expanded_economics import job_name
-from systematic_trading.research.momentum_replay import read_json
+from systematic_trading.research.momentum_replay import checked_files, read_json, verify_usd_bundle
 from systematic_trading.research.turnover_gate import (FROZEN_COST_BPS, THRESHOLDS, VERSION, assess_archetypes,
     calibrate, format_bps, format_multiple, implied_turnover, screen, weights_from_targets)
 
 REPLAYS = Path('var/research/fr25-placebo-20261010-v1')
-ROOT = Path('var/research/turnover-gate-20261010-v1')
+ROOT = Path('var/research/turnover-gate-20261011-v2')
 OUTPUT = Path('research/turnover-gate-2026-10-10')
 SUB_START = '2023-01-03'
 REFIT_ARM = 'REFIT22'
@@ -31,29 +31,35 @@ def arm_window(arm):
     return 'sub2023' if arm == REFIT_ARM else 'evaluation'
 
 
-def evaluation_arms(statistics):
+def evaluation_arms(statistics, replays=REPLAYS):
     """Every arm in the frozen root that has both a decision file and a measured replay."""
     arms = []
     for name in statistics:
         if not name.endswith('-delay0-evaluation'):
             continue
         arm = name.split('-cost')[0]
-        if (REPLAYS / 'decisions' / (arm + '.json')).exists():
+        if (replays / 'decisions' / (arm + '.json')).exists():
             arms.append(arm)
-    if REFIT_ARM not in arms and (REPLAYS / 'decisions' / (REFIT_ARM + '.json')).exists():
+    if REFIT_ARM not in arms and (replays / 'decisions' / (REFIT_ARM + '.json')).exists():
         arms.append(REFIT_ARM)
     return sorted(arms, key=lambda a: (a not in ORDER, a))
 
 
-def arm_row(arm, statistics):
+def arm_row(arm, statistics, replays=REPLAYS):
     """Implied turnover from the mapping beside the measured traded-notional turnover."""
     window = arm_window(arm)
-    start = SUB_START if window == 'sub2023' else '0000-00-00'
+    name = job_name((arm, int(FROZEN_COST_BPS), 0, window))
+    measured = statistics[name]
+    start, end = measured['dates'][0], measured['dates'][-1]
     decisions = {d: weights_from_targets(row['targets'])
-                 for d, row in sorted(read_json(REPLAYS / 'decisions' / (arm + '.json')).items())
-                 if d >= start}
+                 for d, row in sorted(read_json(replays / 'decisions' / (arm + '.json')).items())
+                 if start <= d <= end}
+    replay = read_json(replays / 'python' / (name + '.json'))
+    if sorted(decisions) != sorted(replay['decisions']):
+        raise ValueError('Calibration and measured replay decision calendars differ: ' + name)
+    if [row['date'] for row in replay['nav']] != measured['dates']:
+        raise ValueError('Calibration statistics and measured NAV calendars differ: ' + name)
     implied = implied_turnover(decisions)
-    measured = statistics[job_name((arm, int(FROZEN_COST_BPS), 0, window))]
     factor = calibrate(implied['annual_turnover'], float(measured['annual_turnover']))
     return dict(arm=arm, window=window, decisions=implied['decisions'], first=implied['first'], last=implied['last'],
                 implied_turnover=implied['annual_turnover'],
@@ -129,10 +135,20 @@ def build(root=ROOT, replays=REPLAYS):
     root, replays = Path(root), Path(replays)
     if (root / 'calibration.json').exists():
         raise FileExistsError('Preserve the frozen turnover-gate calibration')
+    checked_files(replays, 'input_manifest.json')
+    checked_files(replays, 'decision_manifest.json')
     statistics = read_json(replays / 'statistics.json')
+    for arm in evaluation_arms(statistics, replays):
+        name = job_name((arm, int(FROZEN_COST_BPS), 0, arm_window(arm)))
+        replay_path = replays / 'python' / (name + '.json')
+        bundle = replays / 'bundles' / name
+        verify_usd_bundle(bundle)
+        receipt = read_json(replay_path.with_suffix('.receipt.json'))
+        if receipt != dict(sha256=sha256(replay_path), manifest_sha256=sha256(bundle / 'manifest.json')):
+            raise ValueError('Replay receipt changed: ' + name)
     bars = read_json(replays / 'bars.json')
     decisions = sorted(read_json(replays / 'selection.json'))
-    rows = [arm_row(arm, statistics) for arm in evaluation_arms(statistics)]
+    rows = [arm_row(arm, statistics, replays) for arm in evaluation_arms(statistics, replays)]
     span = programme_sigma(bars, decisions)
     gate_verdicts = verdicts(rows, span['sigma'])
     report = dict(version=VERSION + '-calibration', thresholds=dict(THRESHOLDS), cost_bps=FROZEN_COST_BPS,

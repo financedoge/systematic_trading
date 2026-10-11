@@ -1,0 +1,22 @@
+{
+  "files": {
+    "comparison.png": "4f4d29185341f382cbc0c864fa439ac4165b3bddf43993bea9faaf8b4cf43b9b",
+    "index.html": "a58c0a9f80dfb2d38860806b846251237ea56c9ed989fdc72d9dfdb238ea3b84",
+    "presentation_source/candidate_pool_analysis.py": "b3394f05ef93577adc7f652626a823e05c2898d8ef902a4e5ff068b4b88a2c84",
+    "reports/F3.html": "517b0521f67ba84f791d8d759d0c997b5ab73f5c213d125c30ce1e90eacbb014",
+    "reports/M0_12.html": "a35c10c999d3930ad699ef9fa155b7fe284cfdcecf13f2f3239d1a6115c33665",
+    "reports/M0_14.html": "ef3e517865291cc3ff5b78b824701649c8789ff1c0db6545d93cb2f7c6b53491",
+    "reports/M1_12.html": "314fc33ea67b8d735c3aee412ada43cc100575da2971b81dc3c32fe1b1a8f30c",
+    "reports/M1_14.html": "e5f52aab4b7b9e3c2c83581d1990161b0f0c7e9fd5c61071be24943d31aa7127",
+    "reports/M2_12.html": "b725feeeb8307cd0a69be66ce843819512b07038a2a358c7e39dcdfbd47caf96",
+    "reports/M2_14.html": "d38b6a372e984e2861d07bde54dc2a49d23b1830fe745027a0f8b96c9614132c",
+    "reports/M3_12.html": "3165fc44385d4e10f510fc3b4bfdd9b51e81b5cf9cae5afa8ea92450f614090f",
+    "reports/M3_14.html": "e94ee371bbf236cb7fde5704fa7adf6c875e1f655b4a548a293e426c886240cc",
+    "reports/RP12.html": "e13bbfcfdedcf7e57ad999351c632afc5d302d1b95ea10c62003bcbd546fffdc",
+    "reports/RP14.html": "46c8476251c5c23f94ffa7b70b88f8177c18d030d29d0a5cbd86a83517255583",
+    "reports/URTH.html": "1fbd7872769a74beb7775c6eca14cacc64481449b2fa7c71ebf2c31ed30742ac"
+  },
+  "protocol_sha256": "8242daf88c16cf28c8f12f16f68aafd84ff4ec71dfbc85d37cc0aa32acdfce60",
+  "report_sha256": "1ac62b28dd40c3e0849e4c10f746360e8aaeb42aa24b03fd028848bda6d592b9",
+  "study": "D:\\projects\\systematic_trading\\var\\research\\candidate-pool-momentum-20261009-v1"
+}

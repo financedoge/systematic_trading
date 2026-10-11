@@ -122,8 +122,8 @@ def test_the_profit_and_loss_rules_cannot_see_the_session_they_trade_on():
     """A target executed at day D's open may only be decided with closes before D."""
     books = {day: {'a': 0.5, 'b': 0.5} for day in DAY}
     desired = {day: {'a': 0.05, 'b': -0.05} for day in DAY}
-    calm = {day: 100.0 for day in DAY}
-    flat = {day: 100.0 for day in DAY}
+    calm = {'2025-12-31': 100.0, **{day: 100.0 for day in DAY}}
+    flat = dict(calm)
     # 'a' collapses on the last session only: a look-ahead stop would exit on that same session
     rows, events = study.simulate(books, {DAY[0]}, 0.10, 'EXIT-SL-05', desired,
                                   {'a': dict(calm, **{DAY[-1]: 10.0}), 'b': flat})
@@ -134,7 +134,7 @@ def test_the_profit_and_loss_rules_cannot_see_the_session_they_trade_on():
                                   {'a': dict(calm, **{DAY[-2]: 10.0}), 'b': flat})
     assert events['exits'] == 1 and DAY[-1] in rows
     assert rows[DAY[-1]] == {'a': 0.5, 'b': 0.5}
-    # and the entry base is the entry session's own close, so a later loss is measurable at all
+    # The declared prior-close entry proxy makes a later loss measurable without future prices.
     assert events['exit_days'] == [DAY[-1]]
 
 

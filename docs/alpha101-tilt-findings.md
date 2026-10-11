@@ -1,4 +1,7 @@
 > **Corrected 2026-10-11 after peer review.** This measurement used the defective alpha 43 and the
+
+> **Superseded evidence — 2026-10-11 second review.** Earlier numerical and exit/budget conclusions on this page are historical. The prior repair was incomplete. See [the current review](strategy-review-2026-10-11.md) for the raw-activity, monthly scheduling, funding and matched-payoff fixes, accepted replacement roots, and limits. The old grids have not all been rerun and must not support promotion.
+
 > pre-fix rank IC. The corrected study is `var/research/alpha101-tilt-20261011-v2`: 48 candidates,
 > **29 pass / 16 reject / 3 insufficient**, i.e. 12 passing alphas at X = 5%, **11 at X = 10%** (one
 > fewer than before) and 6 at X = 20%. The shape of the finding — wide at 5%, slightly narrower at 10%,

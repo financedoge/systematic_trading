@@ -10,6 +10,7 @@ from systematic_trading.config import AppSettings, get_settings
 from systematic_trading.data.providers import ProviderRegistry
 from systematic_trading.execution.broker import InteractiveBrokersAdapter
 from systematic_trading.execution.twap_benchmark import TwapBenchmarkService
+from systematic_trading.execution.benchmark_collection import ExecutionBenchmarkCollector
 from systematic_trading.live import TradingManagementService
 from systematic_trading.live.broker_pnl import BrokerPnlService
 from systematic_trading.services import (
@@ -83,6 +84,9 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
             app.state.broker_health = BrokerHealthMonitor(resolved_settings, on_available=broker_available)
         app.state.broker = broker
         app.state.twap_benchmarks = TwapBenchmarkService(resolved_settings)
+        app.state.benchmark_collector = ExecutionBenchmarkCollector(
+            resolved_settings, store, app.state.twap_benchmarks, app.state.analytics)
+        app.state.benchmark_collector.start()
         app.state.broker_pnl = BrokerPnlService(resolved_settings)
         app.state.broker_pnl.start()
         app.state.trading_management_service = trading_management_service
@@ -97,6 +101,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         yield
         if app.state.broker_health is not None:
             app.state.broker_health.close()
+        app.state.benchmark_collector.close()
         if app.state.analytics_service is not None:
             app.state.analytics_service.stop()
         app.state.broker_pnl.close()
@@ -159,6 +164,18 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
             now=checked_at,
         )
         from systematic_trading.services.health import ServiceHealthState, _overall_status
+        collector = getattr(app.state, "benchmark_collector", None)
+        if collector is not None:
+            state = collector.status()
+            counts = (state.get("coverage") or {}).get("window_status_counts", {})
+            order_counts = (state.get("coverage") or {}).get("order_status_counts", {})
+            status = ("disabled" if not state['enabled'] else "error" if state['last_error'] or not state['running']
+                      else "degraded" if counts.get('unavailable') or order_counts.get('unavailable')
+                      or order_counts.get('execution_review_required') else "ok")
+            result.services.append(ServiceHealthState(service_id="execution_benchmarks", display_name="Post-trade benchmarks",
+                service_type="embedded", implementation_status="active", required=False, checked_at=checked_at,
+                status=status, message=state['last_error'] or "App-owned collection of original and routed paper execution windows.",
+                details=state))
         analytics = getattr(app.state, "analytics_service", None)
         result.services = [s for s in result.services if s.service_id not in {"analytics", "alert_delivery"}]
         if analytics is not None:
