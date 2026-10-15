@@ -21,6 +21,18 @@ from systematic_trading.recorders.market_data import (
 router = APIRouter(prefix="/api/v1")
 
 
+@router.get('/market-data/coverage')
+def market_data_coverage(request: Request):
+    service = getattr(request.app.state, 'analytics_service', None)
+    state = service.status().get('market_data_coverage') if service is not None else None
+    if not state:
+        return dict(status='unknown', message='Market-data coverage has not been checked yet.')
+    from datetime import UTC
+    if (datetime.now(UTC)-datetime.fromisoformat(state['checked_at'])).total_seconds() > 180:
+        return dict(state, status='error', message='Coverage monitor is stale. ' + state['message'])
+    return state
+
+
 class MarketDataAuditBar(BaseModel):
     raw_event_id: str
     symbol: str

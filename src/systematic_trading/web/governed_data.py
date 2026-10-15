@@ -59,7 +59,10 @@ def catalog(request:Request,batch:str|None=None):
     store,batch=context(request,batch)
     rows=_query(store,"SELECT payload FROM analytics.observations FINAL WHERE workspace="+_sql_string(store.workspace)
         +" AND source_id='governance/catalog' AND version="+_sql_string(batch)+" AND family='governed_series_catalog' ORDER BY entity")
-    return dict(batch=batch,series=[json.loads(r['payload']) for r in rows],research_only=True,
+    from systematic_trading.services.market_data_health import daily_coverage
+    coverage = daily_coverage(request.app.state.settings, [json.loads(r['payload']) for r in rows])
+    series = coverage.pop('series')
+    return dict(batch=batch,series=series,coverage=coverage,research_only=True,
         basis_note='Raw means reconstructed from recorded splits, not tape-certified. Adjusted prices include provider dividend adjustments. Unknown history is never filled.')
 
 
@@ -72,7 +75,14 @@ def audit(request:Request,symbol:str=Query(...,min_length=1,max_length=50),batch
         +' AND source_id='+_sql_string(source)+' AND version='+_sql_string(physical)+" AND point_key='audit' LIMIT 1")
     if not rows:
         raise HTTPException(404,'Unknown symbol in this batch')
-    return dict(batch=batch,audit=json.loads(rows[0]['payload']))
+    from systematic_trading.services.market_data_health import series_freshness
+    from systematic_trading.recorders.listed_daily import expected_session, load_state
+    from datetime import UTC, datetime
+    audit = json.loads(rows[0]['payload'])
+    audit['freshness'] = series_freshness(audit, cutoff=expected_session(datetime.now(UTC)),
+        enabled=request.app.state.settings.governed_refresh_enabled,
+        receipt=load_state(request.app.state.settings).get('symbols', {}).get(symbol))
+    return dict(batch=batch,audit=audit)
 
 
 @router.get('/series')

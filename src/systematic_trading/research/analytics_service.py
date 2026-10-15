@@ -87,6 +87,7 @@ class AnalyticsService:
             event_store=store if hasattr(store, 'append_platform_event') else None,
             service_name='analytics-service')
         self._reported_issues = {}
+        self._market_data_checked_at = None
 
     def _report_issue(self, name, message, *, severity='error'):
         with self._lock:
@@ -171,6 +172,14 @@ class AnalyticsService:
         # Independent of refreshes: all lanes can be blocked and still raise
         # overdue alerts, without needing an HTTP status request.
         self._check_readiness()
+        if self._market_data_checked_at is None or (now-self._market_data_checked_at).total_seconds() >= 60:
+            from systematic_trading.services.market_data_health import check_market_data
+            coverage = check_market_data(self.settings, self.analytics, now=now)
+            self._market_data_checked_at = now
+            with self._lock:
+                self._status['market_data_coverage'] = coverage
+            if coverage['status'] != 'ok':
+                self._report_issue('market_data_coverage', coverage['message'], severity='warning')
 
     def _run_watchdog(self):
         while not self._stop.wait(15):
@@ -310,6 +319,10 @@ class AnalyticsService:
         jobs = [
             ("governed-publication", lambda: self._refresh_governed()),
             ("research-etf-recorder", lambda: self._refresh_research_etfs()),
+            # Publish before calculating: calculations and trading retain the
+            # strict common-batch contract. Never advance the catalog just after
+            # finishing the calculation that trading needs for that batch.
+            ("listed-daily-recorder", lambda: self._refresh_listed_daily()),
             ("strategy-fx", lambda: refresh_tracked_fx(self.settings, self.store)),
             ("tracked-strategies", lambda: refresh_tracked_strategies(self.settings, self.store, self.analytics)),
             ("strategy-serving", lambda: publish_strategies(self.settings, self.store, self.analytics)),
@@ -333,7 +346,7 @@ class AnalyticsService:
             ("lean-history", lambda: import_lean_histories(self.analytics, self.store)),
             ("market-raw", lambda: import_raw_market_data(self.settings, self.analytics)),
         ]
-        research = {"governed-publication", "research-etf-recorder", "strategy-fx", "tracked-strategies", "strategy-serving", "signal-decay", "economic-recorder", "positioning-recorder", "energy-recorder", "issuer-etf-recorder"}
+        research = {"governed-publication", "research-etf-recorder", "listed-daily-recorder", "strategy-fx", "tracked-strategies", "strategy-serving", "signal-decay", "economic-recorder", "positioning-recorder", "energy-recorder", "issuer-etf-recorder"}
         archives = {"research-history", "lean-history", "market-raw"}
         def owner(name):
             return "research" if name in research else "archives" if name in archives else "operations"
@@ -433,6 +446,10 @@ class AnalyticsService:
     def _refresh_research_etfs(self):
         from systematic_trading.recorders.research_etfs import refresh_research_etfs
         return refresh_research_etfs(self.settings, self.analytics)
+
+    def _refresh_listed_daily(self):
+        from systematic_trading.recorders.listed_daily import refresh_listed_daily
+        return refresh_listed_daily(self.settings, self.analytics)
 
     def _refresh_economics(self):
         from systematic_trading.recorders.economics import refresh_economics

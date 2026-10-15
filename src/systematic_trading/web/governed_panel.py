@@ -28,6 +28,7 @@ GOVERNED_HTML = r'''
 </style>
 <section id="governed-panel" class="panel" data-market-view="history" hidden>
  <div class="panel-head"><h2>Historical Daily Price</h2><span id="governed-status">Loading catalog</span></div>
+ <div id="governed-freshness" role="status" class="note">Checking published data freshness…</div>
  <details><summary>Research data recorders</summary><div id="research-recorder-status" class="note">Checking coverage…</div></details>
  <div class="note market-debug-only">One published history per symbol. Raw prices are reconstructed from reported splits; dividend-adjusted prices follow the provider’s back-adjustment convention. Neither is certified exchange tape. Missing observations remain missing.</div>
  <form id="governed-filters" class="filters">
@@ -197,6 +198,10 @@ GOVERNED_HTML = r'''
  }
  function render(){
   if(!page||!audit)return;const source=page.comparison_source;
+  const freshness=audit.freshness;
+  $('governed-freshness').textContent=freshness?.message||'Freshness is not available for this series.';
+  $('governed-freshness').setAttribute('role',freshness?.stale?'alert':'status');
+  $('governed-freshness').style.cssText=freshness?.stale?'background:#fff1e5;color:#8b351b;border-left:4px solid #c55c23':'';
   $('governed-status').textContent=`${fmt(page.rows.length)} dated rows loaded${page.next_after?' · truncated':''}`;
   if(page.kind==='usd_index'){
    const data=page.publication,last=page.rows.filter(r=>r.index_level!==null).at(-1);
@@ -215,6 +220,7 @@ GOVERNED_HTML = r'''
   $('governed-availability-note').textContent=`${audit.first||'No history'} to ${audit.last||'no history'}.${endNote}${page.next_after?' Loaded history is truncated.':''}${audit.internal_gaps?' Missing sessions remain gaps.':''}${audit.unresolved_historical_names?.length?' Historical issuer identity needs review.':''}`;
   $('governed-message').textContent=`${audit.status.replaceAll('_',' ')} · ${audit.first||'no history'} to ${audit.last||'no history'}.${endNote}\n${missing?fmt(missing)+' sessions have no defensible raw reconstruction. ':''}Price conflicts refer to archived source comparisons, not a claim that the selected source is wrong. Historical availability and full listing-history completeness are uncertified.${audit.listing_boundary?.date?' Identity/start boundary: '+audit.listing_boundary.date+'. Earlier source observations are quarantined pending dated identity evidence.':''}${audit.unresolved_historical_names?.length?' Historical issuer names require review: '+audit.unresolved_historical_names.join('; '):''}`;
   $('governed-batch').textContent='Frozen batch '+batch+' · cutoff '+audit.requested_cutoff;
+  if(audit.previous_audit?.status==='review')$('governed-message').textContent+=`\nPrevious archived audit remains under review (${fmt(audit.previous_audit.conflict_dates)} price conflict dates); the new capture does not resolve those conflicts. Prior batch ${audit.previous_audit.batch}.`;
   renderCharts();
   const selected=audit.sources.find(s=>s.source_id===source);$('governed-comparison-note').textContent=selected?`${selected.source_id} · ${selected.price_basis} · ${selected.accepted?'Accepted for joining after audit':'Excluded from joining'}${selected.eligible_from?' on or after '+selected.eligible_from:''}. ${selected.pre_listing_observations?fmt(selected.pre_listing_observations)+' earlier source observations are excluded. ':''}Original source Close and volume may use different split/dividend conventions. ${page.comparison_truncated?'Source display is truncated.':''}`:'';
   $('governed-overlaps').innerHTML='<table><thead><tr><th>Compared source</th><th>Overlap</th><th>Scale</th><th>Price error p99</th><th>Return error p99</th><th>Volume error p99</th><th>Join</th></tr></thead><tbody>'+audit.overlaps.filter(r=>r.anchor===audit.primary_source).map(r=>`<tr><td>${esc(r.candidate)}</td><td>${fmt(r.overlap)}</td><td>${num(r.scale)}</td><td>${pct(r.p99_scale_error)}</td><td>${pct(r.p99_return_error)}</td><td>${pct(r.volume_p99_scale_error)}</td><td>${esc(r.reason)}</td></tr>`).join('')+'</tbody></table>';

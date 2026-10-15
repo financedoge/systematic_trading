@@ -184,6 +184,10 @@ class RecoveryLedger:
             "pending_windows": sum(counts[s] for s in ("pending", "retry", "in_progress", "source_partial")),
             "recovered_slots": sum(self.data["windows"].get(w.key, {}).get("slots", 0) for w in windows),
             "next_request_at": self.data["next_request_at"], "last_result": self.data.get("last_result"),
+            "latest_complete_end_by_symbol": {symbol: max(
+                (w.end.isoformat() for w in windows if w.symbol == symbol
+                 and self.data['windows'].get(w.key, {}).get('status') == 'complete'), default='')
+                for symbol in symbols},
             "research_approved": False,
         }
 

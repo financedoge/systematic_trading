@@ -241,3 +241,10 @@ def _service_harness(monkeypatch, tmp_path, start):
         "--symbols", "SPY",
     ]
     return service, Clock, args, states
+
+
+def test_daily_backfill_warning_is_unhealthy_even_with_success_exit(monkeypatch, tmp_path):
+    service, _, _, _ = _service_harness(monkeypatch, tmp_path, '2026-10-15T14:00:00+00:00')
+    assert 'AAPL unavailable' in service._child_last_error(
+        {'returncode': 0}, {'returncode': 0, 'warnings': ['AAPL unavailable']})
+    assert service._child_last_error({'returncode': 0}, {'returncode': 0, 'warnings': []}) is None

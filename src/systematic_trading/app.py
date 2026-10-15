@@ -180,6 +180,15 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         result.services = [s for s in result.services if s.service_id not in {"analytics", "alert_delivery"}]
         if analytics is not None:
             state = analytics.status()
+            coverage = state.get('market_data_coverage') or dict(status='unknown',
+                message='Data coverage has not been checked yet; process liveness does not establish freshness.')
+            coverage_status = coverage['status']
+            if coverage.get('checked_at') and (checked_at-datetime.fromisoformat(coverage['checked_at'])).total_seconds() > 180:
+                coverage_status = 'error'
+                coverage = dict(coverage, message='Market-data coverage monitor is stale. ' + coverage['message'])
+            result.services.append(ServiceHealthState(service_id='market_data_coverage', display_name='Market data freshness and coverage',
+                service_type='embedded', implementation_status='active', required=True, checked_at=checked_at,
+                status=coverage_status, message=coverage['message'], details=coverage))
             from systematic_trading.web.strategy_control import calculation_readiness
             readiness = calculation_readiness(state)
             result.services.append(ServiceHealthState(service_id="analytics", display_name="Strategy and account calculations",

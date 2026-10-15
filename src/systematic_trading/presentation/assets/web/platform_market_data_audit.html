@@ -536,6 +536,7 @@
       });
       if (!baseResponse.ok) throw new Error(`intraday symbols returned ${baseResponse.status}`);
       const base = await baseResponse.json();
+      if ((base.errors || []).length) throw new Error(`Intraday catalog cannot be read: ${base.errors[0]}`);
       state.recorderDates = base.recorder_dates || [];
       if (!el("intraday-start-date").value && !el("intraday-end-date").value && base.latest_recorder_date) {
         setIntradaySessionRange(state.sessionPreset);
@@ -551,6 +552,7 @@
       const data = await response.json();
       state.symbols = (data.symbols || []).map((symbol) => ({ symbol }));
       applySymbolOptions(() => `raw intraday | ${intradayRangeLabel()}`);
+      if (!state.symbols.length) throw new Error('No intraday symbols are available in this capture-date range. Check recorder coverage and select a wider range.');
     }
 
     function setIntradaySessionRange(sessionCount) {

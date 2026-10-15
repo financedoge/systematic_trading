@@ -1,5 +1,53 @@
 # Project Log
 
+## 2026-10-15 — Repair silent market-data staleness and empty intraday selector
+
+The operator found AAPL ending September 25 and an empty intraday symbol list.
+AAPL had never been included in the strategy/research-ETF recurring daily jobs;
+new catalog timestamps masked inherited old endpoints. Intraday recordings were
+present, but selector requests scanned 4.07 GB of manifests twice and timed out.
+Process health also discarded successful-exit backfill warnings and did not
+verify delivered-data freshness.
+
+The operator selected automatic daily coverage for all currently listed symbols
+with supported identities. Added an application-owned, resumable recorder using
+the existing audit/publication pipeline, bounded batches of 64 before strategy
+calculations, per-symbol retry/quarantine, and preserved prior historical conflict
+evidence. Initial catalog classification admits 3,133 current-listing candidates;
+2,223 missing/ended/unresolved histories remain held for review. Each new capture
+must still prove supported identity and continuity. All strategy publication,
+approval, reconciliation and broker-environment checks remain intact.
+
+Added persisted incremental manifest summaries (raw hash checks remain enforced),
+explicit selector errors, independent one-minute daily/intraday coverage checks,
+a required System health row, persistent Market Data freshness warnings, and
+durable background alerts. Email delivery is still unconfigured and is explicitly
+shown as disabled. AAPL now has 11,552 daily rows through October 14; its original
+2,771 archive-conflict dates remain review evidence. The first recovery wave
+published 14 symbols; the running app independently acquired, validated and
+published a further 60. At 14:52 UTC, 126/3,133 candidates were current and 3,007
+were pending/stale, including six quarantines. Four intraday symbols had already
+advanced through today's 14:30 UTC window and the fifth was recovering. Acquisition
+and audit failures remain isolated for inspection/retry.
+Final acceptance confirmed all five intraday symbols completed that window with
+zero outstanding gaps. The selector took 6.23s during concurrent append/calculation
+work (0.11s warm); the old full-manifest timeout was not reproduced.
+
+132 focused tests passed with zero failures/skips, as did Ruff and whitespace
+checks. Live browser checks showed AAPL current and five populated intraday ticker
+choices with OHLCV charts. The deployed ticker endpoint returned in 0.11 seconds.
+System correctly remains degraded for the broad daily backlog. Deployment used
+the normal service scripts and a temporary paper-approval pause; restored the
+original enabled policy and CNH 1,000,000 cap after fresh matched reconciliation
+(policy revision 10). Live remains disabled. No new allocation or execution
+authority was introduced. Evidence: `var/reviews/market-data-incident-20261015/`.
+
+Remaining acceptance: broad catch-up must progress to the expected completed
+session, quarantines and unsupported identities need explicit resolution, and
+intraday windows must keep advancing. See
+[incident record](docs/market-data-freshness-2026-10-15.md). Do not describe pending
+or reviewed data as healthy or silently substitute provider archives for research.
+
 ## 2026-10-15 — Dynamic rebalancing becomes a standing research comparison
 
 The operator requested that all future research explicitly check dynamic

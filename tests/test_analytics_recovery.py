@@ -45,6 +45,17 @@ def service(tmp_path):
     return worker, events
 
 
+def test_watchdog_alerts_on_missing_market_data_without_http_requests(tmp_path, monkeypatch):
+    from systematic_trading.services import market_data_health
+    worker, events = service(tmp_path)
+    monkeypatch.setattr(worker, '_check_readiness', lambda: None)
+    coverage = dict(status='degraded', message='AAPL has no data after September 25')
+    monkeypatch.setattr(market_data_health, 'check_market_data', lambda *args, **kwargs: coverage)
+    worker._watchdog_tick()
+    assert worker.status()['market_data_coverage'] == coverage
+    assert any(e.event_type == 'analytics_market_data_coverage' and e.status == 'warning' for e in events)
+
+
 def test_watchdog_alerts_when_all_refreshes_are_blocked_and_no_http_request_arrives(tmp_path):
     worker, events = service(tmp_path)
     old = datetime.now(UTC)-timedelta(hours=3)

@@ -432,6 +432,12 @@ def _run_daily_backfill_child(
         "stdout_tail": result.stdout[-4000:],
         "stderr_tail": result.stderr[-2000:],
     }
+    try:
+        report = json.loads(result.stdout)
+        status['warnings'] = report.get('warnings', [])
+    except (ValueError, TypeError):
+        if result.returncode == 0:
+            status['warnings'] = ['Daily backfill returned no readable coverage report.']
     level = logger.info if result.returncode == 0 else logger.error
     level(
         "recorder_service_daily_backfill_completed",
@@ -516,6 +522,8 @@ def _child_last_error(
     ):
         if not status:
             continue
+        if status.get('warnings'):
+            return f"{label} incomplete: " + '; '.join(str(w) for w in status['warnings'])[:600]
         returncode = status.get("returncode")
         if returncode not in (None, 0):
             stderr = str(status.get("stderr_tail") or "").strip()

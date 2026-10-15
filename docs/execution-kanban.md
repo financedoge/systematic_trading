@@ -6,6 +6,23 @@ are preserved byte-for-byte in the [history archive](archive/README.md).
 Use [research state](research-state.md) for accepted conclusions and the
 [research plan](signal-decay-and-alpha-plan.md) for the ordered research programme.
 
+## Market-data freshness incident — 2026-10-15
+
+**Repair deployed; broad catch-up running:** AAPL is audited/published through
+October 14. The intraday selector now returns its five recorded symbols in 0.11s
+(previously a 4.07 GB manifest scan exceeded a 45s timeout), and charts load.
+The application owns automatic daily refresh for supported current-listing
+candidates, with per-symbol quarantine/retry and retained historical conflicts.
+Independent freshness checks now make missing/stale daily data and intraday gaps
+degrade System health and create durable alerts, including when child processes
+exit successfully with warnings. Market Data displays these warnings directly.
+132 regression tests, Ruff and live API/browser checks passed. The original paper
+approval policy/cap was restored after matched reconciliation; live remains disabled.
+**Open:** catch up the broad daily backlog, investigate quarantines and unsupported
+identities, and configure an external alert channel if required (SMTP is currently
+unconfigured). Do not call broad coverage recovered until actual endpoints pass.
+[Incident and recovery details](market-data-freshness-2026-10-15.md).
+
 ## Rebalance mechanism review — 2026-10-15
 
 **Standing rule and publication checks complete:** Future research must evaluate

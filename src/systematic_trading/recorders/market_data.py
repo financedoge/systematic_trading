@@ -453,6 +453,10 @@ class RawDataCatalog:
         if limit is not None and limit < 1:
             raise ValueError("Catalog limit must be positive")
         manifest_paths = _manifest_paths(self.root, day=day)
+        if start_date or end_date:
+            manifest_paths = [p for p in manifest_paths
+                              if (not start_date or p.stem[5:] >= str(start_date))
+                              and (not end_date or p.stem[5:] <= str(end_date))]
         entries: list[RawCatalogEntry] = []
         seen_raw_refs: set[str] = set()
         duplicate_raw_refs = 0
@@ -463,6 +467,26 @@ class RawDataCatalog:
         latest = []
         representatives = {}
         for manifest_path in manifest_paths:
+            if summarize and entry_filter is None:
+                from systematic_trading.recorders.catalog_summary import manifest_summary
+                try:
+                    summary = manifest_summary(manifest_path)
+                except OSError as exc:
+                    errors.append(f"{manifest_path}: {exc}")
+                    continue
+                records_read += summary['records_read']
+                invalid += summary['records_invalid']
+                errors.extend(summary['errors'][:max(0, 50-len(errors))])
+                for payload in summary['entries']:
+                    entry = RawCatalogEntry.model_validate(payload)
+                    if not _catalog_entry_matches(entry, source=source, environment=environment,
+                            data_kind=data_kind, symbol=symbol, day=day, raw_schema_version=raw_schema_version):
+                        continue
+                    key = json.dumps([str(entry.recorder_date), entry.source_name, entry.environment,
+                                      entry.data_kind, entry.symbol, entry.raw_schema_version])
+                    matched_entries += summary['counts'][key]
+                    representatives[key] = entry
+                continue
             try:
                 lines = manifest_path.open(encoding="utf-8")
             except OSError as exc:

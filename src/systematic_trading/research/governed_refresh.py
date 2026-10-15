@@ -6,6 +6,7 @@ symbol, action ledger, file hash and ClickHouse row has been verified.
 from datetime import UTC, datetime
 import gzip
 import json
+import os
 from pathlib import Path
 import shutil
 from urllib.parse import urlencode
@@ -117,12 +118,18 @@ def inherit_series(prior, output, catalog):
             source = prior.checked(name)
             destination = output / name
             destination.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(source, destination)
+            # Published blobs are immutable and hash checked. Reuse their disk
+            # blocks across catalog waves; never rewrite a linked artifact.
+            try:
+                os.link(source, destination)
+            except OSError:
+                shutil.copyfile(source, destination)
             copied[name] = sha256(source)
     _write(output, "inherited.json", dict(root=str(prior.root), batch=sha256(prior.root / "manifest.json"), files=copied))
 
 
-def _build_publish(analytics, prior, publication, output, symbols, old_rows, cutoff, now, fetch, *, admissions=None):
+def _build_publish(analytics, prior, publication, output, symbols, old_rows, cutoff, now, fetch, *, admissions=None,
+                   instrument_types=("ETF",), retain_prior_review=False):
     sessions, calendar = governed_sessions("1950-01-01", cutoff)
     catalog = json.loads(prior.checked("catalog.json").read_text(encoding="utf8"))
     inherited = [dict(item, storage_batch=item.get("storage_batch", publication["version"]))
@@ -141,7 +148,7 @@ def _build_publish(analytics, prior, publication, output, symbols, old_rows, cut
         source_id = f"governance-source/{output.name}/bars/{symbol}"
         source = yahoo_source(json.loads(raw), key=source_id, symbol=symbol, raw_hash=digest(raw),
                               vintage=now.isoformat(), priority=100, action_start="1950-01-01")
-        if source.metadata.get("symbol") != symbol or source.metadata.get("currency") != "USD" or source.metadata.get("instrumentType") != "ETF":
+        if source.metadata.get("symbol") != symbol or source.metadata.get("currency") != "USD" or source.metadata.get("instrumentType") not in instrument_types:
             raise ValueError("Provider ETF identity changed: " + symbol)
         source.metadata["identity_eligible"] = True
         bars, audit, actions = consolidate(symbol, [source], sessions, cutoff)
@@ -156,6 +163,19 @@ def _build_publish(analytics, prior, publication, output, symbols, old_rows, cut
         elif not admissions or symbol not in admissions:
             raise ValueError("New fund requires explicit admission: " + symbol)
         audit["requested_cutoff"] = cutoff
+        if retain_prior_review:
+            old = prior.audit(symbol)
+            # A fresh single-source capture cannot resolve archived conflicts
+            # or certify identity/publication availability retroactively.
+            audit['previous_audit'] = old.get('previous_audit') or dict(
+                batch=next(r.get('storage_batch', publication['version']) for r in catalog if r['symbol'] == symbol),
+                status=old['status'], conflict_dates=old.get('conflict_dates', 0),
+                volume_conflict_pairs=old.get('volume_conflict_pairs', 0))
+            if old['status'] != 'audited_with_limitations':
+                audit['status'] = old['status']
+            for key in ('roles', 'holdings_names', 'historical_name_periods', 'unresolved_historical_names'):
+                if key in old:
+                    audit[key] = old[key]
         accepted_days = {b["trade_date"] for b in bars}
         comparisons = [dict(symbol=symbol, trade_date=d, source_id=source_id, source_hash=source.raw_hash,
             source_close=r["close"], source_adjusted_close=r["adjusted_close"], source_volume=r["volume"],

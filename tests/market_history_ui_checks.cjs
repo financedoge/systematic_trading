@@ -4,7 +4,7 @@ function boot(url){
  const nodes=new Map(),events=new Map(),calls=[],location={href:url},root={dataset:{}};
  const node=id=>{if(!nodes.has(id))nodes.set(id,{hidden:true,checked:false,attrs:{},setAttribute(k,v){this.attrs[k]=v}});return nodes.get(id)};
  const window={addEventListener:(name,fn)=>events.set(name,fn),dispatchEvent:event=>calls.push(['event',event.type,event.detail.enabled])};
- const context=vm.createContext({URL,location,window,CustomEvent:class{constructor(type,options){this.type=type;this.detail=options.detail}},
+ const context=vm.createContext({URL,location,window,setInterval:()=>0,fetch:async()=>({ok:true,json:async()=>({status:'degraded',message:'Daily histories stale'})}),CustomEvent:class{constructor(type,options){this.type=type;this.detail=options.detail}},
   document:{documentElement:root,getElementById:node},history:{replaceState:(_,__,url)=>{location.href=String(url)}}});
  vm.runInContext(input.controller.match(/<script>([\s\S]*?)<\/script>/)[1],context);
  for(const view of ['history','bars','economics','positioning','energy','issuer','raw'])window.MarketHistory.register(view,()=>calls.push(['load',view]));

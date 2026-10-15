@@ -150,6 +150,7 @@ MARKET_HISTORY_UI_HTML = r'''
  <label class="market-debug-switch"><input id="market-debug" type="checkbox" role="switch">Debug</label>
 </div>
 <p class="market-description">Explore price histories, intraday market activity and economic data vintages.</p>
+<div id="market-coverage-warning" role="status" style="padding:12px;margin-bottom:14px;background:#fff1e5;color:#8b351b">Checking recorder coverage…</div>
 <div class="market-navigation">
 <nav class="data-tabs" aria-label="Market History views">
  <button id="governed-tab" type="button" aria-selected="false"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v14h14M5 13l4-5 3 2 5-6"/></svg>Historical Daily Price</button>
@@ -186,6 +187,12 @@ MARKET_HISTORY_UI_HTML = r'''
   register:(view,handler)=>handlers.set(view,handler)};
  document.documentElement.dataset.marketDebug=String(debug);
  window.addEventListener('DOMContentLoaded',()=>{
+  async function refreshCoverage(){
+   const box=document.getElementById('market-coverage-warning');
+   try{const response=await fetch('/api/v1/market-data/coverage');if(!response.ok)throw new Error('Coverage check failed');const data=await response.json();box.textContent=data.message;box.setAttribute('role',data.status==='ok'?'status':'alert');box.hidden=data.status==='ok'}
+   catch(e){box.hidden=false;box.setAttribute('role','alert');box.textContent='Market-data coverage is unavailable. Recorder health and data freshness are unverified.'}
+  }
+  refreshCoverage();setInterval(refreshCoverage,30000);
   document.getElementById('market-debug').checked=debug;
   document.getElementById('market-debug').onchange=e=>setDebug(e.target.checked);
   for(const [view,[,button]] of Object.entries(views))document.getElementById(button).onclick=()=>activate(view);
