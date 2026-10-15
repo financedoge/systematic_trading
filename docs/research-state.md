@@ -1,6 +1,6 @@
 # Research State
 
-Current conclusions and review queue, updated October 13, 2026. Detailed historical
+Current conclusions and review queue, updated October 15, 2026. Detailed historical
 entries are preserved in the [verified history archive](archive/README.md).
 The [research plan](signal-decay-and-alpha-plan.md) controls sequencing; the
 [execution Kanban](execution-kanban.md) tracks open implementation work.
@@ -19,6 +19,13 @@ The [research plan](signal-decay-and-alpha-plan.md) controls sequencing; the
 - New ETF, feature and momentum research uses the full supported candidate pool
   and pinned, hash-verified published histories. Admission never requires allocation.
   Do not repeat standalone XLE/XLB-only studies without an explicit request.
+- Always test dynamic rebalancing as an explicit option alongside a fixed-interval
+  control in future strategy, ETF, feature and portfolio-construction research.
+  Predeclare candidates and compare net Sharpe, return/drawdown guardrails,
+  turnover/costs, delay sensitivity and chronological robustness. Target-change
+  triggers use latest theoretical versus last adopted targets, including cash;
+  adopted versus actual held remains Trading housekeeping. P4.22/P4.23's monthly
+  outcome applies to the tested recipes and universes, not every future strategy.
 - Use adjusted prices for returns and separately audited raw prices/volume for
   traded-activity signals. Preserve missing coverage, source identity and vintage
   limitations. Provider archives are inspection/governance evidence only.
@@ -30,6 +37,8 @@ The [research plan](signal-decay-and-alpha-plan.md) controls sequencing; the
 
 | Work | Current conclusion | Evidence |
 | --- | --- | --- |
+| P4.23 joint width/timing | The 6-by-8 search retains 6/monthly in all annual selections and the final window. FR25 monthly X=6/8/12: Sharpe 1.190/1.048/0.830, CAGR 13.05%/10.08%/6.96%, turnover 8.05×/7.01×/5.85×. Wider portfolios reduce turnover but do not qualify. Top four/monthly is an isolated early-window pass, rejected by neighbor stability. 588 scenarios, six native checks; current pools only. | [Joint results](../research/selection-width-timing-20261015-v1/results.md) |
+| P4.22 target-change timing | With top six fixed, no threshold qualifies in the three annual selection windows or final trailing-three-year window. FR25 0.10: Sharpe 0.966 vs monthly 1.190; CAGR 10.05% vs 13.05%; drawdown -13.10% vs -8.66%; annual turnover 58.36× vs 8.05×. Explicit monthly macro fallback; F3 is legacy-basis sensitivity. 132 scenarios and six native checks completed. | [Results](../research/target-change-rebalance-20261015-v1/results.md) |
 | P4.19 execution references | Retain execution policy. 27 complete orders, seven ETFs, five sessions: actual-fill cost 1.185 bps versus routed TWAP, 3.769 versus close, 9.471 versus session VWAP, before fees. Reference differences are not achievable counterfactual fills; close sensitivity changes sign under session omission. | [Execution references](execution-reference-findings.md) |
 | P4.19a collection | App-owned original/routed window and full-session collection, immutable attempts and separate reference audits. 34 windows and 30 sessions verified at acceptance. Eighteen filled orders lack complete executions; USO/DBB contracts and legacy windows remain gaps. This is retrospective diagnostic qualification, not continuous intraday research admission. | [Collection contract](execution-benchmark-collection.md) |
 | FR25 selection | Frozen 75% M1 / 25% financial-ridge selection blend is monitored. Effect-size leads remain concentrated and retrospective; family-adjusted significance is absent. Part B placebo rank passes, but the registered retention interval fails. | [FR25 tracking](fr25-selection-tracking.md), [robustness](fr25-robustness-findings.md), [placebo](fr25-placebo-findings.md) |
@@ -45,6 +54,27 @@ decisions are recorded in `var/research/strategy-review-20261011-v3/`. This is
 already-inspected historical evidence, not an untouched holdout.
 
 ## Next work and blocked dependencies
+
+**Operator-requested timing research: P4.22 and P4.23 completed:**
+[Target-change rebalance protocol](target-change-rebalance-plan.md). Strategy events
+compare the latest theoretical target with the last adopted target; Trading alone
+handles latest adopted versus actual held. The operator chose net Sharpe with
+return/drawdown guardrails and explicitly scoped the first study to the current
+FR25/14 and F3/12 pools, with full-supported-pool validation later. Use unchanged
+signals/models, eight frozen thresholds, monthly/daily controls and chronological
+selection. P4.22 retained monthly. P4.23 jointly searched maximum selected count X
+and target-change threshold n, including wider selections and larger thresholds,
+with a frozen [6-by-8 grid](../research/selection-width-timing-20261015-v1/protocol.json).
+The annual selectors and final selector retained top-six monthly. Wider selection
+reduced traded notional, but also reduced net return and Sharpe in the current
+FR25 pool. F3 followed the FR25-selected calendar; it was not separately optimized.
+Full-pool validation remains a separate qualified-parent study, not evidence
+established by these current-pool results. Conditional bootstrap intervals do not
+provide selection-aware formal superiority evidence.
+The operator authorized previous-monthly macro snapshots when daily snapshots are
+absent. Keep source dates and disclose the no-change/no-new-publication assumption.
+No monitored or trading policy changed. This is a
+separate timing hypothesis; it does not reopen or rescue the expanded-FR25 rejection.
 
 1. P4.16d stage 1 was accepted and the 38-addition recorder wave is enabled.
    The first retrospective comparison reviewed all 52 candidates and used 50

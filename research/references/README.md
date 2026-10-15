@@ -4,7 +4,7 @@ Collected the identifiable references directly cited by the three supplied repor
 
 **45 verified PDFs:** 42 academic papers, one broker report and two governance documents. **Two broker reports remain unresolved.** The original three reports are preserved. Working papers and accepted manuscripts are labelled separately from the cited journal versions.
 
-**Discussion update:** two additional BIS papers on USD effects are saved with separate provenance and firsthand notes in the [supplemental collection](supplemental/README.md), bringing the acquired library to 47 PDFs. The user deferred the missing broker reports and unnamed citations; they remain excluded from the rationale and are no longer prerequisites.
+**Discussion updates:** two BIS papers on USD effects and Gârleanu-Pedersen's *Dynamic Trading with Predictable Returns and Transaction Costs* are saved with separate provenance and firsthand notes in the [supplemental collection](supplemental/README.md), bringing this collection plus its supplements to 48 PDFs. The dynamic-trading paper was added October 15, 2026 for the [target-change rebalance plan](../../docs/target-change-rebalance-plan.md). The user deferred the missing broker reports and unnamed citations; they remain excluded from the rationale and are no longer prerequisites.
 
 - [Firsthand reading notes](../momentum-literature-notes-2026-10-01.md)
 - [Proposed research plan for discussion](../momentum-research-plan-2026-10-01.md)

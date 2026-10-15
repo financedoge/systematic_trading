@@ -32,5 +32,24 @@
     "downloaded_version": "BIS Quarterly Review, March 2023",
     "read_pdf_pages": "1-5,9",
     "reading_status": "Initial firsthand pass through selected sections, not a full appendix review"
+  },
+  {
+    "id": "T01",
+    "title": "Dynamic Trading with Predictable Returns and Transaction Costs",
+    "authors": "Nicolae Gârleanu; Lasse Heje Pedersen",
+    "source_url": "https://w4.stern.nyu.edu/facdir/lpederse/papers/DynamicTrading.pdf",
+    "final_url": "https://w4.stern.nyu.edu/facdir/lpederse/papers/DynamicTrading.pdf",
+    "retrieved_at": "2026-10-15T13:00:54.783944+00:00",
+    "file": "T01_dynamic_trading_with_predictable_returns_and_transaction_costs.pdf",
+    "status": "downloaded",
+    "sha256": "b9b01f48bd7ff0ce0431615d88b76f8a076b6593cc1d7765bd6ec2eb617473ab",
+    "bytes": 586123,
+    "pages": 32,
+    "doi": "10.1111/jofi.12080",
+    "downloaded_version": "Published Journal of Finance 68(6), December 2013, pp. 2309-2340",
+    "identity_check": "PDF title/author/journal/DOI text verified; first page rendered and visually inspected",
+    "read_pdf_pages": "1,5-6,8-9,24",
+    "reading_status": "Selected introduction, assumptions, policy propositions and conclusion; not complete proofs or empirical replication",
+    "research_use": "Cost and forecast-persistence motivation; quadratic-cost gradual trading does not establish the proposed target-to-target L1 threshold"
   }
 ]

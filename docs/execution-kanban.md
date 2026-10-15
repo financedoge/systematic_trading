@@ -6,6 +6,63 @@ are preserved byte-for-byte in the [history archive](archive/README.md).
 Use [research state](research-state.md) for accepted conclusions and the
 [research plan](signal-decay-and-alpha-plan.md) for the ordered research programme.
 
+## Rebalance mechanism review — 2026-10-15
+
+**Standing rule and publication checks complete:** Future research must evaluate
+dynamic rebalancing alongside fixed-interval controls; this is recorded in
+`AGENTS.md`, the continuous-research playbook and research-state rules. The operator
+authorized commit/push of P4.22/P4.23 source, tests, findings and compact acceptance
+receipts. Research source matches the accepted frozen versions; Ruff, document
+links and receipt hashes pass. Concurrent market-data work is a separate change.
+
+**P4.22 and P4.23 completed; top-six monthly retained:** The 132-scenario
+fixed-top-six study retained monthly in all three annual selection windows and
+the final trailing-three-year window. Both parents reproduce 70 monthly decisions;
+six native LEAN/Python checks pass, including the 0.10 intramonth policies.
+[Results](../research/target-change-rebalance-20261015-v1/results.md).
+The joint (X, n) study completed 588 full-size scenarios: X is maximum selected
+ETF count and n is the target-change threshold. All three annual selections and
+the final trailing-three-year selection retain 6/monthly. Wider selection lowers
+traded notional but reduces net return and Sharpe in this current FR25 pool.
+Top four/monthly passes performance guards in two early windows, but fails the
+registered neighbor-stability requirement; no pair passes in the later windows.
+The 6-by-8 grid, Sharpe/return/drawdown guards and cost/delay scenarios were frozen
+before joint results. [Joint findings](../research/selection-width-timing-20261015-v1/results.md). Trading settings
+and live-disabled posture stay unchanged. The operator distinguishes strategy
+change (`latest theoretical - last adopted target`) from trading alignment
+(`latest adopted target - actual held`). Only strategy change is optimized;
+housekeeping remains in Trading. This supersedes the initial review's proposal
+to use held weights in the strategy trigger and include paper drift in the grid.
+
+[Registered protocol](target-change-rebalance-plan.md): current FR25/14 primary,
+F3/12 transfer check, full-pool validation later by explicit operator choice.
+Monthly plus eight target-distance thresholds competes with monthly and daily
+controls. Net Sharpe selection has fixed return/drawdown guardrails, chronological
+three-year selection windows, neighbor stability, six cost/delay scenarios and
+an explicit monthly fallback. Pin published inputs and verify all used hashes
+before running; retain existing model cadence and full account-level accounting.
+Existing historical periods are inspected evidence, not untouched holdouts.
+The operator explicitly authorized last-monthly macro fallback when an exact
+daily snapshot is absent; retain source timestamps and carry-age diagnostics.
+F3 preserves its current legacy adjusted-price/source-volume activity proxy and
+is a sensitivity comparison, not raw-activity transfer confirmation.
+The [joint X/n protocol](../research/selection-width-timing-20261015-v1/protocol.json)
+now has membership-turnover attribution, independent checks of 98 adoption
+policies and six native LEAN/Python parity checks. All 1,453 top-six daily targets
+per parent and 60 common parent economic replays match exactly. Expanded-pool
+validation remains later, conditional on a separately qualified parent.
+The downloaded Gârleanu-Pedersen journal paper
+has verified identity, 32 pages and a provenance/hash record in references.
+
+The initial review verified daily indicative targets, monthly backtests and the
+existing paper individual-ETF 0.02 alignment policy. Its 109 passed / one skipped
+focused checks remain dated review evidence. P4.22 implementation checks passed
+114 tests with one optional skip before the joint-study extension. The joint
+extension passed 119 tests with one optional skip; Ruff, report rendering and
+artifact/input hashes pass.
+[Snapshot](../var/reviews/rebalance-20261015.json) and [log](../log.md).
+No strategy, funding, threshold or routing setting changed.
+
 ## Repository restructuring and maintenance — 2026-10-12
 
 **Done — source and local maintenance:** Separated presentation assets, API
@@ -112,6 +169,8 @@ After finishing work:
 | P4.5 | Review | Backtest artifact hashes | Reports, inputs, configs, and outputs are hashed and linked to strategy versions. | Frozen bundle and output hashes plus registry exist; acceptance now concerns coverage of the broader promotion contract. |
 | P4.6 | Pending | Overfit/stability gate | Promotion requires split, benchmark, turnover, fee, stress, and parameter stability checks. | Extend current SOTA workflow. |
 | P4.7 | Review | LEAN runtime/dependency setup | Requires installing/configuring LEAN runtime or choosing equivalent deployment path. | Pinned local container runtime is installed and used. Prior setup blocker is superseded; P6.15 resource review remains open. |
+| P4.22 | Done; monthly retained | Target-change threshold rebalance study | Latest theoretical versus last adopted target; independent of account holdings; causal selection, guards, cost/delay stress and native parity. | [Results](../research/target-change-rebalance-20261015-v1/results.md). 132 scenarios, six native checks. Explicit monthly macro fallback; F3 legacy-basis sensitivity. |
+| P4.23 | Done; 6/monthly retained | Joint selection-width X and target-change threshold n | Frozen 6-by-8 grid; 588 full-size scenarios, six native checks and 98 independent adoption checks. Wider selections reduce turnover but do not qualify under FR25 selection guards/stability. | [Results](../research/selection-width-timing-20261015-v1/results.md). F3 is legacy-basis sensitivity; expanded-pool validation later. No monitoring or trading changes. |
 | P4.16d | Review: first wave ingested; unchanged expanded FR25 rejected at pre-test | Substantial tradable ETF expansion, granular classes and volatility-aware ranking *(operator reaffirmed 2026-10-11)* | Versioned candidate inventory, dated taxonomy and data/contract gap matrix; staged audited admission; scalable app and paper-execution contracts; then controlled full-pool comparisons. Design capacity for hundreds of candidates, with duplicate-exposure controls and risk-normalized class ranking. | **First wave delivered 2026-10-14:** [299-record inventory](etf-universe-inventory-2026-10-13.md), 38-addition recorder wave and [50-fund current-cohort diagnostic](etf-expansion-findings-2026-10-14.md). Expanded FR25 fails the cost/IC gate; full expanded replay withheld. Class/volatility-aware design and historical membership reconstruction remain open. Research comparisons require pinned audited publication and explicit membership limitations; no provider archives or online prices as study inputs. Admission does not mandate allocation. **P4.16c remains parked behind this work.** [Plan](signal-decay-and-alpha-plan.md). |
 | P4.20 | Pending | Decay-based promotion gate | Require any new signal to demonstrate a minimum estimated half-life and sub-period IC stability before it can enter a monitored recipe. | Registered October 10; depends on P4.13. Structural protection against the survivor-selection problem described in the plan's Appendix A. Governance only. |
 | P4.21 | Pending | Look-through constituent alpha | Compute the structurally cross-sectional alphas on the constituent cross-section (680 IVV constituent series plus issuer holdings and sector data) and aggregate holdings-weighted to ETF scores. | Registered October 10 and deferred. The only honest route to the 76 structurally cross-sectional alphas, which need breadth that 14 ETFs cannot supply. Carries three disclosed caveats: index-membership history is a survivorship trap, issuer holdings snapshots are prospective-only from October 2026, and the constituent series are the `review`-status population from P3.8. Blocked on the constituent-coverage assessment; do not start before P4.16 answers whether the cross-sectional premise holds. |

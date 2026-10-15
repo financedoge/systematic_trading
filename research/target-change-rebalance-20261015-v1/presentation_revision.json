@@ -1,0 +1,16 @@
+{
+  "economics_changed": false,
+  "files": [
+    "F3-monthly.report.json",
+    "F3-monthly.html",
+    "F3-walk_forward.report.json",
+    "F3-walk_forward.html",
+    "FR25-monthly.report.json",
+    "FR25-monthly.html",
+    "FR25-walk_forward.report.json",
+    "FR25-walk_forward.html"
+  ],
+  "reason": "Explicit monthly macro carry and theoretical/adopted-target decision flow; USD holdings caption and calendar annualization convention.",
+  "renderer_sha256": "b176f67fa16ec538c73f5b0f08132dd52ffecbe3dc3ab4037019af1477092599",
+  "source_sha256": "7d9d876d964294241dffe7ec844f326761204105eddf748bfeda4afc569afa76"
+}

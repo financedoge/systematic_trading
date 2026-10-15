@@ -1,5 +1,198 @@
 # Project Log
 
+## 2026-10-15 — Dynamic rebalancing becomes a standing research comparison
+
+The operator requested that all future research explicitly check dynamic
+rebalancing alongside fixed-time-interval rebalancing. Recorded this requirement
+in `AGENTS.md`, the continuous-research playbook and current research-state rules.
+Predeclare dynamic trigger/threshold candidates and retain a fixed-interval
+control; compare net Sharpe with return/drawdown guards, actual turnover/costs,
+execution delays and chronological robustness. The current top-six/monthly result
+is local to its tested recipe and universe. Strategy adoption continues to use
+latest theoretical versus last adopted targets, including cash; adopted versus
+actual held remains Trading housekeeping. No new experiment or trading policy
+was requested by this standing rule.
+
+The operator also authorized committing and pushing the completed rebalance work.
+Publication is scoped to its source, tests, protocols, findings, reference
+provenance and compact acceptance receipts. Generated reports, replay bundles and
+downloaded PDFs follow the existing local-storage/backup convention. Concurrent
+market-data changes and broker snapshots belong to separate work.
+Before staging, all six research source files matched their accepted frozen
+versions. The existing 119-passed/one-skipped behavioral test receipt remains
+applicable; this publication session changed governance/docs and compact evidence
+only. Fresh Ruff, document links, accepted analysis/runner hashes and both compact
+receipts passed verification. GitHub's `origin/master` was fetched successfully.
+
+## 2026-10-15 — P4.23 completed: joint selection width and rebalance threshold
+
+Completed the operator-authorized X=4/6/8/10/12/all by
+n=.05/.10/.20/.40/.60/.80/1.00/monthly grid on the current FR25/14 and F3/12
+universes. FR25 is the selection parent; F3 follows the selected calendar as a
+legacy activity-basis sensitivity, without a separate parameter optimization.
+Missing daily macro observations use the approved previous-monthly snapshot
+with original dates. No new observations, model recipe, eligibility gate,
+fallback, price basis, allocation or execution authority was introduced.
+
+All three annual selectors and the final trailing-three-year selector retain
+6/monthly. Top four/monthly passes the performance checks in the first two
+windows, but lacks a passing immediate neighbor; later windows have no passing
+pair. On the descriptive full sample at 5bp per traded side, FR25 monthly
+X=6/8/12 gives Sharpe 1.190/1.048/0.830, CAGR 13.05%/10.08%/6.96%, and annual
+gross turnover 8.05×/7.01×/5.85×. The highest-Sharpe intramonth fixed pair is
+6/0.80, with Sharpe 1.108, CAGR 11.98% and turnover 24.92×; this is not a
+walk-forward selection or global optimum. At n=.10, widening six to eight reduces
+turnover 58.36× to 48.32× and entry/exit share 74.1% to 68.1%, but Sharpe falls
+0.966 to 0.614. More ETFs reduce traded notional, without establishing better
+net performance or fewer individual fills. Full-pool validation remains later.
+
+Acceptance: 576 fixed-pair scenarios plus 12 continuous walk-forward scenarios,
+USD100k size checks, six native LEAN/Python checks, 98 independently verified
+adoption policies, all 1,453 top-six target evaluations per parent, and 60 exact
+parent economic replay matches. Joint 20,000-replicate stationary bootstrap at
+63/21/126-session mean blocks covers 96 contrasts; it remains conditional and
+descriptive, not selector-aware formal superiority. Membership, rank/gate/fallback,
+reversal, concentration and ex-post raw-dollar-volume diagnostics are retained.
+
+Accepted evidence: `var/research/selection-width-timing-20261015-v1/`.
+Input manifest SHA-256:
+`5aca451cdae47ef3f080f7a7c9476d5c99a2b15103be28e30657eeb615afcd78`.
+Analysis SHA-256:
+`089d4bdb8fe2594ab0b685aa9b0515b0f5c5e02127ca301a1fa939b9056f1087`.
+[Results, grid and shared detail reports](research/selection-width-timing-20261015-v1/results.md).
+The original timing report's presentation-only revision now shows the actual
+macro carry/adoption flow, USD caption and cash-anchor annualization convention;
+its accepted economics remain unchanged. Focused checks: 119 passed, one optional
+skip; Ruff and rendered report/figure checks passed. The original Gârleanu-Pedersen
+PDF hash still matches its 32-page reference receipt. Paper/live settings and
+application strategy calculations retain their existing defaults.
+
+## 2026-10-15 — P4.22 completed; joint selection-width/timing study authorized
+
+Executed the registered fixed-top-six timing study on the pinned audited price
+batch through October 14. At the operator's direction, missing daily macro
+snapshots use the previous completed monthly snapshot with original timestamps
+and carry-age receipts; prices/activity still update daily. The initially started
+macro backfill was stopped after 393 successful study-scoped publications. Those
+captures remain evidence and are excluded from the pinned-parent backtest.
+
+All three annual FR25 selectors and the final trailing-three-year selector choose
+monthly. At 5bp, FR25 monthly versus n=0.10: Sharpe 1.189916 versus 0.966457,
+CAGR 13.0454% versus 10.0494%, drawdown -8.6558% versus -13.1009%, annual gross
+turnover 8.0475× versus 58.3570×, with 70 versus 769 rebalance dates.
+The study completed 132 full-size replays, USD100k diagnostics, six native LEAN
+parity checks, independent event checks and 20,000 joint stationary-bootstrap
+replicates at each of 63/21/126 sessions. Inference is conditional/descriptive;
+no selection-aware superiority claim. Both parents exactly reproduce 70 monthly
+target decisions. F3 retains the current legacy adjusted-price/source-volume
+activity proxy, so it is not audited raw-activity transfer confirmation.
+
+The initial runner stopped on a path-assembly error before any performance run;
+its frozen artifacts remain in the parent directory. Accepted artifacts are in
+`var/research/target-change-rebalance-20261015-v1/run-02/`, with results and shared
+SOTA-format reports in `research/target-change-rebalance-20261015-v1/`.
+Focused implementation checks: 114 passed, one optional skip before P4.23.
+
+The operator then requested joint optimization of **X = maximum selected ETFs**
+and **n = intramonth target-change threshold**, explicitly confirming that meaning.
+P4.23 registers X=4/6/8/10/12/all eligible and n=.05/.10/.20/.40/.60/.80/1.00/monthly
+before joint performance results. Use the same net-Sharpe guards, annual causal
+selector, cost/delay scenarios, retained account state and monthly macro rule.
+Compare with top-six monthly and each same-X monthly control; attribute actual
+membership entry/exit turnover without assuming every change is a rank crossing.
+Current parent pools first; expanded-pool validation remains later and cannot
+rescue the previously rejected expanded-FR25 arm. No funding, monitoring, broker,
+approval or live setting changed.
+
+## 2026-10-15 — Target-change threshold protocol and literature reference
+
+Operator clarification supersedes the earlier review's proposed held-weight
+strategy trigger: strategy change compares the latest theoretical target with
+the **last adopted rebalance target**; Trading housekeeping compares the **latest
+adopted target with actual held weights**. Both use absolute differences when
+aggregated. Only the first belongs in this threshold study. The existing per-ETF
+paper alignment tolerance and all approval/routing controls remain unchanged.
+
+The operator selected **net Sharpe with return/drawdown guardrails** and explicitly
+authorized the **current FR25/14 and F3/12 universes first, full-pool validation
+later**. Recorded P4.22 in `docs/target-change-rebalance-plan.md` and the matching
+`research/target-change-rebalance-20261015-v1/protocol.json`. Planned FR25 threshold
+selection with F3 transfer check, eight preset thresholds, monthly/daily controls,
+three-year causal selection and 2024-2026 validation, six cost/delay scenarios,
+neighbor stability and a monthly fallback. Numerical guardrail tolerances are
+declared design choices, not fitted results. Existing history is already inspected;
+the final candidate must be frozen before prospective observation. The previous
+expanded-FR25 rejection is not reversed by this scoped timing experiment.
+
+Downloaded the published 32-page Gârleanu-Pedersen (2013) paper from the author's
+NYU-hosted PDF to `research/references/supplemental/`, ID T01. Verified title,
+authors, journal, DOI and rendered title page; read the introduction and selected
+model/policy/conclusion pages. SHA-256
+`b9b01f48bd7ff0ce0431615d88b76f8a076b6593cc1d7765bd6ec2eb617473ab`.
+Provenance and reading scope are in the supplemental manifest and README. Its
+quadratic-cost gradual-trading solution motivates the cost/persistence trade-off,
+but does not derive this strategy's L1 band or its optimal threshold.
+
+Plan and reference only: no backtest was run and no strategy, monitoring, funding,
+broker or alignment setting changed. The recorded app price batch remains a
+planning reference until preparation verifies every immutable input hash. Next:
+freeze inputs/code/models, reproduce monthly controls and test independent event
+semantics, then run the finite protocol and review all outcomes before follow-on work.
+Validation: protocol JSON, declared pool/grid/fold/family consistency, PDF page
+count/DOI/hash, local document links and whitespace checks passed. No behavioral
+code changed, so the earlier test count is not presented as a new test run.
+
+## 2026-10-15 — Daily target-distance rebalance review
+
+The subsequent operator clarification and P4.22 entry above supersede this
+review's recommendation to use held weights for the strategy trigger.
+
+Reviewed the operator's proposal to recalculate theoretical holdings daily and
+rebalance within the month when total absolute weight differences exceed a
+backtested threshold (example 0.10). Source and running-app inspection distinguish
+three contracts: latest indicative targets refresh with published observations;
+strategy reports hold simulated shares between monthly events; paper alignment
+compares marked broker holdings with existing approved monthly/handover targets
+and can stage a correction at 0.02 absolute drift in any individual ETF. Cash is
+in NAV but is not a separate row in that existing drift test. The current test is
+neither a portfolio L1 threshold nor a daily signal adoption policy.
+
+Read-only operational receipt at 20:54 Asia/Shanghai: control revision 6 has F3
+at 100% active paper capital and an already-pending FR25 100% change effective
+October 15 close. Paper alignment reports aligned, valuation October 14, approved
+target date October 7. No control, proposal, approval or broker state was changed.
+The published simulated F3 and FR25 reports, both valued through October 14,
+have latest-target versus held-weight L1 distances including cash of 0.225823863
+and 0.418602257. Their last scheduled rebalance is October 1 and next is November 2.
+These snapshots show that a 0.10 rule would currently flag their monthly simulated
+books; they are not broker holdings or a historical simulation of the new policy.
+Evidence: `var/reviews/rebalance-20261015.json`, serving publication
+`d6269697d1c44951042aa9aa953514cdcafe7bf7be5aaa4acaa967047d64620d`, price batch
+`ad78b10e053829e5fd2d0d18fc82c2c572cb1901a1cc1bdecd01fb727bfa6472`.
+
+Review conclusion: faster response is mechanically plausible; higher net returns
+or better risk-adjusted performance are unestablished. A future registered study
+should isolate rebalance timing from signal/model changes, compare monthly HOLD
+and the existing paper drift policy separately, and add daily full and monthly
+plus threshold variants. Measure distance from actual filled, marked holdings,
+not yesterday's target; use absolute differences including cash. An L1 distance
+of 0.10 corresponds to a 5% transfer between two assets (10% gross traded notional
+when cash is unchanged), not a 10% one-way transfer. Evaluate costs on actual
+noncash fills, next-session execution and delayed fills. Threshold selection must
+be causal and stable, with costs/drawdowns/whipsaws and multiple comparisons
+reported; already-inspected historical periods cannot become untouched holdouts.
+Use app-owned versioned logic, pinned audited published histories and verified
+hashes, explicitly adjusted-return versus raw-activity bases, the full supported
+candidate pool and declared admission/membership/FX/vintage limitations. Existing
+frozen-universe strategies remain controls. This is a recommendation, not a new
+strategy implementation, research run or change to the existing research queue.
+
+Do not use the old daily Alpha101 grids to reject or validate this different
+proposal: the October 11 second review superseded their frequency/threshold
+conclusions and did not rerun the full grid. Existing focused tests passed:
+109 passed / one optional skip in monthly staging, initial allocation, tracked
+runtime and research-review repairs. No new behavioral code was introduced.
+
 ## 2026-10-14 — Audited ETF expansion and frozen candidate rejection
 
 Enabled the accepted 38-addition recorder wave after FR25 paper readiness.

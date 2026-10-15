@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "id": "target-change-rebalance-20261015-v1",
+  "work_item": "P4.22",
+  "registered_date": "2026-10-15",
+  "status": "planned_not_executed",
+  "plan": "docs/target-change-rebalance-plan.md",
+  "user_choices": {
+    "objective": "net_sharpe_with_return_drawdown_guardrails",
+    "universe_scope": "current_FR25_and_F3_first_full_supported_pool_later",
+    "strategy_distance": "latest_theoretical_vs_last_adopted_target",
+    "trading_distance": "latest_adopted_target_vs_actual_held"
+  },
+  "authority": {
+    "change_strategy_definitions": false,
+    "change_monitoring": false,
+    "change_funding": false,
+    "change_trading_alignment": false,
+    "broker_routing": false,
+    "live_enabled": false
+  },
+  "parents": {
+    "primary": {
+      "key": "research_fr25_14_v1",
+      "symbols": [
+        "DBC",
+        "EWH",
+        "EWJ",
+        "EWY",
+        "GLD",
+        "HYG",
+        "IEF",
+        "LQD",
+        "MCHI",
+        "SPY",
+        "TLT",
+        "VGK",
+        "XLB",
+        "XLE"
+      ]
+    },
+    "transfer": {
+      "key": "research_fallback_f3_v1",
+      "symbols": [
+        "DBC",
+        "EWH",
+        "EWJ",
+        "EWY",
+        "GLD",
+        "HYG",
+        "IEF",
+        "LQD",
+        "MCHI",
+        "SPY",
+        "TLT",
+        "VGK"
+      ],
+      "thresholds": "use_FR25_selected_calendar_without_F3_reselection"
+    }
+  },
+  "policy": {
+    "distance": "sum_absolute_target_weight_differences",
+    "include_cash": true,
+    "anchor": "last_strategy_adopted_target",
+    "comparison": "strictly_greater_than",
+    "anchor_update": "on_valid_strategy_adoption_independent_of_fills",
+    "initial_adoption": true,
+    "retain_monthly_events": true,
+    "monthly_threshold_collision": "one_event_monthly_primary_both_reasons_logged",
+    "monthly_unchanged_target": "adopt_and_rebalance",
+    "extra_event_resets_monthly_calendar": false,
+    "missing_target": "fail_without_anchor_update",
+    "no_order_event_updates_anchor": true,
+    "holdings_affect_trigger": false,
+    "model_fit_schedules": "unchanged_parent_contract"
+  },
+  "thresholds": [
+    "0.025",
+    "0.05",
+    "0.075",
+    "0.10",
+    "0.15",
+    "0.20",
+    "0.30",
+    "0.40"
+  ],
+  "controls": [
+    "monthly_hold_between_events",
+    "daily_full_rebalance_even_if_target_unchanged",
+    "URTH_buy_and_hold_context_only"
+  ],
+  "inputs": {
+    "evaluation_start": "2021-01-04",
+    "evaluation_end": "2026-10-14",
+    "warmup": "existing_app_parent_history_and_causal_model_contract",
+    "published_price_batch_reference": "ad78b10e053829e5fd2d0d18fc82c2c572cb1901a1cc1bdecd01fb727bfa6472",
+    "reference_status": "read_from_app_independent_file_verification_required_before_run",
+    "required_receipts": [
+      "immutable_price_catalog_and_all_used_file_hashes",
+      "raw_activity_hashes",
+      "model_schedules_and_training_cutoffs",
+      "USD_and_financial_vintage_receipts",
+      "strategy_definitions_and_effective_evaluator_source",
+      "dependency_and_engine_versions"
+    ],
+    "price_basis": "dividend_split_adjusted_USD",
+    "activity_basis": "audited_raw_close_and_raw_volume",
+    "online_price_downloads": false,
+    "provider_archive_inputs": false,
+    "missing_price_fill": false,
+    "unresolved_limitations": [
+      "historical_publication_vintages",
+      "survivorship_and_membership",
+      "economic_archive_availability_assumptions",
+      "simulated_adjusted_units_not_raw_broker_shares"
+    ]
+  },
+  "accounting": {
+    "currency": "USD",
+    "initial_cash": "1000000",
+    "cash_interest": "0",
+    "sizing": "whole_adjusted_units_prior_execution_session_close_sell_first_affordability",
+    "base_fill": "next_session_open",
+    "extra_delay_sessions": [
+      0,
+      1
+    ],
+    "cost_bps_per_actual_traded_notional": [
+      "5",
+      "10",
+      "20"
+    ],
+    "primary_scenario": {
+      "cost_bps": "5",
+      "extra_delay_sessions": 0
+    },
+    "pending_end_event": "retain_unfilled_no_invented_returns",
+    "hold_shares_between_events": true,
+    "housekeeping_triggers": false,
+    "selected_policy_size_diagnostic": "100000"
+  },
+  "walk_forward": {
+    "folds": [
+      {
+        "train_start": "2021-01-04",
+        "train_end": "2023-12-29",
+        "validate_start": "2024-01-02",
+        "validate_end": "2024-12-31"
+      },
+      {
+        "train_start": "2022-01-03",
+        "train_end": "2024-12-31",
+        "validate_start": "2025-01-02",
+        "validate_end": "2025-12-31"
+      },
+      {
+        "train_start": "2023-01-03",
+        "train_end": "2025-12-31",
+        "validate_start": "2026-01-02",
+        "validate_end": "2026-10-14"
+      }
+    ],
+    "candidate_runs": "continuous_common_funding_from_2021_score_declared_training_window_only",
+    "policy_initialization": "monthly_through_2023",
+    "selection_activation": "first_monthly_event_of_validation_year",
+    "carry_positions_cash_and_target_anchor": true,
+    "charge_transition_costs": true,
+    "splice_independent_nav_curves": false,
+    "untouched_holdout": false
+  },
+  "selector": {
+    "primary_score": "annualized_daily_net_sharpe_zero_cash_rate",
+    "minimum_sharpe_uplift": "0.05",
+    "maximum_cagr_shortfall_percentage_points": "0.50",
+    "maximum_drawdown_worsening_percentage_points": "2.00",
+    "training_stress_checks": [
+      {
+        "cost_bps": "10",
+        "extra_delay_sessions": 0
+      },
+      {
+        "cost_bps": "5",
+        "extra_delay_sessions": 1
+      }
+    ],
+    "stress_requirement": "positive_sharpe_uplift_and_same_return_drawdown_guardrails",
+    "minimum_passing_immediate_neighbors": 1,
+    "sharpe_plateau_width": "0.02",
+    "plateau_tie_break": [
+      "lowest_actual_annual_traded_notional_over_nav",
+      "larger_threshold"
+    ],
+    "fallback": "monthly"
+  },
+  "assessment": {
+    "walk_forward_minimum_sharpe_uplift": "0.05",
+    "return_drawdown_guardrails": "same_as_selector",
+    "minimum_positive_sharpe_validation_folds": 2,
+    "training_stress_checks_must_pass_on_aggregate_validation": true,
+    "transfer_requirement": "positive_F3_walk_forward_sharpe_uplift_and_same_return_drawdown_guardrails_no_reselection",
+    "fixed_grid_full_sample_winners": "descriptive_in_sample_only",
+    "existing_promotion_and_turnover_policies": "unchanged_separate_from_research_ranking"
+  },
+  "inference": {
+    "method": "paired_stationary_block_bootstrap",
+    "replicates": 20000,
+    "seed": 20261015,
+    "primary_mean_block_sessions": 63,
+    "sensitivity_mean_block_sessions": [
+      21,
+      126
+    ],
+    "resample_parent_candidate_benchmark_jointly": true,
+    "walk_forward_conditional_intervals": "conditional_on_selected_threshold_calendar",
+    "formal_claims_require": "selection_aware_resampling_that_repeats_registered_selector",
+    "multiplicity": "Holm",
+    "primary_family_size": 18,
+    "primary_family": "8_fixed_thresholds_plus_walk_forward_for_each_of_2_parents",
+    "choose_best_sensitivity": false
+  },
+  "candidate_freeze": {
+    "selection_window": "2023-10-16_through_2026-10-14_trailing_3_years",
+    "selector": "unchanged_FR25_selector",
+    "outcome": "one_fixed_threshold_or_monthly",
+    "prospective_start": "first_completed_session_after_candidate_freeze",
+    "first_performance_review_minimum_sessions": 126,
+    "retune_during_prospective": false,
+    "full_pool_validation": "later_separate_qualified_parent_frozen_timing_rule"
+  },
+  "implementation": {
+    "owner": "app_strategy_analytics_services",
+    "agent_recurring_calculation": false,
+    "preconditions": [
+      "freeze_and_verify_inputs",
+      "reproduce_monthly_app_control",
+      "independent_event_policy_tests"
+    ],
+    "parity": [
+      "monthly_controls_native_LEAN_and_Python",
+      "selected_walk_forward_policies_native_LEAN_and_Python",
+      "independent_event_decision_checks"
+    ],
+    "outputs": [
+      "sealed_protocol_input_source_hashes",
+      "daily_target_tape",
+      "adoption_and_event_ledger",
+      "fills_costs_cash_NAV",
+      "all_threshold_and_cost_delay_results",
+      "annual_selection_receipts",
+      "full_portfolio_constituent_attribution",
+      "common_SOTA_report_and_decision_flow"
+    ]
+  },
+  "literature": {
+    "id": "T01",
+    "doi": "10.1111/jofi.12080",
+    "file": "research/references/supplemental/T01_dynamic_trading_with_predictable_returns_and_transaction_costs.pdf",
+    "sha256": "b9b01f48bd7ff0ce0431615d88b76f8a076b6593cc1d7765bd6ec2eb617473ab",
+    "use": "motivation_for_cost_and_signal_persistence_tradeoff_not_derivation_of_L1_threshold"
+  }
+}

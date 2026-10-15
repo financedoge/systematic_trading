@@ -1,0 +1,36 @@
+{
+  "acceptance": {
+    "F3_audited_transfer_confirmation": false,
+    "analysis_runner_sha256": "395cfea57d6f8ed4e1e8b354be86b8ad833d50980106e3d7ff1aa6bf94b0728e",
+    "analysis_sha256": "a044cc5516c144d6e1c7bad05d09fab3d825f61fb7a7a964ed4db9c150618b17",
+    "candidate": "monthly",
+    "candidate_frozen_at": "2026-10-15T13:52:46.517787+00:00",
+    "formal_superiority": false,
+    "full_size_replays": 132,
+    "independent_policy_checks": 22,
+    "native_parity": 6,
+    "promotion_eligible": false,
+    "prospective_policy": "First completed session after freeze; at least 126 sessions to first review; no automation started.",
+    "selection_sha256": "fec5272202c6f270393f6d7b12711ea02e90f7c3fcbf16cfa3f1f08dc461fada",
+    "status": "passed"
+  },
+  "artifact_sha256": {
+    "acceptance.json": "db9b4fb8f92dc817972cd917281a6370f25935442066d65a81bb3e7daac3d072",
+    "analysis.json": "a044cc5516c144d6e1c7bad05d09fab3d825f61fb7a7a964ed4db9c150618b17",
+    "analysis_runner.py": "395cfea57d6f8ed4e1e8b354be86b8ad833d50980106e3d7ff1aa6bf94b0728e",
+    "input_manifest.json": "14ac122d9927a2c5121222444c209c9d265c5af52d194e86fa8e70e0077b026b",
+    "native_summary.json": "e0088532b64b88164a1aa9da97fb0f6ea5760afcef58798cf9eb60971539bdc5",
+    "native_threshold_summary.json": "088e3e98499a6215a7d67aabf8d54480d8f47dc17b5f82aa2bb5681ca10d4916",
+    "protocol.json": "e30c4cbb03e9e6b8fbe2177bb4fe07479be7199d04e6f47078967991ca0f8bba",
+    "runner.py": "ac3a6827cc2a41f490c073dd94145f19af85295e89a319260dbf0cddb3c14f6f",
+    "selections.json": "fec5272202c6f270393f6d7b12711ea02e90f7c3fcbf16cfa3f1f08dc461fada",
+    "target_manifest_F3.json": "2afa31ace6818d9e26ed5fe7e4bd556cfeec1a335a915a97c45adb8f1b48f7e2",
+    "target_manifest_FR25.json": "b19c40953b674248f04005713bc4778d87b0fe710b5573a54f4993e5f14fbd12"
+  },
+  "bundle": "var/research/target-change-rebalance-20261015-v1/run-02",
+  "promotion_eligible": false,
+  "registered_protocol_sha256": "a751f4875488d8b1a86414fe0d514de759a2d9b6dd9f0fb795ac410f7719dcf4",
+  "storage": "Version source, protocols, findings, grids and this compact receipt in Git. Full replay bundles, generated HTML/PNG/report JSON and downloaded reference PDFs remain local and in the configured full-system backup scope. No new backup or restore is asserted.",
+  "study": "target-change-rebalance-20261015-v1",
+  "verification": "Accepted frozen analysis and runner hashes verified again when preparing this commit. Full input, native, replay and policy checks are recorded by the acceptance receipt."
+}

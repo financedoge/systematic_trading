@@ -1,5 +1,30 @@
 # Signal decay, alpha overlays and portfolio robustness — research plan
 
+## Target-change rebalance study requested October 15, 2026
+
+**P4.22 and P4.23 are complete.** The fixed-top-six threshold study retained
+monthly in all chronological selections. The joint maximum selected count X and
+target-change threshold n study also retained 6/monthly in all annual windows and
+the final trailing-three-year window. Its [6-by-8 grid](../research/selection-width-timing-20261015-v1/protocol.json)
+was frozen before joint results; 588 scenarios, six native checks and 98 adoption
+checks passed. Wider selection lowered turnover but did not qualify under the
+registered FR25 objective and guardrails. [Results](../research/selection-width-timing-20261015-v1/results.md).
+Missing daily macro snapshots may use the previous
+completed monthly snapshot by explicit operator instruction, with actual source
+dates retained. The operator distinguishes strategy target adoption
+from trading housekeeping and requested a threshold-selection backtest. Use
+`sum(abs(latest theoretical target - last adopted target))`, including cash;
+holdings and fills affect accounting, not this trigger. Latest adopted versus
+actual held remains a Trading concern. Keep model fitting and monthly events.
+
+The operator selected net Sharpe with return/drawdown guardrails and explicitly
+chose the existing FR25 and F3 universes first, with full-pool validation later.
+The [complete protocol](target-change-rebalance-plan.md) defines eight thresholds,
+monthly/daily controls, causal annual selection, cost/delay stress, stability,
+uncertainty and a prospective candidate freeze. Gârleanu-Pedersen (2013) is saved
+with provenance in the reference library. This timing study does not change the
+existing expanded-universe rejection or grant execution/promotion authority.
+
 ## Agreed priorities after the 2026-10-11 review
 
 The [second review](strategy-review-2026-10-11.md) supersedes conflicting numerical claims in the

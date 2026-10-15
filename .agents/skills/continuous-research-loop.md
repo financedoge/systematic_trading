@@ -20,6 +20,7 @@ Tracked candidates must be implemented as full executable strategy definitions a
 1. Start from the current SOTA hurdle, not from a weak benchmark.
 2. Define the research question and expected failure mode before running experiments.
 3. Use point-in-time features and explicit universe rules.
+   Always include dynamic rebalancing as a research option alongside a fixed-interval control. Register the event/threshold grid before results, including joint selection-width/timing choices when relevant. Target-change events compare latest theoretical with last adopted target weights, including cash; adopted-target versus actual-held alignment stays in Trading. Evaluate net Sharpe with return/drawdown guards, actual traded notional and costs, execution delays and chronological parameter stability. Do not carry the current universe's preference for monthly rebalancing forward as a universal conclusion.
 4. Compare against SOTA, relevant external benchmarks, and risk-adjusted metrics.
 5. Separate in-sample, out-of-sample, walk-forward, and stress-period results.
 6. Check turnover, liquidity, concentration, drawdown, fee sensitivity, and parameter stability.

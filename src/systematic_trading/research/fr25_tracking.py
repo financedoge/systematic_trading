@@ -91,15 +91,23 @@ def prepare_schedule(inputs, bars, *, max_workers=None):
         sources=inputs['entries'], features=states, models=models, workers=workers)
 
 
-def prediction(schedule, histories, day):
+def prediction(schedule, histories, day, *, allow_monthly_fallback=False):
     if not schedule or schedule.get('parameters') != PARAMETERS:
         raise ValueError('Published FR25 financial schedule required')
     day = str(day)
-    if day not in schedule['models']:
-        raise ValueError('Exact FR25 decision missing; await application catch-up')
-    model = schedule['models'][day]
     known = str(histories['SPY'][-1].trade_date)
-    if model['known_through'] != known or known >= day or (model['last_label_end'] and model['last_label_end'] > known):
+    model = schedule['models'].get(day)
+    fallback = model is None and allow_monthly_fallback
+    if fallback:
+        cutoff = max(str(r.trade_date) for r in histories['SPY'] if str(r.trade_date)[:7] < day[:7])
+        candidates = [m for d,m in schedule['models'].items() if d <= day and m['known_through'] == cutoff]
+        if len(candidates) != 1 or (date.fromisoformat(known)-date.fromisoformat(cutoff)).days > 35:
+            raise ValueError('Missing or ambiguous monthly FR25 fallback')
+        model = candidates[0]
+    if model is None:
+        raise ValueError('Exact FR25 decision missing; await application catch-up')
+    if ((not fallback and model['known_through'] != known) or model['known_through'] > known
+            or known >= day or (model['last_label_end'] and model['last_label_end'] > model['known_through'])):
         raise ValueError('FR25 model and decision cutoffs differ')
     if model['ready'] and set(model['models']) != set(histories):
         raise ValueError('FR25 model universe changed')
@@ -112,11 +120,13 @@ class FinancialRankSelection(SelectionBlend):
         super().__init__(parent, dict(blend='R25', group='financial'), {}, {})
         self.schedule = None
         self.rolling_schedule = None
+        self.allow_monthly_fallback = False
 
     def apply(self, targets, context):
         from systematic_trading.research.rolling_tracking import select_rolling_model
         from systematic_trading.signals.library import compute_signal_features
-        self.ridge = prediction(self.schedule, context.bars_by_symbol, context.as_of)
+        self.ridge = prediction(self.schedule, context.bars_by_symbol, context.as_of,
+            allow_monthly_fallback=self.allow_monthly_fallback)
         model = select_rolling_model(self.rolling_schedule, context.bars_by_symbol, context.as_of)
         self.xgb = {s: model.predict(compute_signal_features(symbol=s, context=context))
                     for s in context.bars_by_symbol}

@@ -109,7 +109,7 @@ def worker_init(path):
     _WORK=data
 
 
-def targets_worker(day):
+def targets_worker(day, *, allow_monthly_fallback=False, selection_top_n=None, selection_diagnostics=False):
     from systematic_trading.backtest.stored import _target_schedule
     from systematic_trading.research import instantiate_overlays, instruments_for_definition
     from systematic_trading.research.rolling_tracking import select_rolling_model
@@ -119,7 +119,16 @@ def targets_worker(day):
     output={}
     for value in data['definitions']:
         definition=StrategyDefinition.from_dict(value);overlays=instantiate_overlays(definition)
+        if selection_top_n is not None:
+            selections=[o for spec,o in zip(definition.overlays,overlays,strict=True)
+                if spec.kind in ('asset_pool_filter','financial_rank_selection')]
+            if (type(selection_top_n) is not int or not 1<=selection_top_n<=len(history)
+                    or len(selections)!=1):
+                raise ValueError('Finite selection-width override requires one selector and a supported count')
+            selections[0].top_n=selection_top_n
         for spec,o in zip(definition.overlays,overlays,strict=True):
+            if spec.kind in ('usd_ridge', 'financial_rank_selection'):
+                o.allow_monthly_fallback = allow_monthly_fallback
             if spec.kind=='rolling_model':
                 o.model=select_rolling_model(data['rolling'],history,as_of)
             elif spec.kind=='decision_tree' and day<'2023-01-01':
@@ -139,6 +148,12 @@ def targets_worker(day):
             trade_dates=[as_of],rebalance_frequency='daily',lookback_bars=63,max_weight=D('.45'),cash_reserve_weight=D('.02'),
             sleeve_name=definition.sleeve_name,target_overlays=overlays)[as_of]
         output[definition.key]=dict(signal_session=day,known_through=data['days'][i-1],targets=[t.model_dump(mode='json') for t in targets])
+        if selection_diagnostics:
+            selector=next(o for spec,o in zip(definition.overlays,overlays,strict=True)
+                if spec.kind in ('asset_pool_filter','financial_rank_selection'))
+            output[definition.key]['selection']=dict(top_n=selector.top_n,
+                observation=getattr(selector,'observation',None),
+                positive_final_targets=[t.symbol for t in targets if t.target_weight>0])
     return day,output
 
 

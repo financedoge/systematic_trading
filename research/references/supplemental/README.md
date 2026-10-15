@@ -1,6 +1,23 @@
-# Sources added during the plan discussion — 2026-10-01
+# Supplemental research references
 
-These two BIS papers supplement the original 45-document collection. They support the new USD research question. They are literature, not approved market-data inputs. [Provenance and SHA-256 hashes](manifest.json) · [Revised plan](../../momentum-research-plan-2026-10-01.md)
+Two BIS papers added October 1, 2026 support the USD research question; the dynamic-trading paper added October 15 supports the rebalance-policy study. These supplement the original 45-document collection. They are literature, not approved market-data inputs. [Provenance and SHA-256 hashes](manifest.json) · [USD plan](../../momentum-research-plan-2026-10-01.md)
+
+## T01 — Dynamic Trading with Predictable Returns and Transaction Costs
+
+Nicolae Gârleanu and Lasse Heje Pedersen. Published journal version, The Journal
+of Finance 68(6), December 2013, pp. 2309-2340; DOI 10.1111/jofi.12080.
+32 PDF pages. Title, authors, journal and DOI verified; title page rendered and
+visually checked. Selected firsthand reading: PDF pp. 1, 5-6, 8-9, 24; not a
+complete proof review or empirical replication.
+
+[Local PDF](T01_dynamic_trading_with_predictable_returns_and_transaction_costs.pdf)
+· [Author's university source](https://w4.stern.nyu.edu/facdir/lpederse/papers/DynamicTrading.pdf)
+· [Rebalance protocol](../../../docs/target-change-rebalance-plan.md)
+
+The quadratic-cost model connects forecast persistence to gradual portfolio
+adjustment. It motivates testing costs and responsiveness together; it does not
+establish the proposed target-to-target L1 band, a numerical ETF threshold or
+superiority over the app's monthly strategies. Those require the separate study.
 
 ## U01 — The US dollar and capital flows to EMEs
 

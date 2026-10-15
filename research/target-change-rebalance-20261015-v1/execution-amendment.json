@@ -1,0 +1,13 @@
+{
+  "registered_before_performance_results": true,
+  "date": "2026-10-15",
+  "user_authorization": "If there is no daily snapshot, find the last monthly snapshot and assume no change or new published points.",
+  "macro_policy": "Exact snapshot if present in the pinned parent input; otherwise previous completed monthly snapshot available before the decision. Preserve original timestamps and report carry age. No backfill of prices.",
+  "financial_policy": "Use exact frozen financial prediction if available; otherwise carry the previous monthly financial prediction and model. Recalculate price-based ranks and sizing daily. No new fitting schedule.",
+  "usd_policy": "Use exact frozen USD snapshot if available; otherwise carry the previous monthly USD21/USD63 features with source timestamps intact. Recalculate price features daily using the existing monthly coefficients.",
+  "backfill": "Stopped on user clarification. Partial new captures are retained as audit evidence but excluded from this pinned-parent study.",
+  "F3": "Preserve current published F3 with adjusted-price/inherited-source-volume activity proxy. Results are a legacy-parent sensitivity comparison, not audited raw-activity transfer confirmation. Corrected-basis F3 needs a separately versioned study.",
+  "unchanged": "Threshold grid, selection objective and guardrails, costs, delays, folds, funding, price batch, strategy universes and execution permissions. No monitoring or trading-policy changes.",
+  "formal_superiority_claim": false,
+  "inference": "Registered paired stationary-bootstrap intervals conditional on the realized selector calendar; no selection-aware formal superiority claim. Holm 18 reported descriptively."
+}

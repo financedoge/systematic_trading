@@ -26,12 +26,21 @@ def price_features(histories, usd):
     return result
 
 
-def select_snapshot(snapshots, known):
+def select_snapshot(snapshots, known, *, monthly_fallback=None):
     candidates = [r for r in snapshots if r['known_through'] == known and r['vintage_date'] < known]
+    fallback = not candidates and monthly_fallback is not None
+    if fallback:
+        if monthly_fallback >= known or (date.fromisoformat(known)-date.fromisoformat(monthly_fallback)).days > 35:
+            raise ValueError("Invalid previous-month USD fallback")
+        candidates = [r for r in snapshots if r['known_through'] == monthly_fallback
+                      and r['vintage_date'] < monthly_fallback]
     if len(candidates) != 1:
         raise ValueError("Missing or ambiguous published USD snapshot for " + known)
     row = candidates[0]
-    if (date.fromisoformat(known)-date.fromisoformat(row['observation_date'])).days > 14:
+    # A carried snapshot retains its real timestamp. Check freshness at source,
+    # not by relabelling it as a new observation at the current signal close.
+    freshness_at = monthly_fallback if fallback else known
+    if (date.fromisoformat(freshness_at)-date.fromisoformat(row['observation_date'])).days > 14:
         raise ValueError("Stale USD index observation")
     return row
 
@@ -73,7 +82,7 @@ def prepare_usd_schedule(bars, snapshots):
         policy="60 completed months; label_end strictly before fit close; per-ETF standardized ridge alpha=1; monthly refits")
 
 
-def usd_prediction(schedule, histories, as_of):
+def usd_prediction(schedule, histories, as_of, *, allow_monthly_fallback=False):
     known = str(histories['SPY'][-1].trade_date)
     if known < FIRST_FIT:
         return None
@@ -88,7 +97,8 @@ def usd_prediction(schedule, histories, as_of):
     if (date.fromisoformat(known)-date.fromisoformat(fit_close)) > timedelta(days=35):
         raise ValueError("Stale monthly USD model")
     fit = schedule['models'][fit_close]
-    snap = select_snapshot(schedule['snapshots'], known)
+    snap = select_snapshot(schedule['snapshots'], known,
+        monthly_fallback=fit_close if allow_monthly_fallback and known != fit_close else None)
     current = price_features(histories, snap['features'])
     predictions = {}
     if set(current) != set(fit['models']):
@@ -101,7 +111,10 @@ def usd_prediction(schedule, histories, as_of):
         if not math.isfinite(value):
             raise ValueError("Invalid USD prediction")
         predictions[symbol] = value
-    return dict(predictions=predictions, fit_close=fit_close, snapshot=snap, features=current, model=fit)
+    return dict(predictions=predictions, fit_close=fit_close, snapshot=snap, features=current, model=fit,
+        snapshot_policy='exact_else_previous_monthly' if allow_monthly_fallback else 'exact',
+        snapshot_carried=snap['known_through'] != known,
+        snapshot_age_days=(date.fromisoformat(known)-date.fromisoformat(snap['known_through'])).days)
 
 
 class UsdRidgeOverlay:
@@ -109,9 +122,11 @@ class UsdRidgeOverlay:
 
     def __init__(self, schedule=None):
         self.schedule = schedule
+        self.allow_monthly_fallback = False
 
     def apply(self, targets, context):
-        result = usd_prediction(self.schedule, context.bars_by_symbol, context.as_of)
+        result = usd_prediction(self.schedule, context.bars_by_symbol, context.as_of,
+            allow_monthly_fallback=self.allow_monthly_fallback)
         if result is None:
             return list(targets)
         return apply_usd_predictions(list(targets), result['predictions'])

@@ -1,0 +1,37 @@
+{
+  "acceptance": {
+    "analysis_input_manifest_sha256": "f676c3ee2150207dd2d7443bfed5f4716f32d3582b0640ced7802cfd8fd6bcf1",
+    "analysis_runner_sha256": "170f8324716ea08e5bc89ef7692edafcbfe4519c7179f76e0efe3426585b5d42",
+    "analysis_sha256": "089d4bdb8fe2594ab0b685aa9b0515b0f5c5e02127ca301a1fa939b9056f1087",
+    "candidate": "6/monthly",
+    "candidate_frozen_at": "2026-10-15T14:25:27.343935+00:00",
+    "conditional_inference_only": true,
+    "full_size_replays": 588,
+    "independent_policy_checks": 98,
+    "native_checks": 6,
+    "promotion_eligible": false,
+    "selection_sha256": "64ed4640e86f34aded00cca68bc9fd6f9a49e0d634a9c8232a2a74f6eda072de",
+    "selector_reproduced": true,
+    "status": "passed"
+  },
+  "artifact_sha256": {
+    "acceptance.json": "9dc3545019d01f22d4fc5af91915ac4e2ba66f077b86c81965d1c36a81e4afe6",
+    "analysis.json": "089d4bdb8fe2594ab0b685aa9b0515b0f5c5e02127ca301a1fa939b9056f1087",
+    "analysis_input_manifest.json": "f676c3ee2150207dd2d7443bfed5f4716f32d3582b0640ced7802cfd8fd6bcf1",
+    "analysis_runner.py": "170f8324716ea08e5bc89ef7692edafcbfe4519c7179f76e0efe3426585b5d42",
+    "input_manifest.json": "5aca451cdae47ef3f080f7a7c9476d5c99a2b15103be28e30657eeb615afcd78",
+    "native_summary.json": "575436d6266ffd4d97e99335381be070d3e794642e0f5636d9e24162763ee329",
+    "protocol.json": "da155ccf392aebeb72e74356414083ede334b9462eca980f5228a58094b359fc",
+    "replay_validation.json": "89ad5b9aa8bfe2d701f0624b653565a7f7a3961b84af74e1febf3718ac62a8fb",
+    "runner.py": "ce383efd288301fbd26479ae57f82566dbf427c0664519d643ad98109eee24c5",
+    "selections.json": "64ed4640e86f34aded00cca68bc9fd6f9a49e0d634a9c8232a2a74f6eda072de",
+    "target_manifest_F3.json": "76af7472a44307421acba4eefef10a6cfda7dfafcd97fbee39576bfa37b7e2e4",
+    "target_manifest_FR25.json": "0a5e91d57ccfbe192fd10d7bcf74923f97e732cbaae7a1bd9b59622f8769c47b"
+  },
+  "bundle": "var/research/selection-width-timing-20261015-v1",
+  "promotion_eligible": false,
+  "registered_protocol_sha256": "e3c367a5709770d58d6040d16e7667d80994496c23a0ebe48ff10b3394d47c3c",
+  "storage": "Version source, protocols, findings, grids and this compact receipt in Git. Full replay bundles, generated HTML/PNG/report JSON and downloaded reference PDFs remain local and in the configured full-system backup scope. No new backup or restore is asserted.",
+  "study": "selection-width-timing-20261015-v1",
+  "verification": "Accepted frozen analysis and runner hashes verified again when preparing this commit. Full input, native, replay and policy checks are recorded by the acceptance receipt."
+}
