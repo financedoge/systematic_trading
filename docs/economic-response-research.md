@@ -82,8 +82,8 @@ fills, daily NAV and final holdings reproduce the parent exactly.
 
 ## Completed result
 
-The [findings](../research/economic-response-2026-10-07/findings.html) and
-[complete assessment](../research/economic-response-2026-10-07/assessment.html)
+The findings (rendered artifact unavailable in this checkout: `../research/economic-response-2026-10-07/findings.html`) and
+complete assessment (rendered artifact unavailable in this checkout: `../research/economic-response-2026-10-07/assessment.html`)
 include all eleven shared-format reports and complete decision flows.
 
 | Evaluation arm | CAGR | Sharpe | Calmar | Maximum drawdown |

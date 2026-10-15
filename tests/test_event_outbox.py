@@ -137,6 +137,22 @@ def test_event_outbox_dispatcher_uses_in_memory_publisher_for_successful_batch(t
     assert publisher.published[0].event.event_id == "evt-001"
 
 
+def test_dispatch_progress_follows_persisted_success_and_failure(tmp_path) -> None:
+    store = _store(tmp_path)
+    for event_id in ['evt-001','evt-002']:
+        store.append_platform_event(_market_event(event_id,'SPY'))
+    dispatcher = EventOutboxDispatcher(store,_FlakyPublisher(fail_first_for={'evt-002'}))
+    observed=[]
+    def progress(result):
+        # Success is already durable when its heartbeat is emitted.
+        assert store.get_platform_event_outbox_record('evt-001').published_at is not None
+        observed.append((result.attempted,result.published,result.failed))
+    result=dispatcher.dispatch_pending(progress=progress)
+    assert observed==[(1,1,0),(2,1,1)]
+    assert result.failed==1
+    assert store.get_platform_event_outbox_record('evt-002').publish_attempts==1
+
+
 def test_jsonl_publisher_writes_dispatched_event_payloads(tmp_path) -> None:
     store = _store(tmp_path)
     store.append_platform_event(_market_event("evt-001", "SPY"))

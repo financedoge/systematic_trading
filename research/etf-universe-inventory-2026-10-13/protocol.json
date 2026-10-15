@@ -1,0 +1,66 @@
+{
+  "version": "p416d-stage1-protocol-v1",
+  "registered_on": "2026-10-13",
+  "scope": "Reference inventory and admission planning only; no price study or admission",
+  "required_completed_session": "2026-10-12",
+  "selection_basis": "Economic coverage, existing catalog and current primary-source listing metadata; no performance/AUM/yield selection",
+  "historical_eligibility": "Prospective membership begins no earlier than verified admission and actual capture. Earlier research requires dated membership, mandate and availability evidence; inception alone is insufficient.",
+  "excluded_first_wave": [
+    "leveraged_or_inverse",
+    "single_stock",
+    "options_income_or_buffer",
+    "crypto",
+    "ETN_credit_wrapper",
+    "target_maturity_or_undefined_mandate",
+    "non_US_listing_or_non_USD_quote"
+  ],
+  "reference_rules": [
+    "Local candidate IDs are permanent; ticker reuse creates a new identity.",
+    "Issuer product IDs are reference IDs, not globally certified security IDs.",
+    "One primary bucket plus secondary tags; no double counting silver or multi-region funds.",
+    "Unknown inception/closure/currency remains null. Directory absence is not closure evidence.",
+    "Mandate or index change splits dated regimes; do not silently join historical series."
+  ],
+  "admission_rules": {
+    "identity": "Reconcile issuer name, ISIN/CUSIP, listing MIC/currency/calendar, inception vs listing, splits/distributions, closure and mandate history; preserve existing holds.",
+    "price": "Pinned published audited adjusted prices for returns; separately audited raw OHLC/volume for activity; complete causal lookback and no fills/substitutions.",
+    "liquidity": {
+      "status": "proposal frozen before outcome comparison; requires review before admission",
+      "lookback_sessions": 63,
+      "min_valid_sessions": 63,
+      "median_raw_dollar_volume_USD": 5000000,
+      "min_session_raw_dollar_volume_USD": 500000,
+      "maximum_order_fraction_of_median_daily_value": 0.005,
+      "prospective_regular_session_median_spread_bps": 20,
+      "minimum_spread_sessions": 20,
+      "spread_note": "Historical raw dollar-volume proxy does not certify historical spreads. Missing spreads block paper readiness, not falsely passed.",
+      "no_AUM_gate": "No current AUM survivorship screen. Review fund closure/liquidity risk independently."
+    },
+    "warmup": "252 consecutive supported sessions after the verified mandate/listing boundary; new mandates restart warmup. Annual screening is not permission to fill missing history.",
+    "broker": "Fresh contract, security type, primary venue, quote currency, min tick/size, order capabilities, account/environment permissions and reconciliation; no inventory field enables routing.",
+    "fx": "USD quote does not remove underlying FX or CNH reporting FX requirements. Uncertified legacy FX remains disclosed."
+  },
+  "duplicate_rules": {
+    "status": "Proposed conservative overlap buckets, not verified identical indexes or measured independent breadth",
+    "representative": "After eligibility, choose highest prior-63-session audited median dollar volume, then lower contemporaneously documented fee if both known, then permanent candidate ID; never trailing return.",
+    "selection": "At most one representative per duplicate review bucket for class ranking; swap only at scheduled rebalance, charge all turnover. Ineligible bucket stays absent.",
+    "breadth": "Report fund count, bucket count, singleton buckets, holdings overlap and effective covariance breadth separately. Regional and global parents share exposure limits; they are not independent.",
+    "peer_minimum": "No within-peer cross-sectional alpha claim with fewer than three independently supported exposure groups; do not count substitutes as independent observations."
+  },
+  "proposed_risk_normalization": {
+    "status": "Frozen proposal for a later registered comparison; not calculated here",
+    "formula": "Mean over h in {21,63,126} of log(adjusted_close_t / adjusted_close_t_minus_h) / (sample_std_of_last_63_daily_log_returns * sqrt(h))",
+    "rules": "All inputs available at decision cutoff; require finite positive volatility and complete 127-price/63-return windows. One vote per eligible representative; equal-weight bucket scores within class. No missing-value imputation.",
+    "baseline": "First compare unchanged recipe on original versus full admitted pool. Risk normalization is a separate arm, never bundled with alpha or universe effects.",
+    "unchanged": "126-session positive gate, monthly schedule, defensive fallback and 45% cap are not changed by inventory."
+  },
+  "later_research_gates": [
+    "P4.15 turnover/IC/dispersion gate before every replay; missing inputs means insufficient, not pass.",
+    "Freeze new time/group holdouts after the inspected historical sample and label retrospective evidence.",
+    "Family-adjusted tests and full-pool attribution; unchanged SOTA/FR25 comparators.",
+    "P6.15 measured worker budgets before concurrent expansion."
+  ],
+  "capacity_storage_multiplier": 4,
+  "capacity_note": "Illustrative allowance for files, replicas/snapshots and staging; excludes provider evidence, actions, filings, intraday data, models and backtest reports. Not measured ClickHouse compression.",
+  "next_stage": "Review inventory and rules before recorder ingestion; this manifest cannot enable automatic admission, calculations or orders."
+}

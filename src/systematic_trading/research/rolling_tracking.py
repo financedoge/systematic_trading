@@ -126,13 +126,17 @@ def read_model_artifacts(root):
     return json.loads((attempt/'schedule.json').read_text(encoding='utf8')), dict(receipt, artifact_path=str(attempt))
 
 
-def prepare_model_schedule(settings, inputs, definition, start, code_hashes):
+def prepare_model_schedule(settings, inputs, definition, start, code_hashes, *, max_workers=None):
     recipe = definition_training_spec(definition)
     if recipe is None:
         return None, None
     from systematic_trading.research import instruments_for_definition
     request = dict(recipe=recipe, start=start, symbols=list(instruments_for_definition(definition)),
         bars=inputs['latest_bars'], batch=inputs['provenance']['batch'], code_hashes=code_hashes)
+    if max_workers is not None:
+        if not isinstance(max_workers, int) or max_workers < 1:
+            raise ValueError('Rolling model workers must be positive integers')
+        request['max_workers'] = max_workers
     revision = digest(encode(request))
     root = settings.data_dir/'tracked_models'/revision
     if not root.exists():

@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Protocol
+from collections.abc import Callable
 from time import monotonic
 
 from pydantic import BaseModel, Field
@@ -36,7 +37,8 @@ class EventOutboxDispatcher:
         self.store = store
         self.publisher = publisher
 
-    def dispatch_pending(self, *, limit: int = 100, max_batch_seconds: float = 20) -> EventOutboxDispatchResult:
+    def dispatch_pending(self, *, limit: int = 100, max_batch_seconds: float = 20,
+                         progress: Callable[[EventOutboxDispatchResult], None] | None = None) -> EventOutboxDispatchResult:
         records = self.store.list_pending_platform_events(limit=limit)
         failures: list[EventOutboxDispatchFailure] = []
         published = 0
@@ -57,9 +59,14 @@ class EventOutboxDispatcher:
                         error=error,
                     )
                 )
-                continue
-            self.store.mark_platform_event_published(record.event_id)
-            published += 1
+            else:
+                self.store.mark_platform_event_published(record.event_id)
+                published += 1
+            # Report completed, persisted attempts only. A blocked broker/store
+            # operation cannot manufacture a healthy heartbeat in another thread.
+            if progress is not None:
+                progress(EventOutboxDispatchResult(attempted=attempted, published=published,
+                    failed=len(failures), failures=list(failures)))
         return EventOutboxDispatchResult(
             attempted=attempted,
             published=published,

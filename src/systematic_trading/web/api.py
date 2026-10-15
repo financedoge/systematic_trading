@@ -10,7 +10,6 @@ from typing import Any, Iterable
 
 from fastapi import APIRouter, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse, Response
-from pydantic import BaseModel, Field
 
 from systematic_trading.backtest.accounting import FxConverter, PortfolioValuationService, quantize_money
 from systematic_trading.backtest.reporting import build_backtest_report_data, render_backtest_report_html
@@ -69,8 +68,6 @@ from systematic_trading.live import (
     fetch_and_write_account_snapshot,
     load_trading_service_status,
 )
-from systematic_trading.portfolio.beta import BetaInstrumentState, RiskParityBetaSleeve
-from systematic_trading.portfolio.proposals import RebalanceProposalBuilder
 from systematic_trading.research import (
     MSCI_WORLD_PROXY_NAME,
     MSCI_WORLD_PROXY_SYMBOL,
@@ -81,236 +78,36 @@ from systematic_trading.research.catalog import discover_strategy_artifacts, sum
 from systematic_trading.services import ServiceGraph, build_service_graph
 from systematic_trading.storage.interfaces import TradingStore
 
+from systematic_trading.web.contracts import (
+    PlatformManifest as PlatformManifest,
+    LatestPriceQuote as LatestPriceQuote,
+    VolatilityInput as VolatilityInput,
+    RealizedVolatilityEstimate as RealizedVolatilityEstimate,
+    FXRateInput as FXRateInput,
+    ExistingPositionInput as ExistingPositionInput,
+    RiskParityPreviewRequest as RiskParityPreviewRequest,
+    ProposalDecisionInput as ProposalDecisionInput,
+    ProposalApprovalSubmitInput as ProposalApprovalSubmitInput,
+    BrokerSubmissionInput as BrokerSubmissionInput,
+    ProposalApprovalSubmissionResult as ProposalApprovalSubmissionResult,
+    DashboardSeriesPoint as DashboardSeriesPoint,
+    DashboardPerformance as DashboardPerformance,
+    DashboardHoldingDiff as DashboardHoldingDiff,
+    DashboardHoldings as DashboardHoldings,
+    DashboardAccountSnapshotRefresh as DashboardAccountSnapshotRefresh,
+    BrokerPortfolioResetInput as BrokerPortfolioResetInput,
+    DashboardPnlCollapseInput as DashboardPnlCollapseInput,
+    DashboardPnlComparisonPoint as DashboardPnlComparisonPoint,
+    DashboardSlippagePoint as DashboardSlippagePoint,
+    DashboardExecutionSlippageRow as DashboardExecutionSlippageRow,
+    DashboardMissedOrderRow as DashboardMissedOrderRow,
+    DashboardExecutionQuality as DashboardExecutionQuality,
+    OrderAnalyticsInput as OrderAnalyticsInput,
+)
+
 router = APIRouter(prefix="/api/v1")
 FAILED_RESUBMIT_STATUSES = {BrokerOrderStatus.REJECTED, BrokerOrderStatus.CANCELLED}
 ACCOUNT_SNAPSHOT_PATTERN = re.compile(r"ib_paper_account_snapshot_(\d{8})(?:_\d{6})?\.json$")
-
-
-class PlatformManifest(BaseModel):
-    project: str
-    base_currency: Currency
-    default_environment: OrderEnvironment
-    supported_regions: list[str]
-    features: dict[str, bool]
-
-
-class LatestPriceQuote(BaseModel):
-    symbol: str
-    price: Decimal = Field(gt=0)
-
-
-class VolatilityInput(BaseModel):
-    symbol: str
-    realized_volatility: Decimal = Field(gt=0)
-
-
-class RealizedVolatilityEstimate(BaseModel):
-    symbol: str
-    start_date: date
-    end_date: date
-    observation_count: int
-    periods_per_year: int
-    realized_volatility: Decimal
-
-
-class FXRateInput(BaseModel):
-    currency: Currency
-    rate_to_cnh: Decimal = Field(gt=0)
-
-
-class ExistingPositionInput(BaseModel):
-    symbol: str
-    quantity: int = Field(ge=0)
-    average_cost: Decimal = Field(ge=0)
-
-
-class RiskParityPreviewRequest(BaseModel):
-    as_of: date
-    instruments: list[Instrument]
-    prices: list[LatestPriceQuote]
-    volatilities: list[VolatilityInput]
-    fx_rates: list[FXRateInput]
-    positions: list[ExistingPositionInput] = Field(default_factory=list)
-    cash: list[CashBalance] = Field(default_factory=list)
-    max_weight: Decimal | None = Field(default=None, gt=0)
-
-
-class ProposalDecisionInput(BaseModel):
-    status: ProposalStatus
-    comment: str | None = None
-
-
-class ProposalApprovalSubmitInput(BaseModel):
-    comment: str | None = None
-
-
-class BrokerSubmissionInput(BaseModel):
-    environment: OrderEnvironment = OrderEnvironment.PAPER
-    allow_resubmit: bool = False
-    failed_only: bool = False
-    route_order_type: OrderType | None = None
-    confirm_submit: bool = False
-
-
-class ProposalApprovalSubmissionResult(BaseModel):
-    proposal: TradeProposal
-    broker_submission: BrokerSubmissionResult
-
-
-class DashboardSeriesPoint(BaseModel):
-    switch_anchor: bool = False
-    is_theoretical: bool = False
-    break_before: bool = False
-    return_break: bool = False
-    period_start: str | None = None
-    period_growth: Decimal | None = None
-    allocation_version: str = "legacy"
-    allocation_label: str = "Legacy / unverified strategy assignment"
-    trade_date: date
-    nav_cnh: Decimal
-    index: Decimal
-
-
-class DashboardPerformance(BaseModel):
-    spot_basis: dict = Field(default_factory=dict)
-    theoretical_contract: str | None = None
-    theoretical_base_nav_cnh: Decimal | None = None
-    strategy_comparison_start_date: date | None = None
-    theoretical_periods: list[dict] = Field(default_factory=list)
-    theoretical_sources: dict = Field(default_factory=dict)
-    strategy_actual_rebased: list[DashboardSeriesPoint] = Field(default_factory=list)
-    allocation_timeline: list[dict] = Field(default_factory=list)
-    allocation_revision: str | None = None
-    comparison_label: str = "Standalone strategy comparison"
-    account_return_basis: str = "NAV change; external cash flows are not classified"
-    portfolio_context: dict = Field(default_factory=dict)
-    strategy_name: str
-    strategy_source: str | None = None
-    latest_strategy_data_date: date | None = None
-    latest_market_data_date: date | None = None
-    strategy_extension_count: int = 0
-    account_source_count: int = 0
-    account_reset_at: datetime | None = None
-    account_tracking_start_date: date | None = None
-    account_alignment_date: date | None = None
-    account_alignment_nav_cnh: Decimal | None = None
-    account_alignment_strategy_index: Decimal | None = None
-    latest_strategy_nav_cnh: Decimal | None = None
-    latest_account_nav_cnh: Decimal | None = None
-    strategy_total_return: Decimal | None = None
-    account_total_return: Decimal | None = None
-    strategy: list[DashboardSeriesPoint] = Field(default_factory=list)
-    account: list[DashboardSeriesPoint] = Field(default_factory=list)
-    warnings: list[str] = Field(default_factory=list)
-
-
-class DashboardHoldingDiff(BaseModel):
-    symbol: str
-    account_quantity: int | None = None
-    account_value_cnh: Decimal | None = None
-    account_weight: Decimal | None = None
-    strategy_weight: Decimal | None = None
-    target_value_cnh: Decimal | None = None
-    weight_diff: Decimal | None = None
-    trade_side: str | None = None
-    trade_quantity: int | None = None
-    currency: Currency | None = None
-    price: Decimal | None = None
-
-
-class DashboardHoldings(BaseModel):
-    portfolio_context: dict = Field(default_factory=dict)
-    as_of: date | None = None
-    account_snapshot_source: str | None = None
-    strategy_source: str | None = None
-    strategy_proposal_id: str | None = None
-    account_nav_cnh: Decimal | None = None
-    rows: list[DashboardHoldingDiff] = Field(default_factory=list)
-    warnings: list[str] = Field(default_factory=list)
-
-
-class DashboardAccountSnapshotRefresh(BaseModel):
-    output_path: str
-    as_of: date | None = None
-    cash_count: int
-    position_count: int
-    managed_accounts: list[str] = Field(default_factory=list)
-    warnings: list[str] = Field(default_factory=list)
-
-
-class BrokerPortfolioResetInput(BaseModel):
-    confirm_reset_to_ib: bool = False
-
-
-class DashboardPnlCollapseInput(BaseModel):
-    cutoff_date: date
-
-
-class DashboardPnlComparisonPoint(BaseModel):
-    as_of: datetime
-    actual_pnl_cnh: Decimal
-    theoretical_pnl_cnh: Decimal
-    execution_gain_cnh: Decimal
-
-
-class DashboardSlippagePoint(BaseModel):
-    trade_date: date
-    daily_slippage_cnh: Decimal
-    cumulative_slippage_cnh: Decimal
-    daily_slippage_bps: Decimal | None = None
-
-
-class DashboardExecutionSlippageRow(BaseModel):
-    allocation_label: str = "Legacy / unverified strategy assignment"
-    allocation_version: str = "legacy"
-    local_order_id: str
-    proposal_id: str
-    order_index: int
-    symbol: str
-    side: OrderSide
-    filled_quantity: int
-    reference_price: Decimal
-    average_fill_price: Decimal
-    currency: Currency
-    reference_notional_cnh: Decimal | None = None
-    actual_notional_cnh: Decimal | None = None
-    execution_gain_cnh: Decimal | None = None
-    execution_gain_bps: Decimal | None = None
-    filled_at: datetime
-
-
-class DashboardMissedOrderRow(BaseModel):
-    proposal_id: str
-    order_index: int
-    symbol: str
-    side: OrderSide
-    quantity: int
-    reference_notional_cnh: Decimal
-    missed_at: datetime
-    reason: str | None = None
-
-
-class DashboardExecutionQuality(BaseModel):
-    allocation_timeline: list[dict] = Field(default_factory=list)
-    as_of: datetime
-    portfolio_context: dict = Field(default_factory=dict)
-    valuation_complete: bool = True
-    filled_order_count: int = 0
-    actual_pnl_cnh: Decimal | None
-    theoretical_pnl_cnh: Decimal | None
-    execution_gain_cnh: Decimal | None
-    execution_gain_bps: Decimal | None = None
-    execution_rows_gain_cnh: Decimal = Decimal("0")
-    execution_reconciliation_difference_cnh: Decimal | None = None
-    filled_notional_cnh: Decimal = Decimal("0")
-    filled_trade_count: int = 0
-    missed_order_count: int = 0
-    missed_notional_cnh: Decimal = Decimal("0")
-    missed_rows: list[DashboardMissedOrderRow] = Field(default_factory=list)
-    history: list[DashboardPnlComparisonPoint] = Field(default_factory=list)
-    slippage: list[DashboardSlippagePoint] = Field(default_factory=list)
-    rows: list[DashboardExecutionSlippageRow] = Field(default_factory=list)
-    warnings: list[str] = Field(default_factory=list)
 
 
 def _settings(request: Request) -> AppSettings:
@@ -332,77 +129,13 @@ def _broker(request: Request) -> InteractiveBrokersAdapter:
 def _build_risk_parity_artifacts(
     request_body: RiskParityPreviewRequest,
     settings: AppSettings,
-) -> tuple[TradeProposal, object]:
-    instrument_map = {instrument.symbol: instrument for instrument in request_body.instruments}
-    price_map = {price.symbol: price.price for price in request_body.prices}
-    volatility_map = {vol.symbol: vol.realized_volatility for vol in request_body.volatilities}
-    fx_map: dict[Currency, Decimal] = {Currency.CNH: Decimal("1")}
-    for rate_input in request_body.fx_rates:
-        fx_map[rate_input.currency] = rate_input.rate_to_cnh
+) -> tuple[TradeProposal, PortfolioSnapshot]:
+    from systematic_trading.portfolio.preview import build_risk_parity_preview
 
-    missing_symbols = sorted(
-        {
-            *set(volatility_map) - set(instrument_map),
-            *set(volatility_map) - set(price_map),
-            *{position.symbol for position in request_body.positions} - set(instrument_map),
-            *{position.symbol for position in request_body.positions} - set(price_map),
-        }
-    )
-    if missing_symbols:
-        raise HTTPException(status_code=400, detail=f"Missing instrument or price inputs for: {', '.join(missing_symbols)}")
-
-    beta_states = [
-        BetaInstrumentState(
-            instrument=instrument_map[symbol],
-            realized_volatility=volatility,
-        )
-        for symbol, volatility in volatility_map.items()
-    ]
-
-    asset_count = Decimal(len(beta_states))
-    minimum_workable_cap = (Decimal("1") / asset_count).quantize(Decimal("0.0001"), rounding=ROUND_HALF_UP)
-    effective_max_weight = request_body.max_weight or max(Decimal("0.35"), minimum_workable_cap)
-    if effective_max_weight * asset_count < Decimal("1"):
-        raise HTTPException(
-            status_code=400,
-            detail=(
-                f"max_weight={effective_max_weight} is too low for {int(asset_count)} instruments. "
-                f"Use at least {minimum_workable_cap}."
-            ),
-        )
-
-    sleeve = RiskParityBetaSleeve(max_weight=effective_max_weight)
-    targets = sleeve.generate_targets(beta_states)
-
-    positions = [
-        PortfolioPosition(
-            symbol=position.symbol,
-            quantity=position.quantity,
-            average_cost=position.average_cost,
-            market_price=price_map[position.symbol],
-            currency=instrument_map[position.symbol].quote_currency,
-            country=instrument_map[position.symbol].country,
-        )
-        for position in request_body.positions
-    ]
-    cash = request_body.cash or [CashBalance(currency=Currency.CNH, amount=Decimal("0"))]
-    proposal = RebalanceProposalBuilder(environment=settings.default_environment).build(
-        as_of=request_body.as_of,
-        sleeve=sleeve.name,
-        positions=positions,
-        cash=cash,
-        instruments=instrument_map,
-        prices=price_map,
-        fx_to_cnh=fx_map,
-        targets=targets,
-    )
-    snapshot = PortfolioValuationService.build_snapshot(
-        as_of=request_body.as_of,
-        positions=positions,
-        cash=cash,
-        converter=FxConverter(fx_map),
-    )
-    return proposal, snapshot
+    try:
+        return build_risk_parity_preview(request_body, settings.default_environment)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
 @router.get("/platform/manifest", response_model=PlatformManifest)
@@ -457,10 +190,6 @@ def update_paper_approval(change: PaperApprovalUpdate, request: Request):
         return service.auto_approval.configure(change)
     except ValueError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
-
-
-class OrderAnalyticsInput(BaseModel):
-    local_order_ids: list[str] = Field(max_length=100)
 
 
 @router.get("/execution/interactive-brokers/benchmark-coverage")

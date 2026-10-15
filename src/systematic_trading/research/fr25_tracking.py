@@ -76,16 +76,19 @@ def fit_day(day):
     return day, fitted
 
 
-def prepare_schedule(inputs, bars):
+def prepare_schedule(inputs, bars, *, max_workers=None):
+    workers = min(os.cpu_count() or 1, max_workers) if max_workers is not None else os.cpu_count() or 1
+    if workers < 1:
+        raise ValueError('Financial model workers must be positive')
     states = feature_states(inputs)
     opens = {s: {r['trade_date']: r['open'] for r in rows} for s, rows in bars.items()}
     for variable in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'NUMEXPR_NUM_THREADS'):
         os.environ[variable] = '1'
-    with ProcessPoolExecutor(max_workers=os.cpu_count() or 1, initializer=fit_init,
+    with ProcessPoolExecutor(max_workers=workers, initializer=fit_init,
             initargs=(states, opens, inputs['known'])) as pool:
         models = dict(pool.map(fit_day, sorted(states)))
     return dict(parameters=PARAMETERS, pin=inputs['pin'], provenance=inputs['provenance'],
-        sources=inputs['entries'], features=states, models=models, workers=os.cpu_count() or 1)
+        sources=inputs['entries'], features=states, models=models, workers=workers)
 
 
 def prediction(schedule, histories, day):
@@ -118,6 +121,15 @@ class FinancialRankSelection(SelectionBlend):
         self.xgb = {s: model.predict(compute_signal_features(symbol=s, context=context))
                     for s in context.bars_by_symbol}
         return super().apply(targets, context)
+
+
+def published_live_schedule(settings, definition, price_batch):
+    """Bind execution to monitoring's hashed, exact financial schedule."""
+    from systematic_trading.research.economic_tracking import published_live_schedule as load
+    schedule, receipt = load(settings, definition, price_batch)
+    if schedule.get('parameters') != PARAMETERS:
+        raise ValueError('Published FR25 financial parameters differ from the registered recipe')
+    return schedule, receipt
 
 
 def enrich_report(report, definition, inputs, economic, schedule, receipt, rolling, days):

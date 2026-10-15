@@ -44,13 +44,15 @@ class StrategyDefinition:
     universe_key: str = "global"
     scheduler: str = "static_monthly"
     overlays: tuple[OverlaySpec, ...] = ()
+    universe_members: tuple[dict[str, Any], ...] = ()
 
     @classmethod
     def from_dict(cls, value):
         return cls(key=value["key"], name=value["name"], sleeve_name=value["sleeveName"],
                    state=value["state"], description=value["description"], promoted_on=value.get("promotedOn"),
                    universe_key=value["universeKey"], scheduler=value["scheduler"],
-                   overlays=tuple(OverlaySpec(kind=o["kind"], parameters=o["parameters"]) for o in value["overlays"]))
+                   overlays=tuple(OverlaySpec(kind=o["kind"], parameters=o["parameters"]) for o in value["overlays"]),
+                   universe_members=tuple(value.get("universeMembers", ())))
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -63,6 +65,7 @@ class StrategyDefinition:
             "universeKey": self.universe_key,
             "scheduler": self.scheduler,
             "overlays": [overlay.to_dict() for overlay in self.overlays],
+            **({"universeMembers": list(self.universe_members)} if self.universe_members else {}),
         }
 
 

@@ -1,6 +1,7 @@
 .venv/
 __pycache__/
 .pytest_cache/
+.ruff_cache/
 *.pyc
 *.pyo
 *.pyd
@@ -19,6 +20,9 @@ var/live/*
 var/live/account_snapshots/*
 !var/live/account_snapshots/.gitkeep
 var/log/
+var/maintenance/
+# Generated broker snapshots are retained on disk/backups; tracked evidence stays tracked.
+var/reconciliation/ib_paper_reconciliation_*.json
 var/run/
 var/database-sync/
 var/system-backup/

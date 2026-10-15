@@ -1,0 +1,32 @@
+[
+  {
+    "event_id": "hyxu-euhy-2025",
+    "old_symbol": "HYXU",
+    "new_symbol": "EUHY",
+    "cusip": "464286210",
+    "issuer_product_id": "ishares:239550",
+    "announced": "2025-08-29",
+    "planned_mandate_change": "on or around 2025-10-31",
+    "symbol_effective": "2025-11-03",
+    "interpretation": "Name/ticker and investment-mandate transition, not evidence of fund liquidation in 2020. Old series ending 2020-04-01 is incomplete history. Keep old and new regimes separate and quarantined until audited.",
+    "old_exposure": "Non-US developed-market high-yield bonds in EUR, GBP and CAD",
+    "new_exposure": "Euro-denominated high-yield bonds hedged to USD; issuer domicile is not restricted to Europe",
+    "sources": [
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/930667/000119312525192804/R2.htm",
+        "role": "Issuer prospectus supplement, announced mandate changes",
+        "access": "Read through web retrieval 2026-10-13; direct byte capture returned HTTP 403"
+      },
+      {
+        "url": "https://infomemo.theocc.com/infomemos?number=57452",
+        "role": "OCC notice dated 2025-10-17, effective symbol date and CUSIP",
+        "access": "Read through web retrieval 2026-10-13; direct byte capture returned HTTP 403"
+      },
+      {
+        "url": "https://www.ishares.com/us/products/239550/ishares-euro-high-yield-corporate-bond-usd-hedged-etf",
+        "role": "Current issuer identity, mandate and inception",
+        "access": "Byte snapshot in sources/euhy.html.gz"
+      }
+    ]
+  }
+]

@@ -1,0 +1,325 @@
+# Historical memory index
+
+These are historical headings and milestone labels, not current status.
+Open the corresponding original file from [the ZIP archive](project-history-2026-10-12.zip).
+
+## log.md
+- 2026-10-12 — P4.19 retrospective execution comparison and full-session reference audits
+- 2026-10-11 — P4.19a app-owned benchmark collection and verified publication
+- 2026-10-11 — P4.19 evidence audit and queued worker resource redesign
+- 2026-10-11 — Agreed research priorities and substantial ETF-universe expansion
+- 2026-10-11 — Second research review, repairs, paper-gate assessment and P4.18
+- 2026-10-11 — Peer review of the Alpha101 work: five findings, all confirmed, all fixed, studies re-run
+- 2026-10-11 — Session committed and pushed (`80ff109`), with a GitHub routing workaround on the way
+- 2026-10-11 — The 5%-HOLD tilt becomes a monitored strategy
+- 2026-10-11 — P4.17f: closing the tilt when the signal stops — holding still wins, and half the rules never fire
+- 2026-10-11 — Tracked-calculation throughput: measured, one fix, and the honest remaining levers
+- 2026-10-11 — P4.17d/P4.17e: raising the tilt budget and raising the frequency both make it worse
+- 2026-10-11 — P4.17c: baking the 10% tilt into the SOTA — nearly free, nearly neutral
+- 2026-10-11 — P4.17b: tipping the alpha in as a tilt, not a selector, changes the answer
+- 2026-10-11 — Incident: research edits aborted a live tracked-strategy calculation
+- 2026-10-11 — P4.17 Alpha101 screen: the information is real, the turnover is not payable
+- 2026-10-11 — Documentation encoding incident, and the recovery
+- 2026-10-11 — P4.16b hierarchical construction: the operator's rule works, the risk does not move
+- 2026-10-11 — P4.16d registered: granular asset classes, a wider ETF pool, volatility-aware ranking
+- 2026-10-10 — P4.16 sleeve construction: the fallback is worth more than the partition
+- 2026-10-10 — P4.15 turnover and breakeven-IC gate: the Alpha101 daily archetypes cannot pay
+- 2026-10-10 — P4.14 Part B run: the ridge rank contributes, retention still fails
+- 2026-10-10 — P4.14 Part B protocol frozen; placebo shown to have full power
+- 2026-10-10 — Execution generality planned: capability general, admission narrow
+- 2026-10-10 — Strategies page called a policy gate "Catching up"
+- 2026-10-10 — P4.14 Part A: FR25 attribution, positive mechanism, inconclusive verdict
+- 2026-10-10 — P4.14 protocol frozen before outcomes
+- 2026-10-10 — P4.13 signal decay: IC instrumentation, dashboard panel, decay warning
+- 2026-10-10 — Next research phase registered: signal decay, alpha overlays, robustness
+- 2026-10-10 — Governed-data `review` status: decision and triage
+- 2026-10-10 — FR25 close-out, calculation identity and governed-data hardening
+- 2026-10-10 — Momentum/XGBoost/ridge ranks at the asset-selection stage
+- 2026-10-10 — Full-pool IC challenge and portfolio-contribution diagnosis
+- 2026-10-10 — Strategy comparison period returns and frozen names/actions
+- 2026-10-10 — Expanded-pool economics completed; standalone SPY deferred
+- 2026-10-09 — M1/14 monitored; cash/stress and loser-basket research completed
+- 2026-10-09 — Candidate-pool correction and finite momentum rerun
+- 2026-10-09 — Audited sector ETF admission and frozen universe control
+- 2026-10-09 — Cash reserve and stress-deployment research queued
+- 2026-10-09 — Issuer ETF fundamentals pilot recorded and inspected
+- 2026-10-08 - Anchor allocation performance at first verified account NAV
+- 2026-10-07 - Economic context ridge monitored and financial challengers completed
+- 2026-10-07 - Economic asset-response experiment completed
+- 2026-10-07 - Allocation preview race, offline preparation and deferred rebalance
+- 2026-10-07 - Leading indicators, context groups and expanded recorder
+- 2026-10-07 - Economic recorder, full vintage capture and revision audit
+- 2026-10-07 - Recorder-first BIL admission, F4 parking and IB tradability requirement
+- 2026-10-07 - Direct XGBoost ranking and portfolio construction research
+- 2026-10-07 - Complete F3 monitoring report and archive/restore lifecycle
+- 2026-10-07 - Cash fallback implemented and first finite study completed
+- 2026-10-07 - Cash and alternative fallback added to research roadmap
+- 2026-10-07 - ETF research boundary and data expansion proposal
+- 2026-10-07 - System dashboard backup process and status
+- 2026-10-07 - Full optional recovery backups and PostgreSQL/ClickHouse consolidation
+- 2026-10-07 - Verify NAS database catch-up after returning home
+- 2026-10-05 - Reset-anchored cumulative NAV and broker spot preview
+- 2026-10-05 - Allocation-period theoretical performance and rebasing
+- 2026-10-04 - Simplify and refine Market History; CRSP access unavailable
+- 2026-10-04 - Correct sampled quote records presented as five-second OHLCV
+- 2026-09-27 - Cross-application connection audit, repairs pending selection
+- 2026-09-27 - Rolling XGBoost and lag-20 added to app tracking
+- 2026-09-27 - Rolling model investigation completed
+- 2026-09-27 - Rolling model experiment started
+- 2026-09-27 - Source publication preparation
+- 2026-09-27 - Application-owned tracked strategies and complete reports
+- 2026-09-26 - ETF lag-20 research tracking, no promotion
+- 2026-09-26 - Audited research rerun, input policy and Market History
+- 2026-09-26 - Interactive governed price histories
+- 2026-09-26 - Governed underlying histories and adjustment/identity audit
+- 2026-09-26 - Ten-year constituent testing and visible research histories
+- 2026-09-26 - Earlier constituent integration in selection, allocation and trees
+- 2026-09-26 - Constituent information in the SOTA ETF strategy
+- 2026-09-26 - Underlying-stock sector aggregates and ClickHouse research archive
+- 2026-09-26 - Sector-volume HHI and forward-return plots
+- 2026-09-26 - Flow/concentration acceleration strategy research
+- 2026-09-26 - Analytical time-series migration and Strategy latency
+- 2026-09-26 - URTH benchmark historical coverage repair
+- 2026-09-26 - PnL N/A after-hours and attribution follow-up
+- 2026-09-26 - Live broker PnL and platform audit
+- 2026-09-25 - Fill prices, TWAP estimates, paper automatic approval and opening P&L reset
+- 2026-09-25 - Blotter date filters and completed TWAP visibility
+- 2026-09-25 - Active TWAP reconciliation synchronization repair
+- 2026-09-25 - Proposal readiness and post-handoff approval repair
+- 2026-09-25 - Docker socket recovery and platform startup
+- 2026-09-25 - PostgreSQL provisioning and receiving-PC restore
+- 2026-09-25 - Receiving-PC handoff preflight
+- 2026-09-25 - Publish NAS handoff and verify the real backup
+- 2026-09-21 - NAS database handoff between PCs
+- 2026-09-20 - Dashboard performance repair
+- 2026-09-20 - Publish completed review repairs
+- 2026-09-20 - Recorder calendar and local Docker bindings
+- 2026-09-20 - Reviewed paper execution recovery
+- 2026-09-20 - Durable executions and monthly staging
+- 2026-09-19 - Review-driven execution and accounting repairs
+- 2026-07-14 - Current Full Report For Monitored Strategies
+- 2026-07-14 - Broker-Authoritative Portfolio Reconciliation
+- 2026-07-14 - Explicit Market Data Symbol Selection
+- 2026-07-14 - Multi-Session Intraday Market Data
+- 2026-07-13 - First-Class Intraday Market Data Workspace
+- 2026-07-13 - Five-Symbol IB Intraday Recorder Recovery
+- 2026-07-13 - Monitored Strategy Workspace
+- 2026-07-13 - Rebalance Execution Window And Missed Attribution
+- 2026-07-13 - Unified Operational Header
+- 2026-07-13 - Primary Strategy Navigation
+- 2026-07-13 - Operator Startup Blocked By Recycled PID
+- 2026-07-12 - Strategy Catalog And Theoretical Versus Actual Attribution
+- 2026-07-12
+- 2026-07-11
+- 2026-06-29
+- 2026-06-27
+- 2026-10-03 — Dated strategy roles, capital allocation and attribution
+- 2026-10-04 — Strategy switch form validation repair
+- 2026-10-04 — Verified execution recovery and approved XGBoost handover
+- 2026-10-04 — Execution replay hardening and readable approval review
+- 2026-10-04 — Intraday outage recovery and historical bootstrap
+- 2026-10-08 — October 7 allocation replay incident and explicit late catch-up
+- 2026-10-08 — Host standby, interrupted database exchanges and resumable analytics archives
+- 2026-10-08 — CFTC disaggregated positioning source admitted to Market Data
+- 2026-10-08 — EIA energy recorder and source qualification
+
+## docs/execution-kanban.md
+- Repository restructuring and maintenance — 2026-10-12
+- P4.19a reference qualification — 2026-10-12
+- P4.19a benchmark collection implementation — 2026-10-11
+- Agreed research priorities — 2026-10-11
+- P4.19 execution-timing study — 2026-10-11
+- Review and repair session — 2026-10-11
+- Active session — 2026-10-11 (research items P4.14 Part B, P4.15, P4.16, P4.16b, P4.17)
+- Prior session — 2026-10-10 (close-out and hardening)
+- Prior session — 2026-10-10 (research)
+- Prior session — 2026-10-09
+- Prior session — 2026-10-08
+- Prior active session — 2026-09-26
+- Operating Rule
+- Current Snapshot
+- P0: Project Memory And Governance
+- P0.1: Industrial target-state plan (Done)
+- P0.2: README project goal memory (Done)
+- P0.3: Live-disabled-by-default policy (Done)
+- P0.4: Agent operating rules (Done)
+- P0.5: Recurring operating playbooks (Done)
+- P0.6: Kanban execution tracker (Done)
+- P0.7: Decision log discipline (Pending)
+- P1: Event Spine And Local Operations
+- P1.1: Versioned platform event contracts (Done)
+- P1.2: Durable local event outbox (Done)
+- P1.3: Transactional event producers (Done)
+- P1.4: Local outbox dispatcher (Done)
+- P1.5: Run dispatcher with operator stack (Done)
+- P1.6: Event replay reader (Done)
+- P1.7: Queue adapter selection (Done)
+- P1.8: Real queue publisher adapter (Done)
+- P2: Service Foundation
+- P2.1: Local service supervisor plan (Done)
+- P2.2: Service manifest (Done)
+- P2.3: Health check contract (Done)
+- P2.4: Postgres target design (Done)
+- P2.5: SQLite-to-Postgres adapter boundary (Done)
+- P2.6: Columnar store target design (Done)
+- P2.7: Schema registry convention (Done)
+- P2.8: External service runtime (Done)
+- P2.9: Postgres transactional adapter and migration tooling (Done)
+- P3: Market Data Recording And Data Quality
+- P3.1: Market data recorder contract (Done)
+- P3.2a: Recorder source and capacity spec (Done)
+- P3.2: IB market data recorder v0 (Done)
+- P3.3: Raw data catalog (Done)
+- P3.4a: Pilot raw-data proving and audit loop (In Progress)
+- P3.4: Normalized bar/quote pipeline (In Progress)
+- P3.4c: Migrate strategy, rebalance, PnL, and backtest market-data reads to ClickHouse (In Progress)
+- P3.5: Data freshness checks (Pending)
+- P3.6: Replay a trading day (Pending)
+- P3.7: Paid/primary market-data vendor (Blocked)
+- P3.8: Promote `review` series to `audited_with_limitations` (Pending)
+- P4: Research, Backtest, And Promotion Registry
+- P4.1: Strategy spec schema (Pending)
+- P4.2: Strategy promotion registry (Pending)
+- P4.3: LEAN integration design (Pending)
+- P4.4: LEAN smoke backtest (Pending)
+- P4.5: Backtest artifact hashes (Pending)
+- P4.6: Overfit/stability gate (Pending)
+- P4.7: LEAN runtime/dependency setup (Blocked)
+- P4.8: Strategy catalog and theoretical performance portal (Done)
+- P4.9: Monitored strategy lifecycle and detail workspace (Done)
+- P4.10: Direct current full report for monitored strategies (Done)
+- P4.11: Cash reserve and stress deployment (Done)
+- P4.12: Expanded-pool economic response (Done)
+- P4.13: Signal decay: IC instrumentation, dashboard panel and allocation-aware warning (Done)
+- P4.14: FR25 robustness stress (Done)
+- P4.15: Turnover and breakeven-IC gate (Done)
+- P4.16: Sleeve-aware construction (Done)
+- P4.16b: Hierarchical construction *(operator-proposed 2026-10-11)* (Done)
+- P4.16d: Substantial tradable ETF expansion, granular classes and volatility-aware ranking *(operator reaffirmed 2026-10-11)* (Pending inventory; comparison blocked on publication)
+- P4.17: Alpha101 restricted time-series subset as selection features (Done)
+- P4.17b: Alpha101 as a tactical tilt *(operator-proposed 2026-10-11)* (Done)
+- P4.17c: Alpha101 tilt replayed on the current SOTA *(operator-requested 2026-10-11)* (Done)
+- P4.17d: Tilt budget surface on FR25 and the SOTA *(operator-requested 2026-10-11)* (Done)
+- P4.17e: Daily, threshold-triggered tilt *(operator-requested 2026-10-11)* (Done)
+- P4.18: Volatility-targeted exposure (Done — fixed rule rejected)
+- P4.19: Execution timing (Done — retrospective comparison; retain policy)
+- P4.19a: App-owned execution benchmark collection/publication (Done — scoped retrospective references)
+- P4.20: Decay-based promotion gate (Pending)
+- P4.21: Look-through constituent alpha (Pending)
+- P5: Portfolio Blotter And Execution Controls
+- P5.1: Rebalance blotter domain model (Pending)
+- P5.2: Pre-trade check engine (Pending)
+- P5.3: Blotter API (Pending)
+- P5.4: Resize/defer workflow (Pending)
+- P5.5: IB connection health gate (In Progress)
+- P5.6: Broker reconciliation gate (In Progress)
+- P5.6a: Broker-authoritative portfolio reset workflow (Done)
+- P5.10: Rebalance execution window and missed attribution (Done)
+- P5.7: Live kill switch (Pending)
+- P5.8: Live capital caps (Pending)
+- P5.9: Live account enablement (Blocked)
+- P5.11: Intraday signal activation and stop-loss execution (Blocked)
+- P6: Observability, Alerts, And Incidents
+- P6.14: Reset-aware interactive performance tracking (Done)
+- P6.0: Foundation service health portal and startup path (Done)
+- P6.0a: Structured operational logs v0 (Done)
+- P6.0b: Recorder/VPN/TWS incident triage and resilience hardening (Done)
+- P6.0c: Docker/TWS health and startup preflight hardening (Done)
+- P6.15: Research worker deployment and resource budgets (Pending)
+- P6.1: Metrics contract (Pending)
+- P6.2: Local metrics endpoint (Pending)
+- P6.3: Grafana dashboard plan (Pending)
+- P6.4: Alert event producer (Done)
+- P6.5: Desktop popup alert channel (Pending)
+- P6.6: Incident registry (Pending)
+- P6.7: Alert delivery audit (Pending)
+- P6.8: SMS/push provider (Blocked)
+- P6.9: Market data audit portal (Done)
+- P6.9a: First-class intraday market-data view (Done)
+- P6.9b: Multi-session intraday market-data view (Done)
+- P6.9c: Explicit market-data symbol selector (Done)
+- P6.10: Actual versus strategy-theoretical attribution (Done)
+- P6.11: Supervisor PID reuse hardening (Done)
+- P6.12: Primary strategy navigation (Done)
+- P6.13: Unified operational header (Done)
+- P7: Daily Operating Loops
+- P7.1: Daily post-trade report (Pending)
+- P7.2: Continuous research report (Pending)
+- P7.3: Robustness review report (Pending)
+- P7.4: Promotion review report (Pending)
+- P7.5: Automated Kanban reminder (Pending)
+- P7.6: Disaster recovery drill (Pending)
+- P8: Execution Generality
+- P8.1: Contract identity registry (Pending)
+- P8.2: Symbol to contract resolution (Pending)
+- P8.3: Registry-backed universe selectors (Pending)
+- P8.4: Instrument admission gate (Pending)
+- P8.5: Capability check replacing the hard-coded allocation gate (Pending)
+- P8.6: Per-currency CNH FX path (Blocked)
+- P8.7: Per-venue calendars and execution windows (Pending)
+- P8.8: Lot size, tick and minimum-size enforcement (Pending)
+- P8.9: Multi-currency governed price lane (Blocked)
+- P8.10: Generalised exposure, staleness and reporting (Pending)
+- Next Recommended Work Order
+
+## docs/research-state.md
+- 2026-10-12 — P4.19 matched execution references complete; retain policy
+- 2026-10-11 — P4.19a automatic benchmark collection deployed
+- 2026-10-11 — P4.19 coverage audit; worker resource review queued
+- 2026-10-11 — Operator accepted priorities and substantial ETF expansion
+- 2026-10-11 — Second review: corrected evidence and paper-allocation decision
+- 2026-10-11 — Peer review found five real defects in the Alpha101 work; all confirmed, fixed, re-run
+- 2026-10-11 — The Alpha101 family tilt is now a monitored strategy
+- 2026-10-11 — P4.17f exit rules: holding beats exiting, and half the rules never fire
+- 2026-10-11 — P4.17d/P4.17e: the tilt has no high-X regime and no profitable high-frequency one
+- 2026-10-11 — P4.17c: the 10% tilt baked into the SOTA is nearly free and nearly neutral
+- 2026-10-11 — P4.17b tactical tilt: the balance is 5–10%, and the IC bar falls 100× with it
+- 2026-10-11 — P4.17 Alpha101 screen: the information is real, the turnover is not payable
+- 2026-10-11 — P4.16b hierarchical construction: the operator's rule works, risk is untouched
+- 2026-10-10 — P4.16 sleeve construction: the fallback matters more than the partition
+- 2026-10-10 — P4.15 turnover gate: Alpha101's daily archetypes cannot pay for themselves
+- 2026-10-10 — P4.14 Part B: the ridge rank contributes, but retention still fails
+- 2026-10-10 — P4.14 Part A: FR25's edge is real but concentrated and not significant
+- 2026-10-10 — P4.13 signal decay measured; no decay in the funded selection score
+- Next research phase — registered 2026-10-10
+- Standing research scope — updated 2026-10-10
+- 2026-10-10 — FR25 authorized for application-owned monitoring
+- 2026-10-10 — Predictive ranks moved into full-pool selection
+- 2026-10-10 — Full-pool IC diagnosis: retain signal leads, distinguish recipe failure
+- 2026-10-10 — Expanded-universe economic revisit completed
+- 2026-10-10 — Deferred standalone SPY idea
+- 2026-10-09 — P4.11 cash reserve and loser-basket study completed
+- 2026-10-09 — M1/14 added to app-owned monitoring
+- 2026-10-09 — Corrected candidate-pool and momentum experiment completed
+- 2026-10-09 — XLE/XLB admitted; first universe control rejected
+- 2026-10-09 — Cash reserve and stress-deployment study queued
+- 2026-10-09 — Prospective issuer ETF fundamentals recorded
+- 2026-10-08 — EIA energy context recorded and published
+- 2026-10-08 — CFTC positioning recorder published; no historical backtest
+- 2026-10-07 - Context ridge monitored; financial-condition combinations completed
+- 2026-10-07 - Completed economic asset-response experiment
+- 2026-10-07 - Leading economic panel expansion
+- 2026-10-07 — Economic vintage panel and revision sensitivity
+- Treasury-bill recorder and F4 parking — 2026-10-07
+- XGBoost ranking, exposure attribution and final target caps — 2026-10-07
+- Defensive-cash monitoring and strategy lifecycle — 2026-10-07
+- Fallback implementation and first results — 2026-10-07
+- ETF research expansion proposal — 2026-10-07
+- Active SOTA and paper allocation — 2026-10-04
+- USD promotion decision — 2026-10-02
+- Momentum horizon, membership and USD round — 2026-10-01
+- Rolling one-year XGBoost with lag-20 selected for app tracking — 2026-09-27
+- Rolling tree, forest and XGBoost investigation — 2026-09-27
+- App-owned tracked calculations — 2026-09-26
+- Superseded initial ETF lag-20 observation workflow — 2026-09-26
+- Audited-input rerun — 2026-09-26
+- Data-governance hold — 2026-09-26
+- Latest evidence — 2026-09-26 ten-year constituent follow-up
+- Production Research Rule
+- Alpha Factory Direction
+- Current SOTA
+- Original Parent Model Summary
+- Workflow Rule
+- Short-Horizon Relative Momentum Tests
+- Latest Country-Factor Research
+- Signal Library And Decision Tree

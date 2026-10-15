@@ -70,7 +70,8 @@ class FrozenPortfolioAlgorithm(QCAlgorithm):  # noqa: F405
         self.sessions = json.loads((self.root / 'sessions.json').read_text())
         self.expected_decisions = json.loads((self.root / 'decisions.json').read_text())
         self.quotes = json.loads((self.root / 'quotes.json').read_text())
-        self.instruments = {s: usd_instruments()[s] for s in self.quotes}
+        members = usd_instruments(getattr(self.spec,'recipe',None))
+        self.instruments = {s: members[s] for s in self.quotes}
         self.set_time_zone(TimeZones.NEW_YORK)  # noqa: F405
         self.set_start_date(datetime.fromisoformat(self.spec.start_date))
         from systematic_trading.lean.session_boundary import set_completed_end_date

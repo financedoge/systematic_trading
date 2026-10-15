@@ -43,7 +43,7 @@ from systematic_trading.research.turnover_gate import implied_turnover, screen
 STUDY = 'alpha101-screen-v2'
 PARENT = Path('var/research/sleeve-construction-20261010-v1')
 DEFAULT_ROOT = Path('var/research/alpha101-screen-20261011-v4')
-PAPER = Path('research_tmp/101_formulaic_alphas.pdf')
+PAPER = Path('research/references/alpha101/101_formulaic_alphas.pdf')
 PAPER_SHA256 = '1f9c21afe32dcb3ee77b31548acdaea00451fbfa1c0ee10c907867bcc736fce9'
 GATE_ROOT = Path('var/research/turnover-gate-20261011-v2')
 
@@ -288,6 +288,8 @@ def sigma_from_calibration():
 
 def extract_formulas(path=PAPER):
     """The registered alphas' formulas, read from the pinned paper copy."""
+    if sha256(Path(path)) != PAPER_SHA256:
+        raise ValueError('Alpha101 reference paper hash mismatch')
     from pypdf import PdfReader
     text = '\n'.join(page.extract_text() or '' for page in PdfReader(str(path)).pages)
     text = text.replace('\u2019', "'").replace('\u201c', '"').replace('\u201d', '"')

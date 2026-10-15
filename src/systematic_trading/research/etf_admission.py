@@ -10,6 +10,13 @@ Recorder, constituent-input and universe-control paths all consult
 from __future__ import annotations
 
 ADMISSION_HOLDS: dict[str, dict[str, str]] = {
+    "BWX": dict(
+        reason="Issuer listing date is 2007-10-02 but the provider firstTradeDate and first observation are 2007-10-11.",
+        conflict="issuer/provider listing-boundary disagreement",
+        recorded="2026-10-14",
+        evidence="var/governance/research-2026-10-12-dec6c45f535d",
+        release="Retain quarantine until independent dated evidence resolves the boundary; do not trim or relabel the source.",
+    ),
     "XOP": dict(
         reason="Issuer listing date is 2006-06-23 but the provider firstTradeDate and first observation are 2006-06-22.",
         conflict="issuer/provider listing-boundary disagreement",

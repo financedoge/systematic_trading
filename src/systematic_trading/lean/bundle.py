@@ -131,7 +131,9 @@ def freeze_bundle(*, root: Path, bars: dict, fx: dict, provenance: dict, spec_va
             previous_month = day[:7]
     root.mkdir(parents=True)
     source_root = Path(__file__).resolve().parents[1]
-    source_files = sorted(source_root.rglob('*.py'))
+    # Report assets are executable bundle dependencies after template extraction.
+    source_files = sorted([*source_root.rglob('*.py'),
+                           *(source_root / 'presentation' / 'assets').rglob('*.html')])
     source_hash = hashlib.sha256()
     for path in source_files:
         relative = Path('source/systematic_trading') / path.relative_to(source_root)

@@ -1,0 +1,115 @@
+{
+  "bundle": "D:\\projects\\systematic_trading\\var\\research\\etf-expansion-20261014-v1",
+  "exclusions": {
+    "BWX": "Issuer listing date is 2007-10-02 but the provider firstTradeDate and first observation are 2007-10-11.",
+    "CPER": "Unsupported audited observation: ('CPER', '2018-08-23')"
+  },
+  "expanded_replay": "withheld_by_registered_pretest",
+  "manifests": {
+    "input_manifest.json": "1c5a4d615249c38903e256fe6f9264f7487565a6d279bb648ed736f4cc51151d",
+    "model_manifest.json": "13f5b8d1df7ff60c3bc93dd545c247e769cf6da702c401c9b6b5faaf87042b67",
+    "result_manifest.json": "504de15874b9979fd5d910146b654ae39cfd111c8581f3e9399747d2103631a1"
+  },
+  "native": {
+    "URTH-5": {
+      "economic_sha256": "24c9dbbe684b58a0e7e8db620f484355559e1b16c37d00a0fe9a476cdecbb99b",
+      "elapsed_seconds": 19.773858785629272,
+      "image": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
+      "manifest_sha256": "ad28c6cbee3a42d77d483aeccd0984df8952e4290fb040424373ce27f14acff5",
+      "promotion_eligible": false,
+      "resources": {
+        "cpus": "2",
+        "memory": "4g"
+      },
+      "started": 1791908213.6045506,
+      "status": "succeeded"
+    },
+    "original14-10": {
+      "economic_sha256": "78eec97a10509fb008f2ce7e5606d49076339d85b469b4781934808ccf4fefd5",
+      "elapsed_seconds": 28.027020931243896,
+      "image": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
+      "manifest_sha256": "0e740a28eb484f1915610a3add8bb58409787eefce4c9e6cec47dc5e3b916cfe",
+      "promotion_eligible": false,
+      "resources": {
+        "cpus": "2",
+        "memory": "4g"
+      },
+      "started": 1791908184.200067,
+      "status": "succeeded"
+    },
+    "original14-5": {
+      "economic_sha256": "390eb5d55ab0bbbf9cb46a335ae79bcafdb8962db26799894b19f95473af34cc",
+      "elapsed_seconds": 31.868705987930298,
+      "image": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
+      "manifest_sha256": "b967562e6341e62e14759372e25d17f8217b662dc14941b2b69c9c89d9bf8fd0",
+      "promotion_eligible": false,
+      "resources": {
+        "cpus": "2",
+        "memory": "4g"
+      },
+      "started": 1791908149.787523,
+      "status": "succeeded"
+    }
+  },
+  "pretest": {
+    "expanded": {
+      "annual_cost_bps": 67.72882985134258,
+      "annual_turnover": 13.545765970268516,
+      "breakeven_ic": 0.010662755572968113,
+      "calibration_end": "2024-12-31",
+      "candidate_ic": -0.014629797613538555,
+      "cost_bps": 5.0,
+      "cost_ceiling_bps": 44.0,
+      "cost_test": false,
+      "ic_margin": -1.3720466077856612,
+      "margin_test": false,
+      "period_sessions": 21,
+      "promotion_eligible": false,
+      "reasons": [
+        "annual cost 67.7bp exceeds the 44.0bp ceiling",
+        "IC margin -1.37x is below the required 3.0x against a breakeven IC of 0.0107"
+      ],
+      "sigma": 0.052932556839127176,
+      "status": "reject",
+      "thresholds": {
+        "cost_bps": 5.0,
+        "cost_tolerance": 0.1,
+        "max_annual_cost_bps": 40.0,
+        "min_ic_margin": 3.0,
+        "period_sessions": 21,
+        "version": "turnover-gate-v1"
+      },
+      "version": "turnover-gate-v1"
+    },
+    "original14": {
+      "annual_cost_bps": 43.174783096792304,
+      "annual_turnover": 8.63495661935846,
+      "breakeven_ic": 0.006557336699733047,
+      "calibration_end": "2024-12-31",
+      "candidate_ic": 0.03544601847889613,
+      "cost_bps": 5.0,
+      "cost_ceiling_bps": 44.0,
+      "cost_test": true,
+      "ic_margin": 5.4055510799589035,
+      "margin_test": true,
+      "period_sessions": 21,
+      "promotion_eligible": false,
+      "reasons": [
+        "cost 43.2bp is inside the ceiling and positive IC clears the requirement"
+      ],
+      "sigma": 0.05486829113938638,
+      "status": "pass",
+      "thresholds": {
+        "cost_bps": 5.0,
+        "cost_tolerance": 0.1,
+        "max_annual_cost_bps": 40.0,
+        "min_ic_margin": 3.0,
+        "period_sessions": 21,
+        "version": "turnover-gate-v1"
+      },
+      "version": "turnover-gate-v1"
+    }
+  },
+  "price_batch": "0c3238db078c5d28201f8d8ba57e5687a793d80c3b04817d2c2d61c5f1f1b14d",
+  "protocol_sha256": "401c84e7e70d548343f02f9eea3d4afcb913d4048028ed0b30597598825c0d38"
+}

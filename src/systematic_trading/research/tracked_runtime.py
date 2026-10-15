@@ -42,7 +42,10 @@ def next_session(day):
 
 
 CALCULATION_PACKAGES = ("research", "lean", "signals", "portfolio", "backtest")
-CALCULATION_EXTRA_SOURCES = ("recorders/economics.py", "runtime_io.py")
+CALCULATION_EXTRA_SOURCES = (
+    "recorders/economics.py", "runtime_io.py", "presentation/templates.py",
+    "presentation/assets/backtest/reporting_html_template.html",
+)
 
 
 def calculation_code_hashes():

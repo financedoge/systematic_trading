@@ -37,7 +37,7 @@ def candidate_evidence(settings, key, *, store=None):
         store=create_trading_store(settings)
     monitoring_state=require_monitored(settings,store,[key])
     definition = registered_strategy_definition(key)
-    if issue := allocation_contract_issue(definition):
+    if issue := allocation_contract_issue(definition, settings):
         raise ValueError(issue)
     document = AnalyticsStore.from_settings(settings).document('tracked-strategies/calculations', 'report/'+key)
     if not document:

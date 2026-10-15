@@ -31,6 +31,12 @@ from systematic_trading.research.strategy_catalog import (
 
 
 def instruments_for_definition(definition: StrategyDefinition):
+    if definition.universe_members:
+        from systematic_trading.domain.market import Instrument
+        members = [Instrument.model_validate(row) for row in definition.universe_members]
+        if len({row.symbol for row in members}) != len(members):
+            raise ValueError('Duplicate instrument in frozen strategy membership')
+        return {row.symbol: row for row in sorted(members, key=lambda row: row.symbol)}
     universe_key = definition.universe_key
     if universe_key == "all_weather":
         return ALL_WEATHER_ETF_UNIVERSE
@@ -40,7 +46,20 @@ def instruments_for_definition(definition: StrategyDefinition):
         from systematic_trading.research.etf_universe import RESEARCH_SECTOR_ETFS
         pool = {**MULTI_ASSET_ETF_UNIVERSE, **RESEARCH_SECTOR_ETFS}
         return {s:pool[s] for s in sorted(pool)}
-    return GLOBAL_ETF_UNIVERSE
+    if universe_key == 'global':
+        return GLOBAL_ETF_UNIVERSE
+    raise ValueError('Unregistered strategy universe: ' + universe_key)
+
+
+def union_instruments(definitions):
+    """Preserve every component and reject conflicting shared identities."""
+    result = {}
+    for definition in definitions:
+        for symbol, instrument in instruments_for_definition(definition).items():
+            if symbol in result and result[symbol] != instrument:
+                raise ValueError('Conflicting allocation instrument identity: ' + symbol)
+            result[symbol] = instrument
+    return dict(sorted(result.items()))
 
 __all__ = [
     "BENCHMARK_INSTRUMENTS",

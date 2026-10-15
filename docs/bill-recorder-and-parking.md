@@ -60,7 +60,7 @@ stages execute the frozen source. Use all logical CPUs for independent Python
 jobs and memory-bounded native lanes. Preserve failed attempts and prior freezes.
 
 Results and seven complete reports:
-[Treasury-bill assessment](../research/bill-parking-2026-10-07/assessment.html).
+Treasury-bill assessment (rendered artifact unavailable in this checkout: `../research/bill-parking-2026-10-07/assessment.html`).
 No new monitored recipe, promotion or capital assignment is created by this study.
 The next information workstreams are macro release vintages and prospective
 issuer holdings/shares/NAV snapshots, then energy and sector fundamentals.

@@ -111,3 +111,48 @@ def test_new_drift_proposal_does_not_repeat_previous_capital_transfer(tmp_path,m
     assert not plan.proposal.input_provenance['allocation']['intent']['capital_reset']
     assert plan.proposal.input_provenance['allocation']['intent']['cash_transfers']=={}
     assert plan.proposal.targets[0].target_weight==Decimal('.26')
+
+
+@pytest.mark.parametrize('financial_ready',[False,True])
+def test_fr25_paper_targets_match_full_research_flow_and_raw_sizing(tmp_path,monkeypatch,financial_ready):
+    from systematic_trading.research import fr25_tracking, usd_tracking, instruments_for_definition
+    from systematic_trading.research.strategy_catalog import fr25_definition
+    from systematic_trading.execution.registry import publish_registry
+    from test_execution_registry import entries_for
+    histories, usd = panel()
+    for symbol in ('XLB','XLE'):
+        histories[symbol] = list(histories['SPY'])
+        usd['models']['2024-10-31']['models'][symbol] = deepcopy(usd['models']['2024-10-31']['models']['SPY'])
+    raw = {s:[b.model_copy(update={'close':b.close*2,'volume':b.volume*3}) for b in rows]
+           for s,rows in histories.items()}
+    rolling = {'2024-10-31':model_record()}
+    financial = dict(parameters=fr25_tracking.PARAMETERS, models={'2024-11-01':dict(
+        ready=financial_ready, known_through='2024-10-31',last_label_end='2024-09-30',
+        models={s:dict(linear_forecast=(i-7)/100) for i,s in enumerate(sorted(histories))})})
+    receipt = dict(calculation_revision='one-committed-calculation')
+    monkeypatch.setattr(strategy_models,'published_rolling_schedule',lambda *args:(rolling,receipt))
+    monkeypatch.setattr(usd_tracking,'published_live_schedule',lambda *args:(usd,receipt))
+    monkeypatch.setattr(fr25_tracking,'published_live_schedule',lambda *args:(financial,receipt))
+    class Session:
+        def load(self,symbols,*,raw_activity=False):
+            assert raw_activity
+            return histories,{s:dict(close=str(rows[-1].close),trade_date='2024-10-31') for s,rows in raw.items()},dict(batch='audited'),raw
+    store=SQLiteStore(tmp_path/'fr25.db');store.initialize()
+    store.upsert_fx_rate(FXRate(rate_date=date(2024,10,31),base_currency=Currency.USD,rate=Decimal(7)))
+    settings=AppSettings(data_dir=tmp_path,database_path=store.database_path,require_governed_decision_inputs=True)
+    definition=fr25_definition()
+    publish_registry(settings,entries_for(instruments_for_definition(definition)),account='DU123',reason='Test')
+    snapshot=LiveAccountSnapshotInput(as_of=date(2024,10,31),cash=[CashBalance(currency=Currency.USD,amount=100000)])
+    kwargs=dict(store=store,broker=InteractiveBrokersAdapter(settings),account_snapshot=snapshot,
+        decision_date=date(2024,10,31),definition=definition,decision_session=Session())
+    actual=build_sota_live_rebalance_plan(**kwargs)
+    expected=targets_for_day({s:[r.model_dump(mode='json') for r in rows] for s,rows in histories.items()},
+        date(2024,11,1),definition=definition,base_tree_models=rolling,usd_models=usd,economic_models=financial,
+        raw_rows={s:[r.model_dump(mode='json') for r in rows] for s,rows in raw.items()})
+    assert actual.proposal.targets == expected
+    assert actual.proposal.input_provenance['financial'] == receipt
+    assert actual.proposal.orders
+    assert all(o.reference_price == raw[o.symbol][-1].close for o in actual.proposal.orders)
+    assert max(t.target_weight for t in actual.proposal.targets) <= Decimal('.45')
+    monkeypatch.setattr(fr25_tracking,'published_live_schedule',lambda *args:(financial,dict(calculation_revision='changed')))
+    with pytest.raises(ValueError,match='publications changed'):build_sota_live_rebalance_plan(**kwargs)

@@ -56,7 +56,8 @@ class CandidatePool(AssetPoolFilterOverlay):
     def apply(self, targets, context):
         scores = self._selection_scores(targets,context)
         output = super().apply(targets,context)
-        eligible = sorted((s for s,v in scores.items() if v.raw_metrics['longMomentum'] > self.min_long_momentum),
+        eligible = sorted((s for s,v in scores.items() if v.raw_metrics['longMomentum'] > self.min_long_momentum
+                           and (self.admitted_symbols is None or s in self.admitted_symbols)),
                           key=lambda s:(-scores[s].total,s))
         self.observation = dict(eligible=eligible, selected=[t.symbol for t in output if t.target_weight>0],
             fallback=self.cash_budget_active,

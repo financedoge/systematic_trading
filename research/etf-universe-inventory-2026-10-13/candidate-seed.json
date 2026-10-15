@@ -1,0 +1,2698 @@
+{
+  "version": "p416d-inventory-v1",
+  "date": "2026-10-13",
+  "identity_note": "Permanent local candidate IDs; never reuse on a ticker reassignment. Issuer/security-master reconciliation remains a separate gate.",
+  "candidates": [
+    {
+      "candidate_id": "candidate-7099ccb6-ab1b-55a8-9859-3961b11e6294",
+      "symbol": "SPY",
+      "peer_group": "equity.us.large_blend",
+      "duplicate_review_group": "equity.us.large_blend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "baseline"
+    },
+    {
+      "candidate_id": "candidate-a1e7c59e-cac0-56a9-8d92-5025adadc904",
+      "symbol": "IVV",
+      "peer_group": "equity.us.large_blend",
+      "duplicate_review_group": "equity.us.large_blend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-ca9f99e0-0b46-55a9-8215-9eb68033f2fa",
+      "symbol": "VOO",
+      "peer_group": "equity.us.large_blend",
+      "duplicate_review_group": "equity.us.large_blend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-251f94b5-0759-5d2f-b066-05f7b36c37e9",
+      "symbol": "IWB",
+      "peer_group": "equity.us.large_blend",
+      "duplicate_review_group": "equity.us.large_blend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-fbee2256-fff3-5e71-a5b5-a9506cbc05e3",
+      "symbol": "OEF",
+      "peer_group": "equity.us.large_blend",
+      "duplicate_review_group": "equity.us.large_blend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-c3419bc2-786e-5e36-8705-1654c0587a89",
+      "symbol": "IWL",
+      "peer_group": "equity.us.large_blend",
+      "duplicate_review_group": "equity.us.large_blend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-bfc455af-050e-50d1-bef1-95ea686e70c0",
+      "symbol": "MLRG",
+      "peer_group": "equity.us.large_blend",
+      "duplicate_review_group": "equity.us.large_blend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-35475b54-3e24-5d1d-866c-5a2fd7cc8110",
+      "symbol": "ITOT",
+      "peer_group": "equity.us.total_market",
+      "duplicate_review_group": "equity.us.total_market",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-3483f152-edc2-5ed6-aa3c-31ddbb69b2a3",
+      "symbol": "VTI",
+      "peer_group": "equity.us.total_market",
+      "duplicate_review_group": "equity.us.total_market",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-325801e5-0e1f-52af-9ef5-2cfa1dbd4699",
+      "symbol": "IWV",
+      "peer_group": "equity.us.total_market",
+      "duplicate_review_group": "equity.us.total_market",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-854c8ab4-9f3e-5e06-a148-a2389b244af7",
+      "symbol": "IYY",
+      "peer_group": "equity.us.total_market",
+      "duplicate_review_group": "equity.us.total_market",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-538067a1-76ef-5da9-aa3d-5e671ef1e141",
+      "symbol": "MDY",
+      "peer_group": "equity.us.mid_blend",
+      "duplicate_review_group": "equity.us.mid_blend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-d569b3bf-d976-5ee4-b6d7-11c39f156c51",
+      "symbol": "IJH",
+      "peer_group": "equity.us.mid_blend",
+      "duplicate_review_group": "equity.us.mid_blend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-e3dafdaf-3fe8-5191-8892-1ea254034e1b",
+      "symbol": "IWR",
+      "peer_group": "equity.us.mid_blend",
+      "duplicate_review_group": "equity.us.mid_blend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-74908e77-82a9-5892-9b94-3fd6f12c7c56",
+      "symbol": "IMCB",
+      "peer_group": "equity.us.mid_blend",
+      "duplicate_review_group": "equity.us.mid_blend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-429aa049-782d-5c14-a7fd-a1a1d405a5da",
+      "symbol": "IWM",
+      "peer_group": "equity.us.small_blend",
+      "duplicate_review_group": "equity.us.small_blend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-9f6be8d9-09c9-5cc3-ba77-300cb9739959",
+      "symbol": "IJR",
+      "peer_group": "equity.us.small_blend",
+      "duplicate_review_group": "equity.us.small_blend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-f7d236b1-5013-57c8-a627-246ba57cdf00",
+      "symbol": "VB",
+      "peer_group": "equity.us.small_blend",
+      "duplicate_review_group": "equity.us.small_blend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-b3a88cf9-923f-545f-9eb0-a9cd231905fb",
+      "symbol": "MSML",
+      "peer_group": "equity.us.small_blend",
+      "duplicate_review_group": "equity.us.small_blend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-ff818480-d976-5235-90bc-28ed7370c689",
+      "symbol": "IWC",
+      "peer_group": "equity.us.micro_cap",
+      "duplicate_review_group": "equity.us.micro_cap",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-c753d1a3-c801-5f9e-bc1a-660d70ae1a12",
+      "symbol": "IWF",
+      "peer_group": "equity.us.large_growth",
+      "duplicate_review_group": "equity.us.large_growth",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-f6466091-d60b-5e49-9ef2-742fc88fae06",
+      "symbol": "IVW",
+      "peer_group": "equity.us.large_growth",
+      "duplicate_review_group": "equity.us.large_growth",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-bc9bea25-053c-5a12-8a04-4bfe5c3f8c39",
+      "symbol": "VUG",
+      "peer_group": "equity.us.large_growth",
+      "duplicate_review_group": "equity.us.large_growth",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-647338a6-8d14-50a4-8b66-6ee00ca35f17",
+      "symbol": "IUSG",
+      "peer_group": "equity.us.large_growth",
+      "duplicate_review_group": "equity.us.large_growth",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-1332d5ea-141e-553b-8a4a-643019b46301",
+      "symbol": "ILCG",
+      "peer_group": "equity.us.large_growth",
+      "duplicate_review_group": "equity.us.large_growth",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-d8574d2c-6a30-5945-9da4-9b446444a37b",
+      "symbol": "IWY",
+      "peer_group": "equity.us.large_growth",
+      "duplicate_review_group": "equity.us.large_growth",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-8603d8bd-67d6-514c-8924-0e35b730332e",
+      "symbol": "IWD",
+      "peer_group": "equity.us.large_value",
+      "duplicate_review_group": "equity.us.large_value",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-09d57788-c3ca-57f3-8d17-ac24130f3661",
+      "symbol": "IVE",
+      "peer_group": "equity.us.large_value",
+      "duplicate_review_group": "equity.us.large_value",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-5411da46-6056-5e3d-8501-2a893b52fce8",
+      "symbol": "VTV",
+      "peer_group": "equity.us.large_value",
+      "duplicate_review_group": "equity.us.large_value",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-03c245bc-77d6-57c0-934b-e5156b17736e",
+      "symbol": "IUSV",
+      "peer_group": "equity.us.large_value",
+      "duplicate_review_group": "equity.us.large_value",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-d8d467df-9e43-5fe3-9270-9c53066d971d",
+      "symbol": "ILCV",
+      "peer_group": "equity.us.large_value",
+      "duplicate_review_group": "equity.us.large_value",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-b11ba197-8a94-5692-a0b4-aabce41baef9",
+      "symbol": "IWX",
+      "peer_group": "equity.us.large_value",
+      "duplicate_review_group": "equity.us.large_value",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-14db31ff-f411-5ed8-9521-7fc2e8898b0c",
+      "symbol": "IWP",
+      "peer_group": "equity.us.mid_growth",
+      "duplicate_review_group": "equity.us.mid_growth",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-353ad133-0e48-5538-ae56-cb0cf84aaf77",
+      "symbol": "IJK",
+      "peer_group": "equity.us.mid_growth",
+      "duplicate_review_group": "equity.us.mid_growth",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-427ba2b6-8cc8-5bff-8505-64e7722b0126",
+      "symbol": "IMCG",
+      "peer_group": "equity.us.mid_growth",
+      "duplicate_review_group": "equity.us.mid_growth",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-1bc62e88-6e1a-586b-9416-d5b29ecf7036",
+      "symbol": "IWS",
+      "peer_group": "equity.us.mid_value",
+      "duplicate_review_group": "equity.us.mid_value",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-7a526d3a-0e18-5481-8d55-9977363632d4",
+      "symbol": "IJJ",
+      "peer_group": "equity.us.mid_value",
+      "duplicate_review_group": "equity.us.mid_value",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-e2b3ca01-301c-50ee-84ef-856d012d11e7",
+      "symbol": "IMCV",
+      "peer_group": "equity.us.mid_value",
+      "duplicate_review_group": "equity.us.mid_value",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-0c75c58c-1ed6-5b30-b47f-345d81912ad1",
+      "symbol": "IWO",
+      "peer_group": "equity.us.small_growth",
+      "duplicate_review_group": "equity.us.small_growth",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-d8f6d280-0606-5c01-be72-c09ee8cbe60c",
+      "symbol": "IJT",
+      "peer_group": "equity.us.small_growth",
+      "duplicate_review_group": "equity.us.small_growth",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-ab04bc17-f354-5d24-a7f6-91332889ec4d",
+      "symbol": "ISCG",
+      "peer_group": "equity.us.small_growth",
+      "duplicate_review_group": "equity.us.small_growth",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-41b70673-dae4-5de3-8346-d92a04bfbd8a",
+      "symbol": "IWN",
+      "peer_group": "equity.us.small_value",
+      "duplicate_review_group": "equity.us.small_value",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-0821155b-5bf8-5a82-8fa1-5fab896e85f5",
+      "symbol": "IJS",
+      "peer_group": "equity.us.small_value",
+      "duplicate_review_group": "equity.us.small_value",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-2e6d738f-6f57-53e3-993a-12ecabd48666",
+      "symbol": "ISCV",
+      "peer_group": "equity.us.small_value",
+      "duplicate_review_group": "equity.us.small_value",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-55f95657-2ad9-5013-8bda-37ac81754b63",
+      "symbol": "DVY",
+      "peer_group": "equity.us.dividend",
+      "duplicate_review_group": "equity.us.dividend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-713e0824-c0e6-57bb-8388-0beb3a66d97e",
+      "symbol": "HDV",
+      "peer_group": "equity.us.dividend",
+      "duplicate_review_group": "equity.us.dividend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-03231102-b984-533a-abcf-e62a1669024d",
+      "symbol": "VIG",
+      "peer_group": "equity.us.dividend",
+      "duplicate_review_group": "equity.us.dividend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-79ddc57a-6cc7-58b9-9540-55274252b67c",
+      "symbol": "VYM",
+      "peer_group": "equity.us.dividend",
+      "duplicate_review_group": "equity.us.dividend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-e580dec5-c329-58d9-b5f8-0d9604ca2d9d",
+      "symbol": "SCHD",
+      "peer_group": "equity.us.dividend",
+      "duplicate_review_group": "equity.us.dividend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-019cfd8c-1268-5040-a283-e78f058ce771",
+      "symbol": "QUAL",
+      "peer_group": "equity.us.quality",
+      "duplicate_review_group": "equity.us.quality",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-826bc9df-179e-51f4-b94a-295fb8d2d0ff",
+      "symbol": "MTUM",
+      "peer_group": "equity.us.momentum",
+      "duplicate_review_group": "equity.us.momentum",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-7ef2dcf8-2395-5cac-921b-1dee517f5194",
+      "symbol": "USMV",
+      "peer_group": "equity.us.minimum_volatility",
+      "duplicate_review_group": "equity.us.minimum_volatility",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-c0a68e4e-6063-5e89-ba2a-2acda9a97b26",
+      "symbol": "VLUE",
+      "peer_group": "equity.us.value_factor",
+      "duplicate_review_group": "equity.us.value_factor",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-6d72c6ee-1b1b-5948-b45d-6a00f1d4f00f",
+      "symbol": "SIZE",
+      "peer_group": "equity.us.size_factor",
+      "duplicate_review_group": "equity.us.size_factor",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-dd1dcf5a-c4e0-5b4e-a1d8-ceefb1fccc66",
+      "symbol": "EUSA",
+      "peer_group": "equity.us.equal_weight",
+      "duplicate_review_group": "equity.us.equal_weight",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-703056e6-2a6f-5d03-a126-932f2d77dabf",
+      "symbol": "RSP",
+      "peer_group": "equity.us.equal_weight",
+      "duplicate_review_group": "equity.us.equal_weight",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-08899e97-f4bb-5ebc-9515-fb807167f474",
+      "symbol": "URTH",
+      "peer_group": "equity.developed_global.broad",
+      "duplicate_review_group": "equity.developed_global.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-a467ef07-6fc7-5f9d-8a57-0b6c1b29a586",
+      "symbol": "ACWI",
+      "peer_group": "equity.global.broad",
+      "duplicate_review_group": "equity.global.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-c9d86ef7-1693-5724-ac21-618c65df853a",
+      "symbol": "VT",
+      "peer_group": "equity.global.broad",
+      "duplicate_review_group": "equity.global.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-81e06c11-3e81-5dfa-bf76-f97d2cb23d5b",
+      "symbol": "IOO",
+      "peer_group": "equity.global.broad",
+      "duplicate_review_group": "equity.global.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-26b29260-c63a-52c0-9bfe-24e75389d6af",
+      "symbol": "ACWX",
+      "peer_group": "equity.global_ex_us.broad",
+      "duplicate_review_group": "equity.global_ex_us.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-9d706231-8088-50e3-ad2a-b03ae4da7f3f",
+      "symbol": "IXUS",
+      "peer_group": "equity.global_ex_us.broad",
+      "duplicate_review_group": "equity.global_ex_us.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-31518668-7ac5-5aa6-8c3a-461fbaff58f2",
+      "symbol": "VEU",
+      "peer_group": "equity.global_ex_us.broad",
+      "duplicate_review_group": "equity.global_ex_us.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-e59083bf-4491-557f-ae57-328dfcef6c54",
+      "symbol": "VXUS",
+      "peer_group": "equity.global_ex_us.broad",
+      "duplicate_review_group": "equity.global_ex_us.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-b9bfce6b-9f4e-5eab-9c2b-3dc5e2a61b15",
+      "symbol": "EFA",
+      "peer_group": "equity.developed_ex_us.broad",
+      "duplicate_review_group": "equity.developed_ex_us.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-806a1672-25be-52a0-a2ec-4e917b42514a",
+      "symbol": "IEFA",
+      "peer_group": "equity.developed_ex_us.broad",
+      "duplicate_review_group": "equity.developed_ex_us.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-32f3c016-bf69-53ca-91b0-b9a7496925a7",
+      "symbol": "VEA",
+      "peer_group": "equity.developed_ex_us.broad",
+      "duplicate_review_group": "equity.developed_ex_us.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-7b97314b-08d3-5948-bad1-ae5295097e08",
+      "symbol": "SCZ",
+      "peer_group": "equity.developed_ex_us.small",
+      "duplicate_review_group": "equity.developed_ex_us.small",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-5f229044-776d-5ff4-a4b5-3a9f14e4a094",
+      "symbol": "EFG",
+      "peer_group": "equity.developed_ex_us.growth",
+      "duplicate_review_group": "equity.developed_ex_us.growth",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-8991774f-3254-5921-bddb-2869e45d6e64",
+      "symbol": "EFV",
+      "peer_group": "equity.developed_ex_us.value",
+      "duplicate_review_group": "equity.developed_ex_us.value",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-dcf1f063-83f0-5e71-af15-1c1d283e4ee8",
+      "symbol": "EFAV",
+      "peer_group": "equity.developed_ex_us.minimum_volatility",
+      "duplicate_review_group": "equity.developed_ex_us.minimum_volatility",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-59bce64b-5bd2-55e4-bb5c-898e9ca5866c",
+      "symbol": "ACWV",
+      "peer_group": "equity.global.minimum_volatility",
+      "duplicate_review_group": "equity.global.minimum_volatility",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-b3055db2-421f-5668-8c26-e43c3220bfd1",
+      "symbol": "EEM",
+      "peer_group": "equity.emerging.broad",
+      "duplicate_review_group": "equity.emerging.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-098892a9-4216-5495-8aae-b4e8b88ea947",
+      "symbol": "IEMG",
+      "peer_group": "equity.emerging.broad",
+      "duplicate_review_group": "equity.emerging.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-1b037bb6-70e4-515c-b413-5201c1a24ff7",
+      "symbol": "VWO",
+      "peer_group": "equity.emerging.broad",
+      "duplicate_review_group": "equity.emerging.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-87acf3df-ca6d-5cc3-a4b8-4ddb05aed6b8",
+      "symbol": "EEMS",
+      "peer_group": "equity.emerging.small",
+      "duplicate_review_group": "equity.emerging.small",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-63c3cfe5-d7ee-502c-9c2f-a0e6ed8c8e6f",
+      "symbol": "DVYE",
+      "peer_group": "equity.emerging.dividend",
+      "duplicate_review_group": "equity.emerging.dividend",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-ea2083ca-fda5-5400-840a-40af1fc2b6c4",
+      "symbol": "EEMV",
+      "peer_group": "equity.emerging.minimum_volatility",
+      "duplicate_review_group": "equity.emerging.minimum_volatility",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-d41f1620-d43c-511f-b899-6c6342dae5e3",
+      "symbol": "VGK",
+      "peer_group": "equity.europe.broad",
+      "duplicate_review_group": "equity.europe.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "baseline"
+    },
+    {
+      "candidate_id": "candidate-72df1e32-d427-548b-a477-ccfadf5f3b24",
+      "symbol": "IEV",
+      "peer_group": "equity.europe.broad",
+      "duplicate_review_group": "equity.europe.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-186fda81-e82d-5510-bf98-754ec260c8d8",
+      "symbol": "FEZ",
+      "peer_group": "equity.eurozone.large",
+      "duplicate_review_group": "equity.eurozone.large",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-62c11a31-3240-5441-9798-150a5d70bfcd",
+      "symbol": "EZU",
+      "peer_group": "equity.eurozone.large",
+      "duplicate_review_group": "equity.eurozone.large",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-50042385-2a53-5a77-8f89-d6fd025eeeb3",
+      "symbol": "DFE",
+      "peer_group": "equity.europe.small",
+      "duplicate_review_group": "equity.europe.small",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-1969538b-210d-556b-9622-bfa8ef33400f",
+      "symbol": "IEUS",
+      "peer_group": "equity.europe.small",
+      "duplicate_review_group": "equity.europe.small",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-79e7e7bd-d227-5282-8591-b1fbc5ce5b75",
+      "symbol": "EUFN",
+      "peer_group": "equity.europe.financials",
+      "duplicate_review_group": "equity.europe.financials",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-32dd2cb3-eaf9-5df2-b6b9-66f9e1287bd8",
+      "symbol": "EWU",
+      "peer_group": "equity.uk.broad",
+      "duplicate_review_group": "equity.uk.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-cfba631b-0dc9-58b5-b30e-600672b88bd4",
+      "symbol": "EWUS",
+      "peer_group": "equity.uk.small",
+      "duplicate_review_group": "equity.uk.small",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-427df0ca-adb7-5746-b230-9eb4ab721b55",
+      "symbol": "EWG",
+      "peer_group": "equity.germany.broad",
+      "duplicate_review_group": "equity.germany.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-4f037f35-13ff-5fcb-8a31-a69c0eba3700",
+      "symbol": "EWQ",
+      "peer_group": "equity.france.broad",
+      "duplicate_review_group": "equity.france.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-104685cc-9dc0-5196-a398-b479a53e3650",
+      "symbol": "EWI",
+      "peer_group": "equity.italy.broad",
+      "duplicate_review_group": "equity.italy.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-0b5fc1eb-8325-570c-b8d8-5eadbc68402d",
+      "symbol": "EWP",
+      "peer_group": "equity.spain.broad",
+      "duplicate_review_group": "equity.spain.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-84a54218-903f-55a5-9dd4-d77214bd19a9",
+      "symbol": "EWN",
+      "peer_group": "equity.netherlands.broad",
+      "duplicate_review_group": "equity.netherlands.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-4f154892-4104-51e0-896d-7d3cdfbd0808",
+      "symbol": "EWL",
+      "peer_group": "equity.switzerland.broad",
+      "duplicate_review_group": "equity.switzerland.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-2f78ac17-ee72-5b47-8877-3e4edc212611",
+      "symbol": "EWD",
+      "peer_group": "equity.sweden.broad",
+      "duplicate_review_group": "equity.sweden.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-b8a2f9b2-221b-5b7e-b685-f7d0f8b86004",
+      "symbol": "ENOR",
+      "peer_group": "equity.norway.broad",
+      "duplicate_review_group": "equity.norway.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-4e3b26f8-4b94-5d95-a4d2-5c4923e69a09",
+      "symbol": "EDEN",
+      "peer_group": "equity.denmark.broad",
+      "duplicate_review_group": "equity.denmark.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-439bf241-cb97-58cd-a6db-2b6a6237d963",
+      "symbol": "EFNL",
+      "peer_group": "equity.finland.broad",
+      "duplicate_review_group": "equity.finland.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-daaa8df8-7fd2-561c-a5d6-8565363a6aaa",
+      "symbol": "EWO",
+      "peer_group": "equity.austria.broad",
+      "duplicate_review_group": "equity.austria.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-1ab79962-a2c9-52fd-bc9f-d9357b4e0cdb",
+      "symbol": "EWK",
+      "peer_group": "equity.belgium.broad",
+      "duplicate_review_group": "equity.belgium.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-c76304dc-b1ef-5727-a517-d43e99439c7f",
+      "symbol": "EIRL",
+      "peer_group": "equity.ireland.broad",
+      "duplicate_review_group": "equity.ireland.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-30d703b1-bc3e-5714-9ba1-e2e0712f0b18",
+      "symbol": "EPOL",
+      "peer_group": "equity.poland.broad",
+      "duplicate_review_group": "equity.poland.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-09ea0367-abc5-5d6e-afc6-b44d9d65624f",
+      "symbol": "MCHI",
+      "peer_group": "equity.china.broad",
+      "duplicate_review_group": "equity.china.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "baseline"
+    },
+    {
+      "candidate_id": "candidate-3c94c655-1403-54bd-a61a-8d0083b8ac25",
+      "symbol": "FXI",
+      "peer_group": "equity.china.large_offshore",
+      "duplicate_review_group": "equity.china.large_offshore",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-32ec7079-5900-5dae-be92-b5c0cfe5051d",
+      "symbol": "ECNS",
+      "peer_group": "equity.china.small",
+      "duplicate_review_group": "equity.china.small",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-6c988dca-12f6-5784-b9ca-a0f66d6e0c3c",
+      "symbol": "EWH",
+      "peer_group": "equity.hong_kong.broad",
+      "duplicate_review_group": "equity.hong_kong.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "baseline"
+    },
+    {
+      "candidate_id": "candidate-3bfa540c-65cb-531c-a5c0-754aa6056157",
+      "symbol": "EWJ",
+      "peer_group": "equity.japan.broad",
+      "duplicate_review_group": "equity.japan.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "baseline"
+    },
+    {
+      "candidate_id": "candidate-f41a9ba4-6140-54b4-a66a-f0e40e55d27f",
+      "symbol": "JPXN",
+      "peer_group": "equity.japan.broad",
+      "duplicate_review_group": "equity.japan.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-1c5120f1-fef1-5515-86c7-a917f2adc3ba",
+      "symbol": "SCJ",
+      "peer_group": "equity.japan.small",
+      "duplicate_review_group": "equity.japan.small",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-55322b33-be14-5cdf-9bc5-4abe7c05c884",
+      "symbol": "EWY",
+      "peer_group": "equity.south_korea.broad",
+      "duplicate_review_group": "equity.south_korea.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "baseline"
+    },
+    {
+      "candidate_id": "candidate-0052ebb0-ef87-5bb7-aa6f-3b8cefae29d9",
+      "symbol": "EWT",
+      "peer_group": "equity.taiwan.broad",
+      "duplicate_review_group": "equity.taiwan.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-30a0da2d-11b9-5da8-8c9c-9ac2c01ef3ed",
+      "symbol": "INDA",
+      "peer_group": "equity.india.broad",
+      "duplicate_review_group": "equity.india.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-1ad5c7e7-7371-5056-8c9e-bae2b3742e3d",
+      "symbol": "EPI",
+      "peer_group": "equity.india.broad",
+      "duplicate_review_group": "equity.india.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-6db937b0-4ff4-5956-99c9-797c11aa489d",
+      "symbol": "INDY",
+      "peer_group": "equity.india.broad",
+      "duplicate_review_group": "equity.india.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-137802d4-31b3-5e50-98a2-26722e538bd8",
+      "symbol": "SMIN",
+      "peer_group": "equity.india.small",
+      "duplicate_review_group": "equity.india.small",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-81441f4d-ae39-5259-93a9-5b5713816b4e",
+      "symbol": "EIDO",
+      "peer_group": "equity.indonesia.broad",
+      "duplicate_review_group": "equity.indonesia.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-1695e6e4-cbc3-503f-bf20-d740b88644f3",
+      "symbol": "EWM",
+      "peer_group": "equity.malaysia.broad",
+      "duplicate_review_group": "equity.malaysia.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-2381acbe-211b-509d-b640-9d1993f3d2d7",
+      "symbol": "EPHE",
+      "peer_group": "equity.philippines.broad",
+      "duplicate_review_group": "equity.philippines.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-f268df9d-c139-503a-a504-d81727ab342b",
+      "symbol": "EWS",
+      "peer_group": "equity.singapore.broad",
+      "duplicate_review_group": "equity.singapore.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-cf4255db-4aea-537c-b383-9ec0c5ef1c2a",
+      "symbol": "THD",
+      "peer_group": "equity.thailand.broad",
+      "duplicate_review_group": "equity.thailand.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-e635ecc4-4bb8-5000-a40d-523f850ff452",
+      "symbol": "AAXJ",
+      "peer_group": "equity.asia_ex_japan.broad_includes_China",
+      "duplicate_review_group": "equity.asia_ex_japan.broad_includes_China",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-6ee8af6e-72de-50f3-82f1-66fcae40f240",
+      "symbol": "EEMA",
+      "peer_group": "equity.asia_emerging.broad_includes_China",
+      "duplicate_review_group": "equity.asia_emerging.broad_includes_China",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-615e3a63-bcbf-59d1-af7a-d363de2b40ad",
+      "symbol": "AIA",
+      "peer_group": "equity.asia.large_includes_China",
+      "duplicate_review_group": "equity.asia.large_includes_China",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-928798f6-f6dc-53e8-8a36-01978085e779",
+      "symbol": "EPP",
+      "peer_group": "equity.pacific_ex_japan.broad",
+      "duplicate_review_group": "equity.pacific_ex_japan.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-97cf1bcc-a265-5283-8126-bae314ec3195",
+      "symbol": "EWA",
+      "peer_group": "equity.australia.broad",
+      "duplicate_review_group": "equity.australia.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-cf1666e4-33ed-5927-9df4-50a1d1fb2217",
+      "symbol": "ENZL",
+      "peer_group": "equity.new_zealand.broad",
+      "duplicate_review_group": "equity.new_zealand.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-1e34eb92-647f-522e-bccd-bceb913ea5db",
+      "symbol": "EWC",
+      "peer_group": "equity.canada.broad",
+      "duplicate_review_group": "equity.canada.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-4ae52e68-44e8-546c-a9bf-003f2f23590c",
+      "symbol": "EWZ",
+      "peer_group": "equity.brazil.broad",
+      "duplicate_review_group": "equity.brazil.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-2ca7c9e6-3014-5b78-bc1c-dcfcea20bf28",
+      "symbol": "EWZS",
+      "peer_group": "equity.brazil.small",
+      "duplicate_review_group": "equity.brazil.small",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-87cbfcbd-6238-589a-a08f-6d25f6bc0a15",
+      "symbol": "EWW",
+      "peer_group": "equity.mexico.broad",
+      "duplicate_review_group": "equity.mexico.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-7ee47df2-3a64-57af-bccb-cd8d9882d2b5",
+      "symbol": "ECH",
+      "peer_group": "equity.chile.broad",
+      "duplicate_review_group": "equity.chile.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-561bd9fd-1b5d-5237-aa89-c17b62d7a7ca",
+      "symbol": "EPU",
+      "peer_group": "equity.peru_global_exposure.broad",
+      "duplicate_review_group": "equity.peru_global_exposure.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-f0bdccd8-04f8-53fc-8f14-89b8e3f1f398",
+      "symbol": "ILF",
+      "peer_group": "equity.latin_america.large",
+      "duplicate_review_group": "equity.latin_america.large",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-8094c7fd-986c-5157-a12a-c9853b6fbbff",
+      "symbol": "EIS",
+      "peer_group": "equity.israel.broad",
+      "duplicate_review_group": "equity.israel.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-345ff882-7ed1-5c98-95e4-1cb1529ecbfe",
+      "symbol": "EZA",
+      "peer_group": "equity.south_africa.broad",
+      "duplicate_review_group": "equity.south_africa.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-ddb77014-5f6e-5392-9869-933479c3a455",
+      "symbol": "TUR",
+      "peer_group": "equity.turkey.broad",
+      "duplicate_review_group": "equity.turkey.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-d966ec64-d14b-54e4-a34a-a19ec35e75e5",
+      "symbol": "XLE",
+      "peer_group": "equity.us.energy",
+      "duplicate_review_group": "equity.us.energy",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "baseline"
+    },
+    {
+      "candidate_id": "candidate-e5fa1eba-4c0d-504b-92f0-99931ae15f67",
+      "symbol": "IYE",
+      "peer_group": "equity.us.energy",
+      "duplicate_review_group": "equity.us.energy",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-ef351f47-546a-5f7b-9904-828f27cd1902",
+      "symbol": "VDE",
+      "peer_group": "equity.us.energy",
+      "duplicate_review_group": "equity.us.energy",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-188951fb-7720-58bf-bad5-4fb7312009e2",
+      "symbol": "XLB",
+      "peer_group": "equity.us.materials",
+      "duplicate_review_group": "equity.us.materials",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "baseline"
+    },
+    {
+      "candidate_id": "candidate-cda8e9c7-3715-5a0e-81ef-206be89a28bd",
+      "symbol": "IYM",
+      "peer_group": "equity.us.materials",
+      "duplicate_review_group": "equity.us.materials",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-f99ff238-8b1a-589e-8d3d-d341c725308b",
+      "symbol": "VAW",
+      "peer_group": "equity.us.materials",
+      "duplicate_review_group": "equity.us.materials",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-9b0aeed0-e198-5055-aa28-24c089bab424",
+      "symbol": "XLI",
+      "peer_group": "equity.us.industrials",
+      "duplicate_review_group": "equity.us.industrials",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-3c3b56f3-7818-5bf2-a62d-c2ce0898bdff",
+      "symbol": "IYJ",
+      "peer_group": "equity.us.industrials",
+      "duplicate_review_group": "equity.us.industrials",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-5faf17f2-90f0-5b61-8036-e87d408197ee",
+      "symbol": "VIS",
+      "peer_group": "equity.us.industrials",
+      "duplicate_review_group": "equity.us.industrials",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-b173ad97-e974-5889-8784-a016aae81cd3",
+      "symbol": "XLK",
+      "peer_group": "equity.us.technology",
+      "duplicate_review_group": "equity.us.technology",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-d42c2a14-7053-5d52-8c07-6616bd1d57b7",
+      "symbol": "IYW",
+      "peer_group": "equity.us.technology",
+      "duplicate_review_group": "equity.us.technology",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-eb68eb08-fc86-5c98-8fe8-0a6783d3b6a5",
+      "symbol": "VGT",
+      "peer_group": "equity.us.technology",
+      "duplicate_review_group": "equity.us.technology",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-d149edd4-e64f-557e-96b8-4dcbacdc69af",
+      "symbol": "IGM",
+      "peer_group": "equity.us.technology",
+      "duplicate_review_group": "equity.us.technology",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-6700772a-7c12-5ad7-b9da-22e874b678ce",
+      "symbol": "XLP",
+      "peer_group": "equity.us.staples",
+      "duplicate_review_group": "equity.us.staples",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-46d01217-ee3e-586c-a5ed-a95a8665c840",
+      "symbol": "IYK",
+      "peer_group": "equity.us.staples",
+      "duplicate_review_group": "equity.us.staples",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-776f73ff-7793-5d77-9b51-0d707a097944",
+      "symbol": "VDC",
+      "peer_group": "equity.us.staples",
+      "duplicate_review_group": "equity.us.staples",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-b11243bd-c39d-599b-ab8e-8cc30ee68527",
+      "symbol": "XLY",
+      "peer_group": "equity.us.discretionary",
+      "duplicate_review_group": "equity.us.discretionary",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-d54916ab-e08c-5c5e-993d-71aca6fb2ae0",
+      "symbol": "IYC",
+      "peer_group": "equity.us.discretionary",
+      "duplicate_review_group": "equity.us.discretionary",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-96a3d155-addd-523b-9708-5840e9c03afa",
+      "symbol": "VCR",
+      "peer_group": "equity.us.discretionary",
+      "duplicate_review_group": "equity.us.discretionary",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-fda1a1b2-85dd-5a3d-bcc0-1348e572144c",
+      "symbol": "XLV",
+      "peer_group": "equity.us.healthcare",
+      "duplicate_review_group": "equity.us.healthcare",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-e33778a9-8b2a-52c0-a9ad-2f214b2a55c1",
+      "symbol": "IYH",
+      "peer_group": "equity.us.healthcare",
+      "duplicate_review_group": "equity.us.healthcare",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-5a5c92b2-d34a-5b1b-b1d8-697abca64cca",
+      "symbol": "VHT",
+      "peer_group": "equity.us.healthcare",
+      "duplicate_review_group": "equity.us.healthcare",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-97b6e732-a957-5a59-aef0-744263dd4d71",
+      "symbol": "XLF",
+      "peer_group": "equity.us.financials",
+      "duplicate_review_group": "equity.us.financials",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-2af158d7-0f13-54fc-b686-c39b9fb8b07b",
+      "symbol": "IYF",
+      "peer_group": "equity.us.financials",
+      "duplicate_review_group": "equity.us.financials",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-fb91f85b-1048-5013-89d3-81257a93da5e",
+      "symbol": "VFH",
+      "peer_group": "equity.us.financials",
+      "duplicate_review_group": "equity.us.financials",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-0d889bc1-32c6-54d4-872a-c371f982de22",
+      "symbol": "XLU",
+      "peer_group": "equity.us.utilities",
+      "duplicate_review_group": "equity.us.utilities",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-acfee2e8-7bc4-51ec-abef-7344f101499a",
+      "symbol": "IDU",
+      "peer_group": "equity.us.utilities",
+      "duplicate_review_group": "equity.us.utilities",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-28aa68f9-3c41-597b-9878-0c9bae28090a",
+      "symbol": "VPU",
+      "peer_group": "equity.us.utilities",
+      "duplicate_review_group": "equity.us.utilities",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-b6127d45-8f8e-58a9-ad70-d93716359334",
+      "symbol": "XLC",
+      "peer_group": "equity.us.communication_services",
+      "duplicate_review_group": "equity.us.communication_services",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-010a369b-4a99-5636-9970-fb59ef2a4760",
+      "symbol": "VOX",
+      "peer_group": "equity.us.communication_services",
+      "duplicate_review_group": "equity.us.communication_services",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-91e8a703-8717-5259-afa0-a8f2d6d7c602",
+      "symbol": "IYZ",
+      "peer_group": "equity.us.telecommunications",
+      "duplicate_review_group": "equity.us.telecommunications",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-3a5d6746-8201-5b30-a107-a08ea8e9fd2d",
+      "symbol": "SOXX",
+      "peer_group": "equity.us_listed_industry.semiconductors",
+      "duplicate_review_group": "equity.us_listed_industry.semiconductors",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-186b241a-84d9-5323-8ea4-174343494109",
+      "symbol": "SMH",
+      "peer_group": "equity.us_listed_industry.semiconductors",
+      "duplicate_review_group": "equity.us_listed_industry.semiconductors",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-3de81b8c-0c26-5ecf-b13a-b71722697806",
+      "symbol": "XSD",
+      "peer_group": "equity.us_listed_industry.semiconductors",
+      "duplicate_review_group": "equity.us_listed_industry.semiconductors",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-e8ee8078-3b90-56c8-86e4-c7f046fabe35",
+      "symbol": "IBB",
+      "peer_group": "equity.us_listed_industry.biotechnology",
+      "duplicate_review_group": "equity.us_listed_industry.biotechnology",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-40976bee-daef-512a-8ad1-cb8b11080fe4",
+      "symbol": "XBI",
+      "peer_group": "equity.us_listed_industry.biotechnology",
+      "duplicate_review_group": "equity.us_listed_industry.biotechnology",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-6800184e-9de2-51af-b8e1-64898fbbfd71",
+      "symbol": "ITA",
+      "peer_group": "equity.us.aerospace_defense",
+      "duplicate_review_group": "equity.us.aerospace_defense",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-0b3ab1f0-dfb5-5956-925e-967bbdd11bcd",
+      "symbol": "XAR",
+      "peer_group": "equity.us.aerospace_defense",
+      "duplicate_review_group": "equity.us.aerospace_defense",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-f49509a2-f954-5f74-baf6-d049be971014",
+      "symbol": "IYT",
+      "peer_group": "equity.us.transportation",
+      "duplicate_review_group": "equity.us.transportation",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-b9a794c8-88ea-5d1d-a713-b9738bb00cd5",
+      "symbol": "XTN",
+      "peer_group": "equity.us.transportation",
+      "duplicate_review_group": "equity.us.transportation",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-09c8a01d-d00e-549e-bdf9-47bc6f472f80",
+      "symbol": "ITB",
+      "peer_group": "equity.us.homebuilders",
+      "duplicate_review_group": "equity.us.homebuilders",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-15fc8014-a6a6-50ce-9914-0e77792de47a",
+      "symbol": "XHB",
+      "peer_group": "equity.us.homebuilders",
+      "duplicate_review_group": "equity.us.homebuilders",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-f70dd342-6cf4-513c-9bb9-4d2d9ce976a3",
+      "symbol": "IAT",
+      "peer_group": "equity.us.regional_banks",
+      "duplicate_review_group": "equity.us.regional_banks",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-61eccd1d-4cb5-592b-8251-d172dae903ea",
+      "symbol": "KRE",
+      "peer_group": "equity.us.regional_banks",
+      "duplicate_review_group": "equity.us.regional_banks",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-23cf7a61-2b7b-5647-907e-adfc4a0a7bd7",
+      "symbol": "IAK",
+      "peer_group": "equity.us.insurance",
+      "duplicate_review_group": "equity.us.insurance",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-aa20c81f-6e53-5ba8-a1bb-ff22f2c0f20d",
+      "symbol": "KIE",
+      "peer_group": "equity.us.insurance",
+      "duplicate_review_group": "equity.us.insurance",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-cabbd710-ed32-5458-a204-134b213ead48",
+      "symbol": "IAI",
+      "peer_group": "equity.us.broker_exchanges",
+      "duplicate_review_group": "equity.us.broker_exchanges",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-3545c81a-7b80-51b4-a56f-f2f80dee4b2c",
+      "symbol": "IYG",
+      "peer_group": "equity.us.financial_services",
+      "duplicate_review_group": "equity.us.financial_services",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-fb4e8bb1-6e4b-574d-b3ac-bc9c55ab2b45",
+      "symbol": "IHI",
+      "peer_group": "equity.us.medical_devices",
+      "duplicate_review_group": "equity.us.medical_devices",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-5dfd4c2f-5287-56c7-af5f-96ab0be93a9a",
+      "symbol": "IHF",
+      "peer_group": "equity.us.health_providers",
+      "duplicate_review_group": "equity.us.health_providers",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-34413477-7b25-5618-8142-d18671f20c4a",
+      "symbol": "IHE",
+      "peer_group": "equity.us.pharmaceuticals",
+      "duplicate_review_group": "equity.us.pharmaceuticals",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-60c3a26d-fd00-590c-b8b8-d260c9938f31",
+      "symbol": "IGV",
+      "peer_group": "equity.us.software",
+      "duplicate_review_group": "equity.us.software",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-8a674fba-12af-50e4-ac47-31dda1b350cc",
+      "symbol": "XOP",
+      "peer_group": "equity.us.oil_gas_producers",
+      "duplicate_review_group": "equity.us.oil_gas_producers",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "hold"
+    },
+    {
+      "candidate_id": "candidate-2fe6f534-fbb8-53da-beff-48726a837299",
+      "symbol": "IEO",
+      "peer_group": "equity.us.oil_gas_producers",
+      "duplicate_review_group": "equity.us.oil_gas_producers",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-940abca1-cc86-5bc8-9d01-722174c568aa",
+      "symbol": "IEZ",
+      "peer_group": "equity.us.oil_services",
+      "duplicate_review_group": "equity.us.oil_services",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-210603e3-9d45-5669-bef4-56452d64644c",
+      "symbol": "OIH",
+      "peer_group": "equity.us.oil_services",
+      "duplicate_review_group": "equity.us.oil_services",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-2b6ead7b-99d7-5f3a-ab6a-265c4b6c6043",
+      "symbol": "RING",
+      "peer_group": "equity.global.gold_miners",
+      "duplicate_review_group": "equity.global.gold_miners",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-3869cc83-304c-56f5-80f3-c57171c3c44a",
+      "symbol": "GDX",
+      "peer_group": "equity.global.gold_miners",
+      "duplicate_review_group": "equity.global.gold_miners",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-eda5995b-7ce6-5ee0-b71a-6094e4f9f239",
+      "symbol": "SLVP",
+      "peer_group": "equity.global.silver_metal_miners",
+      "duplicate_review_group": "equity.global.silver_metal_miners",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-4a496edd-46f2-5308-981c-104f1286b484",
+      "symbol": "PICK",
+      "peer_group": "equity.global.metal_miners_ex_gold_silver",
+      "duplicate_review_group": "equity.global.metal_miners_ex_gold_silver",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-71b85080-b0cb-50be-b711-b85683f2a365",
+      "symbol": "XME",
+      "peer_group": "equity.us.mixed_metal_miners",
+      "duplicate_review_group": "equity.us.mixed_metal_miners",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-97970933-5d17-5dd2-9c35-0a1c75e9dda8",
+      "symbol": "VEGI",
+      "peer_group": "equity.global.agriculture_producers",
+      "duplicate_review_group": "equity.global.agriculture_producers",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-9cebb136-04f8-58a6-bbd4-4d0cf5b19f76",
+      "symbol": "MOO",
+      "peer_group": "equity.global.agriculture_producers",
+      "duplicate_review_group": "equity.global.agriculture_producers",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-90589276-b2c0-55ac-9fca-e1937d4a3819",
+      "symbol": "WOOD",
+      "peer_group": "equity.global.timber_forestry",
+      "duplicate_review_group": "equity.global.timber_forestry",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-b5073afb-0367-5620-b7b0-59aa7847177d",
+      "symbol": "ICLN",
+      "peer_group": "equity.global.clean_energy",
+      "duplicate_review_group": "equity.global.clean_energy",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-1f0e40e9-7b48-5b42-86f1-46062250e9ba",
+      "symbol": "IGF",
+      "peer_group": "equity.global.infrastructure",
+      "duplicate_review_group": "equity.global.infrastructure",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-ace26d68-730f-56f7-86be-43f9283235c5",
+      "symbol": "IXC",
+      "peer_group": "equity.global.energy",
+      "duplicate_review_group": "equity.global.energy",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-5214b2c4-db09-5c8d-b7e0-63b3c0633123",
+      "symbol": "MXI",
+      "peer_group": "equity.global.materials",
+      "duplicate_review_group": "equity.global.materials",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-e8c9c795-2bcb-55fa-b00f-c13650e3e0e4",
+      "symbol": "EXI",
+      "peer_group": "equity.global.industrials",
+      "duplicate_review_group": "equity.global.industrials",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-00821a73-3e4a-57b3-a796-bcdce30782c7",
+      "symbol": "IXN",
+      "peer_group": "equity.global.technology",
+      "duplicate_review_group": "equity.global.technology",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-601edb2f-7638-50db-bc19-2fc4801c5c5d",
+      "symbol": "KXI",
+      "peer_group": "equity.global.staples",
+      "duplicate_review_group": "equity.global.staples",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-617a9f4c-7567-5e68-9d58-0e57e6d56fe7",
+      "symbol": "RXI",
+      "peer_group": "equity.global.discretionary",
+      "duplicate_review_group": "equity.global.discretionary",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-edefeb2a-0ab3-54d3-bf24-61298dd98938",
+      "symbol": "IXJ",
+      "peer_group": "equity.global.healthcare",
+      "duplicate_review_group": "equity.global.healthcare",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-d6767aa0-f842-5934-b74c-076ae2a88af0",
+      "symbol": "IXG",
+      "peer_group": "equity.global.financials",
+      "duplicate_review_group": "equity.global.financials",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-ab3d17a6-2ac9-5b41-a972-7ee451efbcda",
+      "symbol": "JXI",
+      "peer_group": "equity.global.utilities",
+      "duplicate_review_group": "equity.global.utilities",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-19aa9110-79aa-5244-a2cb-9d065a57e0ca",
+      "symbol": "IXP",
+      "peer_group": "equity.global.communication_services",
+      "duplicate_review_group": "equity.global.communication_services",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-3c6cb152-8f9b-5143-8272-692b1ecddfb0",
+      "symbol": "VNQ",
+      "peer_group": "real_estate_equity.us.broad",
+      "duplicate_review_group": "real_estate_equity.us.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-2f0406e9-15d2-583e-b4f1-a624e3775e2a",
+      "symbol": "IYR",
+      "peer_group": "real_estate_equity.us.broad",
+      "duplicate_review_group": "real_estate_equity.us.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-5a8994c1-9a92-5ee2-8df4-1c3392ee5a90",
+      "symbol": "USRT",
+      "peer_group": "real_estate_equity.us.broad",
+      "duplicate_review_group": "real_estate_equity.us.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-0b0dabb8-ca96-59f9-b068-e465b5ec6a85",
+      "symbol": "ICF",
+      "peer_group": "real_estate_equity.us.broad",
+      "duplicate_review_group": "real_estate_equity.us.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-016e359d-cf28-5817-baaa-f4b4969f1970",
+      "symbol": "XLRE",
+      "peer_group": "real_estate_equity.us.broad",
+      "duplicate_review_group": "real_estate_equity.us.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-0d14704b-7388-56fc-8b28-244a4a7c026e",
+      "symbol": "REZ",
+      "peer_group": "real_estate_equity.us.residential_multisector",
+      "duplicate_review_group": "real_estate_equity.us.residential_multisector",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-bdedc22d-1c84-5951-a665-b94da06c8fba",
+      "symbol": "REM",
+      "peer_group": "real_estate_equity.us.mortgage_reits",
+      "duplicate_review_group": "real_estate_equity.us.mortgage_reits",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-92e1df54-c91c-5273-8fc7-243b2bdfac53",
+      "symbol": "IFGL",
+      "peer_group": "real_estate_equity.developed_ex_us.broad",
+      "duplicate_review_group": "real_estate_equity.developed_ex_us.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-df03a179-c8f1-5cfa-bc8d-379d323bcd6f",
+      "symbol": "BIL",
+      "peer_group": "sovereign.us.bills",
+      "duplicate_review_group": "sovereign.us.bills",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-706a3114-68e8-5181-a648-08d7ff6b3313",
+      "symbol": "SGOV",
+      "peer_group": "sovereign.us.bills",
+      "duplicate_review_group": "sovereign.us.bills",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-c216d550-78b7-5072-aae9-814869f48d67",
+      "symbol": "SHV",
+      "peer_group": "sovereign.us.bills",
+      "duplicate_review_group": "sovereign.us.bills",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-6741bffa-ab48-5570-aa95-05aabd957402",
+      "symbol": "SHY",
+      "peer_group": "sovereign.us.treasury_1_3",
+      "duplicate_review_group": "sovereign.us.treasury_1_3",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-77090af7-3d69-575d-8dbc-b0e2dbb98238",
+      "symbol": "VGSH",
+      "peer_group": "sovereign.us.treasury_1_3",
+      "duplicate_review_group": "sovereign.us.treasury_1_3",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-9b26db0a-24b8-5d68-af60-278eedfb3aee",
+      "symbol": "IEI",
+      "peer_group": "sovereign.us.treasury_3_7",
+      "duplicate_review_group": "sovereign.us.treasury_3_7",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-b9e0e186-6f47-511a-976a-7efdfed41a4f",
+      "symbol": "IEF",
+      "peer_group": "sovereign.us.treasury_7_10",
+      "duplicate_review_group": "sovereign.us.treasury_7_10",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "baseline"
+    },
+    {
+      "candidate_id": "candidate-3faeab78-3f72-5fcb-8ed8-238bee6ee262",
+      "symbol": "TLH",
+      "peer_group": "sovereign.us.treasury_10_20",
+      "duplicate_review_group": "sovereign.us.treasury_10_20",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-bbc9637b-0af9-56ca-87e4-338f7016df9f",
+      "symbol": "TLT",
+      "peer_group": "sovereign.us.treasury_20_plus",
+      "duplicate_review_group": "sovereign.us.treasury_20_plus",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "baseline"
+    },
+    {
+      "candidate_id": "candidate-c8a4b9b9-7ef2-5339-9808-e625eee9ce4a",
+      "symbol": "VGLT",
+      "peer_group": "sovereign.us.treasury_20_plus",
+      "duplicate_review_group": "sovereign.us.treasury_20_plus",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-945006b9-f9ad-5e09-a920-cf0ff8efccc2",
+      "symbol": "GOVT",
+      "peer_group": "sovereign.us.treasury_broad",
+      "duplicate_review_group": "sovereign.us.treasury_broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-14ca5a2a-4206-551d-945d-3ddd4566f172",
+      "symbol": "TIP",
+      "peer_group": "inflation_linked.us.tips_broad",
+      "duplicate_review_group": "inflation_linked.us.tips_broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-b1da7c87-be62-5fb9-b40d-845b42455d81",
+      "symbol": "SCHP",
+      "peer_group": "inflation_linked.us.tips_broad",
+      "duplicate_review_group": "inflation_linked.us.tips_broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-e5a5b632-2511-5b5b-94ca-eec0d08252ea",
+      "symbol": "STIP",
+      "peer_group": "inflation_linked.us.tips_short",
+      "duplicate_review_group": "inflation_linked.us.tips_short",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-148b3a99-0461-5cee-a6b5-cf92902b5f50",
+      "symbol": "VTIP",
+      "peer_group": "inflation_linked.us.tips_short",
+      "duplicate_review_group": "inflation_linked.us.tips_short",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-6db5d29e-f68f-5372-85c9-dd39662967c6",
+      "symbol": "IGOV",
+      "peer_group": "sovereign.developed_ex_us.unhedged_broad",
+      "duplicate_review_group": "sovereign.developed_ex_us.unhedged_broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-ff087884-595e-5b49-99f8-90724d40c28a",
+      "symbol": "BWX",
+      "peer_group": "sovereign.developed_ex_us.unhedged_broad",
+      "duplicate_review_group": "sovereign.developed_ex_us.unhedged_broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-99163b10-1559-558a-bf3e-2f696916c0d6",
+      "symbol": "ISHG",
+      "peer_group": "sovereign.developed_ex_us.unhedged_short",
+      "duplicate_review_group": "sovereign.developed_ex_us.unhedged_short",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-bf6bce1d-49c2-57ab-a863-b7a6d89f3e2a",
+      "symbol": "BWZ",
+      "peer_group": "sovereign.developed_ex_us.unhedged_short",
+      "duplicate_review_group": "sovereign.developed_ex_us.unhedged_short",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-ac762cfa-29e1-5ac8-84ab-e7f1c7164536",
+      "symbol": "AGG",
+      "peer_group": "aggregate_bond.us.broad",
+      "duplicate_review_group": "aggregate_bond.us.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-cc06f972-56b8-57dc-b769-1a73c127248a",
+      "symbol": "BND",
+      "peer_group": "aggregate_bond.us.broad",
+      "duplicate_review_group": "aggregate_bond.us.broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-a8b373f9-1eef-5200-a273-aa42b9845707",
+      "symbol": "ISTB",
+      "peer_group": "aggregate_bond.us.short",
+      "duplicate_review_group": "aggregate_bond.us.short",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-a2c5782f-3554-5185-bcf5-0fc7018646ce",
+      "symbol": "ILTB",
+      "peer_group": "aggregate_bond.us.long",
+      "duplicate_review_group": "aggregate_bond.us.long",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-6e4cd9df-9317-5111-848e-79d8e108065f",
+      "symbol": "GVI",
+      "peer_group": "aggregate_bond.us.government_credit_intermediate",
+      "duplicate_review_group": "aggregate_bond.us.government_credit_intermediate",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-115ecb0a-6dac-57c4-88e0-8d7fc6ac98c2",
+      "symbol": "CBON",
+      "peer_group": "aggregate_bond.china.onshore",
+      "duplicate_review_group": "aggregate_bond.china.onshore",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-a139b36c-2de8-5b4f-8d81-59a7a4fc1023",
+      "symbol": "BNDX",
+      "peer_group": "aggregate_bond.global_ex_us.usd_hedged",
+      "duplicate_review_group": "aggregate_bond.global_ex_us.usd_hedged",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-f53d16b1-8471-50c6-bc0d-4fe558291e26",
+      "symbol": "IAGG",
+      "peer_group": "aggregate_bond.global_ex_us.usd_hedged",
+      "duplicate_review_group": "aggregate_bond.global_ex_us.usd_hedged",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-a9ca125e-4513-56dc-be54-c59c1532b6a7",
+      "symbol": "LQD",
+      "peer_group": "credit.usd.investment_grade_broad",
+      "duplicate_review_group": "credit.usd.investment_grade_broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "baseline"
+    },
+    {
+      "candidate_id": "candidate-6adf682a-4307-541e-b87e-439fa650854f",
+      "symbol": "USIG",
+      "peer_group": "credit.usd.investment_grade_broad",
+      "duplicate_review_group": "credit.usd.investment_grade_broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-f0e9b397-d20d-5b58-9c72-a8d50d5cf7a5",
+      "symbol": "VCIT",
+      "peer_group": "credit.usd.investment_grade_broad",
+      "duplicate_review_group": "credit.usd.investment_grade_broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-dfb62d60-ad44-5174-b885-8a6ee5e79c27",
+      "symbol": "IGSB",
+      "peer_group": "credit.usd.investment_grade_short",
+      "duplicate_review_group": "credit.usd.investment_grade_short",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-462f4558-a777-5b46-a8f8-cbfe9d06aacf",
+      "symbol": "SLQD",
+      "peer_group": "credit.usd.investment_grade_short",
+      "duplicate_review_group": "credit.usd.investment_grade_short",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-9d568164-95ea-5e55-8fe3-989c183ca41b",
+      "symbol": "VCSH",
+      "peer_group": "credit.usd.investment_grade_short",
+      "duplicate_review_group": "credit.usd.investment_grade_short",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-1c7caec3-69d7-52f1-9c47-208df0f4c44e",
+      "symbol": "IGIB",
+      "peer_group": "credit.usd.investment_grade_intermediate",
+      "duplicate_review_group": "credit.usd.investment_grade_intermediate",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-f57fd470-cb44-5512-a4dc-c1e03042d66e",
+      "symbol": "IGLB",
+      "peer_group": "credit.usd.investment_grade_long",
+      "duplicate_review_group": "credit.usd.investment_grade_long",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-f014f9ab-7e4e-5a06-b1b1-47930b56e614",
+      "symbol": "VCLT",
+      "peer_group": "credit.usd.investment_grade_long",
+      "duplicate_review_group": "credit.usd.investment_grade_long",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-a975d601-36fd-5218-b530-4bddd1a2d58e",
+      "symbol": "QLTA",
+      "peer_group": "credit.usd.investment_grade_high_quality",
+      "duplicate_review_group": "credit.usd.investment_grade_high_quality",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-b1d4c397-8680-5d4a-a80c-f481acf99aa2",
+      "symbol": "HYG",
+      "peer_group": "credit.usd.high_yield_broad",
+      "duplicate_review_group": "credit.usd.high_yield_broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "baseline"
+    },
+    {
+      "candidate_id": "candidate-6b743ea4-4e2f-5cdd-8f7e-a90943752d8d",
+      "symbol": "JNK",
+      "peer_group": "credit.usd.high_yield_broad",
+      "duplicate_review_group": "credit.usd.high_yield_broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-1ca0eeee-f85d-50d2-9858-8e8e72e58ee0",
+      "symbol": "USHY",
+      "peer_group": "credit.usd.high_yield_broad",
+      "duplicate_review_group": "credit.usd.high_yield_broad",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-6c361434-3be8-58b7-ba6b-f640aad0fca5",
+      "symbol": "SHYG",
+      "peer_group": "credit.usd.high_yield_short",
+      "duplicate_review_group": "credit.usd.high_yield_short",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-bd217185-4f52-5819-91d4-70c4dd463648",
+      "symbol": "SJNK",
+      "peer_group": "credit.usd.high_yield_short",
+      "duplicate_review_group": "credit.usd.high_yield_short",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-d07468d7-f1a7-5956-a97e-64a853c90b39",
+      "symbol": "FLOT",
+      "peer_group": "credit.usd.floating_investment_grade",
+      "duplicate_review_group": "credit.usd.floating_investment_grade",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-36bc72d2-5ff9-5dd1-81c2-2570b9b384bf",
+      "symbol": "IBND",
+      "peer_group": "credit.global_ex_us.investment_grade_unhedged",
+      "duplicate_review_group": "credit.global_ex_us.investment_grade_unhedged",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-310e8b04-0ba1-595b-818f-fe91cb03139d",
+      "symbol": "EUHY",
+      "peer_group": "credit.euro_denomination.high_yield_usd_hedged",
+      "duplicate_review_group": "credit.euro_denomination.high_yield_usd_hedged",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "hold"
+    },
+    {
+      "candidate_id": "candidate-551861e9-f98b-5fbe-b2b1-9c916f1f0675",
+      "symbol": "HYXU",
+      "peer_group": "credit.global_ex_us.legacy_high_yield_unhedged",
+      "duplicate_review_group": "credit.global_ex_us.legacy_high_yield_unhedged",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "hold"
+    },
+    {
+      "candidate_id": "candidate-17c1dc9a-ea9e-5da7-8a2b-99115bdce600",
+      "symbol": "GHYG",
+      "peer_group": "credit.global.high_yield_mixed",
+      "duplicate_review_group": "credit.global.high_yield_mixed",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-bc229476-07b7-5057-97a4-c5b0549f4652",
+      "symbol": "EMB",
+      "peer_group": "credit.emerging.sovereign_usd",
+      "duplicate_review_group": "credit.emerging.sovereign_usd",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-ff6c5a23-5ac7-5f9b-990f-db222b9a6de2",
+      "symbol": "VWOB",
+      "peer_group": "credit.emerging.sovereign_usd",
+      "duplicate_review_group": "credit.emerging.sovereign_usd",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-053adabd-4a2d-54b1-a4e4-c99a6d994830",
+      "symbol": "LEMB",
+      "peer_group": "credit.emerging.sovereign_local",
+      "duplicate_review_group": "credit.emerging.sovereign_local",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-bd2af415-9378-501c-a615-ff98e1635053",
+      "symbol": "EMLC",
+      "peer_group": "credit.emerging.sovereign_local",
+      "duplicate_review_group": "credit.emerging.sovereign_local",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-4190a81b-cadd-5269-a4e8-4c5979a99e71",
+      "symbol": "CEMB",
+      "peer_group": "credit.emerging.corporate_usd",
+      "duplicate_review_group": "credit.emerging.corporate_usd",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-cdb66e1e-77e8-5420-9055-16651d0da82e",
+      "symbol": "EMHY",
+      "peer_group": "credit.emerging.high_yield",
+      "duplicate_review_group": "credit.emerging.high_yield",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-392a55e6-2945-5ef7-a666-49e8b264d28e",
+      "symbol": "AGZ",
+      "peer_group": "securitized.us.agency",
+      "duplicate_review_group": "securitized.us.agency",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-d493876f-f8c7-5abe-a8a5-0d6ff69cea16",
+      "symbol": "MBB",
+      "peer_group": "securitized.us.mortgage_agency",
+      "duplicate_review_group": "securitized.us.mortgage_agency",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-e41d25b9-32b8-55f3-8c58-104c10cc4277",
+      "symbol": "GNMA",
+      "peer_group": "securitized.us.mortgage_agency",
+      "duplicate_review_group": "securitized.us.mortgage_agency",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-a0a8679a-8ad9-5159-82ca-bda2032c9e9c",
+      "symbol": "VMBS",
+      "peer_group": "securitized.us.mortgage_agency",
+      "duplicate_review_group": "securitized.us.mortgage_agency",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-2054bbb1-6811-56aa-887e-8a9637df3de0",
+      "symbol": "CMBS",
+      "peer_group": "securitized.us.commercial_mortgage",
+      "duplicate_review_group": "securitized.us.commercial_mortgage",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-ef4fa113-172c-5a37-8a7d-d8a243e169fc",
+      "symbol": "PFF",
+      "peer_group": "hybrid_credit.us.preferred",
+      "duplicate_review_group": "hybrid_credit.us.preferred",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-bb9941f0-de03-534c-956f-276bb5b5e277",
+      "symbol": "GLD",
+      "peer_group": "commodity.global.gold_physical",
+      "duplicate_review_group": "commodity.global.gold_physical",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "baseline"
+    },
+    {
+      "candidate_id": "candidate-a17415cb-f280-5007-9a3c-ece7361f5a23",
+      "symbol": "IAU",
+      "peer_group": "commodity.global.gold_physical",
+      "duplicate_review_group": "commodity.global.gold_physical",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-b2927e7a-b457-5e22-a11b-b98d75697351",
+      "symbol": "GLDM",
+      "peer_group": "commodity.global.gold_physical",
+      "duplicate_review_group": "commodity.global.gold_physical",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-dc0d16c6-31f8-583e-9c61-2bcb04bc91e9",
+      "symbol": "SGOL",
+      "peer_group": "commodity.global.gold_physical",
+      "duplicate_review_group": "commodity.global.gold_physical",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-695011f2-51b9-5e4d-83b5-58ee3181e70e",
+      "symbol": "SLV",
+      "peer_group": "commodity.global.silver_physical",
+      "duplicate_review_group": "commodity.global.silver_physical",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-3ec82cde-015a-5262-ac38-eb7f7c85dc40",
+      "symbol": "SIVR",
+      "peer_group": "commodity.global.silver_physical",
+      "duplicate_review_group": "commodity.global.silver_physical",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-2bb4c48d-7c73-58ec-a8c6-f91679abb835",
+      "symbol": "PPLT",
+      "peer_group": "commodity.global.platinum_physical",
+      "duplicate_review_group": "commodity.global.platinum_physical",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-339531b7-a892-5496-8c6f-c14584ff7068",
+      "symbol": "PALL",
+      "peer_group": "commodity.global.palladium_physical",
+      "duplicate_review_group": "commodity.global.palladium_physical",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-17c2c0e7-33a1-5281-8c91-9cebade94830",
+      "symbol": "DBC",
+      "peer_group": "commodity.global.broad_futures",
+      "duplicate_review_group": "commodity.global.broad_futures",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "baseline"
+    },
+    {
+      "candidate_id": "candidate-67f86688-3ac1-566e-9775-5fd87483ff1b",
+      "symbol": "GSG",
+      "peer_group": "commodity.global.broad_futures",
+      "duplicate_review_group": "commodity.global.broad_futures",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-ac9b15bb-339e-538a-a1c8-9fd45486a997",
+      "symbol": "PDBC",
+      "peer_group": "commodity.global.broad_futures",
+      "duplicate_review_group": "commodity.global.broad_futures",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-d483c3f9-732a-5aeb-8cff-4d5d711a907e",
+      "symbol": "USO",
+      "peer_group": "commodity.global.crude_oil_futures",
+      "duplicate_review_group": "commodity.global.crude_oil_futures",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-a36ca936-4acd-5ab7-b99f-96a3e6e0bdfb",
+      "symbol": "BNO",
+      "peer_group": "commodity.global.crude_oil_futures",
+      "duplicate_review_group": "commodity.global.crude_oil_futures",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-29290481-b586-5693-aa4a-db5ded7a24cd",
+      "symbol": "UNG",
+      "peer_group": "commodity.global.natural_gas_futures",
+      "duplicate_review_group": "commodity.global.natural_gas_futures",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-c2bbc103-3331-54bd-9f35-a639cee3c4b2",
+      "symbol": "DBB",
+      "peer_group": "commodity.global.base_metals_futures",
+      "duplicate_review_group": "commodity.global.base_metals_futures",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-2e8cedcc-f401-5936-a4fa-49ec2194856a",
+      "symbol": "CPER",
+      "peer_group": "commodity.global.copper_futures",
+      "duplicate_review_group": "commodity.global.copper_futures",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-8e0c3cfc-04a0-51c3-95ff-3ef8b310766b",
+      "symbol": "DBA",
+      "peer_group": "commodity.global.agriculture_futures",
+      "duplicate_review_group": "commodity.global.agriculture_futures",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-bd9013fa-e467-5847-80be-35275154353c",
+      "symbol": "CORN",
+      "peer_group": "commodity.global.corn_futures",
+      "duplicate_review_group": "commodity.global.corn_futures",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-e8902d07-c3d3-5a51-a749-8a118df04465",
+      "symbol": "WEAT",
+      "peer_group": "commodity.global.wheat_futures",
+      "duplicate_review_group": "commodity.global.wheat_futures",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "wave_1_proposed"
+    },
+    {
+      "candidate_id": "candidate-30bd2680-a0b5-5331-9950-8a84eed2d816",
+      "symbol": "SOYB",
+      "peer_group": "commodity.global.soybeans_futures",
+      "duplicate_review_group": "commodity.global.soybeans_futures",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    },
+    {
+      "candidate_id": "candidate-61c19070-09cc-5bc2-ae8e-39c98dfa50bc",
+      "symbol": "CANE",
+      "peer_group": "commodity.global.sugar_futures",
+      "duplicate_review_group": "commodity.global.sugar_futures",
+      "classification_observed_on": "2026-10-13",
+      "historical_classification_valid_from": null,
+      "stage": "reserve"
+    }
+  ]
+}

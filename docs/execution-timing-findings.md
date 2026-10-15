@@ -5,10 +5,11 @@ blocked.** There is no supported cost ranking of opening-window TWAP, session cl
 The earlier plan's assumption that retained benchmarks already made this a no-new-data comparison
 was incorrect. At this frozen snapshot, the published benchmark dataset was empty.
 
-**Subsequent implementation:** [P4.19a's app-owned collector](execution-benchmark-collection.md)
-now captures and publishes observed order windows automatically. This does not change the frozen
-counts below or establish a close/VWAP comparison. Trading-time raw-unit, close and full-session
-VWAP qualification remain pending; later deployment receipts are separate evidence.
+**Subsequent work, October 12:** [P4.19a's app-owned collector](execution-benchmark-collection.md)
+now publishes order windows, full sessions and scoped retrospective reference audits. The separate
+[matched comparison](execution-reference-findings.md) covers 27 orders and retains the current
+execution policy. It does not change the frozen counts below. Continuous intraday research admission,
+raw-tape certification and an achievable execution-style ranking remain outside that diagnostic scope.
 
 ## Frozen coverage
 

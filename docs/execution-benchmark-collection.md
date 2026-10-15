@@ -11,6 +11,9 @@ It has no order, approval, allocation or account-recovery authority.
   other order types, unsupported currencies and execution-review blocks remain visible in coverage.
 - Original intent and the actual routed window are tracked separately. A symbol/window identity is
   fetched once even if multiple orders refer to it. Rescheduling cannot replace the original benchmark.
+- From October 12, the same bounded queue also collects the original and routed regular sessions.
+  It uses the app's US calendar (including early closes), waits for session completion and gives order
+  windows priority. All captured sessions remain separate immutable observations.
 - The provider resolves exactly one matching IB contract before requesting historical `TRADES` bars.
   The capture retains conId, currency, venue, OHLC, volume, WAP, trade count, callback messages and
   observation time. Contract discovery is not a trading-permission test.
@@ -56,28 +59,54 @@ Settings:
 | `ST_EXECUTION_BENCHMARK_MAX_PENDING` | `4` | Bound running/queued data requests; one request runs at a time |
 | `ST_IB_BENCHMARK_CLIENT_ID` | paper order client + 90 | Separate read-only data connection |
 
-## Remaining close/VWAP qualification contract
+## Retrospective reference qualification — October 12
 
-P4.19's execution-style comparison remains separate from this delivery. The current collector retains
-order windows, not complete sessions, and does not reconstruct absent execution details. The following
-inputs must be qualified and bound into a new frozen study before the comparison can proceed:
+The app separately publishes `execution-reference-audits`. This publication admits only retrospective
+execution diagnostics; `research_approved: false` remains explicit. It does not admit these bars to
+strategy backtests or certify a continuous intraday price history. Missing execution details stay missing.
+
+The versioned policy is fixed in `execution/benchmark_qualification.py` before examining price costs.
+The audited daily catalog, per-symbol storage batch, source files and ClickHouse row hashes must agree.
+Incremental catalog versions can point to an older storage batch; the reader verifies that publication
+instead of assuming every symbol belongs to the newest batch. The app retains both passing and failing
+audits with explicit reasons. A research freeze consumes this publication, not provider downloads.
 
 | Reference | Required definition and evidence | Current status |
 | --- | --- | --- |
-| Trading-time raw basis | Match contract and session to an audited raw-price publication, with input hashes and explicit corporate-action/unit handling; do not compare adjusted historical prices to unadjusted fills | Not independently qualified |
-| Session close | Declare last regular-session trade versus official closing-auction price, then bind the selected audited raw closing-price source and session date | Not qualified |
-| Session VWAP | Full regular-session coverage using the shared calendar, including early closes; valid traded volume and per-bar WAP/value with explicit units, positive total volume and no missing intervals | Not qualified; volume/WAP now retained for the available order windows |
+| Trading-time raw basis | Resolved USD stock contract, governed raw row and all session OHLC fields within the existing raw-price audit tolerance (0.5%); actual differences retained | Scoped consistency audit; known subsequent splits, missing raw values and unresolved quality flags withhold the session |
+| Session close | Governed reconstructed raw daily close on the declared session, with catalog/storage/row/source hashes | Audited reference; **not certified official auction price** |
+| Session VWAP | Full regular-session one-minute coverage; sum of bar WAP times provider volume divided by summed provider volume | Filtered historical TRADES estimate; no substitution of minute closes for WAP |
+
+Positive-volume bars require finite WAP within valid OHLC bounds. Zero-volume minutes contribute no
+value; all-zero sessions fail. Missing/overlapping minutes, conflicting duplicate fields and negative
+volume fail. Provider volume remains in its reported quantity units: a common scale cancels within
+one contract/session, but the audit does **not** assert share counts, traded dollar value or comparable
+volume across instruments. Subsequent reported splits are rejected rather than guessed or rebased.
+
+The 0.5% threshold checks price-basis consistency; it is not a claim of sub-basis-point price accuracy.
+The governed prices are reconstructed from reported corporate actions, not tape-certified. The action
+ledger's vintage may precede the IB capture, so later actions are not independently covered. Cross-source
+OHLC agreement does not repair that limitation or establish historical availability. These restrictions
+are embedded in every policy publication and survive the frozen analysis.
 
 IB's historical feed filters some trade types, and per-bar WAP can be rounded. Even a complete
 volume-weighted aggregation must be labelled an **IB historical TRADES session-VWAP estimate**, not
 an exact exchange-wide VWAP. Multiplying each minute close by volume is a different approximation
 and cannot be substituted. [Historical-bar semantics](https://interactivebrokers.github.io/tws-api/historical_bars.html).
 
-The future matched cohort fixes symbol, decision, side and quantity across styles, records both
+The matched cohort fixes symbol, decision, side and executed quantity across references, records both
 intended and actual dates, separates approval/rescheduling delay, and reports exclusions. Reference
 price comparisons do not establish counterfactual fill prices, impact or fill probability. A prospective
 execution-style experiment needs its own declared protocol. No execution-style change follows from
 collection alone.
+
+`scripts/analyze_execution_references.py` freezes the publications, checked governed inputs, raw
+capture evidence and calculation sources. It requires complete execution details and all six references
+(original/routed TWAP, close, VWAP) for each included order. Overlapping window/session minute closes
+must match exactly, otherwise the revised vintage is excluded. It reports signed USD cost divided by
+gross reference notional, per-symbol/session results, same-date versus delayed-date cohorts and a
+leave-one-session-out sensitivity. Original-minus-routed price cost includes intervening market movement;
+it is not an isolated causal estimate of approval delay. No fees, FX or unfilled-order cost are imputed.
 
 ## Verification
 
@@ -94,3 +123,10 @@ outside the configured IB contract universe, and ten legacy TWAP orders have no 
 These gaps keep coverage degraded; they are not a collector crash or evidence of denied XLE/XLB
 trading permission. Paper capital and order counts were unchanged. The focused suite passed 96 tests;
 one disposable-ClickHouse test was skipped, with actual publication/readback checked separately.
+
+October 12 follow-up: 30 full sessions passed the scoped reference audit; all **64** order-window/session
+captures were source-verified and read back identically from ClickHouse. The new matched research
+freeze reproduced exactly (27 orders / five sessions); [findings](execution-reference-findings.md).
+The extended suite passed 100 tests with one disposable-ClickHouse skip; seven final analysis checks
+and Ruff passed. Receipts are `var/research/benchmark-qualification-20261012-*`. Allocations, orders
+and execution authority remain unchanged.

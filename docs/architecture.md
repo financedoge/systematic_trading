@@ -1,5 +1,15 @@
 # Architecture
 
+Current implementation: a Python modular application with separate supervised
+workers, PostgreSQL transactional state, ClickHouse analytical serving and NATS
+outbox delivery. SQLite is an explicit offline test/recovery backend. Live routing
+remains disabled; future target services are described in the
+[industrial plan](industrial-platform-plan.md).
+
+Start with the [documentation index](README.md) and the
+[maintenance/code map](repository-maintenance.md). The strategy/data contracts
+below remain authoritative; dated deployment receipts are historical observations.
+
 ## FR25 monitoring contract — 2026-10-10
 
 `research_fr25_14_v1` is a versioned `multi_asset_14` strategy: the full 14-ETF
@@ -133,6 +143,13 @@ market-data files, and it does not change execution approval or reconciliation g
 
 The embedded trading management loop owns an optional paper automatic-approval controller. Its machine/profile/strategy-bound policy defaults off and is audited locally and in the event outbox. Eligible new strategy proposals pass fresh account, data, sizing, exposure, open-order and session checks before a compare-and-set approval and normal idempotent router handoff. A durable attempt claim precedes submission; restarts never retry uncertain attempts. SQLite and PostgreSQL approval decisions support expected-status checks. The app-owned post-trade benchmark collector has no execution authority: it scans filled paper orders, deduplicates original/routed windows, retains immutable observations and failed attempts, and publishes coverage through the audited analytics path. Its read-only IB client and retry queue are shared with the blotter; UI visits are not its scheduler. See [benchmark collection](execution-benchmark-collection.md).
 
+The benchmark collector also captures complete regular sessions on the shared US calendar. Its separate
+`execution-reference-audits` publication binds full-session OHLC/WAP/volume to the published governed
+raw daily catalog and the correct per-symbol storage batch. Reference qualification is scoped to
+retrospective execution diagnostics, with corporate-action, historical-vintage, provider-volume and
+paper-fill limitations; it is not intraday data admission or strategy promotion. Frozen comparisons
+consume this publication and retain source evidence rather than fetching prices during research.
+
 The target architecture is an industrial 24x7 systematic trading platform: micro-services connected by a message queue, immutable market-data recording, columnar analytics storage, transactional order and approval state, LEAN-compatible backtesting, Interactive Brokers execution, strong portfolio rebalancing controls, and Grafana-class monitoring.
 
 The full target-state system chart and execution schedule are maintained in `docs/industrial-platform-plan.md`.
@@ -218,15 +235,27 @@ Registered monitored strategies are application-owned analytical calculations. T
 9. Storage layer: PostgreSQL for operational state and immutable legacy SQLite evidence; explicit SQLite only for offline tests/recovery; ClickHouse for columnar query serving; Parquet for immutable market-data archive and DuckDB-readable research snapshots.
 10. Observability layer: metrics, logs, traces, dashboards, alerts, incidents, and daily operating reports.
 
-## Initial module boundaries
+## Current module boundaries
 
-- `domain/`: schema and business language.
-- `backtest/`: FX conversion, cash ledger, valuation, risk helpers, and daily engine.
-- `storage/`: local persistence and schema management.
-- `portfolio/`: sleeve logic and proposal builders.
-- `data/`: source manifests and future provider adapters.
-- `execution/`: broker environment manifests and future routing adapters.
-- `web/`: API endpoints and request contracts.
+| Package | Responsibility |
+| --- | --- |
+| `domain`, `schemas` | Shared business models, events and schema compatibility. |
+| `data`, `recorders`, `market_data` | Provider adapters, raw capture, audited publication, analytical storage/readers. |
+| `research`, `signals` | Versioned strategy definitions, governed inputs, causal models, app-owned tracking and research evidence. |
+| `backtest`, `lean` | Accounting, deterministic simulations, reports and frozen native parity. |
+| `portfolio` | Targets, context, valuation, allocation controls and pure preview construction. |
+| `execution`, `live` | Broker routing/reconciliation and supervised paper operating loops. |
+| `storage`, `messaging`, `services` | Persistence, backups, outbox transport, health and recovery. |
+| `web` | HTTP adapters, request/response contracts and page composition. |
+| `presentation` | Packaged HTML assets shared by browser pages and standalone reports; no broker/API dependency. |
+| `maintenance` | Explicit verified local log archiving; no recurring trading calculations. |
+| `valuation` | Separate quantitative stock-valuation tooling; not ETF execution authority. |
+
+Existing `web.api` contract imports remain compatible. `portfolio.preview` owns
+risk-parity input validation and side-effect-free proposal construction. Static
+workspace HTML is composed once per process; account, strategy and health data
+still arrive through live APIs. Frozen LEAN bundles include and verify all HTML
+resources. Analytical serving versions include those resource signatures.
 
 ## Target Service Boundaries
 
@@ -240,24 +269,44 @@ Registered monitored strategies are application-owned analytical calculations. T
 - Alert service: route warnings to email, SMS or push, desktop popup, dashboards, and incident logs.
 - Reporting service: generate post-trade, PnL, slippage, exposure, and robustness reports.
 
-## Near-Term Roadmap
+## Implementation roadmap
 
-- Add persistent storage for raw data, normalized bars, FX, and research artifacts.
-- Add filings and macro adapters.
-- Add paper broker state mirroring and approval queue persistence.
-- Add a thin web UI on top of the current API.
-- Introduce event schemas, Postgres transactional state, and the ClickHouse plus Parquet columnar market-data path.
-- Maintain event and data schemas through the code-based registry in `systematic_trading.schemas` until a separate schema registry service is justified.
-- Build an always-on market-data recorder and replay path.
-- Promote ClickHouse `market_data.daily_bars` and later intraday tables as the golden market-data source for UI, research, backtests, feature jobs, and validation.
-- Integrate LEAN into the promotion path for production candidates.
-- Build the strong rebalance blotter before any live trading.
-- Add Grafana-class dashboards and multi-channel alerts.
+The [execution Kanban](execution-kanban.md) is the sole open-work tracker.
+Storage, web UI, event schemas, recorder workers and local LEAN parity already
+exist. Remaining work includes generalized paper execution/admission, measured
+worker budgets, stronger promotion and risk contracts, admitted intraday histories,
+metrics/alert coverage and disaster-recovery acceptance. Historical milestones
+must not be mistaken for current missing infrastructure.
 
-The [database consolidation record](database-consolidation.md) documents the server-store defaults and physical storage relocation. The [LEAN integration plan](lean-backtest-integration-plan.md) defines an isolated backtest worker with frozen input bundles and no brokerage access.
-
+The [database consolidation record](database-consolidation.md) covers server-store
+defaults and physical storage. The [LEAN worker contract](lean-backtesting.md)
+covers frozen offline inputs and explicit remaining data limitations.
 
 ## Strategy monitoring lifecycle
+
+### Paper execution membership and evidence
+
+Strategy definitions can carry frozen instrument membership. Mixed allocations
+resolve the complete union, reject conflicting identities and share one
+request-local audited-input session for signal and valuation data. Execution
+marks remain audited raw units. FR25 binds the same financial, rolling, USD and
+raw-activity schedules used by monitoring; mismatched revisions block preparation.
+
+`execution/registry.py` publishes immutable, account-bound US-listed USD ETF
+admissions with verified IB conIds, whole-share/tick capabilities and dated
+paper what-if evidence. Proposal receipts bind the registry version and contract
+IDs; changed or removed evidence requires a fresh review. Admission is separate
+from strategy funding, broker approval and reconciliation. Non-US calendars,
+currencies and board lots remain outside this implemented boundary.
+[Readiness and limits](execution-readiness-2026-10-13.md).
+
+Finite expanded-pool diagnostics use `research/etf_expansion.py` and the shared
+app model/target/replay services. They preserve published-batch hashes, explicit
+price and volume bases, missing observations and admission masks. An unpublished
+research candidate is not automatically a tracked strategy or an executable
+allocation. [First expanded study](etf-expansion-findings-2026-10-14.md).
+
+### Monitoring state and refresh
 
 Monitoring membership is application state in the transactional strategy-control tables, under the global `strategy-monitoring-v1` scope. The versioned config seeds membership; immutable operator events override it across account resets. Each archive/restore increments a generation and uses compare-and-swap, with guarded allocation revisions. PostgreSQL serializes lifecycle and allocation commits with a shared advisory lock; SQLite tests use an immediate transaction.
 

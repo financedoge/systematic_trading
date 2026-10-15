@@ -1,0 +1,94 @@
+{
+  "version": "p416d-stage1-delivery-v1",
+  "completed_at": "2026-10-13T13:06:07.619286+00:00",
+  "status": "review_before_ingestion",
+  "governed_batch": "38153d09e24666838a4737dfe32423fe9832b12c49132b0d41418c8e1355378f",
+  "source_manifest_sha256": "f6bdf697bd981be8fb73d8ecf504617db32ba4a0af59cc978ac49afbdb0db418",
+  "files": {
+    "candidate-seed.json": "a2382e66a7e669723731cc3f52d2d9089267f2d56ec09a1dcbdd0d5ea0f68e86",
+    "gap-matrix.md": "50c958bc69b3062b6a30e05d111dd0bba2386a9b17bfaa530c9de9512e459894",
+    "identity-events.json": "9e14577f30ee416bb61fc9e17dbe1e05bb367586b743b9cc875bfc2f269d60aa",
+    "inventory.json": "c9ffa2c5406e3485781d82c71cf2616c7536c4523f15285dd4cb7aceab96bf20",
+    "protocol.json": "6db6572f7723af799eedc2097800fadd5cce6cab3b0c2175b1b021bf073f5eb6",
+    "README.md": "ac27e5ff19cded4f769778d3880ff4e2e88fb193b568ceebbfa980c3b2ac1a90",
+    "source-manifest.json": "f6bdf697bd981be8fb73d8ecf504617db32ba4a0af59cc978ac49afbdb0db418",
+    "taxonomy.json": "a776e4475da7ffb6080c123eb567245b60c046e212dc3cf090a0d9e736c9b0dc",
+    "tests.xml": "1802bf5736f7ef7bba32aa3a40b33df727f83a57e06ee733661c416045407584",
+    "sources/admission-holds.json": "76375deb22c4f71d76cfa0dacfbafd18c0c7d63898e3668066473b9e0eaa0023",
+    "sources/euhy.html.gz": "0cf585c6496e879a6907a64a9c40cdab6e44a1511793010a9d0d8d74ce7bcb44",
+    "sources/euhy.html.receipt.json": "a2393ae634b023f0c0b1d4510f6ac6bd3d5ff7ed126eb61f1cc52c0870634258",
+    "sources/governance-catalog.json.gz": "a709814cb32ef39937bdd7a8909e5cd4aa4d26586250b01a6095b3a2ccbcf4d8",
+    "sources/governance-evidence.json.gz": "3e258f54948040e3ccf1fe080cc8a46b914bc93b554505454004ad95f6bdd709",
+    "sources/governance-manifest.json": "38153d09e24666838a4737dfe32423fe9832b12c49132b0d41418c8e1355378f",
+    "sources/governance-publication.json": "5141095b53888a82e248802317ed335824e2cc61337887a659ee478c2549e95f",
+    "sources/ishares-products.html.gz": "48e99aca984caa714bead7a5191999ee6edb0f4ae4d22399709acc3c2c8aade5",
+    "sources/ishares-products.html.receipt.json": "453aa8dc0d3a8c33de2457bac7bff2fbf6d1e867047060aa78653bdf4ba66efc",
+    "sources/nasdaqtraded.txt.gz": "712d48aa03d9ac1462ef6979f95782f4d4fe14080d6b39c45bb490012d1da77f",
+    "sources/nasdaqtraded.txt.receipt.json": "06b010b950440b674c06498adaf8c9dd2055710afe5201a228e976a9bbc9a83f",
+    "sources/research-etf-recorders.json": "f6a213628034e19dd6ae5284964d1c9032378d5f31e771025fe0729294bca1d6"
+  },
+  "code": {
+    "scripts/build_etf_inventory.py": "eec51960565a89cdd0f2386785e1851a1ab2f00cf82a9406109b0afe10605799",
+    "tests/test_etf_inventory.py": "f2fa2308fc91b70660a351676e9c64f7becf16e61ab753cafc9faa098fdba1a4"
+  },
+  "report_sha256": "0578d7d72b46ed65284cc8393d08e531338f87e5a856056855003e0501cf3f80",
+  "verification": {
+    "focused_tests": "11 passed",
+    "ruff": "passed",
+    "docs": "85 documents, 373 local links, zero errors",
+    "whitespace": "git diff --check passed",
+    "offline_rebuild": "exact deterministic outputs"
+  },
+  "summary": {
+    "candidates": 299,
+    "proposed_peer_groups": 181,
+    "fund_entity_references": 298,
+    "legacy_symbol_regimes": 1,
+    "singleton_groups": 117,
+    "directory_etfs_observed": 5761,
+    "issuer_reference_rows": 482,
+    "stages": {
+      "baseline": 14,
+      "reserve": 244,
+      "wave_1_proposed": 38,
+      "hold": 3
+    },
+    "asset_classes": {
+      "equity": 211,
+      "real_estate_equity": 8,
+      "sovereign": 15,
+      "inflation_linked": 4,
+      "aggregate_bond": 8,
+      "credit": 26,
+      "securitized": 5,
+      "hybrid_credit": 1,
+      "commodity": 21
+    },
+    "governance_status": {
+      "audited_with_limitations": 48,
+      "review": 4,
+      "absent": 247
+    },
+    "price_current_to_cutoff": 16,
+    "gaps": {
+      "causal_liquidity_and_spread_evidence": 299,
+      "dated_holdings_overlap_review": 299,
+      "dated_mandate_and_security_master_review": 299,
+      "expanded_app_execution_and_parity_contract": 299,
+      "external_security_identifier": 294,
+      "fresh_broker_contract_permissions_calendar_lot_and_reconciliation": 299,
+      "historical_membership_and_closure_coverage": 299,
+      "historical_publication_availability_not_certified": 52,
+      "issuer_inception_and_listing_boundary": 90,
+      "listing_currency_confirmation": 296,
+      "governance_status_review": 4,
+      "price_refresh_to_frozen_cutoff": 36,
+      "no_series_in_pinned_publication": 247,
+      "existing_admission_hold": 1,
+      "mandate_transition_and_alias_audit": 2,
+      "audited_raw_activity_coverage": 1,
+      "current_listing_unresolved": 1
+    }
+  },
+  "authority": "Reference planning only; no ingestion, strategy admission, app restart or trading changes"
+}

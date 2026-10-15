@@ -9,8 +9,15 @@ from systematic_trading.research import alpha101 as lib
 from systematic_trading.research import alpha101_screen as screening
 
 ROOT = screening.DEFAULT_ROOT
-PAPER = Path('research_tmp/101_formulaic_alphas.pdf')
+PAPER = screening.PAPER
 BUILT = pytest.mark.skipif(not (ROOT / 'screen.json').exists(), reason='frozen alpha screen not built')
+
+
+def test_formula_extraction_rejects_unpinned_reference(tmp_path):
+    paper = tmp_path / 'altered.pdf'
+    paper.write_bytes(b'not the registered reference')
+    with pytest.raises(ValueError, match='hash mismatch'):
+        screening.extract_formulas(paper)
 
 
 def history(**columns):

@@ -321,6 +321,7 @@ class AssetPoolFilterOverlay:
         min_long_momentum: Decimal = Decimal("0"),
         reallocate_selected: bool = True,
         fallback_policy: str = "neutral",
+        admitted_symbols: set[str] | None = None,
     ) -> None:
         lookbacks = [
             short_momentum_bars,
@@ -355,6 +356,7 @@ class AssetPoolFilterOverlay:
         if fallback_policy not in {"neutral", "eligible_cash", "all_cash", "defensive_cash"}:
             raise ValueError("Unsupported asset-pool fallback policy")
         self.fallback_policy = fallback_policy
+        self.admitted_symbols = frozenset(admitted_symbols) if admitted_symbols is not None else None
         self.cash_budget_active = False
         self.lookback_bars = max(lookbacks)
         self.threshold = self.min_long_momentum
@@ -397,7 +399,7 @@ class AssetPoolFilterOverlay:
         eligible_symbols = [
             symbol
             for symbol, score in scores.items()
-            if (
+            if (self.admitted_symbols is None or symbol in self.admitted_symbols) and (
                 not self.require_positive_long_momentum
                 or score.raw_metrics.get("longMomentum", Decimal("-1")) > self.min_long_momentum
             )

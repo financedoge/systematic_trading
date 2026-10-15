@@ -1,0 +1,452 @@
+[
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.0,
+    "group": "aggregate_bond.us.broad",
+    "mean_target_weight": 0.0,
+    "original14_pnl_usd": null,
+    "selected_months": 0,
+    "symbol": "AGG"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.6905987394957983,
+    "group": "sovereign.us.bills",
+    "mean_target_weight": 0.03214285714285714,
+    "original14_pnl_usd": null,
+    "selected_months": 5,
+    "symbol": "BIL"
+  },
+  {
+    "admission_excluded_months": 54,
+    "annual_target_turnover": 0.15256433627288832,
+    "group": "commodity.global.corn_futures",
+    "mean_target_weight": 0.010115809450302167,
+    "original14_pnl_usd": null,
+    "selected_months": 7,
+    "symbol": "CORN"
+  },
+  {
+    "admission_excluded_months": 3,
+    "annual_target_turnover": 0.7692874089280876,
+    "group": "commodity.global.agriculture_futures",
+    "mean_target_weight": 0.03957860511416652,
+    "original14_pnl_usd": null,
+    "selected_months": 13,
+    "symbol": "DBA"
+  },
+  {
+    "admission_excluded_months": 53,
+    "annual_target_turnover": 0.20362289962894728,
+    "group": "commodity.global.base_metals_futures",
+    "mean_target_weight": 0.011545009100802804,
+    "original14_pnl_usd": null,
+    "selected_months": 5,
+    "symbol": "DBB"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.5158926455153467,
+    "group": "commodity.global.broad_futures",
+    "mean_target_weight": 0.05118715739718055,
+    "original14_pnl_usd": 14706.749999999975,
+    "selected_months": 23,
+    "symbol": "DBC"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.18011398983057614,
+    "group": "equity.emerging.broad",
+    "mean_target_weight": 0.005029877334077691,
+    "original14_pnl_usd": null,
+    "selected_months": 2,
+    "symbol": "EEM"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.12446737259074696,
+    "group": "equity.developed_ex_us.broad",
+    "mean_target_weight": 0.013981733976060801,
+    "original14_pnl_usd": null,
+    "selected_months": 5,
+    "symbol": "EFA"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.0,
+    "group": "credit.emerging.sovereign_usd",
+    "mean_target_weight": 0.0,
+    "original14_pnl_usd": null,
+    "selected_months": 0,
+    "symbol": "EMB"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.4179684354537765,
+    "group": "equity.australia.broad",
+    "mean_target_weight": 0.014059816595413041,
+    "original14_pnl_usd": null,
+    "selected_months": 7,
+    "symbol": "EWA"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.5026232285750226,
+    "group": "equity.canada.broad",
+    "mean_target_weight": 0.04438824126452418,
+    "original14_pnl_usd": null,
+    "selected_months": 14,
+    "symbol": "EWC"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.10056375887971603,
+    "group": "equity.germany.broad",
+    "mean_target_weight": 0.023209320421177237,
+    "original14_pnl_usd": null,
+    "selected_months": 10,
+    "symbol": "EWG"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.0,
+    "group": "equity.hong_kong.broad",
+    "mean_target_weight": 0.004843864421491751,
+    "original14_pnl_usd": 6717.579999999998,
+    "selected_months": 2,
+    "symbol": "EWH"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.3866352228769961,
+    "group": "equity.japan.broad",
+    "mean_target_weight": 0.02208003545848014,
+    "original14_pnl_usd": 11110.799999999992,
+    "selected_months": 10,
+    "symbol": "EWJ"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.7578354642305272,
+    "group": "equity.taiwan.broad",
+    "mean_target_weight": 0.05892666737523151,
+    "original14_pnl_usd": null,
+    "selected_months": 26,
+    "symbol": "EWT"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.441338036109581,
+    "group": "equity.uk.broad",
+    "mean_target_weight": 0.020363532482409654,
+    "original14_pnl_usd": null,
+    "selected_months": 7,
+    "symbol": "EWU"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.3036831401921042,
+    "group": "equity.south_korea.broad",
+    "mean_target_weight": 0.02645215019843399,
+    "original14_pnl_usd": 18708.770000000008,
+    "selected_months": 14,
+    "symbol": "EWY"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.2981727151434301,
+    "group": "commodity.global.gold_physical",
+    "mean_target_weight": 0.03101451029145093,
+    "original14_pnl_usd": 12072.42,
+    "selected_months": 12,
+    "symbol": "GLD"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.0,
+    "group": "credit.usd.high_yield_broad",
+    "mean_target_weight": 0.0,
+    "original14_pnl_usd": 5341.390000000001,
+    "selected_months": 0,
+    "symbol": "HYG"
+  },
+  {
+    "admission_excluded_months": 4,
+    "annual_target_turnover": 0.2750592082698128,
+    "group": "equity.us.regional_banks",
+    "mean_target_weight": 0.016316355458384925,
+    "original14_pnl_usd": null,
+    "selected_months": 9,
+    "symbol": "IAT"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.15232210170165425,
+    "group": "equity.us_listed_industry.biotechnology",
+    "mean_target_weight": 0.011365385613832052,
+    "original14_pnl_usd": null,
+    "selected_months": 7,
+    "symbol": "IBB"
+  },
+  {
+    "admission_excluded_months": 70,
+    "annual_target_turnover": 0.0,
+    "group": "credit.global_ex_us.investment_grade_unhedged",
+    "mean_target_weight": 0.0,
+    "original14_pnl_usd": null,
+    "selected_months": 0,
+    "symbol": "IBND"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.0,
+    "group": "sovereign.us.treasury_7_10",
+    "mean_target_weight": 0.0,
+    "original14_pnl_usd": -392.09000000000674,
+    "selected_months": 0,
+    "symbol": "IEF"
+  },
+  {
+    "admission_excluded_months": 32,
+    "annual_target_turnover": 0.0,
+    "group": "sovereign.developed_ex_us.unhedged_broad",
+    "mean_target_weight": 0.0,
+    "original14_pnl_usd": null,
+    "selected_months": 0,
+    "symbol": "IGOV"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.5819661645907155,
+    "group": "equity.india.broad",
+    "mean_target_weight": 0.02757090254858251,
+    "original14_pnl_usd": null,
+    "selected_months": 11,
+    "symbol": "INDA"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.28483649851411225,
+    "group": "equity.us.aerospace_defense",
+    "mean_target_weight": 0.03033214615175473,
+    "original14_pnl_usd": null,
+    "selected_months": 16,
+    "symbol": "ITA"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.13859193714211054,
+    "group": "equity.us.small_blend",
+    "mean_target_weight": 0.013808630873224738,
+    "original14_pnl_usd": null,
+    "selected_months": 6,
+    "symbol": "IWM"
+  },
+  {
+    "admission_excluded_months": 60,
+    "annual_target_turnover": 0.0,
+    "group": "credit.emerging.sovereign_local",
+    "mean_target_weight": 0.0,
+    "original14_pnl_usd": null,
+    "selected_months": 0,
+    "symbol": "LEMB"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.0,
+    "group": "credit.usd.investment_grade_broad",
+    "mean_target_weight": 0.0,
+    "original14_pnl_usd": -1611.2299999999937,
+    "selected_months": 0,
+    "symbol": "LQD"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.0,
+    "group": "securitized.us.mortgage_agency",
+    "mean_target_weight": 0.0,
+    "original14_pnl_usd": null,
+    "selected_months": 0,
+    "symbol": "MBB"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.056088121075067755,
+    "group": "equity.china.broad",
+    "mean_target_weight": 0.003844701897056378,
+    "original14_pnl_usd": 1029.74,
+    "selected_months": 2,
+    "symbol": "MCHI"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.34887571075698337,
+    "group": "equity.us.mid_blend",
+    "mean_target_weight": 0.016110294236474205,
+    "original14_pnl_usd": null,
+    "selected_months": 6,
+    "symbol": "MDY"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.2712999041624157,
+    "group": "commodity.global.platinum_physical",
+    "mean_target_weight": 0.015638134132420836,
+    "original14_pnl_usd": null,
+    "selected_months": 9,
+    "symbol": "PPLT"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.0,
+    "group": "sovereign.us.treasury_1_3",
+    "mean_target_weight": 0.0,
+    "original14_pnl_usd": null,
+    "selected_months": 0,
+    "symbol": "SHY"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.19492467048835088,
+    "group": "commodity.global.silver_physical",
+    "mean_target_weight": 0.01906408022085232,
+    "original14_pnl_usd": null,
+    "selected_months": 12,
+    "symbol": "SLV"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.40609424341312994,
+    "group": "equity.us_listed_industry.semiconductors",
+    "mean_target_weight": 0.04666164469131934,
+    "original14_pnl_usd": null,
+    "selected_months": 30,
+    "symbol": "SOXX"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.7957839743627374,
+    "group": "equity.us.large_blend",
+    "mean_target_weight": 0.04325098319258948,
+    "original14_pnl_usd": 16082.930000000015,
+    "selected_months": 14,
+    "symbol": "SPY"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.0,
+    "group": "inflation_linked.us.tips_broad",
+    "mean_target_weight": 0.0,
+    "original14_pnl_usd": null,
+    "selected_months": 0,
+    "symbol": "TIP"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.0,
+    "group": "sovereign.us.treasury_20_plus",
+    "mean_target_weight": 0.0,
+    "original14_pnl_usd": -2642.019999999996,
+    "selected_months": 0,
+    "symbol": "TLT"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.26448254290591,
+    "group": "equity.europe.broad",
+    "mean_target_weight": 0.0171481761103599,
+    "original14_pnl_usd": 3341.179999999995,
+    "selected_months": 7,
+    "symbol": "VGK"
+  },
+  {
+    "admission_excluded_months": 47,
+    "annual_target_turnover": 0.03886717427403994,
+    "group": "commodity.global.wheat_futures",
+    "mean_target_weight": 0.004020279175010021,
+    "original14_pnl_usd": null,
+    "selected_months": 3,
+    "symbol": "WEAT"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.2834728792722546,
+    "group": "equity.us.materials",
+    "mean_target_weight": 0.010456517599956625,
+    "original14_pnl_usd": 1644.71999999999,
+    "selected_months": 4,
+    "symbol": "XLB"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.6159807632667126,
+    "group": "equity.us.communication_services",
+    "mean_target_weight": 0.048483132780090185,
+    "original14_pnl_usd": null,
+    "selected_months": 21,
+    "symbol": "XLC"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.3959520982136655,
+    "group": "equity.us.energy",
+    "mean_target_weight": 0.03638605154333925,
+    "original14_pnl_usd": 15549.769999999997,
+    "selected_months": 22,
+    "symbol": "XLE"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.605393929481914,
+    "group": "equity.us.industrials",
+    "mean_target_weight": 0.02911953534990821,
+    "original14_pnl_usd": null,
+    "selected_months": 10,
+    "symbol": "XLI"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.5807778262706227,
+    "group": "equity.us.technology",
+    "mean_target_weight": 0.06398256815642764,
+    "original14_pnl_usd": null,
+    "selected_months": 28,
+    "symbol": "XLK"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.2282919476903052,
+    "group": "equity.us.staples",
+    "mean_target_weight": 0.008996913552799796,
+    "original14_pnl_usd": null,
+    "selected_months": 3,
+    "symbol": "XLP"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.4574202407320331,
+    "group": "equity.us.utilities",
+    "mean_target_weight": 0.016884338713433405,
+    "original14_pnl_usd": null,
+    "selected_months": 9,
+    "symbol": "XLU"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.31521791240655134,
+    "group": "equity.us.healthcare",
+    "mean_target_weight": 0.014701525279062388,
+    "original14_pnl_usd": null,
+    "selected_months": 6,
+    "symbol": "XLV"
+  },
+  {
+    "admission_excluded_months": 0,
+    "annual_target_turnover": 0.40869872755386577,
+    "group": "equity.us.discretionary",
+    "mean_target_weight": 0.030769469116563076,
+    "original14_pnl_usd": null,
+    "selected_months": 15,
+    "symbol": "XLY"
+  }
+]

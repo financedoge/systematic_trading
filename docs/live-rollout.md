@@ -299,6 +299,7 @@ Install the optional IB dependency before real paper routing:
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -e ".[ib]"
+.\.venv\Scripts\python.exe scripts/install_ib_api.py
 ```
 
 Official IBKR TWS API notes that matter for this rollout:

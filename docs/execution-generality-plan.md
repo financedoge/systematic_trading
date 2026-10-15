@@ -1,5 +1,15 @@
 # Execution generality — routing any admitted IB contract
 
+> **2026-10-14 implementation update:** The first US-listed USD ETF boundary is
+> implemented and deployed: immutable account-bound contract admission, conId
+> routing, explicit research membership, union resolution for mixed allocations,
+> shared pinned decision inputs and FR25 financial/raw-activity binding. The
+> 5% FR25 review succeeded without blockers; no allocation was activated.
+> [Acceptance evidence](execution-readiness-2026-10-13.md). The original findings
+> below describe the pre-change baseline. Non-US calendars, currencies, board
+> lots and security-master migration remain planned; this is not universal
+> instrument support.
+
 > **2026-10-11 review update:** The operator manually checked XLE/XLB and reported trading permission. Retain that as operator evidence; permission is not presumed denied. Independent blockers remain: `live/sota.py` does not bind FR25 financial-selection schedules or audited raw-activity inputs, and `live/allocated_plan.py` resolves the combined instrument set from only one component. After operator login at 13:12 UTC, the paper API and reconciliation pass; fresh ISIN lookup verifies XLE conId 4215217 and XLB conId 4215200. These operational checks are resolved, while strategy input/model binding and mixed-universe integration remain incomplete. Implement and verify the minimum same-venue 14-ETF execution contract before allocation; the broader multi-venue architecture below need not all precede this case. UI/backend now share a conservative contract check instead of separate allowlists.
 
 Registered 2026-10-10 at the user's direction. The execution path must not have to

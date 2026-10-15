@@ -18,7 +18,8 @@ def targets_for_day(rows: dict, day: date, *, benchmark: bool = False, lookback_
                     flow_overlay: FlowConcentrationSpec | None = None, flow_state: dict | None = None,
                     constituent_overlay: ConstituentOverlaySpec | None = None, constituent_features: dict | None = None,
                     base_tree_models: dict | None = None, fixed_model_from: str | None = None,
-                    definition=None, usd_models=None, economic_models=None, raw_rows=None):
+                    definition=None, usd_models=None, economic_models=None, raw_rows=None,
+                    admitted_symbols=None, diagnostics=None):
     if constituent_overlay is not None and (benchmark or flow_overlay is not None or constituent_features is None):
         raise ValueError('Constituent overlay needs frozen features and an unmodified SOTA base')
     if benchmark and flow_overlay is not None:
@@ -34,6 +35,14 @@ def targets_for_day(rows: dict, day: date, *, benchmark: bool = False, lookback_
     if min(len(bars) for bars in histories.values()) < 253:
         raise ValueError(f'Insufficient warmup before {day}; 253 prior observations required')
     overlays = list(instantiate_overlays(definition))
+    if admitted_symbols is not None:
+        if not set(admitted_symbols) <= set(histories):
+            raise ValueError('Admission mask contains unknown instruments')
+        selectors = [o for o,s in zip(overlays,definition.overlays,strict=True)
+                     if s.kind in {'asset_pool_filter','financial_rank_selection'}]
+        if len(selectors) != 1 or selectors[0].fallback_policy == 'neutral':
+            raise ValueError('Admission requires one selector with an explicit cash fallback')
+        selectors[0].admitted_symbols = frozenset(admitted_symbols)
     for overlay, spec in zip(overlays, definition.overlays, strict=True):
         if spec.kind == 'usd_ridge':
             overlay.schedule = usd_models
@@ -69,6 +78,13 @@ def targets_for_day(rows: dict, day: date, *, benchmark: bool = False, lookback_
         cash_reserve_weight=Decimal('0.02'), sleeve_name=definition.sleeve_name,
         target_overlays=() if benchmark else overlays,
     )[day]
+    if admitted_symbols is not None and any(t.target_weight > 0 and t.symbol not in admitted_symbols for t in targets):
+        raise ValueError('Downstream overlay reintroduced an inadmissible instrument')
+    if diagnostics is not None:
+        diagnostics.update(selection=[dict(kind=s.kind, observation=o.observation,
+            ranks=getattr(o, 'rank_table', None), financial_abstained=getattr(o, 'abstained', None))
+            for o,s in zip(overlays,definition.overlays,strict=True)
+            if s.kind == 'financial_rank_selection'])
     if flow_overlay is not None:
         return apply_concentration_targets(targets, concentration_features(histories, flow_overlay),
                                            flow_overlay, flow_state)

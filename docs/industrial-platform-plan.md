@@ -4,7 +4,7 @@
 
 Build this repository into a 24x7 industrial-standard systematic trading platform for research, backtesting, paper trading, live trading, monitoring, and post-trade analysis. The target standard is institutional discipline: versioned data, reproducible research, explicit promotion gates, resilient services, audited execution, strong reconciliation, and real-time observability.
 
-The current Python/FastAPI/SQLite implementation remains the v0 control plane and research harness. The target state is a service-oriented platform using a message queue, columnar storage, transactional state storage, LEAN-compatible backtesting, Interactive Brokers execution, and Grafana-class monitoring.
+The current Python/FastAPI modular application uses PostgreSQL for transactional state, ClickHouse for analytical serving, NATS for event delivery and an isolated LEAN research worker. SQLite remains an explicit offline test/recovery backend. This document describes the target service architecture and promotion gates; the execution Kanban records current delivery, and the phase durations below are original planning estimates, not present schedules.
 
 The initial schema registry is code-based in `systematic_trading.schemas`; the convention and compatibility rules are documented in `docs/schema-registry-convention.md`.
 
@@ -150,7 +150,7 @@ Use a column store for fast analytics and historical scans. The selected target 
 
 The detailed target design is `docs/columnar-store-target-design.md`.
 
-SQLite remains acceptable for local prototypes only. Postgres should become the transactional source of truth for orders, approvals, strategy registry, reconciliation state, incidents, and operator actions.
+PostgreSQL is the operational source of truth for implemented transactional contracts. SQLite remains an explicit offline test/recovery backend. Expanded promotion and incident registries still require their own acceptance gates.
 
 ### Feature Service
 
@@ -452,19 +452,14 @@ Deliverables:
 - Monthly strategy promotion or retirement review.
 - Quarterly disaster recovery and restore drill.
 
-## Near-Term Implementation Backlog
+## Current implementation backlog
 
-Track execution status in `docs/execution-kanban.md`. That file is the active Kanban for Done, In Progress, Pending, Review, and Blocked work.
+Use [the execution Kanban](execution-kanban.md) for open work and
+[research state](research-state.md) for accepted conclusions. PostgreSQL, ClickHouse,
+NATS, raw recording, the operator UI and local LEAN parity are implemented; do not
+restart those completed milestones from the original phase schedule.
 
-1. Add event schema definitions for market data, proposals, orders, fills, alerts, and incidents.
-2. Select initial queue and database stack for single-machine operation.
-3. Add Postgres alongside SQLite without breaking current tests.
-4. Add ClickHouse or Parquet-first market-data warehouse path.
-5. Build the market-data recorder as an isolated service.
-6. Add service health checks and metric emission.
-7. Build the rebalance blotter model and API.
-8. Integrate LEAN for promoted strategy backtests.
-9. Add promotion registry tables and artifact hashes.
-10. Expand alert channels beyond JSONL and SMTP.
-11. Add daily post-trade report generation.
-12. Add robustness review automation and incident trend reporting.
+Current priorities are ETF admission/taxonomy, measured worker resource budgets,
+the generalized paper execution contract, promotion/risk controls, data-quality
+coverage, observability and verified recovery. Live enablement remains conditional
+on the full promotion and operating evidence above.

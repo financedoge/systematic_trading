@@ -203,6 +203,8 @@ def strategy_inputs(settings, analytics, store=None):
     if settings.strategy_monitoring_config_path.exists():
         files.append(settings.strategy_monitoring_config_path)
     code_root = Path(__file__).resolve().parents[1]
+    files += list((code_root / "presentation").rglob("*.html"))
+    files += [code_root / "presentation/templates.py", code_root / "web/contracts.py"]
     files += [code_root / name for name in ("web/api.py", "web/asset_names.py", "web/shell.py",
                                           "research/etf_universe.py", "research/all_weather_universe.py", "research/stock_universe.py",
                                           "backtest/reporting.py", "chart_navigation.py", "research/catalog.py",

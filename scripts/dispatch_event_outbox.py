@@ -28,11 +28,12 @@ def dispatch_once(
     limit: int,
     settings: AppSettings | None = None,
     publisher: object | None = None,
+    progress=None,
 ) -> EventOutboxDispatchResult:
     store = create_transactional_store(settings or AppSettings(), database_path=database_path)
     store.initialize()
     dispatcher = EventOutboxDispatcher(store, publisher or JsonlPlatformEventPublisher(output_path))
-    return dispatcher.dispatch_pending(limit=limit)
+    return dispatcher.dispatch_pending(limit=limit, progress=progress)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -73,6 +74,21 @@ def main(argv: list[str] | None = None) -> int:
     exit_code = 0
     logger = OperationalLogger(path=operation_log_path, service_id=SERVICE_ID)
     publisher = _build_publisher(args, output_path)
+    last_progress = time.monotonic()
+
+    def record_progress(result):
+        nonlocal last_progress
+        now = time.monotonic()
+        if now - last_progress < 5:
+            return
+        _write_dispatcher_state(
+            state_path=state_path, started_at=started_at, running=True,
+            database_path=database_path, output_path=output_path,
+            publisher_name=args.publisher, nats_url=args.nats_url,
+            last_result=result, last_error=_dispatch_error(result),
+            message="Event outbox dispatcher making progress within a batch.",
+        )
+        last_progress = now
     logger.info(
         "dispatcher_started",
         message="Event outbox dispatcher started.",
@@ -103,6 +119,7 @@ def main(argv: list[str] | None = None) -> int:
                     limit=args.limit,
                     settings=settings,
                     publisher=publisher,
+                    progress=record_progress,
                 )
                 last_error = _dispatch_error(last_result)
                 print(json.dumps(last_result.model_dump(mode="json"), sort_keys=True))

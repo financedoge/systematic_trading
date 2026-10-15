@@ -57,6 +57,9 @@ class IBContractSpec(BaseModel):
     exchange: str = "SMART"
     currency: Currency
     primary_exchange: str | None = None
+    con_id: int | None = Field(default=None, gt=0)
+    local_symbol: str | None = None
+    trading_class: str | None = None
 
 
 class IBOrderSpec(BaseModel):
@@ -163,7 +166,8 @@ class InteractiveBrokersOrderRouter:
         self.settings = settings
         self.adapter = InteractiveBrokersAdapter(settings)
         self.client = client
-        self.instruments = instruments or instruments_for_definition(current_sota_definition())
+        self.instruments = instruments if instruments is not None else instruments_for_definition(current_sota_definition())
+        self._explicit_instruments = instruments
 
     @serialized_orders
     def submit_approved_proposal(
@@ -175,12 +179,18 @@ class InteractiveBrokersOrderRouter:
         allow_resubmit: bool = False,
         order_indexes: set[int] | None = None,
     ) -> BrokerSubmissionResult:
+        try:
+            contracts = self._proposal_contracts(store, proposal)
+        except (OSError, ValueError, KeyError, TypeError) as exc:
+            return BrokerSubmissionResult(proposal_id=proposal.proposal_id, environment=environment,
+                records=[], validation_issues=['Execution contract: ' + str(exc)])
         validation_issues = self._validate_proposal_for_submission(
             proposal,
             store,
             environment,
             allow_resubmit,
             order_indexes=order_indexes,
+            contracts=contracts,
         )
         if validation_issues:
             return BrokerSubmissionResult(
@@ -226,7 +236,7 @@ class InteractiveBrokersOrderRouter:
                     submitted_at=submitted_at,
                     remaining_quantity=order.quantity,
                 )
-                contract = self.contract_spec_for(order.symbol)
+                contract = contracts[order.symbol]
                 ib_order = order_spec_for(order, order_ref=order_ref)
                 stage = f"reserving {order.symbol} before sending it to IB"
                 if not store.reserve_broker_order_record(record, allow_resubmit=allow_resubmit):
@@ -297,6 +307,17 @@ class InteractiveBrokersOrderRouter:
         )
 
     def contract_spec_for(self, symbol: str) -> IBContractSpec:
+        from systematic_trading.execution.registry import ExecutionRegistry
+        if (self.settings.data_dir / 'execution_registry/current.json').exists():
+            registry = ExecutionRegistry(self.settings)
+            entry = registry.document['entries'].get(symbol)
+            if entry is None:
+                raise ValueError('No execution admission: ' + symbol)
+            instrument = Instrument.model_validate(entry['instrument'])
+            contract = registry.resolve({symbol:instrument})[symbol]
+            return IBContractSpec(symbol=symbol, con_id=contract['conId'], currency=contract['currency'],
+                primary_exchange=contract['primaryExchange'], local_symbol=contract.get('localSymbol'),
+                trading_class=contract.get('tradingClass'))
         instrument = self.instruments.get(symbol)
         if instrument is None:
             raise ValueError(f"{symbol} is not in the configured IB instrument universe.")
@@ -307,6 +328,31 @@ class InteractiveBrokersOrderRouter:
             primary_exchange=primary_exchange,
         )
 
+    def _proposal_contracts(self, store, proposal):
+        from systematic_trading.portfolio.strategy_allocation import trading_definition
+        from systematic_trading.execution.registry import proposal_registry, registry_required
+        from systematic_trading.execution.reconciliation import load_latest_ib_reconciliation
+        instruments = (self._explicit_instruments if self._explicit_instruments is not None
+                       else instruments_for_definition(trading_definition(store)))
+        registry = proposal_registry(self.settings, instruments)
+        bound = proposal.input_provenance.get('execution_registry')
+        if registry is None:
+            if bound is not None:
+                raise ValueError('Bound execution registry is missing; routing is blocked')
+            return {s:IBContractSpec(symbol=s, currency=i.quote_currency,
+                    primary_exchange=_primary_exchange(i)) for s,i in instruments.items()}
+        if bound is None and registry_required(instruments):
+            raise ValueError('Expanded proposal lacks execution registry receipt')
+        if bound is not None and bound != registry.receipt(instruments):
+            raise ValueError('Execution admission changed; rebuild and approve a new proposal')
+        report = load_latest_ib_reconciliation(self.settings)
+        if report is None or report.managed_accounts != [registry.document['account']]:
+            raise ValueError('Execution admission requires the reconciled paper account')
+        contracts = registry.resolve(instruments, account=report.managed_accounts[0])
+        return {s:IBContractSpec(symbol=s, con_id=c['conId'], currency=c['currency'],
+                primary_exchange=c['primaryExchange'], local_symbol=c.get('localSymbol'),
+                trading_class=c.get('tradingClass')) for s,c in contracts.items()}
+
     def _validate_proposal_for_submission(
         self,
         proposal: TradeProposal,
@@ -314,11 +360,18 @@ class InteractiveBrokersOrderRouter:
         environment: OrderEnvironment,
         allow_resubmit: bool,
         order_indexes: set[int] | None = None,
+        contracts: dict[str, IBContractSpec] | None = None,
     ) -> list[str]:
         from systematic_trading.portfolio.strategy_allocation import allocation_binding_issues
         issues: list[str] = allocation_binding_issues(store, proposal)
         from systematic_trading.live.deferred_rebalance import prepared_submission_issues
         issues.extend(prepared_submission_issues(self.settings, store, proposal))
+        if contracts is None:
+            try:
+                contracts = self._proposal_contracts(store, proposal)
+            except (OSError, ValueError, KeyError, TypeError) as exc:
+                contracts = {}
+                issues.append('Execution contract: ' + str(exc))
         order_items = _selected_order_items(proposal, order_indexes)
         if proposal.status != ProposalStatus.APPROVED:
             issues.append(f"{proposal.proposal_id}: proposal status must be approved before routing.")
@@ -341,8 +394,10 @@ class InteractiveBrokersOrderRouter:
                 issues.append(
                     f"{order.symbol}: order environment {order.environment.value} does not match route environment {environment.value}."
                 )
-            if order.symbol not in self.instruments:
+            if order.symbol not in contracts:
                 issues.append(f"{order.symbol}: instrument is not in the configured IB route universe.")
+            elif contracts[order.symbol].con_id is not None and order.reference_price < 1:
+                issues.append(f"{order.symbol}: sub-dollar tick rules are not supported by this admission.")
             if order.notional_cnh <= Decimal("0"):
                 issues.append(f"{order.symbol}: notional must be positive.")
             if order.quantity < 1:
@@ -731,6 +786,12 @@ def _to_ib_contract(spec: IBContractSpec) -> object:
     contract.currency = spec.currency.value
     if spec.primary_exchange:
         contract.primaryExchange = spec.primary_exchange
+    if spec.con_id is not None:
+        contract.conId = spec.con_id
+    if spec.local_symbol:
+        contract.localSymbol = spec.local_symbol
+    if spec.trading_class:
+        contract.tradingClass = spec.trading_class
     return contract
 
 

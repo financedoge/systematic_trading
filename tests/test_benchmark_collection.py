@@ -49,22 +49,23 @@ def test_collection_without_blotter_deduplicates_and_publishes_audited_observati
     collector.refresh(now=NOW)
     service.pool.shutdown(wait=True)
     report = collector.refresh(now=NOW)
-    assert len(provider.calls) == 1  # two orders, original and routed, same instrument/window
+    assert len(provider.calls) == 2  # one shared order window and one shared regular session
     assert report["window_status_counts"] == {"ready": 1}
     assert report["paper_order_count"] == 2
     files = list((tmp_path / "execution_benchmarks").glob("*.json"))
-    assert len(files) == 1
+    assert len(files) == 2
+    assert report["session_status_counts"] == {"ready": 1}
     candidate = json.loads(files[0].read_text())
     assert candidate["audit"]["coverage"] == "100%"
     assert candidate["bars"][0]["volume"] == "7"
     assert candidate["research_approved"] is False
     import_json_group(analytics, "execution-benchmarks", files, "execution_benchmark")
-    assert len(analytics.docs["execution-benchmarks"]) == 1
+    assert len(analytics.docs["execution-benchmarks"]) == 2
     writes = analytics.writes
     collector.refresh(now=NOW + timedelta(seconds=30))
     assert analytics.writes == writes  # unchanged coverage is not a new publication
     assert (tmp_path / "run" / "execution_benchmark_collection.json").exists()
-    assert len(list((tmp_path / "execution_benchmark_attempts").rglob("*.request.json"))) == 1
+    assert len(list((tmp_path / "execution_benchmark_attempts").rglob("*.request.json"))) == 2
     restarted = TwapBenchmarkService(service.settings, Provider())
     assert restarted.get(row, now=NOW)["status"] == "ready"
     assert not restarted.provider.calls
@@ -81,7 +82,8 @@ def test_original_and_routed_windows_are_distinct(store, tmp_path):
     collector.refresh(now=NOW)
     service.pool.shutdown(wait=True)
     report = collector.refresh(now=NOW)
-    assert len(provider.calls) == report["unique_window_count"] == 2
+    assert len(provider.calls) == 4
+    assert report["unique_window_count"] == report["unique_session_count"] == 2
     assert report["orders"][0]["original"]["window_start"] != report["orders"][0]["routed"]["window_start"]
 
 
@@ -100,7 +102,7 @@ def test_failure_retry_is_durable_and_partial_response_retained(store, tmp_path)
     restarted = TwapBenchmarkService(service.settings, provider)
     result = restarted.get(row)
     assert result["status"] == "unavailable" and result["next_retry_at"]
-    assert len(provider.calls) == 1
+    assert len(provider.calls) == 2
     raw = next((tmp_path / "execution_benchmark_attempts").rglob("*.response.json"))
     assert json.loads(raw.read_text())["response"]["bars"] == [{"close": "123"}]
     state = retained_state(tmp_path, result["benchmark_key"])
@@ -115,7 +117,8 @@ def test_completed_evidence_tampering_withholds_read_and_publication(store, tmp_
     service, collector, analytics, provider = setup(tmp_path, [row])
     collector.refresh(now=NOW)
     service.pool.shutdown(wait=True)
-    path = next((tmp_path / "execution_benchmarks").glob("*.json"))
+    key = service.get(row, now=NOW)["benchmark_key"]
+    path = tmp_path / "execution_benchmarks" / (key + ".json")
     saved = json.loads(path.read_text())
     saved["bars"][0]["close"] = "101"
     saved["audit"]["bars_sha256"] = digest(saved["bars"])
@@ -127,7 +130,7 @@ def test_completed_evidence_tampering_withholds_read_and_publication(store, tmp_
     with pytest.raises(ValueError, match="original capture"):
         import_json_group(analytics, "execution-benchmarks", [path], "execution_benchmark")
     assert "execution-benchmarks" not in analytics.versions
-    assert len(provider.calls) == 1
+    assert len(provider.calls) == 2
     restarted.close()
 
 

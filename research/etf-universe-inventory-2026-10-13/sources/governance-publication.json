@@ -1,0 +1,9 @@
+{
+  "workspace": "93dff1b967b0e2332e7347a90be03b44746efd1e81b0a76475b76ed6694e2862",
+  "source_id": "governance/catalog",
+  "version": "38153d09e24666838a4737dfe32423fe9832b12c49132b0d41418c8e1355378f",
+  "published_at": "2026-10-13 12:46:39.917040",
+  "observation_count": 5341,
+  "document_count": 5,
+  "provenance": "{\"cutoff\":\"2026-10-12\",\"owner\":\"application\",\"parent\":\"296e23e51c2e594ff0a0aaa1996b04ac6b4561b4084637d0ae4e9f38e0277b34\",\"policy\":{\"basis\":\"Yahoo split/dividend back-adjusted prices; not a reinvestment total-return index\",\"conflict_tolerance\":0.005,\"dividend_factor_tolerance\":0.001,\"historical_availability\":\"unknown; retrieval time is not historical availability\",\"listing_boundary\":\"Quarantine every source observation before the preferred provider firstTradeDate; when absent, use the first valid preferred observation as an identity floor. Earlier issuer continuity requires independent dated evidence\",\"median_scale_error\":0.001,\"min_overlap\":60,\"minimum_informative_returns\":20,\"p99_return_error\":0.01,\"p99_scale_error\":0.005,\"raw\":\"Reconstructed from source Close and strictly subsequent split ratios; never tape-certified\",\"raw_basis_price_tolerance\":0.005,\"raw_basis_volume_tolerance\":0.05,\"version\":2},\"root\":\"D:\\\\projects\\\\systematic_trading\\\\var\\\\governance\\\\research-2026-10-12-321490d52343\"}"
+}

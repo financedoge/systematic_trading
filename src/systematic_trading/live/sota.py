@@ -74,6 +74,8 @@ def build_sota_live_rebalance_plan(
     explicit_targets=None,
     allocation_receipt=None,
     reuse_proposal_intent=False,
+    decision_session=None,
+    valuation_instruments=None,
 ) -> SotaLiveRebalancePlan:
     if definition is None:
         from systematic_trading.portfolio.strategy_allocation import control_state
@@ -87,15 +89,28 @@ def build_sota_live_rebalance_plan(
         definition = current_sota_definition()
     overlays = instantiate_overlays(definition)
     instruments = instruments_for_definition(definition)
-    bars_by_symbol = {
+    pricing_instruments = dict(valuation_instruments or instruments)
+    if any(pricing_instruments.get(s) != i for s, i in instruments.items()):
+        raise ValueError('Valuation universe must contain identical strategy instruments')
+    needs_raw = any(s.kind == 'audited_etf_activity' for s in definition.overlays)
+    if needs_raw and not broker.settings.require_governed_decision_inputs:
+        raise ValueError('Audited activity execution requires published governed inputs')
+    bars_by_symbol = {} if broker.settings.require_governed_decision_inputs else {
         symbol: store.list_price_bars(symbol, end_date=decision_date or account_snapshot.as_of)
         for symbol in instruments
     }
     input_receipt, execution_marks = {"policy": "explicit_legacy_stored_inputs"}, None
     if broker.settings.require_governed_decision_inputs:
-        from systematic_trading.portfolio.decision_inputs import decision_inputs
-        bars_by_symbol, execution_marks, input_receipt = decision_inputs(
-            broker.settings, instruments, decision_date or account_snapshot.as_of)
+        from systematic_trading.portfolio.decision_inputs import DecisionInputSession
+        decision_session = decision_session or DecisionInputSession(
+            broker.settings, decision_date or account_snapshot.as_of)
+        bars_by_symbol, execution_marks, input_receipt, raw_bars = decision_session.load(instruments, raw_activity=needs_raw)
+        if set(pricing_instruments) != set(instruments):
+            execution_marks, valuation_receipt = decision_session.marks(pricing_instruments)
+            input_receipt['valuation_inputs'] = valuation_receipt
+        for overlay, spec in zip(overlays, definition.overlays, strict=True):
+            if spec.kind == 'audited_etf_activity':
+                overlay.raw = raw_bars
     effective_decision_date = decision_date or account_snapshot.as_of or _latest_trade_date(bars_by_symbol)
     latest_available_trade_date = _latest_trade_date(bars_by_symbol)
     if latest_available_trade_date < effective_decision_date:
@@ -148,6 +163,17 @@ def build_sota_live_rebalance_plan(
             for overlay, spec in zip(overlays, definition.overlays, strict=True):
                 if spec.kind == 'economic_ridge':
                     overlay.schedule = schedule
+        if any(o.kind == 'financial_rank_selection' for o in definition.overlays):
+            from systematic_trading.research.fr25_tracking import published_live_schedule
+            schedule, financial_receipt = published_live_schedule(broker.settings, definition, input_receipt.get('batch'))
+            input_receipt['financial'] = financial_receipt
+            for overlay, spec in zip(overlays, definition.overlays, strict=True):
+                if spec.kind == 'financial_rank_selection':
+                    overlay.schedule = schedule
+        revisions = {input_receipt[k]['calculation_revision'] for k in ('rolling_model','usd','economic','financial')
+                     if k in input_receipt and 'calculation_revision' in input_receipt[k]}
+        if len(revisions) > 1:
+            raise ValueError('Model publications changed while preparing the proposal; retry from one calculation')
         targets, eligible_symbols = _sota_targets_as_of(
             instruments=instruments,
             bars_by_symbol={symbol: [bar for bar in bars if bar.trade_date <= target_date] for symbol, bars in bars_by_symbol.items()},
@@ -163,16 +189,16 @@ def build_sota_live_rebalance_plan(
     if execution_marks is not None:
         prices = {s: Decimal(mark["close"]) for s, mark in execution_marks.items()
                   if mark["trade_date"] == str(effective_decision_date)}
-        if set(prices) != set(instruments):
+        if set(prices) != set(pricing_instruments):
             raise ValueError("Incomplete audited raw execution marks for the decision session")
     fx_to_cnh = _latest_fx_to_cnh(
         store=store,
-        currencies=_required_currencies(instruments, account_snapshot),
+        currencies=_required_currencies(pricing_instruments, account_snapshot),
         decision_date=effective_decision_date,
     )
     positions = _portfolio_positions(
         account_snapshot=account_snapshot,
-        instruments=instruments,
+        instruments=pricing_instruments,
         prices=prices,
     )
     cash = account_snapshot.cash or [CashBalance(currency=Currency.CNH, amount=Decimal("0"))]
@@ -188,7 +214,7 @@ def build_sota_live_rebalance_plan(
         sleeve=definition.sleeve_name,
         positions=positions,
         cash=cash,
-        instruments=instruments,
+        instruments=pricing_instruments,
         prices=prices,
         fx_to_cnh=fx_to_cnh,
         targets=targets,
@@ -202,6 +228,10 @@ def build_sota_live_rebalance_plan(
                          target_source_inputs=target_proposal.input_provenance if target_proposal else None)
     if allocation_receipt is not None:
         input_receipt['allocation'] = allocation_receipt
+    from systematic_trading.execution.registry import proposal_registry
+    registry = proposal_registry(broker.settings, pricing_instruments)
+    if registry is not None:
+        input_receipt['execution_registry'] = registry.receipt(pricing_instruments)
     input_receipt["receipt_sha256"] = digest(encode(input_receipt))
     proposal = proposal.model_copy(update={"input_provenance": input_receipt,
         "portfolio_context": portfolio_context(store).model_dump(mode="json")})

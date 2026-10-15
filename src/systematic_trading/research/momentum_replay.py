@@ -50,7 +50,15 @@ def verify_usd_bundle(root):
     return dict(spec=SimpleNamespace(**s))
 
 
-def usd_instruments():
+def usd_instruments(recipe=None):
+    if recipe and recipe.get('universeMembers'):
+        from systematic_trading.domain.market import Instrument
+        members = [Instrument.model_validate(row) for row in recipe['universeMembers']]
+        if len({i.symbol for i in members}) != len(members) or any(i.quote_currency != Currency.USD for i in members):
+            raise ValueError('Research membership requires unique USD instruments')
+        return {i.symbol:i for i in members}
+    if recipe and recipe.get('universeKey') not in {None,'multi_asset','multi_asset_14','global'}:
+        raise ValueError('Expanded research recipe requires frozen membership')
     from systematic_trading.research.parking_fallback import BILL
     from systematic_trading.research.etf_universe import RESEARCH_SECTOR_ETFS
     return {**instruments_for_definition(current_sota_definition()), **BENCHMARK_INSTRUMENTS,
@@ -88,7 +96,8 @@ def run_usd_reference(root):
     started=time.perf_counter()
     spec=verify_usd_bundle(root)['spec']
     decisions,quotes,sessions=[read_json(root/name) for name in ('decisions.json','quotes.json','sessions.json')]
-    instruments={s:usd_instruments()[s] for s in quotes}
+    members = usd_instruments(getattr(spec,'recipe',None))
+    instruments={s:members[s] for s in quotes}
     fills=[]
     decision_days=iter(sorted(decisions))
     cost=D(spec.transaction_cost_bps)/10000

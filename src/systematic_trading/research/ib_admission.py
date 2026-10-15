@@ -16,7 +16,7 @@ def validate_contract(fund, details):
     contract = row["contract"]
     if (contract.get("symbol") != fund["symbol"] or contract.get("secType") != "STK"
             or contract.get("currency") != fund["currency"]
-            or contract.get("primaryExchange") != "ARCA"
+            or contract.get("primaryExchange") != fund.get("primary_exchange", "ARCA")
             or not isinstance(contract.get("conId"), int) or contract["conId"] <= 0
             or "SMART" not in row.get("validExchanges", "").split(",")):
         raise ValueError("IB/issuer contract identity disagreement: " + fund["symbol"])

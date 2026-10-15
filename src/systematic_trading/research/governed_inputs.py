@@ -17,6 +17,7 @@ class GovernedInputs:
         self.root = root
         if sha256(root / 'manifest.json') != batch:
             raise ValueError('Governed batch manifest mismatch')
+        self.batch = batch
         self.manifest = json.loads((root / 'manifest.json').read_text(encoding='utf8'))
         self.used = {}
         self.parent = None
@@ -29,7 +30,8 @@ class GovernedInputs:
     def checked(self, relative):
         if relative not in self.manifest and self.parent is not None:
             path = self.parent.checked(relative)
-            self.used['parent/' + relative] = self.parent.used[relative]
+            key = relative if relative in self.parent.used else 'parent/' + relative
+            self.used['parent/' + relative] = self.parent.used[key]
             return path
         path = self.root / relative
         if relative not in self.manifest or sha256(path) != self.manifest[relative]:

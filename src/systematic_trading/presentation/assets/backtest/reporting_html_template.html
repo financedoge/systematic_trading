@@ -1,0 +1,1144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Backtest Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f8fafc;
+      --panel: #ffffff;
+      --ink: #111827;
+      --muted: #64748b;
+      --line: #d7dee8;
+      --line-soft: #edf2f7;
+      --accent: #0f766e;
+      --benchmark: #111827;
+      --danger: #b91c1c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+    main {
+      width: min(1480px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 24px 0 40px;
+    }
+    .report-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-end;
+      margin-bottom: 18px;
+    }
+    .app-header {
+      min-height: 56px;
+      padding: 8px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
+    }
+    .app-header h1 { margin: 0; font-size: 18px; }
+    .app-actions { display: flex; gap: 8px; align-items: center; }
+    .app-actions a {
+      min-height: 32px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #ffffff;
+      color: var(--ink);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 26px;
+      line-height: 1.15;
+      font-weight: 760;
+    }
+    h2 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.25;
+      font-weight: 720;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(130px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 76px;
+    }
+    .stat-label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 8px;
+      white-space: nowrap;
+    }
+    .stat-value {
+      font-size: 20px;
+      line-height: 1.1;
+      font-weight: 760;
+    }
+    .chart-panel, .table-panel, .warning-panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .chart-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 14px 16px 0;
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px 12px;
+      max-width: 760px;
+    }
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #334155;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .swatch {
+      width: 11px;
+      height: 11px;
+      border-radius: 3px;
+      border: 1px solid rgba(17, 24, 39, 0.14);
+      flex: 0 0 auto;
+    }
+    .chart-wrap {
+      position: relative;
+      height: 620px;
+      padding: 4px 10px 10px;
+    }
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .tooltip {
+      position: absolute;
+      min-width: 230px;
+      max-width: 300px;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 120ms ease, transform 120ms ease;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.14);
+      padding: 10px 12px;
+      color: var(--ink);
+      font-size: 12px;
+      line-height: 1.45;
+      z-index: 3;
+    }
+    .tooltip.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .tooltip-title {
+      font-weight: 720;
+      margin-bottom: 6px;
+    }
+    .tooltip-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .tables {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 390px);
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .table-panel {
+      overflow: hidden;
+    }
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .segments {
+      display: inline-flex;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      flex: 0 0 auto;
+      background: #f8fafc;
+    }
+    .segments button {
+      border: 0;
+      border-right: 1px solid var(--line);
+      background: transparent;
+      color: #334155;
+      padding: 8px 11px;
+      min-width: 76px;
+      font: inherit;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .segments button:last-child { border-right: 0; }
+    .segments button.active {
+      background: var(--ink);
+      color: white;
+    }
+    .benchmark-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .benchmark-control select {
+      min-width: 220px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--ink);
+      padding: 8px 10px;
+      font: inherit;
+      font-size: 12px;
+    }
+    .table-scroll {
+      max-height: 560px;
+      overflow: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+    th, td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--line-soft);
+      text-align: right;
+      white-space: nowrap;
+    }
+    th:first-child, td:first-child { text-align: left; }
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #f8fafc;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 720;
+    }
+    tr:last-child td { border-bottom: 0; }
+    .negative { color: #b91c1c; }
+    .positive { color: #047857; }
+    .warning-panel {
+      margin-top: 14px;
+      padding: 12px 14px;
+      color: #7c2d12;
+      background: #fff7ed;
+      border-color: #fed7aa;
+    }
+    .signal-panel {
+      margin-top: 14px;
+      overflow: hidden;
+    }
+    .contribution-panel {
+      margin-top: 14px;
+    }
+    .signal-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+      gap: 14px;
+      padding: 14px;
+    }
+    .signal-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .signal-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 11px;
+      background: #f8fafc;
+    }
+    .signal-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+    .signal-card div {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: #334155;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+    .signal-detail {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      min-height: 160px;
+      padding: 12px;
+    }
+    .signal-detail h3 {
+      margin: 0 0 8px;
+      font-size: 14px;
+    }
+    .signal-detail ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      color: #334155;
+      line-height: 1.65;
+    }
+    .warning-panel ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+    @media (max-width: 1100px) {
+      .summary { grid-template-columns: repeat(3, minmax(130px, 1fr)); }
+      .tables { grid-template-columns: 1fr; }
+      .signal-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      main { width: min(100vw - 20px, 1480px); padding-top: 16px; }
+      .report-header, .chart-head, .panel-head {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .app-header { align-items: flex-start; flex-direction: column; padding: 10px 12px; }
+      .app-actions { width: 100%; flex-wrap: wrap; }
+      .app-actions a { flex: 1 1 110px; }
+      .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .signal-summary { grid-template-columns: 1fr; }
+      .chart-wrap { height: 520px; }
+      .legend { justify-content: flex-start; }
+      .segments { width: 100%; }
+      .segments button { flex: 1 1 0; min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <h1>Strategies</h1>
+    <div class="app-actions">
+      <a class="button" href="/operator">Trading</a>
+      <a class="button" href="/strategies">Strategies</a>
+      <a class="button" href="/platform">System</a>
+      <a class="button" href="/platform/market-data-audit">Market Data</a>
+    </div>
+  </header>
+  <main>
+    <section class="report-header">
+      <div>
+        <h1 id="title">Backtest Report</h1>
+        <div class="meta" id="meta"></div>
+      </div>
+      <div class="meta" id="dataMeta"></div>
+    </section>
+
+    <section class="summary" id="summaryCards"></section>
+
+    <section class="table-panel" id="currentStatePanel" hidden style="margin-bottom:14px">
+      <div class="panel-head"><div><h2>Current Portfolio and Target Weights</h2><div class="meta" id="calculationMeta"></div></div>
+        <button type="button" id="refreshCalculations">Refresh calculations</button></div>
+      <div class="meta" id="allocationMeta" style="padding:12px 16px"></div>
+      <div class="table-scroll"><table id="currentWeightsTable"></table></div>
+      <div class="meta" id="exposureMeta" style="padding:12px 16px"></div>
+      <div class="meta" id="refreshStatus" style="padding:0 16px 12px" role="status"></div>
+    </section>
+
+    <section class="table-panel" id="usdModelPanel" hidden style="margin-bottom:14px">
+      <div class="panel-head"><h2>USD Prediction Layer</h2><a href="/platform/market-data-audit?view=usd">USD index history</a></div>
+      <div style="padding:12px 16px"><p id="usdModelMeta"></p><p class="meta" id="usdModelExplanation"></p>
+        <div class="table-scroll"><table id="usdForecasts"></table></div>
+        <details><summary>Inputs, coefficients and publication lineage</summary><pre id="usdModelDetails" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre></details>
+      </div>
+    </section>
+
+    <section class="table-panel" id="economicModelPanel" hidden style="margin-bottom:14px">
+      <div class="panel-head"><h2 id="economicModelTitle">Leading Indicators and Payroll / Inflation Context</h2><a href="/platform/market-data-audit?view=economics">Economic data</a></div>
+      <div style="padding:12px 16px"><p id="economicModelStatus"></p><p class="meta" id="economicModelExplanation"></p>
+        <div class="table-scroll"><table id="economicForecasts"></table></div>
+        <div class="table-scroll"><table id="selectionRanks" hidden></table></div>
+        <details><summary>Inputs, coefficients, missing observations and publication lineage</summary><pre id="economicModelDetails" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre></details>
+      </div>
+    </section>
+
+    <section class="table-panel" id="modelTrainingPanel" hidden style="margin-bottom:14px">
+      <div class="panel-head"><h2>Rolling Model and ETF Activity</h2><button id="downloadRollingModel">Download current model</button></div>
+      <div style="padding:12px 16px"><p id="rollingModelMeta"></p><p class="meta" id="rollingModelExplanation"></p>
+        <details><summary>Current forecasts and lag-20 activity signals</summary><div class="table-scroll"><table id="rollingForecasts"></table></div></details>
+        <details><summary>Allocation after each strategy step</summary><div class="table-scroll"><table id="rollingStages"></table></div></details>
+        <details><summary>Feature definitions and current input values</summary><div id="rollingFeatures"></div></details>
+        <details><summary>Training parameters and provenance</summary><pre id="rollingProvenance" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre></details>
+        <details id="rollingTrees"><summary>Inspect all 100 fitted trees</summary>
+          <p class="meta">The forecast adds one leaf contribution from each tree. Leaf values already include the learning rate. Inputs and thresholds use float32; equality follows the right branch.</p>
+          <label>Boosting tree <select id="rollingTreeSelect" aria-label="Boosting tree"></select></label>
+          <button id="rollingTreeIn">Zoom in</button> <button id="rollingTreeOut">Zoom out</button> <button id="rollingTreeFit">Fit</button>
+          <div id="rollingTreeChart" style="overflow:auto;max-height:550px;border:1px solid #d9dee7"></div>
+        </details>
+      </div>
+    </section>
+
+    <section class="chart-panel">
+      <div class="chart-head">
+        <div>
+          <h2>NAV, Benchmark, Holdings, Drawdowns</h2>
+          <div class="meta" id="chartMeta"></div>
+        </div>
+        <div>
+          <label class="benchmark-control">
+            Benchmark
+            <select id="benchmarkSelect"></select>
+          </label>
+          <div class="legend" id="legend"></div>
+        </div>
+      </div>
+      <div class="chart-wrap" id="chartWrap">
+        <svg id="chartSvg" role="img" aria-label="Backtest chart"></svg>
+        <div class="tooltip" id="tooltip"></div>
+      </div>
+    </section>
+
+    <section class="tables">
+      <div class="table-panel">
+        <div class="panel-head">
+          <h2>Period Metrics</h2>
+          <div class="segments" id="metricSegments">
+            <button type="button" data-frequency="yearly" class="active">Yearly</button>
+            <button type="button" data-frequency="quarterly">Quarterly</button>
+            <button type="button" data-frequency="monthly">Monthly</button>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table id="metricsTable"></table>
+        </div>
+      </div>
+      <div class="table-panel">
+        <div class="panel-head">
+          <h2>Largest Drawdowns</h2>
+        </div>
+        <div class="table-scroll">
+          <table id="drawdownTable"></table>
+        </div>
+      </div>
+    </section>
+
+    <section class="table-panel contribution-panel">
+      <div class="panel-head">
+        <div>
+          <h2>Holdings And Contribution</h2>
+          <div class="meta">Contribution is estimated from prior-close weights and daily __ACCOUNTING_CURRENCY__ price returns within each period.</div>
+        </div>
+        <div class="segments" id="contributionSegments">
+          <button type="button" data-frequency="yearly">Yearly</button>
+          <button type="button" data-frequency="quarterly">Quarterly</button>
+          <button type="button" data-frequency="monthly" class="active">Monthly</button>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table id="contributionTable"></table>
+      </div>
+    </section>
+
+    <section class="table-panel signal-panel" id="signalPanel" hidden>
+      <div class="panel-head">
+        <div>
+          <h2>Signal Attribution</h2>
+          <div class="meta" id="signalComparisonNote">Period-level diagnostics show how active signal weight changes helped or hurt versus the benchmark strategy.</div>
+        </div>
+      </div>
+      <div class="signal-layout">
+        <div>
+          <div class="signal-summary" id="signalSummary"></div>
+          <div class="table-scroll">
+            <table id="signalTable"></table>
+          </div>
+        </div>
+        <aside class="signal-detail" id="signalDetail"></aside>
+      </div>
+    </section>
+
+    <section class="table-panel" id="decisionPanel" hidden style="margin-top:14px">
+      <div class="panel-head"><div><h2>Full Strategy Decision Chart</h2><div class="meta">Execution order, gates and the fitted tree used for current signals.</div></div></div>
+      <div id="decisionCharts"></div>
+    </section>
+    <section class="warning-panel" id="warnings" hidden></section>
+  </main>
+
+  <script>
+    const report = __REPORT_DATA__;
+    const state = { frequency: "yearly", contributionFrequency: "monthly", benchmarkId: report.defaultBenchmarkId || "primary" };
+    const strategyColor = "#0f766e";
+    const benchmarkColor = "#111827";
+
+    function fmtPct(value, digits = 2) {
+      if (value === null || value === undefined || !Number.isFinite(value)) return "n/a";
+      return new Intl.NumberFormat("en-US", { style: "percent", minimumFractionDigits: digits, maximumFractionDigits: digits }).format(value);
+    }
+
+    function fmtNum(value, digits = 2) {
+      if (value === null || value === undefined || !Number.isFinite(value)) return "n/a";
+      return new Intl.NumberFormat("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(value);
+    }
+
+    function fmtMoney(value) {
+      if (value === null || value === undefined || !Number.isFinite(value)) return "n/a";
+      return "__ACCOUNTING_CURRENCY__ " + new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(value);
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+    }
+
+    function cls(value) {
+      if (value === null || value === undefined || !Number.isFinite(value) || Math.abs(value) < 0.0000001) return "";
+      return value < 0 ? "negative" : "positive";
+    }
+
+    function currentBenchmarkOption() {
+      return (report.benchmarkOptions || []).find((item) => item.id === state.benchmarkId) || { id: "primary", name: report.benchmarkName };
+    }
+
+    function currentBenchmark(point) {
+      return (point.benchmarks && point.benchmarks[state.benchmarkId]) || { nav: point.benchmark, index: point.benchmarkIndex };
+    }
+
+    function setupHeader() {
+      document.getElementById("title").textContent = report.title;
+      const monitoring = report.monitoring || null;
+      document.getElementById("meta").textContent = monitoring
+        ? `${report.summary.start} to ${report.summary.end} | ${monitoring.lifecycle}`
+        : `${report.summary.start} to ${report.summary.end}`;
+      document.getElementById("dataMeta").innerHTML = [
+        `Source: ${escapeHtml(report.sourceJson)}`,
+        report.database ? `Market DB: ${escapeHtml(report.database)}` : null,
+        monitoring ? `Artifact ended: ${escapeHtml(monitoring.artifactEndDate)}` : null,
+        monitoring ? `Monitored through: ${escapeHtml(monitoring.monitoredThrough)}` : null,
+        monitoring ? `Method: ${escapeHtml(monitoring.method)}` : null
+      ].filter(Boolean).join("<br>");
+      document.getElementById("chartMeta").textContent = `${currentBenchmarkOption().name}. ${report.allocationSource}`;
+    }
+
+    function setupSummary() {
+      const summary = (report.summariesByBenchmark && report.summariesByBenchmark[state.benchmarkId]) || report.summary;
+      const items = [
+        ["Final NAV", fmtMoney(summary.finalNav)],
+        ["Total Return", fmtPct(summary.totalReturn)],
+        ["Annualized", fmtPct(summary.annualizedReturn)],
+        ["Max Drawdown", fmtPct(summary.maxDrawdown)],
+        ["Sharpe", fmtNum(summary.sharpe)],
+        ["Alpha", fmtPct(summary.alpha)],
+        ["Info Ratio", fmtNum(summary.informationRatio)],
+        ["Tracking Error", fmtPct(summary.trackingError)]
+      ];
+      document.getElementById("summaryCards").innerHTML = items.map(([label, value]) => `
+        <div class="stat">
+          <div class="stat-label">${escapeHtml(label)}</div>
+          <div class="stat-value">${escapeHtml(value)}</div>
+        </div>
+      `).join("");
+    }
+
+    function setupTrackedStrategy() {
+      const a=report.currentAllocation,m=report.monitoring;
+      const training=report.modelTraining;
+      const usd=report.usdModel;
+      const economic=report.economicModel;
+      if(economic){
+        const e=economic.latest;
+        document.getElementById('economicModelPanel').hidden=false;
+        if(economic.title)document.getElementById('economicModelTitle').textContent=economic.title;
+        const status=document.getElementById('economicModelStatus');
+        status.textContent=`${economic.status}. Decision: ${e.decision}; known through ${e.known_through}. ${e.training_rows} completed training months. Economic model available on ${economic.historical_ready}/${economic.historical_decisions} historical decisions.`;
+        if(!e.ready){status.style.background='#fff7db';status.style.color='#785b13';status.style.padding='12px';}
+        document.getElementById('economicModelExplanation').textContent=economic.explanation;
+        document.getElementById('economicForecasts').innerHTML=e.ready?`<thead><tr><th>ETF</th><th>Forecast return</th><th>Increment over historical mean</th></tr></thead><tbody>${Object.entries(e.models).map(([s,v])=>`<tr><td>${escapeHtml(s)}</td><td>${fmtPct(v.linear_forecast)}</td><td>${fmtPct(v.linear_increment)}</td></tr>`).join('')}</tbody>`:`<tbody><tr><td>${escapeHtml(economic.abstention||'No economic tilt while required observations are unavailable. Capped parent targets remain in force.')}</td></tr></tbody>`;
+        if(economic.selectionRanks){
+          const table=document.getElementById('selectionRanks');table.hidden=false;
+          table.innerHTML=`<caption>Latest indicative selection · scores use −1 to +1 midranks; held weights follow scheduled rebalances</caption><thead><tr><th>ETF</th><th>M1 rank</th><th>Financial rank</th><th>Combined score</th><th>Eligible</th><th>Selected</th></tr></thead><tbody>${economic.selectionRanks.map(r=>`<tr><td>${escapeHtml(r.symbol)}</td><td>${Number(r.momentum).toFixed(3)}</td><td>${r.ridge===null?'Unavailable':Number(r.ridge).toFixed(3)}</td><td>${Number(r.combined).toFixed(3)}</td><td>${r.eligible?'Yes':'No'}</td><td>${r.selected?'Yes':'No'}</td></tr>`).join('')}</tbody>`;
+        }
+        const {training_labels,...latest}=e;
+        document.getElementById('economicModelDetails').textContent=JSON.stringify({...economic,latest},null,2);
+      }
+      if(usd){
+        document.getElementById('usdModelPanel').hidden=false;
+        document.getElementById('usdModelMeta').textContent=`Monthly fit: ${usd.fit_close}. USD vintage: ${usd.snapshot.vintage_date}; last index observation: ${usd.snapshot.observation_date}. 21-observation USD change: ${fmtPct(usd.snapshot.features.USD21)}; 63-observation change: ${fmtPct(usd.snapshot.features.USD63)}.`;
+        document.getElementById('usdModelExplanation').textContent=usd.explanation;
+        document.getElementById('usdForecasts').innerHTML=`<thead><tr><th>Ticker</th><th class="asset-name">Asset name</th><th>Ridge forecast score</th></tr></thead><tbody>${Object.entries(usd.predictions).sort((a,b)=>b[1]-a[1]).map(([s,v])=>`<tr><td>${escapeHtml(s)}</td>${AssetNames.cell(s)}<td>${fmtPct(v)}</td></tr>`).join('')}</tbody>`;
+        const {snapshot,...details}=usd;document.getElementById('usdModelDetails').textContent=JSON.stringify({...details,vintage:snapshot.vintage_date,available_at:snapshot.available_at},null,2);
+      }
+      if(training){
+        document.getElementById('modelTrainingPanel').hidden=false;
+        const t=training.training,r=training.receipt;
+        document.getElementById('rollingModelMeta').textContent=`Fitted through ${training.fitAsOf}. One-year window starts ${t.window_start}; ${t.training_samples} ETF-month observations across ${t.training_months} months. Latest completed training label: ${t.max_label_end}. Monthly refits; latest features through ${a.target_known_through}.`;
+        document.getElementById('rollingModelExplanation').textContent=training.explanation;
+        document.getElementById('rollingForecasts').innerHTML=`<thead><tr><th>Ticker</th><th class="asset-name">Asset name</th><th>Model score</th><th>Activity z</th><th>Activity signal</th><th>Activity slope</th><th>20d return</th><th>Signed volume</th></tr></thead><tbody>${training.forecasts.map(f=>`<tr><td>${escapeHtml(f.symbol)}</td>${AssetNames.cell(f.symbol)}<td>${fmtPct(f.forecast)}</td><td>${fmtNum(f.activity?.z)}</td><td>${f.activity?.signal??'—'}</td><td>${fmtNum(f.activity?.velocity,6)}</td><td>${fmtPct(f.activity?.momentum_20)}</td><td>${fmtNum(f.activity?.signed_volume_20)}</td></tr>`).join('')}</tbody>`;
+        document.getElementById('rollingStages').innerHTML=`<thead><tr><th>Ticker</th><th class="asset-name">Asset name</th>${training.allocationStages.map(s=>`<th>${escapeHtml(s.name.replaceAll('_',' '))}</th>`).join('')}</tr></thead><tbody>${[...training.forecasts.map(f=>f.symbol),'Cash'].map(symbol=>`<tr><td>${escapeHtml(symbol)}</td>${AssetNames.cell(symbol)}${training.allocationStages.map(s=>`<td>${fmtPct(symbol==='Cash'?1-Object.values(s.weights).reduce((x,y)=>x+y,0):s.weights[symbol]||0)}</td>`).join('')}</tr>`).join('')}</tbody>`;
+        document.getElementById('rollingFeatures').innerHTML=`<p class="meta">ETF activity lag-20 is applied after XGBoost, relative momentum, and adaptive trend. It is not one of the model’s 26 training inputs. Valuation and macro scores are neutral zeros.</p><div class="table-scroll"><table><thead><tr><th>Feature</th><th>Meaning</th><th>Lookback</th>${training.forecasts.map(f=>`<th>${escapeHtml(f.symbol)}<span class="asset-name-caption">${escapeHtml(AssetNames.name(f.symbol))}</span></th>`).join('')}</tr></thead><tbody>${training.features.map(f=>`<tr><td>${escapeHtml(f.featureId)}</td><td>${escapeHtml(f.description)}</td><td>${f.lookbackBars??'Neutral'}</td>${training.forecasts.map(row=>`<td>${fmtNum(row.inputs[f.featureId],5)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+        document.getElementById('rollingProvenance').textContent=JSON.stringify({recipe:training.recipe,training:t,model_sha256:training.modelSha256,audited_batch:training.batch,receipt:r},null,2);
+        document.getElementById('downloadRollingModel').onclick=()=>{const url=URL.createObjectURL(new Blob([JSON.stringify({recipe:training.recipe,training:t,model:training.model,model_sha256:training.modelSha256},null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download='rolling-xgboost-'+training.fitAsOf+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+        const selector=document.getElementById('rollingTreeSelect'),box=document.getElementById('rollingTreeChart');let scale=1;
+        selector.innerHTML=training.trees.map((_,i)=>`<option value="${i}">${i+1} / ${training.trees.length}</option>`).join('');
+        const showTree=()=>{box.innerHTML=training.trees[Number(selector.value)];box.querySelector('svg').style.width=(scale*100)+'%';};
+        selector.onchange=()=>{scale=1;showTree();};showTree();
+        for(const [id,factor] of [['rollingTreeIn',1.25],['rollingTreeOut',.8],['rollingTreeFit',0]])document.getElementById(id).onclick=()=>{scale=factor?Math.max(.5,Math.min(4,scale*factor)):1;showTree();};
+      }
+      if(a){
+        document.getElementById('currentStatePanel').hidden=false;
+        document.getElementById('calculationMeta').textContent=`Calculated by the application using ${m.engine==='lean'?'LEAN with Python parity':'Python'}. Valuation: ${a.valuation_date}. Price inputs: ${m.priceThrough}. Updated: ${m.computedAt}.`;
+        document.getElementById('allocationMeta').textContent=`${report.modelRegime}. Last scheduled rebalance: ${a.last_rebalance}; next: ${a.next_rebalance}. Latest signal targets use data through ${a.target_known_through}. ${a.notes}`;
+        document.getElementById('currentWeightsTable').innerHTML=`<thead><tr><th>Ticker</th><th class="asset-name">Asset name</th><th>Adjusted units</th><th>Value __ACCOUNTING_CURRENCY__</th><th>Held weight</th><th>Last scheduled target</th><th>Latest signal target</th></tr></thead><tbody>${a.holdings.map(r=>`<tr><td>${escapeHtml(r.symbol)}</td>${AssetNames.cell(r.symbol)}<td>${r.quantity==null?'—':fmtNum(r.quantity,0)}</td><td>${fmtMoney(r.value_cnh)}</td><td>${fmtPct(r.weight)}</td><td>${fmtPct(r.scheduled_weight)}</td><td>${fmtPct(r.target_weight)}</td></tr>`).join('')}</tbody>`;
+        document.getElementById('exposureMeta').textContent=`Gross exposure: ${fmtMoney(a.gross_exposure_cnh)} (${fmtPct(a.gross_exposure_cnh/a.nav_cnh)} of NAV); cash: ${fmtMoney(a.cash_cnh)}. Country exposure: ${Object.entries(a.country_exposure_cnh).map(([k,v])=>k+' '+fmtPct(v/a.nav_cnh)).join(' · ')}. Accounting currency: __ACCOUNTING_CURRENCY__; ETF quote currency: USD. Forward window starts ${m.prospectiveStart}; ${m.prospectiveObservations} simulated sessions since that date.`;
+        document.getElementById('refreshCalculations').onclick=async()=>{
+          const button=document.getElementById('refreshCalculations'),status=document.getElementById('refreshStatus');button.disabled=true;
+          try{const r=await fetch('/api/v1/strategies/refresh',{method:'POST'});if(!r.ok)throw new Error(await r.text());status.textContent='Application refresh requested. Existing values remain visible until a complete calculation is published.';
+            let attempts=0;const poll=setInterval(async()=>{try{const response=await fetch('/api/v1/analytics/status');const s=await response.json();status.textContent=s.current_job?'Application is calculating: '+s.current_job:(Object.keys(s.errors||{}).length?'Calculation issue: '+JSON.stringify(s.errors):'Refresh completed. Reload this page to view the latest publication.');if(!s.current_job||++attempts>=120){clearInterval(poll);button.disabled=false;}}catch(e){clearInterval(poll);button.disabled=false;status.textContent=e.message;}},3000);
+          }catch(e){status.textContent=e.message;button.disabled=false;}
+        };
+      }
+      if(report.decisionDiagrams?.length){
+        document.getElementById('decisionPanel').hidden=false;
+        document.getElementById('decisionCharts').innerHTML=report.decisionDiagrams.map((d,i)=>`<div style="padding:14px"><h3>${escapeHtml(d.title)}</h3><p class="meta">${escapeHtml(d.note||'')}</p><div><button data-diagram="${i}" data-scale="1.25">Zoom in</button> <button data-diagram="${i}" data-scale="0.8">Zoom out</button> <button data-diagram="${i}" data-scale="reset">Fit</button> <span class="meta">Drag to pan</span></div><div id="diagram-${i}" style="overflow:auto;max-height:720px;border:1px solid #d9dee7;cursor:grab;touch-action:none">${d.svg}</div></div>`).join('');
+        report.decisionDiagrams.forEach((_,i)=>{const box=document.getElementById('diagram-'+i),svg=box.querySelector('svg');svg.style.height='auto';svg.style.width='100%';let scale=1,drag=null;
+          document.querySelectorAll(`[data-diagram="${i}"]`).forEach(b=>b.onclick=()=>{scale=b.dataset.scale==='reset'?1:Math.max(.5,Math.min(4,scale*Number(b.dataset.scale)));svg.style.width=(scale*100)+'%';if(b.dataset.scale==='reset'){box.scrollLeft=0;box.scrollTop=0;}});
+          box.onpointerdown=e=>{if(e.button!==0)return;drag={x:e.clientX,y:e.clientY,left:box.scrollLeft,top:box.scrollTop};box.setPointerCapture(e.pointerId);e.preventDefault();};
+          box.onpointermove=e=>{if(drag){box.scrollLeft=drag.left-(e.clientX-drag.x);box.scrollTop=drag.top-(e.clientY-drag.y);}};
+          box.onpointerup=box.onpointercancel=()=>{drag=null;};
+        });
+      }
+    }
+
+    function setupLegend() {
+      const items = [
+        ["Strategy NAV", strategyColor],
+        [currentBenchmarkOption().name, benchmarkColor],
+        ["Drawdown periods", "#b91c1c"],
+        ...(report.splitDate ? [[report.splitLabel || "OOS period", "#0f766e"]] : []),
+        ...report.allocationOrder.map((symbol) => [AssetNames.label(symbol), report.colors[symbol]])
+      ];
+      document.getElementById("legend").innerHTML = items.map(([label, color]) => `
+        <span class="legend-item"><span class="swatch" style="background:${escapeHtml(color)}"></span>${escapeHtml(label)}</span>
+      `).join("");
+    }
+
+    function svgEl(tag, attrs = {}) {
+      const node = document.createElementNS("http://www.w3.org/2000/svg", tag);
+      for (const [key, value] of Object.entries(attrs)) {
+        node.setAttribute(key, value);
+      }
+      return node;
+    }
+
+    function renderChart() {
+      const svg = document.getElementById("chartSvg");
+      const wrap = document.getElementById("chartWrap");
+      const tooltip = document.getElementById("tooltip");
+      const width = Math.max(760, wrap.clientWidth - 20);
+      const height = wrap.clientHeight - 14;
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+      svg.innerHTML = "";
+
+      const margin = { top: 24, right: 30, bottom: 54, left: 72 };
+      const plotW = width - margin.left - margin.right;
+      const plotH = height - margin.top - margin.bottom;
+      const top = margin.top;
+      const bottom = margin.top + plotH;
+      const left = margin.left;
+      const right = margin.left + plotW;
+      const allPoints = report.chart.map(point=>({...point,day:new Date(`${point.date}T00:00:00Z`)}));
+      const view=ChartNavigation.view('chartWrap',allPoints,p=>p.day.getTime(),renderChart,{left,right,top,bottom});
+      const points=view.rows;tooltip.classList.remove('visible');
+      if(!points.length){const label=svgEl('text',{x:left,y:top+30,fill:'#64748b'});label.textContent='No observations in this period. Use Full history to reset.';svg.appendChild(label);return}
+      const [start,end]=view.range;
+      const x = (day) => left + ((day.getTime() - start) / Math.max(1, end - start)) * plotW;
+      const values = points.flatMap((point) => [point.navIndex, currentBenchmark(point).index].filter((value) => Number.isFinite(value)));
+      const minV = Math.min(...values);
+      const maxV = Math.max(...values);
+      const pad = Math.max(4, (maxV - minV) * 0.08);
+      const yMin = Math.floor(minV - pad);
+      const yMax = Math.ceil(maxV + pad);
+      const y = (value) => bottom - ((value - yMin) / Math.max(1, yMax - yMin)) * plotH;
+      const centers = points.map((point) => x(point.day));
+
+      for (let index = 0; index < points.length; index += 1) {
+        const point = points[index];
+        const x0 = index === 0 ? left : (centers[index - 1] + centers[index]) / 2;
+        const x1 = index === points.length - 1 ? right : (centers[index] + centers[index + 1]) / 2;
+        let cursor = bottom;
+        for (const symbol of report.allocationOrder) {
+          const weight = Math.max(0, Math.min(1, point.weights[symbol] || 0));
+          if (weight <= 0.0001) continue;
+          const h = weight * plotH;
+          svg.appendChild(svgEl("rect", {
+            x: x0,
+            y: cursor - h,
+            width: Math.max(0.6, x1 - x0),
+            height: h,
+            fill: report.colors[symbol] || "#94a3b8",
+            opacity: symbol === "Cash" ? 0.13 : 0.17
+          }));
+          cursor -= h;
+        }
+      }
+
+      for (const period of report.drawdownPeriods) {
+        if(Date.parse(period.start)>end||(period.end&&Date.parse(period.end)<start))continue;
+        const x0 = x(new Date(`${period.start}T00:00:00`));
+        const x1 = period.end ? x(new Date(`${period.end}T00:00:00`)) : right;
+        svg.appendChild(svgEl("rect", {
+          x: Math.max(left, x0),
+          y: top,
+          width: Math.max(1, Math.min(right, x1) - Math.max(left, x0)),
+          height: plotH,
+          fill: "#b91c1c",
+          opacity: Math.min(0.16, Math.max(0.045, Math.abs(period.depth) * 0.55))
+        }));
+      }
+
+      if (report.splitDate) {
+        const splitDay = new Date(`${report.splitDate}T00:00:00`);
+        if (splitDay > points[0].day && splitDay < points[points.length - 1].day) {
+          const xx = x(splitDay);
+          svg.appendChild(svgEl("rect", {
+            x: xx,
+            y: top,
+            width: Math.max(1, right - xx),
+            height: plotH,
+            fill: "#0f766e",
+            opacity: "0.055"
+          }));
+          svg.appendChild(svgEl("line", {
+            x1: xx,
+            y1: top,
+            x2: xx,
+            y2: bottom,
+            stroke: "#0f766e",
+            "stroke-width": "2",
+            "stroke-dasharray": "5 4"
+          }));
+          const labelBg = svgEl("rect", {
+            x: Math.min(right - 118, Math.max(left + 8, xx + 8)),
+            y: top + 8,
+            width: "110",
+            height: "24",
+            rx: "4",
+            fill: "#ffffff",
+            opacity: "0.92"
+          });
+          const label = svgEl("text", {
+            x: Math.min(right - 63, Math.max(left + 63, xx + 63)),
+            y: top + 25,
+            "text-anchor": "middle",
+            fill: "#0f766e",
+            "font-size": "12",
+            "font-weight": "700"
+          });
+          label.textContent = `${report.splitLabel || 'OOS from'} ${report.splitDate}`;
+          svg.appendChild(labelBg);
+          svg.appendChild(label);
+        }
+      }
+
+      const gridTicks = 5;
+      for (let tick = 0; tick <= gridTicks; tick += 1) {
+        const value = yMin + ((yMax - yMin) * tick) / gridTicks;
+        const yy = y(value);
+        svg.appendChild(svgEl("line", { x1: left, y1: yy, x2: right, y2: yy, stroke: "#dfe6ef", "stroke-width": "1" }));
+        const label = svgEl("text", { x: left - 10, y: yy + 4, "text-anchor": "end", fill: "#64748b", "font-size": "12" });
+        label.textContent = fmtNum(value, 0);
+        svg.appendChild(label);
+      }
+
+      for(const [stamp,xx,anchor]of [[start,left,'start'],[end,right,'end']]){const label=svgEl('text',{x:xx,y:bottom+42,'text-anchor':anchor,fill:'#64748b','font-size':11});label.textContent=new Date(stamp).toISOString().slice(0,10);svg.appendChild(label)}
+      const firstYear = points[0].day.getFullYear();
+      const lastYear = points[points.length - 1].day.getFullYear();
+      for (let year = firstYear; year <= lastYear; year += 1) {
+        const day = new Date(`${year}-01-01T00:00:00`);
+        if (day < points[0].day || day > points[points.length - 1].day) continue;
+        const xx = x(day);
+        svg.appendChild(svgEl("line", { x1: xx, y1: top, x2: xx, y2: bottom, stroke: "#e8edf4", "stroke-width": "1" }));
+        const label = svgEl("text", { x: xx, y: bottom + 24, "text-anchor": "middle", fill: "#64748b", "font-size": "12" });
+        label.textContent = String(year);
+        svg.appendChild(label);
+      }
+
+      svg.appendChild(svgEl("line", { x1: left, y1: bottom, x2: right, y2: bottom, stroke: "#94a3b8", "stroke-width": "1" }));
+      svg.appendChild(svgEl("line", { x1: left, y1: top, x2: left, y2: bottom, stroke: "#94a3b8", "stroke-width": "1" }));
+
+      function pathFor(key) {
+        return points
+          .filter((point) => Number.isFinite(point[key]))
+          .map((point, index) => `${index === 0 ? "M" : "L"}${x(point.day).toFixed(2)},${y(point[key]).toFixed(2)}`)
+          .join(" ");
+      }
+
+      if (points.some((point) => Number.isFinite(currentBenchmark(point).index))) {
+        svg.appendChild(svgEl("path", {
+          d: points
+            .filter((point) => Number.isFinite(currentBenchmark(point).index))
+            .map((point, index) => `${index === 0 ? "M" : "L"}${x(point.day).toFixed(2)},${y(currentBenchmark(point).index).toFixed(2)}`)
+            .join(" "),
+          fill: "none",
+          stroke: benchmarkColor,
+          "stroke-width": "2.2",
+          "stroke-dasharray": "7 5",
+          "stroke-linejoin": "round",
+          "stroke-linecap": "round"
+        }));
+      }
+      svg.appendChild(svgEl("path", {
+        d: pathFor("navIndex"),
+        fill: "none",
+        stroke: strategyColor,
+        "stroke-width": "2.7",
+        "stroke-linejoin": "round",
+        "stroke-linecap": "round"
+      }));
+
+      const focus = svgEl("g", { opacity: "0" });
+      const focusLine = svgEl("line", { y1: top, y2: bottom, stroke: "#334155", "stroke-width": "1", "stroke-dasharray": "3 4" });
+      const focusDot = svgEl("circle", { r: "4.5", fill: strategyColor, stroke: "#ffffff", "stroke-width": "2" });
+      focus.appendChild(focusLine);
+      focus.appendChild(focusDot);
+      svg.appendChild(focus);
+
+      const overlay = svgEl("rect", { x: left, y: top, width: plotW, height: plotH, fill: "transparent" });
+      overlay.addEventListener("mousemove", (event) => {
+        const bounds = svg.getBoundingClientRect();
+        const localX = ((event.clientX - bounds.left) / bounds.width) * width;
+        let nearest = 0;
+        let distance = Infinity;
+        for (let index = 0; index < centers.length; index += 1) {
+          const current = Math.abs(centers[index] - localX);
+          if (current < distance) {
+            nearest = index;
+            distance = current;
+          }
+        }
+        const point = points[nearest];
+        const xx = centers[nearest];
+        focus.setAttribute("opacity", "1");
+        focusLine.setAttribute("x1", xx);
+        focusLine.setAttribute("x2", xx);
+        focusDot.setAttribute("cx", xx);
+        focusDot.setAttribute("cy", y(point.navIndex));
+
+        const topHoldings = Object.entries(point.weights)
+          .filter(([, value]) => value > 0.01)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 5)
+          .map(([symbol, value]) => `<div class="tooltip-row"><span>${escapeHtml(AssetNames.label(symbol))}</span><strong>${fmtPct(value, 1)}</strong></div>`)
+          .join("");
+        tooltip.innerHTML = `
+          <div class="tooltip-title">${escapeHtml(point.date)}</div>
+          <div class="tooltip-row"><span>NAV index</span><strong>${fmtNum(point.navIndex)}</strong></div>
+          <div class="tooltip-row"><span>${escapeHtml(currentBenchmarkOption().name)}</span><strong>${fmtNum(currentBenchmark(point).index)}</strong></div>
+          <div class="tooltip-row"><span>Drawdown</span><strong>${fmtPct(point.drawdown)}</strong></div>
+          ${topHoldings}
+        `;
+        const wrapBounds = wrap.getBoundingClientRect();
+        const tooltipWidth = 270;
+        const leftPos = Math.min(wrapBounds.width - tooltipWidth - 12, Math.max(12, event.clientX - wrapBounds.left + 14));
+        tooltip.style.left = `${leftPos}px`;
+        tooltip.style.top = `${Math.max(12, event.clientY - wrapBounds.top - 20)}px`;
+        tooltip.classList.add("visible");
+      });
+      overlay.addEventListener("mouseleave", () => {
+        focus.setAttribute("opacity", "0");
+        tooltip.classList.remove("visible");
+      });
+      svg.appendChild(overlay);
+    }
+
+    function renderMetrics() {
+      const benchmarkMetrics = (report.metricsByBenchmark && report.metricsByBenchmark[state.benchmarkId]) || report.metrics;
+      const rows = benchmarkMetrics[state.frequency] || [];
+      const table = document.getElementById("metricsTable");
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Return</th>
+            <th>Sharpe</th>
+            <th>Sortino</th>
+            <th>Calmar</th>
+            <th>Alpha</th>
+            <th>IR</th>
+            <th>Bench</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map((row) => `
+            <tr>
+              <td>${escapeHtml(row.period)}</td>
+              <td class="${cls(row.return)}">${fmtPct(row.return)}</td>
+              <td>${fmtNum(row.sharpe)}</td>
+              <td>${fmtNum(row.sortino)}</td>
+              <td>${fmtNum(row.calmar)}</td>
+              <td class="${cls(row.alpha)}">${fmtPct(row.alpha)}</td>
+              <td>${fmtNum(row.informationRatio)}</td>
+              <td class="${cls(row.benchmarkReturn)}">${fmtPct(row.benchmarkReturn)}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      `;
+    }
+
+    function renderDrawdowns() {
+      const rows = report.topDrawdowns || [];
+      const table = document.getElementById("drawdownTable");
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th>Start</th>
+            <th>Trough</th>
+            <th>Recovery</th>
+            <th>Depth</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map((row) => `
+            <tr>
+              <td>${escapeHtml(row.start)}</td>
+              <td>${escapeHtml(row.trough)}</td>
+              <td>${row.end ? escapeHtml(row.end) : "Open"}</td>
+              <td class="negative">${fmtPct(row.depth)}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      `;
+    }
+
+    function renderContributions() {
+      const periods = (report.holdingContributions && report.holdingContributions[state.contributionFrequency]) || [];
+      const rows = [];
+      for (const period of periods) {
+        for (const holding of period.holdings || []) {
+          rows.push({ period, holding });
+        }
+      }
+      const table = document.getElementById("contributionTable");
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Ticker</th><th class="asset-name">Asset name</th>
+            <th>Start Wt</th>
+            <th>Avg Wt</th>
+            <th>End Wt</th>
+            <th>Asset Return</th>
+            <th>Contribution</th>
+            <th>Held Days</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map(({ period, holding }) => `
+            <tr>
+              <td>${escapeHtml(period.period)}</td>
+              <td>${escapeHtml(holding.symbol)}</td>${AssetNames.cell(holding.symbol)}
+              <td>${fmtPct(holding.startWeight, 1)}</td>
+              <td>${fmtPct(holding.averageWeight, 1)}</td>
+              <td>${fmtPct(holding.endWeight, 1)}</td>
+              <td class="${cls(holding.assetReturn)}">${fmtPct(holding.assetReturn)}</td>
+              <td class="${cls(holding.contribution)}">${fmtPct(holding.contribution)}</td>
+              <td>${holding.daysHeld} / ${holding.observations}</td>
+            </tr>
+          `).join("") || `
+            <tr>
+              <td colspan="9">No contribution rows are available. Stored prices and FX rates are required.</td>
+            </tr>
+          `}
+        </tbody>
+      `;
+    }
+
+    function renderSignalDiagnostics() {
+      const diagnostics = report.signalDiagnostics;
+      if (!diagnostics || !diagnostics.periods || !diagnostics.periods.length) return;
+      document.getElementById("signalPanel").hidden = false;
+      if (report.signalBenchmark) document.getElementById("signalComparisonNote").textContent = `Signal attribution compares this strategy with ${report.signalBenchmark}. The chart benchmark selector does not change this attribution baseline.`;
+      const summary = diagnostics.summary || {};
+      const summaryItems = [
+        ["Full", summary.full],
+        [report.sampleLabels?.in_sample || "In Sample", summary.in_sample],
+        [report.sampleLabels?.out_of_sample || "Out Of Sample", summary.out_of_sample]
+      ];
+      document.getElementById("signalSummary").innerHTML = summaryItems.map(([label, item]) => `
+        <div class="signal-card">
+          <strong>${escapeHtml(label)}</strong>
+          <div><span>Periods</span><b>${item ? item.periods : 0}</b></div>
+          <div><span>Positive / negative</span><b>${item ? `${item.positivePeriods} / ${item.negativePeriods}` : "0 / 0"}</b></div>
+          <div><span>Est. contribution</span><b class="${cls(item && item.estimatedContribution)}">${fmtPct(item && item.estimatedContribution)}</b></div>
+          <div><span>Compounded delta</span><b class="${cls(item && item.compoundedDelta)}">${fmtPct(item && item.compoundedDelta)}</b></div>
+          <div><span>Avg. period delta</span><b class="${cls(item && item.averageRealizedDelta)}">${fmtPct(item && item.averageRealizedDelta)}</b></div>
+          <div><span>Information ratio</span><b>${fmtNum(item && item.informationRatio)}</b></div>
+          <div><span>Tracking error</span><b>${fmtPct(item && item.trackingError)}</b></div>
+        </div>
+      `).join("");
+
+      const rows = diagnostics.periods.map((period, index) => ({ ...period, index, signal: period.signals[0] }));
+      const table = document.getElementById("signalTable");
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Sample</th>
+            <th>Signal</th>
+            <th>Changes</th>
+            <th>Est. Contribution</th>
+            <th>Realized Delta</th>
+            <th>Main Positive</th>
+            <th>Main Negative</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map((row) => `
+            <tr data-signal-period="${row.index}">
+              <td>${escapeHtml(row.period)}</td>
+              <td>${escapeHtml(report.sampleLabels?.[row.sample] || (row.sample === "out_of_sample" ? "OOS" : "IS"))}</td>
+              <td>${escapeHtml(row.signal.name)}</td>
+              <td>${row.signal.activeChanges}</td>
+              <td class="${cls(row.signal.estimatedContribution)}">${fmtPct(row.signal.estimatedContribution)}</td>
+              <td class="${cls(row.signal.realizedDelta)}">${fmtPct(row.signal.realizedDelta)}</td>
+              <td class="${cls(row.signal.topPositive[0] && row.signal.topPositive[0].estimatedContribution)}">${impactLabel(row.signal.topPositive[0])}</td>
+              <td class="${cls(row.signal.topNegative[0] && row.signal.topNegative[0].estimatedContribution)}">${impactLabel(row.signal.topNegative[0])}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      `;
+      table.addEventListener("click", (event) => {
+        const row = event.target.closest("tr[data-signal-period]");
+        if (!row) return;
+        renderSignalDetail(rows[Number(row.dataset.signalPeriod)]);
+      });
+      renderSignalDetail(rows[rows.length - 1]);
+    }
+
+    function renderSignalDetail(row) {
+      if (!row) return;
+      const detail = document.getElementById("signalDetail");
+      const signal = row.signal;
+      const changes = (signal.changes || []).slice(0, 12);
+      detail.innerHTML = `
+        <h3>${escapeHtml(row.period)}</h3>
+        <div class="tooltip-row"><span>Signal</span><strong>${escapeHtml(signal.name)}</strong></div>
+        <div class="tooltip-row"><span>Estimated contribution</span><strong class="${cls(signal.estimatedContribution)}">${fmtPct(signal.estimatedContribution)}</strong></div>
+        <div class="tooltip-row"><span>Realized candidate-minus-baseline</span><strong class="${cls(signal.realizedDelta)}">${fmtPct(signal.realizedDelta)}</strong></div>
+        <ul>
+          ${changes.map((item) => `
+            <li>
+              ${escapeHtml(AssetNames.label(item.symbol))} ${escapeHtml(item.action)}:
+              ${fmtPct(item.baselineWeight, 1)} to ${fmtPct(item.candidateWeight, 1)},
+              asset ${fmtPct(item.assetReturn, 2)},
+              contribution <span class="${cls(item.estimatedContribution)}">${fmtPct(item.estimatedContribution, 2)}</span>
+            </li>
+          `).join("") || "<li>No material signal weight changes in this period.</li>"}
+        </ul>
+      `;
+    }
+
+    function impactLabel(item) {
+      if (!item) return "n/a";
+      return `${escapeHtml(AssetNames.label(item.symbol))} ${escapeHtml(item.action)} ${fmtPct(item.estimatedContribution, 1)}`;
+    }
+
+    function setupSegments() {
+      document.getElementById("metricSegments").addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-frequency]");
+        if (!button) return;
+        state.frequency = button.dataset.frequency;
+        for (const item of document.querySelectorAll("#metricSegments button")) {
+          item.classList.toggle("active", item === button);
+        }
+        renderMetrics();
+      });
+      document.getElementById("contributionSegments").addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-frequency]");
+        if (!button) return;
+        state.contributionFrequency = button.dataset.frequency;
+        for (const item of document.querySelectorAll("#contributionSegments button")) {
+          item.classList.toggle("active", item === button);
+        }
+        renderContributions();
+      });
+    }
+
+    function setupBenchmarkSelect() {
+      const select = document.getElementById("benchmarkSelect");
+      const options = report.benchmarkOptions && report.benchmarkOptions.length
+        ? report.benchmarkOptions
+        : [{ id: "primary", name: report.benchmarkName }];
+      select.innerHTML = options.map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.name)}</option>`).join("");
+      select.value = state.benchmarkId;
+      select.addEventListener("change", () => {
+        state.benchmarkId = select.value;
+        setupHeader();
+        setupSummary();
+        setupLegend();
+        renderMetrics();
+        renderChart();
+      });
+    }
+
+    function setupWarnings() {
+      const panel = document.getElementById("warnings");
+      if (!report.warnings.length) return;
+      panel.hidden = false;
+      panel.innerHTML = `<strong>Report notes</strong><ul>${report.warnings.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
+    }
+
+    setupHeader();
+    setupTrackedStrategy();
+    setupSummary();
+    setupBenchmarkSelect();
+    setupLegend();
+    setupSegments();
+    setupWarnings();
+    renderMetrics();
+    renderDrawdowns();
+    renderContributions();
+    renderSignalDiagnostics();
+    renderChart();
+    window.addEventListener("resize", renderChart);
+  </script>
+</body>
+</html>

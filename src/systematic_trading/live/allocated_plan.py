@@ -12,17 +12,22 @@ def build_allocated_plan(*, store, broker, account_snapshot, decision_date, inte
                          environment, order_type, queue=False, target_decision_date=None,
                          target_proposal=None, active_override=None, reuse_proposal_intent=False):
     from systematic_trading.live.sota import build_sota_live_rebalance_plan, _latest_fx_to_cnh, _required_currencies
-    from systematic_trading.research import instruments_for_definition
+    from systematic_trading.research import union_instruments
     from systematic_trading.market_data.analytics_store import digest, encode
     from dataclasses import replace
     active = active_override or control_state(store)['active']
     from systematic_trading.research.strategy_lifecycle import require_monitored
     require_monitored(broker.settings,store,[r['strategy_key'] for r in active['allocations']])
+    definitions = [registered_strategy_definition(r['strategy_key']) for r in active['allocations']]
+    instruments = union_instruments(definitions)
     definition = trading_definition(store)
     if active_override:
         first = registered_strategy_definition(active['allocations'][0]['strategy_key'])
-        definition = replace(first, key=active['key'], sleeve_name=active['key'], name='Proposed trading allocation')
+        definition = replace(first, key=active['key'], sleeve_name=active['key'], name='Proposed trading allocation',
+            universe_members=tuple(i.model_dump(mode='json') for i in instruments.values()))
     decision_date = decision_date or account_snapshot.as_of
+    from systematic_trading.portfolio.decision_inputs import DecisionInputSession
+    session = DecisionInputSession(broker.settings, decision_date) if broker.settings.require_governed_decision_inputs else None
     target_date = max(filter(None, (target_decision_date or decision_date,
         date.fromisoformat(active['effective_close']) if active.get('effective_close') else None)))
     plans, component_targets = {}, {}
@@ -31,18 +36,25 @@ def build_allocated_plan(*, store, broker, account_snapshot, decision_date, inte
         plan = build_sota_live_rebalance_plan(store=store, broker=broker, account_snapshot=account_snapshot,
             decision_date=decision_date, intended_trade_date=intended_trade_date, environment=environment,
             order_type=order_type, queue=False, definition=registered_strategy_definition(key),
-            target_decision_date=target_date)
+            target_decision_date=target_date, decision_session=session, valuation_instruments=instruments)
         plans[key] = plan
         component_targets[key] = plan.proposal.targets
     batches = {p.proposal.input_provenance.get('batch') for p in plans.values()}
     if len(batches) != 1 or None in batches:
         raise ValueError('All strategies must use the same published audited price batch.')
-    instruments = instruments_for_definition(definition)
+    revisions = {value['calculation_revision'] for p in plans.values()
+                 for key in ('rolling_model','usd','economic','financial')
+                 if isinstance(value := p.proposal.input_provenance.get(key), dict) and 'calculation_revision' in value}
+    if len(revisions) > 1:
+        raise ValueError('Allocation components must use one committed model calculation.')
     unknown = {p.symbol for p in account_snapshot.positions} - instruments.keys()
     if unknown:
         raise ValueError('Unsupported account positions require reconciliation: '+', '.join(sorted(unknown)))
     from systematic_trading.portfolio.decision_inputs import decision_inputs
-    _, marks, _ = decision_inputs(broker.settings, instruments, decision_date)
+    if session is not None:
+        marks, _ = session.marks(instruments)
+    else:
+        _, marks, _ = decision_inputs(broker.settings, instruments, decision_date)
     prices = {s: D(mark['close']) for s,mark in marks.items() if mark['trade_date'] == str(decision_date)}
     if set(prices) != set(instruments):
         raise ValueError('Incomplete audited raw marks for allocation valuation.')
@@ -104,7 +116,8 @@ def build_allocated_plan(*, store, broker, account_snapshot, decision_date, inte
     plan = build_sota_live_rebalance_plan(store=store, broker=broker, account_snapshot=account_snapshot,
         decision_date=decision_date, intended_trade_date=intended_trade_date, environment=environment,
         order_type=order_type, queue=False, definition=definition, explicit_targets=combined,
-        allocation_receipt=receipt, target_decision_date=target_date)
+        allocation_receipt=receipt, target_decision_date=target_date, decision_session=session,
+        valuation_instruments=instruments)
     cap = active.get('max_batch_notional_cnh')
     if cap and sum(o.notional_cnh for o in plan.proposal.orders) > D(cap):
         raise ValueError('Net account orders exceed the allocation batch capital cap.')

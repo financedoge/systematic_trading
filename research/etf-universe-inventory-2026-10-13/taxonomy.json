@@ -1,0 +1,1453 @@
+{
+  "version": "p416d-taxonomy-v1",
+  "groups": [
+    {
+      "peer_group": "equity.us.large_blend",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "large_blend",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.total_market",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "total_market",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.mid_blend",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "mid_blend",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.small_blend",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "small_blend",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.micro_cap",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "micro_cap",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.large_growth",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "large_growth",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.large_value",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "large_value",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.mid_growth",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "mid_growth",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.mid_value",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "mid_value",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.small_growth",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "small_growth",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.small_value",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "small_value",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.dividend",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "dividend",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.quality",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "quality",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.momentum",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "momentum",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.minimum_volatility",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "minimum_volatility",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.value_factor",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "value_factor",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.size_factor",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "size_factor",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.equal_weight",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "equal_weight",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.developed_global.broad",
+      "asset_class": "equity",
+      "exposure_region": "developed_global",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.broad",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global_ex_us.broad",
+      "asset_class": "equity",
+      "exposure_region": "global_ex_US",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.developed_ex_us.broad",
+      "asset_class": "equity",
+      "exposure_region": "developed_ex_US",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.developed_ex_us.small",
+      "asset_class": "equity",
+      "exposure_region": "developed_ex_US",
+      "exposure": "small",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.developed_ex_us.growth",
+      "asset_class": "equity",
+      "exposure_region": "developed_ex_US",
+      "exposure": "growth",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.developed_ex_us.value",
+      "asset_class": "equity",
+      "exposure_region": "developed_ex_US",
+      "exposure": "value",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.developed_ex_us.minimum_volatility",
+      "asset_class": "equity",
+      "exposure_region": "developed_ex_US",
+      "exposure": "minimum_volatility",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.minimum_volatility",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "minimum_volatility",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.emerging.broad",
+      "asset_class": "equity",
+      "exposure_region": "emerging",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.emerging.small",
+      "asset_class": "equity",
+      "exposure_region": "emerging",
+      "exposure": "small",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.emerging.dividend",
+      "asset_class": "equity",
+      "exposure_region": "emerging",
+      "exposure": "dividend",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.emerging.minimum_volatility",
+      "asset_class": "equity",
+      "exposure_region": "emerging",
+      "exposure": "minimum_volatility",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.europe.broad",
+      "asset_class": "equity",
+      "exposure_region": "Europe",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.eurozone.large",
+      "asset_class": "equity",
+      "exposure_region": "Eurozone",
+      "exposure": "large",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.europe.small",
+      "asset_class": "equity",
+      "exposure_region": "Europe",
+      "exposure": "small",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.europe.financials",
+      "asset_class": "equity",
+      "exposure_region": "Europe",
+      "exposure": "financials",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.uk.broad",
+      "asset_class": "equity",
+      "exposure_region": "UK",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.uk.small",
+      "asset_class": "equity",
+      "exposure_region": "UK",
+      "exposure": "small",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.germany.broad",
+      "asset_class": "equity",
+      "exposure_region": "Germany",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.france.broad",
+      "asset_class": "equity",
+      "exposure_region": "France",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.italy.broad",
+      "asset_class": "equity",
+      "exposure_region": "Italy",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.spain.broad",
+      "asset_class": "equity",
+      "exposure_region": "Spain",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.netherlands.broad",
+      "asset_class": "equity",
+      "exposure_region": "Netherlands",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.switzerland.broad",
+      "asset_class": "equity",
+      "exposure_region": "Switzerland",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.sweden.broad",
+      "asset_class": "equity",
+      "exposure_region": "Sweden",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.norway.broad",
+      "asset_class": "equity",
+      "exposure_region": "Norway",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.denmark.broad",
+      "asset_class": "equity",
+      "exposure_region": "Denmark",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.finland.broad",
+      "asset_class": "equity",
+      "exposure_region": "Finland",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.austria.broad",
+      "asset_class": "equity",
+      "exposure_region": "Austria",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.belgium.broad",
+      "asset_class": "equity",
+      "exposure_region": "Belgium",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.ireland.broad",
+      "asset_class": "equity",
+      "exposure_region": "Ireland",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.poland.broad",
+      "asset_class": "equity",
+      "exposure_region": "Poland",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.china.broad",
+      "asset_class": "equity",
+      "exposure_region": "China",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.china.large_offshore",
+      "asset_class": "equity",
+      "exposure_region": "China",
+      "exposure": "large_offshore",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.china.small",
+      "asset_class": "equity",
+      "exposure_region": "China",
+      "exposure": "small",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.hong_kong.broad",
+      "asset_class": "equity",
+      "exposure_region": "Hong_Kong",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.japan.broad",
+      "asset_class": "equity",
+      "exposure_region": "Japan",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.japan.small",
+      "asset_class": "equity",
+      "exposure_region": "Japan",
+      "exposure": "small",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.south_korea.broad",
+      "asset_class": "equity",
+      "exposure_region": "South_Korea",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.taiwan.broad",
+      "asset_class": "equity",
+      "exposure_region": "Taiwan",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.india.broad",
+      "asset_class": "equity",
+      "exposure_region": "India",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.india.small",
+      "asset_class": "equity",
+      "exposure_region": "India",
+      "exposure": "small",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.indonesia.broad",
+      "asset_class": "equity",
+      "exposure_region": "Indonesia",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.malaysia.broad",
+      "asset_class": "equity",
+      "exposure_region": "Malaysia",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.philippines.broad",
+      "asset_class": "equity",
+      "exposure_region": "Philippines",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.singapore.broad",
+      "asset_class": "equity",
+      "exposure_region": "Singapore",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.thailand.broad",
+      "asset_class": "equity",
+      "exposure_region": "Thailand",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.asia_ex_japan.broad_includes_China",
+      "asset_class": "equity",
+      "exposure_region": "Asia_ex_Japan",
+      "exposure": "broad_includes_China",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.asia_emerging.broad_includes_China",
+      "asset_class": "equity",
+      "exposure_region": "Asia_emerging",
+      "exposure": "broad_includes_China",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.asia.large_includes_China",
+      "asset_class": "equity",
+      "exposure_region": "Asia",
+      "exposure": "large_includes_China",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.pacific_ex_japan.broad",
+      "asset_class": "equity",
+      "exposure_region": "Pacific_ex_Japan",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.australia.broad",
+      "asset_class": "equity",
+      "exposure_region": "Australia",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.new_zealand.broad",
+      "asset_class": "equity",
+      "exposure_region": "New_Zealand",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.canada.broad",
+      "asset_class": "equity",
+      "exposure_region": "Canada",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.brazil.broad",
+      "asset_class": "equity",
+      "exposure_region": "Brazil",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.brazil.small",
+      "asset_class": "equity",
+      "exposure_region": "Brazil",
+      "exposure": "small",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.mexico.broad",
+      "asset_class": "equity",
+      "exposure_region": "Mexico",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.chile.broad",
+      "asset_class": "equity",
+      "exposure_region": "Chile",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.peru_global_exposure.broad",
+      "asset_class": "equity",
+      "exposure_region": "Peru_global_exposure",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.latin_america.large",
+      "asset_class": "equity",
+      "exposure_region": "Latin_America",
+      "exposure": "large",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.israel.broad",
+      "asset_class": "equity",
+      "exposure_region": "Israel",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.south_africa.broad",
+      "asset_class": "equity",
+      "exposure_region": "South_Africa",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.turkey.broad",
+      "asset_class": "equity",
+      "exposure_region": "Turkey",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.energy",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "energy",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.materials",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "materials",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.industrials",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "industrials",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.technology",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "technology",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.staples",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "staples",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.discretionary",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "discretionary",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.healthcare",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "healthcare",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.financials",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "financials",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.utilities",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "utilities",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.communication_services",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "communication_services",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.telecommunications",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "telecommunications",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us_listed_industry.semiconductors",
+      "asset_class": "equity",
+      "exposure_region": "US_listed_industry",
+      "exposure": "semiconductors",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us_listed_industry.biotechnology",
+      "asset_class": "equity",
+      "exposure_region": "US_listed_industry",
+      "exposure": "biotechnology",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.aerospace_defense",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "aerospace_defense",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.transportation",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "transportation",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.homebuilders",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "homebuilders",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.regional_banks",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "regional_banks",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.insurance",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "insurance",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.broker_exchanges",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "broker_exchanges",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.financial_services",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "financial_services",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.medical_devices",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "medical_devices",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.health_providers",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "health_providers",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.pharmaceuticals",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "pharmaceuticals",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.software",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "software",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.oil_gas_producers",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "oil_gas_producers",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.oil_services",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "oil_services",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.gold_miners",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "gold_miners",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.silver_metal_miners",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "silver_metal_miners",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.metal_miners_ex_gold_silver",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "metal_miners_ex_gold_silver",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.us.mixed_metal_miners",
+      "asset_class": "equity",
+      "exposure_region": "US",
+      "exposure": "mixed_metal_miners",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.agriculture_producers",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "agriculture_producers",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.timber_forestry",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "timber_forestry",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.clean_energy",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "clean_energy",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.infrastructure",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "infrastructure",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.energy",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "energy",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.materials",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "materials",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.industrials",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "industrials",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.technology",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "technology",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.staples",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "staples",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.discretionary",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "discretionary",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.healthcare",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "healthcare",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.financials",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "financials",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.utilities",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "utilities",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "equity.global.communication_services",
+      "asset_class": "equity",
+      "exposure_region": "global",
+      "exposure": "communication_services",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "real_estate_equity.us.broad",
+      "asset_class": "real_estate_equity",
+      "exposure_region": "US",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "real_estate_equity.us.residential_multisector",
+      "asset_class": "real_estate_equity",
+      "exposure_region": "US",
+      "exposure": "residential_multisector",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "real_estate_equity.us.mortgage_reits",
+      "asset_class": "real_estate_equity",
+      "exposure_region": "US",
+      "exposure": "mortgage_reits",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "real_estate_equity.developed_ex_us.broad",
+      "asset_class": "real_estate_equity",
+      "exposure_region": "developed_ex_US",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "sovereign.us.bills",
+      "asset_class": "sovereign",
+      "exposure_region": "US",
+      "exposure": "bills",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "sovereign.us.treasury_1_3",
+      "asset_class": "sovereign",
+      "exposure_region": "US",
+      "exposure": "treasury_1_3",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "sovereign.us.treasury_3_7",
+      "asset_class": "sovereign",
+      "exposure_region": "US",
+      "exposure": "treasury_3_7",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "sovereign.us.treasury_7_10",
+      "asset_class": "sovereign",
+      "exposure_region": "US",
+      "exposure": "treasury_7_10",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "sovereign.us.treasury_10_20",
+      "asset_class": "sovereign",
+      "exposure_region": "US",
+      "exposure": "treasury_10_20",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "sovereign.us.treasury_20_plus",
+      "asset_class": "sovereign",
+      "exposure_region": "US",
+      "exposure": "treasury_20_plus",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "sovereign.us.treasury_broad",
+      "asset_class": "sovereign",
+      "exposure_region": "US",
+      "exposure": "treasury_broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "inflation_linked.us.tips_broad",
+      "asset_class": "inflation_linked",
+      "exposure_region": "US",
+      "exposure": "tips_broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "inflation_linked.us.tips_short",
+      "asset_class": "inflation_linked",
+      "exposure_region": "US",
+      "exposure": "tips_short",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "sovereign.developed_ex_us.unhedged_broad",
+      "asset_class": "sovereign",
+      "exposure_region": "developed_ex_US",
+      "exposure": "unhedged_broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "sovereign.developed_ex_us.unhedged_short",
+      "asset_class": "sovereign",
+      "exposure_region": "developed_ex_US",
+      "exposure": "unhedged_short",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "aggregate_bond.us.broad",
+      "asset_class": "aggregate_bond",
+      "exposure_region": "US",
+      "exposure": "broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "aggregate_bond.us.short",
+      "asset_class": "aggregate_bond",
+      "exposure_region": "US",
+      "exposure": "short",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "aggregate_bond.us.long",
+      "asset_class": "aggregate_bond",
+      "exposure_region": "US",
+      "exposure": "long",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "aggregate_bond.us.government_credit_intermediate",
+      "asset_class": "aggregate_bond",
+      "exposure_region": "US",
+      "exposure": "government_credit_intermediate",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "aggregate_bond.china.onshore",
+      "asset_class": "aggregate_bond",
+      "exposure_region": "China",
+      "exposure": "onshore",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "aggregate_bond.global_ex_us.usd_hedged",
+      "asset_class": "aggregate_bond",
+      "exposure_region": "global_ex_US",
+      "exposure": "usd_hedged",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "credit.usd.investment_grade_broad",
+      "asset_class": "credit",
+      "exposure_region": "USD",
+      "exposure": "investment_grade_broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "credit.usd.investment_grade_short",
+      "asset_class": "credit",
+      "exposure_region": "USD",
+      "exposure": "investment_grade_short",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "credit.usd.investment_grade_intermediate",
+      "asset_class": "credit",
+      "exposure_region": "USD",
+      "exposure": "investment_grade_intermediate",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "credit.usd.investment_grade_long",
+      "asset_class": "credit",
+      "exposure_region": "USD",
+      "exposure": "investment_grade_long",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "credit.usd.investment_grade_high_quality",
+      "asset_class": "credit",
+      "exposure_region": "USD",
+      "exposure": "investment_grade_high_quality",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "credit.usd.high_yield_broad",
+      "asset_class": "credit",
+      "exposure_region": "USD",
+      "exposure": "high_yield_broad",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "credit.usd.high_yield_short",
+      "asset_class": "credit",
+      "exposure_region": "USD",
+      "exposure": "high_yield_short",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "credit.usd.floating_investment_grade",
+      "asset_class": "credit",
+      "exposure_region": "USD",
+      "exposure": "floating_investment_grade",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "credit.global_ex_us.investment_grade_unhedged",
+      "asset_class": "credit",
+      "exposure_region": "global_ex_US",
+      "exposure": "investment_grade_unhedged",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "credit.euro_denomination.high_yield_usd_hedged",
+      "asset_class": "credit",
+      "exposure_region": "euro_denomination",
+      "exposure": "high_yield_usd_hedged",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "credit.global_ex_us.legacy_high_yield_unhedged",
+      "asset_class": "credit",
+      "exposure_region": "global_ex_US",
+      "exposure": "legacy_high_yield_unhedged",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "credit.global.high_yield_mixed",
+      "asset_class": "credit",
+      "exposure_region": "global",
+      "exposure": "high_yield_mixed",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "credit.emerging.sovereign_usd",
+      "asset_class": "credit",
+      "exposure_region": "emerging",
+      "exposure": "sovereign_usd",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "credit.emerging.sovereign_local",
+      "asset_class": "credit",
+      "exposure_region": "emerging",
+      "exposure": "sovereign_local",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "credit.emerging.corporate_usd",
+      "asset_class": "credit",
+      "exposure_region": "emerging",
+      "exposure": "corporate_usd",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "credit.emerging.high_yield",
+      "asset_class": "credit",
+      "exposure_region": "emerging",
+      "exposure": "high_yield",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "securitized.us.agency",
+      "asset_class": "securitized",
+      "exposure_region": "US",
+      "exposure": "agency",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "securitized.us.mortgage_agency",
+      "asset_class": "securitized",
+      "exposure_region": "US",
+      "exposure": "mortgage_agency",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "securitized.us.commercial_mortgage",
+      "asset_class": "securitized",
+      "exposure_region": "US",
+      "exposure": "commercial_mortgage",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "hybrid_credit.us.preferred",
+      "asset_class": "hybrid_credit",
+      "exposure_region": "US",
+      "exposure": "preferred",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "commodity.global.gold_physical",
+      "asset_class": "commodity",
+      "exposure_region": "global",
+      "exposure": "gold_physical",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "commodity.global.silver_physical",
+      "asset_class": "commodity",
+      "exposure_region": "global",
+      "exposure": "silver_physical",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "commodity.global.platinum_physical",
+      "asset_class": "commodity",
+      "exposure_region": "global",
+      "exposure": "platinum_physical",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "commodity.global.palladium_physical",
+      "asset_class": "commodity",
+      "exposure_region": "global",
+      "exposure": "palladium_physical",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "commodity.global.broad_futures",
+      "asset_class": "commodity",
+      "exposure_region": "global",
+      "exposure": "broad_futures",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "commodity.global.crude_oil_futures",
+      "asset_class": "commodity",
+      "exposure_region": "global",
+      "exposure": "crude_oil_futures",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "commodity.global.natural_gas_futures",
+      "asset_class": "commodity",
+      "exposure_region": "global",
+      "exposure": "natural_gas_futures",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "commodity.global.base_metals_futures",
+      "asset_class": "commodity",
+      "exposure_region": "global",
+      "exposure": "base_metals_futures",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "commodity.global.copper_futures",
+      "asset_class": "commodity",
+      "exposure_region": "global",
+      "exposure": "copper_futures",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "commodity.global.agriculture_futures",
+      "asset_class": "commodity",
+      "exposure_region": "global",
+      "exposure": "agriculture_futures",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "commodity.global.corn_futures",
+      "asset_class": "commodity",
+      "exposure_region": "global",
+      "exposure": "corn_futures",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "commodity.global.wheat_futures",
+      "asset_class": "commodity",
+      "exposure_region": "global",
+      "exposure": "wheat_futures",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "commodity.global.soybeans_futures",
+      "asset_class": "commodity",
+      "exposure_region": "global",
+      "exposure": "soybeans_futures",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    },
+    {
+      "peer_group": "commodity.global.sugar_futures",
+      "asset_class": "commodity",
+      "exposure_region": "global",
+      "exposure": "sugar_futures",
+      "assignment_status": "proposed_from_reference_names_not_historical_index_certification",
+      "comparison_rule": "One representative per conservative overlap bucket before class ranking; verify mandates and dated holdings before acceptance."
+    }
+  ]
+}

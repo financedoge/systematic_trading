@@ -8,19 +8,30 @@ from systematic_trading.portfolio.context import portfolio_context
 from systematic_trading.research.strategy_catalog import current_sota_definition, registered_strategy_definition
 
 
-def allocation_contract_issue(definition):
+def allocation_contract_issue(definition, settings=None):
     """One capability boundary for catalog, candidate list and allocation review.
 
     Research identity admission does not establish account permission or the
     multi-strategy execution/valuation contract. P8 replaces this boundary only
     after those contracts and evidence are implemented.
     """
-    if definition.universe_key == 'multi_asset_14':
-        return ('Monitoring only; the 14-ETF paper execution contract is incomplete: '
-                'XLE/XLB account permission, raw-unit sizing and mixed-universe '
-                'allocation/reconciliation require verification (P8.1-P8.5).')
-    if definition.universe_key != 'multi_asset' or definition.scheduler != 'static_monthly':
+    from systematic_trading.execution.registry import CAPABILITIES, ExecutionRegistry
+    from systematic_trading.research import instruments_for_definition
+    if definition.scheduler != 'static_monthly':
         return 'Trading allocations currently support the monitored monthly multi-asset strategies.'
+    if definition.universe_key == 'multi_asset' and not definition.universe_members:
+        return None
+    prefix = ('Monitoring only; the 14-ETF paper execution contract is incomplete: '
+              if definition.universe_key == 'multi_asset_14' else 'Execution contract incomplete: ')
+    unsupported = {o.kind for o in definition.overlays} - CAPABILITIES
+    if unsupported:
+        return prefix + 'unsupported overlays: ' + ', '.join(sorted(unsupported))
+    if settings is None or not hasattr(settings, 'data_dir'):
+        return prefix + 'published account-bound execution admissions required.'
+    try:
+        ExecutionRegistry(settings).resolve(instruments_for_definition(definition))
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        return prefix + str(exc)
     return None
 
 
@@ -86,7 +97,9 @@ def trading_definition(store):
     if active['version'] == 'legacy':
         return current_sota_definition()
     definitions = [registered_strategy_definition(row['strategy_key']) for row in active['allocations']]
+    from systematic_trading.research import union_instruments
     return replace(definitions[0], key=active['key'], sleeve_name=active['key'],
+        universe_members=tuple(i.model_dump(mode='json') for i in union_instruments(definitions).values()),
         name=' + '.join(f"{Decimal(row['weight'])*100:g}% {d.name}" for row, d in zip(active['allocations'], definitions)))
 
 

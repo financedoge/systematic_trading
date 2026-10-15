@@ -1,6 +1,12 @@
 # Systematic Trading
 
-Industrial systematic trading platform in progress.
+Python systematic trading platform with governed research, reproducible backtests,
+application-owned strategy monitoring and Interactive Brokers paper execution.
+PostgreSQL stores operational state, ClickHouse serves analytical publications,
+and NATS carries outbox events. Live routing remains disabled.
+
+Start with the [documentation index](docs/README.md) and
+[code and maintenance guide](docs/repository-maintenance.md).
 
 The project goal is to evolve this repository from a Python-first research and paper-execution toolkit into a 24x7 systematic trading platform with service boundaries, message queues, columnar storage, LEAN-compatible backtesting, Interactive Brokers execution, Grafana-class monitoring, post-trade analysis, and explicit research-to-live promotion controls.
 
@@ -18,16 +24,18 @@ Trading monitoring now shares one portfolio start/episode across holdings, P&L, 
 - Manual approval by default; an audited, opt-in paper policy can approve and route new strategy TWAP proposals automatically. Live routing remains disabled. See [Trading operations](docs/trading-operations.md).
 - Long-term target: micro-services, event bus, columnar research store, transactional order state, live market-data recorder, strong rebalance blotter, and continuous operating loops.
 
-## Current implementation slice
+## Current implementation
 
-- Project scaffolding and environment-driven settings.
+- Environment-driven settings and guarded, supervised local services.
 - Core domain models for instruments, research memos, portfolio state, proposals, and orders.
 - CNH-aware FX conversion and multi-currency cash ledger.
 - Initial inverse-volatility risk-parity sleeve and proposal preview builder.
 - Minimal daily backtest engine for deterministic portfolio simulations.
 - Offline LEAN research worker with frozen inputs, shared SOTA signals, native simulated fills, Python parity and immutable PostgreSQL research evidence. See [local LEAN backtesting](docs/lean-backtesting.md).
 - Read-only IB account/position PnL stream with explicit currencies, freshness and unavailable states, separate from stored daily accounting.
-- Thin FastAPI operator API for health, manifest, and risk-parity proposal previews.
+- FastAPI operator API for strategy tracking, allocation, paper execution, data and health.
+  API contracts, pure risk-parity preview construction and packaged presentation assets
+  now have separate module boundaries.
 - Postgres transactional persistence for watchlists, theses, proposal queues, approval decisions, broker order records, PnL snapshots, and the event outbox on the recommended local platform path.
 - ClickHouse serving storage for normalized daily bars and FX rates.
 - Provider and broker manifests so the operator API can expose data-source coverage and paper-vs-live execution boundaries.
@@ -166,6 +174,11 @@ pip install -e ".[data]"
 
 ## Repository layout
 
+The [documentation index](docs/README.md) groups current runbooks, contracts and
+dated findings. Historical session notes and registered research protocols are
+preserved in the verified [archive](docs/archive/README.md); use current research
+state and the Kanban before interpreting old results or priorities.
+
 - `docs/` architecture and operating notes.
 - `docs/industrial-platform-plan.md` target architecture, system chart, service boundaries, promotion gates, and execution schedule.
 - `docs/execution-kanban.md` Kanban-style execution tracker with status, acceptance criteria, dependencies, and next work order.
@@ -188,6 +201,10 @@ pip install -e ".[data]"
 - `AGENTS.md` repository-level working rules for agents.
 - `.agents/skills/` project playbooks for recurring operating loops.
 - `src/systematic_trading/` application package.
+- `src/systematic_trading/presentation/assets/` packaged HTML page/report templates.
+- `src/systematic_trading/web/contracts.py` HTTP request/response contracts.
+- `src/systematic_trading/portfolio/preview.py` validated, side-effect-free proposal previews.
+- `scripts/` stable CLI/launcher entry points; [script guide](scripts/README.md).
 - `src/systematic_trading/schemas/` code-based schema registry for platform contracts.
 - `tests/` deterministic tests for accounting, sleeves, API, and backtests.
 

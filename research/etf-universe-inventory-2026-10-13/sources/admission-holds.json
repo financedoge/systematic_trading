@@ -1,0 +1,9 @@
+{
+  "XOP": {
+    "reason": "Issuer listing date is 2006-06-23 but the provider firstTradeDate and first observation are 2006-06-22.",
+    "conflict": "issuer/provider listing-boundary disagreement",
+    "recorded": "2026-10-09",
+    "evidence": "var/governance/research-2026-10-08-f7edd995880b",
+    "release": "Retain quarantine until independent dated evidence resolves the boundary; do not trim or relabel the source."
+  }
+}

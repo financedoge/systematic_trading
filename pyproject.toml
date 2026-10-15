@@ -48,13 +48,16 @@ package-dir = {"" = "src"}
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+"systematic_trading.presentation" = ["assets/**/*.html"]
+
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 addopts = "-q"
 testpaths = ["tests"]
 
 [tool.ruff.lint]
-select = ["E9", "F"]
+select = ["E9", "F", "B006", "B012", "B018", "B019", "B020"]
 
 [tool.ruff.lint.per-file-ignores]
 # Pytest fixture imports are intentionally referenced by parameter name.

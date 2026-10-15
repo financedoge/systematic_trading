@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "docs/signal-decay-and-alpha-plan.md",
+      "bytes": 72127,
+      "sha256": "95cfa169dce47d49a31c4b97df35b9a029e65e4649380040b99b2c80ce04a697"
+    },
+    {
+      "path": "docs/etf-research-expansion-roadmap.md",
+      "bytes": 60208,
+      "sha256": "9f6855f9924b299cbfa0f1e604190a7778a03b7ceb060c4381903d2a74e5d264"
+    }
+  ],
+  "archive_sha256": "c03f461d14a04836308ee4dc2c67cdbd8bd9af45f73097c8c96cb3e1e1b380bd"
+}

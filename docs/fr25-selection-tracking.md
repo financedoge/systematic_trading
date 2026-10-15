@@ -6,7 +6,11 @@ application owns the recurring calculation. No agent, notebook, reminder or
 manually maintained research card produces FR25 numbers.
 
 Monitoring is not promotion. FR25 grants no capital, approval, reconciliation or
-broker authority, and it is not allocation-ready.
+broker authority. The October 13 execution deployment now supports its 14-member
+paper allocation contract. Fresh account-bound IB simulations succeeded for all
+members, and the conditional 5% FR25 / 95% F3 preview returned no blockers or
+routing warnings. The active allocation remains F3 100%. See the
+[execution evidence and limitations](execution-readiness-2026-10-13.md).
 
 ## Executable definition
 

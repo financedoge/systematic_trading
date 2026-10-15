@@ -66,7 +66,7 @@ def status(request: Request):
         definition = registered_strategy_definition(key)
         saved=analytics.document('tracked-strategies/calculations','detail/'+key) if analytics else None
         detail=json.loads(saved[0]['payload']) if saved else {}
-        if detail and calculation_ready(detail,monitoring,through) and not allocation_contract_issue(definition):
+        if detail and calculation_ready(detail,monitoring,through) and not allocation_contract_issue(definition,settings):
             candidates.append(dict(strategy_key=key,name=definition.name,report_url='/api/v1/strategies/'+key+'/report'))
     now = datetime.now(UTC)
     history = control_events(store)

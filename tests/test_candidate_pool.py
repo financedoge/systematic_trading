@@ -57,6 +57,25 @@ def test_defensive_fallback_keeps_incoming_budget():
     assert sum(r.target_weight for r in output)==next(r.target_weight for r in targets if r.symbol=='GLD')
 
 
+def test_admission_mask_excludes_high_rank_without_changing_scores_and_preserves_fallback():
+    targets,context=fixture()
+    unrestricted=CandidatePool(parent(),'M1')
+    scores=unrestricted._selection_scores(targets,context)
+    selected={r.symbol for r in unrestricted.apply(targets,context) if r.target_weight>0}
+    excluded=sorted(selected)[0]
+    restricted=CandidatePool(parent(),'M1')
+    restricted.admitted_symbols=frozenset(context.bars_by_symbol)-{excluded}
+    assert restricted._selection_scores(targets,context)==scores
+    result=restricted.apply(targets,context)
+    assert len([r for r in result if r.target_weight>0])==6
+    assert next(r.target_weight for r in result if r.symbol==excluded)==0
+    assert excluded not in restricted.observation['eligible']
+    restricted.admitted_symbols=frozenset({'GLD','SPY'})
+    result=apply_target_overlays(targets,[restricted],context)
+    assert {r.symbol for r in result if r.target_weight>0}=={'GLD'}
+    assert sum(r.target_weight for r in result)==next(r.target_weight for r in targets if r.symbol=='GLD')
+
+
 def test_skip_month_momentum_gate_ignores_latest_month_crash():
     targets,context=fixture();bars=dict(context.bars_by_symbol)
     bars['SPY']=[r.model_copy(update=dict(close=D(1))) if i>=len(bars['SPY'])-21 else r for i,r in enumerate(bars['SPY'])]

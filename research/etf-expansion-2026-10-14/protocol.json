@@ -1,0 +1,63 @@
+{
+  "admission": {
+    "duplicate_rule": "highest prior median dollar volume, then permanent candidate ID",
+    "liquidity_sessions": 63,
+    "maximum_order_adv_fraction": 0.005,
+    "median_usd": 5000000,
+    "minimum_usd": 500000,
+    "prior_observations": 253
+  },
+  "arms": [
+    "original14",
+    "expanded"
+  ],
+  "calibration_end": "2024-12-31",
+  "candidate_count": 52,
+  "common_warmup_start": "2018-06-19",
+  "cost_bps": [
+    5,
+    10
+  ],
+  "image": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
+  "inference": {
+    "block_months": 6,
+    "comparisons": 1,
+    "replications": 20000,
+    "seed": 20261014
+  },
+  "initial_cash_usd": "100000",
+  "later_comparison_start": "2025-01-01",
+  "limitations": [
+    "Retrospective current-cohort diagnostics, with survivorship and historical mandate/membership limitations; not promotion evidence.",
+    "Price vintages are published, audited and hash verified, but historical publication availability is not certified.",
+    "Raw prices and volumes are audited reconstructions, not tape-certified. Unsupported common-window observations exclude the fund; no filling.",
+    "Common history begins with the youngest supported fund. Models are retrained on this common history; the control may differ from full-history monitoring.",
+    "Economic archive vintages before 2026-10-10 use conservative daily availability assumptions; actual first-seen evidence is required thereafter.",
+    "2025 onward is a later chronological comparison, not an untouched holdout for the previously researched FR25 recipe.",
+    "No historical spreads, historical fees or complete historical mandate ledger. Prior dollar volume is not proof of execution quality.",
+    "USD adjusted units and next-session open execution; zero cash interest, no modeled spread/slippage/impact. Costs are sensitivity assumptions.",
+    "Admission changes eligibility only. Features/ranks use the declared full candidate pool; no class normalization or parameter search.",
+    "Financial information abstention retains the registered M1 fallback. No macro or FX prices are filled; USD accounting requires no FX conversion."
+  ],
+  "limits": {
+    "model_workers": 4,
+    "native_cpus": 2,
+    "native_memory_gib": 4,
+    "simultaneous_native_runs": 1
+  },
+  "pretest": {
+    "annual_cost_ceiling_bps": 44,
+    "expanded_replay_requires": "pass",
+    "ic": "Mean monthly cross-sectional Spearman of FR25 selector scores and next 21-session open returns; admissible pool; calibration only",
+    "ic_margin": 3,
+    "original_control": "Registered recipe, report gate without changing control",
+    "period_sessions": 21,
+    "sigma": "Pooled calibration forward-return standard deviation"
+  },
+  "registered_on": "2026-10-14",
+  "slippage_bps": 0,
+  "start": "2021-01-04",
+  "supported_count": 50,
+  "through": "2026-10-12",
+  "version": "etf-expansion-retrospective-v1"
+}

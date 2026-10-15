@@ -58,7 +58,8 @@ def train(root, attempt):
     recipe_code = {str(p.relative_to(source)): sha256(p) for p in
         [source/'research'/n for n in ('rolling_models.py', 'rolling_training.py', 'rolling_tracking.py')]
         + list((source/'signals').glob('*.py'))}
-    with ProcessPoolExecutor(max_workers=min(os.cpu_count() or 1, len(dates)), initializer=initialize,
+    workers = min(os.cpu_count() or 1, len(dates), request.get('max_workers', os.cpu_count() or 1))
+    with ProcessPoolExecutor(max_workers=workers, initializer=initialize,
                              initargs=(str(attempt/'training_records.json'), str(cache), recipe_code, versions)) as pool:
         jobs = [pool.submit(fit, cutoff) for cutoff in dates]
         for future in as_completed(jobs):
@@ -68,7 +69,7 @@ def train(root, attempt):
     write_json(attempt/'schedule.json', schedule)
     write_json(attempt/'receipt.json', dict(status='succeeded', request_sha256=sha256(root/'request.json'),
         recipe=request['recipe'], versions=versions, monthly_fits=len(schedule), reused_fits=cached_count,
-        new_fits=len(schedule)-cached_count, cores=os.cpu_count(),
+        new_fits=len(schedule)-cached_count, cores=os.cpu_count(), workers=workers,
         elapsed_seconds=time.perf_counter()-started, promotion_eligible=False,
         files={n: sha256(attempt/n) for n in ('training_records.json', 'schedule.json')}))
 

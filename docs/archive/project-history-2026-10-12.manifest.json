@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "captured_date": "2026-10-12",
+  "purpose": "Historical project memory before current-state consolidation; includes pre-existing local edits.",
+  "files": [
+    {
+      "path": "log.md",
+      "bytes": 456426,
+      "sha256": "979382f9d55115d46ec9d684a2b72e34bc38b7dab22f4cb7fa06a8a9f5cd26ac"
+    },
+    {
+      "path": "docs/execution-kanban.md",
+      "bytes": 210052,
+      "sha256": "86bd2f75724725a6f0715c3a54821633340ed1228f01fdc0def961bd2519fe21"
+    },
+    {
+      "path": "docs/research-state.md",
+      "bytes": 142036,
+      "sha256": "6a205707c2509e1960d0374152a00b3d5bbfe5397b336fea35981f81a2b3ab93"
+    }
+  ],
+  "archive_sha256": "37b787ef77d01d295091457cd8d6f55b8f687e07125468ad15de9d0a8ade0977"
+}

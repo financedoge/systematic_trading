@@ -81,7 +81,10 @@ class BacktestRunSpec(BaseModel):
 
 
 def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    # Audited bundles can contain large histories; verification should not need
+    # a second in-memory copy of every file. Preserve the same exact byte hash.
+    with path.open('rb') as stream:
+        return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
 def write_json(path: Path, data) -> None:

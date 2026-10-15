@@ -61,6 +61,21 @@ def calculate_twap(bars, start, end):
     return weighted / covered, count
 
 
+def session_window(record, *, original_intent=True):
+    from systematic_trading.live.trading_calendar import us_equity_market_close
+    start, end = benchmark_window(record, original_intent=original_intent)
+    zone = ZoneInfo("America/New_York")
+    day = start.astimezone(zone).date()
+    close = us_equity_market_close(day)
+    if close is None or end.astimezone(zone).date() != day:
+        raise ValueError("Benchmark window is not in a supported US session")
+    opening = datetime.combine(day, datetime.min.time().replace(hour=9, minute=30), zone).astimezone(UTC)
+    closing = datetime.combine(day, close, zone).astimezone(UTC)
+    if not opening <= start < end <= closing:
+        raise ValueError("Benchmark window is outside the regular session")
+    return opening, closing
+
+
 class IBMinuteBars:
     def __init__(self, settings):
         self.settings = settings
@@ -167,9 +182,29 @@ class TwapBenchmarkService:
         base.update(window_start=start.isoformat(), window_end=end.isoformat())
         if not original_intent:
             base['method'] = 'Time-weighted 1-minute trade closes over the routed TWAP window; excludes fees.'
+        result = self.get_window(record.order.symbol, start, end, now=now, schedule=schedule)
+        result = dict(base, **result)
+        if result['status'] == 'ready' and record.average_fill_price and record.filled_quantity:
+            price = Decimal(result['twap_price'])
+            sign = Decimal(1) if record.order.side == OrderSide.BUY else Decimal(-1)
+            difference = sign * (record.average_fill_price - price)
+            result.update(slippage_bps=str(difference / price * 10000),
+                          price_cost=str(difference * record.filled_quantity))
+        return result
+
+    def get_session(self, record, *, now=None, original_intent=True, schedule=True):
+        try:
+            start, end = session_window(record, original_intent=original_intent)
+        except ValueError as exc:
+            return dict(status='unavailable', message=str(exc))
+        return self.get_window(record.order.symbol, start, end, now=now, schedule=schedule)
+
+    def get_window(self, symbol, start, end, *, now=None, schedule=True):
+        now = now or datetime.now(UTC)
+        base = dict(window_start=start.isoformat(), window_end=end.isoformat())
         if now < end:
             return dict(base, status='waiting', message='Benchmark available after the scheduled TWAP window closes.')
-        key = sha256(f'v1:{record.order.symbol}:{start.isoformat()}:{end.isoformat()}'.encode()).hexdigest()
+        key = sha256(f'v1:{symbol}:{start.isoformat()}:{end.isoformat()}'.encode()).hexdigest()
         path = self.settings.data_dir / 'execution_benchmarks' / f'{key}.json'
         with self.lock:
             cached = self.cache.get(key)
@@ -178,7 +213,7 @@ class TwapBenchmarkService:
                     saved = self.analytics.document('execution-benchmarks', key)
                     if saved:
                         candidate = json.loads(saved[0]['payload'])
-                        validate_ready(candidate, root=self.settings.data_dir, symbol=record.order.symbol, start=start, end=end)
+                        validate_ready(candidate, root=self.settings.data_dir, symbol=symbol, start=start, end=end)
                         cached = self.cache[key] = candidate
                 except (RuntimeError, OSError, ValueError, KeyError, TypeError):
                     # Original immutable observation is retained for recovery;
@@ -187,24 +222,19 @@ class TwapBenchmarkService:
             if cached is None and path.exists():
                 try:
                     cached = json.loads(path.read_text(encoding='utf-8'))
-                    validate_ready(cached, root=self.settings.data_dir, symbol=record.order.symbol, start=start, end=end)
+                    validate_ready(cached, root=self.settings.data_dir, symbol=symbol, start=start, end=end)
                     self.cache[key] = cached
                 except (OSError, ValueError, KeyError, TypeError):
                     return dict(base, status='unavailable', message='Retained benchmark failed validation; preserve and review its evidence.')
             if cached and cached['status'] == 'ready':
                 try:
-                    price, count = validate_ready(cached, root=self.settings.data_dir, symbol=record.order.symbol, start=start, end=end)
+                    price, count = validate_ready(cached, root=self.settings.data_dir, symbol=symbol, start=start, end=end)
                 except (OSError, ValueError, KeyError, TypeError):
                     return dict(base, status='unavailable', message='Retained benchmark failed validation; preserve and review its evidence.')
                 result = dict(base, status='ready', twap_price=str(price), bar_count=count,
                               coverage='100%', observed_at=cached['observed_at'], source='IB historical TRADES',
                               benchmark_key=key, research_approved=False,
                               price_basis=cached.get('price_basis', 'Legacy operational benchmark; raw basis not independently certified'))
-                if record.average_fill_price and record.filled_quantity:
-                    sign = Decimal(1) if record.order.side == OrderSide.BUY else Decimal(-1)
-                    difference = sign * (record.average_fill_price - price)
-                    result.update(slippage_bps=str(difference / price * 10000),
-                                  price_cost=str(difference * record.filled_quantity))
                 return result
             if cached is None:
                 try:
@@ -218,7 +248,7 @@ class TwapBenchmarkService:
             if (schedule and not self.closed and due and key not in self.pending
                     and len(self.pending) < self.settings.execution_benchmark_max_pending):
                 self.pending.add(key)
-                self.pool.submit(self._fetch, key, path, record.order.symbol, start, end)
+                self.pool.submit(self._fetch, key, path, symbol, start, end)
             return dict(base, status='loading' if key in self.pending else 'unavailable',
                         benchmark_key=key, next_retry_at=cached.get('next_retry_at') if cached else None,
                         message=cached.get('message','Awaiting collection capacity.') if cached else 'Awaiting collection capacity.')

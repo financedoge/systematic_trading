@@ -1,0 +1,19 @@
+{
+  "url": "https://www.nasdaqtrader.com/dynamic/SymDir/nasdaqtraded.txt",
+  "captured_at": "2026-10-13T12:51:06.734784+00:00",
+  "sha256": "4a6f029e80d97cda17f7deeb60e997959bda3c8edd08a5ddc04c83f8c4773205",
+  "bytes": 1001949,
+  "headers": {
+    "Content-Type": "text/plain",
+    "Last-Modified": "Tue, 13 Oct 2026 12:47:24 GMT",
+    "Accept-Ranges": "bytes",
+    "ETag": "\"6df5b5fe105bdd1:0\"",
+    "Server": "Microsoft-IIS/10.0",
+    "Date": "Tue, 13 Oct 2026 12:50:56 GMT",
+    "Connection": "close",
+    "Content-Length": "1001949",
+    "Set-Cookie": "visid_incap_3159544=duK1GbGZQ1mHXePbSiHzUDEpzmoAAAAAQUIPAAAAAAD+fGJrsN5ptvBvfjhZqv5i; expires=Wed, 13 Oct 2027 10:27:04 GMT; HttpOnly; path=/; Domain=.nasdaqtrader.com",
+    "X-CDN": "Imperva",
+    "X-Iinfo": "14-28871988-28872043 NNNY CT(67 248 0) RT(1791895857105 265) q(0 0 0 66) r(1 1) U24"
+  }
+}

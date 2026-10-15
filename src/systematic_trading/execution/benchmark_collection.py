@@ -6,6 +6,7 @@ from pathlib import Path
 from threading import Event, Lock, Thread
 
 from systematic_trading.domain.enums import Currency, OrderEnvironment, OrderType
+from systematic_trading.execution.benchmark_qualification import publish_references
 from systematic_trading.market_data.analytics_store import digest, encode
 from systematic_trading.runtime_io import atomic_json
 
@@ -42,7 +43,7 @@ class ExecutionBenchmarkCollector:
         records = self.store.list_broker_order_records()
         # Recent fills first; durable retry cooldowns let older windows advance on later cycles.
         records.sort(key=lambda row: (row.order.intended_trade_date or row.updated_at.date(), row.local_order_id), reverse=True)
-        rows = []
+        rows, eligible = [], []
         for record in records:
             if self._stop.is_set():
                 break
@@ -54,7 +55,7 @@ class ExecutionBenchmarkCollector:
                         execution_detail_status="quantity_complete" if record.execution_fills and
                         sum(fill.quantity for fill in record.execution_fills) == record.filled_quantity
                         and not record.execution_sync_issue else "incomplete",
-                        original=None, routed=None)
+                        original=None, routed=None, original_session=None, routed_session=None)
             if not record.filled_quantity:
                 item["collection_status"] = "not_filled"
             elif record.broker != "interactive-brokers" or record.order.environment != OrderEnvironment.PAPER:
@@ -66,6 +67,7 @@ class ExecutionBenchmarkCollector:
             elif record.order.currency != Currency.USD:
                 item["collection_status"] = "unsupported_currency_contract"
             else:
+                eligible.append((record, item))
                 for name, original in (("original", True), ("routed", False)):
                     result = self.benchmarks.get(record, now=now, original_intent=original)
                     item[name] = {key: value for key, value in result.items() if key in {
@@ -73,6 +75,16 @@ class ExecutionBenchmarkCollector:
                         "observed_at", "coverage", "bar_count", "price_basis", "research_approved"}}
                 item["collection_status"] = item["original"]["status"]
             rows.append(item)
+        # Order windows have first use of the bounded queue. Session requests
+        # share that queue and deduplicate across windows/orders on the same day.
+        sessions = {}
+        for record, item in eligible:
+            for name, original in (("original_session", True), ("routed_session", False)):
+                result = self.benchmarks.get_session(record, now=now, original_intent=original)
+                item[name] = {key: value for key, value in result.items() if key in {
+                    "status", "message", "window_start", "window_end", "benchmark_key", "next_retry_at"}}
+                if result.get("benchmark_key"):
+                    sessions[result["benchmark_key"]] = result
         rows.sort(key=lambda row: row["local_order_id"])
         windows = {}
         for row in rows:
@@ -80,12 +92,15 @@ class ExecutionBenchmarkCollector:
                 result = row[name]
                 if result and result.get("benchmark_key"):
                     windows[result["benchmark_key"]] = result["status"]
-        report = dict(version=1, scope="All retained paper orders; original and routed TWAP windows",
+        references = publish_references(self.settings, self.analytics, sessions)
+        report = dict(version=2, scope="All retained paper orders; original/routed TWAP windows and regular sessions",
                       paper_order_count=len(rows), filled_order_count=sum(row["filled_quantity"] > 0 for row in rows),
                       order_status_counts=dict(Counter(row["collection_status"] for row in rows)),
                       window_status_counts=dict(Counter(windows.values())), unique_window_count=len(windows),
-                      basis="Operational observations only; raw-unit and full-session comparison qualification pending",
-                      close_status="not_qualified", session_vwap_status="not_qualified", orders=rows)
+                      session_status_counts=dict(Counter(r["status"] for r in sessions.values())),
+                      unique_session_count=len(sessions), reference_audit=references,
+                      basis="Operational captures; separately published retrospective reference audits retain source limitations",
+                      close_status=references["status"], session_vwap_status=references["status"], orders=rows)
         publication = None
         if self.analytics is not None:
             version = digest(encode(report))

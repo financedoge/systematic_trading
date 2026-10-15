@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import math
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import Decimal, ROUND_DOWN, ROUND_HALF_UP
 from typing import Mapping, Sequence
 
 WEIGHT_STEP = Decimal("0.0001")
@@ -25,10 +25,14 @@ def inverse_volatility_weights(
 ) -> dict[str, Decimal]:
     if not volatility_by_symbol:
         raise ValueError("At least one volatility observation is required.")
-    if Decimal(max_weight) <= 0:
-        raise ValueError("max_weight must be positive.")
-    if Decimal(max_weight) * len(volatility_by_symbol) < Decimal("1"):
-        raise ValueError("max_weight is too low to allocate the full portfolio.")
+    max_weight = Decimal(max_weight)
+    if not max_weight.is_finite() or not 0 < max_weight <= 1:
+        raise ValueError("max_weight must be finite and in (0, 1].")
+    rounded_cap = max_weight.quantize(WEIGHT_STEP, rounding=ROUND_DOWN)
+    if rounded_cap * len(volatility_by_symbol) < Decimal("1"):
+        raise ValueError("max_weight is too low to allocate the full portfolio at 0.0001 precision.")
+    if any(not Decimal(value).is_finite() or Decimal(value) <= 0 for value in volatility_by_symbol.values()):
+        raise ValueError("Volatility observations must be finite and positive.")
 
     inverse = {symbol: Decimal("1") / Decimal(volatility) for symbol, volatility in volatility_by_symbol.items()}
     capped: dict[str, Decimal] = {}
@@ -44,17 +48,22 @@ def inverse_volatility_weights(
             capped.update(provisional)
             break
 
-        for symbol in breaches:
+        for symbol in sorted(breaches):
             capped[symbol] = Decimal(max_weight)
             remaining_budget -= Decimal(max_weight)
             remaining.pop(symbol)
 
     rounded = {
-        symbol: Decimal(weight).quantize(WEIGHT_STEP, rounding=ROUND_HALF_UP)
+        symbol: min(rounded_cap, Decimal(weight).quantize(WEIGHT_STEP, rounding=ROUND_HALF_UP))
         for symbol, weight in capped.items()
     }
     residual = Decimal("1.0000") - sum(rounded.values())
-    if residual != Decimal("0.0000"):
-        largest = max(rounded, key=rounded.get)
-        rounded[largest] = (rounded[largest] + residual).quantize(WEIGHT_STEP, rounding=ROUND_HALF_UP)
+    # A rounding residual must never breach a concentration cap (or make a
+    # weight negative). Allocate it deterministically to weights with room.
+    for symbol in sorted(rounded, key=lambda symbol: (-rounded[symbol], symbol)):
+        if residual == 0:
+            break
+        adjustment = min(residual, rounded_cap - rounded[symbol]) if residual > 0 else max(residual, -rounded[symbol])
+        rounded[symbol] += adjustment
+        residual -= adjustment
     return dict(sorted(rounded.items()))

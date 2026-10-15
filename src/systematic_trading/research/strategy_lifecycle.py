@@ -110,7 +110,7 @@ def decorate_catalog(payload, settings, store):
         key=row['strategy_id'];ready=calculation_ready(row,state,through)
         # Monitoring a new pool does not extend the separately guarded broker
         # allocation contract. The 14-ETF recipe is observation-only for now.
-        issue = allocation_contract_issue(registered_strategy_definition(key)) if key in state['monitored'] else None
+        issue = allocation_contract_issue(registered_strategy_definition(key), settings) if key in state['monitored'] else None
         allocation_supported = issue is None
         row.update(lifecycle='monitored' if key in state['monitored'] else 'archived',
             calculation_status='Current' if ready else 'Catching up' if key in state['monitored'] else 'Paused',

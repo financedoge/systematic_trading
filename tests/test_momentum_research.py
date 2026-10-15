@@ -112,3 +112,23 @@ def test_usd_cash_fees_prior_sizing_and_next_open_fills(tmp_path):
     assert D(result['nav'][1]['nav'])==D('949.45')
     (tmp_path/'quotes.json').write_text('{}')
     with pytest.raises(ValueError,match='changed'):verify_usd_bundle(tmp_path)
+
+
+def test_usd_replay_accepts_frozen_expanded_members_and_rejects_implicit_universe(tmp_path):
+    from systematic_trading.research.momentum_replay import usd_instruments
+    usd_fixture(tmp_path)
+    member=usd_instruments()['SPY'].model_dump(mode='json')
+    member.update(symbol='NEW',name='Explicitly registered test ETF')
+    for filename in ('quotes.json','decisions.json'):
+        p=tmp_path/filename;p.write_text(p.read_text().replace('SPY','NEW'))
+    spec=json.loads((tmp_path/'spec.json').read_text())
+    spec['recipe']=dict(universeKey='expanded-test-v1',universeMembers=[member])
+    write_json(tmp_path/'spec.json',spec)
+    write_json(tmp_path/'manifest.json',{p.name:sha256(p) for p in tmp_path.iterdir() if p.name!='manifest.json'})
+    result=run_usd_reference(tmp_path)
+    assert result['fills'][0]['symbol']=='NEW'
+    assert D(result['nav'][-1]['nav'])==D('949.45')
+    with pytest.raises(ValueError,match='frozen membership'):
+        usd_instruments(dict(universeKey='expanded-test-v1'))
+    with pytest.raises(ValueError,match='unique USD'):
+        usd_instruments(dict(universeMembers=[member,member]))

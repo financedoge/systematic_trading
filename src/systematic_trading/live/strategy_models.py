@@ -51,4 +51,6 @@ def bind_rolling_model(settings, definition, price_batch, overlays, histories, d
     for overlay, spec in zip(overlays, definition.overlays, strict=True):
         if spec.kind == 'rolling_model':
             overlay.model = model
+        elif spec.kind == 'financial_rank_selection':
+            overlay.rolling_schedule = schedule
     return receipt
