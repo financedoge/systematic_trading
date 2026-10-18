@@ -58,7 +58,7 @@ def prepare(root, broker_path):
     from systematic_trading.research.strategy_catalog import defensive_cash_definition
     if root.exists():
         raise FileExistsError("Frozen universe study already exists")
-    settings=AppSettings(transactional_store_backend="postgres",market_data_store_backend="clickhouse")
+    settings=AppSettings(transactional_store_backend="postgres")
     state=control_state(create_trading_store(settings))
     if state["sota_key"] != "research_fallback_f3_v1":
         raise ValueError("Current SOTA differs; reconsider the benchmark before outcomes")

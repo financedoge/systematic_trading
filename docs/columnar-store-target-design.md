@@ -2,9 +2,12 @@
 
 ## Status
 
-Decision: use ClickHouse as the primary serving column store, Parquet as the immutable lake/archive and interchange format, and DuckDB as a local/offline research reader over Parquet extracts.
-
-This completes the P2.6 design decision. P2.8 remains responsible for proving the local runtime with Docker and a smoke query.
+The original ClickHouse target below was superseded on October 17, 2026 by the
+operator-selected [native Windows migration](storage-retention-and-windows-native-plan.md):
+PostgreSQL operational state and publication metadata, compressed Parquet histories,
+native DuckDB analytics and native NATS. ClickHouse is still deployed until verified
+cutover. The remaining sections document the historical design for migration context;
+they do not prescribe new Docker/WSL dependencies or indefinite exploratory retention.
 
 ## Decision Summary
 

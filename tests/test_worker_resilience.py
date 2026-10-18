@@ -132,6 +132,7 @@ def test_failed_parity_is_not_automatically_retried(run_fixture):
 
 
 def test_active_orphan_container_is_not_restarted(run_fixture, monkeypatch):
+    monkeypatch.setenv('ST_LEAN_RUNTIME_BACKEND','docker')
     from systematic_trading.research import run_recovery
     runtime, bundle, output, calls = run_fixture
     output.mkdir()

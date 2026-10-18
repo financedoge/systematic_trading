@@ -1,4 +1,9 @@
-"""P4.15 — turnover and breakeven-IC gate (standing pre-test).
+"""Turnover/IC diagnostics; the annual cost ceiling was retired on 2026-10-17.
+
+``screen`` reports costs and information diagnostics for a subsequent net replay.
+It never rejects a candidate for exceeding an absolute annual cost budget.
+``legacy_screen`` reproduces the historical P4.15 experiment only. The historical
+description below explains its provenance; it is not current research policy.
 
 Registered 2026-10-10 in ``docs/signal-decay-and-alpha-plan.md`` and frozen here
 before any later item in the programme consumes it. The question it answers, for a
@@ -42,7 +47,8 @@ from typing import Any
 
 from systematic_trading.research.signal_decay import breakeven_ic
 
-VERSION = 'turnover-gate-v1'
+VERSION = 'turnover-diagnostics-v2'
+LEGACY_VERSION = 'turnover-gate-v1'
 FROZEN_COST_BPS = 5.0
 SESSIONS_PER_YEAR = 252
 DEFAULT_PERIOD_SESSIONS = 21
@@ -53,8 +59,8 @@ DEFAULT_PERIOD_SESSIONS = 21
 PROGRAMME_REFERENCE_IC = 0.0943
 
 # Frozen before the calibration study was run, and not revised after it.
-THRESHOLDS = dict(
-    version=VERSION,
+LEGACY_THRESHOLDS = dict(
+    version=LEGACY_VERSION,
     cost_bps=FROZEN_COST_BPS,
     period_sessions=DEFAULT_PERIOD_SESSIONS,
     # The monitored strategy's measured drag on the traded-notional convention is
@@ -68,6 +74,10 @@ THRESHOLDS = dict(
     # clears it by ~15x; Alpha101's median archetype does not clear it at all.
     min_ic_margin=3.0,
 )
+
+# Information margin is a diagnostic, not a substitute for net portfolio returns.
+THRESHOLDS = dict(version=VERSION, cost_bps=FROZEN_COST_BPS,
+                  period_sessions=DEFAULT_PERIOD_SESSIONS, min_ic_margin=3.0)
 
 
 def implied_turnover(weights_by_decision: Mapping[str, Mapping[str, Any]]) -> dict:
@@ -106,7 +116,7 @@ def implied_turnover(weights_by_decision: Mapping[str, Mapping[str, Any]]) -> di
     span = (date.fromisoformat(days[-1]) - date.fromisoformat(days[0])).days / 365.25
     if span <= 0:
         raise ValueError('Decision calendar does not span a positive period')
-    return dict(version=VERSION, decisions=len(days), first=days[0], last=days[-1], years=span,
+    return dict(version=LEGACY_VERSION, decisions=len(days), first=days[0], last=days[-1], years=span,
                 total_traded_notional=traded, annual_turnover=traded / span,
                 mean_traded_per_decision=traded / len(days),
                 max_traded_per_decision=max(row['traded_notional'] for row in rows), rows=rows)
@@ -137,16 +147,16 @@ def calibrate(implied: float, measured: float) -> dict:
                 implied_is_conservative=bool(measured <= implied))
 
 
-def screen(
+def legacy_screen(
     annual_turnover: float,
     *,
     sigma: float | None,
     candidate_ic: float | None = None,
     cost_bps: float = FROZEN_COST_BPS,
     period_sessions: int = DEFAULT_PERIOD_SESSIONS,
-    thresholds: Mapping[str, Any] = THRESHOLDS,
+    thresholds: Mapping[str, Any] = LEGACY_THRESHOLDS,
 ) -> dict:
-    """The frozen two-test verdict for one candidate cost profile.
+    """Historical reproduction only: the frozen P4.15 two-test verdict.
 
     Test 1 — cost ceiling: the annual drag at the frozen cost must not exceed the
     monitored book's drag plus the disclosed tolerance.
@@ -185,11 +195,59 @@ def screen(
         if not reasons:
             reasons.append(f'cost {cost:.1f}bp is inside the ceiling and positive IC clears '
                            f'the requirement')
-    return dict(version=VERSION, status=status, cost_test=cost_test, margin_test=margin_test,
+    return dict(version=LEGACY_VERSION, status=status, cost_test=cost_test, margin_test=margin_test,
                 annual_turnover=float(annual_turnover), annual_cost_bps=cost, cost_ceiling_bps=ceiling,
                 breakeven_ic=breakeven, candidate_ic=ic, ic_margin=margin,
                 sigma=sigma, cost_bps=cost_bps, period_sessions=period_sessions,
                 thresholds=dict(thresholds), reasons=reasons)
+
+
+def screen(
+    annual_turnover: float,
+    *,
+    sigma: float | None,
+    candidate_ic: float | None = None,
+    cost_bps: float = FROZEN_COST_BPS,
+    period_sessions: int = DEFAULT_PERIOD_SESSIONS,
+    thresholds: Mapping[str, Any] = THRESHOLDS,
+) -> dict:
+    """Report research diagnostics without an absolute cost or IC admission veto.
+
+    Compare candidate and matched control returns after actual simulated costs.
+    A diagnostic cannot establish that incremental return pays for incremental
+    cost; valid inputs therefore return ``requires_replay``, never a strategy pass.
+    Missing signal evidence is explicit and never replaced by another signal's IC.
+    Frozen studies must call ``legacy_screen`` to reproduce their original verdicts.
+    """
+    if 'max_annual_cost_bps' in thresholds or 'cost_tolerance' in thresholds:
+        raise ValueError('Annual cost ceilings are retired; use legacy_screen only for historical reproduction')
+    if candidate_ic is not None and (not _finite(candidate_ic) or not -1 <= candidate_ic <= 1):
+        raise ValueError('Candidate IC must be finite and between -1 and 1')
+    if sigma is not None and (not _finite(sigma) or sigma <= 0):
+        raise ValueError('Dispersion must be finite and positive when supplied')
+    if not isinstance(period_sessions, int) or period_sessions <= 0:
+        raise ValueError('Period sessions must be a positive integer')
+    minimum = float(thresholds['min_ic_margin'])
+    if not _finite(minimum) or minimum <= 0:
+        raise ValueError('Diagnostic IC margin must be finite and positive')
+    cost = annual_cost_bps(annual_turnover, cost_bps)
+    breakeven = breakeven_ic(annual_turnover, sigma, cost_bps=cost_bps, period_sessions=period_sessions)
+    if annual_turnover == 0 and sigma is not None:
+        breakeven = 0.0
+    margin = candidate_ic / breakeven if candidate_ic is not None and breakeven else None
+    complete = candidate_ic is not None and breakeven is not None
+    margin_test = (bool(candidate_ic > 0 and (breakeven == 0 or margin >= minimum))
+                   if complete else None)
+    return dict(version=VERSION, status='requires_replay' if complete else 'insufficient',
+                cost_test=None, margin_test=margin_test, annual_turnover=float(annual_turnover),
+                annual_cost_bps=cost, cost_ceiling_bps=None, breakeven_ic=breakeven,
+                candidate_ic=candidate_ic, ic_margin=margin, sigma=sigma, cost_bps=cost_bps,
+                period_sessions=period_sessions, thresholds=dict(thresholds),
+                net_performance_established=False, promotion_eligible=False,
+                reasons=['No absolute annual cost ceiling. Compare matched portfolio returns after costs.'
+                         if complete else 'Candidate IC or dispersion is unavailable; no economic verdict.',
+                         'IC margin is diagnostic; net Sharpe, return/drawdown guards, cost/delay '
+                         'sensitivity and chronological validation remain required.'])
 
 
 def archetypes() -> list[dict]:
@@ -203,7 +261,7 @@ def archetypes() -> list[dict]:
 def assess_archetypes(*, sigma: float, candidate_ic: float | None = None,
                       cost_bps: float = FROZEN_COST_BPS) -> list[dict]:
     """Apply the frozen gate to each registered archetype."""
-    return [dict(entry, **screen(entry['annual_turnover'], sigma=sigma, candidate_ic=candidate_ic,
+    return [dict(entry, **legacy_screen(entry['annual_turnover'], sigma=sigma, candidate_ic=candidate_ic,
                                  cost_bps=cost_bps)) for entry in archetypes()]
 
 

@@ -24,6 +24,9 @@ class ClickHouseMarketDataStore:
 
     @classmethod
     def from_settings(cls, settings: AppSettings) -> ClickHouseMarketDataStore:
+        if settings.market_data_store_backend == 'parquet':
+            from systematic_trading.market_data.native_market import NativeMarketDataClient
+            return cls(NativeMarketDataClient.from_settings(settings))
         return cls(
             ClickHouseMarketDataClient(
                 settings.clickhouse_http_url,

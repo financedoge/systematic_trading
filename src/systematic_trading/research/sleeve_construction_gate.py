@@ -12,8 +12,9 @@ from pathlib import Path
 
 from systematic_trading.lean.contracts import sha256, write_json
 from systematic_trading.research.momentum_replay import read_json
-from systematic_trading.research.turnover_gate import (FROZEN_COST_BPS, PROGRAMME_REFERENCE_IC, THRESHOLDS,
-    VERSION, implied_turnover, screen, weights_from_targets)
+from systematic_trading.research.turnover_gate import (FROZEN_COST_BPS, PROGRAMME_REFERENCE_IC,
+    LEGACY_THRESHOLDS as THRESHOLDS, LEGACY_VERSION as VERSION,
+    implied_turnover, legacy_screen as screen, weights_from_targets)
 
 GATE_ROOT = Path('var/research/turnover-gate-20261010-v1')
 

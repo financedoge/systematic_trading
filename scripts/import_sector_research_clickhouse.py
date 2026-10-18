@@ -181,7 +181,7 @@ def main():
     parser.add_argument('--receipt', type=Path, required=True)
     args = parser.parse_args()
     store = ResearchBatchAnalytics.from_settings(AppSettings())
-    store.client.timeout_seconds = 120
+    if hasattr(store,'client'):store.client.timeout_seconds=120
     store.initialize()
     result = import_dataset(args.root, store)
     result['workspace'] = store.workspace

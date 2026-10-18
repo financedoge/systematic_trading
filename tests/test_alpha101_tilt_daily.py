@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 import pytest
+from retained_artifacts import requires_artifact
 
 from systematic_trading.research import alpha101_tilt_daily_study as study
 
@@ -94,6 +95,7 @@ def test_the_daily_cross_section_is_transposed_into_the_tested_rule():
 # --- the frozen frontier -----------------------------------------------------
 
 @BUILT
+@requires_artifact(ROOT / 'decisions')
 def test_every_arm_was_frozen_and_replayed():
     assert len(study.arms()) == 34
     for arm in study.arms():

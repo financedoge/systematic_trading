@@ -115,6 +115,11 @@ def decorate_catalog(payload, settings, store):
         row.update(lifecycle='monitored' if key in state['monitored'] else 'archived',
             calculation_status='Current' if ready else 'Catching up' if key in state['monitored'] else 'Paused',
             allocation_ready=ready and allocation_supported,can_restore=replay_supported(key),archive_blocker=archive_blocker(store,key))
+        from systematic_trading.storage.artifact_retention import retirement_for_path
+        retirement = retirement_for_path(settings.data_dir, row['artifact_path']) if row.get('artifact_path') else None
+        if retirement:
+            row.update(artifact_retirement=retirement, exact_replay_available=False,
+                       artifact_status='Detailed workspace retired; historical published report retained')
         if not allocation_supported:
             row['allocation_unavailable_reason']=issue
     payload['membership_revision']=state['revision']

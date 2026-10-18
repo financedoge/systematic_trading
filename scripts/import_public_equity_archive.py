@@ -25,7 +25,7 @@ def main():
     root=args.root
     verify_manifest(root,'archive_manifest.json')
     store=ResearchBatchAnalytics.from_settings(AppSettings())
-    store.client.timeout_seconds=120
+    if hasattr(store,'client'):store.client.timeout_seconds=120
     prefix='sector-research/'+root.name+'/'
     current=store.publication_index(prefix)
     count=0

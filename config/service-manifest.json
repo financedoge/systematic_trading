@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "profile": "local-windows",
-  "description": "Local supervised service layout for the operator stack.",
+  "profile": "native-windows",
+  "description": "Native Windows operational services and embedded Parquet/DuckDB analytics.",
   "services": [
     {
       "service_id": "operator_dashboard",
@@ -34,7 +34,7 @@
         "PYTHONPATH": "src",
         "ST_AUTOMATION_ENABLED": "true",
         "ST_TRANSACTIONAL_STORE_BACKEND": "postgres",
-        "ST_MARKET_DATA_STORE_BACKEND": "clickhouse"
+        "ST_MARKET_DATA_STORE_BACKEND": "parquet"
       },
       "restart_policy": {
         "mode": "on_missing_with_backoff",
@@ -138,7 +138,7 @@
         "scripts/start_nats_jetstream.ps1"
       ],
       "working_directory": ".",
-      "pid_file": null,
+      "pid_file": "var/run/native-nats.pid",
       "stdout_log": null,
       "stderr_log": null,
       "health_check": {
@@ -149,11 +149,11 @@
       },
       "environment": {},
       "restart_policy": {
-        "mode": "docker_compose",
+        "mode": "on_missing_with_backoff",
         "max_restarts": 0
       },
       "depends_on": [],
-      "notes": "Docker Compose path is versioned under deploy/nats. Local Docker runtime has been smoke-tested."
+      "notes": "Pinned native Windows NATS; verified JetStream data, bounded memory/file stores and loopback listeners."
     },
     {
       "service_id": "postgres_transactional",
@@ -225,38 +225,29 @@
       "notes": "Health probe connects to TWS/Gateway paper API and waits for nextValidId. Login and 2FA recovery remain manual."
     },
     {
-      "service_id": "clickhouse_columnar",
-      "display_name": "ClickHouse Columnar Store",
-      "service_type": "worker",
+      "service_id": "native_analytics",
+      "display_name": "Native Parquet / DuckDB analytics",
+      "service_type": "embedded_worker",
       "implementation_status": "active",
       "required": true,
       "startup_order": 15,
-      "command": [
-        "powershell",
-        "-ExecutionPolicy",
-        "Bypass",
-        "-File",
-        "scripts/start_clickhouse.ps1"
-      ],
+      "command": [],
       "working_directory": ".",
       "pid_file": null,
       "stdout_log": null,
       "stderr_log": null,
       "health_check": {
-        "kind": "http",
-        "target": "http://127.0.0.1:8123/ping",
-        "timeout_seconds": 2,
-        "stale_after_seconds": 30
+        "kind": "none"
       },
-      "environment": {
-        "ST_CLICKHOUSE_LOG_ROOT": "D:/systematic_trading_data/clickhouse/logs"
-      },
+      "environment": {},
       "restart_policy": {
-        "mode": "docker_compose",
+        "mode": "embedded",
         "max_restarts": 0
       },
-      "depends_on": [],
-      "notes": "Docker Compose path is versioned under deploy/clickhouse. P2.8 owns the local runtime smoke."
+      "depends_on": [
+        "postgres_transactional"
+      ],
+      "notes": "Immutable compressed files with PostgreSQL publication metadata; bounded embedded DuckDB reads, no external database daemon."
     },
     {
       "service_id": "market_data_recorder",
@@ -290,7 +281,7 @@
       "environment": {
         "PYTHONPATH": "src",
         "ST_TRANSACTIONAL_STORE_BACKEND": "postgres",
-        "ST_MARKET_DATA_STORE_BACKEND": "clickhouse"
+        "ST_MARKET_DATA_STORE_BACKEND": "parquet"
       },
       "restart_policy": {
         "mode": "on_missing_with_backoff",
@@ -343,7 +334,11 @@
       "implementation_status": "active",
       "required": false,
       "startup_order": 69,
-      "command": [".venv/Scripts/python.exe", "scripts/system_backup.py", "worker"],
+      "command": [
+        ".venv/Scripts/python.exe",
+        "scripts/system_backup.py",
+        "worker"
+      ],
       "pid_file": "var/run/system_backup.pid",
       "stdout_log": "var/log/system_backup.worker.log",
       "health_check": {
@@ -352,7 +347,8 @@
         "stale_after_seconds": 300
       },
       "supervised_by": "local_recovery",
-      "notes": "Optional hourly native database/queue and durable-file backups; retries every five minutes and resumes interrupted uploads. Offline NAS never gates trading or startup."
+      "notes": "Optional hourly native database/queue and durable-file backups; retries every five minutes and resumes interrupted uploads. Offline NAS never gates trading or startup.",
+      "depends_on": []
     },
     {
       "service_id": "local_recovery",
@@ -378,7 +374,8 @@
         "mode": "local_platform_start",
         "max_restarts": 0
       },
-      "notes": "Started with the local platform. Checks desired services every 30 seconds; retries guarded startup with persisted bounded backoff. Explicit stops are honored. Broker login, reconciliation breaks, corrupt data and live authority are never bypassed."
+      "notes": "Started with the local platform. Checks desired services every 30 seconds; retries guarded startup with persisted bounded backoff. Explicit stops are honored. Broker login, reconciliation breaks, corrupt data and live authority are never bypassed.",
+      "depends_on": []
     }
   ]
 }

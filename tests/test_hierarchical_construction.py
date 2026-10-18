@@ -4,6 +4,7 @@ from decimal import Decimal
 from pathlib import Path
 
 import pytest
+from retained_artifacts import requires_artifact
 
 from systematic_trading.research import hierarchical_construction_study as study
 from systematic_trading.research import hierarchical_construction_analysis as analysis
@@ -143,6 +144,7 @@ def test_the_gate_record_screened_both_arms_before_the_replays():
 
 
 @BUILT
+@requires_artifact(ROOT / 'decisions')
 def test_no_arm_ever_forces_more_classes_or_names_than_the_rule_allows():
     for arm in study.ARMS:
         limit = study.CLASS_CHOICES[arm]
@@ -158,6 +160,7 @@ def test_no_arm_ever_forces_more_classes_or_names_than_the_rule_allows():
 
 
 @BUILT
+@requires_artifact(ROOT / 'decisions')
 def test_the_rule_dropped_a_downtrending_class_exactly_as_intended():
     """The operator's example: bonds into a rising-rate year must not be forced in."""
     for arm in study.ARMS:
@@ -181,6 +184,7 @@ def test_a_day_with_no_qualifying_class_is_cash_rather_than_a_forced_allocation(
 
 
 @BUILT
+@requires_artifact(Path('var/research/sleeve-construction-20261010-v1/decisions'))
 def test_the_pinned_parent_study_is_unchanged():
     from systematic_trading.lean.contracts import sha256
     receipt = json.loads((ROOT / 'data_receipt.json').read_text(encoding='utf8'))
@@ -232,6 +236,7 @@ def test_the_corrected_root_reverifies_its_receipts_and_registers_both_populatio
 
 
 @BUILT_V2
+@requires_artifact(ROOT_V2 / 'decisions')
 def test_no_corrected_hierarchical_decision_holds_a_name_that_failed_the_gate():
     for arm in study.ARMS:
         for day, row in _v2_rows(arm).items():
@@ -243,6 +248,7 @@ def test_no_corrected_hierarchical_decision_holds_a_name_that_failed_the_gate():
 
 
 @BUILT_V2
+@requires_artifact(ROOT / 'decisions')
 def test_the_corrected_arms_hold_exactly_what_the_published_arms_held():
     """The class-score population repair changes no choice on the pinned decisions."""
     for arm in study.ARMS:
@@ -254,6 +260,7 @@ def test_the_corrected_arms_hold_exactly_what_the_published_arms_held():
 
 
 @BUILT_V2
+@requires_artifact(ROOT_V2 / 'source')
 def test_the_class_score_audit_records_how_often_the_populations_disagreed():
     """The audit re-derives the superseded population on the corrected decisions."""
     from systematic_trading.lean.contracts import sha256
@@ -279,6 +286,7 @@ def test_the_class_score_audit_records_how_often_the_populations_disagreed():
 
 
 @BUILT_V2
+@requires_artifact(ROOT_V2 / 'decisions')
 def test_the_corrected_arms_still_drop_the_downtrending_class():
     for arm in study.ARMS:
         rows = _v2_rows(arm)

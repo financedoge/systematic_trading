@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 from systematic_trading.research import alpha101_tilt as tilt
+from retained_artifacts import requires_artifact
 
 ROOT = tilt.DEFAULT_ROOT
 BUILT = pytest.mark.skipif(not (ROOT / 'tilt.json').exists(), reason='frozen tilt measurement not built')
@@ -139,6 +140,7 @@ def test_frozen_passes_require_matched_payoff_and_affordability():
 
 
 @BUILT
+@requires_artifact('var/research/sleeve-construction-20261010-v1/controls/CP.json')
 def test_the_measurement_reproduces_and_its_inputs_are_unchanged():
     checks = tilt.verify(ROOT)
     assert checks['reproduced'] is True

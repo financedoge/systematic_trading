@@ -62,7 +62,7 @@ def prepare(root,runner):
     for folder,manifests in ((candidate,['input_manifest.json','decision_manifest.json','model_manifest.json']),
         (financial,['input_manifest.json','feature_manifest.json']),(app,['input_manifest.json'])):
         for manifest in manifests:checked_files(folder,manifest)
-    settings=AppSettings(transactional_store_backend='postgres',market_data_store_backend='clickhouse');store=create_trading_store(settings)
+    settings=AppSettings(transactional_store_backend='postgres');store=create_trading_store(settings)
     before=dict(control=control_state(store),membership=membership(settings,store),orders=[r.model_dump(mode='json') for r in store.list_broker_order_records()])
     if before['control']['sota_key']!='research_fallback_f3_v1':raise ValueError('Funded/SOTA baseline requires review')
     receipt=read_json(candidate/'data_receipt.json');old=read_json(candidate/'protocol.json')

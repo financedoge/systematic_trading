@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "startup_retention": true,
+  "generated_soft_gib": 20,
+  "generated_admission_gib": 40,
+  "new_calculation_reserve_gib": 2,
+  "failed_attempt_days": 7,
+  "complete_calculation_revisions": 2
+}

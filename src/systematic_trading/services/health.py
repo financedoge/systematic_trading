@@ -19,6 +19,7 @@ from systematic_trading.services.manifest import (
     ServiceImplementationStatus,
     ServiceManifest,
     ServiceSpec,
+    ServiceType,
     load_service_manifest,
 )
 
@@ -102,6 +103,27 @@ def evaluate_service_health(
     checked_at = _as_utc(now or datetime.now(tz=UTC))
     resolved_base_dir = Path(base_dir) if base_dir is not None else Path.cwd()
     health_check = service.health_check
+
+    if service.service_id in {'clickhouse_columnar','native_analytics'} and settings.market_data_store_backend=='parquet':
+        service=service.model_copy(update=dict(service_id='native_analytics',display_name='Native Parquet / DuckDB analytics',
+            service_type=ServiceType.EMBEDDED_WORKER,command=[],environment={}))
+        try:
+            from systematic_trading.market_data.analytics_store import AnalyticsStore
+            native=AnalyticsStore.from_settings(settings)
+            native.initialize()
+            publication=native.latest('governance/catalog')
+            if not publication:raise ValueError('No audited price catalog has been committed')
+            for table in ('observations','documents'):
+                manifest=native._manifest(publication,table)
+                for fragment in (manifest or {}).get('fragments',[]):
+                    if not (native.lake.root/fragment['path']).is_file():raise ValueError('A current catalog fragment is missing')
+            return _state(service,checked_at=checked_at,status=ServiceHealthLevel.OK,running=True,
+                message='PostgreSQL publication catalog and native analytical files are available.',
+                target=str(settings.native_analytics_root),health_check_kind='native_manifest')
+        except Exception as exc:
+            return _state(service,checked_at=checked_at,status=ServiceHealthLevel.ERROR,running=False,
+                message='Native analytical readiness failed: '+str(exc),target=str(settings.native_analytics_root),
+                health_check_kind='native_manifest')
 
     if service.service_id == "trading_management_loop" and not settings.automation_enabled:
         return _state(

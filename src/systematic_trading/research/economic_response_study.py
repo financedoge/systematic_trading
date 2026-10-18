@@ -46,7 +46,7 @@ def prepare(root, parent, economic_pin, runner):
         raise FileExistsError('Frozen study already exists; preserve evidence')
     checked_files(parent,'input_manifest.json'); checked_files(parent,'decision_manifest.json')
     old = read_json(parent/'protocol.json')
-    settings = AppSettings(transactional_store_backend='postgres',market_data_store_backend='clickhouse')
+    settings = AppSettings(transactional_store_backend='postgres')
     analytics = AnalyticsStore.from_settings(settings); state = control_state(create_trading_store(settings))
     if state['sota_key'] not in {old['baseline'],'research_fallback_f3_v1'}:
         raise ValueError('Unanticipated SOTA change; review the experiment comparators')

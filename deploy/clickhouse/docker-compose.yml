@@ -13,6 +13,8 @@ services:
     volumes:
       - clickhouse_data:/var/lib/clickhouse
       - ./backup.xml:/etc/clickhouse-server/config.d/system-backup.xml:ro
+      - ./retention-server.xml:/etc/clickhouse-server/config.d/resource-retention.xml:ro
+      - ./retention-users.xml:/etc/clickhouse-server/users.d/resource-retention.xml:ro
       - "${ST_CLICKHOUSE_LOG_ROOT:-D:/systematic_trading_data/clickhouse/logs}:/var/log/clickhouse-server"
     ulimits:
       nofile:

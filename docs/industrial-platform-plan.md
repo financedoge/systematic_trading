@@ -4,7 +4,19 @@
 
 Build this repository into a 24x7 industrial-standard systematic trading platform for research, backtesting, paper trading, live trading, monitoring, and post-trade analysis. The target standard is institutional discipline: versioned data, reproducible research, explicit promotion gates, resilient services, audited execution, strong reconciliation, and real-time observability.
 
-The current Python/FastAPI modular application uses PostgreSQL for transactional state, ClickHouse for analytical serving, NATS for event delivery and an isolated LEAN research worker. SQLite remains an explicit offline test/recovery backend. This document describes the target service architecture and promotion gates; the execution Kanban records current delivery, and the phase durations below are original planning estimates, not present schedules.
+The Python/FastAPI application's implemented defaults are native PostgreSQL for
+transactional/publication state, Parquet/DuckDB analytics, native NATS and isolated
+native LEAN workers. SQLite remains an explicit offline test/recovery backend.
+The execution Kanban records cutover acceptance; the phase durations and legacy
+service diagrams below are original planning history, not present schedules.
+
+On October 17 the operator selected a native Windows replacement for the container
+foundation: PostgreSQL metadata/operations, compressed Parquet with native DuckDB,
+native NATS and a Docker-free calculation/validation path. Memory/storage limits
+take priority over retaining full historical exploratory runs. The
+[migration and retention plan](storage-retention-and-windows-native-plan.md)
+supersedes the ClickHouse/Docker target below; remaining references describe the
+legacy deployment until cutover, not authorization for new container dependencies.
 
 The initial schema registry is code-based in `systematic_trading.schemas`; the convention and compatibility rules are documented in `docs/schema-registry-convention.md`.
 
@@ -146,7 +158,10 @@ Required controls:
 
 ### Columnar Research Store
 
-Use a column store for fast analytics and historical scans. The selected target is ClickHouse as the serving analytical store, Parquet as the immutable archive and portability layer, and DuckDB as the local/offline Parquet research reader.
+Use compressed immutable Parquet for analytical histories, native DuckDB for bounded
+queries and PostgreSQL for committed publication manifests. The legacy ClickHouse
+store was retired after verified native cutover on October 18. Preserve logical input hashes,
+point-in-time semantics and atomic publication across the storage change.
 
 The detailed target design is `docs/columnar-store-target-design.md`.
 

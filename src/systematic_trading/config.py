@@ -52,7 +52,8 @@ class AppSettings(BaseSettings):
     data_dir: Path = Path("var")
     database_path: Path = Path("var/systematic_trading.db")
     transactional_store_backend: str = "postgres"
-    market_data_store_backend: str = "clickhouse"
+    market_data_store_backend: str = "parquet"
+    lean_runtime_backend: str = "native"
     market_data_storage_policy_path: Path = Path("config/market-data-storage.json")
     strategy_monitoring_config_path: Path = Path("config/strategy-monitoring.json")
     postgres_host: str = "127.0.0.1"
@@ -73,6 +74,8 @@ class AppSettings(BaseSettings):
     clickhouse_user: str = "st_app"
     clickhouse_password: str = "local-dev-change-me"
     analytics_enabled: bool = True
+    native_analytics_root: Path = Path("D:/systematic_trading_data/analytics")
+    analytics_workspace: str | None = None
     analytics_refresh_seconds: int = Field(default=60, ge=15)
 
     automation_enabled: bool = False

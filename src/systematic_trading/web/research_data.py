@@ -49,7 +49,7 @@ def _scope(store, dataset=None):
 @router.get('/datasets')
 def research_datasets(request: Request):
     store = _store(request)
-    rows = _query(store, 'SELECT '+DATASET_SQL+' AS dataset, family, count() AS row_count, '
+    rows = store.research_query('datasets') if hasattr(store,'research_query') else _query(store, 'SELECT '+DATASET_SQL+' AS dataset, family, count() AS row_count, '
         'uniqExact(entity) AS entity_count, min(observed_at) AS first_observation, '
         'max(observed_at) AS last_observation, countIf(available_at IS NULL) AS unknown_availability '
         'FROM analytics.current_observations WHERE '+_scope(store)+' GROUP BY dataset,family ORDER BY dataset,family')
@@ -59,7 +59,7 @@ def research_datasets(request: Request):
         item['families'].append(dict(**row, label=LABELS.get(row['family'], row['family'].removeprefix('research_').replace('_', ' ').capitalize())))
         item['row_count'] += row['row_count']
     return dict(datasets=sorted(groups.values(), key=lambda x:-x['row_count']),
-        storage='ClickHouse research archive',
+        storage=getattr(store,'storage_name','clickhouse')+' research archive',
         availability_note='Recorded dates are not proof of historical publication. Unknown availability stays unknown; coverage and source evidence are preserved with each record.')
 
 
@@ -69,7 +69,7 @@ def research_entities(request: Request, dataset: str, family: str, search: str =
     where = _scope(store, dataset)+' AND family='+_sql_string(family)
     if search:
         where += ' AND positionCaseInsensitiveUTF8(entity,'+_sql_string(search)+')>0'
-    rows = _query(store, 'SELECT entity,count() AS row_count,min(observed_at) AS first_observation,'
+    rows = store.research_query('entities',dataset=dataset,family=family,search=search,limit=limit+1) if hasattr(store,'research_query') else _query(store, 'SELECT entity,count() AS row_count,min(observed_at) AS first_observation,'
         'max(observed_at) AS last_observation FROM analytics.current_observations WHERE '+where+
         ' GROUP BY entity ORDER BY entity LIMIT '+str(limit+1))
     return dict(entities=rows[:limit], truncated=len(rows)>limit)
@@ -90,16 +90,19 @@ def research_rows(request: Request, dataset: str, family: str, entity: str = Que
     if end_date:
         where += ' AND toDate(observed_at)<='+_sql_string(end_date.isoformat())
     query_hash = digest(encode(dict(dataset=dataset, family=family, entity=entity, start=start_date, end=end_date)))
+    after = None
     if cursor:
         try:
             position = json.loads(base64.urlsafe_b64decode(cursor.encode()).decode())
             if position['query'] != query_hash or len(position['after']) != 2 or not all(isinstance(x,str) for x in position['after']):
                 raise ValueError('Wrong query')
             source, key = position['after']
+            after = (source,key)
         except (ValueError, KeyError, TypeError, UnicodeError) as exc:
             raise HTTPException(422, 'Invalid cursor for these filters') from exc
         where += ' AND (source_id,point_key)>('+_sql_string(source)+','+_sql_string(key)+')'
-    rows = _query(store, 'SELECT source_id,version,point_key,entity,observed_at,available_at,ingested_at,'
+    rows = store.research_query('rows',dataset=dataset,family=family,entity=entity,start=start_date,end=end_date,
+        after=after,limit=limit+1) if hasattr(store,'research_query') else _query(store, 'SELECT source_id,version,point_key,entity,observed_at,available_at,ingested_at,'
         'lower(hex(SHA256(payload))) AS payload_sha256,payload FROM analytics.current_observations WHERE '+where+
         ' ORDER BY source_id,point_key LIMIT '+str(limit+1))
     more = len(rows)>limit

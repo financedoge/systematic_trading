@@ -7,7 +7,7 @@ function el(id) {
   if (!elements.has(id)) {
     const attrs = {}, selection = {setAttribute(k, v) {this[k] = v;}};
     elements.set(id, {
-      value: '', textContent: '', innerHTML: '', dataset: {}, selectedOptions: [{text: 'Source close'}],
+      value: '', textContent: '', innerHTML: '', dataset: {}, style: {}, selectedOptions: [{text: 'Source close'}],
       classList: {add() {}, remove() {}}, setAttribute(k, v) {attrs[k] = v;}, attrs,
       querySelector(selector) {
         if (selector === '.zoom-selection') return selection;

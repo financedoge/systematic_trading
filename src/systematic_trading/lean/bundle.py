@@ -71,7 +71,7 @@ def export_bundle(*, store, root: Path, start: date, end: date, warmup_start: da
 
 def freeze_bundle(*, root: Path, bars: dict, fx: dict, provenance: dict, spec_values: dict,
                   constituent_features: dict | None = None, base_tree_models: dict | None = None,
-                  usd_models: dict | None = None) -> Path:
+                  usd_models: dict | None = None, repository_commit: str | None = None) -> Path:
     if root.exists():
         raise FileExistsError(root)
     days = [row['trade_date'] for row in next(iter(bars.values()))]
@@ -161,7 +161,7 @@ def freeze_bundle(*, root: Path, bars: dict, fx: dict, provenance: dict, spec_va
         definition = dict(base=definition, research_overlay=constituent_config.model_dump(), promotion_eligible=False)
         write_json(root / 'constituent_features.json', constituent_features)
     strategy_hash = hashlib.sha256(json.dumps(definition, sort_keys=True).encode()).hexdigest()
-    commit = subprocess.run(['git', 'rev-parse', 'HEAD'], capture_output=True, text=True, check=True).stdout.strip()
+    commit = repository_commit or subprocess.run(['git', 'rev-parse', 'HEAD'], capture_output=True, text=True, check=True).stdout.strip()
     spec = BacktestRunSpec(**spec_values, strategy_hash=strategy_hash, source_hash=source_hash.hexdigest(), repository_commit=commit)
     for filename, payload in [('spec.json', spec.model_dump()), ('bars.json', bars), ('fx.json', fx),
                               ('provenance.json', provenance), ('decisions.json', decisions),

@@ -36,7 +36,7 @@ from systematic_trading.research import alpha101 as lib
 from systematic_trading.research import sleeve_construction_study as base
 from systematic_trading.research.expanded_economics import job_name
 from systematic_trading.research.momentum_replay import freeze_usd_bundle, read_json, run_usd_reference
-from systematic_trading.research.turnover_gate import implied_turnover, screen
+from systematic_trading.research.turnover_gate import implied_turnover, legacy_screen as screen
 
 STUDY = 'alpha101-tilt-replay-v1'
 PARENT = base.DEFAULT_ROOT

@@ -9,7 +9,6 @@ from urllib.request import urlopen
 
 from systematic_trading.config import AppSettings
 from systematic_trading.market_data.analytics_store import AnalyticsStore, digest, encode
-from systematic_trading.market_data.golden import _sql_string
 
 
 def verify(root: Path, output: Path, base_url: str):
@@ -17,18 +16,16 @@ def verify(root: Path, output: Path, base_url: str):
     batch=receipt['batch']
     assert digest((root/'manifest.json').read_bytes())==batch
     store=AnalyticsStore.from_settings(AppSettings())
-    scope='workspace='+_sql_string(store.workspace)
     checks={}
     for table,key in [('governed_daily','bars'),('governance_comparisons','comparisons')]:
-        checks[table]=store.query(f'SELECT count() n,uniqExact(symbol) symbols FROM market_data.{table} FINAL WHERE '
-                                  +scope+' AND batch='+_sql_string(batch))[0]
+        checks[table]=store.governed_counts(table,batch)
         assert checks[table]['n']==receipt[key]
     prefix='governance-batch/'+batch+'/'
     publication=store.latest('governance/catalog')
     assert publication['version']==batch and publication['observation_count']==receipt['symbols']
+    counts=store.publication_counts(prefix,batch)
     for table,key in [('observations','actions'),('documents','source_documents'),('publications','symbols')]:
-        n=store.query(f'SELECT count() n FROM analytics.{table} FINAL WHERE '+scope
-                      +' AND startsWith(source_id,'+_sql_string(prefix)+') AND version='+_sql_string(batch))[0]['n']
+        n=counts[table]
         assert n==receipt[key],(table,n,receipt[key])
         checks[table]=n
     manifest=store.document('governance/catalog','manifest.json')

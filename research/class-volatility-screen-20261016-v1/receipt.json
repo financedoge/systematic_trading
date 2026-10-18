@@ -1,0 +1,26 @@
+{
+  "analysis_sha256": "c2b5ff180071868de2f1e30cbbb50e322e66843b60380f5be721ba7644102f59",
+  "artifacts": {
+    "attribution.json": "e57c86c10d14a53945e74ac01843e83ffc4b72e2a9745978313469e14132f676",
+    "protocol.json": "0176302c527659a923084dac14b3049577e20ffd01951e7053a417fbce31574d",
+    "screen.png": "ee0292b8b4f56d2997daa15839ff666a949ac19edc5ff5e4df0f0584a9f7d57c",
+    "summary.json": "38010398ab43f348e9e88bc3f3c878fabbff152d47cbb940231b7fba38a61a31"
+  },
+  "assertions": "prior-session features, gates, caps/cash, overlap, class scores/budgets, adoption anchors, security turnover, IC labels/ranks and gate formula",
+  "input_manifest_sha256": "f1f9b039141a9e29a3d39b2392d7737659826c6f115eb5d55b523ab597d38f13",
+  "native_replays": 0,
+  "protocol_sha256": "0176302c527659a923084dac14b3049577e20ffd01951e7053a417fbce31574d",
+  "reason": "All mappings rejected before portfolio replay",
+  "report_generator_sha256": "8555849d11b18e450e21c562e42a73d986424c37565067f0a5e78adc8f1bbecf",
+  "result_manifest_sha256": "ae0758ec9c94d8a0cd273d0f95580f4078c5befccd6fa3bce9b93b173674d7b5",
+  "verdict_counts": {
+    "reject": 16
+  },
+  "verified_adoptions": 4485,
+  "verified_daily_target_vectors": 5800,
+  "verified_ic_observations": 2144,
+  "verified_member_scores": 179940,
+  "verified_policies": 16,
+  "verified_window_turnovers": 128,
+  "verifier_sha256": "0fb7cdbd6c41a10e0ae5b50db4bf072ee0594edca714894608713d3a3bb39b4a"
+}

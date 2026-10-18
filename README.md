@@ -2,8 +2,15 @@
 
 Python systematic trading platform with governed research, reproducible backtests,
 application-owned strategy monitoring and Interactive Brokers paper execution.
-PostgreSQL stores operational state, ClickHouse serves analytical publications,
-and NATS carries outbox events. Live routing remains disabled.
+Native Windows PostgreSQL stores operational state and publication metadata,
+Parquet/DuckDB serves analytics, and native NATS carries outbox events. Independent
+LEAN validation runs in restricted Windows workers. Live routing remains disabled.
+
+The selected replacement architecture is native Windows PostgreSQL, Parquet/DuckDB
+and NATS, with bounded retention of archived research artifacts. See the
+[disk cleanup and native migration plan](docs/storage-retention-and-windows-native-plan.md).
+See the [native runtime guide](docs/native-windows-runtime.md) for startup, resource
+limits and recovery, and the Kanban for migration acceptance status.
 
 Start with the [documentation index](docs/README.md) and
 [code and maintenance guide](docs/repository-maintenance.md).
@@ -37,7 +44,7 @@ Trading monitoring now shares one portfolio start/episode across holdings, P&L, 
   API contracts, pure risk-parity preview construction and packaged presentation assets
   now have separate module boundaries.
 - Postgres transactional persistence for watchlists, theses, proposal queues, approval decisions, broker order records, PnL snapshots, and the event outbox on the recommended local platform path.
-- ClickHouse serving storage for normalized daily bars and FX rates.
+- Immutable Parquet storage with PostgreSQL manifests and native DuckDB queries.
 - Provider and broker manifests so the operator API can expose data-source coverage and paper-vs-live execution boundaries.
 - Research state tracking with a current SOTA registry and comparison artifacts that include model layer and decision-tree diagrams.
 
@@ -77,7 +84,8 @@ paper Gateway on port 4002 with separate API client IDs and local raw storage.
 The [LEAN and NautilusTrader assessment](docs/trading-engine-assessment.md) describes
 the proposed backtest validation pilot and boundaries for any future engine migration.
 The [LEAN integration plan](docs/lean-backtest-integration-plan.md) specifies the worker boundaries and acceptance gates. The [platform audit](docs/platform-audit-2026-09-26.md) records timing/data fixes and remaining research and feed limitations.
-See [database consolidation](docs/database-consolidation.md) for SQLite retirement, verified archive evidence, D: storage, and the remaining administrator-only PostgreSQL directory move.
+See [database consolidation](docs/database-consolidation.md) for SQLite retirement,
+verified archive evidence and PostgreSQL's verified D: storage location.
 
 Recommended local foundation startup:
 
@@ -87,14 +95,19 @@ The latest verified snapshot revision wins; unchanged backups retain their revis
 time, and incoming restores wait for stopped services. Read the
 [optional NAS backup guide](docs/database-sync.md). A new PC still needs local infrastructure
 and credentials. The optional [full-system backup worker](docs/full-system-backup.md)
-captures ClickHouse, NATS and durable raw/audited/model/research files with encrypted
+captures a consistent PostgreSQL/Parquet inventory, native NATS and retained
+raw/audited/model/research files with encrypted
 deduplicated snapshots and automatic reconnect retries.
 
 ```powershell
 .\scripts\start_local_platform.ps1
 ```
 
-This starts NATS JetStream, verifies Postgres, starts ClickHouse, starts the operator dashboard plus event dispatcher, and starts the always-on market-data recorder service. Prospective capture runs during regular US equity sessions; historical recovery continues outside market hours. Open `http://127.0.0.1:8000/platform` for service health and `http://127.0.0.1:8000/operator` for the trading operator UI.
+This starts native NATS JetStream, verifies PostgreSQL, performs guarded stopped
+startup retention, and starts the operator dashboard, event dispatcher and recorder.
+DuckDB is embedded; no Docker/WSL service is started. Prospective capture runs during
+regular US equity sessions; historical recovery continues outside market hours.
+Open `http://127.0.0.1:8000/platform` for health and `/operator` for trading.
 
 Structured operational logs are written to `var/log/platform_operations.jsonl`.
 
@@ -103,14 +116,17 @@ normal guarded launchers, with bounded backoff. Explicit stop scripts pause the
 corresponding target; full shutdown stops recovery first. Use `-SkipRecovery` to
 omit it. See the [recovery review and limits](docs/robustness-review-2026-09-30.md).
 
-Inspect or request a one-shot repair after Docker, VPN, Wi-Fi, or TWS disruptions:
+Inspect or request a one-shot repair after process, VPN, Wi-Fi, or TWS disruptions:
 
 ```powershell
 .\scripts\watch_local_platform.ps1
 .\scripts\watch_local_platform.ps1 -Repair
 ```
 
-If Docker Desktop is installed but not running, NATS/ClickHouse startup now tries to start Docker Desktop and waits for the daemon before Docker Compose. If the engine still is not reachable, startup fails with an explicit Docker daemon message. Use `-SkipNats -SkipClickHouse` for a partial non-Docker startup.
+Native NATS startup verifies its pinned executable and migrated stream. Native
+LEAN requires an accepted runtime manifest. Missing infrastructure fails explicitly;
+the native profile does not start Docker Desktop. Legacy ClickHouse scripts remain
+available only for explicitly selected migration/rollback work.
 
 The platform health view includes `ib_tws_api`, populated by:
 
@@ -146,15 +162,19 @@ Skip the market-data recorder service for maintenance:
 
 The recorder service starts with the five-symbol `SPY/QQQ/TLT/GLD/IWM` pilot and `-RecorderIntradayFeed delayed-trades`. That channel retains incomplete sampled quotes in five-second buckets, not complete interval OHLCV or market volume; it is raw inspection evidence only. Recorded Bars excludes these samples and defaults to actual IB historical OHLCV candles. The paid `reqRealTimeBars` path remains available with `-RecorderIntradayFeed realtime` after API market-data subscriptions are verified. A separate paced worker recovers up to six months of IB 5-second history, resumes persisted gaps after outages and keeps running after hours. See [intraday recovery](docs/intraday-recovery.md) for progress, limits and configuration.
 
-The recorder service also runs ClickHouse daily-bar backfill on startup and then on an interval, including after-hours/weekends. The default path repairs `market_data.daily_bars` directly from Yahoo adjusted daily bars, with IB historical daily bars as fallback.
+The recorder service also runs daily-bar backfill through the configured native
+store, including after-hours/weekends. Acquisition and source repair remain separate
+from the audited publication gates required for research inputs.
 
-The local operator startup path now defaults to `ST_TRANSACTIONAL_STORE_BACKEND=postgres` and `ST_MARKET_DATA_STORE_BACKEND=clickhouse`. Active dashboard, proposal, broker-record, PnL, and event-outbox state use Postgres, while daily bars and FX reads use ClickHouse. SQLite remains an explicit offline test backend and retained recovery artifact; research scripts and reports now use the configured server stores.
+Local startup defaults to PostgreSQL, Parquet/DuckDB and native LEAN. Active
+dashboard, proposal, broker-record, PnL and outbox state use PostgreSQL; analytical
+histories use immutable Parquet. SQLite remains an explicit offline test backend.
 
 Rebalance proposals are time-bound to preserve next-open parity with the backtest. The default execution deadline is 30 minutes after the configured TWAP start on the intended trade date. Change it with `ST_EXECUTION_REBALANCE_TIMEOUT_MINUTES`; expired pending or retryable proposals become `missed`, cannot be approved or resubmitted, and are retained in execution-quality analysis.
 
 The strategy workspace at `/strategies` separates Monitored strategies and Archived artifacts. Membership and calculation settings are configured in `config/strategy-monitoring.json`. The app calculates registered monitored strategies from audited histories, replaying signals and monthly rebalances and updating NAV, held weights and indicative latest targets. The same full report shows risk parity, URTH and SOTA comparisons, period metrics, drawdowns, holdings/contributions, signal attribution and decision charts. Select `calculation.engine` as `lean` (with Python parity) or `python` (the same frozen accounting contract); the app refreshes on input/definition changes or through its Refresh calculations button. No agent scheduler is involved. See [tracked strategy calculations](docs/etf-activity-lag20-tracking.md). The [rolling one-year XGBoost + lag-20 candidate](docs/rolling-xgboost-lag20-tracking.md) adds app-owned monthly fitting across all cores, immutable model lineage, matched controls and inspectable fitted trees; install `.[rolling-research]` for its training worker.
 
-Strategy pages and account performance now read prepared ClickHouse publications.
+Strategy pages and account performance read committed analytical publications.
 A background worker refreshes analytical histories when source data changes.
 Daily ETF acquisition retries across Yahoo chart hosts and passes the existing
 audit/publication gates; independent USD/CNH evidence catch-up runs before strategy
@@ -188,14 +208,14 @@ state and the Kanban before interpreting old results or priorities.
 - `docs/market-data-recorder-source-plan.md` two-lane recorder source plan, IBKR capacity limits, and ETF universe seed.
 - `docs/market-data-golden-source.md` corrected columnar golden-source model for local market data.
 - `docs/postgres-transactional-store-design.md` Postgres schema, migration tooling, and SQLite migration plan.
-- `docs/columnar-store-target-design.md` ClickHouse, Parquet, and DuckDB target for columnar analytics.
+- `docs/columnar-store-target-design.md` Native PostgreSQL/Parquet/DuckDB analytics and the legacy migration boundary.
 - `docs/schema-registry-convention.md` code-based event/data schema registry and compatibility rules.
 - `config/service-manifest.json` machine-readable service manifest for the local operator stack.
 - `config/market-data-storage.json` tiered hot/archive/backup storage policy for recorded market data.
 - `config/market-data-recorder-sources.json` machine-readable recorder lane, capacity, and source policy.
 - `config/columnar-store.json` machine-readable columnar store deployment and storage policy metadata.
-- `deploy/nats/` Docker Compose path for the NATS JetStream event bus.
-- `deploy/clickhouse/` Docker Compose path for the local ClickHouse columnar store.
+- `config/native-runtime.json` pinned native NATS/LEAN runtime and acceptance references.
+- `deploy/nats/` and `deploy/clickhouse/` legacy migration definitions.
 - `docs/research-state.md` current research hurdle and SOTA promotion notes.
 - `log.md` project decision and operating log.
 - `AGENTS.md` repository-level working rules for agents.
@@ -210,4 +230,7 @@ state and the Kanban before interpreting old results or priorities.
 
 ## Local state
 
-The local platform uses PostgreSQL for relational state and ClickHouse for time series. `var/systematic_trading.db` is a frozen historical artifact preserved in file backups. All source rows are verified in the PostgreSQL archive; active application and SQL backup paths do not require SQLite. Explicit SQLite tests remain supported. See [migration evidence and storage locations](docs/database-consolidation.md).
+The local platform uses PostgreSQL metadata/operations and Parquet/DuckDB analytics.
+`var/systematic_trading.db` remains frozen historical evidence in file backups.
+Its source rows are verified in the PostgreSQL archive; active application and SQL
+backup paths do not require SQLite. See [storage locations](docs/database-consolidation.md).

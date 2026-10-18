@@ -61,7 +61,7 @@ The operator page `/platform/market-data-audit` now uses this table as the prima
 Direct daily backfill command:
 
 ```powershell
-.\.venv\Scripts\python.exe .\scripts\backfill_clickhouse_daily_bars.py `
+.\.venv\Scripts\python.exe .\scripts\backfill_daily_bars.py `
   --symbols SPY `
   --start-date 2012-01-01 `
   --end-date 2026-07-10 `

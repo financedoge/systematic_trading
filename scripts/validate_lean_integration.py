@@ -65,18 +65,21 @@ def write_summary(root, summary):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, required=True, help='New immutable validation suite directory on D:')
-    parser.add_argument('--image', required=True)
+    parser.add_argument('--image',help='Required only for explicit legacy Docker validation')
+    parser.add_argument('--runtime',choices=['native','docker'])
     parser.add_argument('--cases', nargs='+', default=['fixture-targets', 'fixture-shared', 'fixture-stress',
         'year-sota', 'year-benchmark', 'year-cost', 'year-delay', 'year-lookback42', 'year-lookback84',
         'full-sota', 'full-benchmark'])
     args = parser.parse_args()
+    settings = AppSettings()
+    runtime=args.runtime or settings.lean_runtime_backend
+    if runtime=='docker' and not args.image:parser.error('Legacy Docker validation requires --image with a digest')
     if args.root.exists():
         parser.error('Use a new suite directory; prior evidence is immutable')
     args.root.mkdir(parents=True)
-    settings = AppSettings()
     market = ClickHouseMarketDataStore.from_settings(settings)
     registry = PostgresStore.from_settings(settings)
-    summary = {'image': args.image, 'promotion_eligible': False, 'runs': {},
+    summary = {'image': args.image or 'windows-native-lean', 'runtime':runtime,'promotion_eligible': False, 'runs': {},
         'warning': 'Engineering parity only. Legacy FX, adjusted vintages and fixed universe are uncertified; '
                    'pre-2023 is fitted and post-2023 has been used in strategy selection.'}
     for case in args.cases:
@@ -103,7 +106,7 @@ def main():
                           delay=1 if case == 'year-delay' else 0,
                           lookback_bars=42 if case == 'year-lookback42' else 84 if case == 'year-lookback84' else 63)
         print(f'Running {case}', flush=True)
-        receipt = run_bundle(bundle=bundle, output=output, image=args.image)
+        receipt = run_bundle(bundle=bundle, output=output, image=args.image,runtime=runtime)
         register_run(registry, output)
         # An identical insertion must be a no-op, proving registry idempotency.
         register_run(registry, output)
@@ -120,7 +123,7 @@ def main():
                 'artifact_bytes': sum(p.stat().st_size for p in output.rglob('*') if p.is_file())}
         summary['runs'][case] = item
         if case == 'fixture-targets':
-            repeated = run_bundle(bundle=bundle, output=args.root / 'runs' / 'fixture-repeat', image=args.image)
+            repeated = run_bundle(bundle=bundle, output=args.root / 'runs' / 'fixture-repeat', image=args.image,runtime=runtime)
             if repeated['economic_sha256'] != receipt['economic_sha256']:
                 raise ValueError('Repeated native LEAN economic output changed')
             register_run(registry, args.root / 'runs' / 'fixture-repeat')

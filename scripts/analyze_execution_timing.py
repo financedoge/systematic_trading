@@ -203,10 +203,8 @@ def freeze(root):
         version = digest(encode({"files": provenance["files"], "extractor": provenance["extractor"]}))
         if version != publication["version"]:
             raise ValueError("Benchmark publication version does not match its provenance")
-        documents = analytics.query(
-            "SELECT point_key, payload, lower(hex(SHA256(payload))) AS payload_sha256 "
-            "FROM analytics.documents FINAL WHERE " + analytics._where("execution-benchmarks", version)
-            + " ORDER BY point_key")
+        documents = [dict(point_key=r['point_key'],payload=r['payload'],payload_sha256=digest(r['payload']))
+            for r in analytics.pinned_rows('documents','execution-benchmarks',version,order=[('point_key','ASC')])]
     orders = create_transactional_store(settings).list_broker_order_records()
     snapshot = dict(captured_at=datetime.now(UTC).isoformat(), orders=[row.model_dump(mode="json") for row in orders],
                     benchmark_publication=publication, benchmark_documents=documents)

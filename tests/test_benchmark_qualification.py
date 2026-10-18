@@ -89,7 +89,7 @@ def test_daily_requires_published_storage_and_equal_hash_payload():
     row = daily["row"]
     payload = encode(row)
     publisher = SimpleNamespace(workspace="test", latest=lambda _: dict(version="parent"),
-        query=lambda _: [dict(payload=payload, payload_hash=digest(payload))])
+        governed_rows=lambda *args, **kwargs: [dict(payload=payload, payload_hash=digest(payload))])
     reader = object.__new__(PublishedDaily)
     reader.analytics, reader.batch = publisher, "catalog"
     reader.catalog, reader.cache = {"SPY": dict(storage_batch="parent")}, {"SPY": ({row["trade_date"]: row}, [])}
@@ -101,6 +101,6 @@ def test_daily_requires_published_storage_and_equal_hash_payload():
     publisher.latest = lambda _: dict(version="parent")
     changed = deepcopy(row)
     changed["raw_close"] = 101
-    publisher.query = lambda _: [dict(payload=json.dumps(changed), payload_hash=digest(json.dumps(changed)))]
+    publisher.governed_rows = lambda *args, **kwargs: [dict(payload=json.dumps(changed), payload_hash=digest(json.dumps(changed)))]
     with pytest.raises(ValueError, match="mismatch"):
         reader.get("SPY", row["trade_date"])

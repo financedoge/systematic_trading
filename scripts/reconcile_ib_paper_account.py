@@ -35,7 +35,7 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    settings = AppSettings(transactional_store_backend="postgres", market_data_store_backend="clickhouse")
+    settings = AppSettings(transactional_store_backend="postgres")
     store = create_trading_store(settings)
     store.initialize()
     report = reconcile_ib_paper_account(

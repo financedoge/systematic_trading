@@ -446,6 +446,9 @@ def _entry_in_recorder_range(entry: RawCatalogEntry, start: date | None, end: da
 
 def _clickhouse_client(request: Request) -> ClickHouseMarketDataClient:
     settings = request.app.state.settings
+    if settings.market_data_store_backend == 'parquet':
+        from systematic_trading.market_data.native_market import NativeMarketDataClient
+        return NativeMarketDataClient.from_settings(settings)
     return ClickHouseMarketDataClient(
         settings.clickhouse_http_url,
         database=settings.clickhouse_database,

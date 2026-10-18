@@ -7,6 +7,7 @@ import pytest
 
 from systematic_trading.research import alpha101 as lib
 from systematic_trading.research import alpha101_screen as screening
+from retained_artifacts import requires_artifact
 
 ROOT = screening.DEFAULT_ROOT
 PAPER = screening.PAPER
@@ -317,6 +318,7 @@ def test_every_mapped_alpha_respects_the_mapping_contract():
 
 
 @BUILT
+@requires_artifact('var/research/sleeve-construction-20261010-v1/controls/CP.json')
 def test_the_frozen_screen_reproduces_and_its_inputs_are_unchanged():
     checks = screening.verify(ROOT)
     assert checks['parent_unchanged'] and checks['paper_unchanged']
@@ -414,7 +416,7 @@ def test_alpha_53_only_needs_the_two_endpoint_denominators():
 
 def test_the_gate_refuses_or_judges_zero_turnover_instead_of_raising():
     """A zero-turnover candidate needs a zero IC; judging it must not raise ZeroDivisionError."""
-    from systematic_trading.research.turnover_gate import screen
+    from systematic_trading.research.turnover_gate import legacy_screen as screen
 
     verdict = screen(0.0, sigma=0.05, candidate_ic=0.02)
     assert verdict['status'] == 'pass'

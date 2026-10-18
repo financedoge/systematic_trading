@@ -116,9 +116,14 @@ def calculate(settings,analytics,config,definitions,sota,root,code_hashes,inputs
     if read_json(root/'worker.json')!=payload:raise ValueError('M1/14 inputs changed within immutable revision')
     days=[r['trade_date'] for r in inputs['bars']['SPY']]
     quotes,sessions=quotes_for_data(inputs['bars'],days,p['start'])
-    workers=os.cpu_count() or 1
+    workers=min(2,os.cpu_count() or 1)
     for v in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','NUMEXPR_NUM_THREADS'):os.environ[v]='1'
-    with ProcessPoolExecutor(max_workers=workers,initializer=worker_init,initargs=(str(root.resolve()),)) as pool:
+    if os.name=='nt':
+        from systematic_trading.research.native_usd_preparation import prepare
+        economics=prepare(root,start=p['start'],cost=p['transaction_cost_bps'])
+        workers=1
+    else:
+      with ProcessPoolExecutor(max_workers=workers,initializer=worker_init,initargs=(str(root.resolve()),)) as pool:
         rows=dict(pool.map(targets_worker,decision_sessions(days,p['start'],'monthly')))
         for definition in comparisons.values():
             decisions={day:rows[day][definition.key] for day in sorted(rows)}
@@ -130,7 +135,10 @@ def calculate(settings,analytics,config,definitions,sota,root,code_hashes,inputs
         with ThreadPoolExecutor(max_workers=resource['workers']) as pool:
             receipts=dict(pool.map(lambda k:native_attempt(root,k,p['image'],str(resource['cpus_per_run'])),economics))
     else:receipts={k:dict(engine='python',status='succeeded',validation='Python only') for k in economics}
-    for key in (sota.key,'URTH'):
+    # A SOTA in this family is already calculated above using its own 14-ETF
+    # inputs. Import only external benchmarks; never replace it with a 12-ETF run.
+    parent_benchmarks=[key for key in (sota.key,'URTH') if key not in economics]
+    for key in parent_benchmarks:
         bundle=parent/'bundles'/key;spec=verify_usd_bundle(bundle)['spec']
         if spec.end_date!=inputs['provenance']['price_through'] or spec.start_date!=p['start']:
             raise ValueError('M1/14 benchmark window mismatch')
@@ -141,7 +149,7 @@ def calculate(settings,analytics,config,definitions,sota,root,code_hashes,inputs
         verify_usd_bundle(root/'bundles'/key)
         if p.get('engine','lean')=='lean':receipts[key]=native_attempt(parent,key,p['image'],'2')[1]
         else:receipts[key]=dict(engine='python',status='succeeded')
-    inputs['provenance']['parent_benchmark_manifest']={k:sha256(parent/'bundles'/k/'manifest.json') for k in (sota.key,'URTH')}
+    inputs['provenance']['parent_benchmark_manifest']={k:sha256(parent/'bundles'/k/'manifest.json') for k in parent_benchmarks}
     comparisons[sota.key]=sota
     return build_reports(settings,analytics,config,definitions,sota,root,inputs,comparisons,
         economics,quotes,rolling,model_receipt,usd,receipts,workers,economic_models)

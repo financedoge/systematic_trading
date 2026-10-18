@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 import pytest
+from retained_artifacts import requires_artifact
 
 from systematic_trading.research import alpha101_tilt_surface_study as study
 
@@ -30,6 +31,7 @@ def test_the_protocol_declares_the_cost_deviation_and_refuses_to_name_an_optimum
 
 
 @BUILT
+@requires_artifact(ROOT / 'decisions')
 def test_every_arm_is_frozen_and_replayed():
     assert len(study.arms()) == 16
     for arm in study.arms():

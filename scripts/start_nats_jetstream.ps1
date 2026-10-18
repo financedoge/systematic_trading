@@ -1,6 +1,5 @@
 param(
-    [switch]$Recovery,
-    [string]$ComposeFile = "deploy\nats\docker-compose.yml"
+    [switch]$Recovery
 )
 
 $ErrorActionPreference = "Stop"
@@ -10,23 +9,5 @@ if (-not $Recovery) {
     & (Join-Path $RepoRoot ".venv\Scripts\python.exe") (Join-Path $ScriptDir "local_recovery.py") resume nats
     if ($LASTEXITCODE -ne 0) { throw "Could not resume NATS recovery." }
 }
-$ResolvedComposeFile = Resolve-Path (Join-Path $RepoRoot $ComposeFile)
-
-if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
-    throw "Docker CLI is not available. Install Docker Desktop or run this on a server with Docker."
-}
-
-& (Join-Path $ScriptDir "assert_docker_ready.ps1") -Context "NATS JetStream startup" -StartDockerDesktopIfStopped
-
-Push-Location $RepoRoot
-try {
-    docker compose -f $ResolvedComposeFile up -d
-    if ($LASTEXITCODE -ne 0) {
-        throw "docker compose up failed with exit code $LASTEXITCODE"
-    }
-    Write-Output "NATS JetStream requested via Docker Compose."
-    Write-Output "Client URL: nats://127.0.0.1:4222"
-    Write-Output "Monitoring URL: http://127.0.0.1:8222"
-} finally {
-    Pop-Location
-}
+& (Join-Path $ScriptDir 'native_nats.ps1') -Action start
+if ($LASTEXITCODE -ne 0) { throw 'Native NATS startup failed.' }

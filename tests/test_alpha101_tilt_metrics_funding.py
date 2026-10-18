@@ -12,6 +12,7 @@ import json
 from pathlib import Path
 
 import pytest
+from retained_artifacts import requires_artifact
 
 from systematic_trading.research import alpha101_tilt_study as study
 from systematic_trading.research import alpha101_tilt_replay_analysis as replay_analysis
@@ -136,6 +137,7 @@ def test_every_metrics_from_call_site_passes_the_funding_anchor():
 # --- the frozen replay --------------------------------------------------------
 
 @BUILT
+@requires_artifact(ROOT / 'python')
 def test_the_published_metrics_are_measured_from_the_declared_funding():
     name = study.job_name(('SOTA', 5, 0, 'evaluation'))
     row = load_all(ROOT)[name]

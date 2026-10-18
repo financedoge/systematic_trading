@@ -1,0 +1,22 @@
+{
+  "bulk_root": "D:/systematic_trading_data",
+  "lean": {
+    "acceptance": "D:\\projects\\systematic_trading\\var\\maintenance\\windows-cutover\\native-lean-acceptance.json",
+    "acceptance_sha256": "b9e67e20b185c053cf03e37614e191f2934f1506c7350ddbce6b2bb53a014b78",
+    "accepted": true,
+    "data_root": "D:\\systematic_trading_data\\dependencies\\lean-18130\\Data",
+    "dotnet_root": "D:\\systematic_trading_data\\dependencies\\dotnet",
+    "engine_root": "D:\\systematic_trading_data\\dependencies\\lean-18130\\Launcher\\bin\\Release",
+    "manifest": "D:\\systematic_trading_data\\dependencies\\lean-runtime-manifest.json",
+    "manifest_sha256": "61559a38721403c92d51aa613d582befb47b3a82a69af6ac368c2fc82736f263",
+    "python_root": "D:\\systematic_trading_data\\dependencies\\python311"
+  },
+  "nats_archive_sha256": "4f7edfa376750b2720463bd22766ed469a5f13f378a643097866fcd953cbf7e3",
+  "nats_binary": "var/dependencies/nats/nats-server.exe",
+  "nats_cli_archive_sha256": "1f1ea2b5ff1acf97e0e1c486b1695edc64256233c70c4e888cce2370fd549025",
+  "nats_cli_version": "0.5.0",
+  "nats_client_port": 4222,
+  "nats_monitor_port": 8222,
+  "nats_version": "2.15.1",
+  "schema_version": 1
+}

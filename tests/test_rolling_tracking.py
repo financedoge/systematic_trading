@@ -41,6 +41,20 @@ def model_record(cutoff='2024-10-31'):
                 threshold=[.025, 0, 0], value=[0, -.001, .001]) for _ in range(100)]))
 
 
+@pytest.mark.skipif(os.name!='nt',reason='Windows restricted worker scheduling')
+def test_windows_training_does_not_require_global_named_pipe_pool(tmp_path,monkeypatch):
+    from systematic_trading.research import rolling_training as training
+    root=tmp_path/'model';attempt=root/'attempt';attempt.mkdir(parents=True)
+    write_json(root/'request.json',dict(recipe=rolling_xgboost_spec(),bars={},symbols=[],start='2024-11-01'))
+    monkeypatch.setattr(training,'monthly_training_records',lambda *args:[])
+    monkeypatch.setattr(training,'monthly_fit_dates',lambda *args:['2024-10-31','2024-11-29'])
+    monkeypatch.setattr(training,'fit',lambda day:(day,model_record(day),False))
+    monkeypatch.setattr(training,'ProcessPoolExecutor',lambda **kwargs:pytest.fail('Restricted Windows worker must not create global named pipes'))
+    training.train(root,attempt)
+    receipt=json.loads((attempt/'receipt.json').read_text())
+    assert receipt['workers']==1 and receipt['monthly_fits']==2
+
+
 def test_combined_definition_reproduces_research_model_plus_lag20_and_rejects_missing_fit(bars):
     definition = rolling_xgboost_1y_definition()
     schedule = {'2024-10-31': model_record()}

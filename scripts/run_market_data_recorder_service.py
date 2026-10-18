@@ -397,7 +397,7 @@ def _run_daily_backfill_child(
 ) -> dict[str, object]:
     command = [
         sys.executable,
-        str(REPO_ROOT / "scripts" / "backfill_clickhouse_daily_bars.py"),
+        str(REPO_ROOT / "scripts" / "backfill_daily_bars.py"),
         "--lookback-days",
         str(lookback_days),
         "--provider",
@@ -414,7 +414,7 @@ def _run_daily_backfill_child(
     started_at = datetime.now(tz=UTC)
     logger.info(
         "recorder_service_daily_backfill_starting",
-        message="Starting ClickHouse daily market-data backfill.",
+        message="Starting daily serving-history backfill.",
         provider=provider,
         fallback_provider=fallback_provider,
         symbols=symbols,
@@ -441,7 +441,7 @@ def _run_daily_backfill_child(
     level = logger.info if result.returncode == 0 else logger.error
     level(
         "recorder_service_daily_backfill_completed",
-        message="ClickHouse daily market-data backfill completed.",
+        message="Daily serving-history backfill completed.",
         **status,
     )
     return status
@@ -517,7 +517,7 @@ def _child_last_error(
     last_daily_backfill_status: dict[str, object] | None,
 ) -> str | None:
     for label, status in (
-        ("Daily ClickHouse backfill", last_daily_backfill_status),
+        ("Daily serving-history backfill", last_daily_backfill_status),
         ("IB recorder child", last_child_status),
     ):
         if not status:

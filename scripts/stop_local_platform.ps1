@@ -24,6 +24,8 @@ if ($KeepInfrastructure) {
     exit 0
 }
 
-& (Join-Path $ScriptDir "stop_clickhouse.ps1")
+$backend = & $Python -c "from systematic_trading.config import AppSettings; print(AppSettings().market_data_store_backend)"
+if ($LASTEXITCODE -ne 0) { throw "Could not determine configured analytical backend" }
+if ($backend.Trim() -eq "clickhouse") { & (Join-Path $ScriptDir "stop_clickhouse.ps1") }
 & (Join-Path $ScriptDir "stop_nats_jetstream.ps1")
 Write-Output "Local platform stopped. External Postgres was not stopped."

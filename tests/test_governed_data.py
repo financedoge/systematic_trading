@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from systematic_trading.market_data.governance_store import GovernanceStore
+from systematic_trading.market_data.analytics_store import AnalyticsStore
 from systematic_trading.web import governed_data
 from systematic_trading.web.platform import market_data_audit_portal
 
@@ -13,7 +14,7 @@ from systematic_trading.web.platform import market_data_audit_portal
 BATCH='a'*64
 
 
-class Store:
+class Store(AnalyticsStore):
     workspace='workspace'
     def __init__(self):
         self.queries=[]
@@ -34,8 +35,10 @@ class Store:
 
 
 @pytest.fixture
-def client():
+def client(tmp_path):
+    from systematic_trading.config import AppSettings
     app=FastAPI();app.include_router(governed_data.router);app.state.analytics=Store()
+    app.state.settings=AppSettings(data_dir=tmp_path,governed_refresh_enabled=False)
     with TestClient(app) as c:
         yield c,app.state.analytics
 

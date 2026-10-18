@@ -58,14 +58,25 @@ def train(root, attempt):
     recipe_code = {str(p.relative_to(source)): sha256(p) for p in
         [source/'research'/n for n in ('rolling_models.py', 'rolling_training.py', 'rolling_tracking.py')]
         + list((source/'signals').glob('*.py'))}
-    workers = min(os.cpu_count() or 1, len(dates), request.get('max_workers', os.cpu_count() or 1))
-    with ProcessPoolExecutor(max_workers=workers, initializer=initialize,
-                             initargs=(str(attempt/'training_records.json'), str(cache), recipe_code, versions)) as pool:
-        jobs = [pool.submit(fit, cutoff) for cutoff in dates]
-        for future in as_completed(jobs):
-            cutoff, model, cached = future.result()
+    workers = min(2, os.cpu_count() or 1, len(dates), request.get('max_workers', 2))
+    if os.name=='nt':
+        # AppContainer denies multiprocessing's global named pipes. Train
+        # sequentially inside the already bounded, network-denied worker;
+        # do not widen its IPC or process permissions to regain parallelism.
+        workers=1
+        initialize(str(attempt/'training_records.json'),str(cache),recipe_code,versions)
+        for day in dates:
+            cutoff,model,cached=fit(day)
             schedule[cutoff] = model
             cached_count += cached
+    else:
+        with ProcessPoolExecutor(max_workers=workers, initializer=initialize,
+                                 initargs=(str(attempt/'training_records.json'), str(cache), recipe_code, versions)) as pool:
+            jobs = [pool.submit(fit, cutoff) for cutoff in dates]
+            for future in as_completed(jobs):
+                cutoff, model, cached = future.result()
+                schedule[cutoff] = model
+                cached_count += cached
     write_json(attempt/'schedule.json', schedule)
     write_json(attempt/'receipt.json', dict(status='succeeded', request_sha256=sha256(root/'request.json'),
         recipe=request['recipe'], versions=versions, monthly_fits=len(schedule), reused_fits=cached_count,

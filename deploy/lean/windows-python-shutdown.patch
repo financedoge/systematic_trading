@@ -1,0 +1,15 @@
+diff --git a/Common/Python/PythonInitializer.cs b/Common/Python/PythonInitializer.cs
+--- a/Common/Python/PythonInitializer.cs
++++ b/Common/Python/PythonInitializer.cs
+@@ -83,7 +83,11 @@ namespace QuantConnect.Python
+                 try
+                 {
+                     var pyLock = Py.GIL();
++                    // Shutdown consumes the interpreter/GIL. A managed finalizer
++                    // cannot release it later on the GC finalizer thread.
++                    GC.SuppressFinalize(pyLock);
+                     Log.Trace($"PythonInitializer.Shutdown(): calling engine shutdown...");
+                     PythonEngine.Shutdown();
++                    GC.KeepAlive(pyLock);
+                 }
+                 catch (Exception ex)

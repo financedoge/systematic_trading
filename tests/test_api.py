@@ -30,7 +30,7 @@ def test_health_endpoint_reports_service_health_contract(tmp_path) -> None:
         assert services["postgres_transactional"]["health_check_kind"] == "tcp"
         assert services["ib_tws_api"]["health_check_kind"] == "state_file"
         assert services["ib_tws_api"]["status"] == "error"
-        assert services["clickhouse_columnar"]["health_check_kind"] == "http"
+        assert services["native_analytics"]["health_check_kind"] == "none"
         assert services["trading_management_loop"]["status"] == "disabled"
         assert services["market_data_recorder"]["status"] == "degraded"
 
@@ -48,7 +48,8 @@ def test_platform_service_graph_endpoint_returns_manifest_edges(tmp_path) -> Non
         assert "nats_jetstream" in node_ids
         assert "postgres_transactional" in node_ids
         assert "ib_tws_api" in node_ids
-        assert "clickhouse_columnar" in node_ids
+        assert "native_analytics" in node_ids
+        assert ("postgres_transactional", "native_analytics", "depends_on") in edges
         assert ("nats_jetstream", "event_outbox_dispatcher", "depends_on") in edges
         assert ("operator_dashboard", "trading_management_loop", "supervises") in edges
 
@@ -61,7 +62,8 @@ def test_platform_service_actions_catalog_marks_safe_restart_targets(tmp_path) -
     assert response.status_code == 200
     services = {item["service_id"]: item for item in response.json()["services"]}
     assert services["nats_jetstream"]["restartable"] is True
-    assert services["clickhouse_columnar"]["restartable"] is True
+    assert services["native_analytics"]["restartable"] is False
+    assert 'clickhouse_columnar' not in services
     assert services["postgres_transactional"]["restartable"] is False
     assert "external database" in services["postgres_transactional"]["reason"]
     assert services["ib_tws_api"]["restartable"] is False
@@ -77,6 +79,15 @@ def test_platform_service_restart_rejects_unmanaged_service(tmp_path) -> None:
 
     assert response.status_code == 400
     assert "external database" in response.json()["detail"]
+
+
+def test_native_profile_never_restarts_legacy_docker_from_api(tmp_path,monkeypatch):
+    from systematic_trading.web import platform_actions
+    monkeypatch.setattr(platform_actions.subprocess,'run',lambda *args,**kwargs: (_ for _ in ()).throw(AssertionError('No process may start')))
+    with TestClient(create_app(AppSettings(data_dir=tmp_path))) as client:
+        response=client.post('/api/v1/platform/services/clickhouse_columnar/restart')
+    assert response.status_code==400
+    assert 'retired' in response.json()['detail']
 
 
 def test_risk_parity_preview_endpoint_returns_cnh_proposal() -> None:

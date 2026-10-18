@@ -2,11 +2,14 @@
 from AlgorithmImports import *  # noqa: F403
 import json
 import sys
+import os
 from datetime import datetime
 from decimal import Decimal as D, ROUND_HALF_UP
 from pathlib import Path
 
-sys.path.insert(0, '/input/source')
+INPUT_ROOT = Path(os.environ.get('ST_LEAN_INPUT_ROOT','/input'))
+OUTPUT_ROOT = Path(os.environ.get('ST_LEAN_OUTPUT_ROOT','/output'))
+sys.path.insert(0, str(INPUT_ROOT/'source'))
 
 from systematic_trading.lean.contracts import verify_bundle, write_json
 from systematic_trading.lean.strategy import targets_for_day
@@ -26,7 +29,7 @@ def money(value):
 
 class FrozenQuote(PythonData):  # noqa: F405
     def get_source(self, config, date, is_live):
-        return SubscriptionDataSource(f'/input/quotes/{config.symbol.value.split(".")[0]}.csv', SubscriptionTransportMedium.LOCAL_FILE)  # noqa: F405
+        return SubscriptionDataSource(str(INPUT_ROOT/'quotes'/f'{config.symbol.value.split(".")[0]}.csv'), SubscriptionTransportMedium.LOCAL_FILE)  # noqa: F405
 
     def reader(self, config, line, date, is_live):
         stamp, value, phase = line.split(',')
@@ -63,7 +66,7 @@ class DeclaredFill(ImmediateFillModel):  # noqa: F405
 
 class FrozenPortfolioAlgorithm(QCAlgorithm):  # noqa: F405
     def initialize(self):
-        self.root = Path('/input')
+        self.root = INPUT_ROOT
         self.spec = verify_bundle(self.root)['spec']
         self.sessions = json.loads((self.root / 'sessions.json').read_text())
         self.expected_decisions = json.loads((self.root / 'decisions.json').read_text())
@@ -157,8 +160,8 @@ class FrozenPortfolioAlgorithm(QCAlgorithm):  # noqa: F405
     def on_end_of_algorithm(self):
         if [r['date'] for r in self.nav_rows] != self.sessions or set(self.decisions) != set(self.expected_decisions):
             raise ValueError('Partial LEAN output; missing session/decision')
-        write_json(Path('/output/resources.json'), dict(process_resources(),
+        write_json(OUTPUT_ROOT/'resources.json', dict(process_resources(),
                    input_events=len(self.processed) * len(self.symbols_by_name), order_events=len(self.fills)))
-        write_json(Path('/output/economic.json'), {'schema_version': 1, 'engine': 'lean', 'complete': True,
+        write_json(OUTPUT_ROOT/'economic.json', {'schema_version': 1, 'engine': 'lean', 'complete': True,
             'nav': self.nav_rows, 'fills': self.fills, 'decisions': self.decisions,
             'final_positions': {name: int(self.portfolio[s].quantity) for name, s in self.symbols_by_name.items() if self.portfolio[s].quantity}})

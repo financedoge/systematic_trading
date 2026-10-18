@@ -103,7 +103,8 @@ class OptionalNasSync(NasSync):
                             return "newer_remote_pending_restart"
                         if hasattr(self.databases, "settings"):
                             from systematic_trading.storage.dependencies import verify_dependencies
-                            verify_dependencies(self.databases.settings, remote.get("dependencies"))
+                            verify_dependencies(self.databases.settings, remote.get("dependencies"),
+                                verify_publications=self.databases.settings.market_data_store_backend!='parquet')
                         self.databases.assert_quiet()
                         rollback = self.local / ("before-restore-" + uuid4().hex)
                         shutil.copytree(directory, rollback)

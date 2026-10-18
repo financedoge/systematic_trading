@@ -1,11 +1,23 @@
 # Research State
 
-Current conclusions and review queue, updated October 15, 2026. Detailed historical
+Current conclusions and review queue, updated October 17, 2026. Detailed historical
 entries are preserved in the [verified history archive](archive/README.md).
 The [research plan](signal-decay-and-alpha-plan.md) controls sequencing; the
 [execution Kanban](execution-kanban.md) tracks open implementation work.
 
 ## Authority and input rules
+
+- Storage/memory now take priority over exact replay of archived exploratory work.
+  Retain compact findings, definitions/runners and retirement receipts; bulky outputs
+  and study-only snapshots may be discarded. Protect current monitored/funded/pending
+  strategies, active studies, promotion inputs and operational evidence. A new run
+  after input retirement is new evidence on a new audited batch. See the
+  [retention and native migration plan](storage-retention-and-windows-native-plan.md).
+
+- The operator retired the 44 bp annual research cost ceiling on October 17. Judge
+  incremental returns after incremental costs, net Sharpe and Calmar, return/drawdown
+  guards, cost/delay sensitivity and chronological stability. Cost and IC-margin
+  screens are diagnostics, not net-performance verdicts. See the [rejection audit](research-cost-policy-review-2026-10-17.md).
 
 - Monitoring is application-owned: versioned signals, scheduled rebalances,
   target/held weights, daily NAV and the shared benchmark/decision-flow report.
@@ -37,6 +49,8 @@ The [research plan](signal-decay-and-alpha-plan.md) controls sequencing; the
 
 | Work | Current conclusion | Evidence |
 | --- | --- | --- |
+| P4.16d cash-relative follow-up | Net replay reopened. Class-first monthly was withheld solely for 45.66 bp cost despite a 3.59x IC margin; no net-performance result exists yet. All 16 fixed mappings and matched controls will be compared with SOTA/monitored recipes. | [Rejection audit](research-cost-policy-review-2026-10-17.md), [historical findings](cash-relative-momentum-findings.md) |
+| P4.16d class/volatility screen | Historical 16/16 proxy failures; all also missed the IC heuristic. Weak information and BIL/cash concentration remain diagnostics, but no net portfolio rejection is established. | [Historical findings](class-volatility-screen-findings.md) |
 | P4.23 joint width/timing | The 6-by-8 search retains 6/monthly in all annual selections and the final window. FR25 monthly X=6/8/12: Sharpe 1.190/1.048/0.830, CAGR 13.05%/10.08%/6.96%, turnover 8.05×/7.01×/5.85×. Wider portfolios reduce turnover but do not qualify. Top four/monthly is an isolated early-window pass, rejected by neighbor stability. 588 scenarios, six native checks; current pools only. | [Joint results](../research/selection-width-timing-20261015-v1/results.md) |
 | P4.22 target-change timing | With top six fixed, no threshold qualifies in the three annual selection windows or final trailing-three-year window. FR25 0.10: Sharpe 0.966 vs monthly 1.190; CAGR 10.05% vs 13.05%; drawdown -13.10% vs -8.66%; annual turnover 58.36× vs 8.05×. Explicit monthly macro fallback; F3 is legacy-basis sensitivity. 132 scenarios and six native checks completed. | [Results](../research/target-change-rebalance-20261015-v1/results.md) |
 | P4.19 execution references | Retain execution policy. 27 complete orders, seven ETFs, five sessions: actual-fill cost 1.185 bps versus routed TWAP, 3.769 versus close, 9.471 versus session VWAP, before fees. Reference differences are not achievable counterfactual fills; close sensitivity changes sign under session omission. | [Execution references](execution-reference-findings.md) |
@@ -82,8 +96,14 @@ separate timing hypothesis; it does not reopen or rescue the expanded-FR25 rejec
    67.73 bp annual implied cost against 44 bp, with rank IC −0.01463. Its portfolio
    replay was withheld. The original control passed; native 5/10 bp replays and
    URTH reconciled. [Full findings and attribution](etf-expansion-findings-2026-10-14.md).
-   Next: separately specify the accepted class/volatility-aware design; do not
-   tune this rejected arm or treat current-cohort evidence as historical membership.
+   The October 16 and 17 screens withheld all mappings under old proxy rules.
+   The operator removed the absolute-cost ceiling and requested retests before
+   the next planned item. First: full net replays of the fixed cash-relative family
+   and matched controls, including dynamic policies, against current SOTA FR25 and
+   monitored strategies; report Sharpe and Calmar. Six standalone Alpha101 signals
+   (24/26/46/49/53/54) were also excluded solely by cost and are queued separately.
+   See the [audit](research-cost-policy-review-2026-10-17.md). The reserved prospective
+   design remains inactive; current-cohort evidence is not historical membership.
    BWX and XOP retain listing holds; CPER is excluded from this study for an
    unsupported raw-volume observation. HYXU/EUHY remain separate quarantined
    regimes. [Inventory](etf-universe-inventory-2026-10-13.md).

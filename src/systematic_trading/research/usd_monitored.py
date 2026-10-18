@@ -170,7 +170,17 @@ def economics_worker(name):
     return name,result
 
 
-def calculate(settings, analytics, config, definitions, sota, root, code_hashes, economic_inputs=None):
+def calculation_family(risk, definitions, sota):
+    """A benchmark from another universe must be calculated by its own family."""
+    comparisons={d.key:d for d in [risk,*definitions]}
+    if any(d.universe_key!=risk.universe_key for d in definitions):
+        raise ValueError('USD calculation family has mixed strategy universes')
+    if sota.universe_key==risk.universe_key:
+        comparisons[sota.key]=sota
+    return comparisons
+
+
+def calculate(settings, analytics, config, definitions, sota, root, code_hashes, economic_inputs=None, *, defer_reports=False):
     """Full-history replay also catches up every missed session after restore."""
     from systematic_trading.research.rolling_tracking import prepare_model_schedule
     from systematic_trading.research.usd_data import load_usd, refresh_usd
@@ -181,7 +191,9 @@ def calculate(settings, analytics, config, definitions, sota, root, code_hashes,
     from systematic_trading.research.compute import available_resources
     inputs=load_inputs(settings,analytics,config);p=config['calculation'];root=root/'usd'
     risk=replace(risk_parity_definition(),universe_key='multi_asset')
-    comparisons={d.key:d for d in [risk,sota,*definitions]}
+    comparisons=calculation_family(risk,definitions,sota)
+    if sota.key not in comparisons and not defer_reports:
+        raise ValueError('Cross-pool SOTA reports require the completed benchmark family')
     snapshots,_=load_usd(analytics)
     from systematic_trading.live.trading_calendar import next_us_trading_day
     days=[r['trade_date'] for r in inputs['bars']['SPY']]
@@ -221,10 +233,15 @@ def calculate(settings, analytics, config, definitions, sota, root, code_hashes,
         raise ValueError('USD inputs changed within an immutable revision')
     quotes,sessions=quotes_for_data(inputs['bars'],days,p['start'])
     benchmark_quotes,_=quotes_for_data({'URTH':inputs['urth']},days,p['start'])
-    workers=os.cpu_count() or 1
+    workers=min(2,os.cpu_count() or 1)
     for variable in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','NUMEXPR_NUM_THREADS'):
         os.environ[variable]='1'
-    with ProcessPoolExecutor(max_workers=workers,initializer=worker_init,initargs=(str(root.resolve()),)) as pool:
+    if os.name=='nt':
+        from systematic_trading.research.native_usd_preparation import prepare
+        economics=prepare(root,start=p['start'],cost=p['transaction_cost_bps'],urth=inputs['urth'])
+        workers=1
+    else:
+      with ProcessPoolExecutor(max_workers=workers,initializer=worker_init,initargs=(str(root.resolve()),)) as pool:
         rows=dict(pool.map(targets_worker,decision_sessions(days,p['start'],'monthly')))
         for key in comparisons:
             decisions={d:rows[d][key] for d in sorted(rows)}
@@ -236,18 +253,56 @@ def calculate(settings, analytics, config, definitions, sota, root, code_hashes,
     receipts={}
     if p.get('engine','lean')=='lean':
         resources=available_resources(len(economics),'lean');n=min(resources['workers'],len(economics))
-        cpus=str(round(resources['usable_cpus']/n,6))
+        cpus=str(resources['cpus_per_run'])
         def native(key):
             return native_attempt(root, key, p['image'], cpus)
         with ThreadPoolExecutor(max_workers=n) as pool:
             receipts=dict(pool.map(native,economics))
     else:
         receipts={k:dict(engine='python',status='succeeded',validation='Python only; no native parity claim') for k in economics}
-    return build_reports(settings,analytics,config,definitions,sota,root,inputs,comparisons,economics,quotes,
-                         rolling,model_receipt,usd,receipts,workers,economic_models)
+    prepared=dict(settings=settings,analytics=analytics,config=config,definitions=definitions,sota=sota,root=root,
+        inputs=inputs,comparisons=comparisons,economics=economics,quotes=quotes,rolling=rolling,
+        model_receipt=model_receipt,usd=usd,receipts=receipts,workers=workers,economic_models=economic_models)
+    return prepared if defer_reports else build_reports(**prepared)
 
 
-def build_reports(settings,analytics,config,definitions,sota,root,inputs,comparisons,economics,quotes,rolling,model_receipt,usd,receipts,workers,economic_models=None):
+def complete_cross_pool_reports(prepared,source_root,source_inputs):
+    from systematic_trading.research.momentum_replay import verify_usd_bundle
+    from systematic_trading.lean.runner import compare_outputs
+    key=prepared['sota'].key;p=prepared['config']['calculation']
+    bundle=source_root/'bundles'/key;spec=verify_usd_bundle(bundle)['spec']
+    if (source_inputs['provenance']['batch']!=prepared['inputs']['provenance']['batch']
+            or spec.start_date!=p['start'] or spec.end_date!=prepared['inputs']['provenance']['price_through']):
+        raise ValueError('Cross-pool SOTA requires matching audited batch and valuation window')
+    economic=read_json(source_root/'python'/(key+'.json'))
+    if p.get('engine','lean')=='lean':
+        receipt=native_attempt(source_root,key,p['image'],'2')[1]
+        if not compare_outputs(economic,read_json(Path(receipt['artifact_path'])/'economic.json'),spec)['passed']:
+            raise ValueError('Cross-pool SOTA accounting differs from its verified native replay')
+    else:
+        receipt=dict(engine='python',status='succeeded',validation='Python only; no native parity claim')
+    prepared['economics'][key]=economic;prepared['receipts'][key]=receipt
+    prepared['comparisons'][key]=prepared['sota']
+    prepared['inputs']['provenance']['sota_benchmark']=dict(strategy=key,bundle=str(bundle.resolve()),
+        manifest_sha256=sha256(bundle/'manifest.json'),batch=source_inputs['provenance']['batch'])
+    return build_reports(**prepared,external_bundles={key:bundle},comparison_bars=source_inputs['bars'])
+
+
+def comparison_prices(prices, bars, *, anchor=None):
+    """Use the frozen replay's cent-rounded closes and its unrounded anchor."""
+    from systematic_trading.backtest.accounting import quantize_money
+    days=set(next(iter(prices.values())))
+    result=dict(prices)
+    for symbol,rows in bars.items():
+        selected={r['trade_date']:float(D(str(r['close'])) if r['trade_date']==anchor
+                  else quantize_money(D(str(r['close'])))) for r in rows if r['trade_date'] in days}
+        if set(selected)!=days or (symbol in prices and prices[symbol]!=selected):
+            raise ValueError('Cross-pool benchmark price calendar or basis differs')
+        result[symbol]=selected
+    return result
+
+
+def build_reports(settings,analytics,config,definitions,sota,root,inputs,comparisons,economics,quotes,rolling,model_receipt,usd,receipts,workers,economic_models=None,*,external_bundles=None,comparison_bars=None):
     from systematic_trading.research.tracked_runtime import report_result,latest_allocation
     from systematic_trading.backtest.reporting import build_backtest_report_data
     from systematic_trading.backtest.comparison import build_signal_diagnostics
@@ -258,10 +313,12 @@ def build_reports(settings,analytics,config,definitions,sota,root,inputs,compari
     from systematic_trading.research.compute import frozen_input
     p=config['calculation'];days=[r['trade_date'] for r in inputs['bars']['SPY']]
     anchor=days[days.index(min(economics[definitions[0].key]['decisions']))-1]
-    results={k:report_result(v,read_json(root/'bundles'/k/'quotes.json'),p['initial_cash_cnh'],anchor) for k,v in economics.items()}
+    results={k:report_result(v,read_json((external_bundles or {}).get(k,root/'bundles'/k)/'quotes.json'),p['initial_cash_cnh'],anchor) for k,v in economics.items()}
     prices={s:{d:float(q['close']) for d,q in rows.items()} for s,rows in quotes.items()}
     for s in prices:
         prices[s][anchor]=float(next(r['close'] for r in inputs['bars'][s] if r['trade_date']==anchor))
+    if comparison_bars:
+        prices=comparison_prices(prices,comparison_bars,anchor=anchor)
     documents=[];observations=[];end=inputs['provenance']['price_through']
     usd_receipt=frozen_input(root/'usd.models.json',usd)
     economic_receipt=frozen_input(root/'economic.models.json',economic_models) if economic_models else None

@@ -6,6 +6,174 @@ are preserved byte-for-byte in the [history archive](archive/README.md).
 Use [research state](research-state.md) for accepted conclusions and the
 [research plan](signal-decay-and-alpha-plan.md) for the ordered research programme.
 
+## Range-breakout lifecycle factor research — 2026-10-18
+
+**In progress:** Operator-requested mathematical compression, confirmed breakout,
+holding, overheating/trailing-profit and false-breakout stop rules. Freeze a finite
+protocol before inspecting performance; evaluate the full supported ETF pool as
+selection and trading/tilt rules with fixed-calendar and dynamic controls, actual
+net costs, delayed execution and chronological validation. Use pinned hash-verified
+published adjusted prices and separately audited raw volume, retain compact
+artifacts, and preserve all monitoring/allocation/broker authorities. Price/volume
+regimes are proxies, not proof of fundamental change or foresight of a price peak.
+
+## Disk retention and Windows native migration implementation — 2026-10-18
+
+**Complete — native cutover, research retirement, host compaction and broker follow-up.**
+Final follow-up acceptance passed at 16:40 local time on October 18. Administrator
+compaction reclaimed 246.15 GiB in its measured receipt; the Docker VHDX is now
+2.72 GiB. Gateway is healthy and fresh reconciliation matched all six positions,
+with no warnings or unmatched orders/fills. The operator already enabled paper
+policy revision 19; its prior account, binding, strategy and 1,000,000 CNH cap are
+unchanged. No additional policy revision was written. Live routing stays disabled.
+Retired 815 selected roots: 95 superseded calculations, 128 completed-study leaves,
+264 unreferenced model revisions and 328 governance projections. Verified exclusive
+file contents removed total 97.73 GiB. Findings, recipes and retirement receipts
+remain; protected active studies, canonical audited histories and broker evidence
+passed checks. The final inventory measured about 133 GiB logical contents in `var/`,
+down from 477.32 GiB; hard links make this distinct from physical reclaimed space.
+
+Native PostgreSQL/Parquet migration verified 50,206 publications, 10,065 governed
+pairs and 34,772 unique fragment hashes. Native NATS restore/reliability checks,
+independent native LEAN parity, restricted-worker tests, isolated database/queue
+restore and Docker-free cold startup passed. The final app revision is
+`b528d1061f7757f1bcc434529662beb20251fcd69748878e7870d91b43eeddc4`:
+12 native runs and artifact hashes passed; all seven monitored strategy reports
+are served through October 16. Allocation control is unchanged. Worker runs are
+serialized, limited to two CPUs and 4 GiB, with no network capability.
+
+The exact first native NAS snapshot is
+`8e0658e40f3d0b0451ee9770eb8d4d8c9364c26bfbb3ce43048f1277c10e0de5`.
+A fresh post-calculation incremental backup completed and passed exact identity,
+manifest and dependency readback, including the newly published calculation:
+`2d08c381db7938ac4c0c7a1dc2efdd34e67428239a832f8f11507ef96aebc289`.
+It reused 1,287,668 files and added 124,934,927 packed bytes; normal hourly supervision
+has resumed. Snapshot selection now
+resolves the tagged original candidate and explicitly selects its incremental parent.
+The final 1,903-case broad run had one Docker-dependent test fixture failure; its
+repair and backup regressions pass (21 cases). Four real isolation tests, 17 final
+report/resource tests and 15 final backup tests pass; documentation links and lint
+pass. Earlier retired-replay skips and repaired failures are recorded in the log.
+
+Removed the exact project ClickHouse container, both legacy Docker data volumes
+and all three images, with ownership checks and a retirement receipt. Docker and
+its only WSL distribution are stopped, Docker auto-start is absent and the VHDX
+is detached. Operator-run compaction and a subsequent exclusive-access check passed;
+the receipt records 267,222,253,568 bytes before and 2,918,187,008 after. D: had
+790.33 GiB free at the final host check. Automatic approval review blocked
+removal of both disposable restore-test roots; they remain with compact evidence:
+`var/system-backup/postgres-restore-drill/data` and
+`D:/systematic_trading_data/native-restore-drill-20261018`.
+`operator-followup-acceptance.json` verifies unchanged allocation control, paper
+policy, reconciliation, seven served reports and healthy core native services.
+The first resumed hourly backup also completed (snapshot
+`40cbff997b972b940ec7b3f8dd440ca379cca2e06c14ca27621c6fcfd730d656`).
+Existing daily coverage/acquisition and execution-benchmark gaps remain visible;
+neither migration nor reconciliation waives their data-quality checks.
+
+## Disk retention and Windows native migration plan — 2026-10-17
+
+**Done — plan and durable policy; implementation queued:** The operator prioritizes
+memory/storage over recomputation and explicitly permits retiring bulky archived
+research artifacts without exact replay copies. Selected replacement: native Windows
+PostgreSQL metadata/operations, compressed Parquet/native DuckDB, native NATS and a
+Docker-free calculation/independent-validation path. The live catalog has 22 archived
+entries (21 IDs) and seven monitored strategies; FR25 is SOTA and 100% paper allocation
+at control revision 7. Latest two complete calculation directories total about
+0.89 GiB versus 58.20 GiB for 239 revisions. Savings remain subject to active and
+paper-evidence pins and hard-link accounting. Compact summaries and retirement
+records replace an unconditional keep-every-experiment rule; no full backup of
+deliberately disposable output is required. [Implementation plan](storage-retention-and-windows-native-plan.md)
+covers seven ordered stages, exact code boundaries, native engine isolation/parity,
+atomic publication, cutover/delta rollback, backup/restore and cleanup acceptance.
+Next: stage 1 retention records/summary serving and guarded deletion manifest, then
+diagnostic cleanup. No data deletion, service migration or runtime change in this
+planning session; the earlier automatic-review deletion rejection remains recorded.
+
+## Storage and service resource review — 2026-10-17
+
+**Done — assessment; cleanup/resource policy remains follow-up:** `var/` contains
+4.83M files / 477.32 GiB logical lengths. The apparent 353.17 GiB governance tree
+has only 18.43 GiB of unique file contents because of existing hard links; blanket
+deletion would overstate savings and break pinned research evidence. Current study
+batch hashes/publications verified. Tracked bundles (58.20 GiB), study artifacts
+(53.53 GiB) and models (6.77 GiB) require dependency-aware retention/deduplication.
+Outside `var/`, ClickHouse holds 82.53 GiB of diagnostic logs. NATS process memory
+is about 43 MiB despite a much larger Docker-accounted figure; ClickHouse's cgroup
+is dominated by file cache. Neither service has a container cap; the scheduler
+allows three 4 GiB LEAN workers with only 2 GiB reserved for services. Native NATS
+is possible, while ClickHouse still needs WSL on Windows and LEAN still uses Docker.
+Removal of a verified stopped 3.586 GiB restore-test cluster was rejected by
+automatic approval review (“blocked by policy”). **No files were deleted and no
+runtime settings changed.** Next: diagnostic retention, measured service/worker
+budgets (P6.15), verified backup completion and dependency-aware artifact retention.
+See [the storage review](repository-maintenance.md#storage-and-memory-review--october-17-2026).
+
+## Codex desktop crash investigation and workspace-view fix — 2026-10-17
+
+**Done — containment applied; app-side crash handed to OpenAI:** Operator reported
+repeated ChatGPT/Codex desktop crashes while working in this repository. Ten Crashpad
+reports are retained (nine on 2026-10-17), with the latest Electron main-process crash an
+access violation `0xC0000005` in `chrome.dll`, `ERR_WORKER_OUT_OF_MEMORY` worker events,
+and 4.8M-file/476 GB `var/` data trees feeding the app's file search and turn-diff
+snapshots. `.gitignore` now excludes the four bulk local data trees (`var/governance/`,
+`var/research/`, `var/tracked_strategies/`, `var/tracked_models/`): the repository view
+fell from 4,610,923 to 2,808 files for file search and from 4,610,057 to 1,948 untracked
+files for git snapshots, with enumeration from 4.0 s/19.0 s to 0.1 s. Tracked `var/`
+evidence is unchanged (160 files). The crash itself is in the OpenAI client (dumps were
+uploaded via Crashpad); environment follow-ups (memory/pagefile headroom, sandbox reset,
+network reconnects, app version) are recorded in [log.md](../log.md). No app calculation
+source, monitoring, capital, broker or live setting changed.
+
+## Remove the annual research cost ceiling — 2026-10-17
+
+**Done — policy and audit; retest In Progress:** The operator removed the 44 bp annual-cost rejection rule.
+Evaluate incremental returns after incremental trading costs, with net Sharpe,
+return/drawdown guards, cost/delay sensitivity and chronological validation.
+The executable diagnostic and historical-reproduction entry points are separated;
+162 focused tests and Ruff pass. Seven cost-only withheld cases are identified
+([audit](research-cost-policy-review-2026-10-17.md)). Guarded restart and fresh matched
+reconciliation passed; the prior paper policy/cap was restored. Existing raw-input
+coverage issues remain independent of this change. Next: replay the fixed 16-arm
+cash-relative family against SOTA and monitored strategies and report Sharpe/Calmar
+before another item. Frozen evidence and promotion controls remain separate.
+
+## Historical cash-relative screen — superseded interpretation, 2026-10-17
+
+**Done — 16/16 rejected; class-first candidate misses the cost ceiling:** the
+registered cash-relative score is compared with merely removing BIL, under pooled
+and class-first construction and monthly/0.10/0.40/0.80 adoption. Class-first monthly
+clears the heuristic information margin (3.59x versus 3x), but costs 45.66 bp
+against the unchanged 44 bp ceiling. All dynamic mappings cost at least 108.46 bp.
+Later static payoff improvements are before costs, exposure-sensitive and already
+inspected; no replay admission or promotion follows. Comparable-class evidence is
+sparse. [Full findings](cash-relative-momentum-findings.md).
+All 52 candidates/50 published histories are accounted for; BIL is a measured
+reference with zero target. 72 tests, Ruff and independent checks of 5,800 targets,
+16 policies, 5,698 adoptions and 554 paired payoffs pass; 2,900 parent targets
+reproduce exactly. Inputs, code and results are hash-verified. The reserved
+October 19-April 20 prospective design remains inactive after rejection.
+Next: review the cost constraint and whether a separately frozen turnover mechanism
+is justified with the signal fixed; no threshold/holding-period tuning or ceiling
+relaxation. No app source, monitoring, capital, broker or live setting changed.
+
+## Historical class and volatility screen — 2026-10-16
+
+**Done — 16/16 mappings rejected; ready for review:** the frozen 50-fund
+construction screen compares pooled/class-first selection, raw/volatility-normalized
+126-session momentum and monthly/0.10/0.40/0.80 target adoption. Fourteen mappings
+exceed the 44 bp cost ceiling. The two normalized monthly mappings cost 24.84/38.15
+bp but have information margins of only 1.91x/0.55x versus the required 3x.
+Their later-period mapping ICs turn negative; the pooled version averages 45% BIL
+plus 41.64% cash. No mapping qualifies for portfolio replay.
+[Findings, chart and full attribution](class-volatility-screen-findings.md).
+57 focused tests and Ruff pass; independent checks reproduce 5,800 daily targets,
+16 policies, 4,485 adoptions, 128 turnover windows and 2,144 IC observations.
+The protocol, published inputs and source/result hashes are frozen. Stop this
+item for review before another hypothesis; no retuning or FR25 rescue. Historical
+membership/mandate limitations and P6.15 remain open. App calculation source,
+monitoring, allocation and trading settings were not changed.
+
 ## Market-data freshness incident — 2026-10-15
 
 **Repair deployed; broad catch-up running:** AAPL is audited/published through
@@ -120,14 +288,16 @@ See [session evidence and acceptance](execution-readiness-2026-10-13.md).
 
 ## Current priorities
 
-**2026-10-14 research session — Review:** P4.16d stage 1 accepted: 299
+**2026-10-17 research session — Review:** P4.16d stage 1 accepted: 299
 symbol/regime records (298 provisional fund references), proposed taxonomy and
 complete gap matrix, 38-addition first wave alongside the original 14, frozen
 proposed screening rules and file-density/capacity estimates. All 16 input
 snapshots and the pinned catalog hashes verify; 11 inventory tests pass.
 [Inventory report](etf-universe-inventory-2026-10-13.md). Research ingestion is
-enabled; the first full supported-pool comparison is running. No allocation
-change. The HYXU closure claim is corrected
+enabled; expanded FR25, class/volatility and the cash-relative follow-up all failed
+their pre-tests. The cash-relative class-first rule clears the heuristic IC margin
+but misses cost admission. [Latest findings](cash-relative-momentum-findings.md).
+No allocation change. The HYXU closure claim is corrected
 from primary sources; its legacy history and new EUHY regime remain quarantined.
 
 - P4.19 retrospective execution references complete; retain current execution policy.
@@ -188,7 +358,7 @@ After finishing work:
 | P4.7 | Review | LEAN runtime/dependency setup | Requires installing/configuring LEAN runtime or choosing equivalent deployment path. | Pinned local container runtime is installed and used. Prior setup blocker is superseded; P6.15 resource review remains open. |
 | P4.22 | Done; monthly retained | Target-change threshold rebalance study | Latest theoretical versus last adopted target; independent of account holdings; causal selection, guards, cost/delay stress and native parity. | [Results](../research/target-change-rebalance-20261015-v1/results.md). 132 scenarios, six native checks. Explicit monthly macro fallback; F3 legacy-basis sensitivity. |
 | P4.23 | Done; 6/monthly retained | Joint selection-width X and target-change threshold n | Frozen 6-by-8 grid; 588 full-size scenarios, six native checks and 98 independent adoption checks. Wider selections reduce turnover but do not qualify under FR25 selection guards/stability. | [Results](../research/selection-width-timing-20261015-v1/results.md). F3 is legacy-basis sensitivity; expanded-pool validation later. No monitoring or trading changes. |
-| P4.16d | Review: first wave ingested; unchanged expanded FR25 rejected at pre-test | Substantial tradable ETF expansion, granular classes and volatility-aware ranking *(operator reaffirmed 2026-10-11)* | Versioned candidate inventory, dated taxonomy and data/contract gap matrix; staged audited admission; scalable app and paper-execution contracts; then controlled full-pool comparisons. Design capacity for hundreds of candidates, with duplicate-exposure controls and risk-normalized class ranking. | **First wave delivered 2026-10-14:** [299-record inventory](etf-universe-inventory-2026-10-13.md), 38-addition recorder wave and [50-fund current-cohort diagnostic](etf-expansion-findings-2026-10-14.md). Expanded FR25 fails the cost/IC gate; full expanded replay withheld. Class/volatility-aware design and historical membership reconstruction remain open. Research comparisons require pinned audited publication and explicit membership limitations; no provider archives or online prices as study inputs. Admission does not mandate allocation. **P4.16c remains parked behind this work.** [Plan](signal-decay-and-alpha-plan.md). |
+| P4.16d | Review: expanded FR25 and subsequent class/volatility screen rejected | Substantial tradable ETF expansion, granular classes and volatility-aware ranking *(operator reaffirmed 2026-10-11)* | Versioned candidate inventory, dated taxonomy and data/contract gap matrix; staged audited admission; scalable app and paper-execution contracts; then controlled full-pool comparisons. Design capacity for hundreds of candidates, with duplicate-exposure controls and risk-normalized class ranking. | [299-record inventory](etf-universe-inventory-2026-10-13.md), 38-addition recorder wave and [50-fund FR25 diagnostic](etf-expansion-findings-2026-10-14.md) completed. The separate [October 16 construction screen](class-volatility-screen-findings.md) rejects all 16 raw/risk-normalized, pooled/class and monthly/dynamic mappings. No expanded candidate qualifies for replay. Review the cash/bill concentration and incomparable-payoff issue before a new hypothesis; historical membership reconstruction remains open. Published pinned inputs only; admission never mandates allocation. **P4.16c remains parked.** [Plan](signal-decay-and-alpha-plan.md). |
 | P4.20 | Pending | Decay-based promotion gate | Require any new signal to demonstrate a minimum estimated half-life and sub-period IC stability before it can enter a monitored recipe. | Registered October 10; depends on P4.13. Structural protection against the survivor-selection problem described in the plan's Appendix A. Governance only. |
 | P4.21 | Pending | Look-through constituent alpha | Compute the structurally cross-sectional alphas on the constituent cross-section (680 IVV constituent series plus issuer holdings and sector data) and aggregate holdings-weighted to ETF scores. | Registered October 10 and deferred. The only honest route to the 76 structurally cross-sectional alphas, which need breadth that 14 ETFs cannot supply. Carries three disclosed caveats: index-membership history is a survivorship trap, issuer holdings snapshots are prospective-only from October 2026, and the constituent series are the `review`-status population from P3.8. Blocked on the constituent-coverage assessment; do not start before P4.16 answers whether the cross-sectional premise holds. |
 
@@ -253,8 +423,10 @@ are the cross-cutting platform work that runs alongside it.
 
 **Research, one item at a time with a review between items.** The second review and the
 fixed P4.18 experiment and the scoped P4.19 retrospective comparison are complete. Next
-review the **P4.16d first-wave rejection** ([findings](etf-expansion-findings-2026-10-14.md)), then separately register comparable-group and volatility-aware ranking before another cross-sectional
-alpha study. Register horizon, peer-group, incremental payoff and actual fill-based exit
+complete the **P4.16d cash-relative net retest** with the signal fixed
+([scope and audit](research-cost-policy-review-2026-10-17.md)); compare Sharpe and
+Calmar against SOTA and monitored strategies, then stop for the operator report.
+Register horizon, peer-group, incremental payoff and actual fill-based exit
 contracts before any new budget/TP/SL grid. See the current priorities at the top of the plan.
 
 **Platform, in parallel:** the new **P8** execution-generality phase

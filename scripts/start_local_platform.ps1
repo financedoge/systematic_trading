@@ -21,8 +21,8 @@ param(
     [string]$NatsUrl = "nats://127.0.0.1:4222",
     [ValidateSet("sqlite", "postgres")]
     [string]$TransactionalStoreBackend = "postgres",
-    [ValidateSet("sqlite", "clickhouse")]
-    [string]$MarketDataStoreBackend = "clickhouse",
+    [ValidateSet("sqlite", "clickhouse", "parquet")]
+    [string]$MarketDataStoreBackend = "parquet",
     [string]$OperationLogPath = "var\log\platform_operations.jsonl"
 )
 
@@ -252,6 +252,9 @@ try {
 
     & $Python ".\scripts\sync_databases.py" prepare
     if ($LASTEXITCODE -ne 0) { throw "Local database preparation failed; inspect local restore state and backup logs." }
+    if ($MarketDataStoreBackend -eq 'parquet') {
+        & (Join-Path $ScriptDir 'maintain_research_storage.ps1')
+    }
     $syncConfig = Get-Content (Join-Path $RepoRoot "config\database-sync.json") -Raw | ConvertFrom-Json
     if ($syncConfig.enabled) {
         $syncProcess = Start-Process -FilePath $Python -ArgumentList @(".\scripts\sync_databases.py", "worker") `
@@ -271,7 +274,7 @@ try {
 
     Update-IbTwsHealthState
 
-    if (-not $SkipClickHouse) {
+    if (-not $SkipClickHouse -and $MarketDataStoreBackend -eq "clickhouse") {
         Write-OperationLog -Event "clickhouse_start_requested" -Message "ClickHouse startup requested." -Details @{ url = "http://127.0.0.1:8123" }
         & (Join-Path $ScriptDir "start_clickhouse.ps1")
         Wait-HttpHealth -Name "ClickHouse" -Url "http://127.0.0.1:8123/ping" -TimeoutSeconds 45
@@ -300,7 +303,7 @@ try {
     if (-not $SkipRecovery) {
         $recoveryProfile = @{
             schema_version = 1
-            enabled = @{ nats = -not $SkipNats; clickhouse = -not $SkipClickHouse; operator = -not $SkipOperator; recorder = -not $SkipMarketDataRecorder; backup = [bool]$syncConfig.enabled }
+            enabled = @{ nats = -not $SkipNats; clickhouse = (-not $SkipClickHouse -and $MarketDataStoreBackend -eq "clickhouse"); operator = -not $SkipOperator; recorder = -not $SkipMarketDataRecorder; backup = [bool]$syncConfig.enabled }
             operator = @{ HostName = $HostName; Port = $Port; EventPublisher = $EventPublisher; NatsUrl = $NatsUrl; TransactionalStoreBackend = $TransactionalStoreBackend; MarketDataStoreBackend = $MarketDataStoreBackend; OperationLogPath = $ResolvedOperationLogPath }
             recorder = @{ RecorderSymbols = $RecorderSymbols; RecorderRealtimeChunkSeconds = $RecorderRealtimeChunkSeconds; RecorderGapFillLookbackMinutes = $RecorderGapFillLookbackMinutes; RecorderPollSeconds = $RecorderPollSeconds; RecorderClientId = $RecorderClientId; RecorderIntradayFeed = $RecorderIntradayFeed; RecorderMarketDataMode = $RecorderMarketDataMode; OperationLogPath = $ResolvedOperationLogPath }
         }

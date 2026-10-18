@@ -1,0 +1,1952 @@
+{
+  "caveats": [
+    "Audit of archived verdicts, not a new profitability result.",
+    "Superseded Alpha101 grids establish that replays existed, not valid economic conclusions.",
+    "Information-margin failures remain diagnostics, not evidence of negative net returns.",
+    "P4.22/P4.23 and the corrected FR25/5% tilt and exposure-targeting studies already used net replays."
+  ],
+  "cost_only_withheld": 7,
+  "sources": {
+    "var/research/alpha101-screen-20261011-v4/screen.json": "99d5b25e5af34eea85a2a949d6c2ac96b7c58d9624bbf366fc028e2109a31fa7",
+    "var/research/alpha101-tilt-20261011-v3/tilt.json": "69690a96f92e654c745ede21121a461b4537c3d020dbe987984238dfe7636d9d",
+    "var/research/alpha101-tilt-daily-20261011-v2/gate.json": "03bc6fb9001b7081bb8aff8d71e143df411771a7e7f54a595c7b79d4b79be068",
+    "var/research/alpha101-tilt-exit-20261011-v2/gate.json": "97e2eec40f822b531f80cca75ea3ad93d2caf30e5d18aa753d1b60ffb3e145c4",
+    "var/research/alpha101-tilt-surface-20261011-v2/gate.json": "599fab30f9cf13eed6ab7dbfce2ebfea298b1dfa51723eabb0b720c261863528",
+    "var/research/cash-relative-momentum-20261017-v1/analysis.json": "fd31124c83ee437027b43326e6f9ff25b190f9b9055799a18621b2de1206b673",
+    "var/research/class-volatility-screen-20261016-v1/analysis.json": "c2b5ff180071868de2f1e30cbbb50e322e66843b60380f5be721ba7644102f59",
+    "var/research/etf-expansion-20261014-v1/summary.json": "f2827ae809f55a0c7568a7793a0d7907d7b8aa92d20626577b4105713307c707",
+    "var/research/hierarchical-construction-20261011-v2/gate.json": "65d819f5b1b88909c4690bf83ae29648c3c5202ad5fb5f3f9f521a513ca5e2b0",
+    "var/research/sleeve-construction-20261010-v2/gate.json": "bb060041349e7f3850892391a3440438c81040796ca9dcd1b027d49156525037"
+  },
+  "studies": [
+    {
+      "cost_only_withheld": 1,
+      "counts": {
+        "cost_and_information": 15,
+        "cost_only": 1,
+        "information_only": 0,
+        "insufficient": 0,
+        "passed": 0
+      },
+      "evidence_status": "accepted_screen",
+      "rows": [
+        {
+          "annual_cost_bps": 243.08210231498828,
+          "candidate": "/results/class_cash_relative_risk-0.10/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.6739584941088727,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 184.93439185016229,
+          "candidate": "/results/class_cash_relative_risk-0.40/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.885866852466061,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 108.46037656260029,
+          "candidate": "/results/class_cash_relative_risk-0.80/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 1.5104801662427563,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 45.65769789754994,
+          "candidate": "/results/class_cash_relative_risk-monthly/gate",
+          "cost_only_replay_withheld": true,
+          "historical_classification": "cost_only",
+          "ic_margin": 3.588162679350061,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 251.9985331206956,
+          "candidate": "/results/class_remove_bill_risk-0.10/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.37490220901878984,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 192.9731630861139,
+          "candidate": "/results/class_remove_bill_risk-0.40/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.4895748467069706,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 116.30546476786591,
+          "candidate": "/results/class_remove_bill_risk-0.80/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.8122989485060373,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 45.35841857864895,
+          "candidate": "/results/class_remove_bill_risk-monthly/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 2.0828505423448447,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 333.45710888998235,
+          "candidate": "/results/pooled_cash_relative_risk-0.10/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.18063521954760328,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 260.6301884799466,
+          "candidate": "/results/pooled_cash_relative_risk-0.40/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.23110944447897508,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 155.55493194520233,
+          "candidate": "/results/pooled_cash_relative_risk-0.80/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.3872207542430723,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 51.705653111793815,
+          "candidate": "/results/pooled_cash_relative_risk-monthly/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 1.1649422151929436,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 296.2083725888267,
+          "candidate": "/results/pooled_remove_bill_risk-0.10/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.21712645886739687,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 228.28909101153954,
+          "candidate": "/results/pooled_remove_bill_risk-0.40/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.2817246971465469,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 148.14855734668123,
+          "candidate": "/results/pooled_remove_bill_risk-0.80/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.4341228573463879,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 50.190081743037055,
+          "candidate": "/results/pooled_remove_bill_risk-monthly/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 1.281422001987652,
+          "margin_test": false,
+          "replayed": false
+        }
+      ],
+      "study": "cash-relative-momentum-20261017-v1"
+    },
+    {
+      "cost_only_withheld": 0,
+      "counts": {
+        "cost_and_information": 14,
+        "cost_only": 0,
+        "information_only": 2,
+        "insufficient": 0,
+        "passed": 0
+      },
+      "evidence_status": "accepted_screen",
+      "rows": [
+        {
+          "annual_cost_bps": 233.79460888050912,
+          "candidate": "/results/class_raw-0.10/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": -0.6384640710299163,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 178.51296414429754,
+          "candidate": "/results/class_raw-0.40/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": -0.8361827304040382,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 105.45686514864263,
+          "candidate": "/results/class_raw-0.80/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": -1.4154551015744676,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 48.3192584916026,
+          "candidate": "/results/class_raw-monthly/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": -3.0892332049474316,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 225.77412353342544,
+          "candidate": "/results/class_risk-0.10/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.09233465699643922,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 173.01987003980273,
+          "candidate": "/results/class_risk-0.40/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.12048775814208387,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 78.84091736471026,
+          "candidate": "/results/class_risk-0.80/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.2644156987506299,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 38.15166064648089,
+          "candidate": "/results/class_risk-monthly/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": 0.5464185805252343,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 336.53730147869277,
+          "candidate": "/results/pooled_raw-0.10/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": -0.5963503387908756,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 276.6490847896418,
+          "candidate": "/results/pooled_raw-0.40/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": -0.7254465848140764,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 153.63690049382575,
+          "candidate": "/results/pooled_raw-0.80/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": -1.3062886136566576,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 56.97100263759842,
+          "candidate": "/results/pooled_raw-monthly/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": -3.522741824103618,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 142.96263912044594,
+          "candidate": "/results/pooled_risk-0.10/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.33163268916407435,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 116.13623477788798,
+          "candidate": "/results/pooled_risk-0.40/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.4082367966567961,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 79.53829934334098,
+          "candidate": "/results/pooled_risk-0.80/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.5960786797420491,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 24.837361956056093,
+          "candidate": "/results/pooled_risk-monthly/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": 1.9088615186020725,
+          "margin_test": false,
+          "replayed": false
+        }
+      ],
+      "study": "class-volatility-screen-20261016-v1"
+    },
+    {
+      "cost_only_withheld": 0,
+      "counts": {
+        "cost_and_information": 1,
+        "cost_only": 0,
+        "information_only": 0,
+        "insufficient": 0,
+        "passed": 1
+      },
+      "evidence_status": "accepted_screen",
+      "rows": [
+        {
+          "annual_cost_bps": 67.72882985134258,
+          "candidate": "/gates/expanded",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": -1.3720466077856612,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 43.174783096792304,
+          "candidate": "/gates/original14",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 5.4055510799589035,
+          "margin_test": true,
+          "replayed": true
+        }
+      ],
+      "study": "etf-expansion-20261014-v1"
+    },
+    {
+      "cost_only_withheld": 6,
+      "counts": {
+        "cost_and_information": 8,
+        "cost_only": 6,
+        "information_only": 1,
+        "insufficient": 1,
+        "passed": 0
+      },
+      "evidence_status": "canonical_corrected_screen",
+      "rows": [
+        {
+          "annual_cost_bps": 68.65649648477532,
+          "candidate": "/rows/6/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.08236831491595341,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 72.78375358843265,
+          "candidate": "/rows/9/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.36039190290936357,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 75.54967578376674,
+          "candidate": "/rows/12/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": -0.059093614954992685,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 38.083576123551055,
+          "candidate": "/rows/21/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": 1.9148988542856558,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 67.04279798357837,
+          "candidate": "/rows/23/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": -1.8712572254085658,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 51.73848920498632,
+          "candidate": "/rows/24/gate",
+          "cost_only_replay_withheld": true,
+          "historical_classification": "cost_only",
+          "ic_margin": 5.222607942353995,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 71.93443971370431,
+          "candidate": "/rows/26/gate",
+          "cost_only_replay_withheld": true,
+          "historical_classification": "cost_only",
+          "ic_margin": 4.979795736092852,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 76.43951808916515,
+          "candidate": "/rows/35/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 0.03417022657593172,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 69.73917024074113,
+          "candidate": "/rows/43/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 2.4212149475995486,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 63.86410825703543,
+          "candidate": "/rows/46/gate",
+          "cost_only_replay_withheld": true,
+          "historical_classification": "cost_only",
+          "ic_margin": 5.221174037478558,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 70.00938373288916,
+          "candidate": "/rows/49/gate",
+          "cost_only_replay_withheld": true,
+          "historical_classification": "cost_only",
+          "ic_margin": 4.0688536204380235,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 71.76914080148603,
+          "candidate": "/rows/51/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 2.998046130170685,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 74.29623379517415,
+          "candidate": "/rows/53/gate",
+          "cost_only_replay_withheld": true,
+          "historical_classification": "cost_only",
+          "ic_margin": 5.4135048949955165,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 69.65631915592263,
+          "candidate": "/rows/54/gate",
+          "cost_only_replay_withheld": true,
+          "historical_classification": "cost_only",
+          "ic_margin": 4.022708247066796,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 69.73132377220912,
+          "candidate": "/rows/101/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": -6.708251684222394,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "candidate": "7",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "insufficient",
+          "replayed": false
+        }
+      ],
+      "study": "alpha101-screen-20261011-v4"
+    },
+    {
+      "cost_only_withheld": 0,
+      "counts": {
+        "cost_and_information": 7,
+        "cost_only": 0,
+        "information_only": 28,
+        "insufficient": 3,
+        "passed": 10
+      },
+      "evidence_status": "canonical_corrected_screen",
+      "rows": [
+        {
+          "annual_cost_bps": 0.0014973407640361813,
+          "candidate": "/rows/6@0.05/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.6478600253353228,
+          "candidate": "/rows/6@0.1/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 3.223180251646429,
+          "candidate": "/rows/6@0.2/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.0,
+          "candidate": "/rows/7@0.05/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "insufficient",
+          "ic_margin": null,
+          "margin_test": null,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.0,
+          "candidate": "/rows/7@0.1/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "insufficient",
+          "ic_margin": null,
+          "margin_test": null,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.0,
+          "candidate": "/rows/7@0.2/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "insufficient",
+          "ic_margin": null,
+          "margin_test": null,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.3172102390440479,
+          "candidate": "/rows/9@0.05/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 1.1437915419883815,
+          "candidate": "/rows/9@0.1/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 4.046715238499816,
+          "candidate": "/rows/9@0.2/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.36260276190446916,
+          "candidate": "/rows/12@0.05/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 1.2259527467161124,
+          "candidate": "/rows/12@0.1/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 4.197115686626214,
+          "candidate": "/rows/12@0.2/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.024444928435514157,
+          "candidate": "/rows/21@0.05/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.2778510056266281,
+          "candidate": "/rows/21@0.1/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 1.4548274796537086,
+          "candidate": "/rows/21@0.2/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.0751754476217048,
+          "candidate": "/rows/23@0.05/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.711519335458286,
+          "candidate": "/rows/23@0.1/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 3.2354500238098627,
+          "candidate": "/rows/23@0.2/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.026611922651058606,
+          "candidate": "/rows/24@0.05/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.4601799471682355,
+          "candidate": "/rows/24@0.1/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 2.0868470468329203,
+          "candidate": "/rows/24@0.2/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.48108499885904266,
+          "candidate": "/rows/26@0.05/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 1.6881622640051663,
+          "candidate": "/rows/26@0.1/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 5.171548592142816,
+          "candidate": "/rows/26@0.2/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.2905499844100845,
+          "candidate": "/rows/35@0.05/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 1.2160006043747096,
+          "candidate": "/rows/35@0.1/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 4.068565721612938,
+          "candidate": "/rows/35@0.2/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.24315133748491924,
+          "candidate": "/rows/43@0.05/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": null,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.992418204554868,
+          "candidate": "/rows/43@0.1/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 3.6338292993469157,
+          "candidate": "/rows/43@0.2/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.30159051711165397,
+          "candidate": "/rows/46@0.05/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": null,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.9955900434485887,
+          "candidate": "/rows/46@0.1/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": null,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 3.333209739563463,
+          "candidate": "/rows/46@0.2/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": null,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.28745938155316786,
+          "candidate": "/rows/49@0.05/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": null,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 1.0696799091039377,
+          "candidate": "/rows/49@0.1/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": null,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 3.580227502783835,
+          "candidate": "/rows/49@0.2/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": null,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.18764827911383897,
+          "candidate": "/rows/51@0.05/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": null,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.8253805186142493,
+          "candidate": "/rows/51@0.1/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": null,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 3.0915228434189235,
+          "candidate": "/rows/51@0.2/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": null,
+          "margin_test": true,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.41764742468373584,
+          "candidate": "/rows/53@0.05/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 1.4416609602203057,
+          "candidate": "/rows/53@0.1/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 4.354207892319728,
+          "candidate": "/rows/53@0.2/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.3068941303566852,
+          "candidate": "/rows/54@0.05/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 1.1653245854162364,
+          "candidate": "/rows/54@0.1/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 3.98264143812459,
+          "candidate": "/rows/54@0.2/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 0.4044582017187537,
+          "candidate": "/rows/101@0.05/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 1.4196821351881717,
+          "candidate": "/rows/101@0.1/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "information_only",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        },
+        {
+          "annual_cost_bps": 4.6421600753570935,
+          "candidate": "/rows/101@0.2/gate",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": null,
+          "margin_test": false,
+          "replayed": false
+        }
+      ],
+      "study": "alpha101-tilt-20261011-v3"
+    },
+    {
+      "cost_only_withheld": 0,
+      "counts": {
+        "cost_and_information": 0,
+        "cost_only": 2,
+        "information_only": 0,
+        "insufficient": 0,
+        "passed": 3
+      },
+      "evidence_status": "construction",
+      "rows": [
+        {
+          "annual_cost_bps": 43.606942343062165,
+          "candidate": "/arms/CP",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 13.54325680459505,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 43.73054613812185,
+          "candidate": "/arms/M1",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 13.504976973073429,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 45.9103971729443,
+          "candidate": "/arms/POOL",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 12.863753201492635,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 46.405989278733955,
+          "candidate": "/arms/SLV-COMP",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 12.726374931218208,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 32.69562426678266,
+          "candidate": "/arms/SLV-EQ",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 18.0629681145212,
+          "margin_test": true,
+          "replayed": true
+        }
+      ],
+      "study": "sleeve-construction-20261010-v2"
+    },
+    {
+      "cost_only_withheld": 0,
+      "counts": {
+        "cost_and_information": 0,
+        "cost_only": 1,
+        "information_only": 0,
+        "insufficient": 0,
+        "passed": 3
+      },
+      "evidence_status": "construction",
+      "rows": [
+        {
+          "annual_cost_bps": 43.606942343062165,
+          "candidate": "/arms/CP",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 13.54325680459505,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 45.46660782781582,
+          "candidate": "/arms/HIER-K2",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 12.989313406705312,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 40.74534330484624,
+          "candidate": "/arms/HIER-K3",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.494417538629925,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 43.73054613812185,
+          "candidate": "/arms/M1",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 13.504976973073429,
+          "margin_test": true,
+          "replayed": true
+        }
+      ],
+      "study": "hierarchical-construction-20261011-v2"
+    },
+    {
+      "cost_only_withheld": 0,
+      "counts": {
+        "cost_and_information": 0,
+        "cost_only": 10,
+        "information_only": 0,
+        "insufficient": 0,
+        "passed": 6
+      },
+      "evidence_status": "superseded_grid",
+      "rows": [
+        {
+          "annual_cost_bps": 41.04862330153444,
+          "candidate": "/arms/FR25/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.387328273520543,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 41.55798635925944,
+          "candidate": "/arms/FR25-TILT-10/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.210987354147273,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 55.68218708287262,
+          "candidate": "/arms/FR25-TILT-100/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 10.60626475997237,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 55.729641996996406,
+          "candidate": "/arms/FR25-TILT-150/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 10.597233311620599,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 43.76527741816428,
+          "candidate": "/arms/FR25-TILT-20/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 13.494259683822937,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 46.384240112460034,
+          "candidate": "/arms/FR25-TILT-30/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 12.732342217601948,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 51.22517155761856,
+          "candidate": "/arms/FR25-TILT-50/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 11.529097915288984,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 54.634840437949265,
+          "candidate": "/arms/FR25-TILT-75/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 10.809586225222045,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 36.82616548513494,
+          "candidate": "/arms/SOTA/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 16.036967488609452,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 38.30072512317667,
+          "candidate": "/arms/SOTA-TILT-10/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 15.419551894015889,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 56.366429594192,
+          "candidate": "/arms/SOTA-TILT-100/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 10.477513350892002,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 56.437060918525816,
+          "candidate": "/arms/SOTA-TILT-150/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 10.464400679330897,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 41.635228419014496,
+          "candidate": "/arms/SOTA-TILT-20/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.184622999343201,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 45.46120361937848,
+          "candidate": "/arms/SOTA-TILT-30/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 12.990857513581485,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 51.620193216027445,
+          "candidate": "/arms/SOTA-TILT-50/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 11.44087191118635,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 55.2797548340072,
+          "candidate": "/arms/SOTA-TILT-75/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 10.683477529678651,
+          "margin_test": true,
+          "replayed": true
+        }
+      ],
+      "study": "alpha101-tilt-surface-20261011-v2"
+    },
+    {
+      "cost_only_withheld": 0,
+      "counts": {
+        "cost_and_information": 4,
+        "cost_only": 17,
+        "information_only": 0,
+        "insufficient": 0,
+        "passed": 13
+      },
+      "evidence_status": "superseded_grid",
+      "rows": [
+        {
+          "annual_cost_bps": 41.04862330153444,
+          "candidate": "/arms/FR25/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.387328273520543,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 142.66692797717735,
+          "candidate": "/arms/FR25-D10-T0/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 4.139571987627972,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 112.7456160112807,
+          "candidate": "/arms/FR25-D10-T100/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 5.238163926091552,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 45.66971401655843,
+          "candidate": "/arms/FR25-D10-T200/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 12.93154624093189,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 41.557986359259445,
+          "candidate": "/arms/FR25-D10-T300/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.21098735414727,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 138.1343276519853,
+          "candidate": "/arms/FR25-D10-T50/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 4.275403722260581,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 243.11612469154437,
+          "candidate": "/arms/FR25-D20-T0/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 2.429209577787422,
+          "margin_test": false,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 181.88194111581947,
+          "candidate": "/arms/FR25-D20-T100/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 3.247051438928667,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 51.68127346610853,
+          "candidate": "/arms/FR25-D20-T200/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 11.427350353557955,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 43.765277418164274,
+          "candidate": "/arms/FR25-D20-T300/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 13.494259683822941,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 234.17930188485764,
+          "candidate": "/arms/FR25-D20-T50/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 2.521913823560888,
+          "margin_test": false,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 91.77927984011316,
+          "candidate": "/arms/FR25-D5-T0/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 6.434785930376641,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 76.55292846005443,
+          "candidate": "/arms/FR25-D5-T100/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 7.7146626588351515,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 43.154557245042085,
+          "candidate": "/arms/FR25-D5-T200/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 13.685229470941007,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 40.99269964219183,
+          "candidate": "/arms/FR25-D5-T300/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.406955964603142,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 89.6040177316712,
+          "candidate": "/arms/FR25-D5-T50/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 6.590999305229992,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 41.55798635925944,
+          "candidate": "/arms/FR25-M10/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.210987354147273,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 36.82616548513494,
+          "candidate": "/arms/SOTA/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 16.036967488609452,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 136.9210364876849,
+          "candidate": "/arms/SOTA-D10-T0/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 4.313289131932473,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 106.48803077013802,
+          "candidate": "/arms/SOTA-D10-T100/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 5.545975583773068,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 42.39985276882385,
+          "candidate": "/arms/SOTA-D10-T200/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 13.92882239085292,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 38.30072512317667,
+          "candidate": "/arms/SOTA-D10-T300/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 15.419551894015889,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 132.54142426675347,
+          "candidate": "/arms/SOTA-D10-T50/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 4.455814639705823,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 235.53711112334614,
+          "candidate": "/arms/SOTA-D20-T0/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 2.5073756564246286,
+          "margin_test": false,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 174.7518690360052,
+          "candidate": "/arms/SOTA-D20-T100/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 3.3795347762122065,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 48.459187254439485,
+          "candidate": "/arms/SOTA-D20-T200/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 12.18716309694517,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 41.635228419014496,
+          "candidate": "/arms/SOTA-D20-T300/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.184622999343201,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 226.35605333313748,
+          "candidate": "/arms/SOTA-D20-T50/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_and_information",
+          "ic_margin": 2.6090754363263255,
+          "margin_test": false,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 86.83100427172248,
+          "candidate": "/arms/SOTA-D5-T0/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 6.801487827632899,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 71.84696093167324,
+          "candidate": "/arms/SOTA-D5-T100/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 8.219972159670117,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 39.39636617199525,
+          "candidate": "/arms/SOTA-D5-T200/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.990723155453667,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 37.2031483771392,
+          "candidate": "/arms/SOTA-D5-T300/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 15.874463435953814,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 84.72068788439915,
+          "candidate": "/arms/SOTA-D5-T50/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 6.970906792224154,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 38.30072512317667,
+          "candidate": "/arms/SOTA-M10/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 15.419551894015889,
+          "margin_test": true,
+          "replayed": true
+        }
+      ],
+      "study": "alpha101-tilt-daily-20261011-v2"
+    },
+    {
+      "cost_only_withheld": 0,
+      "counts": {
+        "cost_and_information": 0,
+        "cost_only": 10,
+        "information_only": 0,
+        "insufficient": 0,
+        "passed": 32
+      },
+      "evidence_status": "superseded_grid",
+      "rows": [
+        {
+          "annual_cost_bps": 41.04862330153444,
+          "candidate": "/arms/FR25/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.387328273520543,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 41.81961412885162,
+          "candidate": "/arms/FR25-X10-EXIT-FADE/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.122081968418158,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 46.328373599315384,
+          "candidate": "/arms/FR25-X10-EXIT-FLIP/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 12.74769590927293,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 65.32161150513203,
+          "candidate": "/arms/FR25-X10-EXIT-FLIP-REENTER/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 9.041112198661256,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 41.557986359259445,
+          "candidate": "/arms/FR25-X10-EXIT-NOSIG/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.21098735414727,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 41.557986359259445,
+          "candidate": "/arms/FR25-X10-EXIT-PNL/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.21098735414727,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 41.645116607351056,
+          "candidate": "/arms/FR25-X10-EXIT-SL-05/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.181255012046563,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 41.557986359259445,
+          "candidate": "/arms/FR25-X10-EXIT-TP-1/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.21098735414727,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 41.557986359259445,
+          "candidate": "/arms/FR25-X10-HOLD/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.21098735414727,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 45.158593010031595,
+          "candidate": "/arms/FR25-X20-EXIT-FADE/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 13.07791007758077,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 52.84216816680676,
+          "candidate": "/arms/FR25-X20-EXIT-FLIP/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 11.176301788961007,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 91.09995836142059,
+          "candidate": "/arms/FR25-X20-EXIT-FLIP-REENTER/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 6.48276935838164,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 43.765277418164274,
+          "candidate": "/arms/FR25-X20-EXIT-NOSIG/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 13.494259683822941,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 43.765277418164274,
+          "candidate": "/arms/FR25-X20-EXIT-PNL/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 13.494259683822941,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 43.765277418164274,
+          "candidate": "/arms/FR25-X20-HOLD/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 13.494259683822941,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 41.06004727118464,
+          "candidate": "/arms/FR25-X5-EXIT-FADE/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.383325345797191,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 43.454687724440575,
+          "candidate": "/arms/FR25-X5-EXIT-FLIP/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 13.590709070568145,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 53.2106699064262,
+          "candidate": "/arms/FR25-X5-EXIT-FLIP-REENTER/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 11.098902149772353,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 40.99269964219183,
+          "candidate": "/arms/FR25-X5-EXIT-NOSIG/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.406955964603142,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 40.99269964219183,
+          "candidate": "/arms/FR25-X5-EXIT-PNL/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.406955964603142,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 40.99269964219183,
+          "candidate": "/arms/FR25-X5-HOLD/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.406955964603142,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 36.82616548513494,
+          "candidate": "/arms/SOTA/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 16.036967488609452,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 38.580488370516214,
+          "candidate": "/arms/SOTA-X10-EXIT-FADE/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 15.307738278051215,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 42.42553782057019,
+          "candidate": "/arms/SOTA-X10-EXIT-FLIP/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 13.920389674563314,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 62.3316449216719,
+          "candidate": "/arms/SOTA-X10-EXIT-FLIP-REENTER/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 9.474802395434999,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 38.30072512317667,
+          "candidate": "/arms/SOTA-X10-EXIT-NOSIG/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 15.419551894015889,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 38.30072512317667,
+          "candidate": "/arms/SOTA-X10-EXIT-PNL/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 15.419551894015889,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 38.38219301843457,
+          "candidate": "/arms/SOTA-X10-EXIT-SL-05/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 15.386823215953587,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 38.30072512317667,
+          "candidate": "/arms/SOTA-X10-EXIT-TP-1/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 15.419551894015889,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 38.30072512317667,
+          "candidate": "/arms/SOTA-X10-HOLD/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 15.419551894015889,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 42.72189243859109,
+          "candidate": "/arms/SOTA-X20-EXIT-FADE/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 13.823826261071341,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 49.537268822318126,
+          "candidate": "/arms/SOTA-X20-EXIT-FLIP/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 11.921933377747813,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 88.66466716804732,
+          "candidate": "/arms/SOTA-X20-EXIT-FLIP-REENTER/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 6.660827108231587,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 41.635228419014496,
+          "candidate": "/arms/SOTA-X20-EXIT-NOSIG/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.184622999343201,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 41.635228419014496,
+          "candidate": "/arms/SOTA-X20-EXIT-PNL/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.184622999343201,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 41.635228419014496,
+          "candidate": "/arms/SOTA-X20-HOLD/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.184622999343201,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 37.26500779803522,
+          "candidate": "/arms/SOTA-X5-EXIT-FADE/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 15.84811203625721,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 39.42797147705744,
+          "candidate": "/arms/SOTA-X5-EXIT-FLIP/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 14.97870665141651,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 49.39000178104888,
+          "candidate": "/arms/SOTA-X5-EXIT-FLIP-REENTER/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "cost_only",
+          "ic_margin": 11.957481217218104,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 37.2031483771392,
+          "candidate": "/arms/SOTA-X5-EXIT-NOSIG/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 15.874463435953814,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 37.2031483771392,
+          "candidate": "/arms/SOTA-X5-EXIT-PNL/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 15.874463435953814,
+          "margin_test": true,
+          "replayed": true
+        },
+        {
+          "annual_cost_bps": 37.2031483771392,
+          "candidate": "/arms/SOTA-X5-HOLD/verdict",
+          "cost_only_replay_withheld": false,
+          "historical_classification": "passed",
+          "ic_margin": 15.874463435953814,
+          "margin_test": true,
+          "replayed": true
+        }
+      ],
+      "study": "alpha101-tilt-exit-20261011-v2"
+    }
+  ],
+  "version": "research-cost-rejection-audit-20261017-v1"
+}

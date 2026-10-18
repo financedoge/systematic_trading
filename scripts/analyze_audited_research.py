@@ -257,7 +257,8 @@ def main(root):
     names=['summary.json','exposure_audit.json','signal_activity.json','uncertainty.json','contrasts.json','old_vs_audited.json','etf_return_corrections.json','benchmarks.json','benchmark_input_hashes.json','scatter_observations.json','scatter_observations.csv','scatter_correlations.json','scatter_matched_comparison.json','report.md','charts.html','analysis_source.py',*figures,*[n[:-4]+'.svg' for n in figures]]
     names.append('coverage_decomposition.json')
     manifest={n:sha256(root/n) for n in names};write_json(root/'analysis_manifest.json',manifest)
-    store=AnalyticsStore.from_settings(AppSettings());store.client.timeout_seconds=120
+    store=AnalyticsStore.from_settings(AppSettings())
+    if hasattr(store,'client'):store.client.timeout_seconds=120
     observations=[observation(n+'/'+w,'research_constituent_backtest',n,dict(period=w,**r)) for n,windows in summary.items() for w,r in windows.items()]
     observations += [observation(w+'/'+n,'research_constituent_contrast',n,dict(period=w,**r)) for w,series in contrasts.items() for n,r in series.items()]
     observations += [observation(r['date'],'research_governed_scatter','IVV_cohort',r,r['date']) for r in records]

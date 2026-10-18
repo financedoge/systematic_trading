@@ -9,6 +9,13 @@ should compose that logic and record explicit inputs/outputs.
 | --- | --- |
 | Start, inspect, stop local services | `start_local_platform.ps1`, `watch_local_platform.ps1`, `stop_local_platform.ps1` |
 | Guarded operator start | `start_operator_dashboard.ps1` |
+| Native NATS lifecycle and verification | `native_nats.ps1`, `install_native_nats.py`, `verify_native_nats.py` |
+| Daily serving-history acquisition | `backfill_daily_bars.py`; honors the configured backend; the old ClickHouse filename remains a compatible entry point |
+| Native analytical migration and verification | `migrate_native_analytics.py`, `verify_native_analytics.py`; staged stopped-writer operation |
+| Isolated native recovery drill | `verify_native_restore.py`; requires verified migration evidence and a new destination |
+| Guarded research retirement | `retire_research_artifacts.py plan`, `apply_research_retention.ps1`; startup maintenance uses `maintain_research_storage.ps1` |
+| One-time legacy Docker retirement | `retire_legacy_docker.ps1 -PlanOnly`, then the same script without that switch; exact project resources and completed native acceptance required |
+| Retired Docker disk compaction | `compact_retired_docker_disk.ps1` from Administrator PowerShell after verified retirement and Docker shutdown; saves measured before/after sizes |
 | IB SDK installation | `install_ib_api.py` |
 | Broker diagnosis | `probe_ib_tws_health.py`, `test_ib_paper_connection.py` |
 | Reconciliation and reviewed execution recovery | `reconcile_ib_paper_account.py`, `recover_ib_paper_executions.py`; follow [rollout controls](../docs/live-rollout.md) |

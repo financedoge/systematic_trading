@@ -165,7 +165,7 @@ def test_a_failed_second_spawn_leaves_no_live_engine(tmp_path, monkeypatch):
     bundle, target = _bundle(tmp_path)
     try:
         with pytest.raises(subprocess.SubprocessError, match='Publication withheld'):
-            runner.run_bundle(bundle=bundle, output=target, image=IMAGE, timeout_seconds=30)
+            runner.run_bundle(bundle=bundle, output=target, image=IMAGE, timeout_seconds=30, runtime='docker')
         assert engines.live() == []                     # the oracle was terminated and reaped
         engines.assert_no_live_child()
     finally:
@@ -189,7 +189,7 @@ def test_a_failed_image_inspection_reaps_both_engines_before_hashing(tmp_path, m
     monkeypatch.setattr(runner, 'sha256', recording_sha256)
     try:
         with pytest.raises(subprocess.SubprocessError, match='Publication withheld') as error:
-            runner.run_bundle(bundle=bundle, output=target, image=IMAGE, timeout_seconds=30)
+            runner.run_bundle(bundle=bundle, output=target, image=IMAGE, timeout_seconds=30, runtime='docker')
         assert isinstance(error.value.__cause__, subprocess.CalledProcessError)
         engines.assert_no_live_child()
         assert live_at_hash == [], f'artifacts were hashed while engines ran: {live_at_hash}'
@@ -203,7 +203,7 @@ def test_a_timeout_leaves_no_live_engine(tmp_path, monkeypatch):
     bundle, target = _bundle(tmp_path)
     try:
         with pytest.raises(subprocess.SubprocessError, match='Publication withheld') as error:
-            runner.run_bundle(bundle=bundle, output=target, image=IMAGE, timeout_seconds=1.5)
+            runner.run_bundle(bundle=bundle, output=target, image=IMAGE, timeout_seconds=1.5, runtime='docker')
         assert isinstance(error.value.__cause__, subprocess.TimeoutExpired)
         engines.assert_no_live_child()
     finally:

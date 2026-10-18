@@ -66,7 +66,7 @@ sleep/offline periods. NAS backup is optional and cannot block normal local
 startup/shutdown; see [optional snapshot synchronization](database-sync.md).
 
 The analytics watchdog reports long host/process pauses on resume and retries
-all refresh lanes through their normal checks. ClickHouse transport failures
+all refresh lanes through their normal checks. In explicitly selected legacy recovery, ClickHouse transport failures
 name the endpoint and operation; an ambiguous write response is never retried
 by the transport client. Keep the host awake for uninterrupted local processing;
 local alerts also resume only when the host runs. Already accepted broker orders

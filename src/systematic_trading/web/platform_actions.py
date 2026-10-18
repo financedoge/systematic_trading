@@ -41,12 +41,6 @@ _RESTARTABLE_SERVICES = {
             [sys.executable, str(REPO_ROOT / "scripts" / "configure_nats_stream.py"), "--nats-url", "nats://127.0.0.1:4222"],
         ]
     },
-    "clickhouse_columnar": {
-        "commands": [
-            ["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(REPO_ROOT / "scripts" / "stop_clickhouse.ps1")],
-            ["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(REPO_ROOT / "scripts" / "start_clickhouse.ps1")],
-        ]
-    },
     "market_data_recorder": {
         "commands": [
             ["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(REPO_ROOT / "scripts" / "stop_market_data_recorder.ps1")],
@@ -56,6 +50,7 @@ _RESTARTABLE_SERVICES = {
 }
 
 _DISABLED_REASONS = {
+    "native_analytics": "Parquet/DuckDB runs inside the application; there is no analytical server to restart.",
     "postgres_transactional": "Postgres is an external database service; restart it outside the trading API.",
     "operator_dashboard": "The operator API cannot safely restart its own hosting process from inside a request.",
     "event_outbox_dispatcher": "Dispatcher lifecycle is tied to the operator dashboard startup script.",
@@ -70,7 +65,7 @@ def platform_service_actions() -> ServiceActionCatalog:
         "nats_jetstream",
         "postgres_transactional",
         "ib_tws_api",
-        "clickhouse_columnar",
+        "native_analytics",
         "operator_dashboard",
         "event_outbox_dispatcher",
         "trading_management_loop",
@@ -90,6 +85,8 @@ def platform_service_actions() -> ServiceActionCatalog:
 
 @router.post("/platform/services/{service_id}/restart", response_model=ServiceActionResult)
 def restart_platform_service(service_id: str) -> ServiceActionResult:
+    if service_id=='clickhouse_columnar':
+        raise HTTPException(status_code=400,detail='ClickHouse is retired in the native platform profile.')
     spec = _RESTARTABLE_SERVICES.get(service_id)
     if spec is None:
         reason = _DISABLED_REASONS.get(service_id, "No local restart action is configured.")

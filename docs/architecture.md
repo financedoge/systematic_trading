@@ -1,10 +1,20 @@
 # Architecture
 
 Current implementation: a Python modular application with separate supervised
-workers, PostgreSQL transactional state, ClickHouse analytical serving and NATS
+workers, PostgreSQL transactional/publication state, Parquet/DuckDB analytics and native NATS
 outbox delivery. SQLite is an explicit offline test/recovery backend. Live routing
 remains disabled; future target services are described in the
 [industrial plan](industrial-platform-plan.md).
+
+Selected target as of October 17: native Windows PostgreSQL for operational state
+and publication metadata, immutable compressed Parquet with native DuckDB analytics,
+native NATS and a Docker-free calculation/validation path. These are the implemented
+defaults and passed native cutover acceptance on October 18. The Kanban records
+remaining host compaction and broker reconciliation work. The
+[native runtime guide](native-windows-runtime.md) records actual limits and recovery.
+The [migration and retention plan](storage-retention-and-windows-native-plan.md)
+defines storage contracts, retired research summaries, memory budgets, native engine
+validation and the coordinated cutover. Existing contracts below remain in force.
 
 Start with the [documentation index](README.md) and the
 [maintenance/code map](repository-maintenance.md). The strategy/data contracts
@@ -27,7 +37,7 @@ targets, replay, daily NAV and held weights, the matched benchmark and the share
 report with its inspectable rank table. `research/fr25_tracking.py` supplies the
 audited input contract and `research/selection_blend.py` the frozen blend.
 Candidate and parent strategies share one price publication and one atomic
-ClickHouse commit. Calculation revisions bind code, inputs and the monitoring
+PostgreSQL catalog commit over verified immutable Parquet. Calculation revisions bind code, inputs and the monitoring
 generation; obsolete work is discarded, and a failed recalculation retains the
 previous complete publication.
 
@@ -123,10 +133,9 @@ Data exposes recorder coverage and quarantine status. See the
 `web/shell.py` owns the shared workspace presentation. Application health includes recurring broker probes, calculation workers and durable delivery receipts. NAS SQL snapshots carry external dependency manifests; missing analytical data/artifacts defer incoming restore before database mutation. Paper/live gates and checks preventing replacement of active local databases remain mandatory.
 
 The governed historical-price research layer is documented in
-`docs/price-governance-2026-09-26.md`. Immutable batches in
-`market_data.governed_daily` and `market_data.governance_comparisons` retain
-explicit adjustment bases, source lineage and overlap/gap audits. ClickHouse
-analytics publications commit a catalog only after complete row/document hash
+`docs/price-governance-2026-09-26.md`. Immutable governed batches retain
+explicit adjustment bases, source lineage and overlap/gap audits. Native
+analytics publications commit their PostgreSQL catalog only after Parquet and row/document hash
 verification. The read-only Market Data governance API serves committed
 workspace-scoped batches. This layer does not change the production daily-bar
 reader, broker execution contracts or strategy selection.
@@ -136,8 +145,10 @@ local PostgreSQL/SQLite engines, local recovery checkpoints and verified immutab
 NAS snapshots. Latest observed database revisions win; unchanged copies retain
 their age, publication is serialized and incoming restores require stopped services.
 NAS failures defer sync without blocking startup/shutdown. Interrupted local
-restores still block application access. It does not replicate ClickHouse, broker configuration or raw
-market-data files, and it does not change execution approval or reconciliation gates.
+restores still block application access. SQL handoff does not transfer analytical
+Parquet/provider files or broker configuration; pinned dependencies must already be
+available and verified. Full-system backup covers the data files separately. Neither
+path changes execution approval or reconciliation gates.
 
 ## Target State
 
@@ -157,12 +168,12 @@ The full target-state system chart and execution schedule are maintained in `doc
 ## Current State
 
 Analytical histories and prepared Strategy/account performance responses use a
-verified ClickHouse projection worker. Requests read the last complete publication;
+verified PostgreSQL/Parquet projection worker. Requests read the last complete publication;
 source changes refresh it in the background. PostgreSQL retains transactional
 authority and original files remain replay evidence. See [analytical migration](analytics-migration.md).
 
-Tracked rolling models use an isolated application fitting process, with parallel
-monthly fits, hash-verified model caches and portable inference shared by Python
+Tracked rolling models use an isolated application fitting process, with budgeted
+monthly fits (sequential on Windows), hash-verified model caches and portable inference shared by Python
 and native LEAN. The analytics worker publishes complete strategies and matched
 controls together after parity checks. The report exposes training lineage and
 the executable allocation trace. See [rolling XGBoost tracking](rolling-xgboost-lag20-tracking.md).
@@ -211,9 +222,9 @@ publication. The event outbox retains bounded at-least-once delivery. See the
 [robustness review](robustness-review-2026-09-30.md) for failure tests and remaining
 operator dependencies. Recovery confers no trading authority.
 
-Registered monitored strategies are application-owned analytical calculations. The analytics worker reads committed audited batches, verifies source hashes and FX evidence, freezes complete strategy definitions, and runs either the internal Python engine or isolated LEAN with Python parity. A single ClickHouse publication commits matched results, current weights and report data only after all calculations succeed; failures retain the previous complete publication with an error status. No broker credentials or order authorization enter this boundary. The shared report renderer serves both SOTA and tracked challengers. Codex/agent schedules are not calculation infrastructure.
+Registered monitored strategies are application-owned analytical calculations. The analytics worker reads committed audited batches, verifies source hashes and FX evidence, freezes complete strategy definitions, and runs either the internal Python engine or isolated LEAN with Python parity. An atomic PostgreSQL publication over verified immutable Parquet commits matched results, current weights and report data only after all calculations succeed; failures retain the previous complete publication with an error status. No broker credentials or order authorization enter this boundary. The shared report renderer serves both SOTA and tracked challengers. Codex/agent schedules are not calculation infrastructure.
 
-- Optimize for low turnover, concentrated, thesis-driven portfolios.
+- Optimize portfolio outcomes after trading costs, with explicit risk limits and benchmark comparisons. Turnover is a measured cost driver, not an independent rejection ceiling.
 - Keep CNH as the accounting and risk currency even when assets trade in foreign currencies.
 - Separate research, backtesting, proposal generation, and broker execution concerns.
 - Keep v1 human-in-the-loop. The platform proposes trades and explains them; the operator accepts or rejects them.
@@ -232,7 +243,7 @@ Registered monitored strategies are application-owned analytical calculations. T
 6. Portfolio layer: rebalance blotter, constraints, pre-trade checks, sizing, and approval workflow.
 7. Execution layer: Interactive Brokers paper-first routing, validation, reconciliation, idempotent order submission, and audit.
 8. Web layer: operator interface for monitoring, approvals, paper trading, and later controlled live trading.
-9. Storage layer: PostgreSQL for operational state and immutable legacy SQLite evidence; explicit SQLite only for offline tests/recovery; ClickHouse for columnar query serving; Parquet for immutable market-data archive and DuckDB-readable research snapshots.
+9. Storage layer: PostgreSQL for operational state, publication metadata and immutable legacy SQLite evidence; explicit SQLite only for offline tests/recovery; immutable compressed Parquet for analytical histories and bounded native DuckDB queries.
 10. Observability layer: metrics, logs, traces, dashboards, alerts, incidents, and daily operating reports.
 
 ## Current module boundaries

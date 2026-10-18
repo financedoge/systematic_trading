@@ -104,7 +104,7 @@ def test_annual_cost_rejects_invalid_inputs():
 
 
 def test_the_gate_delegates_the_breakeven_definition():
-    verdict = gate.screen(8.07, sigma=0.0522)
+    verdict = gate.legacy_screen(8.07, sigma=0.0522)
     assert verdict['breakeven_ic'] == breakeven_ic(8.07, 0.0522, cost_bps=5.0, period_sessions=21)
     assert verdict['breakeven_ic'] == pytest.approx(0.0064, abs=5e-5)
 
@@ -112,50 +112,50 @@ def test_the_gate_delegates_the_breakeven_definition():
 # --- the frozen verdict -------------------------------------------------------
 
 def test_a_cheap_signal_with_an_edge_passes():
-    verdict = gate.screen(8.07, sigma=0.0522, candidate_ic=0.0943)
+    verdict = gate.legacy_screen(8.07, sigma=0.0522, candidate_ic=0.0943)
     assert verdict['status'] == 'pass' and verdict['cost_test'] and verdict['margin_test']
     assert verdict['ic_margin'] == pytest.approx(14.64, abs=0.05)
 
 
 def test_a_candidate_above_the_cost_ceiling_is_rejected():
-    verdict = gate.screen(120.0, sigma=0.0522)
+    verdict = gate.legacy_screen(120.0, sigma=0.0522)
     assert verdict['status'] == 'reject'
     assert verdict['cost_test'] is False and verdict['margin_test'] is False
     assert any('exceeds the' in reason for reason in verdict['reasons'])
 
 
 def test_a_cheap_candidate_without_an_edge_is_rejected_on_the_margin_alone():
-    verdict = gate.screen(8.07, sigma=0.0522, candidate_ic=0.01)
+    verdict = gate.legacy_screen(8.07, sigma=0.0522, candidate_ic=0.01)
     assert verdict['status'] == 'reject'
     assert verdict['cost_test'] is True and verdict['margin_test'] is False
     assert any('IC margin' in reason for reason in verdict['reasons'])
 
 
 def test_the_cost_ceiling_carries_its_disclosed_tolerance():
-    within = gate.screen(8.8, sigma=0.0522, candidate_ic=0.0943)
-    above = gate.screen(8.9, sigma=0.0522, candidate_ic=0.0943)
+    within = gate.legacy_screen(8.8, sigma=0.0522, candidate_ic=0.0943)
+    above = gate.legacy_screen(8.9, sigma=0.0522, candidate_ic=0.0943)
     assert within['cost_ceiling_bps'] == pytest.approx(44.0)
     assert within['cost_test'] is True and above['cost_test'] is False
 
 
 def test_a_missing_dispersion_is_insufficient_rather_than_a_pass():
-    verdict = gate.screen(8.07, sigma=None, candidate_ic=0.0943)
+    verdict = gate.legacy_screen(8.07, sigma=None, candidate_ic=0.0943)
     assert verdict['status'] == 'insufficient'
     assert verdict['margin_test'] is None and verdict['breakeven_ic'] is None
     assert verdict['cost_test'] is True
 
 
 def test_the_reference_ic_is_used_when_a_candidate_declares_none():
-    verdict = gate.screen(8.07, sigma=0.0522)
+    verdict = gate.legacy_screen(8.07, sigma=0.0522)
     assert verdict['candidate_ic'] == gate.PROGRAMME_REFERENCE_IC
 
 
 def test_the_frozen_thresholds_are_the_declared_ones():
-    assert gate.THRESHOLDS['cost_bps'] == 5.0
-    assert gate.THRESHOLDS['max_annual_cost_bps'] == 40.0
-    assert gate.THRESHOLDS['cost_tolerance'] == 0.10
-    assert gate.THRESHOLDS['min_ic_margin'] == 3.0
-    assert gate.THRESHOLDS['period_sessions'] == 21
+    assert gate.LEGACY_THRESHOLDS['cost_bps'] == 5.0
+    assert gate.LEGACY_THRESHOLDS['max_annual_cost_bps'] == 40.0
+    assert gate.LEGACY_THRESHOLDS['cost_tolerance'] == 0.10
+    assert gate.LEGACY_THRESHOLDS['min_ic_margin'] == 3.0
+    assert gate.LEGACY_THRESHOLDS['period_sessions'] == 21
 
 
 # --- calibration --------------------------------------------------------------

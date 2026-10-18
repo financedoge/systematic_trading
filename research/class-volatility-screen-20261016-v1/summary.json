@@ -1,0 +1,3179 @@
+{
+  "acceptance": {
+    "analysis_sha256": "c2b5ff180071868de2f1e30cbbb50e322e66843b60380f5be721ba7644102f59",
+    "assertions": "prior-session features, gates, caps/cash, overlap, class scores/budgets, adoption anchors, security turnover, IC labels/ranks and gate formula",
+    "input_manifest_sha256": "f1f9b039141a9e29a3d39b2392d7737659826c6f115eb5d55b523ab597d38f13",
+    "native_replays": 0,
+    "reason": "All mappings rejected before portfolio replay",
+    "verdict_counts": {
+      "reject": 16
+    },
+    "verified_adoptions": 4485,
+    "verified_daily_target_vectors": 5800,
+    "verified_ic_observations": 2144,
+    "verified_member_scores": 179940,
+    "verified_policies": 16,
+    "verified_window_turnovers": 128,
+    "verifier_sha256": "0fb7cdbd6c41a10e0ae5b50db4bf072ee0594edca714894608713d3a3bb39b4a"
+  },
+  "analysis_sha256": "c2b5ff180071868de2f1e30cbbb50e322e66843b60380f5be721ba7644102f59",
+  "candidates": 52,
+  "daily_sessions": 1450,
+  "exclusions": {
+    "BWX": "Issuer listing date is 2007-10-02 but the provider firstTradeDate and first observation are 2007-10-11.",
+    "CPER": "Unsupported audited observation: ('CPER', '2018-08-23')"
+  },
+  "input_manifest_sha256": "f1f9b039141a9e29a3d39b2392d7737659826c6f115eb5d55b523ab597d38f13",
+  "limitations": [
+    "Current surviving first-wave cohort, not historical universe membership. Class and overlap history is not certified; retrospective diagnostic only.",
+    "Audited adjusted prices are revised histories, not certified publication vintages; audited raw dollar volume is not tape-certified.",
+    "Use the pinned October 12 cutoff for comparability; this is not a claim that current app prices end there.",
+    "BWX listing hold and CPER unsupported raw-volume observation remain excluded; all 52 candidates are accounted for.",
+    "Simple momentum and risk-normalization parameters are declared design choices informed by prior research, not untouched out-of-sample hypotheses.",
+    "The new construction omits FR25 overlays, so its gate is not a matched FR25 performance comparison. Existing SOTA results remain the later replay hurdle.",
+    "Target-change costs omit held-weight drift and fills; old mapping calibration is not assumed to certify new dynamic-policy turnover.",
+    "No NAV, Sharpe, drawdown, achievable execution advantage, alpha discovery or prospective evidence is claimed by this screen.",
+    "No FX, macro, historical spreads or fill inputs are used. Unresolved FX and historical membership block broader promotion claims."
+  ],
+  "monthly_sessions": 70,
+  "protocol_sha256": "0176302c527659a923084dac14b3049577e20ffd01951e7053a417fbce31574d",
+  "published_batch": "0c3238db078c5d28201f8d8ba57e5687a793d80c3b04817d2c2d61c5f1f1b14d",
+  "replay_candidates": [],
+  "results": {
+    "class_raw-0.10": {
+      "arm": "class_raw",
+      "calibration_ic_intervals": {
+        "12": {
+          "family_95_bonferroni": [
+            -0.06766294039090683,
+            0.020318656918085126
+          ],
+          "individual_95": [
+            -0.05212340111198477,
+            0.004857047200317893
+          ],
+          "valid_draws": 20000
+        },
+        "3": {
+          "family_95_bonferroni": [
+            -0.08625505779301361,
+            0.03842677766987698
+          ],
+          "individual_95": [
+            -0.06436945260075755,
+            0.018003985383311497
+          ],
+          "valid_draws": 20000
+        },
+        "6": {
+          "family_95_bonferroni": [
+            -0.08081855488885621,
+            0.030941392413055258
+          ],
+          "individual_95": [
+            -0.05885623403048065,
+            0.011650773022566141
+          ],
+          "valid_draws": 20000
+        }
+      },
+      "gate": {
+        "annual_cost_bps": 233.79460888050912,
+        "annual_turnover": 46.75892177610182,
+        "breakeven_ic": 0.03680699599036603,
+        "candidate_ic": -0.0234999445023909,
+        "cost_bps": 5.0,
+        "cost_ceiling_bps": 44.0,
+        "cost_test": false,
+        "ic_margin": -0.6384640710299163,
+        "margin_test": false,
+        "period_sessions": 21,
+        "reasons": [
+          "annual cost 233.8bp exceeds the 44.0bp ceiling",
+          "IC margin -0.64x is below the required 3.0x against a breakeven IC of 0.0368"
+        ],
+        "sigma": 0.052932556839127176,
+        "status": "reject",
+        "thresholds": {
+          "cost_bps": 5.0,
+          "cost_tolerance": 0.1,
+          "max_annual_cost_bps": 40.0,
+          "min_ic_margin": 3.0,
+          "period_sessions": 21,
+          "version": "turnover-gate-v1"
+        },
+        "version": "turnover-gate-v1"
+      },
+      "policy": "0.10",
+      "windows": {
+        "2021": {
+          "adoption_events": 100,
+          "annual_cost_at_98pct_gross_diagnostic": 251.17923716206312,
+          "annual_cost_bps": 196.35837190843816,
+          "annual_turnover": 39.27167438168763,
+          "ic": -0.04283342725706496,
+          "ic_months": 12,
+          "max_target_weight": 0.23610959889313757,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.7661111111111109,
+          "mean_effective_holdings": 4.5997432837389365,
+          "mean_selected": 4.690476190476191,
+          "missing_ic_months": 0,
+          "total_target_change": 38.81471444706156,
+          "years": 0.9883641341546886
+        },
+        "2022": {
+          "adoption_events": 106,
+          "annual_cost_at_98pct_gross_diagnostic": 294.6399783718587,
+          "annual_cost_bps": 201.31775414650903,
+          "annual_turnover": 40.263550829301806,
+          "ic": 0.028442438368086177,
+          "ic_months": 11,
+          "max_target_weight": 0.23328717448877512,
+          "mean_adopted_bill_weight": 0.05661354581673307,
+          "mean_adopted_gross": 0.669601593625498,
+          "mean_effective_holdings": 3.9580674391994775,
+          "mean_selected": 4.099601593625498,
+          "missing_ic_months": 0,
+          "total_target_change": 40.125756336388385,
+          "years": 0.9965776865160849
+        },
+        "2023": {
+          "adoption_events": 134,
+          "annual_cost_at_98pct_gross_diagnostic": 347.2493182175454,
+          "annual_cost_bps": 314.3763827596178,
+          "annual_turnover": 62.87527655192356,
+          "ic": -0.07456171932904888,
+          "ic_months": 11,
+          "max_target_weight": 0.23983955117678407,
+          "mean_adopted_bill_weight": 0.0006533333333333333,
+          "mean_adopted_gross": 0.8872266666666667,
+          "mean_effective_holdings": 5.25428024458767,
+          "mean_selected": 5.432,
+          "missing_ic_months": 0,
+          "total_target_change": 62.66009764517502,
+          "years": 0.9965776865160849
+        },
+        "2024": {
+          "adoption_events": 100,
+          "annual_cost_at_98pct_gross_diagnostic": 262.63587273982387,
+          "annual_cost_bps": 224.76906040035192,
+          "annual_turnover": 44.953812080070385,
+          "ic": -0.023605325139225485,
+          "ic_months": 11,
+          "max_target_weight": 0.24319560356328518,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.8387037037037037,
+          "mean_effective_holdings": 4.874400625029489,
+          "mean_selected": 5.134920634920635,
+          "missing_ic_months": 0,
+          "total_target_change": 44.923042872623384,
+          "years": 0.999315537303217
+        },
+        "2025": {
+          "adoption_events": 77,
+          "annual_cost_at_98pct_gross_diagnostic": 174.5424774300259,
+          "annual_cost_bps": 147.31385095094186,
+          "annual_turnover": 29.46277019018837,
+          "ic": 0.05140686101295214,
+          "ic_months": 12,
+          "max_target_weight": 0.2243882865098583,
+          "mean_adopted_bill_weight": 0.0013066666666666667,
+          "mean_adopted_gross": 0.8271199999999999,
+          "mean_effective_holdings": 4.930909251295403,
+          "mean_selected": 5.064,
+          "missing_ic_months": 0,
+          "total_target_change": 29.361939354492996,
+          "years": 0.9965776865160849
+        },
+        "2026": {
+          "adoption_events": 39,
+          "annual_cost_at_98pct_gross_diagnostic": 102.41987111784839,
+          "annual_cost_bps": 93.22834422265687,
+          "annual_turnover": 18.645668844531375,
+          "ic": 0.1192786529857101,
+          "ic_months": 9,
+          "max_target_weight": 0.2560692858836749,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.892051282051282,
+          "mean_effective_holdings": 5.094579124612012,
+          "mean_selected": 5.461538461538462,
+          "missing_ic_months": 0,
+          "total_target_change": 14.497932790819743,
+          "years": 0.7775496235455168
+        },
+        "calibration": {
+          "adoption_events": 440,
+          "annual_cost_at_98pct_gross_diagnostic": 289.8995458666399,
+          "annual_cost_bps": 233.79460888050912,
+          "annual_turnover": 46.75892177610182,
+          "ic": -0.0234999445023909,
+          "ic_months": 47,
+          "max_target_weight": 0.24319560356328518,
+          "mean_adopted_bill_weight": 0.014301824212271975,
+          "mean_adopted_gross": 0.7903383084577114,
+          "mean_effective_holdings": 4.671173386463314,
+          "mean_selected": 4.838805970149254,
+          "missing_ic_months": 0,
+          "total_target_change": 186.5236113012467,
+          "years": 3.9890485968514717
+        },
+        "later": {
+          "adoption_events": 116,
+          "annual_cost_at_98pct_gross_diagnostic": 141.36824981663895,
+          "annual_cost_bps": 123.41924731182972,
+          "annual_turnover": 24.683849462365945,
+          "ic": 0.08049477185841984,
+          "ic_months": 21,
+          "max_target_weight": 0.2560692858836749,
+          "mean_adopted_bill_weight": 0.0007340823970037454,
+          "mean_adopted_gross": 0.8555730337078651,
+          "mean_effective_holdings": 5.002629757580208,
+          "mean_selected": 5.238202247191011,
+          "missing_ic_months": 0,
+          "total_target_change": 43.8598721453128,
+          "years": 1.7768651608487338
+        }
+      }
+    },
+    "class_raw-0.40": {
+      "arm": "class_raw",
+      "calibration_ic_intervals": {
+        "12": {
+          "family_95_bonferroni": [
+            -0.06766294039090683,
+            0.020318656918085126
+          ],
+          "individual_95": [
+            -0.05212340111198477,
+            0.004857047200317893
+          ],
+          "valid_draws": 20000
+        },
+        "3": {
+          "family_95_bonferroni": [
+            -0.08625505779301361,
+            0.03842677766987698
+          ],
+          "individual_95": [
+            -0.06436945260075755,
+            0.018003985383311497
+          ],
+          "valid_draws": 20000
+        },
+        "6": {
+          "family_95_bonferroni": [
+            -0.08081855488885621,
+            0.030941392413055258
+          ],
+          "individual_95": [
+            -0.05885623403048065,
+            0.011650773022566141
+          ],
+          "valid_draws": 20000
+        }
+      },
+      "gate": {
+        "annual_cost_bps": 178.51296414429754,
+        "annual_turnover": 35.70259282885951,
+        "breakeven_ic": 0.02810383860838154,
+        "candidate_ic": -0.0234999445023909,
+        "cost_bps": 5.0,
+        "cost_ceiling_bps": 44.0,
+        "cost_test": false,
+        "ic_margin": -0.8361827304040382,
+        "margin_test": false,
+        "period_sessions": 21,
+        "reasons": [
+          "annual cost 178.5bp exceeds the 44.0bp ceiling",
+          "IC margin -0.84x is below the required 3.0x against a breakeven IC of 0.0281"
+        ],
+        "sigma": 0.052932556839127176,
+        "status": "reject",
+        "thresholds": {
+          "cost_bps": 5.0,
+          "cost_tolerance": 0.1,
+          "max_annual_cost_bps": 40.0,
+          "min_ic_margin": 3.0,
+          "period_sessions": 21,
+          "version": "turnover-gate-v1"
+        },
+        "version": "turnover-gate-v1"
+      },
+      "policy": "0.40",
+      "windows": {
+        "2021": {
+          "adoption_events": 52,
+          "annual_cost_at_98pct_gross_diagnostic": 182.95821880259354,
+          "annual_cost_bps": 142.17983273349694,
+          "annual_turnover": 28.435966546699387,
+          "ic": -0.04283342725706496,
+          "ic_months": 12,
+          "max_target_weight": 0.23578798485940455,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.761574074074074,
+          "mean_effective_holdings": 4.575304018965268,
+          "mean_selected": 4.662698412698413,
+          "missing_ic_months": 0,
+          "total_target_change": 28.10508945478023,
+          "years": 0.9883641341546886
+        },
+        "2022": {
+          "adoption_events": 60,
+          "annual_cost_at_98pct_gross_diagnostic": 211.78630975742624,
+          "annual_cost_bps": 144.28469708573664,
+          "annual_turnover": 28.85693941714733,
+          "ic": 0.028442438368086177,
+          "ic_months": 11,
+          "max_target_weight": 0.23328717448877512,
+          "mean_adopted_bill_weight": 0.06507304116865871,
+          "mean_adopted_gross": 0.6676494023904384,
+          "mean_effective_holdings": 3.958171497832472,
+          "mean_selected": 4.087649402390438,
+          "missing_ic_months": 0,
+          "total_target_change": 28.758181924275508,
+          "years": 0.9965776865160849
+        },
+        "2023": {
+          "adoption_events": 77,
+          "annual_cost_at_98pct_gross_diagnostic": 260.33958434445555,
+          "annual_cost_bps": 235.86766341607677,
+          "annual_turnover": 47.173532683215356,
+          "ic": -0.07456171932904888,
+          "ic_months": 11,
+          "max_target_weight": 0.23983955117678407,
+          "mean_adopted_bill_weight": 0.0006533333333333333,
+          "mean_adopted_gross": 0.8878800000000001,
+          "mean_effective_holdings": 5.24991005538382,
+          "mean_selected": 5.436,
+          "missing_ic_months": 0,
+          "total_target_change": 47.01209006622968,
+          "years": 0.9965776865160849
+        },
+        "2024": {
+          "adoption_events": 73,
+          "annual_cost_at_98pct_gross_diagnostic": 224.82062292796087,
+          "annual_cost_bps": 192.8520819692892,
+          "annual_turnover": 38.57041639385784,
+          "ic": -0.023605325139225485,
+          "ic_months": 11,
+          "max_target_weight": 0.24319560356328518,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.8406481481481483,
+          "mean_effective_holdings": 4.882745834404526,
+          "mean_selected": 5.146825396825397,
+          "missing_ic_months": 0,
+          "total_target_change": 38.544016382636855,
+          "years": 0.999315537303217
+        },
+        "2025": {
+          "adoption_events": 57,
+          "annual_cost_at_98pct_gross_diagnostic": 151.67750527604986,
+          "annual_cost_bps": 128.2180511266875,
+          "annual_turnover": 25.643610225337497,
+          "ic": 0.05140686101295214,
+          "ic_months": 12,
+          "max_target_weight": 0.2243882865098583,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.8284266666666668,
+          "mean_effective_holdings": 4.945692298026179,
+          "mean_selected": 5.072,
+          "missing_ic_months": 0,
+          "total_target_change": 25.555849752287063,
+          "years": 0.9965776865160849
+        },
+        "2026": {
+          "adoption_events": 36,
+          "annual_cost_at_98pct_gross_diagnostic": 93.18514055397858,
+          "annual_cost_bps": 84.82237152990358,
+          "annual_turnover": 16.964474305980715,
+          "ic": 0.1192786529857101,
+          "ic_months": 9,
+          "max_target_weight": 0.2560692858836749,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.892051282051282,
+          "mean_effective_holdings": 5.090675697052229,
+          "mean_selected": 5.461538461538462,
+          "missing_ic_months": 0,
+          "total_target_change": 13.190720610262897,
+          "years": 0.7775496235455168
+        },
+        "calibration": {
+          "adoption_events": 262,
+          "annual_cost_at_98pct_gross_diagnostic": 221.62511298952322,
+          "annual_cost_bps": 178.51296414429754,
+          "annual_turnover": 35.70259282885951,
+          "ic": -0.0234999445023909,
+          "ic_months": 47,
+          "max_target_weight": 0.24319560356328518,
+          "mean_adopted_bill_weight": 0.016414593698175786,
+          "mean_adopted_gross": 0.7893631840796019,
+          "mean_effective_holdings": 4.666076739155316,
+          "mean_selected": 4.832835820895522,
+          "missing_ic_months": 0,
+          "total_target_change": 142.41937782792144,
+          "years": 3.9890485968514717
+        },
+        "later": {
+          "adoption_events": 93,
+          "annual_cost_at_98pct_gross_diagnostic": 124.78009784759065,
+          "annual_cost_bps": 109.03069972974868,
+          "annual_turnover": 21.806139945949734,
+          "ic": 0.08049477185841984,
+          "ic_months": 21,
+          "max_target_weight": 0.2560692858836749,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.8563071161048688,
+          "mean_effective_holdings": 5.009224349284785,
+          "mean_selected": 5.242696629213484,
+          "missing_ic_months": 0,
+          "total_target_change": 38.746570362549974,
+          "years": 1.7768651608487338
+        }
+      }
+    },
+    "class_raw-0.80": {
+      "arm": "class_raw",
+      "calibration_ic_intervals": {
+        "12": {
+          "family_95_bonferroni": [
+            -0.06766294039090683,
+            0.020318656918085126
+          ],
+          "individual_95": [
+            -0.05212340111198477,
+            0.004857047200317893
+          ],
+          "valid_draws": 20000
+        },
+        "3": {
+          "family_95_bonferroni": [
+            -0.08625505779301361,
+            0.03842677766987698
+          ],
+          "individual_95": [
+            -0.06436945260075755,
+            0.018003985383311497
+          ],
+          "valid_draws": 20000
+        },
+        "6": {
+          "family_95_bonferroni": [
+            -0.08081855488885621,
+            0.030941392413055258
+          ],
+          "individual_95": [
+            -0.05885623403048065,
+            0.011650773022566141
+          ],
+          "valid_draws": 20000
+        }
+      },
+      "gate": {
+        "annual_cost_bps": 105.45686514864263,
+        "annual_turnover": 21.091373029728526,
+        "breakeven_ic": 0.016602394859611562,
+        "candidate_ic": -0.0234999445023909,
+        "cost_bps": 5.0,
+        "cost_ceiling_bps": 44.0,
+        "cost_test": false,
+        "ic_margin": -1.4154551015744676,
+        "margin_test": false,
+        "period_sessions": 21,
+        "reasons": [
+          "annual cost 105.5bp exceeds the 44.0bp ceiling",
+          "IC margin -1.42x is below the required 3.0x against a breakeven IC of 0.0166"
+        ],
+        "sigma": 0.052932556839127176,
+        "status": "reject",
+        "thresholds": {
+          "cost_bps": 5.0,
+          "cost_tolerance": 0.1,
+          "max_annual_cost_bps": 40.0,
+          "min_ic_margin": 3.0,
+          "period_sessions": 21,
+          "version": "turnover-gate-v1"
+        },
+        "version": "turnover-gate-v1"
+      },
+      "policy": "0.80",
+      "windows": {
+        "2021": {
+          "adoption_events": 26,
+          "annual_cost_at_98pct_gross_diagnostic": 117.46493234868456,
+          "annual_cost_bps": 89.88553354988625,
+          "annual_turnover": 17.97710670997725,
+          "ic": -0.04283342725706496,
+          "ic_months": 12,
+          "max_target_weight": 0.23610959889313757,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.7499074074074072,
+          "mean_effective_holdings": 4.514917041640974,
+          "mean_selected": 4.591269841269841,
+          "missing_ic_months": 0,
+          "total_target_change": 17.767927508013106,
+          "years": 0.9883641341546886
+        },
+        "2022": {
+          "adoption_events": 25,
+          "annual_cost_at_98pct_gross_diagnostic": 103.84876196891389,
+          "annual_cost_bps": 71.92181854819202,
+          "annual_turnover": 14.384363709638405,
+          "ic": 0.028442438368086177,
+          "ic_months": 11,
+          "max_target_weight": 0.23328717448877512,
+          "mean_adopted_bill_weight": 0.04815405046480743,
+          "mean_adopted_gross": 0.6787118193891102,
+          "mean_effective_holdings": 4.012985311658151,
+          "mean_selected": 4.155378486055777,
+          "missing_ic_months": 0,
+          "total_target_change": 14.33513590775737,
+          "years": 0.9965776865160849
+        },
+        "2023": {
+          "adoption_events": 39,
+          "annual_cost_at_98pct_gross_diagnostic": 168.756329905825,
+          "annual_cost_bps": 151.8806969152425,
+          "annual_turnover": 30.3761393830485,
+          "ic": -0.07456171932904888,
+          "ic_months": 11,
+          "max_target_weight": 0.23550270288964198,
+          "mean_adopted_bill_weight": 0.00196,
+          "mean_adopted_gross": 0.8820000000000001,
+          "mean_effective_holdings": 5.211783622614958,
+          "mean_selected": 5.4,
+          "missing_ic_months": 0,
+          "total_target_change": 30.272182711648608,
+          "years": 0.9965776865160849
+        },
+        "2024": {
+          "adoption_events": 30,
+          "annual_cost_at_98pct_gross_diagnostic": 128.90581142325618,
+          "annual_cost_bps": 108.87084734622896,
+          "annual_turnover": 21.77416946924579,
+          "ic": -0.023605325139225485,
+          "ic_months": 11,
+          "max_target_weight": 0.24319560356328518,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.8276851851851853,
+          "mean_effective_holdings": 4.8137058069013765,
+          "mean_selected": 5.067460317460317,
+          "missing_ic_months": 0,
+          "total_target_change": 21.75926586249066,
+          "years": 0.999315537303217
+        },
+        "2025": {
+          "adoption_events": 21,
+          "annual_cost_at_98pct_gross_diagnostic": 70.64595852710436,
+          "annual_cost_bps": 58.918729411605035,
+          "annual_turnover": 11.783745882321007,
+          "ic": 0.05140686101295214,
+          "ic_months": 12,
+          "max_target_weight": 0.2177741120000937,
+          "mean_adopted_bill_weight": 0.0032666666666666664,
+          "mean_adopted_gross": 0.8173199999999999,
+          "mean_effective_holdings": 4.881457962555283,
+          "mean_selected": 5.004,
+          "missing_ic_months": 0,
+          "total_target_change": 11.74341820989691,
+          "years": 0.9965776865160849
+        },
+        "2026": {
+          "adoption_events": 10,
+          "annual_cost_at_98pct_gross_diagnostic": 12.456122964431424,
+          "annual_cost_bps": 11.253095703764115,
+          "annual_turnover": 2.250619140752823,
+          "ic": 0.1192786529857101,
+          "ic_months": 9,
+          "max_target_weight": 0.23945896471971684,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.8853504273504272,
+          "mean_effective_holdings": 5.0586659417681155,
+          "mean_selected": 5.420512820512821,
+          "missing_ic_months": 0,
+          "total_target_change": 1.749968065636692,
+          "years": 0.7775496235455168
+        },
+        "calibration": {
+          "adoption_events": 120,
+          "annual_cost_at_98pct_gross_diagnostic": 131.73915410116328,
+          "annual_cost_bps": 105.45686514864263,
+          "annual_turnover": 21.091373029728526,
+          "ic": -0.0234999445023909,
+          "ic_months": 47,
+          "max_target_weight": 0.24319560356328518,
+          "mean_adopted_bill_weight": 0.012514096185737976,
+          "mean_adopted_gross": 0.7844875621890547,
+          "mean_effective_holdings": 4.637829031554833,
+          "mean_selected": 4.802985074626866,
+          "missing_ic_months": 0,
+          "total_target_change": 84.13451198990956,
+          "years": 3.9890485968514717
+        },
+        "later": {
+          "adoption_events": 31,
+          "annual_cost_at_98pct_gross_diagnostic": 43.925017391641745,
+          "annual_cost_bps": 37.969640501838626,
+          "annual_turnover": 7.593928100367725,
+          "ic": 0.08049477185841984,
+          "ic_months": 21,
+          "max_target_weight": 0.23945896471971684,
+          "mean_adopted_bill_weight": 0.0018352059925093632,
+          "mean_adopted_gross": 0.847131086142322,
+          "mean_effective_holdings": 4.959110897266523,
+          "mean_selected": 5.186516853932584,
+          "missing_ic_months": 0,
+          "total_target_change": 13.493386275533616,
+          "years": 1.7768651608487338
+        }
+      }
+    },
+    "class_raw-monthly": {
+      "arm": "class_raw",
+      "calibration_ic_intervals": {
+        "12": {
+          "family_95_bonferroni": [
+            -0.06766294039090683,
+            0.020318656918085126
+          ],
+          "individual_95": [
+            -0.05212340111198477,
+            0.004857047200317893
+          ],
+          "valid_draws": 20000
+        },
+        "3": {
+          "family_95_bonferroni": [
+            -0.08625505779301361,
+            0.03842677766987698
+          ],
+          "individual_95": [
+            -0.06436945260075755,
+            0.018003985383311497
+          ],
+          "valid_draws": 20000
+        },
+        "6": {
+          "family_95_bonferroni": [
+            -0.08081855488885621,
+            0.030941392413055258
+          ],
+          "individual_95": [
+            -0.05885623403048065,
+            0.011650773022566141
+          ],
+          "valid_draws": 20000
+        }
+      },
+      "gate": {
+        "annual_cost_bps": 48.3192584916026,
+        "annual_turnover": 9.663851698320519,
+        "breakeven_ic": 0.007607047750475928,
+        "candidate_ic": -0.0234999445023909,
+        "cost_bps": 5.0,
+        "cost_ceiling_bps": 44.0,
+        "cost_test": false,
+        "ic_margin": -3.0892332049474316,
+        "margin_test": false,
+        "period_sessions": 21,
+        "reasons": [
+          "annual cost 48.3bp exceeds the 44.0bp ceiling",
+          "IC margin -3.09x is below the required 3.0x against a breakeven IC of 0.0076"
+        ],
+        "sigma": 0.052932556839127176,
+        "status": "reject",
+        "thresholds": {
+          "cost_bps": 5.0,
+          "cost_tolerance": 0.1,
+          "max_annual_cost_bps": 40.0,
+          "min_ic_margin": 3.0,
+          "period_sessions": 21,
+          "version": "turnover-gate-v1"
+        },
+        "version": "turnover-gate-v1"
+      },
+      "policy": "monthly",
+      "windows": {
+        "2021": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 56.67581501172647,
+          "annual_cost_bps": 43.931253435015485,
+          "annual_turnover": 8.786250687003097,
+          "ic": -0.04283342725706496,
+          "ic_months": 12,
+          "max_target_weight": 0.23575659724863957,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.7596296296296295,
+          "mean_effective_holdings": 4.5272957018343085,
+          "mean_selected": 4.650793650793651,
+          "missing_ic_months": 0,
+          "total_target_change": 8.684015052725854,
+          "years": 0.9883641341546886
+        },
+        "2022": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 67.65550325454505,
+          "annual_cost_bps": 44.96889691752962,
+          "annual_turnover": 8.993779383505924,
+          "ic": 0.028442438368086177,
+          "ic_months": 11,
+          "max_target_weight": 0.23193972660566414,
+          "mean_adopted_bill_weight": 0.05401062416998672,
+          "mean_adopted_gross": 0.6513811420982736,
+          "mean_effective_holdings": 3.8494494942648965,
+          "mean_selected": 3.9880478087649402,
+          "missing_ic_months": 0,
+          "total_target_change": 8.962999851050395,
+          "years": 0.9965776865160849
+        },
+        "2023": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 59.696556469136034,
+          "annual_cost_bps": 53.72690082222243,
+          "annual_turnover": 10.745380164444487,
+          "ic": -0.07456171932904888,
+          "ic_months": 11,
+          "max_target_weight": 0.23550270288964198,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.882,
+          "mean_effective_holdings": 5.191462249583336,
+          "mean_selected": 5.4,
+          "missing_ic_months": 0,
+          "total_target_change": 10.708606105017916,
+          "years": 0.9965776865160849
+        },
+        "2024": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 59.2312366927411,
+          "annual_cost_bps": 51.00467604097151,
+          "annual_turnover": 10.200935208194302,
+          "ic": -0.023605325139225485,
+          "ic_months": 11,
+          "max_target_weight": 0.23377912857660121,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.843888888888889,
+          "mean_effective_holdings": 4.9185397378512405,
+          "mean_selected": 5.166666666666667,
+          "missing_ic_months": 0,
+          "total_target_change": 10.193953048571993,
+          "years": 0.999315537303217
+        },
+        "2025": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 42.37395778351988,
+          "annual_cost_bps": 36.04611342118091,
+          "annual_turnover": 7.209222684236183,
+          "ic": 0.05140686101295214,
+          "ic_months": 12,
+          "max_target_weight": 0.2177741120000937,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.8336533333333334,
+          "mean_effective_holdings": 4.981843929121438,
+          "mean_selected": 5.104,
+          "missing_ic_months": 0,
+          "total_target_change": 7.184550464235375,
+          "years": 0.9965776865160849
+        },
+        "2026": {
+          "adoption_events": 10,
+          "annual_cost_at_98pct_gross_diagnostic": 12.456122964431424,
+          "annual_cost_bps": 11.253095703764115,
+          "annual_turnover": 2.250619140752823,
+          "ic": 0.1192786529857101,
+          "ic_months": 9,
+          "max_target_weight": 0.23945896471971684,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.8853504273504272,
+          "mean_effective_holdings": 5.0586659417681155,
+          "mean_selected": 5.420512820512821,
+          "missing_ic_months": 0,
+          "total_target_change": 1.749968065636692,
+          "years": 0.7775496235455168
+        },
+        "calibration": {
+          "adoption_events": 48,
+          "annual_cost_at_98pct_gross_diagnostic": 60.386555171888844,
+          "annual_cost_bps": 48.3192584916026,
+          "annual_turnover": 9.663851698320519,
+          "ic": -0.0234999445023909,
+          "ic_months": 47,
+          "max_target_weight": 0.23575659724863957,
+          "mean_adopted_bill_weight": 0.01348922056384743,
+          "mean_adopted_gross": 0.7841625207296848,
+          "mean_effective_holdings": 4.621321309708539,
+          "mean_selected": 4.800995024875622,
+          "missing_ic_months": 0,
+          "total_target_change": 38.54957405736618,
+          "years": 3.9890485968514717
+        },
+        "later": {
+          "adoption_events": 22,
+          "annual_cost_at_98pct_gross_diagnostic": 28.772871661851486,
+          "annual_cost_bps": 25.141239545730155,
+          "annual_turnover": 5.028247909146031,
+          "ic": 0.08049477185841984,
+          "ic_months": 21,
+          "max_target_weight": 0.23945896471971684,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.8563071161048688,
+          "mean_effective_holdings": 5.015507507696948,
+          "mean_selected": 5.242696629213484,
+          "missing_ic_months": 0,
+          "total_target_change": 8.934518529872072,
+          "years": 1.7768651608487338
+        }
+      }
+    },
+    "class_risk-0.10": {
+      "arm": "class_risk",
+      "calibration_ic_intervals": {
+        "12": {
+          "family_95_bonferroni": [
+            -0.06431875524831832,
+            0.070020561900635
+          ],
+          "individual_95": [
+            -0.044123705944855277,
+            0.04985326480247839
+          ],
+          "valid_draws": 20000
+        },
+        "3": {
+          "family_95_bonferroni": [
+            -0.07245974861971122,
+            0.0796121808793772
+          ],
+          "individual_95": [
+            -0.04818754716462187,
+            0.056136376946296196
+          ],
+          "valid_draws": 20000
+        },
+        "6": {
+          "family_95_bonferroni": [
+            -0.06982826291889692,
+            0.07614442890787
+          ],
+          "individual_95": [
+            -0.0464525274327762,
+            0.05311003665223458
+          ],
+          "valid_draws": 20000
+        }
+      },
+      "gate": {
+        "annual_cost_bps": 225.77412353342544,
+        "annual_turnover": 45.15482470668509,
+        "breakeven_ic": 0.03554430660063002,
+        "candidate_ic": 0.0032819713581454437,
+        "cost_bps": 5.0,
+        "cost_ceiling_bps": 44.0,
+        "cost_test": false,
+        "ic_margin": 0.09233465699643922,
+        "margin_test": false,
+        "period_sessions": 21,
+        "reasons": [
+          "annual cost 225.8bp exceeds the 44.0bp ceiling",
+          "IC margin 0.09x is below the required 3.0x against a breakeven IC of 0.0355"
+        ],
+        "sigma": 0.052932556839127176,
+        "status": "reject",
+        "thresholds": {
+          "cost_bps": 5.0,
+          "cost_tolerance": 0.1,
+          "max_annual_cost_bps": 40.0,
+          "min_ic_margin": 3.0,
+          "period_sessions": 21,
+          "version": "turnover-gate-v1"
+        },
+        "version": "turnover-gate-v1"
+      },
+      "policy": "0.10",
+      "windows": {
+        "2021": {
+          "adoption_events": 114,
+          "annual_cost_at_98pct_gross_diagnostic": 322.6997094929193,
+          "annual_cost_bps": 231.14006969631717,
+          "annual_turnover": 46.228013939263434,
+          "ic": 0.06244802105003059,
+          "ic_months": 12,
+          "max_target_weight": 0.23575659724863957,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.7019444444444444,
+          "mean_effective_holdings": 4.237114010657401,
+          "mean_selected": 4.2976190476190474,
+          "missing_ic_months": 0,
+          "total_target_change": 45.69011097077098,
+          "years": 0.9883641341546886
+        },
+        "2022": {
+          "adoption_events": 89,
+          "annual_cost_at_98pct_gross_diagnostic": 272.06309013934106,
+          "annual_cost_bps": 181.5560462085244,
+          "annual_turnover": 36.31120924170488,
+          "ic": 0.04998567697046618,
+          "ic_months": 11,
+          "max_target_weight": 0.2333202042761568,
+          "mean_adopted_bill_weight": 0.100863213811421,
+          "mean_adopted_gross": 0.6539840637450199,
+          "mean_effective_holdings": 3.8380841868222815,
+          "mean_selected": 4.00398406374502,
+          "missing_ic_months": 0,
+          "total_target_change": 36.18694090069973,
+          "years": 0.9965776865160849
+        },
+        "2023": {
+          "adoption_events": 104,
+          "annual_cost_at_98pct_gross_diagnostic": 310.5080197695532,
+          "annual_cost_bps": 239.29818056906902,
+          "annual_turnover": 47.859636113813806,
+          "ic": -0.03602157159713981,
+          "ic_months": 11,
+          "max_target_weight": 0.22901888157715705,
+          "mean_adopted_bill_weight": 0.1633333333333333,
+          "mean_adopted_gross": 0.7552533333333333,
+          "mean_effective_holdings": 4.536857300658869,
+          "mean_selected": 4.624,
+          "missing_ic_months": 0,
+          "total_target_change": 47.695845435806234,
+          "years": 0.9965776865160849
+        },
+        "2024": {
+          "adoption_events": 104,
+          "annual_cost_at_98pct_gross_diagnostic": 360.7868600479473,
+          "annual_cost_bps": 252.9325870706509,
+          "annual_turnover": 50.58651741413018,
+          "ic": -0.05891651142494274,
+          "ic_months": 11,
+          "max_target_weight": 0.2645161200729276,
+          "mean_adopted_bill_weight": 0.16333333333333333,
+          "mean_adopted_gross": 0.687037037037037,
+          "mean_effective_holdings": 4.075795188270886,
+          "mean_selected": 4.2063492063492065,
+          "missing_ic_months": 0,
+          "total_target_change": 50.55189283000004,
+          "years": 0.999315537303217
+        },
+        "2025": {
+          "adoption_events": 88,
+          "annual_cost_at_98pct_gross_diagnostic": 290.85902650684767,
+          "annual_cost_bps": 194.099923688903,
+          "annual_turnover": 38.8199847377806,
+          "ic": -0.12266150474097903,
+          "ic_months": 12,
+          "max_target_weight": 0.26739854567858223,
+          "mean_adopted_bill_weight": 0.1633333333333333,
+          "mean_adopted_gross": 0.6539866666666667,
+          "mean_effective_holdings": 3.8210763222533384,
+          "mean_selected": 4.004,
+          "missing_ic_months": 0,
+          "total_target_change": 38.687130580567114,
+          "years": 0.9965776865160849
+        },
+        "2026": {
+          "adoption_events": 70,
+          "annual_cost_at_98pct_gross_diagnostic": 295.6384213526645,
+          "annual_cost_bps": 211.24249594087829,
+          "annual_turnover": 42.24849918817566,
+          "ic": -0.026469720412859412,
+          "ic_months": 9,
+          "max_target_weight": 0.2651664779737292,
+          "mean_adopted_bill_weight": 0.16333333333333333,
+          "mean_adopted_gross": 0.7002393162393163,
+          "mean_effective_holdings": 4.081598024906931,
+          "mean_selected": 4.287179487179487,
+          "missing_ic_months": 0,
+          "total_target_change": 32.85030463912906,
+          "years": 0.7775496235455168
+        },
+        "calibration": {
+          "adoption_events": 411,
+          "annual_cost_at_98pct_gross_diagnostic": 316.3145829243856,
+          "annual_cost_bps": 225.77412353342544,
+          "annual_turnover": 45.15482470668509,
+          "ic": 0.0032819713581454437,
+          "ic_months": 47,
+          "max_target_weight": 0.2645161200729276,
+          "mean_adopted_bill_weight": 0.10677611940298505,
+          "mean_adopted_gross": 0.6994892205638473,
+          "mean_effective_holdings": 4.171568730534367,
+          "mean_selected": 4.282587064676617,
+          "missing_ic_months": 0,
+          "total_target_change": 180.12479013727634,
+          "years": 3.9890485968514717
+        },
+        "later": {
+          "adoption_events": 158,
+          "annual_cost_at_98pct_gross_diagnostic": 292.58428959994615,
+          "annual_cost_bps": 201.30237453000038,
+          "annual_turnover": 40.26047490600008,
+          "ic": -0.08143645431464207,
+          "ic_months": 21,
+          "max_target_weight": 0.26739854567858223,
+          "mean_adopted_bill_weight": 0.1633333333333333,
+          "mean_adopted_gross": 0.67425468164794,
+          "mean_effective_holdings": 3.935237517798171,
+          "mean_selected": 4.128089887640449,
+          "missing_ic_months": 0,
+          "total_target_change": 71.53743521969623,
+          "years": 1.7768651608487338
+        }
+      }
+    },
+    "class_risk-0.40": {
+      "arm": "class_risk",
+      "calibration_ic_intervals": {
+        "12": {
+          "family_95_bonferroni": [
+            -0.06431875524831832,
+            0.070020561900635
+          ],
+          "individual_95": [
+            -0.044123705944855277,
+            0.04985326480247839
+          ],
+          "valid_draws": 20000
+        },
+        "3": {
+          "family_95_bonferroni": [
+            -0.07245974861971122,
+            0.0796121808793772
+          ],
+          "individual_95": [
+            -0.04818754716462187,
+            0.056136376946296196
+          ],
+          "valid_draws": 20000
+        },
+        "6": {
+          "family_95_bonferroni": [
+            -0.06982826291889692,
+            0.07614442890787
+          ],
+          "individual_95": [
+            -0.0464525274327762,
+            0.05311003665223458
+          ],
+          "valid_draws": 20000
+        }
+      },
+      "gate": {
+        "annual_cost_bps": 173.01987003980273,
+        "annual_turnover": 34.603974007960545,
+        "breakeven_ic": 0.02723904410500538,
+        "candidate_ic": 0.0032819713581454437,
+        "cost_bps": 5.0,
+        "cost_ceiling_bps": 44.0,
+        "cost_test": false,
+        "ic_margin": 0.12048775814208387,
+        "margin_test": false,
+        "period_sessions": 21,
+        "reasons": [
+          "annual cost 173.0bp exceeds the 44.0bp ceiling",
+          "IC margin 0.12x is below the required 3.0x against a breakeven IC of 0.0272"
+        ],
+        "sigma": 0.052932556839127176,
+        "status": "reject",
+        "thresholds": {
+          "cost_bps": 5.0,
+          "cost_tolerance": 0.1,
+          "max_annual_cost_bps": 40.0,
+          "min_ic_margin": 3.0,
+          "period_sessions": 21,
+          "version": "turnover-gate-v1"
+        },
+        "version": "turnover-gate-v1"
+      },
+      "policy": "0.40",
+      "windows": {
+        "2021": {
+          "adoption_events": 57,
+          "annual_cost_at_98pct_gross_diagnostic": 216.12931010886138,
+          "annual_cost_bps": 153.5204226566912,
+          "annual_turnover": 30.704084531338243,
+          "ic": 0.06244802105003059,
+          "ic_months": 12,
+          "max_target_weight": 0.23575659724863957,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.696111111111111,
+          "mean_effective_holdings": 4.200269759586968,
+          "mean_selected": 4.261904761904762,
+          "missing_ic_months": 0,
+          "total_target_change": 30.34681592282849,
+          "years": 0.9883641341546886
+        },
+        "2022": {
+          "adoption_events": 53,
+          "annual_cost_at_98pct_gross_diagnostic": 200.9230796223756,
+          "annual_cost_bps": 135.28287034335253,
+          "annual_turnover": 27.056574068670507,
+          "ic": 0.04998567697046618,
+          "ic_months": 11,
+          "max_target_weight": 0.2333202042761568,
+          "mean_adopted_bill_weight": 0.0950066401062417,
+          "mean_adopted_gross": 0.6598406374501993,
+          "mean_effective_holdings": 3.8788171640647704,
+          "mean_selected": 4.039840637450199,
+          "missing_ic_months": 0,
+          "total_target_change": 26.96397799040675,
+          "years": 0.9965776865160849
+        },
+        "2023": {
+          "adoption_events": 74,
+          "annual_cost_at_98pct_gross_diagnostic": 255.50436440224513,
+          "annual_cost_bps": 194.6943256745108,
+          "annual_turnover": 38.93886513490216,
+          "ic": -0.03602157159713981,
+          "ic_months": 11,
+          "max_target_weight": 0.2284824346559646,
+          "mean_adopted_bill_weight": 0.1633333333333333,
+          "mean_adopted_gross": 0.74676,
+          "mean_effective_holdings": 4.487885670035999,
+          "mean_selected": 4.572,
+          "missing_ic_months": 0,
+          "total_target_change": 38.80560413170263,
+          "years": 0.9965776865160849
+        },
+        "2024": {
+          "adoption_events": 71,
+          "annual_cost_at_98pct_gross_diagnostic": 299.18520708777356,
+          "annual_cost_bps": 209.74624306417985,
+          "annual_turnover": 41.94924861283597,
+          "ic": -0.05891651142494274,
+          "ic_months": 11,
+          "max_target_weight": 0.2645161200729276,
+          "mean_adopted_bill_weight": 0.16333333333333333,
+          "mean_adopted_gross": 0.687037037037037,
+          "mean_effective_holdings": 4.0571077455348785,
+          "mean_selected": 4.2063492063492065,
+          "missing_ic_months": 0,
+          "total_target_change": 41.92053591700241,
+          "years": 0.999315537303217
+        },
+        "2025": {
+          "adoption_events": 67,
+          "annual_cost_at_98pct_gross_diagnostic": 254.91423918084809,
+          "annual_cost_bps": 169.4329976422037,
+          "annual_turnover": 33.88659952844074,
+          "ic": -0.12266150474097903,
+          "ic_months": 12,
+          "max_target_weight": 0.26618855439633615,
+          "mean_adopted_bill_weight": 0.1633333333333333,
+          "mean_adopted_gross": 0.6513733333333334,
+          "mean_effective_holdings": 3.797521408715899,
+          "mean_selected": 3.988,
+          "missing_ic_months": 0,
+          "total_target_change": 33.77062896195053,
+          "years": 0.9965776865160849
+        },
+        "2026": {
+          "adoption_events": 52,
+          "annual_cost_at_98pct_gross_diagnostic": 248.01700079053543,
+          "annual_cost_bps": 177.21556637682707,
+          "annual_turnover": 35.44311327536541,
+          "ic": -0.026469720412859412,
+          "ic_months": 9,
+          "max_target_weight": 0.2651664779737292,
+          "mean_adopted_bill_weight": 0.16333333333333333,
+          "mean_adopted_gross": 0.7002393162393163,
+          "mean_effective_holdings": 4.092625233351019,
+          "mean_selected": 4.287179487179487,
+          "missing_ic_months": 0,
+          "total_target_change": 27.558779384541488,
+          "years": 0.7775496235455168
+        },
+        "calibration": {
+          "adoption_events": 255,
+          "annual_cost_at_98pct_gross_diagnostic": 243.13908560708703,
+          "annual_cost_bps": 173.01987003980273,
+          "annual_turnover": 34.603974007960545,
+          "ic": 0.0032819713581454437,
+          "ic_months": 47,
+          "max_target_weight": 0.2645161200729276,
+          "mean_adopted_bill_weight": 0.10531343283582087,
+          "mean_adopted_gross": 0.6973764510779435,
+          "mean_effective_holdings": 4.155635479582052,
+          "mean_selected": 4.269651741293532,
+          "missing_ic_months": 0,
+          "total_target_change": 138.0369339619398,
+          "years": 3.9890485968514717
+        },
+        "later": {
+          "adoption_events": 119,
+          "annual_cost_at_98pct_gross_diagnostic": 251.38137856194513,
+          "annual_cost_bps": 172.57755314758256,
+          "annual_turnover": 34.51551062951651,
+          "ic": -0.08143645431464207,
+          "ic_months": 21,
+          "max_target_weight": 0.26618855439633615,
+          "mean_adopted_bill_weight": 0.1633333333333333,
+          "mean_adopted_gross": 0.6727865168539325,
+          "mean_effective_holdings": 3.926836567825671,
+          "mean_selected": 4.119101123595506,
+          "missing_ic_months": 0,
+          "total_target_change": 61.329408346492045,
+          "years": 1.7768651608487338
+        }
+      }
+    },
+    "class_risk-0.80": {
+      "arm": "class_risk",
+      "calibration_ic_intervals": {
+        "12": {
+          "family_95_bonferroni": [
+            -0.06431875524831832,
+            0.070020561900635
+          ],
+          "individual_95": [
+            -0.044123705944855277,
+            0.04985326480247839
+          ],
+          "valid_draws": 20000
+        },
+        "3": {
+          "family_95_bonferroni": [
+            -0.07245974861971122,
+            0.0796121808793772
+          ],
+          "individual_95": [
+            -0.04818754716462187,
+            0.056136376946296196
+          ],
+          "valid_draws": 20000
+        },
+        "6": {
+          "family_95_bonferroni": [
+            -0.06982826291889692,
+            0.07614442890787
+          ],
+          "individual_95": [
+            -0.0464525274327762,
+            0.05311003665223458
+          ],
+          "valid_draws": 20000
+        }
+      },
+      "gate": {
+        "annual_cost_bps": 78.84091736471026,
+        "annual_turnover": 15.768183472942052,
+        "breakeven_ic": 0.012412165289931089,
+        "candidate_ic": 0.0032819713581454437,
+        "cost_bps": 5.0,
+        "cost_ceiling_bps": 44.0,
+        "cost_test": false,
+        "ic_margin": 0.2644156987506299,
+        "margin_test": false,
+        "period_sessions": 21,
+        "reasons": [
+          "annual cost 78.8bp exceeds the 44.0bp ceiling",
+          "IC margin 0.26x is below the required 3.0x against a breakeven IC of 0.0124"
+        ],
+        "sigma": 0.052932556839127176,
+        "status": "reject",
+        "thresholds": {
+          "cost_bps": 5.0,
+          "cost_tolerance": 0.1,
+          "max_annual_cost_bps": 40.0,
+          "min_ic_margin": 3.0,
+          "period_sessions": 21,
+          "version": "turnover-gate-v1"
+        },
+        "version": "turnover-gate-v1"
+      },
+      "policy": "0.80",
+      "windows": {
+        "2021": {
+          "adoption_events": 20,
+          "annual_cost_at_98pct_gross_diagnostic": 96.99323266728916,
+          "annual_cost_bps": 69.98651907408231,
+          "annual_turnover": 13.997303814816462,
+          "ic": 0.06244802105003059,
+          "ic_months": 12,
+          "max_target_weight": 0.23575659724863957,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.7071296296296294,
+          "mean_effective_holdings": 4.245930866692679,
+          "mean_selected": 4.329365079365079,
+          "missing_ic_months": 0,
+          "total_target_change": 13.834433065431192,
+          "years": 0.9883641341546886
+        },
+        "2022": {
+          "adoption_events": 26,
+          "annual_cost_at_98pct_gross_diagnostic": 114.08655509068623,
+          "annual_cost_bps": 73.40628943085986,
+          "annual_turnover": 14.681257886171972,
+          "ic": 0.04998567697046618,
+          "ic_months": 11,
+          "max_target_weight": 0.2333202042761568,
+          "mean_adopted_bill_weight": 0.08719787516600266,
+          "mean_adopted_gross": 0.6305577689243027,
+          "mean_effective_holdings": 3.6837932377410265,
+          "mean_selected": 3.860557768924303,
+          "missing_ic_months": 0,
+          "total_target_change": 14.63101401934729,
+          "years": 0.9965776865160849
+        },
+        "2023": {
+          "adoption_events": 22,
+          "annual_cost_at_98pct_gross_diagnostic": 91.56829205476492,
+          "annual_cost_bps": 70.93490357842454,
+          "annual_turnover": 14.186980715684909,
+          "ic": -0.03602157159713981,
+          "ic_months": 11,
+          "max_target_weight": 0.2201386100560551,
+          "mean_adopted_bill_weight": 0.1633333333333333,
+          "mean_adopted_gross": 0.7591733333333331,
+          "mean_effective_holdings": 4.559668232203925,
+          "mean_selected": 4.648,
+          "missing_ic_months": 0,
+          "total_target_change": 14.138428420285576,
+          "years": 0.9965776865160849
+        },
+        "2024": {
+          "adoption_events": 28,
+          "annual_cost_at_98pct_gross_diagnostic": 144.17293486758092,
+          "annual_cost_bps": 101.55038071030005,
+          "annual_turnover": 20.31007614206001,
+          "ic": -0.05891651142494274,
+          "ic_months": 11,
+          "max_target_weight": 0.26047633615012267,
+          "mean_adopted_bill_weight": 0.16333333333333333,
+          "mean_adopted_gross": 0.6902777777777778,
+          "mean_effective_holdings": 4.0494740087061185,
+          "mean_selected": 4.226190476190476,
+          "missing_ic_months": 0,
+          "total_target_change": 20.296174652571946,
+          "years": 0.999315537303217
+        },
+        "2025": {
+          "adoption_events": 18,
+          "annual_cost_at_98pct_gross_diagnostic": 75.73989829549605,
+          "annual_cost_bps": 49.53389348525442,
+          "annual_turnover": 9.906778697050884,
+          "ic": -0.12266150474097903,
+          "ic_months": 12,
+          "max_target_weight": 0.26618855439633615,
+          "mean_adopted_bill_weight": 0.1633333333333333,
+          "mean_adopted_gross": 0.64092,
+          "mean_effective_holdings": 3.773260984310664,
+          "mean_selected": 3.924,
+          "missing_ic_months": 0,
+          "total_target_change": 9.872874594733803,
+          "years": 0.9965776865160849
+        },
+        "2026": {
+          "adoption_events": 18,
+          "annual_cost_at_98pct_gross_diagnostic": 123.7138814757822,
+          "annual_cost_bps": 88.1857924365832,
+          "annual_turnover": 17.63715848731664,
+          "ic": -0.026469720412859412,
+          "ic_months": 9,
+          "max_target_weight": 0.2651664779737292,
+          "mean_adopted_bill_weight": 0.16333333333333333,
+          "mean_adopted_gross": 0.6985641025641025,
+          "mean_effective_holdings": 4.049422048219534,
+          "mean_selected": 4.276923076923077,
+          "missing_ic_months": 0,
+          "total_target_change": 13.71376594222567,
+          "years": 0.7775496235455168
+        },
+        "calibration": {
+          "adoption_events": 96,
+          "annual_cost_at_98pct_gross_diagnostic": 110.89590196155889,
+          "annual_cost_bps": 78.84091736471026,
+          "annual_turnover": 15.768183472942052,
+          "ic": 0.0032819713581454437,
+          "ic_months": 47,
+          "max_target_weight": 0.26047633615012267,
+          "mean_adopted_bill_weight": 0.10336318407960197,
+          "mean_adopted_gross": 0.6967263681592039,
+          "mean_effective_holdings": 4.134319591367638,
+          "mean_selected": 4.2656716417910445,
+          "missing_ic_months": 0,
+          "total_target_change": 62.90005015763606,
+          "years": 3.9890485968514717
+        },
+        "later": {
+          "adoption_events": 36,
+          "annual_cost_at_98pct_gross_diagnostic": 97.63741045920314,
+          "annual_cost_bps": 66.37149812114369,
+          "annual_turnover": 13.274299624228737,
+          "ic": -0.08143645431464207,
+          "ic_months": 21,
+          "max_target_weight": 0.26618855439633615,
+          "mean_adopted_bill_weight": 0.1633333333333333,
+          "mean_adopted_gross": 0.6661797752808988,
+          "mean_effective_holdings": 3.8942753831021917,
+          "mean_selected": 4.078651685393258,
+          "missing_ic_months": 0,
+          "total_target_change": 23.586640536959482,
+          "years": 1.7768651608487338
+        }
+      }
+    },
+    "class_risk-monthly": {
+      "arm": "class_risk",
+      "calibration_ic_intervals": {
+        "12": {
+          "family_95_bonferroni": [
+            -0.06431875524831832,
+            0.070020561900635
+          ],
+          "individual_95": [
+            -0.044123705944855277,
+            0.04985326480247839
+          ],
+          "valid_draws": 20000
+        },
+        "3": {
+          "family_95_bonferroni": [
+            -0.07245974861971122,
+            0.0796121808793772
+          ],
+          "individual_95": [
+            -0.04818754716462187,
+            0.056136376946296196
+          ],
+          "valid_draws": 20000
+        },
+        "6": {
+          "family_95_bonferroni": [
+            -0.06982826291889692,
+            0.07614442890787
+          ],
+          "individual_95": [
+            -0.0464525274327762,
+            0.05311003665223458
+          ],
+          "valid_draws": 20000
+        }
+      },
+      "gate": {
+        "annual_cost_bps": 38.15166064648089,
+        "annual_turnover": 7.630332129296178,
+        "breakeven_ic": 0.0060063319131474485,
+        "candidate_ic": 0.0032819713581454437,
+        "cost_bps": 5.0,
+        "cost_ceiling_bps": 44.0,
+        "cost_test": true,
+        "ic_margin": 0.5464185805252343,
+        "margin_test": false,
+        "period_sessions": 21,
+        "reasons": [
+          "IC margin 0.55x is below the required 3.0x against a breakeven IC of 0.0060"
+        ],
+        "sigma": 0.052932556839127176,
+        "status": "reject",
+        "thresholds": {
+          "cost_bps": 5.0,
+          "cost_tolerance": 0.1,
+          "max_annual_cost_bps": 40.0,
+          "min_ic_margin": 3.0,
+          "period_sessions": 21,
+          "version": "turnover-gate-v1"
+        },
+        "version": "turnover-gate-v1"
+      },
+      "policy": "monthly",
+      "windows": {
+        "2021": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 49.57990544780861,
+          "annual_cost_bps": 36.46352834521374,
+          "annual_turnover": 7.292705669042747,
+          "ic": 0.06244802105003059,
+          "ic_months": 12,
+          "max_target_weight": 0.23575659724863957,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.7207407407407407,
+          "mean_effective_holdings": 4.311461287941351,
+          "mean_selected": 4.412698412698413,
+          "missing_ic_months": 0,
+          "total_target_change": 7.207848724228424,
+          "years": 0.9883641341546886
+        },
+        "2022": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 56.41548824834885,
+          "annual_cost_bps": 35.250315034326874,
+          "annual_turnover": 7.050063006865375,
+          "ic": 0.04998567697046618,
+          "ic_months": 11,
+          "max_target_weight": 0.23193972660566414,
+          "mean_adopted_bill_weight": 0.08264276228419656,
+          "mean_adopted_gross": 0.6123373173970783,
+          "mean_effective_holdings": 3.5934863065619873,
+          "mean_selected": 3.749003984063745,
+          "missing_ic_months": 0,
+          "total_target_change": 7.025935481174528,
+          "years": 0.9965776865160849
+        },
+        "2023": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 47.27435924470617,
+          "annual_cost_bps": 37.409776282310816,
+          "annual_turnover": 7.481955256462164,
+          "ic": -0.03602157159713981,
+          "ic_months": 11,
+          "max_target_weight": 0.2201386100560551,
+          "mean_adopted_bill_weight": 0.1633333333333333,
+          "mean_adopted_gross": 0.7755066666666667,
+          "mean_effective_holdings": 4.659142244161974,
+          "mean_selected": 4.748,
+          "missing_ic_months": 0,
+          "total_target_change": 7.456349660101924,
+          "years": 0.9965776865160849
+        },
+        "2024": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 61.9058862748363,
+          "annual_cost_bps": 43.76811668505292,
+          "annual_turnover": 8.753623337010584,
+          "ic": -0.05891651142494274,
+          "ic_months": 11,
+          "max_target_weight": 0.25902519179016414,
+          "mean_adopted_bill_weight": 0.16333333333333333,
+          "mean_adopted_gross": 0.6928703703703704,
+          "mean_effective_holdings": 4.073817769844429,
+          "mean_selected": 4.242063492063492,
+          "missing_ic_months": 0,
+          "total_target_change": 8.747631808374711,
+          "years": 0.999315537303217
+        },
+        "2025": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 46.89758656319522,
+          "annual_cost_bps": 31.3588528819232,
+          "annual_turnover": 6.2717705763846405,
+          "ic": -0.12266150474097903,
+          "ic_months": 12,
+          "max_target_weight": 0.26618855439633615,
+          "mean_adopted_bill_weight": 0.1633333333333333,
+          "mean_adopted_gross": 0.6552933333333333,
+          "mean_effective_holdings": 3.8139644609062047,
+          "mean_selected": 4.012,
+          "missing_ic_months": 0,
+          "total_target_change": 6.250306611373057,
+          "years": 0.9965776865160849
+        },
+        "2026": {
+          "adoption_events": 10,
+          "annual_cost_at_98pct_gross_diagnostic": 62.210631509550325,
+          "annual_cost_bps": 44.18549981575754,
+          "annual_turnover": 8.837099963151507,
+          "ic": -0.026469720412859412,
+          "ic_months": 9,
+          "max_target_weight": 0.2651664779737292,
+          "mean_adopted_bill_weight": 0.16333333333333333,
+          "mean_adopted_gross": 0.696051282051282,
+          "mean_effective_holdings": 4.026942748524525,
+          "mean_selected": 4.2615384615384615,
+          "missing_ic_months": 0,
+          "total_target_change": 6.871283749582555,
+          "years": 0.7775496235455168
+        },
+        "calibration": {
+          "adoption_events": 48,
+          "annual_cost_at_98pct_gross_diagnostic": 53.389304641048916,
+          "annual_cost_bps": 38.15166064648089,
+          "annual_turnover": 7.630332129296178,
+          "ic": 0.0032819713581454437,
+          "ic_months": 47,
+          "max_target_weight": 0.25902519179016414,
+          "mean_adopted_bill_weight": 0.10222553897180761,
+          "mean_adopted_gross": 0.7003018242122719,
+          "mean_effective_holdings": 4.159045717959771,
+          "mean_selected": 4.287562189054726,
+          "missing_ic_months": 0,
+          "total_target_change": 30.43776567387962,
+          "years": 3.9890485968514717
+        },
+        "later": {
+          "adoption_events": 22,
+          "annual_cost_at_98pct_gross_diagnostic": 53.75438997600214,
+          "annual_cost_bps": 36.92342742171832,
+          "annual_turnover": 7.384685484343665,
+          "ic": -0.08143645431464207,
+          "ic_months": 21,
+          "max_target_weight": 0.26618855439633615,
+          "mean_adopted_bill_weight": 0.1633333333333333,
+          "mean_adopted_gross": 0.6731535580524344,
+          "mean_effective_holdings": 3.907292025143446,
+          "mean_selected": 4.121348314606742,
+          "missing_ic_months": 0,
+          "total_target_change": 13.121590360955615,
+          "years": 1.7768651608487338
+        }
+      }
+    },
+    "pooled_raw-0.10": {
+      "arm": "pooled_raw",
+      "calibration_ic_intervals": {
+        "12": {
+          "family_95_bonferroni": [
+            -0.0781781444695625,
+            0.015507915041644461
+          ],
+          "individual_95": [
+            -0.06093554002082209,
+            -0.001934673623218721
+          ],
+          "valid_draws": 20000
+        },
+        "3": {
+          "family_95_bonferroni": [
+            -0.09904502753960774,
+            0.03280840825556383
+          ],
+          "individual_95": [
+            -0.0762384301802429,
+            0.011942574627387204
+          ],
+          "valid_draws": 20000
+        },
+        "6": {
+          "family_95_bonferroni": [
+            -0.08746171138226905,
+            0.02515573412703899
+          ],
+          "individual_95": [
+            -0.06822928786262972,
+            0.004837593076969117
+          ],
+          "valid_draws": 20000
+        }
+      },
+      "gate": {
+        "annual_cost_bps": 336.53730147869277,
+        "annual_turnover": 67.30746029573855,
+        "breakeven_ic": 0.0529820904145216,
+        "candidate_ic": -0.03159588756854876,
+        "cost_bps": 5.0,
+        "cost_ceiling_bps": 44.0,
+        "cost_test": false,
+        "ic_margin": -0.5963503387908756,
+        "margin_test": false,
+        "period_sessions": 21,
+        "reasons": [
+          "annual cost 336.5bp exceeds the 44.0bp ceiling",
+          "IC margin -0.60x is below the required 3.0x against a breakeven IC of 0.0530"
+        ],
+        "sigma": 0.052932556839127176,
+        "status": "reject",
+        "thresholds": {
+          "cost_bps": 5.0,
+          "cost_tolerance": 0.1,
+          "max_annual_cost_bps": 40.0,
+          "min_ic_margin": 3.0,
+          "period_sessions": 21,
+          "version": "turnover-gate-v1"
+        },
+        "version": "turnover-gate-v1"
+      },
+      "policy": "0.10",
+      "windows": {
+        "2021": {
+          "adoption_events": 139,
+          "annual_cost_at_98pct_gross_diagnostic": 323.09347337050434,
+          "annual_cost_bps": 323.0934733705044,
+          "annual_turnover": 64.61869467410088,
+          "ic": -0.030763934517128968,
+          "ic_months": 12,
+          "max_target_weight": 0.38683775573187446,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9800000000000001,
+          "mean_effective_holdings": 5.594984433189292,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 63.866800211773906,
+          "years": 0.9883641341546886
+        },
+        "2022": {
+          "adoption_events": 96,
+          "annual_cost_at_98pct_gross_diagnostic": 353.83597049687097,
+          "annual_cost_bps": 286.43025057682684,
+          "annual_turnover": 57.28605011536536,
+          "ic": -0.01415699366655882,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.14325538256914885,
+          "mean_adopted_gross": 0.7933100899015935,
+          "mean_effective_holdings": 3.9836533799397063,
+          "mean_selected": 5.294820717131474,
+          "missing_ic_months": 0,
+          "total_target_change": 57.089999293615314,
+          "years": 0.9965776865160849
+        },
+        "2023": {
+          "adoption_events": 156,
+          "annual_cost_at_98pct_gross_diagnostic": 367.4103982843744,
+          "annual_cost_bps": 364.6906336956965,
+          "annual_turnover": 72.93812673913929,
+          "ic": -0.058540223132757196,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.0072,
+          "mean_adopted_gross": 0.9727455256863977,
+          "mean_effective_holdings": 5.524634038662919,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 72.68850960450843,
+          "years": 0.9965776865160849
+        },
+        "2024": {
+          "adoption_events": 159,
+          "annual_cost_at_98pct_gross_diagnostic": 374.4934314863163,
+          "annual_cost_bps": 374.49343148631635,
+          "annual_turnover": 74.89868629726327,
+          "ic": -0.02916467884687002,
+          "ic_months": 11,
+          "max_target_weight": 0.3408602764599026,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9800000000000001,
+          "mean_effective_holdings": 5.417853479599238,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 74.84742094045474,
+          "years": 0.999315537303217
+        },
+        "2025": {
+          "adoption_events": 106,
+          "annual_cost_at_98pct_gross_diagnostic": 227.88017386965498,
+          "annual_cost_bps": 223.02920045578244,
+          "annual_turnover": 44.60584009115649,
+          "ic": 0.07355183013241445,
+          "ic_months": 12,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.0216,
+          "mean_adopted_gross": 0.9591383608987665,
+          "mean_effective_holdings": 5.4003337547570265,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 44.45318492315116,
+          "years": 0.9965776865160849
+        },
+        "2026": {
+          "adoption_events": 68,
+          "annual_cost_at_98pct_gross_diagnostic": 215.93392565101658,
+          "annual_cost_bps": 215.93392565101666,
+          "annual_turnover": 43.18678513020333,
+          "ic": 0.005833070424103597,
+          "ic_months": 9,
+          "max_target_weight": 0.33797798361833237,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9800000000000004,
+          "mean_effective_holdings": 5.00678896986207,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 33.579868520130724,
+          "years": 0.7775496235455168
+        },
+        "calibration": {
+          "adoption_events": 550,
+          "annual_cost_at_98pct_gross_diagnostic": 354.03327661761654,
+          "annual_cost_bps": 336.53730147869277,
+          "annual_turnover": 67.30746029573855,
+          "ic": -0.03159588756854876,
+          "ic_months": 47,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.03756925475110086,
+          "mean_adopted_gross": 0.9315693671511439,
+          "mean_effective_holdings": 5.130637474679905,
+          "mean_selected": 5.823880597014925,
+          "missing_ic_months": 0,
+          "total_target_change": 268.492730050352,
+          "years": 3.9890485968514717
+        },
+        "later": {
+          "adoption_events": 174,
+          "annual_cost_at_98pct_gross_diagnostic": 222.23847967885985,
+          "annual_cost_bps": 219.58068389952763,
+          "annual_turnover": 43.91613677990553,
+          "ic": 0.04452950454313837,
+          "ic_months": 21,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.012134831460674157,
+          "mean_adopted_gross": 0.968279978033015,
+          "mean_effective_holdings": 5.2278815456457535,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 78.03305344328183,
+          "years": 1.7768651608487338
+        }
+      }
+    },
+    "pooled_raw-0.40": {
+      "arm": "pooled_raw",
+      "calibration_ic_intervals": {
+        "12": {
+          "family_95_bonferroni": [
+            -0.0781781444695625,
+            0.015507915041644461
+          ],
+          "individual_95": [
+            -0.06093554002082209,
+            -0.001934673623218721
+          ],
+          "valid_draws": 20000
+        },
+        "3": {
+          "family_95_bonferroni": [
+            -0.09904502753960774,
+            0.03280840825556383
+          ],
+          "individual_95": [
+            -0.0762384301802429,
+            0.011942574627387204
+          ],
+          "valid_draws": 20000
+        },
+        "6": {
+          "family_95_bonferroni": [
+            -0.08746171138226905,
+            0.02515573412703899
+          ],
+          "individual_95": [
+            -0.06822928786262972,
+            0.004837593076969117
+          ],
+          "valid_draws": 20000
+        }
+      },
+      "gate": {
+        "annual_cost_bps": 276.6490847896418,
+        "annual_turnover": 55.32981695792836,
+        "breakeven_ic": 0.04355370640644262,
+        "candidate_ic": -0.03159588756854876,
+        "cost_bps": 5.0,
+        "cost_ceiling_bps": 44.0,
+        "cost_test": false,
+        "ic_margin": -0.7254465848140764,
+        "margin_test": false,
+        "period_sessions": 21,
+        "reasons": [
+          "annual cost 276.6bp exceeds the 44.0bp ceiling",
+          "IC margin -0.73x is below the required 3.0x against a breakeven IC of 0.0436"
+        ],
+        "sigma": 0.052932556839127176,
+        "status": "reject",
+        "thresholds": {
+          "cost_bps": 5.0,
+          "cost_tolerance": 0.1,
+          "max_annual_cost_bps": 40.0,
+          "min_ic_margin": 3.0,
+          "period_sessions": 21,
+          "version": "turnover-gate-v1"
+        },
+        "version": "turnover-gate-v1"
+      },
+      "policy": "0.40",
+      "windows": {
+        "2021": {
+          "adoption_events": 88,
+          "annual_cost_at_98pct_gross_diagnostic": 257.1460536321835,
+          "annual_cost_bps": 257.1460536321835,
+          "annual_turnover": 51.4292107264367,
+          "ic": -0.030763934517128968,
+          "ic_months": 12,
+          "max_target_weight": 0.38683775573187446,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9800000000000001,
+          "mean_effective_holdings": 5.6012415448697395,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 50.83078732989363,
+          "years": 0.9883641341546886
+        },
+        "2022": {
+          "adoption_events": 77,
+          "annual_cost_at_98pct_gross_diagnostic": 317.46538552089015,
+          "annual_cost_bps": 258.7665569381749,
+          "annual_turnover": 51.75331138763498,
+          "ic": -0.01415699366655882,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.14847277556440902,
+          "mean_adopted_gross": 0.7987996089190151,
+          "mean_effective_holdings": 3.9871396879649676,
+          "mean_selected": 5.338645418326693,
+          "missing_ic_months": 0,
+          "total_target_change": 51.57619533223582,
+          "years": 0.9965776865160849
+        },
+        "2023": {
+          "adoption_events": 100,
+          "annual_cost_at_98pct_gross_diagnostic": 291.62554125606067,
+          "annual_cost_bps": 289.46677595174185,
+          "annual_turnover": 57.89335519034837,
+          "ic": -0.058540223132757196,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.0072,
+          "mean_adopted_gross": 0.9727455256863977,
+          "mean_effective_holdings": 5.518694173357913,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 57.69522598025136,
+          "years": 0.9965776865160849
+        },
+        "2024": {
+          "adoption_events": 113,
+          "annual_cost_at_98pct_gross_diagnostic": 303.26317261742474,
+          "annual_cost_bps": 303.2631726174248,
+          "annual_turnover": 60.652634523484956,
+          "ic": -0.02916467884687002,
+          "ic_months": 11,
+          "max_target_weight": 0.3408602764599026,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9800000000000001,
+          "mean_effective_holdings": 5.426936237014208,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 60.61112005769202,
+          "years": 0.999315537303217
+        },
+        "2025": {
+          "adoption_events": 58,
+          "annual_cost_at_98pct_gross_diagnostic": 157.04851491457583,
+          "annual_cost_bps": 153.22663385585705,
+          "annual_turnover": 30.64532677117141,
+          "ic": 0.07355183013241445,
+          "ic_months": 12,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.0216,
+          "mean_adopted_gross": 0.9561510419911854,
+          "mean_effective_holdings": 5.383889691736748,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 30.540448856143446,
+          "years": 0.9965776865160849
+        },
+        "2026": {
+          "adoption_events": 66,
+          "annual_cost_at_98pct_gross_diagnostic": 214.50920835752544,
+          "annual_cost_bps": 214.50920835752555,
+          "annual_turnover": 42.90184167150511,
+          "ic": 0.005833070424103597,
+          "ic_months": 9,
+          "max_target_weight": 0.33797798361833237,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9800000000000004,
+          "mean_effective_holdings": 4.980307903957406,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 33.35831084108816,
+          "years": 0.7775496235455168
+        },
+        "calibration": {
+          "adoption_events": 378,
+          "annual_cost_at_98pct_gross_diagnostic": 290.6038890722204,
+          "annual_cost_bps": 276.6490847896418,
+          "annual_turnover": 55.32981695792836,
+          "ic": -0.03159588756854876,
+          "ic_months": 47,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.03887230514096186,
+          "mean_adopted_gross": 0.9329403813535049,
+          "mean_effective_holdings": 5.133877020948696,
+          "mean_selected": 5.834825870646767,
+          "missing_ic_months": 0,
+          "total_target_change": 220.71332870007288,
+          "years": 3.9890485968514717
+        },
+        "later": {
+          "adoption_events": 124,
+          "annual_cost_at_98pct_gross_diagnostic": 182.29991979372616,
+          "annual_cost_bps": 179.80756532676284,
+          "annual_turnover": 35.96151306535257,
+          "ic": 0.04452950454313837,
+          "ic_months": 21,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.012134831460674157,
+          "mean_adopted_gross": 0.9666017089838121,
+          "mean_effective_holdings": 5.207039245406474,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 63.89875969723154,
+          "years": 1.7768651608487338
+        }
+      }
+    },
+    "pooled_raw-0.80": {
+      "arm": "pooled_raw",
+      "calibration_ic_intervals": {
+        "12": {
+          "family_95_bonferroni": [
+            -0.0781781444695625,
+            0.015507915041644461
+          ],
+          "individual_95": [
+            -0.06093554002082209,
+            -0.001934673623218721
+          ],
+          "valid_draws": 20000
+        },
+        "3": {
+          "family_95_bonferroni": [
+            -0.09904502753960774,
+            0.03280840825556383
+          ],
+          "individual_95": [
+            -0.0762384301802429,
+            0.011942574627387204
+          ],
+          "valid_draws": 20000
+        },
+        "6": {
+          "family_95_bonferroni": [
+            -0.08746171138226905,
+            0.02515573412703899
+          ],
+          "individual_95": [
+            -0.06822928786262972,
+            0.004837593076969117
+          ],
+          "valid_draws": 20000
+        }
+      },
+      "gate": {
+        "annual_cost_bps": 153.63690049382575,
+        "annual_turnover": 30.72738009876515,
+        "breakeven_ic": 0.024187524286920992,
+        "candidate_ic": -0.03159588756854876,
+        "cost_bps": 5.0,
+        "cost_ceiling_bps": 44.0,
+        "cost_test": false,
+        "ic_margin": -1.3062886136566576,
+        "margin_test": false,
+        "period_sessions": 21,
+        "reasons": [
+          "annual cost 153.6bp exceeds the 44.0bp ceiling",
+          "IC margin -1.31x is below the required 3.0x against a breakeven IC of 0.0242"
+        ],
+        "sigma": 0.052932556839127176,
+        "status": "reject",
+        "thresholds": {
+          "cost_bps": 5.0,
+          "cost_tolerance": 0.1,
+          "max_annual_cost_bps": 40.0,
+          "min_ic_margin": 3.0,
+          "period_sessions": 21,
+          "version": "turnover-gate-v1"
+        },
+        "version": "turnover-gate-v1"
+      },
+      "policy": "0.80",
+      "windows": {
+        "2021": {
+          "adoption_events": 34,
+          "annual_cost_at_98pct_gross_diagnostic": 141.05154566118122,
+          "annual_cost_bps": 141.05154566118125,
+          "annual_turnover": 28.21030913223625,
+          "ic": -0.030763934517128968,
+          "ic_months": 12,
+          "max_target_weight": 0.38683775573187446,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9800000000000001,
+          "mean_effective_holdings": 5.604366927715824,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 27.882057759718787,
+          "years": 0.9883641341546886
+        },
+        "2022": {
+          "adoption_events": 41,
+          "annual_cost_at_98pct_gross_diagnostic": 250.14411168334175,
+          "annual_cost_bps": 199.13280211873803,
+          "annual_turnover": 39.82656042374761,
+          "ic": -0.01415699366655882,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.130199203187251,
+          "mean_adopted_gross": 0.7801508688855505,
+          "mean_effective_holdings": 4.017350306022494,
+          "mean_selected": 5.227091633466135,
+          "missing_ic_months": 0,
+          "total_target_change": 39.69026144899146,
+          "years": 0.9965776865160849
+        },
+        "2023": {
+          "adoption_events": 34,
+          "annual_cost_at_98pct_gross_diagnostic": 138.50951588561017,
+          "annual_cost_bps": 137.4841957578738,
+          "annual_turnover": 27.49683915157476,
+          "ic": -0.058540223132757196,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.0072,
+          "mean_adopted_gross": 0.9727455256863977,
+          "mean_effective_holdings": 5.478537059676613,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 27.402736348181282,
+          "years": 0.9965776865160849
+        },
+        "2024": {
+          "adoption_events": 35,
+          "annual_cost_at_98pct_gross_diagnostic": 138.0842981061113,
+          "annual_cost_bps": 138.08429810611133,
+          "annual_turnover": 27.616859621222268,
+          "ic": -0.02916467884687002,
+          "ic_months": 11,
+          "max_target_weight": 0.3367961639067714,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9800000000000001,
+          "mean_effective_holdings": 5.39214247748098,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 27.59795691100925,
+          "years": 0.999315537303217
+        },
+        "2025": {
+          "adoption_events": 23,
+          "annual_cost_at_98pct_gross_diagnostic": 86.99371126504852,
+          "annual_cost_bps": 84.87666089056782,
+          "annual_turnover": 16.975332178113565,
+          "ic": 0.07355183013241445,
+          "ic_months": 12,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.0216,
+          "mean_adopted_gross": 0.9561510419911854,
+          "mean_effective_holdings": 5.38775737209087,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 16.91723726990647,
+          "years": 0.9965776865160849
+        },
+        "2026": {
+          "adoption_events": 23,
+          "annual_cost_at_98pct_gross_diagnostic": 112.94183379402101,
+          "annual_cost_bps": 112.94183379402105,
+          "annual_turnover": 22.58836675880421,
+          "ic": 0.005833070424103597,
+          "ic_months": 9,
+          "max_target_weight": 0.33144137281412606,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9800000000000004,
+          "mean_effective_holdings": 4.994819662693191,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 17.56357606981628,
+          "years": 0.7775496235455168
+        },
+        "calibration": {
+          "adoption_events": 144,
+          "annual_cost_at_98pct_gross_diagnostic": 162.19643060574472,
+          "annual_cost_bps": 153.63690049382575,
+          "annual_turnover": 30.72738009876515,
+          "ic": -0.03159588756854876,
+          "ic_months": 47,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.03430845771144278,
+          "mean_adopted_gross": 0.9282828353351968,
+          "mean_effective_holdings": 5.123492101333726,
+          "mean_selected": 5.8069651741293535,
+          "missing_ic_months": 0,
+          "total_target_change": 122.57301246790095,
+          "years": 3.9890485968514717
+        },
+        "later": {
+          "adoption_events": 46,
+          "annual_cost_at_98pct_gross_diagnostic": 98.37201122584928,
+          "annual_cost_bps": 97.02709608885782,
+          "annual_turnover": 19.405419217771563,
+          "ic": 0.04452950454313837,
+          "ic_months": 21,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.012134831460674157,
+          "mean_adopted_gross": 0.9666017089838121,
+          "mean_effective_holdings": 5.215571184826718,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 34.48081333972278,
+          "years": 1.7768651608487338
+        }
+      }
+    },
+    "pooled_raw-monthly": {
+      "arm": "pooled_raw",
+      "calibration_ic_intervals": {
+        "12": {
+          "family_95_bonferroni": [
+            -0.0781781444695625,
+            0.015507915041644461
+          ],
+          "individual_95": [
+            -0.06093554002082209,
+            -0.001934673623218721
+          ],
+          "valid_draws": 20000
+        },
+        "3": {
+          "family_95_bonferroni": [
+            -0.09904502753960774,
+            0.03280840825556383
+          ],
+          "individual_95": [
+            -0.0762384301802429,
+            0.011942574627387204
+          ],
+          "valid_draws": 20000
+        },
+        "6": {
+          "family_95_bonferroni": [
+            -0.08746171138226905,
+            0.02515573412703899
+          ],
+          "individual_95": [
+            -0.06822928786262972,
+            0.004837593076969117
+          ],
+          "valid_draws": 20000
+        }
+      },
+      "gate": {
+        "annual_cost_bps": 56.97100263759842,
+        "annual_turnover": 11.394200527519683,
+        "breakeven_ic": 0.008969118131893902,
+        "candidate_ic": -0.03159588756854876,
+        "cost_bps": 5.0,
+        "cost_ceiling_bps": 44.0,
+        "cost_test": false,
+        "ic_margin": -3.522741824103618,
+        "margin_test": false,
+        "period_sessions": 21,
+        "reasons": [
+          "annual cost 57.0bp exceeds the 44.0bp ceiling",
+          "IC margin -3.52x is below the required 3.0x against a breakeven IC of 0.0090"
+        ],
+        "sigma": 0.052932556839127176,
+        "status": "reject",
+        "thresholds": {
+          "cost_bps": 5.0,
+          "cost_tolerance": 0.1,
+          "max_annual_cost_bps": 40.0,
+          "min_ic_margin": 3.0,
+          "period_sessions": 21,
+          "version": "turnover-gate-v1"
+        },
+        "version": "turnover-gate-v1"
+      },
+      "policy": "monthly",
+      "windows": {
+        "2021": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 57.31866480407624,
+          "annual_cost_bps": 57.31866480407625,
+          "annual_turnover": 11.46373296081525,
+          "ic": -0.030763934517128968,
+          "ic_months": 12,
+          "max_target_weight": 0.38683775573187446,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9800000000000001,
+          "mean_effective_holdings": 5.502823965378485,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 11.330342501996729,
+          "years": 0.9883641341546886
+        },
+        "2022": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 82.61306191075917,
+          "annual_cost_bps": 66.13432471676413,
+          "annual_turnover": 13.226864943352826,
+          "ic": -0.01415699366655882,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.1248207171314741,
+          "mean_adopted_gross": 0.7845204707754337,
+          "mean_effective_holdings": 4.088151766252471,
+          "mean_selected": 5.087649402390438,
+          "missing_ic_months": 0,
+          "total_target_change": 13.181598465107266,
+          "years": 0.9965776865160849
+        },
+        "2023": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 48.28884422625974,
+          "annual_cost_bps": 48.288844226259755,
+          "annual_turnover": 9.657768845251951,
+          "ic": -0.058540223132757196,
+          "ic_months": 11,
+          "max_target_weight": 0.28472334341679945,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9800000000000002,
+          "mean_effective_holdings": 5.571638957445836,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 9.62471693270831,
+          "years": 0.9965776865160849
+        },
+        "2024": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 56.61555987246202,
+          "annual_cost_bps": 56.61555987246203,
+          "annual_turnover": 11.323111974492406,
+          "ic": -0.02916467884687002,
+          "ic_months": 11,
+          "max_target_weight": 0.3123072422497469,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9800000000000001,
+          "mean_effective_holdings": 5.4323495891895615,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 11.315361726734368,
+          "years": 0.999315537303217
+        },
+        "2025": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 45.27152155549475,
+          "annual_cost_bps": 45.271521555494765,
+          "annual_turnover": 9.054304311098953,
+          "ic": 0.07355183013241445,
+          "ic_months": 12,
+          "max_target_weight": 0.2593480650496544,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9800000000000002,
+          "mean_effective_holdings": 5.633389032141006,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 9.023317643367609,
+          "years": 0.9965776865160849
+        },
+        "2026": {
+          "adoption_events": 10,
+          "annual_cost_at_98pct_gross_diagnostic": 40.177748275086785,
+          "annual_cost_bps": 40.177748275086806,
+          "annual_turnover": 8.03554965501736,
+          "ic": 0.005833070424103597,
+          "ic_months": 9,
+          "max_target_weight": 0.33144137281412606,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9800000000000004,
+          "mean_effective_holdings": 4.951353292850346,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 6.248038609240057,
+          "years": 0.7775496235455168
+        },
+        "calibration": {
+          "adoption_events": 48,
+          "annual_cost_at_98pct_gross_diagnostic": 59.95796501806718,
+          "annual_cost_bps": 56.97100263759842,
+          "annual_turnover": 11.394200527519683,
+          "ic": -0.03159588756854876,
+          "ic_months": 47,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.03117412935323383,
+          "mean_adopted_gross": 0.9311787444424219,
+          "mean_effective_holdings": 5.148954794469628,
+          "mean_selected": 5.772139303482587,
+          "missing_ic_months": 0,
+          "total_target_change": 45.45201962654669,
+          "years": 3.9890485968514717
+        },
+        "later": {
+          "adoption_events": 22,
+          "annual_cost_at_98pct_gross_diagnostic": 42.972749393412556,
+          "annual_cost_bps": 42.97274939341257,
+          "annual_turnover": 8.594549878682514,
+          "ic": 0.04452950454313837,
+          "ic_months": 21,
+          "max_target_weight": 0.33144137281412606,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9800000000000003,
+          "mean_effective_holdings": 5.334519438519256,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 15.271356252607672,
+          "years": 1.7768651608487338
+        }
+      }
+    },
+    "pooled_risk-0.10": {
+      "arm": "pooled_risk",
+      "calibration_ic_intervals": {
+        "12": {
+          "family_95_bonferroni": [
+            -0.05433719128563197,
+            0.06825003802261433
+          ],
+          "individual_95": [
+            -0.03383622390751847,
+            0.046709334633027025
+          ],
+          "valid_draws": 20000
+        },
+        "3": {
+          "family_95_bonferroni": [
+            -0.07290600950160135,
+            0.08377785772803503
+          ],
+          "individual_95": [
+            -0.04499850605122959,
+            0.05989292401336464
+          ],
+          "valid_draws": 20000
+        },
+        "6": {
+          "family_95_bonferroni": [
+            -0.0643682738123589,
+            0.07713633325259445
+          ],
+          "individual_95": [
+            -0.039534120408836804,
+            0.054212255963192325
+          ],
+          "valid_draws": 20000
+        }
+      },
+      "gate": {
+        "annual_cost_bps": 142.96263912044594,
+        "annual_turnover": 28.59252782408919,
+        "breakeven_ic": 0.02250704287012788,
+        "candidate_ic": 0.007464071152151615,
+        "cost_bps": 5.0,
+        "cost_ceiling_bps": 44.0,
+        "cost_test": false,
+        "ic_margin": 0.33163268916407435,
+        "margin_test": false,
+        "period_sessions": 21,
+        "reasons": [
+          "annual cost 143.0bp exceeds the 44.0bp ceiling",
+          "IC margin 0.33x is below the required 3.0x against a breakeven IC of 0.0225"
+        ],
+        "sigma": 0.052932556839127176,
+        "status": "reject",
+        "thresholds": {
+          "cost_bps": 5.0,
+          "cost_tolerance": 0.1,
+          "max_annual_cost_bps": 40.0,
+          "min_ic_margin": 3.0,
+          "period_sessions": 21,
+          "version": "turnover-gate-v1"
+        },
+        "version": "turnover-gate-v1"
+      },
+      "policy": "0.10",
+      "windows": {
+        "2021": {
+          "adoption_events": 145,
+          "annual_cost_at_98pct_gross_diagnostic": 390.9156211223007,
+          "annual_cost_bps": 390.09157367201215,
+          "annual_turnover": 78.01831473440242,
+          "ic": 0.07444405188628622,
+          "ic_months": 12,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.977934166716172,
+          "mean_effective_holdings": 4.939810040548452,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 77.11050409067563,
+          "years": 0.9883641341546886
+        },
+        "2022": {
+          "adoption_events": 61,
+          "annual_cost_at_98pct_gross_diagnostic": 222.98449708455624,
+          "annual_cost_bps": 149.089937535104,
+          "annual_turnover": 29.817987507020803,
+          "ic": 0.0218491672371529,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.26875339053727637,
+          "mean_adopted_gross": 0.6552389995480152,
+          "mean_effective_holdings": 2.7448054776271835,
+          "mean_selected": 5.155378486055777,
+          "missing_ic_months": 0,
+          "total_target_change": 29.715941006312313,
+          "years": 0.9965776865160849
+        },
+        "2023": {
+          "adoption_events": 26,
+          "annual_cost_at_98pct_gross_diagnostic": 21.663775997251633,
+          "annual_cost_bps": 12.048903559182786,
+          "annual_turnover": 2.4097807118365573,
+          "ic": 0.0042232086150219336,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.4500000000000001,
+          "mean_adopted_gross": 0.5450538950133688,
+          "mean_effective_holdings": 1.4475995168035554,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 2.4015336868131607,
+          "years": 0.9965776865160849
+        },
+        "2024": {
+          "adoption_events": 44,
+          "annual_cost_at_98pct_gross_diagnostic": 37.63686402863639,
+          "annual_cost_bps": 24.161558752255576,
+          "annual_turnover": 4.832311750451115,
+          "ic": -0.06185145440278769,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.45000000000000007,
+          "mean_adopted_gross": 0.6291259430964963,
+          "mean_effective_holdings": 1.8473114264815627,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 4.829004213318705,
+          "years": 0.999315537303217
+        },
+        "2025": {
+          "adoption_events": 47,
+          "annual_cost_at_98pct_gross_diagnostic": 38.21369805723868,
+          "annual_cost_bps": 23.277934207313482,
+          "annual_turnover": 4.655586841462696,
+          "ic": -0.06914266822957528,
+          "ic_months": 12,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.4500000000000001,
+          "mean_adopted_gross": 0.5969685396319802,
+          "mean_effective_holdings": 1.6657059048992477,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 4.639653963839621,
+          "years": 0.9965776865160849
+        },
+        "2026": {
+          "adoption_events": 20,
+          "annual_cost_at_98pct_gross_diagnostic": 14.218359446362525,
+          "annual_cost_bps": 7.948696330830671,
+          "annual_turnover": 1.5897392661661343,
+          "ic": -0.01702141439554898,
+          "ic_months": 9,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.4500000000000001,
+          "mean_adopted_gross": 0.547863657097718,
+          "mean_effective_holdings": 1.4319808682586583,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 1.2361011679430038,
+          "years": 0.7775496235455168
+        },
+        "calibration": {
+          "adoption_events": 276,
+          "annual_cost_at_98pct_gross_diagnostic": 199.52158827837994,
+          "annual_cost_bps": 142.96263912044594,
+          "annual_turnover": 28.59252782408919,
+          "ic": 0.007464071152151615,
+          "ic_months": 47,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.2918976129600562,
+          "mean_adopted_gross": 0.7021966271768023,
+          "mean_effective_holdings": 2.747463347041667,
+          "mean_selected": 5.7890547263681595,
+          "missing_ic_months": 0,
+          "total_target_change": 114.05698299711965,
+          "years": 3.9890485968514717
+        },
+        "later": {
+          "adoption_events": 67,
+          "annual_cost_at_98pct_gross_diagnostic": 28.15770123187442,
+          "annual_cost_bps": 16.534049012970765,
+          "annual_turnover": 3.306809802594153,
+          "ic": -0.046804988014992575,
+          "ic_months": 21,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.4500000000000001,
+          "mean_adopted_gross": 0.5754506697574159,
+          "mean_effective_holdings": 1.5632870686185403,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 5.875755131782629,
+          "years": 1.7768651608487338
+        }
+      }
+    },
+    "pooled_risk-0.40": {
+      "arm": "pooled_risk",
+      "calibration_ic_intervals": {
+        "12": {
+          "family_95_bonferroni": [
+            -0.05433719128563197,
+            0.06825003802261433
+          ],
+          "individual_95": [
+            -0.03383622390751847,
+            0.046709334633027025
+          ],
+          "valid_draws": 20000
+        },
+        "3": {
+          "family_95_bonferroni": [
+            -0.07290600950160135,
+            0.08377785772803503
+          ],
+          "individual_95": [
+            -0.04499850605122959,
+            0.05989292401336464
+          ],
+          "valid_draws": 20000
+        },
+        "6": {
+          "family_95_bonferroni": [
+            -0.0643682738123589,
+            0.07713633325259445
+          ],
+          "individual_95": [
+            -0.039534120408836804,
+            0.054212255963192325
+          ],
+          "valid_draws": 20000
+        }
+      },
+      "gate": {
+        "annual_cost_bps": 116.13623477788798,
+        "annual_turnover": 23.227246955577595,
+        "breakeven_ic": 0.01828368048465422,
+        "candidate_ic": 0.007464071152151615,
+        "cost_bps": 5.0,
+        "cost_ceiling_bps": 44.0,
+        "cost_test": false,
+        "ic_margin": 0.4082367966567961,
+        "margin_test": false,
+        "period_sessions": 21,
+        "reasons": [
+          "annual cost 116.1bp exceeds the 44.0bp ceiling",
+          "IC margin 0.41x is below the required 3.0x against a breakeven IC of 0.0183"
+        ],
+        "sigma": 0.052932556839127176,
+        "status": "reject",
+        "thresholds": {
+          "cost_bps": 5.0,
+          "cost_tolerance": 0.1,
+          "max_annual_cost_bps": 40.0,
+          "min_ic_margin": 3.0,
+          "period_sessions": 21,
+          "version": "turnover-gate-v1"
+        },
+        "version": "turnover-gate-v1"
+      },
+      "policy": "0.40",
+      "windows": {
+        "2021": {
+          "adoption_events": 99,
+          "annual_cost_at_98pct_gross_diagnostic": 324.3621185376405,
+          "annual_cost_bps": 323.90828101155813,
+          "annual_turnover": 64.78165620231162,
+          "ic": 0.07444405188628622,
+          "ic_months": 12,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9786288140626104,
+          "mean_effective_holdings": 4.941797191438201,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 64.02786554150444,
+          "years": 0.9883641341546886
+        },
+        "2022": {
+          "adoption_events": 46,
+          "annual_cost_at_98pct_gross_diagnostic": 193.96263749705474,
+          "annual_cost_bps": 130.77208788823862,
+          "annual_turnover": 26.154417577647724,
+          "ic": 0.0218491672371529,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.2739707835325365,
+          "mean_adopted_gross": 0.6607285185654368,
+          "mean_effective_holdings": 2.7487407912383834,
+          "mean_selected": 5.199203187250996,
+          "missing_ic_months": 0,
+          "total_target_change": 26.064908961707793,
+          "years": 0.9965776865160849
+        },
+        "2023": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 10.23255643170066,
+          "annual_cost_bps": 5.677252585256713,
+          "annual_turnover": 1.1354505170513425,
+          "ic": 0.0042232086150219336,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.4500000000000001,
+          "mean_adopted_gross": 0.5437260542551325,
+          "mean_effective_holdings": 1.4415809581240067,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 1.1315646494365192,
+          "years": 0.9965776865160849
+        },
+        "2024": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 11.169461378139543,
+          "annual_cost_bps": 7.1562868324880835,
+          "annual_turnover": 1.4312573664976167,
+          "ic": -0.06185145440278769,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.45000000000000007,
+          "mean_adopted_gross": 0.6278871342501995,
+          "mean_effective_holdings": 1.8430247101765798,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 1.4302777242207532,
+          "years": 0.999315537303217
+        },
+        "2025": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 7.516662590628311,
+          "annual_cost_bps": 4.619765946538976,
+          "annual_turnover": 0.9239531893077952,
+          "ic": -0.06914266822957528,
+          "ic_months": 12,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.4500000000000001,
+          "mean_adopted_gross": 0.602311274853932,
+          "mean_effective_holdings": 1.6889912348227885,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 0.9207911318495208,
+          "years": 0.9965776865160849
+        },
+        "2026": {
+          "adoption_events": 10,
+          "annual_cost_at_98pct_gross_diagnostic": 6.180596852499041,
+          "annual_cost_bps": 3.529093761906425,
+          "annual_turnover": 0.705818752381285,
+          "ic": -0.01702141439554898,
+          "ic_months": 9,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.4500000000000001,
+          "mean_adopted_gross": 0.5595757123796052,
+          "mean_effective_holdings": 1.4851356511662495,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 0.5488091052054345,
+          "years": 0.7775496235455168
+        },
+        "calibration": {
+          "adoption_events": 169,
+          "annual_cost_at_98pct_gross_diagnostic": 161.87365469921707,
+          "annual_cost_bps": 116.13623477788798,
+          "annual_turnover": 23.227246955577595,
+          "ic": 0.007464071152151615,
+          "ic_months": 47,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.2932006633499172,
+          "mean_adopted_gross": 0.7031008862671999,
+          "mean_effective_holdings": 2.7463724351629457,
+          "mean_selected": 5.8,
+          "missing_ic_months": 0,
+          "total_target_change": 92.65461687686943,
+          "years": 3.9890485968514717
+        },
+        "later": {
+          "adoption_events": 22,
+          "annual_cost_at_98pct_gross_diagnostic": 6.944438016374492,
+          "annual_cost_bps": 4.135373548415427,
+          "annual_turnover": 0.8270747096830855,
+          "ic": -0.046804988014992575,
+          "ic_months": 21,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.4500000000000001,
+          "mean_adopted_gross": 0.5835844553427102,
+          "mean_effective_holdings": 1.599661259962058,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 1.4696002370549555,
+          "years": 1.7768651608487338
+        }
+      }
+    },
+    "pooled_risk-0.80": {
+      "arm": "pooled_risk",
+      "calibration_ic_intervals": {
+        "12": {
+          "family_95_bonferroni": [
+            -0.05433719128563197,
+            0.06825003802261433
+          ],
+          "individual_95": [
+            -0.03383622390751847,
+            0.046709334633027025
+          ],
+          "valid_draws": 20000
+        },
+        "3": {
+          "family_95_bonferroni": [
+            -0.07290600950160135,
+            0.08377785772803503
+          ],
+          "individual_95": [
+            -0.04499850605122959,
+            0.05989292401336464
+          ],
+          "valid_draws": 20000
+        },
+        "6": {
+          "family_95_bonferroni": [
+            -0.0643682738123589,
+            0.07713633325259445
+          ],
+          "individual_95": [
+            -0.039534120408836804,
+            0.054212255963192325
+          ],
+          "valid_draws": 20000
+        }
+      },
+      "gate": {
+        "annual_cost_bps": 79.53829934334098,
+        "annual_turnover": 15.907659868668198,
+        "breakeven_ic": 0.012521956254804593,
+        "candidate_ic": 0.007464071152151615,
+        "cost_bps": 5.0,
+        "cost_ceiling_bps": 44.0,
+        "cost_test": false,
+        "ic_margin": 0.5960786797420491,
+        "margin_test": false,
+        "period_sessions": 21,
+        "reasons": [
+          "annual cost 79.5bp exceeds the 44.0bp ceiling",
+          "IC margin 0.60x is below the required 3.0x against a breakeven IC of 0.0125"
+        ],
+        "sigma": 0.052932556839127176,
+        "status": "reject",
+        "thresholds": {
+          "cost_bps": 5.0,
+          "cost_tolerance": 0.1,
+          "max_annual_cost_bps": 40.0,
+          "min_ic_margin": 3.0,
+          "period_sessions": 21,
+          "version": "turnover-gate-v1"
+        },
+        "version": "turnover-gate-v1"
+      },
+      "policy": "0.80",
+      "windows": {
+        "2021": {
+          "adoption_events": 46,
+          "annual_cost_at_98pct_gross_diagnostic": 212.52310207409369,
+          "annual_cost_bps": 212.22288133560195,
+          "annual_turnover": 42.44457626712039,
+          "ic": 0.07444405188628622,
+          "ic_months": 12,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9786156030998489,
+          "mean_effective_holdings": 4.9329380021562965,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 41.95069687181509,
+          "years": 0.9883641341546886
+        },
+        "2022": {
+          "adoption_events": 26,
+          "annual_cost_at_98pct_gross_diagnostic": 145.0660854029419,
+          "annual_cost_bps": 95.04471798407636,
+          "annual_turnover": 19.00894359681527,
+          "ic": 0.0218491672371529,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.2556972111553785,
+          "mean_adopted_gross": 0.6420785627851918,
+          "mean_effective_holdings": 2.7788616953614134,
+          "mean_selected": 5.087649402390438,
+          "missing_ic_months": 0,
+          "total_target_change": 18.94388903282891,
+          "years": 0.9965776865160849
+        },
+        "2023": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 10.23255643170066,
+          "annual_cost_bps": 5.677252585256713,
+          "annual_turnover": 1.1354505170513425,
+          "ic": 0.0042232086150219336,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.4500000000000001,
+          "mean_adopted_gross": 0.5437260542551325,
+          "mean_effective_holdings": 1.4415809581240067,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 1.1315646494365192,
+          "years": 0.9965776865160849
+        },
+        "2024": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 11.169461378139543,
+          "annual_cost_bps": 7.1562868324880835,
+          "annual_turnover": 1.4312573664976167,
+          "ic": -0.06185145440278769,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.45000000000000007,
+          "mean_adopted_gross": 0.6278871342501995,
+          "mean_effective_holdings": 1.8430247101765798,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 1.4302777242207532,
+          "years": 0.999315537303217
+        },
+        "2025": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 7.516662590628311,
+          "annual_cost_bps": 4.619765946538976,
+          "annual_turnover": 0.9239531893077952,
+          "ic": -0.06914266822957528,
+          "ic_months": 12,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.4500000000000001,
+          "mean_adopted_gross": 0.602311274853932,
+          "mean_effective_holdings": 1.6889912348227885,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 0.9207911318495208,
+          "years": 0.9965776865160849
+        },
+        "2026": {
+          "adoption_events": 10,
+          "annual_cost_at_98pct_gross_diagnostic": 6.180596852499041,
+          "annual_cost_bps": 3.529093761906425,
+          "annual_turnover": 0.705818752381285,
+          "ic": -0.01702141439554898,
+          "ic_months": 9,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.4500000000000001,
+          "mean_adopted_gross": 0.5595757123796052,
+          "mean_effective_holdings": 1.4851356511662495,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 0.5488091052054345,
+          "years": 0.7775496235455168
+        },
+        "calibration": {
+          "adoption_events": 96,
+          "annual_cost_at_98pct_gross_diagnostic": 111.60237695013997,
+          "annual_cost_bps": 79.53829934334098,
+          "annual_turnover": 15.907659868668198,
+          "ic": 0.007464071152151615,
+          "ic_months": 47,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.288636815920398,
+          "mean_adopted_gross": 0.6984397240150035,
+          "mean_effective_holdings": 2.751673759775722,
+          "mean_selected": 5.772139303482587,
+          "missing_ic_months": 0,
+          "total_target_change": 63.45642827830134,
+          "years": 3.9890485968514717
+        },
+        "later": {
+          "adoption_events": 22,
+          "annual_cost_at_98pct_gross_diagnostic": 6.944438016374492,
+          "annual_cost_bps": 4.135373548415427,
+          "annual_turnover": 0.8270747096830855,
+          "ic": -0.046804988014992575,
+          "ic_months": 21,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.4500000000000001,
+          "mean_adopted_gross": 0.5835844553427102,
+          "mean_effective_holdings": 1.599661259962058,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 1.4696002370549555,
+          "years": 1.7768651608487338
+        }
+      }
+    },
+    "pooled_risk-monthly": {
+      "arm": "pooled_risk",
+      "calibration_ic_intervals": {
+        "12": {
+          "family_95_bonferroni": [
+            -0.05433719128563197,
+            0.06825003802261433
+          ],
+          "individual_95": [
+            -0.03383622390751847,
+            0.046709334633027025
+          ],
+          "valid_draws": 20000
+        },
+        "3": {
+          "family_95_bonferroni": [
+            -0.07290600950160135,
+            0.08377785772803503
+          ],
+          "individual_95": [
+            -0.04499850605122959,
+            0.05989292401336464
+          ],
+          "valid_draws": 20000
+        },
+        "6": {
+          "family_95_bonferroni": [
+            -0.0643682738123589,
+            0.07713633325259445
+          ],
+          "individual_95": [
+            -0.039534120408836804,
+            0.054212255963192325
+          ],
+          "valid_draws": 20000
+        }
+      },
+      "gate": {
+        "annual_cost_bps": 24.837361956056093,
+        "annual_turnover": 4.967472391211219,
+        "breakeven_ic": 0.003910221396059061,
+        "candidate_ic": 0.007464071152151615,
+        "cost_bps": 5.0,
+        "cost_ceiling_bps": 44.0,
+        "cost_test": true,
+        "ic_margin": 1.9088615186020725,
+        "margin_test": false,
+        "period_sessions": 21,
+        "reasons": [
+          "IC margin 1.91x is below the required 3.0x against a breakeven IC of 0.0039"
+        ],
+        "sigma": 0.052932556839127176,
+        "status": "reject",
+        "thresholds": {
+          "cost_bps": 5.0,
+          "cost_tolerance": 0.1,
+          "max_annual_cost_bps": 40.0,
+          "min_ic_margin": 3.0,
+          "period_sessions": 21,
+          "version": "turnover-gate-v1"
+        },
+        "version": "turnover-gate-v1"
+      },
+      "policy": "monthly",
+      "windows": {
+        "2021": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 53.44878537600411,
+          "annual_cost_bps": 53.44878537600412,
+          "annual_turnover": 10.689757075200824,
+          "ic": 0.07444405188628622,
+          "ic_months": 12,
+          "max_target_weight": 0.44801313064285303,
+          "mean_adopted_bill_weight": 0.0,
+          "mean_adopted_gross": 0.9800000000000001,
+          "mean_effective_holdings": 4.9237202212608615,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 10.565372495954819,
+          "years": 0.9883641341546886
+        },
+        "2022": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 49.98187803586636,
+          "annual_cost_bps": 33.55620938006761,
+          "annual_turnover": 6.7112418760135215,
+          "ic": 0.0218491672371529,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.24135458167330678,
+          "mean_adopted_gross": 0.6579401672115709,
+          "mean_effective_holdings": 2.837116373982708,
+          "mean_selected": 5.087649402390438,
+          "missing_ic_months": 0,
+          "total_target_change": 6.688273902447425,
+          "years": 0.9965776865160849
+        },
+        "2023": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 10.23255643170066,
+          "annual_cost_bps": 5.677252585256713,
+          "annual_turnover": 1.1354505170513425,
+          "ic": 0.0042232086150219336,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.4500000000000001,
+          "mean_adopted_gross": 0.5437260542551325,
+          "mean_effective_holdings": 1.4415809581240067,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 1.1315646494365192,
+          "years": 0.9965776865160849
+        },
+        "2024": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 11.169461378139543,
+          "annual_cost_bps": 7.1562868324880835,
+          "annual_turnover": 1.4312573664976167,
+          "ic": -0.06185145440278769,
+          "ic_months": 11,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.45000000000000007,
+          "mean_adopted_gross": 0.6278871342501995,
+          "mean_effective_holdings": 1.8430247101765798,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 1.4302777242207532,
+          "years": 0.999315537303217
+        },
+        "2025": {
+          "adoption_events": 12,
+          "annual_cost_at_98pct_gross_diagnostic": 7.516662590628311,
+          "annual_cost_bps": 4.619765946538976,
+          "annual_turnover": 0.9239531893077952,
+          "ic": -0.06914266822957528,
+          "ic_months": 12,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.4500000000000001,
+          "mean_adopted_gross": 0.602311274853932,
+          "mean_effective_holdings": 1.6889912348227885,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 0.9207911318495208,
+          "years": 0.9965776865160849
+        },
+        "2026": {
+          "adoption_events": 10,
+          "annual_cost_at_98pct_gross_diagnostic": 6.180596852499041,
+          "annual_cost_bps": 3.529093761906425,
+          "annual_turnover": 0.705818752381285,
+          "ic": -0.01702141439554898,
+          "ic_months": 9,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.4500000000000001,
+          "mean_adopted_gross": 0.5595757123796052,
+          "mean_effective_holdings": 1.4851356511662495,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 0.5488091052054345,
+          "years": 0.7775496235455168
+        },
+        "calibration": {
+          "adoption_events": 48,
+          "annual_cost_at_98pct_gross_diagnostic": 34.63631901780732,
+          "annual_cost_bps": 24.837361956056093,
+          "annual_turnover": 4.967472391211219,
+          "ic": 0.007464071152151615,
+          "ic_months": 47,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.28505472636815926,
+          "mean_adopted_gross": 0.7027483118059084,
+          "mean_effective_holdings": 2.763911614052633,
+          "mean_selected": 5.772139303482587,
+          "missing_ic_months": 0,
+          "total_target_change": 19.81548877205954,
+          "years": 3.9890485968514717
+        },
+        "later": {
+          "adoption_events": 22,
+          "annual_cost_at_98pct_gross_diagnostic": 6.944438016374492,
+          "annual_cost_bps": 4.135373548415427,
+          "annual_turnover": 0.8270747096830855,
+          "ic": -0.046804988014992575,
+          "ic_months": 21,
+          "max_target_weight": 0.45,
+          "mean_adopted_bill_weight": 0.4500000000000001,
+          "mean_adopted_gross": 0.5835844553427102,
+          "mean_effective_holdings": 1.599661259962058,
+          "mean_selected": 6.0,
+          "missing_ic_months": 0,
+          "total_target_change": 1.4696002370549555,
+          "years": 1.7768651608487338
+        }
+      }
+    }
+  },
+  "supported": 50
+}

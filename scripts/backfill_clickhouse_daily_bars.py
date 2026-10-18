@@ -29,7 +29,7 @@ class TushareSingleSymbolProvider:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Backfill ClickHouse daily market-data bars directly from provider data.")
+    parser = argparse.ArgumentParser(description="Backfill daily serving-history bars through the configured storage backend.")
     parser.add_argument("--symbols", default=None, help="Comma-separated symbols. Defaults to stored symbols plus registered benchmarks.")
     parser.add_argument("--start-date", default=None)
     parser.add_argument("--end-date", default=None)
@@ -63,6 +63,11 @@ def main(argv: list[str] | None = None) -> int:
         user=args.clickhouse_user or settings.clickhouse_user,
         password=args.clickhouse_password or os.getenv("ST_CLICKHOUSE_PASSWORD", settings.clickhouse_password),
     )
+    if settings.market_data_store_backend=='parquet':
+        if any((args.clickhouse_url,args.clickhouse_database,args.clickhouse_user,args.clickhouse_password)):
+            raise ValueError('ClickHouse connection overrides are incompatible with the native backend')
+        from systematic_trading.market_data.native_market import NativeMarketDataClient
+        client=NativeMarketDataClient.from_settings(settings)
     client.ensure_daily_bars_table()
     symbols = _resolve_symbols(args.symbols, client)
     if args.max_symbols is not None:

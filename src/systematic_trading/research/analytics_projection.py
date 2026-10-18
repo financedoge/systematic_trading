@@ -124,7 +124,7 @@ def import_account_histories(settings, analytics):
     return changed
 
 
-def import_lean_histories(analytics, store):
+def import_lean_histories(analytics, store, data_dir=None):
     store = getattr(store, "transactional_store", store)
     if store.__class__.__name__ != "PostgresStore":
         return False
@@ -143,6 +143,16 @@ def import_lean_histories(analytics, store):
     for run in runs:
         root = Path(run["artifact_path"])
         source = 'lean-run/' + digest(str(root.resolve()))
+        from systematic_trading.storage.artifact_retention import retirement_for_path
+        retirement = retirement_for_path(data_dir,root) if data_dir is not None else None
+        if retirement:
+            version = 'retired/' + retirement['manifest_sha256']
+            versions[source] = version
+            changed |= analytics.publish(source,version,[],
+                [dict(point_key='retirement',media_type='application/json',payload=encode(dict(
+                    retirement=retirement,registry=run['payload'],exact_replay_available=False)))],
+                provenance=dict(artifact_path=str(root),retired=True,retirement=retirement))
+            continue
         artifacts = run['payload']['receipt']['artifacts']
         expected = {name: artifacts[name] for name in ('reference.json', 'economic.json')}
         version = digest(encode(dict(artifacts=expected, extractor=extractor)))

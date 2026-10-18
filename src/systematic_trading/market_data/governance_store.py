@@ -24,11 +24,15 @@ class GovernanceStore:
 
     def initialize(self):
         self.analytics.initialize()
+        if hasattr(self.analytics,'insert_governed'):
+            return
         for sql in DDL.split(';'):
             if sql.strip():
                 self.analytics.client.execute(sql)
 
     def insert_verified(self,table,batch,symbol,records):
+        if hasattr(self.analytics,'insert_governed'):
+            return self.analytics.insert_governed(table,batch,symbol,records)
         if table not in ('governed_daily','governance_comparisons'):
             raise ValueError('Unknown governed table')
         comparison=table=='governance_comparisons'

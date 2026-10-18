@@ -27,7 +27,7 @@ def prepare(root):
     worker=read_json(parent/'worker.json');old=read_json(previous/'data_receipt.json')
     bundle=parent/'bundles/research_fallback_f3_v1';spec=verify_usd_bundle(bundle)['spec']
     if spec.recipe!=defensive_cash_definition().to_dict():raise ValueError('F3 definition changed')
-    settings=AppSettings(transactional_store_backend='postgres',market_data_store_backend='clickhouse')
+    settings=AppSettings(transactional_store_backend='postgres')
     state=control_state(create_trading_store(settings))
     if state['sota_key']!='research_fallback_f3_v1':raise ValueError('SOTA changed')
     p=dict(version='candidate-pool-momentum-v1',registered_at=datetime.now(UTC).isoformat(),

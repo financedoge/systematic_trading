@@ -1,0 +1,384 @@
+{
+  "adoption": "existing app research adoption_schedule: monthly anchors always adopt; otherwise strictly greater than threshold on L1 latest theoretical versus last adopted targets including cash; no held-weight input",
+  "arms": [
+    "pooled_remove_bill_risk",
+    "pooled_cash_relative_risk",
+    "class_remove_bill_risk",
+    "class_cash_relative_risk"
+  ],
+  "calibration_end": "2024-12-31",
+  "classes": {
+    "aggregate_us": [
+      "AGG"
+    ],
+    "bills_us": [
+      "BIL"
+    ],
+    "commodity_agriculture": [
+      "DBA",
+      "CORN",
+      "WEAT"
+    ],
+    "commodity_base_metals": [
+      "DBB",
+      "CPER"
+    ],
+    "commodity_broad_parent": [
+      "DBC"
+    ],
+    "commodity_precious": [
+      "GLD",
+      "SLV",
+      "PPLT"
+    ],
+    "credit_emerging_local": [
+      "LEMB"
+    ],
+    "credit_emerging_usd": [
+      "EMB"
+    ],
+    "credit_ex_us_unhedged": [
+      "IBND"
+    ],
+    "credit_usd_high_yield": [
+      "HYG"
+    ],
+    "credit_usd_investment_grade": [
+      "LQD"
+    ],
+    "equity_asia_ex_china": [
+      "EWJ",
+      "EWY",
+      "EWT",
+      "INDA"
+    ],
+    "equity_australia": [
+      "EWA"
+    ],
+    "equity_canada": [
+      "EWC"
+    ],
+    "equity_china": [
+      "MCHI"
+    ],
+    "equity_developed_ex_us_parent": [
+      "EFA"
+    ],
+    "equity_emerging_parent": [
+      "EEM"
+    ],
+    "equity_europe": [
+      "VGK",
+      "EWG",
+      "EWU"
+    ],
+    "equity_hong_kong": [
+      "EWH"
+    ],
+    "equity_us": [
+      "SPY",
+      "MDY",
+      "IWM",
+      "XLE",
+      "XLB",
+      "XLC",
+      "XLI",
+      "XLK",
+      "XLP",
+      "XLU",
+      "XLV",
+      "XLY",
+      "SOXX",
+      "IBB",
+      "ITA",
+      "IAT"
+    ],
+    "inflation_linked_us": [
+      "TIP"
+    ],
+    "securitized_us": [
+      "MBB"
+    ],
+    "sovereign_developed_ex_us": [
+      "IGOV",
+      "BWX"
+    ],
+    "sovereign_us": [
+      "SHY",
+      "IEF",
+      "TLT"
+    ]
+  },
+  "construction": {
+    "all_ineligible": "all cash",
+    "cap": "each security capped at 0.45 after sizing; excess stays cash",
+    "class": "within each primary class choose up to two eligible members; class score is their mean declared score; select top three classes, with deterministic alphabetical class ties; each class has gross budget 0.98/3 times selected_count/2; divide it by inverse volatility",
+    "downstream": "Inherited price-only construction; only registered score/gate and BIL role change",
+    "duplicate_rule": "inherit frozen parent admission: highest prior-63-session median raw dollar volume per duplicate group, then permanent candidate ID",
+    "overlap_rule": "broad parent/child fund conflicts listed below cannot be co-selected. Pooled selection greedily skips conflicts by score; class selection greedily skips conflicting members against already chosen classes, recomputes each remaining class's available top two and score, and chooses the next class. Within-class selection also skips conflicts. No look-through independence is claimed.",
+    "pooled": "top six eligible members by the declared score; inverse-volatility weights; gross budget 0.98 times selected_count/6",
+    "primary_class_rule": "one class per fund; each class gets at most one class-selection vote",
+    "unfilled_slots": "cash, including missing class slots; do not redistribute unused budgets"
+  },
+  "later_diagnostics": "2025-01-01 through cutoff, plus each calendar year; same monthly IC clock; labels must finish inside each window; continuous adopted anchors, no later-period artificial liquidation/re-establishment",
+  "later_start": "2025-01-01",
+  "limitations": [
+    "Current-survivor first-wave cohort; historical membership, mandate and look-through classifications remain uncertified.",
+    "Published adjusted and raw histories are audited with limitations, not certified historical publication vintages or raw trading tape.",
+    "Risk-scaled scores do not by themselves make regional, duration, credit and commodity payoffs economically homogeneous; class-conditioned coverage is reported rather than assumed.",
+    "This is a finite pre-replay screen. Target-change costs are proxies and exclude actual drift/fills; static forward contribution excludes fees, slippage, timing and portfolio path effects.",
+    "Hypothesis and controls are informed by earlier inspected failures; the prospective period is reserved but inactive until a separate eligible implementation exists.",
+    "No CNH/FX, macro or direct provider-price input is used. No promotion, funding or execution evidence is supplied by this screen."
+  ],
+  "limits": {
+    "live_prices": false,
+    "promotion_eligible": false,
+    "workers": 1
+  },
+  "next_stage_if_survivors": {
+    "additional_execution_delay_sessions": [
+      0,
+      1
+    ],
+    "controls": "construction-matched pooled_raw at the same timing, each same-arm monthly control, original 14-ETF FR25 SOTA and URTH on matched inputs/accounting; include an average-exposure-matched pooled control because unfilled class slots and singleton classes create cash",
+    "cost_bps": [
+      5,
+      10,
+      20
+    ],
+    "objective": "net Sharpe with +0.05 minimum improvement, CAGR no more than 0.5 percentage points worse and max drawdown no more than 2 percentage points worse versus matched control; positive Sharpe advantage under 10bp and one-session delay",
+    "requirements": "native/Python parity, actual turnover/costs, whole-unit USD accounting, full constituent/class PnL and exposure, episode drawdowns, annual stability and family-adjusted paired inference before any recommendation; review/freeze replay implementation first"
+  },
+  "overlap_parents": {
+    "AGG": [
+      "SHY",
+      "IEF",
+      "TLT",
+      "LQD",
+      "MBB"
+    ],
+    "DBA": [
+      "CORN",
+      "WEAT"
+    ],
+    "DBC": [
+      "GLD",
+      "SLV",
+      "PPLT",
+      "DBB",
+      "CPER",
+      "DBA",
+      "CORN",
+      "WEAT"
+    ],
+    "EEM": [
+      "MCHI",
+      "EWY",
+      "EWT",
+      "INDA"
+    ],
+    "EFA": [
+      "VGK",
+      "EWG",
+      "EWU",
+      "EWJ",
+      "EWA",
+      "EWH"
+    ],
+    "SPY": [
+      "XLE",
+      "XLB",
+      "XLC",
+      "XLI",
+      "XLK",
+      "XLP",
+      "XLU",
+      "XLV",
+      "XLY",
+      "SOXX",
+      "IBB",
+      "ITA",
+      "IAT"
+    ],
+    "VGK": [
+      "EWG",
+      "EWU"
+    ],
+    "XLI": [
+      "ITA"
+    ],
+    "XLK": [
+      "SOXX"
+    ],
+    "XLV": [
+      "IBB"
+    ]
+  },
+  "parent": "var\\research\\class-volatility-screen-20261016-v1",
+  "policies": [
+    "monthly",
+    "0.10",
+    "0.40",
+    "0.80"
+  ],
+  "pretest": {
+    "annual_cost_ceiling_bps": 44,
+    "cost": "sum absolute security-target changes, including initial establishment; no cash pseudo-trade; annualize over fixed start through calibration_end; target-change proxy only, not actual turnover",
+    "cost_bps_per_traded_security_side": 5,
+    "decision": "pass requires both unchanged P4.15 thresholds on calibration; later-period diagnostics cannot rescue failure; an admission pass is not strategy acceptance",
+    "degenerate_cross_section": "skip with explicit reason; never substitute programme reference IC",
+    "gate_labels": "raw adjusted open-to-open returns on the identical full admissible pool, including zero-weight BIL; preserves comparison with the parent gate",
+    "ic": "monthly Spearman of nonzero/zero final target weights versus next 21-session adjusted open-to-open returns across the full admissible pool, including momentum-ineligible zero weights; measure the composed mapping, not an untraded latent score",
+    "inherited_gate": true,
+    "minimum_ic_margin": 3,
+    "minimum_ic_months": 12,
+    "period_sessions": 21,
+    "primary_horizon_sessions": 21,
+    "rank_invariance": "Subtracting a common BIL forward return cannot change cross-sectional ranks. Excess-return rank IC must agree with raw-return IC, up to numerical roundoff; it is not a second signal or independent test.",
+    "reference_controls": "Both published normalized parent controls with BIL remain frozen reference evidence; matched removal-only controls isolate the actual cash-relative change",
+    "sigma": "pooled matching 21-session forward-return sample standard deviation",
+    "stage_boundary": "publish all 16 screens and review; do not replay gate-rejected mappings or optimize the grid",
+    "stop": "Do not replay a rejected mapping or select a different lookback, class count, threshold or cash reference after results. Report every arm."
+  },
+  "question": "Does subtracting bill carry before volatility normalization improve risky-asset selection beyond merely removing BIL from competition?",
+  "registered_on": "2026-10-17",
+  "registration": {
+    "arms": [
+      "pooled_remove_bill_risk",
+      "pooled_cash_relative_risk",
+      "class_remove_bill_risk",
+      "class_cash_relative_risk"
+    ],
+    "authority": {
+      "allocation": false,
+      "broker": false,
+      "finite_study": true,
+      "live": false,
+      "monitoring": false,
+      "workers": 1
+    },
+    "diagnostics": {
+      "horizons_sessions": [
+        1,
+        5,
+        10,
+        21
+      ],
+      "paired_family": "Eight candidate/control contrasts: pooled and class-first at four horizons; report every contrast, no best-horizon selection",
+      "payoff": "Static h-session excess contribution versus the BIL proxy: sum_i w_i * [r_i(open_t,open_t+h) - r_BIL(open_t,open_t+h)]. Contrast candidate minus matching removal-only control using identical dates/labels. This is an untraded, zero-cost, BIL-financed comparison, not account PnL or a portfolio backtest.",
+      "peer_conditioning": "Use the inherited primary classes as descriptive conditioning groups. At least three admissible risky names, nonconstant targets/returns and twelve valid months are needed for a class summary; singleton/two-name/short groups are insufficient, not zero IC or inferred comparable peers.",
+      "signal_and_mapping": "On monthly anchors, report raw selection-score IC over eligible risky names separately from final-target mapping IC over all admissible names; no substitution of signal IC into the primary mapping gate",
+      "uncertainty": "Joint stationary bootstrap, 20000 replicates, mean blocks 3/6/12 months, seed 20261017; individual and Bonferroni 95% family intervals. Calibration and later windows separate; conditional inspected-sample diagnostics, not discovery evidence."
+    },
+    "limitations": [
+      "Current-survivor first-wave cohort; historical membership, mandate and look-through classifications remain uncertified.",
+      "Published adjusted and raw histories are audited with limitations, not certified historical publication vintages or raw trading tape.",
+      "Risk-scaled scores do not by themselves make regional, duration, credit and commodity payoffs economically homogeneous; class-conditioned coverage is reported rather than assumed.",
+      "This is a finite pre-replay screen. Target-change costs are proxies and exclude actual drift/fills; static forward contribution excludes fees, slippage, timing and portfolio path effects.",
+      "Hypothesis and controls are informed by earlier inspected failures; the prospective period is reserved but inactive until a separate eligible implementation exists.",
+      "No CNH/FX, macro or direct provider-price input is used. No promotion, funding or execution evidence is supplied by this screen."
+    ],
+    "origin": "User requested continuation after the October 16 screen. The hypothesis is informed by that inspected result and is not an independent out-of-sample discovery.",
+    "parent": "var/research/class-volatility-screen-20261016-v1",
+    "parent_analysis_sha256": "c2b5ff180071868de2f1e30cbbb50e322e66843b60380f5be721ba7644102f59",
+    "parent_input_manifest_sha256": "f1f9b039141a9e29a3d39b2392d7737659826c6f115eb5d55b523ab597d38f13",
+    "parent_protocol_sha256": "0176302c527659a923084dac14b3049577e20ffd01951e7053a417fbce31574d",
+    "policies": [
+      "monthly",
+      "0.10",
+      "0.40",
+      "0.80"
+    ],
+    "pretest": {
+      "gate_labels": "raw adjusted open-to-open returns on the identical full admissible pool, including zero-weight BIL; preserves comparison with the parent gate",
+      "inherited_gate": true,
+      "primary_horizon_sessions": 21,
+      "rank_invariance": "Subtracting a common BIL forward return cannot change cross-sectional ranks. Excess-return rank IC must agree with raw-return IC, up to numerical roundoff; it is not a second signal or independent test.",
+      "reference_controls": "Both published normalized parent controls with BIL remain frozen reference evidence; matched removal-only controls isolate the actual cash-relative change",
+      "stop": "Do not replay a rejected mapping or select a different lookback, class count, threshold or cash reference after results. Report every arm."
+    },
+    "prospective": {
+      "activation": "Requires the retrospective gate, full matched economic replay and native parity, reviewed app calculation implementation and separate monitoring/promotion decisions. A failed screen does not activate this reserved window.",
+      "calendar": "Dates derived from the application's US calendar; actual exchange closures and missing publications remain explicit, never manufactured sessions",
+      "decision_sessions": 126,
+      "earliest_signal_session": "2026-10-19",
+      "no_early_selection": "If a candidate ever qualifies for this stage, freeze it before the first prospective decision and assess once all registered labels mature; do not replace the window or pick a recipe after interim results",
+      "owner": "Any future monitored calculation must be implemented in the app strategy/analytics services; agents and reminders cannot perform recurring calculations",
+      "planned_last_21_session_label": "2027-05-19",
+      "planned_last_signal_session": "2027-04-20",
+      "status": "reserved validation design only; no future observations exist in this study and no recurring job is created"
+    },
+    "question": "Does subtracting bill carry before volatility normalization improve risky-asset selection beyond merely removing BIL from competition?",
+    "registered_on": "2026-10-17",
+    "replay_if_qualified": {
+      "controls": "same-timing removal-only, same-arm monthly, average-exposure-matched control, original 14-ETF FR25 SOTA and URTH on matched accounting",
+      "cost_bps": [
+        5,
+        10,
+        20
+      ],
+      "extra_delay_sessions": [
+        0,
+        1
+      ],
+      "objective": "net Sharpe +0.05 versus matched control, CAGR no more than 0.5pp worse and max drawdown no more than 2pp worse; positive Sharpe advantage at 10bp and one-session delay",
+      "required": "actual traded turnover/costs, risk/exposure and full constituent/group PnL, chronological and episode stability, family-adjusted inference and native/Python reconciliation; no synthetic-fill exit claims"
+    },
+    "score": {
+      "cash_relative_candidate": "[r_i(126) - r_BIL(126)] / sigma_i(63); require both raw ETF momentum > 0 and excess momentum > 0; BIL cannot receive a target",
+      "missing_reference": "fail closed; no zero substitution, forward fill, provider lookup or alternate cash proxy",
+      "reference": "BIL adjusted total-return history is a Treasury-bill-fund proxy with its own fees and price risk, not a certified risk-free rate or the interest paid on idle account cash",
+      "remove_bill_control": "r_i(126) / sigma_i(63), retaining the original positive raw-momentum gate; BIL cannot receive a target",
+      "role": "All 50 supported histories remain inputs; 49 may compete for positions and BIL supplies the reference. BWX/CPER holds remain unchanged. Zero target for BIL is a declared role constraint, not missing coverage.",
+      "sigma": "same trailing 63-session annualized sample standard deviation of ETF simple adjusted returns; no floor or alternative windows"
+    },
+    "unchanged": [
+      "126-session momentum, 63-session volatility and 253-session warmup",
+      "same pinned published October 12 batch, June 2018 warmup, 2021-2024 calibration and 2025+ chronological diagnostic",
+      "full first-wave admission, raw-dollar liquidity and duplicate representatives",
+      "24 primary classes, parent/child overlap exclusions and deterministic candidate-ID ties",
+      "six pooled slots or three classes with two slots each; inverse-volatility sizing, 98% maximum gross and 45% name cap",
+      "unfilled budgets stay literal cash, not automatically invested in BIL",
+      "monthly anchors plus strict L1 target-change events versus last adopted target, including cash; no held-weight trigger",
+      "44 bp cost ceiling and 3x IC/breakeven margin using the original target-weight/raw-return gate; no lowered gate or fitted thresholds"
+    ],
+    "version": "cash-relative-momentum-screen-v1"
+  },
+  "score": {
+    "cash_relative_candidate": "[r_i(126) - r_BIL(126)] / sigma_i(63); require both raw ETF momentum > 0 and excess momentum > 0; BIL cannot receive a target",
+    "missing_reference": "fail closed; no zero substitution, forward fill, provider lookup or alternate cash proxy",
+    "reference": "BIL adjusted total-return history is a Treasury-bill-fund proxy with its own fees and price risk, not a certified risk-free rate or the interest paid on idle account cash",
+    "remove_bill_control": "r_i(126) / sigma_i(63), retaining the original positive raw-momentum gate; BIL cannot receive a target",
+    "role": "All 50 supported histories remain inputs; 49 may compete for positions and BIL supplies the reference. BWX/CPER holds remain unchanged. Zero target for BIL is a declared role constraint, not missing coverage.",
+    "sigma": "same trailing 63-session annualized sample standard deviation of ETF simple adjusted returns; no floor or alternative windows"
+  },
+  "stage": "finite pre-replay admission screen; review before any portfolio replay",
+  "start": "2021-01-04",
+  "taxonomy": {
+    "basis": "explicit modelling groups derived from the frozen first-wave inventory; not certified historical classifications or verified look-through weights",
+    "boundary_rules": [
+      "Semiconductors, energy producers and materials funds are equities.",
+      "Silver/platinum have one precious-metal class with industrial exposure disclosed, never a second vote.",
+      "Hong Kong remains separate from mainland China; European grouping includes UK, not an EU-membership claim.",
+      "Broad regional/commodity parents retain explicit overlap conflicts rather than being labelled independent breadth.",
+      "Pure energy-futures and chemicals proxies are absent from this admitted wave; do not substitute equity producers.",
+      "Overlap edges are conservative predeclared structural exclusions, not a complete historical holdings-overlap audit."
+    ],
+    "historical_valid_from": null,
+    "observed_on": "2026-10-13",
+    "registered_grouping_on": "2026-10-16"
+  },
+  "through": "2026-10-12",
+  "uncertainty": {
+    "family": "16 mappings, including controls; report individual and Bonferroni 95% family intervals; descriptive and conditional on this inspected cohort",
+    "mean_block_months": [
+      3,
+      6,
+      12
+    ],
+    "method": "joint stationary bootstrap of monthly mapping IC observations; all 16 mappings resampled with identical indices; missing or constant months remain missing",
+    "replications": 20000,
+    "seed": 20261017
+  },
+  "version": "cash-relative-momentum-screen-v1"
+}

@@ -16,7 +16,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--bundle', type=Path, required=True)
     parser.add_argument('--output', type=Path)
-    parser.add_argument('--image', help='Pinned quantconnect/lean@sha256:...')
+    parser.add_argument('--image', help='Pinned image, required only for an explicit legacy Docker run')
+    parser.add_argument('--runtime', choices=['native','docker'])
     parser.add_argument('--export', action='store_true')
     parser.add_argument('--register', action='store_true', help='Append passed research evidence to PostgreSQL')
     parser.add_argument('--start', default='2025-01-02')
@@ -30,6 +31,9 @@ def main():
     parser.add_argument('--delay-sessions', type=int, default=0)
     parser.add_argument('--lookback-bars', type=int, default=63)
     args = parser.parse_args()
+    runtime=args.runtime or AppSettings().lean_runtime_backend
+    if args.output and runtime=='docker' and not args.image:
+        parser.error('Legacy Docker output requires --image with a digest')
     if args.export:
         export_bundle(store=ClickHouseMarketDataStore.from_settings(AppSettings()), root=args.bundle,
                       start=date.fromisoformat(args.start), end=date.fromisoformat(args.end),
@@ -38,9 +42,7 @@ def main():
                       legacy_fx=args.allow_legacy_fx, lookback_bars=args.lookback_bars)
         print(f'Frozen bundle: {args.bundle}')
     if args.output:
-        if not args.image:
-            parser.error('--output requires --image with a digest')
-        print(run_bundle(bundle=args.bundle, output=args.output, image=args.image))
+        print(run_bundle(bundle=args.bundle, output=args.output, image=args.image,runtime=runtime))
         if args.register:
             from systematic_trading.lean.registry import register_run
             from systematic_trading.storage.postgres import PostgresStore

@@ -370,7 +370,7 @@ def costs(root):
     """Cost and the P4.15 verdict for every arm — reported, never used as a filter here."""
     from systematic_trading.research.alpha101_tilt import calibration
     configured = calibration()
-    from systematic_trading.research.turnover_gate import implied_turnover, screen
+    from systematic_trading.research.turnover_gate import implied_turnover, legacy_screen as screen
     root = Path(root)
     reference = {}
     for base in BASES:

@@ -135,6 +135,10 @@ def native_parity(bundle, output, image, cpus='5'):
             raise ValueError('Failed/changed native run; retain and use a distinct attempt path')
         checked_files(output,'artifact_manifest.json')
         return receipt
+    from systematic_trading.config import AppSettings
+    if AppSettings().lean_runtime_backend=='native':
+        from systematic_trading.lean.native_runner import run_native_bundle
+        return run_native_bundle(bundle=bundle,output=output,image=image,cpus=str(min(2,float(cpus))),contract='usd')
     output.mkdir(parents=True)
     name='st-momentum-'+uuid4().hex[:12]
     receipt=dict(status='running',manifest_sha256=sha256(bundle/'manifest.json'),image=image,promotion_eligible=False,

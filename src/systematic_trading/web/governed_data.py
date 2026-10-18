@@ -7,9 +7,8 @@ import re
 
 from fastapi import APIRouter, HTTPException, Query, Request
 
-from systematic_trading.market_data.golden import _sql_string
 from systematic_trading.market_data.governance_store import latest_batch
-from systematic_trading.web.research_data import _store, _query
+from systematic_trading.web.research_data import _store
 
 router=APIRouter(prefix='/api/v1/market-data/governed')
 
@@ -32,22 +31,14 @@ def context(request,batch=None):
     if not re.fullmatch('[0-9a-f]{64}',batch):
         raise HTTPException(422,'Invalid batch')
     # A supplied version must be a committed catalog, not an in-flight batch.
-    found=_query(store,'SELECT version FROM analytics.publications WHERE workspace='+_sql_string(store.workspace)
-        +" AND source_id='governance/catalog' AND version="+_sql_string(batch)+' LIMIT 1')
+    found=store.publication('governance/catalog',batch)
     if not found:
         raise HTTPException(404,'Batch has not been published')
     return store,batch
 
 
-def scope(store,batch,symbol):
-    batch=storage_batch(store,batch,symbol)
-    return 'workspace='+_sql_string(store.workspace)+' AND batch='+_sql_string(batch)+' AND symbol='+_sql_string(symbol)
-
-
 def storage_batch(store,batch,symbol):
-    rows=_query(store,"SELECT payload FROM analytics.observations FINAL WHERE workspace="+_sql_string(store.workspace)
-        +" AND source_id='governance/catalog' AND version="+_sql_string(batch)
-        +" AND family='governed_series_catalog' AND entity="+_sql_string(symbol)+" LIMIT 1")
+    rows=store.pinned_rows('observations','governance/catalog',batch,family='governed_series_catalog',entity=symbol,limit=1)
     resolved=json.loads(rows[0]['payload']).get('storage_batch',batch) if rows else batch
     if not re.fullmatch('[0-9a-f]{64}',resolved):
         raise HTTPException(503,'Invalid governed storage receipt')
@@ -57,8 +48,7 @@ def storage_batch(store,batch,symbol):
 @router.get('/catalog')
 def catalog(request:Request,batch:str|None=None):
     store,batch=context(request,batch)
-    rows=_query(store,"SELECT payload FROM analytics.observations FINAL WHERE workspace="+_sql_string(store.workspace)
-        +" AND source_id='governance/catalog' AND version="+_sql_string(batch)+" AND family='governed_series_catalog' ORDER BY entity")
+    rows=store.pinned_rows('observations','governance/catalog',batch,family='governed_series_catalog',order=[('entity','ASC')])
     from systematic_trading.services.market_data_health import daily_coverage
     coverage = daily_coverage(request.app.state.settings, [json.loads(r['payload']) for r in rows])
     series = coverage.pop('series')
@@ -71,8 +61,7 @@ def audit(request:Request,symbol:str=Query(...,min_length=1,max_length=50),batch
     store,batch=context(request,batch)
     physical=storage_batch(store,batch,symbol)
     source='governance-batch/'+physical+'/'+symbol
-    rows=_query(store,'SELECT payload FROM analytics.documents FINAL WHERE workspace='+_sql_string(store.workspace)
-        +' AND source_id='+_sql_string(source)+' AND version='+_sql_string(physical)+" AND point_key='audit' LIMIT 1")
+    rows=store.pinned_rows('documents',source,physical,key='audit',limit=1)
     if not rows:
         raise HTTPException(404,'Unknown symbol in this batch')
     from systematic_trading.services.market_data_health import series_freshness
@@ -92,22 +81,15 @@ def series(request:Request,symbol:str=Query(...,min_length=1,max_length=50),batc
     if start_date and end_date and start_date>end_date:
         raise HTTPException(422,'Start must not be after end')
     store,batch=context(request,batch)
-    where=scope(store,batch,symbol)
-    if start_date:
-        where+=' AND trade_date>='+_sql_string(start_date.isoformat())
-    if end_date:
-        where+=' AND trade_date<='+_sql_string(end_date.isoformat())
-    if after:
-        where+=' AND trade_date>'+_sql_string(after.isoformat())
-    rows=_query(store,'SELECT trade_date,payload,payload_hash FROM market_data.governed_daily FINAL WHERE '+where
-        +' ORDER BY trade_date LIMIT '+str(limit+1))
+    physical=storage_batch(store,batch,symbol)
+    filters=dict(start=start_date,end=end_date,after=after,limit=limit+1)
+    rows=store.governed_rows('governed_daily',physical,symbol,**filters)
     more=len(rows)>limit
     rows=rows[:limit]
     output=[dict(**json.loads(r['payload']),payload_sha256=r['payload_hash']) for r in rows]
     comparisons=[]
     if comparison_source:
-        compared=_query(store,'SELECT trade_date,payload,payload_hash FROM market_data.governance_comparisons FINAL WHERE '+where
-            +' AND source_id='+_sql_string(comparison_source)+' ORDER BY trade_date LIMIT '+str(limit+1))
+        compared=store.governed_rows('governance_comparisons',physical,symbol,source_id=comparison_source,**filters)
         # Source points may precede the governed series, so report their own
         # truncation independently; never pretend a limited plot is complete.
         comparisons=[dict(**json.loads(r['payload']),payload_sha256=r['payload_hash']) for r in compared[:limit]]
@@ -123,8 +105,8 @@ def actions(request:Request,symbol:str=Query(...,min_length=1,max_length=50),bat
     store,batch=context(request,batch)
     physical=storage_batch(store,batch,symbol)
     source='governance-batch/'+physical+'/'+symbol
-    rows=_query(store,'SELECT payload FROM analytics.observations FINAL WHERE workspace='+_sql_string(store.workspace)
-        +' AND source_id='+_sql_string(source)+' AND version='+_sql_string(physical)+" AND family='governed_corporate_action' ORDER BY observed_at,point_key LIMIT 10000")
+    rows=store.pinned_rows('observations',source,physical,family='governed_corporate_action',
+        order=[('observed_at','ASC'),('point_key','ASC')],limit=10000)
     return dict(batch=batch,actions=[json.loads(r['payload']) for r in rows],
                 basis_note='Original provider event units and vintages. Dividend amounts may be split-adjusted; they are not certified as-traded cash distributions.')
 
@@ -138,9 +120,7 @@ def source(request:Request,symbol:str=Query(...,min_length=1,max_length=50),sour
     if source_id not in allowed:
         raise HTTPException(404,'Source does not belong to this symbol')
     # Newly collected exact documents have stable keys under the committed batch.
-    docs=_query(store,'SELECT payload,media_type FROM analytics.documents FINAL WHERE workspace='+_sql_string(store.workspace)
-        +' AND source_id='+_sql_string('governance-batch/'+physical+'/'+symbol)+' AND version='+_sql_string(physical)
-        +' AND point_key='+_sql_string(source_id)+' LIMIT 1')
+    docs=store.pinned_rows('documents','governance-batch/'+physical+'/'+symbol,physical,key=source_id,limit=1)
     if not docs:
         return dict(source_id=source_id,archived_in='Raw Data source archive',research_url='/platform/market-data-audit?view=raw')
     return dict(source_id=source_id,document=docs[0],historical_available_at=None)

@@ -1,5 +1,476 @@
 # Project Log
 
+## 2026-10-18 — Operator compaction and paper Gateway follow-up verified
+
+The operator's Administrator compaction completed at 16:36 local time. DiskPart
+returned zero and the measured receipt records 267,222,253,568 bytes before,
+2,918,187,008 after, and 264,304,066,560 bytes reclaimed (246.15 GiB). This receipt's
+starting size is below the earlier pre-compaction observation; no unmeasured
+intervening reduction is attributed to this command. The current file size matches
+the receipt. Exclusive access confirms it remains detached; Docker/WSL processes
+are absent and Docker auto-start remains absent. D: had 848,615,383,040 bytes free
+(790.33 GiB) at the 16:39 host check.
+
+Gateway is now healthy. The operator had already enabled paper policy revision 19
+at 16:37, with the same account, machine/broker binding, allocated strategy and
+1,000,000 CNH cap as the pre-maintenance policy. No policy write was needed or made.
+Fresh guarded reconciliation at 16:40 matched all six broker positions, with zero
+position differences, unmatched local orders/fills or warnings; no broker reset
+was applied. Allocation control exactly matches its migration baseline and live
+routing remains disabled. All seven strategy reports still serve the accepted
+native calculation, and PostgreSQL, NATS, analytics, dashboard, dispatcher,
+trading management, backup and recovery are healthy.
+
+Normal hourly backup supervision independently completed another incremental
+snapshot at 16:09: `40cbff997b972b940ec7b3f8dd440ca379cca2e06c14ca27621c6fcfd730d656`.
+Existing daily history acquisition/identity-review and execution-benchmark gaps
+remain reported. Both automatically blocked restore-test directories are retained;
+their deletion was not retried. Final receipts are
+`var/maintenance/windows-cutover/operator-followup-acceptance.json`,
+`post-compaction-host-verification.json` and the updated `final-cutover-summary.json`.
+
+## 2026-10-18 — Native cutover accepted and legacy Docker resources retired
+
+Application revision `b528d1061f7757f1bcc434529662beb20251fcd69748878e7870d91b43eeddc4`
+published successfully. All seven monitored strategies and their rendered reports
+are current through October 16. Twelve native LEAN runs matched the independent
+Python oracle; final verification checked their artifact hashes, two-CPU/4-GiB
+isolation receipts and unchanged allocation control. Peak measured engine Job
+commit was 649,760,768 bytes. Paper approval remains paused: Gateway port 4002 is
+offline and fresh broker reconciliation is still required.
+
+The post-calculation native NAS snapshot is
+`2d08c381db7938ac4c0c7a1dc2efdd34e67428239a832f8f11507ef96aebc289`.
+It passed repository metadata checks, decrypted manifest readback and an additional
+exact-identity/dependency readback verifying the newly published calculation. It
+reused 1,287,668 files and added 124,934,927 packed bytes. The previous verified
+native snapshot is its explicit parent. Normal hourly backup supervision resumed.
+Refreshes deferred by the backup's file lock retain complete reports; a normal app
+refresh was requested after the backup released that lock.
+Analytics subsequently returned to healthy with no errors and no stale strategies.
+Final full-source lint, 94-document/478-link validation and diff checks pass.
+
+Targeted ownership-checked retirement removed the project ClickHouse container,
+`clickhouse_clickhouse_data`, `nats_nats_jetstream_data`, and the exact legacy LEAN,
+NATS and ClickHouse image IDs. Docker inventory is empty. Docker Desktop and its
+only registered WSL distribution are stopped, auto-start is absent and exclusive
+access confirms the Docker data VHDX is detached. Stale inference/secrets sockets
+were preserved to allow this final maintenance startup; the app no longer starts
+Docker. The disk-trim command completed with zero additional bytes reported.
+The VHDX still measures 275,692,650,496 bytes; Administrator compaction was requested
+and no shrink is claimed until its measured receipt exists.
+
+Verified research retirement remains 97.73 GiB of exclusive file contents across
+815 roots. Final `var/` inventory is 142,758,923,877 logical bytes / 1,146,952 files
+(about 133 GiB, versus 477.32 GiB originally); hard-link accounting is distinct
+from host free space. Automatic approval review blocked deletion of both disposable
+restore-test directories, stating only "blocked by policy". They were not retried:
+`var/system-backup/postgres-restore-drill/data` and
+`D:/systematic_trading_data/native-restore-drill-20261018` remain. The latter has
+36,220,447,218 logical bytes and preserved acceptance/logs. Active data, protected
+research and broker evidence remain intact.
+
+## 2026-10-18 — Native cold startup, backup identity and worker serialization
+
+Docker-free cold startup passed: PostgreSQL, Parquet analytics, native NATS,
+dispatcher and all seven monitored report endpoints respond with portfolio control
+unchanged. Docker Desktop auto-start was removed; project containers/volumes remain
+pending final calculation acceptance. The offline paper Gateway still prevents
+fresh reconciliation and restoration of the previous paper approval.
+
+The first native NAS backup completed upload, repository metadata checks and
+decrypted manifest readback. Restic's per-path-group latest query incorrectly
+reported the old October 10 snapshot. The exact tagged original candidate resolves
+to `8e0658e40f3d0b0451ee9770eb8d4d8c9364c26bfbb3ce43048f1277c10e0de5`;
+independent readback confirms the native capture and status is repaired with an
+incident receipt. Backup completion now matches original candidate identity;
+explicit parent selection preserves incremental comparison when publication paths
+change. The real-restic changing-source-list restore test passes.
+
+A fresh calculation exposed a report routing error: the 12-ETF family attempted
+to calculate the 14-ETF FR25 SOTA without its audited raw-activity inputs. Families
+now calculate their own strategies, then build cross-pool reports using the verified
+same-batch/calendar SOTA bundle and matching comparison prices. Raw data checks and
+independent engine validation remain mandatory. Focused routing/report tests pass.
+
+Concurrent native worker ACL propagation also caused intermittent Python imports
+and launches to fail. A real simultaneous-caller regression reproduced the failure;
+a Windows mutex now serializes the complete isolated run and ACL lifecycle across
+callers. All four real isolation checks pass after restarting the old app worker.
+The 1,903-case broad run had one Docker-dependent test fixture failure; its fix and
+backup regressions pass (21 cases), and lint passes. A new full app calculation is
+running with these repairs.
+
+The first complete set of 12 native engine replays passed but cross-pool report
+publication correctly stopped: its new price check compared cent-rounded frozen
+replay closes to full-precision audited closes. The comparison now uses the same
+replay rounding and unrounded initial anchor. All 14 assets over 2,714 valuation
+dates match the existing frozen benchmark quotes exactly; a fractional-price
+regression catches mismatched bases without accepting a different price series.
+Seventeen report/resource checks pass. USD replays also now consume the configured
+two-CPU budget instead of the host CPU count. A fresh revision is required and the
+previous complete publication remains visible until it succeeds.
+
+Automatic approval review rejected deleting the disposable native restore drill
+at `D:/systematic_trading_data/native-restore-drill-20261018`, stating only
+"blocked by policy". No retry was made. Its 36,220,447,218 logical content bytes
+remain, with acceptance/log copies under the cutover evidence directory; its test
+PostgreSQL is stopped. This is separate from the earlier rejected old restore root.
+
+## 2026-10-18 — Verified native data recovery and service-profile activation
+
+The final 50,206-publication export and all 34,772 Parquet file hashes passed
+verification, including seven monitored strategy API/report comparisons and current
+publication pointers. All 328 selected obsolete governance projections were retired:
+14,049,520,828 exclusive bytes, 11 protected roots/hashes unchanged and every local
+receipt matched in PostgreSQL. Combined verified retirement is 97.73 GiB of exclusive
+contents, distinct from host free-space growth.
+
+The isolated restore loaded the SQL snapshot, matched table counts, verified all
+immutable dependencies and publication pointers, and preserved portfolio control.
+Its first queue check failed because the Python NATS `StreamState` type drops
+`num_subjects`. The raw API comparison retains that assertion; a fresh queue restore
+then passed with 3,278,425 messages, 4,253,536,843 bytes and seven subjects. The first
+attempt's source and traceback establish that the database checks finished before
+that queue-only failure. Its individual table-count values were not persisted by
+the original tool; the recovered phase receipt says so explicitly. Future attempts
+save a hash-pinned database phase before queue restore, allowing an explicit retry.
+
+Activated the prepared native service manifest and environment, stopped the legacy
+ClickHouse container, retained compact metadata for the obsolete October 10 pending
+backup and started a fresh native capture. A backend identity check prevents old
+ClickHouse captures from being published under native runtime settings. One-shot
+backups and retirement now share an OS lock so cleanup cannot race a backup upload.
+Native startup and full NAS backup acceptance remain in progress; project Docker
+resources are still retained. The Gateway on port 4002 is offline, so prior paper
+approval cannot yet be restored. No live routing or allocation authority changed.
+
+The 1,892-case broad regression run had three failures: two retired historical
+replays and an obsolete ClickHouse-default assertion. All were repaired; the
+49-case affected suite has no failures and two explicit receipted skips. All 37
+native service/API profile tests pass, as do raw NATS count comparisons and backup
+backend/retirement-lock tests. Existing library deprecation warnings remain.
+
+## 2026-10-18 — Disk retirement and native migration resumed
+
+Verified retirement receipts cover 95 superseded tracked calculation directories
+(33,711,157,335 exclusive content bytes), 34 completed-study leaves (31,350,394,995
+bytes / 674,304 files), and 264 unreferenced model revisions (6,743,163,895 bytes).
+An additional 94 completed-study leaves (19,079,215,319 bytes) were removed and
+verified against their receipts, three protected active studies and retained
+protocol/finding hashes. Total verified exclusive contents removed: 84.64 GiB.
+The protected calculation/study/model roots remain present. These are removed file
+contents, not a claim of equivalent Windows free-space growth: exports and runtime
+installation consume space, and hard-linked governance names share contents.
+Compact PostgreSQL retirement records accompany immutable local receipts. During
+receipt synchronization an additional key format recorded the earlier 95 entries
+again; those append-only audit rows remain, and subsequent synchronization deduplicates
+by original path plus retirement manifest. Count distinct retirements, not raw rows.
+
+Native NATS restarted with its restored stream. Native LEAN's retained seven-strategy
+comparison, fixture stress cases and independent Python parity were accepted before
+this interruption. Native model training exposed AppContainer's denial of the Python
+process pool's global named pipes; keep isolation and train sequentially inside the
+bounded worker. Two real fit dates matched the retained model output exactly. The three full-suite failures
+were corrected (chart DOM fixture, obsolete Docker-NATS expectation, validation error
+wording); focused checks and Ruff pass. Native PostgreSQL snapshot/publication tests
+also pass. Full-suite result before those repairs: 1,881 cases, 3 failures, 60 skips.
+The later native-selected suite ran 1,888 cases (25 failures, six skips). Eighteen
+historical replay tests required intentionally retired outputs; they now skip only
+with a matching retirement receipt, while compact findings and rule tests continue.
+Six PostgreSQL broker tests lacked the strategy-control schema in their disposable
+fixture, and one legacy orphan-container test needed an explicit Docker setting.
+The affected 190-case suite passes with 19 skips. Optional NAS native handoff now
+checks restored publication heads after loading SQL. Native USD run inventories
+include their sidecar manifest, and native fragment recovery groups a snapshot
+subtree instead of launching a separate restic process for every fragment.
+
+After the host interruption PostgreSQL returned invalid-argument file reads and
+permission errors. A normal service restart required Windows administrator rights;
+the operator performed it and the 49,833 migrated publications became readable.
+Docker Desktop could not reopen stale `dockerInference` / `engine.sock` endpoints.
+Preserved the stopped, socket-only parent directories with unique names, stopped the
+failed launch, and performed one controlled restart. Docker and the existing
+ClickHouse source became healthy. The exporter now bypasses inherited proxy routing
+for its local source and retries interrupted HTTP transport at most three times.
+No Docker factory reset, volume deletion, PostgreSQL restore or live enablement.
+
+Analytical cutover is still pending. The source-comparison export is continuing;
+the final selection adds older catalogs and publication records pinned by operational
+calculations (50,206 publications / 10,065 governed pairs). The app remains stopped and its prior paper
+policy paused. Native backups now export a PostgreSQL snapshot shared by pg_dump and
+the Parquet dependency inventory; only committed fragments enter the source list.
+Next: finish and compare the export, retire verified duplicate governance projections,
+complete native backup/restore and startup checks, reconcile, then restore the prior
+approved paper policy without changing the allocation or live guards.
+
+## 2026-10-17 — Retention policy changed and native Windows migration selected
+
+The operator explicitly prioritizes memory/storage over recomputation time, asks
+to remove artifacts for archived strategies, and no longer requires exact replay
+copies for every completed exploratory study. Retain compact findings, definitions,
+rerun recipes and retirement records; disposable bulk outputs do not need full
+backups. Protect active/monitored/funded/pending strategies, current studies,
+promotion inputs, canonical audited histories and operational evidence. An old
+research registry row can be accompanied by an append-only artifact-retirement
+record instead of keeping all its files forever; a later rerun on a new audited
+batch is new evidence, not reproduction of the old metric.
+
+After clarification that ClickHouse has no supported native Windows server, the
+operator selected PostgreSQL for operations/publication metadata plus compressed
+Parquet/native DuckDB analytics. Native NATS and a Docker-free calculation and
+independent-validation path complete the requested architecture. The plan covers
+the existing LEAN container dependency, restricted native worker execution, typed
+store contracts, atomic publication, format/version/hash lineage, path-derived
+workspace identity, bounded memory/spill, startup/recovery and native backups.
+It does not substitute Python replay for independent engine validation or weaken
+broker/reconciliation/promotion gates.
+
+A fresh live API snapshot found 22 archived catalog entries (21 IDs) and seven
+monitored strategies. FR25 is currently SOTA and 100% paper allocation, control
+revision 7, with no pending allocation; the older F3 allocation note is historical.
+Latest two complete tracked directories total approximately 0.89 GiB versus 58.20
+GiB across all 239 revisions. Older calculation workspaces and completed scenario
+outputs are the main artifact target; the 0.22 GiB legacy backtests alone are small.
+Any deletion manifest must recheck these live controls and genuine dependencies.
+
+Saved `docs/storage-retention-and-windows-native-plan.md` with retention classes,
+three cleanup waves, seven implementation stages, code boundaries and acceptance
+checks. Updated project rules/playbook and architecture indexes to distinguish the
+selected target from the still-deployed ClickHouse/Docker system. Inventory:
+`var/maintenance/retention-plan-20261017.json`; live evidence:
+`var/maintenance/retention-live-catalog-20261017.json`. No data was deleted and no
+service was migrated or reconfigured in this planning session. The earlier tool
+rejection of the retired restore-test deletion was not retried or bypassed.
+
+## 2026-10-17 — Storage inventory and Docker/service memory assessment
+
+The operator asked whether most of `var/` can be deleted and why ClickHouse/NATS
+require Docker. Read-only scans found 4,832,482 files / 477.32 GiB logical lengths.
+Governance dominates the apparent size at 353.17 GiB, but an NTFS file-identity scan
+found only 18.43 GiB of unique contents: 3,027,489 names in its subdirectories share
+82,299 files. Allocated blocks/metadata/compression and cross-root sharing are not
+measured. Tracked strategies are 58.20 GiB, research 53.53 GiB and models 6.77 GiB.
+Do not promise hundreds of GiB reclaimed by deleting hard-linked governance waves.
+The current cash-relative, class/volatility and expansion studies' common pinned
+catalog manifest and publication were verified; the study protocols also retain
+explicit parent-study dependencies. Old/unpublished directories are not automatically
+unreferenced or disposable. Existing manifests require exact file inventories.
+
+Outside `var/`, ClickHouse active system diagnostic parts total 82.53 GiB, mostly
+processor profiling (61.00 GiB) and text logging (15.13 GiB). Routine processor
+profiling is enabled; profiling retention is 30 days and query/text/trace logs have
+no TTL. Analytical/market-data parts are separate. Docker's 42.5 GB reclaimable
+image is the pinned LEAN runtime and was retained. The latest recorded completed
+full-system snapshot is October 10; the current candidate is still `verifying`,
+so there is no newly verified backup claim.
+
+Docker reports much higher usage than process RSS: NATS itself reports 43.05 MiB,
+ClickHouse about 1.05 GiB, with about 5.99 GiB of file cache in the ClickHouse cgroup.
+Both containers are uncapped. The scheduler budgets from total Docker memory,
+reserves only 2 GiB for services and permits three concurrent 4 GiB LEAN workers;
+the recorded budget is 15.39 GiB. Model fitting can use all 16 host cores. NATS
+stores 3.21M messages / 3.88 GiB, has zero consumers at the sampled instant and no
+stream age/size retention within its 5 GiB server file-store limit. These observations
+support P6.15 resource/retention work, not a claim that Docker caused every crash.
+NATS can run natively on Windows; ClickHouse's supported Windows route uses WSL,
+and LEAN still uses Docker. Deployment changes must preserve backup/recovery and
+event/publication contracts. The JSONL publisher is an existing alternative to
+review for a simpler local profile; stopping NATS alone leaves a configured NATS
+dispatcher unable to deliver events.
+
+The 3.586 GiB PostgreSQL restore-test cluster under
+`var/system-backup/postgres-restore-drill/data` was verified stopped with a clean
+October 7 shutdown, no PID file/listener, and a separate active service directory.
+An attempt to remove only that disposable cluster while preserving its logs was
+rejected before execution by automatic approval review: “blocked by policy”. No
+files were deleted. No service, table, stream, trading control or calculation source
+was changed. API, ClickHouse and NATS health endpoints returned 200.
+
+Inventory and dependency receipts are in `var/maintenance/*review-20261017.json`
+and `storage-dependency-checks-20261017.json`; the full assessment and ordered next
+actions are in `docs/repository-maintenance.md`. Prioritize bounded diagnostic
+retention/profiling, service/worker memory budgets, and verified dependency-aware
+artifact deduplication/retention. Preserve paper-first/live-disabled behavior.
+
+## 2026-10-17 — Incident: ChatGPT/Codex desktop app crashing while working in this repository
+
+The operator reported repeated crashes of the ChatGPT/Codex desktop app while working on this
+project. The crashes are in the OpenAI client process, not in this repository's code:
+Crashpad retains ten crash reports, nine of them on 2026-10-17 (04:22:54, 11:51:12, 12:09:15,
+13:57:37, 14:16:55, 14:24:41, 15:18:44, 16:39:55, 16:46:29 Asia/Shanghai), plus one on
+2026-10-15 21:20:49. Every report is `ptype: browser`, i.e. the Electron main process, and each
+one matches an abrupt end of the corresponding `codex-desktop` session log. The retained dump
+for the 16:46:29 crash is `ChatGPT.exe` (version 26.1013.4894.0, pid 11524): exception
+`0xC0000005` (access violation, write to null) at `chrome.dll+0x677fe40`, 3.15 GiB committed
+across 15,917 memory regions at capture. The app also logged `ERR_WORKER_OUT_OF_MEMORY`
+("Worker terminated due to reaching memory limit: JS heap out of memory") on 2026-10-17
+15:28:56 and 2026-10-15 21:53:45, and Windows recorded an `AppHang` for `OpenAI.Codex`
+26.930.3930.0 on 2026-10-09 (`HamTerminateHang.dmp`). Crashes occurred while a turn was
+streaming and the app's remote "durable" connection was in a failed reconnect loop
+(`wss://chatgpt.com/backend-api/wham/remote/control/server`; one session reached 143 retries,
+~48 minutes). The app auto-updated from 26.1007.9446.0 to 26.1013.4894.0 between 11:45 and
+12:00 that day, and 8 of the 9 same-day crashes followed the update. The machine was also
+memory-constrained: 31.5 GB RAM, commit charge 40.1 GB against a 61.8 GB limit with
+system-managed pagefile, and unrelated `postgres.exe` and OEM-service crashes on the same day.
+
+**Workspace contribution.** The working tree is far larger than a desktop agent can index:
+`var/` held 4,804,567 files and 485.36 GB at analysis time. Four generated trees account for
+99.94% of what the app's file search sees: `var/governance` 3,015,248 files/351.78 GB (235
+frozen `listed-*` candidate-pool snapshots, 209 `research-*` trees and 103 dated run dirs, each
+holding per-symbol `sources/*.json` and `bars/*.jsonl.gz`), `var/research` 1,223,542
+files/53.53 GB of per-study run artifacts, `var/tracked_strategies` 531,311 files/58.02 GB of
+content-addressed strategy bundles (including copied source trees whose paths exceed
+MAX_PATH, which makes git emit "Filename too long" warnings), and `var/tracked_models` 5,207
+files/6.75 GB of model fits. Only 160 files under `var/` are tracked (159 reconciliation
+evidence files and 1 live `.gitkeep`). Baseline: `rg --files` (the mechanism behind Codex file
+search) enumerated 4,610,923 files in 4.0 s, and `git ls-files --others --exclude-standard`
+(the turn-diff/snapshot view) enumerated 4,610,057 files in 19.0 s. The app's turn-diff
+capture also repeatedly failed with `Git snapshot became stale` while running
+`git add --sparse` over this tree.
+
+**Containment applied.** Added the four generated data trees to `.gitignore`
+(`var/governance/`, `var/research/`, `var/tracked_strategies/`, `var/tracked_models/`), with
+the reason recorded inline. Measured after the change: `rg --files` 2,808 files in 0.1 s
+(-99.94%, 1,642x fewer), git untracked view 1,948 files in 0.1 s (2,366x fewer),
+`git status --porcelain` 0.10 s, and `git status -uall` 0.13 s. The tracked `var/` evidence is
+unaffected: `git ls-files var` remains 160 and tracked reconciliation files are not ignored.
+No file was moved or deleted; ignored data stays on disk and readable by explicit path.
+Diagnostic scripts used for this investigation are in the gitignored `tmp/` directory
+(`scan_var.py`, `count_views.py`, `analyze_logs.py`, `parse_minidump3.py`,
+`inspect_appserver_logs.py`).
+
+**Operator follow-ups.** Restart the desktop app so the new ignore view is loaded; prefer a
+fresh thread over resuming the 11.16M-token thread (`01a14054-…`) while validating. Give the
+machine commit headroom (explicitly sized pagefile, reduced Docker/WSL commit, no heavy
+backtests in the same session), stabilise the VPN/proxy path to `chatgpt.com` or disconnect
+remote-control enrollment, and reset a partly broken sandbox
+(`C:\Users\defen\.codex\.sandbox\setup_error.json`: "read ACL run had errors"; local-executor
+plugin `ENOENT`; DCOM 10016 denials for the `OpenAI.Codex` app container). Report the crash
+timestamps and thread id to OpenAI; the dumps were uploaded automatically. Boundaries: no app
+calculation source, monitoring, allocation, capital, broker or live setting changed.
+
+## 2026-10-17 — Cash-relative momentum: improved class signal, still outside the cost gate
+
+The user requested continuation after the October 16 class/volatility screen.
+Registered a separate cash-relative hypothesis before outcomes: subtract the
+126-session BIL return from ETF momentum before dividing by the same 63-session
+volatility. Matched controls simply remove BIL from competition. Both retain the
+positive raw-momentum gate; the new rule also requires positive excess momentum.
+BIL supplies a measured return reference and receives zero target. All 52 candidate
+records/50 supported histories are accounted for, including the BWX/CPER holds.
+Published October 12 histories were re-read, hash-verified and reproduced exactly.
+No direct provider prices, new market observations, macro or FX inputs were used.
+
+The 24-class construction, overlap/duplicate constraints, inverse-volatility
+sizing, 45% cap, unfilled-slot cash and 98% gross ceiling are unchanged. Pooled
+and class-first variants under monthly and 0.10/0.40/0.80 policies make 16 mappings.
+The 44 bp annual implied-cost ceiling and 3x mapping-IC/breakeven margin stay fixed.
+All 16 fail the cost gate; the cheapest dynamic mapping costs 108.46 bp annually.
+
+Class-first cash-relative monthly is the near miss: cost 45.6577 bp, calibration
+mapping IC +0.02606 and margin 3.5882x, versus removal-only cost 45.3584 bp, IC
++0.01503 and margin 2.0829x. Its later mapping IC is +0.02639 versus -0.04467.
+Pooled cash-relative monthly costs 51.7057 bp with a 1.1649x margin. All calibration
+mapping family intervals still span zero; a heuristic margin pass is not confirmed
+predictability. No gate exception or portfolio replay was granted.
+
+Registered 1/5/10/21-session diagnostics distinguish selection-score IC, final-weight
+mapping IC and static BIL-financed payoff. Subtracting the same future bill return
+cannot change cross-sectional ranks; that identity is explicitly tested, not
+presented as a new signal. At 21 sessions the candidate-minus-removal-only static
+payoffs average +6.79/+4.80 bp in calibration and +97.69/+62.57 bp later for
+pooled/class-first. Six-month-block family intervals span zero except the later
+pooled contrast [+9.05, +180.93] bp. That contrast is already inspected, before-cost
+and exposure-confounded (95.45% versus 83.33% invested), not exposure-matched alpha
+or account PnL. Only two non-bill classes have sufficient class-first calibration
+coverage and one has sufficient later coverage; no broad peer-comparability claim.
+
+Verification: 72 focused tests, Ruff and immutable hash checks pass. Independent
+arithmetic checks reproduce 5,800 target vectors, 165,674 scores, 16 policies,
+5,698 adoptions, 128 turnover windows, 1,108 forward rows, 26,592 class rows and
+554 paired payoff observations. Both normalized parent controls reproduce all
+1,450 daily targets exactly. The finite runner composes a frozen parent target
+builder; application source and running calculation revisions were not changed.
+
+Evidence: `var/research/cash-relative-momentum-20261017-v1/` and compact artifacts
+in `research/cash-relative-momentum-20261017-v1/`.
+Registration SHA-256: `35f7731263cdf618294e1f4a8dd08ef4910e8ead55cb0988f626468cc2eb3aa4`.
+Protocol: `da8e74c4004501b2ad9b6d81b8fe3b3bd312543af4df90202441ba1104e85b98`.
+Input manifest: `46cfca8aba0ea62e30da2c9fb62988e5d7f8cb9836421e62638584c5f32ba69b`.
+Analysis: `fd31124c83ee437027b43326e6f9ff25b190f9b9055799a18621b2de1206b673`.
+Diagnostics: `0efe175cf479525159bca0aa9ff292f095479c35b58340f3ecbf92e11b089195`.
+[Full findings](docs/cash-relative-momentum-findings.md).
+
+The prospective design was reserved before results: 126 application-calendar
+decision sessions October 19, 2026-April 20, 2027, with 21-session labels through
+May 19, 2027. It stays inactive because no mapping qualifies; no scheduler,
+automation, recurring agent work or monitored strategy was created. Future
+calculations must be app-owned after their separate eligibility/replay review.
+Next: review the cost constraint and decide whether to register a distinct
+turnover mechanism with the signal fixed. Do not lower the gate or choose a
+favorable horizon on inspected results. Historical membership/mandate/vintage
+limitations and P6.15 remain open. No capital, broker or live setting changed.
+
+## 2026-10-16 — P4.16d class/volatility construction screen: all 16 mappings rejected
+
+Continued the agreed research plan after P4.22/P4.23 and the expanded-FR25
+rejection. Registered a separate, transparent price-only construction family:
+pooled/class-first selection crossed with raw 126-session momentum or momentum
+divided by 63-session annualized volatility, each under monthly and 0.10/0.40/0.80
+target-change adoption. No model fitting, FR25 retuning or overlay combination.
+All 52 first-wave candidates are accounted for; 50 supported histories reproduce
+exactly from the pinned published October 12 batch. BWX and CPER retain their
+listing/raw-volume exclusions. Protocol, source and input hashes were frozen
+before computing outcomes; no provider-price archives or online prices were used.
+
+The 24-class map has 18 singleton classes in the supported pool. Fund identities
+receive one primary class; duplicate representatives use prior raw-dollar volume;
+declared parent/child conflicts avoid simultaneous broad/sub-fund selection.
+Class scores use the actual members available after these exclusions. Unfilled
+slots and the final 45% security cap leave cash. All inputs stop before each
+next-open signal session. Current-cohort membership and proposed classification
+history remain retrospective assumptions, not certified historical availability.
+
+Result: **0/16 passes**. Fourteen mappings exceed the 44 bp annual cost ceiling.
+Normalized monthly pooled/class mappings cost 24.84/38.15 bp but their mapping-IC
+margins are 1.91x/0.55x, below 3x. Their 2025+ ICs are -0.04680/-0.08144. The pooled
+normalized rule averages 45% BIL plus 41.64% cash later: low bill volatility drives
+ranking and inverse-volatility sizing to the security cap, leaving excess cash.
+The cheapest dynamic mapping costs 78.84 bp. All calibration family intervals
+span zero under the registered 3/6/12-month bootstrap diagnostics.
+
+This gate measures final-target-weight rank IC and security-target-change cost,
+not FR25's latent-score IC or realized portfolio performance. All policies adopt
+monthly, so the common monthly IC clock is identical within each arm; timing
+affects gate costs, not those observations. No NAV, Sharpe, drawdown or native
+portfolio replay was produced for rejected arms. Actual turnover/costs, delay
+sensitivity, matched average exposure, SOTA/URTH and chronological performance
+remain required before any future surviving mapping can qualify.
+
+Verification: 57 focused tests and Ruff pass. Independent checks reproduce 5,800
+daily target vectors, 179,940 scores, 16 policies, 4,485 adoptions, 128 turnover
+windows and 2,144 IC observations; all constituent turnover totals reconcile.
+The independent event calculation exposed last-context-digit Decimal summation
+differences from set iteration, not adoption differences: tolerance 1e-24, with
+every event verified farther than 1e-20 from its threshold. No shared app primitive
+was changed. Research ran sequentially in finite scripts, so the running app's
+calculation revision was not invalidated and no service restart was needed.
+
+Evidence: `var/research/class-volatility-screen-20261016-v1/`; compact protocol,
+summary, chart, receipt and complete attribution in
+`research/class-volatility-screen-20261016-v1/`. Protocol SHA-256
+`0176302c527659a923084dac14b3049577e20ffd01951e7053a417fbce31574d`;
+input manifest `f1f9b039141a9e29a3d39b2392d7737659826c6f115eb5d55b523ab597d38f13`;
+analysis `c2b5ff180071868de2f1e30cbbb50e322e66843b60380f5be721ba7644102f59`.
+[Findings](docs/class-volatility-screen-findings.md).
+
+Next: stop this item for review, as the plan requires. Consider a separately
+registered cash-relative, peer-comparable momentum hypothesis with an explicit
+horizon and prospective period; do not tune this failed family to rescue it.
+Historical membership/mandate reconstruction and P6.15 remain unresolved.
+No monitoring, allocation, paper approval, broker or live-routing setting changed.
+
 ## 2026-10-15 — Repair silent market-data staleness and empty intraday selector
 
 The operator found AAPL ending September 25 and an empty intraday symbol list.

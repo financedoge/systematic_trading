@@ -56,7 +56,7 @@ def test_monitored_overlay_receives_same_raw_history_as_research():
 
 @pytest.mark.parametrize('ic,expected', [(0, 'reject'), (-.1, 'reject'), (.1, 'pass')])
 def test_zero_cost_never_substitutes_for_positive_information(ic, expected):
-    result = gate.screen(0, sigma=.05, candidate_ic=ic)
+    result = gate.legacy_screen(0, sigma=.05, candidate_ic=ic)
     assert result['status'] == expected
     assert result['ic_margin'] is None
     json.dumps(result, allow_nan=False)

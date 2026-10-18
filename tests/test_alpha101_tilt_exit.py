@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 import pytest
+from retained_artifacts import requires_artifact
 
 from systematic_trading.research import alpha101_tilt_exit_study as study
 
@@ -141,6 +142,7 @@ def test_the_profit_and_loss_rules_cannot_see_the_session_they_trade_on():
 # --- the frozen study ---------------------------------------------------------
 
 @BUILT
+@requires_artifact(ROOT / 'decisions')
 def test_every_arm_is_frozen_and_replayed():
     assert len(study.arms()) == 42
     for arm in study.arms():

@@ -53,7 +53,7 @@ from systematic_trading.research.momentum_replay import checked_files, freeze_us
 from systematic_trading.research.momentum_signals import decision_sessions
 from systematic_trading.research.rolling_tracking import prepare_model_schedule
 from systematic_trading.research.strategy_catalog import fr25_definition, StrategyDefinition
-from systematic_trading.research.turnover_gate import implied_turnover, screen
+from systematic_trading.research.turnover_gate import implied_turnover, legacy_screen as screen
 from systematic_trading.research.usd_data import load_usd
 from systematic_trading.research.usd_tracking import prepare_usd_schedule
 

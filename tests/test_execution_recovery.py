@@ -75,6 +75,8 @@ def backend_store(request, sqlite_store):
         connection.execute(sql.SQL("CREATE DATABASE {}").format(sql.Identifier(database)))
     with psycopg.connect(**kwargs, dbname=database) as connection:
         connection.execute(Path("deploy/postgres/migrations/001_initial_transactional_store.sql").read_text())
+        for migration in ('003_lean_research_runs.sql','004_lean_append_only.sql','005_strategy_control.sql'):
+            connection.execute((Path('deploy/postgres/migrations')/migration).read_text())
     store = PostgresStore(PostgresConnectionConfig(database=database, **kwargs))
     store.initialize()
     store.save_proposal(sqlite_store.get_proposal("proposal"))

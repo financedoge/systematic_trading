@@ -1,0 +1,9 @@
+<clickhouse>
+  <logger><level>warning</level><size>20M</size><count>3</count></logger>
+  <mark_cache_size>536870912</mark_cache_size>
+  <uncompressed_cache_size>134217728</uncompressed_cache_size>
+  <processors_profile_log><ttl>event_date + INTERVAL 1 DAY</ttl></processors_profile_log>
+  <text_log><level>warning</level><ttl>event_date + INTERVAL 7 DAY</ttl></text_log>
+  <trace_log><ttl>event_date + INTERVAL 7 DAY</ttl></trace_log>
+  <query_log><ttl>event_date + INTERVAL 7 DAY</ttl></query_log>
+</clickhouse>

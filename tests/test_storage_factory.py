@@ -90,12 +90,13 @@ def test_trading_store_factory_routes_clickhouse_over_postgres_transactional_sto
     assert isinstance(store.market_data_store, ClickHouseMarketDataStore)
 
 
-def test_application_defaults_require_server_stores(monkeypatch):
+def test_application_defaults_require_native_stores(monkeypatch):
     monkeypatch.delenv("ST_TRANSACTIONAL_STORE_BACKEND")
     monkeypatch.delenv("ST_MARKET_DATA_STORE_BACKEND")
     settings = AppSettings(_env_file=None)
     assert settings.transactional_store_backend == "postgres"
-    assert settings.market_data_store_backend == "clickhouse"
+    assert settings.market_data_store_backend == "parquet"
+    assert settings.lean_runtime_backend == "native"
 
 
 def test_sqlite_path_cannot_silently_redirect_production_store(tmp_path):

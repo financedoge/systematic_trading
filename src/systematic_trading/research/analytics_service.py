@@ -343,7 +343,7 @@ class AnalyticsService:
                 (root / "market_data" / "fx_observations").glob("*.json"), "fx_observation")),
             ("transactional-history", lambda: import_transactional_histories(self.analytics, self.store)),
             ("dashboard-serving", lambda: publish_dashboard(self.settings, self.store, self.analytics)),
-            ("lean-history", lambda: import_lean_histories(self.analytics, self.store)),
+            ("lean-history", lambda: import_lean_histories(self.analytics, self.store, self.settings.data_dir)),
             ("market-raw", lambda: import_raw_market_data(self.settings, self.analytics)),
         ]
         research = {"governed-publication", "research-etf-recorder", "listed-daily-recorder", "strategy-fx", "tracked-strategies", "strategy-serving", "signal-decay", "economic-recorder", "positioning-recorder", "energy-recorder", "issuer-etf-recorder"}

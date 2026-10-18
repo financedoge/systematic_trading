@@ -1,6 +1,28 @@
-# Turnover and breakeven-IC gate (P4.15)
+# Trading costs and information diagnostics
 
-Standing pre-test for every later research item in the
+## Current policy — October 17, 2026
+
+The operator retired the **44 bp annual-cost ceiling**. Additional trading cost
+is acceptable when additional return pays for it. Compare the candidate with its
+matched control after costs, using net Sharpe, return/drawdown guards, actual
+traded notional, fee/slippage and execution-delay sensitivity, and chronological
+robustness. No absolute-cost filter may remove a candidate or its comparison arm.
+IC/breakeven margins remain visible diagnostics; they cannot establish portfolio
+profitability or replace a net replay. A positive net difference alone does not
+establish robustness or confer promotion/execution authority.
+
+`turnover_gate.screen` now returns `requires_replay` for complete diagnostics,
+with no cost ceiling and no automatic strategy pass. Missing IC/dispersion stays
+`insufficient`; another signal's IC is never substituted. `legacy_screen` retains
+the original arithmetic only for reproducing dated experiments. Existing legacy
+study modules explicitly use that entry point; do not reuse their admission rules
+in a new study. Historical results and registered thresholds remain unchanged.
+
+See the [rejection audit and reopened research](research-cost-policy-review-2026-10-17.md).
+
+## Historical P4.15 contract — superseded
+
+The following was the original pre-test for later research items in the
 [signal decay and alpha plan](signal-decay-and-alpha-plan.md). Registered
 2026-10-10, implemented in `src/systematic_trading/research/turnover_gate.py`, and
 consumed as a library — an item that cannot state its turnover, its IC and its

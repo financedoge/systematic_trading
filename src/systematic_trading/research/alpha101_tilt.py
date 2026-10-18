@@ -68,7 +68,7 @@ def calibration():
 
 def headroom_thresholds(headroom_bps):
     """The gate's own thresholds with the ceiling replaced by the remaining headroom."""
-    return dict(gate.THRESHOLDS, max_annual_cost_bps=float(headroom_bps), cost_tolerance=0.0)
+    return dict(gate.LEGACY_THRESHOLDS, max_annual_cost_bps=float(headroom_bps), cost_tolerance=0.0)
 
 
 def initialize():

@@ -22,7 +22,7 @@ def main():
         if digest((root/name).read_bytes()) != expected:
             raise ValueError('Frozen analysis changed: '+name)
     store = AnalyticsStore.from_settings(AppSettings())
-    store.client.timeout_seconds = 120
+    if hasattr(store,'client'):store.client.timeout_seconds=120
     rows = []
     with (root/'sector_observations.csv').open(newline='', encoding='utf-8') as stream:
         for item in csv.DictReader(stream):

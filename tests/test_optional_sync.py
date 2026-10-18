@@ -51,6 +51,20 @@ def test_latest_revision_wins_and_unchanged_backups_do_not_become_newer(tmp_path
     assert values(b) == ["a", "b", "newest"]
 
 
+def test_native_handoff_checks_publication_heads_only_after_restore(tmp_path,monkeypatch):
+    from systematic_trading.storage import dependencies
+    a,b=node(tmp_path,'source'),node(tmp_path,'destination')
+    insert(a,'audited-event');a.prepare()
+    directory,manifest=b.checkpoint()
+    b.databases.settings=b.databases.settings.model_copy(update={'market_data_store_backend':'parquet'})
+    checks=[]
+    monkeypatch.setattr(dependencies,'verify_dependencies',
+        lambda settings,receipt,*,verify_publications=True: checks.append(verify_publications))
+    assert b.transfer(directory,manifest,restore=True)=='restored_newer_remote'
+    assert checks==[False,False,True]
+    assert values(b)==['audited-event']
+
+
 def test_corrupt_remote_and_busy_nas_do_not_block_local_services(tmp_path):
     a, b = node(tmp_path, "a"), node(tmp_path, "b")
     insert(a, "remote")

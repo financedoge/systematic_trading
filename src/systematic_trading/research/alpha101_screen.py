@@ -38,7 +38,7 @@ import numpy as np
 from systematic_trading.lean.contracts import sha256, write_json
 from systematic_trading.research.momentum_replay import checked_files, read_json
 from systematic_trading.research import alpha101 as lib
-from systematic_trading.research.turnover_gate import implied_turnover, screen
+from systematic_trading.research.turnover_gate import implied_turnover, legacy_screen as screen
 
 STUDY = 'alpha101-screen-v2'
 PARENT = Path('var/research/sleeve-construction-20261010-v1')

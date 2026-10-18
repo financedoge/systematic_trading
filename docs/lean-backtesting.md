@@ -5,8 +5,13 @@ LEAN event engine. It cannot route orders to IB. Input bundles and run artifacts
 live under `D:/systematic_trading_data/lean/`; PostgreSQL stores immutable research
 evidence in `ops.lean_research_runs`.
 
-The [September 26 validation report](lean-validation-2026-09-26.md) records all
-twelve successful native runs, including two 3,330-session histories. Tested
+The default now uses a pinned native Windows LEAN build with AppContainer/Job
+isolation; see the [native runtime guide](native-windows-runtime.md). Its migration
+acceptance covers the seven retained strategies, independent Python parity,
+fixtures, stress/repeat checks and separate Windows model-fit validation.
+
+The historical [September 26 validation report](lean-validation-2026-09-26.md) records
+twelve successful LEAN-engine runs in Docker, including two 3,330-session histories. Tested
 image: `quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59`
 (release label 18130). Input, fill, fee, cash and NAV comparisons passed without
 widening the declared tolerances.
@@ -28,7 +33,7 @@ scenario from the older runner retaining USD cash. It cannot certify broker TWAP
 or raw splits/dividends; adjusted data receives no additional corporate actions.
 
 `targets` replays frozen monthly targets. `shared` recomputes those targets in
-the container from the frozen strategy source and prior-only signal context.
+the isolated worker from the frozen strategy source and prior-only signal context.
 Both route simulated orders through LEAN's native transactions, fill model,
 portfolio and cash book. The Python engine independently runs identical declared
 economics. Target/date/symbol/quantity differences fail; cash, fee and NAV checks
@@ -36,10 +41,11 @@ use predeclared tolerances. Failed or partial results cannot enter the registry.
 
 ## Use
 
-Install the official `quantconnect/lean` container, then use its immutable
-`quantconnect/lean@sha256:...` repository digest. Mutable tags are rejected by the
-runner. The open-source engine is invoked directly; no QuantConnect cloud upload,
-paid CLI subscription, or brokerage credentials are involved.
+Provision the pinned runtime with `scripts/install_native_lean.py` and complete
+native acceptance before enabling it in `config/native-runtime.json`. The native
+runtime is the default and requires no container image. An explicit legacy
+`--runtime docker` run still requires a verified image digest. The engine runs
+locally without a cloud upload, paid CLI subscription or brokerage credentials.
 
 ```powershell
 .\.venv\Scripts\python.exe scripts/run_lean_backtest.py --export `
@@ -48,8 +54,7 @@ paid CLI subscription, or brokerage credentials are involved.
 
 .\.venv\Scripts\python.exe scripts/run_lean_backtest.py `
   --bundle D:/systematic_trading_data/lean/datasets/my-sota-run `
-  --output D:/systematic_trading_data/lean/runs/my-sota-run `
-  --image quantconnect/lean@sha256:<verified-digest> --register
+  --output D:/systematic_trading_data/lean/runs/my-sota-run --register
 ```
 
 Strict export refuses missing/invalid bars and missing FX dates. Current legacy
@@ -64,8 +69,7 @@ Run the repeatability, one-year, long-history and robustness suite with:
 
 ```powershell
 .\.venv\Scripts\python.exe scripts/validate_lean_integration.py `
-  --root D:/systematic_trading_data/lean/validation/my-new-suite `
-  --image quantconnect/lean@sha256:<verified-digest>
+  --root D:/systematic_trading_data/lean/validation/my-new-suite
 ```
 
 Each suite directory is new and immutable. The suite includes target replay,
@@ -75,13 +79,12 @@ delay, 42/84-bar parameter neighborhoods, and SOTA/baseline comparisons.
 runtime versions, event counts, first/repeat timings, artifact sizes and separate
 pre-/post-2023 metrics. These are explicitly labelled fitted/selected intervals.
 
-The container has no network, a read-only filesystem/input mount, no privileges,
-2 CPUs, 4 GiB memory, a PID limit and a bounded timeout. Only its dedicated output
-directory and temporary scratch space are writable. The project `.env`, Docker
-socket, database credentials and broker connection are not mounted.
-The NAS database snapshot includes registry rows. Frozen datasets/run files and
-the Docker image remain on D: and require separate copying when moving PCs,
-just like ClickHouse/raw market-data artifacts.
+The Windows worker has no network capability, read-only input/source grants,
+2 CPUs, a 4 GiB process-tree memory limit, a process limit and a bounded timeout.
+Only its output and scratch roots are writable; credentials are absent from its
+allowlisted environment. A unique AppContainer profile and its ACL grants are
+removed after each run. Full native backups include the accepted engine/runtime
+manifest, registry and retained datasets/run files. SQL alone cannot recover them.
 
 Artifacts include the specification, source/data provenance, target decisions,
 native fills/fees, daily NAV/cash, final holdings, engine logs, Python reference,

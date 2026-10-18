@@ -73,12 +73,18 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert "ST_AUTOMATION_ENABLED" in serve_script
     assert "--disable-automation" in serve_script
 
-    assert "docker compose" in nats_start_script
-    assert "assert_docker_ready.ps1" in nats_start_script
-    assert "deploy\\nats\\docker-compose.yml" in nats_start_script
-    assert "nats://127.0.0.1:4222" in nats_start_script
+    native_nats_script = Path("scripts/native_nats.ps1").read_text(encoding="utf-8")
+    assert "native_nats.ps1" in nats_start_script
+    assert "-Action start" in nats_start_script
+    assert "docker" not in nats_start_script.lower()
+    assert "migration-ready.json" in native_nats_script
+    assert "Native NATS executable checksum changed" in native_nats_script
+    assert "Get-OwnedNatsProcess" in native_nats_script
+    assert "-WindowStyle Hidden" in native_nats_script
     assert "$LASTEXITCODE" in nats_start_script
-    assert "docker compose" in nats_stop_script
+    assert "native_nats.ps1" in nats_stop_script
+    assert "-Action stop" in nats_stop_script
+    assert "docker" not in nats_stop_script.lower()
     assert "$LASTEXITCODE" in nats_stop_script
     assert Path("scripts/configure_nats_stream.py").exists()
 
@@ -103,6 +109,7 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert "configure_nats_stream.py" in local_start_script
     assert "start_clickhouse.ps1" in local_start_script
     assert "start_operator_dashboard.ps1" in local_start_script
+    assert "maintain_research_storage.ps1" in local_start_script
     assert "StartMarketDataRecorder" in local_start_script
     assert "SkipMarketDataRecorder" in local_start_script
     assert "run_market_data_recorder_service.py" in local_start_script

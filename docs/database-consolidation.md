@@ -1,5 +1,14 @@
 # Database consolidation and D: storage
 
+## October 18 native migration update
+
+The PostgreSQL service now uses `D:/systematic_trading_data/postgresql/18/data`
+(PostgreSQL 18.4), verified from the Windows service command line. The operator
+restarted it after an interrupted host session caused file-read errors. The
+September relocation instructions below are historical. See the
+[native runtime guide](native-windows-runtime.md) and execution Kanban for the
+Parquet/DuckDB, native NATS and native LEAN migration and acceptance state.
+
 ## October 7 active SQLite retirement
 
 The application already uses PostgreSQL and ClickHouse; no additional production

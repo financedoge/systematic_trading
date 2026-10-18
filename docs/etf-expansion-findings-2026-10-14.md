@@ -1,3 +1,5 @@
+> **Policy correction — October 17, 2026.** The annual cost ceiling is retired. Historical gate failures below are not net-performance verdicts. See the [audit and reopened studies](research-cost-policy-review-2026-10-17.md). The [original report](../research/etf-expansion-20261014-v1/findings-original.md) retains the text covered by the original receipt.
+
 # Expanded ETF study — October 14, 2026
 
 The first expanded FR25 candidate is rejected by the registered pre-test. It estimates **67.73 bp annual cost**, above the **44 bp ceiling**, and its calibration rank IC is **−0.01463**. No expanded portfolio NAV or performance advantage is claimed: its full replay was withheld by the frozen rule. The original 14-ETF FR25 control passes. No strategy, allocation or broker authority changed.

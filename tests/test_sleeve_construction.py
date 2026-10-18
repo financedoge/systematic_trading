@@ -4,6 +4,7 @@ from decimal import Decimal
 from pathlib import Path
 
 import pytest
+from retained_artifacts import requires_artifact
 
 from systematic_trading.research import sleeve_construction_study as study
 from systematic_trading.research import sleeve_construction_analysis as analysis
@@ -174,6 +175,7 @@ def test_the_gate_record_screened_every_arm_before_the_replays():
 
 
 @BUILT
+@requires_artifact(ROOT / 'controls')
 def test_the_construction_matched_arm_reproduces_the_pooled_control_except_on_fallbacks():
     study.initialize(ROOT)
     parity = analysis.pool_vs_control(ROOT)
@@ -184,6 +186,7 @@ def test_the_construction_matched_arm_reproduces_the_pooled_control_except_on_fa
 
 
 @BUILT
+@requires_artifact(ROOT / 'controls')
 def test_every_frozen_decision_respects_the_cap_and_the_sleeve_slot_contract():
     study.initialize(ROOT)
     protocol = json.loads((ROOT / 'protocol.json').read_text(encoding='utf8'))
@@ -258,6 +261,7 @@ def test_the_gate_record_screened_every_corrected_arm_before_the_replays():
 
 
 @BUILT_V2
+@requires_artifact(ROOT_V2 / 'decisions')
 def test_no_corrected_decision_holds_a_name_whose_momentum_gate_failed():
     """The regression the review asked for: the gate holds for one-name sleeves too."""
     protocol = json.loads((ROOT_V2 / 'protocol.json').read_text(encoding='utf8'))
@@ -272,6 +276,7 @@ def test_no_corrected_decision_holds_a_name_whose_momentum_gate_failed():
 
 
 @BUILT_V2
+@requires_artifact(ROOT_V2 / 'decisions')
 def test_the_single_instrument_sleeves_are_held_exactly_on_their_gate_positive_days():
     """The published 'permanent DBC/GLD exposure' reading, re-derived under the repair."""
     evaluation_start = json.loads((ROOT_V2 / 'protocol.json').read_text(encoding='utf8'))['evaluation_start']
@@ -292,6 +297,7 @@ def test_the_single_instrument_sleeves_are_held_exactly_on_their_gate_positive_d
 
 
 @BUILT_V2
+@requires_artifact(ROOT / 'decisions')
 def test_the_repair_moves_only_the_single_instrument_sleeves():
     """Every other admission count, and the pooled arm's decisions, are unchanged."""
     v1 = analysis.admission(ROOT)

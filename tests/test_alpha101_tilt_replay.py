@@ -4,6 +4,7 @@ from decimal import Decimal as D
 from pathlib import Path
 
 import pytest
+from retained_artifacts import requires_artifact
 
 from systematic_trading.research import alpha101_tilt_study as study
 from systematic_trading.research.alpha101_tilt_replay_analysis import (at, contrast, load_all, metrics_from,
@@ -117,6 +118,7 @@ def test_the_composite_averages_rank_scores_rather_than_values():
 # --- the frozen replay -------------------------------------------------------
 
 @BUILT
+@requires_artifact(ROOT / 'python')
 def test_every_registered_job_was_replayed_once():
     jobs = study.jobs()
     assert len(jobs) == 3 * 3 * 2 * 2 == 36
@@ -152,6 +154,7 @@ def test_the_frozen_result_is_inconclusive_and_directionally_better():
 
 
 @BUILT
+@requires_artifact(ROOT / 'python')
 def test_the_analysis_reproduces_from_the_replays():
     results = load_all(ROOT)
     assert len(results) == 36

@@ -198,6 +198,29 @@ def test_operator_refresh_wakes_archive_and_account_retries(tmp_path):
     assert all(wake.is_set() for wake in (worker._wake, worker._operations_wake, worker._archive_wake))
 
 
+def test_retired_registered_run_keeps_summary_without_reading_or_recreating_files(tmp_path,monkeypatch):
+    from test_analytics_projection import MemoryAnalytics
+    from systematic_trading.storage import artifact_retention
+    root=tmp_path/'already-removed'
+    run=dict(artifact_path=str(root),payload={'receipt':{'artifacts':{'reference.json':'old','economic.json':'old'}}})
+    class Connection:
+        def __enter__(self):return self
+        def __exit__(self,*args):pass
+        def execute(self,*args):return self
+        def fetchone(self):return {'name':'ops.lean_research_runs'}
+        def fetchall(self):return [run]
+    class PostgresStore:
+        def _connect(self):return Connection()
+    monkeypatch.setattr(artifact_retention,'retirement_for_path',lambda *args:dict(manifest_sha256='a'*64,status='retired'))
+    analytics=MemoryAnalytics()
+    assert import_lean_histories(analytics,PostgresStore(),tmp_path)
+    source='lean-run/'+digest(str(root.resolve()))
+    document,_=analytics.document(source,'retirement')
+    assert json.loads(document['payload'])['exact_replay_available'] is False
+    assert analytics.rows[source]==[] and not root.exists()
+    assert not import_lean_histories(analytics,PostgresStore(),tmp_path)
+
+
 def test_restart_does_not_claim_archive_recovery_before_its_first_refresh(tmp_path):
     worker, _ = service(tmp_path)
     worker._status.update(operations_completed_at=datetime.now(UTC).isoformat(),

@@ -9,6 +9,7 @@ import pytest
 from systematic_trading.config import AppSettings
 from systematic_trading.storage.nas_sync import file_hash, read_json, write_json
 from systematic_trading.storage.system_backup import BackupStopped, SystemBackup, snapshot_nats
+from systematic_trading.runtime_io import exclusive_lock
 
 
 @pytest.fixture
@@ -31,7 +32,8 @@ def fake_capture(backup):
     capture = backup.stage / "capture"
     capture.mkdir(parents=True, exist_ok=True)
     (capture / "postgres.dump").write_bytes(b"fake-test-dump")
-    write_json(capture / "manifest.json", {"files": {"postgres.dump": {"sha256": file_hash(capture/"postgres.dump")}}})
+    write_json(capture / "manifest.json", {"market_data_store_backend": backup.settings.market_data_store_backend,
+        "files": {"postgres.dump": {"sha256": file_hash(capture/"postgres.dump")}}})
     pending = dict(capture=str(capture), manifest_sha256=file_hash(capture/"manifest.json"),
                    captured_at="2026-10-07T02:00:00+00:00", sources=[str(backup.workspace/"source")])
     write_json(backup.local / "pending.json", pending)
@@ -80,11 +82,34 @@ def test_existing_repository_without_key_cannot_be_reinitialized(backup):
     assert not backup.password.exists()
 
 
+def test_one_shot_backup_defers_while_retirement_owns_files(backup, monkeypatch):
+    monkeypatch.setattr(backup, "capture", lambda: pytest.fail("Retirement owns the source files"))
+    with exclusive_lock(backup.workspace / "var/run/research-retention.lock"):
+        assert backup.once() is None
+    assert backup.state['status']=='deferred'
+    assert 'Calculation/retirement file lock unavailable' in backup.state['error']
+
+
 def test_pending_manifest_tampering_fails_before_upload(backup):
     pending = fake_capture(backup)
     (backup.stage / "capture/manifest.json").write_text("{}")
     with pytest.raises(ValueError, match="identity changed"):
         backup.publish(pending)
+
+
+def test_legacy_pending_capture_cannot_be_published_as_native(backup, monkeypatch):
+    backup.settings = backup.settings.model_copy(update={"market_data_store_backend": "parquet"})
+    pending = fake_capture(backup)
+    manifest_path = backup.stage / "capture/manifest.json"
+    manifest = read_json(manifest_path)
+    manifest.pop("market_data_store_backend")
+    manifest["clickhouse"] = {"databases": ["legacy"]}
+    write_json(manifest_path, manifest)
+    pending["manifest_sha256"] = file_hash(manifest_path)
+    monkeypatch.setattr(backup, "restic", lambda *a: pytest.fail("Must not upload mismatched state"))
+    with pytest.raises(ValueError, match="different analytics backend"):
+        backup.publish(pending)
+    assert manifest_path.exists()
 
 
 def test_reachable_but_hung_smb_metadata_is_bounded_and_deferred(backup, monkeypatch):
@@ -118,6 +143,27 @@ def test_restore_cannot_overwrite_sources_or_accept_abbreviated_id(backup):
         backup.restore_files("a"*64, backup.workspace / "source")
     with pytest.raises(ValueError, match="overlaps"):
         backup.restore_files("a"*64, backup.workspace / "source/new-child")
+
+
+def test_restore_groups_only_committed_native_fragments(backup,tmp_path,monkeypatch):
+    import json
+    lake=tmp_path/'native-lake'
+    backup.settings=backup.settings.model_copy(update={'native_analytics_root':lake})
+    parquet=lake/'parquet'
+    calls=[]
+    def restic(*args):
+        calls.append(args)
+        if args[0]=='snapshots':
+            return json.dumps([dict(tags=['system-complete'],paths=[str(parquet/'a.parquet'),str(parquet/'b.parquet')])])
+        if args[0]=='ls':return json.dumps(dict(path=args[-1],type='dir'))
+        return ''
+    monkeypatch.setattr(backup,'restic',restic)
+    target=tmp_path/'restore'
+    backup.restore_files('a'*64,target)
+    assert len([c for c in calls if c[0]=='restore'])==1
+    assert read_json(target/'restore-map.json')[0]['original']==str(parquet)
+    with pytest.raises(ValueError,match='overlaps'):
+        backup.restore_files('a'*64,lake/'empty-child')
 
 
 def test_staging_cannot_contain_source_or_be_inside_source(backup):
@@ -184,10 +230,21 @@ def test_real_restic_backup_readback_restore_and_incremental_catchup(backup, mon
     backup.repository = original / "offline/child"
     assert backup.once() is None
     backup.repository = original
+    # A newly committed fragment changes the root list. Retain incremental
+    # comparison against the verified parent instead of rescanning all sources.
+    fragment = tmp_path / 'committed-fragment.parquet'
+    fragment.write_bytes(b'new immutable test fragment')
+    def changed_source_capture():
+        pending = fake_capture(backup)
+        pending['sources'].append(str(fragment))
+        write_json(backup.local / 'pending.json', pending)
+        return pending
+    monkeypatch.setattr(backup, 'capture', changed_source_capture)
     second = backup.once()
     assert second and second != first, backup.state
     backup.restore_files(second, tmp_path / "restored-second")
     assert [p.read_text() for p in (tmp_path/"restored-second").rglob("data.txt")] == ["offline-change\n"]
+    assert backup.state['summary']['files_unmodified'] > 0
     backup.restic("check", "--read-data")
 
 

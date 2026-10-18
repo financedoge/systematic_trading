@@ -1,5 +1,18 @@
 # Application calculation resources
 
+## October 18 storage and memory policy
+
+The operator superseded the all-core preference below with memory/storage-first
+operation. The current app admits one heavy calculation, limits native workers to
+4 GiB and two CPUs, uses one Windows model-fit worker, and requires 10 GiB host
+memory available before starting. DuckDB uses 1 GB/two threads per query with two
+query slots. Generated artifacts have a 40 GiB admission budget, including a 2 GiB
+reserve; protected evidence is never evicted to make a run fit. See the
+[native runtime guide](native-windows-runtime.md) for enforced limits and the
+remaining distinction between DuckDB memory and total API-process memory.
+
+## Historical September/October all-core configuration
+
 The October 7 finite fallback research honors the user's all-core request with
 16 independent Python workers and three native lanes allocated 6/5/5 CPUs,
 retaining the existing 4 GiB-per-container and 2 GiB service memory reserve.

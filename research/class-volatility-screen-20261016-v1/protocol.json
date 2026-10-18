@@ -1,0 +1,120 @@
+{
+  "version": "class-volatility-screen-v1",
+  "registered_on": "2026-10-16",
+  "stage": "finite pre-replay admission screen; review before any portfolio replay",
+  "question": "Does granular class selection and/or volatility normalization produce an affordable, informative momentum mapping across the full supported first-wave ETF pool?",
+  "parent": "var/research/etf-expansion-20261014-v1",
+  "start": "2021-01-04",
+  "through": "2026-10-12",
+  "calibration_end": "2024-12-31",
+  "later_start": "2025-01-01",
+  "arms": ["pooled_raw", "pooled_risk", "class_raw", "class_risk"],
+  "policies": ["monthly", "0.10", "0.40", "0.80"],
+  "score": {
+    "raw": "126-session adjusted close return, ending at the prior session close",
+    "risk": "raw score divided by 63-session sample standard deviation of adjusted daily simple returns, annualized by sqrt(252)",
+    "eligibility": "shared prior-253-observation, raw-dollar-liquidity and duplicate admission mask; positive raw 126-session momentum; finite strictly positive volatility",
+    "zero_volatility": "unavailable for every arm; never impute or add a fitted volatility floor",
+    "ties": "ascending permanent candidate_id",
+    "cash_like_funds": "BIL remains a candidate, with the same positive momentum and volatility tests; report bill weights and low-volatility dominance explicitly"
+  },
+  "construction": {
+    "pooled": "top six eligible members by the declared score; inverse-volatility weights; gross budget 0.98 times selected_count/6",
+    "class": "within each primary class choose up to two eligible members; class score is their mean declared score; select top three classes, with deterministic alphabetical class ties; each class has gross budget 0.98/3 times selected_count/2; divide it by inverse volatility",
+    "unfilled_slots": "cash, including missing class slots; do not redistribute unused budgets",
+    "cap": "each security capped at 0.45 after sizing; excess stays cash",
+    "all_ineligible": "all cash",
+    "primary_class_rule": "one class per fund; each class gets at most one class-selection vote",
+    "duplicate_rule": "inherit frozen parent admission: highest prior-63-session median raw dollar volume per duplicate group, then permanent candidate ID",
+    "overlap_rule": "broad parent/child fund conflicts listed below cannot be co-selected. Pooled selection greedily skips conflicts by score; class selection greedily skips conflicting members against already chosen classes, recomputes each remaining class's available top two and score, and chooses the next class. Within-class selection also skips conflicts. No look-through independence is claimed.",
+    "downstream": "transparent construction-only family: no financial ridge, XGBoost, activity or USD overlay; it is not FR25 and does not amend the rejected expanded FR25"
+  },
+  "classes": {
+    "equity_us": ["SPY", "MDY", "IWM", "XLE", "XLB", "XLC", "XLI", "XLK", "XLP", "XLU", "XLV", "XLY", "SOXX", "IBB", "ITA", "IAT"],
+    "equity_europe": ["VGK", "EWG", "EWU"],
+    "equity_asia_ex_china": ["EWJ", "EWY", "EWT", "INDA"],
+    "equity_hong_kong": ["EWH"],
+    "equity_china": ["MCHI"],
+    "equity_australia": ["EWA"],
+    "equity_canada": ["EWC"],
+    "equity_developed_ex_us_parent": ["EFA"],
+    "equity_emerging_parent": ["EEM"],
+    "bills_us": ["BIL"],
+    "sovereign_us": ["SHY", "IEF", "TLT"],
+    "sovereign_developed_ex_us": ["IGOV", "BWX"],
+    "inflation_linked_us": ["TIP"],
+    "aggregate_us": ["AGG"],
+    "credit_usd_investment_grade": ["LQD"],
+    "credit_usd_high_yield": ["HYG"],
+    "credit_ex_us_unhedged": ["IBND"],
+    "credit_emerging_usd": ["EMB"],
+    "credit_emerging_local": ["LEMB"],
+    "securitized_us": ["MBB"],
+    "commodity_precious": ["GLD", "SLV", "PPLT"],
+    "commodity_base_metals": ["DBB", "CPER"],
+    "commodity_agriculture": ["DBA", "CORN", "WEAT"],
+    "commodity_broad_parent": ["DBC"]
+  },
+  "overlap_parents": {
+    "SPY": ["XLE", "XLB", "XLC", "XLI", "XLK", "XLP", "XLU", "XLV", "XLY", "SOXX", "IBB", "ITA", "IAT"],
+    "XLK": ["SOXX"], "XLV": ["IBB"], "XLI": ["ITA"],
+    "EFA": ["VGK", "EWG", "EWU", "EWJ", "EWA", "EWH"],
+    "VGK": ["EWG", "EWU"],
+    "EEM": ["MCHI", "EWY", "EWT", "INDA"],
+    "AGG": ["SHY", "IEF", "TLT", "LQD", "MBB"],
+    "DBC": ["GLD", "SLV", "PPLT", "DBB", "CPER", "DBA", "CORN", "WEAT"],
+    "DBA": ["CORN", "WEAT"]
+  },
+  "taxonomy": {
+    "observed_on": "2026-10-13",
+    "registered_grouping_on": "2026-10-16",
+    "historical_valid_from": null,
+    "basis": "explicit modelling groups derived from the frozen first-wave inventory; not certified historical classifications or verified look-through weights",
+    "boundary_rules": [
+      "Semiconductors, energy producers and materials funds are equities.",
+      "Silver/platinum have one precious-metal class with industrial exposure disclosed, never a second vote.",
+      "Hong Kong remains separate from mainland China; European grouping includes UK, not an EU-membership claim.",
+      "Broad regional/commodity parents retain explicit overlap conflicts rather than being labelled independent breadth.",
+      "Pure energy-futures and chemicals proxies are absent from this admitted wave; do not substitute equity producers.",
+      "Overlap edges are conservative predeclared structural exclusions, not a complete historical holdings-overlap audit."
+    ]
+  },
+  "adoption": "existing app research adoption_schedule: monthly anchors always adopt; otherwise strictly greater than threshold on L1 latest theoretical versus last adopted targets including cash; no held-weight input",
+  "pretest": {
+    "cost_bps_per_traded_security_side": 5,
+    "annual_cost_ceiling_bps": 44,
+    "minimum_ic_margin": 3,
+    "period_sessions": 21,
+    "minimum_ic_months": 12,
+    "ic": "monthly Spearman of nonzero/zero final target weights versus next 21-session adjusted open-to-open returns across the full admissible pool, including momentum-ineligible zero weights; measure the composed mapping, not an untraded latent score",
+    "degenerate_cross_section": "skip with explicit reason; never substitute programme reference IC",
+    "cost": "sum absolute security-target changes, including initial establishment; no cash pseudo-trade; annualize over fixed start through calibration_end; target-change proxy only, not actual turnover",
+    "sigma": "pooled matching 21-session forward-return sample standard deviation",
+    "decision": "pass requires both unchanged P4.15 thresholds on calibration; later-period diagnostics cannot rescue failure; an admission pass is not strategy acceptance",
+    "stage_boundary": "publish all 16 screens and review; do not replay gate-rejected mappings or optimize the grid"
+  },
+  "later_diagnostics": "2025-01-01 through cutoff, plus each calendar year; same monthly IC clock; labels must finish inside each window; continuous adopted anchors, no later-period artificial liquidation/re-establishment",
+  "uncertainty": {
+    "method": "joint stationary bootstrap of monthly mapping IC observations; all 16 mappings resampled with identical indices; missing or constant months remain missing",
+    "mean_block_months": [3, 6, 12], "replications": 20000, "seed": 20261016,
+    "family": "16 mappings, including controls; report individual and Bonferroni 95% family intervals; descriptive and conditional on this inspected cohort"
+  },
+  "next_stage_if_survivors": {
+    "controls": "construction-matched pooled_raw at the same timing, each same-arm monthly control, original 14-ETF FR25 SOTA and URTH on matched inputs/accounting; include an average-exposure-matched pooled control because unfilled class slots and singleton classes create cash",
+    "cost_bps": [5, 10, 20], "additional_execution_delay_sessions": [0, 1],
+    "objective": "net Sharpe with +0.05 minimum improvement, CAGR no more than 0.5 percentage points worse and max drawdown no more than 2 percentage points worse versus matched control; positive Sharpe advantage under 10bp and one-session delay",
+    "requirements": "native/Python parity, actual turnover/costs, whole-unit USD accounting, full constituent/class PnL and exposure, episode drawdowns, annual stability and family-adjusted paired inference before any recommendation; review/freeze replay implementation first"
+  },
+  "limits": {"workers": 1, "live_prices": false, "promotion_eligible": false},
+  "limitations": [
+    "Current surviving first-wave cohort, not historical universe membership. Class and overlap history is not certified; retrospective diagnostic only.",
+    "Audited adjusted prices are revised histories, not certified publication vintages; audited raw dollar volume is not tape-certified.",
+    "Use the pinned October 12 cutoff for comparability; this is not a claim that current app prices end there.",
+    "BWX listing hold and CPER unsupported raw-volume observation remain excluded; all 52 candidates are accounted for.",
+    "Simple momentum and risk-normalization parameters are declared design choices informed by prior research, not untouched out-of-sample hypotheses.",
+    "The new construction omits FR25 overlays, so its gate is not a matched FR25 performance comparison. Existing SOTA results remain the later replay hurdle.",
+    "Target-change costs omit held-weight drift and fills; old mapping calibration is not assumed to certify new dynamic-policy turnover.",
+    "No NAV, Sharpe, drawdown, achievable execution advantage, alpha discovery or prospective evidence is claimed by this screen.",
+    "No FX, macro, historical spreads or fill inputs are used. Unresolved FX and historical membership block broader promotion claims."
+  ]
+}

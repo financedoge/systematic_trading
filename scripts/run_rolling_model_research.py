@@ -19,7 +19,6 @@ from systematic_trading.lean.bundle import freeze_bundle
 from systematic_trading.lean.contracts import sha256, write_json, verify_bundle
 from systematic_trading.lean.runner import run_bundle
 from systematic_trading.market_data.analytics_store import AnalyticsStore
-from systematic_trading.market_data.golden import _sql_string
 from systematic_trading.research import current_sota_definition, instruments_for_definition, instantiate_overlays
 from systematic_trading.research.governed_inputs import GovernedInputs, etf_bar
 from systematic_trading.research.rolling_models import fit_record
@@ -76,11 +75,10 @@ def prepare(protocol_path):
     shutil.copyfile(protocol_path, root/'protocol.json')
     governed = GovernedInputs(Path(protocol['governed_root']), protocol['batch'])
     store = AnalyticsStore.from_settings(AppSettings())
-    store.client.timeout_seconds = 120
-    committed = store.query('SELECT version FROM analytics.publications FINAL WHERE workspace='
-        +_sql_string(store.workspace)+" AND source_id='governance/catalog' AND version="+_sql_string(protocol['batch']))
+    if hasattr(store,'client'):store.client.timeout_seconds = 120
+    committed = store.publication('governance/catalog',protocol['batch'])
     if not committed:
-        raise ValueError('Audited batch is not committed in ClickHouse')
+        raise ValueError('Audited batch is not committed in the analytical store')
     days = [d for d in read(governed.checked('calendar.json'))['sessions']
             if protocol['warmup_start'] <= d <= protocol['end']]
     bars = {}

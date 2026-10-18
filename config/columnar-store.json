@@ -1,9 +1,31 @@
 {
   "schema_version": 1,
-  "profile": "local-clickhouse-parquet-duckdb",
-  "decision": "clickhouse_serving_store_with_parquet_archive_and_duckdb_research_reader",
-  "clickhouse": {
-    "implementation_status": "planned_runtime_smoke",
+  "profile": "native-windows-postgres-parquet-duckdb",
+  "decision": "postgres_publication_catalog_with_immutable_parquet_and_native_duckdb",
+  "parquet_archive": {
+    "raw_archive_root": "D:/systematic_trading_data/market-data/raw",
+    "normalized_archive_root": "D:/systematic_trading_data/market-data/normalized",
+    "backup_root": "Z:/systematic_trading_backup/market-data",
+    "backup_mode": "async_closed_chunks_only"
+  },
+  "duckdb": {
+    "role": "bounded_embedded_analytics",
+    "persistent_service": false,
+    "source": "versioned_parquet_snapshots",
+    "memory_limit": "1GB",
+    "threads": 2,
+    "concurrent_queries": 2,
+    "spill_limit": "10GB"
+  },
+  "policies": {
+    "bulk_data_inside_repo": false,
+    "point_in_time_required": true,
+    "raw_before_publish_required": true,
+    "clickhouse_is_mutable_workflow_source_of_truth": false,
+    "postgres_is_mutable_workflow_source_of_truth": true
+  },
+  "legacy_clickhouse": {
+    "implementation_status": "retired_after_verified_cutover",
     "host": "127.0.0.1",
     "http_port": 8123,
     "native_port": 9000,
@@ -21,21 +43,10 @@
     "health_check": "http://127.0.0.1:8123/ping",
     "docker_compose": "deploy/clickhouse/docker-compose.yml"
   },
-  "parquet_archive": {
-    "raw_archive_root": "D:/systematic_trading_data/market-data/raw",
-    "normalized_archive_root": "D:/systematic_trading_data/market-data/normalized",
-    "backup_root": "Z:/systematic_trading_backup/market-data",
-    "backup_mode": "async_closed_chunks_only"
-  },
-  "duckdb": {
-    "role": "local_research_reader",
-    "persistent_service": false,
-    "source": "versioned_parquet_snapshots"
-  },
-  "policies": {
-    "bulk_data_inside_repo": false,
-    "point_in_time_required": true,
-    "raw_before_publish_required": true,
-    "clickhouse_is_mutable_workflow_source_of_truth": false
+  "native_analytics": {
+    "root": "D:/systematic_trading_data/analytics",
+    "metadata_schema": "native_analytics",
+    "publication": "atomic_postgresql_manifest_commit",
+    "compression": "zstd"
   }
 }

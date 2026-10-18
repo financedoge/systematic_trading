@@ -65,7 +65,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         app.state.store = store
         app.state.analytics = None
         app.state.analytics_service = None
-        if resolved_settings.analytics_enabled and resolved_settings.market_data_store_backend == "clickhouse":
+        if resolved_settings.analytics_enabled and resolved_settings.market_data_store_backend in {"clickhouse", "parquet"}:
             from systematic_trading.market_data.analytics_store import AnalyticsStore
             from systematic_trading.research.analytics_service import AnalyticsService
             app.state.analytics = AnalyticsStore.from_settings(resolved_settings)

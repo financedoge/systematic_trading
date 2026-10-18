@@ -119,12 +119,12 @@ def build_features(protocol, output):
 
 def archive(protocol, features, root):
     store = AnalyticsStore.from_settings(AppSettings())
-    store.client.timeout_seconds = 120
+    if hasattr(store,'client'):store.client.timeout_seconds = 120
     source_id = 'sector-research/'+Path(protocol['stock_root']).name+'/'
     original = store.latest(source_id+'dataset')
     if original is None:
         raise ValueError('Stock source dataset must already be published in ClickHouse')
-    counts = store.query("SELECT family,count() AS n FROM analytics.current_observations WHERE workspace="
+    counts = [dict(family=r['family'],n=r['row_count']) for r in store.research_query('datasets',dataset=source_id.rstrip('/'))] if hasattr(store,'research_query') else store.query("SELECT family,count() AS n FROM analytics.current_observations WHERE workspace="
         +_sql_string(store.workspace)+" AND startsWith(source_id,"+_sql_string(source_id)
         +") GROUP BY family ORDER BY family")
     rows = [observation(lag+'/'+day, 'research_constituent_signal', 'SPY', dict(holdings_lag_days=int(lag), **row), day)

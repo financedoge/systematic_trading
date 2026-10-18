@@ -60,11 +60,15 @@ def timestamp(value: Any) -> str | None:
 
 
 class AnalyticsStore:
+    storage_name = 'clickhouse'
     def __init__(self, client: ClickHouseMarketDataClient, workspace: str):
         self.client, self.workspace = client, workspace
 
     @classmethod
     def from_settings(cls, settings):
+        if settings.market_data_store_backend == 'parquet':
+            from systematic_trading.market_data.native_analytics import NativeAnalyticsStore
+            return NativeAnalyticsStore.from_settings(settings)
         return cls(ClickHouseMarketDataClient(settings.clickhouse_http_url,
                    database=settings.clickhouse_database, user=settings.clickhouse_user,
                    password=settings.clickhouse_password),
@@ -82,6 +86,49 @@ class AnalyticsStore:
         rows = self.query("SELECT * FROM analytics.publications WHERE workspace=" + _sql_string(self.workspace)
                           + " AND source_id=" + _sql_string(source_id) + " ORDER BY published_at DESC LIMIT 1")
         return rows[0] if rows else None
+
+    def publication(self, source_id, version=None):
+        if version is None:
+            return self.latest(source_id)
+        rows = self.query('SELECT * FROM analytics.publications FINAL WHERE '+self._where(source_id,version)+' LIMIT 1')
+        return rows[0] if rows else None
+
+    def publications(self, source_id):
+        return self.query('SELECT * FROM analytics.publications FINAL WHERE workspace='+_sql_string(self.workspace)
+                          +' AND source_id='+_sql_string(source_id)+' ORDER BY published_at DESC')
+
+    def pinned_rows(self, table, source_id, version, *, family=None, entity=None, key=None, limit=None, order=()):
+        if table not in ('observations','documents'):
+            raise ValueError('Unknown publication table')
+        sql = f'SELECT * FROM analytics.{table} FINAL WHERE '+self._where(source_id,version)
+        for name,value in [('family',family),('entity',entity),('point_key',key)]:
+            if value is not None: sql += ' AND '+name+'='+_sql_string(value)
+        for name,direction in order:
+            if name not in ('observed_at','point_key','entity','source_id') or direction not in ('ASC','DESC'):
+                raise ValueError('Unsupported publication ordering')
+        if order: sql += ' ORDER BY '+','.join(name+' '+direction for name,direction in order)
+        if limit is not None: sql += ' LIMIT '+str(int(limit))
+        return self.query(sql)
+
+    def governed_rows(self, table, batch, symbol, *, start=None, end=None, after=None, source_id=None, limit=25000):
+        if table not in ('governed_daily','governance_comparisons'):
+            raise ValueError('Unknown governed table')
+        sql = f'SELECT * FROM market_data.{table} FINAL WHERE workspace='+_sql_string(self.workspace)
+        sql += ' AND batch='+_sql_string(batch)+' AND symbol='+_sql_string(symbol)
+        for operator,value in [('>=',start),('<=',end),('>',after)]:
+            if value: sql += ' AND trade_date'+operator+_sql_string(str(value))
+        if source_id is not None: sql += ' AND source_id='+_sql_string(source_id)
+        return self.query(sql+' ORDER BY trade_date LIMIT '+str(int(limit)))
+
+    def governed_counts(self,table,batch):
+        if table not in ('governed_daily','governance_comparisons'):raise ValueError('Unknown governed table')
+        return self.query(f'SELECT count() n,uniqExact(symbol) symbols FROM market_data.{table} FINAL WHERE '
+            'workspace='+_sql_string(self.workspace)+' AND batch='+_sql_string(batch))[0]
+
+    def publication_counts(self,prefix,version):
+        where='workspace='+_sql_string(self.workspace)+' AND startsWith(source_id,'+_sql_string(prefix)+') AND version='+_sql_string(version)
+        return {table:int(self.query(f'SELECT count() n FROM analytics.{table} FINAL WHERE '+where)[0]['n'])
+            for table in ('observations','documents','publications')}
 
     def publication_index(self, prefix):
         rows = self.query("SELECT source_id, argMax(version, published_at) AS version, "

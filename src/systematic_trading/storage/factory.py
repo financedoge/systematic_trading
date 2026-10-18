@@ -10,7 +10,7 @@ from systematic_trading.storage.routed import MarketDataRoutedTradingStore
 from systematic_trading.storage.sqlite import SQLiteStore
 
 SUPPORTED_TRANSACTIONAL_STORE_BACKENDS = ("sqlite", "postgres")
-SUPPORTED_MARKET_DATA_STORE_BACKENDS = ("sqlite", "clickhouse")
+SUPPORTED_MARKET_DATA_STORE_BACKENDS = ("sqlite", "clickhouse", "parquet")
 
 
 def create_transactional_store(
@@ -47,12 +47,12 @@ def create_trading_store(
     resolved_market_data_backend = _normalize_backend(market_data_backend or settings.market_data_store_backend)
     if resolved_market_data_backend == "sqlite":
         if isinstance(transactional_store, PostgresStore):
-            raise ValueError("Postgres transactional storage requires market_data_store_backend='clickhouse'.")
+            raise ValueError("Postgres transactional storage requires market_data_store_backend=clickhouse or parquet.")
         return transactional_store
-    if resolved_market_data_backend == "clickhouse":
+    if resolved_market_data_backend in {"clickhouse", "parquet"}:
         return MarketDataRoutedTradingStore(
             transactional_store,
-            ClickHouseMarketDataStore.from_settings(settings),
+            ClickHouseMarketDataStore.from_settings(settings.model_copy(update={'market_data_store_backend':resolved_market_data_backend})),
         )
     raise ValueError(
         f"Unsupported market data store backend '{resolved_market_data_backend}'. "

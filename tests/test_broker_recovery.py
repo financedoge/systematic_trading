@@ -24,6 +24,7 @@ def test_startup_healthy_gateway_wakes_both_workers(monkeypatch, tmp_path):
     from systematic_trading import app as module
     from systematic_trading.research import analytics_service
     from systematic_trading.market_data.analytics_store import AnalyticsStore
+    from systematic_trading.storage.sqlite import SQLiteStore
 
     calls = []
     now = datetime.now(UTC)
@@ -34,11 +35,12 @@ def test_startup_healthy_gateway_wakes_both_workers(monkeypatch, tmp_path):
     monkeypatch.setattr(module, "TradingManagementService", lambda **kw: trading)
     monkeypatch.setattr(analytics_service, "AnalyticsService", lambda *args: analytics)
     monkeypatch.setattr(AnalyticsStore, "from_settings", lambda _: object())
+    monkeypatch.setattr(module, "create_trading_store", lambda _: SQLiteStore(tmp_path/'recovery-test.db'))
     monkeypatch.setattr(broker_monitor, "probe_ib_tws_health", lambda _: SimpleNamespace(ok=True, checked_at=now))
     monkeypatch.setattr(broker_monitor.BrokerHealthMonitor, "start", broker_monitor.BrokerHealthMonitor.probe_once)
     monkeypatch.setattr(broker_monitor.BrokerHealthMonitor, "close", lambda _: None)
     settings = AppSettings(data_dir=tmp_path, automation_enabled=True, analytics_enabled=True,
-                           market_data_store_backend="clickhouse", health_monitor_enabled=True)
+                           market_data_store_backend="parquet", health_monitor_enabled=True)
     with TestClient(module.create_app(settings)):
         assert calls == ["trading-start", ("analytics", {"reason": "broker_reconnected"}), ("reconcile", now)]
 

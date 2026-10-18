@@ -45,6 +45,9 @@ def select_attempt(output, bundle, engine, *, now=None):
         elif receipt.get("status") != "running":
             raise ValueError("Unrecognized calculation attempt status")
         if engine == "lean" and receipt.get("run_id", "").startswith("st-lean-"):
+            from systematic_trading.config import AppSettings
+            if AppSettings().lean_runtime_backend=='native':
+                raise ValueError('Legacy container attempt requires an explicit retirement receipt before native retry')
             # The parent may have crashed while Docker was still computing.
             # Never delete an orphan container or reuse its writable directory.
             running = subprocess.run(["docker", "ps", "-q", "--filter", "name=^/"+receipt["run_id"]+"$"],

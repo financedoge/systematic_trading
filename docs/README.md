@@ -11,10 +11,14 @@ state and reviewed controls, never in a prose status note.
 - [Execution Kanban](execution-kanban.md)
 - [Research State](research-state.md)
 - [Expanded ETF study and rejection findings](etf-expansion-findings-2026-10-14.md)
+- [Full-pool class and volatility screen — 2026-10-16](class-volatility-screen-findings.md)
+- [Cash-relative momentum and matched BIL-removal controls — 2026-10-17](cash-relative-momentum-findings.md)
 - [Repository maintenance](repository-maintenance.md)
+- [Disk cleanup and native Windows migration](storage-retention-and-windows-native-plan.md)
 
 ## Operations and recovery
 
+- [Native Windows runtime, limits and migration evidence](native-windows-runtime.md)
 - [Gateway trading operations](trading-operations.md)
 - [Trading strategy roles and capital allocation](trading-allocations.md)
 - [Live Rollout](live-rollout.md)

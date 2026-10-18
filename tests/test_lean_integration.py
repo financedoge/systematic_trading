@@ -144,7 +144,7 @@ def test_runner_marks_engine_failure_and_retains_logs(tmp_path, monkeypatch, fai
     monkeypatch.setattr(runner.subprocess, 'Popen', fake_popen)
     with pytest.raises((subprocess.SubprocessError, ValueError), match='Native replay failed through 2025-12-31') as error:
         runner.run_bundle(bundle=bundle, output=target, image='quantconnect/lean@sha256:'+'a'*64,
-                          timeout_seconds=0.5)
+                          timeout_seconds=0.5, runtime='docker')
     assert 'Publication withheld' in str(error.value) and str(target.resolve()) in str(error.value)
     assert error.value.__cause__ is not None
     assert json.loads((target / 'run.json').read_text())['status'] == 'failed'

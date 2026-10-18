@@ -12,8 +12,9 @@ import numpy as np
 from systematic_trading.lean.contracts import sha256, write_json
 from systematic_trading.research.expanded_economics import job_name
 from systematic_trading.research.momentum_replay import checked_files, read_json, verify_usd_bundle
-from systematic_trading.research.turnover_gate import (FROZEN_COST_BPS, THRESHOLDS, VERSION, assess_archetypes,
-    calibrate, format_bps, format_multiple, implied_turnover, screen, weights_from_targets)
+from systematic_trading.research.turnover_gate import (FROZEN_COST_BPS, LEGACY_THRESHOLDS as THRESHOLDS,
+    LEGACY_VERSION as VERSION, assess_archetypes, calibrate, format_bps, format_multiple,
+    implied_turnover, legacy_screen as screen, weights_from_targets)
 
 REPLAYS = Path('var/research/fr25-placebo-20261010-v1')
 ROOT = Path('var/research/turnover-gate-20261011-v2')

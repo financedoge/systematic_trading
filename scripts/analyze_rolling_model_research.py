@@ -280,7 +280,7 @@ def publish(root, summary):
     store = PostgresStore.from_settings(settings)
     registered = [register_run(store, root/'runs'/name) for name in summary['trials']]
     analytics = AnalyticsStore.from_settings(settings)
-    analytics.client.timeout_seconds = 120
+    if hasattr(analytics,'client'):analytics.client.timeout_seconds=120
     observations = []
     for name, result in summary['trials'].items():
         for row in read(root/'runs'/name/'economic.json')['nav']:

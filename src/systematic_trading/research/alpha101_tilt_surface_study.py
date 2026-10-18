@@ -38,7 +38,7 @@ from systematic_trading.research import alpha101 as lib
 from systematic_trading.research import alpha101_tilt_study as rule
 from systematic_trading.research.expanded_economics import job_name
 from systematic_trading.research.momentum_replay import checked_files, freeze_usd_bundle, read_json, run_usd_reference
-from systematic_trading.research.turnover_gate import implied_turnover, screen
+from systematic_trading.research.turnover_gate import implied_turnover, legacy_screen as screen
 
 STUDY = 'alpha101-tilt-surface-v1'
 DEFAULT_ROOT = Path('var/research/alpha101-tilt-surface-20261011-v3')

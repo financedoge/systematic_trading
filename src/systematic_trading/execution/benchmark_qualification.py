@@ -12,7 +12,6 @@ from zoneinfo import ZoneInfo
 from systematic_trading.execution.benchmark_archive import validate_ready
 from systematic_trading.execution.twap_benchmark import calculate_twap
 from systematic_trading.market_data.analytics_store import digest, encode
-from systematic_trading.market_data.golden import _sql_string
 from systematic_trading.research.governed_inputs import GovernedInputs
 from systematic_trading.research.price_governance import POLICY as DAILY_POLICY
 
@@ -100,10 +99,7 @@ class PublishedDaily:
         publication = self.analytics.latest(f"governance-batch/{storage}/{symbol}")
         if not publication or publication["version"] != storage:
             raise ValueError("Daily storage batch is not published")
-        sql = "SELECT payload,payload_hash FROM market_data.governed_daily FINAL WHERE workspace="
-        sql += _sql_string(self.analytics.workspace) + " AND batch=" + _sql_string(storage)
-        sql += " AND symbol=" + _sql_string(symbol) + " AND trade_date=" + _sql_string(day)
-        published = self.analytics.query(sql)
+        published = self.analytics.governed_rows('governed_daily',storage,symbol,start=day,end=day,limit=2)
         if (len(published) != 1 or digest(published[0]["payload"]) != published[0]["payload_hash"]
                 or json.loads(published[0]["payload"]) != row):
             raise ValueError("Daily row publication/hash mismatch")

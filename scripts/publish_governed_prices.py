@@ -14,7 +14,6 @@ from urllib.parse import urlencode, urlsplit
 from systematic_trading.config import AppSettings
 from systematic_trading.market_data.analytics_store import AnalyticsStore, digest, encode
 from systematic_trading.market_data.governance_store import GovernanceStore
-from systematic_trading.market_data.golden import _sql_string
 from systematic_trading.research.analytics_projection import observation
 
 
@@ -29,6 +28,8 @@ def rows(path):
 
 def connected_store():
     analytics=AnalyticsStore.from_settings(AppSettings())
+    if not hasattr(analytics,'client'):
+        return analytics
     # Local to this idempotent, hash-verified research import. No trading calls.
     client=analytics.client
     url=urlsplit(client.base_url)
@@ -139,8 +140,7 @@ def main(root,fresh,workers=1):
     docs.append(dict(point_key='etf_source_manifest',media_type='application/json',payload=(fresh.parent/'governance-etfs-20260926-v1'/'manifest.json').read_bytes().decode('utf8')))
     docs.append(dict(point_key='publisher_source.py',media_type='text/x-python',payload=Path(__file__).read_bytes().decode('utf8')))
     for table,key in [('governed_daily','bars'),('governance_comparisons','comparisons')]:
-        actual=analytics.query(f'SELECT count() AS n FROM market_data.{table} FINAL WHERE workspace='
-            +_sql_string(analytics.workspace)+' AND batch='+_sql_string(batch))[0]['n']
+        actual=analytics.governed_counts(table,batch)['n']
         if actual!=counts[key]:
             raise ValueError('Whole-batch row count mismatch: '+table)
     # The catalog pointer moves only after all per-symbol rows and documents have

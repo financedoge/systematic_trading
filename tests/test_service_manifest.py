@@ -14,7 +14,7 @@ def test_default_service_manifest_loads_current_operator_stack() -> None:
         "nats_jetstream",
         "postgres_transactional",
         "ib_tws_api",
-        "clickhouse_columnar",
+        "native_analytics",
     ]
     dashboard = manifest.service("operator_dashboard")
     dispatcher = manifest.service("event_outbox_dispatcher")
@@ -22,7 +22,7 @@ def test_default_service_manifest_loads_current_operator_stack() -> None:
     nats = manifest.service("nats_jetstream")
     postgres = manifest.service("postgres_transactional")
     ib_tws = manifest.service("ib_tws_api")
-    clickhouse = manifest.service("clickhouse_columnar")
+    analytics = manifest.service("native_analytics")
     recorder = manifest.service("market_data_recorder")
 
     assert dashboard.health_check.target == "http://127.0.0.1:8000/health"
@@ -50,10 +50,11 @@ def test_default_service_manifest_loads_current_operator_stack() -> None:
     assert ib_tws.health_check.target == "var/run/ib_tws_api.state.json"
     assert "scripts/probe_ib_tws_health.py" in ib_tws.command
     assert ib_tws.restart_policy.mode == "external_tws_session"
-    assert clickhouse.implementation_status.value == "active"
-    assert clickhouse.health_check.target == "http://127.0.0.1:8123/ping"
-    assert "scripts/start_clickhouse.ps1" in clickhouse.command
-    assert clickhouse.environment["ST_CLICKHOUSE_LOG_ROOT"].startswith("D:/")
+    assert analytics.implementation_status.value == "active"
+    assert analytics.service_type.value == "embedded_worker"
+    assert analytics.health_check.kind.value == "none"
+    assert analytics.command == []
+    assert analytics.depends_on == ['postgres_transactional']
     assert recorder.implementation_status.value == "active"
     assert recorder.required is False
     assert "scripts/run_market_data_recorder_service.py" in recorder.command

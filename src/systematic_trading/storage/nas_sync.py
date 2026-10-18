@@ -161,6 +161,7 @@ class LocalDatabases:
     def snapshot(self, directory: Path):
         directory.mkdir(parents=True, exist_ok=True)
         files, fingerprints = {}, {}
+        dependencies = None
         for index, source in enumerate(self.sqlite_paths):
             name = f"sqlite-{index}.db"
             fingerprints[name] = None
@@ -171,7 +172,13 @@ class LocalDatabases:
                 fingerprints[name] = sqlite_fingerprint(target)
         if self.config["postgres"]:
             target = directory / "postgres.sql"
-            self.pg("pg_dump", "--no-password", "--clean", "--if-exists", "--no-owner", "--file", target)
+            if self.settings.market_data_store_backend=='parquet':
+                from systematic_trading.storage.dependencies import native_backup_snapshot
+                with native_backup_snapshot(self.settings) as (snapshot,dependencies):
+                    self.pg('pg_dump','--no-password','--clean','--if-exists','--no-owner',
+                        '--snapshot',snapshot,'--file',target)
+            else:
+                self.pg("pg_dump", "--no-password", "--clean", "--if-exists", "--no-owner", "--file", target)
             fingerprints[target.name] = postgres_fingerprint(target)
             if self.config.get("postgres_compression") == "gzip":
                 compressed = directory / "postgres.sql.gz"
@@ -183,11 +190,14 @@ class LocalDatabases:
             files[target.name] = file_hash(target)
         from systematic_trading.storage.dependencies import dependency_receipt
         return {"files": files, "fingerprints": fingerprints, "layout": self.layout,
-                "dependencies": dependency_receipt(self.settings)}
+                "dependencies": dependencies if dependencies is not None else dependency_receipt(self.settings)}
 
     def restore(self, directory: Path, manifest: dict):
         from systematic_trading.storage.dependencies import verify_dependencies
-        verify_dependencies(self.settings, manifest.get("dependencies"))
+        native=self.settings.market_data_store_backend=='parquet'
+        # Native publication metadata is inside this SQL capture. Validate
+        # immutable files first; compare restored publication heads afterwards.
+        verify_dependencies(self.settings, manifest.get("dependencies"),verify_publications=not native)
         self.assert_quiet()
         for index, target in enumerate(self.sqlite_paths):
             if f"sqlite-{index}.db" not in manifest["files"] and target.exists():
@@ -224,6 +234,8 @@ class LocalDatabases:
             # The destination must be quiescent. Backup API handles WAL instead of
             # replacing a main file underneath old -wal/-shm sidecars.
             sqlite_snapshot(directory / name, target)
+        if native:
+            verify_dependencies(self.settings,manifest.get('dependencies'))
 
 
 class NasSync:
@@ -359,7 +371,8 @@ class NasSync:
                 manifest = self.download(head, temporary / "remote") if head else None
                 if manifest and head != self.state["head"] and hasattr(self.databases, "settings"):
                     from systematic_trading.storage.dependencies import verify_dependencies
-                    verify_dependencies(self.databases.settings, manifest.get("dependencies"))
+                    verify_dependencies(self.databases.settings, manifest.get("dependencies"),
+                        verify_publications=self.databases.settings.market_data_store_backend!='parquet')
                 write_json(self.root / "owner.json", {"node": self.state["node"], "host": self.state["host"]})
                 if head and head != self.state["head"]:
                     rollback = self.local / ("before-restore-" + uuid4().hex)

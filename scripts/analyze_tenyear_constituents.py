@@ -164,7 +164,8 @@ def main():
     shutil.copyfile(__file__,root/'analysis_source.py')
     names=['summary.json','exposure_audit.json','signal_activity.json','uncertainty.json','comparisons.json','hhi_correlations.json','daily_returns.csv','results.png','hhi_scatter.png','report.md','analysis_source.py']
     write_json(root/'analysis_manifest.json',{n:sha256(root/n) for n in names})
-    store=AnalyticsStore.from_settings(AppSettings());store.client.timeout_seconds=120
+    store=AnalyticsStore.from_settings(AppSettings())
+    if hasattr(store,'client'):store.client.timeout_seconds=120
     obs=[observation(n+'/'+w,'research_constituent_backtest',n,dict(period=w,**r)) for n,periods in summary.items() for w,r in periods.items()]
     obs += [observation(w+'/'+n,'research_constituent_contrast',n,dict(period=w,**r)) for w,pairs in comparisons.items() for n,r in pairs.items()]
     docs=[dict(point_key=n,media_type='text/markdown' if n.endswith('.md') else 'application/json',payload=(root/n).read_text(encoding='utf8')) for n in names if n.endswith(('.json','.md'))]

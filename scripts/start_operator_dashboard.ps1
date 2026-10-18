@@ -9,8 +9,8 @@ param(
     [string]$NatsUrl = "nats://127.0.0.1:4222",
     [ValidateSet("sqlite", "postgres")]
     [string]$TransactionalStoreBackend = "postgres",
-    [ValidateSet("sqlite", "clickhouse")]
-    [string]$MarketDataStoreBackend = "clickhouse",
+    [ValidateSet("sqlite", "clickhouse", "parquet")]
+    [string]$MarketDataStoreBackend = "parquet",
     [string]$OperationLogPath = "var\log\platform_operations.jsonl",
     [int]$DispatcherLogHeartbeatEveryIterations = 12
 )

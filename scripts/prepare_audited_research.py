@@ -20,7 +20,6 @@ from systematic_trading.config import AppSettings
 from systematic_trading.domain.market import PriceBar
 from systematic_trading.lean.contracts import sha256, write_json
 from systematic_trading.market_data.analytics_store import AnalyticsStore, digest, encode
-from systematic_trading.market_data.golden import _sql_string
 from systematic_trading.research import current_sota_definition, instantiate_overlays
 from systematic_trading.research.analytics_projection import observation
 from systematic_trading.research.chronological_tree import select_base_tree
@@ -75,9 +74,9 @@ def prepare(protocol_path):
         shutil.copyfile(Path(__file__).with_name(name), root/name)
     shutil.copytree(Path(__file__).resolve().parents[1]/'src/systematic_trading', root/'preparation_source', ignore=shutil.ignore_patterns('__pycache__'))
     governed = GovernedInputs(Path(protocol['governed_root']), protocol['batch'])
-    store = AnalyticsStore.from_settings(AppSettings()); store.client.timeout_seconds = 120
-    committed = store.query('SELECT version FROM analytics.publications FINAL WHERE workspace='+_sql_string(store.workspace)
-        +" AND source_id='governance/catalog' AND version="+_sql_string(protocol['batch']))
+    store = AnalyticsStore.from_settings(AppSettings())
+    if hasattr(store,'client'):store.client.timeout_seconds = 120
+    committed = store.publication('governance/catalog',protocol['batch'])
     if not committed:
         raise ValueError('Governed batch is not published')
     verify_manifest(source, 'data_manifest.json')
@@ -118,12 +117,11 @@ def prepare(protocol_path):
             identity_boundary=audits[symbol].get('listing_boundary'), name=audits[symbol].get('name')))
         if col % 100 == 0:
             print('READ GOVERNED',col,len(symbols),flush=True)
-    # Source rows were previously fully hash verified in CH; compare current per-symbol counts too.
-    counts = store.query('SELECT symbol,count() n FROM market_data.governed_daily FINAL WHERE workspace='+_sql_string(store.workspace)
-        +' AND batch='+_sql_string(protocol['batch'])+" AND trade_date>='"+days[0]+"' AND trade_date<='"+days[-1]+"' GROUP BY symbol")
-    counts = {r['symbol']: r['n'] for r in counts}
+    catalog={r['entity']:json.loads(r['payload']) for r in store.pinned_rows('observations','governance/catalog',protocol['batch'],family='governed_series_catalog')}
+    counts={symbol:len(store.governed_rows('governed_daily',catalog[symbol].get('storage_batch',protocol['batch']),
+        symbol,start=days[0],end=days[-1],limit=100000)) for symbol in symbols}
     if any(counts.get(r['symbol'],0) != r['governed_rows'] for r in coverage):
-        raise ValueError('Local governed series and ClickHouse row counts differ')
+        raise ValueError('Local governed series and published row counts differ')
     write_json(root/'stock_coverage.json', coverage)
     sectors = read(source/'protocol.json')['sectors']
     features, labels, exclusions = {}, {}, []

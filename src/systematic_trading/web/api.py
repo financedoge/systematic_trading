@@ -877,7 +877,7 @@ def _published_strategy(request, key, *, html=False):
     document, publication = saved
     service = getattr(request.app.state, "analytics_service", None)
     status = service.status() if service else {}
-    metadata = {"storage": "clickhouse", "published_at": publication["published_at"],
+    metadata = {"storage": getattr(analytics,'storage_name','clickhouse'), "published_at": publication["published_at"],
                 "version": publication["version"], "refresh": status}
     if html:
         from systematic_trading.web.shell import with_app_shell
@@ -890,6 +890,11 @@ def _published_strategy(request, key, *, html=False):
             detail=decorate_catalog(dict(strategies=[detail],expected_through=status.get('strategy_price_through')),
                 _settings(request),CatalogControlView(_store(request)))['strategies'][0]
         banner = report_refresh_banner(publication, status, detail=detail)
+        if detail and detail.get('artifact_retirement'):
+            banner += ('<aside role="note" style="padding:1rem;background:#fff4ce;color:#332900">'
+                       'Detailed research workspace retired under the storage retention policy. '
+                       'This saved report is historical evidence. A new calculation uses a newly '
+                       'pinned audited batch and does not reproduce this retired run.</aside>')
         body = with_app_shell(document["payload"], "strategies").replace("<body>", "<body>" + banner, 1)
         return HTMLResponse(body, headers={"X-Analytics-Published-At": publication["published_at"],
                                            "X-Analytics-Version": publication["version"]})
@@ -1782,13 +1787,13 @@ def _account_snapshots(
     settings: AppSettings,
     warnings: list[str],
 ) -> list[tuple[Path, LiveAccountSnapshotInput]]:
-    if settings.analytics_enabled and settings.market_data_store_backend == "clickhouse":
+    if settings.analytics_enabled and settings.market_data_store_backend in {"clickhouse", "parquet"}:
         from systematic_trading.market_data.analytics_store import AnalyticsStore
         analytics = AnalyticsStore.from_settings(settings)
         try:
             publication = analytics.latest("account-history")
             if publication is None:
-                warnings.append("Account analytical history is awaiting its first ClickHouse publication.")
+                warnings.append("Account analytical history is awaiting its first verified publication.")
                 return []
             rows = analytics.current_observations("account-history/", family="account_snapshot", limit=1000000)
             snapshots = []

@@ -176,8 +176,8 @@ def freeze(root):
         pub = analytics.latest(source)
         if pub is None:
             raise ValueError("No published input: " + source)
-        docs = analytics.query("SELECT point_key,payload,lower(hex(SHA256(payload))) AS payload_sha256 "
-            "FROM analytics.documents FINAL WHERE " + analytics._where(source, pub["version"]) + " ORDER BY point_key")
+        docs = [dict(point_key=r['point_key'],payload=r['payload'],payload_sha256=digest(r['payload']))
+            for r in analytics.pinned_rows('documents',source,pub['version'],order=[('point_key','ASC')])]
         snapshot[source] = dict(publication=pub, documents=docs)
     audits = verify_documents(snapshot, "execution-reference-audits")
     daily = PublishedDaily(analytics)

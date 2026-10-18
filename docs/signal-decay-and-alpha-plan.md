@@ -1,5 +1,20 @@
 # Signal decay, alpha overlays and portfolio robustness — research plan
 
+## Cost policy and retest requested October 17, 2026
+
+The 44 bp annual-cost ceiling is retired by operator instruction. Replay declared
+candidates and controls without an absolute cost or IC-proxy veto; evaluate
+incremental returns after incremental costs, net Sharpe and Calmar, return/drawdown
+guards, cost/delay stress and chronological stability. Historical gate outcomes
+remain reproducible but cannot exclude a new comparison.
+[Audit and reopened hypotheses](research-cost-policy-review-2026-10-17.md).
+
+First retest the fixed cash-relative family against matched removal-only controls,
+current SOTA FR25 and monitored recipes, including monthly and the existing three
+dynamic thresholds. Deliver its report and stop for review before the next
+planned item. The six cost-only Alpha101 exclusions are a later separate study
+on the full supported pool. No strategy promotion or allocation follows.
+
 ## Target-change rebalance study requested October 15, 2026
 
 **P4.22 and P4.23 are complete.** The fixed-top-six threshold study retained
@@ -194,9 +209,39 @@ portfolio replay is withheld. Original control and benchmark native replays
 pass. Historical membership reconstruction and a separately registered
 class/volatility-aware design remain open; no post-result parameter tuning.
 
+**Separate construction screen — 2026-10-16:**
+[Class/volatility findings](class-volatility-screen-findings.md). Frozen before
+outcomes: pooled versus top-three-class/top-two-member selection, raw 126-session
+momentum versus momentum/63-session volatility, and monthly plus 0.10/0.40/0.80
+target-change adoption. All 52 candidates reviewed; the same 50 published histories
+used, with 24 primary classes, explicit parent/child overlap exclusions and cash
+for unfilled slots. This price-only factorial design omits FR25 overlays and is a
+separate construction hypothesis, not a matched FR25 improvement claim.
+All 16 mappings fail the unchanged cost/IC gate; no portfolio replay follows.
+Normalized monthly costs pass but information margins fail; later pooled
+normalized targets average 45% BIL plus 41.64% cash. 57 tests and independent
+target/adoption/IC/turnover checks pass. Stop for review. A cash-relative,
+peer-comparable signal would require a separately declared hypothesis, horizon
+and prospective period; it is not authorized as an automatic parameter rescue.
+Historical membership/mandate and historical classification validity remain open.
+
+**Cash-relative follow-up — 2026-10-17:** user requested continuation after the
+construction-screen report. [Registered study and findings](cash-relative-momentum-findings.md)
+compare excess-over-BIL momentum divided by the same volatility with a matched
+control that only removes BIL. Raw positive momentum, sizing, classes/overlap,
+126/63-session windows and the cost/IC gates are unchanged. All 50 published
+histories remain inputs; BIL is a reference, not a holding. Pooled/class-first
+construction and monthly/0.10/0.40/0.80 policies give 16 mappings, all rejected.
+Class-first cash-relative monthly clears the heuristic IC margin at 3.59x but
+costs 45.66 bp against 44 bp. Fixed 1/5/10/21-session diagnostics, paired static
+payoffs and sparse within-class coverage do not override the gate. No replay.
+The predeclared October 19, 2026-April 20, 2027 prospective decision window (labels
+through May 19) stays inactive; it creates no monitoring or agent calculation job.
+Historical next action (superseded by the October 17 policy above): review the cost constraint before separately declaring a turnover mechanism with
+the signal fixed. No lower ceiling, horizon selection or rescue tuning is implied.
+
 **Acceptance when it is run.** The taxonomy, its boundary rules and the risk-adjustment rule
-frozen in advance; a pinned audited publication batch with verified input hashes; the P4.15
-turnover gate applied to every candidate mapping before any replay; controls that stop
+frozen in advance; a pinned audited publication batch with verified input hashes; turnover and IC diagnostics reported for every candidate mapping without an absolute-cost veto; controls that stop
 near-duplicate funds from multiplying a class's selection probability (the roadmap's existing
 rule); family-adjusted tests; and judgement on drawdown across episodes, consistent with P4.16's
 finding that exposure rules matter more than the partition.

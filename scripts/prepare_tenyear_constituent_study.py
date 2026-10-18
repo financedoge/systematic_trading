@@ -89,7 +89,7 @@ def main():
     for name in ('prepare_tenyear_constituent_study.py','prepare_long_constituent_features.py','run_constituent_research.py'):
         shutil.copyfile(Path(__file__).with_name(name),root/name)
     store=AnalyticsStore.from_settings(AppSettings())
-    store.client.timeout_seconds=120
+    if hasattr(store,'client'):store.client.timeout_seconds=120
     source=store.latest('sector-research/'+Path(protocol['stock_root']).name+'/dataset')
     if source is None:
         raise ValueError('Issuer dataset must be in ClickHouse')

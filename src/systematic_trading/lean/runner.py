@@ -210,7 +210,14 @@ def _await_processes(launched, timeout_seconds):
     return done
 
 
-def run_bundle(*, bundle: Path, output: Path, image: str, timeout_seconds=900, cpus="2", memory="4g") -> dict:
+def run_bundle(*, bundle: Path, output: Path, image: str | None=None, timeout_seconds=900, cpus="2", memory="4g", runtime=None) -> dict:
+    if runtime is None:
+        from systematic_trading.config import AppSettings
+        runtime=AppSettings().lean_runtime_backend
+    if runtime=='native':
+        from systematic_trading.lean.native_runner import run_native_bundle
+        return run_native_bundle(bundle=bundle,output=output,image=image,timeout_seconds=timeout_seconds,cpus=cpus,memory=memory)
+    if runtime!='docker':raise ValueError('Unknown LEAN runtime backend')
     verified = verify_bundle(bundle)
     if output.exists():
         raise FileExistsError(f'Run artifacts are immutable: {output}')
@@ -301,10 +308,17 @@ def run_python_bundle(*, bundle: Path, output: Path, timeout_seconds=900) -> dic
     environment.update(OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1', MKL_NUM_THREADS='1', NUMEXPR_NUM_THREADS='1')
     started = time.perf_counter()
     try:
-        with (output/'reference.log').open('w', encoding='utf8') as log:
-            subprocess.run([sys.executable, '-B', '-m', 'systematic_trading.lean.reference', str(bundle.resolve()),
-                            str(output.resolve()/'economic.json')], cwd=output, env=environment,
-                           stdout=log, stderr=subprocess.STDOUT, timeout=timeout_seconds, check=True)
+        if os.name=='nt':
+            from systematic_trading.lean.windows_worker import run as isolated_run
+            isolated_run([sys.executable,'-B','-m','systematic_trading.lean.reference',str(bundle.resolve()),
+                str(output.resolve()/'economic.json')],output=output,read_roots=[Path(sys.prefix),Path(sys.base_prefix),bundle],
+                environment={'PYTHONPATH':str(bundle.resolve()/'source')},timeout=timeout_seconds)
+            (output/'reference.log').write_bytes((output/'worker.log').read_bytes())
+        else:
+            with (output/'reference.log').open('w', encoding='utf8') as log:
+                subprocess.run([sys.executable, '-B', '-m', 'systematic_trading.lean.reference', str(bundle.resolve()),
+                                str(output.resolve()/'economic.json')], cwd=output, env=environment,
+                               stdout=log, stderr=subprocess.STDOUT, timeout=timeout_seconds, check=True)
         economic = json.loads((output/'economic.json').read_text(encoding='utf8'))
         if not economic['complete']:
             raise ValueError('Incomplete Python calculation')
@@ -317,6 +331,6 @@ def run_python_bundle(*, bundle: Path, output: Path, timeout_seconds=900) -> dic
         raise
     finally:
         receipt['elapsed_seconds'] = time.perf_counter()-started
-        receipt['artifacts'] = {p.name: sha256(p) for p in output.iterdir() if p.is_file() and p.name != 'run.json'}
+        receipt['artifacts'] = {p.relative_to(output).as_posix(): sha256(p) for p in output.rglob('*') if p.is_file() and p.name != 'run.json'}
         write_json(output/'run.json', receipt)
     return receipt

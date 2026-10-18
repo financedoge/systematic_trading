@@ -190,7 +190,9 @@ def latest_allocation(definition, inputs, economic, quotes, models=None, usd_mod
 
 def refresh_tracked_strategies(settings, store, analytics):
     try:
-        return _refresh_tracked_strategies(settings, store, analytics)
+        from systematic_trading.runtime_io import exclusive_lock
+        with exclusive_lock(settings.data_dir / "run/research-retention.lock"):
+            return _refresh_tracked_strategies(settings, store, analytics)
     except Exception as exc:
         state = settings.data_dir / "run/strategy-compute.json"
         if state.exists():
@@ -270,8 +272,10 @@ def _refresh_tracked_strategies(settings, store, analytics):
     if current and current["version"] == revision:
         return False
     root = settings.data_dir / "tracked_strategies" / revision
+    from systematic_trading.storage.artifact_budget import admit
+    storage_budget=admit(settings)
     resources = available_resources(max(1,len(all_definitions)), p.get("engine", "lean"))
-    compute = dict(revision=revision, resources=resources, phase="preparing_models", completed=[], prepared=[],
+    compute = dict(revision=revision, resources=resources, storage_budget=storage_budget, phase="preparing_models", completed=[], prepared=[],
         started_at=datetime.now(UTC).isoformat())
     compute_path = settings.data_dir / "run" / "strategy-compute.json"
     def progress(phase):
@@ -441,12 +445,20 @@ def _refresh_tracked_strategies(settings, store, analytics):
             observed_at=row["trade_date"], available_at=datetime.now(UTC).isoformat(), payload=encode(row)) for row in results[key]["nav_series"]]
         observations += [dict(point_key=key+"/allocation", family="tracked_strategy_allocation", entity=key,
             observed_at=current_allocation["target_known_through"], available_at=datetime.now(UTC).isoformat(), payload=encode(current_allocation))]
+    prepared_usd=None
     if usd_definitions:
         progress('replaying_usd_strategies')
         from systematic_trading.research.usd_monitored import calculate as calculate_usd
-        usd_documents,usd_observations,usd_provenance=calculate_usd(settings,analytics,config,usd_definitions,
-            selected_sota,root,_LOADED_CODE_HASHES,economic_inputs=inputs.get('economic'))
-        documents.extend(usd_documents);observations.extend(usd_observations)
+        defer_usd=selected_sota.universe_key!='multi_asset'
+        if defer_usd and not any(d.key==selected_sota.key for d in m1_definitions):
+            raise ValueError('Current SOTA must be calculated by its own monitored family')
+        usd_result=calculate_usd(settings,analytics,config,usd_definitions,
+            selected_sota,root,_LOADED_CODE_HASHES,economic_inputs=inputs.get('economic'),defer_reports=defer_usd)
+        if defer_usd:
+            prepared_usd=usd_result;usd_provenance=prepared_usd['inputs']['provenance']
+        else:
+            usd_documents,usd_observations,usd_provenance=usd_result
+            documents.extend(usd_documents);observations.extend(usd_observations)
         if usd_provenance['usd'] != inputs['provenance']['usd']:
             raise ValueError('USD publication changed during calculation')
     if m1_definitions:
@@ -457,6 +469,10 @@ def _refresh_tracked_strategies(settings, store, analytics):
         documents.extend(candidate_documents);observations.extend(candidate_observations)
         if candidate_provenance['usd'] != inputs['provenance']['usd']:
             raise ValueError('Candidate USD publication changed during calculation')
+    if prepared_usd is not None:
+        from systematic_trading.research.usd_monitored import complete_cross_pool_reports
+        usd_documents,usd_observations,_=complete_cross_pool_reports(prepared_usd,root/'m1_14',m1_inputs)
+        documents.extend(usd_documents);observations.extend(usd_observations)
     # Keep the last complete report for archived entries. Their portfolios are not extended.
     previous=published_strategies(analytics)
     archive_keys=[]
@@ -493,6 +509,10 @@ def _refresh_tracked_strategies(settings, store, analytics):
                         compute=compute))
     progress("complete")
     (root / "compute.json").write_text(encode(compute), encoding="utf8")
+    from systematic_trading.runtime_io import atomic_json
+    atomic_json(settings.data_dir/'run/research-retention.pending.json',dict(
+        revision=revision,queued_at=datetime.now(UTC).isoformat(),
+        reason='Successful publication; retire unreferenced predecessors at the next stopped startup'))
     return published
 
 

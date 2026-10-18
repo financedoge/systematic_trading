@@ -15,12 +15,12 @@ def checked_input(reference):
     return json.loads(path.read_text(encoding="utf8"))
 
 
-def prepare(request_path):
+def prepare(request_path, *, output_bundle=None, repository_commit=None):
     request = json.loads(request_path.read_text(encoding="utf8"))
     inputs = checked_input(request["inputs"])
     models = checked_input(request["models"]) if request["models"] else None
     usd_models = checked_input(request["usd_models"]) if request.get("usd_models") else None
-    bundle = Path(request["bundle"])
+    bundle = Path(output_bundle or request["bundle"])
     from systematic_trading.runtime_io import exclusive_lock
     with exclusive_lock(bundle.with_name(bundle.name + ".lock")):
         if not bundle.exists():
@@ -28,11 +28,12 @@ def prepare(request_path):
             # it cannot poison the next retry's immutable final bundle path.
             staging = bundle.with_name(bundle.name + ".preparing-" + uuid4().hex)
             freeze_bundle(root=staging, bars=inputs["bars"], fx=inputs["fx"], provenance=inputs["provenance"],
-                base_tree_models=models, usd_models=usd_models, spec_values=request["spec"])
+                base_tree_models=models, usd_models=usd_models, spec_values=request["spec"],repository_commit=repository_commit)
             verify_bundle(staging)
             staging.rename(bundle)
         verify_bundle(bundle)
 
 
 if __name__ == "__main__":
-    prepare(Path(sys.argv[1]))
+    prepare(Path(sys.argv[1]),output_bundle=sys.argv[2] if len(sys.argv)>2 else None,
+            repository_commit=sys.argv[3] if len(sys.argv)>3 else None)

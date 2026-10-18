@@ -15,6 +15,7 @@ PHASES = {
     "inventorying_sources": (1, "Checking source coverage"),
     "capturing_postgres": (1, "Capturing PostgreSQL"),
     "capturing_clickhouse": (1, "Capturing ClickHouse"),
+    "capturing_native_analytics": (1, "Pinning native analytical manifests"),
     "copying_clickhouse": (1, "Copying ClickHouse capture locally"),
     "capturing_queue": (1, "Capturing NATS streams"),
     "hashing_capture": (1, "Checking capture hashes"),
