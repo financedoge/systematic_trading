@@ -58,7 +58,7 @@ def features(close, high, low, volume, lookback):
 
 def adaptive_features(close, high, low, volume):
     """Longest qualifying prior range, without tuning duration to future returns."""
-    selected = features(close, high, low, volume, 42)
+    selected = {k: v.copy() for k, v in features(close, high, low, volume, 42).items()}
     for lookback in (63, 126, 252, 504, 756):
         other = features(close, high, low, volume, lookback)
         mask = other['tight']

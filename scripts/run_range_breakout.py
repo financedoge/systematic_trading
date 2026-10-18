@@ -59,7 +59,7 @@ def prepare(root):
         return
     from systematic_trading.research.governed_inputs import GovernedInputs
     from systematic_trading.research.etf_expansion import load_published_pool, admission_for_day
-    from systematic_trading.research.fr25_tracking import fr25_definition
+    from systematic_trading.research.strategy_catalog import fr25_definition
     from systematic_trading.research import instruments_for_definition
     p = read(PROTOCOL)
     parent = Path(p['price_pin_source']).parent
