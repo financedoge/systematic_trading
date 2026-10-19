@@ -7,7 +7,6 @@ uploads keep their capture and reuse already uploaded content on reconnect.
 from __future__ import annotations
 
 import asyncio
-from contextlib import ExitStack
 from datetime import UTC, datetime
 import json
 import os
@@ -128,7 +127,7 @@ class SystemBackup:
             running=status not in {"disabled", "paused"}, last_error=self.state.get("error"),
             message="Full recovery backup: " + status, details=self.state)
 
-    def command(self, args, *, env=None, timeout=None):
+    def command(self, args, *, env=None, timeout=None, stall_timeout=None):
         """Bounded child process; shutdown cancels work, never waits for NAS upload."""
         output = self.local / "command.stdout.log"
         errors = self.local / "command.stderr.log"
@@ -137,16 +136,34 @@ class SystemBackup:
                 stdout=stdout, stderr=stderr,
                 creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0)
             deadline = time.monotonic() + (timeout or self.config.get("command_timeout_seconds", 21600))
+            # A reachable-but-hung NAS/SMB call can block restic forever without
+            # writing output. Bound silence separately so a wedged upload cannot
+            # keep the capture/retirement locks until the long command timeout.
+            limit = stall_timeout if stall_timeout is not None else self.config.get("stall_timeout_seconds", 900)
+            try:
+                limit = float(limit)
+            except (TypeError, ValueError):
+                limit = 900.0
+            last_size, last_output = -1, time.monotonic()
             next_heartbeat = 0
             try:
                 while process.poll() is None:
                     if self.stop_path.exists():
                         raise BackupStopped("Backup paused for local shutdown")
-                    if time.monotonic() > deadline:
+                    now = time.monotonic()
+                    if now > deadline:
                         raise TimeoutError("Backup command timed out; retry will reuse uploaded content")
-                    if time.monotonic() >= next_heartbeat:
+                    if limit > 0:
+                        size = os.fstat(stdout.fileno()).st_size + os.fstat(stderr.fileno()).st_size
+                        if size != last_size:
+                            last_size, last_output = size, now
+                        elif now - last_output > limit:
+                            raise TimeoutError(
+                                f"{Path(args[0]).name} produced no output for "
+                                f"{int(now - last_output)} seconds; the stalled command timed out")
+                    if now >= next_heartbeat:
                         self.heartbeat()
-                        next_heartbeat = time.monotonic()+30
+                        next_heartbeat = now+30
                     time.sleep(.25)
             finally:
                 if process.poll() is None:
@@ -161,11 +178,12 @@ class SystemBackup:
             raise RuntimeError(f"{Path(args[0]).name} failed (exit {process.returncode}); inspect var/system-backup/command.stderr.log")
         return output.read_text(encoding="utf8", errors="replace")
 
-    def restic(self, *args):
+    def restic(self, *args, timeout=None, stall_timeout=None):
         env = os.environ.copy()
         env.update(RESTIC_REPOSITORY=str(self.repository), RESTIC_PASSWORD_FILE=str(self.password),
                    RESTIC_CACHE_DIR=str(self.local / "cache"))
-        return self.command([self.binary, "--json", *args], env=env)
+        return self.command([self.binary, "--json", *args], env=env,
+            timeout=timeout, stall_timeout=stall_timeout)
 
     def initialize_repository(self):
         if not self.binary.is_file():
@@ -373,7 +391,7 @@ class SystemBackup:
         exclude_file = self.local / "exclude.txt"
         exclude_file.write_text("\n".join(self.config["exclude"])+"\n", encoding="utf8")
         self.status("uploading", error=None, capture_at=pending["captured_at"])
-        self.restic("unlock")  # Only restic-proven stale locks; never --remove-all.
+        self.restic("unlock", timeout=120)  # Only restic-proven stale locks; never --remove-all.
         backup_args = ["backup", "--tag", "system-candidate", "--host", socket.gethostname(),
             "--files-from-verbatim", str(paths_file), "--iexclude-file", str(exclude_file)]
         # Native committed fragment lists change with each publication. Restic's
@@ -417,20 +435,16 @@ class SystemBackup:
             return None
         with exclusive_lock(self.local / "capture.lock"):
             try:
-                # A one-shot backup has no worker PID. Share the retirement lock
-                # so cleanup cannot remove files while restic is reading them.
-                with ExitStack() as guards:
-                    try:
-                        guards.enter_context(exclusive_lock(self.workspace / "var/run/research-retention.lock"))
-                    except OSError as exc:
-                        self.status("deferred", error=f"Calculation/retirement file lock unavailable: {exc}")
-                        return None
-                    self.status("connecting", error=None)
-                    check_nas(self.repository)  # Before expensive capture or NAS filesystem operations.
-                    self.initialize_repository()
-                    pending_path = self.local / "pending.json"
-                    pending = read_json(pending_path) if pending_path.exists() else self.capture()
-                    return self.publish(pending)
+                # Retention cleanup probes this capture lock before deleting files,
+                # and the tracked calculation has its own artifact lock. An upload
+                # therefore never blocks strategy recalculation, and cleanup cannot
+                # remove files while restic is reading them.
+                self.status("connecting", error=None)
+                check_nas(self.repository)  # Before expensive capture or NAS filesystem operations.
+                self.initialize_repository()
+                pending_path = self.local / "pending.json"
+                pending = read_json(pending_path) if pending_path.exists() else self.capture()
+                return self.publish(pending)
             except BackupStopped:
                 self.status("paused", error=None)
                 return None

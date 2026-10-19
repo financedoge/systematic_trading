@@ -1,0 +1,40 @@
+{
+  "version": "range-breakout-individual-calibration-v2",
+  "registered_on": "2026-10-18",
+  "question": "Can IS-fitted range and exit parameters improve individual-ETF breakout holding, followed by a frozen full-pool application?",
+  "fit_end": "2022-12-31",
+  "oos_start": "2023-01-01",
+  "through": "2026-10-16",
+  "split": "No overlap: all parameter selection ends December 2022. 2023 onward is withheld from this calibration procedure. Previously inspected market history is retrospective chronological OOS, not a pristine prospective holdout.",
+  "data": "Latest hash-pinned published audited continuous histories, full supported ETF candidates including USO. Per-asset longest complete valid suffix avoids truncation to the youngest ETF. Exclude all observations up to and including the last unsupported observation/calendar gap; record every excluded gap. Exact XNYS calendar from exchange_calendars 4.13.2, adjusted OHLC, audited raw prices/volume, no filling or online research prices. CPER/BWX/XOP remain subject to missing-observation and identity checks. Additional stocks are unnecessary if existing long ETF histories pass coverage.",
+  "coverage_amendment": "Before any OOS evaluation, after IS fits for GLD/USO/SOXX/AGG, retain full supported suffixes for funds with early unsupported observations. The initial whole-history rejection removed valid later histories. Existing supported inputs and all parameter/selection rules remain identical. Scope amendment is data-quality-driven and recorded with hashes.",
+  "warmup_sessions": 252,
+  "minimum_fit_sessions": 1260,
+  "range_grid": {
+    "windows": [21, 42, 63, 126, 252, 504, 756, 1008, 1260],
+    "absolute_widths": [0.10, 0.15, 0.25, 0.40, 0.60, 0.80],
+    "absolute_drift_fractions": [0.35, 0.65],
+    "relative_width_percentiles": [0.25, 0.50, 0.75],
+    "relative_drift_fraction": 0.50,
+    "definition": "W=q95(log prior L closes)-q05. Absolute W<=log(1+width); relative W<=chosen quantile of the preceding 756 observed W values, minimum252, excluding today's W. First/last block median drift <= fraction*W and recent return volatility<=window volatility. Select longest qualifying complete L before crossing; freeze its band and ATR. Shorter windows allowed before long windows exist."
+  },
+  "entry": "Same three-close crossing/confirmation as v1 at U+0.5 prior ATR20; test raw-volume confirmation on/off (three-day mean>=1.2*pre-cross63 median). No future opening price in the decision. 21-session post-exit cooldown retained.",
+  "exit_grid": {
+    "initial_atr": [2, 4, 8],
+    "trailing_atr": [4, 8, 12],
+    "failed_range_atr_buffer": [0.5, 2.0, null],
+    "atr_cross_product": true,
+    "heat_ablations": "Additionally test initial4/trail8 at each failed-range setting with sticky joint-volume/price heat halving the trailing multiplier. All other candidates disable heat tightening.",
+    "percentage_ablations": "Additionally initial4 or8, trailing10/20/30 percent from highest close, failed-range disabled, heat disabled.",
+    "definition": "Initial S=E-i*entryATR, without v1's hidden max(U-ATR) floor. Ratchet max(oldS, highestClose-k*currentATR), or highestClose*(1-drawdown). Optional close<U-buffer*entryATR exit. No 21-session no-follow-through exit in v2. All stops decided at close and filled at next open, including gaps; no peak fill or guaranteed stop price."
+  },
+  "candidate_count": 1080,
+  "legacy_control": "Unchanged v1 adaptive42-756, log1.25 width, volume confirmation, initial/range/time stops and heat tightening, calculated on the same longer pinned histories.",
+  "screen": "Fractional 98%-budget single-ETF buy/hold units, zero cash yield, next-open executions and5bp per side. Score=.5 full-IS Sharpe+.5 median Sharpe of three equal contiguous IS session blocks-.25 standard deviation of block Sharpes. Retain top6 overall plus top6 satisfying IS CAGR>=max(0,buyholdCAGR-2pp), drawdown>=buyholdDrawdown-5pp and8 closed trades; union plus v1. Screens only, not final reported PnL.",
+  "exact_selection": "Replay shortlist with shared whole-share application engine at5bp,10bp,and5bp+one-session delay. Use minimum robust score across those frictions. Evidence requires >=1260 fit sessions,8 closed signal episodes,>=10% exposure and activity in every IS block. Guards require CAGR>=max(0,matched buyholdCAGR-2pp), drawdown>=matched buyholdDrawdown-5pp at all three frictions. Prefer guarded evidence-qualified candidates; if none, retain descriptive best evidence-qualified fit marked failed guards. Within0.03 score choose lower annual turnover then score/id. No OOS metric accepted by selector.",
+  "fallback": "If insufficient history/trade evidence, use common pooled rule, explicitly not an individually fitted claim. Shared rule maximizes median within-ETF IS screen score percentile across ETFs with>=1260 fit sessions. All pool members equal weight, not selected after seeing cases; ties by ID. Report shared-rule OOS control for every ETF.",
+  "evaluation": "After writing and hashing one sealed parameter-selection file for every ETF, evaluate selected/shared/v1/buyhold/200-session-SMA controls. Selected event and month-end timing,5/10/20bp and0/1 extra delay. Start OOS portfolio cash at first2023 session; prior-close signal can enter, with costs. State machine uses full past history but parameters never use OOS outcomes. Report IS separately, each OOS year, full OOS, exposure, trades, stop reasons, missed upside, entry-delay and cost sensitivity.",
+  "portfolio": "Only after individual freeze/evaluation, apply selected/shared active signals over the full supported pool using existing prior63 raw-dollar liquidity and duplicate admission; top6 inverse-vol slots and45% cap, unused slots cash, existing overlap controls. Selection adds0.5 active-factor percentile to M1 rank; trading uses active-only score. Monthly versus event (>10% L1 latest theoretical vs last adopted incl.cash, plus risk exits). Compare M1, equal-weight and frozen FR25/80-20 blend on their exact original shared October12 cutoff; do not manufacture updated FR25 targets on newer inputs.",
+  "inference": "Show parameter surfaces and shortlist dispersion;1080 choices per ETF are a large search. OOS paired21-session block bootstrap,1000 draws,seed20261018,simultaneous max-t bounds over supported-ETF selected-minus-v1 daily returns. No claim that price/volume proves a fundamental shock or that sample-best exit identifies the future peak.",
+  "authority": "Research only; no monitoring, promotion, funding, broker policy or live change. All holdings USD adjusted research units; no historical execution-share, spread, publication-vintage or universe-survivorship certification."
+}

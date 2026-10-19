@@ -1,0 +1,50 @@
+{
+  "status": "passed_with_visual_QA_limitation",
+  "scope": "GLD only; daily trading; unchanged numerical parameters",
+  "tests": {
+    "python_passed": 23,
+    "new_trace_tests": 7,
+    "report_source_and_control_handlers": "passed",
+    "scoped_lint": "passed"
+  },
+  "replay": {
+    "trace_rows": 5512,
+    "OOS_entries": 7,
+    "OOS_exits": 6,
+    "exact_saved_daily_path": true
+  },
+  "native": {
+    "artifacts_sha256": "6c810998fb2bd938b691f5be08438da03c908325c03977c706619c887049bd56",
+    "bundle_manifest_sha256": "0c4eded24605f9047b22743a56c04140896c16bc17723fcc3ef01b9d08c6671d",
+    "fills": 13,
+    "maximum_nav_error_usd": 0.0,
+    "parity": {
+      "decision_count": 14,
+      "differences": [],
+      "economic_sha256": "865f52b76729314d856f93348b92c252cc7c1f301593ecb38ddb0b30c1b2b51f",
+      "fill_count": 13,
+      "limitations": [
+        "Current supported surviving ETF cohort, provider identity and revised adjusted-price vintage limitations persist.",
+        "USD adjusted units, zero cash yield, daily decisions/later-open fills; no executable raw-share, historical spread or publication-vintage certification.",
+        "Price/volume is not proof of a fundamental shock. Stops can gap.2024+ was already inspected by earlier studies and user examples.",
+        "No monitoring,promotion,funding,broker policy or live change."
+      ],
+      "nav_count": 701,
+      "passed": true,
+      "promotion_eligible": false
+    },
+    "status": "succeeded"
+  },
+  "browser_visual_QA": "Blocked: browser URL security rejects file protocol. No rendered-browser check claimed.",
+  "inputs_sha256": "968d382f0b7c45949b67d891cb2018bc6e4f5d05be33f5d38c12bca12f3088b9",
+  "publication_sha256": {
+    "index.html": "6522966a4b0f85cb5834ac05708d7386ffebe5f1078ce8fc237cc33220433bb2",
+    "data.js": "e7ca4cb569f73aa7cd321a6ef6410129dc1db30981920aa6cd455bcd890efc79"
+  },
+  "commands": [
+    "python -m pytest tests/test_range_trace.py tests/test_range_joint.py tests/test_joint_replay.py",
+    "python scripts/build_gld_drilldown.py",
+    "python scripts/verify_gld_daily_native.py",
+    "node scripts/verify_gld_drilldown.cjs"
+  ]
+}

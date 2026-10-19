@@ -1,5 +1,243 @@
 # Project Log
 
+## 2026-10-19 — Tracked calculation reported a backup lock as Permission denied; locks decoupled
+
+The operator dashboard showed `Strategy calculation error` /
+`tracked-strategies: [Errno 13] Permission denied` on top of "Last complete results
+are retained". The strategies were healthy: prices and valuations were current
+through 2026-10-16 and the last complete publication stayed published; only the
+next refresh was affected.
+
+**Root cause.** The native-migration commit `b7d6d1f` (2026-10-18) made the hourly
+full-system backup take the same OS lock as every tracked-strategy refresh,
+`var/run/research-retention.lock` (`system_backup.py` and `tracked_runtime.py` both
+gained that lock in the commit). The calculation acquires it before deciding
+whether anything changed, so while a backup held it the non-blocking `msvcrt`
+acquire raised a bare `[Errno 13] Permission denied` (no path, unlike a real
+file-permission error) and the analytics service surfaced the raw string as a
+calculation failure. Eight such alerts appeared on 2026-10-18 between 15:00 and
+22:54 local, matching the hourly backups; each normally cleared when the roughly
+five-minute backup finished. The 22:54 restart's backup then stalled in its NAS
+upload with no command output and no sustained SMB traffic; it held the shared
+lock until a later retry released it, so the banner persisted for about 50 minutes
+instead of minutes. That retry was then itself deferred by the running
+calculation — the same collision in reverse.
+
+**Changes.** (1) `exclusive_lock` now raises `LockUnavailable` (an `OSError`
+subclass), so transient contention is distinguishable from filesystem denial.
+(2) A tracked calculation that cannot start because of the artifact lock raises
+`CalculationDeferred`; the analytics service records it in a new `deferred` status
+field and logs an info line instead of an error/alert, and the Strategy page shows
+a waiting warning with an explicit heading (`Strategy recalculation waiting`)
+rather than "Strategy calculation error"/"Strategy data is stale"; the
+saved-report poll script reports the waiting state too. (3) A backup no longer
+takes the calculation lock: it owns `var/system-backup/capture.lock` for
+capture/upload/verify, which research-retention maintenance already probes before
+deleting files, while calculations keep the artifact lock; the two jobs can now
+overlap safely. (4) Restic commands fail after `stall_timeout_seconds` (900 s
+configured) without stdout/stderr growth, `unlock` is bounded to 120 s, and
+System → Backups flags an active stage with no progress for 30 minutes as
+possibly stalled.
+
+**Verification.** 224 focused tests (one optional skip) and Ruff pass, covering
+the deferral status/heading and UI, the decoupled backup lock (an upload proceeds
+while the calculation lock is held and the capture lock stays held for retention
+safety), the no-output stall timeout and a progress-producing command that must
+not trip it, the stalled-stage panel flag, and existing recovery/lock behavior.
+Live recovery: the wedged backup was stopped, the dashboard was restarted through
+the normal recovery chain at 00:07, and a full recalculation published revision
+`160cadad…` at 00:32:55 (preparation 201 s, backtests 422 s) with `errors={}` and
+`deferred={}`. The backup was then restarted: while it uploaded, the 60-second
+tracked-strategy refresh ran concurrently at 00:36:28 with
+`errors={}`/`deferred={}` (previously the failure point), the panel showed live
+progress, and the upload finished verification as snapshot `cf1b9a34…` at
+00:46:25. Strategy readiness is `ok`; daily strategies are current through
+2026-10-16. The original NAS stall did not reproduce on retry and is now bounded
+and visible instead of holding locks for the six-hour command timeout. No
+allocation, funding, order, approval or broker change.
+
+## 2026-10-18 — GLD-only drill-down; operator replaces calendar timing with daily trading
+
+Operator asks for dated range windows, entry decisions, daily SL/TP calculations
+and fitting evidence, then explicitly removes monthly execution from this whole
+study. Future numeric fitting and 2023 variant selection must compare daily
+strategies only. Work stays on GLD until the lifecycle is understood; do not
+expand or re-fit every ETF in parallel. Pre2023 fitting/2023 selection/2024+
+evaluation boundaries and return/Sharpe/Calmar preference remain.
+
+Built research/gld-breakout-drilldown-20261018-v1/index.html with a date/episode
+inspector, preceding quantile range boxes, all candidate pass/fail calculations,
+crossings, confirmations, actual daily fills, initial/range/ratcheted stops,
+trailing activation and time hurdles, exact formulas, all33 parameter bounds,
+retained22,885-evaluation fitting summaries, finalists and perturbation scores.
+Discarded search vectors are not invented. The inherited v3 parameter vector
+is deliberately fixed to isolate execution; it is not a new daily optimum.
+Future changes informed by these exposed dates are development retests.
+
+Daily completed-close signals execute at the following session open; 98% entry
+target, fixed quantity until exit, 5bp each side, zero cash yield. No calendar
+rebalance or intraday stop order. Seven recent confirmed signals all become
+entries, with six completed trades exiting on the five-session progress test.
+Example: preceding252-session range2023-02-28..2024-02-28, q20/q80 bands
+$178.056/$187.568, crossing2024-02-29 at boundary$188.479876, confirmation
+March11, entryMarch12 at$200.42. On March19 the peak$201.19 failed the
+$204.598168 progress hurdle; saleMarch20 at$199.16, despite price above stop.
+Latest entryAugust17,2026: peak$428.07 never reaches trail activation$431.98;
+effective stop$357.45 remains below October16 close$382.01. Volume/heat are
+disabled in this vector. Daily2024+ CAGR−1.84%, Sharpe−0.229, DD−11.99%.
+
+The old report confused daily model shading with calendar-held positions. That
+execution contract is now superseded for this study; original v3 evidence is
+preserved. Every GLD variant failed the original2023 guards, including all daily
+variants. The drill-down displays daily2023 results without claiming a new pass.
+
+Validation:7 new diagnostic tests plus16 joint/replay tests pass (23 total);
+source-level JavaScript data/control checks and scoped lint pass. Detailed trace
+matches all5,512 original daily signal/stop/risk rows; IS/2023/OOS daily metrics
+match retained records. A new Windows-native GLD daily accounting replay matches
+13 fills and701 NAV values exactly, maximum error$0. Browser security rejected
+automated opening of the local file URL; visual browser QA was not performed.
+Audited input hashes are verified; no new provider prices, filling, execution
+authority, monitoring, funding or broker changes. Next: inspect the progress
+deadline, then make one GLD numerical-rule revision with the same daily audit.
+
+## 2026-10-18 — Joint lifecycle v3 complete; fitting and one-year selection fail to generalize
+
+Implemented the operator's expanded joint fit and return/Sharpe/Calmar preference:
+45/40/15 scaled utility relative to matched buy-hold, soft penalties for near-buy-hold
+exposure/correlation and oversized initial/trailing percentage stop risk. Fitting
+uses only physically truncated pre2023 histories; 2023 selects regularization,
+model variant and event/monthly clock, as explicitly requested. Numeric variants
+and all 52 selections were hash-sealed before 2024+ replay. No later retuning.
+
+33 mixed continuous/integer dimensions cover dynamic ranges, distribution tails,
+drift/volatility, confirmation/volume, ATR, initial/range/trailing/heat/time exits
+and cooldown. Differential evolution handles discontinuous trade rules: three
+objectives, two seeds, population128 and30 generations. 1,100,502 distinct IS
+evaluations across50 qualified ETFs; CPER/XLC use shared numeric fallback.
+Compare raw/weak/moderate/strong, chronological/local stability, pooled shared and
+50% continuous shrinkage. 2023 can also retain v1/v2. Inputs reuse the pinned
+audited v2 publication and suffix coverage; no provider downloads or new fills.
+Numba0.67/llvmlite0.49 are isolated in the study runtime, not the shared app venv.
+
+2024–October16 selected net CAGR: GLD−0.19%, USO−4.11%, SOXX42.72%; matched
+buy-hold27.75%/36.67%/40.83%. SOXX DD−28.46% versus−40.29%. All three cases
+failed 2023 return/drawdown guards. Gold's selected6.10ATR initial stop is wide,
+but its five-session/2.39ATR follow-through hurdle causes all six completed OOS
+signal exits. 2023 selects the older oil rule despite stronger later joint fits;
+those alternatives are disclosed, not substituted after inspecting OOS.
+36/52 selections pass2023 guards,5/52 beat OOS buy-hold CAGR,26/52 beat shared
+parameters and36/52 beat v1. Family-adjusted positive bounds versus v1 are only
+BIL/SHY; none versus buy-hold. Moderate penalties improve median OOS utility
+relative to raw fitting, but it remains negative. Some fitted width caps become
+87–96%, weakening the original literal tight-range premise.
+
+Full52 pool: inherited inverse-vol trading2.75% CAGR is BIL/cash dominated;
+equal-budget active sleeves7.24% event/8.39% monthly versus matched momentum
+10.11%/11.94%. 20% sleeve tilt16.24% versus matched blend16.20% and FR25 19.64%
+through October12. Cost/delay, chronological, gated-admission and constituent
+evidence retained. No annual cost ceiling or OOS construction selection.
+
+63 focused tests and scoped lint pass. 7,320 reported individual OOS scenarios,
+204 portfolio scenarios,1,220 primary paths recomputed for acceptance. Five
+Windows-native LEAN jobs match cash/fills/NAV exactly, including both slot and
+equal-budget portfolios. Selection SHA256:
+38ddfc3124ba9bb457ad54e89d529b51e422435d5c771f9ab7733ae160fe31a3.
+No monitoring, capital, broker or approval changes. Report:
+research/range-breakout-20261018-v3/index.html. Next research recommendation:
+multiple rolling validation windows before2023, fewer/pooled dimensions and an
+explicit compression constraint. Inspected2024+ is used evidence, not fresh OOS.
+
+## 2026-10-18 — Longer-history v2 calibration complete; joint v3 requested
+
+Completed 1,080 range/exit/volume combinations per ETF on pre2023 data, then
+sealed choices before2023+ evaluation. Published audited histories already cover
+GLD from2004,USO2006,SOXX2001 and SPY1993, so no stock acquisition was needed.
+Use XNYS4.13.2 for historical exceptional closures; operational calendars unchanged.
+A documented coverage-only amendment retains each valid continuous suffix after
+early unsupported bars, without filling. Original cases stay byte-identical;
+52/54 candidates supported,CPER included from2018,BWX/XOP still held.
+
+47 individual fits (46 IS guard passes),five shared-rule fallbacks. OOS case net
+CAGR GLD20.10%,USO−3.21%,SOXX32.11%; wider holding improves gold/semiconductor
+participation but increases drawdown, and oil fails. Only2/52 beat buy-hold CAGR
+and15/52 beat the shared rule. The one positive simultaneous bound versus v1 is
+BIL, not risky-breakout alpha. Inverse-vol/BIL/cash construction dominates the
+standalone portfolio:2.86% CAGR;20% tilt13.87% versus FR25 16.51% and matched
+blend13.73% on2023–October12. Full report includes all episodes, surfaces,
+yearly/stress comparisons and attribution.
+
+56,160 fractional IS screens,1,536 exact IS replays,1,872 individual OOS and156
+portfolio replays;47 focused tests, lint and five exact native LEAN checks pass.
+Acceptance recomputes metrics and verifies manifests. About94.65MiB retained.
+No monitoring, funding or execution changes. See range-breakout-calibration-v2.md.
+
+The operator then requested joint fitting of the full lifecycle, with pre2023 IS,
+2023 explicitly used for regularization/model-variant selection, and2024+ OOS.
+They also requested a return/Sharpe/Calmar objective weighted toward the first two,
+and penalties for buy-hold-like strategies and overly wide stops. Proposed45/40/15
+scaled objective, gradient-free joint optimization for discontinuous thresholds,
+and2023-selected penalty/robustness variants. V3 is now active; no2024+ metric may
+select or retune its rules. V1/v2 remain separate historical baselines.
+
+## 2026-10-18 — Adaptive range-breakout factor implemented and tested, including USO
+
+The operator requested a mathematical stable-range → breakout → hold → overheated
+exit/false-break stop lifecycle and selection/trading/tilting tests. Before any
+performance run, clarified that 1/2 years were examples and required an adaptive
+duration. The registered v1 selects the longest qualifying prior range from
+42/63/126/252/504/756 sessions, freezes its bands at crossing, requires three closes
+with an optional raw-volume confirmation, and uses ratcheting ATR exits that can
+tighten after joint price extension and volume. All fills occur at later opens;
+neither fundamentals nor the eventual peak are inferred as known facts.
+
+Gold, oil and semiconductors were named as cases. The initial pool had no oil ETF;
+after the operator explicitly authorized other usable histories, inspection of
+the wider published catalog found USO. The additive extension retains all original
+50 input arrays exactly, adds one separately hash-pinned audited history, and
+preserves all six FR25 control NAV paths exactly. USO has provider-based identity
+and audited raw/adjusted coverage, not historical mandate/security-master or broker
+admission. It is a futures-fund return, not spot oil. BWX and XOP listing holds and
+CPER unsupported raw volume remain excluded. Other oil-fund histories still need
+ingestion/audit/publication before testing; the pool was not silently expanded
+using online prices or archives.
+
+Completed 12 variants ×3 applications ×2 timing policies ×6 frictions plus nine
+controls ×6 frictions in each pool: 972 fixed replays, and 36 continuous annual
+walk-forward replays. Costs 5/10/20 bp per side; zero/one extra session delay;
+no annual-cost ceiling. The app accounting engine supplies fills, actual notional,
+costs and NAV. Four accepted restricted native Windows LEAN checks match exactly:
+original FR25, adaptive trading and adaptive tilt, and extended adaptive trading.
+37 focused tests and scoped Ruff pass; scenario data/source occupy about 164 MiB.
+
+Primary 51-ETF standalone trading: 2024–October 12 CAGR 9.23%, Sharpe 1.413,
+drawdown −4.63%, average exposure 46.45%, annual turnover 21.90× and cost 109.6 bp.
+Full 2021–October 2026 CAGR is 4.76%, Sharpe 0.764, drawdown −10.69%. An extra
+execution session reduces 2024+ CAGR to 6.42%; 20 bp plus that delay gives 2.99%.
+The 20% breakout/80% FR25 blend returns 17.00% versus FR25 19.37%; matched 20% M1
+blend returns 15.99% with slightly higher Sharpe and smaller drawdown. BIL-relative
+Sharpe and exposure disclose the bill/cash distortions of zero-risk-free Sharpe.
+Neither pool has a positive simultaneous mean-return lower bound across its
+72 candidate/control contrasts. Annual selection is unstable and often falls
+back to its control. This is already inspected historical evidence.
+
+Case diagnostics include GLD Sep–Oct 2025 +13.73%, USO Mar–Apr 2026 +37.52%,
+XLE Jan–Apr 2026 +30.38%, and USO Jun 2025 −11.74% despite a nominal stop because
+of the executable opening gap. The rule misses most later semiconductor gains.
+Of 238 closed primary signal episodes since 2021, 58.8% lose before costs.
+These are virtual gross single-asset episodes, not portfolio-level contributions.
+
+Disposition: retain the research prototype, not a promoted strategy or claimed
+optimal exit. New work should predeclare re-entry/continuation hypotheses and use
+later evidence; do not retune v1 to these memorable cases. Future oil/other ETF
+expansion must audit/publish missing inputs first. The initial native attempt
+failed before launch because the frozen tree lacked deployment configuration;
+binding the exact accepted native config and its hashes resolved it without
+weakening acceptance or isolation. No monitoring, allocations, paper policy,
+broker approvals/reconciliation or live settings were changed. No recurring
+agent calculation was created. See `docs/range-breakout-factor.md` and
+`research/range-breakout-20261018-v1/index.html`.
+
 ## 2026-10-18 — Operator compaction and paper Gateway follow-up verified
 
 The operator's Administrator compaction completed at 16:36 local time. DiskPart

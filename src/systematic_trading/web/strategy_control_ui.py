@@ -117,7 +117,9 @@ JS = r"""
   }
   function renderCalculationStatus(state){
     const target=root.querySelector('#sc-calculation-status');if(!target)return;
-    target.innerHTML=state && state.severity!=='ok'?`<div class="sc-${state.severity==='error'?'error':'warning'}" role="alert"><strong>${state.severity==='error'?'Strategy calculation error':'Strategy data is stale'}</strong><p>${esc(state.message)}</p><a href="/platform">Inspect service health</a></div>`:'';
+    if(!state||state.severity==='ok'){target.innerHTML='';return}
+    const heading=state.heading||(state.severity==='error'?'Strategy calculation error':'Strategy data is stale');
+    target.innerHTML=`<div class="sc-${state.severity==='error'?'error':'warning'}" role="alert"><strong>${esc(heading)}</strong><p>${esc(state.message)}</p><a href="/platform">Inspect service health</a></div>`;
   }
   function edit(allocations=data.state.active.allocations,mode='trading',sotaKey=data.state.sota_key){
     const editor=root.querySelector('#sc-editor');editor.hidden=false;invalidatePreview();message('');

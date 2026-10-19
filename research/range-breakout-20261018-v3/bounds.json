@@ -1,0 +1,200 @@
+[
+  {
+    "integer": false,
+    "lower": 0.05,
+    "name": "absolute_width",
+    "upper": 1.0
+  },
+  {
+    "integer": false,
+    "lower": 0.1,
+    "name": "relative_width_percentile",
+    "upper": 0.9
+  },
+  {
+    "integer": true,
+    "lower": 0,
+    "name": "range_basis",
+    "upper": 1
+  },
+  {
+    "integer": true,
+    "lower": 0,
+    "name": "minimum_window_index",
+    "upper": 4
+  },
+  {
+    "integer": true,
+    "lower": 3,
+    "name": "maximum_window_index",
+    "upper": 8
+  },
+  {
+    "integer": true,
+    "lower": 0,
+    "name": "band_tail_index",
+    "upper": 3
+  },
+  {
+    "integer": false,
+    "lower": 0.05,
+    "name": "maximum_drift_fraction",
+    "upper": 1.0
+  },
+  {
+    "integer": true,
+    "lower": 0,
+    "name": "drift_block_index",
+    "upper": 2
+  },
+  {
+    "integer": true,
+    "lower": 0,
+    "name": "short_vol_fraction_index",
+    "upper": 2
+  },
+  {
+    "integer": false,
+    "lower": 0.4,
+    "name": "maximum_short_long_vol_ratio",
+    "upper": 1.6
+  },
+  {
+    "integer": true,
+    "lower": 0,
+    "name": "width_reference_index",
+    "upper": 2
+  },
+  {
+    "integer": true,
+    "lower": 0,
+    "name": "atr_period_index",
+    "upper": 4
+  },
+  {
+    "integer": false,
+    "lower": 0.0,
+    "name": "breakout_buffer_atr",
+    "upper": 2.0
+  },
+  {
+    "integer": true,
+    "lower": 1,
+    "name": "confirmation_sessions",
+    "upper": 10
+  },
+  {
+    "integer": true,
+    "lower": 0,
+    "name": "volume_confirmation",
+    "upper": 1
+  },
+  {
+    "integer": false,
+    "lower": 0.75,
+    "name": "confirmation_volume_ratio",
+    "upper": 3.0
+  },
+  {
+    "integer": true,
+    "lower": 0,
+    "name": "entry_volume_reference_index",
+    "upper": 3
+  },
+  {
+    "integer": false,
+    "lower": 0.5,
+    "name": "initial_stop_atr",
+    "upper": 12.0
+  },
+  {
+    "integer": false,
+    "lower": -1.0,
+    "name": "failed_range_buffer_atr",
+    "upper": 6.0
+  },
+  {
+    "integer": false,
+    "lower": -1.0,
+    "name": "initial_upper_floor_atr",
+    "upper": 6.0
+  },
+  {
+    "integer": true,
+    "lower": 0,
+    "name": "trailing_basis",
+    "upper": 2
+  },
+  {
+    "integer": false,
+    "lower": 1.0,
+    "name": "trailing_atr",
+    "upper": 20.0
+  },
+  {
+    "integer": false,
+    "lower": 0.04,
+    "name": "trailing_percentage",
+    "upper": 0.4
+  },
+  {
+    "integer": false,
+    "lower": 0.0,
+    "name": "trailing_activation_gain_atr",
+    "upper": 6.0
+  },
+  {
+    "integer": true,
+    "lower": 0,
+    "name": "heat_enabled",
+    "upper": 1
+  },
+  {
+    "integer": false,
+    "lower": 1.0,
+    "name": "heat_extension_atr",
+    "upper": 12.0
+  },
+  {
+    "integer": false,
+    "lower": 0.25,
+    "name": "heat_near_high_atr",
+    "upper": 4.0
+  },
+  {
+    "integer": false,
+    "lower": 1.0,
+    "name": "heat_volume_ratio",
+    "upper": 5.0
+  },
+  {
+    "integer": false,
+    "lower": 0.2,
+    "name": "heat_trail_multiplier",
+    "upper": 1.0
+  },
+  {
+    "integer": true,
+    "lower": 0,
+    "name": "heat_volume_reference_index",
+    "upper": 3
+  },
+  {
+    "integer": true,
+    "lower": 0,
+    "name": "time_exit_index",
+    "upper": 6
+  },
+  {
+    "integer": false,
+    "lower": 0.0,
+    "name": "time_exit_required_gain_atr",
+    "upper": 4.0
+  },
+  {
+    "integer": true,
+    "lower": 0,
+    "name": "cooldown_sessions",
+    "upper": 63
+  }
+]

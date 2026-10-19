@@ -1,0 +1,322 @@
+{
+  "fit_end": "2022-12-31",
+  "grid_sha256": "f1c9bf356167b483496270721a91097fb99adf1253f66eaa1dd308c875023aee",
+  "input_manifest_sha256": "0274cfa1f994f49b2864cbbc5ffe4cd914b3f743c0375c48cc431ecd79e0996d",
+  "sealed_utc": "2026-10-18T11:23:04.496207+00:00",
+  "selections": {
+    "AGG": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "982",
+      "individually_fitted": true
+    },
+    "BIL": {
+      "fallback_reason": "Insufficient history/trade evidence",
+      "guard_pass": false,
+      "id": "268",
+      "individually_fitted": false
+    },
+    "CORN": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "504",
+      "individually_fitted": true
+    },
+    "CPER": {
+      "fallback_reason": "Insufficient history/trade evidence",
+      "guard_pass": false,
+      "id": "268",
+      "individually_fitted": false
+    },
+    "DBA": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "355",
+      "individually_fitted": true
+    },
+    "DBB": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "1002",
+      "individually_fitted": true
+    },
+    "DBC": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "533",
+      "individually_fitted": true
+    },
+    "EEM": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "1040",
+      "individually_fitted": true
+    },
+    "EFA": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "776",
+      "individually_fitted": true
+    },
+    "EMB": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "11",
+      "individually_fitted": true
+    },
+    "EWA": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "177",
+      "individually_fitted": true
+    },
+    "EWC": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "412",
+      "individually_fitted": true
+    },
+    "EWG": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "930",
+      "individually_fitted": true
+    },
+    "EWH": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "170",
+      "individually_fitted": true
+    },
+    "EWJ": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "746",
+      "individually_fitted": true
+    },
+    "EWT": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "260",
+      "individually_fitted": true
+    },
+    "EWU": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "411",
+      "individually_fitted": true
+    },
+    "EWY": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "610",
+      "individually_fitted": true
+    },
+    "GLD": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "206",
+      "individually_fitted": true
+    },
+    "HYG": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "806",
+      "individually_fitted": true
+    },
+    "IAT": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "46",
+      "individually_fitted": true
+    },
+    "IBB": {
+      "fallback_reason": "Insufficient history/trade evidence",
+      "guard_pass": false,
+      "id": "268",
+      "individually_fitted": false
+    },
+    "IBND": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "146",
+      "individually_fitted": true
+    },
+    "IEF": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "988",
+      "individually_fitted": true
+    },
+    "IGOV": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "59",
+      "individually_fitted": true
+    },
+    "INDA": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "47",
+      "individually_fitted": true
+    },
+    "ITA": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "245",
+      "individually_fitted": true
+    },
+    "IWM": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "988",
+      "individually_fitted": true
+    },
+    "LEMB": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "234",
+      "individually_fitted": true
+    },
+    "LQD": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "1066",
+      "individually_fitted": true
+    },
+    "MBB": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "231",
+      "individually_fitted": true
+    },
+    "MCHI": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "138",
+      "individually_fitted": true
+    },
+    "MDY": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "412",
+      "individually_fitted": true
+    },
+    "PPLT": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "529",
+      "individually_fitted": true
+    },
+    "SHY": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "887",
+      "individually_fitted": true
+    },
+    "SLV": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "1062",
+      "individually_fitted": true
+    },
+    "SOXX": {
+      "fallback_reason": null,
+      "guard_pass": false,
+      "id": "263",
+      "individually_fitted": true
+    },
+    "SPY": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "246",
+      "individually_fitted": true
+    },
+    "TIP": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "392",
+      "individually_fitted": true
+    },
+    "TLT": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "211",
+      "individually_fitted": true
+    },
+    "USO": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "584",
+      "individually_fitted": true
+    },
+    "VGK": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "334",
+      "individually_fitted": true
+    },
+    "WEAT": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "191",
+      "individually_fitted": true
+    },
+    "XLB": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "224",
+      "individually_fitted": true
+    },
+    "XLC": {
+      "fallback_reason": "Insufficient history/trade evidence",
+      "guard_pass": false,
+      "id": "268",
+      "individually_fitted": false
+    },
+    "XLE": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "267",
+      "individually_fitted": true
+    },
+    "XLI": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "494",
+      "individually_fitted": true
+    },
+    "XLK": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "140",
+      "individually_fitted": true
+    },
+    "XLP": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "1068",
+      "individually_fitted": true
+    },
+    "XLU": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "916",
+      "individually_fitted": true
+    },
+    "XLV": {
+      "fallback_reason": "Insufficient history/trade evidence",
+      "guard_pass": false,
+      "id": "268",
+      "individually_fitted": false
+    },
+    "XLY": {
+      "fallback_reason": null,
+      "guard_pass": true,
+      "id": "138",
+      "individually_fitted": true
+    }
+  },
+  "shared_id": "268",
+  "version": "sealed-pre2023"
+}

@@ -1,0 +1,106 @@
+{
+  "additional_delay_sessions": [
+    0,
+    1
+  ],
+  "applications": {
+    "selection": "Full-pool M1 control ranks the mean 21/63/126 adjusted return divided by prior63 annual volatility, positive126 gate. Candidate adds 0.5 times the cross-sectional percentile rank of the active breakout score to the control's percentile rank; inactive factor rank is zero. Same top-six inverse-vol construction.",
+    "tilt": "80% of the frozen original14 FR25 monthly theoretical target plus 20% of the full-pool breakout sleeve. FR25 monthly targets carry forward as deliberately unchanged adopted targets, not fabricated daily model updates. Compare to FR25 and 80% FR25 +20% construction-matched M1 sleeve.",
+    "trading": "Only active breakout episodes eligible; rank by breakout score; up to six slots inverse volatility. Unfilled slots remain cash. This is the standalone buy/hold/exit strategy."
+  },
+  "calibration_end": "2023-12-31",
+  "candidate_source": "var/research/etf-expansion-20261014-v1/candidates.json",
+  "comparisons": "All twelve registered variants times three applications times two policies, all six cost/delay scenarios. Adaptive is the operator-requested primary rule; fixed252/504 are duration controls. M1 monthly/event, FR25, FR25/M1 blend monthly/event, equal-weight eligible pool monthly, inverse-vol eligible pool monthly, URTH and BIL buy-hold controls. No absolute cost gate. Volume and heat ablations are included in the grid.",
+  "construction": {
+    "cash_reserve": 0.02,
+    "liquidity": "Inherited prior63 median raw dollar volume >=5m and minimum >=0.5m; one duplicate representative. All candidates evaluated, including explicit held-out identities and unsupported observations.",
+    "overlap": "Greedily reject parent/child overlaps using the previously frozen full-pool class protocol; admission never mandates allocation.",
+    "security_cap": 0.45,
+    "slots": 6,
+    "unfilled_slots": "cash"
+  },
+  "cost_bps": [
+    5,
+    10,
+    20
+  ],
+  "evaluation_start": "2024-01-01",
+  "event_policy": "Monthly anchors plus strictly greater than 0.10 L1 distance between latest theoretical and last adopted targets, including cash. For trading/tilt also adopt every breakout exit affecting positive last-adopted weight; never compare to actual held weights. Daily close signal, next open execution.",
+  "extension": {
+    "description": "Original 50 series unchanged plus USO from a separately pinned newer audited publication, truncated to the identical October 12 cutoff. No within-series splicing. All twelve variants, three uses, two clocks and six frictions repeated. Data extension inspected after original-pool results, not an untouched confirmatory replication.",
+    "identity": "USO name/roles and no unresolved historical-name or coverage audit issues verified. Provider identity only; no security-master, historical mandate, broker or recorder admission claimed.",
+    "issuer_reference": "https://www.uscfinvestments.com/uso",
+    "oil_basis": "Oil-futures fund returns including fund implementation, not a spot oil price series.",
+    "operator_requested": true,
+    "original_input_manifest_sha256": "18ba7b98c3ba3be92d13d4a404655d85892b8d8d406d6ef4fa1c7db2fbec062a",
+    "signal_parameters_changed": false
+  },
+  "inference": {
+    "block_sessions": 21,
+    "method": "Paired circular moving-block bootstrap, simultaneous max-t mean-return bounds for all 72 fixed candidate/control contrasts on 2024+. Also show each calendar year and walk-forward. Descriptive historical inference, not an untouched prospective test.",
+    "replications": 2000,
+    "seed": 20261018
+  },
+  "initial_cash_usd": "1000000",
+  "limitations": [
+    "Current supported cohort with survivorship, historical mandate and membership limitations.",
+    "Pinned published adjusted prices and raw activity are audited with limitations; historical publication availability and tape-level volumes are uncertified.",
+    "Adjusted-unit USD research, not executable raw shares or CNH accounting. Cash earns zero; BIL is separately benchmarked. No unsupported FX input is introduced.",
+    "Daily close decisions and next-open fills cannot identify or fill intraday peaks/stops; gaps can exceed stop distances. Additional one-session delay is explicit.",
+    "Costs are per traded security side, a combined friction assumption, with no historical spread/impact claim. Monthly control deliberately delays exits until its next scheduled adoption.",
+    "Virtual signal entries/exits define the factor independently of portfolio selection. Portfolio holdings, actual fees, exposure and fills are accounted separately.",
+    "FR25 is a frozen previously validated current-SOTA recipe on this same batch, not today's monitored CNH return series. Its economic and USD-model historical-availability assumptions are inherited and disclosed.",
+    "2024+ is chronological out-of-sample for this frozen factor selection procedure, but the market history has already been inspected by the broader research programme. Only future observations are genuinely unseen."
+  ],
+  "limits": {
+    "allocation": false,
+    "live": false,
+    "monitoring": false,
+    "native_cpus": 2,
+    "native_memory_gib": 4,
+    "promotion_eligible": false,
+    "workers": 1
+  },
+  "policies": [
+    "monthly",
+    "event"
+  ],
+  "price_pin_source": "var/research/etf-expansion-20261014-v1/price_pin.json",
+  "question": "Does a compressed range followed by a persistent breakout predict profitable trends, and do volume-confirmed, overheating-sensitive exits improve net ETF portfolios?",
+  "registered_on": "2026-10-18",
+  "registration_amendment": "Before any signal calculation or performance run, operator clarified that one/two years were illustrative. Added adaptive42-756 as primary and retained fixed252/504 duration controls; no performance-informed changes.",
+  "signal": {
+    "adaptive_windows": [
+      42,
+      63,
+      126,
+      252,
+      504,
+      756
+    ],
+    "entry": "Cross above exp(q95)+0.5*prior20 ATR, then three consecutive closes above this frozen level. Cancel immediately on failure. For volume variant the three-day mean raw volume must exceed 1.2 times the median raw volume over 63 days before the crossing. Fill earliest next open; no entry at the confirming close.",
+    "exits": [
+      "atr4",
+      "heat_atr4_to2"
+    ],
+    "heat": "Sticky overheated state when close is at least frozenUpper+3*entryATR, within currentATR of highestCloseSinceEntry, and raw volume >= 2*prior63 median. Only the heat exit tightens k from 4 to 2. A volume surge alone is not an exit.",
+    "lookbacks": [
+      "adaptive",
+      252,
+      504
+    ],
+    "range": "Prior L adjusted closes, excluding initial breakout day. Log-price 95%-5% width <= log(1.25), absolute median(last b)-median(first b) <= half that width, b=min(63,max(10,floor(L/4))), and prior min(63,floor(L/3)) return volatility <= full-window return volatility. Adaptive chooses the longest currently qualifying complete window from 42/63/126/252/504/756 using only data before the breakout day. Fixed252/504 are controls. Bands and chosen duration freeze at initial crossing.",
+    "reset": "21 sessions after exit before another initial breakout. Oversold is descriptive: below frozen lower band during cooldown; a new qualifying trailing range is required for another entry.",
+    "risk": "At next open after confirmation establish a virtual signal episode. Stop starts at max(fill-2*entryATR, frozenUpper-entryATR). Each close ratchets stop to max(oldStop, highestCloseSinceEntry-k*ATR20). A close below stop or frozenUpper-0.5*entryATR exits at next open. A 21-session episode that has never gained entryATR also exits. Never fill at the stop or retrospective high.",
+    "score": "For active episodes clip((close-frozenUpper)/entryATR,0,10); inactive zero. Price/volume states do not establish fundamental causality.",
+    "volume_confirmation": [
+      false,
+      true
+    ]
+  },
+  "sota_decisions_source": "var/research/etf-expansion-20261014-v1/decisions/original14.json",
+  "start": "2021-01-04",
+  "through": "2026-10-12",
+  "version": "range-breakout-lifecycle-uso-extension-v1",
+  "walk_forward": "For 2024,2025,2026 choose each application's variant and timing only from the preceding three calendar years. Require +0.05 Sharpe, CAGR >= control-0.5pp and max drawdown >= control-2pp at 5bp, plus strictly positive Sharpe advantage and the return/drawdown guards at 10bp and 5bp with one-session delay. Require another passing variant differing in exactly one parameter at the same timing. Among candidates within 0.02 Sharpe of best choose lower turnover then identifier. Otherwise retain matched control. Mix decisions and replay continuously, never splice NAV or reset cash annually."
+}

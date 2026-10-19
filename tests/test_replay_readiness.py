@@ -250,6 +250,22 @@ def test_trading_readiness_includes_failures_even_without_pending_allocation(sta
     assert result['severity'] == severity and detail in result['message']
 
 
+def test_deferred_calculation_is_reported_as_waiting_not_stale():
+    result = calculation_readiness({'errors': {},
+        'deferred': {'tracked-strategies': 'waiting for the backup/retention artifact lock'}})
+    assert result['severity'] == 'warning'
+    assert result['heading'] == 'Strategy recalculation waiting'
+    assert 'retained' in result['message'] and 'retry automatically' in result['message']
+    assert 'stale' not in result['heading'].lower()
+
+
+def test_error_readiness_keeps_its_explicit_heading():
+    assert calculation_readiness({'errors': {'tracked-strategies': 'Invalid audited inputs'}})[
+        'heading'] == 'Strategy calculation error'
+    assert calculation_readiness({'strategy_stale': True, 'strategy_freshness_message': 'Expected Oct 7'})[
+        'heading'] == 'Strategy data is stale'
+
+
 def test_handover_error_alerts_once_then_reports_recovery(tmp_path, monkeypatch):
     from systematic_trading.live import strategy_control
     from systematic_trading.live.management_service import TradingManagementService

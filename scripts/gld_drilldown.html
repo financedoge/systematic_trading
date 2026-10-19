@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GLD · daily trading drill-down</title>
+<style>
+:root{color-scheme:light;--bg:#f5f7fa;--ink:#243749;--muted:#516577;--panel:white;--line:#dce3e9;--range:#638ca5;--signal:#9b6b29;--stop:#b63b49;--trail:#6654a2;--buy:#087e74;--sell:#b63b49}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}main{max-width:1450px;padding:24px;margin:auto}h1{font-size:30px;margin:8px 0}h2{font-size:21px;margin:0 0 12px}h3{font-size:17px}p{max-width:1150px}section{background:var(--panel);padding:22px;margin:20px 0;border-radius:9px}a{color:#076e88}button,input,select{font:inherit;border:1px solid #b9c7d1;border-radius:5px;background:var(--panel);color:var(--ink);padding:6px 10px}button{cursor:pointer}button:hover{background:#edf3f6}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--buy);outline-offset:2px}label{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:12px 0}.controls .field{display:block;font-size:13px}.field input,.field select{display:block;margin-top:4px}.muted{color:var(--muted)}.flag{font-weight:650}.warn{border-left:4px solid var(--signal);padding:5px 15px;background:#fcf7ec}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.scroll{overflow:auto}table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}th,td{border-bottom:1px solid var(--line);padding:7px 9px;vertical-align:top;text-align:right}th:first-child,td:first-child{text-align:left}th{background:#edf2f6;font-weight:600}td.text{text-align:left}tr.selected{background:#e3f3ef}tr.clickable{cursor:pointer}tr.clickable:hover{background:#f0f5f8}.pass{color:#086e59}.fail{color:#ad303b}code,pre{font:13px/1.6 ui-monospace,monospace}pre{white-space:pre-wrap;background:#f0f4f7;padding:12px;overflow-wrap:anywhere}.legend{display:flex;gap:15px;flex-wrap:wrap;font-size:13px;margin-bottom:8px}.swatch{display:inline-block;width:22px;height:3px;vertical-align:middle;margin-right:5px;background:var(--ink)}.plot{position:relative}svg{width:100%;display:block;touch-action:pan-y}svg text{font:12px system-ui,sans-serif;fill:var(--ink)}.help{font-size:13px}.state{padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:12px 0}.datebutton{border:0;background:transparent;padding:0;color:#076e88;white-space:nowrap}details{margin:15px 0}summary{font-weight:600;cursor:pointer}.nowrap{white-space:nowrap}#tip{position:absolute;pointer-events:none;display:none;background:#fff;border:1px solid var(--line);padding:8px;font-size:12px;z-index:2;box-shadow:0 2px 8px #0001}#daily td,#episodes td{white-space:nowrap}#chartError{color:var(--sell)}
+@media(max-width:800px){main{padding:12px}section{padding:14px}.grid{grid-template-columns:1fr}h1{font-size:25px}.controls{gap:8px}}
+</style></head>
+<body><main>
+<p class="muted">GLD only · daily trading · unchanged numerical parameters · through October 16, 2026</p>
+<h1>GLD: from range to entry, one day at a time</h1>
+<p>This study now uses <strong>daily trading decisions</strong>. Every completed close evaluates the range, confirmation and exit rules. A changed target executes at the next trading session’s open. There is no calendar rebalancing. This first drill-down keeps the numerical parameters fixed so the effect of the execution change is isolated.</p>
+<div class="warn"><strong>The holding rule is the immediate problem.</strong> In 2024 onward, the daily strategy entered seven confirmed breakouts. Six ended on the five-session progress test. Those exits were not caused by stop losses or profit-taking. The remaining position’s trailing exit has never activated.</div>
+<p>Stops below are <strong>close-based conditions</strong>, followed by a next-open exit. They are not intraday stop orders or guaranteed fill prices. As of October 16, 2026, the effective stop was $357.45 versus a $382.01 close. Trailing activation required a $431.98 peak; the recorded peak was only $428.07. There is no fixed take-profit target.</p>
+<p id="outcome" class="muted"></p>
+
+<section aria-labelledby="chart-title">
+<h2 id="chart-title">Price, prior ranges and decision dates</h2>
+<div class="controls">
+<label class="field">Display from<input type="date" id="from"></label><label class="field">Through<input type="date" id="to"></label>
+<span class="muted">Execution: daily close → next session open</span>
+<button id="oos" type="button">Recent / 2024 onward</button><button id="full" type="button">Full history</button>
+<label><input type="checkbox" id="boxes" checked>All confirmed ranges in view</label>
+</div>
+<div class="legend">
+<span><i class="swatch"></i>Adjusted close</span><span><i class="swatch" style="background:var(--range)"></i>Prior range box (central 60%)</span>
+<span style="color:var(--signal)">◆ Crossing attempt · △ Confirmed signal</span><span style="color:var(--buy)">● Executed buy/add</span><span style="color:var(--sell)">× Executed sell · T Time exit · S Price stop · R Failed range</span>
+<span><i class="swatch" style="background:var(--stop)"></i>Effective model stop</span><span><i class="swatch" style="background:var(--trail)"></i>Trailing activation</span>
+</div>
+<div class="plot"><svg id="price" role="img" aria-label="GLD adjusted price with prior range windows, signal dates, actual fills and daily model stops"></svg><div id="tip"></div></div>
+<svg id="lanes" role="img" aria-label="Separate daily model state and executed holding state on the same dates"></svg>
+<p class="help muted">Click the price chart to inspect a session. Range boxes extend backward from a crossing to the exact data window used then; they are not signals known at the box's start. R labels identify episodes in the table below. The outlined blue box is the selected day's frozen or currently qualifying range. Faint diamonds are crossing attempts that did not reach confirmation. Session spacing compresses weekends. No full-window min/max containment is implied by quantile bands. IS, 2023 and 2024+ accounts each start with fresh capital.</p>
+<div id="chartError" role="alert"></div>
+</section>
+
+<section>
+<h2>Inspect one session</h2>
+<div class="controls">
+<button id="prev" type="button">← Previous session</button><label>Session<input id="day" type="date"></label><button id="next" type="button">Next session →</button>
+<label>Jump to<select id="bookmark">
+<option value="">Choose a calculation</option><option value="2024-02-29">Feb 29, 2024 · breakout of 252-session base</option>
+<option value="2024-03-11">Mar 11, 2024 · confirmed, buy next open</option><option value="2024-03-12">Mar 12, 2024 · actual daily entry</option><option value="2024-03-19">Mar 19, 2024 · early time exit</option>
+<option value="2024-10-01">Oct 1, 2024 · model time exit</option>
+<option value="2024-10-02">Oct 2, 2024 · actual next-open sell</option>
+<option value="2026-08-14">Aug 14, 2026 · latest confirmation</option>
+<option value="2026-08-17">Aug 17, 2026 · latest actual entry</option>
+<option value="2026-10-16">Oct 16, 2026 · latest levels</option></select></label>
+<button id="focus" type="button">Show this range / episode</button>
+</div>
+<div id="state" class="state" aria-live="polite"></div>
+<div class="grid">
+<div><h3>Why range-bound, or why rejected?</h3><div id="rangeContext"></div><div id="ranges" class="scroll"></div>
+<p class="help">The longest passing window is eligible only while seeking a new setup. During confirmation, holding or cooldown, new ranges are ignored by the frozen state machine. The table still calculates them so rejected opportunities can be examined.</p></div>
+<div><h3>Decision and execution</h3><div id="decision"></div><h3>Stop loss and trailing exit</h3><div id="stops"></div></div>
+</div>
+<details><summary>Exact inputs and formulas for this date</summary><pre id="calculation"></pre></details>
+<details><summary>All selected-day data, including each candidate window</summary><pre id="dayjson"></pre></details>
+</section>
+
+<section>
+<h2>Every confirmed episode</h2>
+<p>Choose a row to show its range and decision. Signal confirmation is distinct from a fill. “Time exit” means the highest close failed the progress hurdle five sessions after the virtual entry session (entry age = 0). The daily strategy sells at the following open. Entry and exit markers come from the executed daily backtest ledger.</p>
+<div class="controls"><label><input type="checkbox" id="allEpisodes">Include pre-2024 episodes</label></div>
+<div id="episodes" class="scroll"></div>
+<h3>Executed backtest fills</h3><div id="fills" class="scroll"></div>
+</section>
+
+<section>
+<h2>Daily ledger around the selected date</h2>
+<p class="help">Close and levels are adjusted USD. Quantities, NAV and fees come from the shared whole-share accountant. On the exit-signal date the account still holds until the following open. After that sale, the stop is blank. Entries target 98% exposure; quantities stay unchanged until an exit signal.</p>
+<div class="controls"><button id="earlier" type="button">← Earlier 15 sessions</button><button id="later" type="button">Later 15 sessions →</button><button id="download" type="button">Download complete audit JSON</button></div>
+<div id="daily" class="scroll"></div>
+</section>
+
+<section>
+<h2>How these GLD parameters were fitted and selected</h2>
+<p>Numeric fitting used only data through 2022. This diagnostic inherits the v3 GLD parameter vector and executes it daily; it does not refit or reselect parameters. Below are the retained fitting records and the daily variants’ 2023 results. Future model selection will compare daily strategies only.</p>
+<div id="selectionExplanation" class="warn"></div>
+<h3>2023 daily model results — historical calculations</h3><div id="validation" class="scroll"></div>
+<details><summary>Pre-2023 fitting: finalist scores, nearby perturbations and six search runs</summary>
+<div id="ISexplanation"></div><div id="ISvariants" class="scroll"></div><h3>Every shortlisted parameter vector</h3><div id="finalists" class="scroll"></div><h3>Optimizer runs</h3><div id="seeds" class="scroll"></div>
+<pre id="local"></pre><p id="searchNote"></p></details>
+<details><summary>All 33 parameters, bounds and active/inactive status</summary><div id="parameters" class="scroll"></div></details>
+<details><summary>Mathematical definition of this GLD rule</summary><pre id="math"></pre></details>
+</section>
+<section>
+<h2>What to fix first, one piece at a time</h2>
+<ol><li><strong>Five-session progress deadline:</strong> inspect why it terminates six recent breakouts before the subsequent rally. Start with March 12–19, 2024.</li>
+<li><strong>Stop and trailing exit:</strong> inspect the initial risk, activation threshold and drawdown distance separately. The latest trailing exit never activated.</li>
+<li><strong>Range and confirmation:</strong> inspect the dated candidate windows, rejected criteria, central-60% band and eight-close confirmation delay.</li></ol>
+<p>No numerical rule has been repaired yet. This daily baseline is the calculation trail for making one GLD change at a time. Other ETFs remain outside the current scope.</p>
+<details><summary>Input provenance and verification</summary><div id="provenance"></div></details>
+<p><a href="../range-breakout-20261018-v3/index.html">Original v3 report</a> · <a href="manifest.json">Diagnostic publication hashes</a></p>
+</section>
+</main><script src="data.js"></script><script>
+'use strict';
+const D=window.GLD_DIAGNOSTIC, T=D.trace, P=D.parameters, N=D.days.length, $=id=>document.getElementById(id);
+const esc=s=>String(s??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const f=(v,d=2)=>v===null||v===undefined||!Number.isFinite(+v)?'—':(+v).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pct=v=>v===null||v===undefined?'—':f(v*100)+'%';
+const valid=x=>x!==null&&x!==undefined&&Number.isFinite(+x);
+const date=i=>i===null||i<0||i>=N?'—':D.days[i];
+const row=i=>Object.fromEntries(Object.entries(T).map(([k,v])=>[k,v[i]]));
+let selected=D.days.indexOf('2024-02-29'),start=D.days.indexOf('2023-10-02'),end=N-1;
+const atDate=s=>{let i=D.days.findIndex(d=>d>=s);return i<0?N-1:i;};
+const reason={0:'none',1:'failed range',2:'initial / trailing stop',3:'time: insufficient follow-through'};
+const table=(heads,rows)=>'<table><thead><tr>'+heads.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr></thead><tbody>'+(Array.isArray(rows)?rows.join(''):rows)+'</tbody></table>';
+const cells=(values,attrs='')=>'<tr '+attrs+'>'+values.map((x,i)=>'<td'+(i===0?' class="text"':'')+'>'+x+'</td>').join('')+'</tr>';
+const dbutton=i=>i===null?'—':'<button class="datebutton" type="button" data-day="'+i+'">'+date(i)+'</button>';
+const yes=b=>'<span class="'+(b?'pass':'fail')+'">'+(b?'PASS':'FAIL')+'</span>';
+const period=i=>D.days[i]<'2023-01-01'?'IS':D.days[i]<'2024-01-01'?'validation':'OOS';
+function candidate(w,i){
+ const width=w.width[i],drift=w.drift[i],sv=w.short_vol[i],lv=w.long_vol[i],rank=w.rank[i];
+ const wo=valid(width)&&(P[2]<.5?width<=Math.log1p(P[0]):valid(rank)&&rank<=P[1]);
+ const dd=valid(drift)&&valid(width)&&drift<=P[6]*width;
+ const vo=valid(sv)&&valid(lv)&&sv<=P[9]*lv;
+ return {sessions:w.sessions,start:i-w.sessions,end:i-1,lower:w.lower[i],upper:w.upper[i],log_width:width,
+ width_percent:valid(width)?Math.expm1(width):null,drift:drift,drift_limit:valid(width)?P[6]*width:null,
+ short_vol:sv,long_vol:lv,vol_ratio:valid(lv)&&lv>0?sv/lv:null,width_pass:wo,drift_pass:dd,vol_pass:vo,passes:wo&&dd&&vo};
+}
+function episodeAt(i){const id=T.episode[i];return D.episodes.find(e=>e.id===id&&i>=e.crossing&&i<=(e.exit_signal??N-1))||D.episodes.find(e=>e.crossing===i);}
+function frameRange(i){
+ const e=episodeAt(i),r=row(i);
+ if(e)return {start:e.range_start,end:e.range_end,lower:e.lower,upper:e.upper,label:'Frozen R'+e.id};
+ if(r.crossing>=0)return {start:r.frozen_start,end:r.frozen_end,lower:r.frozen_lower,upper:r.frozen_upper,label:'Pending frozen range'};
+ const passing=D.windows.map(w=>candidate(w,i)).filter(w=>w.passes);
+ return passing.length?Object.assign({label:'Current qualifying range'},passing[passing.length-1]):null;
+}
+function select(i,adjust=false){
+ selected=Math.max(0,Math.min(N-1,i));$('day').value=date(selected);
+ if(adjust&&(selected<start||selected>end)){start=Math.max(0,selected-90);end=Math.min(N-1,selected+45);syncDates();}
+ renderDetail();renderChart();renderTables();
+}
+function syncDates(){$('from').value=date(start);$('to').value=date(end);}
+function renderDetail(){
+ const i=selected,r=row(i),policy='event',m=D.modes[policy],fs=D.fills.filter(x=>x.index===i&&x.policy===policy);
+ const active=r.active?'long at this close':'flat at this close';const held=m.quantity[i];
+ $('state').innerHTML='<strong>'+date(i)+'</strong> · '+esc(period(i))+' · model: <strong>'+esc(r.state_before)+' → '+esc(r.state_after)+'</strong> · '+esc(r.action.replaceAll('_',' '))+'<br>Daily model '+active+'; the daily account holds <strong>'+f(held,0)+' adjusted units</strong> at close. '+(fs.length?fs.map(x=>esc(x.action)+' '+f(x.quantity,0)+' @ $'+f(x.price)).join('; '):'No executed fill today.');
+ const rr=frameRange(i);
+ $('rangeContext').innerHTML=rr?'<p><strong>'+esc(rr.label)+'</strong>: '+date(rr.start)+' through '+date(rr.end)+', $'+f(rr.lower)+'–$'+f(rr.upper)+'.</p>':'<p>No frozen or qualifying range on this date.</p>';
+ const cr=D.windows.map(w=>candidate(w,i));$('ranges').innerHTML=table(['L / dates','Band USD','Width / limit','Drift / limit','Vol ratio / limit','Pass'],cr.map(w=>cells([
+ esc(w.sessions)+' sessions<br><small>'+date(w.start)+'<br>'+date(w.end)+'</small>','$'+f(w.lower)+'–'+f(w.upper),
+ pct(w.width_percent)+' / '+pct(P[0])+'<br>'+yes(w.width_pass),f(w.drift,5)+' / '+f(w.drift_limit,5)+'<br>'+yes(w.drift_pass),
+ f(w.vol_ratio,3)+' / '+f(P[9],3)+'<br>'+yes(w.vol_pass),yes(w.passes)
+ ],w.sessions===r.duration||w.start===r.qualifying_start?'class="selected"':'')));
+ const schedule=valid(m.decision[i])?(m.decision[i]?'Target adopted at today’s open from prior close.':'No entry/exit target change at today’s open.'):'No account replay during warm-up.';
+ $('decision').innerHTML=table(['Item','Calculation / state'],[
+ ['Close / open / low','$'+f(D.price.close[i])+' / $'+f(D.price.open[i])+' / $'+f(D.price.low[i])],
+ ['Range scan',r.range_scan?'Performed at this close':'Not performed: '+r.state_before+'; candidate table is diagnostic'],
+ ['Breakout boundary',valid(r.breakout_level)?'$'+f(r.breakout_level,4):'—'],
+ ['Crossing test',r.range_scan?'Previous close ≤ boundary: '+r.previous_below+'; current close > boundary: '+r.current_above:'Frozen confirmation / holding state'],
+ ['Confirmation',r.pending_count?f(r.pending_count,0)+' / '+P[13]+' closes':r.confirmation>=0?'Confirmed '+date(r.confirmation):'—'],
+ ['Frozen virtual entry',r.virtual_entry>=0?date(r.virtual_entry)+' @ $'+f(r.entry):'Not entered yet'],
+ ['Model exit',r.exit_reason?reason[r.exit_reason]:'None today'],
+ ['Execution schedule',schedule],
+ ['Actual fill',fs.length?fs.map(x=>x.action+' '+f(x.quantity,0)+' @ $'+f(x.price)+'; fee $'+f(x.fee)+'; prior decision '+x.signal_date).join('<br>'):'None'],
+ ['Account NAV / cash',valid(m.nav[i])?'$'+f(m.nav[i])+' / $'+f(m.cash[i]):'Warm-up']
+ ].map(v=>cells(v.map(esc))));
+ const stopRows=[
+ ['Initial entry − '+f(P[17],4)+' × ATR',r.initial_raw],
+ ['Optional initial range floor',r.initial_floor],['Initial stop after floor',r.initial_stop],
+ ['Failed-range level U − '+f(P[18],4)+' × ATR',r.range_stop],
+ ['Trailing activation: entry + '+f(P[23],4)+' × ATR',r.trail_activation],
+ ['Model peak: max(entry open, subsequent closes)',r.peak],
+ ['Trailing candidate',r.trail_candidate],['Ratcheted price stop',r.ratchet],['Effective max(price stop, range stop)',r.stop],
+ ['Time hurdle: entry + '+f(P[31],4)+' × ATR',r.time_required]];
+ $('stops').innerHTML=table(['Level / condition','USD / result'],stopRows.map(v=>cells([esc(v[0]),valid(v[1])?'$'+f(v[1],4):'—'])).join('')+
+ '<tr><td class="text">Trail active?</td><td>'+String(r.trail_enabled)+(r.trail_enabled?'':' — activation not reached')+'</td></tr>'+
+ '<tr><td class="text">Close below effective stop?</td><td>'+(valid(r.stop)?String(D.price.close[i]<r.stop):'No live model stop')+'</td></tr>'+
+ '<tr><td class="text">Low below stop? (not an execution trigger)</td><td>'+(valid(r.stop)?String(r.low_below_stop):'—')+'</td></tr>'+
+ '<tr><td class="text">Time age / deadline / failed?</td><td>'+(r.time_age>=0?r.time_age+' / '+date(r.time_deadline)+' / '+r.time_failed:'—')+'</td></tr>'+
+ '<tr><td class="text">Fixed take-profit target</td><td>None in this rule</td></tr>')+
+ '<p class="help">'+(valid(held)&&held>0&&!valid(r.stop)?'<strong>The exit signal is known at the close; the position is sold at the next session open.</strong>':'Entry levels use that entry session’s open; accountant fills are rounded to cents. Completed-close exit tests execute at the next session open, which may gap beyond the level.')+'</p>';
+ const width=Math.log1p(P[0]);
+ $('calculation').textContent='Range width W = log(q80) − log(q20) ≤ log(1 + '+f(P[0],10)+') = '+f(width,10)+'\nDrift = |median(last block log close) − median(first block log close)| ≤ '+f(P[6],10)+' × W\nShort / long log-return volatility ≤ '+f(P[9],10)+'\nLongest passing L from '+D.decoded.windows.join(', ')+'; prior prices end t−1.\nFor this fit, drift block=min(63,max(10,floor(L×.25))); short vol=min(63,max(5,floor(L×.5))).\nATR60 = mean of last60 daily true ranges (not Wilder smoothing).\nCrossing uses prior-session ATR; then ATR freezes at '+f(r.entry_atr,10)+'.\nBoundary = U + '+f(P[12],10)+' × frozen ATR = '+f(r.breakout_level,10)+'\nConfirmation = '+P[13]+' consecutive closes above frozen boundary, including crossing close.\nInitial raw stop = entry − '+f(P[17],10)+' × ATR = '+f(r.initial_raw,10)+'\nInitial floor = U − '+f(P[19],10)+' × ATR = '+f(r.initial_floor,10)+'\nFailed range = U − '+f(P[18],10)+' × ATR = '+f(r.range_stop,10)+'\nTrail activates if highest close ≥ entry + '+f(P[23],10)+' × ATR = '+f(r.trail_activation,10)+'\nWhen active: candidate trail = highest close − '+f(P[21],10)+' × entry ATR; ratchet never decreases.\nEffective stop = max(ratchet, failed-range level) = '+f(r.stop,10)+'\nTime exit: age ≥ 5 AND highest close < entry + '+f(P[31],10)+' × ATR = '+f(r.time_required,10)+'\nTime-exit age counts virtual entry session as0. A satisfied peak hurdle remains satisfied even after price falls.\nOrder of exit precedence: failed range → price stop → time exit. All compare completed close; daily low does not trigger a fill.\nVolume confirmation and heat tightening are disabled in this selected fit.';
+ $('dayjson').textContent=JSON.stringify({date:date(i),price:Object.fromEntries(Object.entries(D.price).map(([k,v])=>[k,v[i]])),trace:r,candidates:cr,execution:{policy:policy,fields:Object.fromEntries(Object.entries(m).map(([k,v])=>[k,v[i]])),fills:fs}},null,2);
+}
+const NS='http://www.w3.org/2000/svg';
+function node(svg,name,attrs,text){const e=document.createElementNS(NS,name);for(const[k,v]of Object.entries(attrs||{}))e.setAttribute(k,v);if(text!==undefined)e.textContent=text;svg.appendChild(e);return e;}
+function renderChart(){
+ const svg=$('price'),lanes=$('lanes'),W=svg.getBoundingClientRect().width,H=430,L=122,R=18,top=18,bottom=42;
+ if(W<100)return;svg.innerHTML='';lanes.innerHTML='';svg.setAttribute('viewBox','0 0 '+W+' '+H);lanes.setAttribute('viewBox','0 0 '+W+' 92');
+ const x=i=>L+(i-start)/Math.max(1,end-start)*(W-L-R), vals=[];
+ const add=v=>{if(valid(v))vals.push(v);};
+ for(let i=start;i<=end;i++){add(D.price.low[i]);add(D.price.high[i]);add(T.stop[i]);if(valid(T.stop[i]))add(T.trail_activation[i]);}
+ const fr=frameRange(selected);if(fr&&fr.end>=start&&fr.start<=end){add(fr.lower);add(fr.upper);}
+ const lo=Math.min(...vals),hi=Math.max(...vals),pad=(hi-lo)*.07||1,y=v=>H-bottom-(v-(lo-pad))/(hi-lo+2*pad)*(H-top-bottom);
+ const defs=node(svg,'defs');const clip=node(defs,'clipPath',{id:'chartclip'});node(clip,'rect',{x:L,y:top,width:W-L-R,height:H-top-bottom});
+ const g=node(svg,'g',{'clip-path':'url(#chartclip)'});
+ for(let k=0;k<6;k++){const v=lo+(hi-lo)*k/5;node(svg,'line',{x1:L,x2:W-R,y1:y(v),y2:y(v),stroke:'#dce3e9','stroke-width':.7});node(svg,'text',{x:L-9,y:y(v)+4,'text-anchor':'end'},f(v,0));}
+ const nt=W<600?3:6;
+ for(let k=0;k<nt;k++){const i=Math.round(start+(end-start)*k/(nt-1));node(svg,'text',{x:x(i),y:H-18,'text-anchor':k===0?'start':k===nt-1?'end':'middle'},date(i).slice(0,10));}
+ node(svg,'text',{x:13,y:top+12},'USD');
+ function box(r,selectedBox=false){if(!valid(r.lower)||!valid(r.upper)||r.end<start||r.start>end)return;
+ node(g,'rect',{x:x(Math.max(start,r.start)),y:y(r.upper),width:Math.max(2,x(Math.min(end,r.end))-x(Math.max(start,r.start))),height:Math.max(1,y(r.lower)-y(r.upper)),fill:'#638ca5','fill-opacity':selectedBox?.13:.08,stroke:'#638ca5','stroke-width':selectedBox?1.8:.7,'stroke-dasharray':selectedBox?'5 3':'none'});
+ if(selectedBox||end-start<1600)node(g,'text',{x:x(Math.max(start,r.start))+3,y:y(r.upper)-5},r.label);
+ }
+ if($('boxes').checked)for(const e of D.episodes){if(e.confirmation>=start&&e.crossing<=end)box({start:e.range_start,end:e.range_end,lower:e.lower,upper:e.upper,label:'R'+e.id+' · '+e.sessions+'d'});}
+ if(fr)box(fr,true);
+ function line(values,color,dash='',width=1.3){let d='',on=false;for(let i=start;i<=end;i++){const v=values[i];if(!valid(v)){on=false;continue;}d+=(on?'L':'M')+x(i).toFixed(2)+','+y(v).toFixed(2);on=true;}node(g,'path',{d,fill:'none',stroke:color,'stroke-width':width,'stroke-dasharray':dash});}
+ line(D.price.close,'#243749');line(T.stop,'#b63b49','',1.5);line(T.trail_activation,'#6654a2','4 3',1);
+ const confirmedCrossings=new Set(D.episodes.map(e=>e.crossing));
+ for(let i=start;i<=end;i++)if(T.crossing[i]===i&&!confirmedCrossings.has(i)){const xx=x(i),yy=y(D.price.close[i]);node(g,'path',{d:'M'+xx+','+(yy-4)+'l4,4l-4,4l-4,-4Z',fill:'#9b6b29','fill-opacity':.3});}
+ for(const e of D.episodes){
+  if(e.crossing>=start&&e.crossing<=end){let xx=x(e.crossing),yy=y(D.price.close[e.crossing]);node(g,'path',{d:'M'+xx+','+(yy-5)+'l5,5l-5,5l-5,-5Z',fill:'#9b6b29'});}
+  if(e.confirmation>=start&&e.confirmation<=end){let xx=x(e.confirmation),yy=y(D.price.close[e.confirmation]);node(g,'path',{d:'M'+xx+','+(yy-7)+'l6,11h-12Z',fill:'#9b6b29',stroke:'white','stroke-width':.7});}
+  if(e.exit_signal>=start&&e.exit_signal<=end&&e.exit_signal!==null){const xx=x(e.exit_signal),yy=y(D.price.close[e.exit_signal]);node(g,'text',{x:xx,y:yy-10,'text-anchor':'middle',style:'fill:#b63b49'},({1:'R',2:'S',3:'T'})[e.exit_reason]);}
+ }
+ const policy='event';
+ for(const f of D.fills.filter(z=>z.policy===policy&&z.index>=start&&z.index<=end)){const xx=x(f.index),yy=y(f.price);
+ if(f.quantity>0)node(g,'circle',{cx:xx,cy:yy,r:5,fill:'#087e74',stroke:'white','stroke-width':1});
+ else node(g,'path',{d:'M'+(xx-5)+','+(yy-5)+'l10,10m0,-10l-10,10',stroke:'#b63b49','stroke-width':2});
+ }
+ if(selected>=start&&selected<=end){node(g,'line',{x1:x(selected),x2:x(selected),y1:top,y2:H-bottom,stroke:'#516577','stroke-width':1,'stroke-dasharray':'2 3'});node(g,'circle',{cx:x(selected),cy:y(D.price.close[selected]),r:3.5,fill:'#243749'});}
+ const overlay=node(svg,'rect',{x:L,y:top,width:W-L-R,height:H-top-bottom,fill:'transparent',role:'presentation'});
+ const indexAt=e=>Math.max(start,Math.min(end,Math.round(start+((e.clientX-svg.getBoundingClientRect().left)-L)/(W-L-R)*(end-start))));
+ overlay.addEventListener('click',e=>select(indexAt(e)));
+ overlay.addEventListener('mousemove',e=>{const i=indexAt(e),tip=$('tip');tip.style.display='block';tip.style.left=Math.min(W-235,Math.max(0,e.clientX-svg.getBoundingClientRect().left+12))+'px';tip.style.top='24px';tip.innerHTML=date(i)+' · close $'+f(D.price.close[i])+'<br>Model: '+esc(T.action[i].replaceAll('_',' '))+'<br>Effective stop $'+f(T.stop[i])+' · click to inspect';});
+ overlay.addEventListener('mouseleave',()=>$('tip').style.display='none');
+ [['Daily model',T.active,20],['Executed holding',D.modes[policy].quantity.map(v=>valid(v)&&v>0),58]].forEach(([label,values,yy])=>{
+ node(lanes,'text',{x:0,y:yy+13},label);const left=122,xx=i=>left+(i-start)/Math.max(1,end-start)*(W-left-R);
+ node(lanes,'rect',{x:left,y:yy,width:W-left-R,height:17,fill:'#eef2f5'});
+ let b=null;for(let i=start;i<=end+1;i++){if(i<=end&&values[i]&&b===null)b=i;if((i>end||!values[i])&&b!==null){node(lanes,'rect',{x:xx(b),y:yy,width:Math.max(1,xx(Math.min(end,i))-xx(b)),height:17,fill:yy===20?'#9b6b29':'#087e74','fill-opacity':.6});b=null;}}
+ });
+}
+function renderTables(){
+ const policy='event',showAll=$('allEpisodes').checked;
+ const es=D.episodes.filter(e=>showAll||date(e.confirmation)>='2024-01-01');
+ $('episodes').innerHTML=table(['Episode / base dates','L','Band USD','Cross','Confirm','Virtual entry','Model exit / reason','Executed fills associated'],es.map(e=>{
+ const ff=D.fills.filter(f=>f.policy===policy&&f.model_episode===e.id&&f.action==='entry');
+ return cells(['<strong>R'+e.id+'</strong><br>'+date(e.range_start)+' → '+date(e.range_end),e.sessions,'$'+f(e.lower)+'–'+f(e.upper),dbutton(e.crossing),dbutton(e.confirmation),dbutton(e.virtual_entry),
+ e.exit_signal===null?'Still active':dbutton(e.exit_signal)+'<br>'+esc(reason[e.exit_reason]),ff.length?ff.map(q=>dbutton(q.index)+' @ $'+f(q.price)).join('<br>'):'No '+policy+' entry'],
+ 'class="clickable'+(T.episode[selected]===e.id?' selected':'')+'" data-episode="'+e.id+'"');}));
+ const fs=D.fills.filter(f=>f.policy===policy&&(showAll||f.period==='OOS'));
+ $('fills').innerHTML=table(['Date','Decision close','Action','Quantity','Fill USD','Fee USD','After quantity','Model episode / reason'],fs.map(q=>cells([dbutton(q.index),esc(q.signal_date),esc(q.action),f(q.quantity,0),'$'+f(q.price),'$'+f(q.fee),f(q.after,0),'R'+(q.model_episode??'—')+' · '+esc(q.reason)])));
+ const a=Math.max(0,selected-7),b=Math.min(N-1,selected+7),m=D.modes[policy],dr=[];
+ for(let i=a;i<=b;i++)dr.push(cells([dbutton(i),'$'+f(D.price.open[i]),'$'+f(D.price.close[i]),esc(T.action[i].replaceAll('_',' ')),f(m.fill_quantity[i],0),f(m.quantity[i],0),
+ '$'+f(T.initial_stop[i]),'$'+f(T.range_stop[i]),'$'+f(T.trail_activation[i]),'$'+f(T.trail_candidate[i]),'$'+f(T.stop[i]),T.time_age[i]>=0?T.time_age[i]:'—',T.time_failed[i]?'YES':'no','$'+f(m.nav[i])],i===selected?'class="selected"':''));
+ $('daily').innerHTML=table(['Date','Open','Close','Model action','Filled units','Held units','Initial stop','Range stop','Trail activates','Trail candidate','Effective stop','Age','Time fail','Account NAV'],dr);
+ document.querySelectorAll('[data-day]').forEach(e=>e.onclick=ev=>{ev.stopPropagation();select(+e.dataset.day,true);});
+ document.querySelectorAll('[data-episode]').forEach(e=>e.onclick=()=>{const ep=D.episodes.find(x=>x.id===+e.dataset.episode);select(ep.confirmation);focus();});
+}
+function fitting(){
+ const F=D.fitting,V=F.validation,fit=F.fit,sel=V.rows.local_stability_event,bm=V.buyhold['5:0'].stats[0];
+ const performance=D.metrics.OOS_event;
+ $('outcome').textContent='Daily baseline, 2024 onward: net CAGR '+pct(performance.cagr)+', Sharpe '+f(performance.sharpe,3)+', maximum drawdown '+pct(performance.max_drawdown)+'. Entry target 98%; 5bp each side; no cash yield. These inherited parameters remain a failing baseline to diagnose.';
+ $('selectionExplanation').innerHTML='<strong>Current diagnostic vector: local_stability, executed daily.</strong> It is inherited, not newly selected. Its 2023 daily CAGR was '+pct(sel.scenarios['5:0'].metrics.cagr)+' and worst-friction moderate utility was '+f(sel.score,6)+'. Every daily variant failed the 2023 guards; the return guard required at least '+pct(Math.max(0,bm[0]-.02))+'. The original fitting and selection record remains in the export; it is not a validation pass.';
+ const vr=Object.entries(V.rows).filter(([name])=>name.endsWith('_event')).sort((a,b)=>b[1].score-a[1].score).map(([name,z])=>{const r=z.scenarios['5:0'];return cells([esc(name),f(z.score,6),pct(r.metrics.cagr),f(r.metrics.sharpe,4),pct(r.metrics.max_drawdown),f(z.scenarios['5:0'].components.moderate,6),f(z.scenarios['10:0'].components.moderate,6),f(z.scenarios['5:1'].components.moderate,6),yes(z.guard_pass)],name==='local_stability_event'?'class="selected"':'');});
+ $('validation').innerHTML=table(['Daily variant','Worst utility','2023 CAGR','Sharpe','Max DD','5bp utility','10bp utility','5bp + delay utility','Guards'],vr);
+ $('ISexplanation').innerHTML='<p>IS: '+esc(fit.fit_start)+' through '+esc(fit.known_through)+' ('+fit.sessions+' sessions), '+f(fit.unique_evaluations,0)+' distinct evaluations. Numeric variants were fixed before 2023. The table evaluates each finalist with actual whole-share costs.</p><p>The joint search used differential evolution because discrete thresholds make the trading objective discontinuous. Six runs = raw/moderate/chronological objectives × two seeds; each used 128 initial Sobol vectors (including v1/v2 anchors), best1bin mutation 0.5–1.0, recombination 0.7 and a fixed 30-generation budget, without polishing. The runs exhausted that budget; this is not a convergence guarantee or a claim of a global optimum. Screening required at least four completed trades and 5% exposure.</p>';
+ $('ISvariants').innerHTML=table(['Family','Parameter ID','Selection score','IS CAGR','Sharpe','Max DD','Raw utility','Moderate utility','Hold penalty','Stop penalty'],Object.entries(fit.variants).map(([name,z])=>{const r=z.exact.scenarios['5:0'];return cells([esc(name),esc(z.id),f(z.score,6),pct(r.metrics.cagr),f(r.metrics.sharpe,4),pct(r.metrics.max_drawdown),f(r.components.raw,6),f(r.components.moderate,6),f(r.components.hold_penalty,6),f(r.components.stop_penalty,6)],name==='local_stability'?'class="selected"':'');}));
+ $('finalists').innerHTML=table(['ID','Screen raw','Screen moderate','Exact moderate 5bp','Exact 10bp','Exact +delay','IS guards','Parameters'],Object.entries(fit.archive).map(([id,z])=>cells([esc(id),f(z.components.raw,6),f(z.components.moderate,6),f(z.exact.scenarios['5:0'].components.moderate,6),f(z.exact.scenarios['10:0'].components.moderate,6),f(z.exact.scenarios['5:1'].components.moderate,6),yes(z.exact.guard_pass),'<details><summary>33 values</summary><pre>'+esc(JSON.stringify(Object.fromEntries(F.bounds.map((b,i)=>[b.name,z.parameters[i]])),null,2))+'</pre></details>'],id===fit.variants.local_stability.id?'class="selected"':'')));
+ $('seeds').innerHTML=table(['Objective','Seed','Evaluations','Generations','Best screen score','Termination / history'],fit.trajectories.map(z=>cells([esc(z.objective),z.seed,z.evaluations,z.generations,f(z.score,6),esc(z.message)+'<details><summary>Per-generation best scores</summary><pre>'+esc(z.trajectory.map((v,i)=>(i+1)+': '+f(v,8)).join('\n'))+'</pre></details>'])));
+ const loc=fit.local[fit.variants.local_stability.id],rec=fit.archive[fit.variants.local_stability.id],central=rec.components.moderate;
+ $('local').textContent='Selected local-stability vector: '+fit.variants.local_stability.id+'\n16 nearby pre2023 perturbations: '+loc.values.map(x=>f(x,6)).join(', ')+'\nMedian='+f(loc.median,8)+'; standard deviation='+f(loc.std,8)+'\nLocal score=median−0.5×std='+f(loc.score,8)+'\nCentral screen moderate utility='+f(central,8)+'\nFragility deduction=max(0, central−local score)='+f(Math.max(0,central-loc.score),8)+'\nExact local selection score=min(5bp,10bp,extra-delay moderate utility)−fragility deduction='+f(fit.variants.local_stability.score,8);
+ $('searchNote').textContent='The retained record contains six optimizer trajectories, finalist parameter vectors and all16 local perturbation scores. Intermediate discarded trial vectors and perturbation vectors were not retained. The runner, seeds and bounds define the search recipe; this report does not fabricate a complete trial-by-trial archive.';
+ function enabled(i){if([1,10].includes(i)&&P[2]===0)return 'Inactive: absolute ranges';if(i===0&&P[2]===1)return 'Inactive: relative ranges';if([15,16].includes(i)&&!P[14])return 'Inactive: volume off';if(i>=25&&i<=29&&!P[24])return 'Inactive: heat off';if(i===22&&P[20]!==2)return 'Inactive: ATR trail';return 'Used';}
+ $('parameters').innerHTML=table(['Parameter','Bounds','Selected value','Use'],F.bounds.map((b,i)=>cells([esc(b.name),b.low+' … '+b.high,f(b.selected,b.integer?0:8),esc(enabled(i))])));
+ $('math').textContent='U = .45 × (clip(CAGR,−1,1) − clip(BH CAGR,−1,1)) / .10\n  + .40 × (clip(Sharpe,−3,3) − clip(BH Sharpe,−3,3))\n  + .15 × (clip(CAGR/max(.03,|DD|),−3,3) − matched BH term)\nP = .20 × hold penalty + .20 × stop penalty\nHold penalty = clip((exposure−.85)/.15,0,1) × clip((asset-return correlation−.85)/.15,0,1)\nStop penalty = .5 × [capped mean initial-risk excess over10% /10% + capped mean trail-risk excess over20% /20%]\nCommon moderate utility = U−P. Raw/weak/strong variants use U, U−.5P, U−2P.\nChronological stable score = .5 U(full) + .5 median U(3 IS blocks) − .25 std U(blocks) − P − scarcity term.\nLocal score and2023 selection calculation are shown above.\n\nThis selected GLD rule uses quantiles20%/80%, absolute width cap '+pct(P[0])+', longest of '+D.decoded.windows.join('/')+' sessions.\nIts short-volatility limit is '+f(P[9],4)+'× long volatility, so it does not strictly require compression below1×.\nSee the day panel for substitutions into all entry, stop and time-exit formulas.';
+ $('provenance').innerHTML='<p>Original selection SHA256: <code>'+esc(D.parent_selection_sha256)+'</code>. The explanatory state machine matches every frozen active flag, stop, upper band, duration, exit reason and risk value. The daily replay reproduces the saved 2024+ event NAV, turnover, fees and exposure; 2023 daily metrics and pre-2023 fitting metrics also match the retained records. '+(D.native?'Independent Windows-native daily replay: '+D.native.fills+' identical fills; maximum NAV difference $'+f(D.native.maximum_nav_error_usd,2)+'.':'Independent native daily verification pending.')+'</p><ul>'+D.limitations.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+ $('math').textContent+='\n\nPeak H is max(virtual entry open, all closes since entry), not the intraday high.\nEach normalized stop-risk excess is capped at 3 before averaging the two terms.\nScarcity deduction = .10 × max(0, 12 − completed IS trades) / 12.\nThe stop penalty measures model distances, not the realized size of gap losses beyond a stop.\nHistorical 2023 guard: CAGR ≥ max(0, matched BH CAGR − .02), and signed max drawdown ≥ matched BH drawdown − .05, at all three frictions.\nHistorical selector: prefer guard-passing variants; if none pass, rank every variant descriptively. Take the simplest candidate within .03 of the best worst-friction moderate score.\nComplexity order: shared, shrinkage, local_stability, stable, strong, moderate, weak, raw, v2, v1. Within a family, prefer lower 5bp annual turnover, then the variant key.';
+}
+function focus(){const r=frameRange(selected),e=episodeAt(selected);start=Math.max(0,(r?r.start:selected-50)-10);end=Math.min(N-1,(e?(e.exit_signal??Math.min(N-1,e.confirmation+100)):selected)+35);syncDates();renderChart();}
+$('from').onchange=()=>{start=atDate($('from').value);if(start>=end)end=Math.min(N-1,start+1);syncDates();renderChart();};
+$('to').onchange=()=>{end=atDate($('to').value);if(end<=start)start=Math.max(0,end-1);syncDates();renderChart();};
+$('day').onchange=()=>select(atDate($('day').value),true);$('prev').onclick=()=>select(selected-1,true);$('next').onclick=()=>select(selected+1,true);
+$('bookmark').onchange=()=>{if($('bookmark').value)select(atDate($('bookmark').value),true);};
+$('boxes').onchange=renderChart;$('allEpisodes').onchange=renderTables;
+$('focus').onclick=focus;$('earlier').onclick=()=>select(selected-15,true);$('later').onclick=()=>select(selected+15,true);
+$('oos').onclick=()=>{start=atDate('2023-10-01');end=N-1;syncDates();renderChart();};
+$('full').onclick=()=>{start=0;end=N-1;syncDates();renderChart();};
+$('download').onclick=()=>{const b=new Blob([JSON.stringify(D,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='GLD-daily-audit.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);};
+try{syncDates();fitting();select(selected);new ResizeObserver(renderChart).observe($('price').parentElement);}catch(e){$('chartError').textContent='Display error: '+e.message;throw e;}
+</script></body></html>
+

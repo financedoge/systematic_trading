@@ -10,6 +10,9 @@ import json
 from pathlib import Path
 import shutil
 import time
+import os
+import subprocess
+import sys
 
 import numpy as np
 import pandas as pd
@@ -372,6 +375,17 @@ def main():
     parser.add_argument('--root', type=Path, default=ROOT)
     parser.add_argument('--limit', type=int)
     args = parser.parse_args()
+    # Resume through the one frozen implementation, not whichever checkout is
+    # present later. The archived runner receives its package via PYTHONPATH.
+    frozen = (args.root/'runner.py').resolve()
+    if args.root.exists() and frozen.exists() and Path(__file__).resolve() != frozen:
+        verify(args.root, 'input_manifest.json')
+        environment = dict(os.environ, PYTHONPATH=str((args.root/'source').resolve()))
+        command = [sys.executable, '-B', str(frozen), args.stage, '--root', str(args.root.resolve())]
+        if args.limit is not None:
+            command += ['--limit', str(args.limit)]
+        subprocess.run(command, env=environment, check=True)
+        return
     if args.stage == 'replay':
         replay(args.root, args.limit)
     else:

@@ -219,6 +219,34 @@ def test_failed_strategy_calculation_preserves_reports_and_other_projections(tmp
     assert "import_account_histories" in calls and "import_transactional_histories" in calls
 
 
+def test_deferred_strategy_calculation_is_waiting_not_an_error(tmp_path, monkeypatch):
+    from systematic_trading.research import analytics_service as module
+    from systematic_trading.research.tracked_runtime import CalculationDeferred
+
+    def deferred(*args):
+        raise CalculationDeferred("waiting for the backup/retention artifact lock")
+    monkeypatch.setattr(module, "refresh_tracked_strategies", deferred)
+    calls = []
+    for name in ("publish_strategies", "publish_dashboard", "import_json_group", "import_account_histories",
+                 "import_transactional_histories", "import_lean_histories", "import_raw_market_data"):
+        monkeypatch.setattr(module, name, lambda *args, label=name: calls.append(label))
+    monkeypatch.setattr(module, "refresh_tracked_fx", lambda *args: False)
+    service = module.AnalyticsService(AppSettings(data_dir=tmp_path), object(), SimpleNamespace(
+        initialize=lambda: None, latest=lambda _: None, document=lambda *_: None))
+    status = service.refresh()
+    assert status["errors"] == {}
+    assert list(status["deferred"]) == ["tracked-strategies"]
+    assert "backup/retention" in status["deferred"]["tracked-strategies"]
+    alerts_path = tmp_path/'log/automation_alerts.jsonl'
+    alerts = [json.loads(line) for line in alerts_path.read_text().splitlines()] if alerts_path.exists() else []
+    assert not any(event['event_type'] == 'analytics_tracked-strategies' for event in alerts)
+    assert "publish_strategies" in calls  # Serving is not blocked by a waiting calculation.
+    # A later successful refresh clears the waiting marker.
+    monkeypatch.setattr(module, "refresh_tracked_strategies", lambda *args: False)
+    status = service.refresh()
+    assert status["deferred"] == {} and status["errors"] == {}
+
+
 def test_file_import_is_idempotent_and_removed_rows_disappear(tmp_path):
     analytics = MemoryAnalytics()
     first, second = tmp_path / "a.json", tmp_path / "b.json"

@@ -69,6 +69,9 @@ _POLL_SCRIPT = """<script>
       if(Object.keys(status.errors||{}).length){
         messages.push('Refresh needs attention: '+Object.values(status.errors).join('; '));
       }
+      if(Object.keys(status.deferred||{}).length){
+        messages.push('Recalculation is waiting for the backup/retention lock; retrying automatically.');
+      }
       banner.textContent=messages.filter(Boolean).join(' · ');
     } catch(error){
       banner.textContent=label+' · Update status unavailable; retrying automatically.';

@@ -1,0 +1,84 @@
+{
+  "data": "Reuse the exact52 supported per-ETF histories and hashes from v2, including its disclosed valid-suffix coverage amendment and XNYS4.13.2 calendar. Pin parent manifest and canonical batch; no provider-archive/online research inputs or new filling. Full histories,252 warmup,minimum1260 IS sessions for individual optimization. Shorter assets use shared fitted rule.",
+  "evaluation": "2024\u2013October16,2026 after parameter/variant seal; selected and all frozen variants, event/monthly controls,5/10/20bp per side and0/1 extra session. Fresh OOS cash account, prior-close state may enter with costs. Report net CAGR,Sharpe,actual Calmar,DD,exposure,turnover,costs,planned stop risk,holding/false-signal/exit diagnostics,chronological stability,seed/local sensitivity and IS-to-validation-to-OOS deterioration.",
+  "evaluation_risk": "Stop penalties measure causal planned signal risk inside the evaluated period; fixed-monthly adoption can defer signal exits and actual drawdown guards capture that delay. Monthly is a calendar-only control, with no intramonth protective fills.",
+  "fit_end": "2022-12-31",
+  "inference": "Retrospective historical experiment after extensive prior market inspection. Large search and one-year model selection can still overfit. Compare raw/regularized/shared/shrunk recipes, report trial budget and seed dispersion,21-session paired block confidence intervals, no global-optimum or pristine-OOS claim. Numerical bounds, objective weights, tie tolerance,perturbation size and search budget are declared design choices, not themselves fitted to2024+.",
+  "initial_cash_usd": "1000000",
+  "limitations": [
+    "Current supported surviving ETF cohort, provider identity and revised adjusted-price vintage limitations persist.",
+    "USD adjusted units, zero cash yield, daily decisions/later-open fills; no executable raw-share, historical spread or publication-vintage certification.",
+    "Price/volume is not proof of a fundamental shock. Stops can gap.2024+ was already inspected by earlier studies and user examples.",
+    "No monitoring,promotion,funding,broker policy or live change."
+  ],
+  "model_variants": {
+    "archive": "Pool all three joint-search objectives/seeds per ETF, rank under each declared utility. Retain top3 per raw/weak/moderate/strong/stable for exact-accounting checks. Also assess local robustness of the top12 moderate/stable leaders with16 deterministic5%-of-bound perturbations. Local score=median perturbed moderate utility-.5std, retaining top3 for exact checks. Perturbations use IS only.",
+    "controls": "Unchanged v1, pre2023-fitted v2, buy-hold,SMA200. Full variant comparison remains visible even if2023 does not select it.",
+    "exact_IS": "Use shared whole-share engine at5bp,10bp and5bp plus one extra session. Raw selects maximum base5bp raw utility; penalized variants maximize worst corresponding utility across these frictions. Preserve finalists that fail buy-hold return/drawdown guards as descriptive, visibly marked; no OOS-driven rejection/refit.",
+    "individual": [
+      "raw",
+      "weak",
+      "moderate",
+      "strong",
+      "stable",
+      "local_stability"
+    ],
+    "local_detail": "Take union of top6 moderate and top6 stable leaders (at most12);16 perturbations each. Continuous coordinates uniform +/-5% of bounds; integer coordinates move one adjacent category with probability10% each direction, otherwise unchanged; clip to bounds. Exact local finalist score=min exact moderate utility across3 frictions minus max(0,screen moderate minus local score).",
+    "shared": "After individual fitting, evaluate union of raw/moderate/stable leaders across every history-qualified ETF on IS. Choose common parameters maximizing median within-ETF moderate-utility percentile. No cases-only pooling.",
+    "shrinkage": "Halfway from individually fitted moderate parameters toward shared parameters in normalized continuous coordinates; retain individual categorical/integer choices. Evaluate on IS; no2023 coefficient fitting. Shared rule is the short-history fallback."
+  },
+  "oos_start": "2024-01-01",
+  "operator_request": "Joint fitting of all consequential lifecycle parameters, with return/Sharpe/Calmar emphasis on return and Sharpe and penalties for buy-hold-like exposure and oversized stops.",
+  "optimizer": {
+    "acceleration": "Optional isolated Numba0.67.0/llvmlite0.49.0; identical Python reference, no shared-runtime package replacement. One worker. Keep compact finalist archives, not full daily paths for every trial.",
+    "budget": "At most23808 trials per history-qualified ETF, across3 objectives and2 seeds. Record termination/trajectories and unique evaluations; budget exhaustion is not global convergence. Equal budgets for cases and other ETFs.",
+    "generations": 30,
+    "initialization": "Independent Sobol populations plus v1 and the pre2023-fitted v2 anchors; no OOS seed selection",
+    "method": "SciPy differential_evolution, mixed integer/continuous, joint33-dimensional search; ordinary gradients are unsuitable for threshold-triggered discrete trades",
+    "mutation": [
+      0.5,
+      1.0
+    ],
+    "objectives": [
+      "raw",
+      "moderate",
+      "stable"
+    ],
+    "polish": false,
+    "population": 128,
+    "recombination": 0.7,
+    "seeds": [
+      20261018,
+      20261019
+    ],
+    "strategy": "best1bin",
+    "tolerance": 0,
+    "workers": 1
+  },
+  "parameter_count": 33,
+  "parameters": "All names/bounds/integrality exported verbatim from range_joint.PARAMETERS before fitting. Range width/basis/relative percentile,minimum and maximum adaptive duration,band quantiles,drift tolerance/block,volatility ratio/window,width-reference horizon,ATR horizon,breakout buffer,confirmation length,volume enable/ratio/reference,initial ATR stop,optional upper-band initial floor,optional failed-range stop,trailing current ATR/entry ATR/percentage,distance/activation,heat enable/extension/near-high/volume/ratchet/reference,time-exit duration/gain,cooldown. Negative band-floor/range-fail buffers disable those exits. Trades retain causal crossing, completed-close decisions and later-open fills.",
+  "parent": "var/research/range-breakout-20261018-v2",
+  "portfolio": "After individual evidence, apply sealed active factors to full52 pool with causal liquidity/duplicate admission and fixed matched construction controls. Preserve inherited top6 inverse-vol/45%-cap monthly/event mappings and FR25 tilt controls through their original October12 cutoff. Also report predeclared equal-budget active sleeves to diagnose BIL/inverse-vol distortion, with matched equal-budget momentum control. Compare unconditional versus2023-positive-moderate-utility admission; never select construction using2024+. Candidate evaluation does not mandate allocation.",
+  "registered_on": "2026-10-18",
+  "through": "2026-10-16",
+  "utility": {
+    "base_penalty": "P=.20*holdPenalty+.20*stopPenalty. Weak=U-.5P; moderate=U-P; strong=U-2P; raw=U. Soft penalties, not stop bans or forced premature exits.",
+    "calmar": "Difference of separately clipped[-3,3] CAGR/max(3%,abs(maxDD)); the3% floor applies only to optimizer utility, not reported actual Calmar",
+    "evidence": "At least4 closed IS episodes,5% average exposure and1260 IS sessions for individual fitting; infeasible trials receive dominated fitness and cannot be selected as an individual recipe. No annual cost ceiling.",
+    "hold_penalty": "clip((average exposure-.85)/.15,0,1)*clip((strategy/asset daily-return correlation-.85)/.15,0,1)",
+    "return": "Difference of net CAGR versus same-window98%-entry buy-hold, in10-percentage-point units; each CAGR bounded[-100%,100%] for objective scaling only",
+    "sharpe": "Difference of separately clipped[-3,3] net zero-risk-free Sharpe levels; clipping levels prevents near-cash Sharpe from dominating",
+    "stability": "Three contiguous equal-session IS blocks with continuous NAV. Stable=.5Ufull+.5median(Ublocks)-.25std(Ublocks)-P-.10*max(0,12-closedTrades)/12.",
+    "stop_penalty": "Half the sum of mean initial effective stop-distance excess above10% divided by10%, and mean active highest-close/effective-stop-distance excess above20% divided by20%; each component capped3. Actual combined stop includes optional range-failure floor; no assumption gaps stop at threshold. Penalties use only evaluated-window observations, including fresh account entry into an inherited signal.",
+    "weights": {
+      "calmar": 0.15,
+      "return": 0.45,
+      "sharpe": 0.4
+    }
+  },
+  "validation_authorization": "Operator explicitly chose2023 to select regularization/model variants. Numerical lifecycle parameters are fitted only before2023;2023 selects among sealed fitted variants and monthly/event execution policies.2024+ never selects or retunes.",
+  "validation_end": "2023-12-31",
+  "validation_selector": "Use physical history prefixes ending2023-12-31. For each frozen model variant and event/monthly clock, compute exact2023 net moderate utility at5bp,10bp and5bp+one extra delay; score=min of these. Prefer candidates with CAGR>=max(0,matched buyholdCAGR-2pp),maxDD>=buyholdMaxDD-5pp at all3 frictions. If none pass, choose best descriptive candidate and label failed. Within0.03 of best choose lower complexity (shared,shrinkage,local,stable,strong,moderate,weak,raw,v2,v1),then lower turnover,then ID. No numerical lifecycle adjustment using2023. Seal chosen parameters/variant/clock for all ETFs before OOS replay.",
+  "validation_start": "2023-01-01",
+  "version": "range-breakout-joint-lifecycle-v3"
+}

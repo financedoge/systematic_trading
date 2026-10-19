@@ -1,0 +1,16 @@
+{
+  "IS_exact_replays": 1536,
+  "IS_fractional_screens": 56160,
+  "candidates_per_asset": 1080,
+  "individual_oos_replays": 1872,
+  "individuals": 52,
+  "input_manifest_sha256": "0274cfa1f994f49b2864cbbc5ffe4cd914b3f743c0375c48cc431ecd79e0996d",
+  "native_checks": 5,
+  "native_max_error": 0.0,
+  "pool_replays": 156,
+  "selection_sha256": "2e2dcc5b12cdf26479c2e6f53c50a26d431923b10cd98480795facc51827358a",
+  "status": "pass",
+  "test_command": "pytest tests/test_range_calibration.py tests/test_range_breakout.py tests/test_range_breakout_analysis.py tests/test_target_change_rebalance.py tests/test_selection_timing.py tests/test_governed_research_inputs.py",
+  "tests": "47 focused tests passed; acceptance additionally verifies all manifests and recomputes individual OOS metrics.",
+  "tests_passed": 47
+}

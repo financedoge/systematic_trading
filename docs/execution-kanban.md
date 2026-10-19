@@ -6,16 +6,111 @@ are preserved byte-for-byte in the [history archive](archive/README.md).
 Use [research state](research-state.md) for accepted conclusions and the
 [research plan](signal-decay-and-alpha-plan.md) for the ordered research programme.
 
+## Tracked-calculation/backup lock collision — 2026-10-18
+
+**Complete — false "Strategy calculation error" removed and artifact locks
+decoupled:** the hourly recovery backup shared
+`var/run/research-retention.lock` with every tracked-strategy refresh, so while
+a backup uploaded/verified, the calculation's non-blocking Windows lock acquire
+failed and surfaced as a bare `[Errno 13] Permission denied`; a wedged NAS
+upload kept that state for the whole long command timeout. The backup now holds
+only `var/system-backup/capture.lock` (already probed by research-retention
+maintenance), while calculations keep the artifact lock, and overlapping
+contention is reported as a transient waiting warning with an explicit heading
+instead of an error/alert. Restic commands now fail after
+`stall_timeout_seconds` (900 s) without output, `unlock` is bounded to 120 s,
+and System → Backups flags a transfer stage with no progress for 30 minutes.
+224 focused tests (one optional skip) and Ruff pass; live restart/publication
+and backup behavior are recorded in `log.md`. No allocation, order, approval,
+funding or broker change.
+
+## GLD daily behavior drill-down — 2026-10-18
+
+**In progress — confirmation / patience experiment:** Operator requests repair
+of the February–March 2024 late entry and early time exit. GLD daily only;
+jointly enumerate confirmation count and progress deadline, keep range/ATR/
+price stops/required progress/all other parameters fixed. Numeric fitting
+pre2023, 2023 regularization/model selection, then a sealed 2024+ development
+retest with entry-only and holding-only ablations. Preserve the v1 diagnostic
+and provide the same daily range/entry/exit calculation detail for the revision.
+
+**Diagnostic complete; numerical repairs remain open:** Operator restricts work
+to GLD first and explicitly replaces calendar execution with daily trading for
+this study. Future fitting and 2023 variant selection must compare daily rules
+only. Daily completed-close decisions execute at the next session open; no
+calendar rebalancing. Keep inherited v3 numerical parameters fixed for this
+first diagnostic, without claiming they are a newly selected daily optimum.
+
+Interactive dated ranges, rejected window criteria, crossings/confirmations,
+actual fills, daily initial/range/trailing/time levels and retained fitting
+records now cover 5,512 sessions. Seven 2024+ entries, six time-rule exits;
+latest trailing activation $431.98 was never reached (peak $428.07), effective
+stop $357.45. Daily baseline CAGR −1.84%, Sharpe −0.229, DD −11.99%.
+23 focused tests and report source/control checks pass. Independent native
+daily replay matches all 13 fills and 701 NAV observations with zero error.
+Browser policy blocked local-file visual QA; no browser-rendering pass claimed.
+No new fit, other-ETF study, promotion, monitoring or broker action.
+Next: inspect the five-session progress test and change one GLD rule at a time.
+[Daily drill-down](../research/gld-breakout-drilldown-20261018-v1/index.html).
+
+## Joint lifecycle optimization v3 — 2026-10-18
+
+**Complete — joint search does not validate a general breakout strategy:**
+33 mixed parameters, 1,100,502 unique pre-2023 evaluations across 50 qualified
+ETFs; two short histories use shared parameters. Scaled net-return/Sharpe/Calmar
+45/40/15 objective, soft near-buy-hold and wide-stop penalties, two seeds,
+chronological/local stability, shared/shrunk variants. Calendar 2023 selects
+frozen variants/clocks; all 52 choices sealed before 2024+ replay.
+
+Selected OOS CAGR GLD −0.19%, USO −4.11%, SOXX 42.72%, versus buy-hold
+27.75%/36.67%/40.83%. Gold's fitted five-session time exit misses the rally;
+all three cases failed 2023 return/drawdown guards. Only 5/52 beat buy-hold
+CAGR; no positive family-adjusted bound versus buy-hold. Equal-budget sleeves
+7.24% event /8.39% monthly trail matched momentum 10.11%/11.94%.
+7,320 individual OOS scenarios, 204 pool scenarios, 63 focused tests and five
+exact Windows-native checks pass. Report includes all variants, parameters,
+seed/local diagnostics, costs/delays, attribution and failed selections.
+No strategy promotion, tracking, funding or execution change.
+[Report](../research/range-breakout-20261018-v3/index.html),
+[recipe and interpretation](range-breakout-calibration-v2.md#joint-lifecycle-v3-follow-up).
+
+## Range-breakout individual-asset calibration v2 — 2026-10-18
+
+**Complete — no general validation or promotion:** 52 supported /54 reviewed ETFs,
+full individual histories, 1,080 range/exit/volume choices per ETF fitted strictly
+before 2023. 47 individual fits,46 passing IS guards; five shared-rule fallbacks.
+2023–October16 OOS CAGR: GLD20.10%,USO−3.21%,SOXX32.11%, versus v1
+3.27%/3.38%/−0.46% and buy-hold23.48%/24.71%/46.95%. Wider holding captures
+gold/semiconductor rallies but raises drawdowns; oil fails OOS. Only2/52 beat
+buy-hold CAGR and15/52 beat the shared rule. One positive family bound is BIL,
+not a risky breakout. BIL/cash dominates standalone portfolio construction.
+56,160 fractional screens,1,536 exact IS replays,1,872 individual OOS and156 pool
+replays;47 tests, scoped lint and five exact native LEAN checks pass. Compact
+study footprint94.65MiB. [Definition/results](range-breakout-calibration-v2.md),
+[report](../research/range-breakout-20261018-v2/index.html).
+
 ## Range-breakout lifecycle factor research — 2026-10-18
 
-**In progress:** Operator-requested mathematical compression, confirmed breakout,
-holding, overheating/trailing-profit and false-breakout stop rules. Freeze a finite
-protocol before inspecting performance; evaluate the full supported ETF pool as
-selection and trading/tilt rules with fixed-calendar and dynamic controls, actual
-net costs, delayed execution and chronological validation. Use pinned hash-verified
-published adjusted prices and separately audited raw volume, retain compact
-artifacts, and preserve all monitoring/allocation/broker authorities. Price/volume
-regimes are proxies, not proof of fundamental change or foresight of a price peak.
+**Complete — research prototype, no promotion:** Implemented adaptive 42–756-session
+compression, frozen-range three-close confirmation, optional raw-volume support,
+holding, heat-sensitive trailing exits, false-break stops and reset states.
+Fixed 252/504-session controls remain. Reviewed 53 existing-pool candidates and
+tested 50; after explicit operator steering, added a separately pinned audited USO
+history for 51 supported / 54 reviewed without changing the original 50 inputs or
+FR25 control. Tested selection, standalone trading and a 20% FR25 sleeve under
+monthly/event timing and six cost/delay cases: 972 fixed and 36 continuous
+walk-forward replays across the two pools. Four native LEAN checks match exactly;
+37 focused tests and scoped lint pass. About 164 MiB of artifacts, with one source
+snapshot per pool and compact scenario paths.
+
+Primary extended-pool trading: 2024+ CAGR 9.23%, Sharpe 1.413, drawdown −4.63%,
+46.45% exposure; full-period CAGR 4.76%, Sharpe 0.764. The 20% tilt earns 17.00%
+versus matched FR25's 19.37%; its construction-matched blend earns 15.99% with
+higher Sharpe. Zero family-adjusted positive contrasts; one-session delay and
+20 bp costs materially erode trading performance. Includes GLD/USO/SOXX/XLE case
+charts and losers/missed trends. No monitoring/allocation/broker policy changed.
+[Definition, findings and next work](range-breakout-factor.md);
+[full report](../research/range-breakout-20261018-v1/index.html).
 
 ## Disk retention and Windows native migration implementation — 2026-10-18
 

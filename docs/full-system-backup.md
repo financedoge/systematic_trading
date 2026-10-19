@@ -62,8 +62,22 @@ deduplicate content. Interrupted uploads retain their capture and reuse uploaded
 blocks on reconnect. After a delayed capture completes, an hourly-due fresh
 capture follows. Missed timer ticks do not need individual recreation.
 `deferred` preserves the last complete snapshot ID and its timestamp.
-Calculation, retirement and backup share a file lock. An active calculation can
-defer capture; this is normal contention, not a reason to bypass the lock. Restic
+
+Calculation and backup do not share a file lock. A backup holds
+`var/system-backup/capture.lock` for its whole capture/upload/verify span, and
+research-retention maintenance probes that capture lock before deleting
+artifacts; the tracked calculation owns `var/run/research-retention.lock`. An
+upload therefore cannot block or defer strategy recalculation, and a running
+calculation cannot defer a capture. Transient lock overlap in the calculation
+is reported as a waiting state, not a calculation failure.
+
+Every native command is bounded twice: `command_timeout_seconds` (six hours by
+default) for the whole child, and `stall_timeout_seconds` (900 s) of no
+stdout/stderr growth for restic commands. A NAS call that answers nothing
+therefore fails, releases the capture lock and retries on the normal five-minute
+schedule instead of holding the lock until the long timeout. The restic `unlock`
+probe is additionally bounded to 120 s. System → Backups marks an active stage
+that has reported no progress for 30 minutes as possibly stalled. Restic
 uses the last verified snapshot as its explicit parent when committed fragment
 paths change. Completion resolves the tagged candidate's original ID, because
 `snapshots --latest 1` can return multiple independent path groups.

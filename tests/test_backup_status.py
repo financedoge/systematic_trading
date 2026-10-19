@@ -111,6 +111,21 @@ def test_stalled_progress_is_labelled_stale(backup_root):
     assert module.backup_status(backup_root, now=NOW)["full"]["progress"]["stale"]
 
 
+def test_upload_without_progress_for_thirty_minutes_is_flagged_as_stalled(backup_root):
+    update(backup_root, status="uploading", at=(NOW-timedelta(minutes=45)).isoformat())
+    full = module.backup_status(backup_root, now=NOW)["full"]
+    assert full["status"] == "uploading"
+    assert full["tone"] == "warning"
+    assert "stalled" in full["issue"]
+    assert full["progress"] is None
+
+
+def test_active_phase_within_expected_window_is_not_flagged(backup_root):
+    update(backup_root, status="uploading", at=(NOW-timedelta(minutes=5)).isoformat())
+    full = module.backup_status(backup_root, now=NOW)["full"]
+    assert (full["tone"], full["issue"]) == ("active", None)
+
+
 def test_worker_stopped_or_heartbeat_lost_cannot_show_active_progress(backup_root):
     update(backup_root, status="uploading")
     progress_log(backup_root, dict(message_type="status", bytes_done=20, total_bytes=100))

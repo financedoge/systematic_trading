@@ -7,6 +7,7 @@
   "interval_seconds": 3600,
   "retry_seconds": 300,
   "command_timeout_seconds": 21600,
+  "stall_timeout_seconds": 900,
   "clickhouse_container": "systematic-trading-clickhouse",
   "nats_url": "nats://127.0.0.1:4222",
   "required_paths": [

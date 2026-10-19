@@ -45,6 +45,10 @@ assert.match(node('sc-calculation-status').innerHTML, /F3: three attempts exhaus
 context.reviewTest.readiness({severity:'warning',message:'Expected Oct 7; FX Oct 6 <unsafe>'});
 assert.match(node('sc-calculation-status').innerHTML, /sc-warning/);
 assert.match(node('sc-calculation-status').innerHTML, /&lt;unsafe&gt;/);
+context.reviewTest.readiness({severity:'warning',heading:'Strategy recalculation waiting',
+  message:'tracked-strategies: waiting for the backup/retention artifact lock'});
+assert.match(node('sc-calculation-status').innerHTML, /Strategy recalculation waiting/);
+assert.doesNotMatch(node('sc-calculation-status').innerHTML, /Strategy data is stale/);
 context.reviewTest.readiness({severity:'ok',message:'Current'});
 assert.strictEqual(node('sc-calculation-status').innerHTML,'');
 context.reviewTest.setup();

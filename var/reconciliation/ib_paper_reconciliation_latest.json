@@ -1,26 +1,65 @@
 {
-  "account_snapshot_path": "var\\live\\account_snapshots\\ib_paper_account_snapshot_20260715_001931.json",
+  "account_snapshot_path": "var\\live\\account_snapshots\\ib_paper_account_snapshot_20261019_083731.json",
   "broker_cash": [
     {
-      "amount": "1015927.20",
+      "amount": "18388.87",
       "currency": "HKD"
     }
   ],
-  "broker_positions": [],
-  "checked_at": "2026-07-14T16:19:31.640211Z",
+  "broker_positions": [
+    {
+      "average_cost": "32.7931433",
+      "currency": "USD",
+      "quantity": 656,
+      "symbol": "DBC"
+    },
+    {
+      "average_cost": "22.277832",
+      "currency": "USD",
+      "quantity": 813,
+      "symbol": "EWH"
+    },
+    {
+      "average_cost": "97.78134715",
+      "currency": "USD",
+      "quantity": 212,
+      "symbol": "EWJ"
+    },
+    {
+      "average_cost": "188.2095025",
+      "currency": "USD",
+      "quantity": 40,
+      "symbol": "EWY"
+    },
+    {
+      "average_cost": "769.7383354",
+      "currency": "USD",
+      "quantity": 48,
+      "symbol": "SPY"
+    },
+    {
+      "average_cost": "86.06396795",
+      "currency": "USD",
+      "quantity": 256,
+      "symbol": "VGK"
+    }
+  ],
+  "checked_at": "2026-10-19T00:37:30.937722Z",
   "environment": "paper",
+  "execution_issues": [],
+  "execution_sync_pending": [],
   "has_breaks": false,
   "ib_fill_count": 0,
-  "ib_position_count": 0,
-  "local_filled_order_count": 0,
-  "local_order_count": 0,
-  "local_order_history_count": 220,
+  "ib_position_count": 6,
+  "local_filled_order_count": 27,
+  "local_order_count": 38,
+  "local_order_history_count": 276,
   "managed_accounts": [
     "DU8959779"
   ],
   "pnl_reset_baseline_id": null,
   "position_differences": [],
-  "report_path": "var\\reconciliation\\ib_paper_reconciliation_20260714_161931_640211.json",
+  "report_path": "var\\reconciliation\\ib_paper_reconciliation_20261019_003730_937722.json",
   "requires_operator_confirmation": false,
   "reset_applied": false,
   "status": "matched",

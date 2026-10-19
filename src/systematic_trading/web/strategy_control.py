@@ -116,7 +116,8 @@ def status(request: Request):
 
 def calculation_readiness(state):
     if state is None:
-        return dict(severity='error', message='Calculation worker is unavailable. Start the analytics service; strategy freshness cannot be verified.')
+        return dict(severity='error', heading='Strategy calculation unavailable',
+            message='Calculation worker is unavailable. Start the analytics service; strategy freshness cannot be verified.')
     issues = [f'{name}: {error}' for name, error in state.get('errors', {}).items()]
     worker_error = False
     for lane in ('research', 'operations', 'archives', 'watchdog'):
@@ -128,9 +129,19 @@ def calculation_readiness(state):
     if state.get('strategy_stale'):
         issues.append(state['strategy_freshness_message'])
     if not issues:
+        deferred = state.get('deferred') or {}
+        if deferred:
+            # A backup/retention job transiently owns the artifact lock. The last
+            # complete results stay current; this is a waiting state, not a failure.
+            waiting = [f'{name}: {message}' for name, message in sorted(deferred.items())]
+            return dict(severity='warning', heading='Strategy recalculation waiting',
+                message='\n'.join(waiting)+
+                '\nLast complete results are retained. Calculations retry automatically; '
+                'allocation and order checks remain enforced.')
         return dict(severity='ok', message=state.get('strategy_freshness_message', 'Calculations available.'))
     severity = 'error' if state.get('errors') or worker_error else 'warning'
-    return dict(severity=severity, message='\n'.join(issues)+
+    heading = 'Strategy calculation error' if severity == 'error' else 'Strategy data is stale'
+    return dict(severity=severity, heading=heading, message='\n'.join(issues)+
         '\nLast complete results are retained. Resolve the reported cause, then refresh calculations. Allocation and order checks remain enforced.')
 
 

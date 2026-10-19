@@ -27,6 +27,10 @@ PHASES = {
     "disabled": (None, "Disabled"),
 }
 
+# A healthy transfer reports restic progress every few seconds. A phase that has
+# run this long without any progress is treated as visibly stalled.
+STALL_SECONDS = 1800
+
 
 def _read(path: Path, limit=131072):
     try:
@@ -213,17 +217,26 @@ def backup_status(root: Path, *, now=None):
         db_label, db_tone = "Status delayed", "warning"
     roots = settings.get("required_paths", [])
     roots = [item for item in roots if isinstance(item, str)] if isinstance(roots, list) else []
+    progress = _progress(root, state, now) if active else None
+    issue = _issue(state.get("error"))
+    phase_started = _date(state.get("at"))
+    if active and phase_started and (now - phase_started).total_seconds() > STALL_SECONDS:
+        if progress is None or progress.get("stale"):
+            minutes = int((now - phase_started).total_seconds() // 60)
+            issue = issue or (f"No progress has been reported for {minutes} minutes; the backup "
+                "command may be stalled. Pause and restart the backup worker if it does not recover.")
+            tone = "warning"
     return dict(checked_at=now.isoformat(), full=dict(
         status=display, phase=phase if phase in PHASES else "unknown", label=label, tone=tone,
         stage=step if active or display == "complete" else None,
         phase_at=_iso(state.get("at")), worker_running=running,
         heartbeat_at=_iso(health.get("heartbeat_at")), heartbeat_fresh=fresh,
-        progress=_progress(root, state, now) if active else None,
+        progress=progress,
         pending_capture_at=_iso(pending.get("captured_at")) if pending else None,
         last_success=last_success, next_at=next_at, next_kind=next_kind,
         interval_seconds=interval, retry_seconds=retry,
         repository=str(settings.get("repository", "Not configured")),
-        source_roots=roots, issue=_issue(state.get("error"))),
+        source_roots=roots, issue=issue),
         database=dict(label=db_label, tone=db_tone, worker_running=db_running,
             result=db_phase if db_phase in db_labels else "unknown",
             checked_at=_iso(db.get("at")), revision_at=_iso(db.get("revision_at")),

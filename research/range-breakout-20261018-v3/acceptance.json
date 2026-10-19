@@ -1,0 +1,28 @@
+{
+  "individuals": 52,
+  "input_manifest_sha256": "1ef25050d426f754ca50f4236dc5c7d9fb957cc8f3ff99c31020f73a6685ef4f",
+  "native_checks": 5,
+  "native_maximum_error_usd": 0.0,
+  "oos_exact_replays": 7320,
+  "pool_replays": 204,
+  "primary_paths_recomputed": 1220,
+  "selection_sha256": "38ddfc3124ba9bb457ad54e89d529b51e422435d5c771f9ab7733ae160fe31a3",
+  "status": "pass",
+  "tests": {
+    "command": "pytest tests/test_joint_replay.py tests/test_range_joint.py tests/test_range_calibration.py tests/test_range_breakout.py tests/test_range_breakout_analysis.py tests/test_target_change_rebalance.py tests/test_selection_timing.py tests/test_governed_research_inputs.py -q",
+    "hashes": {
+      "tests/test_governed_research_inputs.py": "3dc20c32ee52c126832c457161e725ca65244cd826ce00a94c8ea40f56cb1d39",
+      "tests/test_joint_replay.py": "11268b08df5930deded5aebe2006778b19cd112ed965f6662bdbe487bea73ce2",
+      "tests/test_range_breakout.py": "a770c0ab75a2910feff5238746b27949d01aeab4010d6b1504e1c6a3c713d766",
+      "tests/test_range_breakout_analysis.py": "7b223abaa960d65e5cba9e9caa9dc698617ac5d1e6ae9d39492a5ce0a4bf56db",
+      "tests/test_range_calibration.py": "4d2fb08a7e1a91cce94bd2faf8f4ab0cbf71324c2bfb431784efdf2f54c83d95",
+      "tests/test_range_joint.py": "f5a806bd1326d14783551cf0d2c2d20ba4be1cdc11823b03938698d145ed0a77",
+      "tests/test_selection_timing.py": "cacac888be5d773f8e21f029b1abc683f00977c7f79809386f249da28bb24dc7",
+      "tests/test_target_change_rebalance.py": "44aa572a46cef709f28d04877ab35c4a627b119458327091fb92d139f1a31218"
+    },
+    "passed": 63,
+    "ruff": "pass: new module, both runners, both new test files",
+    "scope": "Causality, physical split, JIT/reference parity, cost/delay/shared accounting, trailing bases, penalties, timing and governed inputs"
+  },
+  "variants_sha256": "accaf5b66f9db23e19c930e52fb788c2a088aa5c0c7a717fb7e77b1ad9ebe28e"
+}

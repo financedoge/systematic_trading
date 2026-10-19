@@ -1,0 +1,1477 @@
+{
+  "cases": {
+    "GLD": [
+      {
+        "atr": 2.1460006713867186,
+        "duration": 504,
+        "entry_date": "2022-03-10",
+        "entry_price": 186.8800048828125,
+        "exit_date": "2022-03-15",
+        "exit_price": 179.10000610351562,
+        "exit_reason": "trailing_or_initial_stop",
+        "exit_signal": 940,
+        "fill_index": 938,
+        "gross_return": -0.04163098553093203,
+        "heated": false,
+        "lower": 157.8399809552677,
+        "max_favorable_return": 0.0,
+        "peak": 186.8800048828125,
+        "signal_date": "2022-03-09",
+        "signal_index": 937,
+        "stop": 182.58800354003907,
+        "upper": 182.95550429423585
+      },
+      {
+        "atr": 1.9290008544921875,
+        "duration": 756,
+        "entry_date": "2023-12-18",
+        "entry_price": 187.5,
+        "exit_date": "2024-02-14",
+        "exit_price": 184.27000427246094,
+        "exit_reason": "trailing_or_initial_stop",
+        "exit_signal": 1422,
+        "fill_index": 1384,
+        "gross_return": -0.017226643880208337,
+        "heated": false,
+        "lower": 158.01248595277787,
+        "max_favorable_return": 0.0271466471354167,
+        "peak": 192.58999633789062,
+        "signal_date": "2023-12-15",
+        "signal_index": 1383,
+        "stop": 186.25799255371095,
+        "upper": 185.39998858402507
+      },
+      {
+        "atr": 2.4714988708496093,
+        "duration": 63,
+        "entry_date": "2024-07-19",
+        "entry_price": 221.52000427246094,
+        "exit_date": "2024-07-22",
+        "exit_price": 221.5800018310547,
+        "exit_reason": "failed_range",
+        "exit_signal": 1530,
+        "fill_index": 1530,
+        "gross_return": 0.0002708448782799966,
+        "heated": false,
+        "lower": 212.96100614344388,
+        "max_favorable_return": 0.000947957073979877,
+        "peak": 221.72999572753906,
+        "signal_date": "2024-07-18",
+        "signal_index": 1529,
+        "stop": 221.14747056370024,
+        "upper": 223.61896943454985
+      },
+      {
+        "atr": 2.3739959716796877,
+        "duration": 63,
+        "entry_date": "2025-02-04",
+        "entry_price": 261.8299865722656,
+        "exit_date": "2025-02-28",
+        "exit_price": 262.55999755859375,
+        "exit_reason": "trailing_or_initial_stop",
+        "exit_signal": 1682,
+        "fill_index": 1666,
+        "gross_return": 0.002788110696887891,
+        "heated": true,
+        "lower": 239.293973942532,
+        "max_favorable_return": 0.03964406452714542,
+        "peak": 272.2099914550781,
+        "signal_date": "2025-02-03",
+        "signal_index": 1665,
+        "stop": 266.4859924316406,
+        "upper": 255.10489329605383
+      },
+      {
+        "atr": 2.68900146484375,
+        "duration": 63,
+        "entry_date": "2025-09-03",
+        "entry_price": 327.760009765625,
+        "exit_date": "2025-10-22",
+        "exit_price": 372.75,
+        "exit_reason": "trailing_or_initial_stop",
+        "exit_signal": 1845,
+        "fill_index": 1811,
+        "gross_return": 0.13726503811903856,
+        "heated": true,
+        "lower": 303.6559594317951,
+        "max_favorable_return": 0.23001580999698334,
+        "peak": 403.1499938964844,
+        "signal_date": "2025-09-02",
+        "signal_index": 1810,
+        "stop": 390.2489990234375,
+        "upper": 313.11299368031564
+      },
+      {
+        "atr": 7.3105010986328125,
+        "duration": 42,
+        "entry_date": "2026-08-13",
+        "entry_price": 402.1700134277344,
+        "exit_date": "2026-08-31",
+        "exit_price": 407.760009765625,
+        "exit_reason": "trailing_or_initial_stop",
+        "exit_signal": 2059,
+        "fill_index": 2048,
+        "gross_return": 0.013899585128803071,
+        "heated": true,
+        "lower": 367.153490665416,
+        "max_favorable_return": 0.0644006092740137,
+        "peak": 428.07000732421875,
+        "signal_date": "2026-08-12",
+        "signal_index": 2047,
+        "stop": 413.3299987792969,
+        "upper": 396.2594753227645
+      }
+    ],
+    "SOXX": [
+      {
+        "atr": 2.3822481416017225,
+        "duration": 126,
+        "entry_date": "2021-09-16",
+        "entry_price": 151.1813967869703,
+        "exit_date": "2021-09-21",
+        "exit_price": 147.51908615714316,
+        "exit_reason": "failed_range",
+        "exit_signal": 819,
+        "fill_index": 817,
+        "gross_return": -0.024224611676182062,
+        "heated": false,
+        "lower": 129.0580832025985,
+        "max_favorable_return": 0.009211203185123917,
+        "peak": 152.57395935058594,
+        "signal_date": "2021-09-15",
+        "signal_index": 816,
+        "stop": 147.46416792209638,
+        "upper": 149.84641606369811
+      },
+      {
+        "atr": 2.6343688112992454,
+        "duration": 126,
+        "entry_date": "2021-11-04",
+        "entry_price": 160.32146726750514,
+        "exit_date": "2021-12-17",
+        "exit_price": 164.5190460460845,
+        "exit_reason": "trailing_or_initial_stop",
+        "exit_signal": 881,
+        "fill_index": 852,
+        "gross_return": 0.02618226273824864,
+        "heated": true,
+        "lower": 129.4722732900498,
+        "max_favorable_return": 0.10132471509935281,
+        "peak": 176.5659942626953,
+        "signal_date": "2021-11-03",
+        "signal_index": 851,
+        "stop": 166.99992483141997,
+        "upper": 151.41024396296828
+      },
+      {
+        "atr": 3.5245227957900767,
+        "duration": 42,
+        "entry_date": "2023-02-06",
+        "entry_price": 136.43041533175452,
+        "exit_date": "2023-04-26",
+        "exit_price": 132.12403972457642,
+        "exit_reason": "trailing_or_initial_stop",
+        "exit_signal": 1220,
+        "fill_index": 1166,
+        "gross_return": -0.03156463019412781,
+        "heated": false,
+        "lower": 112.13390809798925,
+        "max_favorable_return": 0.06284809121155299,
+        "peak": 145.0048065185547,
+        "signal_date": "2023-02-03",
+        "signal_index": 1165,
+        "stop": 132.7384011328637,
+        "upper": 131.68116021444547
+      },
+      {
+        "atr": 2.78501547037948,
+        "duration": 63,
+        "entry_date": "2023-05-31",
+        "entry_price": 156.8486027974727,
+        "exit_date": "2023-06-26",
+        "exit_price": 159.38891340616746,
+        "exit_reason": "trailing_or_initial_stop",
+        "exit_signal": 1261,
+        "fill_index": 1245,
+        "gross_return": 0.016195940310510082,
+        "heated": true,
+        "lower": 131.77048081262163,
+        "max_favorable_return": 0.07527907874281436,
+        "peak": 168.65602111816406,
+        "signal_date": "2023-05-30",
+        "signal_index": 1244,
+        "stop": 160.35213570145197,
+        "upper": 144.3490230298768
+      }
+    ],
+    "XLE": [
+      {
+        "atr": 0.5567383879039747,
+        "duration": 63,
+        "entry_date": "2022-01-07",
+        "entry_price": 25.803806845586056,
+        "exit_date": "2022-03-16",
+        "exit_price": 30.625558329394234,
+        "exit_reason": "trailing_or_initial_stop",
+        "exit_signal": 941,
+        "fill_index": 896,
+        "gross_return": 0.1868620205019469,
+        "heated": true,
+        "lower": 22.845621556260998,
+        "max_favorable_return": 0.27658888922939195,
+        "peak": 32.940853118896484,
+        "signal_date": "2022-01-06",
+        "signal_index": 895,
+        "stop": 31.00875474628696,
+        "upper": 24.643536384011767
+      },
+      {
+        "atr": 0.7620297171009967,
+        "duration": 252,
+        "entry_date": "2026-01-13",
+        "entry_price": 45.821874542204235,
+        "exit_date": "2026-04-02",
+        "exit_price": 59.741493116740045,
+        "exit_reason": "trailing_or_initial_stop",
+        "exit_signal": 1956,
+        "fill_index": 1902,
+        "gross_return": 0.30377671611219537,
+        "heated": true,
+        "lower": 38.579577568877774,
+        "max_favorable_return": 0.3475016671519233,
+        "peak": 61.745052337646484,
+        "signal_date": "2026-01-12",
+        "signal_index": 1901,
+        "stop": 59.28868392021624,
+        "upper": 44.64435303816887
+      }
+    ]
+  },
+  "episodes": {
+    "L252-V0-H0": {
+      "closed": 110,
+      "durations": {
+        "126": 0,
+        "252": 110,
+        "42": 0,
+        "504": 0,
+        "63": 0,
+        "756": 0
+      },
+      "entries": 110,
+      "failed_range_rate": 0.36363636363636365,
+      "median_gross_return": -0.010041887648270242,
+      "median_hold_sessions": 19.5,
+      "stop_loss_rate": 0.5818181818181818,
+      "win_rate": 0.4090909090909091
+    },
+    "L252-V0-H1": {
+      "closed": 111,
+      "durations": {
+        "126": 0,
+        "252": 111,
+        "42": 0,
+        "504": 0,
+        "63": 0,
+        "756": 0
+      },
+      "entries": 111,
+      "failed_range_rate": 0.3333333333333333,
+      "median_gross_return": -0.006890517877580882,
+      "median_hold_sessions": 16.0,
+      "stop_loss_rate": 0.5675675675675675,
+      "win_rate": 0.42342342342342343
+    },
+    "L252-V1-H0": {
+      "closed": 58,
+      "durations": {
+        "126": 0,
+        "252": 58,
+        "42": 0,
+        "504": 0,
+        "63": 0,
+        "756": 0
+      },
+      "entries": 58,
+      "failed_range_rate": 0.2413793103448276,
+      "median_gross_return": 0.005222533772963667,
+      "median_hold_sessions": 24.0,
+      "stop_loss_rate": 0.4482758620689655,
+      "win_rate": 0.5517241379310345
+    },
+    "L252-V1-H1": {
+      "closed": 58,
+      "durations": {
+        "126": 0,
+        "252": 58,
+        "42": 0,
+        "504": 0,
+        "63": 0,
+        "756": 0
+      },
+      "entries": 58,
+      "failed_range_rate": 0.20689655172413793,
+      "median_gross_return": 0.0061944749678461974,
+      "median_hold_sessions": 17.0,
+      "stop_loss_rate": 0.43103448275862066,
+      "win_rate": 0.5689655172413793
+    },
+    "L504-V0-H0": {
+      "closed": 54,
+      "durations": {
+        "126": 0,
+        "252": 0,
+        "42": 0,
+        "504": 54,
+        "63": 0,
+        "756": 0
+      },
+      "entries": 54,
+      "failed_range_rate": 0.4074074074074074,
+      "median_gross_return": -0.01019849148130908,
+      "median_hold_sessions": 17.5,
+      "stop_loss_rate": 0.7222222222222222,
+      "win_rate": 0.2777777777777778
+    },
+    "L504-V0-H1": {
+      "closed": 54,
+      "durations": {
+        "126": 0,
+        "252": 0,
+        "42": 0,
+        "504": 54,
+        "63": 0,
+        "756": 0
+      },
+      "entries": 54,
+      "failed_range_rate": 0.37037037037037035,
+      "median_gross_return": -0.009410144693455025,
+      "median_hold_sessions": 15.0,
+      "stop_loss_rate": 0.7037037037037037,
+      "win_rate": 0.2962962962962963
+    },
+    "L504-V1-H0": {
+      "closed": 28,
+      "durations": {
+        "126": 0,
+        "252": 0,
+        "42": 0,
+        "504": 28,
+        "63": 0,
+        "756": 0
+      },
+      "entries": 28,
+      "failed_range_rate": 0.2857142857142857,
+      "median_gross_return": -0.008925847713591561,
+      "median_hold_sessions": 14.0,
+      "stop_loss_rate": 0.7142857142857143,
+      "win_rate": 0.2857142857142857
+    },
+    "L504-V1-H1": {
+      "closed": 28,
+      "durations": {
+        "126": 0,
+        "252": 0,
+        "42": 0,
+        "504": 28,
+        "63": 0,
+        "756": 0
+      },
+      "entries": 28,
+      "failed_range_rate": 0.2857142857142857,
+      "median_gross_return": -0.010193810459379338,
+      "median_hold_sessions": 11.5,
+      "stop_loss_rate": 0.75,
+      "win_rate": 0.25
+    },
+    "Ladaptive-V0-H0": {
+      "closed": 433,
+      "durations": {
+        "126": 63,
+        "252": 59,
+        "42": 109,
+        "504": 39,
+        "63": 138,
+        "756": 29
+      },
+      "entries": 437,
+      "failed_range_rate": 0.3625866050808314,
+      "median_gross_return": -0.009928659342554824,
+      "median_hold_sessions": 19.0,
+      "stop_loss_rate": 0.648960739030023,
+      "win_rate": 0.3441108545034642
+    },
+    "Ladaptive-V0-H1": {
+      "closed": 445,
+      "durations": {
+        "126": 64,
+        "252": 61,
+        "42": 116,
+        "504": 39,
+        "63": 140,
+        "756": 29
+      },
+      "entries": 449,
+      "failed_range_rate": 0.3550561797752809,
+      "median_gross_return": -0.008208020759355228,
+      "median_hold_sessions": 15.0,
+      "stop_loss_rate": 0.6314606741573033,
+      "win_rate": 0.36179775280898874
+    },
+    "Ladaptive-V1-H0": {
+      "closed": 223,
+      "durations": {
+        "126": 41,
+        "252": 32,
+        "42": 49,
+        "504": 17,
+        "63": 63,
+        "756": 22
+      },
+      "entries": 224,
+      "failed_range_rate": 0.2600896860986547,
+      "median_gross_return": -0.007995978727585062,
+      "median_hold_sessions": 21.0,
+      "stop_loss_rate": 0.6188340807174888,
+      "win_rate": 0.3721973094170404
+    },
+    "Ladaptive-V1-H1": {
+      "closed": 231,
+      "durations": {
+        "126": 41,
+        "252": 32,
+        "42": 54,
+        "504": 17,
+        "63": 66,
+        "756": 22
+      },
+      "entries": 232,
+      "failed_range_rate": 0.24242424242424243,
+      "median_gross_return": -0.005054045880300895,
+      "median_hold_sessions": 16.0,
+      "stop_loss_rate": 0.5844155844155844,
+      "win_rate": 0.4025974025974026
+    }
+  },
+  "family_positive": 0,
+  "fr25": {
+    "annual_cost_bps": 44.043134488673616,
+    "annual_excess_vs_bil": 0.14054693526317452,
+    "annual_turnover": 8.806900403639554,
+    "average_exposure": 0.97837476815312,
+    "bil_relative_sharpe": 1.2424965766882912,
+    "cagr": 0.19370559990716174,
+    "calmar": 2.2386422510523727,
+    "max_drawdown": -0.08652816224481685,
+    "scenario": "FR25__monthly__c5d0",
+    "sessions": 697,
+    "sharpe": 1.6237046356218334
+  },
+  "primary_tilt": {
+    "annual_cost_bps": 55.787261860280594,
+    "annual_excess_vs_bil": 0.11969308095104339,
+    "annual_mean_difference": 0.009921836256453126,
+    "annual_turnover": 11.152699846567891,
+    "average_exposure": 0.8686507324325184,
+    "bil_relative_sharpe": 1.221048274729839,
+    "cagr": 0.1709455147226031,
+    "calmar": 2.2838941461606206,
+    "family_positive": false,
+    "max_drawdown": -0.07484826519213861,
+    "scenario": "Ladaptive-V1-H1__tilt__event__c5d0",
+    "sessions": 697,
+    "sharpe": 1.660812505366116,
+    "simultaneous_lower": -0.01479812548041496,
+    "simultaneous_upper": 0.03464179799332121
+  },
+  "primary_trading": {
+    "annual_cost_bps": 105.73384737709526,
+    "annual_excess_vs_bil": 0.04947838680487554,
+    "annual_mean_difference": 0.066413415113385,
+    "annual_turnover": 21.129424665130827,
+    "average_exposure": 0.4554179180156719,
+    "bil_relative_sharpe": 0.8137278570345257,
+    "cagr": 0.09480504920127042,
+    "calmar": 1.9037051296872813,
+    "family_positive": false,
+    "max_drawdown": -0.049800280370544514,
+    "scenario": "Ladaptive-V1-H1__trading__event__c5d0",
+    "sessions": 697,
+    "sharpe": 1.5197766712662226,
+    "simultaneous_lower": -0.06962846850449954,
+    "simultaneous_upper": 0.20245529873126952
+  },
+  "scenarios": 486,
+  "selections": {
+    "selection": {
+      "2024": {
+        "neighbor_supported": [
+          "L504-V0-H0__selection__monthly",
+          "L504-V0-H1__selection__monthly"
+        ],
+        "passing": [
+          "L504-V0-H0__selection__monthly",
+          "L504-V0-H1__selection__monthly"
+        ],
+        "selected": "L504-V0-H0__selection__monthly",
+        "training_end": "2023-12-31",
+        "training_start": "2021-01-01"
+      },
+      "2025": {
+        "neighbor_supported": [
+          "L504-V0-H0__selection__monthly",
+          "L504-V0-H1__selection__monthly",
+          "Ladaptive-V1-H0__selection__monthly",
+          "Ladaptive-V1-H1__selection__monthly"
+        ],
+        "passing": [
+          "L504-V0-H0__selection__monthly",
+          "L504-V0-H1__selection__monthly",
+          "Ladaptive-V1-H0__selection__monthly",
+          "Ladaptive-V1-H1__selection__monthly"
+        ],
+        "selected": "L504-V0-H0__selection__monthly",
+        "training_end": "2024-12-31",
+        "training_start": "2022-01-01"
+      },
+      "2026": {
+        "neighbor_supported": [
+          "L252-V1-H0__selection__event",
+          "L252-V1-H0__selection__monthly",
+          "L252-V1-H1__selection__monthly",
+          "L504-V0-H0__selection__event",
+          "L504-V0-H0__selection__monthly",
+          "L504-V0-H1__selection__event",
+          "L504-V0-H1__selection__monthly",
+          "L504-V1-H0__selection__event",
+          "L504-V1-H0__selection__monthly",
+          "L504-V1-H1__selection__event",
+          "L504-V1-H1__selection__monthly",
+          "Ladaptive-V1-H1__selection__monthly"
+        ],
+        "passing": [
+          "L252-V1-H0__selection__event",
+          "L252-V1-H0__selection__monthly",
+          "L252-V1-H1__selection__monthly",
+          "L504-V0-H0__selection__event",
+          "L504-V0-H0__selection__monthly",
+          "L504-V0-H1__selection__event",
+          "L504-V0-H1__selection__monthly",
+          "L504-V1-H0__selection__event",
+          "L504-V1-H0__selection__monthly",
+          "L504-V1-H1__selection__event",
+          "L504-V1-H1__selection__monthly",
+          "Ladaptive-V1-H1__selection__monthly"
+        ],
+        "selected": "L504-V0-H0__selection__monthly",
+        "training_end": "2025-12-31",
+        "training_start": "2023-01-01"
+      }
+    },
+    "tilt": {
+      "2024": {
+        "neighbor_supported": [],
+        "passing": [],
+        "selected": "blend_control__monthly",
+        "training_end": "2023-12-31",
+        "training_start": "2021-01-01"
+      },
+      "2025": {
+        "neighbor_supported": [
+          "L504-V1-H0__tilt__monthly",
+          "L504-V1-H1__tilt__monthly"
+        ],
+        "passing": [
+          "L252-V0-H0__tilt__monthly",
+          "L504-V1-H0__tilt__monthly",
+          "L504-V1-H1__tilt__monthly"
+        ],
+        "selected": "L504-V1-H1__tilt__monthly",
+        "training_end": "2024-12-31",
+        "training_start": "2022-01-01"
+      },
+      "2026": {
+        "neighbor_supported": [],
+        "passing": [],
+        "selected": "blend_control__monthly",
+        "training_end": "2025-12-31",
+        "training_start": "2023-01-01"
+      }
+    },
+    "trading": {
+      "2024": {
+        "neighbor_supported": [],
+        "passing": [],
+        "selected": "M1__monthly",
+        "training_end": "2023-12-31",
+        "training_start": "2021-01-01"
+      },
+      "2025": {
+        "neighbor_supported": [
+          "L252-V0-H0__trading__monthly",
+          "L252-V0-H1__trading__monthly",
+          "L252-V1-H0__trading__monthly",
+          "L504-V0-H0__trading__monthly",
+          "L504-V1-H0__trading__monthly",
+          "L504-V1-H1__trading__monthly",
+          "Ladaptive-V0-H1__trading__monthly",
+          "Ladaptive-V1-H0__trading__monthly",
+          "Ladaptive-V1-H1__trading__monthly"
+        ],
+        "passing": [
+          "L252-V0-H0__trading__monthly",
+          "L252-V0-H1__trading__monthly",
+          "L252-V1-H0__trading__monthly",
+          "L504-V0-H0__trading__monthly",
+          "L504-V1-H0__trading__monthly",
+          "L504-V1-H1__trading__monthly",
+          "Ladaptive-V0-H1__trading__monthly",
+          "Ladaptive-V1-H0__trading__monthly",
+          "Ladaptive-V1-H1__trading__monthly"
+        ],
+        "selected": "L504-V1-H1__trading__monthly",
+        "training_end": "2024-12-31",
+        "training_start": "2022-01-01"
+      },
+      "2026": {
+        "neighbor_supported": [],
+        "passing": [],
+        "selected": "M1__monthly",
+        "training_end": "2025-12-31",
+        "training_start": "2023-01-01"
+      }
+    }
+  },
+  "studied_assets": 50,
+  "verdict": "Research prototype; no promotion. Judge matched return/drawdown and cash-relative results, not zero-risk-free Sharpe alone.",
+  "walk_forward": {
+    "WF_selection__c10d0": {
+      "adoptions": 70,
+      "fills": 579,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 15.778453179210674,
+          "annual_turnover": 1.5772537806545546,
+          "average_exposure": 0.6190638835732827,
+          "cagr": 0.034985485960455254,
+          "calmar": 13.567165065230952,
+          "max_drawdown": -0.002578688015679398,
+          "sessions": 252,
+          "sharpe": 4.263009452748479
+        },
+        "2025": {
+          "annual_cost_bps": 13.385985219272316,
+          "annual_turnover": 1.3384928063075932,
+          "average_exposure": 0.6003861367184493,
+          "cagr": 0.03557362449968293,
+          "calmar": 16.88092774396838,
+          "max_drawdown": -0.002107326388645525,
+          "sessions": 250,
+          "sharpe": 5.011933946252431
+        },
+        "2026": {
+          "annual_cost_bps": 9.578209835964108,
+          "annual_turnover": 0.9576833386421081,
+          "average_exposure": 0.5563943528420487,
+          "cagr": 0.020819214695400046,
+          "calmar": 4.234346619337057,
+          "max_drawdown": -0.004916747863843884,
+          "sessions": 195,
+          "sharpe": 2.749095586633
+        },
+        "evaluation": {
+          "annual_cost_bps": 13.185677796258492,
+          "annual_turnover": 1.3182774825495798,
+          "average_exposure": 0.5948314657737146,
+          "cagr": 0.03121259536497445,
+          "calmar": 6.3482196421950805,
+          "max_drawdown": -0.004916747863843884,
+          "sessions": 697,
+          "sharpe": 4.082024049119438
+        }
+      }
+    },
+    "WF_selection__c10d1": {
+      "adoptions": 70,
+      "fills": 584,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 15.732897857915571,
+          "annual_turnover": 1.5731616115364708,
+          "average_exposure": 0.6189492717367155,
+          "cagr": 0.030265523756105583,
+          "calmar": 11.727249068464516,
+          "max_drawdown": -0.0025807863020059774,
+          "sessions": 252,
+          "sharpe": 3.6253443302906168
+        },
+        "2025": {
+          "annual_cost_bps": 13.38161686094253,
+          "annual_turnover": 1.3380431790801757,
+          "average_exposure": 0.600468421737915,
+          "cagr": 0.03481057512328989,
+          "calmar": 16.139376360957648,
+          "max_drawdown": -0.002156872381233965,
+          "sessions": 250,
+          "sharpe": 4.8483272716396675
+        },
+        "2026": {
+          "annual_cost_bps": 9.583466178156474,
+          "annual_turnover": 0.9583174047368844,
+          "average_exposure": 0.557325310364438,
+          "cagr": 0.021459967420871084,
+          "calmar": 4.684320532323002,
+          "max_drawdown": -0.00458123377185482,
+          "sessions": 195,
+          "sharpe": 2.8278584126869317
+        },
+        "evaluation": {
+          "annual_cost_bps": 13.169111018896512,
+          "annual_turnover": 1.316814081493439,
+          "average_exposure": 0.5950799963173551,
+          "cagr": 0.02941838361845628,
+          "calmar": 6.421498025093261,
+          "max_drawdown": -0.00458123377185482,
+          "sessions": 697,
+          "sharpe": 3.8057072459822927
+        }
+      }
+    },
+    "WF_selection__c20d0": {
+      "adoptions": 70,
+      "fills": 577,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 31.54984008162576,
+          "annual_turnover": 1.5769327097474362,
+          "average_exposure": 0.6191542525013374,
+          "cagr": 0.0333700226833904,
+          "calmar": 12.925481374504859,
+          "max_drawdown": -0.002581723783936729,
+          "sessions": 252,
+          "sharpe": 4.055362431964109
+        },
+        "2025": {
+          "annual_cost_bps": 26.77404386969885,
+          "annual_turnover": 1.3386363521117173,
+          "average_exposure": 0.6004009989243575,
+          "cagr": 0.03420476168114228,
+          "calmar": 16.22226870435194,
+          "max_drawdown": -0.002108506664790122,
+          "sessions": 250,
+          "sharpe": 4.793281144601098
+        },
+        "2026": {
+          "annual_cost_bps": 19.141231894655753,
+          "annual_turnover": 0.9569038996546395,
+          "average_exposure": 0.5564018327219974,
+          "cagr": 0.01984985883137913,
+          "calmar": 3.992065524306773,
+          "max_drawdown": -0.004972327911583085,
+          "sessions": 195,
+          "sharpe": 2.609223023923508
+        },
+        "evaluation": {
+          "annual_cost_bps": 26.365295390892793,
+          "annual_turnover": 1.317994822549409,
+          "average_exposure": 0.5948715620404819,
+          "cagr": 0.029867749612685568,
+          "calmar": 6.006794029635166,
+          "max_drawdown": -0.004972327911583085,
+          "sessions": 697,
+          "sharpe": 3.8908569957353762
+        }
+      }
+    },
+    "WF_selection__c20d1": {
+      "adoptions": 70,
+      "fills": 584,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 31.463799964606327,
+          "annual_turnover": 1.5730201712432068,
+          "average_exposure": 0.6190472348491399,
+          "cagr": 0.028684358641000385,
+          "calmar": 11.038936941051748,
+          "max_drawdown": -0.0025984711022606355,
+          "sessions": 252,
+          "sharpe": 3.428238487745806
+        },
+        "2025": {
+          "annual_cost_bps": 26.76017072995559,
+          "annual_turnover": 1.337879819537631,
+          "average_exposure": 0.6005337313590048,
+          "cagr": 0.033401871818986795,
+          "calmar": 15.287330488202734,
+          "max_drawdown": -0.002184938164630057,
+          "sessions": 250,
+          "sharpe": 4.6189743286586395
+        },
+        "2026": {
+          "annual_cost_bps": 19.19071318566018,
+          "annual_turnover": 0.9595263535076363,
+          "average_exposure": 0.557338710770754,
+          "cagr": 0.02054504189860107,
+          "calmar": 4.448850038325182,
+          "max_drawdown": -0.004618056738620813,
+          "sessions": 195,
+          "sharpe": 2.706669921678198
+        },
+        "evaluation": {
+          "annual_cost_bps": 26.34305501402213,
+          "annual_turnover": 1.3170425781516284,
+          "average_exposure": 0.5951425891277352,
+          "cagr": 0.028086545386204254,
+          "calmar": 6.081896991718714,
+          "max_drawdown": -0.004618056738620813,
+          "sessions": 697,
+          "sharpe": 3.621992110879668
+        }
+      }
+    },
+    "WF_selection__c5d0": {
+      "adoptions": 70,
+      "fills": 581,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 7.891762035724251,
+          "annual_turnover": 1.577687656009018,
+          "average_exposure": 0.6190719000459178,
+          "cagr": 0.035807344509501515,
+          "calmar": 13.873924926622385,
+          "max_drawdown": -0.002580909490204286,
+          "sessions": 252,
+          "sharpe": 4.360064176141197
+        },
+        "2025": {
+          "annual_cost_bps": 6.69146351224406,
+          "annual_turnover": 1.3382600170249594,
+          "average_exposure": 0.6003006146559147,
+          "cagr": 0.036240643016058005,
+          "calmar": 17.23356014775309,
+          "max_drawdown": -0.0021029109891018694,
+          "sessions": 250,
+          "sharpe": 5.13069412619214
+        },
+        "2026": {
+          "annual_cost_bps": 4.788803820710729,
+          "annual_turnover": 0.9575814346709478,
+          "average_exposure": 0.5563967252278212,
+          "cagr": 0.021283583493445946,
+          "calmar": 4.334308046251632,
+          "max_drawdown": -0.004910491655490956,
+          "sessions": 195,
+          "sharpe": 2.8011802512230077
+        },
+        "evaluation": {
+          "annual_cost_bps": 6.593122892542494,
+          "annual_turnover": 1.3183223433735256,
+          "average_exposure": 0.5948043527904951,
+          "cagr": 0.031878123491232424,
+          "calmar": 6.49183945880165,
+          "max_drawdown": -0.004910491655490956,
+          "sessions": 697,
+          "sharpe": 4.169997795304226
+        }
+      }
+    },
+    "WF_selection__c5d1": {
+      "adoptions": 70,
+      "fills": 579,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 7.868186062193252,
+          "annual_turnover": 1.5734694303738075,
+          "average_exposure": 0.6189655527365076,
+          "cagr": 0.031067737604146606,
+          "calmar": 12.027918652415808,
+          "max_drawdown": -0.002582968716529077,
+          "sessions": 252,
+          "sharpe": 3.7183992494180673
+        },
+        "2025": {
+          "annual_cost_bps": 6.692312073051059,
+          "annual_turnover": 1.3384207382729292,
+          "average_exposure": 0.600427588815947,
+          "cagr": 0.03548457098037905,
+          "calmar": 16.50910204147736,
+          "max_drawdown": -0.002149394369919566,
+          "sessions": 250,
+          "sharpe": 4.948424686420028
+        },
+        "2026": {
+          "annual_cost_bps": 4.798543771554734,
+          "annual_turnover": 0.959691854742275,
+          "average_exposure": 0.5573476768821021,
+          "cagr": 0.02185039671867206,
+          "calmar": 4.774842754477314,
+          "max_drawdown": -0.004576150010004665,
+          "sessions": 195,
+          "sharpe": 2.873656031128889
+        },
+        "evaluation": {
+          "annual_cost_bps": 6.587628323369638,
+          "annual_turnover": 1.317445326681744,
+          "average_exposure": 0.5950774942404542,
+          "cagr": 0.030058742934042204,
+          "calmar": 6.568565905472046,
+          "max_drawdown": -0.004576150010004665,
+          "sessions": 697,
+          "sharpe": 3.8864916135567134
+        }
+      }
+    },
+    "WF_tilt__c10d0": {
+      "adoptions": 70,
+      "fills": 849,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 88.76449081651063,
+          "annual_turnover": 8.868589755327621,
+          "average_exposure": 0.9043484232494375,
+          "cagr": 0.040169504972788816,
+          "calmar": 0.7626966864260348,
+          "max_drawdown": -0.0526677323865421,
+          "sessions": 252,
+          "sharpe": 0.5874141481850946
+        },
+        "2025": {
+          "annual_cost_bps": 61.36588684588926,
+          "annual_turnover": 6.138519313103131,
+          "average_exposure": 0.7921404334393081,
+          "cagr": 0.18688573797796448,
+          "calmar": 2.77673257075006,
+          "max_drawdown": -0.06730419052472247,
+          "sessions": 250,
+          "sharpe": 1.9127549256929894
+        },
+        "2026": {
+          "annual_cost_bps": 69.51347092438861,
+          "annual_turnover": 6.95191766816219,
+          "average_exposure": 0.8935279312581822,
+          "cagr": 0.268323358504569,
+          "calmar": 4.058544835945301,
+          "max_drawdown": -0.06611319311495845,
+          "sessions": 195,
+          "sharpe": 2.1875942827752826
+        },
+        "evaluation": {
+          "annual_cost_bps": 73.55129157458936,
+          "annual_turnover": 7.353139730143431,
+          "average_exposure": 0.8610744011679065,
+          "cagr": 0.15279923077318736,
+          "calmar": 2.157850751727396,
+          "max_drawdown": -0.07081084298850093,
+          "sessions": 697,
+          "sharpe": 1.6024271569817135
+        }
+      }
+    },
+    "WF_tilt__c10d1": {
+      "adoptions": 70,
+      "fills": 849,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 88.75467511647193,
+          "annual_turnover": 8.881816505533653,
+          "average_exposure": 0.9047099682551196,
+          "cagr": 0.025104211470613258,
+          "calmar": 0.48367028900433906,
+          "max_drawdown": -0.05190356331849866,
+          "sessions": 252,
+          "sharpe": 0.3842747028553173
+        },
+        "2025": {
+          "annual_cost_bps": 61.596644319054946,
+          "annual_turnover": 6.152469009620512,
+          "average_exposure": 0.7920268958602766,
+          "cagr": 0.18964607673561962,
+          "calmar": 2.805168734358098,
+          "max_drawdown": -0.06760594270597986,
+          "sessions": 250,
+          "sharpe": 1.9489290934764738
+        },
+        "2026": {
+          "annual_cost_bps": 70.24117429676679,
+          "annual_turnover": 7.021514977943445,
+          "average_exposure": 0.8964791528233468,
+          "cagr": 0.26806951590884975,
+          "calmar": 4.852106755807764,
+          "max_drawdown": -0.05524806633489299,
+          "sessions": 195,
+          "sharpe": 2.2282015649004308
+        },
+        "evaluation": {
+          "annual_cost_bps": 73.83410071303327,
+          "annual_turnover": 7.382396603297819,
+          "average_exposure": 0.8619900584876785,
+          "cagr": 0.1476260673340355,
+          "calmar": 2.1836256019099594,
+          "max_drawdown": -0.06760594270597986,
+          "sessions": 697,
+          "sharpe": 1.569465511127669
+        }
+      }
+    },
+    "WF_tilt__c20d0": {
+      "adoptions": 70,
+      "fills": 850,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 177.59330343701782,
+          "annual_turnover": 8.871778640729232,
+          "average_exposure": 0.9049315572021964,
+          "cagr": 0.030996461377411633,
+          "calmar": 0.5669272023102493,
+          "max_drawdown": -0.05467450009648489,
+          "sessions": 252,
+          "sharpe": 0.4619411536043629
+        },
+        "2025": {
+          "annual_cost_bps": 122.7704905856636,
+          "annual_turnover": 6.140463685528406,
+          "average_exposure": 0.7925222190707746,
+          "cagr": 0.1797224419806187,
+          "calmar": 2.653552947368028,
+          "max_drawdown": -0.06772898281863171,
+          "sessions": 250,
+          "sharpe": 1.844386240553266
+        },
+        "2026": {
+          "annual_cost_bps": 139.06191820854104,
+          "annual_turnover": 6.953589970437081,
+          "average_exposure": 0.8939689905926318,
+          "cagr": 0.2595843315338606,
+          "calmar": 3.924419433959547,
+          "max_drawdown": -0.06614591939066838,
+          "sessions": 195,
+          "sharpe": 2.124040216502604
+        },
+        "evaluation": {
+          "annual_cost_bps": 147.14951099456226,
+          "annual_turnover": 7.355457938423386,
+          "average_exposure": 0.8615455672140752,
+          "cagr": 0.14440499469457335,
+          "calmar": 1.9410932559403966,
+          "max_drawdown": -0.07439364093025702,
+          "sessions": 697,
+          "sharpe": 1.5201000560565239
+        }
+      }
+    },
+    "WF_tilt__c20d1": {
+      "adoptions": 70,
+      "fills": 848,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 177.54684447571756,
+          "annual_turnover": 8.883666035275413,
+          "average_exposure": 0.9054111151958019,
+          "cagr": 0.016008290374346368,
+          "calmar": 0.29147977642158607,
+          "max_drawdown": -0.05492075838288191,
+          "sessions": 252,
+          "sharpe": 0.2583406804086719
+        },
+        "2025": {
+          "annual_cost_bps": 123.21006676117071,
+          "annual_turnover": 6.153336130325739,
+          "average_exposure": 0.7923853446096305,
+          "cagr": 0.1824546095413313,
+          "calmar": 2.6821621846126416,
+          "max_drawdown": -0.0680251964583124,
+          "sessions": 250,
+          "sharpe": 1.8819677032599114
+        },
+        "2026": {
+          "annual_cost_bps": 140.53495027110299,
+          "annual_turnover": 7.024085837797849,
+          "average_exposure": 0.8968953449443324,
+          "cagr": 0.2593820451553741,
+          "calmar": 4.660315575750421,
+          "max_drawdown": -0.05565761394036228,
+          "sessions": 195,
+          "sharpe": 2.166298442719954
+        },
+        "evaluation": {
+          "annual_cost_bps": 147.70249182358475,
+          "annual_turnover": 7.384095569356413,
+          "average_exposure": 0.8624885644847841,
+          "cagr": 0.1392555328505285,
+          "calmar": 1.9354167888770881,
+          "max_drawdown": -0.07195118573468784,
+          "sessions": 697,
+          "sharpe": 1.4876007590831557
+        }
+      }
+    },
+    "WF_tilt__c5d0": {
+      "adoptions": 70,
+      "fills": 851,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 44.37416803294225,
+          "annual_turnover": 8.86701751623749,
+          "average_exposure": 0.9039953696171261,
+          "cagr": 0.044823118657063565,
+          "calmar": 0.8678346284234352,
+          "max_drawdown": -0.05164937787570445,
+          "sessions": 252,
+          "sharpe": 0.6507246071348662
+        },
+        "2025": {
+          "annual_cost_bps": 30.687563472815597,
+          "annual_turnover": 6.139491477394126,
+          "average_exposure": 0.7920211287626949,
+          "cagr": 0.19051180923628142,
+          "calmar": 2.8392554294865064,
+          "max_drawdown": -0.06709921455384393,
+          "sessions": 250,
+          "sharpe": 1.9467812731320078
+        },
+        "2026": {
+          "annual_cost_bps": 34.748776189079386,
+          "annual_turnover": 6.950214306289604,
+          "average_exposure": 0.8932842209299259,
+          "cagr": 0.2726103460549443,
+          "calmar": 4.123580925196465,
+          "max_drawdown": -0.06611009969252779,
+          "sessions": 195,
+          "sharpe": 2.21902402693927
+        },
+        "evaluation": {
+          "annual_cost_bps": 36.772155766679816,
+          "annual_turnover": 7.352443433524896,
+          "average_exposure": 0.860835779649247,
+          "cagr": 0.1570170754295257,
+          "calmar": 2.275573168043457,
+          "max_drawdown": -0.06900111041673485,
+          "sessions": 697,
+          "sharpe": 1.6434885922588933
+        }
+      }
+    },
+    "WF_tilt__c5d1": {
+      "adoptions": 70,
+      "fills": 849,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 44.37235504887382,
+          "annual_turnover": 8.880673532400763,
+          "average_exposure": 0.9042670614560862,
+          "cagr": 0.029653418084633953,
+          "calmar": 0.5876496911643906,
+          "max_drawdown": -0.05046104597771095,
+          "sessions": 252,
+          "sharpe": 0.4469302717189161
+        },
+        "2025": {
+          "annual_cost_bps": 30.798597431783183,
+          "annual_turnover": 6.152605657416511,
+          "average_exposure": 0.7918119480004868,
+          "cagr": 0.19325254297455663,
+          "calmar": 2.8672025570349646,
+          "max_drawdown": -0.06740107792537797,
+          "sessions": 250,
+          "sharpe": 1.982197914020116
+        },
+        "2026": {
+          "annual_cost_bps": 35.11783783228405,
+          "annual_turnover": 7.020882362390797,
+          "average_exposure": 0.8961294154793077,
+          "cagr": 0.27248447767401074,
+          "calmar": 4.952346233853917,
+          "max_drawdown": -0.055021289870915036,
+          "sessions": 195,
+          "sharpe": 2.2595475014119426
+        },
+        "evaluation": {
+          "annual_cost_bps": 36.91457849003929,
+          "annual_turnover": 7.381855387640354,
+          "average_exposure": 0.8616549820739173,
+          "cagr": 0.1518329375062577,
+          "calmar": 2.2526781793364954,
+          "max_drawdown": -0.06740107792537797,
+          "sessions": 697,
+          "sharpe": 1.6102200743964112
+        }
+      }
+    },
+    "WF_trading__c10d0": {
+      "adoptions": 70,
+      "fills": 495,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 17.139151164880232,
+          "annual_turnover": 1.7133752186055862,
+          "average_exposure": 0.6118628092512418,
+          "cagr": 0.032204046711888035,
+          "calmar": 13.006940552972022,
+          "max_drawdown": -0.0024759125007709493,
+          "sessions": 252,
+          "sharpe": 3.7844779114604283
+        },
+        "2025": {
+          "annual_cost_bps": 11.620124437751592,
+          "annual_turnover": 1.1616815574643344,
+          "average_exposure": 0.02774197992075225,
+          "cagr": -0.0022479715013116186,
+          "calmar": -0.2720542946380046,
+          "max_drawdown": -0.00826295171815894,
+          "sessions": 250,
+          "sharpe": -0.3239042200443246
+        },
+        "2026": {
+          "annual_cost_bps": 19.43920310072278,
+          "annual_turnover": 1.9437061451235045,
+          "average_exposure": 0.5561872856824166,
+          "cagr": 0.018603421772029893,
+          "calmar": 3.59248719106717,
+          "max_drawdown": -0.005178423967185708,
+          "sessions": 195,
+          "sharpe": 2.4080362578071406
+        },
+        "evaluation": {
+          "annual_cost_bps": 15.803072894732654,
+          "annual_turnover": 1.5799334903210542,
+          "average_exposure": 0.38677395067370485,
+          "cagr": 0.015935093452608573,
+          "calmar": 1.7508536999495972,
+          "max_drawdown": -0.009101327799728387,
+          "sessions": 697,
+          "sharpe": 2.053668385816766
+        }
+      }
+    },
+    "WF_trading__c10d1": {
+      "adoptions": 70,
+      "fills": 500,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 17.10744874788173,
+          "annual_turnover": 1.710750705147477,
+          "average_exposure": 0.6117952582722392,
+          "cagr": 0.026695490930290777,
+          "calmar": 10.783222277768937,
+          "max_drawdown": -0.002475650621180936,
+          "sessions": 252,
+          "sharpe": 3.0744555049167004
+        },
+        "2025": {
+          "annual_cost_bps": 11.619189100931349,
+          "annual_turnover": 1.1616706646297672,
+          "average_exposure": 0.029923835413190908,
+          "cagr": -0.0017139046729094387,
+          "calmar": -0.22674268939362552,
+          "max_drawdown": -0.007558808963115449,
+          "sessions": 250,
+          "sharpe": -0.2502809637114261
+        },
+        "2026": {
+          "annual_cost_bps": 19.48414166415479,
+          "annual_turnover": 1.949462038623827,
+          "average_exposure": 0.5546587033343878,
+          "cagr": 0.01790005353848234,
+          "calmar": 3.4030881421712404,
+          "max_drawdown": -0.00525994414210551,
+          "sessions": 195,
+          "sharpe": 2.216900764468062
+        },
+        "evaluation": {
+          "annual_cost_bps": 15.80384789700031,
+          "annual_turnover": 1.5805910206402471,
+          "average_exposure": 0.38710446354104394,
+          "cagr": 0.013970185801697399,
+          "calmar": 1.6151900318604835,
+          "max_drawdown": -0.008649252116548545,
+          "sessions": 697,
+          "sharpe": 1.7741288194854579
+        }
+      }
+    },
+    "WF_trading__c20d0": {
+      "adoptions": 70,
+      "fills": 494,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 34.29897334385445,
+          "annual_turnover": 1.7144019048401404,
+          "average_exposure": 0.6120404446590166,
+          "cagr": 0.03044063975974942,
+          "calmar": 12.28190174041352,
+          "max_drawdown": -0.002478495627398214,
+          "sessions": 252,
+          "sharpe": 3.5647782188074557
+        },
+        "2025": {
+          "annual_cost_bps": 23.24465506915953,
+          "annual_turnover": 1.161908733618293,
+          "average_exposure": 0.027746373639350792,
+          "cagr": -0.003407321624069648,
+          "calmar": -0.3761191159281164,
+          "max_drawdown": -0.009059155676418351,
+          "sessions": 250,
+          "sharpe": -0.4850912335132171
+        },
+        "2026": {
+          "annual_cost_bps": 38.88142019577226,
+          "annual_turnover": 1.9438658092925625,
+          "average_exposure": 0.5562641549283048,
+          "cagr": 0.01659851620869701,
+          "calmar": 3.1877358715757222,
+          "max_drawdown": -0.00520699232226296,
+          "sessions": 195,
+          "sharpe": 2.094400162529782
+        },
+        "evaluation": {
+          "annual_cost_bps": 31.616043024557815,
+          "annual_turnover": 1.580430841085134,
+          "average_exposure": 0.3868612563485356,
+          "cagr": 0.014324669063688678,
+          "calmar": 1.3980513113014061,
+          "max_drawdown": -0.010246168325792171,
+          "sessions": 697,
+          "sharpe": 1.8230287134662186
+        }
+      }
+    },
+    "WF_trading__c20d1": {
+      "adoptions": 70,
+      "fills": 499,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 34.21822856487068,
+          "annual_turnover": 1.710893136908376,
+          "average_exposure": 0.6118656426631366,
+          "cagr": 0.02495512982051995,
+          "calmar": 10.076472254272511,
+          "max_drawdown": -0.0024765740619132615,
+          "sessions": 252,
+          "sharpe": 2.860521647882667
+        },
+        "2025": {
+          "annual_cost_bps": 23.239852035280695,
+          "annual_turnover": 1.1617424871609618,
+          "average_exposure": 0.029922232012699643,
+          "cagr": -0.0028732675468795543,
+          "calmar": -0.330183136917964,
+          "max_drawdown": -0.008702042065804938,
+          "sessions": 250,
+          "sharpe": -0.41477354768047275
+        },
+        "2026": {
+          "annual_cost_bps": 38.955118420700146,
+          "annual_turnover": 1.9487877305036951,
+          "average_exposure": 0.5547482660060598,
+          "cagr": 0.015911635667114954,
+          "calmar": 3.0050578173896927,
+          "max_drawdown": -0.0052949515896291155,
+          "sessions": 195,
+          "sharpe": 1.8906388404853933
+        },
+        "evaluation": {
+          "annual_cost_bps": 31.605745622961425,
+          "annual_turnover": 1.5804796265988121,
+          "average_exposure": 0.38715439286293685,
+          "cagr": 0.012372177440561849,
+          "calmar": 1.2637163666967326,
+          "max_drawdown": -0.009790311945473862,
+          "sessions": 697,
+          "sharpe": 1.542522781729617
+        }
+      }
+    },
+    "WF_trading__c5d0": {
+      "adoptions": 70,
+      "fills": 492,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 8.575097781295446,
+          "annual_turnover": 1.7144930967536884,
+          "average_exposure": 0.6118783209416894,
+          "cagr": 0.03308545708902777,
+          "calmar": 13.34796700977714,
+          "max_drawdown": -0.002478688856871858,
+          "sessions": 252,
+          "sharpe": 3.8858587599280248
+        },
+        "2025": {
+          "annual_cost_bps": 5.8102114274741865,
+          "annual_turnover": 1.1617120654600135,
+          "average_exposure": 0.02774297241375973,
+          "cagr": -0.0016675844634879144,
+          "calmar": -0.205832150957632,
+          "max_drawdown": -0.008101671462546034,
+          "sessions": 250,
+          "sharpe": -0.2402727151051491
+        },
+        "2026": {
+          "annual_cost_bps": 9.713795774177893,
+          "annual_turnover": 1.9425866386713078,
+          "average_exposure": 0.556026764417834,
+          "cagr": 0.019580954676652995,
+          "calmar": 3.798117008085461,
+          "max_drawdown": -0.005155437453603695,
+          "sessions": 195,
+          "sharpe": 2.56540047990868
+        },
+        "evaluation": {
+          "annual_cost_bps": 7.901962229153069,
+          "annual_turnover": 1.58003539639575,
+          "average_exposure": 0.3867350057994596,
+          "cagr": 0.016733466879040204,
+          "calmar": 1.9612280817992684,
+          "max_drawdown": -0.008532137100386916,
+          "sessions": 697,
+          "sharpe": 2.1649707835641667
+        }
+      }
+    },
+    "WF_trading__c5d1": {
+      "adoptions": 70,
+      "fills": 497,
+      "windows": {
+        "2024": {
+          "annual_cost_bps": 8.554531102691952,
+          "annual_turnover": 1.7108250144717656,
+          "average_exposure": 0.6117457761895486,
+          "cagr": 0.02757254538556886,
+          "calmar": 11.149833628600973,
+          "max_drawdown": -0.002472910924414262,
+          "sessions": 252,
+          "sharpe": 3.178979638054391
+        },
+        "2025": {
+          "annual_cost_bps": 5.808381616620156,
+          "annual_turnover": 1.1613977616135562,
+          "average_exposure": 0.02991195818099567,
+          "cagr": -0.001133357151142711,
+          "calmar": -0.1552985292395008,
+          "max_drawdown": -0.007297925850893616,
+          "sessions": 250,
+          "sharpe": -0.16518318717526417
+        },
+        "2026": {
+          "annual_cost_bps": 9.7442198880243,
+          "annual_turnover": 1.9499194500389443,
+          "average_exposure": 0.5546491898401285,
+          "cagr": 0.019012173134610677,
+          "calmar": 3.630086591132481,
+          "max_drawdown": -0.005237388325957104,
+          "sessions": 195,
+          "sharpe": 2.389916741361072
+        },
+        "evaluation": {
+          "annual_cost_bps": 7.902381808031778,
+          "annual_turnover": 1.5806479724646603,
+          "average_exposure": 0.3870796515980492,
+          "cagr": 0.01480477237406741,
+          "calmar": 1.8343581080058766,
+          "max_drawdown": -0.00807081905624285,
+          "sessions": 697,
+          "sharpe": 1.891170664790336
+        }
+      }
+    }
+  }
+}

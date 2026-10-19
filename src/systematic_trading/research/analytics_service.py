@@ -13,7 +13,7 @@ from systematic_trading.research.analytics_projection import (
     publish_strategies, publish_dashboard, import_account_histories,
 )
 from systematic_trading.research.signal_decay_job import refresh_signal_decay
-from systematic_trading.research.tracked_runtime import refresh_tracked_strategies
+from systematic_trading.research.tracked_runtime import CalculationDeferred, refresh_tracked_strategies
 from systematic_trading.research.tracked_freshness import freshness, refresh_tracked_fx
 
 
@@ -87,6 +87,7 @@ class AnalyticsService:
             event_store=store if hasattr(store, 'append_platform_event') else None,
             service_name='analytics-service')
         self._reported_issues = {}
+        self._deferred = {}
         self._market_data_checked_at = None
 
     def _report_issue(self, name, message, *, severity='error'):
@@ -240,7 +241,8 @@ class AnalyticsService:
             errors = dict(self._status['errors'])
             if self._status.get('alert_delivery_error'):
                 errors['alert-delivery'] = self._status['alert_delivery_error']
-            return {**self._status, "errors": errors, "running": research and operations,
+            return {**self._status, "errors": errors, "deferred": dict(self._deferred),
+                    "running": research and operations,
                     "spot_running": bool(self._spot_thread and self._spot_thread.is_alive()),
                     **freshness(self._strategy_inputs),
                     "research_running": research, "operations_running": operations,
@@ -311,6 +313,8 @@ class AnalyticsService:
         self.analytics.initialize()
         if lane in {"all", "research"}:
             self._load_strategy_freshness()
+            with self._lock:
+                self._deferred = {}
         with self._lock:
             errors = dict(self._lane_errors.get(lane, {}))
         errors.pop(lane + '_worker', None)
@@ -383,15 +387,24 @@ class AnalyticsService:
                 with self._lock:
                     self._lane_errors.get(lane, {}).pop(name, None)
                     self._reported_issues.pop(name, None)
+                    self._deferred.pop(name, None)
                     self._status["errors"] = {k:v for values in self._lane_errors.values() for k,v in values.items()}
                 if name in {"tracked-strategies", "strategy-serving"}:
                     self._load_strategy_freshness()
+            except CalculationDeferred as exc:
+                # A transient artifact-lock overlap (backup/retention). This is
+                # not a calculation failure: the previous complete publication
+                # stays current and the next lane refresh retries the job.
+                logging.getLogger(__name__).info('Analytics job %s deferred: %s', name, exc)
+                with self._lock:
+                    self._deferred[name] = str(exc)
             except Exception as exc:
                 errors[name] = str(exc)
                 logging.getLogger(__name__).exception('Analytics job %s failed', name)
                 with self._lock:
                     if name == 'dashboard-serving':
                         self._performance_payload = None
+                    self._deferred.pop(name, None)
                     self._lane_errors[lane] = dict(errors)
                     self._status["errors"] = {k:v for values in self._lane_errors.values() for k,v in values.items()}
                 # Never fall through to the legacy static SOTA marks if a
@@ -404,7 +417,8 @@ class AnalyticsService:
         with self._lock:
             self._lane_errors[lane] = errors
             self._status.update(last_completed_at=datetime.now(UTC).isoformat(),
-                errors={k:v for values in self._lane_errors.values() for k,v in values.items()}, changed=changed)
+                errors={k:v for values in self._lane_errors.values() for k,v in values.items()},
+                deferred=dict(self._deferred), changed=changed)
             self._status[lane + "_completed_at"] = datetime.now(UTC).isoformat()
             self._status.pop(lane + "_job", None)
             self._status.pop(lane + "_job_started_at", None)

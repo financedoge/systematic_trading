@@ -82,12 +82,37 @@ def test_existing_repository_without_key_cannot_be_reinitialized(backup):
     assert not backup.password.exists()
 
 
-def test_one_shot_backup_defers_while_retirement_owns_files(backup, monkeypatch):
-    monkeypatch.setattr(backup, "capture", lambda: pytest.fail("Retirement owns the source files"))
+def test_one_shot_backup_is_not_blocked_by_the_calculation_lock(backup, monkeypatch):
+    monkeypatch.setattr(backup, "initialize_repository", lambda: None)
+    monkeypatch.setattr(backup, "capture", lambda: fake_capture(backup))
+
+    def publish(pending):
+        # The capture lock is held for the whole upload so retention/maintenance
+        # cannot delete files that restic is reading; the calculation lock is not
+        # taken, so an upload can never block strategy recalculation.
+        with pytest.raises(OSError):
+            with exclusive_lock(backup.local / "capture.lock"):
+                pytest.fail("capture lock must stay held during the upload")
+        return "ran"
+
+    monkeypatch.setattr(backup, "publish", publish)
     with exclusive_lock(backup.workspace / "var/run/research-retention.lock"):
-        assert backup.once() is None
-    assert backup.state['status']=='deferred'
-    assert 'Calculation/retirement file lock unavailable' in backup.state['error']
+        assert backup.once() == "ran"
+    assert backup.state["status"] != "deferred"
+
+
+def test_command_without_output_stalls_instead_of_holding_locks(backup):
+    backup.config["stall_timeout_seconds"] = 1
+    started = time.monotonic()
+    with pytest.raises(TimeoutError, match="no output"):
+        backup.command([sys.executable, "-c", "import time; time.sleep(30)"])
+    assert time.monotonic() - started < 15
+
+
+def test_command_output_prevents_the_stall_guard(backup):
+    script = "import time\nfor index in range(6):\n    print(index, flush=True)\n    time.sleep(.2)"
+    output = backup.command([sys.executable, "-c", script], stall_timeout=1)
+    assert output.strip().splitlines()[-1] == "5"
 
 
 def test_pending_manifest_tampering_fails_before_upload(backup):

@@ -26,6 +26,10 @@ async function reportChecks() {
   assert.match(banner.textContent, /retrying automatically/);
   assert.equal(reloads, 0);
   reject = false;
+  payload = {...payload, deferred:{'tracked-strategies':'waiting for the backup/retention artifact lock'}};
+  await timers.shift()();
+  assert.match(banner.textContent, /waiting for the backup\/retention lock/);
+  assert.match(banner.textContent, /retrying automatically/);
   payload = {...payload, strategy_serving_version:'v2'};
   await timers.shift()();
   assert.equal(reloads, 1);

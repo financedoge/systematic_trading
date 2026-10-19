@@ -188,20 +188,45 @@ def latest_allocation(definition, inputs, economic, quotes, models=None, usd_mod
         notes="Held weights follow filled monthly rebalances and daily marks. Latest signal targets are indicative until the next scheduled rebalance; no order is placed.")
 
 
+class CalculationDeferred(RuntimeError):
+    """The calculation could not start because another artifact job holds the lock.
+
+    This is a transient waiting state, not a calculation failure: the last
+    complete publication is retained and the next refresh retries.
+    """
+
+
+def _record_calculation_failure(settings, exc):
+    state = settings.data_dir / "run/strategy-compute.json"
+    if state.exists():
+        compute = json.loads(state.read_text(encoding="utf8"))
+        if compute.get("phase") != "complete":
+            compute.update(phase="failed", error=str(exc), updated_at=datetime.now(UTC).isoformat())
+            temporary = state.with_suffix(".tmp")
+            temporary.write_text(encode(compute), encoding="utf8")
+            temporary.replace(state)
+
+
 def refresh_tracked_strategies(settings, store, analytics):
+    from systematic_trading.runtime_io import LockUnavailable, exclusive_lock
+    entered = False
     try:
-        from systematic_trading.runtime_io import exclusive_lock
         with exclusive_lock(settings.data_dir / "run/research-retention.lock"):
+            entered = True
             return _refresh_tracked_strategies(settings, store, analytics)
+    except LockUnavailable as exc:
+        if entered:
+            # A native-run output lock is already owned by another process: that
+            # is a real stuck or concurrent calculation, so report it as failure.
+            _record_calculation_failure(settings, exc)
+            raise
+        # Backup/retention currently owns the artifact lock. Wait for the next
+        # refresh instead of raising an operator-visible calculation error.
+        raise CalculationDeferred(
+            "Tracked calculation is waiting for the backup/retention artifact lock; "
+            "the last complete results are retained and the next refresh retries") from exc
     except Exception as exc:
-        state = settings.data_dir / "run/strategy-compute.json"
-        if state.exists():
-            compute = json.loads(state.read_text(encoding="utf8"))
-            if compute.get("phase") != "complete":
-                compute.update(phase="failed", error=str(exc), updated_at=datetime.now(UTC).isoformat())
-                temporary = state.with_suffix(".tmp")
-                temporary.write_text(encode(compute), encoding="utf8")
-                temporary.replace(state)
+        _record_calculation_failure(settings, exc)
         raise
 
 
