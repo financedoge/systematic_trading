@@ -1,0 +1,146 @@
+[
+  {
+    "name": "width_cap",
+    "low": 0.05,
+    "high": 0.8,
+    "integral": false
+  },
+  {
+    "name": "tail_index",
+    "low": 0,
+    "high": 3,
+    "integral": true
+  },
+  {
+    "name": "drift_max",
+    "low": 0.15,
+    "high": 1.5,
+    "integral": false
+  },
+  {
+    "name": "vol_ratio_cap",
+    "low": 0.5,
+    "high": 1.6,
+    "integral": false
+  },
+  {
+    "name": "atr_index",
+    "low": 0,
+    "high": 3,
+    "integral": true
+  },
+  {
+    "name": "breakout_buffer_atr",
+    "low": 0.0,
+    "high": 1.5,
+    "integral": false
+  },
+  {
+    "name": "confirm_sessions",
+    "low": 1,
+    "high": 6,
+    "integral": true
+  },
+  {
+    "name": "volume_shortcut",
+    "low": 0,
+    "high": 1,
+    "integral": true
+  },
+  {
+    "name": "volume_ratio",
+    "low": 1.0,
+    "high": 3.0,
+    "integral": false
+  },
+  {
+    "name": "volref_index",
+    "low": 0,
+    "high": 2,
+    "integral": true
+  },
+  {
+    "name": "initial_stop_atr",
+    "low": 1.5,
+    "high": 12.0,
+    "integral": false
+  },
+  {
+    "name": "band_fail_atr",
+    "low": -1.0,
+    "high": 4.0,
+    "integral": false
+  },
+  {
+    "name": "trail_basis",
+    "low": 0,
+    "high": 1,
+    "integral": true
+  },
+  {
+    "name": "trail_atr",
+    "low": 1.0,
+    "high": 12.0,
+    "integral": false
+  },
+  {
+    "name": "trail_pct",
+    "low": 0.03,
+    "high": 0.35,
+    "integral": false
+  },
+  {
+    "name": "trail_activate_atr",
+    "low": 0.0,
+    "high": 6.0,
+    "integral": false
+  },
+  {
+    "name": "heat_enabled",
+    "low": 0,
+    "high": 1,
+    "integral": true
+  },
+  {
+    "name": "heat_ext_atr",
+    "low": 1.0,
+    "high": 12.0,
+    "integral": false
+  },
+  {
+    "name": "heat_vol_ratio",
+    "low": 1.0,
+    "high": 5.0,
+    "integral": false
+  },
+  {
+    "name": "heat_near_high_atr",
+    "low": 0.25,
+    "high": 5.0,
+    "integral": false
+  },
+  {
+    "name": "heat_trail_mult",
+    "low": 0.2,
+    "high": 1.0,
+    "integral": false
+  },
+  {
+    "name": "time_exit_index",
+    "low": 0,
+    "high": 5,
+    "integral": true
+  },
+  {
+    "name": "time_exit_gain_atr",
+    "low": 0.5,
+    "high": 4.0,
+    "integral": false
+  },
+  {
+    "name": "cooldown_sessions",
+    "low": 0,
+    "high": 42,
+    "integral": true
+  }
+]

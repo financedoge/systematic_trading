@@ -1,0 +1,12 @@
+{
+  "identity": "fr25-lifecycle-conditional-v1",
+  "version": "1.0.0",
+  "inputs": {
+    "panel": "6119a0d21b1b0ba0ab50281dbd5234932e634790944811d11feb64af4c8db9c5",
+    "recipe": "3527fd37a773f9910b8084b996606bd4059e32c90fb8ae779b36faae6fb10a5f",
+    "overlay_study": "bf2c0b197adfd48b4f166d1eee5c0c57a933475a4ee60d04f0cb0f7bba9d1993"
+  },
+  "spec_sha256": "26ff32af5aa4df9184889a2edddf046f0a3ac24eefe3b1b46a093fd52e79bf6f",
+  "latest_target_sha256": "415a1c23dcc2ef0950ca4a2fce87392d90f33e850f9bb240dea868e184960c10",
+  "rebalances_sha256": "70c1fb81dcee1ce81235d4d1562f42fee066946ef4c78dd9f149ce7b85bfe8c4"
+}

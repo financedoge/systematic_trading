@@ -1,5 +1,158 @@
 # Project Log
 
+## 2026-10-20 — Allocation theoretical NAV resumed through the latest audited session
+
+The operator reported that the dashboard's allocation theoretical NAV stopped at 2026-10-16
+while the account NAV continued to 2026-10-19, and expected the theoretical curve to advance
+automatically. Two independent causes were found. First, the tracked-strategy calculation
+had not completed since 2026-10-19 21:02 UTC because generated artifacts had reached
+38.5 GiB against the 40 GiB admission limit that reserves 2 GiB for new work, so every
+refresh raised "Calculation deferred ... run guarded retention". The allocation theoretical
+series is built from the published tracked strategy NAVs (FR25/M1), so it stayed at
+2026-10-16 while prices and FX advanced to 2026-10-19. Second, the last successful revision
+had itself valued only through 2026-10-16: it was built at 21:02 UTC, one minute after the
+2026-10-19 USD/CNH observation was captured at 21:01 UTC, so its pinned inputs raced the
+publication and recorded "Valuation stops before missing supported FX on 2026-10-19". A
+guarded retention request had been queued since that publication ("retire unreferenced
+predecessors at the next stopped startup"), but only dashboard-level restarts had occurred,
+so the bounded startup maintenance never ran.
+
+Fix: the full platform was stopped with `stop_local_platform.ps1 -KeepInfrastructure`
+(NATS/Postgres kept), the app-owned `maintain_research_storage.ps1` ran at the stopped
+boundary, and the platform restarted with `start_local_platform.ps1 -SkipNats`. Retention
+verified its protection set (latest two complete calculation revisions, monitored/SOTA and
+active-allocation pins, compute revision, operational references) and retired two
+superseded tracked calculation revisions (`160cadad…`, `b528d106…`) plus five unreferenced
+model fits (`3be92a01…`, `45b0f116…`, `aed9f702…`, `c9ca0658…`, `dac7f68b…`), with manifests
+and retirement receipts under `var/maintenance`; the pending marker was cleared. Unique
+generated footprint fell from 38.48 GiB to 37.40 GiB, so admission passed
+(37.40 + 2 <= 40 GiB). The subsequent tracked calculation (revision `de9c8cb1…`) completed
+normally, strategy-serving republished as `ae428582…` with valuation through 2026-10-19,
+and the dashboard-serving publication rebuilt (one transient "Strategy publication changed
+during performance calculation" race cleared on the next operations cycle).
+
+Verification: `/api/v1/dashboard/performance` now returns the theoretical series through
+2026-10-19, matching the account series; the final allocation period (started 2026-10-15)
+is valued through 2026-10-19 with three observations, theoretical return -0.12% and
+theoretical P&L -1,048.64 CNH, and the missing-FX valuation warning is gone. All monitored
+strategies except the frozen-input conditional candidate report "Current" through
+2026-10-19; analytics errors are empty. No trading, allocation, funding, promotion,
+monitoring or broker state changed: allocation revision 7 and its active allocation are
+unchanged, no proposals or orders were created, and the expired cleanup proposals remain
+`missed`. Known outstanding: the optional NAS sync still reports a pre-existing
+"NAS operation.lock exists" local-only state (backup worker paused between scheduled runs),
+and the conditional candidate remains "Catching up" by design (its pinned panel ends
+2026-10-12). Each new tracked revision adds roughly 2 GiB, so the guarded retention must run
+at the next full stopped start again; closed-study retirement can recover more headroom if
+needed.
+
+## 2026-10-20 — Performance panel N/A after a proposal expiry retired its publication
+
+The operator reported that every value in the Performance section was N/A. Cause: the
+dashboard page loads `/api/v1/proposals`, and that endpoint expires due pending proposals.
+At 20:35:50 local (12:35:50 UTC) `drift-97f2af32c2d7-20261019` moved `pending` → `missed`
+with no fills. `allocation_ledger_revision` counted every missed proposal, so that
+never-routed expiry retired the saved `dashboard-serving/performance` publication:
+`/api/v1/dashboard/performance` answered 503 "Performance publication is refreshing for the
+current account baseline", the failure text was written only into the collapsed
+diagnostics panel, and the browser retried on its 60-second cycle. The saved publication
+was republished at 12:37:51 UTC, but the user saw four `n/a` chips and an empty chart for
+the intervening window and reported it at 12:37:30 UTC.
+
+Fix: (1) `allocation_ledger_revision` now counts only approved proposals plus missed
+proposals that carry execution evidence (fills); a never-routed expiry changes no
+performance figure and must not retire the publication. (2) On a stale publication the
+performance endpoint requests an in-process analytics refresh
+(`reason=performance_publication_stale`) and returns `Retry-After: 2`. (3) The dashboard
+Performance panel shows a visible "refreshing" status, retries a 503 after 1.5/3/5/8 s,
+and shows `refreshing…` placeholders only when no earlier publication exists; previously
+rendered values are kept while the next publication is built.
+
+Validation: new tests cover that a missed proposal without fills leaves the ledger revision
+unchanged while a filled missed proposal still invalidates it, and that a stale publication
+requests a rebuild with the short Retry-After; the operator JavaScript checks now cover the
+error classifier, visible status and pending placeholders. Ruff clean; focused suites
+(`test_strategy_control`, `test_analytics_projection`, `test_dashboard_performance`,
+`test_operator_ui`, `test_presentation_assets`, `test_api`) pass. The dashboard was
+restarted through the guarded launcher (PID 50528); the served page contains the new loader,
+the live 503 path requested the refresh, and `/api/v1/dashboard/performance` returned 200
+after warm-up. The due pending proposal expired at 14:06:49 UTC during verification and the
+publication stayed valid. No trading, allocation, funding, promotion, monitoring or broker
+state changed.
+
+Known outstanding, not caused by this fix: the tracked-strategy calculation is still
+deferred by the 40 GiB artifact admission limit (~38.5 GiB used), so the strategy-serving
+publication remains stale ("Catching up"), and the monitored conditional candidate's report
+page has a separate missing-current-allocation-field rendering defect that needs its
+calculation/publication to resume before it can be regenerated.
+
+## 2026-10-20 — Missed 2026-10-16 handover had no automatic recovery; paper renewal added
+
+The operator reported that the FR25 allocation activated after the 2026-10-15 close
+missed its 2026-10-16 orders and that switching automatic paper trading on produced no
+proposal, approval or order. Investigation: the prepared handover
+`handover-fe2d3613-…` targeted the 2026-10-16 09:30–10:00 New York TWAP, was never
+approved or routed, and expired to `missed` at 2026-10-17 03:44 UTC with six synthetic
+missed records and no broker attempt. The policy revision in force on 2026-10-16 was
+bound to the previous allocation, a new allocation requires a fresh opt-in, and the
+re-enabled revisions (11, 19) were bound to the current allocation. However, the
+automatic approval controller only scans pending proposals and nothing renewed an
+expired application-prepared intent, so the enabled policy had nothing eligible to act
+on. Three latent blockers would also have prevented recovery: renewal rebuilt component
+models at the source target date, for which the advancing FR25 publication no longer
+publishes an exact daily decision; renewal rejected a legitimate whole-share top-up leg
+because it required exact original legs; and the execution market-data refresh, drift
+valuation and end-of-day account snapshot still used the 12-ETF SOTA designation instead
+of the active 14-ETF allocation, so XLB/XLE had no bars in the execution store.
+
+Changes: an enabled paper policy bound to the current allocation now renews one expired
+application-prepared rebalance per management cycle into the next complete TWAP window.
+The successor preserves the retained target weights and original price/TWAP benchmark,
+recalculates whole-share quantities from the latest completed session and current
+reconciled account, records the policy revision in its deferred-rebalance lineage, and
+then goes through the ordinary eligibility, preflight, approval and router checks.
+Renewals are persisted in the policy file under `renewals`; a blocked renewal retries no
+sooner than five minutes. Real/uncertain broker attempts, claimed attempts, rejected,
+superseded or direction-reversed intents, changed target vectors and session-limited
+operator catch-up authorizations are never renewed automatically. Manual refresh keeps
+the existing explicit-approval path. The execution data universe (market-data refresh,
+EOD account snapshot and drift valuation) now follows the SOTA ∪ active-allocation
+universe. Two further defects found during recovery were also fixed: allocation component
+targets now bind the requested monthly decision session instead of `max(target date,
+activation close)` (which broke mid-month drift with "Exact FR25 decision missing"), and
+a `missed` rebalance with at least one fill keeps its frozen targets as the adopted target
+so a residual cancelled leg cannot make the account drift toward an older month-end
+target. Contract and incident record: `docs/paper-rebalance-renewal-2026-10-20.md`; code
+in `live/auto_approval.py`, `live/deferred_rebalance.py`, `live/allocated_plan.py`,
+`live/market_data.py`, `live/management_service.py`, `live/initial_allocation.py`,
+`live/account_snapshot.py` and `portfolio/targets.py`.
+
+Validation and recovery: focused renewal/approval/allocation/market-data/management
+suites passed; a write-intercepted dry run against the live state renewed
+`handover-fe2d3613-…` into proposal `renew-d349f9fb67b4efa58df5` (seven orders,
+346,488.42 CNH gross), passed the real preflight (including plan/size recheck) and
+simulated approval and TWAP submission without touching the store, policy file or
+broker; and the missing XLB/XLE daily bars through 2026-10-16 were acquired through the
+app-owned refresh path (7,438 bars, 2 symbols). The recovery then executed through the
+normal automatic path: policy renewal audit at 16:47:59 UTC, automatic approval at
+16:50:24 under policy revision 19, seven paper TWAP orders submitted at 16:50:27 (IB IDs
+47–53), six legs fully filled (DBC 185, EWH 813, EWJ 18, SPY 2, VGK 22, XLE 327), the
+unfilled 1-share EWY remainder cancelled by IB at the 13:20 New York window end, and a
+fresh matched reconciliation (six positions, zero breaks). The batch's residual miss was
+blocked from becoming a stale month-end rebalance: the first drift proposal
+`drift-2fdda5799533-20261019` was rejected with no broker records and automatic approval
+paused at policy revision 20 while the target-source fix deployed; after guarded restarts
+at 17:24 and 17:29 UTC the restored policy (revision 21, same allocation, paper account
+and CNH 1,000,000 cap) reports all holding drifts under the 2pp threshold (largest SPY
++0.56pp). A one-share EWY residual cleanup proposal `drift-97f2af32c2d7-20261019`
+(1,005.89 CNH) remains pending operator review; it predates the restored revision and is
+not auto-eligible. Three full-suite runs completed: run 1 had two transient native-worker
+mutex-contention failures from the live analytics worker, run 2 exited zero, and run 3
+after the final target-source fix had one transient native-worker mutex-contention failure;
+all failed tests passed on isolated rerun, and focused renewal/allocation/market-data/
+management suites pass. No promotion, monitoring membership, allocation change, funding or
+live authority changed.
+
 ## 2026-10-19 — Tracked calculation reported a backup lock as Permission denied; locks decoupled
 
 The operator dashboard showed `Strategy calculation error` /
@@ -1916,3 +2069,357 @@ prices into research inputs.
 because the class question is probably not answerable at this granularity. Registered so it
 is not lost; it does not authorise any new instrument, any download into research inputs,
 or any change to monitoring, allocation or the 45% cap.
+
+## 2026-10-19 — GLD range-breakout lifecycle re-fitted; 2023 test fixed, procedure validation fails
+
+The operator's second GLD request was run as a new predeclared study
+(`var/research/gld-lifecycle-20261019-v1`, report
+`research/gld-lifecycle-20261019-v1/index.html`). The 24-parameter lifecycle has no fixed
+behavioral threshold: width cap, band tail, lookback, drift cap, short/long volatility
+ratio, ATR period, breakout buffer, confirmation count, volume shortcut, initial stop,
+failed-range floor, trailing basis/distance/activation, overheat thresholds, time exit and
+cooldown are all fitted. Search: rand/1/bin differential evolution, 4 seeds x population
+20 x dimension x 110 generations = 213,120 pre-2023 evaluations at 5bp; 400 finalists
+replayed at 5/10/20bp and 5bp plus one session of delay; selection sealed and hashed
+before any 2023+ read. Warm-up 252 sessions; fit and selection end 2022-12-30; OOS starts
+2023-01-03.
+
+**The 2023 failure is fixed mechanically.** The sealed rule crosses on 2023-03-13,
+confirms on the same close under the fitted one-close rule (volume shortcut on), fills
+2023-03-14 at $177.35, and the fitted dynamic take-profit exits 2023-04-14 at $185.89
+(+4.82% gross, 23 sessions). The previous daily diagnostic used the inherited 8-close
+confirmation (entry 2023-03-27 at $181.15) and the five-session progress deadline (exit
+2023-04-03). The rule then caught the October 2023 breakout, held it into 2024-03-12 for
++9.08%, and caught the 2024 and 2025 legs.
+
+**Results.** 5bp per side, next-open fills. IS 2005-2022: CAGR 9.21%, Sharpe 1.06, max
+drawdown -13.28%, average exposure 29.8%, versus matched buy-hold 7.60%/0.49/-45.56%.
+2023-2026 development retest: CAGR 7.87%, Sharpe 0.86, DD -12.20%, exposure 33.9%, versus
+buy-hold 23.75%/1.16/-26.40%. The frozen vector is stable across both pre-2023 eras (2005-
+2015 9.28%/0.98/-13.28%; 2016-2022 9.12%/1.24/-8.55%). At 20bp per side IS/OOS CAGR is
+8.70%/7.28%; one extra execution session at 5bp gives 8.79%/7.69%. The rule is an
+IS-selected breakout harvester that halves buy-hold drawdown but trails the exceptional
+persistent 2024-2026 bull leg; its take-profit is a fast burst exit by IS evidence.
+
+**Robustness, including a failure.** The same fitting/selection procedure was rerun with a
+fit ending 2015-12-31 and evaluated once on 2016-2022. It selected a boundary-hugging
+vector (width cap at its 0.80 bound) and lost money: CAGR 1.00%, Sharpe 0.16, DD -23.02%
+versus buy-hold 7.42%/0.58/-22.00%. This is recorded as a failed procedure validation.
+A fitted continuation-re-entry option was tested on the sealed vector: the best enabled
+setting lowers IS CAGR from 9.21% to 5.7%, Sharpe from 1.06 to 0.46, raises DD to -33.8%
+and exposure to ~65%, so it is rejected. A one-dimensional trailing-distance/activation
+surface shows IS fitness falls as the trail widens while 2023+ development CAGR rises —
+reported as sensitivity, not used for selection. The implication for the requested ETF-pool
+extension is explicit: per-asset fits need an added two-era stability requirement and a
+shared-parameter fallback instead of relying on short per-asset histories.
+
+**Verification and authority.** 8 new focused lifecycle tests pass (causal prefix
+stability, future-shock isolation, trace/no-trace NAV equality, truncated-run prefix
+equality, next-open fill ordering, stop ratchet direction, buy-hold path, determinism and
+three blocks). The report reproduces the sealed IS statistics under the current module
+(<=1e-8) and the full-history evaluation asserts its IS slice equals the sealed fit. No
+promotion, monitoring, allocation, funding, approval or broker action changed. Next step:
+apply the same algorithm to the supported ETF pool with per-asset or shared parameters and
+test selection and trading/tilt uses against matched controls.
+
+## 2026-10-19 — GLD long-range strategy and short/long combination
+
+The operator asked to save the sealed short-range rule as the "short range breakout
+dynamic TP/SL" strategy, then build a sibling that looks for longer range periods and
+correspondingly longer rallies with larger SL levels, and finally test whether the two
+returns can be added. The shared checked state machine now carries two predeclared
+structural `Spec` domains; the short domain is preserved exactly (sealed IS metrics
+reproduce to 0.0 under the refactor). The long domain searches 126/189/252/378/504/756
+session lookbacks, ATR 20/40/60/120, 4-20 ATR initial stops, -1 to 8 ATR failed-range
+floors, 3-20 ATR or 8-50% trailing distances, 0/126/252/504 session time limits and
+0-126 session cooldowns. It was fitted with the same objective, differential-evolution
+search, friction/evidence/sealing protocol as the short study: 4 seeds x 20 x dimension x
+150 generations = 326,160 pre-2023 evaluations at 5bp; 400 finalists at 5/10/20bp and +1
+session delay; sealed before any 2023+ read.
+
+**Long-range result.** Sealed vector: width cap 0.335, tail 5%, drift cap 0.60, ATR120,
+confirmation 8 closes, initial stop 11.06 ATR, failed-range floor 8 ATR, trail 3.77 ATR
+armed after a 9.89 ATR advance, time exit 504 sessions, cooldown 0, re-entry off. IS
+2005-2022 CAGR 8.02%, Sharpe 1.05, DD -12.52%, 21.2% exposure. 2023-2026 development
+retest CAGR 11.65%, Sharpe 1.29, DD -11.35%, 40.1% exposure (buy-hold 23.75%/1.16/
+-26.40%). It entered the 2023-03-30 756-session range break and held 251 sessions into
+2024-04-10 for +15.63%, then took +14.55% (2024-07 to 2024-10) and +14.69% (2025-02 to
+2025-04). The 2005-2015 refit procedure validation again failed on 2016-2022
+(0.69%/0.12/-22.30% versus buy-hold 7.42%/0.58/-22.00%), so both domains remain
+evidence-thin outside the inspected interval.
+
+**Correlation and combination.** Daily-return correlation of the two sealed strategies is
+0.338 out-of-sample (0.368 IS, 0.361 full) because each sleeve is in the market only
+34%/40% of sessions; correlation when both are long is 0.998 (same ETF). OOS overlap:
+17.1% short-only, 23.3% long-only, 16.8% both, 42.9% neither. Predeclared 50/50
+independent half-accounts (no between-sleeve rebalancing, only parental internal costs):
+OOS CAGR 9.62%, Sharpe 1.28, max DD -6.64% versus parents 7.87%/0.86/-12.20% and
+11.65%/1.29/-11.35%. Daily- and monthly-rebalanced 50/50 controls are similar (OOS
+Sharpe 1.31/1.30). Stress: 20bp gives OOS Sharpe 1.23; one extra session gives 1.23.
+The interior 25/75 and 75/25 splits also improve; 50/50 was predeclared, not selected
+from the OOS grid. The diversification is horizon/time-in-market, not asset
+diversification; a persistent single gold trend where both sleeves are long together
+would reduce the benefit.
+
+**Artifacts and authority.** New frozen roots `var/research/gld-longrange-lifecycle-20261019-v1`
+and `var/research/gld-lifecycle-combination-20261019-v1`; public report
+`research/gld-lifecycle-combination-20261019-v1/index.html` with both parents, daily
+ledgers, correlation, combination controls and friction/delay stress; findings
+`docs/gld-longrange-combination-findings-2026-10-19.md`. 11 focused tests pass (3 new
+domain/causality tests). No promotion, monitoring, allocation, funding, approval or
+broker action changed. Next: both horizons across the supported ETF pool with cross-period
+stability guards and shared fallbacks, then selection and trading/tilt tests against
+matched controls.
+
+## 2026-10-19 — Two-horizon lifecycle across the 52-ETF pool; asset selection does not beat FR25
+
+The operator asked to test the two sealed GLD lifecycle strategies on a broad range of ETFs
+and then as an asset-selection rule versus the current SOTA. New study
+`var/research/gld-lifecycle-pool-20261019-v1` (report
+`research/gld-lifecycle-pool-20261019-v1/index.html`, findings
+`docs/gld-lifecycle-pool-findings-2026-10-19.md`). The pinned 52-asset v2 panel equals the
+per-asset audited closes exactly; FR25 target weights and the frozen FR25/M1/equal-weight/
+URTH/BIL paths are from the same batch.
+
+**Per-ETF evidence.** Each ETF was fitted independently in both structural domains on
+pre-2023 sessions only: 200 random bounded vectors + the sealed GLD vector + 40 anchor
+mutations at 5bp, top 15 replayed at 5/10/20bp and +1 session delay, ≥5 closed IS episodes
+and ≥5% exposure required, one vector sealed per ETF/domain. Short-range evidence passed for
+52/52 ETFs and long-range for 47/52 (commodities 8/10, fixed income 12/13, international
+13/13, US equities 13/15, real assets 1/1); no transfer fallbacks were needed. The shallow
+per-asset fit recovers the GLD deep-dive numbers (GLD short OOS 7.9%/0.86, long OOS
+11.6%/1.29) but leaves several weak sleeves (TLT, USO, XLE negative OOS).
+
+**Asset selection versus FR25.** Signals and extension scores were mapped causally onto the
+2023-01-03 to 2026-10-12 portfolio window and replayed through the shared application
+accounting engine (the FR25 target replay reproduces the frozen FR25 path to 0.03%). At 5bp,
+next-open fills, 45% cap and 98% budget: FR25 SOTA CAGR 16.75%, Sharpe 1.47, DD -8.65%,
+Calmar 1.93; equal weight 14.74%/1.38; URTH 20.45%/1.40. Primary lifecycle rule R1 (active
+sleeves with positive 126-session momentum, extension-ranked top six): monthly 7.35%/1.00/
+-8.62%, event 4.46%/0.63 (the 10% L1 event threshold over-trades: 299 rebalances, 29x
+turnover). R3 lifecycle allocation monthly 8.05%/1.20/-6.66%. Best lifecycle-only rule R4
+(active sleeves ranked by momentum) 14.53%/1.00/-11.62% event and 14.09%/0.93/-13.50%
+monthly. **No standalone lifecycle selection rule beats FR25 on both net CAGR and Sharpe.**
+The predeclared 80/20 FR25+R1 monthly tilt is 14.86% CAGR / Sharpe 1.475 / DD -7.53% versus
+FR25 16.75%/1.47/-8.65%: a lower-drawdown risk-shaping control that gives up 1.9pp CAGR, not
+a return improvement. R1/FR25 daily return correlation is 0.60.
+
+**Diagnostics.** Extension-score ranking selected defensive names (SHY 34/47 monthly slots,
+XLV, IBB, XLP, EUW) and no commodities, so the sleeve missed the 2023-2026 gold/commodity
+trends the GLD deep dive captured; ranking active names by momentum (R4) was materially
+better, so the lifecycle is more useful as a conditioning filter than as a standalone
+ranker. The event clock needs a wider pre-2023-fitted threshold. Both parents' 2005-2015
+refit validation failure still applies: the fitting procedure is data-hungry.
+
+**Verification and authority.** 17 focused lifecycle/pool tests pass and Ruff is clean. No
+promotion, monitoring, allocation, funding, approval or broker action changed. Next
+experiment: lifecycle as an eligibility filter on FR25/M1, deeper per-ETF fit with a
+pre-2023 cross-period stability requirement, and matched-control retests of net Sharpe/
+return/drawdown, turnover and delay.
+
+## 2026-10-19 — Daily life-cycle opportunity scanner / CTA portfolios
+
+The operator asked for two daily, event-driven constructions from the sealed short/long
+life-cycle signals, instead of monthly asset selection: (A) equal re-split whenever a new
+ETF entry fires, with holdings persisting to their own exits; (B) a 1/6-slot CTA where each
+new entry takes one sixth and unused slots stay in a government/cash proxy. Study
+`var/research/gld-lifecycle-daily-scanner-20261019-v1` (report
+`research/gld-lifecycle-daily-scanner-20261019-v1/index.html`, findings
+`docs/gld-lifecycle-daily-scanner-findings-2026-10-19.md`). Both start flat at 2023-01-03,
+use union/short-only/long-only signal sources, next-open fills and 5/10/20bp plus +1 delay
+stress; BIL is the base government/cash proxy with SHY/IEF sensitivity. All parameters come
+from the sealed pre-2023 pool fits; no OOS tuning.
+
+**Results (5bp, 2023-01-03 to 2026-10-12):** Rule A union 8.51% CAGR / 0.94 Sharpe /
+-11.04% DD; Rule B union 7.20% / 0.85 / -10.09%; best variant short-only equal-split 10.57%
+/ 1.04 / -10.27%; 8-slot variation 9.06% / 0.89; long-only equal-split 5.85% / 0.68.
+References: FR25 SOTA 16.75% / 1.47 / -8.65%, equal weight 14.74% / 1.38, URTH 20.45% /
+1.40, BIL 4.46%. Daily-return correlations 0.73 with FR25 and 0.66 with URTH. The rules are
+positive, low-turnover and cost-robust but do not beat the benchmarks.
+
+**Binding finding:** the cash leg is effectively unused. The fitted per-ETF signals are
+active ~73% of OOS asset-days, so the 52-ETF universe almost always has at least six
+simultaneous signals: 0.0% of sessions had zero holdings, 83% had the full six, average
+holdings 5.7 (29 accepted entries / 23 exits). The rules are concentrated rotating six-name
+portfolios, and BIL/SHY/IEF proxies give identical results because cash weight is almost
+always zero. This is a signal-selectivity problem, not a portfolio-rule problem: the
+permissive per-ETF fits were selected for breadth in the pool study (median short sleeve long
+59% of IS sessions). Next experiments: pre-2023-calibrated entry-strength threshold to create
+real cash periods, replace-when-full ranking, stricter event-style per-ETF fits (5-50%
+exposure, two-era stability), and a smaller sector/asset-class universe.
+
+**Verification and authority.** Portfolio replay uses the shared application accounting
+engine; the frozen FR25 target replay deviation is 0.0. No promotion, monitoring,
+allocation, funding, approval or broker action changed. 17 focused tests still pass; Ruff
+clean.
+
+## 2026-10-19 — Two-era stable life-cycle signals as an FR25/M1 eligibility filter
+
+Following the operator's request to condition rather than rank, the per-ETF life-cycle fits
+were deepened and given an explicit pre-2023 two-era stability requirement, then used only as
+an active/inactive eligibility filter on frozen FR25/M1, with matched random filters and a
+pre-2023-calibrated conditional overlay. New study
+`var/research/gld-lifecycle-conditioning-20261019-v1` (report
+`research/gld-lifecycle-conditioning-20261019-v1/index.html`, findings
+`docs/gld-lifecycle-conditioning-findings-2026-10-19.md`).
+
+**Two-era refit (pre-2023 only):** 300 random bounded vectors per domain + the sealed GLD
+vector + 60 anchor mutations, screened by the worse of the 2005-2015 and 2016-2022 eras, top
+20 replayed across 5/10/20bp and +1 delay; stability requires positive fitness and at least 2
+closed trades in both eras, at least 8 total and 10% exposure. **25/52 short-range and 9/52
+long-range sleeves pass** (2 transfer fallbacks each); the long-range domain is the harder
+case. Per-asset era fits are in the report.
+
+**Eligibility filter versus matched controls:** at each monthly FR25/M1 decision, names
+without a stable life-cycle signal are removed and the rest keep their relative weights
+(renormalised to 98%) or the removed weight stays in cash. FR25 2023-2026 at 5bp: frozen
+16.75% CAGR / 1.469 Sharpe / -8.65% DD. Union-filtered 15.79% / 1.302 / -8.82% (9.9x
+turnover, 49bp cost); cash variant 12.94% / 1.275 / -7.78%. Matched random filters that remove
+the same number of names span 15.00-18.60% CAGR and 1.31-1.44 Sharpe, so the filter has no
+demonstrated edge over random removal and is worse than frozen FR25. Cost/delay retest:
+14.15% / 1.179 at 20bp, 14.26% / 1.192 with +1 delay (not delay-robust). M1 conditioning is
+immaterial (2.67% vs 2.91% frozen). The eligibility-filter route is retired.
+
+**Conditional overlay (pre-2023 threshold):** 20% capital to the Rule A short-only daily
+sleeve only in months whose stable union-signal breadth is at or above the pre-2023 median
+(36/52; true in 69% of months). Conditional overlay 16.01% CAGR / 1.478 Sharpe / -7.67% DD /
+Calmar 2.09 versus frozen FR25 16.75% / 1.469 / -8.65% and the unconditional overlay 15.54%
+/ 1.454 / -7.67%: the only construction that improves both Sharpe slightly and drawdown by
+~1pp, at a 0.74pp CAGR cost. It is a marginal risk-shaping sleeve, not a SOTA replacement;
+inter-sleeve rebalancing cost is not yet explicitly charged. An FR25-breadth-weak version
+could not be calibrated (only one pre-2023 FR25 rebalance in this panel).
+
+**Authority.** No promotion, monitoring, allocation, funding, approval or broker action
+changed. 2023-2026 remains an inspected development retest. Next: charge explicit
+inter-sleeve rebalancing cost and +1 delay to the conditional overlay and require
+multi-measure risk-adjusted improvement; do not pursue the eligibility filter further.
+
+## 2026-10-19 — Cost-charged conditional FR25 overlay and monitoring candidate
+
+The operator asked to test the conditional 80/20 overlay with explicit inter-sleeve costs and
+delay against fixed-monthly and dynamic (target-change-triggered) rebalancing, and to keep it
+as a potential candidate to add to monitored. New study
+`var/research/gld-lifecycle-overlay-robustness-20261019-v1` (report
+`research/gld-lifecycle-overlay-robustness-20261019-v1/index.html`, candidate dossier
+`docs/conditional-fr25-lifecycle-overlay-candidate-2026-10-19.md`). The overlay is now one
+portfolio in the shared application accounting engine: 80% of the budget follows frozen FR25
+monthly weights, 20% follows the Rule A short-only daily sleeve when the pre-2023-calibrated
+stable union breadth is at or above its median (36/52; true in 68% of months); every
+intra-FR25, intra-sleeve and inter-sleeve trade is charged and delay is explicit.
+
+**Results (2023-2026):** frozen FR25 16.75% CAGR / 1.469 Sharpe / 2.063 Sortino / -8.65% DD /
+1.935 Calmar. Dynamic conditional candidate (10% L1 target-change trigger) 16.08% / 1.479 /
+2.10 / -7.64% / 2.10 (8.8x turnover, ~44bp annual cost). It beats FR25 on all four
+risk-adjusted measures at 5bp, 10bp and 20bp (CAGR -0.66pp at 5bp); beats the unconditional
+sleeve control (15.71%/1.461) and all three random-condition controls on the risk measures;
+beats the fixed-monthly conditional control (16.19%/1.481/-8.39%/1.93) on DD and Calmar.
+**It fails the +1-session delay test** (Sharpe 1.39 vs matched FR25 1.41; only DD still
+better), which remains the main open weakness. The fixed-monthly control is competitive on
+Sharpe/CAGR, so the dynamic clock is better on the multi-measure risk gate rather than
+uniformly better.
+
+**Candidate status:** recorded in `candidate.json` as research candidate for monitoring
+review only. No monitored strategy, allocation, funding, promotion, broker or live setting
+changed. Adding it to monitoring requires an app-tracked versioned strategy, paper-trading
+evidence, resolution of the delay weakness, risk limits, operator approval and a rollback
+plan. 2023-2026 remains an inspected development retest. Next: rebuild with the actual
+production execution clock and re-run the multi-measure gate; if delay sensitivity persists,
+retire the candidate and keep FR25 as the sole SOTA.
+
+## 2026-10-19 — Versioned dynamic conditional candidate and full strategy page
+
+At the operator's request the dynamic conditional candidate was frozen as a versioned strategy
+package and a full project-standard strategy page was prepared. Identity
+`fr25-lifecycle-conditional-v1`, version 1.0.0, state research candidate for monitoring
+review. Deliverables: `research/fr25-lifecycle-conditional-v1/index.html`,
+`strategy-spec.json`, `latest-target.json`, `latest-holdings.csv`, `rebalances.csv`,
+`sleeve-parameters.json`, `manifest.json`; frozen root
+`var/research/fr25-lifecycle-conditional-v1`; builder
+`scripts/build_fr25_lifecycle_conditional_page.py`.
+
+The page contains the complete specification (80% frozen FR25 + 20% Rule A short-only daily
+life-cycle sleeve, condition on pre-2023-calibrated stable breadth at/above median 36/52,
+dynamic target-change 10% L1 clock with month-end anchors), decision flow, cost-charged
+performance, cost/delay stress, latest target and marked-to-market held weights, recent
+rebalance ledger, sleeve parameter table, risk limits and the project promotion checklist.
+Last decision 2026-09-30, marked to 2026-10-12 close: condition ON, breadth 36/52, sleeve 20%
+across six life-cycle names, FR25 core 80%, cash 2%. Performance at 5bp: CAGR 16.08%, Sharpe
+1.479, Sortino 2.10, max DD -7.64%, Calmar 2.10, turnover 8.8x, ~44bp/year; gate passes at
+5/10/20bp but fails +1-session delay.
+
+Adding to monitored strategies was NOT performed: the app-tracked versioned calculation
+pipeline/artifact, paper-trading evidence, delay resolution and operator approval/rollback
+record are still missing. No monitoring, allocation, funding, approval or broker state
+changed. 2023-2026 remains an inspected development retest. Skill checklist
+(`strategy-promotion-control`) applied to the page: specification/version and inputs/data
+versions are prepared; executable app-tracked calculation, paper evidence and approval remain
+open, so the decision is defer-to-monitoring-review, not promote.
+
+## 2026-10-19 — App-tracked implementation of the conditional candidate
+
+The operator authorized building the app-tracked implementation so the candidate can be added
+to monitored strategies. Implemented: a registered versioned strategy definition
+`fr25_lifecycle_conditional_v1` (v1.0.0, state candidate, scheduler dynamic_monthly) in
+`src/systematic_trading/research/fr25_lifecycle_conditional.py`, registered through
+`registered_strategy_definition`; frozen parameter artifact
+`fr25_lifecycle_conditional_parameters.json` (52 sleeve parameter sets and the frozen
+stable-breadth condition input, panel hash pinned); application-side calculation through the
+shared `DailyBacktestEngine`; tracked payload
+`var/research/fr25-lifecycle-conditional-v1/tracked/artifact.json` (NAV series 947 sessions,
+55 rebalances, CAGR 16.09% versus 16.08% on the research page; artifact SHA-256 `58557e78…`,
+parameter SHA-256 `6b4dac1a…`); test module `tests/test_fr25_lifecycle_conditional.py`;
+promotion record `config/strategy-promotions/fr25-lifecycle-conditional-2026-10-19.json`;
+strategy page updated with an "App-tracked implementation" section.
+
+**Monitored membership is still NOT changed.** The monitored-strategy runtime calculates its
+configured keys through the tracked-inputs/LEAN calculation family and scheduling. The
+candidate's module and artifact are in place, but the runtime family wiring, runtime
+verification against the published artifact, the operator-approved
+`config/strategy-monitoring.json` entry and the monitoring refresh are not. Adding the key
+before that would break the runtime's calculation contract. Remaining steps are recorded in the
+promotion record: wire the runtime family, run the app calculation and verify targets/NAV/
+holdings against the artifact, resolve or explicitly accept the +1-session delay weakness,
+record the risk contract, add the config key after approval and restart through guarded
+launchers, with rollback (remove key, restore config, retain candidate artifact). No monitoring,
+allocation, funding, approval, broker or live state changed. Research/paper candidate only.
+
+
+## 2026-10-19 — Tracked runtime wiring attempt for the conditional candidate
+
+Validated the app-tracked candidate end to end at the artifact level: the registered definition,
+frozen 52-sleeve parameters, 2043-session breadth input and 947-session/55-proposal tracked
+artifact all pass (`scripts/validate_fr25_lifecycle_conditional.py`,
+`var/research/fr25-lifecycle-conditional-v1/tracked/validation.json`); artifact and parameter
+hashes match, CAGR 16.09% versus 16.08% on the research page, and the monitoring config is
+unchanged.
+
+**Blocked at monitored runtime publication wiring.** The app monitored-strategy refresh requires
+its tracked-inputs/LEAN calculation family, is only triggered by the running application, and
+would reject the candidate definition as written (the contract requires monthly multi-asset
+definitions, while this candidate uses a dynamic clock and a 52-ETF sleeve on an FR25 base). Only
+PostgreSQL is currently running; the app/analytics/LEAN services are not. The candidate's
+dedicated runtime family branch, a full refresh verification against the published artifact and
+an operator-approved config edit therefore remain; I did not edit
+`config/strategy-monitoring.json` or the core tracked runtime blind. No monitoring, allocation,
+funding, approval or broker state changed.
+
+
+## 2026-10-20 — Conditional candidate added to monitored strategies
+
+The candidate is now a monitored strategy: `fr25_lifecycle_conditional_v1` was added to
+`config/strategy-monitoring.json`, the app was restarted through the guarded scripts, and the
+app-owned tracked runtime published its detail/report (report endpoint HTTP 200). Verified app
+publication: lifecycle monitored, 947 observations from 2023-01-03 to 2026-10-12, final NAV
+1,738,429.33, CAGR 16.09%, annualised volatility 10.46%, Sharpe 1.479, max drawdown -7.64%,
+Calmar 2.11 — consistent with the research page. The tracked-runtime work required a dedicated
+family branch (`research/fr25_lifecycle_monitoring.py`) because the candidate uses a dynamic clock
+on a 52-ETF sleeve rather than the generic monthly multi-asset overlay chain.
+
+Status is Catching up: the platform expected session is 2026-10-16 but 23 of the 52 pool ETFs do
+not yet have audited app bars for 2026-10-13..16, and prices are not silently filled. The next
+tracked refresh after the audited batch covers those sessions will extend the publication.
+Allocation remains unavailable because the allocation contract supports monitored monthly
+multi-asset strategies while this candidate uses a dynamic target-change clock; monitoring is
+tracking/reporting only with no execution authority. Promotion record updated at
+`config/strategy-promotions/fr25-lifecycle-conditional-2026-10-19.json`; rollback = remove the key,
+restart guarded launchers, verify the prior six-strategy publication, retain the candidate artifact.

@@ -1,5 +1,4 @@
 """One account proposal from independently calculated, capital-weighted strategies."""
-from datetime import date
 
 from systematic_trading.portfolio.strategy_allocation import (
     allocation_binding_issues, combine_targets, control_state, trading_definition,
@@ -28,8 +27,11 @@ def build_allocated_plan(*, store, broker, account_snapshot, decision_date, inte
     decision_date = decision_date or account_snapshot.as_of
     from systematic_trading.portfolio.decision_inputs import DecisionInputSession
     session = DecisionInputSession(broker.settings, decision_date) if broker.settings.require_governed_decision_inputs else None
-    target_date = max(filter(None, (target_decision_date or decision_date,
-        date.fromisoformat(active['effective_close']) if active.get('effective_close') else None)))
+    # Component models must bind the requested target decision (normally the latest
+    # month-end session). The allocation activation close only anchors the opening book;
+    # forcing it as the model target date makes a daily overlay look for an exact decision
+    # that the advancing publication no longer carries.
+    target_date = target_decision_date or decision_date
     plans, component_targets = {}, {}
     for row in active['allocations']:
         key = row['strategy_key']

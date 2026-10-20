@@ -232,7 +232,10 @@ def latest_monthly_target_date(as_of: date) -> date:
 
 
 def portfolio_drift(store, snapshot, targets, as_of):
-    instruments = instruments_for_definition(current_sota_definition())
+    from systematic_trading.portfolio.strategy_allocation import trading_definition
+    # Targets and holdings belong to the active trading allocation; its universe can be
+    # wider than the SOTA designation (for example, the 14-ETF FR25 allocation).
+    instruments = instruments_for_definition(trading_definition(store))
     quantities = {p.symbol: p.quantity for p in snapshot.positions}
     weights = {t.symbol: t.target_weight for t in targets}
     symbols = sorted(quantities.keys() | weights.keys())

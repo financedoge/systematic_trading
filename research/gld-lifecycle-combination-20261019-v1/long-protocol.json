@@ -1,0 +1,302 @@
+{
+  "identity": "gld-longrange-lifecycle-20261019-v1",
+  "authority": "Research only; no monitoring, promotion, funding or broker action.",
+  "question": "Does an explicit long-range-compression -> confirmed-breakout -> wide dynamic-trailing lifecycle identify GLD's multi-quarter regime breakouts early and ride them with much larger initial risk and trailing distances than the short-range variant?",
+  "operator_direction": "Second requested GLD strategy: same lifecycle and objective, but a predeclared long-range structural domain (126-756 session lookbacks, 4-20 ATR initial stops, 3-20 ATR / 8-50% trailing distances, 0-504 session time limits). Every behavioral threshold inside that domain is fitted on pre-2023 sessions. The short-range study remains the frozen comparison strategy; the two are combined only after both are sealed.",
+  "data": {
+    "source": "Pinned published audited GLD continuous history reused from the frozen range-breakout v2 study input and hash-verified against its manifest.",
+    "asset_sha256": "968d382f0b7c45949b67d891cb2018bc6e4f5d05be33f5d38c12bca12f3088b9",
+    "governance_batch": "5688bb093a7481231f05b8ba4d84e3e26e016231ffeb42576b4e7aca12cf99bd",
+    "governance_root": "D:\\projects\\systematic_trading\\var\\governance\\listed-2026-10-16-a861d1534a00",
+    "through": "2026-10-16",
+    "basis": "Adjusted OHLC for signal/returns; audited raw volume for traded activity. Adjusted and raw GLD closes are identical. No filling, splicing or online prices.",
+    "sessions": 5512,
+    "first_session": "2004-11-18",
+    "last_session": "2026-10-16"
+  },
+  "chronology": {
+    "warmup_sessions": 252,
+    "fit_start": "2005-11-17",
+    "fit_end": "2022-12-30",
+    "fit_is_sessions": 4309,
+    "oos_start": "2023-01-01",
+    "oos_first_session": "2023-01-03",
+    "oos_end": "2026-10-16",
+    "rule": "Fit and selection read only sessions through fit_end. OOS metrics start at the first session on/after oos_start and continue the same account and state."
+  },
+  "parameterization": {
+    "structural_domain": "long_range",
+    "structural_domain_note": "Long-range domain: candidate windows 126-756 sessions; ATR periods 20-120; volume references 63-252; time limits 0/126/252/504; initial stops 4-20 ATR; failed-range floors -1 to 8 ATR; trailing 3-20 ATR or 8-50%; cooldown 0-126 sessions. The domain was predeclared before fitting and is the only structural difference from the short-range study.",
+    "vector_length": 27,
+    "parameters": [
+      {
+        "name": "width_cap",
+        "low": 0.1,
+        "high": 0.8,
+        "integral": false
+      },
+      {
+        "name": "tail_index",
+        "low": 0.0,
+        "high": 3.0,
+        "integral": true
+      },
+      {
+        "name": "drift_max",
+        "low": 0.08,
+        "high": 0.6,
+        "integral": false
+      },
+      {
+        "name": "vol_ratio_cap",
+        "low": 0.5,
+        "high": 1.6,
+        "integral": false
+      },
+      {
+        "name": "atr_index",
+        "low": 0.0,
+        "high": 3.0,
+        "integral": true
+      },
+      {
+        "name": "breakout_buffer_atr",
+        "low": 0.0,
+        "high": 1.5,
+        "integral": false
+      },
+      {
+        "name": "confirm_sessions",
+        "low": 1.0,
+        "high": 8.0,
+        "integral": true
+      },
+      {
+        "name": "volume_shortcut",
+        "low": 0.0,
+        "high": 1.0,
+        "integral": true
+      },
+      {
+        "name": "volume_ratio",
+        "low": 1.0,
+        "high": 3.0,
+        "integral": false
+      },
+      {
+        "name": "volref_index",
+        "low": 0.0,
+        "high": 2.0,
+        "integral": true
+      },
+      {
+        "name": "initial_stop_atr",
+        "low": 4.0,
+        "high": 20.0,
+        "integral": false
+      },
+      {
+        "name": "band_fail_atr",
+        "low": -1.0,
+        "high": 8.0,
+        "integral": false
+      },
+      {
+        "name": "trail_basis",
+        "low": 0.0,
+        "high": 1.0,
+        "integral": true
+      },
+      {
+        "name": "trail_atr",
+        "low": 3.0,
+        "high": 20.0,
+        "integral": false
+      },
+      {
+        "name": "trail_pct",
+        "low": 0.08,
+        "high": 0.5,
+        "integral": false
+      },
+      {
+        "name": "trail_activate_atr",
+        "low": 0.0,
+        "high": 12.0,
+        "integral": false
+      },
+      {
+        "name": "heat_enabled",
+        "low": 0.0,
+        "high": 1.0,
+        "integral": true
+      },
+      {
+        "name": "heat_ext_atr",
+        "low": 2.0,
+        "high": 16.0,
+        "integral": false
+      },
+      {
+        "name": "heat_vol_ratio",
+        "low": 1.0,
+        "high": 5.0,
+        "integral": false
+      },
+      {
+        "name": "heat_near_high_atr",
+        "low": 0.25,
+        "high": 6.0,
+        "integral": false
+      },
+      {
+        "name": "heat_trail_mult",
+        "low": 0.2,
+        "high": 1.0,
+        "integral": false
+      },
+      {
+        "name": "time_exit_index",
+        "low": 0.0,
+        "high": 3.0,
+        "integral": true
+      },
+      {
+        "name": "time_exit_gain_atr",
+        "low": 0.5,
+        "high": 6.0,
+        "integral": false
+      },
+      {
+        "name": "cooldown_sessions",
+        "low": 0.0,
+        "high": 126.0,
+        "integral": true
+      },
+      {
+        "name": "reentry_enabled",
+        "low": 0.0,
+        "high": 1.0,
+        "integral": true
+      },
+      {
+        "name": "reentry_buffer_atr",
+        "low": 0.0,
+        "high": 6.0,
+        "integral": false
+      },
+      {
+        "name": "reentry_wait_index",
+        "low": 0.0,
+        "high": 5.0,
+        "integral": true
+      }
+    ],
+    "structural_choices": {
+      "candidate_windows": [
+        126,
+        189,
+        252,
+        378,
+        504,
+        756
+      ],
+      "tail_candidates": [
+        0.05,
+        0.1,
+        0.15,
+        0.2
+      ],
+      "atr_candidates": [
+        20,
+        40,
+        60,
+        120
+      ],
+      "volume_reference_candidates": [
+        63,
+        126,
+        252
+      ],
+      "time_limit_candidates": [
+        0,
+        126,
+        252,
+        504
+      ],
+      "reentry_wait_candidates": [
+        0,
+        126,
+        252,
+        378,
+        504,
+        756
+      ],
+      "range_selection": "longest qualifying lookback wins",
+      "decision_clock": "completed close",
+      "execution": "next session open; one whole-session delay in stress cases",
+      "accounting": "fractional units, 100% target, zero cash yield, cost per side",
+      "continuation_reentry": "Optional fitted re-engagement of a closed breakout trend: a close above the previous episode peak plus reentry_buffer_atr*ATR within reentry_wait_sessions re-enters at the next open. It is disabled when the fitted switch is zero."
+    }
+  },
+  "objective": {
+    "utility": "45% clipped scaled excess CAGR, 40% clipped excess Sharpe, 15% clipped excess regularized Calmar versus a matched-cost buy-and-hold of the same window; CAGR scaled by 10pp and clipped to +/-3; Sharpe/Calmar clipped to +/-3.",
+    "robust": "0.5*full utility + 0.5*median of three contiguous IS block utilities - 0.25*std(blocks)",
+    "fit_fitness": "robust - 0.10*scarcity - 0.30*low-exposure; scarcity=max(0,10-closed)/10; low-exposure=max(0,0.20-average exposure)/0.20",
+    "note": "The objective contains no post-2022 observation."
+  },
+  "search": {
+    "algorithm": "rand/1/bin differential evolution, F=0.7, CR=0.9",
+    "seeds": 4,
+    "population_multiplier": 20,
+    "generations": 150,
+    "evaluations_per_seed": 81540,
+    "screening": "5bp per side, next-open fills, IS window only"
+  },
+  "selection": {
+    "finalists": 400,
+    "frictions": [
+      {
+        "cost_bp": 5.0,
+        "delay": 0
+      },
+      {
+        "cost_bp": 10.0,
+        "delay": 0
+      },
+      {
+        "cost_bp": 5.0,
+        "delay": 1
+      },
+      {
+        "cost_bp": 20.0,
+        "delay": 0
+      }
+    ],
+    "final_score": "minimum fitness over the friction set",
+    "evidence": ">=10 closed IS episodes, average IS exposure >=20% at 5bp and at least one closed episode in each of the three contiguous IS blocks",
+    "guards": "at every friction: IS CAGR >= matched buy-hold CAGR - 2pp and IS maximum drawdown no worse than matched buy-hold drawdown - 5pp",
+    "stability": "Among evidence/guard-passing finalists within 0.05 of the best final_score, compute the fraction of +/-1-selection-step parameter neighbours whose IS fitness is within 0.15 of the candidate; choose the highest, then lower annual turnover, then higher exposure, then lexicographic parameters.",
+    "fallback": "If no candidate passes the guards the best evidence candidate is retained and marked descriptive.",
+    "seal": "selection.json is written and hashed before any 2023+ evaluation."
+  },
+  "validation": {
+    "purpose": "Second pre-2023 chronology: fit 2005-2015, select, then evaluate 2016-2022. Untouched pseudo-OOS for the procedure; never reads 2023+.",
+    "fit_end": "2015-12-31",
+    "pseudo_oos": [
+      "2016-01-01",
+      "2022-12-30"
+    ],
+    "search": {
+      "seeds": 2,
+      "population_multiplier": 16,
+      "generations": 80
+    }
+  },
+  "limitations": [
+    "The 2023+ interval has already been inspected in earlier GLD work and in the operator's review; it is a chronological development retest, not an untouched holdout.",
+    "The lifecycle structure was motivated by the operator's critique of the earlier attempt (confirmation lag, tight stop, five-session exit). Structure choices were not selected using post-2022 performance, but 2023 is not unbiased evidence for them.",
+    "A fitted rule can overfit 2005-2022 gold; block stability, friction stress, parameter-neighbour stability and a 2016-2022 pseudo-OOS validation are reported.",
+    "One US-listed gold ETF on a current-vintage provider history; no historical universe or publication-vintage certification. Cash earns zero; close-based stops can gap."
+  ]
+}

@@ -8,10 +8,11 @@ from datetime import UTC, date, datetime
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from threading import Event, Thread
-from typing import Protocol
+from typing import Mapping, Protocol
 
 from systematic_trading.config import AppSettings
 from systematic_trading.domain.enums import Currency, OrderEnvironment
+from systematic_trading.domain.market import Instrument
 from systematic_trading.domain.portfolio import CashBalance
 from systematic_trading.execution.broker import BrokerConnectionProfile, InteractiveBrokersAdapter
 from systematic_trading.live.sota import AccountPositionInput, LiveAccountSnapshotInput
@@ -157,6 +158,7 @@ def fetch_and_write_account_snapshot(
     as_of: date | None = None,
     output_path: Path | None = None,
     sota_universe_only: bool = False,
+    universe_instruments: Mapping[str, Instrument] | None = None,
     timeout_seconds: float = 20.0,
     observed_at: datetime | None = None,
 ) -> FetchedAccountSnapshot:
@@ -171,6 +173,7 @@ def fetch_and_write_account_snapshot(
         position_rows=position_rows,
         as_of=observation_time.astimezone(NY).date(),
         sota_universe_only=sota_universe_only,
+        universe_instruments=universe_instruments,
     )
     resolved_output_path = output_path or default_account_snapshot_path(settings)
     result.snapshot.captured_at = observation_time
@@ -191,10 +194,12 @@ def build_live_snapshot(
     position_rows: list[IbPositionRow],
     as_of: date | None,
     sota_universe_only: bool,
+    universe_instruments: Mapping[str, Instrument] | None = None,
 ) -> SnapshotBuildResult:
     warnings: list[str] = []
     cash = _cash_balances(summary_rows, warnings)
-    positions = _positions(position_rows, warnings, sota_universe_only=sota_universe_only)
+    positions = _positions(position_rows, warnings, sota_universe_only=sota_universe_only,
+        universe_instruments=universe_instruments)
     snapshot = LiveAccountSnapshotInput(as_of=as_of, cash=cash, positions=positions)
     return SnapshotBuildResult(snapshot=snapshot, warnings=warnings)
 
@@ -231,14 +236,24 @@ def _positions(
     warnings: list[str],
     *,
     sota_universe_only: bool,
+    universe_instruments: Mapping[str, Instrument] | None = None,
 ) -> list[AccountPositionInput]:
     positions: list[AccountPositionInput] = []
-    sota_universe = instruments_for_definition(current_sota_definition()) if sota_universe_only else {}
+    if universe_instruments is not None:
+        universe = dict(universe_instruments)
+        universe_label = "position outside the active trading universe"
+    elif sota_universe_only:
+        universe = instruments_for_definition(current_sota_definition())
+        universe_label = "non-SOTA position"
+    else:
+        universe = {}
+        universe_label = ""
+    filter_to_universe = bool(universe)
     for row in sorted(rows, key=lambda item: item.symbol):
         if row.quantity == Decimal("0"):
             continue
-        if sota_universe_only and row.symbol not in sota_universe:
-            warnings.append(f"ignored non-SOTA position {row.symbol} quantity={row.quantity}")
+        if filter_to_universe and row.symbol not in universe:
+            warnings.append(f"ignored {universe_label} {row.symbol} quantity={row.quantity}")
             continue
         if row.quantity < Decimal("0"):
             warnings.append(f"ignored short position {row.symbol} quantity={row.quantity}; current SOTA live model is long-only")

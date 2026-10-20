@@ -6,7 +6,7 @@
 - `ST_EXECUTION_REBALANCE_TIMEOUT_MINUTES` controls how long after `ST_EXECUTION_TWAP_START_TIME` approval or retry remains allowed; default is 30 minutes in `ST_AUTOMATION_TIMEZONE`.
 - Pending proposals and approved proposals with failed or missing broker orders become `missed` after the deadline.
 - Orders already accepted by the broker remain active and are not falsely expired.
-- Missed orders are durable audit records. They cannot be resubmitted and their count/reference notional appear in execution-quality analysis; no synthetic fill price or invented slippage PnL is created.
+- Missed orders are durable audit records. They cannot be resubmitted in place. Under an enabled paper approval policy bound to the same allocation, one expired application-prepared rebalance can be renewed into a new window, audited in the policy, and then approved only through the normal automatic checks. No synthetic fill price or invented slippage PnL is created. See the [paper rebalance renewal contract](paper-rebalance-renewal-2026-10-20.md).
 
 ## Policy
 
@@ -31,7 +31,7 @@ The target rollout path is defined in `docs/industrial-platform-plan.md`. This d
 ## Safeguards
 
 - Separate paper and live environments.
-- Persisted approval before submission: manual, or the explicitly enabled paper-only policy. Existing proposals and uncertain attempts are never released/retried automatically.
+- Persisted approval before submission: manual, or the explicitly enabled paper-only policy. Existing proposals and uncertain attempts are never released or retried automatically; an enabled policy may prepare one new window for a missed application-prepared rebalance, which still passes every approval and broker check.
 - Buying-power, duplicate-order, and stale-price checks.
 - Local reconciliation of positions, orders, and cash balances against broker state.
 - Durable local storage for proposal, approval, and broker order history before and after broker routing.

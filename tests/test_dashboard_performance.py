@@ -150,5 +150,5 @@ def test_performance_javascript_behavior():
         pytest.skip("Node.js is required for the operator JavaScript regression checks")
     script = _OPERATOR_HTML.split("<script>", 1)[1].split("</script>", 1)[0]
     result = subprocess.run([node, str(Path(__file__).with_name("operator_performance_checks.cjs"))],
-        input=script, capture_output=True, text=True, timeout=20)
+        input=script, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=20)
     assert result.returncode == 0, result.stdout + result.stderr

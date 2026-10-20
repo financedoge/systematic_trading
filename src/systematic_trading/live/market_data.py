@@ -1,14 +1,14 @@
 from __future__ import annotations
 
 from datetime import UTC, date, datetime, timedelta
-from typing import Protocol, Sequence
+from typing import Mapping, Protocol, Sequence
 
 from pydantic import BaseModel, Field
 
 from systematic_trading.data.yahoo import YahooChartProvider
 from systematic_trading.daily_quality import completed_session, valid_ohlc
 from systematic_trading.domain.enums import Currency
-from systematic_trading.domain.market import PriceBar
+from systematic_trading.domain.market import Instrument, PriceBar
 from systematic_trading.research import current_sota_definition, instruments_for_definition
 from systematic_trading.storage.interfaces import MarketDataStore
 
@@ -38,6 +38,7 @@ def refresh_sota_market_data(
     store: MarketDataStore,
     target_date: date,
     symbols: Sequence[str] | None = None,
+    instruments: Mapping[str, Instrument] | None = None,
     provider: DailyBarProvider | None = None,
     fallback_provider: DailyBarProvider | None = None,
     fx_provider: DailyBarProvider | None = None,
@@ -48,13 +49,17 @@ def refresh_sota_market_data(
     fx_currencies: Sequence[Currency] = (Currency.USD,),
     repair_history: bool = True,
 ) -> MarketDataRefreshResult:
-    """Refresh observed data only; legacy carry-forward options never authorize synthetic writes."""
+    """Refresh observed data only; legacy carry-forward options never authorize synthetic writes.
+
+    ``instruments`` selects the execution universe; the data refresh must cover the
+    active trading allocation's union, not only the SOTA designation.
+    """
     price_provider = provider or YahooChartProvider(adjust_prices=True)
     if fx_provider is None:
         from systematic_trading.config import AppSettings
         from systematic_trading.data.ib_fx import IbFxDailyBarProvider
         fx_provider = IbFxDailyBarProvider(AppSettings())
-    configured_instruments = instruments_for_definition(current_sota_definition())
+    configured_instruments = dict(instruments) if instruments is not None else instruments_for_definition(current_sota_definition())
     refresh_symbols = sorted({symbol.upper() for symbol in (symbols or configured_instruments)})
     warnings: list[str] = []
     bars_upserted = 0

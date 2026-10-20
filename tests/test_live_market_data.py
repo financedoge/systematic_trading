@@ -98,6 +98,31 @@ def test_refresh_sota_market_data_never_persists_synthetic_prices_or_fx(tmp_path
     assert any("USD/CNH: stale FX was not carried forward" in warning for warning in result.warnings)
 
 
+def test_refresh_accepts_explicit_execution_universe_instruments(tmp_path) -> None:
+    store = SQLiteStore(tmp_path / "market_refresh_universe.db")
+    store.initialize()
+    store.upsert_fx_rate(FXRate(rate_date=date(2026, 5, 18), base_currency=Currency.USD, rate=Decimal("7.20")))
+    from systematic_trading.research import instruments_for_definition
+    from systematic_trading.research.strategy_catalog import registered_strategy_definition
+    universe = instruments_for_definition(registered_strategy_definition("research_fr25_14_v1"))
+    assert "XLB" in universe  # Allocation-only symbol outside the SOTA designation.
+    provider = _FakeMarketDataProvider({"XLB": [_bar(date(2026, 5, 19), Decimal("50"))]})
+    fx_provider = _FakeMarketDataProvider({"USD/CNH": [_bar(date(2026, 5, 19), Decimal("7.21"))]})
+
+    result = refresh_sota_market_data(
+        store=store,
+        target_date=date(2026, 5, 19),
+        instruments={"XLB": universe["XLB"]},
+        provider=provider,
+        fx_provider=fx_provider,
+    )
+
+    assert result.symbols_requested == 1
+    assert result.latest_bar_date == date(2026, 5, 19)
+    assert store.list_price_bars("XLB")[-1].close == Decimal("50")
+    assert provider.requests == [("XLB", date(2012, 1, 1), date(2026, 5, 19))]
+
+
 class _FakeMarketDataProvider:
     def __init__(self, bars_by_symbol: dict[str, list[PriceBar]]) -> None:
         self.bars_by_symbol = bars_by_symbol

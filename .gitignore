@@ -46,3 +46,39 @@ var/tracked_models/
 # repository's history or its licence surface.
 tmp/
 research_tmp/
+# Downloaded third-party papers and texts stay on local disk/NAS; the reference
+# manifests, README notes and classification code remain tracked.
+research/references/**/*.pdf
+research/references/alpha101/paper.txt
+research/references/alpha101/laozdao.md
+research/references/excluded/
+research/references/supplied-reports/
+# Raw provider archives and sources are inspection evidence only; the audited
+# publication metadata and manifests remain tracked.
+research/usd-data/archives/
+research/usd-data/source-inspection/
+research/usd-data/broad-dollar-latest-history.csv
+# One-off runtime audits, repair evidence, cutover scratch state and review
+# screenshots are retained on disk/NAS but are not versioned. Tracked broker and
+# approval evidence (reconciliation rows, account snapshots) stays tracked.
+var/audit-*.json
+var/broker_evidence/
+var/execution_benchmark_attempts/
+var/execution_benchmark_state/
+var/execution_registry/
+var/lean-image-*.json
+var/lean-source-reference/
+var/link-audit-map.txt
+var/market_data/
+var/migration/
+var/platform-audit-*.json
+var/platform-audit-tests.xml
+var/pnl-na-*.json
+var/pnl-na-regression.xml
+var/recovery/
+var/reviews/
+var/strategy-columns-*
+var/strategy-latency-before.json
+var/strategy-report-profile.prof
+var/tmp-test-conditional-monitor/
+var/urth-*.json

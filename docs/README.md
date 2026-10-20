@@ -13,6 +13,13 @@ state and reviewed controls, never in a prose status note.
 - [Expanded ETF study and rejection findings](etf-expansion-findings-2026-10-14.md)
 - [Full-pool class and volatility screen — 2026-10-16](class-volatility-screen-findings.md)
 - [Cash-relative momentum and matched BIL-removal controls — 2026-10-17](cash-relative-momentum-findings.md)
+- [GLD fitted range-breakout lifecycle — 2026-10-19](gld-range-lifecycle-findings-2026-10-19.md)
+- [GLD long-range lifecycle and short/long combination — 2026-10-19](gld-longrange-combination-findings-2026-10-19.md)
+- [Two-horizon lifecycle across the 52-ETF pool and versus FR25 — 2026-10-19](gld-lifecycle-pool-findings-2026-10-19.md)
+- [Daily life-cycle opportunity scanner / CTA-style portfolios — 2026-10-19](gld-lifecycle-daily-scanner-findings-2026-10-19.md)
+- [Two-era stable life-cycle signals as an FR25/M1 eligibility filter — 2026-10-19](gld-lifecycle-conditioning-findings-2026-10-19.md)
+- [Candidate: conditional 80/20 FR25 + Rule A short-only overlay — 2026-10-19](conditional-fr25-lifecycle-overlay-candidate-2026-10-19.md)
+- [Versioned candidate strategy page: fr25-lifecycle-conditional-v1](../research/fr25-lifecycle-conditional-v1/index.html)
 - [Repository maintenance](repository-maintenance.md)
 - [Disk cleanup and native Windows migration](storage-retention-and-windows-native-plan.md)
 
@@ -20,6 +27,7 @@ state and reviewed controls, never in a prose status note.
 
 - [Native Windows runtime, limits and migration evidence](native-windows-runtime.md)
 - [Gateway trading operations](trading-operations.md)
+- [Paper rebalance renewal contract](paper-rebalance-renewal-2026-10-20.md)
 - [Trading strategy roles and capital allocation](trading-allocations.md)
 - [Live Rollout](live-rollout.md)
 - [One IB Gateway for the local platform](ib-gateway-operation.md)

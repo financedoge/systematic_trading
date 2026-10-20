@@ -34,21 +34,33 @@ and are shown in red. Routing still requires fresh matching account evidence.
 
 Activation persists the handover's pending rebalance in its immutable event before
 adding it to the proposal queue. The worker recovers an interrupted queue write by
-proposal ID. Configuration approval never authorizes those orders. On Trading,
-**Refresh for approval** prepares a successor when the window is missed or balances
-have changed, then the operator uses the usual order approval. The original proposal
-and any approval remain in history; a successor invalidates the old route. Renewed
-proposals do not inherit approval or automatic execution authority. Known broker
+proposal ID. Configuration approval never authorizes those orders. With an enabled
+paper approval policy bound to the same allocation, one expired application-prepared
+rebalance is renewed automatically into the next complete TWAP window and then uses
+the normal automatic eligibility, approval and routing checks; manual renewal keeps
+the usual operator approval path. In both modes a successor invalidates the old
+route, the original proposal and any approval remain in history, and known broker
 attempts, partial fills and uncertain outcomes require reconciliation/management;
-this button never blindly resends them.
+renewal never blindly resends them. A session-limited operator catch-up authorization
+is never extended automatically. An operator can also prepare a successor explicitly
+through `POST /api/v1/proposals/{proposal_id}/refresh-rebalance`, then use the usual
+order approval. See the
+[paper rebalance renewal contract](paper-rebalance-renewal-2026-10-20.md).
 
-Renewal retains the original target intent and original price/TWAP benchmarks while
+Renewal retains the original target weights and original price/TWAP benchmarks while
 recalculating whole-share quantities from current available marks and recorded
-balances. Direction/asset changes require a new allocation review. Total price
-slippage includes approval and rescheduling delay for executed quantities, using the
-original benchmark; unfilled orders remain missed-order evidence, not fictitious
-slippage. TWAP statistics remain unavailable when complete original-window minute
-bars are unavailable. Fees and unclassified cash movements remain separate.
+balances. A changed target vector or a reversed trade direction requires a new
+allocation review; whole-share rounding at refreshed prices may add a small trade
+leg inside the same allocation, and that leg's benchmark starts with the refreshed
+plan. A rebalance that fills some legs and then expires `missed` on a residual
+keeps its frozen targets as the adopted target until a later rebalance is
+approved, so drift monitoring never falls back to an older month-end target;
+unfilled residuals inside the drift tolerance remain normal missed-order audit
+records. Total price slippage includes approval and rescheduling delay for executed
+quantities, using the original benchmark; unfilled orders remain missed-order
+evidence, not fictitious slippage. TWAP statistics remain unavailable when complete
+original-window minute bars are unavailable. Fees and unclassified cash movements
+remain separate.
 
 ## Multiple strategies
 

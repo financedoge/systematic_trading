@@ -336,6 +336,28 @@ def test_late_fill_and_approval_invalidate_attribution_without_new_account_snaps
     assert allocation_ledger_revision(store)!=approved
 
 
+def test_unrouted_proposal_expiry_does_not_invalidate_attribution(store,monkeypatch):
+    """An expired never-routed proposal must not retire the dashboard publication."""
+    from systematic_trading.domain.enums import ProposalStatus
+    from systematic_trading.portfolio.allocation_analytics import allocation_ledger_revision
+    commit(store,0,'A')
+    def proposal(status):
+        return TradeProposal(proposal_id='awaiting',as_of=date(2026,10,2),sleeve='A',summary='Test',
+            status=status,reasoning=ProposalReasoning(summary='Test'),input_provenance=dict(allocation=dict(version='A-0')))
+    proposals=[proposal(ProposalStatus.PENDING)];records=[]
+    monkeypatch.setattr(store,'list_proposals',lambda:proposals)
+    monkeypatch.setattr(store,'list_broker_order_records',lambda:records)
+    before=allocation_ledger_revision(store)
+    proposals[0]=proposal(ProposalStatus.MISSED)
+    records.append(SimpleNamespace(local_order_id='missed-awaiting-000',proposal_id='awaiting',filled_quantity=0,
+        average_fill_price=None,execution_sync_issue=None,order=SimpleNamespace(reference_price=D(99)),execution_fills=[]))
+    assert allocation_ledger_revision(store)==before
+    records[:]=[SimpleNamespace(local_order_id='fill-awaiting-000',proposal_id='awaiting',filled_quantity=1,
+        average_fill_price=D(100),execution_sync_issue=None,order=SimpleNamespace(reference_price=D(99)),
+        execution_fills=[BrokerExecutionFill(symbol='SPY',side='buy',quantity=1,average_price=D(100))])]
+    assert allocation_ledger_revision(store)!=before
+
+
 def test_unclassified_withdrawal_funds_zero_reserve_without_resetting_strategy_weights():
     book={'A':dict(positions={},cash={'USD':'600'}),'B':dict(positions={},cash={'USD':'400'}),
         RESERVE:dict(positions={},cash={'USD':'-10'})}

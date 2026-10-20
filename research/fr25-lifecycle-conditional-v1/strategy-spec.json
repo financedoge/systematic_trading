@@ -1,0 +1,183 @@
+{
+  "identity": "fr25-lifecycle-conditional-v1",
+  "version": "1.0.0",
+  "state": "research_candidate_for_monitoring_review",
+  "created": "2026-10-19",
+  "name": "FR25 80/20 + Rule A short-only conditional overlay",
+  "summary": "80% of the target budget follows the frozen FR25 SOTA monthly weights; 20% follows the Rule A short-only daily life-cycle sleeve only in months where the pre-2023-calibrated stable union-signal breadth is at or above its median. Dynamic target-change rebalancing (10% L1) with month-end anchors.",
+  "base_strategy": "FR25 SOTA frozen target weights (52-ETF pool)",
+  "sleeve": {
+    "name": "Rule A short-only daily life-cycle sleeve",
+    "entry": "daily 0->1 transition of the per-ETF short-range life-cycle state",
+    "exit": "1->0 transition; holdings persist until their own signal exits",
+    "capacity": 6,
+    "allocation": "equal re-split on new entry; exit drops the name and re-equalises",
+    "signal_source": "sealed pre-2023 per-ETF short-range parameters (52-ETF pool study)",
+    "cash_proxy": "BIL (T-bill) inside the sleeve when flat"
+  },
+  "blend": {
+    "fr25_weight": 0.8,
+    "sleeve_weight": 0.2,
+    "target_budget": 0.98
+  },
+  "condition": {
+    "name": "stable union-signal breadth at or above pre-2023 median",
+    "threshold": 36.0,
+    "calibration": "median of pre-2023 daily stable union breadth",
+    "true_in_oos": 0.6808510638297872,
+    "evaluated_at": "month-end close; applied from next session"
+  },
+  "rebalance": {
+    "scheduler": "dynamic target-change",
+    "trigger_l1": 0.1,
+    "anchors": "FR25 month-end decisions",
+    "delay_stress": [
+      0,
+      1
+    ]
+  },
+  "execution": {
+    "decision": "close",
+    "fill": "next open",
+    "cost_bp": 5.0,
+    "cost_stress_bp": [
+      5,
+      10,
+      20
+    ]
+  },
+  "universe": [
+    "AGG",
+    "BIL",
+    "CORN",
+    "CPER",
+    "DBA",
+    "DBB",
+    "DBC",
+    "EEM",
+    "EFA",
+    "EMB",
+    "EWA",
+    "EWC",
+    "EWG",
+    "EWH",
+    "EWJ",
+    "EWT",
+    "EWU",
+    "EWY",
+    "GLD",
+    "HYG",
+    "IAT",
+    "IBB",
+    "IBND",
+    "IEF",
+    "IGOV",
+    "INDA",
+    "ITA",
+    "IWM",
+    "LEMB",
+    "LQD",
+    "MBB",
+    "MCHI",
+    "MDY",
+    "PPLT",
+    "SHY",
+    "SLV",
+    "SOXX",
+    "SPY",
+    "TIP",
+    "TLT",
+    "USO",
+    "VGK",
+    "WEAT",
+    "XLB",
+    "XLC",
+    "XLE",
+    "XLI",
+    "XLK",
+    "XLP",
+    "XLU",
+    "XLV",
+    "XLY"
+  ],
+  "cash_mapping": "unallocated budget stays cash",
+  "data": {
+    "panel_and_recipe": {
+      "panel": "D:\\projects\\systematic_trading\\var\\research\\range-breakout-20261018-v2\\pool\\inputs.npz",
+      "recipe": "D:\\projects\\systematic_trading\\var\\research\\range-breakout-20261018-v2\\pool\\recipe.json",
+      "overlay_study": "D:\\projects\\systematic_trading\\var\\research\\gld-lifecycle-overlay-robustness-20261019-v1\\evidence.json"
+    },
+    "sha256": {
+      "panel": "6119a0d21b1b0ba0ab50281dbd5234932e634790944811d11feb64af4c8db9c5",
+      "recipe": "3527fd37a773f9910b8084b996606bd4059e32c90fb8ae779b36faae6fb10a5f",
+      "overlay_study": "bf2c0b197adfd48b4f166d1eee5c0c57a933475a4ee60d04f0cb0f7bba9d1993"
+    },
+    "calendar": "2023-01-03 to 2026-10-12",
+    "fit_end": "2022-12-30"
+  },
+  "performance": {
+    "candidate": {
+      "cagr": 0.16083250154263395,
+      "sharpe": 1.4787256479774733,
+      "sortino": 2.0987682142528987,
+      "maxdd": -0.07640745117421976,
+      "calmar": 2.1049321639575855,
+      "volatility": 0.10458252003771944,
+      "exposure": 0.9790181407864931,
+      "sessions": 946,
+      "annual_turnover": 8.79149291898782,
+      "annual_cost_bps": 43.96773756371547
+    },
+    "benchmarks": {
+      "FR25 SOTA": {
+        "cagr": 0.16745643918203257,
+        "sharpe": 1.4691985910837693,
+        "sortino": 2.063348884270908,
+        "maxdd": -0.08654754187494995,
+        "calmar": 1.934849165606408,
+        "volatility": 0.10949284366365063,
+        "exposure": 0.9789519451971103,
+        "sessions": 946
+      },
+      "Equal weight": {
+        "cagr": 0.14742009487008922,
+        "sharpe": 1.376379362603304,
+        "sortino": 1.917902352898739,
+        "maxdd": -0.10885210772821863,
+        "calmar": 1.3543154831523057,
+        "volatility": 0.10385161523910848,
+        "exposure": 0.9802106168479277,
+        "sessions": 946
+      },
+      "URTH": {
+        "cagr": 0.2045095473005505,
+        "sharpe": 1.4040882737191294,
+        "sortino": 1.9957455957486634,
+        "maxdd": -0.16800029909959635,
+        "calmar": 1.2173165666765284,
+        "volatility": 0.13947077838566369,
+        "exposure": 0.9910589271121997,
+        "sessions": 946
+      },
+      "BIL": {
+        "cagr": 0.04464860056519582,
+        "sharpe": 18.01208625085788,
+        "sortino": 89.1355764582017,
+        "maxdd": -0.00025071231323581245,
+        "calmar": 1.4882866855065273,
+        "volatility": 0.002425442799527746,
+        "exposure": 0.9821898660322899,
+        "sessions": 946
+      }
+    }
+  },
+  "promotion": {
+    "state": "candidate_for_monitoring_review",
+    "missing": [
+      "app-tracked versioned implementation and calculation pipeline",
+      "paper-trading evidence through the tracked-strategy pipeline",
+      "resolution of the +1-session delay weakness",
+      "operator approval and rollback plan"
+    ]
+  }
+}

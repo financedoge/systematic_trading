@@ -532,6 +532,7 @@ class TradingManagementService:
                     as_of=service_date,
                     observed_at=now,
                     sota_universe_only=True,
+                    universe_instruments=self._market_data_universe(),
                 )
                 account_snapshot = account_result.snapshot
                 account_snapshot_path = str(account_result.output_path)
@@ -720,11 +721,22 @@ class TradingManagementService:
             )
             self._save_status_locked()
 
+    def _market_data_universe(self):
+        """SOTA plus active-allocation instruments; execution data must cover both."""
+        from systematic_trading.portfolio.strategy_allocation import trading_definition
+        from systematic_trading.research import current_sota_definition, instruments_for_definition
+        instruments = dict(instruments_for_definition(current_sota_definition()))
+        instruments.update(instruments_for_definition(trading_definition(self.store)))
+        return instruments
+
     def _refresh_market_data(self, service_date: date) -> MarketDataRefreshResult | None:
         try:
+            universe = self._market_data_universe()
             result = refresh_sota_market_data(
                 store=self.store,
                 target_date=service_date,
+                symbols=sorted(universe),
+                instruments=universe,
                 provider=self.market_data_provider,
                 fallback_provider=self._market_data_fallback_provider(),
                 fx_provider=self._fx_provider(),

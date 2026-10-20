@@ -1,28 +1,22 @@
 {
-  "account_snapshot_path": "var\\live\\account_snapshots\\ib_paper_account_snapshot_20261019_083731.json",
+  "account_snapshot_path": "var\\live\\account_snapshots\\ib_paper_account_snapshot_20261020_230653.json",
   "broker_cash": [
     {
-      "amount": "18388.87",
+      "amount": "16851.87",
       "currency": "HKD"
     }
   ],
   "broker_positions": [
     {
-      "average_cost": "32.7931433",
+      "average_cost": "32.80471635",
       "currency": "USD",
-      "quantity": 656,
+      "quantity": 471,
       "symbol": "DBC"
     },
     {
-      "average_cost": "22.277832",
+      "average_cost": "97.5788074",
       "currency": "USD",
-      "quantity": 813,
-      "symbol": "EWH"
-    },
-    {
-      "average_cost": "97.78134715",
-      "currency": "USD",
-      "quantity": 212,
+      "quantity": 230,
       "symbol": "EWJ"
     },
     {
@@ -32,34 +26,40 @@
       "symbol": "EWY"
     },
     {
-      "average_cost": "769.7383354",
+      "average_cost": "769.75087175",
       "currency": "USD",
-      "quantity": 48,
+      "quantity": 46,
       "symbol": "SPY"
     },
     {
-      "average_cost": "86.06396795",
+      "average_cost": "86.1104885",
       "currency": "USD",
-      "quantity": 256,
+      "quantity": 278,
       "symbol": "VGK"
+    },
+    {
+      "average_cost": "67.86500305",
+      "currency": "USD",
+      "quantity": 327,
+      "symbol": "XLE"
     }
   ],
-  "checked_at": "2026-10-19T00:37:30.937722Z",
+  "checked_at": "2026-10-20T15:06:51.926056Z",
   "environment": "paper",
   "execution_issues": [],
   "execution_sync_pending": [],
   "has_breaks": false,
-  "ib_fill_count": 0,
+  "ib_fill_count": 42,
   "ib_position_count": 6,
-  "local_filled_order_count": 27,
-  "local_order_count": 38,
-  "local_order_history_count": 276,
+  "local_filled_order_count": 33,
+  "local_order_count": 48,
+  "local_order_history_count": 286,
   "managed_accounts": [
     "DU8959779"
   ],
   "pnl_reset_baseline_id": null,
   "position_differences": [],
-  "report_path": "var\\reconciliation\\ib_paper_reconciliation_20261019_003730_937722.json",
+  "report_path": "var\\reconciliation\\ib_paper_reconciliation_20261020_150651_926056.json",
   "requires_operator_confirmation": false,
   "reset_applied": false,
   "status": "matched",

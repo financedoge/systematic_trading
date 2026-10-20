@@ -82,6 +82,60 @@ def test_missed_intent_refreshes_offline_once_without_carrying_approval(case):
     assert store.get_proposal('original').orders == original.orders
 
 
+def test_automatic_renewal_sets_policy_binding_but_still_requires_approval(case):
+    settings, store, report, original = case
+    expire_due_proposals(store, settings, now=NOW)
+    saved = refresh_rebalance(settings, store, 'original', now=NOW,
+        automation_strategy_key='allocation-policy-key', automation_policy_revision=7)
+    assert saved.status == ProposalStatus.PENDING
+    assert saved.automation_strategy_key == 'allocation-policy-key'
+    lineage = saved.input_provenance['deferred_rebalance']
+    assert lineage['automation_strategy_key'] == 'allocation-policy-key'
+    assert lineage['automation_policy_revision'] == 7
+    assert 'Automatic renewal' in saved.summary
+    # Preparation never approves or routes, even for the automatic policy.
+    assert not store.strategy_approval_times()
+    assert not store.list_broker_order_records(proposal_id=saved.proposal_id)
+    assert any('newer proposal' in issue for issue in prepared_submission_issues(settings, store, original))
+
+
+def test_renewal_keeps_a_new_whole_share_leg_with_its_own_refreshed_benchmark(case, monkeypatch):
+    settings, store, report, original = case
+    expire_due_proposals(store, settings, now=NOW)
+    from systematic_trading.domain.enums import OrderSide
+    extra = original.orders[0].model_copy(update=dict(symbol='EWY', side=OrderSide.BUY, quantity=1))
+
+    def plan(**kwargs):
+        return SimpleNamespace(validation_issues=[], proposal=original.model_copy(update=dict(
+            as_of=kwargs['decision_date'], intended_trade_date=kwargs['intended_trade_date'],
+            orders=[order.model_copy(update=dict(intended_trade_date=kwargs['intended_trade_date']))
+                    for order in (original.orders[0], extra)])))
+
+    monkeypatch.setattr('systematic_trading.live.allocated_plan.build_allocated_plan', plan)
+    saved = refresh_rebalance(settings, store, 'original', now=NOW)
+    assert {order.symbol for order in saved.orders} == {'SPY', 'EWY'}
+    refreshed = next(order for order in saved.orders if order.symbol == 'SPY')
+    added = next(order for order in saved.orders if order.symbol == 'EWY')
+    assert refreshed.benchmark_reference_price == 100  # The original slippage benchmark is kept.
+    assert added.benchmark_reference_price == added.reference_price  # A new leg starts with this plan.
+
+
+def test_renewal_rejects_a_changed_trade_direction(case, monkeypatch):
+    settings, store, report, original = case
+    expire_due_proposals(store, settings, now=NOW)
+    from systematic_trading.domain.enums import OrderSide
+    flipped = original.orders[0].model_copy(update=dict(side=OrderSide.SELL))
+
+    def plan(**kwargs):
+        return SimpleNamespace(validation_issues=[], proposal=original.model_copy(update=dict(
+            as_of=kwargs['decision_date'], intended_trade_date=kwargs['intended_trade_date'],
+            orders=[flipped.model_copy(update=dict(intended_trade_date=kwargs['intended_trade_date']))])))
+
+    monkeypatch.setattr('systematic_trading.live.allocated_plan.build_allocated_plan', plan)
+    with pytest.raises(ValueError, match='direction changed'):
+        refresh_rebalance(settings, store, 'original', now=NOW)
+
+
 @pytest.mark.parametrize('updates', [dict(status='pending_submit'), dict(status='submitted'),
     dict(status='partially_filled', filled_quantity=1), dict(status='filled', filled_quantity=2),
     dict(status='cancelled'), dict(status='missed', broker_order_id=123),

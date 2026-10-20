@@ -6,10 +6,11 @@
     "research_rolling_xgboost_1y_lag20_v1_usd_v1",
     "research_fallback_f3_v1",
     "research_economic_context_ridge_v1",
-    "research_fr25_alpha_tilt_5_v1"
+    "research_fr25_alpha_tilt_5_v1",
+    "fr25_lifecycle_conditional_v1"
   ],
   "method": "app_native_signal_rebalance_lean_replay",
-  "notes": "App-calculated strategies on audited histories; full signal/rebalance replay, current held and target weights, matched benchmarks. Tracking confers no execution or promotion authority.",
+  "notes": "App-calculated strategies on audited histories; full signal/rebalance replay, current held and target weights, matched benchmarks. Tracking confers no execution or promotion authority. Added candidate fr25_lifecycle_conditional_v1 (FR25 + conditional short life-cycle sleeve) on 2026-10-19; research tracking only.",
   "calculation": {
     "schema_version": 1,
     "start": "2016-01-04",

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "decision_date": "2026-10-19",
+  "decision": "Operator authorized app-tracked implementation of the dynamic conditional candidate; monitoring membership addition deferred pending tracked-runtime wiring and final approval",
+  "authority": "Operator reviewed the versioned candidate page and explicitly asked to build the app-tracked implementation so it can be added to monitored strategies",
+  "identity": "fr25_lifecycle_conditional_v1",
+  "version": "1.0.0",
+  "strategy": "80% frozen FR25 SOTA monthly targets + 20% Rule A short-only life-cycle sleeve when pre-2023-calibrated stable union breadth is at or above its median; dynamic 10% L1 target-change rebalancing",
+  "implementation": {
+    "definition_module": "src/systematic_trading/research/fr25_lifecycle_conditional.py",
+    "catalog_registration": "registered_strategy_definition('fr25_lifecycle_conditional_v1')",
+    "frozen_parameters": "src/systematic_trading/research/fr25_lifecycle_conditional_parameters.json",
+    "calculation_engine": "shared application DailyBacktestEngine via app module",
+    "tracked_artifact": "var/research/fr25-lifecycle-conditional-v1/tracked/artifact.json",
+    "artifact_sha256": "58557e7821555e33662d2b15078757a15c6af2d31c8eb7daa56ccf7c082b7b5d",
+    "parameters_sha256": "6b4dac1a82bfb8e8f96937c4f5bbf102250f9a5361836f7abc9090ab2034f2c0",
+    "sessions": 947,
+    "rebalances": 55,
+    "cagr": 0.16090449755088154,
+    "research_page_cagr": 0.16083250154263395
+  },
+  "evidence": [
+    "research/fr25-lifecycle-conditional-v1/index.html",
+    "research/gld-lifecycle-overlay-robustness-20261019-v1/index.html",
+    "docs/conditional-fr25-lifecycle-overlay-candidate-2026-10-19.md"
+  ],
+  "monitoring": {
+    "state": "added_monitored_catching_up_data_gap",
+    "app_membership": "config/strategy-monitoring.json monitored_strategy_ids includes fr25_lifecycle_conditional_v1",
+    "publication": "app tracked-strategies publication includes detail/report for fr25_lifecycle_conditional_v1",
+    "reported": {
+      "lifecycle": "monitored",
+      "calculation_status": "Catching up",
+      "start_date": "2023-01-03",
+      "end_date": "2026-10-12",
+      "observations": 947,
+      "final_nav_cnh": 1738429.33,
+      "total_return": 0.7508300037004092,
+      "annualized_return": 0.16090449755088154,
+      "annualized_volatility": 0.10459260922937487,
+      "sharpe": 1.4791862161311904,
+      "max_drawdown": -0.07640551063247558,
+      "calmar": 2.1059279130383866,
+      "report_url": "/api/v1/strategies/fr25_lifecycle_conditional_v1/report",
+      "report_http_status": 200
+    },
+    "data_gap": "The monitored artifact ends 2026-10-12 while the platform expected session is 2026-10-16. The app's daily histories for 23 of the 52 pool ETFs are stale/pending for 2026-10-13..16, so the candidate cannot be extended without silently filling prices. Status will remain Catching up until the audited batch covers those sessions; the next tracked refresh will then extend the publication.",
+    "allocation": "Not allocation-ready: trading allocations currently support monitored monthly multi-asset strategies, and this candidate uses a dynamic target-change clock. Monitoring is tracking/reporting only; no execution authority.",
+    "rollback": "Remove fr25_lifecycle_conditional_v1 from config/strategy-monitoring.json, restart through guarded launchers, verify the previous six-strategy publication, and retain the candidate artifact/research page."
+  },
+  "risk_contract": "20% sleeve cap, 98% target budget, inherited FR25 45% single-name cap, no shorting or leverage, BIL cash proxy inside the sleeve. The +1-session delay test fails Sharpe/Calmar/Sortino versus matched FR25, so monitoring must not be represented as established execution-clock evidence.",
+  "statistical_limit": "2023-2026 is an inspected development retest. The candidate improves Sharpe/Sortino/max DD/Calmar versus FR25 at 5/10/20bp but gives up ~0.66pp CAGR at 5bp; this is risk-shaping, not a return improvement and not statistical significance.",
+  "execution_authority": "No monitoring, allocation, funding, approval, broker or live authority changed. Research/paper candidate only.",
+  "rollback": "Remove the candidate key from the monitoring config if added, restore the previous config, restart through guarded launchers, verify the prior publication, and retain the candidate research artifact.",
+  "validation": {
+    "passed": true,
+    "report": "var/research/fr25-lifecycle-conditional-v1/tracked/validation.json",
+    "artifact_sha256": "58557e7821555e33662d2b15078757a15c6af2d31c8eb7daa56ccf7c082b7b5d",
+    "checks": "definition registered; 52 sleeve parameter sets; 2043 breadth sessions; 947-session artifact; 55 proposals; CAGR matches page within 0.01pp; artifact and parameter hashes match; monitoring config unchanged"
+  },
+  "blocker": "The monitored runtime publication path was not run: only PostgreSQL is currently running, the app/analytics/LEAN services are not, and the candidate still needs its tracked-runtime family branch plus a verified refresh before the config key can be added safely. Editing config/strategy-monitoring.json now would make the next tracked refresh fail its calculation contract."
+}

@@ -1,0 +1,1946 @@
+{
+ "equal_split|union": [
+  {
+   "date": "2022-12-30",
+   "holdings": 1,
+   "names": "BIL",
+   "invested": 0.020000000000000018
+  },
+  {
+   "date": "2023-01-05",
+   "holdings": 1,
+   "names": "MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-01-10",
+   "holdings": 2,
+   "names": "LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-01-11",
+   "holdings": 3,
+   "names": "EWT;LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-01-12",
+   "holdings": 4,
+   "names": "EWG;EWT;LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-01-17",
+   "holdings": 6,
+   "names": "EMB;EWG;EWT;IEF;LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-02-15",
+   "holdings": 6,
+   "names": "EMB;EWG;EWT;LEMB;MCHI;WEAT",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-02-22",
+   "holdings": 5,
+   "names": "EWG;EWT;LEMB;MCHI;WEAT",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-02-24",
+   "holdings": 6,
+   "names": "DBA;EWG;EWT;LEMB;MCHI;WEAT",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-02-28",
+   "holdings": 5,
+   "names": "DBA;EWG;EWT;LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-03-09",
+   "holdings": 4,
+   "names": "EWG;EWT;LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-03-14",
+   "holdings": 5,
+   "names": "EWG;EWT;GLD;LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-03-27",
+   "holdings": 6,
+   "names": "EWG;EWT;GLD;LEMB;LQD;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-05-26",
+   "holdings": 5,
+   "names": "EWG;EWT;GLD;LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-06-14",
+   "holdings": 6,
+   "names": "DBA;EWG;EWT;GLD;LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-09-27",
+   "holdings": 5,
+   "names": "DBA;EWT;GLD;LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-09-28",
+   "holdings": 4,
+   "names": "DBA;EWT;GLD;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-10-05",
+   "holdings": 3,
+   "names": "EWT;GLD;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-11-09",
+   "holdings": 4,
+   "names": "EWT;GLD;HYG;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-11-16",
+   "holdings": 6,
+   "names": "EWH;EWT;GLD;HYG;LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-11-28",
+   "holdings": 5,
+   "names": "EWT;GLD;HYG;LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-11-29",
+   "holdings": 6,
+   "names": "AGG;EWT;GLD;HYG;LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-01-18",
+   "holdings": 5,
+   "names": "AGG;EWT;GLD;HYG;LEMB",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-02-02",
+   "holdings": 6,
+   "names": "AGG;DBA;EWT;GLD;HYG;LEMB",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-04-11",
+   "holdings": 5,
+   "names": "AGG;DBA;EWT;HYG;LEMB",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-04-25",
+   "holdings": 6,
+   "names": "AGG;DBA;EWT;HYG;LEMB;WEAT",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-05-20",
+   "holdings": 5,
+   "names": "AGG;DBA;EWT;HYG;LEMB",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-05-21",
+   "holdings": 6,
+   "names": "AGG;DBA;EWT;GLD;HYG;LEMB",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-06-10",
+   "holdings": 6,
+   "names": "AGG;DBA;EWT;HYG;LEMB;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-12-19",
+   "holdings": 5,
+   "names": "AGG;DBA;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-01-02",
+   "holdings": 6,
+   "names": "AGG;CORN;DBA;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-03-04",
+   "holdings": 5,
+   "names": "AGG;CORN;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-03-06",
+   "holdings": 6,
+   "names": "AGG;CORN;EWH;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-03-11",
+   "holdings": 5,
+   "names": "AGG;CORN;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-03-18",
+   "holdings": 6,
+   "names": "AGG;CORN;EWH;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-03-21",
+   "holdings": 6,
+   "names": "AGG;CORN;EWT;HYG;IGOV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-04-07",
+   "holdings": 4,
+   "names": "AGG;CORN;IGOV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-05-02",
+   "holdings": 5,
+   "names": "AGG;CORN;EFA;IGOV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-05-06",
+   "holdings": 6,
+   "names": "AGG;CORN;EFA;EWT;IGOV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-05-16",
+   "holdings": 6,
+   "names": "AGG;EFA;EWH;EWT;IGOV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-03-16",
+   "holdings": 4,
+   "names": "AGG;EWH;EWT;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-04-10",
+   "holdings": 5,
+   "names": "AGG;EWH;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-04-14",
+   "holdings": 6,
+   "names": "AGG;EFA;EWH;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-07-30",
+   "holdings": 5,
+   "names": "AGG;EFA;EWH;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-08-05",
+   "holdings": 6,
+   "names": "AGG;CPER;EFA;EWH;HYG;TIP",
+   "invested": 1.0
+  }
+ ],
+ "slots|union": [
+  {
+   "date": "2022-12-30",
+   "holdings": 1,
+   "names": "BIL",
+   "invested": 0.020000000000000018
+  },
+  {
+   "date": "2023-01-05",
+   "holdings": 2,
+   "names": "BIL;MCHI",
+   "invested": 0.18333333333333335
+  },
+  {
+   "date": "2023-01-10",
+   "holdings": 3,
+   "names": "BIL;LEMB;MCHI",
+   "invested": 0.3466666666666667
+  },
+  {
+   "date": "2023-01-11",
+   "holdings": 4,
+   "names": "BIL;EWT;LEMB;MCHI",
+   "invested": 0.51
+  },
+  {
+   "date": "2023-01-12",
+   "holdings": 5,
+   "names": "BIL;EWG;EWT;LEMB;MCHI",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2023-01-17",
+   "holdings": 6,
+   "names": "EMB;EWG;EWT;IEF;LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-02-15",
+   "holdings": 6,
+   "names": "EMB;EWG;EWT;LEMB;MCHI;WEAT",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-02-22",
+   "holdings": 6,
+   "names": "BIL;EWG;EWT;LEMB;MCHI;WEAT",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-02-24",
+   "holdings": 6,
+   "names": "DBA;EWG;EWT;LEMB;MCHI;WEAT",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-02-28",
+   "holdings": 6,
+   "names": "BIL;DBA;EWG;EWT;LEMB;MCHI",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-03-09",
+   "holdings": 5,
+   "names": "BIL;EWG;EWT;LEMB;MCHI",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2023-03-14",
+   "holdings": 6,
+   "names": "BIL;EWG;EWT;GLD;LEMB;MCHI",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-03-27",
+   "holdings": 6,
+   "names": "EWG;EWT;GLD;LEMB;LQD;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-05-26",
+   "holdings": 6,
+   "names": "BIL;EWG;EWT;GLD;LEMB;MCHI",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-06-14",
+   "holdings": 6,
+   "names": "DBA;EWG;EWT;GLD;LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-09-27",
+   "holdings": 6,
+   "names": "BIL;DBA;EWT;GLD;LEMB;MCHI",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-09-28",
+   "holdings": 5,
+   "names": "BIL;DBA;EWT;GLD;MCHI",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2023-10-05",
+   "holdings": 4,
+   "names": "BIL;EWT;GLD;MCHI",
+   "invested": 0.51
+  },
+  {
+   "date": "2023-11-09",
+   "holdings": 5,
+   "names": "BIL;EWT;GLD;HYG;MCHI",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2023-11-16",
+   "holdings": 6,
+   "names": "EWH;EWT;GLD;HYG;LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-11-28",
+   "holdings": 6,
+   "names": "BIL;EWT;GLD;HYG;LEMB;MCHI",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-11-29",
+   "holdings": 6,
+   "names": "AGG;EWT;GLD;HYG;LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-01-18",
+   "holdings": 6,
+   "names": "AGG;BIL;EWT;GLD;HYG;LEMB",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2024-02-02",
+   "holdings": 6,
+   "names": "AGG;DBA;EWT;GLD;HYG;LEMB",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-04-11",
+   "holdings": 6,
+   "names": "AGG;BIL;DBA;EWT;HYG;LEMB",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2024-04-25",
+   "holdings": 6,
+   "names": "AGG;DBA;EWT;HYG;LEMB;WEAT",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-05-20",
+   "holdings": 6,
+   "names": "AGG;BIL;DBA;EWT;HYG;LEMB",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2024-05-21",
+   "holdings": 6,
+   "names": "AGG;DBA;EWT;GLD;HYG;LEMB",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-06-10",
+   "holdings": 6,
+   "names": "AGG;DBA;EWT;HYG;LEMB;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-12-19",
+   "holdings": 6,
+   "names": "AGG;BIL;DBA;EWT;HYG;TIP",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2025-01-02",
+   "holdings": 6,
+   "names": "AGG;CORN;DBA;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-03-04",
+   "holdings": 6,
+   "names": "AGG;BIL;CORN;EWT;HYG;TIP",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2025-03-06",
+   "holdings": 6,
+   "names": "AGG;CORN;EWH;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-03-11",
+   "holdings": 6,
+   "names": "AGG;BIL;CORN;EWT;HYG;TIP",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2025-03-18",
+   "holdings": 6,
+   "names": "AGG;CORN;EWH;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-03-21",
+   "holdings": 6,
+   "names": "AGG;CORN;EWT;HYG;IGOV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-04-07",
+   "holdings": 5,
+   "names": "AGG;BIL;CORN;IGOV;TIP",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2025-05-02",
+   "holdings": 6,
+   "names": "AGG;BIL;CORN;EFA;IGOV;TIP",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2025-05-06",
+   "holdings": 6,
+   "names": "AGG;CORN;EFA;EWT;IGOV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-05-16",
+   "holdings": 6,
+   "names": "AGG;EFA;EWH;EWT;IGOV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-03-16",
+   "holdings": 5,
+   "names": "AGG;BIL;EWH;EWT;TIP",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2026-04-10",
+   "holdings": 6,
+   "names": "AGG;BIL;EWH;EWT;HYG;TIP",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2026-04-14",
+   "holdings": 6,
+   "names": "AGG;EFA;EWH;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-07-30",
+   "holdings": 6,
+   "names": "AGG;BIL;EFA;EWH;HYG;TIP",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2026-08-05",
+   "holdings": 6,
+   "names": "AGG;CPER;EFA;EWH;HYG;TIP",
+   "invested": 1.0
+  }
+ ],
+ "equal_split|short": [
+  {
+   "date": "2022-12-30",
+   "holdings": 1,
+   "names": "BIL",
+   "invested": 0.020000000000000018
+  },
+  {
+   "date": "2023-01-11",
+   "holdings": 1,
+   "names": "EWT",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-01-12",
+   "holdings": 2,
+   "names": "EWG;EWT",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-01-17",
+   "holdings": 4,
+   "names": "EMB;EWG;EWT;IEF",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-01-25",
+   "holdings": 5,
+   "names": "EMB;EWA;EWG;EWT;IEF",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-01-26",
+   "holdings": 6,
+   "names": "EMB;EWA;EWG;EWT;IEF;SOXX",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-02-15",
+   "holdings": 6,
+   "names": "EMB;EWA;EWG;EWT;SOXX;WEAT",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-02-22",
+   "holdings": 5,
+   "names": "EWA;EWG;EWT;SOXX;WEAT",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-02-24",
+   "holdings": 5,
+   "names": "DBA;EWG;EWT;SOXX;WEAT",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-02-28",
+   "holdings": 4,
+   "names": "DBA;EWG;EWT;SOXX",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-03-09",
+   "holdings": 3,
+   "names": "EWG;EWT;SOXX",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-03-14",
+   "holdings": 4,
+   "names": "EWG;EWT;GLD;SOXX",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-03-24",
+   "holdings": 5,
+   "names": "EWG;EWT;GLD;LEMB;SOXX",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-03-27",
+   "holdings": 6,
+   "names": "EWG;EWT;GLD;LEMB;LQD;SOXX",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-04-17",
+   "holdings": 5,
+   "names": "EWG;EWT;LEMB;LQD;SOXX",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-05-02",
+   "holdings": 6,
+   "names": "EWG;EWT;INDA;LEMB;LQD;SOXX",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-05-26",
+   "holdings": 5,
+   "names": "EWG;EWT;INDA;LEMB;SOXX",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-06-02",
+   "holdings": 6,
+   "names": "EWG;EWT;INDA;LEMB;SOXX;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-06-21",
+   "holdings": 5,
+   "names": "EWG;EWT;INDA;SOXX;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-07-14",
+   "holdings": 6,
+   "names": "EMB;EWG;EWT;INDA;SOXX;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-08-04",
+   "holdings": 5,
+   "names": "EWG;EWT;INDA;SOXX;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-09-27",
+   "holdings": 4,
+   "names": "EWT;INDA;SOXX;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-10-23",
+   "holdings": 4,
+   "names": "EWT;INDA;SLV;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-10-27",
+   "holdings": 5,
+   "names": "EWT;GLD;INDA;SLV;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-11-09",
+   "holdings": 4,
+   "names": "EWT;GLD;INDA;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-11-16",
+   "holdings": 6,
+   "names": "EWH;EWT;GLD;INDA;LEMB;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-11-28",
+   "holdings": 5,
+   "names": "EWT;GLD;INDA;LEMB;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-11-29",
+   "holdings": 6,
+   "names": "AGG;EWT;GLD;INDA;LEMB;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-03-13",
+   "holdings": 5,
+   "names": "AGG;EWT;INDA;LEMB;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-03-14",
+   "holdings": 6,
+   "names": "AGG;CPER;EWT;INDA;LEMB;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-05-23",
+   "holdings": 5,
+   "names": "AGG;EWT;INDA;LEMB;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-06-05",
+   "holdings": 4,
+   "names": "AGG;EWT;LEMB;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-06-10",
+   "holdings": 5,
+   "names": "AGG;EWT;LEMB;TIP;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-06-17",
+   "holdings": 6,
+   "names": "AGG;EWT;LEMB;TIP;TLT;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-07-02",
+   "holdings": 6,
+   "names": "AGG;EWT;EWY;LEMB;TIP;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-07-22",
+   "holdings": 5,
+   "names": "AGG;EWT;LEMB;TIP;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-08-06",
+   "holdings": 4,
+   "names": "AGG;EWT;LEMB;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-08-16",
+   "holdings": 3,
+   "names": "AGG;EWT;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-08-26",
+   "holdings": 4,
+   "names": "AGG;EWJ;EWT;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-09-05",
+   "holdings": 3,
+   "names": "AGG;EWT;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-09-12",
+   "holdings": 4,
+   "names": "AGG;EWT;TIP;TLT",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-09-16",
+   "holdings": 6,
+   "names": "AGG;EWT;GLD;SLV;TIP;TLT",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-10-07",
+   "holdings": 5,
+   "names": "AGG;EWT;GLD;SLV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-10-17",
+   "holdings": 6,
+   "names": "AGG;EWT;GLD;IWM;SLV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-11-01",
+   "holdings": 5,
+   "names": "AGG;EWT;IWM;SLV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-11-04",
+   "holdings": 4,
+   "names": "AGG;EWT;IWM;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-11-07",
+   "holdings": 5,
+   "names": "AGG;EWT;IWM;TIP;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-11-08",
+   "holdings": 6,
+   "names": "AGG;EWT;HYG;IWM;TIP;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-01-13",
+   "holdings": 5,
+   "names": "AGG;EWT;HYG;TIP;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-01-16",
+   "holdings": 6,
+   "names": "AGG;CPER;EWT;HYG;TIP;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-02-19",
+   "holdings": 5,
+   "names": "AGG;EWT;HYG;TIP;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-02-20",
+   "holdings": 6,
+   "names": "AGG;EFA;EWT;HYG;TIP;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-03-11",
+   "holdings": 5,
+   "names": "AGG;EFA;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-03-18",
+   "holdings": 6,
+   "names": "AGG;EFA;EWH;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-03-21",
+   "holdings": 6,
+   "names": "AGG;EFA;EWT;HYG;IGOV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-04-07",
+   "holdings": 3,
+   "names": "AGG;IGOV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-05-01",
+   "holdings": 4,
+   "names": "AGG;EWJ;IGOV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-05-02",
+   "holdings": 5,
+   "names": "AGG;EFA;EWJ;IGOV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-05-06",
+   "holdings": 6,
+   "names": "AGG;EFA;EWJ;EWT;IGOV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-03-04",
+   "holdings": 5,
+   "names": "AGG;EFA;EWJ;EWT;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-03-06",
+   "holdings": 6,
+   "names": "AGG;CORN;EFA;EWJ;EWT;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-03-09",
+   "holdings": 5,
+   "names": "AGG;CORN;EFA;EWT;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-03-12",
+   "holdings": 6,
+   "names": "AGG;CORN;DBA;EFA;EWT;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-03-16",
+   "holdings": 5,
+   "names": "AGG;CORN;DBA;EWT;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-04-10",
+   "holdings": 6,
+   "names": "AGG;CORN;DBA;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-06-05",
+   "holdings": 5,
+   "names": "AGG;DBA;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-06-08",
+   "holdings": 4,
+   "names": "AGG;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-06-11",
+   "holdings": 5,
+   "names": "AGG;EWT;HYG;IAT;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-07-23",
+   "holdings": 6,
+   "names": "AGG;EWT;HYG;IAT;TIP;XLE",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-07-30",
+   "holdings": 5,
+   "names": "AGG;HYG;IAT;TIP;XLE",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-08-05",
+   "holdings": 6,
+   "names": "AGG;CPER;HYG;IAT;TIP;XLE",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-10-08",
+   "holdings": 5,
+   "names": "AGG;CPER;HYG;TIP;XLE",
+   "invested": 1.0
+  }
+ ],
+ "slots|short": [
+  {
+   "date": "2022-12-30",
+   "holdings": 1,
+   "names": "BIL",
+   "invested": 0.020000000000000018
+  },
+  {
+   "date": "2023-01-11",
+   "holdings": 2,
+   "names": "BIL;EWT",
+   "invested": 0.18333333333333335
+  },
+  {
+   "date": "2023-01-12",
+   "holdings": 3,
+   "names": "BIL;EWG;EWT",
+   "invested": 0.3466666666666667
+  },
+  {
+   "date": "2023-01-17",
+   "holdings": 5,
+   "names": "BIL;EMB;EWG;EWT;IEF",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2023-01-25",
+   "holdings": 6,
+   "names": "BIL;EMB;EWA;EWG;EWT;IEF",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-01-26",
+   "holdings": 6,
+   "names": "EMB;EWA;EWG;EWT;IEF;SOXX",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-02-15",
+   "holdings": 6,
+   "names": "EMB;EWA;EWG;EWT;SOXX;WEAT",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-02-22",
+   "holdings": 6,
+   "names": "BIL;EWA;EWG;EWT;SOXX;WEAT",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-02-24",
+   "holdings": 6,
+   "names": "BIL;DBA;EWG;EWT;SOXX;WEAT",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-02-28",
+   "holdings": 5,
+   "names": "BIL;DBA;EWG;EWT;SOXX",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2023-03-09",
+   "holdings": 4,
+   "names": "BIL;EWG;EWT;SOXX",
+   "invested": 0.51
+  },
+  {
+   "date": "2023-03-14",
+   "holdings": 5,
+   "names": "BIL;EWG;EWT;GLD;SOXX",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2023-03-24",
+   "holdings": 6,
+   "names": "BIL;EWG;EWT;GLD;LEMB;SOXX",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-03-27",
+   "holdings": 6,
+   "names": "EWG;EWT;GLD;LEMB;LQD;SOXX",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-04-17",
+   "holdings": 6,
+   "names": "BIL;EWG;EWT;LEMB;LQD;SOXX",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-05-02",
+   "holdings": 6,
+   "names": "EWG;EWT;INDA;LEMB;LQD;SOXX",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-05-26",
+   "holdings": 6,
+   "names": "BIL;EWG;EWT;INDA;LEMB;SOXX",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-06-02",
+   "holdings": 6,
+   "names": "EWG;EWT;INDA;LEMB;SOXX;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-06-21",
+   "holdings": 6,
+   "names": "BIL;EWG;EWT;INDA;SOXX;XLK",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-07-14",
+   "holdings": 6,
+   "names": "EMB;EWG;EWT;INDA;SOXX;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-08-04",
+   "holdings": 6,
+   "names": "BIL;EWG;EWT;INDA;SOXX;XLK",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-09-27",
+   "holdings": 5,
+   "names": "BIL;EWT;INDA;SOXX;XLK",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2023-10-23",
+   "holdings": 5,
+   "names": "BIL;EWT;INDA;SLV;XLK",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2023-10-27",
+   "holdings": 6,
+   "names": "BIL;EWT;GLD;INDA;SLV;XLK",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-11-09",
+   "holdings": 5,
+   "names": "BIL;EWT;GLD;INDA;XLK",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2023-11-16",
+   "holdings": 6,
+   "names": "EWH;EWT;GLD;INDA;LEMB;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-11-28",
+   "holdings": 6,
+   "names": "BIL;EWT;GLD;INDA;LEMB;XLK",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-11-29",
+   "holdings": 6,
+   "names": "AGG;EWT;GLD;INDA;LEMB;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-03-13",
+   "holdings": 6,
+   "names": "AGG;BIL;EWT;INDA;LEMB;XLK",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2024-03-14",
+   "holdings": 6,
+   "names": "AGG;CPER;EWT;INDA;LEMB;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-05-23",
+   "holdings": 6,
+   "names": "AGG;BIL;EWT;INDA;LEMB;XLK",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2024-06-05",
+   "holdings": 5,
+   "names": "AGG;BIL;EWT;LEMB;XLK",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2024-06-10",
+   "holdings": 6,
+   "names": "AGG;BIL;EWT;LEMB;TIP;XLK",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2024-06-17",
+   "holdings": 6,
+   "names": "AGG;EWT;LEMB;TIP;TLT;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-07-02",
+   "holdings": 6,
+   "names": "AGG;EWT;EWY;LEMB;TIP;XLK",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-07-22",
+   "holdings": 6,
+   "names": "AGG;BIL;EWT;LEMB;TIP;XLK",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2024-08-06",
+   "holdings": 5,
+   "names": "AGG;BIL;EWT;LEMB;TIP",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2024-08-16",
+   "holdings": 4,
+   "names": "AGG;BIL;EWT;TIP",
+   "invested": 0.51
+  },
+  {
+   "date": "2024-08-26",
+   "holdings": 5,
+   "names": "AGG;BIL;EWJ;EWT;TIP",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2024-09-05",
+   "holdings": 4,
+   "names": "AGG;BIL;EWT;TIP",
+   "invested": 0.51
+  },
+  {
+   "date": "2024-09-12",
+   "holdings": 5,
+   "names": "AGG;BIL;EWT;TIP;TLT",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2024-09-16",
+   "holdings": 6,
+   "names": "AGG;EWT;GLD;SLV;TIP;TLT",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-10-07",
+   "holdings": 6,
+   "names": "AGG;BIL;EWT;GLD;SLV;TIP",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2024-10-17",
+   "holdings": 6,
+   "names": "AGG;EWT;GLD;IWM;SLV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-11-01",
+   "holdings": 6,
+   "names": "AGG;BIL;EWT;IWM;SLV;TIP",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2024-11-04",
+   "holdings": 5,
+   "names": "AGG;BIL;EWT;IWM;TIP",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2024-11-07",
+   "holdings": 6,
+   "names": "AGG;BIL;EWT;IWM;TIP;XLY",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2024-11-08",
+   "holdings": 6,
+   "names": "AGG;EWT;HYG;IWM;TIP;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-01-13",
+   "holdings": 6,
+   "names": "AGG;BIL;EWT;HYG;TIP;XLY",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2025-01-16",
+   "holdings": 6,
+   "names": "AGG;CPER;EWT;HYG;TIP;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-02-19",
+   "holdings": 6,
+   "names": "AGG;BIL;EWT;HYG;TIP;XLY",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2025-02-20",
+   "holdings": 6,
+   "names": "AGG;EFA;EWT;HYG;TIP;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-03-11",
+   "holdings": 6,
+   "names": "AGG;BIL;EFA;EWT;HYG;TIP",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2025-03-18",
+   "holdings": 6,
+   "names": "AGG;EFA;EWH;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-03-21",
+   "holdings": 6,
+   "names": "AGG;EFA;EWT;HYG;IGOV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-04-07",
+   "holdings": 4,
+   "names": "AGG;BIL;IGOV;TIP",
+   "invested": 0.51
+  },
+  {
+   "date": "2025-05-01",
+   "holdings": 5,
+   "names": "AGG;BIL;EWJ;IGOV;TIP",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2025-05-02",
+   "holdings": 6,
+   "names": "AGG;BIL;EFA;EWJ;IGOV;TIP",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2025-05-06",
+   "holdings": 6,
+   "names": "AGG;EFA;EWJ;EWT;IGOV;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-03-04",
+   "holdings": 6,
+   "names": "AGG;BIL;EFA;EWJ;EWT;TIP",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2026-03-06",
+   "holdings": 6,
+   "names": "AGG;CORN;EFA;EWJ;EWT;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-03-09",
+   "holdings": 6,
+   "names": "AGG;BIL;CORN;EFA;EWT;TIP",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2026-03-12",
+   "holdings": 6,
+   "names": "AGG;CORN;DBA;EFA;EWT;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-03-16",
+   "holdings": 6,
+   "names": "AGG;BIL;CORN;DBA;EWT;TIP",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2026-04-10",
+   "holdings": 6,
+   "names": "AGG;CORN;DBA;EWT;HYG;TIP",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-06-05",
+   "holdings": 6,
+   "names": "AGG;BIL;DBA;EWT;HYG;TIP",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2026-06-08",
+   "holdings": 5,
+   "names": "AGG;BIL;EWT;HYG;TIP",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2026-06-11",
+   "holdings": 6,
+   "names": "AGG;BIL;EWT;HYG;IAT;TIP",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2026-07-23",
+   "holdings": 6,
+   "names": "AGG;EWT;HYG;IAT;TIP;XLE",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-07-30",
+   "holdings": 6,
+   "names": "AGG;BIL;HYG;IAT;TIP;XLE",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2026-08-05",
+   "holdings": 6,
+   "names": "AGG;CPER;HYG;IAT;TIP;XLE",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-10-08",
+   "holdings": 6,
+   "names": "AGG;BIL;CPER;HYG;TIP;XLE",
+   "invested": 0.8366666666666667
+  }
+ ],
+ "equal_split|long": [
+  {
+   "date": "2022-12-30",
+   "holdings": 1,
+   "names": "BIL",
+   "invested": 0.020000000000000018
+  },
+  {
+   "date": "2023-01-05",
+   "holdings": 1,
+   "names": "MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-01-10",
+   "holdings": 2,
+   "names": "LEMB;MCHI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-01-17",
+   "holdings": 3,
+   "names": "LEMB;MCHI;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-01-18",
+   "holdings": 4,
+   "names": "IBND;LEMB;MCHI;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-01-19",
+   "holdings": 5,
+   "names": "CPER;IBND;LEMB;MCHI;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-01-24",
+   "holdings": 6,
+   "names": "CPER;IBND;LEMB;MCHI;XLB;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-02-27",
+   "holdings": 5,
+   "names": "CPER;LEMB;MCHI;XLB;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-03-15",
+   "holdings": 6,
+   "names": "CPER;LEMB;MCHI;SHY;XLB;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-09-28",
+   "holdings": 5,
+   "names": "CPER;MCHI;SHY;XLB;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-11-09",
+   "holdings": 6,
+   "names": "CPER;HYG;MCHI;SHY;XLB;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-01-18",
+   "holdings": 5,
+   "names": "CPER;HYG;SHY;XLB;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-01-22",
+   "holdings": 6,
+   "names": "CPER;EWA;HYG;SHY;XLB;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-05-23",
+   "holdings": 5,
+   "names": "EWA;HYG;SHY;XLB;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-05-31",
+   "holdings": 6,
+   "names": "DBA;EWA;HYG;SHY;XLB;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-07-02",
+   "holdings": 5,
+   "names": "DBA;EWA;HYG;SHY;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-07-03",
+   "holdings": 6,
+   "names": "DBA;EWA;HYG;SHY;USO;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-07-17",
+   "holdings": 5,
+   "names": "DBA;EWA;HYG;SHY;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-08-02",
+   "holdings": 6,
+   "names": "DBA;EWA;HYG;SHY;TLT;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-01-31",
+   "holdings": 5,
+   "names": "EWA;HYG;SHY;TLT;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-02-07",
+   "holdings": 6,
+   "names": "EWA;GLD;HYG;SHY;TLT;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-03-12",
+   "holdings": 5,
+   "names": "GLD;HYG;SHY;TLT;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-04-04",
+   "holdings": 6,
+   "names": "GLD;HYG;IBND;SHY;TLT;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-04-07",
+   "holdings": 4,
+   "names": "GLD;IBND;SHY;TLT",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-04-17",
+   "holdings": 5,
+   "names": "GLD;IBND;IGOV;SHY;TLT",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-04-22",
+   "holdings": 6,
+   "names": "GLD;IBND;IGOV;LEMB;SHY;TLT",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-04-23",
+   "holdings": 5,
+   "names": "IBND;IGOV;LEMB;SHY;TLT",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-05-02",
+   "holdings": 6,
+   "names": "IBND;IGOV;LEMB;SHY;TIP;TLT",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-05-13",
+   "holdings": 6,
+   "names": "IGOV;LEMB;SHY;TIP;TLT;VGK",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-08-07",
+   "holdings": 5,
+   "names": "IGOV;LEMB;SHY;TIP;VGK",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-08-19",
+   "holdings": 6,
+   "names": "IGOV;LEMB;SHY;TIP;VGK;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-10-20",
+   "holdings": 5,
+   "names": "LEMB;SHY;TIP;VGK;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-11-06",
+   "holdings": 5,
+   "names": "DBC;LEMB;SHY;VGK;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-12-15",
+   "holdings": 6,
+   "names": "CPER;DBC;LEMB;SHY;VGK;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-03-04",
+   "holdings": 6,
+   "names": "CPER;DBB;DBC;SHY;VGK;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-03-16",
+   "holdings": 5,
+   "names": "CPER;DBB;DBC;SHY;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-03-30",
+   "holdings": 6,
+   "names": "CPER;DBA;DBB;DBC;SHY;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-06-25",
+   "holdings": 4,
+   "names": "DBA;DBB;SHY;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-06-29",
+   "holdings": 5,
+   "names": "DBA;DBB;IAT;SHY;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-07-07",
+   "holdings": 6,
+   "names": "DBA;DBB;IAT;SHY;VGK;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-09-03",
+   "holdings": 5,
+   "names": "DBB;IAT;SHY;VGK;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-09-08",
+   "holdings": 6,
+   "names": "DBB;IAT;LEMB;SHY;VGK;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-09-17",
+   "holdings": 5,
+   "names": "DBB;IAT;SHY;VGK;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-10-02",
+   "holdings": 4,
+   "names": "DBB;SHY;VGK;XLY",
+   "invested": 1.0
+  }
+ ],
+ "slots|long": [
+  {
+   "date": "2022-12-30",
+   "holdings": 1,
+   "names": "BIL",
+   "invested": 0.020000000000000018
+  },
+  {
+   "date": "2023-01-05",
+   "holdings": 2,
+   "names": "BIL;MCHI",
+   "invested": 0.18333333333333335
+  },
+  {
+   "date": "2023-01-10",
+   "holdings": 3,
+   "names": "BIL;LEMB;MCHI",
+   "invested": 0.3466666666666667
+  },
+  {
+   "date": "2023-01-17",
+   "holdings": 4,
+   "names": "BIL;LEMB;MCHI;XLI",
+   "invested": 0.51
+  },
+  {
+   "date": "2023-01-18",
+   "holdings": 5,
+   "names": "BIL;IBND;LEMB;MCHI;XLI",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2023-01-19",
+   "holdings": 6,
+   "names": "BIL;CPER;IBND;LEMB;MCHI;XLI",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-01-24",
+   "holdings": 6,
+   "names": "CPER;IBND;LEMB;MCHI;XLB;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-02-27",
+   "holdings": 6,
+   "names": "BIL;CPER;LEMB;MCHI;XLB;XLI",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-03-15",
+   "holdings": 6,
+   "names": "CPER;LEMB;MCHI;SHY;XLB;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2023-09-28",
+   "holdings": 6,
+   "names": "BIL;CPER;MCHI;SHY;XLB;XLI",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2023-11-09",
+   "holdings": 6,
+   "names": "CPER;HYG;MCHI;SHY;XLB;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-01-18",
+   "holdings": 6,
+   "names": "BIL;CPER;HYG;SHY;XLB;XLI",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2024-01-22",
+   "holdings": 6,
+   "names": "CPER;EWA;HYG;SHY;XLB;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-05-23",
+   "holdings": 6,
+   "names": "BIL;EWA;HYG;SHY;XLB;XLI",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2024-05-31",
+   "holdings": 6,
+   "names": "DBA;EWA;HYG;SHY;XLB;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-07-02",
+   "holdings": 6,
+   "names": "BIL;DBA;EWA;HYG;SHY;XLI",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2024-07-03",
+   "holdings": 6,
+   "names": "DBA;EWA;HYG;SHY;USO;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2024-07-17",
+   "holdings": 6,
+   "names": "BIL;DBA;EWA;HYG;SHY;XLI",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2024-08-02",
+   "holdings": 6,
+   "names": "DBA;EWA;HYG;SHY;TLT;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-01-31",
+   "holdings": 6,
+   "names": "BIL;EWA;HYG;SHY;TLT;XLI",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2025-02-07",
+   "holdings": 6,
+   "names": "EWA;GLD;HYG;SHY;TLT;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-03-12",
+   "holdings": 6,
+   "names": "BIL;GLD;HYG;SHY;TLT;XLI",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2025-04-04",
+   "holdings": 6,
+   "names": "GLD;HYG;IBND;SHY;TLT;XLI",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-04-07",
+   "holdings": 5,
+   "names": "BIL;GLD;IBND;SHY;TLT",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2025-04-17",
+   "holdings": 6,
+   "names": "BIL;GLD;IBND;IGOV;SHY;TLT",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2025-04-22",
+   "holdings": 6,
+   "names": "GLD;IBND;IGOV;LEMB;SHY;TLT",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-04-23",
+   "holdings": 6,
+   "names": "BIL;IBND;IGOV;LEMB;SHY;TLT",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2025-05-02",
+   "holdings": 6,
+   "names": "IBND;IGOV;LEMB;SHY;TIP;TLT",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-05-13",
+   "holdings": 6,
+   "names": "IGOV;LEMB;SHY;TIP;TLT;VGK",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-08-07",
+   "holdings": 6,
+   "names": "BIL;IGOV;LEMB;SHY;TIP;VGK",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2025-08-19",
+   "holdings": 6,
+   "names": "IGOV;LEMB;SHY;TIP;VGK;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2025-10-20",
+   "holdings": 6,
+   "names": "BIL;LEMB;SHY;TIP;VGK;XLY",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2025-11-06",
+   "holdings": 6,
+   "names": "BIL;DBC;LEMB;SHY;VGK;XLY",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2025-12-15",
+   "holdings": 6,
+   "names": "CPER;DBC;LEMB;SHY;VGK;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-03-04",
+   "holdings": 6,
+   "names": "CPER;DBB;DBC;SHY;VGK;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-03-16",
+   "holdings": 6,
+   "names": "BIL;CPER;DBB;DBC;SHY;XLY",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2026-03-30",
+   "holdings": 6,
+   "names": "CPER;DBA;DBB;DBC;SHY;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-06-25",
+   "holdings": 5,
+   "names": "BIL;DBA;DBB;SHY;XLY",
+   "invested": 0.6733333333333333
+  },
+  {
+   "date": "2026-06-29",
+   "holdings": 6,
+   "names": "BIL;DBA;DBB;IAT;SHY;XLY",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2026-07-07",
+   "holdings": 6,
+   "names": "DBA;DBB;IAT;SHY;VGK;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-09-03",
+   "holdings": 6,
+   "names": "BIL;DBB;IAT;SHY;VGK;XLY",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2026-09-08",
+   "holdings": 6,
+   "names": "DBB;IAT;LEMB;SHY;VGK;XLY",
+   "invested": 1.0
+  },
+  {
+   "date": "2026-09-17",
+   "holdings": 6,
+   "names": "BIL;DBB;IAT;SHY;VGK;XLY",
+   "invested": 0.8366666666666667
+  },
+  {
+   "date": "2026-10-02",
+   "holdings": 5,
+   "names": "BIL;DBB;SHY;VGK;XLY",
+   "invested": 0.6733333333333333
+  }
+ ]
+}

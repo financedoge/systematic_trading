@@ -17,14 +17,21 @@ def allocation_revision(store):
 
 
 def allocation_ledger_revision(store):
-    """Late fills and virtual-only approvals must invalidate saved attribution."""
-    proposals = [p.model_dump(mode='json') for p in store.list_proposals()
-        if p.status.value in {'approved', 'missed'}]
+    """Late fills and virtual-only approvals must invalidate saved attribution.
+
+    A missed proposal only affects attribution when execution evidence exists for
+    it. Expiring a never-routed pending proposal changes no performance figure, so
+    counting it here retired the current dashboard publication after every expiry
+    sweep and left the Performance panel on "n/a" until the next refresh cycle.
+    """
     records = [dict(id=r.local_order_id, proposal=r.proposal_id, quantity=r.filled_quantity,
         price=str(r.average_fill_price), issue=r.execution_sync_issue,
         reference_price=str(r.order.reference_price),
         fills=[f.model_dump(mode='json') for f in r.execution_fills])
         for r in store.list_broker_order_records() if r.filled_quantity or r.execution_sync_issue]
+    filled = {r['proposal'] for r in records if D(r['quantity'] or 0) > 0}
+    proposals = [p.model_dump(mode='json') for p in store.list_proposals()
+        if p.status.value == 'approved' or (p.status.value == 'missed' and p.proposal_id in filled)]
     return digest(encode(dict(proposals=sorted(proposals,key=lambda p:p['proposal_id']),
         records=sorted(records,key=lambda r:r['id']), approvals=store.strategy_approval_times())))
 

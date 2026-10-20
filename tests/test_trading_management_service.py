@@ -469,7 +469,7 @@ def test_trading_management_service_filters_non_sota_positions_for_rebalance(tmp
     assert not any("DBB is not in the SOTA" in event.message for event in status.events)
     assert any(
         event.event_type == "account_snapshot"
-        and "ignored non-SOTA position DBB" in str(event.details.get("warnings", []))
+        and "ignored position outside the active trading universe DBB" in str(event.details.get("warnings", []))
         for event in status.events
     )
 

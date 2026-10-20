@@ -113,6 +113,55 @@ def test_new_drift_proposal_does_not_repeat_previous_capital_transfer(tmp_path,m
     assert plan.proposal.targets[0].target_weight==Decimal('.26')
 
 
+def test_allocation_component_targets_bind_requested_decision_not_activation_close(tmp_path,monkeypatch):
+    """Mid-month drift must compute component targets at the monthly decision session."""
+    from systematic_trading.live import allocated_plan, sota
+    from systematic_trading.portfolio import decision_inputs
+    from systematic_trading.domain.execution import TradeProposal,ProposalReasoning
+    from systematic_trading.domain.portfolio import AllocationTarget
+    from systematic_trading.research.strategy_catalog import current_sota_definition
+    from systematic_trading.research import instruments_for_definition
+    from systematic_trading.portfolio.strategy_book import initial_book
+    from systematic_trading.portfolio.strategy_allocation import control_state,scope_for
+    store=SQLiteStore(tmp_path/'decision-bind.db');store.initialize()
+    key=current_sota_definition().key
+    rows=[dict(strategy_key=key,weight='1')]
+    snapshot=LiveAccountSnapshotInput(as_of=date(2026,10,16),positions=[dict(symbol='SPY',quantity=10)],
+        cash=[dict(currency='USD',amount=1000)])
+    book=initial_book(snapshot.model_dump(mode='json'),rows)
+    # The allocation activated several sessions after the monthly target decision.
+    active=dict(version='v1',key='allocation-v1',allocations=rows,effective_close='2026-10-15',
+        opening={'book':book})
+    store.commit_strategy_control(scope_for(store),0,dict(control_state(store),active=active),
+        dict(event_id='fixture',request_hash='fixture'))
+    targets={key:[AllocationTarget(symbol='SPY',target_weight=Decimal('.3'),sleeve=key,rationale='monthly')]}
+    prior=TradeProposal(as_of=date(2026,9,30),target_as_of=date(2026,9,30),sleeve='allocation-v1',summary='prior',
+        reasoning=ProposalReasoning(summary='prior'),status='approved',input_provenance=dict(allocation=dict(version='v1',
+            components={k:dict(targets=[t.model_dump(mode='json') for t in v]) for k,v in targets.items()},
+            intent={'cash_transfers':{}})))
+    store.save_proposal(prior)
+    monkeypatch.setattr(allocated_plan,'replay_book',lambda *args,**kwargs:(book,[]))
+    symbols=instruments_for_definition(current_sota_definition())
+    monkeypatch.setattr(decision_inputs,'decision_inputs',lambda *args:({},
+        {s:dict(close='100',trade_date='2026-10-16') for s in symbols},{}))
+    monkeypatch.setattr(sota,'_latest_fx_to_cnh',lambda **kwargs:{Currency.USD:Decimal(1),Currency.CNH:Decimal(1)})
+    seen=[]
+    def build(**kwargs):
+        seen.append(kwargs.get('target_decision_date'))
+        if kwargs.get('explicit_targets') is not None:
+            proposal=prior.model_copy(update=dict(status='pending',targets=kwargs['explicit_targets'],
+                input_provenance=dict(allocation=kwargs['allocation_receipt'])))
+        else:
+            proposal=prior.model_copy(update=dict(targets=targets[kwargs['definition'].key],input_provenance={'batch':'verified'}))
+        return SimpleNamespace(proposal=proposal,validation_issues=[])
+    monkeypatch.setattr(sota,'build_sota_live_rebalance_plan',build)
+    plan=allocated_plan.build_allocated_plan(store=store,broker=SimpleNamespace(settings=AppSettings()),
+        account_snapshot=snapshot,decision_date=date(2026,10,16),intended_trade_date=date(2026,10,19),
+        environment='paper',order_type='twap',target_decision_date=date(2026,9,30),target_proposal=prior)
+    assert seen and set(seen)=={date(2026,9,30)}
+    assert plan.proposal.targets[0].target_weight==Decimal('.3')
+
+
 @pytest.mark.parametrize('financial_ready',[False,True])
 def test_fr25_paper_targets_match_full_research_flow_and_raw_sizing(tmp_path,monkeypatch,financial_ready):
     from systematic_trading.research import fr25_tracking, usd_tracking, instruments_for_definition

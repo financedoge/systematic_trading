@@ -1,0 +1,11 @@
+{
+  "bounds.json": "440bcb7b16bafe3d31337feb32e8de7bc1b59a36741f1475ec350148d997359b",
+  "daily-ledger.csv": "b0d853383231d67f18a683c1c01dc4388017e382243f3200401b7c6ccc900ce2",
+  "episodes.csv": "146d06fcfe0f7952e03d9632973b13ed82c96aeddca223d30c4af8be5058f312",
+  "index.html": "81d35524c5060bc5d39654eac4c56d11806098b9622ac17a7554d83dd860c610",
+  "parameters.json": "8ccf0eb85d78b1f5c643eb635ee5a2bed9ac2cd6d4f81aa5ae46ad6ad4487449",
+  "protocol.json": "7ced3213e6d2f1a8b5a12fb872f880c984db42ffa3ce19cc57cca2f6e0f280da",
+  "range-regimes.csv": "35fba49022abbb8a7f423715775d06c9b29b8996ebeb865411d45fbaa041730d",
+  "summary.json": "c52fe9593b2ca2a9a5e52bde1ef0075babe0fbf01a8943af1eafdc10ec8935ff",
+  "top-candidates.json": "d9fc49c49b99b24da706b7041409ed715c944fc53d0bc14ead72213901d0547d"
+}

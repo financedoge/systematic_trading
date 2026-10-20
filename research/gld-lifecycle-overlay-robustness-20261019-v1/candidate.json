@@ -1,0 +1,84 @@
+{
+  "status": "research_candidate_for_monitoring_review",
+  "name": "FR25 80/20 + Rule A short-only conditional overlay",
+  "authority": "Research only. Adding a monitored strategy requires an app-tracked versioned strategy, paper-trading evidence, operator approval and a capital/monitoring decision; none of that is done here.",
+  "scenario": "dynamic_conditional_t0.10",
+  "threshold": 36.0,
+  "condition_share": 0.6808510638297872,
+  "best_5bp": {
+    "cagr": 0.16083250154263395,
+    "sharpe": 1.4787256479774733,
+    "sortino": 2.0987682142528987,
+    "maxdd": -0.07640745117421976,
+    "calmar": 2.1049321639575855,
+    "volatility": 0.10458252003771944,
+    "exposure": 0.9790181407864931,
+    "sessions": 946,
+    "annual_turnover": 8.79149291898782,
+    "annual_cost_bps": 43.96773756371547
+  },
+  "gate": {
+    "scenario": "dynamic_conditional_t0.10",
+    "beats_sharpe": true,
+    "beats_maxdd": true,
+    "beats_calmar": true,
+    "beats_return": false,
+    "n_measures": 3
+  },
+  "robustness_versus_matched_fr25": {
+    "base": {
+      "scenario": "dynamic_conditional_t0.10",
+      "benchmark": "FR25 SOTA",
+      "cost_bp": 5.0,
+      "delay": 0,
+      "sharpe": true,
+      "maxdd": true,
+      "calmar": true,
+      "sortino": true,
+      "cagr": false,
+      "n_risk_measures": 4
+    },
+    "cost_10bp": {
+      "scenario": "dynamic_conditional_t0.10",
+      "benchmark": "FR25 10bp",
+      "cost_bp": 10.0,
+      "delay": 0,
+      "sharpe": true,
+      "maxdd": true,
+      "calmar": true,
+      "sortino": true,
+      "cagr": false,
+      "n_risk_measures": 4
+    },
+    "cost_20bp": {
+      "scenario": "dynamic_conditional_t0.10",
+      "benchmark": "FR25 20bp",
+      "cost_bp": 20.0,
+      "delay": 0,
+      "sharpe": true,
+      "maxdd": true,
+      "calmar": true,
+      "sortino": true,
+      "cagr": false,
+      "n_risk_measures": 4
+    },
+    "delay_1": {
+      "scenario": "dynamic_conditional_t0.10",
+      "benchmark": "FR25 +1 delay",
+      "cost_bp": 5.0,
+      "delay": 1,
+      "sharpe": false,
+      "maxdd": true,
+      "calmar": false,
+      "sortino": false,
+      "cagr": false,
+      "n_risk_measures": 1
+    }
+  },
+  "prerequisites": [
+    "Explicit cost-charged overlay with delay sensitivity (this study).",
+    "Out-of-sample/matched-control edge larger than random timing controls.",
+    "Paper-trading evidence through the app's tracked-strategy pipeline.",
+    "Versioned specification + operator approval + rollback plan."
+  ]
+}

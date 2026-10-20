@@ -239,9 +239,12 @@ def _refresh_tracked_strategies(settings, store, analytics):
     p = config["calculation"]
     keys = list(dict.fromkeys(config["monitored_strategy_ids"]))
     definitions = [registered_strategy_definition(k) for k in keys]
+    from systematic_trading.research.fr25_lifecycle_conditional import KEY as FR25_CONDITIONAL_KEY
+    conditional_definitions = [d for d in definitions if d.key == FR25_CONDITIONAL_KEY]
+    definitions = [d for d in definitions if d.key != FR25_CONDITIONAL_KEY]
     if any(d.universe_key not in ("multi_asset", "multi_asset_14") or d.scheduler != "static_monthly" for d in definitions):
         raise ValueError("Tracked definitions must implement the monthly multi-asset contract")
-    requested_definitions = definitions
+    requested_definitions = [*definitions, *conditional_definitions]
     # The 14-candidate family shares one universe, one model recipe and one set of pinned inputs.
     # A new 14-ETF recipe must join this set, or it is prepared against the 12-ETF pool and fails.
     m1_family = {'research_m1_14_v1', 'research_fr25_14_v1', 'research_fr25_alpha_tilt_5_v1'}
@@ -494,6 +497,16 @@ def _refresh_tracked_strategies(settings, store, analytics):
         documents.extend(candidate_documents);observations.extend(candidate_observations)
         if candidate_provenance['usd'] != inputs['provenance']['usd']:
             raise ValueError('Candidate USD publication changed during calculation')
+    if conditional_definitions:
+        progress("replaying_fr25_conditional")
+        from systematic_trading.research.fr25_lifecycle_monitoring import calculate_monitored
+        cond_documents, cond_observations, cond_provenance = calculate_monitored(
+            settings, analytics, config, conditional_definitions, selected_sota, root,
+            _LOADED_CODE_HASHES, inputs)
+        documents.extend(cond_documents)
+        observations.extend(cond_observations)
+        if cond_provenance.get("panel_sha256") is None:
+            raise ValueError("Conditional candidate provenance is incomplete")
     if prepared_usd is not None:
         from systematic_trading.research.usd_monitored import complete_cross_pool_reports
         usd_documents,usd_observations,_=complete_cross_pool_reports(prepared_usd,root/'m1_14',m1_inputs)

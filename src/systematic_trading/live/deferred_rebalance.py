@@ -40,8 +40,16 @@ def prepared_submission_issues(settings, store, proposal):
     return issues
 
 
-def refresh_rebalance(settings, store, proposal_id, *, now=None):
-    """Prepare a successor without approving, routing, or replaying broker attempts."""
+def refresh_rebalance(
+    settings, store, proposal_id, *, now=None, automation_strategy_key=None,
+    automation_policy_revision=None,
+):
+    """Prepare a successor without approving, routing, or replaying broker attempts.
+
+    ``automation_strategy_key`` is supplied only by the enabled paper approval policy. It
+    marks the successor as eligible for that policy's normal approval and routing checks;
+    preparation itself still performs no approval or broker action.
+    """
     from systematic_trading.live.allocated_plan import build_allocated_plan
     from systematic_trading.live.initial_allocation import initial_allocation_window
     from systematic_trading.live.strategy_control import activation_issues, snapshot_for
@@ -89,21 +97,40 @@ def refresh_rebalance(settings, store, proposal_id, *, now=None):
         day, start, end = initial_allocation_window(settings, now)
         report = load_latest_ib_reconciliation(settings)
         snapshot = snapshot_for(settings, day)
+        # Component models must bind to the publication current at this decision date.
+        # The stored target intent is taken from the source proposal below; binding the
+        # component rebuild to an old target date makes the daily overlay schedule miss
+        # its exact decision and blocks renewal after application catch-up.
         plan = build_allocated_plan(store=store, broker=InteractiveBrokersAdapter(settings),
             account_snapshot=snapshot, decision_date=day, intended_trade_date=start.date(),
             environment=OrderEnvironment.PAPER, order_type=OrderType.TWAP,
-            target_decision_date=source.target_as_of or source.as_of, target_proposal=source)
+            target_decision_date=day, target_proposal=source)
         if plan.validation_issues:
             raise ValueError('; '.join(plan.validation_issues))
         fresh = load_latest_ib_reconciliation(settings)
         if fresh is None or account_evidence(fresh) != account_evidence(report):
             raise ValueError('Account changed during preparation. Refresh again.')
         old_orders = {(o.symbol, o.side):o for o in source.orders}
+        old_sides = {o.symbol: o.side for o in source.orders}
+        old_targets = sorted((t.symbol, str(t.target_weight)) for t in source.targets)
+        new_targets = sorted((t.symbol, str(t.target_weight)) for t in plan.proposal.targets)
+        if new_targets != old_targets:
+            raise ValueError('Renewed target weights differ from the retained intent. Review a new allocation.')
         orders = []
         for order in plan.proposal.orders:
             old = old_orders.get((order.symbol, order.side))
             if old is None:
-                raise ValueError('The required trades changed direction or asset. Review a new allocation instead of renewing this intent.')
+                if order.symbol in old_sides:
+                    raise ValueError('The required trade direction changed. Review a new allocation instead of renewing this intent.')
+                # Whole-share rounding at the refreshed prices can add a small leg in
+                # the same allocation. Its benchmark starts with this refreshed plan.
+                orders.append(order.model_copy(update=dict(
+                    execution_start_time=start.strftime('%H:%M'), execution_end_time=end.strftime('%H:%M'),
+                    slippage_reference_price=order.reference_price,
+                    slippage_trade_date=order.intended_trade_date,
+                    slippage_start_time=order.execution_start_time,
+                    slippage_end_time=order.execution_end_time)))
+                continue
             orders.append(order.model_copy(update=dict(
                 execution_start_time=start.strftime('%H:%M'), execution_end_time=end.strftime('%H:%M'),
                 slippage_reference_price=old.slippage_reference_price or old.reference_price,
@@ -114,12 +141,18 @@ def refresh_rebalance(settings, store, proposal_id, *, now=None):
         lineage = dict(root_proposal_id=ancestry.get('root_proposal_id', source.proposal_id),
             previous_proposal_id=source.proposal_id, prepared_at=now.isoformat(),
             original_intended_trade_date=ancestry.get('original_intended_trade_date', str(source.intended_trade_date)))
+        if automation_strategy_key is not None:
+            lineage.update(automation_strategy_key=automation_strategy_key,
+                automation_policy_revision=automation_policy_revision)
         proposal = prepared_proposal(plan.proposal, report).model_copy(update=dict(
             proposal_id='renew-'+sha256(source.proposal_id.encode()).hexdigest()[:20],
             created_at=now, status=ProposalStatus.PENDING, trigger='deferred_rebalance',
-            automation_strategy_key=None, orders=orders,
+            automation_strategy_key=automation_strategy_key, orders=orders,
             execution_deadline_at=min(end, start+timedelta(minutes=settings.execution_rebalance_timeout_minutes)).astimezone(UTC),
-            summary='Refreshed rebalance; review quantities and window before approving. '+plan.proposal.summary))
+            summary=('Automatic renewal of a missed rebalance; review quantities and window. '
+                if automation_strategy_key is not None else
+                'Refreshed rebalance; review quantities and window before approving. ')
+                + plan.proposal.summary))
         proposal.input_provenance['deferred_rebalance'] = lineage
         # Durable lineage invalidates the old route; a crash cannot erase the original approval.
         return store.queue_proposal_once(proposal)

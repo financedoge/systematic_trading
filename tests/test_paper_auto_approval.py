@@ -48,6 +48,146 @@ def ready(setup):
     return controller, route, proposal, at
 
 
+def missed_prepared_rebalance(setup, *, provenance=None, identifier='missed-handover'):
+    """Expired application-prepared handover with no broker attempt (the 2026-10-16 case)."""
+    settings, store, report = setup
+    from systematic_trading.live.deferred_rebalance import prepared_proposal
+    staged = stage(setup)
+    inner = store.get_proposal(staged.proposal_id)
+    with store._connect() as connection:
+        connection.execute('DELETE FROM proposals')
+    source_provenance = dict(inner.input_provenance, allocation=dict(version='legacy'))
+    source_provenance.update(provenance or {})
+    source = prepared_proposal(inner.model_copy(update=dict(
+        proposal_id=identifier, trigger='allocation_handover', status=ProposalStatus.MISSED,
+        automation_strategy_key=None, missed_at=NOW-timedelta(minutes=1),
+        execution_deadline_at=NOW-timedelta(minutes=1),
+        input_provenance=source_provenance)), report)
+    store.save_proposal(source)
+    return source
+
+
+def fake_renewal(monkeypatch, store, source, *, fail=None):
+    calls = []
+
+    def refresh(settings, store, proposal_id, *, now=None, automation_strategy_key=None,
+                automation_policy_revision=None):
+        calls.append(dict(proposal_id=proposal_id, automation_strategy_key=automation_strategy_key,
+            automation_policy_revision=automation_policy_revision, now=now))
+        if fail is not None:
+            raise fail
+        successor = source.model_copy(update=dict(
+            proposal_id='renew-'+proposal_id, status=ProposalStatus.PENDING,
+            trigger='deferred_rebalance', created_at=now,
+            execution_deadline_at=NOW+timedelta(minutes=45),
+            automation_strategy_key=automation_strategy_key,
+            input_provenance=dict(source.input_provenance,
+                deferred_rebalance=dict(previous_proposal_id=proposal_id,
+                    root_proposal_id=proposal_id))))
+        store.save_proposal(successor)
+        return successor
+
+    monkeypatch.setattr('systematic_trading.live.deferred_rebalance.refresh_rebalance', refresh)
+    return calls
+
+
+def test_auto_policy_renews_one_missed_prepared_rebalance_and_routes_successor(setup, monkeypatch):
+    settings, store, report = setup
+    route = Router()
+    controller = PaperAutoApproval(settings, store, order_client=Orders(), router=route)
+    configure(controller)
+    source = missed_prepared_rebalance(setup)
+    calls = fake_renewal(monkeypatch, store, source)
+    at = NOW+timedelta(minutes=3)
+    write_report(settings, report.model_copy(update={'checked_at':at}))
+
+    controller.tick(now=at)
+
+    assert calls == [dict(proposal_id='missed-handover',
+        automation_strategy_key=controller.policy.strategy_key,
+        automation_policy_revision=controller.policy.revision, now=at)], controller.policy.message
+    renewal = controller.policy.renewals['missed-handover']
+    assert renewal['outcome'] == 'renewed' and renewal['proposal_id'] == 'renew-missed-handover'
+    renewed = store.get_proposal('renew-missed-handover')
+    assert renewed.automation_strategy_key == controller.policy.strategy_key
+    assert renewed.status == ProposalStatus.APPROVED
+    assert len(route.calls) == 1
+    assert controller.policy.attempts['renew-missed-handover']['outcome'] == 'submitted'
+    assert store.get_proposal('missed-handover').status == ProposalStatus.MISSED
+
+    # A settled renewal is never repeated, even on later ticks.
+    controller.tick(now=at+timedelta(minutes=1))
+    assert len(calls) == 1 and len(route.calls) == 1
+
+
+def test_auto_policy_does_not_renew_without_enablement_or_catch_up_authorization(setup, monkeypatch):
+    settings, store, report = setup
+    source = missed_prepared_rebalance(setup,
+        provenance={'late_handover': dict(authorized_at=NOW.isoformat())})
+    calls = fake_renewal(monkeypatch, store, source)
+    controller = PaperAutoApproval(settings, store, order_client=Orders(), router=Router())
+    at = NOW+timedelta(minutes=3)
+    controller.tick(now=at)
+    assert not calls and not controller.policy.renewals
+    # An enabled policy never extends a session-limited operator catch-up authorization.
+    configure(controller)
+    write_report(settings, report.model_copy(update={'checked_at':at}))
+    controller.tick(now=at)
+    assert not calls and 'missed-handover' not in controller.policy.renewals
+
+
+def test_auto_policy_does_not_renew_a_claimed_attempt_or_superseded_intent(setup, monkeypatch):
+    settings, store, report = setup
+    source = missed_prepared_rebalance(setup)
+    calls = fake_renewal(monkeypatch, store, source)
+    controller = PaperAutoApproval(settings, store, order_client=Orders(), router=Router())
+    configure(controller)
+    at = NOW+timedelta(minutes=3)
+    write_report(settings, report.model_copy(update={'checked_at':at}))
+    controller.policy.attempts['missed-handover'] = dict(outcome='review', error='routing failed')
+    controller.tick(now=at)
+    assert not calls
+    # An existing pending successor supersedes the expired intent.
+    controller.policy.attempts.clear()
+    store.save_proposal(source.model_copy(update=dict(proposal_id='renew-manual', status=ProposalStatus.PENDING,
+        trigger='deferred_rebalance', created_at=NOW, execution_deadline_at=NOW+timedelta(hours=1),
+        input_provenance=dict(source.input_provenance,
+            deferred_rebalance=dict(previous_proposal_id='missed-handover')))))
+    store.save_proposal(source.model_copy(update=dict(status=ProposalStatus.MISSED)))
+    controller.tick(now=at)
+    assert not calls
+
+
+def test_auto_policy_retries_a_blocked_renewal_after_cooldown(setup, monkeypatch):
+    settings, store, report = setup
+    source = missed_prepared_rebalance(setup)
+    calls = fake_renewal(monkeypatch, store, source,
+        fail=ValueError('Account balances changed since preparation. Refresh the rebalance and review the new orders.'))
+    controller = PaperAutoApproval(settings, store, order_client=Orders(), router=Router())
+    configure(controller)
+    at = NOW+timedelta(minutes=3)
+    write_report(settings, report.model_copy(update={'checked_at':at}))
+
+    controller.tick(now=at)
+    assert len(calls) == 1
+    blocked = controller.policy.renewals['missed-handover']
+    assert blocked['outcome'] == 'blocked' and 'Account balances changed' in blocked['error']
+    assert 'blocked' in controller.policy.message
+
+    controller.tick(now=at+timedelta(seconds=60))
+    assert len(calls) == 1  # Cooldown prevents a tight retry loop.
+    controller.tick(now=at+timedelta(seconds=controller.RENEWAL_RETRY_SECONDS+1))
+    assert len(calls) == 2
+
+
+def test_renewed_rebalance_trigger_is_eligible_for_the_auto_policy(setup):
+    controller, route, proposal, at = ready(setup)
+    controller.store.save_proposal(proposal.model_copy(update={'trigger': 'deferred_rebalance'}))
+    controller.tick(now=at)
+    assert len(route.calls) == 1, controller.policy.message
+    assert controller.store.get_proposal(proposal.proposal_id).status == ProposalStatus.APPROVED
+
+
 def test_manual_default_never_routes(setup):
     settings, store, _ = setup
     stage(setup)

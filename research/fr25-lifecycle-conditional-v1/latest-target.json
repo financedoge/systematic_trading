@@ -1,0 +1,100 @@
+{
+  "as_of": "2026-09-30",
+  "close_as_of": "2026-10-12",
+  "condition_at_last_month_end": true,
+  "stable_breadth": 36,
+  "threshold": 36.0,
+  "target_rows": [
+    {
+      "symbol": "SPY",
+      "combined_target": 0.23607104148471447,
+      "fr25_component": 0.23607104148471447,
+      "sleeve_component": 0.0,
+      "held_weight": 0.23732273557926017,
+      "last_price": 778.0999755859375
+    },
+    {
+      "symbol": "VGK",
+      "combined_target": 0.17057599144382707,
+      "fr25_component": 0.17057599144382707,
+      "sleeve_component": 0.0,
+      "held_weight": 0.16617350817607526,
+      "last_price": 85.81999969482422
+    },
+    {
+      "symbol": "XLE",
+      "combined_target": 0.14686646697161496,
+      "fr25_component": 0.11419980030494828,
+      "sleeve_component": 0.03266666666666667,
+      "held_weight": 0.15532179280904662,
+      "last_price": 66.01000213623047
+    },
+    {
+      "symbol": "EWJ",
+      "combined_target": 0.11543037014274292,
+      "fr25_component": 0.11543037014274292,
+      "sleeve_component": 0.0,
+      "held_weight": 0.11357190235304904,
+      "last_price": 97.31999969482422
+    },
+    {
+      "symbol": "DBC",
+      "combined_target": 0.10352783833626299,
+      "fr25_component": 0.10352783833626299,
+      "sleeve_component": 0.0,
+      "held_weight": 0.10519527946051573,
+      "last_price": 33.33000183105469
+    },
+    {
+      "symbol": "EWY",
+      "combined_target": 0.04419495828750434,
+      "fr25_component": 0.04419495828750434,
+      "sleeve_component": 0.0,
+      "held_weight": 0.04052742591274236,
+      "last_price": 170.11000061035156
+    },
+    {
+      "symbol": "AGG",
+      "combined_target": 0.03266666666666667,
+      "fr25_component": 0.0,
+      "sleeve_component": 0.03266666666666667,
+      "held_weight": 0.03234207531861671,
+      "last_price": 94.66000366210938
+    },
+    {
+      "symbol": "CPER",
+      "combined_target": 0.03266666666666667,
+      "fr25_component": 0.0,
+      "sleeve_component": 0.03266666666666667,
+      "held_weight": 0.032874715674681074,
+      "last_price": 40.630001068115234
+    },
+    {
+      "symbol": "HYG",
+      "combined_target": 0.03266666666666667,
+      "fr25_component": 0.0,
+      "sleeve_component": 0.03266666666666667,
+      "held_weight": 0.03236366122051466,
+      "last_price": 77.29000091552734
+    },
+    {
+      "symbol": "IAT",
+      "combined_target": 0.03266666666666667,
+      "fr25_component": 0.0,
+      "sleeve_component": 0.03266666666666667,
+      "held_weight": 0.03227133385022241,
+      "last_price": 57.369998931884766
+    },
+    {
+      "symbol": "TIP",
+      "combined_target": 0.03266666666666667,
+      "fr25_component": 0.0,
+      "sleeve_component": 0.03266666666666667,
+      "held_weight": 0.0323292686558218,
+      "last_price": 104.5
+    }
+  ],
+  "cash_target": 0.020000000000000018,
+  "gross_target": 0.98,
+  "prior_monthly_fr25": 2034
+}

@@ -292,6 +292,7 @@ def dashboard_performance(request: Request) -> DashboardPerformance:
     settings = _settings(request)
     store = _store(request)
     analytics = getattr(request.app.state, "analytics", None)
+    service = getattr(request.app.state, "analytics_service", None)
     if analytics is not None:
         from systematic_trading.market_data.analytics_store import digest
         try:
@@ -304,10 +305,14 @@ def dashboard_performance(request: Request) -> DashboardPerformance:
         if (saved is None or json.loads(saved[1]['provenance'])['baseline'] != baseline_token
                 or json.loads(saved[1]['provenance']).get('allocation') != allocation_revision(store)
                 or json.loads(saved[1]['provenance']).get('allocation_ledger') != allocation_ledger_revision(store)):
+            # The account/allocation evidence moved ahead of the saved publication.
+            # Ask the in-process worker to rebuild it now instead of waiting for its
+            # next cycle; the browser retries on the short Retry-After window.
+            if service is not None:
+                service.request_refresh(reason="performance_publication_stale")
             raise HTTPException(status_code=503, detail="Performance publication is refreshing for the current account baseline.",
-                                headers={"Retry-After": "5"})
+                                headers={"Retry-After": "2"})
         payload = json.loads(saved[0]["payload"])
-        service = getattr(request.app.state, "analytics_service", None)
         if service and service.status().get("errors"):
             payload["warnings"].append("Some analytical calculations need attention; account and strategy publication times may differ.")
         payload["portfolio_context"] = portfolio_context(store).model_dump(mode="json")

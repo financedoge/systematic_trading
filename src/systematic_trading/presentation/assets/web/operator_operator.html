@@ -609,6 +609,7 @@
           <div class="mini-metric"><label>Account NAV</label><strong id="perf-account-nav">n/a</strong></div>
           <div class="mini-metric"><label>Cumulative account NAV change · since reset</label><strong id="perf-account-return">n/a</strong></div>
         </div>
+        <div id="performance-status" class="performance-note" role="status" aria-live="polite" hidden></div>
         <div class="chart-tools" aria-label="Performance period">
           <div class="segmented" id="performance-range-buttons">
             <button type="button" data-perf-range="1m">1M</button>
@@ -740,6 +741,15 @@
     };
     const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
 
+    function apiFailure(response, data) {
+      const detail = data && data.detail !== undefined ? data.detail : null;
+      const message = detail ? (typeof detail === "string" ? detail : JSON.stringify(detail)) : response.statusText;
+      const error = new Error(message);
+      error.status = response.status;
+      error.detail = detail;
+      return error;
+    }
+
     async function api(path, options = {}) {
       const response = await fetch(path, {
         headers: { "Content-Type": "application/json", ...(options.headers || {}) },
@@ -748,10 +758,7 @@
       const text = await response.text();
       let data = null;
       try { data = text ? JSON.parse(text) : null; } catch { data = text; }
-      if (!response.ok) {
-        const message = data && data.detail ? JSON.stringify(data.detail) : response.statusText;
-        throw new Error(message);
-      }
+      if (!response.ok) throw apiFailure(response, data);
       return data;
     }
 
@@ -781,6 +788,45 @@
       return pending;
     }
 
+    // The saved performance publication briefly lags new account/allocation evidence
+    // (a proposal expiry or fill). The API asks for a rebuild with a 503 and a short
+    // Retry-After, so retry promptly instead of leaving the summary on "n/a" for a
+    // whole background-refresh cycle.
+    const performanceRetryDelays = [1500, 3000, 5000, 8000];
+    function setPerformanceStatus(message) {
+      const node = el("performance-status");
+      if (!node) return;
+      node.textContent = message || "";
+      node.hidden = !message;
+    }
+    function markPerformancePending() {
+      if (state.performance.payload) return;
+      for (const id of ["perf-strategy-nav", "perf-strategy-return", "perf-account-nav", "perf-account-return"]) {
+        el(id).textContent = "refreshing…";
+      }
+      el("performance-chart").innerHTML = '<div class="empty">Performance publication is refreshing for the current account state.</div>';
+    }
+    async function loadPerformance() {
+      let failure = null;
+      for (let attempt = 0; attempt <= performanceRetryDelays.length; attempt += 1) {
+        if (attempt) await new Promise((resolve) => setTimeout(resolve, performanceRetryDelays[attempt - 1]));
+        try {
+          const payload = await api("/api/v1/dashboard/performance", { signal: AbortSignal.timeout(45000) });
+          setPerformanceStatus("");
+          return payload;
+        } catch (error) {
+          failure = error;
+          if (error.status !== 503) break;
+          markPerformancePending();
+          setPerformanceStatus("Performance publication is refreshing for the current account state. Retrying automatically…");
+        }
+      }
+      setPerformanceStatus(failure && failure.status === 503
+        ? "Performance publication is still refreshing. Any displayed values are from the previous publication; retrying automatically."
+        : `Performance unavailable: ${failure ? failure.message : "unknown error"}. Retrying automatically.`);
+      throw failure;
+    }
+
     async function loadDashboardData() {
       const read = path => api(path, {signal: AbortSignal.timeout(45000)});
       const warning = id => error => {
@@ -794,7 +840,7 @@
             renderReconciliationUnavailable(error.message);
           }),
         loadDashboardPanel("automation", () => read("/api/v1/automation/status"), renderAutomation, warning("automation-warnings")),
-        loadDashboardPanel("performance", () => read("/api/v1/dashboard/performance"), renderPerformance, warning("performance-warnings")),
+        loadDashboardPanel("performance", loadPerformance, renderPerformance, warning("performance-warnings")),
         loadDashboardPanel("holdings", () => read("/api/v1/dashboard/holdings"), renderHoldings, warning("holdings-warnings")),
         loadDashboardPanel("pnl", async () => {
           // Missing history must not hide a successful current accounting snapshot.

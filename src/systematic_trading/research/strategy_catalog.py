@@ -191,10 +191,15 @@ def etf_activity_lag20_definition() -> StrategyDefinition:
             "spec": FlowConcentrationSpec(difference_lag=20).model_dump_json()})))
 
 
+def fr25_lifecycle_conditional_definition():
+    from systematic_trading.research.fr25_lifecycle_conditional import definition
+    return definition()
+
+
 def registered_strategy_definition(key: str) -> StrategyDefinition:
     parents = [legacy_sota_definition(), etf_activity_lag20_definition(), rolling_xgboost_1y_definition()]
     definitions = [*parents, *(usd_strategy_definition(d) for d in parents), risk_parity_definition(),
-                   rolling_xgboost_1y_definition(activity=False), defensive_cash_definition(), economic_context_definition(), m1_14_definition(), fr25_definition(), alpha101_tilt_definition()]
+                   rolling_xgboost_1y_definition(activity=False), defensive_cash_definition(), economic_context_definition(), m1_14_definition(), fr25_definition(), alpha101_tilt_definition(), fr25_lifecycle_conditional_definition()]
     return next((d for d in definitions if d.key == key), None) or _unknown_strategy(key)
 
 

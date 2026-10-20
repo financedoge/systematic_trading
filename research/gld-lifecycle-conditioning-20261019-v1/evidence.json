@@ -1,0 +1,919 @@
+{
+  "identity": "gld-lifecycle-conditioning-20261019-v1",
+  "protocol": {
+    "authority": "Research only; no monitoring, promotion, funding or broker action.",
+    "refit": "Per-ETF refit on pre-2023 only: 300 random vectors + GLD vector + 60 anchor mutations; screen by worst of the two eras; top 20 replayed at 5/10/20bp and +1 delay; stability requires positive fitness and >= 2 closed trades in both 2005-2015 and 2016-2022, >= 8 total and >= 10% exposure.",
+    "conditioning": "At each FR25/M1 monthly decision, names without a stable life-cycle signal are either removed and the rest renormalised to 98% or removed and left in cash; matched random filters remove the same number of names.",
+    "conditional_overlay": "20% capital to the Rule A short-only daily sleeve only in months where the number of stable union signals is at or above the pre-2023 median monthly breadth; compare with the unconditional 20% overlay and FR25.",
+    "frictions": [
+      {
+        "cost_bp": 5.0,
+        "delay": 0
+      },
+      {
+        "cost_bp": 10.0,
+        "delay": 0
+      },
+      {
+        "cost_bp": 20.0,
+        "delay": 0
+      },
+      {
+        "cost_bp": 5.0,
+        "delay": 1
+      },
+      {
+        "cost_bp": 10.0,
+        "delay": 1
+      }
+    ]
+  },
+  "fit": {
+    "assets": 52,
+    "stable_short": 25,
+    "stable_long": 9,
+    "fallback_short": 2,
+    "fallback_long": 2,
+    "two_era_requirement": "era1 2005-2015 and era2 2016-2022 both positive fitness, >=2 closed trades per era, >=8 total and >=10% exposure"
+  },
+  "benchmarks": {
+    "FR25 SOTA": {
+      "cagr": 0.16745643918203257,
+      "sharpe": 1.4691985910837693,
+      "maxdd": -0.08654754187494995,
+      "calmar": 1.934849165606408,
+      "volatility": 0.10949284366365063,
+      "exposure": 0.9789519451971103,
+      "sessions": 946
+    },
+    "M1 momentum control": {
+      "cagr": 0.029090463897474717,
+      "sharpe": 3.5098673690239246,
+      "maxdd": -0.005158082684090126,
+      "calmar": 0.9696821299158239,
+      "volatility": 0.008179915835371011,
+      "exposure": 0.5775843357500074,
+      "sessions": 946
+    },
+    "Equal weight": {
+      "cagr": 0.14742009487008922,
+      "sharpe": 1.376379362603304,
+      "maxdd": -0.10885210772821863,
+      "calmar": 1.3543154831523057,
+      "volatility": 0.10385161523910848,
+      "exposure": 0.9802106168479277,
+      "sessions": 946
+    },
+    "URTH": {
+      "cagr": 0.2045095473005505,
+      "sharpe": 1.4040882737191294,
+      "maxdd": -0.16800029909959635,
+      "calmar": 1.2173165666765284,
+      "volatility": 0.13947077838566369,
+      "exposure": 0.9910589271121997,
+      "sessions": 946
+    },
+    "FR25 (10bp)": {
+      "cagr": 0.16258209595968554,
+      "sharpe": 1.4305934832330205,
+      "maxdd": -0.08861725628651196,
+      "calmar": 1.8346550409328284,
+      "volatility": 0.10952357362416393,
+      "exposure": 0.9793074493735329,
+      "sessions": 946
+    },
+    "FR25 (20bp)": {
+      "cagr": 0.1529751265091479,
+      "sharpe": 1.3534892112036436,
+      "maxdd": -0.09272588066046483,
+      "calmar": 1.6497565234165665,
+      "volatility": 0.10963792052404468,
+      "exposure": 0.9799559753595637,
+      "sessions": 946
+    },
+    "FR25 (+1 delay)": {
+      "cagr": 0.1578182085535682,
+      "sharpe": 1.4068073295281422,
+      "maxdd": -0.08335053257652925,
+      "calmar": 1.8934277163576083,
+      "volatility": 0.10836335644502167,
+      "exposure": 0.9786947938949998,
+      "sessions": 946
+    }
+  },
+  "results": {
+    "FR25 union renormalise | 5bp d0": {
+      "kind": "conditioned",
+      "source": "union",
+      "variant": "renormalise",
+      "cost_bp": 5.0,
+      "delay": 0,
+      "fills": 296,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.1578754783640639,
+        "sharpe": 1.301685467492091,
+        "maxdd": -0.08821764726933956,
+        "calmar": 1.7896133398576164,
+        "volatility": 0.11799441102205022,
+        "exposure": 0.9796186883323441,
+        "sessions": 946,
+        "annual_turnover": 9.872476102637172,
+        "annual_cost_bps": 49.37382666735168
+      }
+    },
+    "FR25 union renormalise | 10bp d0": {
+      "kind": "conditioned",
+      "source": "union",
+      "variant": "renormalise",
+      "cost_bp": 10.0,
+      "delay": 0,
+      "fills": 296,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.1524005137683042,
+        "sharpe": 1.2609451761058528,
+        "maxdd": -0.08870669199845771,
+        "calmar": 1.7180272461400534,
+        "volatility": 0.11805114461654997,
+        "exposure": 0.9799998689768994,
+        "sessions": 946,
+        "annual_turnover": 9.875270887454512,
+        "annual_cost_bps": 98.82796560005798
+      }
+    },
+    "FR25 union renormalise | 20bp d0": {
+      "kind": "conditioned",
+      "source": "union",
+      "variant": "renormalise",
+      "cost_bp": 20.0,
+      "delay": 0,
+      "fills": 296,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.1414991768473468,
+        "sharpe": 1.1787620511726296,
+        "maxdd": -0.08973200243806934,
+        "calmar": 1.576908717099073,
+        "volatility": 0.11823231031628266,
+        "exposure": 0.9808190770961904,
+        "sessions": 946,
+        "annual_turnover": 9.880145753619606,
+        "annual_cost_bps": 197.9642586270159
+      }
+    },
+    "FR25 union renormalise | 5bp d1": {
+      "kind": "conditioned",
+      "source": "union",
+      "variant": "renormalise",
+      "cost_bp": 5.0,
+      "delay": 1,
+      "fills": 294,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.1425685783441899,
+        "sharpe": 1.1922813778827712,
+        "maxdd": -0.10140602437439461,
+        "calmar": 1.405918230437885,
+        "volatility": 0.11761610905042805,
+        "exposure": 0.9794160260688102,
+        "sessions": 946,
+        "annual_turnover": 9.896583907101538,
+        "annual_cost_bps": 49.46200400558332
+      }
+    },
+    "FR25 union renormalise | 10bp d1": {
+      "kind": "conditioned",
+      "source": "union",
+      "variant": "renormalise",
+      "cost_bp": 10.0,
+      "delay": 1,
+      "fills": 295,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.13696315768752765,
+        "sharpe": 1.1497328067437438,
+        "maxdd": -0.10234478983953765,
+        "calmar": 1.3382523712469072,
+        "volatility": 0.11769756314958008,
+        "exposure": 0.9797586767459562,
+        "sessions": 946,
+        "annual_turnover": 9.897622259313641,
+        "annual_cost_bps": 98.98712717141392
+      }
+    },
+    "FR25 union cash | 5bp d0": {
+      "kind": "conditioned",
+      "source": "union",
+      "variant": "cash",
+      "cost_bp": 5.0,
+      "delay": 0,
+      "fills": 296,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.1294263020095796,
+        "sharpe": 1.274507599210644,
+        "maxdd": -0.07782691875132575,
+        "calmar": 1.6630017490879387,
+        "volatility": 0.09939217708127707,
+        "exposure": 0.8273054693953995,
+        "sessions": 946,
+        "annual_turnover": 7.9188310057513815,
+        "annual_cost_bps": 39.59617439616433
+      }
+    },
+    "FR25 union cash | 10bp d0": {
+      "kind": "conditioned",
+      "source": "union",
+      "variant": "cash",
+      "cost_bp": 10.0,
+      "delay": 0,
+      "fills": 296,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.12511968808683616,
+        "sharpe": 1.2357396768812814,
+        "maxdd": -0.07938022712456438,
+        "calmar": 1.5762072321926828,
+        "volatility": 0.09941952010809971,
+        "exposure": 0.8275752089100089,
+        "sessions": 946,
+        "annual_turnover": 7.919752682103081,
+        "annual_cost_bps": 79.23490391888211
+      }
+    },
+    "FR25 union cash | 20bp d0": {
+      "kind": "conditioned",
+      "source": "union",
+      "variant": "cash",
+      "cost_bp": 20.0,
+      "delay": 0,
+      "fills": 296,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.11658966467658849,
+        "sharpe": 1.1581358558048411,
+        "maxdd": -0.08252169953510369,
+        "calmar": 1.4128364458489215,
+        "volatility": 0.0995155381898937,
+        "exposure": 0.8280624533563669,
+        "sessions": 946,
+        "annual_turnover": 7.9218584290040255,
+        "annual_cost_bps": 158.64460706765826
+      }
+    },
+    "FR25 union cash | 5bp d1": {
+      "kind": "conditioned",
+      "source": "union",
+      "variant": "cash",
+      "cost_bp": 5.0,
+      "delay": 1,
+      "fills": 295,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.12021987003667878,
+        "sharpe": 1.1985823007888097,
+        "maxdd": -0.07883068979826868,
+        "calmar": 1.525038920049119,
+        "volatility": 0.09880682945011386,
+        "exposure": 0.8268623086014557,
+        "sessions": 946,
+        "annual_turnover": 7.943321850204914,
+        "annual_cost_bps": 39.685334403187845
+      }
+    },
+    "FR25 union cash | 10bp d1": {
+      "kind": "conditioned",
+      "source": "union",
+      "variant": "cash",
+      "cost_bp": 10.0,
+      "delay": 1,
+      "fills": 295,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.11579559329105482,
+        "sharpe": 1.1580272949181065,
+        "maxdd": -0.08097966309142912,
+        "calmar": 1.4299342436176499,
+        "volatility": 0.09885236300628883,
+        "exposure": 0.8270614331600278,
+        "sessions": 946,
+        "annual_turnover": 7.945017615814166,
+        "annual_cost_bps": 79.42087515400675
+      }
+    },
+    "FR25 short renormalise | 5bp d0": {
+      "kind": "conditioned",
+      "source": "short",
+      "variant": "renormalise",
+      "cost_bp": 5.0,
+      "delay": 0,
+      "fills": 239,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.1314917900103496,
+        "sharpe": 1.0353033462569146,
+        "maxdd": -0.1177202799063366,
+        "calmar": 1.1169850268362445,
+        "volatility": 0.12716247110053697,
+        "exposure": 0.9797284160296192,
+        "sessions": 946,
+        "annual_turnover": 10.839804065400601,
+        "annual_cost_bps": 54.234560176540725
+      }
+    },
+    "FR25 short renormalise | 10bp d0": {
+      "kind": "conditioned",
+      "source": "short",
+      "variant": "renormalise",
+      "cost_bp": 10.0,
+      "delay": 0,
+      "fills": 239,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.1255801778059178,
+        "sharpe": 0.9935886528007158,
+        "maxdd": -0.1184145456915483,
+        "calmar": 1.060513107342698,
+        "volatility": 0.12723614259619076,
+        "exposure": 0.9801616543090235,
+        "sessions": 946,
+        "annual_turnover": 10.842229906247963,
+        "annual_cost_bps": 108.55936841861603
+      }
+    },
+    "FR25 short renormalise | 20bp d0": {
+      "kind": "conditioned",
+      "source": "short",
+      "variant": "renormalise",
+      "cost_bp": 20.0,
+      "delay": 0,
+      "fills": 239,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.11383521827352028,
+        "sharpe": 0.9097839911463583,
+        "maxdd": -0.11980621234177702,
+        "calmar": 0.9501612316127398,
+        "volatility": 0.1274522682408564,
+        "exposure": 0.9809984014603594,
+        "sessions": 946,
+        "annual_turnover": 10.84722857275175,
+        "annual_cost_bps": 217.48186144882595
+      }
+    },
+    "FR25 short renormalise | 5bp d1": {
+      "kind": "conditioned",
+      "source": "short",
+      "variant": "renormalise",
+      "cost_bp": 5.0,
+      "delay": 1,
+      "fills": 239,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.11806903294218163,
+        "sharpe": 0.9417827739294875,
+        "maxdd": -0.1282190904294639,
+        "calmar": 0.9208381727456878,
+        "volatility": 0.127106189649308,
+        "exposure": 0.9797590381198144,
+        "sessions": 946,
+        "annual_turnover": 10.843592499853695,
+        "annual_cost_bps": 54.17435043731842
+      }
+    },
+    "FR25 short renormalise | 10bp d1": {
+      "kind": "conditioned",
+      "source": "short",
+      "variant": "renormalise",
+      "cost_bp": 10.0,
+      "delay": 1,
+      "fills": 239,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.1120591419924375,
+        "sharpe": 0.8988901482788054,
+        "maxdd": -0.12932118330205777,
+        "calmar": 0.86651806866551,
+        "volatility": 0.12718419555452432,
+        "exposure": 0.9801836442698915,
+        "sessions": 946,
+        "annual_turnover": 10.846608539412074,
+        "annual_cost_bps": 108.44402452325515
+      }
+    },
+    "FR25 short cash | 5bp d0": {
+      "kind": "conditioned",
+      "source": "short",
+      "variant": "cash",
+      "cost_bp": 5.0,
+      "delay": 0,
+      "fills": 239,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.10044384166092724,
+        "sharpe": 1.200310532561625,
+        "maxdd": -0.06622960127823241,
+        "calmar": 1.5166004282429522,
+        "volatility": 0.08259590112885638,
+        "exposure": 0.6501689484434908,
+        "sessions": 946,
+        "annual_turnover": 6.608262025589301,
+        "annual_cost_bps": 33.0408928969266
+      }
+    },
+    "FR25 short cash | 10bp d0": {
+      "kind": "conditioned",
+      "source": "short",
+      "variant": "cash",
+      "cost_bp": 10.0,
+      "delay": 0,
+      "fills": 239,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.09696761783507468,
+        "sharpe": 1.1617657250069526,
+        "maxdd": -0.06741949650122514,
+        "calmar": 1.4382726491188287,
+        "volatility": 0.08261309397478328,
+        "exposure": 0.6503483446308375,
+        "sessions": 946,
+        "annual_turnover": 6.609305962785431,
+        "annual_cost_bps": 66.11641713590696
+      }
+    },
+    "FR25 short cash | 20bp d0": {
+      "kind": "conditioned",
+      "source": "short",
+      "variant": "cash",
+      "cost_bp": 20.0,
+      "delay": 0,
+      "fills": 239,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.09003762455750386,
+        "sharpe": 1.0842369495400586,
+        "maxdd": -0.07025408907407116,
+        "calmar": 1.2815997722577297,
+        "volatility": 0.08267822910636938,
+        "exposure": 0.650649727980097,
+        "sessions": 946,
+        "annual_turnover": 6.611660963544082,
+        "annual_cost_bps": 132.3751207113163
+      }
+    },
+    "FR25 short cash | 5bp d1": {
+      "kind": "conditioned",
+      "source": "short",
+      "variant": "cash",
+      "cost_bp": 5.0,
+      "delay": 1,
+      "fills": 238,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.08838332053718134,
+        "sharpe": 1.067707756086953,
+        "maxdd": -0.0686404925663614,
+        "calmar": 1.2876265485964082,
+        "volatility": 0.08252367234262559,
+        "exposure": 0.6500720687868308,
+        "sessions": 946,
+        "annual_turnover": 6.619234587139403,
+        "annual_cost_bps": 33.08051056557917
+      }
+    },
+    "FR25 short cash | 10bp d1": {
+      "kind": "conditioned",
+      "source": "short",
+      "variant": "cash",
+      "cost_bp": 10.0,
+      "delay": 1,
+      "fills": 238,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.0848128504417236,
+        "sharpe": 1.0273833323053396,
+        "maxdd": -0.06909241375877162,
+        "calmar": 1.227527681082877,
+        "volatility": 0.08256683682089222,
+        "exposure": 0.6502407363395157,
+        "sessions": 946,
+        "annual_turnover": 6.62036691184376,
+        "annual_cost_bps": 66.19630095899166
+      }
+    },
+    "FR25 long renormalise | 5bp d0": {
+      "kind": "conditioned",
+      "source": "long",
+      "variant": "renormalise",
+      "cost_bp": 5.0,
+      "delay": 0,
+      "fills": 185,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.1521555051788328,
+        "sharpe": 1.1367582592973613,
+        "maxdd": -0.10786917137535701,
+        "calmar": 1.4105559840574906,
+        "volatility": 0.13233851113507478,
+        "exposure": 0.9361897319078871,
+        "sessions": 946,
+        "annual_turnover": 10.371624719545899,
+        "annual_cost_bps": 51.927177100718986
+      }
+    },
+    "FR25 long renormalise | 10bp d0": {
+      "kind": "conditioned",
+      "source": "long",
+      "variant": "renormalise",
+      "cost_bp": 10.0,
+      "delay": 0,
+      "fills": 185,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.14643450576270745,
+        "sharpe": 1.0981592665590352,
+        "maxdd": -0.10829314120459843,
+        "calmar": 1.3522048038670194,
+        "volatility": 0.13247070847400366,
+        "exposure": 0.9366047652606294,
+        "sessions": 946,
+        "annual_turnover": 10.37456170455305,
+        "annual_cost_bps": 103.94052960079989
+      }
+    },
+    "FR25 long renormalise | 20bp d0": {
+      "kind": "conditioned",
+      "source": "long",
+      "variant": "renormalise",
+      "cost_bp": 20.0,
+      "delay": 0,
+      "fills": 186,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.13503358279758948,
+        "sharpe": 1.020569896206754,
+        "maxdd": -0.10912132347098424,
+        "calmar": 1.237462839547537,
+        "volatility": 0.13278485405498913,
+        "exposure": 0.9373760963502944,
+        "sessions": 946,
+        "annual_turnover": 10.37950990186144,
+        "annual_cost_bps": 208.2059763307548
+      }
+    },
+    "FR25 long renormalise | 5bp d1": {
+      "kind": "conditioned",
+      "source": "long",
+      "variant": "renormalise",
+      "cost_bp": 5.0,
+      "delay": 1,
+      "fills": 186,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.13896641815011868,
+        "sharpe": 1.055505909102371,
+        "maxdd": -0.11048043602494328,
+        "calmar": 1.2578373434256187,
+        "volatility": 0.13150480792127545,
+        "exposure": 0.93549577541123,
+        "sessions": 946,
+        "annual_turnover": 10.395814758506408,
+        "annual_cost_bps": 51.92982763149335
+      }
+    },
+    "FR25 long renormalise | 10bp d1": {
+      "kind": "conditioned",
+      "source": "long",
+      "variant": "renormalise",
+      "cost_bp": 10.0,
+      "delay": 1,
+      "fills": 186,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.1330799288629323,
+        "sharpe": 1.0156060020898423,
+        "maxdd": -0.11089019687304669,
+        "calmar": 1.2001054431825895,
+        "volatility": 0.13157614472920504,
+        "exposure": 0.9358470258703016,
+        "sessions": 946,
+        "annual_turnover": 10.397454004231493,
+        "annual_cost_bps": 103.93257835804913
+      }
+    },
+    "FR25 long cash | 5bp d0": {
+      "kind": "conditioned",
+      "source": "long",
+      "variant": "cash",
+      "cost_bp": 5.0,
+      "delay": 0,
+      "fills": 186,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.06540168766622734,
+        "sharpe": 0.9320310246867454,
+        "maxdd": -0.06161318927954418,
+        "calmar": 1.0614884317949267,
+        "volatility": 0.07065812592656315,
+        "exposure": 0.5140887654538163,
+        "sessions": 946,
+        "annual_turnover": 4.923829661250416,
+        "annual_cost_bps": 24.62895192866995
+      }
+    },
+    "FR25 long cash | 10bp d0": {
+      "kind": "conditioned",
+      "source": "long",
+      "variant": "cash",
+      "cost_bp": 10.0,
+      "delay": 0,
+      "fills": 186,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.06284786219659932,
+        "sharpe": 0.897582539637467,
+        "maxdd": -0.061882669161370085,
+        "calmar": 1.0155971461527027,
+        "volatility": 0.07069870580992535,
+        "exposure": 0.5142172171525591,
+        "sessions": 946,
+        "annual_turnover": 4.924042619540922,
+        "annual_cost_bps": 49.273470557713864
+      }
+    },
+    "FR25 long cash | 20bp d0": {
+      "kind": "conditioned",
+      "source": "long",
+      "variant": "cash",
+      "cost_bp": 20.0,
+      "delay": 0,
+      "fills": 186,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.057675810520508186,
+        "sharpe": 0.8274504617018159,
+        "maxdd": -0.06243931291783811,
+        "calmar": 0.9237098844505535,
+        "volatility": 0.07080317484179748,
+        "exposure": 0.514416411857853,
+        "sessions": 946,
+        "annual_turnover": 4.925119545107148,
+        "annual_cost_bps": 98.6224155183817
+      }
+    },
+    "FR25 long cash | 5bp d1": {
+      "kind": "conditioned",
+      "source": "long",
+      "variant": "cash",
+      "cost_bp": 5.0,
+      "delay": 1,
+      "fills": 186,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.06293630533898864,
+        "sharpe": 0.9063483423521992,
+        "maxdd": -0.06326419430962271,
+        "calmar": 0.9948171477687783,
+        "volatility": 0.07005623477331033,
+        "exposure": 0.5135307170659347,
+        "sessions": 946,
+        "annual_turnover": 4.943515539418558,
+        "annual_cost_bps": 24.694881057074348
+      }
+    },
+    "FR25 long cash | 10bp d1": {
+      "kind": "conditioned",
+      "source": "long",
+      "variant": "cash",
+      "cost_bp": 10.0,
+      "delay": 1,
+      "fills": 186,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.06032958779778341,
+        "sharpe": 0.8711310612640449,
+        "maxdd": -0.06350675289568886,
+        "calmar": 0.9499712242708425,
+        "volatility": 0.07007031806585105,
+        "exposure": 0.5136266010841486,
+        "sessions": 946,
+        "annual_turnover": 4.943641861404156,
+        "annual_cost_bps": 49.40436709805402
+      }
+    },
+    "FR25 random matched filter seed7 | 5bp d0": {
+      "kind": "control",
+      "source": "random",
+      "variant": "renormalise",
+      "cost_bp": 5.0,
+      "delay": 0,
+      "fills": 309,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.1859938872414233,
+        "sharpe": 1.4364624795574654,
+        "maxdd": -0.1075902237877655,
+        "calmar": 1.728724792024955,
+        "volatility": 0.12413965060810377,
+        "exposure": 0.9802855059124173,
+        "sessions": 946,
+        "annual_turnover": 12.397827027666825,
+        "annual_cost_bps": 61.996591268045854
+      }
+    },
+    "FR25 random matched filter seed11 | 5bp d0": {
+      "kind": "control",
+      "source": "random",
+      "variant": "renormalise",
+      "cost_bp": 5.0,
+      "delay": 0,
+      "fills": 311,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.1500220562354999,
+        "sharpe": 1.3084463269862556,
+        "maxdd": -0.088731468258191,
+        "calmar": 1.6907424071803414,
+        "volatility": 0.11161880746454411,
+        "exposure": 0.9793309840985137,
+        "sessions": 946,
+        "annual_turnover": 12.102032531561088,
+        "annual_cost_bps": 60.50590977766102
+      }
+    },
+    "FR25 random matched filter seed23 | 5bp d0": {
+      "kind": "control",
+      "source": "random",
+      "variant": "renormalise",
+      "cost_bp": 5.0,
+      "delay": 0,
+      "fills": 313,
+      "indices": 47,
+      "metrics": {
+        "cagr": 0.16320955834144257,
+        "sharpe": 1.3941538980481525,
+        "maxdd": -0.08549109944419409,
+        "calmar": 1.9090824589053352,
+        "volatility": 0.11305439749089438,
+        "exposure": 0.9792882346660793,
+        "sessions": 946,
+        "annual_turnover": 12.423968390480141,
+        "annual_cost_bps": 62.152799927760206
+      }
+    },
+    "M1 union renormalise | 5bp d0": {
+      "kind": "conditioned",
+      "source": "union",
+      "variant": "renormalise",
+      "cost_bp": 5.0,
+      "delay": 0,
+      "fills": 352,
+      "indices": 46,
+      "metrics": {
+        "cagr": 0.026743403990303838,
+        "sharpe": 3.530474657017947,
+        "maxdd": -0.0052395777140347155,
+        "calmar": 0.8914467996767946,
+        "volatility": 0.007483811547488199,
+        "exposure": 0.5775599390069232,
+        "sessions": 946,
+        "annual_turnover": 1.5439876654269225,
+        "annual_cost_bps": 7.720572368382884
+      }
+    },
+    "M1 short renormalise | 5bp d0": {
+      "kind": "conditioned",
+      "source": "short",
+      "variant": "renormalise",
+      "cost_bp": 5.0,
+      "delay": 0,
+      "fills": 303,
+      "indices": 46,
+      "metrics": {
+        "cagr": 0.025544395093076933,
+        "sharpe": 3.7709777025916615,
+        "maxdd": -0.005245807151248338,
+        "calmar": 0.8514798364358978,
+        "volatility": 0.006695144371205874,
+        "exposure": 0.5775081898887511,
+        "sessions": 946,
+        "annual_turnover": 1.4728890561111163,
+        "annual_cost_bps": 7.3654620445507035
+      }
+    }
+  },
+  "conditional_overlay": {
+    "breadth_threshold": 36.0,
+    "pre_2023_months": 1096,
+    "share_of_months_condition_true": 0.6916578669482577,
+    "conditional": {
+      "cagr": 0.1601039520276477,
+      "sharpe": 1.4781231808384254,
+      "maxdd": -0.07666166783740613,
+      "calmar": 2.0884485890290914,
+      "volatility": 0.10417125314621188,
+      "exposure": 1.0,
+      "sessions": 946
+    },
+    "unconditional": {
+      "cagr": 0.1554392426335891,
+      "sharpe": 1.4544997253456626,
+      "maxdd": -0.07666166783740591,
+      "calmar": 2.027600586035579,
+      "volatility": 0.10300963534127447,
+      "exposure": 1.0,
+      "sessions": 946
+    },
+    "sleeve_source": "Rule A short-only daily NAV from the daily-scanner study",
+    "capital_to_sleeve": 0.2
+  },
+  "annual_returns": {
+    "FR25 union renormalise | 5bp d0": {
+      "2023": 0.10807694256189371,
+      "2024": 0.08765348716176358,
+      "2025": 0.22669164997224156,
+      "2026": 0.1655580410559898
+    },
+    "FR25 union cash | 5bp d0": {
+      "2023": 0.08245166835865847,
+      "2024": 0.061681936770151324,
+      "2025": 0.18762978757100623,
+      "2026": 0.14850989353393573
+    },
+    "FR25 short renormalise | 5bp d0": {
+      "2023": 0.040149779071035674,
+      "2024": 0.08852358915373104,
+      "2025": 0.20580177022900248,
+      "2026": 0.15111028415875638
+    },
+    "FR25 short cash | 5bp d0": {
+      "2023": 0.042688703773286596,
+      "2024": 0.04559586275722505,
+      "2025": 0.1592495551537052,
+      "2026": 0.1255171153772927
+    },
+    "FR25 long renormalise | 5bp d0": {
+      "2023": 0.14259657512226354,
+      "2024": 0.1043567190509389,
+      "2025": 0.17669160259851924,
+      "2026": 0.15357789450136972
+    },
+    "FR25 long cash | 5bp d0": {
+      "2023": 0.02548158995891492,
+      "2024": 0.06616380497353203,
+      "2025": 0.061252516210219765,
+      "2026": 0.09315154644381463
+    },
+    "FR25 random matched filter seed7 | 5bp d0": {
+      "2023": 0.12041995790611049,
+      "2024": 0.031377233419392914,
+      "2025": 0.27707416962511133,
+      "2026": 0.2746473110860972
+    },
+    "FR25 random matched filter seed11 | 5bp d0": {
+      "2023": 0.06405456537443732,
+      "2024": 0.059393339855867255,
+      "2025": 0.24286840760895156,
+      "2026": 0.19420766356149954
+    },
+    "FR25 random matched filter seed23 | 5bp d0": {
+      "2023": 0.09014141697566647,
+      "2024": 0.06169933958752383,
+      "2025": 0.33437878012845856,
+      "2026": 0.12951460581006202
+    },
+    "M1 union renormalise | 5bp d0": {
+      "2023": 0.02258710229572891,
+      "2024": 0.03284788740780442,
+      "2025": 0.032705156430385074,
+      "2026": 0.012634636548312095
+    },
+    "M1 short renormalise | 5bp d0": {
+      "2023": 0.02125632020926682,
+      "2024": 0.03179629708892251,
+      "2025": 0.029580884217475845,
+      "2026": 0.013743561184746733
+    },
+    "Conditional overlay 20% Rule A short": {
+      "2023": 0.09958238128150221,
+      "2024": 0.06989038589239849,
+      "2025": 0.2097873395225045,
+      "2026": 0.2207673745540164
+    },
+    "Unconditional overlay 20% Rule A short": {
+      "2023": 0.09628208959878393,
+      "2024": 0.07186084819852212,
+      "2025": 0.20779368134099618,
+      "2026": 0.20689287874399498
+    }
+  },
+  "integrity": {
+    "fr25_max_relative_deviation": 0.00031452497714457017
+  },
+  "chronology": {
+    "fit_end": "2022-12-30",
+    "oos_start": "2023-01-03",
+    "oos_end": "2026-10-12"
+  }
+}

@@ -199,6 +199,25 @@ def test_local_orders_and_reconciled_history(setup, status, before_baseline, unc
     assert stage(setup).status == expected
 
 
+def test_partially_filled_missed_rebalance_remains_the_adopted_target(setup):
+    settings, store, _ = setup
+    from systematic_trading.portfolio.targets import approved_target
+    from systematic_trading.research import current_sota_definition
+    definition = current_sota_definition()
+    initial = stage(setup)
+    proposal = store.get_proposal(initial.proposal_id)
+    store.save_proposal(proposal.model_copy(update={"status": ProposalStatus.MISSED}))
+    through = DECISION + timedelta(days=1)
+    # Fully missed without a fill: never adopted.
+    assert approved_target(store, definition, DECISION, through) is None
+    store.save_broker_order_record(BrokerOrderRecord(proposal_id=proposal.proposal_id, order_index=0,
+        order=proposal.orders[0], order_ref="partial", status=BrokerOrderStatus.PARTIALLY_FILLED,
+        filled_quantity=1, submitted_at=NOW))
+    adopted = approved_target(store, definition, DECISION, through)
+    assert adopted is not None and adopted.proposal_id == proposal.proposal_id
+    assert adopted.targets == proposal.targets
+
+
 def test_service_checks_initial_allocation_before_eod_and_exposes_blocker(setup, monkeypatch):
     settings, store, _ = setup
     service = TradingManagementService(settings=settings, store=store, order_management_client=Orders())
@@ -312,6 +331,67 @@ def test_monthly_target_dates_follow_month_end_calendar():
     assert latest_monthly_target_date(date(2026, 8, 18)) == date(2026, 7, 31)
     assert latest_monthly_target_date(date(2026, 8, 31)) == date(2026, 8, 31)
     assert latest_monthly_target_date(date(2026, 10, 31)) == date(2026, 10, 30)
+
+
+def test_portfolio_drift_uses_active_allocation_universe_not_sota(setup, monkeypatch):
+    settings, store, _ = setup
+    from systematic_trading.domain.market import PriceBar
+    from systematic_trading.domain.portfolio import CashBalance
+    from systematic_trading.live.initial_allocation import portfolio_drift
+    from systematic_trading.research.strategy_catalog import registered_strategy_definition
+    definition = registered_strategy_definition("research_fr25_14_v1")
+    monkeypatch.setattr("systematic_trading.portfolio.strategy_allocation.trading_definition",
+        lambda _store: definition)
+    for symbol, close in (("XLB", Decimal("50")), ("XLE", Decimal("60"))):
+        store.upsert_price_bar(symbol, PriceBar(trade_date=DECISION, open=close, high=close,
+            low=close, close=close, volume=1000))
+    snapshot = LiveAccountSnapshotInput(as_of=DECISION,
+        positions=[AccountPositionInput(symbol="XLE", quantity=10)],
+        cash=[CashBalance(currency=Currency.HKD, amount=Decimal("1000"))])
+    targets = [AllocationTarget(symbol="XLE", target_weight=Decimal("0.6"), sleeve="alloc", rationale="t"),
+        AllocationTarget(symbol="XLB", target_weight=Decimal("0.1"), sleeve="alloc", rationale="t")]
+    rows = portfolio_drift(store, snapshot, targets, DECISION)
+    assert {row["symbol"] for row in rows} == {"XLB", "XLE"}
+    xle = next(row for row in rows if row["symbol"] == "XLE")
+    assert Decimal(xle["quantity"]) == 10
+    assert Decimal(xle["target_weight"]) == Decimal("0.6")
+
+
+def active_allocation_with_allocation_only_symbols(store):
+    """Bind a non-legacy allocation whose universe is wider than the SOTA designation."""
+    from systematic_trading.portfolio.strategy_allocation import control_state, scope_for
+    state = control_state(store)
+    active = dict(state["active"], version="alloc-test", key="allocation-alloc-test",
+        allocations=[dict(strategy_key="research_fr25_14_v1", weight="1")],
+        effective_close="2026-08-14")
+    store.commit_strategy_control(scope_for(store), state["revision"], dict(state, active=active),
+        dict(event_id="alloc-test", request_hash="alloc-test", kind="allocation_activated"))
+    return active
+
+
+def test_market_data_universe_covers_active_allocation_union(setup):
+    settings, store, _ = setup
+    active_allocation_with_allocation_only_symbols(store)
+    universe = TradingManagementService(settings=settings, store=store)._market_data_universe()
+    assert {"XLB", "XLE"} <= set(universe)
+    assert {"SPY", "TLT"} <= set(universe)  # The SOTA designation stays covered.
+
+
+def test_market_data_refresh_requests_active_allocation_union(setup, monkeypatch):
+    settings, store, _ = setup
+    active_allocation_with_allocation_only_symbols(store)
+    captured = {}
+
+    def refresh(**kwargs):
+        captured.update(kwargs)
+        return MarketDataRefreshResult(target_date=kwargs["target_date"],
+            latest_bar_date=kwargs["target_date"], latest_fx_date=kwargs["target_date"])
+
+    monkeypatch.setattr("systematic_trading.live.management_service.refresh_sota_market_data", refresh)
+    service = TradingManagementService(settings=settings, store=store)
+    service._refresh_market_data(DECISION)
+    assert {"XLB", "XLE"} <= set(captured["symbols"])
+    assert {"XLB", "XLE"} <= set(captured["instruments"])
 
 
 def test_monthly_workflow_waits_for_existing_alignment_proposal(setup, monkeypatch):

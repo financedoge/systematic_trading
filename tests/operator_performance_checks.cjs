@@ -105,5 +105,25 @@ assert.equal(retainSpotEndpoints({...paused,checked_at:'2026-10-07T14:01:00Z',pe
 state.performance.rangeKey='custom'; state.performance.start=state.performance.end='2026-10-05';
 renderPerformance(completed);
 assert.equal(el('perf-strategy-return').textContent,'32.00%','Cumulative return survives zooming and rebasing');
+const failure = apiFailure({status:503,statusText:'Service Unavailable'},
+  {detail:'Performance publication is refreshing for the current account baseline.'});
+assert.equal(failure.status,503);
+assert.match(failure.message,/refreshing/);
+assert.equal(apiFailure({status:500,statusText:'Server Error'},null).message,'Server Error');
+setPerformanceStatus('Performance publication is refreshing');
+assert.equal(el('performance-status').hidden,false);
+assert.equal(el('performance-status').textContent,'Performance publication is refreshing');
+setPerformanceStatus('');
+assert.equal(el('performance-status').hidden,true);
+state.performance.payload = null;
+markPerformancePending();
+assert.equal(el('perf-strategy-nav').textContent,'refreshing…');
+assert.equal(el('perf-account-return').textContent,'refreshing…');
+assert.match(el('performance-chart').innerHTML,/refreshing/i);
+state.performance.payload = {strategy: []};
+el('performance-chart').innerHTML = 'rendered-panel';
+markPerformancePending();
+assert.equal(el('performance-chart').innerHTML,'rendered-panel',
+  'A panel that already has values is never replaced by the pending placeholder');
 `, context);
 console.log('Operator performance behavior checks passed');

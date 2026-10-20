@@ -166,6 +166,23 @@ def test_account_reset_rejects_previously_published_performance():
     assert "baseline" in error.value.detail
 
 
+def test_stale_performance_publication_requests_a_rebuild_and_a_short_retry(monkeypatch):
+    from systematic_trading.portfolio import allocation_analytics
+    analytics = MemoryAnalytics()
+    analytics.publish("dashboard-serving", "v1", [], [dict(point_key="performance", payload="{}")],
+                      provenance={"baseline": "none", "allocation": "allocation-a", "allocation_ledger": "old-ledger"})
+    calls = []
+    request_ = request(analytics, SimpleNamespace(latest_pnl_baseline=lambda: None))
+    request_.app.state.analytics_service = SimpleNamespace(request_refresh=lambda **kw: calls.append(kw))
+    monkeypatch.setattr(allocation_analytics, "allocation_revision", lambda store: "allocation-a")
+    monkeypatch.setattr(allocation_analytics, "allocation_ledger_revision", lambda store: "new-ledger")
+    with pytest.raises(HTTPException) as error:
+        dashboard_performance(request_)
+    assert error.value.status_code == 503
+    assert error.value.headers["Retry-After"] == "2"
+    assert calls == [{"reason": "performance_publication_stale"}]
+
+
 def test_dated_rows_preserve_unknown_availability_and_nested_identities():
     data = {"nav_series": [{"trade_date": "2023-01-03", "nav_cnh": "100.000000000001"}],
             "features": {"SPY": {"2023-01-03": 7}},
