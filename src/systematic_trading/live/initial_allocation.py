@@ -14,6 +14,7 @@ from systematic_trading.domain.enums import BrokerOrderStatus, Currency, OrderEn
 from systematic_trading.domain.portfolio import CashBalance
 from systematic_trading.execution.broker import InteractiveBrokersAdapter
 from systematic_trading.execution.window import proposal_is_expired
+from systematic_trading.execution.locks import serialized_orders
 from systematic_trading.live.sota import LiveAccountSnapshotInput, build_sota_live_rebalance_plan, write_sota_live_plan_artifacts
 from systematic_trading.live.trading_calendar import next_us_trading_day, previous_us_trading_day, us_equity_market_close
 from systematic_trading.research import current_sota_definition, instruments_for_definition
@@ -30,6 +31,12 @@ class InitialAllocationResult(BaseModel):
     valuation_date: date | None = None
     target_as_of: date | None = None
     holdings: list[dict[str, str]] = Field(default_factory=list)
+    holdings_stale: bool = False
+    intent_id: str | None = None
+    intent_status: str | None = None
+    pending_since: datetime | None = None
+    pending_age_seconds: int | None = None
+    next_retry_condition: str | None = None
 
 
 def initial_allocation_window(settings: AppSettings, now: datetime) -> tuple[date, datetime, datetime]:
@@ -56,6 +63,7 @@ def stage_initial_allocation(
     return stage_portfolio_alignment(settings=settings, store=store, now=now, order_client=order_client, initial_only=True)
 
 
+@serialized_orders
 def stage_portfolio_alignment(
     *, settings: AppSettings, store: TradingStore, now: datetime, order_client=None, initial_only=False,
 ) -> InitialAllocationResult:
@@ -65,21 +73,8 @@ def stage_portfolio_alignment(
     started = monotonic()
     if not settings.automation_queue_rebalance:
         return InitialAllocationResult(status="disabled", message="Automatic proposal staging is disabled.")
-    # A handover already prepared its approval-only proposal, including when IB
-    # was offline. Retain that intent instead of replacing its price benchmark.
-    from systematic_trading.portfolio.strategy_allocation import allocation_binding_issues
-    prepared = [p for p in store.list_proposals() if p.input_provenance.get('prepared_account')
-        and not allocation_binding_issues(store, p)]
-    replaced = {p.input_provenance.get('deferred_rebalance', {}).get('previous_proposal_id') for p in prepared}
-    for proposal in sorted(prepared, key=lambda p:p.created_at, reverse=True):
-        if proposal.proposal_id in replaced or proposal.status == ProposalStatus.REJECTED:
-            continue
-        attempts = store.list_broker_order_records(proposal.proposal_id)
-        if not attempts or all(r.status == BrokerOrderStatus.MISSED for r in attempts):
-            missed = proposal_is_expired(proposal, settings, now=now)
-            return InitialAllocationResult(status='review' if missed else 'pending', proposal_id=proposal.proposal_id,
-                message='Rebalance retained. Refresh for approval to choose a new window; the original slippage benchmark is preserved.'
-                if missed else 'Prepared rebalance awaits order approval. IB readiness is checked at submission.')
+    from systematic_trading.portfolio.rebalance_intents import latest_rebalance, intent_state, recovery_summary, effective_target_date, sources
+    retained = latest_rebalance(store)
     issues = submission_reconciliation_issues(settings, now=now)
     if issues:
         return InitialAllocationResult(status="blocked", message=issues[0])
@@ -133,17 +128,45 @@ def stage_portfolio_alignment(
     if not empty:
         from systematic_trading.portfolio.targets import approved_target
         target_source = approved_target(store, definition, target_date, decision_date)
+    if retained is not None and intent_state(store, retained).get('status') != 'superseded':
+        target_source = retained
+    # Valuing an existing objective needs its frozen targets and fresh marks/FX,
+    # not a successful strategy rebuild or a new executable order plan.
+    evidence = {}
+    if target_source is not None:
+        evidence = dict(valuation_date=decision_date, target_as_of=effective_target_date(target_source, sources(store)),
+            holdings=portfolio_drift(store, snapshot, target_source.targets, decision_date))
+    if retained is not None:
+        evidence.update(recovery_summary(store, retained, now))
+        state = intent_state(store, retained)
+        if retained.status == ProposalStatus.REJECTED or state.get('status') == 'cancelled':
+            return InitialAllocationResult(status='review', proposal_id=retained.proposal_id,
+                message='Rebalance intent cancelled. Review a new target decision to resume; drift remains visible.',
+                next_retry_condition='Explicit new target decision.', **evidence)
+        if state.get('status') not in {'completed', 'superseded'}:
+            missed = proposal_is_expired(retained, settings, now=now)
+            uncertain = any(r.pending_action or r.execution_sync_issue or r.status in {
+                BrokerOrderStatus.PENDING_SUBMIT, BrokerOrderStatus.SUBMITTED,
+                BrokerOrderStatus.ACKNOWLEDGED, BrokerOrderStatus.PARTIALLY_FILLED} for r in records)
+            if uncertain:
+                return InitialAllocationResult(status='blocked', proposal_id=retained.proposal_id,
+                    message='An order is working or uncertain. Reconcile its terminal outcome before residual recovery.',
+                    next_retry_condition='Terminal broker order and complete fills, followed by matched reconciliation.', **evidence)
+            return InitialAllocationResult(status='review' if missed or retained.status == ProposalStatus.APPROVED else 'pending', proposal_id=retained.proposal_id,
+                message=state.get('reason') or 'Rebalance objective retained; awaiting approval, execution or residual recovery.',
+                next_retry_condition=state.get('next_retry_condition') or
+                    'Fresh reconciliation, complete daily prices/FX, terminal broker orders and an eligible TWAP window.', **evidence)
     broker = InteractiveBrokersAdapter(settings)
     try:
         plan = build_sota_live_rebalance_plan(store=store, broker=broker, account_snapshot=snapshot,
             decision_date=decision_date, intended_trade_date=start.date(), environment=OrderEnvironment.PAPER,
             order_type=OrderType.TWAP, queue=False, target_decision_date=target_date, target_proposal=target_source)
     except ValueError as exc:
-        return InitialAllocationResult(status="blocked", message=str(exc))
+        return InitialAllocationResult(status="blocked", message=str(exc), **evidence)
     if plan.validation_issues:
-        return InitialAllocationResult(status="blocked", message="; ".join(plan.validation_issues))
+        return InitialAllocationResult(status="blocked", message="; ".join(plan.validation_issues), **evidence)
     holdings = portfolio_drift(store, snapshot, plan.proposal.targets, decision_date)
-    evidence = dict(valuation_date=decision_date, target_as_of=plan.proposal.target_as_of, holdings=holdings)
+    evidence.update(valuation_date=decision_date, target_as_of=plan.proposal.target_as_of, holdings=holdings)
     threshold = settings.automation_rebalance_drift_threshold
     breached = any(abs(Decimal(row["drift"])) >= threshold and Decimal(row["drift"]) != 0 for row in holdings)
     intent = plan.proposal.input_provenance.get('allocation', {}).get('intent', {})
@@ -215,7 +238,8 @@ def stage_portfolio_alignment(
                 *plan.proposal.reasoning.drivers],
         }),
     })
-    saved = store.queue_proposal_once(proposal)
+    from systematic_trading.live.deferred_rebalance import prepared_proposal
+    saved = store.queue_proposal_once(prepared_proposal(proposal, report))
     plan = plan.model_copy(update={"proposal": saved, "queued": True})
     json_path, _ = write_sota_live_plan_artifacts(plan, settings.data_dir / "live" / "sota_rebalance")
     return InitialAllocationResult(status="queued", proposal_id=saved.proposal_id, artifact_path=str(json_path),

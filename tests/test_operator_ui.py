@@ -21,6 +21,39 @@ EXPECTED_HEADER_LINKS = [
 ]
 
 
+def test_recovery_status_labels_last_valid_drift_and_retry_condition():
+    from systematic_trading.web.operator import _OPERATOR_HTML
+    node = shutil.which('node')
+    if node is None:
+        pytest.skip('Node.js is required for UI behavior checks.')
+    script = r'''
+const assert = require('node:assert/strict');
+const html = require('node:fs').readFileSync(0, 'utf8');
+const start = html.indexOf('function renderAutomation(payload) {');
+const end = html.indexOf('\n    function ', start + 10);
+const elements = new Map();
+const el = id => {
+  if (!elements.has(id)) elements.set(id, {textContent:'', innerHTML:'', replaceChildren(){}});
+  return elements.get(id);
+};
+const fmtDateTime = String, fmtSignedMoney = String;
+eval(html.slice(start, end));
+renderAutomation({portfolio_alignment_message:'Missing observed FX', portfolio_alignment:{
+  holdings_stale:true, holdings:[], valuation_date:'2026-10-21', target_as_of:'2026-10-16',
+  intent_id:'oct21', intent_status:'outstanding',pending_since:'2026-10-20',pending_age_seconds:7200,
+  next_retry_condition:'Wait for observed FX and fresh reconciliation'}});
+assert.match(el('auto-portfolio-valuation').textContent, /LAST VALID DRIFT/);
+assert.match(el('auto-portfolio-valuation').textContent, /2026-10-21/);
+assert.match(el('auto-portfolio-valuation').textContent, /2 hours/);
+assert.match(el('auto-portfolio-valuation').textContent, /Wait for observed FX/);
+assert.match(el('proposal-readiness').textContent, /Missing observed FX/);
+assert.ok(html.includes('cancel-rebalance-btn'));
+'''
+    result = subprocess.run([node, '-e', script],input=_OPERATOR_HTML,text=True,encoding='utf-8',
+        capture_output=True,timeout=20)
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
 def test_open_strategy_pages_update_when_complete_publication_changes():
     from systematic_trading.web.operator import _STRATEGIES_HTML
     from systematic_trading.web.strategy_refresh import report_refresh_banner

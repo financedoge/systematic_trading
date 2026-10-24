@@ -1,5 +1,9 @@
 # Paper rebalance renewal — missed 2026-10-16 handover
 
+The October 24 [durable intent recovery repair](rebalance-intent-recovery-2026-10-24.md)
+supersedes the narrow renewal eligibility and manual-only partial-fill limitations
+below. This document retains the original incident and deployment evidence.
+
 ## Incident
 
 The FR25 14-ETF allocation `allocation-fe2d3613-4694-4d27-925a-c53536932eab`

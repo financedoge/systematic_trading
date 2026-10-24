@@ -84,9 +84,13 @@ def build_allocated_plan(*, store, broker, account_snapshot, decision_date, inte
             book[RESERVE]['cash'][currency] = str(D(book[RESERVE]['cash'].get(currency, 0)) + residual)
     capital = {r['strategy_key']: D(r['weight']) for r in active['allocations']}
     capital[RESERVE] = 1-sum(capital.values())
-    previous = [p for p in store.list_proposals() if p.status.value == 'approved'
+    approvals = store.strategy_approval_times()
+    previous = [p for p in store.list_proposals() if (p.status.value == 'approved'
+        or (p.status.value == 'missed' and p.proposal_id in approvals))
         and p.input_provenance.get('allocation', {}).get('version') == active['version']]
-    reset = not previous or max(p.target_as_of or p.as_of for p in previous) < target_date
+    from systematic_trading.portfolio.rebalance_intents import effective_target_date, sources
+    retained_date = effective_target_date(target_proposal, sources(store)) if target_proposal else target_date
+    reset = not previous or max(p.target_as_of or p.as_of for p in previous) < retained_date
     if target_proposal is not None:
         issues = allocation_binding_issues(store, target_proposal)
         if issues:
@@ -118,8 +122,11 @@ def build_allocated_plan(*, store, broker, account_snapshot, decision_date, inte
     plan = build_sota_live_rebalance_plan(store=store, broker=broker, account_snapshot=account_snapshot,
         decision_date=decision_date, intended_trade_date=intended_trade_date, environment=environment,
         order_type=order_type, queue=False, definition=definition, explicit_targets=combined,
-        allocation_receipt=receipt, target_decision_date=target_date, decision_session=session,
+        allocation_receipt=receipt, target_decision_date=retained_date, decision_session=session,
         valuation_instruments=instruments)
+    if target_proposal is not None:
+        plan.proposal = plan.proposal.model_copy(update={
+            'target_source_proposal_id': target_proposal.proposal_id})
     cap = active.get('max_batch_notional_cnh')
     if cap and sum(o.notional_cnh for o in plan.proposal.orders) > D(cap):
         raise ValueError('Net account orders exceed the allocation batch capital cap.')

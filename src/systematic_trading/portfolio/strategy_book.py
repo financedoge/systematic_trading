@@ -128,7 +128,7 @@ def replay_book(store, active, *, through=None, reference=False):
         if allocation.get('version') != active['version'] or 'intent' not in allocation:
             continue
         approved = approvals.get(proposal.proposal_id)
-        if approved and proposal.status.value == 'approved':
+        if approved and proposal.status.value in {'approved', 'missed'}:
             at = datetime.fromisoformat(approved)
             if at > cutoff and (through is None or at <= through):
                 events.append((at, 0, proposal.proposal_id, 'internal', allocation['intent']))

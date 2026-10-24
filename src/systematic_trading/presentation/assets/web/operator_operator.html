@@ -548,6 +548,7 @@
           <div class="actions">
             <button id="approve-btn" class="good" disabled>Approve &amp; submit paper orders</button>
             <button id="refresh-rebalance-btn" hidden disabled>Refresh for approval</button>
+            <button id="cancel-rebalance-btn" class="bad" hidden disabled>Cancel rebalance intent</button>
             <button id="reject-btn" class="bad" disabled>Reject</button>
             <button id="resubmit-failed-btn" class="warn" hidden disabled>Resubmit Failed/Missing</button>
           </div>
@@ -931,7 +932,8 @@
         ? `Monthly schedule: decision after ${payload.scheduled_decision_date} close; execution ${payload.scheduled_trade_date} (New York).` : "";
       el("proposal-readiness").textContent = [payload.portfolio_alignment_message, schedule].filter(Boolean).join(" ");
       const alignment = payload.portfolio_alignment || {};
-      el("auto-portfolio-valuation").textContent = `Trigger: ${(Number(payload.rebalance_drift_threshold || 0.02) * 100).toFixed(2)} percentage points per holding. Prices: ${alignment.valuation_date || "unavailable"} daily close. Targets: ${alignment.target_as_of || "unavailable"}.`;
+      const recovery = alignment.intent_id ? ` Intent ${alignment.intent_id}: ${alignment.intent_status || 'outstanding'}. Pending since ${fmtDateTime(alignment.pending_since)} (${Math.floor((alignment.pending_age_seconds || 0) / 3600)} hours). Next: ${alignment.next_retry_condition || 'awaiting reconciliation'}.` : '';
+      el("auto-portfolio-valuation").textContent = `${alignment.holdings_stale ? 'LAST VALID DRIFT — current valuation unavailable. ' : ''}Trigger: ${(Number(payload.rebalance_drift_threshold || 0.02) * 100).toFixed(2)} percentage points per holding. Prices: ${alignment.valuation_date || "unavailable"} daily close. Targets: ${alignment.target_as_of || "unavailable"}.${recovery}`;
       const driftView = el("auto-portfolio-drift");
       driftView.replaceChildren();
       if ((alignment.holdings || []).length) {
@@ -1938,10 +1940,13 @@
       const brokerReady = state.reconciliation && !state.reconciliation.has_breaks && !state.reconciliation.unavailable;
       const recordsUnavailable = state.brokerRecordsLoading || Boolean(state.brokerRecordsError);
       const canDecide = enabled && !state.decisionBusy && !recordsUnavailable && proposal && proposal.status === "pending" && brokerReady;
-      const refreshable = proposal?.input_provenance?.prepared_account && proposal.status !== 'rejected' &&
-        state.brokerRecords.every(r=>r.status==='missed'&&!r.submitted_at&&!r.broker_order_id&&!r.filled_quantity&&!r.pending_action&&!r.execution_sync_issue);
+      const hasIntent = Boolean(proposal?.input_provenance?.prepared_account || proposal?.automation_strategy_key);
+      const refreshable = hasIntent && proposal.status !== 'rejected' &&
+        state.brokerRecords.every(r=>['missed','filled','cancelled','rejected'].includes(r.status)&&!r.pending_action&&!r.execution_sync_issue);
       el('refresh-rebalance-btn').hidden = !refreshable;
       el('refresh-rebalance-btn').disabled = !enabled || state.decisionBusy || recordsUnavailable || !refreshable;
+      el('cancel-rebalance-btn').hidden = !hasIntent;
+      el('cancel-rebalance-btn').disabled = !enabled || state.decisionBusy || !hasIntent;
       el("approve-btn").disabled = !canDecide;
       el("reject-btn").disabled = !canDecide;
       el("approve-btn").textContent = proposal?.orders.length ? 'Approve & submit paper orders' : 'Approve proposal';
@@ -2033,6 +2038,22 @@
       }
     }
 
+    async function cancelRebalance() {
+      const proposal=selectedProposal();
+      if(!proposal||state.decisionBusy||el('cancel-rebalance-btn').disabled)return;
+      const reason=el('decision-comment').value.trim();
+      if(!reason){log('Enter the reason for cancelling this rebalance intent.',true);return}
+      if(!confirm('Cancel this portfolio objective and stop automatic recovery? Existing broker orders must still be managed in the order blotter.'))return;
+      state.decisionBusy=true;setButtons(false);
+      try {
+        await api(`/api/v1/proposals/${encodeURIComponent(proposal.proposal_id)}/cancel-rebalance`,{
+          method:'POST',body:JSON.stringify({operator:'Local operator',reason})});
+        log('Rebalance intent cancelled. The cancellation is durable across restarts.');
+        await loadDashboardData();
+      } catch(error) {log(error.message,true)}
+      finally {state.decisionBusy=false;setButtons(Boolean(selectedProposal()))}
+    }
+
     async function refreshRebalance() {
       const proposal=selectedProposal();
       if(!proposal||state.decisionBusy||el('refresh-rebalance-btn').disabled)return;
@@ -2117,6 +2138,7 @@
     el("reset-to-ib-btn").addEventListener("click", resetPortfolioToIb);
     el("approve-btn").addEventListener("click", () => decide("approved"));
     el("refresh-rebalance-btn").addEventListener("click", refreshRebalance);
+    el("cancel-rebalance-btn").addEventListener("click", cancelRebalance);
     el("reject-btn").addEventListener("click", () => decide("rejected"));
     el("resubmit-failed-btn").addEventListener("click", resubmitFailed);
     document.querySelectorAll("[data-perf-range]").forEach((button) => {

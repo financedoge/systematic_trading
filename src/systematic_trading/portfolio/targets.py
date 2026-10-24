@@ -10,7 +10,7 @@ def approved_target(store, definition, first_decision, through):
     legs filled and only a residual failed. The filled part already changed the book,
     so the proposal's frozen targets remain the adopted target until a later rebalance
     is approved; falling back to the previous month-end would drift the account toward
-    a stale target. A fully missed proposal with no fill was never adopted.
+    a stale target. Approval adopts a target even if its entire execution is missed.
     """
     from systematic_trading.portfolio.strategy_allocation import allocation_binding_issues
     context = portfolio_context(store)
@@ -18,6 +18,7 @@ def approved_target(store, definition, first_decision, through):
         record.proposal_id for record in store.list_broker_order_records()
         if record.filled_quantity > 0 and record.proposal_id
     }
+    adopted_missed.update(store.strategy_approval_times())
     candidates = [p for p in store.list_proposals()
         if not allocation_binding_issues(store, p) and p.sleeve == definition.sleeve_name and p.targets
         and (p.status == ProposalStatus.APPROVED

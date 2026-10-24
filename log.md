@@ -1,5 +1,50 @@
 # Project Log
 
+## 2026-10-24 — Diagnose October 21 missed batch and implement durable intent recovery
+
+The operator supplied an external code review and requested both local diagnosis
+and implementation. Read-only native PostgreSQL inspection confirms
+`drift-97f2af32c2d7-20261021` contains sell 1 SPY, buy 3 VGK and buy 2 XLE, with
+three synthetic missed markers and no broker submission, fills or automatic
+attempt claim. It was prepared October 20 using October 19 data for October 21;
+the saved policy rejects an expired session and the old prepared-account-only
+renewal excludes this ordinary drift batch. Its weights match the adopted
+October 16 handover but the builder stamped September 30. This establishes the
+code/runtime gates, not exact computer/Gateway uptime during the original window.
+Current alignment is separately blocked by missing October 23 USD/CNH and HKD/CNH;
+IB historical requests time out with disconnected cashhmds/ushmds farms.
+
+Implemented a separate durable rebalance-intent lifecycle through the existing
+transactional CAS/immutable audit store (isolated scope, no schema migration).
+Execution expiry no longer erases approval/adopted targets or virtual transfers.
+Background expiry covers closed-market/manual-policy periods; queue validation
+continues past stale/ineligible entries. Ordinary scheduled/drift/initial batches
+can receive fresh residual proposals after reconciliation. Partial executions need
+terminal evidence and complete fills; new claims distinguish provably unsent router
+phases from uncertain legacy outcomes. No absence-based duplicate-order inference
+is permitted. Explicit cancellation survives restart and stale writes, newer
+adoption supersedes earlier intent, and source lineage/benchmarks remain retained.
+The UI exposes cancellation, pending age and retry conditions; retained-target
+drift no longer requires successful order-plan rebuilding, and unavailable current
+valuation retains only a clearly dated/stale previous table. Read-only production
+selection now chooses the October 21 batch and resolves its target date to October 16.
+
+Validation: 282 distinct tests exercised successfully across targeted runs covering
+recovery, approval, native PostgreSQL/SQLite state, broker IDs and synchronization,
+reconciliation, model/execution alignment, virtual accounting, service, API and UI
+contracts. Native PostgreSQL used disposable clusters; Node exercised dashboard
+behavior. Ruff and diff whitespace checks pass. Existing unrelated changes and the
+prior uncommitted newest-intent safeguard were preserved. Details and limits:
+`docs/rebalance-intent-recovery-2026-10-24.md`.
+
+Runtime activation remains pending. No running service was restarted, since a
+restart also loads unrelated pre-existing uncommitted research changes. No policy,
+allocation, approval, market-data or broker records were changed by this work.
+Live remains disabled. Next action is a coordinated restart followed by fresh
+matched reconciliation, observed FX recovery and verification of the app's normal
+paper recovery cycle. Missing FX, uncertain attempts, changed target vectors and
+reversed required directions remain visible blockers; none is bypassed.
+
 ## 2026-10-20 — Allocation theoretical NAV resumed through the latest audited session
 
 The operator reported that the dashboard's allocation theoretical NAV stopped at 2026-10-16

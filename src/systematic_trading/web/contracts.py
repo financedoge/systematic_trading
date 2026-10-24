@@ -34,6 +34,11 @@ class RealizedVolatilityEstimate(BaseModel):
     realized_volatility: Decimal
 
 
+class RebalanceCancellationInput(BaseModel):
+    operator: str = Field(min_length=1, max_length=100)
+    reason: str = Field(min_length=1, max_length=500)
+
+
 class ProposalDecisionInput(BaseModel):
     status: ProposalStatus
     comment: str | None = None

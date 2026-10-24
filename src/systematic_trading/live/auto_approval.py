@@ -125,7 +125,7 @@ class PaperAutoApproval:
                 enabled_at=now if change.enabled else None, updated_at=now, operator=change.operator.strip(),
                 reason=change.reason.strip(), account=account, binding=self._binding(),
                 strategy_key=trading_definition(self.store).key, max_batch_notional_cnh=change.max_batch_notional_cnh,
-                history=[*self.policy.history, audit], message="Waiting for a new eligible strategy proposal." if change.enabled
+                history=[*self.policy.history, audit], message="Waiting for eligible strategy proposals and outstanding rebalance recovery." if change.enabled
                 else "Manual approval. Existing broker orders continue; no new automatic submissions."))
             previous, self.policy = self.policy, updated
             try:
@@ -150,6 +150,10 @@ class PaperAutoApproval:
         now = now or datetime.now(UTC)
         with ORDER_CONNECTION_LOCK:
             self.invalidate_stale_binding()
+            from systematic_trading.execution.window import expire_due_proposals
+            from systematic_trading.portfolio.rebalance_intents import sync_intents, route_issues, record_intent
+            expire_due_proposals(self.store, self.settings, now=now)
+            sync_intents(self.store, now=now)
             if not self.policy.enabled:
                 return
             # A policy bound to the active allocation may renew one expired
@@ -163,14 +167,18 @@ class PaperAutoApproval:
                     continue
                 started = monotonic()
                 try:
+                    if route_issues(self.store, proposal):
+                        continue
                     if not self._preflight(proposal, now):
                         continue
                     checked = now + timedelta(seconds=monotonic() - started)
                     self._account(checked)
                     if proposal_is_expired(proposal, self.settings, now=checked):
                         raise ValueError("Execution window elapsed during validation.")
-                    # Claim before the decision/route; crash recovery always requires manual review.
-                    self.policy.attempts[proposal.proposal_id] = dict(at=checked.isoformat(), outcome="claimed")
+                    # The phase distinguishes a conclusively unsubmitted claim from
+                    # legacy/unknown router outcomes. Real orders reserve before send.
+                    self.policy.attempts[proposal.proposal_id] = dict(at=checked.isoformat(), outcome="claimed",
+                        phase='before_router')
                     self._save()
                     approved = self.store.apply_decision(ApprovalDecision(proposal_id=proposal.proposal_id,
                         status=ProposalStatus.APPROVED, comment=f"Automatic paper policy revision {self.policy.revision}; enabled by {self.policy.operator}."),
@@ -180,6 +188,9 @@ class PaperAutoApproval:
                         self.policy.message = f'{proposal.proposal_id}: virtual capital transfer approved; no broker order needed.'
                         self._save()
                         return
+                    self.policy.attempts[proposal.proposal_id].update(phase='router_entered',
+                        reserve_before_send=type(self.router) is InteractiveBrokersOrderRouter)
+                    self._save()
                     result = self.router.submit_approved_proposal(proposal=approved, store=self.store,
                         environment=OrderEnvironment.PAPER, allow_resubmit=False)
                     complete = (not result.validation_issues and len(result.records) == len(proposal.orders) and
@@ -194,81 +205,101 @@ class PaperAutoApproval:
                     self.policy.message = f"{proposal.proposal_id}: {exc}"
                     if proposal.proposal_id in self.policy.attempts:
                         self.policy.attempts[proposal.proposal_id].update(outcome="review", error=str(exc))
+                    record_intent(self.store, proposal, now=now, reason=str(exc),
+                        next_retry_condition='Fresh reconciled account, complete prices/FX and a new eligible execution window.')
                     self._save()
-                # At most one candidate per cycle; portfolio must reconcile before another batch.
-                return
+                # Validation failures cannot starve later candidates. Once a claim
+                # exists, wait for reconciliation before considering another batch.
+                if proposal.proposal_id in self.policy.attempts:
+                    return
 
     def _renew_missed_rebalance(self, now):
-        """Renew one expired application-prepared rebalance for the bound allocation.
+        """Recover the newest outstanding objective under the bound paper policy.
 
-        Only a policy bound to the active allocation can renew, the source must carry
-        application-prepared account evidence, and any real broker attempt, rejected
-        decision, superseded allocation or session-limited catch-up authorization keeps
-        the intent manual. The successor keeps the original target intent and slippage
-        benchmark, gets a fresh window, and is routed only through the normal checks.
+        Expired or stale attempts get fresh residual sizing, lineage and approval.
+        Known working/uncertain orders, cancellations, supersession and limited
+        catch-up authority cannot be bypassed by renewing a window.
         """
         from systematic_trading.execution.window import expire_due_proposals, proposal_is_expired
-        from systematic_trading.live.deferred_rebalance import refresh_rebalance
-        from systematic_trading.portfolio.strategy_allocation import allocation_binding_issues
+        from systematic_trading.live.deferred_rebalance import refresh_rebalance, unresolved_submission_claim
+        from systematic_trading.portfolio.rebalance_intents import latest_rebalance, intent_state, CLOSED, record_intent
 
         definition = trading_definition(self.store)
         if definition.key != self.policy.strategy_key:
             return None
 
-        def prepared_sources():
-            return [p for p in self.store.list_proposals()
-                    if p.input_provenance.get('prepared_account')
-                    and p.input_provenance.get('allocation')
-                    and not allocation_binding_issues(self.store, p)]
-
-        def current_sources(sources):
-            replaced = {p.input_provenance.get('deferred_rebalance', {}).get('previous_proposal_id')
-                        for p in sources}
-            return [p for p in sources if p.proposal_id not in replaced
-                    and p.sleeve == definition.sleeve_name]
-
-        sources = prepared_sources()
-        candidates = current_sources(sources)
-        if not candidates:
+        try:
+            source = latest_rebalance(self.store)
+        except ValueError as exc:
+            self.policy.message = str(exc)
+            self._save()
+            return None
+        if source is None:
+            return None
+        if source.created_at > now:
+            self.policy.message = f'{source.proposal_id}: future-dated proposal requires clock/creation-time review.'
+            self._save()
             return None
         # Mark pending/approved windows that have elapsed as missed first, so the
         # durable missed-order audit exists before any renewal is created.
-        if any(p.status in {ProposalStatus.PENDING, ProposalStatus.APPROVED}
-               and proposal_is_expired(p, self.settings, now=now) for p in candidates):
+        if source.status in {ProposalStatus.PENDING, ProposalStatus.APPROVED} and proposal_is_expired(source, self.settings, now=now):
             expire_due_proposals(self.store, self.settings, now=now)
-            candidates = current_sources(prepared_sources())
-        for source in sorted(candidates, key=lambda p: p.created_at, reverse=True):
+            source = self.store.get_proposal(source.proposal_id)
+        candidates = [source]
+        for source in candidates:
+            if intent_state(self.store, source).get('status') in CLOSED:
+                continue
             if source.status not in {ProposalStatus.MISSED, ProposalStatus.PENDING, ProposalStatus.APPROVED}:
                 continue
-            if not proposal_is_expired(source, self.settings, now=now):
+            from systematic_trading.live.initial_allocation import initial_allocation_window
+            valuation_day, _, _ = initial_allocation_window(self.settings, now)
+            attempt = self.policy.attempts.get(source.proposal_id, {})
+            safely_unsubmitted = attempt.get('phase') == 'before_router' or attempt.get('reserve_before_send') is True
+            if not proposal_is_expired(source, self.settings, now=now) and not (
+                    source.status == ProposalStatus.PENDING and source.as_of < valuation_day) and not (
+                    attempt.get('outcome') in {'claimed', 'review'} and safely_unsubmitted):
                 continue
             if source.input_provenance.get('late_handover'):
                 # Operator catch-up authorization is explicitly session-limited.
                 continue
-            if source.proposal_id in self.policy.attempts:
+            if unresolved_submission_claim(self.store, source, attempt):
+                message = 'Legacy or uncertain submission claim requires reconciliation and operator review.'
+                record_intent(self.store, source, now=now, reason=message, next_retry_condition=message)
+                self.policy.message = f'{source.proposal_id}: {message}'
+                self._save()
                 continue
             previous = self.policy.renewals.get(source.proposal_id)
             if previous and previous.get('outcome') == 'renewed':
                 continue
             retry_at = self._renewal_retry_at.get(source.proposal_id)
+            if retry_at is None and previous and previous.get('next_retry_at'):
+                retry_at = datetime.fromisoformat(previous['next_retry_at'])
             if retry_at is not None and now < retry_at:
                 continue
             try:
                 renewed = refresh_rebalance(
                     self.settings, self.store, source.proposal_id, now=now,
                     automation_strategy_key=self.policy.strategy_key,
-                    automation_policy_revision=self.policy.revision)
+                    automation_policy_revision=self.policy.revision, order_client=self.order_client)
             except (ValueError, OSError) as exc:
                 self._renewal_retry_at[source.proposal_id] = now + timedelta(
                     seconds=self.RENEWAL_RETRY_SECONDS)
                 self.policy.renewals[source.proposal_id] = dict(
                     at=now.isoformat(), outcome='blocked', source_status=source.status.value,
-                    error=str(exc))
+                    error=str(exc), next_retry_at=self._renewal_retry_at[source.proposal_id].isoformat())
+                record_intent(self.store, source, now=now, reason=str(exc),
+                    next_retry_condition='Retry after cooldown with fresh reconciliation, terminal orders and complete prices/FX.')
                 self.policy.message = (f'{source.proposal_id}: automatic rebalance renewal is '
                     f'blocked: {exc}')
                 self._save()
                 return None
             self._renewal_retry_at.pop(source.proposal_id, None)
+            if intent_state(self.store, renewed).get('status') == 'completed':
+                self.policy.renewals[source.proposal_id] = dict(at=now.isoformat(), outcome='completed',
+                    source_status=source.status.value, proposal_id=renewed.proposal_id)
+                self.policy.message = f'{source.proposal_id}: reconciled objective completed; no residual order needed.'
+                self._save()
+                return renewed
             self.policy.renewals[source.proposal_id] = dict(
                 at=now.isoformat(), outcome='renewed', source_status=source.status.value,
                 source_intended_trade_date=str(source.intended_trade_date),
@@ -276,6 +307,8 @@ class PaperAutoApproval:
                 policy_revision=self.policy.revision)
             self.policy.message = (f'{source.proposal_id}: missed paper rebalance renewed as '
                 f'{renewed.proposal_id}; awaiting its TWAP window.')
+            record_intent(self.store, renewed, now=now, reason='Fresh residual proposal awaits approval and its TWAP window.',
+                next_retry_condition=f'TWAP session {renewed.intended_trade_date}; ordinary policy and broker preflight.')
             self._save()
             return renewed
         return None

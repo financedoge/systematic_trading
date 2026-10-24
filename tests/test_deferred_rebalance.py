@@ -84,9 +84,11 @@ def test_missed_intent_refreshes_offline_once_without_carrying_approval(case):
 
 def test_automatic_renewal_sets_policy_binding_but_still_requires_approval(case):
     settings, store, report, original = case
+    from test_initial_allocation import Orders
+    write_report(settings, report.model_copy(update={'checked_at': NOW}))
     expire_due_proposals(store, settings, now=NOW)
     saved = refresh_rebalance(settings, store, 'original', now=NOW,
-        automation_strategy_key='allocation-policy-key', automation_policy_revision=7)
+        automation_strategy_key='allocation-policy-key', automation_policy_revision=7, order_client=Orders())
     assert saved.status == ProposalStatus.PENDING
     assert saved.automation_strategy_key == 'allocation-policy-key'
     lineage = saved.input_provenance['deferred_rebalance']

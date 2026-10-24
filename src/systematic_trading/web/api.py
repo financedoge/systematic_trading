@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from systematic_trading.web.contracts import RebalanceCancellationInput
+
 import json
 import re
 from datetime import UTC, date
@@ -1213,6 +1215,16 @@ def decide_proposal(proposal_id: str, decision: ProposalDecisionInput, request: 
         )
     except KeyError as exc:
         raise HTTPException(status_code=404, detail=f"Unknown proposal: {proposal_id}") from exc
+
+
+@router.post("/proposals/{proposal_id}/cancel-rebalance")
+@serialized_orders
+def cancel_proposal_rebalance(proposal_id: str, cancellation: RebalanceCancellationInput, request: Request):
+    from systematic_trading.portfolio.rebalance_intents import cancel_intent
+    try:
+        return cancel_intent(_store(request), proposal_id, operator=cancellation.operator, reason=cancellation.reason)
+    except ValueError as exc:
+        raise HTTPException(409, str(exc)) from exc
 
 
 @router.post("/proposals/{proposal_id}/refresh-rebalance", response_model=TradeProposal)

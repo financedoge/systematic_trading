@@ -232,6 +232,12 @@ class TradingManagementService:
     def run_once(self, *, now: datetime | None = None) -> TradingServiceStatus:
         started = monotonic()
         current = _as_utc(now or datetime.now(tz=UTC))
+        from systematic_trading.execution.locks import ORDER_CONNECTION_LOCK
+        from systematic_trading.execution.window import expire_due_proposals
+        from systematic_trading.portfolio.rebalance_intents import sync_intents
+        with ORDER_CONNECTION_LOCK:
+            expire_due_proposals(self.store, self.settings, now=current)
+            sync_intents(self.store, now=current)
         self._consume_broker_recovery(current)
         from systematic_trading.live.strategy_control import activate_pending, handover_phase
         try:
@@ -287,6 +293,23 @@ class TradingManagementService:
         except Exception as exc:
             result = InitialAllocationResult(status="blocked", message=f"Portfolio alignment could not be validated: {exc}")
         with self._lock:
+            previous = self._status.portfolio_alignment
+            if not result.holdings and previous and previous.holdings:
+                result = result.model_copy(update=dict(holdings=previous.holdings,
+                    valuation_date=previous.valuation_date, target_as_of=previous.target_as_of,
+                    holdings_stale=True))
+            from systematic_trading.portfolio.rebalance_intents import latest_rebalance, recovery_summary, intent_state
+            try:
+                retained = latest_rebalance(self.store)
+            except ValueError as exc:
+                retained = None
+                result = result.model_copy(update=dict(status='blocked', message=str(exc)))
+            if retained is not None:
+                info = recovery_summary(self.store, retained, now)
+                info['next_retry_condition'] = (result.next_retry_condition or
+                    intent_state(self.store, retained).get('next_retry_condition') or
+                    'Resolve the displayed blocker; the application retries with fresh reconciliation and data.')
+                result = result.model_copy(update=info)
             changed = (self._status.portfolio_alignment_status, self._status.portfolio_alignment_message) != (result.status, result.message)
             updates = dict(portfolio_alignment_status=result.status, portfolio_alignment_message=result.message,
                 portfolio_alignment_proposal_id=result.proposal_id, portfolio_alignment=result,
@@ -295,7 +318,7 @@ class TradingManagementService:
                 updates.update(last_rebalance_proposal_id=result.proposal_id, last_rebalance_artifact_path=result.artifact_path)
             self._status = self._status.model_copy(update=updates)
             if changed:
-                self._record_event("portfolio_alignment", "warning" if result.status == "blocked" else "ok",
+                self._record_event("portfolio_alignment", "warning" if result.status in {"blocked", "review"} else "ok",
                     result.message, save=False, notify=False)
             self._save_status_locked()
 

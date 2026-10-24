@@ -73,6 +73,12 @@ this strategy. Monitoring conveys no promotion, funding or broker authority.
 
 ## Dated trading allocations
 
+Outstanding paper rebalance objectives use a separate `rebalance-intent:` scope
+in the existing transactional CAS/audit store. Expiration affects an execution
+attempt, not target adoption or the objective lifecycle. Successor windows require
+fresh residual sizing and normal approval; uncertain broker outcomes stay blocked.
+Cancellation and supersession survive restarts. See [rebalance recovery](rebalance-intent-recovery-2026-10-24.md).
+
 The operator can designate SOTA separately from a dated paper trading allocation.
 Transactional state and immutable events own approvals and handovers; the app's
 management and analytics services own activation, virtual strategy accounting and

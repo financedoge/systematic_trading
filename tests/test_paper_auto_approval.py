@@ -71,7 +71,7 @@ def fake_renewal(monkeypatch, store, source, *, fail=None):
     calls = []
 
     def refresh(settings, store, proposal_id, *, now=None, automation_strategy_key=None,
-                automation_policy_revision=None):
+                automation_policy_revision=None, order_client=None):
         calls.append(dict(proposal_id=proposal_id, automation_strategy_key=automation_strategy_key,
             automation_policy_revision=automation_policy_revision, now=now))
         if fail is not None:
@@ -178,6 +178,28 @@ def test_auto_policy_retries_a_blocked_renewal_after_cooldown(setup, monkeypatch
     assert len(calls) == 1  # Cooldown prevents a tight retry loop.
     controller.tick(now=at+timedelta(seconds=controller.RENEWAL_RETRY_SECONDS+1))
     assert len(calls) == 2
+
+
+@pytest.mark.parametrize("new_status", [ProposalStatus.PENDING, ProposalStatus.APPROVED, ProposalStatus.REJECTED])
+@pytest.mark.parametrize("new_prepared", [True, False])
+def test_auto_renewal_never_falls_back_to_an_older_independent_intent(setup, monkeypatch, new_status, new_prepared):
+    settings, store, _ = setup
+    source = missed_prepared_rebalance(setup)
+    newer = source.model_copy(update=dict(
+        proposal_id="newer-monthly-intent", created_at=source.created_at + timedelta(seconds=1),
+        status=new_status, execution_deadline_at=NOW + timedelta(hours=1),
+        input_provenance={k: v for k, v in source.input_provenance.items()
+                          if new_prepared or k != "prepared_account"}))
+    store.save_proposal(newer)
+    calls = fake_renewal(monkeypatch, store, source)
+    controller = PaperAutoApproval(settings, store, order_client=Orders(), router=Router())
+    configure(controller)
+    # The newer intent is not a lineage child of the old one. Its pending,
+    # submitted or rejected status must never resurrect the old target.
+    if new_status == ProposalStatus.APPROVED:
+        controller.policy.attempts[newer.proposal_id] = dict(outcome="submitted")
+    assert controller._renew_missed_rebalance(NOW + timedelta(minutes=3)) is None
+    assert not calls
 
 
 def test_renewed_rebalance_trigger_is_eligible_for_the_auto_policy(setup):

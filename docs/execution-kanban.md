@@ -6,6 +6,24 @@ are preserved byte-for-byte in the [history archive](archive/README.md).
 Use [research state](research-state.md) for accepted conclusions and the
 [research plan](signal-decay-and-alpha-plan.md) for the ordered research programme.
 
+## Outstanding rebalance recovery — 2026-10-24
+
+**Implemented and verified offline; runtime activation pending.** October 21 has
+three synthetic missed records, no automatic attempt or broker submission; its
+ordinary drift proposal was excluded from renewal and used stale forward pricing.
+Current alignment also lacks October 23 USD/CNH and HKD/CNH observations because
+IB history requests time out. Separate durable intent state now survives expiry,
+retains approved targets, rebuilds fresh residual attempts and records cancellation,
+completion and supersession. Background expiry, queue progress, dated drift/blocker
+visibility and account/claim guards are covered by 282 distinct focused checks
+across targeted runs, including disposable native PostgreSQL and Node UI checks;
+Ruff passes. Existing uncommitted work is preserved. The running app was not
+restarted: that would also activate unrelated pre-existing research edits.
+Next: coordinated application restart, fresh matched reconciliation and recovery
+of the missing observed FX; verify the successor in the normal enabled paper
+policy. No policy, allocation, approval or broker state was changed by this session.
+[Incident, contract and rollout notes](rebalance-intent-recovery-2026-10-24.md).
+
 ## Allocation theoretical NAV resumed through the latest audited session — 2026-10-20
 
 **Complete — calculation restarted and theoretical curve advanced to 2026-10-19.** The

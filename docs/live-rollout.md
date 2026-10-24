@@ -2,6 +2,12 @@
 
 ## Rebalance Execution Window
 
+The October 24 [intent recovery contract](rebalance-intent-recovery-2026-10-24.md)
+extends renewal to ordinary application strategy proposals and confirmed terminal
+partial executions. An expired window does not cancel its portfolio objective or
+erase approval/adopted targets. Unknown submissions remain blocked; fresh residual
+proposals still require normal approval, account, data and router checks.
+
 - Monthly signals are calculated from the decision-date close and scheduled orders target the next session open. Empty-account allocation and drift maintenance may propose a current-session TWAP using completed daily data and active targets; see [trading operations](trading-operations.md#initial-allocation-and-drift-monitoring).
 - `ST_EXECUTION_REBALANCE_TIMEOUT_MINUTES` controls how long after `ST_EXECUTION_TWAP_START_TIME` approval or retry remains allowed; default is 30 minutes in `ST_AUTOMATION_TIMEZONE`.
 - Pending proposals and approved proposals with failed or missing broker orders become `missed` after the deadline.
