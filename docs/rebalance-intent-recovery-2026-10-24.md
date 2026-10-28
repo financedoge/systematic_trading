@@ -1,5 +1,43 @@
 # Outstanding paper rebalance recovery — October 24, 2026
 
+## Historical-data and storage follow-up — October 29, 2026 (local)
+
+IB's account connection is available, but independent USD/CNH, EUR/USD and SPY
+daily-history requests all time out. Gateway reports cashhmds/ushmds disconnected.
+The historical-data reconnect has not been performed: Computer Use retained an
+Escape-stop state even after the operator authorized resuming interaction.
+
+Guarded retirement of 138 eligible old calculation directories reclaimed 24.897
+GiB. Generated storage fell from 38.8 to 13.907 GiB; the unchanged admission rule
+now passes. Current protected calculations and broker evidence remain intact,
+with immutable retirement receipts registered in native PostgreSQL. Services and
+backup/sync workers are restored. Fresh matched reconciliation allowed restoring
+the original paper account/allocation/cap as policy revision 25. An application
+refresh is queued, but verified strategy prices/NAV still end October 19.
+Historical data, current audited calculations and a normal recovery successor
+remain outstanding. Evidence: `var/maintenance/incident-20261029/` and
+`var/live/ib-diagnostics-2026-10-29.json`.
+
+## Runtime follow-up — October 28, 2026 (UTC)
+
+The service still ran October 20 code when the operator reported no resubmission.
+After 190 focused passing checks, the native dashboard/management process restarted
+at 16:04:53 UTC and its served API confirmed the repair was loaded. Fresh matched
+reconciliation permitted restoring the existing paper account/allocation/cap under
+policy revision 23. At 16:05:43 UTC the application recorded its first recovery
+attempt for the October 21 objective, retained as outstanding with target date
+October 16. It blocks on stale FR25 model publication (October 19 prices and batch
+9ce26f663281 versus required audited batch a58f943cb77f). The calculation workers
+are running again; a current verified publication has not yet been established.
+
+Portfolio alignment separately requires October 27 USD/CNH and HKD/CNH, whose
+last observations remain October 21. A read-only FX request still timed out after
+45 seconds with IB reporting disconnected cashhmds/ushmds historical-data services.
+No successor or new broker submission occurred. Restore Gateway historical-data
+connectivity and allow the app's audited acquisition, calculation and ordinary
+paper recovery checks to complete. The incident remains unresolved end to end.
+Evidence: `var/live/recovery-activation-2026-10-28/{before,activation,after}.json`.
+
 ## Local incident evidence
 
 Read-only inspection used the configured native PostgreSQL store and the saved
@@ -97,7 +135,7 @@ checks pass. No test uses
 the operational database for writes or submits to the user's broker.
 
 Source changes preserve the pre-existing uncommitted recovery and research work.
-Runtime activation is pending: the running app was not restarted because that also
+At the October 24 handoff runtime activation was pending: the app was not restarted because that also
 loads unrelated pre-existing uncommitted research changes. No policy, allocation,
 approval or broker state was changed. The missing FX observations remain a real dependency for any
 actual successor; a code deployment alone cannot establish portfolio alignment.

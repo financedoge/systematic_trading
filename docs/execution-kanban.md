@@ -6,6 +6,44 @@ are preserved byte-for-byte in the [history archive](archive/README.md).
 Use [research state](research-state.md) for accepted conclusions and the
 [research plan](signal-decay-and-alpha-plan.md) for the ordered research programme.
 
+## IB historical data and calculation admission — 2026-10-29
+
+**Storage recovered; IB historical data remains blocked.** Account reconciliation,
+server time and contract lookup work, while USD/CNH, EUR/USD and SPY daily history
+all time out. Gateway shows cashhmds/ushmds disconnected and apachmds connected.
+Guarded retirement removed 138 eligible old calculations (24.897 GiB), reducing
+generated storage to 13.907 GiB; admission now passes. All retirement receipts are
+registered in native PostgreSQL. Sixteen existing protected directories and the
+current/prior publications remain intact; one historical pin already had an
+October 17 retirement receipt. Membership and allocation controls are unchanged.
+Restarted operator/dispatcher and backup/sync workers; fresh matched reconciliation
+allowed restoring the same paper account/allocation/cap as policy revision 25.
+Requested app-owned refresh; current verified prices/NAV remain October 19.
+Interactive reconnect could not proceed because Computer Use retained its stopped
+session despite renewed operator authorization. Next refresh Gateway market-data
+connections, verify historical responses, then verify audited calculation catch-up
+and a normal policy successor. No new broker submission is established.
+Evidence: var/live/ib-diagnostics-2026-10-29.json and
+var/maintenance/incident-20261029/; retirement manifest
+var/maintenance/incident-20261029-tracked.json.
+
+## Rebalance recovery runtime activation — 2026-10-28
+
+**Activated; end-to-end recovery remains blocked.** The service still ran October
+20 code: its API lacked the committed repair. After 190 focused passing checks
+(including native PostgreSQL), restarted the dashboard/management service at
+2026-10-28 16:04:53 UTC. Temporarily paused paper policy revision 21 and restored
+the same account/allocation/CNH 1,000,000 cap as revision 23 after fresh matched
+reconciliation. Runtime now exposes the repair and persisted its first recovery
+attempt for the October 21 objective at 16:05:43 UTC. It correctly blocks on an
+outdated FR25 calculation (October 19 prices / batch 9ce26f663281 versus required
+a58f943cb77f). Alignment also lacks October 27 USD/CNH and HKD/CNH; latest rates
+remain October 21. A separate 45-second read-only FX probe timed out with IB
+cashhmds/ushmds disconnected. No successor or broker order was created. App-owned
+calculation catch-up is running; next restore Gateway historical data, let audited
+inputs/calculations catch up and verify a normal policy successor. Unrelated
+research edits were preserved. Evidence: var/live/recovery-activation-2026-10-28/.
+
 ## Outstanding rebalance recovery — 2026-10-24
 
 **Implemented and verified offline; runtime activation pending.** October 21 has

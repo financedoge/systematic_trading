@@ -1,5 +1,84 @@
 # Project Log
 
+## 2026-10-29 — Historical-data outage and guarded storage recovery
+
+The operator reports a connected IB Gateway but stale strategies and no recovered
+orders. Read-only account/server-time callbacks and contract resolution succeed.
+USD/CNH (resolved conId 113342317), EUR/USD (12087792) and SPY (756733) each time
+out without historical daily bars. Gateway's own display confirms apachmds ON
+and cashhmds/ushmds OFF; API connectivity does not establish historical-data
+availability. Diagnostic evidence is saved in
+`var/live/ib-diagnostics-2026-10-29.json`. The independent 20-second probes agree
+with the earlier 45-second USD/CNH timeout. No orders were sent by these probes.
+
+An independent admission failure blocked calculations at 38.8 GiB of generated
+artifacts against the existing 40 GiB limit plus 2 GiB work reserve. Temporarily
+paused the existing paper policy (23 -> 24), operator/dispatcher and backup/sync
+writers. Applied the existing guarded retention CLI with sealed manifest
+`var/maintenance/incident-20261029-tracked.json` (SHA-256 d13ba2c33d9586aab209f9d53adecb932e61720d2637dbfcd521d99a2eb9ac90).
+Retired 137 unused attempts older than seven days and one superseded complete
+calculation, reclaiming 24.897 GiB. Verified all 138 immutable receipts and native
+PostgreSQL retirement rows. Generated footprint is now 13.907 GiB and admission
+passes without changing limits. All 16 existing protected directories remain;
+the seventeenth protected reference was already retired on October 17, as its
+prior receipt confirms. Latest two complete publications, membership and allocation
+control snapshots are unchanged. No audited history or broker evidence was retired.
+
+Restarted dashboard PID 82036, dispatcher 43096, database sync 68592 and backup
+71512; temporary stop/pause markers are cleared and local recovery is running.
+Fresh reconciliation at 2026-10-28 16:26:20 UTC matched the paper account with no
+warnings or breaks. Restored the same DU8959779 account, allocation binding and
+CNH 1,000,000 cap through the audited policy API as revision 25. Requested an
+application-owned strategy refresh. Published strategy prices and NAV are still
+October 19 versus required October 27; queued refresh is not verified completion.
+The last observed historical farm status remains disconnected. Existing unrelated
+NAS backup timeout and broad daily/intraday coverage problems remain visible.
+
+Computer Use reported an Escape stop. After the operator explicitly authorized
+continuing interactive work, it still rejected the next call as stopped, so no
+further UI calls were made. The proposed market-data reconnect shortcut was not
+sent. Next resume interactive Gateway diagnosis, verify historical bars, let the
+app ingest/audit and calculate current inputs, then verify normal paper recovery.
+Do not claim the order incident fixed end to end. Compact retention, reconciliation,
+policy and runtime verification is in `var/maintenance/incident-20261029/`.
+
+## 2026-10-28 — Activate the rebalance repair and verify remaining blockers
+
+The operator reported no resubmission since October 21. Inspection confirmed
+that commit 8874c49 had never reached the running application: dashboard PID
+24488 and its management service started October 20, and served OpenAPI lacked
+the new cancellation route. The October 21 batch still had only synthetic missed
+records. The last actual broker submission remains October 19 at 16:50:27 UTC.
+Offline implementation and Git publication had not completed operational recovery.
+
+190 focused tests passed on the current checkout, including disposable native
+PostgreSQL, residual recovery, auto approval, management, UI and strategy contracts.
+Paused existing paper policy revision 21 via the audited API (revision 22),
+restarted the operator stack using its native PostgreSQL/Parquet launcher, and
+verified new dashboard PID 67664 / management start 2026-10-28 16:04:53 UTC.
+Fresh broker reconciliation matched. Restored the same account, allocation and
+CNH 1,000,000 cap via the ordinary policy API as revision 23. Live stays disabled;
+no allocation change, target substitution or forced order was performed.
+
+The running repair persisted the October 21 objective as outstanding with its
+effective October 16 target date, exposed pending age/retry conditions, and recorded
+an automatic recovery attempt at 16:05:43 UTC. The attempt blocks on stale model
+publication: FR25 prices through October 19, model batch 9ce26f663281, required
+audited batch a58f943cb77f. The app's calculation workers restarted and are catching
+up; their previous source-change/restart error is no longer present. This does
+not yet establish a current verified strategy calculation.
+
+Alignment also requires October 27 USD/CNH and HKD/CNH, both last observed October
+21. An independent read-only USD/CNH request with a 45-second timeout still failed;
+IB reports cashhmds and ushmds disconnected despite working account reconciliation.
+No successor was produced and submission attempts are unchanged. Next restore
+Gateway's historical-data connection, allow normal audited acquisition/calculation
+and paper-policy retries, then verify the successor and broker evidence. Do not
+claim end-to-end recovery until those steps pass. No Gateway login/2FA or data
+freshness guard was bypassed. Existing unrelated research changes remain intact.
+Compact before/activation/after evidence and prior error-log tail are retained in
+`var/live/recovery-activation-2026-10-28/`.
+
 ## 2026-10-24 — Diagnose October 21 missed batch and implement durable intent recovery
 
 The operator supplied an external code review and requested both local diagnosis
