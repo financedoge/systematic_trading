@@ -1,0 +1,11 @@
+[
+  "\\rho=2^{-1/126},\\quad(N,S,W)\\leftarrow\\rho(N,S,W),\\quad N_{train}\\leq4",
+  "\\mathrm{reset\\ at}\\ r:\\quad(N_j,S_j,W_j,F_j)\\leftarrow(0,0,0,0)\\quad\\forall j",
+  "\\mu_j\\sim N(0,1/4),\\quad p_j\\sim\\mathrm{Beta}(1,1),\\quad \\mathrm{admit\\ trade}\\ i\\ \\mathrm{only\\ if}\\ entry_i>r",
+  "\\widehat\\mu_j=\\frac{S_j}{4+N_j},\\quad sd_j=\\frac{1}{\\sqrt{4+N_j}},\\quad u_j=\\widehat\\mu_j-0.25sd_j",
+  "\\tau=\\max(\\sigma_{winning\\ returns},2f,10^{-6}),\\quad D_t=1-\\frac{NAV_t}{\\max_{r\\leq s\\leq t}NAV_s}",
+  "\\mathrm{loss\\ trigger}:\\quad L\\in\\{3,4\\}\\ \\mathrm{or}\\ R< -\\tau\\ \\mathrm{or}\\ D_t\\geq\\max(0.10,2\\tau)",
+  "J_t(i,j)=\\frac{\\alpha_{t-1}(i)A_{ij}\\mathcal{L}_t(j)}{\\sum_{a,b}\\alpha_{t-1}(a)A_{ab}\\mathcal{L}_t(b)},\\quad q_t=1-\\sum_iJ_t(i,i)",
+  "q_t\\geq0.8,\\quad \\alpha_t(j),\\alpha_{t+1}(j),\\alpha_{t+2}(j)\\geq0.9\\quad\\Rightarrow\\mathrm{event\\ at}\\ t+2",
+  "\\Delta t_{all\\ resets}\\geq20,\\quad\\Delta t_{HMM\\ resets}\\geq63,\\quad \\ell_{t+1}=\\max(\\ell_t,M_t-k_t\\hat\\sigma O_{entry})"
+]

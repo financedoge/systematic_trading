@@ -1,0 +1,701 @@
+{
+  "intervals": [
+    {
+      "start": "2023-09-01",
+      "end": "2024-01-31",
+      "trough": "2023-10-19",
+      "peak": "2023-12-27",
+      "hindsight_trough_to_peak": 0.22629506911543085,
+      "variants": [
+        {
+          "variant": "baseline",
+          "interval_net_return": -0.021058896174529385,
+          "held_fraction": 0.2980769230769231,
+          "trades": [
+            {
+              "entry": "2023-12-15",
+              "exit": "2024-03-04",
+              "entry_price": 87.69797815462822,
+              "exit_price": 83.7941067115362,
+              "peak_date": "2023-12-27",
+              "peak_gain": 0.018441429219109295,
+              "net_return": -0.045469961310365625,
+              "reason": "fast_down"
+            }
+          ]
+        },
+        {
+          "variant": "selected",
+          "interval_net_return": 0.09244886783802797,
+          "held_fraction": 0.40384615384615385,
+          "trades": [
+            {
+              "entry": "2023-11-03",
+              "exit": "2024-01-05",
+              "entry_price": 78.41665430536511,
+              "exit_price": 85.75189425527752,
+              "peak_date": "2023-12-27",
+              "peak_gain": 0.13898323006258395,
+              "net_return": 0.09244886783802775,
+              "reason": "protection"
+            }
+          ]
+        },
+        {
+          "variant": "independent_uniform_price",
+          "interval_net_return": 0.09244886783802819,
+          "held_fraction": 0.40384615384615385,
+          "trades": [
+            {
+              "entry": "2023-11-03",
+              "exit": "2024-01-05",
+              "entry_price": 78.41665430536511,
+              "exit_price": 85.75189425527752,
+              "peak_date": "2023-12-27",
+              "peak_gain": 0.13898323006258395,
+              "net_return": 0.09244886783802775,
+              "reason": "protection"
+            }
+          ]
+        },
+        {
+          "variant": "independent_uniform_volume",
+          "interval_net_return": 0.09244886783802819,
+          "held_fraction": 0.40384615384615385,
+          "trades": [
+            {
+              "entry": "2023-11-03",
+              "exit": "2024-01-05",
+              "entry_price": 78.41665430536511,
+              "exit_price": 85.75189425527752,
+              "peak_date": "2023-12-27",
+              "peak_gain": 0.13898323006258395,
+              "net_return": 0.09244886783802775,
+              "reason": "protection"
+            }
+          ]
+        },
+        {
+          "variant": "independent_context_price",
+          "interval_net_return": 0.09244886783802819,
+          "held_fraction": 0.40384615384615385,
+          "trades": [
+            {
+              "entry": "2023-11-03",
+              "exit": "2024-01-05",
+              "entry_price": 78.41665430536511,
+              "exit_price": 85.75189425527752,
+              "peak_date": "2023-12-27",
+              "peak_gain": 0.13898323006258395,
+              "net_return": 0.09244886783802775,
+              "reason": "protection"
+            }
+          ]
+        },
+        {
+          "variant": "independent_context_volume",
+          "interval_net_return": 0.09244886783802819,
+          "held_fraction": 0.40384615384615385,
+          "trades": [
+            {
+              "entry": "2023-11-03",
+              "exit": "2024-01-05",
+              "entry_price": 78.41665430536511,
+              "exit_price": 85.75189425527752,
+              "peak_date": "2023-12-27",
+              "peak_gain": 0.13898323006258395,
+              "net_return": 0.09244886783802775,
+              "reason": "protection"
+            }
+          ]
+        },
+        {
+          "variant": "coupled_uniform_price",
+          "interval_net_return": 0.09244886783802797,
+          "held_fraction": 0.40384615384615385,
+          "trades": [
+            {
+              "entry": "2023-11-03",
+              "exit": "2024-01-05",
+              "entry_price": 78.41665430536511,
+              "exit_price": 85.75189425527752,
+              "peak_date": "2023-12-27",
+              "peak_gain": 0.13898323006258395,
+              "net_return": 0.09244886783802775,
+              "reason": "protection"
+            }
+          ]
+        },
+        {
+          "variant": "coupled_uniform_volume",
+          "interval_net_return": 0.09244886783802841,
+          "held_fraction": 0.40384615384615385,
+          "trades": [
+            {
+              "entry": "2023-11-03",
+              "exit": "2024-01-05",
+              "entry_price": 78.41665430536511,
+              "exit_price": 85.75189425527752,
+              "peak_date": "2023-12-27",
+              "peak_gain": 0.13898323006258395,
+              "net_return": 0.09244886783802775,
+              "reason": "protection"
+            }
+          ]
+        },
+        {
+          "variant": "coupled_context_price",
+          "interval_net_return": 0.09244886783802797,
+          "held_fraction": 0.40384615384615385,
+          "trades": [
+            {
+              "entry": "2023-11-03",
+              "exit": "2024-01-05",
+              "entry_price": 78.41665430536511,
+              "exit_price": 85.75189425527752,
+              "peak_date": "2023-12-27",
+              "peak_gain": 0.13898323006258395,
+              "net_return": 0.09244886783802775,
+              "reason": "protection"
+            }
+          ]
+        },
+        {
+          "variant": "coupled_context_volume",
+          "interval_net_return": 0.09244886783802841,
+          "held_fraction": 0.40384615384615385,
+          "trades": [
+            {
+              "entry": "2023-11-03",
+              "exit": "2024-01-05",
+              "entry_price": 78.41665430536511,
+              "exit_price": 85.75189425527752,
+              "peak_date": "2023-12-27",
+              "peak_gain": 0.13898323006258395,
+              "net_return": 0.09244886783802775,
+              "reason": "protection"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "start": "2024-06-03",
+      "end": "2024-10-31",
+      "trough": "2024-07-01",
+      "peak": "2024-09-16",
+      "hindsight_trough_to_peak": 0.1344525950649995,
+      "variants": [
+        {
+          "variant": "baseline",
+          "interval_net_return": 0.004692450177761209,
+          "held_fraction": 0.8207547169811321,
+          "trades": [
+            {
+              "entry": "2024-06-27",
+              "exit": "2024-10-30",
+              "entry_price": 84.49152374267578,
+              "exit_price": 84.97292646952039,
+              "peak_date": "2024-09-16",
+              "peak_gain": 0.09413043853192837,
+              "net_return": 0.0046924501777620975,
+              "reason": "fast_down"
+            }
+          ]
+        },
+        {
+          "variant": "selected",
+          "interval_net_return": -0.009818619240284376,
+          "held_fraction": 0.5283018867924528,
+          "trades": [
+            {
+              "entry": "2024-06-05",
+              "exit": "2024-07-02",
+              "entry_price": 84.02171177789741,
+              "exit_price": 82.1862991908947,
+              "peak_date": "2024-06-14",
+              "peak_gain": 0.01795705990889962,
+              "net_return": -0.022822170282000065,
+              "reason": "protection"
+            },
+            {
+              "entry": "2024-08-02",
+              "exit": "2024-09-26",
+              "entry_price": 88.20739563767549,
+              "exit_price": 89.47061953326872,
+              "peak_date": "2024-09-16",
+              "peak_gain": 0.048038514871641125,
+              "net_return": 0.013307251399132358,
+              "reason": "protection"
+            }
+          ]
+        },
+        {
+          "variant": "independent_uniform_price",
+          "interval_net_return": -0.009818619240284376,
+          "held_fraction": 0.5283018867924528,
+          "trades": [
+            {
+              "entry": "2024-06-05",
+              "exit": "2024-07-02",
+              "entry_price": 84.02171177789741,
+              "exit_price": 82.1862991908947,
+              "peak_date": "2024-06-14",
+              "peak_gain": 0.01795705990889962,
+              "net_return": -0.022822170282000065,
+              "reason": "protection"
+            },
+            {
+              "entry": "2024-08-02",
+              "exit": "2024-09-26",
+              "entry_price": 88.20739563767549,
+              "exit_price": 89.47061953326872,
+              "peak_date": "2024-09-16",
+              "peak_gain": 0.048038514871641125,
+              "net_return": 0.013307251399132358,
+              "reason": "protection"
+            }
+          ]
+        },
+        {
+          "variant": "independent_uniform_volume",
+          "interval_net_return": -0.009818619240284265,
+          "held_fraction": 0.5283018867924528,
+          "trades": [
+            {
+              "entry": "2024-06-05",
+              "exit": "2024-07-02",
+              "entry_price": 84.02171177789741,
+              "exit_price": 82.1862991908947,
+              "peak_date": "2024-06-14",
+              "peak_gain": 0.01795705990889962,
+              "net_return": -0.022822170282000065,
+              "reason": "protection"
+            },
+            {
+              "entry": "2024-08-02",
+              "exit": "2024-09-26",
+              "entry_price": 88.20739563767549,
+              "exit_price": 89.47061953326872,
+              "peak_date": "2024-09-16",
+              "peak_gain": 0.048038514871641125,
+              "net_return": 0.013307251399132358,
+              "reason": "protection"
+            }
+          ]
+        },
+        {
+          "variant": "independent_context_price",
+          "interval_net_return": -0.009818619240284376,
+          "held_fraction": 0.5283018867924528,
+          "trades": [
+            {
+              "entry": "2024-06-05",
+              "exit": "2024-07-02",
+              "entry_price": 84.02171177789741,
+              "exit_price": 82.1862991908947,
+              "peak_date": "2024-06-14",
+              "peak_gain": 0.01795705990889962,
+              "net_return": -0.022822170282000065,
+              "reason": "protection"
+            },
+            {
+              "entry": "2024-08-02",
+              "exit": "2024-09-26",
+              "entry_price": 88.20739563767549,
+              "exit_price": 89.47061953326872,
+              "peak_date": "2024-09-16",
+              "peak_gain": 0.048038514871641125,
+              "net_return": 0.013307251399132358,
+              "reason": "protection"
+            }
+          ]
+        },
+        {
+          "variant": "independent_context_volume",
+          "interval_net_return": -0.009818619240284265,
+          "held_fraction": 0.5283018867924528,
+          "trades": [
+            {
+              "entry": "2024-06-05",
+              "exit": "2024-07-02",
+              "entry_price": 84.02171177789741,
+              "exit_price": 82.1862991908947,
+              "peak_date": "2024-06-14",
+              "peak_gain": 0.01795705990889962,
+              "net_return": -0.022822170282000065,
+              "reason": "protection"
+            },
+            {
+              "entry": "2024-08-02",
+              "exit": "2024-09-26",
+              "entry_price": 88.20739563767549,
+              "exit_price": 89.47061953326872,
+              "peak_date": "2024-09-16",
+              "peak_gain": 0.048038514871641125,
+              "net_return": 0.013307251399132358,
+              "reason": "protection"
+            }
+          ]
+        },
+        {
+          "variant": "coupled_uniform_price",
+          "interval_net_return": -0.009818619240284376,
+          "held_fraction": 0.5283018867924528,
+          "trades": [
+            {
+              "entry": "2024-06-05",
+              "exit": "2024-07-02",
+              "entry_price": 84.02171177789741,
+              "exit_price": 82.1862991908947,
+              "peak_date": "2024-06-14",
+              "peak_gain": 0.01795705990889962,
+              "net_return": -0.022822170282000065,
+              "reason": "protection"
+            },
+            {
+              "entry": "2024-08-02",
+              "exit": "2024-09-26",
+              "entry_price": 88.20739563767549,
+              "exit_price": 89.47061953326872,
+              "peak_date": "2024-09-16",
+              "peak_gain": 0.048038514871641125,
+              "net_return": 0.013307251399132358,
+              "reason": "protection"
+            }
+          ]
+        },
+        {
+          "variant": "coupled_uniform_volume",
+          "interval_net_return": -0.009818619240284487,
+          "held_fraction": 0.5283018867924528,
+          "trades": [
+            {
+              "entry": "2024-06-05",
+              "exit": "2024-07-02",
+              "entry_price": 84.02171177789741,
+              "exit_price": 82.1862991908947,
+              "peak_date": "2024-06-14",
+              "peak_gain": 0.01795705990889962,
+              "net_return": -0.022822170282000065,
+              "reason": "protection"
+            },
+            {
+              "entry": "2024-08-02",
+              "exit": "2024-09-26",
+              "entry_price": 88.20739563767549,
+              "exit_price": 89.47061953326872,
+              "peak_date": "2024-09-16",
+              "peak_gain": 0.048038514871641125,
+              "net_return": 0.013307251399132358,
+              "reason": "protection"
+            }
+          ]
+        },
+        {
+          "variant": "coupled_context_price",
+          "interval_net_return": -0.009818619240284376,
+          "held_fraction": 0.5283018867924528,
+          "trades": [
+            {
+              "entry": "2024-06-05",
+              "exit": "2024-07-02",
+              "entry_price": 84.02171177789741,
+              "exit_price": 82.1862991908947,
+              "peak_date": "2024-06-14",
+              "peak_gain": 0.01795705990889962,
+              "net_return": -0.022822170282000065,
+              "reason": "protection"
+            },
+            {
+              "entry": "2024-08-02",
+              "exit": "2024-09-26",
+              "entry_price": 88.20739563767549,
+              "exit_price": 89.47061953326872,
+              "peak_date": "2024-09-16",
+              "peak_gain": 0.048038514871641125,
+              "net_return": 0.013307251399132358,
+              "reason": "protection"
+            }
+          ]
+        },
+        {
+          "variant": "coupled_context_volume",
+          "interval_net_return": -0.009818619240284487,
+          "held_fraction": 0.5283018867924528,
+          "trades": [
+            {
+              "entry": "2024-06-05",
+              "exit": "2024-07-02",
+              "entry_price": 84.02171177789741,
+              "exit_price": 82.1862991908947,
+              "peak_date": "2024-06-14",
+              "peak_gain": 0.01795705990889962,
+              "net_return": -0.022822170282000065,
+              "reason": "protection"
+            },
+            {
+              "entry": "2024-08-02",
+              "exit": "2024-09-26",
+              "entry_price": 88.20739563767549,
+              "exit_price": 89.47061953326872,
+              "peak_date": "2024-09-16",
+              "peak_gain": 0.048038514871641125,
+              "net_return": 0.013307251399132358,
+              "reason": "protection"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "models": {
+    "0_0": {
+      "coefficients": [
+        0.015000000000011105,
+        0.026080531693668342,
+        0.01500000000000186,
+        0.04622845376740103
+      ],
+      "daily_sigma": 0.008989693986849031,
+      "joint_mean_daily_bp": [
+        -2.696908196055875,
+        -1.348454098028353,
+        2.8073424305129815,
+        -1.348454098027522,
+        0.0,
+        4.155796528541335,
+        0.9961058913764368,
+        2.3445599894039586,
+        6.500356517945294
+      ],
+      "slow_conditional_durations": [
+        [
+          140.1758685186508,
+          140.1758685186508,
+          140.1758685186508
+        ],
+        [
+          184.27866319141626,
+          184.27866319141626,
+          184.27866319141626
+        ],
+        [
+          168.34295309888162,
+          168.34295309888162,
+          168.34295309888162
+        ]
+      ],
+      "fast_conditional_durations": [
+        [
+          12.065204765601491,
+          12.065204765601491,
+          12.065204765601491
+        ],
+        [
+          13.831365642576069,
+          13.831365642576069,
+          13.831365642576069
+        ],
+        [
+          12.382109236374502,
+          12.382109236374502,
+          12.382109236374502
+        ]
+      ],
+      "transition_row_error": 2.220446049250313e-16
+    },
+    "0_1": {
+      "coefficients": [
+        0.015000000000012706,
+        0.02612155887982266,
+        0.015000000000002147,
+        0.046448666528245926
+      ],
+      "daily_sigma": 0.008989693986849038,
+      "joint_mean_daily_bp": [
+        -2.696908196056047,
+        -1.348454098028498,
+        2.827138883832788,
+        -1.3484540980275488,
+        0.0,
+        4.175592981861286,
+        0.9997941098630998,
+        2.3482482078906486,
+        6.523841189751934
+      ],
+      "slow_conditional_durations": [
+        [
+          140.3078004176517,
+          140.3078004176517,
+          140.3078004176517
+        ],
+        [
+          184.65019627516617,
+          184.65019627516617,
+          184.65019627516617
+        ],
+        [
+          167.6881579342907,
+          167.6881579342907,
+          167.6881579342907
+        ]
+      ],
+      "fast_conditional_durations": [
+        [
+          12.070465660981686,
+          12.070465660981686,
+          12.070465660981686
+        ],
+        [
+          13.83784320899161,
+          13.83784320899161,
+          13.83784320899161
+        ],
+        [
+          12.365243173996525,
+          12.365243173996525,
+          12.365243173996525
+        ]
+      ],
+      "transition_row_error": 1.1102230246251565e-16
+    },
+    "1_0": {
+      "coefficients": [
+        0.01500000000003897,
+        0.02726558496797082,
+        0.015000000000007774,
+        0.04583233310378552
+      ],
+      "daily_sigma": 0.008989693986849031,
+      "joint_mean_daily_bp": [
+        -2.696908196058912,
+        -1.3484540980308581,
+        2.7717323950327666,
+        -1.3484540980280535,
+        0.0,
+        4.120186493063625,
+        1.1026385543168327,
+        2.4510926523448866,
+        6.57127914540851
+      ],
+      "slow_conditional_durations": [
+        [
+          141.45375754667387,
+          140.48865389872438,
+          147.928567432364
+        ],
+        [
+          175.6050643577062,
+          183.55400576620337,
+          182.82172524747347
+        ],
+        [
+          179.49888747781375,
+          175.72739885961906,
+          158.51187112820958
+        ]
+      ],
+      "fast_conditional_durations": [
+        [
+          11.287305424657674,
+          11.625025488559421,
+          13.187061442525614
+        ],
+        [
+          13.557217405782806,
+          13.888571428261628,
+          13.879541033025143
+        ],
+        [
+          14.05647831389537,
+          12.658362948759795,
+          11.031466621216065
+        ]
+      ],
+      "transition_row_error": 1.1102230246251565e-16
+    },
+    "1_1": {
+      "coefficients": [
+        0.015000000000046079,
+        0.02732506011236193,
+        0.01500000000000924,
+        0.04601088986411135
+      ],
+      "daily_sigma": 0.008989693986849038,
+      "joint_mean_daily_bp": [
+        -2.6969081960596846,
+        -1.348454098031498,
+        2.7877841013782536,
+        -1.3484540980281863,
+        0.0,
+        4.1362381994097515,
+        1.1079851877956992,
+        2.4564392858238855,
+        6.5926774852336365
+      ],
+      "slow_conditional_durations": [
+        [
+          141.5817026942432,
+          140.60612327487183,
+          148.1025693521704
+        ],
+        [
+          175.87065565797312,
+          183.87307547382633,
+          183.08909638609313
+        ],
+        [
+          178.93609627825776,
+          175.15458607608437,
+          157.9345979878347
+        ]
+      ],
+      "fast_conditional_durations": [
+        [
+          11.290410233609185,
+          11.628826557967574,
+          13.197491225407488
+        ],
+        [
+          13.560958361446882,
+          13.895728635426876,
+          13.886454971518653
+        ],
+        [
+          14.046429255390098,
+          12.64292984955227,
+          11.010136752299594
+        ]
+      ],
+      "transition_row_error": 0.0
+    }
+  },
+  "regime_diagnostics": {
+    "selected_policy": {
+      "entry": 0.35,
+      "exit": 0.35,
+      "aligned_exit": 0.65,
+      "reset": 0.35,
+      "tight": 4.0,
+      "wide": 8.0,
+      "coupled": true,
+      "context": false,
+      "volume": false,
+      "label": "coupled_uniform_price"
+    },
+    "evaluation_sessions": 951,
+    "confirmed_slow_up_sessions": 0,
+    "confirmed_slow_down_sessions": 0,
+    "slow_down_probability_range": [
+      0.23580253004263974,
+      0.3775300812274955
+    ],
+    "fast_up_probability_range": [
+      0.25839339549941076,
+      0.4072958177368332
+    ],
+    "positive_forecast_sessions": 951
+  },
+  "interpretation": "Extrema and peak gains are hindsight diagnostics, not entry targets. Interval returns include carried positions. Trade outcomes can extend beyond interval. Prices before2023 are context only in later charts; no future-trained state labels painted there."
+}

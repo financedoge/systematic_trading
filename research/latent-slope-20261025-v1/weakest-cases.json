@@ -1,0 +1,112 @@
+{
+  "late": {
+    "symbol": "WEAT",
+    "family": "switch",
+    "cumulative": -0.3251227124456674,
+    "sharpe": -0.6188384085746061,
+    "maxdd": -0.35107316062763994,
+    "criterion": "Lowest net cumulative return among risky ETFs under their training-selected policy; 5 bp/side, next open.",
+    "closed_trades": 14,
+    "losing_trades": 10,
+    "accounting": {
+      "net_log_return": -0.3932244008523457,
+      "captured_market_log_return": -0.3792243996856786,
+      "uninvested_market_log_return": -0.12909813210477342,
+      "fee_log_drag": 0.014000001166666842,
+      "gross_cumulative": -0.31560798192010375,
+      "net_cumulative": -0.3251227124456673,
+      "fee_cumulative_drag": 0.009514730525563564,
+      "max_daily_accounting_error": 2.489328188026718e-16
+    },
+    "worst_trades": [
+      {
+        "entry": "2023-02-15",
+        "exit": "2023-02-27",
+        "entry_index": 2573,
+        "exit_index": 2580,
+        "entry_price": 39.79999923706055,
+        "exit_or_mark": 36.25,
+        "reason": "protection",
+        "net_return": -0.09010631130311997,
+        "carried": false
+      },
+      {
+        "entry": "2023-12-06",
+        "exit": "2024-01-19",
+        "entry_index": 2776,
+        "exit_index": 2805,
+        "entry_price": 30.299999237060547,
+        "exit_or_mark": 28.200000762939453,
+        "reason": "fast_down",
+        "net_return": -0.07023711008306222,
+        "carried": false
+      },
+      {
+        "entry": "2023-01-03",
+        "exit": "2023-01-11",
+        "entry_index": 2543,
+        "exit_index": 2549,
+        "entry_price": 39.900001525878906,
+        "exit_or_mark": 37.150001525878906,
+        "reason": "fast_down",
+        "net_return": -0.06985291551932027,
+        "carried": false
+      }
+    ]
+  },
+  "early": {
+    "symbol": "MCHI",
+    "family": "slope",
+    "cumulative": -0.2979901095735701,
+    "sharpe": -0.4746007647826367,
+    "maxdd": -0.5630063187466144,
+    "criterion": "Lowest net cumulative return among risky ETFs under their training-selected policy; 5 bp/side, next open.",
+    "closed_trades": 26,
+    "losing_trades": 19,
+    "accounting": {
+      "net_log_return": -0.35380778612903563,
+      "captured_market_log_return": -0.3278077839623684,
+      "uninvested_market_log_return": 0.06948160909720416,
+      "fee_log_drag": 0.026000002166666994,
+      "gross_cumulative": -0.27949850166091383,
+      "net_cumulative": -0.29799010957357014,
+      "fee_cumulative_drag": 0.018491607912656305,
+      "max_daily_accounting_error": 2.688821387764051e-16
+    },
+    "worst_trades": [
+      {
+        "entry": "2022-05-03",
+        "exit": "2022-05-09",
+        "entry_index": 2598,
+        "exit_index": 2602,
+        "entry_price": 46.01280734842742,
+        "exit_or_mark": 41.76768886479399,
+        "reason": "protection",
+        "net_return": -0.0931667843395998,
+        "carried": false
+      },
+      {
+        "entry": "2022-08-26",
+        "exit": "2022-09-07",
+        "entry_index": 2678,
+        "exit_index": 2685,
+        "entry_price": 46.8683718273272,
+        "exit_or_mark": 42.89785899232838,
+        "reason": "protection",
+        "net_return": -0.08563107911166434,
+        "carried": false
+      },
+      {
+        "entry": "2022-01-12",
+        "exit": "2022-01-27",
+        "entry_index": 2522,
+        "exit_index": 2532,
+        "entry_price": 58.55030436526476,
+        "exit_or_mark": 54.67394513061884,
+        "reason": "fast_down",
+        "net_return": -0.06713894827842615,
+        "carried": false
+      }
+    ]
+  }
+}

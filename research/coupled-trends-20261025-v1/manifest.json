@@ -1,0 +1,30 @@
+{
+  "files": {
+    "2023-rebound.png": "82543793a25085ddda80897f5ec8b19918ae1ce5d4f181cf6ff1c52a9fa4d2dc",
+    "2024-rebound.png": "f50681841d51cf3d9bf1ec15dca7000b8ec1e4388fcc1cd6fe14a5a7e0744cb0",
+    "asset-control-validation.json": "b180e55490b7b93618f760d9bfbdb4fa05cdf018c8c8cf2bfe9845c2a5e49800",
+    "asset-results.json": "6eeaf58769b325eb0f0e0b6f79408db6fe469337d6424cb4fd0804240628ec10",
+    "chart-data.json": "a1c33f7b77bf188fed721a837d08b90e42cc3e0bf400f96e5d78ee4901a93175",
+    "control-validation.json": "036aad8e1ee68f4f19b629994d7e108b7d1b964415029cc902a88d1823dc7a4e",
+    "diagnostics.json": "cd92522cff0b8103992c6bb5880f67ffc3269710282448270528fb895abea4d7",
+    "fit-manifest.json": "461590362747a3c4d8389f311859b462186763063f111de7dafb57f46d33421c",
+    "full-etf-table.csv": "ac1f582bcb591ea0de4966f8001a01d3662387baccafb21efa810d4f190a37c6",
+    "index.html": "c3bad27da21b5b2fa790dc0d6a8e1bb2f7479f23cac56b09a2b13c6561f01499",
+    "native-checks.json": "18f30ac3cf5aaacd840142d32a90b1fde01be8a125d861d7b202fdfb3a917315",
+    "portfolio-results.json": "81bb97914451c5da8492c3d9249868705afed9890a734c15b881f2c35946aa37",
+    "protocol.json": "80b4e47541b5d047e59805191c56bd0fd622fe7696f04036922c6d8c35d5f25f",
+    "selected-parameters.json": "03bdbf48cfb80006d23ae227bc44c62d91ad98ad3b74ff88337950d746417b47",
+    "summary.json": "862fa072edaf56d0f93bbf6033ba29a7b5bd3b7f41317822a1ab245a283103be",
+    "tlt-case-audit.json": "94056bea5d64c17448a7c3027a2633cedf2957ab4ba6db2ac01e98e9a8c617ef",
+    "TLT_early_selected.png": "53de032b4b85df5199c77a1c3b87b03e1f12baaa1e848a7ad0e308a1d074f91c",
+    "TLT_late_selected.png": "b3fc2b18ea1e9dbf4dcc4971a7bf9409c69a74b907b52a3661fb7d418084c363",
+    "validation.json": "42a2cd46ab2c56378c5df40633a6e7e01076b4bb9251dd35ef5f192a54760a86"
+  },
+  "report_code": {
+    "scripts/build_coupled_trends_report.py": "56ef617e27729885d82d74228a4f37db3aab0b5ce1607c0a570c8d4623ba55a0",
+    "scripts/assets/coupled-trends-review.html": "bc189385254dfaf615bc28494f4419f8747cb1f9af4148520e646fde7d591a9c",
+    "scripts/validate_coupled_trends.py": "5ba20f691a9017b93e414dcdbb6923a30b2980a47c9ae0b541bd602e550d7f9d",
+    "tests/coupled_trends_controls.cjs": "921b9da523bb87fac5dcb78fc80bc632475464ecdcee122adc4bf8a342f2d65d",
+    "tests/test_coupled_trends.py": "8d4c3a1e5bee34ad927ea2d481d2bc477a40ca0376690b602a975da260d447a4"
+  }
+}

@@ -1,0 +1,323 @@
+{
+  "rows": [
+    {
+      "symbol": "AGG",
+      "net_pnl_usd": -8940.36000000001,
+      "fees_usd": 1021.6200000000001,
+      "final_units": 0
+    },
+    {
+      "symbol": "BIL",
+      "net_pnl_usd": 940.5300000000519,
+      "fees_usd": 3084.530000000001,
+      "final_units": 0
+    },
+    {
+      "symbol": "CORN",
+      "net_pnl_usd": 7172.5699999999815,
+      "fees_usd": 169.35,
+      "final_units": 0
+    },
+    {
+      "symbol": "CPER",
+      "net_pnl_usd": -31732.919999999995,
+      "fees_usd": 825.86,
+      "final_units": 0
+    },
+    {
+      "symbol": "DBA",
+      "net_pnl_usd": -25594.789999999964,
+      "fees_usd": 1404.8000000000002,
+      "final_units": 0
+    },
+    {
+      "symbol": "DBB",
+      "net_pnl_usd": -5228.460000000006,
+      "fees_usd": 915.5499999999997,
+      "final_units": 0
+    },
+    {
+      "symbol": "DBC",
+      "net_pnl_usd": -19166.14999999998,
+      "fees_usd": 1296.56,
+      "final_units": 0
+    },
+    {
+      "symbol": "EEM",
+      "net_pnl_usd": -19524.620000000043,
+      "fees_usd": 925.1,
+      "final_units": 0
+    },
+    {
+      "symbol": "EFA",
+      "net_pnl_usd": -20849.25999999998,
+      "fees_usd": 1537.97,
+      "final_units": 0
+    },
+    {
+      "symbol": "EMB",
+      "net_pnl_usd": 5389.000000000011,
+      "fees_usd": 525.07,
+      "final_units": 0
+    },
+    {
+      "symbol": "EWA",
+      "net_pnl_usd": -576.5400000000145,
+      "fees_usd": 192.48000000000002,
+      "final_units": 0
+    },
+    {
+      "symbol": "EWC",
+      "net_pnl_usd": -5506.489999999961,
+      "fees_usd": 2005.39,
+      "final_units": 0
+    },
+    {
+      "symbol": "EWG",
+      "net_pnl_usd": -11216.190000000028,
+      "fees_usd": 1152.3500000000004,
+      "final_units": 0
+    },
+    {
+      "symbol": "EWH",
+      "net_pnl_usd": 1538.990000000002,
+      "fees_usd": 505.9599999999999,
+      "final_units": 0
+    },
+    {
+      "symbol": "EWJ",
+      "net_pnl_usd": 24487.61,
+      "fees_usd": 682.12,
+      "final_units": 0
+    },
+    {
+      "symbol": "EWT",
+      "net_pnl_usd": 57518.34999999994,
+      "fees_usd": 1335.0499999999997,
+      "final_units": 1665
+    },
+    {
+      "symbol": "EWU",
+      "net_pnl_usd": -31969.960000000057,
+      "fees_usd": 1278.1599999999996,
+      "final_units": 0
+    },
+    {
+      "symbol": "EWY",
+      "net_pnl_usd": 59659.16999999999,
+      "fees_usd": 654.1300000000003,
+      "final_units": 0
+    },
+    {
+      "symbol": "GLD",
+      "net_pnl_usd": 23785.51000000003,
+      "fees_usd": 2008.5000000000005,
+      "final_units": 0
+    },
+    {
+      "symbol": "HYG",
+      "net_pnl_usd": 7818.180000000041,
+      "fees_usd": 1866.5500000000004,
+      "final_units": 0
+    },
+    {
+      "symbol": "IAT",
+      "net_pnl_usd": 1853.1700000000137,
+      "fees_usd": 905.6399999999999,
+      "final_units": 0
+    },
+    {
+      "symbol": "IBB",
+      "net_pnl_usd": 22478.849999999955,
+      "fees_usd": 1233.8000000000002,
+      "final_units": 951
+    },
+    {
+      "symbol": "IBND",
+      "net_pnl_usd": 214.03000000000503,
+      "fees_usd": 952.1199999999997,
+      "final_units": 0
+    },
+    {
+      "symbol": "IEF",
+      "net_pnl_usd": -4022.9300000000394,
+      "fees_usd": 615.9999999999999,
+      "final_units": 0
+    },
+    {
+      "symbol": "IGOV",
+      "net_pnl_usd": -1388.8599999999938,
+      "fees_usd": 154.09,
+      "final_units": 0
+    },
+    {
+      "symbol": "INDA",
+      "net_pnl_usd": 14062.140000000025,
+      "fees_usd": 822.2399999999999,
+      "final_units": 0
+    },
+    {
+      "symbol": "ITA",
+      "net_pnl_usd": 17330.330000000038,
+      "fees_usd": 1504.0499999999993,
+      "final_units": 0
+    },
+    {
+      "symbol": "IWM",
+      "net_pnl_usd": -424.4000000000167,
+      "fees_usd": 427.01999999999987,
+      "final_units": 0
+    },
+    {
+      "symbol": "LEMB",
+      "net_pnl_usd": 18812.030000000002,
+      "fees_usd": 1410.57,
+      "final_units": 0
+    },
+    {
+      "symbol": "LQD",
+      "net_pnl_usd": -1558.7999999999845,
+      "fees_usd": 161.57999999999998,
+      "final_units": 0
+    },
+    {
+      "symbol": "MBB",
+      "net_pnl_usd": -11028.700000000017,
+      "fees_usd": 1880.33,
+      "final_units": 0
+    },
+    {
+      "symbol": "MCHI",
+      "net_pnl_usd": -1910.4300000000053,
+      "fees_usd": 174.59,
+      "final_units": 0
+    },
+    {
+      "symbol": "MDY",
+      "net_pnl_usd": -759.8899999999911,
+      "fees_usd": 411.0899999999999,
+      "final_units": 0
+    },
+    {
+      "symbol": "PPLT",
+      "net_pnl_usd": 9324.939999999997,
+      "fees_usd": 333.68,
+      "final_units": 0
+    },
+    {
+      "symbol": "SHY",
+      "net_pnl_usd": 10773.190000000042,
+      "fees_usd": 2342.9899999999984,
+      "final_units": 0
+    },
+    {
+      "symbol": "SLV",
+      "net_pnl_usd": 48998.560000000005,
+      "fees_usd": 710.97,
+      "final_units": 0
+    },
+    {
+      "symbol": "SOXX",
+      "net_pnl_usd": 18419.480000000098,
+      "fees_usd": 1516.7500000000002,
+      "final_units": 332
+    },
+    {
+      "symbol": "SPY",
+      "net_pnl_usd": 25094.290000000015,
+      "fees_usd": 1453.07,
+      "final_units": 250
+    },
+    {
+      "symbol": "TIP",
+      "net_pnl_usd": -9275.19999999997,
+      "fees_usd": 484.27000000000004,
+      "final_units": 0
+    },
+    {
+      "symbol": "TLT",
+      "net_pnl_usd": 0.0,
+      "fees_usd": 0.0,
+      "final_units": 0
+    },
+    {
+      "symbol": "USO",
+      "net_pnl_usd": 12579.69999999995,
+      "fees_usd": 1108.0,
+      "final_units": 0
+    },
+    {
+      "symbol": "VGK",
+      "net_pnl_usd": -683.6400000000333,
+      "fees_usd": 975.76,
+      "final_units": 0
+    },
+    {
+      "symbol": "WEAT",
+      "net_pnl_usd": -22549.02,
+      "fees_usd": 388.03999999999996,
+      "final_units": 0
+    },
+    {
+      "symbol": "XLB",
+      "net_pnl_usd": -6016.609999999974,
+      "fees_usd": 375.1,
+      "final_units": 0
+    },
+    {
+      "symbol": "XLC",
+      "net_pnl_usd": 36166.44999999996,
+      "fees_usd": 1482.1100000000001,
+      "final_units": 0
+    },
+    {
+      "symbol": "XLE",
+      "net_pnl_usd": -22877.17,
+      "fees_usd": 882.5700000000002,
+      "final_units": 0
+    },
+    {
+      "symbol": "XLI",
+      "net_pnl_usd": -19222.91,
+      "fees_usd": 1515.009999999999,
+      "final_units": 0
+    },
+    {
+      "symbol": "XLK",
+      "net_pnl_usd": 15637.270000000033,
+      "fees_usd": 1670.6999999999996,
+      "final_units": 961
+    },
+    {
+      "symbol": "XLP",
+      "net_pnl_usd": -2818.6499999999996,
+      "fees_usd": 1608.06,
+      "final_units": 0
+    },
+    {
+      "symbol": "XLU",
+      "net_pnl_usd": 11172.480000000007,
+      "fees_usd": 356.56,
+      "final_units": 0
+    },
+    {
+      "symbol": "XLV",
+      "net_pnl_usd": 2493.17000000001,
+      "fees_usd": 757.4799999999999,
+      "final_units": 1147
+    },
+    {
+      "symbol": "XLY",
+      "net_pnl_usd": 368.0600000000195,
+      "fees_usd": 334.35999999999996,
+      "final_units": 0
+    },
+    {
+      "symbol": "URTH",
+      "net_pnl_usd": 0.0,
+      "fees_usd": 0.0,
+      "final_units": 0
+    }
+  ],
+  "reconciliation_error": 8.731149137020111e-11
+}

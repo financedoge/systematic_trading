@@ -1,0 +1,193 @@
+{
+  "late": {
+    "symbol": "CORN",
+    "era": "late",
+    "arm": "hmm",
+    "cost_bp": 5,
+    "delay": 0,
+    "cagr": -0.06772041669199536,
+    "sharpe": -0.5337735294436098,
+    "maxdd": -0.300354336873484,
+    "calmar": -0.22546841639420281,
+    "sessions": 951,
+    "ann_vol": 0.11829019297114397,
+    "cumulative": -0.23250941058993824,
+    "correlation": 0.6551024160125248,
+    "beta": 0.4344735305682462,
+    "alpha_annual": -0.024876395267337023,
+    "alpha_t_hac": -0.5484184036071017,
+    "down_capture": 0.44838124487838255,
+    "up_capture": 0.4252506543840491,
+    "ic5": 0.021659114211300328,
+    "closed_trades": 17,
+    "wins": 5,
+    "exposure": 0.42902208201892744,
+    "regimes": {
+      "up": {
+        "sessions": 131,
+        "exposure": 0.6335877862595419,
+        "strategy_mean": -0.0006835445314835445,
+        "asset_mean": -0.001529959832440344,
+        "closed": 1,
+        "losing": 1,
+        "mean_trade": -0.030916164899814857
+      },
+      "down": {
+        "sessions": 476,
+        "exposure": 0.42016806722689076,
+        "strategy_mean": -0.0001395782134051555,
+        "asset_mean": -0.0001077900729870016,
+        "closed": 10,
+        "losing": 7,
+        "mean_trade": -0.014333778027769705
+      },
+      "uncertain": {
+        "sessions": 344,
+        "exposure": 0.3633720930232558,
+        "strategy_mean": -0.00023923088959054673,
+        "asset_mean": -0.00023437191895859174,
+        "closed": 6,
+        "losing": 4,
+        "mean_trade": -0.012546639749288527
+      }
+    },
+    "yearly": {
+      "2023": -0.10638654694609506,
+      "2024": -0.06987750731341325,
+      "2025": -0.044633722540171616,
+      "2026": -0.033474522534609585
+    },
+    "guard": null,
+    "enabled": false,
+    "blocked_sessions": 0,
+    "forecast": {
+      "count": 942,
+      "ic": -0.22584676285242364,
+      "return_mse": 0.0011595169088025451,
+      "downside_mse": 0.0005223639843961686,
+      "mean_predicted_return": -0.00102030488798145,
+      "mean_return": -0.0032106263364479653,
+      "mean_predicted_downside": 0.021621349935731872,
+      "mean_downside": 0.022369347096891215
+    },
+    "forecast_null": {
+      "count": 942,
+      "ic": -0.22584676285242364,
+      "return_mse": 0.0011595169088025451,
+      "downside_mse": 0.0005223639843961686,
+      "mean_predicted_return": -0.00102030488798145,
+      "mean_return": -0.0032106263364479653,
+      "mean_predicted_downside": 0.021621349935731872,
+      "mean_downside": 0.022369347096891215
+    },
+    "horizon": 9,
+    "turnover_annual": 9.007649279738422,
+    "cost_bp_annual": 45.0382463986921,
+    "adaptive_incumbent_cumulative": -0.16742860821215266,
+    "adaptive_incumbent_sharpe": -0.40541492171822324,
+    "incumbent_dependence": {
+      "correlation": 0.5869672214424387,
+      "beta": 0.3487096100503242,
+      "alpha_annual": -0.01224742538468387,
+      "alpha_t_hac": -0.2861537729284927,
+      "down_capture": 0.32503583470747827,
+      "up_capture": 0.31101916899125837
+    },
+    "buyhold": -0.3288700636171352
+  },
+  "early": {
+    "symbol": "MCHI",
+    "era": "early",
+    "arm": "hmm",
+    "cost_bp": 5,
+    "delay": 0,
+    "cagr": -0.1306141366356276,
+    "sharpe": -0.6269653062700218,
+    "maxdd": -0.5041436269532746,
+    "calmar": -0.25908120157141895,
+    "sessions": 756,
+    "ann_vol": 0.19340034812064286,
+    "cumulative": -0.342890535892613,
+    "correlation": 0.568288691802071,
+    "beta": 0.32376595290003296,
+    "alpha_annual": -0.1117874024623152,
+    "alpha_t_hac": -1.2571020862001063,
+    "down_capture": 0.43091852927274826,
+    "up_capture": 0.37303040700798035,
+    "ic5": -0.04423642267215644,
+    "closed_trades": 25,
+    "wins": 7,
+    "exposure": 0.421957671957672,
+    "regimes": {
+      "up": {
+        "sessions": 250,
+        "exposure": 0.528,
+        "strategy_mean": 0.00015287875839208276,
+        "asset_mean": 0.00039251386832807,
+        "closed": 7,
+        "losing": 5,
+        "mean_trade": -0.006095789209336859
+      },
+      "down": {
+        "sessions": 421,
+        "exposure": 0.3919239904988123,
+        "strategy_mean": -0.0007231089433256596,
+        "asset_mean": -0.0002706242625415997,
+        "closed": 16,
+        "losing": 12,
+        "mean_trade": -0.02546683079976373
+      },
+      "uncertain": {
+        "sessions": 85,
+        "exposure": 0.25882352941176473,
+        "strategy_mean": -0.001147726469817424,
+        "asset_mean": -0.0008461743745141486,
+        "closed": 2,
+        "losing": 1,
+        "mean_trade": 0.036258226291076445
+      }
+    },
+    "yearly": {
+      "2020": -0.03379181387026475,
+      "2021": -0.15696032292618844,
+      "2022": -0.1932871131328674
+    },
+    "guard": null,
+    "enabled": false,
+    "blocked_sessions": 0,
+    "forecast": {
+      "count": 746,
+      "ic": 0.03644148539386687,
+      "return_mse": 0.0035585492182652182,
+      "downside_mse": 0.0022372059510237237,
+      "mean_predicted_return": 0.0007003302147434497,
+      "mean_return": -0.003847162602559365,
+      "mean_predicted_downside": 0.031549405578694026,
+      "mean_downside": 0.04448559229612109
+    },
+    "forecast_null": {
+      "count": 746,
+      "ic": 0.03644148539386687,
+      "return_mse": 0.0035585492182652182,
+      "downside_mse": 0.0022372059510237237,
+      "mean_predicted_return": 0.0007003302147434497,
+      "mean_return": -0.003847162602559365,
+      "mean_predicted_downside": 0.031549405578694026,
+      "mean_downside": 0.04448559229612109
+    },
+    "horizon": 10,
+    "turnover_annual": 16.6263488216718,
+    "cost_bp_annual": 83.13174410835903,
+    "adaptive_incumbent_cumulative": -0.41371189533373465,
+    "adaptive_incumbent_sharpe": -0.8399011870147368,
+    "incumbent_dependence": {
+      "correlation": 0.5632092819746048,
+      "beta": 0.3157420340807571,
+      "alpha_annual": -0.15060688957876817,
+      "alpha_t_hac": -1.6878251745739326,
+      "down_capture": 0.4589942745274871,
+      "up_capture": 0.38098652375883163
+    },
+    "buyhold": -0.24211480662551388
+  }
+}

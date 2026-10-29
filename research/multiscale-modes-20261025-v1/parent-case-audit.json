@@ -1,0 +1,2029 @@
+{
+  "GLD_short": {
+    "parameters": {
+      "method": "regression",
+      "range": {
+        "length": 63,
+        "drift": 3.0,
+        "width": 8.0,
+        "efficiency": 0.25,
+        "buffer": 0.5,
+        "confirm": 3,
+        "activity": 0.8
+      },
+      "up": {
+        "length": 42,
+        "strength": 4.0,
+        "quality": 0.25,
+        "confirm": 3,
+        "pressure": 0.1,
+        "activity": 1.1
+      },
+      "down": {
+        "length": 42,
+        "strength": 4.0,
+        "quality": 0.25,
+        "confirm": 3,
+        "pressure": 0.2,
+        "activity": 0.7
+      },
+      "volume": true,
+      "family": "regression_volume"
+    },
+    "metrics": {
+      "symbol": "GLD",
+      "domain": "short",
+      "era": "late",
+      "variant": "selected",
+      "cost_bp": 5,
+      "delay": 0,
+      "training_evidence": true,
+      "cagr": 0.22410259954115963,
+      "sharpe": 1.1954445164521268,
+      "maxdd": -0.25539803118643656,
+      "calmar": 0.877464084198708,
+      "sessions": 951,
+      "ann_vol": 0.18336935447652108,
+      "buyhold": {
+        "cagr": 0.23999306623325412,
+        "sharpe": 1.1710003590301634,
+        "maxdd": -0.26404517857029663,
+        "calmar": 0.908909102346517,
+        "sessions": 951,
+        "ann_vol": 0.20113539862188448
+      },
+      "exposure": 0.7960042060988434,
+      "active": 0.7960042060988434,
+      "alpha": 0.01612139708098329,
+      "beta": 0.8301755737383726,
+      "t": 0.36539939701682167,
+      "p": 0.7148132912861844,
+      "completed_trades": 1,
+      "win_fraction": 1.0,
+      "cumulative": 1.1449033439588363,
+      "turnover_annual": 1.0596720567161215,
+      "cost_bp_annual": 5.298360283580609,
+      "evidence_fraction": 0.14195583596214512,
+      "state_fractions": {
+        "-1": 0.1829652996845426,
+        "0": 0.08832807570977919,
+        "1": 0.7287066246056783,
+        "2": 0.0
+      },
+      "ic21": {
+        "ic": 0.15945542214778544,
+        "p": 0.1593782209182287,
+        "observations": 930
+      },
+      "alpha_holm_p": 1.0,
+      "ic21_holm_p": 1.0
+    },
+    "down_conditions_2026": {
+      "down_strength": {
+        "sessions": 71,
+        "first": "2026-04-06"
+      },
+      "fit_quality": {
+        "sessions": 156,
+        "first": "2026-01-02"
+      },
+      "selling_pressure": {
+        "sessions": 34,
+        "first": "2026-02-19"
+      },
+      "activity": {
+        "sessions": 177,
+        "first": "2026-01-02"
+      },
+      "joint_daily_conditions": {
+        "sessions": 14,
+        "first": "2026-04-06"
+      },
+      "confirmed_down": {
+        "sessions": 4,
+        "first": "2026-04-30"
+      },
+      "price_conditions_without_volume": {
+        "sessions": 63,
+        "first": "2026-04-08"
+      }
+    },
+    "snapshots": [
+      {
+        "date": "2026-03-31",
+        "close": 430.2900085449219,
+        "down_strength": 3.071907050348373,
+        "quality": 0.21047942905751532,
+        "selling_pressure": 0.48874335100674454,
+        "activity": 1.164908492033178,
+        "state": 1
+      },
+      {
+        "date": "2026-06-30",
+        "close": 368.3800048828125,
+        "down_strength": 6.839414159564468,
+        "quality": 0.8445411660476919,
+        "selling_pressure": 0.16018521068428526,
+        "activity": 0.9908827164343323,
+        "state": -1
+      },
+      {
+        "date": "2026-10-16",
+        "close": 382.010009765625,
+        "down_strength": 7.670273607205573,
+        "quality": 0.8430834846815709,
+        "selling_pressure": 0.10297512263758109,
+        "activity": 1.034071709384388,
+        "state": 1
+      }
+    ],
+    "trades": [
+      {
+        "entry": "2022-12-20",
+        "exit": "2023-06-27",
+        "entry_index": 4553,
+        "exit_index": 4681,
+        "entry_price": 168.10000610351562,
+        "exit_or_mark": 179.07000732421875,
+        "net_return": 0.06419405301503889,
+        "carried": true,
+        "post_exit_5_return": -0.006868883319477992,
+        "post_exit_21_return": 0.007538899812978173,
+        "retrospective_local_price_percentile": 0.41079003684896986
+      },
+      {
+        "entry": "2023-12-11",
+        "exit": "2026-05-01",
+        "entry_index": 4797,
+        "exit_index": 5395,
+        "entry_price": 184.5,
+        "exit_or_mark": 421.4100036621094,
+        "net_return": 1.2817821369005382,
+        "carried": false,
+        "post_exit_5_return": 0.029330071057052765,
+        "post_exit_21_return": -0.022448426408650746,
+        "retrospective_local_price_percentile": 0.21460640439015188
+      },
+      {
+        "entry": "2026-08-24",
+        "exit": null,
+        "entry_index": 5473,
+        "exit_index": null,
+        "entry_price": 428.54998779296875,
+        "exit_or_mark": 382.010009765625,
+        "net_return": -0.10904419299628365,
+        "carried": false
+      }
+    ],
+    "warning": "Post-exit returns/local ranges use future prices solely for diagnosis. They are not entry/exit inputs. Previous strategy has no protective stop."
+  },
+  "GLD_long": {
+    "parameters": {
+      "method": "regression",
+      "range": {
+        "length": 126,
+        "drift": 1.5,
+        "width": 8.0,
+        "efficiency": 0.65,
+        "buffer": 1.0,
+        "confirm": 3,
+        "activity": 1.3
+      },
+      "up": {
+        "length": 252,
+        "strength": 1.0,
+        "quality": 0.1,
+        "confirm": 3,
+        "pressure": 0.0,
+        "activity": 1.1
+      },
+      "down": {
+        "length": 126,
+        "strength": 0.5,
+        "quality": 0.4,
+        "confirm": 3,
+        "pressure": 0.0,
+        "activity": 1.1
+      },
+      "volume": true,
+      "family": "regression_volume"
+    },
+    "metrics": {
+      "symbol": "GLD",
+      "domain": "long",
+      "era": "late",
+      "variant": "selected",
+      "cost_bp": 5,
+      "delay": 0,
+      "training_evidence": true,
+      "cagr": 0.19211109462429166,
+      "sharpe": 1.01649696841928,
+      "maxdd": -0.26404517857029797,
+      "calmar": 0.7275690306655042,
+      "sessions": 951,
+      "ann_vol": 0.19098220392822535,
+      "buyhold": {
+        "cagr": 0.23999306623325412,
+        "sharpe": 1.1710003590301634,
+        "maxdd": -0.26404517857029663,
+        "calmar": 0.908909102346517,
+        "sessions": 951,
+        "ann_vol": 0.20113539862188448
+      },
+      "exposure": 0.8138801261829653,
+      "active": 0.814931650893796,
+      "alpha": -0.022384608569259844,
+      "beta": 0.9004802224197056,
+      "t": -0.8085973444803995,
+      "p": 0.4187467927504235,
+      "completed_trades": 1,
+      "win_fraction": 0.0,
+      "cumulative": 0.94090733774294,
+      "turnover_annual": 0.7946878295867839,
+      "cost_bp_annual": 3.9734391479339197,
+      "evidence_fraction": 0.24395373291272346,
+      "state_fractions": {
+        "-1": 0.04206098843322818,
+        "0": 0.14300736067297581,
+        "1": 0.814931650893796,
+        "2": 0.0
+      },
+      "ic21": {
+        "ic": 0.046002550617057485,
+        "p": 0.6411823301283557,
+        "observations": 930
+      },
+      "alpha_holm_p": 1.0,
+      "ic21_holm_p": 1.0
+    },
+    "down_conditions_2026": {
+      "down_strength": {
+        "sessions": 90,
+        "first": "2026-06-10"
+      },
+      "fit_quality": {
+        "sessions": 130,
+        "first": "2026-01-02"
+      },
+      "selling_pressure": {
+        "sessions": 91,
+        "first": "2026-03-23"
+      },
+      "activity": {
+        "sessions": 74,
+        "first": "2026-01-02"
+      },
+      "joint_daily_conditions": {
+        "sessions": 1,
+        "first": "2026-08-03"
+      },
+      "confirmed_down": {
+        "sessions": 0,
+        "first": null
+      },
+      "price_conditions_without_volume": {
+        "sessions": 43,
+        "first": "2026-07-08"
+      }
+    },
+    "snapshots": [
+      {
+        "date": "2026-03-31",
+        "close": 430.2900085449219,
+        "down_strength": -9.871550410061143,
+        "quality": 0.6987058329779956,
+        "selling_pressure": 0.29124139926662024,
+        "activity": 1.164908492033178,
+        "state": 1
+      },
+      {
+        "date": "2026-06-30",
+        "close": 368.3800048828125,
+        "down_strength": 5.763863897371773,
+        "quality": 0.3137510529426171,
+        "selling_pressure": 0.09642478995929858,
+        "activity": 0.9908827164343323,
+        "state": 1
+      },
+      {
+        "date": "2026-10-16",
+        "close": 382.010009765625,
+        "down_strength": 5.333871275540695,
+        "quality": 0.2075102198493363,
+        "selling_pressure": -0.03885530052233271,
+        "activity": 1.034071709384388,
+        "state": 1
+      }
+    ],
+    "trades": [
+      {
+        "entry": "2023-05-05",
+        "exit": "2023-09-25",
+        "entry_index": 4646,
+        "exit_index": 4743,
+        "entry_price": 186.55999755859375,
+        "exit_or_mark": 178.41000366210938,
+        "net_return": -0.04464148182200278,
+        "carried": false,
+        "post_exit_5_return": -0.049100440478750174,
+        "post_exit_21_return": 0.025446965937689914,
+        "retrospective_local_price_percentile": 0.9071973528306794
+      },
+      {
+        "entry": "2024-02-06",
+        "exit": null,
+        "entry_index": 4835,
+        "exit_index": null,
+        "entry_price": 187.94000244140625,
+        "exit_or_mark": 382.010009765625,
+        "net_return": 1.0316010176415547,
+        "carried": false
+      }
+    ],
+    "warning": "Post-exit returns/local ranges use future prices solely for diagnosis. They are not entry/exit inputs. Previous strategy has no protective stop."
+  },
+  "CORN_short": {
+    "parameters": {
+      "method": "average",
+      "range": {
+        "length": 42,
+        "drift": 3.0,
+        "width": 4.0,
+        "efficiency": 0.25,
+        "buffer": 0.5,
+        "confirm": 3,
+        "activity": 1.3
+      },
+      "up": {
+        "length": 21,
+        "strength": 1.0,
+        "quality": 0.25,
+        "confirm": 3,
+        "pressure": 0.2,
+        "activity": 1.1
+      },
+      "down": {
+        "length": 10,
+        "strength": 1.0,
+        "quality": 0.1,
+        "confirm": 3,
+        "pressure": 0.2,
+        "activity": 0.7
+      },
+      "volume": false,
+      "family": "average_price"
+    },
+    "metrics": {
+      "symbol": "CORN",
+      "domain": "short",
+      "era": "late",
+      "variant": "selected",
+      "cost_bp": 5,
+      "delay": 0,
+      "training_evidence": true,
+      "cagr": -0.08739850592990084,
+      "sharpe": -0.8336323924323921,
+      "maxdd": -0.3761949738810194,
+      "calmar": -0.23232236472553908,
+      "sessions": 951,
+      "ann_vol": 0.10326611095320973,
+      "buyhold": {
+        "cagr": -0.09874907923168219,
+        "sharpe": -0.49377592681210986,
+        "maxdd": -0.3944853363461961,
+        "calmar": -0.25032382736026737,
+        "sessions": 951,
+        "ann_vol": 0.1783588314451112
+      },
+      "exposure": 0.288117770767613,
+      "active": 0.288117770767613,
+      "alpha": -0.08617928918262244,
+      "beta": 0.3349212964148818,
+      "t": -1.668920332877581,
+      "p": 0.09513316941374943,
+      "completed_trades": 7,
+      "win_fraction": 0.2857142857142857,
+      "cumulative": -0.2918769657321407,
+      "turnover_annual": 3.708852198506425,
+      "cost_bp_annual": 18.544260992532127,
+      "evidence_fraction": 0.47634069400630913,
+      "state_fractions": {
+        "-1": 0.4048370136698212,
+        "0": 0.4658254468980021,
+        "1": 0.12933753943217666,
+        "2": 0.0
+      },
+      "ic21": {
+        "ic": -0.10419979382128808,
+        "p": 0.33506152100081527,
+        "observations": 930
+      },
+      "alpha_holm_p": 1.0,
+      "ic21_holm_p": 1.0
+    },
+    "down_conditions_2026": {
+      "down_strength": {
+        "sessions": 23,
+        "first": "2026-01-13"
+      },
+      "fit_quality": {
+        "sessions": 171,
+        "first": "2026-01-02"
+      },
+      "selling_pressure": {
+        "sessions": 77,
+        "first": "2026-01-02"
+      },
+      "activity": {
+        "sessions": 175,
+        "first": "2026-01-02"
+      },
+      "joint_daily_conditions": {
+        "sessions": 23,
+        "first": "2026-01-13"
+      },
+      "confirmed_down": {
+        "sessions": 14,
+        "first": "2026-01-15"
+      }
+    },
+    "snapshots": [
+      {
+        "date": "2026-03-31",
+        "close": 18.399999618530273,
+        "down_strength": null,
+        "quality": 0.1736528332033825,
+        "selling_pressure": 0.33834905951035527,
+        "activity": 1.823933876397572,
+        "state": 1
+      },
+      {
+        "date": "2026-06-30",
+        "close": 16.75,
+        "down_strength": 0.452064475346271,
+        "quality": 0.0975728899777871,
+        "selling_pressure": -0.14999638298655774,
+        "activity": 1.1872020810208934,
+        "state": -1
+      },
+      {
+        "date": "2026-10-16",
+        "close": 18.190000534057617,
+        "down_strength": 1.0247569475868117,
+        "quality": 0.44708271973873714,
+        "selling_pressure": 0.4365599642692734,
+        "activity": 0.5764724707566589,
+        "state": -1
+      }
+    ],
+    "trades": [
+      {
+        "entry": "2023-06-20",
+        "exit": "2023-07-05",
+        "entry_index": 3279,
+        "exit_index": 3289,
+        "entry_price": 25.940000534057617,
+        "exit_or_mark": 22.5,
+        "net_return": -0.13348069461809653,
+        "carried": false,
+        "post_exit_5_return": -0.029777781168619843,
+        "post_exit_21_return": -0.00044445461697051325,
+        "retrospective_local_price_percentile": 0.12476722003447434
+      },
+      {
+        "entry": "2024-05-15",
+        "exit": "2024-06-06",
+        "entry_index": 3507,
+        "exit_index": 3522,
+        "entry_price": 20.959999084472656,
+        "exit_or_mark": 19.739999771118164,
+        "net_return": -0.059147399914566745,
+        "carried": false,
+        "post_exit_5_return": 0.02482268372845109,
+        "post_exit_21_return": -0.09321176159687794,
+        "retrospective_local_price_percentile": 0.2898549723088746
+      },
+      {
+        "entry": "2025-01-07",
+        "exit": "2025-03-03",
+        "entry_index": 3669,
+        "exit_index": 3705,
+        "entry_price": 18.6299991607666,
+        "exit_or_mark": 19.0,
+        "net_return": 0.018841135281689958,
+        "carried": false,
+        "post_exit_5_return": 0.009473700272409458,
+        "post_exit_21_return": -0.014736878244500429,
+        "retrospective_local_price_percentile": 0.23076901915509954
+      },
+      {
+        "entry": "2025-04-21",
+        "exit": "2025-05-09",
+        "entry_index": 3739,
+        "exit_index": 3753,
+        "entry_price": 19.760000228881836,
+        "exit_or_mark": 18.200000762939453,
+        "net_return": -0.07986793284273008,
+        "carried": false,
+        "post_exit_5_return": -0.014285726262785237,
+        "post_exit_21_return": 0.003846136917024623,
+        "retrospective_local_price_percentile": 0.21138237857317863
+      },
+      {
+        "entry": "2025-09-15",
+        "exit": "2026-01-16",
+        "entry_index": 3840,
+        "exit_index": 3926,
+        "entry_price": 17.850000381469727,
+        "exit_or_mark": 17.059999465942383,
+        "net_return": -0.04521301803972111,
+        "carried": false,
+        "post_exit_5_return": 0.01699888186434495,
+        "post_exit_21_return": 0.02227438921518421,
+        "retrospective_local_price_percentile": 0.06315728184968498
+      },
+      {
+        "entry": "2026-03-06",
+        "exit": "2026-06-05",
+        "entry_index": 3959,
+        "exit_index": 4022,
+        "entry_price": 18.3700008392334,
+        "exit_or_mark": 17.1299991607666,
+        "net_return": -0.06843348173525732,
+        "carried": false,
+        "post_exit_5_return": -0.019264444826235905,
+        "post_exit_21_return": 0.011675468344302109,
+        "retrospective_local_price_percentile": 0.24999970924586518
+      },
+      {
+        "entry": "2026-07-24",
+        "exit": "2026-10-05",
+        "entry_index": 4055,
+        "exit_index": 4105,
+        "entry_price": 18.260000228881836,
+        "exit_or_mark": 19.040000915527344,
+        "net_return": 0.04167416163386406,
+        "carried": false,
+        "post_exit_5_return": -0.030462279578027163,
+        "post_exit_21_return": null,
+        "retrospective_local_price_percentile": 0.4086540445420942
+      }
+    ],
+    "warning": "Post-exit returns/local ranges use future prices solely for diagnosis. They are not entry/exit inputs. Previous strategy has no protective stop."
+  },
+  "CORN_long": {
+    "parameters": {
+      "method": "regression",
+      "range": {
+        "length": 63,
+        "drift": 1.5,
+        "width": 12.0,
+        "efficiency": 0.65,
+        "buffer": 0.5,
+        "confirm": 1,
+        "activity": 0.8
+      },
+      "up": {
+        "length": 252,
+        "strength": 4.0,
+        "quality": 0.25,
+        "confirm": 1,
+        "pressure": 0.0,
+        "activity": 0.7
+      },
+      "down": {
+        "length": 63,
+        "strength": 0.5,
+        "quality": 0.25,
+        "confirm": 3,
+        "pressure": 0.0,
+        "activity": 1.1
+      },
+      "volume": false,
+      "family": "regression_price"
+    },
+    "metrics": {
+      "symbol": "CORN",
+      "domain": "long",
+      "era": "late",
+      "variant": "selected",
+      "cost_bp": 5,
+      "delay": 0,
+      "training_evidence": true,
+      "cagr": 0.0,
+      "sharpe": 0.0,
+      "maxdd": 0.0,
+      "calmar": null,
+      "sessions": 951,
+      "ann_vol": 0.0,
+      "buyhold": {
+        "cagr": -0.09874907923168219,
+        "sharpe": -0.49377592681210986,
+        "maxdd": -0.3944853363461961,
+        "calmar": -0.25032382736026737,
+        "sessions": 951,
+        "ann_vol": 0.1783588314451112
+      },
+      "exposure": 0.0,
+      "active": 0.0,
+      "alpha": -0.04451033649453376,
+      "beta": -0.0001506263652708503,
+      "t": -41.536767791128064,
+      "p": 0.0,
+      "completed_trades": 0,
+      "win_fraction": null,
+      "cumulative": 0.0,
+      "turnover_annual": 0.0,
+      "cost_bp_annual": 0.0,
+      "evidence_fraction": 0.5615141955835962,
+      "state_fractions": {
+        "-1": 0.47108307045215564,
+        "0": 0.5289169295478444,
+        "1": 0.0,
+        "2": 0.0
+      },
+      "ic21": {
+        "ic": null,
+        "p": null,
+        "observations": 930
+      },
+      "alpha_holm_p": 0.0,
+      "ic21_holm_p": 1.0
+    },
+    "down_conditions_2026": {
+      "down_strength": {
+        "sessions": 83,
+        "first": "2026-01-15"
+      },
+      "fit_quality": {
+        "sessions": 137,
+        "first": "2026-01-23"
+      },
+      "selling_pressure": {
+        "sessions": 75,
+        "first": "2026-01-02"
+      },
+      "activity": {
+        "sessions": 78,
+        "first": "2026-01-02"
+      },
+      "joint_daily_conditions": {
+        "sessions": 56,
+        "first": "2026-01-23"
+      },
+      "confirmed_down": {
+        "sessions": 52,
+        "first": "2026-01-27"
+      }
+    },
+    "snapshots": [
+      {
+        "date": "2026-03-31",
+        "close": 18.399999618530273,
+        "down_strength": -4.009570535284371,
+        "quality": 0.5829515198253681,
+        "selling_pressure": -0.3377440013074841,
+        "activity": 1.823933876397572,
+        "state": 0
+      },
+      {
+        "date": "2026-06-30",
+        "close": 16.75,
+        "down_strength": 5.715737944618245,
+        "quality": 0.4587662675246304,
+        "selling_pressure": 0.22113852946421428,
+        "activity": 1.1872020810208934,
+        "state": -1
+      },
+      {
+        "date": "2026-10-16",
+        "close": 18.190000534057617,
+        "down_strength": -4.400813618610107,
+        "quality": 0.23065233327035098,
+        "selling_pressure": 0.4232039080568789,
+        "activity": 0.5764724707566589,
+        "state": 0
+      }
+    ],
+    "trades": [],
+    "warning": "Post-exit returns/local ranges use future prices solely for diagnosis. They are not entry/exit inputs. Previous strategy has no protective stop."
+  },
+  "EWA_short": {
+    "parameters": {
+      "method": "average",
+      "range": {
+        "length": 21,
+        "drift": 3.0,
+        "width": 4.0,
+        "efficiency": 0.65,
+        "buffer": 0.5,
+        "confirm": 1,
+        "activity": 1.3
+      },
+      "up": {
+        "length": 10,
+        "strength": 1.0,
+        "quality": 0.25,
+        "confirm": 1,
+        "pressure": 0.1,
+        "activity": 1.1
+      },
+      "down": {
+        "length": 42,
+        "strength": 1.0,
+        "quality": 0.1,
+        "confirm": 2,
+        "pressure": 0.2,
+        "activity": 0.7
+      },
+      "volume": true,
+      "family": "average_volume"
+    },
+    "metrics": {
+      "symbol": "EWA",
+      "domain": "short",
+      "era": "late",
+      "variant": "selected",
+      "cost_bp": 5,
+      "delay": 0,
+      "training_evidence": true,
+      "cagr": -0.055755282659974204,
+      "sharpe": -0.2796246824809901,
+      "maxdd": -0.27772214944220686,
+      "calmar": -0.20075922202084465,
+      "sessions": 951,
+      "ann_vol": 0.15947373613668628,
+      "buyhold": {
+        "cagr": 0.10508343905070805,
+        "sharpe": 0.6336638073672467,
+        "maxdd": -0.21906949359150174,
+        "calmar": 0.4796808415810594,
+        "sessions": 951,
+        "ann_vol": 0.1845686438393726
+      },
+      "exposure": 0.7592008412197687,
+      "active": 0.7592008412197687,
+      "alpha": -0.141606753175416,
+      "beta": 0.7248222331522439,
+      "t": -3.698390781863651,
+      "p": 0.00021697067269651446,
+      "completed_trades": 6,
+      "win_fraction": 0.3333333333333333,
+      "cumulative": -0.19466997782467088,
+      "turnover_annual": 3.1790161701483646,
+      "cost_bp_annual": 15.895080850741822,
+      "evidence_fraction": 0.45951629863301785,
+      "state_fractions": {
+        "-1": 0.048370136698212406,
+        "0": 0.7644584647739222,
+        "1": 0.1871713985278654,
+        "2": 0.0
+      },
+      "ic21": {
+        "ic": -0.3474312371056792,
+        "p": 0.0017698523321956127,
+        "observations": 930
+      },
+      "alpha_holm_p": 0.02191403794234796,
+      "ic21_holm_p": 0.16990582389077882
+    },
+    "down_conditions_2026": {
+      "down_strength": {
+        "sessions": 14,
+        "first": "2026-09-29"
+      },
+      "fit_quality": {
+        "sessions": 99,
+        "first": "2026-01-14"
+      },
+      "selling_pressure": {
+        "sessions": 43,
+        "first": "2026-01-02"
+      },
+      "activity": {
+        "sessions": 177,
+        "first": "2026-01-02"
+      },
+      "joint_daily_conditions": {
+        "sessions": 4,
+        "first": "2026-09-29"
+      },
+      "confirmed_down": {
+        "sessions": 3,
+        "first": "2026-09-30"
+      },
+      "price_conditions_without_volume": {
+        "sessions": 9,
+        "first": "2026-09-30"
+      }
+    },
+    "snapshots": [
+      {
+        "date": "2026-03-31",
+        "close": 27.37523651123047,
+        "down_strength": null,
+        "quality": 0.0007157280107651936,
+        "selling_pressure": -0.08193675561525934,
+        "activity": 0.6913589734631254,
+        "state": 0
+      },
+      {
+        "date": "2026-06-30",
+        "close": 28.15999984741211,
+        "down_strength": 0.5142478746427108,
+        "quality": 0.08938899193579511,
+        "selling_pressure": 0.0669691685277512,
+        "activity": 1.5160964948836668,
+        "state": 0
+      },
+      {
+        "date": "2026-10-16",
+        "close": 28.729999542236328,
+        "down_strength": 1.9912328400233208,
+        "quality": 0.12775082630470896,
+        "selling_pressure": 0.07906254974488852,
+        "activity": 1.0697122422803311,
+        "state": 0
+      }
+    ],
+    "trades": [
+      {
+        "entry": "2023-01-13",
+        "exit": "2023-03-20",
+        "entry_index": 4975,
+        "exit_index": 5019,
+        "entry_price": 20.99003392675158,
+        "exit_or_mark": 19.58951679172663,
+        "net_return": -0.06765576782338167,
+        "carried": false,
+        "post_exit_5_return": 0.0018098760893812127,
+        "post_exit_21_return": 0.06244363826551447,
+        "retrospective_local_price_percentile": 0.17449744270086565
+      },
+      {
+        "entry": "2023-04-04",
+        "exit": "2023-08-22",
+        "entry_index": 5030,
+        "exit_index": 5126,
+        "entry_price": 20.564563884777115,
+        "exit_or_mark": 19.44140450441291,
+        "net_return": -0.055561162173251244,
+        "carried": false,
+        "post_exit_5_return": 0.027403785957400784,
+        "post_exit_21_return": -0.008360341600752053,
+        "retrospective_local_price_percentile": 0.1559602136471774
+      },
+      {
+        "entry": "2023-12-15",
+        "exit": "2024-12-24",
+        "entry_index": 5207,
+        "exit_index": 5464,
+        "entry_price": 21.590524996995477,
+        "exit_or_mark": 23.080960672709576,
+        "net_return": 0.06796343534761529,
+        "carried": false,
+        "post_exit_5_return": -0.010757123258099521,
+        "post_exit_21_return": 0.02565172109862357,
+        "retrospective_local_price_percentile": 0.2787361952882892
+      },
+      {
+        "entry": "2025-02-14",
+        "exit": "2025-04-08",
+        "entry_index": 5498,
+        "exit_index": 5534,
+        "entry_price": 24.43697969394736,
+        "exit_or_mark": 20.960990757948647,
+        "net_return": -0.14310031334866824,
+        "carried": false,
+        "post_exit_5_return": 0.06423676379684484,
+        "post_exit_21_return": 0.13120710603599317,
+        "retrospective_local_price_percentile": 0.35534658815258724
+      },
+      {
+        "entry": "2025-06-04",
+        "exit": "2025-11-19",
+        "entry_index": 5573,
+        "exit_index": 5690,
+        "entry_price": 25.09589030562775,
+        "exit_or_mark": 24.57852783786795,
+        "net_return": -0.021594321057172627,
+        "carried": false,
+        "post_exit_5_return": 0.018540399232069404,
+        "post_exit_21_return": 0.038357293345139265,
+        "retrospective_local_price_percentile": 0.21505408055872252
+      },
+      {
+        "entry": "2026-01-26",
+        "exit": "2026-10-01",
+        "entry_index": 5734,
+        "exit_index": 5906,
+        "entry_price": 27.316069901692238,
+        "exit_or_mark": 27.93000030517578,
+        "net_return": 0.021453099340736914,
+        "carried": false,
+        "post_exit_5_return": 0.010741111127197334,
+        "post_exit_21_return": null,
+        "retrospective_local_price_percentile": -0.052631138654281165
+      }
+    ],
+    "warning": "Post-exit returns/local ranges use future prices solely for diagnosis. They are not entry/exit inputs. Previous strategy has no protective stop."
+  },
+  "EWA_long": {
+    "parameters": {
+      "method": "regression",
+      "range": {
+        "length": 63,
+        "drift": 3.0,
+        "width": 8.0,
+        "efficiency": 0.45,
+        "buffer": 0.5,
+        "confirm": 1,
+        "activity": 1.0
+      },
+      "up": {
+        "length": 189,
+        "strength": 2.0,
+        "quality": 0.25,
+        "confirm": 2,
+        "pressure": 0.1,
+        "activity": 0.9
+      },
+      "down": {
+        "length": 252,
+        "strength": 2.0,
+        "quality": 0.1,
+        "confirm": 3,
+        "pressure": 0.2,
+        "activity": 1.1
+      },
+      "volume": false,
+      "family": "regression_price"
+    },
+    "metrics": {
+      "symbol": "EWA",
+      "domain": "long",
+      "era": "late",
+      "variant": "selected",
+      "cost_bp": 5,
+      "delay": 0,
+      "training_evidence": true,
+      "cagr": 0.05581983640396482,
+      "sharpe": 0.39975609846326465,
+      "maxdd": -0.21906949359150107,
+      "calmar": 0.2548042426575928,
+      "sessions": 951,
+      "ann_vol": 0.1735316433237567,
+      "buyhold": {
+        "cagr": 0.10508343905070805,
+        "sharpe": 0.6336638073672467,
+        "maxdd": -0.21906949359150174,
+        "calmar": 0.4796808415810594,
+        "sessions": 951,
+        "ann_vol": 0.1845686438393726
+      },
+      "exposure": 0.8738170347003155,
+      "active": 0.8748685594111462,
+      "alpha": -0.039148770605838004,
+      "beta": 0.88359247865119,
+      "t": -1.1622502132617913,
+      "p": 0.24513384345895367,
+      "completed_trades": 1,
+      "win_fraction": 0.0,
+      "cumulative": 0.2275055842989009,
+      "turnover_annual": 0.794687829586784,
+      "cost_bp_annual": 3.97343914793392,
+      "evidence_fraction": 0.7613038906414301,
+      "state_fractions": {
+        "-1": 0.11461619348054679,
+        "0": 0.4900105152471083,
+        "1": 0.3953732912723449,
+        "2": 0.0
+      },
+      "ic21": {
+        "ic": -0.013986490698984633,
+        "p": 0.9143545756668,
+        "observations": 930
+      },
+      "alpha_holm_p": 1.0,
+      "ic21_holm_p": 1.0
+    },
+    "down_conditions_2026": {
+      "down_strength": {
+        "sessions": 0,
+        "first": null
+      },
+      "fit_quality": {
+        "sessions": 199,
+        "first": "2026-01-02"
+      },
+      "selling_pressure": {
+        "sessions": 0,
+        "first": null
+      },
+      "activity": {
+        "sessions": 87,
+        "first": "2026-01-05"
+      },
+      "joint_daily_conditions": {
+        "sessions": 0,
+        "first": null
+      },
+      "confirmed_down": {
+        "sessions": 0,
+        "first": null
+      }
+    },
+    "snapshots": [
+      {
+        "date": "2026-03-31",
+        "close": 27.37523651123047,
+        "down_strength": -7.802543455517045,
+        "quality": 0.6407292445615629,
+        "selling_pressure": -0.13781964826037596,
+        "activity": 0.6913589734631254,
+        "state": 1
+      },
+      {
+        "date": "2026-06-30",
+        "close": 28.15999984741211,
+        "down_strength": -9.904167964583413,
+        "quality": 0.6346224256151142,
+        "selling_pressure": -0.05821605747817896,
+        "activity": 1.5160964948836668,
+        "state": 0
+      },
+      {
+        "date": "2026-10-16",
+        "close": 28.729999542236328,
+        "down_strength": -12.934135726369185,
+        "quality": 0.6063300776128762,
+        "selling_pressure": 0.12294100468101599,
+        "activity": 1.0697122422803311,
+        "state": 0
+      }
+    ],
+    "trades": [
+      {
+        "entry": "2023-03-06",
+        "exit": "2023-11-09",
+        "entry_index": 5009,
+        "exit_index": 5182,
+        "entry_price": 20.635471800051164,
+        "exit_or_mark": 19.54073238234313,
+        "net_return": -0.05399781480179988,
+        "carried": false,
+        "post_exit_5_return": 0.015711659201540273,
+        "post_exit_21_return": 0.0540666707335733,
+        "retrospective_local_price_percentile": 0.5736820916139231
+      },
+      {
+        "entry": "2024-03-05",
+        "exit": null,
+        "entry_index": 5260,
+        "exit_index": null,
+        "entry_price": 22.130294285630853,
+        "exit_or_mark": 28.729999542236328,
+        "net_return": 0.2975716161181208,
+        "carried": false
+      }
+    ],
+    "warning": "Post-exit returns/local ranges use future prices solely for diagnosis. They are not entry/exit inputs. Previous strategy has no protective stop."
+  },
+  "TLT_short": {
+    "parameters": {
+      "method": "regression",
+      "range": {
+        "length": 10,
+        "drift": 1.5,
+        "width": 4.0,
+        "efficiency": 0.65,
+        "buffer": 0.5,
+        "confirm": 2,
+        "activity": 1.3
+      },
+      "up": {
+        "length": 21,
+        "strength": 0.5,
+        "quality": 0.1,
+        "confirm": 1,
+        "pressure": 0.1,
+        "activity": 0.9
+      },
+      "down": {
+        "length": 21,
+        "strength": 4.0,
+        "quality": 0.1,
+        "confirm": 1,
+        "pressure": 0.1,
+        "activity": 0.7
+      },
+      "volume": true,
+      "family": "regression_volume"
+    },
+    "metrics": {
+      "symbol": "TLT",
+      "domain": "short",
+      "era": "late",
+      "variant": "selected",
+      "cost_bp": 5,
+      "delay": 0,
+      "training_evidence": true,
+      "cagr": -0.045146859651809756,
+      "sharpe": -0.3971619893343957,
+      "maxdd": -0.20333265111554732,
+      "calmar": -0.222034480955812,
+      "sessions": 951,
+      "ann_vol": 0.10296623423489148,
+      "buyhold": {
+        "cagr": -0.01730238564273401,
+        "sharpe": -0.05300637543746343,
+        "maxdd": -0.2244421872170539,
+        "calmar": -0.07709061231880257,
+        "sessions": 951,
+        "ann_vol": 0.141243398599693
+      },
+      "exposure": 0.5247108307045215,
+      "active": 0.5247108307045215,
+      "alpha": -0.058082475244738696,
+      "beta": 0.5252723190735162,
+      "t": -1.721504781627398,
+      "p": 0.08515926524676047,
+      "completed_trades": 10,
+      "win_fraction": 0.3,
+      "cumulative": -0.15998995905025215,
+      "turnover_annual": 5.563344510709945,
+      "cost_bp_annual": 27.816722553549727,
+      "evidence_fraction": 0.43112513144058884,
+      "state_fractions": {
+        "-1": 0.19768664563617244,
+        "0": 0.5720294426919033,
+        "1": 0.2302839116719243,
+        "2": 0.0
+      },
+      "ic21": {
+        "ic": -0.0770621931830705,
+        "p": 0.4494088517458432,
+        "observations": 930
+      },
+      "alpha_holm_p": 1.0,
+      "ic21_holm_p": 1.0
+    },
+    "down_conditions_2026": {
+      "down_strength": {
+        "sessions": 33,
+        "first": "2026-03-17"
+      },
+      "fit_quality": {
+        "sessions": 145,
+        "first": "2026-01-02"
+      },
+      "selling_pressure": {
+        "sessions": 107,
+        "first": "2026-01-02"
+      },
+      "activity": {
+        "sessions": 183,
+        "first": "2026-01-02"
+      },
+      "joint_daily_conditions": {
+        "sessions": 25,
+        "first": "2026-03-17"
+      },
+      "confirmed_down": {
+        "sessions": 25,
+        "first": "2026-03-17"
+      },
+      "price_conditions_without_volume": {
+        "sessions": 33,
+        "first": "2026-03-17"
+      }
+    },
+    "snapshots": [
+      {
+        "date": "2026-03-31",
+        "close": 84.36804962158203,
+        "down_strength": 3.744573109693518,
+        "quality": 0.7077423917275495,
+        "selling_pressure": 0.10679848010570218,
+        "activity": 0.8217224468785839,
+        "state": -1
+      },
+      {
+        "date": "2026-06-30",
+        "close": 85.08650207519531,
+        "down_strength": -3.5999695680573462,
+        "quality": 0.6770511808494675,
+        "selling_pressure": -0.05882123509706628,
+        "activity": 1.1879592025612973,
+        "state": 1
+      },
+      {
+        "date": "2026-10-16",
+        "close": 80.05000305175781,
+        "down_strength": 2.1896935016137054,
+        "quality": 0.16630071297777252,
+        "selling_pressure": -0.9999999999999997,
+        "activity": 0.9128240042068491,
+        "state": 0
+      }
+    ],
+    "trades": [
+      {
+        "entry": "2022-11-16",
+        "exit": "2023-01-03",
+        "entry_index": 5112,
+        "exit_index": 5143,
+        "entry_price": 85.4844335184344,
+        "exit_or_mark": 87.76739291399043,
+        "net_return": 0.025679948664972363,
+        "carried": true,
+        "post_exit_5_return": 0.017514859446261077,
+        "post_exit_21_return": 0.06260951059647679,
+        "retrospective_local_price_percentile": 0.2918492379834024
+      },
+      {
+        "entry": "2023-01-19",
+        "exit": "2023-02-23",
+        "entry_index": 5154,
+        "exit_index": 5178,
+        "entry_price": 92.83419408918206,
+        "exit_or_mark": 87.42494553667875,
+        "net_return": -0.059209107822190354,
+        "carried": false,
+        "post_exit_5_return": -0.01787373525952085,
+        "post_exit_21_return": 0.05488730247053297,
+        "retrospective_local_price_percentile": 0.31104222370915496
+      },
+      {
+        "entry": "2023-03-16",
+        "exit": "2023-05-30",
+        "entry_index": 5193,
+        "exit_index": 5244,
+        "entry_price": 92.68092249728475,
+        "exit_or_mark": 87.96284768119209,
+        "net_return": -0.05185526400506579,
+        "carried": false,
+        "post_exit_5_return": 0.012546168579948613,
+        "post_exit_21_return": 0.006019760715356481,
+        "retrospective_local_price_percentile": 0.3596634996108509
+      },
+      {
+        "entry": "2023-06-21",
+        "exit": "2023-08-09",
+        "entry_index": 5259,
+        "exit_index": 5293,
+        "entry_price": 89.4230212900988,
+        "exit_or_mark": 84.72623808616208,
+        "net_return": -0.05347020298680305,
+        "carried": false,
+        "post_exit_5_return": -0.0313789308068646,
+        "post_exit_21_return": -0.022986134148437642,
+        "retrospective_local_price_percentile": 0.5146581578231573
+      },
+      {
+        "entry": "2023-11-10",
+        "exit": "2024-01-19",
+        "entry_index": 5359,
+        "exit_index": 5405,
+        "entry_price": 77.90452192159003,
+        "exit_or_mark": 83.272640010363,
+        "net_return": 0.06783800136266871,
+        "carried": false,
+        "post_exit_5_return": 0.0007470219055296656,
+        "post_exit_21_return": -0.006096310618234901,
+        "retrospective_local_price_percentile": 0.06915316108174677
+      },
+      {
+        "entry": "2024-03-08",
+        "exit": "2024-04-18",
+        "entry_index": 5439,
+        "exit_index": 5467,
+        "entry_price": 85.67211935326263,
+        "exit_or_mark": 80.06965450717435,
+        "net_return": -0.06632839865142426,
+        "carried": false,
+        "post_exit_5_return": -0.016360224791625133,
+        "post_exit_21_return": 0.027680066318145125,
+        "retrospective_local_price_percentile": 0.29795827784135076
+      },
+      {
+        "entry": "2024-06-06",
+        "exit": "2024-10-08",
+        "entry_index": 5501,
+        "exit_index": 5586,
+        "entry_price": 83.94945222561256,
+        "exit_or_mark": 86.39157148220303,
+        "net_return": 0.028061777615604244,
+        "carried": false,
+        "post_exit_5_return": 0.005509237799365518,
+        "post_exit_21_return": -0.04116469257039501,
+        "retrospective_local_price_percentile": 0.34504650213828547
+      },
+      {
+        "entry": "2025-02-06",
+        "exit": "2025-05-23",
+        "entry_index": 5668,
+        "exit_index": 5742,
+        "entry_price": 83.42797974338363,
+        "exit_or_mark": 79.52529896574802,
+        "net_return": -0.047731784301525804,
+        "carried": false,
+        "post_exit_5_return": 0.008340833735748676,
+        "post_exit_21_return": 0.03616583372504967,
+        "retrospective_local_price_percentile": 0.25972804936199984
+      },
+      {
+        "entry": "2025-06-30",
+        "exit": "2025-11-17",
+        "entry_index": 5766,
+        "exit_index": 5864,
+        "entry_price": 82.73099606503567,
+        "exit_or_mark": 85.43867148570683,
+        "net_return": 0.03169645685289235,
+        "carried": false,
+        "post_exit_5_return": 0.010440078921718277,
+        "post_exit_21_return": -0.01084933461145754,
+        "retrospective_local_price_percentile": 0.11864615407755055
+      },
+      {
+        "entry": "2026-01-16",
+        "exit": "2026-03-18",
+        "entry_index": 5905,
+        "exit_index": 5946,
+        "entry_price": 85.1594933871379,
+        "exit_or_mark": 85.02010125884705,
+        "net_return": -0.0026347002761449856,
+        "carried": false,
+        "post_exit_5_return": -0.0059523664969926005,
+        "post_exit_21_return": 0.0006628185913239992,
+        "retrospective_local_price_percentile": 0.4791082621086338
+      },
+      {
+        "entry": "2026-06-18",
+        "exit": "2026-07-16",
+        "entry_index": 6010,
+        "exit_index": 6028,
+        "entry_price": 85.72647708011536,
+        "exit_or_mark": 82.85118085795912,
+        "net_return": -0.034506328719908885,
+        "carried": false,
+        "post_exit_5_return": -0.007991456083483839,
+        "post_exit_21_return": -0.017527556852248605,
+        "retrospective_local_price_percentile": 0.3823507065210128
+      }
+    ],
+    "warning": "Post-exit returns/local ranges use future prices solely for diagnosis. They are not entry/exit inputs. Previous strategy has no protective stop."
+  },
+  "TLT_long": {
+    "parameters": {
+      "method": "regression",
+      "range": {
+        "length": 189,
+        "drift": 0.5,
+        "width": 20.0,
+        "efficiency": 0.65,
+        "buffer": 0.5,
+        "confirm": 3,
+        "activity": 1.6
+      },
+      "up": {
+        "length": 126,
+        "strength": 1.0,
+        "quality": 0.25,
+        "confirm": 2,
+        "pressure": 0.0,
+        "activity": 0.7
+      },
+      "down": {
+        "length": 189,
+        "strength": 0.5,
+        "quality": 0.4,
+        "confirm": 1,
+        "pressure": 0.1,
+        "activity": 0.9
+      },
+      "volume": true,
+      "family": "regression_volume"
+    },
+    "metrics": {
+      "symbol": "TLT",
+      "domain": "long",
+      "era": "late",
+      "variant": "selected",
+      "cost_bp": 5,
+      "delay": 0,
+      "training_evidence": true,
+      "cagr": -0.050782436088137484,
+      "sharpe": -0.4026098913679667,
+      "maxdd": -0.20351039102133894,
+      "calmar": -0.24953239897619148,
+      "sessions": 951,
+      "ann_vol": 0.11344664000311074,
+      "buyhold": {
+        "cagr": -0.01730238564273401,
+        "sharpe": -0.05300637543746343,
+        "maxdd": -0.2244421872170539,
+        "calmar": -0.07709061231880257,
+        "sessions": 951,
+        "ann_vol": 0.141243398599693
+      },
+      "exposure": 0.7981072555205048,
+      "active": 0.7981072555205048,
+      "alpha": -0.05659286137258003,
+      "beta": 0.6459037201565847,
+      "t": -1.6056242086037082,
+      "p": 0.10835650309321965,
+      "completed_trades": 2,
+      "win_fraction": 0.0,
+      "cumulative": -0.17854701759362457,
+      "turnover_annual": 1.0596720567161213,
+      "cost_bp_annual": 5.298360283580608,
+      "evidence_fraction": 0.14721345951629863,
+      "state_fractions": {
+        "-1": 0.20189274447949526,
+        "0": 0.2807570977917981,
+        "1": 0.5173501577287066,
+        "2": 0.0
+      },
+      "ic21": {
+        "ic": -0.10504203407204626,
+        "p": 0.38885228390426224,
+        "observations": 930
+      },
+      "alpha_holm_p": 1.0,
+      "ic21_holm_p": 1.0
+    },
+    "down_conditions_2026": {
+      "down_strength": {
+        "sessions": 106,
+        "first": "2026-05-18"
+      },
+      "fit_quality": {
+        "sessions": 95,
+        "first": "2026-01-02"
+      },
+      "selling_pressure": {
+        "sessions": 47,
+        "first": "2026-04-16"
+      },
+      "activity": {
+        "sessions": 145,
+        "first": "2026-01-02"
+      },
+      "joint_daily_conditions": {
+        "sessions": 13,
+        "first": "2026-09-23"
+      },
+      "confirmed_down": {
+        "sessions": 13,
+        "first": "2026-09-23"
+      },
+      "price_conditions_without_volume": {
+        "sessions": 41,
+        "first": "2026-08-20"
+      }
+    },
+    "snapshots": [
+      {
+        "date": "2026-03-31",
+        "close": 84.36804962158203,
+        "down_strength": -4.203735029007986,
+        "quality": 0.30413745175672907,
+        "selling_pressure": 0.08926721144862684,
+        "activity": 0.8217224468785839,
+        "state": 1
+      },
+      {
+        "date": "2026-06-30",
+        "close": 85.08650207519531,
+        "down_strength": 3.5769756691168126,
+        "quality": 0.27334705421203304,
+        "selling_pressure": -0.03013232096536334,
+        "activity": 1.1879592025612973,
+        "state": 1
+      },
+      {
+        "date": "2026-10-16",
+        "close": 80.05000305175781,
+        "down_strength": 7.482440687993365,
+        "quality": 0.676506928025876,
+        "selling_pressure": 0.10668114011401185,
+        "activity": 0.9128240042068491,
+        "state": -1
+      }
+    ],
+    "trades": [
+      {
+        "entry": "2023-03-24",
+        "exit": "2023-09-18",
+        "entry_index": 5199,
+        "exit_index": 5320,
+        "entry_price": 92.4306098876481,
+        "exit_or_mark": 81.44536285558308,
+        "net_return": -0.11972929428943668,
+        "carried": false,
+        "post_exit_5_return": -0.03952603598311666,
+        "post_exit_21_return": -0.07894457051450843,
+        "retrospective_local_price_percentile": 0.738378325724074
+      },
+      {
+        "entry": "2024-03-08",
+        "exit": "2026-09-24",
+        "entry_index": 5439,
+        "exit_index": 6077,
+        "entry_price": 85.67211935326263,
+        "exit_or_mark": 80.02768729911516,
+        "net_return": -0.06681776744655554,
+        "carried": false,
+        "post_exit_5_return": -0.02896107950714366,
+        "post_exit_21_return": null,
+        "retrospective_local_price_percentile": 0.6689061597803504
+      }
+    ],
+    "warning": "Post-exit returns/local ranges use future prices solely for diagnosis. They are not entry/exit inputs. Previous strategy has no protective stop."
+  },
+  "MCHI_short": {
+    "parameters": {
+      "method": "regression",
+      "range": {
+        "length": 42,
+        "drift": 3.0,
+        "width": 20.0,
+        "efficiency": 0.25,
+        "buffer": 1.0,
+        "confirm": 2,
+        "activity": 1.3
+      },
+      "up": {
+        "length": 21,
+        "strength": 0.5,
+        "quality": 0.4,
+        "confirm": 1,
+        "pressure": 0.2,
+        "activity": 0.9
+      },
+      "down": {
+        "length": 21,
+        "strength": 1.0,
+        "quality": 0.4,
+        "confirm": 3,
+        "pressure": 0.0,
+        "activity": 0.7
+      },
+      "volume": false,
+      "family": "regression_price"
+    },
+    "metrics": {
+      "symbol": "MCHI",
+      "domain": "short",
+      "era": "late",
+      "variant": "selected",
+      "cost_bp": 5,
+      "delay": 0,
+      "training_evidence": true,
+      "cagr": -0.04478273839999847,
+      "sharpe": -0.12655822795636842,
+      "maxdd": -0.41159688182590737,
+      "calmar": -0.10880242387001408,
+      "sessions": 951,
+      "ann_vol": 0.20153237814084252,
+      "buyhold": {
+        "cagr": 0.043474473057827145,
+        "sharpe": 0.2929496506544701,
+        "maxdd": -0.3367367106977165,
+        "calmar": 0.12910523764322665,
+        "sessions": 951,
+        "ann_vol": 0.2634173695082412
+      },
+      "exposure": 0.5236593059936908,
+      "active": 0.5226077812828601,
+      "alpha": -0.08915389142248245,
+      "beta": 0.5862703478854564,
+      "t": -1.4495772112292138,
+      "p": 0.14717645471749324,
+      "completed_trades": 10,
+      "win_fraction": 0.3,
+      "cumulative": -0.15878046543520574,
+      "turnover_annual": 5.563344510709944,
+      "cost_bp_annual": 27.816722553549724,
+      "evidence_fraction": 0.6740273396424816,
+      "state_fractions": {
+        "-1": 0.29547844374342797,
+        "0": 0.41114616193480547,
+        "1": 0.29337539432176657,
+        "2": 0.0
+      },
+      "ic21": {
+        "ic": -0.29210736613917787,
+        "p": 0.001655064588449498,
+        "observations": 930
+      },
+      "alpha_holm_p": 1.0,
+      "ic21_holm_p": 0.16054126507960131
+    },
+    "down_conditions_2026": {
+      "down_strength": {
+        "sessions": 117,
+        "first": "2026-02-05"
+      },
+      "fit_quality": {
+        "sessions": 127,
+        "first": "2026-01-09"
+      },
+      "selling_pressure": {
+        "sessions": 122,
+        "first": "2026-01-02"
+      },
+      "activity": {
+        "sessions": 182,
+        "first": "2026-01-02"
+      },
+      "joint_daily_conditions": {
+        "sessions": 88,
+        "first": "2026-02-10"
+      },
+      "confirmed_down": {
+        "sessions": 73,
+        "first": "2026-02-23"
+      }
+    },
+    "snapshots": [
+      {
+        "date": "2026-03-31",
+        "close": 55.81011199951172,
+        "down_strength": 2.352488513685691,
+        "quality": 0.35655851093559826,
+        "selling_pressure": -0.4839029191142828,
+        "activity": 0.8652435048630622,
+        "state": -1
+      },
+      {
+        "date": "2026-06-30",
+        "close": 51.029998779296875,
+        "down_strength": 5.648165463786554,
+        "quality": 0.8348585414475275,
+        "selling_pressure": 0.3012549540590029,
+        "activity": 1.3017595619289504,
+        "state": -1
+      },
+      {
+        "date": "2026-10-16",
+        "close": 51.20000076293945,
+        "down_strength": 2.957103696642821,
+        "quality": 0.611050790830653,
+        "selling_pressure": 0.06455186291559707,
+        "activity": 1.123292197666108,
+        "state": -1
+      }
+    ],
+    "trades": [
+      {
+        "entry": "2022-11-17",
+        "exit": "2023-02-21",
+        "entry_index": 2736,
+        "exit_index": 2799,
+        "entry_price": 39.34338651823221,
+        "exit_or_mark": 45.73336657084458,
+        "net_return": 0.161253773575317,
+        "carried": true,
+        "post_exit_5_return": -0.03934167663665111,
+        "post_exit_21_return": -0.04195096103469398,
+        "retrospective_local_price_percentile": 0.4186987543825488
+      },
+      {
+        "entry": "2023-04-05",
+        "exit": "2023-05-31",
+        "entry_index": 2830,
+        "exit_index": 2868,
+        "entry_price": 45.4947000676668,
+        "exit_or_mark": 39.656395509863565,
+        "net_return": -0.1292005689955511,
+        "carried": false,
+        "post_exit_5_return": 0.05194230067690642,
+        "post_exit_21_return": 0.045399682993537915,
+        "retrospective_local_price_percentile": -0.009174532676376737
+      },
+      {
+        "entry": "2023-07-31",
+        "exit": "2023-09-28",
+        "entry_index": 2909,
+        "exit_index": 2951,
+        "entry_price": 45.793343288073004,
+        "exit_or_mark": 39.56649265763839,
+        "net_return": -0.13684079169132635,
+        "carried": false,
+        "post_exit_5_return": -0.012177999065678846,
+        "post_exit_21_return": -0.018267208235343002,
+        "retrospective_local_price_percentile": 0.29572244580703644
+      },
+      {
+        "entry": "2023-11-16",
+        "exit": "2023-12-21",
+        "entry_index": 2986,
+        "exit_index": 3010,
+        "entry_price": 40.07612703656788,
+        "exit_or_mark": 37.977554611734774,
+        "net_return": -0.053311813245019324,
+        "carried": false,
+        "post_exit_5_return": 0.018499954242063632,
+        "post_exit_21_return": -0.04024996545397663,
+        "retrospective_local_price_percentile": 0.5672521355415066
+      },
+      {
+        "entry": "2024-05-03",
+        "exit": "2024-06-12",
+        "entry_index": 3101,
+        "exit_index": 3128,
+        "entry_price": 42.32598989288969,
+        "exit_or_mark": 41.55714952037855,
+        "net_return": -0.01914607917952038,
+        "carried": false,
+        "post_exit_5_return": 0.001147204424119197,
+        "post_exit_21_return": -0.011473186394662438,
+        "retrospective_local_price_percentile": 0.634692544761031
+      },
+      {
+        "entry": "2024-08-22",
+        "exit": "2024-10-31",
+        "entry_index": 3177,
+        "exit_index": 3226,
+        "entry_price": 40.498667808507335,
+        "exit_or_mark": 46.954428325528646,
+        "net_return": 0.15824791038758423,
+        "carried": false,
+        "post_exit_5_return": 0.06275380068325886,
+        "post_exit_21_return": -0.03777426238267456,
+        "retrospective_local_price_percentile": 0.3795187322863642
+      },
+      {
+        "entry": "2025-02-05",
+        "exit": "2025-04-10",
+        "entry_index": 3290,
+        "exit_index": 3335,
+        "entry_price": 47.24969819286167,
+        "exit_or_mark": 47.18167000772981,
+        "net_return": -0.002437820356522624,
+        "carried": false,
+        "post_exit_5_return": 0.015242021923955962,
+        "post_exit_21_return": 0.1340885975625763,
+        "retrospective_local_price_percentile": 0.3144475416501063
+      },
+      {
+        "entry": "2025-05-06",
+        "exit": "2025-11-26",
+        "entry_index": 3352,
+        "exit_index": 3494,
+        "entry_price": 52.24483026584514,
+        "exit_or_mark": 60.89714865384502,
+        "net_return": 0.16444596774430176,
+        "carried": false,
+        "post_exit_5_return": -0.0011281218594970666,
+        "post_exit_21_return": -0.015183402485806519,
+        "retrospective_local_price_percentile": 0.3162152979619434
+      },
+      {
+        "entry": "2026-01-13",
+        "exit": "2026-02-27",
+        "entry_index": 3525,
+        "exit_index": 3556,
+        "entry_price": 63.320336481566656,
+        "exit_or_mark": 58.740689024214674,
+        "net_return": -0.07325227641612098,
+        "carried": false,
+        "post_exit_5_return": -0.04075763234646845,
+        "post_exit_21_return": -0.0706916795431628,
+        "retrospective_local_price_percentile": 0.6107660828495448
+      },
+      {
+        "entry": "2026-04-20",
+        "exit": "2026-06-08",
+        "entry_index": 3591,
+        "exit_index": 3625,
+        "entry_price": 58.770491151196346,
+        "exit_or_mark": 53.992157364433254,
+        "net_return": -0.0822232189468739,
+        "carried": false,
+        "post_exit_5_return": 0.017369984577803255,
+        "post_exit_21_return": -0.014856949173375322,
+        "retrospective_local_price_percentile": 0.4361294027509276
+      },
+      {
+        "entry": "2026-07-21",
+        "exit": "2026-09-04",
+        "entry_index": 3654,
+        "exit_index": 3687,
+        "entry_price": 54.33000183105469,
+        "exit_or_mark": 54.63999938964844,
+        "net_return": 0.004700623172161356,
+        "carried": false,
+        "post_exit_5_return": -0.02415812059972855,
+        "post_exit_21_return": -0.04428986449446748,
+        "retrospective_local_price_percentile": 0.6955221127283411
+      }
+    ],
+    "warning": "Post-exit returns/local ranges use future prices solely for diagnosis. They are not entry/exit inputs. Previous strategy has no protective stop."
+  },
+  "MCHI_long": {
+    "parameters": {
+      "method": "regression",
+      "range": {
+        "length": 189,
+        "drift": 3.0,
+        "width": 4.0,
+        "efficiency": 0.45,
+        "buffer": 1.0,
+        "confirm": 3,
+        "activity": 1.0
+      },
+      "up": {
+        "length": 63,
+        "strength": 2.0,
+        "quality": 0.25,
+        "confirm": 1,
+        "pressure": 0.1,
+        "activity": 1.1
+      },
+      "down": {
+        "length": 63,
+        "strength": 0.5,
+        "quality": 0.25,
+        "confirm": 1,
+        "pressure": 0.0,
+        "activity": 1.1
+      },
+      "volume": false,
+      "family": "regression_price"
+    },
+    "metrics": {
+      "symbol": "MCHI",
+      "domain": "long",
+      "era": "late",
+      "variant": "selected",
+      "cost_bp": 5,
+      "delay": 0,
+      "training_evidence": true,
+      "cagr": -0.006298376764296565,
+      "sharpe": 0.05883588449128535,
+      "maxdd": -0.40090112918232657,
+      "calmar": -0.015710548825698403,
+      "sessions": 951,
+      "ann_vol": 0.1848616589843225,
+      "buyhold": {
+        "cagr": 0.043474473057827145,
+        "sharpe": 0.2929496506544701,
+        "maxdd": -0.3367367106977165,
+        "calmar": 0.12910523764322665,
+        "sessions": 951,
+        "ann_vol": 0.2634173695082412
+      },
+      "exposure": 0.4405888538380652,
+      "active": 0.4395373291272345,
+      "alpha": -0.04982016452705567,
+      "beta": 0.49594419506905424,
+      "t": -0.6437175163706772,
+      "p": 0.5197586291830532,
+      "completed_trades": 4,
+      "win_fraction": 0.5,
+      "cumulative": -0.023562019458427508,
+      "turnover_annual": 2.3843283405615807,
+      "cost_bp_annual": 11.921641702807907,
+      "evidence_fraction": 0.6487907465825447,
+      "state_fractions": {
+        "-1": 0.5604626708727655,
+        "0": 0.0,
+        "1": 0.4395373291272345,
+        "2": 0.0
+      },
+      "ic21": {
+        "ic": 0.007062131556614594,
+        "p": 0.9507266091846766,
+        "observations": 930
+      },
+      "alpha_holm_p": 1.0,
+      "ic21_holm_p": 1.0
+    },
+    "down_conditions_2026": {
+      "down_strength": {
+        "sessions": 135,
+        "first": "2026-01-02"
+      },
+      "fit_quality": {
+        "sessions": 93,
+        "first": "2026-01-02"
+      },
+      "selling_pressure": {
+        "sessions": 140,
+        "first": "2026-01-02"
+      },
+      "activity": {
+        "sessions": 94,
+        "first": "2026-01-08"
+      },
+      "joint_daily_conditions": {
+        "sessions": 82,
+        "first": "2026-01-02"
+      },
+      "confirmed_down": {
+        "sessions": 82,
+        "first": "2026-01-02"
+      }
+    },
+    "snapshots": [
+      {
+        "date": "2026-03-31",
+        "close": 55.81011199951172,
+        "down_strength": 7.442643529933288,
+        "quality": 0.7685355674479571,
+        "selling_pressure": 0.0680421479070902,
+        "activity": 0.8652435048630622,
+        "state": -1
+      },
+      {
+        "date": "2026-06-30",
+        "close": 51.029998779296875,
+        "down_strength": 5.750348699715893,
+        "quality": 0.5613515256592778,
+        "selling_pressure": 0.2425645080344193,
+        "activity": 1.3017595619289504,
+        "state": -1
+      },
+      {
+        "date": "2026-10-16",
+        "close": 51.20000076293945,
+        "down_strength": 5.646058494365255,
+        "quality": 0.6274913920019037,
+        "selling_pressure": 0.24030692681409133,
+        "activity": 1.123292197666108,
+        "state": -1
+      }
+    ],
+    "trades": [
+      {
+        "entry": "2022-12-21",
+        "exit": "2023-03-28",
+        "entry_index": 2759,
+        "exit_index": 2824,
+        "entry_price": 42.80503168337571,
+        "exit_or_mark": 45.1183264567053,
+        "net_return": 0.052989074077547826,
+        "carried": true,
+        "post_exit_5_return": 0.011597078495839241,
+        "post_exit_21_return": -0.03418115574067404,
+        "retrospective_local_price_percentile": 0.6711236168455788
+      },
+      {
+        "entry": "2024-04-03",
+        "exit": "2024-07-29",
+        "entry_index": 3079,
+        "exit_index": 3159,
+        "entry_price": 38.14845606575748,
+        "exit_or_mark": 39.22086715698242,
+        "net_return": 0.02708392242454738,
+        "carried": false,
+        "post_exit_5_return": -0.01239972902826092,
+        "post_exit_21_return": 0.017748648910204334,
+        "retrospective_local_price_percentile": 0.22618979585357335
+      },
+      {
+        "entry": "2024-10-07",
+        "exit": "2024-12-23",
+        "entry_index": 3208,
+        "exit_index": 3262,
+        "entry_price": 55.58435335068589,
+        "exit_or_mark": 45.73366278565538,
+        "net_return": -0.17804293431238316,
+        "carried": false,
+        "post_exit_5_return": -0.004249906143224513,
+        "post_exit_21_return": 0.014449788650451989,
+        "retrospective_local_price_percentile": 0.3787750139836553
+      },
+      {
+        "entry": "2025-02-19",
+        "exit": "2025-12-05",
+        "entry_index": 3299,
+        "exit_index": 3500,
+        "entry_price": 52.44891283462937,
+        "exit_or_mark": 61.505631651224334,
+        "net_return": 0.17150486895224537,
+        "carried": false,
+        "post_exit_5_return": -0.018350133707340732,
+        "post_exit_21_return": -0.0005373147073716167,
+        "retrospective_local_price_percentile": 1.0040591947245405
+      },
+      {
+        "entry": "2026-09-02",
+        "exit": "2026-10-09",
+        "entry_index": 3685,
+        "exit_index": 3711,
+        "entry_price": 54.47999954223633,
+        "exit_or_mark": 52.060001373291016,
+        "net_return": -0.04537503990634084,
+        "carried": false,
+        "post_exit_5_return": -0.01651941197974649,
+        "post_exit_21_return": null,
+        "retrospective_local_price_percentile": 0.6056350135932346
+      }
+    ],
+    "warning": "Post-exit returns/local ranges use future prices solely for diagnosis. They are not entry/exit inputs. Previous strategy has no protective stop."
+  }
+}

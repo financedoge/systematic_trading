@@ -1,0 +1,21 @@
+{
+  "completed_local_date": "2026-10-28",
+  "timezone": "Asia/Shanghai",
+  "focused_python_tests": 48,
+  "offline_chart_combinations": 306,
+  "offline_controls": "OHLC/date hover, two-point zoom, empty interval, interval NAV, all arms, weakest-era and incident buttons passed",
+  "native_accounting_cases": 4,
+  "native_max_dollar_error": 0,
+  "visually_inspected": [
+    "equation-proof.png",
+    "CPER-incident.png",
+    "IWM-incident.png",
+    "TLT_late.png",
+    "PPLT_early.png"
+  ],
+  "browser_layout_certified": false,
+  "native_limit": "Frozen synthetic event accounting only; not intraday execution or HMM inference validation",
+  "reference_control_cases": 612,
+  "close_engine_control_cases": 612,
+  "diagnostic_cases": 1632
+}

@@ -1,0 +1,21 @@
+[
+  "x_t=b^f_t/\\sigma,\\quad f_D=N(-a,v),\\quad f_R=N(0,v_R),\\quad f_U=N(a,v),\\quad \\log(f_U/f_D)=2ax_t/v",
+  "p_t(s)\\propto f_s(x_t)\\sum_j p_{t-1}(j)A_{js},\\quad \\mathrm{entry}=\\{p_{U,t}\\geq e_j,\\ b^f_t>0,\\ \\mathrm{armed}\\}",
+  "\\mathrm{armed}\\leftarrow 1\\ \\mathrm{when}\\ p_{U,t}<r;\\quad d_{j,t}=d^{wide}_j\\ \\mathrm{if}\\ p^s_{U,t}\\geq0.7\\ \\mathrm{and\\ context},\\ \\mathrm{else}\\ d^{tight}_j",
+  "R=O_{entry}\\sigma,\\quad S_{entry}=O_{entry}-d_{j,signal}R,\\quad S_{t+1}=\\max(S_t,\\max(O_{entry},C_{entry},\\ldots,C_t)-d_{j,t}R)",
+  "B0:\\ C_t<S_t\\Rightarrow\\mathrm{sell\\ at}\\ O_{t+1+delay};\\qquad B1,B2:\\ L_t\\leq S_t\\Rightarrow F_t=\\min(O_t,S_t)(1-s)",
+  "\\mathrm{trade\\ return}=\\frac{F_{exit}(1-f)}{O_{entry}(1+f)}-1,\\quad f\\in\\{0.0005,0.001,0.002\\},\\quad s=0.0005",
+  "TR_t=\\max(H_t-L_t,|H_t-C_{t-1}|,|L_t-C_{t-1}|),\\quad ATR_t=ATR_{t-1}+(TR_t-ATR_{t-1})/20",
+  "VP_t=\\frac{\\sum_{i=t-2}^{t}\\mathrm{sign}(C_i-C_{i-1})V_i}{\\sum_{i=t-2}^{t}V_i},\\quad CL_t=\\frac{C_t-L_t}{H_t-L_t}",
+  "\\mathrm{recover}:\\quad 1\\leq t-t_x\\leq10,\\quad F_x(1+2f)\\leq C_t\\leq F_x+ATR_{signal(x)}",
+  "p_{U,t}\\geq0.55,\\ p_{D,t}\\leq0.35,\\ (b^f_t>0\\ \\mathrm{or}\\ b^f_t>b^f_{t-1}),\\ C_t>\\max(C_{t-1},O_t),\\ CL_t\\geq0.6,\\ VP_t\\geq0",
+  "j\\in\\{0,1,2\\}:\\quad(\\Delta_j,\\lambda_j,\\kappa_j)=(0,1,0),\\ (-0.05,0.75,-1),\\ (0.05,1.25,1)",
+  "e_j=\\mathrm{clip}(e+\\Delta_j,0.5,0.9),\\quad q_j=\\mathrm{clip}(q+\\Delta_j,0.45,0.9),\\quad q^a_j=\\mathrm{clip}(q^a+\\Delta_j,0.65,0.95)",
+  "d_j=\\lambda_j d,\\quad k_j=\\max(1,k+\\kappa_j),\\quad y_{j,t}=\\frac{NAV^{shadow}_{j,t}/NAV^{shadow}_{j,t-1}-1}{\\sigma}",
+  "\\rho=2^{-1/63},\\quad n_t=\\rho n_{t-1}+1,\\quad s_{j,t}=\\rho s_{j,t-1}+y_{j,t},\\quad \\mu_{j,t}=\\frac{s_{j,t}}{4+n_t}",
+  "\\mathrm{warning}:\\quad n_t\\leftarrow\\sum_{i=\\max(t_0+1,t-20)}^t\\rho^{t-i},\\quad s_{j,t}\\leftarrow\\sum_{i=\\max(t_0+1,t-20)}^t\\rho^{t-i}y_{j,i}",
+  "j^*=\\arg\\max_j\\mu_{j,t};\\quad \\mathrm{switch\\ if}\\ \\mu_{j^*,t}>\\mu_{current,t}+0.02\\ \\mathrm{and\\ flat\\ with\\ no\\ pending\\ order}",
+  "\\mathrm{warning}=\\mathrm{exit\\ reversed}\\ \\vee\\ \\{r_{trade}<0,\\ duration\\leq10\\}\\ \\vee\\ \\{loss\\ streak\\in\\{3,4\\}\\}\\ \\vee\\ \\{r_{trade}<-\\max(\\tau,2f)\\}",
+  "\\tau=\\mathrm{sd}(positive\\ training\\ trade\\ returns)\\ \\mathrm{if}\\ n_{wins}\\geq3;\\quad \\tau=\\sigma\\sqrt{21}\\ \\mathrm{otherwise}",
+  "IC_5=\\mathrm{Spearman}(p_{U,t}-p_{D,t},\\ O_{t+6+delay}/O_{t+1+delay}-1)"
+]

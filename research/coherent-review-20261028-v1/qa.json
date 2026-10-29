@@ -1,0 +1,43 @@
+{
+  "status": "complete",
+  "research_decision": "Retain baseline: both challengers fail all twelve acceptance settings. Shared rules remove unchanged-evidence reversal conflict; XLU warrants further research only.",
+  "focused_python_tests": 42,
+  "test_scope": [
+    "tests/test_coherent_review.py",
+    "tests/test_trained_review.py",
+    "tests/test_stop_review.py",
+    "tests/test_coherent_review_contract.py"
+  ],
+  "test_note": "39 model tests and three artifact contracts passed.",
+  "offline_chart_combinations": 306,
+  "chart_controls": "All ETF/era/arm selectors, dates, hover OHLC, two-click zoom, interval NAV, events/trades, weakest and incident shortcuts passed.",
+  "visual_inspection": [
+    "equation-proof.png",
+    "CORN-loss.png",
+    "MCHI-loss.png",
+    "XLU-recovery.png",
+    "ITA_late.png",
+    "CPER-incident.png",
+    "IWM-incident.png"
+  ],
+  "browser_layout_verified": false,
+  "report_links_and_placeholders": "passed",
+  "main_cases": 1836,
+  "diagnostic_cases": 816,
+  "exact_parent_controls": 612,
+  "exact_disabled_controls": 612,
+  "max_independent_ledger_error": 5.551115123125783e-15,
+  "native_accounting_fixtures": 4,
+  "native_reference_max_dollars": 0.0,
+  "native_scope": "Frozen fills and marks on synthetic event clocks; validates accounting, not market execution or reviewer inference.",
+  "limitations": [
+    "Most reviewers abstain; unchanged medians are not evidence of active value.",
+    "All five enabled asset/era/model fits worsen evaluation forecast MSE versus constants.",
+    "One-session underlying return is not a full action value or stop-clipped PnL target.",
+    "Parent HMM selection remains inherited; independent reviewer folds do not establish fully nested parent validation.",
+    "Both evaluation eras are repeatedly inspected development evidence.",
+    "XLU is a descriptive promising case, not a hindsight asset-selection rule."
+  ],
+  "frozen_behavior_changed_after_evaluation": false,
+  "live_changes": false
+}

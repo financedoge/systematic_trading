@@ -1,0 +1,5818 @@
+{
+  "AGG": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.011830668338279256,
+          -0.061084052155650236,
+          1.5574382544324672
+        ]
+      },
+      "loss_threshold": 0.009240394055078689,
+      "wins": 6,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.6524955720852582,
+          0.6619530639274013,
+          0.6549929404941255
+        ]
+      },
+      "loss_threshold": 0.04869605134053428,
+      "wins": 4,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "BIL": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          5.557834207222939,
+          5.557834207222939,
+          5.557449798330036
+        ]
+      },
+      "loss_threshold": 0.0014957502051880683,
+      "wins": 1,
+      "fallback": true,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          3.953764866594517,
+          3.953764866594517,
+          3.953764866594517
+        ]
+      },
+      "loss_threshold": 0.0016408425187156696,
+      "wins": 0,
+      "fallback": true,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "CORN": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.3482479945838922,
+          0.17776071800656978,
+          0.3508755389126071
+        ]
+      },
+      "loss_threshold": 0.1046449465955187,
+      "wins": 5,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.2728137010549683,
+          0.3875143238001637,
+          0.01767066131600822
+        ]
+      },
+      "loss_threshold": 0.016794241053219684,
+      "wins": 4,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "CPER": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.05339018023010375,
+          0.0997341564343125,
+          -0.2599580597151874
+        ]
+      },
+      "loss_threshold": 0.07142642269620567,
+      "wins": 7,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "DBA": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.49702217608436094,
+          -0.3190733852757563,
+          -0.019915044495351558
+        ]
+      },
+      "loss_threshold": 0.03395786245213777,
+      "wins": 8,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.6284922778179699,
+          0.6177878427745438,
+          0.6719455061883851
+        ]
+      },
+      "loss_threshold": 0.00996878735758247,
+      "wins": 6,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "DBB": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.3383231301031564,
+          -0.9825526392726851,
+          -0.312720190343923
+        ]
+      },
+      "loss_threshold": 0.06466215782599738,
+      "wins": 7,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.2797553792036317,
+          -0.26682440192779194,
+          -0.2825086882309456
+        ]
+      },
+      "loss_threshold": 0.035635921081642166,
+      "wins": 5,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "DBC": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.11412148178335309,
+          -0.04148308994860727,
+          -0.6796033663296092
+        ]
+      },
+      "loss_threshold": 0.11340517422862731,
+      "wins": 8,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.5795669157239424,
+          -0.3529999470042236,
+          0.464511649527653
+        ]
+      },
+      "loss_threshold": 0.017419844088855253,
+      "wins": 5,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "EEM": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.014903046363189525,
+          -0.06854564484078061,
+          -0.020281835734551036
+        ]
+      },
+      "loss_threshold": 0.08163586189947981,
+      "wins": 2,
+      "fallback": true,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.5133311399685777,
+          0.48786814400143763,
+          0.382093578650927
+        ]
+      },
+      "loss_threshold": 0.08266461288551963,
+      "wins": 2,
+      "fallback": true,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "EFA": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.5629052464203018,
+          0.6803581221176035,
+          0.9207972361995763
+        ]
+      },
+      "loss_threshold": 0.04658867437951335,
+      "wins": 9,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.4434848921843254,
+          0.43587574003353025,
+          0.4247538962466632
+        ]
+      },
+      "loss_threshold": 0.061448767748904676,
+      "wins": 2,
+      "fallback": true,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "EMB": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.6917507993185399,
+          1.7516761510349463,
+          1.7215721325541293
+        ]
+      },
+      "loss_threshold": 0.035234944794676475,
+      "wins": 5,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.4714566816173842,
+          0.35665204371991965,
+          0.5199442785777115
+        ]
+      },
+      "loss_threshold": 0.011404287929791748,
+      "wins": 8,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "EWA": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.2952126307966954,
+          1.001785808994744,
+          0.4911323327218793
+        ]
+      },
+      "loss_threshold": 0.04345422503015418,
+      "wins": 11,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.1040460905965481,
+          0.17558567382281212,
+          0.0891046232992477
+        ]
+      },
+      "loss_threshold": 0.03829353675851494,
+      "wins": 4,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "EWC": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.21020125808705284,
+          0.40688793402783896,
+          0.8243219436738916
+        ]
+      },
+      "loss_threshold": 0.04187010432915741,
+      "wins": 9,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.25145250970095795,
+          0.03935828159369041,
+          -0.25142735277183487
+        ]
+      },
+      "loss_threshold": 0.040141787895254064,
+      "wins": 4,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "EWG": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.0791175013712995,
+          0.7238265082791836,
+          0.7903058759390622
+        ]
+      },
+      "loss_threshold": 0.05729000285419295,
+      "wins": 7,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.20020776460854434,
+          0.33383200866496526,
+          0.0163196984482566
+        ]
+      },
+      "loss_threshold": 0.07560594894028555,
+      "wins": 1,
+      "fallback": true,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "EWH": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.5769617929178994,
+          1.1885129803112024,
+          1.3799956594401523
+        ]
+      },
+      "loss_threshold": 0.06997537410423506,
+      "wins": 6,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.1458360033276791,
+          -0.06985405694059472,
+          -0.1458360033276791
+        ]
+      },
+      "loss_threshold": 0.12857019491729957,
+      "wins": 3,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "EWJ": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.7171982477006371,
+          0.7240057641919913,
+          0.709946795387583
+        ]
+      },
+      "loss_threshold": 0.2040018447686202,
+      "wins": 3,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.5568568704047374,
+          0.5439564877012913,
+          0.4906869734781556
+        ]
+      },
+      "loss_threshold": 0.06735367332404149,
+      "wins": 2,
+      "fallback": true,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "EWT": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.48681443057807683,
+          0.6656321440708486,
+          0.8722319559595715
+        ]
+      },
+      "loss_threshold": 0.06701119320147914,
+      "wins": 7,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.267786772718387,
+          1.2068702963313034,
+          1.2913755013646133
+        ]
+      },
+      "loss_threshold": 0.08282659914385727,
+      "wins": 2,
+      "fallback": true,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "EWU": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.9500669958416117,
+          0.8636638218612321,
+          1.178403765687924
+        ]
+      },
+      "loss_threshold": 0.04562087311867251,
+      "wins": 9,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.3764134172584836,
+          0.30247940316127025,
+          0.2671871957920558
+        ]
+      },
+      "loss_threshold": 0.03328654260853946,
+      "wins": 8,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "EWY": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.39504238713627204,
+          0.3538076304447451,
+          0.2711790324678966
+        ]
+      },
+      "loss_threshold": 0.052598987186764735,
+      "wins": 8,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.2968451061414901,
+          0.3352095005049963,
+          0.35210531755977925
+        ]
+      },
+      "loss_threshold": 0.0326859541376969,
+      "wins": 6,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "GLD": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.09427825584026425,
+          0.12170182291219828,
+          0.08101880310469096
+        ]
+      },
+      "loss_threshold": 0.03152277280663652,
+      "wins": 7,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.21818043538992185,
+          0.2773874839640376,
+          0.5826565288483393
+        ]
+      },
+      "loss_threshold": 0.019778286189706687,
+      "wins": 8,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "HYG": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.48600242288692985,
+          0.08596814645969797,
+          -0.8720379667194081
+        ]
+      },
+      "loss_threshold": 0.02295350969649932,
+      "wins": 5,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.0334241762387637,
+          1.034193849275532,
+          1.0032297742726968
+        ]
+      },
+      "loss_threshold": 0.03312249764990329,
+      "wins": 2,
+      "fallback": true,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "IAT": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.8979205132200613,
+          -0.6943260471019567,
+          -0.882934248438323
+        ]
+      },
+      "loss_threshold": 0.12115910080132966,
+      "wins": 6,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.5532353012322607,
+          0.5716123034977123,
+          0.5526416390658314
+        ]
+      },
+      "loss_threshold": 0.0553391921827872,
+      "wins": 3,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "IBB": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.3373130854540009,
+          0.1069448246937616,
+          -0.26993490588732255
+        ]
+      },
+      "loss_threshold": 0.06605288797371356,
+      "wins": 8,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.9936788469438209,
+          1.048059564781893,
+          0.9190373675877539
+        ]
+      },
+      "loss_threshold": 0.018958927148393166,
+      "wins": 5,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "IBND": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.0151254913304184,
+          1.6583298075949415,
+          1.4112124015732064
+        ]
+      },
+      "loss_threshold": 0.028636677463535522,
+      "wins": 6,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.42845287850753816,
+          -1.131226712072557,
+          -0.287643631418291
+        ]
+      },
+      "loss_threshold": 0.016144219644737768,
+      "wins": 6,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "IEF": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.13469246753018965,
+          0.34415841016382565,
+          0.5470381587186953
+        ]
+      },
+      "loss_threshold": 0.018432774165689857,
+      "wins": 5,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.05661204176781418,
+          0.13422346130973248,
+          -0.0539378555925681
+        ]
+      },
+      "loss_threshold": 0.019460415460030935,
+      "wins": 5,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "IGOV": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -1.3053691314995104,
+          -0.1639656693280864,
+          -1.3114465992921267
+        ]
+      },
+      "loss_threshold": 0.01796922400876081,
+      "wins": 4,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.31695394838561436,
+          -0.19149080183514064,
+          -0.14353561074778567
+        ]
+      },
+      "loss_threshold": 0.019571403618500943,
+      "wins": 6,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "INDA": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.2233836736365753,
+          0.13741072176608898,
+          -0.2509690333420163
+        ]
+      },
+      "loss_threshold": 0.04846741875817763,
+      "wins": 8,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.04223847433517347,
+          0.04369638615878984,
+          0.07334281257971964
+        ]
+      },
+      "loss_threshold": 0.07525548614439788,
+      "wins": 5,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "ITA": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.2013219934909611,
+          0.4703021038137773,
+          1.1749846910340436
+        ]
+      },
+      "loss_threshold": 0.06988406574059601,
+      "wins": 5,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.18201048185145444,
+          -0.09997064718493204,
+          -0.17374161052963175
+        ]
+      },
+      "loss_threshold": 0.08121989998496262,
+      "wins": 6,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "IWM": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.2454848454267713,
+          -0.8875300431352585,
+          -0.05217153060706156
+        ]
+      },
+      "loss_threshold": 0.06133101120946626,
+      "wins": 10,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.717078744552065,
+          0.6558702474138517,
+          0.6441945664324634
+        ]
+      },
+      "loss_threshold": 0.03717587822514477,
+      "wins": 5,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "LEMB": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.3939984788368438,
+          0.4079139576279378,
+          1.2728871728361322
+        ]
+      },
+      "loss_threshold": 0.03176915022332092,
+      "wins": 6,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.8108214378599754,
+          0.8264783930665628,
+          0.6925245180223261
+        ]
+      },
+      "loss_threshold": 0.01651278849414747,
+      "wins": 6,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "LQD": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.2002184769751129,
+          0.09428403847622636,
+          1.5550060473845686
+        ]
+      },
+      "loss_threshold": 0.016775347997928014,
+      "wins": 8,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.1464099642944494,
+          1.056271768884418,
+          1.1403222982884358
+        ]
+      },
+      "loss_threshold": 0.04991739320155515,
+      "wins": 4,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "MBB": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.643427509504371,
+          0.985102474065431,
+          0.7747223059996288
+        ]
+      },
+      "loss_threshold": 0.009249927390547938,
+      "wins": 3,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.3042231555426993,
+          1.2968021104380258,
+          1.6319220872012317
+        ]
+      },
+      "loss_threshold": 0.04052243692859747,
+      "wins": 3,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "MCHI": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.3693213674851664,
+          -0.7930951407655208,
+          0.39198565537820995
+        ]
+      },
+      "loss_threshold": 0.08617183021778141,
+      "wins": 4,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.8008870996807541,
+          0.8230894478646417,
+          0.899027251820552
+        ]
+      },
+      "loss_threshold": 0.03150143568130604,
+      "wins": 11,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "MDY": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.2644899536962099,
+          0.09182830600574272,
+          0.2245124442678312
+        ]
+      },
+      "loss_threshold": 0.027828789671292486,
+      "wins": 8,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.418183380761994,
+          0.4400911456354533,
+          0.4211364498267935
+        ]
+      },
+      "loss_threshold": 0.03506456129768771,
+      "wins": 3,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "PPLT": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.388082131998124,
+          0.8886407733951038,
+          1.2796472143300035
+        ]
+      },
+      "loss_threshold": 0.10407876460352608,
+      "wins": 5,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.7168167274145505,
+          0.7604660032027343,
+          0.9709915914306152
+        ]
+      },
+      "loss_threshold": 0.050212332560109284,
+      "wins": 4,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "SHY": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.9875654378248316,
+          -0.4010997420507524,
+          -0.9514133669077954
+        ]
+      },
+      "loss_threshold": 0.004120383633267613,
+      "wins": 1,
+      "fallback": true,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.5373227223665726,
+          1.519604149947382,
+          1.5373227223665726
+        ]
+      },
+      "loss_threshold": 0.012624292567285948,
+      "wins": 6,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "SLV": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.32438108319224024,
+          0.012686523962462237,
+          0.8750373871269841
+        ]
+      },
+      "loss_threshold": 0.07346678036217272,
+      "wins": 7,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.6509918398994581,
+          0.821299589139909,
+          0.5930129399317202
+        ]
+      },
+      "loss_threshold": 0.10367189350247913,
+      "wins": 3,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "SOXX": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.3654409341934054,
+          0.1655216119802606,
+          0.12464467449083226
+        ]
+      },
+      "loss_threshold": 0.0451468767230813,
+      "wins": 11,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.7473319264928386,
+          0.7083054258951604,
+          1.6705061766126172
+        ]
+      },
+      "loss_threshold": 0.04999678274105409,
+      "wins": 11,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "SPY": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.10625950833618615,
+          0.14835767376587022,
+          -0.48045126947925004
+        ]
+      },
+      "loss_threshold": 0.03596695049276028,
+      "wins": 7,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.6978089513891221,
+          0.8342007303176003,
+          0.7384126346801742
+        ]
+      },
+      "loss_threshold": 0.08615250112006412,
+      "wins": 4,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "TIP": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.18950133990158977,
+          0.13664639398731532,
+          -0.04515397472679398
+        ]
+      },
+      "loss_threshold": 0.007701100028550798,
+      "wins": 9,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.5652785278463819,
+          0.16038708467168242,
+          0.5638788286197868
+        ]
+      },
+      "loss_threshold": 0.04495712410002174,
+      "wins": 3,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "TLT": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.15516218206457644,
+          0.6965707544483047,
+          0.4682669505426921
+        ]
+      },
+      "loss_threshold": 0.05310553573337971,
+      "wins": 5,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.046000329269765175,
+          -0.2727484009930859,
+          -0.15101413604833688
+        ]
+      },
+      "loss_threshold": 0.02064154406720646,
+      "wins": 8,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "USO": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.27323158158766686,
+          -0.23092376417619268,
+          -0.3665501349478541
+        ]
+      },
+      "loss_threshold": 0.18102722096925664,
+      "wins": 8,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.7840072732383648,
+          0.8501245293008157,
+          0.7123886216012036
+        ]
+      },
+      "loss_threshold": 0.08553056041482894,
+      "wins": 5,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "slope",
+          "label": "slope",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "VGK": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.0308800095685353,
+          1.1594658203825663,
+          1.3199386893464202
+        ]
+      },
+      "loss_threshold": 0.05467093196458159,
+      "wins": 10,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.4032864978282381,
+          0.4044012181171675,
+          0.532199582034831
+        ]
+      },
+      "loss_threshold": 0.06822100689911303,
+      "wins": 1,
+      "fallback": true,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "WEAT": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.20039728304595286,
+          0.21671010388925735,
+          0.3263660924029969
+        ]
+      },
+      "loss_threshold": 0.038692956120696065,
+      "wins": 9,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.3930501061303406,
+          0.9678390301394809,
+          1.3914598548265131
+        ]
+      },
+      "loss_threshold": 0.027876453586695653,
+      "wins": 4,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "XLB": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.3055231270475516,
+          1.334187409923688,
+          0.7316669540820101
+        ]
+      },
+      "loss_threshold": 0.05680756195657162,
+      "wins": 10,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.651024270269234,
+          0.5861990060356166,
+          0.6085606240271481
+        ]
+      },
+      "loss_threshold": 0.07811296667442101,
+      "wins": 3,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "XLC": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.8826860480189885,
+          -0.8282660928209141,
+          -0.900035093914235
+        ]
+      },
+      "loss_threshold": 0.06700283949996112,
+      "wins": 6,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "XLE": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.2683529406028016,
+          0.2259674658758646,
+          1.2738692529896127
+        ]
+      },
+      "loss_threshold": 0.06270128927795166,
+      "wins": 12,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.20845574143824283,
+          0.20200965030395604,
+          0.07773293852129569
+        ]
+      },
+      "loss_threshold": 0.029546156719315448,
+      "wins": 7,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "XLI": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.4367181563451878,
+          2.045710172845087,
+          1.090484111082687
+        ]
+      },
+      "loss_threshold": 0.05613786996007632,
+      "wins": 8,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.1669847977993498,
+          0.3836338168918899,
+          0.17275713218041017
+        ]
+      },
+      "loss_threshold": 0.03281113770314889,
+      "wins": 11,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "XLK": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.5310757389173183,
+          -0.4110124899539781,
+          -0.3581169709880924
+        ]
+      },
+      "loss_threshold": 0.060381486154264474,
+      "wins": 9,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.552796208437027,
+          1.5743207981495602,
+          1.5721991825814439
+        ]
+      },
+      "loss_threshold": 0.11118074025657618,
+      "wins": 4,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "XLP": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.0804792190666326,
+          0.17735071177656742,
+          1.0690591011849704
+        ]
+      },
+      "loss_threshold": 0.02825567763747832,
+      "wins": 10,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.75,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.7,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.8,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.9786764170584414,
+          0.9094224261431035,
+          0.9704974764038199
+        ]
+      },
+      "loss_threshold": 0.030952375544908484,
+      "wins": 5,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "XLU": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.6462604152052959,
+          0.44477264474410233,
+          0.6236734149979806
+        ]
+      },
+      "loss_threshold": 0.03501357140934528,
+      "wins": 11,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.5616903065393092,
+          0.3799141004649337,
+          0.5510246455919858
+        ]
+      },
+      "loss_threshold": 0.06201942179527413,
+      "wins": 6,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.6,
+          "exit": 0.75,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.5499999999999999,
+          "exit": 0.7,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "switch",
+          "label": "switch",
+          "entry": 0.65,
+          "exit": 0.8,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": false,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "XLV": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -0.08331619237135729,
+          -0.463921467501707,
+          0.004676188528435725
+        ]
+      },
+      "loss_threshold": 0.056907083201076895,
+      "wins": 6,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          1.4506385131465591,
+          1.5528902585103854,
+          1.337423216949533
+        ]
+      },
+      "loss_threshold": 0.05747407027022441,
+      "wins": 5,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 3.0,
+          "wide": 6.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 2.25,
+          "wide": 4.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  },
+  "XLY": {
+    "late": {
+      "training_end": "2022-12-30",
+      "start": "2019-12-31",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          -1.1619933944895628,
+          -1.5741604826256224,
+          -0.8407215126254495
+        ]
+      },
+      "loss_threshold": 0.04474748748197478,
+      "wins": 11,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.75,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.7,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.8,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    },
+    "early": {
+      "training_end": "2019-12-31",
+      "start": "2016-12-28",
+      "seed": {
+        "n": 20.0,
+        "s": [
+          0.3028106608827132,
+          0.328466567403589,
+          0.29742498121779554
+        ]
+      },
+      "loss_threshold": 0.04432560009326315,
+      "wins": 4,
+      "fallback": false,
+      "parameters": [
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.6,
+          "exit": 0.6,
+          "tight": 5.0,
+          "wide": 10.0,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.85,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.5499999999999999,
+          "exit": 0.5499999999999999,
+          "tight": 3.75,
+          "wide": 7.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.7999999999999999,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        },
+        {
+          "family": "context",
+          "label": "context",
+          "entry": 0.65,
+          "exit": 0.65,
+          "tight": 6.25,
+          "wide": 12.5,
+          "reset": 0.5,
+          "context": true,
+          "aligned_exit": 0.9,
+          "entry_delta": 0.0,
+          "protection_scale": 1.0
+        }
+      ]
+    }
+  }
+}

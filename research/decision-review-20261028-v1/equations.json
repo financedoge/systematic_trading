@@ -1,0 +1,20 @@
+[
+  "r_t=\\log(C_t/C_{t-1}),\\quad CL_t=(C_t-L_t)/(H_t-L_t),\\quad VP_t=\\frac{\\sum_{i=t-2}^t sign(r_i)V_i}{\\sum_{i=t-2}^t V_i}",
+  "TR_t=\\max(H_t-L_t,|H_t-C_{t-1}|,|L_t-C_{t-1}|),\\quad ATR_t=ATR_{t-1}+(TR_t-ATR_{t-1})/20",
+  "x_t=clip\\left([r_t/\\sigma,\\ (r_t+r_{t-1}+r_{t-2})/(\\sigma\\sqrt{3}),\\ 2CL_t-1,\\ VP_t,\\ \\log(V_t/\\bar V_{t-20:t-1}),\\ (L_t-L_{t-1})/ATR_{t-1}],-4,4\\right)",
+  "z_t=\\log(O_{t+6}/O_{t+1})/(\\sigma\\sqrt{5}),\\quad y_t=1[z_t>0];\\quad z_t\\ \\mathrm{available\\ at\\ close}\\ t+6",
+  "n_j=\\sum_i1[y_i=j],\\ s_j=\\sum_{i:y_i=j}x_i,\\ Q_j=\\sum_{i:y_i=j}x_ix_i^T,\\ v_j=\\sum_{i:y_i=j}z_i",
+  "m_j=s_j/n_j,\\ \\pi_j=n_j/\\sum_kn_k,\\ b_j=v_j/n_j,\\ \\Sigma=0.5\\frac{\\sum_j(Q_j-n_jm_jm_j^T)}{\\sum_jn_j}+0.5D_{train}+0.05I",
+  "p_{k,t}=\\frac{\\pi_{k,1}N(x_t;m_{k,1},\\Sigma_k)}{\\sum_{j=0}^1\\pi_{k,j}N(x_t;m_{k,j},\\Sigma_k)},\\quad \\mu_{k,t}=\\sigma\\sqrt{5}[(1-p_{k,t})b_{k,0}+p_{k,t}b_{k,1}]",
+  "p_t=\\sum_kw_{k,t}p_{k,t},\\quad \\mu_t=\\sum_kw_{k,t}\\mu_{k,t},\\quad \\pi_t=\\sum_kw_{k,t}\\pi_{k,1},\\quad \\ell_t=clip(logit(p_t)-logit(\\pi_t),-2,2)",
+  "G^+_t=\\max(0,G^+_{t-1}+\\ell_t-0.1),\\quad G^-_t=\\max(0,G^-_{t-1}-\\ell_t-0.1),\\quad h=\\log4",
+  "\\mathrm{entry\\ invalid}:\\ G^-_t\\geq h,\\ p_t<0.5,\\ \\mu_t<0,\\ C_t<C_{t-1},\\ C_t\\leq Peak_{t-1}-0.5ATR_t",
+  "\\mathrm{recover}:\\ 1\\leq t-t_x\\leq20,\\ G^+_t\\geq h,\\ p_t>0.5,\\ \\mu_t>2f+s,\\ F_x(1+2f)\\leq C_t\\leq F_x+1.5ATR_{x-1}",
+  "C_t>\\max(O_t,C_{t-1}),\\quad CL_t\\geq0.6,\\quad VP_t\\geq0;\\quad O_{t+1+delay}\\in[F_x,F_x+1.5ATR_{x-1}]",
+  "R=O_{entry}\\sigma,\\quad S_{entry}=O_{entry}-dR,\\quad S_{t+1}=\\max(S_t,Peak_t-d_tR)",
+  "L_t\\leq S_t\\Rightarrow F_t=\\min(O_t,S_t)(1-s);\\quad f\\in\\{0.0005,0.001,0.002\\},\\ s=0.0005,\\ delay\\in\\{0,1\\}",
+  "\\rho=2^{-1/H};\\quad (n_j,s_j,Q_j,v_j)\\leftarrow\\rho(n_j,s_j,Q_j,v_j)+1[y=j](1,x,xx^T,z)",
+  "a_{k,t}=y_{t-6}\\log\\tilde p_{k,t-6}+(1-y_{t-6})\\log(1-\\tilde p_{k,t-6}),\\quad \\tilde p=clip(p,0.01,0.99)",
+  "w_{k,t}\\propto\\exp[0.98\\log w_{k,t-1}+clip(a_{k,t}-\\bar a_t,-2,2)/5]",
+  "\\mathrm{warning}:\\ w_k\\leftarrow\\sqrt{w_k}/\\sum_j\\sqrt{w_j},\\quad H=10\\ \\mathrm{for\\ next21\\ sessions};\\quad H=63\\ \\mathrm{otherwise}"
+]

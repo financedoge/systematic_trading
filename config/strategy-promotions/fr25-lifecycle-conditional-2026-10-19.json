@@ -25,7 +25,7 @@
     "docs/conditional-fr25-lifecycle-overlay-candidate-2026-10-19.md"
   ],
   "monitoring": {
-    "state": "added_monitored_catching_up_data_gap",
+    "state": "monitored_frozen_history_current_signal_unimplemented",
     "app_membership": "config/strategy-monitoring.json monitored_strategy_ids includes fr25_lifecycle_conditional_v1",
     "publication": "app tracked-strategies publication includes detail/report for fr25_lifecycle_conditional_v1",
     "reported": {
@@ -49,7 +49,7 @@
     "rollback": "Remove fr25_lifecycle_conditional_v1 from config/strategy-monitoring.json, restart through guarded launchers, verify the previous six-strategy publication, and retain the candidate artifact/research page."
   },
   "risk_contract": "20% sleeve cap, 98% target budget, inherited FR25 45% single-name cap, no shorting or leverage, BIL cash proxy inside the sleeve. The +1-session delay test fails Sharpe/Calmar/Sortino versus matched FR25, so monitoring must not be represented as established execution-clock evidence.",
-  "statistical_limit": "2023-2026 is an inspected development retest. The candidate improves Sharpe/Sortino/max DD/Calmar versus FR25 at 5/10/20bp but gives up ~0.66pp CAGR at 5bp; this is risk-shaping, not a return improvement and not statistical significance.",
+  "statistical_limit": "2023-2026 is an inspected development retest. Corrected primary at 5 bp: 15.85% CAGR, 1.459 Sharpe, -7.64% drawdown. Only 2 of 6 matched-friction gates pass; two matched random conditions beat primary base Sharpe. No demonstrated robust condition/timing edge.",
   "execution_authority": "No monitoring, allocation, funding, approval, broker or live authority changed. Research/paper candidate only.",
   "rollback": "Remove the candidate key from the monitoring config if added, restore the previous config, restart through guarded launchers, verify the prior publication, and retain the candidate research artifact.",
   "validation": {
@@ -58,5 +58,20 @@
     "artifact_sha256": "58557e7821555e33662d2b15078757a15c6af2d31c8eb7daa56ccf7c082b7b5d",
     "checks": "definition registered; 52 sleeve parameter sets; 2043 breadth sessions; 947-session artifact; 55 proposals; CAGR matches page within 0.01pp; artifact and parameter hashes match; monitoring config unchanged"
   },
-  "blocker": "The monitored runtime publication path was not run: only PostgreSQL is currently running, the app/analytics/LEAN services are not, and the candidate still needs its tracked-runtime family branch plus a verified refresh before the config key can be added safely. Editing config/strategy-monitoring.json now would make the next tracked refresh fail its calculation contract."
+  "blocker": "Frozen FR25 and stable-breadth inputs cannot extend beyond 2026-10-12. Corrected source and offline report are verified, but guarded deployment/publication and app-owned current signal extension remain open. The fixed dynamic candidate fails every added-delay gate and must not be promoted.",
+  "review_2026_10_20": {
+    "decision": "do_not_promote",
+    "corrected_implementation": "1.1.0",
+    "historical_evidence_above": "Superseded by the correction review; retained as a dated record, not current acceptance.",
+    "report": "docs/conditional-lifecycle-review-2026-10-20.md",
+    "results": "research/fr25-lifecycle-review-20261020-v1/results.json",
+    "gate_passes": 2,
+    "gate_scenarios": 6,
+    "native_checks": 4,
+    "native_max_nav_difference_usd": 0.0,
+    "accounting_currency": "USD",
+    "membership_changed": false,
+    "execution_authority_changed": false,
+    "runtime_publication_verified": false
+  }
 }

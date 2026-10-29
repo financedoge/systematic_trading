@@ -1,0 +1,43 @@
+{
+  "status": "complete",
+  "python_tests_passed": 5,
+  "tests": [
+    "cutoff causality",
+    "constant-series abstention and retained cash",
+    "covariance equal-risk contributions",
+    "calendar alignment rejection",
+    "frozen model identity and preview budget conservation"
+  ],
+  "chart_combinations": 102,
+  "allocation_previews": 10,
+  "date_hover_zoom": "passed",
+  "exact_parent_return_comparisons": 612,
+  "parameter_snapshots": 102,
+  "mathematical_equations": 23,
+  "visual_inspection": [
+    "equation-proof.png",
+    "daily-flow.png",
+    "portfolio-flow.png",
+    "CORN_late.png",
+    "MCHI_early.png"
+  ],
+  "browser_layout_verified": false,
+  "rank_asof": "2026-10-16",
+  "ranked_risky_etfs": 50,
+  "unranked": {
+    "EMB": "63-session strategy return variance is zero; short Sharpe undefined"
+  },
+  "cash_reference": "BIL excluded from ranking",
+  "rank_preview_is_backtest": false,
+  "new_strategy_fitting": false,
+  "portfolio_backtest_run": false,
+  "live_changes": false,
+  "test_correction": "Calendar rejection fixture initially shared a mutable date list between assets; corrected to independent lists and all five checks passed.",
+  "limitations": [
+    "Reused historical development evidence, not fresh OOS.",
+    "Selection is transparent working continuity, not proof of universal superiority.",
+    "Closing boundaries are not guaranteed intraday stops.",
+    "N=15 is illustrative; future chronological N choice remains untested.",
+    "Scientific figures and offline controls checked; browser layout not certified."
+  ]
+}

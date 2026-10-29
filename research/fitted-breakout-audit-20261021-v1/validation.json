@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "checks": {
+    "holdings_reconcile": true,
+    "currency": true,
+    "native": true,
+    "full_pool": true,
+    "price_window": true,
+    "no_prospective": true,
+    "client_renderer": true
+  },
+  "runtime_publication_verified": false,
+  "report_builder_sha256": "930f0a07d54362ea4dd682ea2f330bcd69a60ef58c651c1859b5f0174b75d8e1"
+}

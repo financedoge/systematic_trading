@@ -1,0 +1,8 @@
+{
+  "control_cases": 612,
+  "asset_cases": 1836,
+  "max_control_error": 0.0,
+  "max_disabled_review_error": 0.0,
+  "max_independent_ledger_error": 2.90878432451791e-14,
+  "chart_sha256": "bd126feff85fa9d134749a87659b1741c2e3a686d7baf0c42bf8ee5fe0acc704"
+}

@@ -53,6 +53,7 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 "systematic_trading.presentation" = ["assets/**/*.html"]
+"systematic_trading.research" = ["fr25_lifecycle_conditional_parameters.json", "fr25_lifecycle_inputs.json", "broadtrend_models_v1.json"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

@@ -1,0 +1,221 @@
+{
+  "identity": "post-breakout-trend-20261023-v1",
+  "model": "post-breakout-trend-1.0.0",
+  "source_protocol_sha256": "fe4e69be2bc5c5568a5967b1ef09ba34429daf26e5b5eea26b71bf919d8a3d49",
+  "source_sealed_fits_sha256": "96983c5e960ef5371972ae947f65c0917c4186fd2a3937651e2a39021a50c222",
+  "published_batch": "5688bb093a7481231f05b8ba4d84e3e26e016231ffeb42576b4e7aca12cf99bd",
+  "universe": [
+    "AGG",
+    "BIL",
+    "CORN",
+    "CPER",
+    "DBA",
+    "DBB",
+    "DBC",
+    "EEM",
+    "EFA",
+    "EMB",
+    "EWA",
+    "EWC",
+    "EWG",
+    "EWH",
+    "EWJ",
+    "EWT",
+    "EWU",
+    "EWY",
+    "GLD",
+    "HYG",
+    "IAT",
+    "IBB",
+    "IBND",
+    "IEF",
+    "IGOV",
+    "INDA",
+    "ITA",
+    "IWM",
+    "LEMB",
+    "LQD",
+    "MBB",
+    "MCHI",
+    "MDY",
+    "PPLT",
+    "SHY",
+    "SLV",
+    "SOXX",
+    "SPY",
+    "TIP",
+    "TLT",
+    "USO",
+    "VGK",
+    "WEAT",
+    "XLB",
+    "XLC",
+    "XLE",
+    "XLI",
+    "XLK",
+    "XLP",
+    "XLU",
+    "XLV",
+    "XLY"
+  ],
+  "grid": [
+    {
+      "range": "legacy",
+      "trend": "none",
+      "exit": "legacy",
+      "rule": null
+    },
+    {
+      "range": "legacy",
+      "trend": "none",
+      "exit": "post_trend",
+      "rule": {
+        "lookback": 10,
+        "buffer_atr": 0.5
+      }
+    },
+    {
+      "range": "legacy",
+      "trend": "none",
+      "exit": "post_trend",
+      "rule": {
+        "lookback": 10,
+        "buffer_atr": 1.0
+      }
+    },
+    {
+      "range": "legacy",
+      "trend": "none",
+      "exit": "post_trend",
+      "rule": {
+        "lookback": 10,
+        "buffer_atr": 2.0
+      }
+    },
+    {
+      "range": "legacy",
+      "trend": "none",
+      "exit": "post_trend",
+      "rule": {
+        "lookback": 21,
+        "buffer_atr": 0.5
+      }
+    },
+    {
+      "range": "legacy",
+      "trend": "none",
+      "exit": "post_trend",
+      "rule": {
+        "lookback": 21,
+        "buffer_atr": 1.0
+      }
+    },
+    {
+      "range": "legacy",
+      "trend": "none",
+      "exit": "post_trend",
+      "rule": {
+        "lookback": 21,
+        "buffer_atr": 2.0
+      }
+    },
+    {
+      "range": "legacy",
+      "trend": "none",
+      "exit": "post_trend",
+      "rule": {
+        "lookback": 42,
+        "buffer_atr": 0.5
+      }
+    },
+    {
+      "range": "legacy",
+      "trend": "none",
+      "exit": "post_trend",
+      "rule": {
+        "lookback": 42,
+        "buffer_atr": 1.0
+      }
+    },
+    {
+      "range": "legacy",
+      "trend": "none",
+      "exit": "post_trend",
+      "rule": {
+        "lookback": 42,
+        "buffer_atr": 2.0
+      }
+    },
+    {
+      "range": "legacy",
+      "trend": "none",
+      "exit": "post_trend",
+      "rule": {
+        "lookback": 63,
+        "buffer_atr": 0.5
+      }
+    },
+    {
+      "range": "legacy",
+      "trend": "none",
+      "exit": "post_trend",
+      "rule": {
+        "lookback": 63,
+        "buffer_atr": 1.0
+      }
+    },
+    {
+      "range": "legacy",
+      "trend": "none",
+      "exit": "post_trend",
+      "rule": {
+        "lookback": 63,
+        "buffer_atr": 2.0
+      }
+    }
+  ],
+  "question": "Does exiting on failure of the new post-entry rising trend accommodate both sustained GLD trends and steep IAT reversals without selecting winners from evaluation?",
+  "entry": "Keep all own-ETF independently fitted range/breakout/confirmation/volume/continuation/cooldown rules fixed. This isolates exits; a separate downward-channel entry redesign is not included.",
+  "exit": "Replace old trailing/heat profit rule with rising log-price OLS support fitted only to post-entry closes through yesterday. Require at least5 prior closes; growing window capped at10/21/42/63. Project today; add10th-percentile in-window residual; subtract0.5/1/2 prior-session ATR (own fitted ATR period). Positive slope creates support; ratchet it upward, never loosen it if slope turns negative. Retain original initial risk floor. Original failed-breakout time exit remains until first valid rising support, then trend support governs. Close below effective floor triggers next-open sale, symmetric optional delay. No fixed profit activation threshold or intraday fill.",
+  "fit": "13 candidates including unchanged baseline, separately each ETF/domain/era. Same original utility, three chronological blocks and scarcity penalties. Top5 plus baseline rescored across6 frictions. Replacement requires>=5 training closed trades and5% exposure, CAGR within1pp/DD within2pp of baseline in every friction, and worst utility improvement>.01. Otherwise retain baseline. No retuning from evaluation outcomes. Original27-coordinate anchor stays fixed; lookback/noise allowance refitted per ETF.",
+  "controls": "Baseline, training-selected trend exit, fixed21-session/1ATR trend-exit control applied to full pool. GLD/IAT examples chosen by operator before this test, not used for parameter selection. Both original heavily optimized GLD anchors also get the fixed21/1 rule as a separately labelled sensitivity, not substituted into pool fits.",
+  "evaluation": "Train through2022 evaluate2023-01-03..2026-10-16; separately train through2019 evaluate2020-01-02..2022-12-30. Seal all fits before evaluation. Carry virtual state; idle cash0; all52 supported ETFs, BIL excluded from risky family; no future fallback. These are inspected development periods, not untouched holdouts.",
+  "frictions": [
+    [
+      5,
+      0
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      10,
+      0
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      20,
+      0
+    ],
+    [
+      20,
+      1
+    ]
+  ],
+  "data": "Pinned published adjusted OHLC and audited raw volume only. No online sources/splicing/fills; same batch and hashes as verified baseline. Historical membership and publication-vintage limitations remain.",
+  "metrics": "Net cumulative/CAGR/Sharpe/standardCalmar/DD, alpha over same ETF/BIL, stateIC21, exposure, actual turnover/fees, prior-close regime attribution. Exact baseline regression, ledger reconciliation and training-prefix checks.",
+  "portfolio": "Training-selected states in same full52 admitted six-slot98% momentum selector (rank buffer8,BIL vacancies) and FR25*(.5+.25short+.25long) overlay. Dynamic membership vs monthly; overlay dynamic last-adopted cash-inclusiveL1>=.10+monthly vs monthly. All6 frictions; both eras selector; later FR25/overlay throughOct12. Compare paired baseline, ungated momentum and FR25. Independent native checks for selected/delayed representative portfolios.",
+  "acceptance": "ExcludeBIL and inadequate original training evidence from family gate, retain all in tables. Improved median Sharpe and lower-quartileCAGR;>=90% within1pp CAGR loss and2pp DD deterioration. Require all frictions and both eras. Portfolio higher Sharpe,CAGR within1pp,no worseDD versus matched baseline and FR25(late)/momentum(early). No post-result winner substitution.",
+  "code_hashes": {
+    "scripts/retest_postbreakout_trend.py": "8c755887cbabf00a03eea2c712912c4d9a2799fd1ad7160812e788be7efc7756",
+    "src/systematic_trading/research/post_breakout_trend.py": "b4ef9561a8d3164e7cf0c965307d5404a1005a09626e065574086edf2295e14c",
+    "src/systematic_trading/research/breakout_adaptive.py": "7ad9ff33328f6b127ca9ecb130d8bb2523285e8e02143f5c906e0ea013f937c9",
+    "scripts/run_fitted_breakout_portfolios.py": "89a75c3c5b48847fd1eb442ec4545becfb120eee76a6d6d5995d5d068aeb4c1f",
+    "scripts/revisit_breakout_research.py": "0304f7b9af5d173b3cfaab1e8057a12fdb0c7350e7f5a31a5d39f3f248a89605"
+  },
+  "authority": "Research only; no promotion, monitoring, execution, funding, broker or service changes."
+}

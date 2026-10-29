@@ -1,0 +1,5886 @@
+{
+  "pool": [
+    {
+      "era": "late",
+      "arm": "stop",
+      "enabled": 2,
+      "cases": 51,
+      "entry_invalidations": 37,
+      "recovery_closed": 6,
+      "recovery_wins": 4,
+      "one_session_trades": 6,
+      "median_cumulative": 0.113901151545857,
+      "constant_mse": 0.6316371235616512,
+      "fixed_mse": 0.6316371235616512,
+      "ic": 0.015034863721382755,
+      "ic_defined": 5,
+      "fixed_beats_constant": 1
+    },
+    {
+      "era": "late",
+      "arm": "review",
+      "enabled": 2,
+      "cases": 51,
+      "entry_invalidations": 34,
+      "recovery_closed": 12,
+      "recovery_wins": 9,
+      "one_session_trades": 14,
+      "median_cumulative": 0.113901151545857,
+      "constant_mse": 0.6316371235616512,
+      "fixed_mse": 0.6316371235616512,
+      "ic": 0.008165740495644813,
+      "ic_defined": 9,
+      "fixed_beats_constant": 1
+    },
+    {
+      "era": "early",
+      "arm": "stop",
+      "enabled": 1,
+      "cases": 49,
+      "entry_invalidations": 16,
+      "recovery_closed": 16,
+      "recovery_wins": 8,
+      "one_session_trades": 24,
+      "median_cumulative": 0.06328158752461199,
+      "constant_mse": 0.6974690219327485,
+      "fixed_mse": 0.6974690219327485,
+      "ic": -0.013546128835007573,
+      "ic_defined": 6,
+      "fixed_beats_constant": 1
+    },
+    {
+      "era": "early",
+      "arm": "review",
+      "enabled": 0,
+      "cases": 49,
+      "entry_invalidations": 0,
+      "recovery_closed": 0,
+      "recovery_wins": 0,
+      "one_session_trades": 21,
+      "median_cumulative": 0.06328158752461199,
+      "constant_mse": 0.6974690219327485,
+      "fixed_mse": 0.6974690219327485,
+      "ic": -0.03421800852721154,
+      "ic_defined": 3,
+      "fixed_beats_constant": 1
+    }
+  ],
+  "enabled": [
+    {
+      "symbol": "LEMB",
+      "era": "late",
+      "arm": "stop",
+      "training_gain": 0.013119470484419749,
+      "ridge": 100.0,
+      "forecast": {
+        "symbol": "LEMB",
+        "era": "late",
+        "arm": "stop",
+        "count": 950,
+        "enabled": true,
+        "fixed_mse": 0.5953174369346824,
+        "constant_mse": 0.5916742993182889,
+        "ic": 0.02038942523717438,
+        "forecast_mean": -0.0343303623944425,
+        "actual_mean": 0.04438686135772631
+      },
+      "baseline": {
+        "symbol": "LEMB",
+        "era": "late",
+        "arm": "baseline",
+        "cost_bp": 5,
+        "delay": 0,
+        "cagr": 0.016895105533212496,
+        "sharpe": 0.42980750031651166,
+        "maxdd": -0.05709098725378159,
+        "calmar": 0.2959329720137814,
+        "sessions": 951,
+        "ann_vol": 0.04092757922161134,
+        "cumulative": 0.06526787580117599,
+        "correlation": 0.5783229520368068,
+        "beta": 0.33617531043260673,
+        "alpha_annual": -0.004503452990292249,
+        "alpha_t_hac": -0.28189011321443747,
+        "down_capture": 0.3861142058474084,
+        "up_capture": 0.3688717884929504,
+        "ic5": 0.07123047949052017,
+        "closed_trades": 23,
+        "wins": 14,
+        "exposure": 0.40904311251314407,
+        "any_session_exposure": 0.4332281808622503,
+        "yearly": {
+          "2023": 0.03539455709193229,
+          "2024": -0.0032080860332368566,
+          "2025": 0.04922034168446898,
+          "2026": -0.016256796656554773
+        },
+        "turnover_annual": 12.181595638914848,
+        "cost_bp_annual": 60.907978194574255,
+        "stop_slippage_bp_annual": 2.636324479388167,
+        "recovery_closed": 0,
+        "recovery_wins": 0,
+        "recovery_mean": null,
+        "warnings": 3,
+        "resets": 0,
+        "changes": 0,
+        "stop_fills": 2,
+        "buyhold": 0.2695368097956441,
+        "enabled": false,
+        "entry_invalidations": 0,
+        "handoffs": 0,
+        "one_session_trades": 0,
+        "cancelled_recoveries": 0
+      },
+      "candidate": {
+        "symbol": "LEMB",
+        "era": "late",
+        "arm": "stop",
+        "cost_bp": 5,
+        "delay": 0,
+        "cagr": 0.010241536530061213,
+        "sharpe": 0.39718256726786855,
+        "maxdd": -0.03984705128618837,
+        "calmar": 0.25702118976143895,
+        "sessions": 951,
+        "ann_vol": 0.02653974764192797,
+        "cumulative": 0.03920191945262674,
+        "correlation": 0.3784287735999904,
+        "beta": 0.14264621991239407,
+        "alpha_annual": 0.001165994558270894,
+        "alpha_t_hac": 0.10133471544435106,
+        "down_capture": 0.18180364168280913,
+        "up_capture": 0.17868640514706138,
+        "ic5": 0.07123047949052017,
+        "closed_trades": 26,
+        "wins": 13,
+        "exposure": 0.19242902208201892,
+        "any_session_exposure": 0.21976866456361724,
+        "yearly": {
+          "2023": 0.02752839876193547,
+          "2024": 0.012090771891263952,
+          "2025": 0.016574212969356905,
+          "2026": -0.01701350199122975
+        },
+        "turnover_annual": 13.780732473593703,
+        "cost_bp_annual": 68.90366236796856,
+        "stop_slippage_bp_annual": 0.0,
+        "recovery_closed": 2,
+        "recovery_wins": 1,
+        "recovery_mean": 0.0018124586569303602,
+        "warnings": 30,
+        "resets": 0,
+        "changes": 0,
+        "stop_fills": 0,
+        "buyhold": 0.2695368097956441,
+        "enabled": true,
+        "entry_invalidations": 26,
+        "handoffs": 2,
+        "one_session_trades": 1,
+        "cancelled_recoveries": 0
+      },
+      "stress": [
+        {
+          "cost": 5,
+          "delay": 0,
+          "return_gain": -0.026065956348549246,
+          "sharpe_gain": -0.03262493304864311,
+          "drawdown_gain": 0.017243935967593216
+        },
+        {
+          "cost": 5,
+          "delay": 1,
+          "return_gain": -0.03354386256013897,
+          "sharpe_gain": -0.08205902211571203,
+          "drawdown_gain": 0.020613896457407965
+        },
+        {
+          "cost": 10,
+          "delay": 0,
+          "return_gain": -0.03562981184984659,
+          "sharpe_gain": -0.2119812539489529,
+          "drawdown_gain": 0.010514738789238476
+        },
+        {
+          "cost": 10,
+          "delay": 1,
+          "return_gain": -0.04115349839646587,
+          "sharpe_gain": -0.24156284930826127,
+          "drawdown_gain": 0.018391683046557028
+        },
+        {
+          "cost": 20,
+          "delay": 0,
+          "return_gain": -0.037861158601108724,
+          "sharpe_gain": -0.4184900769796948,
+          "drawdown_gain": -0.007029720216468527
+        },
+        {
+          "cost": 20,
+          "delay": 1,
+          "return_gain": -0.043140503165981725,
+          "sharpe_gain": -0.4373059837460787,
+          "drawdown_gain": -0.006479905433029343
+        }
+      ]
+    },
+    {
+      "symbol": "XLU",
+      "era": "late",
+      "arm": "stop",
+      "training_gain": 0.010700612033821,
+      "ridge": 1.0,
+      "forecast": {
+        "symbol": "XLU",
+        "era": "late",
+        "arm": "stop",
+        "count": 950,
+        "enabled": true,
+        "fixed_mse": 0.4529505525083257,
+        "constant_mse": 0.44644637501144513,
+        "ic": 0.015034863721382755,
+        "forecast_mean": 0.018686709242369055,
+        "actual_mean": 0.01897330004015917
+      },
+      "baseline": {
+        "symbol": "XLU",
+        "era": "late",
+        "arm": "baseline",
+        "cost_bp": 5,
+        "delay": 0,
+        "cagr": 0.05925895503426726,
+        "sharpe": 0.587032331822733,
+        "maxdd": -0.15586882601967034,
+        "calmar": 0.38018477810815676,
+        "sessions": 951,
+        "ann_vol": 0.1079887321478564,
+        "cumulative": 0.24266289278604347,
+        "correlation": 0.661169404671318,
+        "beta": 0.43631654927491337,
+        "alpha_annual": 0.023656828090863356,
+        "alpha_t_hac": 0.5906361473098806,
+        "down_capture": 0.4284317126916739,
+        "up_capture": 0.45190798765688917,
+        "ic5": -0.03022387979044249,
+        "closed_trades": 22,
+        "wins": 10,
+        "exposure": 0.4416403785488959,
+        "any_session_exposure": 0.4647739221871714,
+        "yearly": {
+          "2023": -0.020897295193075704,
+          "2024": 0.14230278255577544,
+          "2025": 0.03693223049651628,
+          "2026": 0.07150319745443223
+        },
+        "turnover_annual": 11.924986713543303,
+        "cost_bp_annual": 59.62493356771657,
+        "stop_slippage_bp_annual": 0.0,
+        "recovery_closed": 0,
+        "recovery_wins": 0,
+        "recovery_mean": null,
+        "warnings": 8,
+        "resets": 0,
+        "changes": 0,
+        "stop_fills": 0,
+        "buyhold": 0.3405477951939757,
+        "enabled": false,
+        "entry_invalidations": 0,
+        "handoffs": 0,
+        "one_session_trades": 0,
+        "cancelled_recoveries": 0
+      },
+      "candidate": {
+        "symbol": "XLU",
+        "era": "late",
+        "arm": "stop",
+        "cost_bp": 5,
+        "delay": 0,
+        "cagr": 0.11056937713722581,
+        "sharpe": 1.0236130094790463,
+        "maxdd": -0.08460296902749342,
+        "calmar": 1.3069207665902847,
+        "sessions": 951,
+        "ann_vol": 0.10817374521163005,
+        "cumulative": 0.48552776731974534,
+        "correlation": 0.6601341763070991,
+        "beta": 0.43637973949191666,
+        "alpha_annual": 0.07098624889563562,
+        "alpha_t_hac": 1.8769199507997167,
+        "down_capture": 0.39207769111996504,
+        "up_capture": 0.46433277846833626,
+        "ic5": -0.03022387979044249,
+        "closed_trades": 23,
+        "wins": 12,
+        "exposure": 0.4185068349106204,
+        "any_session_exposure": 0.4426919032597266,
+        "yearly": {
+          "2023": 0.0359495484371255,
+          "2024": 0.20010819399751445,
+          "2025": 0.1122955281688891,
+          "2026": 0.07424063518426816
+        },
+        "turnover_annual": 12.453024171525295,
+        "cost_bp_annual": 62.26512085762652,
+        "stop_slippage_bp_annual": 0.0,
+        "recovery_closed": 4,
+        "recovery_wins": 3,
+        "recovery_mean": 0.03571420391131078,
+        "warnings": 19,
+        "resets": 0,
+        "changes": 0,
+        "stop_fills": 0,
+        "buyhold": 0.3405477951939757,
+        "enabled": true,
+        "entry_invalidations": 11,
+        "handoffs": 4,
+        "one_session_trades": 0,
+        "cancelled_recoveries": 0
+      },
+      "stress": [
+        {
+          "cost": 5,
+          "delay": 0,
+          "return_gain": 0.24286487453370187,
+          "sharpe_gain": 0.43658067765631337,
+          "drawdown_gain": 0.07126585699217691
+        },
+        {
+          "cost": 5,
+          "delay": 1,
+          "return_gain": 0.12444924002932489,
+          "sharpe_gain": 0.24266016185760386,
+          "drawdown_gain": 0.0342294424699624
+        },
+        {
+          "cost": 10,
+          "delay": 0,
+          "return_gain": 0.09484854282144917,
+          "sharpe_gain": 0.21261925324932884,
+          "drawdown_gain": 0.033748889352669065
+        },
+        {
+          "cost": 10,
+          "delay": 1,
+          "return_gain": 0.008530784826030091,
+          "sharpe_gain": 0.040141331088884846,
+          "drawdown_gain": 0.009118948146016215
+        },
+        {
+          "cost": 20,
+          "delay": 0,
+          "return_gain": 0.07807760002893205,
+          "sharpe_gain": 0.18400737214103619,
+          "drawdown_gain": 0.03334632197617993
+        },
+        {
+          "cost": 20,
+          "delay": 1,
+          "return_gain": 0.0029684098321018926,
+          "sharpe_gain": 0.024955167851190896,
+          "drawdown_gain": 0.008724861461232303
+        }
+      ]
+    },
+    {
+      "symbol": "ITA",
+      "era": "late",
+      "arm": "review",
+      "training_gain": 0.007127386749121611,
+      "ridge": 100.0,
+      "forecast": {
+        "symbol": "ITA",
+        "era": "late",
+        "arm": "review",
+        "count": 950,
+        "enabled": true,
+        "fixed_mse": 0.5820154910109633,
+        "constant_mse": 0.5758387083779989,
+        "ic": 0.006616274425380615,
+        "forecast_mean": -0.02567956286925443,
+        "actual_mean": 0.0411503717669793
+      },
+      "baseline": {
+        "symbol": "ITA",
+        "era": "late",
+        "arm": "baseline",
+        "cost_bp": 5,
+        "delay": 0,
+        "cagr": 0.09009186436054617,
+        "sharpe": 0.6656067868810797,
+        "maxdd": -0.17744628485453706,
+        "calmar": 0.5077134437297443,
+        "sessions": 951,
+        "ann_vol": 0.1455331118964121,
+        "cumulative": 0.38477303307308675,
+        "correlation": 0.752159943244403,
+        "beta": 0.5686127365515583,
+        "alpha_annual": -0.012097252977528184,
+        "alpha_t_hac": -0.26342521321207024,
+        "down_capture": 0.6469617791649557,
+        "up_capture": 0.6246048951210201,
+        "ic5": 0.009583413375068784,
+        "closed_trades": 16,
+        "wins": 6,
+        "exposure": 0.6614090431125131,
+        "any_session_exposure": 0.6782334384858044,
+        "yearly": {
+          "2023": 0.07523820999246,
+          "2024": -0.030910709214668652,
+          "2025": 0.31285404179640786,
+          "2026": 0.012263712298721696
+        },
+        "turnover_annual": 8.466356393910488,
+        "cost_bp_annual": 42.331781969552424,
+        "stop_slippage_bp_annual": 2.5633590268518365,
+        "recovery_closed": 0,
+        "recovery_wins": 0,
+        "recovery_mean": null,
+        "warnings": 3,
+        "resets": 0,
+        "changes": 0,
+        "stop_fills": 2,
+        "buyhold": 0.9215486140182216,
+        "enabled": false,
+        "entry_invalidations": 0,
+        "handoffs": 0,
+        "one_session_trades": 0,
+        "cancelled_recoveries": 0
+      },
+      "candidate": {
+        "symbol": "ITA",
+        "era": "late",
+        "arm": "review",
+        "cost_bp": 5,
+        "delay": 0,
+        "cagr": 0.04884660862963974,
+        "sharpe": 0.45274998201970407,
+        "maxdd": -0.12525898281623904,
+        "calmar": 0.3899649153410424,
+        "sessions": 951,
+        "ann_vol": 0.12167204821421805,
+        "cumulative": 0.19718994578039362,
+        "correlation": 0.6306037027749886,
+        "beta": 0.39855834053579287,
+        "alpha_annual": -0.021289993737764017,
+        "alpha_t_hac": -0.4764170912330876,
+        "down_capture": 0.41202435885155547,
+        "up_capture": 0.39234008978367974,
+        "ic5": 0.009583413375068784,
+        "closed_trades": 32,
+        "wins": 19,
+        "exposure": 0.38065194532071506,
+        "any_session_exposure": 0.41430073606729756,
+        "yearly": {
+          "2023": -0.0473808830705118,
+          "2024": -0.006098332784166938,
+          "2025": 0.15091890884221737,
+          "2026": 0.09864054861284566
+        },
+        "turnover_annual": 17.219953451816092,
+        "cost_bp_annual": 86.09976725908052,
+        "stop_slippage_bp_annual": 2.5810254831375525,
+        "recovery_closed": 12,
+        "recovery_wins": 9,
+        "recovery_mean": 0.016120121008391924,
+        "warnings": 43,
+        "resets": 0,
+        "changes": 0,
+        "stop_fills": 2,
+        "buyhold": 0.9215486140182216,
+        "enabled": true,
+        "entry_invalidations": 27,
+        "handoffs": 5,
+        "one_session_trades": 8,
+        "cancelled_recoveries": 0
+      },
+      "stress": [
+        {
+          "cost": 5,
+          "delay": 0,
+          "return_gain": -0.18758308729269313,
+          "sharpe_gain": -0.2128568048613756,
+          "drawdown_gain": 0.05218730203829802
+        },
+        {
+          "cost": 5,
+          "delay": 1,
+          "return_gain": -0.2598205362590267,
+          "sharpe_gain": -0.37684471032018657,
+          "drawdown_gain": 0.05957676683218327
+        },
+        {
+          "cost": 10,
+          "delay": 0,
+          "return_gain": -0.2839283143550382,
+          "sharpe_gain": -0.40947528572246056,
+          "drawdown_gain": 0.037071254744797444
+        },
+        {
+          "cost": 10,
+          "delay": 1,
+          "return_gain": -0.30150491241970667,
+          "sharpe_gain": -0.4726053841859695,
+          "drawdown_gain": 0.05269260758246341
+        },
+        {
+          "cost": 20,
+          "delay": 0,
+          "return_gain": -0.29138626931977063,
+          "sharpe_gain": -0.45536452939972005,
+          "drawdown_gain": 0.025322022920116316
+        },
+        {
+          "cost": 20,
+          "delay": 1,
+          "return_gain": -0.3102202550022214,
+          "sharpe_gain": -0.5240279875920695,
+          "drawdown_gain": 0.043364434660215556
+        }
+      ]
+    },
+    {
+      "symbol": "MBB",
+      "era": "late",
+      "arm": "review",
+      "training_gain": 0.0059862159367209955,
+      "ridge": 100.0,
+      "forecast": {
+        "symbol": "MBB",
+        "era": "late",
+        "arm": "review",
+        "count": 950,
+        "enabled": true,
+        "fixed_mse": 0.654373865608333,
+        "constant_mse": 0.6509374996473647,
+        "ic": 0.008165740495644813,
+        "forecast_mean": -0.016173630425492868,
+        "actual_mean": 0.019592280287292006
+      },
+      "baseline": {
+        "symbol": "MBB",
+        "era": "late",
+        "arm": "baseline",
+        "cost_bp": 5,
+        "delay": 0,
+        "cagr": -0.009629514553913698,
+        "sharpe": -0.23632524825917306,
+        "maxdd": -0.0978967819104315,
+        "calmar": -0.09836395401356512,
+        "sessions": 951,
+        "ann_vol": 0.03790656883587062,
+        "cumulative": -0.0358573838054147,
+        "correlation": 0.5559748180472562,
+        "beta": 0.3227128426942844,
+        "alpha_annual": -0.020273964508381676,
+        "alpha_t_hac": -1.343343897171539,
+        "down_capture": 0.39189903228836886,
+        "up_capture": 0.33748915549179237,
+        "ic5": -0.03548801255635567,
+        "closed_trades": 25,
+        "wins": 8,
+        "exposure": 0.41219768664563616,
+        "any_session_exposure": 0.4384858044164038,
+        "yearly": {
+          "2023": -0.04653637511981257,
+          "2024": -0.007190557309448398,
+          "2025": 0.015112154756012464,
+          "2026": 0.003361016388262472
+        },
+        "turnover_annual": 13.484358302088227,
+        "cost_bp_annual": 67.4217915104412,
+        "stop_slippage_bp_annual": 25.062795756629004,
+        "recovery_closed": 0,
+        "recovery_wins": 0,
+        "recovery_mean": null,
+        "warnings": 14,
+        "resets": 0,
+        "changes": 0,
+        "stop_fills": 19,
+        "buyhold": 0.1323334073293465,
+        "enabled": false,
+        "entry_invalidations": 0,
+        "handoffs": 0,
+        "one_session_trades": 0,
+        "cancelled_recoveries": 0
+      },
+      "candidate": {
+        "symbol": "MBB",
+        "era": "late",
+        "arm": "review",
+        "cost_bp": 5,
+        "delay": 0,
+        "cagr": -0.013744175587433904,
+        "sharpe": -0.3718897900262594,
+        "maxdd": -0.09735520638686901,
+        "calmar": -0.14117555801604956,
+        "sessions": 951,
+        "ann_vol": 0.03551849472201856,
+        "cumulative": -0.0508872152340718,
+        "correlation": 0.517140714520038,
+        "beta": 0.28126127121293604,
+        "alpha_annual": -0.023071182313697095,
+        "alpha_t_hac": -1.5513945453852833,
+        "down_capture": 0.3391688234521186,
+        "up_capture": 0.27931974224511696,
+        "ic5": -0.03548801255635567,
+        "closed_trades": 31,
+        "wins": 13,
+        "exposure": 0.3312302839116719,
+        "any_session_exposure": 0.3638275499474238,
+        "yearly": {
+          "2023": -0.04633598082336232,
+          "2024": -0.00719055730944862,
+          "2025": -0.001588783108429026,
+          "2026": 0.004030892002369946
+        },
+        "turnover_annual": 16.40758566105097,
+        "cost_bp_annual": 82.03792830525492,
+        "stop_slippage_bp_annual": 22.43012337397813,
+        "recovery_closed": 0,
+        "recovery_wins": 0,
+        "recovery_mean": null,
+        "warnings": 7,
+        "resets": 0,
+        "changes": 0,
+        "stop_fills": 17,
+        "buyhold": 0.1323334073293465,
+        "enabled": true,
+        "entry_invalidations": 7,
+        "handoffs": 0,
+        "one_session_trades": 1,
+        "cancelled_recoveries": 0
+      },
+      "stress": [
+        {
+          "cost": 5,
+          "delay": 0,
+          "return_gain": -0.015029831428657103,
+          "sharpe_gain": -0.13556454176708632,
+          "drawdown_gain": 0.0005415755235624875
+        },
+        {
+          "cost": 5,
+          "delay": 1,
+          "return_gain": -0.02105592239219034,
+          "sharpe_gain": -0.225413373892682,
+          "drawdown_gain": 0.006786497680968395
+        },
+        {
+          "cost": 10,
+          "delay": 0,
+          "return_gain": -0.019726492965730147,
+          "sharpe_gain": -0.18703993618306036,
+          "drawdown_gain": -0.0034965150579792104
+        },
+        {
+          "cost": 10,
+          "delay": 1,
+          "return_gain": -0.024971054398651438,
+          "sharpe_gain": -0.27492156357914066,
+          "drawdown_gain": 0.007283689059066734
+        },
+        {
+          "cost": 20,
+          "delay": 0,
+          "return_gain": -0.02831261759248549,
+          "sharpe_gain": -0.2836606936536349,
+          "drawdown_gain": -0.01751755080059403
+        },
+        {
+          "cost": 20,
+          "delay": 1,
+          "return_gain": -0.03212760905835399,
+          "sharpe_gain": -0.36229215719202945,
+          "drawdown_gain": -0.007065668919782886
+        }
+      ]
+    },
+    {
+      "symbol": "XLU",
+      "era": "early",
+      "arm": "stop",
+      "training_gain": 0.009420481516944856,
+      "ridge": 10.0,
+      "forecast": {
+        "symbol": "XLU",
+        "era": "early",
+        "arm": "stop",
+        "count": 755,
+        "enabled": true,
+        "fixed_mse": 0.5102130055003358,
+        "constant_mse": 0.5037830537491351,
+        "ic": -0.023170247833412937,
+        "forecast_mean": 0.04229454257648049,
+        "actual_mean": 0.015368341710276314
+      },
+      "baseline": {
+        "symbol": "XLU",
+        "era": "early",
+        "arm": "baseline",
+        "cost_bp": 5,
+        "delay": 0,
+        "cagr": 0.07146390527714153,
+        "sharpe": 0.5954620764188462,
+        "maxdd": -0.1286067504876358,
+        "calmar": 0.555677715253462,
+        "sessions": 756,
+        "ann_vol": 0.13016841805065651,
+        "cumulative": 0.2300779576824743,
+        "correlation": 0.49636267690028246,
+        "beta": 0.2405802593266349,
+        "alpha_annual": 0.054221304758024266,
+        "alpha_t_hac": 0.895008651019146,
+        "down_capture": 0.4193315848333001,
+        "up_capture": 0.44524214611812024,
+        "ic5": 0.08252769357169165,
+        "closed_trades": 15,
+        "wins": 9,
+        "exposure": 0.5701058201058201,
+        "any_session_exposure": 0.58994708994709,
+        "yearly": {
+          "2020": 0.03244253461360258,
+          "2021": 0.1359185082665808,
+          "2022": 0.04886494825617249
+        },
+        "turnover_annual": 10.297001730285965,
+        "cost_bp_annual": 51.48500865142981,
+        "stop_slippage_bp_annual": 8.133429861497632,
+        "recovery_closed": 0,
+        "recovery_wins": 0,
+        "recovery_mean": null,
+        "warnings": 3,
+        "resets": 0,
+        "changes": 0,
+        "stop_fills": 5,
+        "buyhold": 0.2001199369476825,
+        "enabled": false,
+        "entry_invalidations": 0,
+        "handoffs": 0,
+        "one_session_trades": 0,
+        "cancelled_recoveries": 0
+      },
+      "candidate": {
+        "symbol": "XLU",
+        "era": "early",
+        "arm": "stop",
+        "cost_bp": 5,
+        "delay": 0,
+        "cagr": 0.10631766189205583,
+        "sharpe": 0.7113770082246441,
+        "maxdd": -0.13687185930562273,
+        "calmar": 0.7767678647124819,
+        "sessions": 756,
+        "ann_vol": 0.15992472484652673,
+        "cumulative": 0.3540650772349474,
+        "correlation": 0.6170044645906224,
+        "beta": 0.36741692869803444,
+        "alpha_annual": 0.07819946563305893,
+        "alpha_t_hac": 1.2676719841536686,
+        "down_capture": 0.46220235185302877,
+        "up_capture": 0.5106467672043614,
+        "ic5": 0.08252769357169165,
+        "closed_trades": 29,
+        "wins": 17,
+        "exposure": 0.5462962962962963,
+        "any_session_exposure": 0.5846560846560847,
+        "yearly": {
+          "2020": 0.17667033119428188,
+          "2021": 0.15064864158800284,
+          "2022": 9.672483142453281e-05
+        },
+        "turnover_annual": 19.60042455072805,
+        "cost_bp_annual": 98.00212275364035,
+        "stop_slippage_bp_annual": 11.351292142695883,
+        "recovery_closed": 16,
+        "recovery_wins": 8,
+        "recovery_mean": 0.001939317000541431,
+        "warnings": 38,
+        "resets": 0,
+        "changes": 0,
+        "stop_fills": 7,
+        "buyhold": 0.2001199369476825,
+        "enabled": true,
+        "entry_invalidations": 16,
+        "handoffs": 4,
+        "one_session_trades": 3,
+        "cancelled_recoveries": 1
+      },
+      "stress": [
+        {
+          "cost": 5,
+          "delay": 0,
+          "return_gain": 0.1239871195524731,
+          "sharpe_gain": 0.11591493180579793,
+          "drawdown_gain": -0.008265108817986921
+        },
+        {
+          "cost": 5,
+          "delay": 1,
+          "return_gain": 0.04842583753345209,
+          "sharpe_gain": 0.09529139556090144,
+          "drawdown_gain": 0.02560454492898545
+        },
+        {
+          "cost": 10,
+          "delay": 0,
+          "return_gain": 0.0009240246303143795,
+          "sharpe_gain": -0.05776898932572733,
+          "drawdown_gain": -0.0606832323515446
+        },
+        {
+          "cost": 10,
+          "delay": 1,
+          "return_gain": 0.14053688701364453,
+          "sharpe_gain": 0.32161776234402306,
+          "drawdown_gain": 0.027335500242875455
+        },
+        {
+          "cost": 20,
+          "delay": 0,
+          "return_gain": 0.1716077166816361,
+          "sharpe_gain": 0.27107014704504045,
+          "drawdown_gain": -0.0298700183760382
+        },
+        {
+          "cost": 20,
+          "delay": 1,
+          "return_gain": 0.04363661094588456,
+          "sharpe_gain": 0.10694633983619078,
+          "drawdown_gain": 0.013664085769775292
+        }
+      ]
+    }
+  ],
+  "cases": {
+    "WEAT_late": {
+      "arm": "review",
+      "models": {
+        "price": {
+          "kind": "price",
+          "model": {
+            "beta": [
+              0.026373056960052904,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "mean": [
+              0.0,
+              0.030188372298997176,
+              0.046734655347039626,
+              0.07293696662110212,
+              0.422398358603771,
+              0.024009074009511217
+            ],
+            "scale": [
+              1.0,
+              0.7479215999237514,
+              0.7105488015721578,
+              0.967210604896806,
+              1.621304455664093,
+              0.6226159448883946
+            ],
+            "ridge": null,
+            "constant": 0.026373056960052904,
+            "rows": 756
+          },
+          "enabled": false,
+          "margin": 0.05,
+          "change": 0.1,
+          "selection": {
+            "candidates": [
+              {
+                "ridge": null,
+                "loss": 0.6103556716020677,
+                "fold_losses": [
+                  0.4606273913332074,
+                  1.0728346297231341,
+                  0.29760499374986144
+                ]
+              },
+              {
+                "ridge": 1.0,
+                "loss": 0.6247580402994916,
+                "fold_losses": [
+                  0.4745105459693045,
+                  1.0771657694382388,
+                  0.3225978054909314
+                ]
+              },
+              {
+                "ridge": 10.0,
+                "loss": 0.6234356976488596,
+                "fold_losses": [
+                  0.4721809928155271,
+                  1.0766675837906066,
+                  0.32145851634044503
+                ]
+              },
+              {
+                "ridge": 100.0,
+                "loss": 0.6182415667488692,
+                "fold_losses": [
+                  0.4653349702511884,
+                  1.0750662822331871,
+                  0.3143234477622321
+                ]
+              }
+            ],
+            "chosen": null,
+            "folds": [
+              {
+                "first": "2021-06-30",
+                "last": "2021-12-28",
+                "training_last_origin": "2021-06-25",
+                "training_last_maturity": "2021-06-29",
+                "rows": 376,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.4606273913332074,
+                  "1.0": 0.4745105459693045,
+                  "10.0": 0.4721809928155271,
+                  "100.0": 0.4653349702511884
+                }
+              },
+              {
+                "first": "2021-12-29",
+                "last": "2022-06-29",
+                "training_last_origin": "2021-12-23",
+                "training_last_maturity": "2021-12-28",
+                "rows": 502,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 1.0728346297231341,
+                  "1.0": 1.0771657694382388,
+                  "10.0": 1.0766675837906066,
+                  "100.0": 1.0750662822331871
+                }
+              },
+              {
+                "first": "2022-06-30",
+                "last": "2022-12-28",
+                "training_last_origin": "2022-06-27",
+                "training_last_maturity": "2022-06-29",
+                "rows": 628,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.29760499374986144,
+                  "1.0": 0.3225978054909314,
+                  "10.0": 0.32145851634044503,
+                  "100.0": 0.3143234477622321
+                }
+              }
+            ],
+            "fold_wins": 0,
+            "relative_loss_gain": 0.0
+          },
+          "first_origin": "2019-12-30",
+          "last_origin": "2022-12-28",
+          "last_maturity": "2022-12-30"
+        },
+        "volume": {
+          "kind": "volume",
+          "model": {
+            "beta": [
+              0.026373056960052904,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "mean": [
+              0.0,
+              0.030188372298997176,
+              0.046734655347039626,
+              0.07293696662110212,
+              0.422398358603771,
+              0.024009074009511217,
+              -0.11138278132042469,
+              -0.026645500005440168,
+              0.034284186051201516
+            ],
+            "scale": [
+              1.0,
+              0.7479215999237514,
+              0.7105488015721578,
+              0.967210604896806,
+              1.621304455664093,
+              0.6226159448883946,
+              0.48642109076281864,
+              0.5827516306677627,
+              0.31524399899868566
+            ],
+            "ridge": null,
+            "constant": 0.026373056960052904,
+            "rows": 756
+          },
+          "enabled": false,
+          "margin": 0.05,
+          "change": 0.1,
+          "selection": {
+            "candidates": [
+              {
+                "ridge": null,
+                "loss": 0.6103556716020677,
+                "fold_losses": [
+                  0.4606273913332074,
+                  1.0728346297231341,
+                  0.29760499374986144
+                ]
+              },
+              {
+                "ridge": 1.0,
+                "loss": 0.6262301216901136,
+                "fold_losses": [
+                  0.47817761259719926,
+                  1.0781432067986123,
+                  0.32236954567452913
+                ]
+              },
+              {
+                "ridge": 10.0,
+                "loss": 0.6247682571205342,
+                "fold_losses": [
+                  0.4753247309523481,
+                  1.0776991393306903,
+                  0.3212809010785641
+                ]
+              },
+              {
+                "ridge": 100.0,
+                "loss": 0.6190411608705916,
+                "fold_losses": [
+                  0.4663300245653637,
+                  1.0766765377865892,
+                  0.31411692025982163
+                ]
+              }
+            ],
+            "chosen": null,
+            "folds": [
+              {
+                "first": "2021-06-30",
+                "last": "2021-12-28",
+                "training_last_origin": "2021-06-25",
+                "training_last_maturity": "2021-06-29",
+                "rows": 376,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.4606273913332074,
+                  "1.0": 0.47817761259719926,
+                  "10.0": 0.4753247309523481,
+                  "100.0": 0.4663300245653637
+                }
+              },
+              {
+                "first": "2021-12-29",
+                "last": "2022-06-29",
+                "training_last_origin": "2021-12-23",
+                "training_last_maturity": "2021-12-28",
+                "rows": 502,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 1.0728346297231341,
+                  "1.0": 1.0781432067986123,
+                  "10.0": 1.0776991393306903,
+                  "100.0": 1.0766765377865892
+                }
+              },
+              {
+                "first": "2022-06-30",
+                "last": "2022-12-28",
+                "training_last_origin": "2022-06-27",
+                "training_last_maturity": "2022-06-29",
+                "rows": 628,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.29760499374986144,
+                  "1.0": 0.32236954567452913,
+                  "10.0": 0.3212809010785641,
+                  "100.0": 0.31411692025982163
+                }
+              }
+            ],
+            "fold_wins": 0,
+            "relative_loss_gain": 0.0
+          },
+          "first_origin": "2019-12-30",
+          "last_origin": "2022-12-28",
+          "last_maturity": "2022-12-30"
+        }
+      },
+      "paired_exits": [],
+      "metrics": [
+        {
+          "symbol": "WEAT",
+          "era": "late",
+          "arm": "baseline",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": -0.04509925474861742,
+          "sharpe": -0.20271386525835322,
+          "maxdd": -0.23988118548481507,
+          "calmar": -0.18800663610807564,
+          "sessions": 951,
+          "ann_vol": 0.16277990266467224,
+          "cumulative": -0.1598319035592296,
+          "correlation": 0.6686845625144577,
+          "beta": 0.4430086574228761,
+          "alpha_annual": 0.01336993852984707,
+          "alpha_t_hac": 0.22290176870276274,
+          "down_capture": 0.3866351166078302,
+          "up_capture": 0.3914603497072117,
+          "ic5": -0.0839528095607919,
+          "closed_trades": 18,
+          "wins": 8,
+          "exposure": 0.33964248159831756,
+          "any_session_exposure": 0.35856992639327023,
+          "yearly": {
+            "2023": -0.13440662213018284,
+            "2024": 0.00590688066459899,
+            "2025": -0.10406799883640727,
+            "2026": 0.07700924902448669
+          },
+          "turnover_annual": 9.497987722852029,
+          "cost_bp_annual": 47.48993861426015,
+          "stop_slippage_bp_annual": 9.074743396150684,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 7,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 7,
+          "buyhold": -0.39849626360455803,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        },
+        {
+          "symbol": "WEAT",
+          "era": "late",
+          "arm": "stop",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": -0.04509925474861742,
+          "sharpe": -0.20271386525835322,
+          "maxdd": -0.23988118548481507,
+          "calmar": -0.18800663610807564,
+          "sessions": 951,
+          "ann_vol": 0.16277990266467224,
+          "cumulative": -0.1598319035592296,
+          "correlation": 0.6686845625144577,
+          "beta": 0.4430086574228761,
+          "alpha_annual": 0.01336993852984707,
+          "alpha_t_hac": 0.22290176870276274,
+          "down_capture": 0.3866351166078302,
+          "up_capture": 0.3914603497072117,
+          "ic5": -0.0839528095607919,
+          "closed_trades": 18,
+          "wins": 8,
+          "exposure": 0.33964248159831756,
+          "any_session_exposure": 0.35856992639327023,
+          "yearly": {
+            "2023": -0.13440662213018284,
+            "2024": 0.00590688066459899,
+            "2025": -0.10406799883640727,
+            "2026": 0.07700924902448669
+          },
+          "turnover_annual": 9.497987722852029,
+          "cost_bp_annual": 47.48993861426015,
+          "stop_slippage_bp_annual": 9.074743396150684,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 0,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 7,
+          "buyhold": -0.39849626360455803,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        },
+        {
+          "symbol": "WEAT",
+          "era": "late",
+          "arm": "review",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": -0.04509925474861742,
+          "sharpe": -0.20271386525835322,
+          "maxdd": -0.23988118548481507,
+          "calmar": -0.18800663610807564,
+          "sessions": 951,
+          "ann_vol": 0.16277990266467224,
+          "cumulative": -0.1598319035592296,
+          "correlation": 0.6686845625144577,
+          "beta": 0.4430086574228761,
+          "alpha_annual": 0.01336993852984707,
+          "alpha_t_hac": 0.22290176870276274,
+          "down_capture": 0.3866351166078302,
+          "up_capture": 0.3914603497072117,
+          "ic5": -0.0839528095607919,
+          "closed_trades": 18,
+          "wins": 8,
+          "exposure": 0.33964248159831756,
+          "any_session_exposure": 0.35856992639327023,
+          "yearly": {
+            "2023": -0.13440662213018284,
+            "2024": 0.00590688066459899,
+            "2025": -0.10406799883640727,
+            "2026": 0.07700924902448669
+          },
+          "turnover_annual": 9.497987722852029,
+          "cost_bp_annual": 47.48993861426015,
+          "stop_slippage_bp_annual": 9.074743396150684,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 0,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 7,
+          "buyhold": -0.39849626360455803,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        }
+      ],
+      "largest_losses": [
+        {
+          "entry_index": 2679,
+          "entry": 36.099998474121094,
+          "entry_signal": 2678,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.08375668143588073,
+          "exit_index": 2686,
+          "exit_price": 33.95939573600328,
+          "exit_signal": 2686,
+          "exit_reason": "intraday_protection",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.026373056960052904,
+          "exit_policy": 0,
+          "net_return": -0.06023671065250635,
+          "entry_date": "2023-07-20",
+          "exit_date": "2023-07-31"
+        },
+        {
+          "entry_index": 2543,
+          "entry": 39.900001525878906,
+          "entry_signal": 2542,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.08375668143588073,
+          "exit_index": 2547,
+          "exit_price": 37.54999923706055,
+          "exit_signal": 2546,
+          "exit_reason": "fast_down",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.026373056960052904,
+          "exit_policy": 0,
+          "net_return": -0.05983793060484133,
+          "entry_date": "2023-01-03",
+          "exit_date": "2023-01-09"
+        },
+        {
+          "entry_index": 2775,
+          "entry": 29.600000381469727,
+          "entry_signal": 2774,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.08375668143588073,
+          "exit_index": 2802,
+          "exit_price": 27.85686717772751,
+          "exit_signal": 2802,
+          "exit_reason": "intraday_protection",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.026373056960052904,
+          "exit_policy": 0,
+          "net_return": -0.05983027454809631,
+          "entry_date": "2023-12-05",
+          "exit_date": "2024-01-16"
+        },
+        {
+          "entry_index": 3386,
+          "entry": 25.020000457763672,
+          "entry_signal": 3385,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.08375668143588073,
+          "exit_index": 3396,
+          "exit_price": 23.75,
+          "exit_signal": 3395,
+          "exit_reason": "fast_down",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.026373056960052904,
+          "exit_policy": 0,
+          "net_return": -0.05170817606027478,
+          "entry_date": "2026-05-14",
+          "exit_date": "2026-05-29"
+        },
+        {
+          "entry_index": 3096,
+          "entry": 24.649999618530273,
+          "entry_signal": 3095,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.08375668143588073,
+          "exit_index": 3102,
+          "exit_price": 23.399999618530273,
+          "exit_signal": 3101,
+          "exit_reason": "fast_down",
+          "context": "uncertain",
+          "handoff_index": null,
+          "entry_score": 0.026373056960052904,
+          "exit_policy": 0,
+          "net_return": -0.051658755585072935,
+          "entry_date": "2025-03-19",
+          "exit_date": "2025-03-27"
+        }
+      ],
+      "largest_winners": [
+        {
+          "entry_index": 2871,
+          "entry": 28.149999618530273,
+          "entry_signal": 2870,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.08375668143588073,
+          "exit_index": 2901,
+          "exit_price": 30.5,
+          "exit_signal": 2900,
+          "exit_reason": "fast_down",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.026373056960052904,
+          "exit_policy": 0,
+          "net_return": 0.08239842469914915,
+          "entry_date": "2024-04-24",
+          "exit_date": "2024-06-06"
+        },
+        {
+          "entry_index": 3451,
+          "entry": 25.100000381469727,
+          "entry_signal": 3450,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.08375668143588073,
+          "exit_index": 3469,
+          "exit_price": 26.440000534057617,
+          "exit_signal": 3468,
+          "exit_reason": "fast_down",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.026373056960052904,
+          "exit_policy": 0,
+          "net_return": 0.05233359942166227,
+          "entry_date": "2026-08-18",
+          "exit_date": "2026-09-14"
+        },
+        {
+          "entry_index": 2650,
+          "entry": 32.0,
+          "entry_signal": 2649,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.08375668143588073,
+          "exit_index": 2664,
+          "exit_price": 33.683150762557986,
+          "exit_signal": 2664,
+          "exit_reason": "intraday_protection",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.026373056960052904,
+          "exit_policy": 0,
+          "net_return": 0.05154638890481977,
+          "entry_date": "2023-06-07",
+          "exit_date": "2023-06-28"
+        },
+        {
+          "entry_index": 3314,
+          "entry": 21.100000381469727,
+          "entry_signal": 3313,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.08375668143588073,
+          "exit_index": 3361,
+          "exit_price": 21.831813232803793,
+          "exit_signal": 3361,
+          "exit_reason": "intraday_protection",
+          "context": "uncertain",
+          "handoff_index": null,
+          "entry_score": 0.026373056960052904,
+          "exit_policy": 0,
+          "net_return": 0.03364890690600064,
+          "entry_date": "2026-01-30",
+          "exit_date": "2026-04-09"
+        },
+        {
+          "entry_index": 3424,
+          "entry": 23.299999237060547,
+          "entry_signal": 3423,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.08375668143588073,
+          "exit_index": 3439,
+          "exit_price": 24.036445151752034,
+          "exit_signal": 3439,
+          "exit_reason": "intraday_protection",
+          "context": "uncertain",
+          "handoff_index": null,
+          "entry_score": 0.026373056960052904,
+          "exit_policy": 0,
+          "net_return": 0.03057603026111022,
+          "entry_date": "2026-07-10",
+          "exit_date": "2026-07-31"
+        }
+      ]
+    },
+    "MCHI_early": {
+      "arm": "review",
+      "models": {
+        "price": {
+          "kind": "price",
+          "model": {
+            "beta": [
+              0.056128355665441415,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "mean": [
+              0.0,
+              0.06662427210707676,
+              0.11752445484162516,
+              0.2766802126256071,
+              1.0793105240138994,
+              0.1065537399217904
+            ],
+            "scale": [
+              1.0,
+              0.8060128236544132,
+              0.8188493396419003,
+              1.1694707156986128,
+              2.4406321595166305,
+              0.5879497975632149
+            ],
+            "ridge": null,
+            "constant": 0.056128355665441415,
+            "rows": 756
+          },
+          "enabled": false,
+          "margin": 0.05,
+          "change": 0.1,
+          "selection": {
+            "candidates": [
+              {
+                "ridge": null,
+                "loss": 0.6664318332351628,
+                "fold_losses": [
+                  0.7527904239131193,
+                  0.6448845924755005,
+                  0.6016204833168682
+                ]
+              },
+              {
+                "ridge": 1.0,
+                "loss": 0.6958399011097774,
+                "fold_losses": [
+                  0.7939547484781451,
+                  0.680888677189171,
+                  0.6126762776620164
+                ]
+              },
+              {
+                "ridge": 10.0,
+                "loss": 0.6940983356847115,
+                "fold_losses": [
+                  0.7932348643293683,
+                  0.6766892267750136,
+                  0.6123709159497526
+                ]
+              },
+              {
+                "ridge": 100.0,
+                "loss": 0.6848050616095285,
+                "fold_losses": [
+                  0.7836085598979879,
+                  0.6607173441906921,
+                  0.6100892807399055
+                ]
+              }
+            ],
+            "chosen": null,
+            "folds": [
+              {
+                "first": "2018-06-28",
+                "last": "2018-12-27",
+                "training_last_origin": "2018-06-25",
+                "training_last_maturity": "2018-06-27",
+                "rows": 376,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.7527904239131193,
+                  "1.0": 0.7939547484781451,
+                  "10.0": 0.7932348643293683,
+                  "100.0": 0.7836085598979879
+                }
+              },
+              {
+                "first": "2018-12-28",
+                "last": "2019-06-28",
+                "training_last_origin": "2018-12-24",
+                "training_last_maturity": "2018-12-27",
+                "rows": 502,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.6448845924755005,
+                  "1.0": 0.680888677189171,
+                  "10.0": 0.6766892267750136,
+                  "100.0": 0.6607173441906921
+                }
+              },
+              {
+                "first": "2019-07-01",
+                "last": "2019-12-27",
+                "training_last_origin": "2019-06-26",
+                "training_last_maturity": "2019-06-28",
+                "rows": 628,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.6016204833168682,
+                  "1.0": 0.6126762776620164,
+                  "10.0": 0.6123709159497526,
+                  "100.0": 0.6100892807399055
+                }
+              }
+            ],
+            "fold_wins": 0,
+            "relative_loss_gain": 0.0
+          },
+          "first_origin": "2016-12-27",
+          "last_origin": "2019-12-27",
+          "last_maturity": "2019-12-31"
+        },
+        "volume": {
+          "kind": "volume",
+          "model": {
+            "beta": [
+              0.056128355665441415,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "mean": [
+              0.0,
+              0.06662427210707676,
+              0.11752445484162516,
+              0.2766802126256071,
+              1.0793105240138994,
+              0.1065537399217904,
+              -0.08312102027435855,
+              0.0774990697654754,
+              -0.026754488552569095
+            ],
+            "scale": [
+              1.0,
+              0.8060128236544132,
+              0.8188493396419003,
+              1.1694707156986128,
+              2.4406321595166305,
+              0.5879497975632149,
+              0.3970118170016934,
+              0.5971034089098569,
+              0.2401640336960224
+            ],
+            "ridge": null,
+            "constant": 0.056128355665441415,
+            "rows": 756
+          },
+          "enabled": false,
+          "margin": 0.05,
+          "change": 0.1,
+          "selection": {
+            "candidates": [
+              {
+                "ridge": null,
+                "loss": 0.6664318332351628,
+                "fold_losses": [
+                  0.7527904239131193,
+                  0.6448845924755005,
+                  0.6016204833168682
+                ]
+              },
+              {
+                "ridge": 1.0,
+                "loss": 0.7000989944121806,
+                "fold_losses": [
+                  0.7953984679898365,
+                  0.6788043636847058,
+                  0.6260941515619997
+                ]
+              },
+              {
+                "ridge": 10.0,
+                "loss": 0.6984296178165366,
+                "fold_losses": [
+                  0.7941267995641957,
+                  0.6755826600796341,
+                  0.6255793938057796
+                ]
+              },
+              {
+                "ridge": 100.0,
+                "loss": 0.6884456868935711,
+                "fold_losses": [
+                  0.7823999085039361,
+                  0.661241569871828,
+                  0.6216955823049491
+                ]
+              }
+            ],
+            "chosen": null,
+            "folds": [
+              {
+                "first": "2018-06-28",
+                "last": "2018-12-27",
+                "training_last_origin": "2018-06-25",
+                "training_last_maturity": "2018-06-27",
+                "rows": 376,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.7527904239131193,
+                  "1.0": 0.7953984679898365,
+                  "10.0": 0.7941267995641957,
+                  "100.0": 0.7823999085039361
+                }
+              },
+              {
+                "first": "2018-12-28",
+                "last": "2019-06-28",
+                "training_last_origin": "2018-12-24",
+                "training_last_maturity": "2018-12-27",
+                "rows": 502,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.6448845924755005,
+                  "1.0": 0.6788043636847058,
+                  "10.0": 0.6755826600796341,
+                  "100.0": 0.661241569871828
+                }
+              },
+              {
+                "first": "2019-07-01",
+                "last": "2019-12-27",
+                "training_last_origin": "2019-06-26",
+                "training_last_maturity": "2019-06-28",
+                "rows": 628,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.6016204833168682,
+                  "1.0": 0.6260941515619997,
+                  "10.0": 0.6255793938057796,
+                  "100.0": 0.6216955823049491
+                }
+              }
+            ],
+            "fold_wins": 0,
+            "relative_loss_gain": 0.0
+          },
+          "first_origin": "2016-12-27",
+          "last_origin": "2019-12-27",
+          "last_maturity": "2019-12-31"
+        }
+      },
+      "paired_exits": [],
+      "metrics": [
+        {
+          "symbol": "MCHI",
+          "era": "early",
+          "arm": "baseline",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": -0.13359213246907975,
+          "sharpe": -0.6847241514397591,
+          "maxdd": -0.48867553133246744,
+          "calmar": -0.27337593945990135,
+          "sessions": 756,
+          "ann_vol": 0.18455928044906583,
+          "cumulative": -0.34962002363340505,
+          "correlation": 0.546274675401547,
+          "beta": 0.2969968661906065,
+          "alpha_annual": -0.11768710057909587,
+          "alpha_t_hac": -1.369969651521961,
+          "down_capture": 0.4011190904436785,
+          "up_capture": 0.3400405424661247,
+          "ic5": -0.04423642267215644,
+          "closed_trades": 26,
+          "wins": 7,
+          "exposure": 0.3955026455026455,
+          "any_session_exposure": 0.4298941798941799,
+          "yearly": {
+            "2020": 0.024929037753563366,
+            "2021": -0.1971245602036663,
+            "2022": -0.2096395651884635
+          },
+          "turnover_annual": 17.262525467370235,
+          "cost_bp_annual": 86.31262733685118,
+          "stop_slippage_bp_annual": 13.07812521263746,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 16,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 8,
+          "buyhold": -0.22765672794497727,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        },
+        {
+          "symbol": "MCHI",
+          "era": "early",
+          "arm": "stop",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": -0.13359213246907975,
+          "sharpe": -0.6847241514397591,
+          "maxdd": -0.48867553133246744,
+          "calmar": -0.27337593945990135,
+          "sessions": 756,
+          "ann_vol": 0.18455928044906583,
+          "cumulative": -0.34962002363340505,
+          "correlation": 0.546274675401547,
+          "beta": 0.2969968661906065,
+          "alpha_annual": -0.11768710057909587,
+          "alpha_t_hac": -1.369969651521961,
+          "down_capture": 0.4011190904436785,
+          "up_capture": 0.3400405424661247,
+          "ic5": -0.04423642267215644,
+          "closed_trades": 26,
+          "wins": 7,
+          "exposure": 0.3955026455026455,
+          "any_session_exposure": 0.4298941798941799,
+          "yearly": {
+            "2020": 0.024929037753563366,
+            "2021": -0.1971245602036663,
+            "2022": -0.2096395651884635
+          },
+          "turnover_annual": 17.262525467370235,
+          "cost_bp_annual": 86.31262733685118,
+          "stop_slippage_bp_annual": 13.07812521263746,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 0,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 8,
+          "buyhold": -0.22765672794497727,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        },
+        {
+          "symbol": "MCHI",
+          "era": "early",
+          "arm": "review",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": -0.13359213246907975,
+          "sharpe": -0.6847241514397591,
+          "maxdd": -0.48867553133246744,
+          "calmar": -0.27337593945990135,
+          "sessions": 756,
+          "ann_vol": 0.18455928044906583,
+          "cumulative": -0.34962002363340505,
+          "correlation": 0.546274675401547,
+          "beta": 0.2969968661906065,
+          "alpha_annual": -0.11768710057909587,
+          "alpha_t_hac": -1.369969651521961,
+          "down_capture": 0.4011190904436785,
+          "up_capture": 0.3400405424661247,
+          "ic5": -0.04423642267215644,
+          "closed_trades": 26,
+          "wins": 7,
+          "exposure": 0.3955026455026455,
+          "any_session_exposure": 0.4298941798941799,
+          "yearly": {
+            "2020": 0.024929037753563366,
+            "2021": -0.1971245602036663,
+            "2022": -0.2096395651884635
+          },
+          "turnover_annual": 17.262525467370235,
+          "cost_bp_annual": 86.31262733685118,
+          "stop_slippage_bp_annual": 13.07812521263746,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 0,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 8,
+          "buyhold": -0.22765672794497727,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        }
+      ],
+      "largest_losses": [
+        {
+          "entry_index": 2385,
+          "entry": 73.81441705823936,
+          "entry_signal": 2384,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.06901370862540826,
+          "exit_index": 2391,
+          "exit_price": 67.42138418750207,
+          "exit_signal": 2390,
+          "exit_reason": "thesis_failed",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.056128355665441415,
+          "exit_policy": 0,
+          "net_return": -0.08752247621196219,
+          "entry_date": "2021-06-29",
+          "exit_date": "2021-07-08"
+        },
+        {
+          "entry_index": 2635,
+          "entry": 51.24589035454795,
+          "entry_signal": 2634,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.06901370862540826,
+          "exit_index": 2645,
+          "exit_price": 47.75473025743583,
+          "exit_signal": 2644,
+          "exit_reason": "thesis_failed",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.056128355665441415,
+          "exit_policy": 0,
+          "net_return": -0.06905706852692184,
+          "entry_date": "2022-06-27",
+          "exit_date": "2022-07-12"
+        },
+        {
+          "entry_index": 2523,
+          "entry": 57.80381662566395,
+          "entry_signal": 2522,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.06901370862540826,
+          "exit_index": 2532,
+          "exit_price": 54.67394513061884,
+          "exit_signal": 2531,
+          "exit_reason": "thesis_failed",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.056128355665441415,
+          "exit_policy": 0,
+          "net_return": -0.055091831348917264,
+          "entry_date": "2022-01-13",
+          "exit_date": "2022-01-27"
+        },
+        {
+          "entry_index": 2431,
+          "entry": 64.876692810919,
+          "entry_signal": 2430,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.06901370862540826,
+          "exit_index": 2439,
+          "exit_price": 61.51142475420824,
+          "exit_signal": 2439,
+          "exit_reason": "intraday_protection",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.056128355665441415,
+          "exit_policy": 0,
+          "net_return": -0.05281941160456349,
+          "entry_date": "2021-09-02",
+          "exit_date": "2021-09-15"
+        },
+        {
+          "entry_index": 2542,
+          "entry": 56.931407410493556,
+          "entry_signal": 2541,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.06901370862540826,
+          "exit_index": 2549,
+          "exit_price": 54.01738175526292,
+          "exit_signal": 2548,
+          "exit_reason": "thesis_failed",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.056128355665441415,
+          "exit_policy": 0,
+          "net_return": -0.05213319285069273,
+          "entry_date": "2022-02-10",
+          "exit_date": "2022-02-22"
+        }
+      ],
+      "largest_winners": [
+        {
+          "entry_index": 2116,
+          "entry": 56.1304069024804,
+          "entry_signal": 2115,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.06901370862540826,
+          "exit_index": 2145,
+          "exit_price": 62.11775702358753,
+          "exit_signal": 2145,
+          "exit_reason": "intraday_protection",
+          "context": "uncertain",
+          "handoff_index": null,
+          "entry_score": 0.056128355665441415,
+          "exit_policy": 0,
+          "net_return": 0.10556245241077256,
+          "entry_date": "2020-06-04",
+          "exit_date": "2020-07-16"
+        },
+        {
+          "entry_index": 2202,
+          "entry": 66.15415846488662,
+          "entry_signal": 2201,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.06901370862540826,
+          "exit_index": 2223,
+          "exit_price": 70.61926488693736,
+          "exit_signal": 2222,
+          "exit_reason": "thesis_failed",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.056128355665441415,
+          "exit_policy": 0,
+          "net_return": 0.06642851411197048,
+          "entry_date": "2020-10-06",
+          "exit_date": "2020-11-04"
+        },
+        {
+          "entry_index": 2264,
+          "entry": 73.25289791458843,
+          "entry_signal": 2263,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.06901370862540826,
+          "exit_index": 2281,
+          "exit_price": 77.68272362936378,
+          "exit_signal": 2281,
+          "exit_reason": "intraday_protection",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.056128355665441415,
+          "exit_policy": 0,
+          "net_return": 0.05941310087378926,
+          "entry_date": "2021-01-05",
+          "exit_date": "2021-01-29"
+        },
+        {
+          "entry_index": 2069,
+          "entry": 49.38277533457303,
+          "entry_signal": 2068,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.06901370862540826,
+          "exit_index": 2095,
+          "exit_price": 51.787613132130545,
+          "exit_signal": 2094,
+          "exit_reason": "thesis_failed",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.056128355665441415,
+          "exit_policy": 0,
+          "net_return": 0.04764973311745235,
+          "entry_date": "2020-03-27",
+          "exit_date": "2020-05-05"
+        },
+        {
+          "entry_index": 2611,
+          "entry": 45.14040640752193,
+          "entry_signal": 2610,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.06901370862540826,
+          "exit_index": 2626,
+          "exit_price": 47.05285084727655,
+          "exit_signal": 2626,
+          "exit_reason": "intraday_protection",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.056128355665441415,
+          "exit_policy": 0,
+          "net_return": 0.041324729926769166,
+          "entry_date": "2022-05-20",
+          "exit_date": "2022-06-13"
+        }
+      ]
+    },
+    "CORN_late": {
+      "arm": "review",
+      "models": {
+        "price": {
+          "kind": "price",
+          "model": {
+            "beta": [
+              0.052656770143644525,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "mean": [
+              0.0,
+              0.054722606249226126,
+              0.09285625146027483,
+              0.20740641137614918,
+              0.8638053206385065,
+              0.06982644604399248
+            ],
+            "scale": [
+              1.0,
+              0.7431517068352773,
+              0.7322920738203571,
+              1.0337617419824672,
+              2.237733352011182,
+              0.6125247474363438
+            ],
+            "ridge": null,
+            "constant": 0.052656770143644525,
+            "rows": 756
+          },
+          "enabled": false,
+          "margin": 0.05,
+          "change": 0.1,
+          "selection": {
+            "candidates": [
+              {
+                "ridge": null,
+                "loss": 0.5326418874082639,
+                "fold_losses": [
+                  0.3645974479536943,
+                  0.8869747463406096,
+                  0.34635346793048777
+                ]
+              },
+              {
+                "ridge": 1.0,
+                "loss": 0.5371011387106485,
+                "fold_losses": [
+                  0.36279508293521207,
+                  0.8796348489188767,
+                  0.3688734842778567
+                ]
+              },
+              {
+                "ridge": 10.0,
+                "loss": 0.5367459032353208,
+                "fold_losses": [
+                  0.3630048610033279,
+                  0.8793035773801785,
+                  0.36792927132245606
+                ]
+              },
+              {
+                "ridge": 100.0,
+                "loss": 0.5348544485186859,
+                "fold_losses": [
+                  0.36311416468597696,
+                  0.8784610301356526,
+                  0.36298815073442814
+                ]
+              }
+            ],
+            "chosen": null,
+            "folds": [
+              {
+                "first": "2021-06-30",
+                "last": "2021-12-28",
+                "training_last_origin": "2021-06-25",
+                "training_last_maturity": "2021-06-29",
+                "rows": 376,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.3645974479536943,
+                  "1.0": 0.36279508293521207,
+                  "10.0": 0.3630048610033279,
+                  "100.0": 0.36311416468597696
+                }
+              },
+              {
+                "first": "2021-12-29",
+                "last": "2022-06-29",
+                "training_last_origin": "2021-12-23",
+                "training_last_maturity": "2021-12-28",
+                "rows": 502,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.8869747463406096,
+                  "1.0": 0.8796348489188767,
+                  "10.0": 0.8793035773801785,
+                  "100.0": 0.8784610301356526
+                }
+              },
+              {
+                "first": "2022-06-30",
+                "last": "2022-12-28",
+                "training_last_origin": "2022-06-27",
+                "training_last_maturity": "2022-06-29",
+                "rows": 628,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.34635346793048777,
+                  "1.0": 0.3688734842778567,
+                  "10.0": 0.36792927132245606,
+                  "100.0": 0.36298815073442814
+                }
+              }
+            ],
+            "fold_wins": 0,
+            "relative_loss_gain": 0.0
+          },
+          "first_origin": "2019-12-30",
+          "last_origin": "2022-12-28",
+          "last_maturity": "2022-12-30"
+        },
+        "volume": {
+          "kind": "volume",
+          "model": {
+            "beta": [
+              0.052656770143644525,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "mean": [
+              0.0,
+              0.054722606249226126,
+              0.09285625146027483,
+              0.20740641137614918,
+              0.8638053206385065,
+              0.06982644604399248,
+              -0.16553245548391984,
+              0.04680316812004084,
+              -0.004234628959389507
+            ],
+            "scale": [
+              1.0,
+              0.7431517068352773,
+              0.7322920738203571,
+              1.0337617419824672,
+              2.237733352011182,
+              0.6125247474363438,
+              0.5407829109186366,
+              0.6088326596731675,
+              0.3380373208987793
+            ],
+            "ridge": null,
+            "constant": 0.052656770143644525,
+            "rows": 756
+          },
+          "enabled": false,
+          "margin": 0.05,
+          "change": 0.1,
+          "selection": {
+            "candidates": [
+              {
+                "ridge": null,
+                "loss": 0.5326418874082639,
+                "fold_losses": [
+                  0.3645974479536943,
+                  0.8869747463406096,
+                  0.34635346793048777
+                ]
+              },
+              {
+                "ridge": 1.0,
+                "loss": 0.5357773344985941,
+                "fold_losses": [
+                  0.35985914390576185,
+                  0.8788465434715229,
+                  0.36862631611849755
+                ]
+              },
+              {
+                "ridge": 10.0,
+                "loss": 0.535395462041202,
+                "fold_losses": [
+                  0.360122332403913,
+                  0.878431027775882,
+                  0.36763302594381125
+                ]
+              },
+              {
+                "ridge": 100.0,
+                "loss": 0.5336357544210043,
+                "fold_losses": [
+                  0.36094492488703267,
+                  0.8772716888822496,
+                  0.3626906494937305
+                ]
+              }
+            ],
+            "chosen": null,
+            "folds": [
+              {
+                "first": "2021-06-30",
+                "last": "2021-12-28",
+                "training_last_origin": "2021-06-25",
+                "training_last_maturity": "2021-06-29",
+                "rows": 376,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.3645974479536943,
+                  "1.0": 0.35985914390576185,
+                  "10.0": 0.360122332403913,
+                  "100.0": 0.36094492488703267
+                }
+              },
+              {
+                "first": "2021-12-29",
+                "last": "2022-06-29",
+                "training_last_origin": "2021-12-23",
+                "training_last_maturity": "2021-12-28",
+                "rows": 502,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.8869747463406096,
+                  "1.0": 0.8788465434715229,
+                  "10.0": 0.878431027775882,
+                  "100.0": 0.8772716888822496
+                }
+              },
+              {
+                "first": "2022-06-30",
+                "last": "2022-12-28",
+                "training_last_origin": "2022-06-27",
+                "training_last_maturity": "2022-06-29",
+                "rows": 628,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.34635346793048777,
+                  "1.0": 0.36862631611849755,
+                  "10.0": 0.36763302594381125,
+                  "100.0": 0.3626906494937305
+                }
+              }
+            ],
+            "fold_wins": 0,
+            "relative_loss_gain": 0.0
+          },
+          "first_origin": "2019-12-30",
+          "last_origin": "2022-12-28",
+          "last_maturity": "2022-12-30"
+        }
+      },
+      "paired_exits": [],
+      "metrics": [
+        {
+          "symbol": "CORN",
+          "era": "late",
+          "arm": "baseline",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": -0.06605165563372095,
+          "sharpe": -0.5205314636596478,
+          "maxdd": -0.2956164568628853,
+          "calmar": -0.2234370046061321,
+          "sessions": 951,
+          "ann_vol": 0.11794474213034846,
+          "cumulative": -0.22731209641573336,
+          "correlation": 0.6545981314741357,
+          "beta": 0.4328712359807353,
+          "alpha_annual": -0.023271283677026734,
+          "alpha_t_hac": -0.5164668926391954,
+          "down_capture": 0.4464604086964153,
+          "up_capture": 0.4248721389116361,
+          "ic5": 0.021659114211300328,
+          "closed_trades": 17,
+          "wins": 5,
+          "exposure": 0.42691903259726605,
+          "any_session_exposure": 0.444794952681388,
+          "yearly": {
+            "2023": -0.100335150447035,
+            "2024": -0.06987750731341313,
+            "2025": -0.04463372254017184,
+            "2026": -0.03347452253461003
+          },
+          "turnover_annual": 8.988650631203296,
+          "cost_bp_annual": 44.943253156016475,
+          "stop_slippage_bp_annual": 2.557005033006644,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 5,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 2,
+          "buyhold": -0.3245451047929765,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        },
+        {
+          "symbol": "CORN",
+          "era": "late",
+          "arm": "stop",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": -0.06605165563372095,
+          "sharpe": -0.5205314636596478,
+          "maxdd": -0.2956164568628853,
+          "calmar": -0.2234370046061321,
+          "sessions": 951,
+          "ann_vol": 0.11794474213034846,
+          "cumulative": -0.22731209641573336,
+          "correlation": 0.6545981314741357,
+          "beta": 0.4328712359807353,
+          "alpha_annual": -0.023271283677026734,
+          "alpha_t_hac": -0.5164668926391954,
+          "down_capture": 0.4464604086964153,
+          "up_capture": 0.4248721389116361,
+          "ic5": 0.021659114211300328,
+          "closed_trades": 17,
+          "wins": 5,
+          "exposure": 0.42691903259726605,
+          "any_session_exposure": 0.444794952681388,
+          "yearly": {
+            "2023": -0.100335150447035,
+            "2024": -0.06987750731341313,
+            "2025": -0.04463372254017184,
+            "2026": -0.03347452253461003
+          },
+          "turnover_annual": 8.988650631203296,
+          "cost_bp_annual": 44.943253156016475,
+          "stop_slippage_bp_annual": 2.557005033006644,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 0,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 2,
+          "buyhold": -0.3245451047929765,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        },
+        {
+          "symbol": "CORN",
+          "era": "late",
+          "arm": "review",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": -0.06605165563372095,
+          "sharpe": -0.5205314636596478,
+          "maxdd": -0.2956164568628853,
+          "calmar": -0.2234370046061321,
+          "sessions": 951,
+          "ann_vol": 0.11794474213034846,
+          "cumulative": -0.22731209641573336,
+          "correlation": 0.6545981314741357,
+          "beta": 0.4328712359807353,
+          "alpha_annual": -0.023271283677026734,
+          "alpha_t_hac": -0.5164668926391954,
+          "down_capture": 0.4464604086964153,
+          "up_capture": 0.4248721389116361,
+          "ic5": 0.021659114211300328,
+          "closed_trades": 17,
+          "wins": 5,
+          "exposure": 0.42691903259726605,
+          "any_session_exposure": 0.444794952681388,
+          "yearly": {
+            "2023": -0.100335150447035,
+            "2024": -0.06987750731341313,
+            "2025": -0.04463372254017184,
+            "2026": -0.03347452253461003
+          },
+          "turnover_annual": 8.988650631203296,
+          "cost_bp_annual": 44.943253156016475,
+          "stop_slippage_bp_annual": 2.557005033006644,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 0,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 2,
+          "buyhold": -0.3245451047929765,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        }
+      ],
+      "largest_losses": [
+        {
+          "entry_index": 3299,
+          "entry": 24.790000915527344,
+          "entry_signal": 3298,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.07182336070941908,
+          "exit_index": 3307,
+          "exit_price": 23.25836545753479,
+          "exit_signal": 3307,
+          "exit_reason": "intraday_protection",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.052656770143644525,
+          "exit_policy": 0,
+          "net_return": -0.06272215178116969,
+          "entry_date": "2023-07-19",
+          "exit_date": "2023-07-31"
+        },
+        {
+          "entry_index": 3735,
+          "entry": 19.6299991607666,
+          "entry_signal": 3734,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.07182336070941908,
+          "exit_index": 3746,
+          "exit_price": 18.600000381469727,
+          "exit_signal": 3745,
+          "exit_reason": "fast_down",
+          "context": "uncertain",
+          "handoff_index": null,
+          "entry_score": 0.052656770143644525,
+          "exit_policy": 0,
+          "net_return": -0.05341770398144419,
+          "entry_date": "2025-04-14",
+          "exit_date": "2025-04-30"
+        },
+        {
+          "entry_index": 3224,
+          "entry": 25.280000686645508,
+          "entry_signal": 3223,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.07182336070941908,
+          "exit_index": 3242,
+          "exit_price": 24.1200008392334,
+          "exit_signal": 3241,
+          "exit_reason": "fast_down",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.052656770143644525,
+          "exit_policy": 0,
+          "net_return": -0.046839705779890606,
+          "entry_date": "2023-03-30",
+          "exit_date": "2023-04-26"
+        },
+        {
+          "entry_index": 3764,
+          "entry": 18.5,
+          "entry_signal": 3763,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.07182336070941908,
+          "exit_index": 3785,
+          "exit_price": 17.670000076293945,
+          "exit_signal": 3784,
+          "exit_reason": "fast_down",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.052656770143644525,
+          "exit_policy": 0,
+          "net_return": -0.04581951855122157,
+          "entry_date": "2025-05-27",
+          "exit_date": "2025-06-26"
+        },
+        {
+          "entry_index": 3164,
+          "entry": 27.09000015258789,
+          "entry_signal": 3163,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.07182336070941908,
+          "exit_index": 3169,
+          "exit_price": 25.959999084472656,
+          "exit_signal": 3168,
+          "exit_reason": "fast_down",
+          "context": "uncertain",
+          "handoff_index": null,
+          "entry_score": 0.052656770143644525,
+          "exit_policy": 0,
+          "net_return": -0.04267065659564018,
+          "entry_date": "2023-01-03",
+          "exit_date": "2023-01-10"
+        }
+      ],
+      "largest_winners": [
+        {
+          "entry_index": 3265,
+          "entry": 23.579999923706055,
+          "entry_signal": 3264,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.07182336070941908,
+          "exit_index": 3282,
+          "exit_price": 25.493652719929592,
+          "exit_signal": 3282,
+          "exit_reason": "intraday_protection",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.052656770143644525,
+          "exit_policy": 0,
+          "net_return": 0.08007514376882918,
+          "entry_date": "2023-05-30",
+          "exit_date": "2023-06-23"
+        },
+        {
+          "entry_index": 3653,
+          "entry": 18.459999084472656,
+          "entry_signal": 3652,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.07182336070941908,
+          "exit_index": 3704,
+          "exit_price": 19.5,
+          "exit_signal": 3703,
+          "exit_reason": "fast_down",
+          "context": "uncertain",
+          "handoff_index": null,
+          "entry_score": 0.052656770143644525,
+          "exit_policy": 0,
+          "net_return": 0.05528227038283928,
+          "entry_date": "2024-12-12",
+          "exit_date": "2025-02-28"
+        },
+        {
+          "entry_index": 4072,
+          "entry": 18.549999237060547,
+          "entry_signal": 4071,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.07182336070941908,
+          "exit_index": 4103,
+          "exit_price": 19.040000915527344,
+          "exit_signal": 4102,
+          "exit_reason": "fast_down",
+          "context": "uncertain",
+          "handoff_index": null,
+          "entry_score": 0.052656770143644525,
+          "exit_policy": 0,
+          "net_return": 0.025389283674641216,
+          "entry_date": "2026-08-18",
+          "exit_date": "2026-10-01"
+        },
+        {
+          "entry_index": 3827,
+          "entry": 17.280000686645508,
+          "entry_signal": 3826,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.07182336070941908,
+          "exit_index": 3891,
+          "exit_price": 17.6200008392334,
+          "exit_signal": 3890,
+          "exit_reason": "fast_down",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.052656770143644525,
+          "exit_policy": 0,
+          "net_return": 0.018656767623593362,
+          "entry_date": "2025-08-26",
+          "exit_date": "2025-11-25"
+        },
+        {
+          "entry_index": 3461,
+          "entry": 19.889999389648438,
+          "entry_signal": 3460,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.07182336070941908,
+          "exit_index": 3519,
+          "exit_price": 20.0,
+          "exit_signal": 3518,
+          "exit_reason": "fast_down",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.052656770143644525,
+          "exit_policy": 0,
+          "net_return": 0.004525420217001752,
+          "entry_date": "2024-03-11",
+          "exit_date": "2024-06-03"
+        }
+      ]
+    },
+    "ITA_late": {
+      "arm": "review",
+      "models": {
+        "price": {
+          "kind": "price",
+          "model": {
+            "beta": [
+              -0.0018866587118127566,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "mean": [
+              0.0,
+              0.0073407883849906114,
+              0.01826250433512684,
+              0.039177751962244434,
+              0.3000499626497251,
+              0.007154145299751524
+            ],
+            "scale": [
+              1.0,
+              0.7493568426117446,
+              0.7550359472449112,
+              1.0567206870102317,
+              1.733035045634577,
+              0.6413711451160317
+            ],
+            "ridge": null,
+            "constant": -0.0018866587118127566,
+            "rows": 756
+          },
+          "enabled": false,
+          "margin": 0.05,
+          "change": 0.1,
+          "selection": {
+            "candidates": [
+              {
+                "ridge": null,
+                "loss": 0.5237543017518087,
+                "fold_losses": [
+                  0.5849184544256419,
+                  0.46835381386001246,
+                  0.5179906369697719
+                ]
+              },
+              {
+                "ridge": 1.0,
+                "loss": 0.5281071873645422,
+                "fold_losses": [
+                  0.5997886609668758,
+                  0.4640372283277871,
+                  0.5204956727989638
+                ]
+              },
+              {
+                "ridge": 10.0,
+                "loss": 0.527254278107068,
+                "fold_losses": [
+                  0.5975000552692292,
+                  0.4639174648251451,
+                  0.5203453142268296
+                ]
+              },
+              {
+                "ridge": 100.0,
+                "loss": 0.5246211731600736,
+                "fold_losses": [
+                  0.5899031686469055,
+                  0.4639664664718598,
+                  0.5199938843614555
+                ]
+              }
+            ],
+            "chosen": null,
+            "folds": [
+              {
+                "first": "2021-06-30",
+                "last": "2021-12-28",
+                "training_last_origin": "2021-06-25",
+                "training_last_maturity": "2021-06-29",
+                "rows": 376,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.5849184544256419,
+                  "1.0": 0.5997886609668758,
+                  "10.0": 0.5975000552692292,
+                  "100.0": 0.5899031686469055
+                }
+              },
+              {
+                "first": "2021-12-29",
+                "last": "2022-06-29",
+                "training_last_origin": "2021-12-23",
+                "training_last_maturity": "2021-12-28",
+                "rows": 502,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.46835381386001246,
+                  "1.0": 0.4640372283277871,
+                  "10.0": 0.4639174648251451,
+                  "100.0": 0.4639664664718598
+                }
+              },
+              {
+                "first": "2022-06-30",
+                "last": "2022-12-28",
+                "training_last_origin": "2022-06-27",
+                "training_last_maturity": "2022-06-29",
+                "rows": 628,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.5179906369697719,
+                  "1.0": 0.5204956727989638,
+                  "10.0": 0.5203453142268296,
+                  "100.0": 0.5199938843614555
+                }
+              }
+            ],
+            "fold_wins": 0,
+            "relative_loss_gain": 0.0
+          },
+          "first_origin": "2019-12-30",
+          "last_origin": "2022-12-28",
+          "last_maturity": "2022-12-30"
+        },
+        "volume": {
+          "kind": "volume",
+          "model": {
+            "beta": [
+              -0.0018866587117878234,
+              0.034731539494066106,
+              0.020581983188150597,
+              0.023206866791580252,
+              -0.03757158886289096,
+              -0.04185112265416474,
+              -0.02827614049788383,
+              -0.04295574548525533,
+              0.05343279758667963
+            ],
+            "mean": [
+              0.0,
+              0.0073407883849906114,
+              0.01826250433512684,
+              0.039177751962244434,
+              0.3000499626497251,
+              0.007154145299751524,
+              -0.09620055181752814,
+              0.014213167024510216,
+              -0.0008263363935410593
+            ],
+            "scale": [
+              1.0,
+              0.7493568426117446,
+              0.7550359472449112,
+              1.0567206870102317,
+              1.733035045634577,
+              0.6413711451160317,
+              0.4016328729396207,
+              0.5894554126914991,
+              0.27121718004530554
+            ],
+            "ridge": 100.0,
+            "constant": -0.0018866587118127566,
+            "rows": 756
+          },
+          "enabled": true,
+          "margin": 0.05,
+          "change": 0.1,
+          "selection": {
+            "candidates": [
+              {
+                "ridge": null,
+                "loss": 0.5237543017518087,
+                "fold_losses": [
+                  0.5849184544256419,
+                  0.46835381386001246,
+                  0.5179906369697719
+                ]
+              },
+              {
+                "ridge": 1.0,
+                "loss": 0.5237906818752587,
+                "fold_losses": [
+                  0.5956254449401218,
+                  0.4623960141248,
+                  0.5133505865608543
+                ]
+              },
+              {
+                "ridge": 10.0,
+                "loss": 0.5230337881445827,
+                "fold_losses": [
+                  0.5937170287394921,
+                  0.4620850598522862,
+                  0.5132992758419698
+                ]
+              },
+              {
+                "ridge": 100.0,
+                "loss": 0.5200213022817074,
+                "fold_losses": [
+                  0.5859181340474665,
+                  0.46078199360979366,
+                  0.5133637791878617
+                ]
+              }
+            ],
+            "chosen": 100.0,
+            "folds": [
+              {
+                "first": "2021-06-30",
+                "last": "2021-12-28",
+                "training_last_origin": "2021-06-25",
+                "training_last_maturity": "2021-06-29",
+                "rows": 376,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.5849184544256419,
+                  "1.0": 0.5956254449401218,
+                  "10.0": 0.5937170287394921,
+                  "100.0": 0.5859181340474665
+                }
+              },
+              {
+                "first": "2021-12-29",
+                "last": "2022-06-29",
+                "training_last_origin": "2021-12-23",
+                "training_last_maturity": "2021-12-28",
+                "rows": 502,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.46835381386001246,
+                  "1.0": 0.4623960141248,
+                  "10.0": 0.4620850598522862,
+                  "100.0": 0.46078199360979366
+                }
+              },
+              {
+                "first": "2022-06-30",
+                "last": "2022-12-28",
+                "training_last_origin": "2022-06-27",
+                "training_last_maturity": "2022-06-29",
+                "rows": 628,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.5179906369697719,
+                  "1.0": 0.5133505865608543,
+                  "10.0": 0.5132992758419698,
+                  "100.0": 0.5133637791878617
+                }
+              }
+            ],
+            "fold_wins": 2,
+            "relative_loss_gain": 0.007127386749121611
+          },
+          "first_origin": "2019-12-30",
+          "last_origin": "2022-12-28",
+          "last_maturity": "2022-12-30"
+        }
+      },
+      "paired_exits": [
+        {
+          "entry": "2023-10-12",
+          "old_exit": "2024-01-10",
+          "new_exit": "2023-10-20",
+          "old_return": 0.10555123898817742,
+          "new_return": -0.02305288457153687,
+          "gain": -0.1286041235597143
+        },
+        {
+          "entry": "2024-05-06",
+          "old_exit": "2024-09-11",
+          "new_exit": "2024-05-20",
+          "old_return": 0.06489608276138181,
+          "new_return": 0.017438229416378404,
+          "gain": -0.04745785334500341
+        },
+        {
+          "entry": "2023-04-03",
+          "old_exit": "2023-04-28",
+          "new_exit": "2023-04-27",
+          "old_return": -0.01559111062673657,
+          "new_return": -0.02410277345902978,
+          "gain": -0.00851166283229321
+        },
+        {
+          "entry": "2025-12-15",
+          "old_exit": "2026-02-03",
+          "new_exit": "2026-01-08",
+          "old_return": 0.10674143479707943,
+          "new_return": 0.10284947300733482,
+          "gain": -0.0038919617897446024
+        },
+        {
+          "entry": "2024-09-20",
+          "old_exit": "2024-10-29",
+          "new_exit": "2024-09-23",
+          "old_return": 0.012471879444753586,
+          "new_return": 0.010727012461767549,
+          "gain": -0.0017448669829860375
+        },
+        {
+          "entry": "2024-11-11",
+          "old_exit": "2024-12-12",
+          "new_exit": "2024-11-15",
+          "old_return": -0.05038695277857608,
+          "new_return": -0.04225103487578297,
+          "gain": 0.00813591790279311
+        },
+        {
+          "entry": "2024-03-08",
+          "old_exit": "2024-04-18",
+          "new_exit": "2024-04-03",
+          "old_return": -0.016500593633051897,
+          "new_return": 0.000976706587741516,
+          "gain": 0.017477300220793412
+        },
+        {
+          "entry": "2023-06-08",
+          "old_exit": "2023-09-12",
+          "new_exit": "2023-06-23",
+          "old_return": -0.04244237681259666,
+          "new_return": -0.0030979102022106186,
+          "gain": 0.03934446661038604
+        },
+        {
+          "entry": "2025-01-21",
+          "old_exit": "2025-02-24",
+          "new_exit": "2025-02-06",
+          "old_return": -0.019348876368994294,
+          "new_return": 0.024247166520847907,
+          "gain": 0.0435960428898422
+        }
+      ],
+      "metrics": [
+        {
+          "symbol": "ITA",
+          "era": "late",
+          "arm": "baseline",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": 0.09009186436054617,
+          "sharpe": 0.6656067868810797,
+          "maxdd": -0.17744628485453706,
+          "calmar": 0.5077134437297443,
+          "sessions": 951,
+          "ann_vol": 0.1455331118964121,
+          "cumulative": 0.38477303307308675,
+          "correlation": 0.752159943244403,
+          "beta": 0.5686127365515583,
+          "alpha_annual": -0.012097252977528184,
+          "alpha_t_hac": -0.26342521321207024,
+          "down_capture": 0.6469617791649557,
+          "up_capture": 0.6246048951210201,
+          "ic5": 0.009583413375068784,
+          "closed_trades": 16,
+          "wins": 6,
+          "exposure": 0.6614090431125131,
+          "any_session_exposure": 0.6782334384858044,
+          "yearly": {
+            "2023": 0.07523820999246,
+            "2024": -0.030910709214668652,
+            "2025": 0.31285404179640786,
+            "2026": 0.012263712298721696
+          },
+          "turnover_annual": 8.466356393910488,
+          "cost_bp_annual": 42.331781969552424,
+          "stop_slippage_bp_annual": 2.5633590268518365,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 3,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 2,
+          "buyhold": 0.9215486140182216,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        },
+        {
+          "symbol": "ITA",
+          "era": "late",
+          "arm": "stop",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": 0.09009186436054617,
+          "sharpe": 0.6656067868810797,
+          "maxdd": -0.17744628485453706,
+          "calmar": 0.5077134437297443,
+          "sessions": 951,
+          "ann_vol": 0.1455331118964121,
+          "cumulative": 0.38477303307308675,
+          "correlation": 0.752159943244403,
+          "beta": 0.5686127365515583,
+          "alpha_annual": -0.012097252977528184,
+          "alpha_t_hac": -0.26342521321207024,
+          "down_capture": 0.6469617791649557,
+          "up_capture": 0.6246048951210201,
+          "ic5": 0.009583413375068784,
+          "closed_trades": 16,
+          "wins": 6,
+          "exposure": 0.6614090431125131,
+          "any_session_exposure": 0.6782334384858044,
+          "yearly": {
+            "2023": 0.07523820999246,
+            "2024": -0.030910709214668652,
+            "2025": 0.31285404179640786,
+            "2026": 0.012263712298721696
+          },
+          "turnover_annual": 8.466356393910488,
+          "cost_bp_annual": 42.331781969552424,
+          "stop_slippage_bp_annual": 2.5633590268518365,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 0,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 2,
+          "buyhold": 0.9215486140182216,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        },
+        {
+          "symbol": "ITA",
+          "era": "late",
+          "arm": "review",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": 0.04884660862963974,
+          "sharpe": 0.45274998201970407,
+          "maxdd": -0.12525898281623904,
+          "calmar": 0.3899649153410424,
+          "sessions": 951,
+          "ann_vol": 0.12167204821421805,
+          "cumulative": 0.19718994578039362,
+          "correlation": 0.6306037027749886,
+          "beta": 0.39855834053579287,
+          "alpha_annual": -0.021289993737764017,
+          "alpha_t_hac": -0.4764170912330876,
+          "down_capture": 0.41202435885155547,
+          "up_capture": 0.39234008978367974,
+          "ic5": 0.009583413375068784,
+          "closed_trades": 32,
+          "wins": 19,
+          "exposure": 0.38065194532071506,
+          "any_session_exposure": 0.41430073606729756,
+          "yearly": {
+            "2023": -0.0473808830705118,
+            "2024": -0.006098332784166938,
+            "2025": 0.15091890884221737,
+            "2026": 0.09864054861284566
+          },
+          "turnover_annual": 17.219953451816092,
+          "cost_bp_annual": 86.09976725908052,
+          "stop_slippage_bp_annual": 2.5810254831375525,
+          "recovery_closed": 12,
+          "recovery_wins": 9,
+          "recovery_mean": 0.016120121008391924,
+          "warnings": 43,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 2,
+          "buyhold": 0.9215486140182216,
+          "enabled": true,
+          "entry_invalidations": 27,
+          "handoffs": 5,
+          "one_session_trades": 8,
+          "cancelled_recoveries": 0
+        }
+      ],
+      "largest_losses": [
+        {
+          "entry_index": 5117,
+          "entry": 222.61194592967257,
+          "entry_signal": 5116,
+          "entry_policy": 0,
+          "entry_reason": "exit_review",
+          "initial_risk_fraction": 0.07406008189575894,
+          "exit_index": 5135,
+          "exit_price": 206.0222243396552,
+          "exit_signal": 5135,
+          "exit_reason": "intraday_protection",
+          "context": "uncertain",
+          "handoff_index": null,
+          "entry_score": 0.13488180618147075,
+          "exit_policy": 0,
+          "net_return": -0.07544806629573564,
+          "entry_date": "2026-09-09",
+          "exit_date": "2026-10-05"
+        },
+        {
+          "entry_index": 5071,
+          "entry": 248.77161436879615,
+          "entry_signal": 5070,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.07406008189575894,
+          "exit_index": 5078,
+          "exit_price": 236.00641820404783,
+          "exit_signal": 5077,
+          "exit_reason": "fast_down",
+          "context": "uncertain",
+          "handoff_index": null,
+          "entry_score": -0.014885006945417154,
+          "exit_policy": 0,
+          "net_return": -0.05226112581896769,
+          "entry_date": "2026-07-06",
+          "exit_date": "2026-07-15"
+        },
+        {
+          "entry_index": 4748,
+          "entry": 154.42612584262267,
+          "entry_signal": 4747,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.07406008189575894,
+          "exit_index": 4758,
+          "exit_price": 146.84750081974883,
+          "exit_signal": 4758,
+          "exit_reason": "intraday_protection",
+          "context": "uncertain",
+          "handoff_index": null,
+          "entry_score": 0.03612364689028808,
+          "exit_policy": 0,
+          "net_return": -0.05002650357563021,
+          "entry_date": "2025-03-20",
+          "exit_date": "2025-04-03"
+        },
+        {
+          "entry_index": 4661,
+          "entry": 155.33212719837155,
+          "entry_signal": 4660,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.14812016379151788,
+          "exit_index": 4665,
+          "exit_price": 148.9180276806613,
+          "exit_signal": 4664,
+          "exit_reason": "entry_invalidated",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.14324381822315463,
+          "exit_policy": 0,
+          "net_return": -0.04225103487578297,
+          "entry_date": "2024-11-11",
+          "exit_date": "2024-11-15"
+        },
+        {
+          "entry_index": 4978,
+          "entry": 239.6379662474726,
+          "entry_signal": 4977,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.14812016379151788,
+          "exit_index": 4994,
+          "exit_price": 232.10690057239066,
+          "exit_signal": 4993,
+          "exit_reason": "entry_invalidated",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": -0.0587317553345085,
+          "exit_policy": 0,
+          "net_return": -0.03239493600185572,
+          "entry_date": "2026-02-19",
+          "exit_date": "2026-03-13"
+        }
+      ],
+      "largest_winners": [
+        {
+          "entry_index": 4934,
+          "entry": 209.95253058020307,
+          "entry_signal": 4933,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.14812016379151788,
+          "exit_index": 4950,
+          "exit_price": 231.7776995755746,
+          "exit_signal": 4949,
+          "exit_reason": "entry_invalidated",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": -0.03272087428554119,
+          "exit_policy": 0,
+          "net_return": 0.10284947300733482,
+          "entry_date": "2025-12-15",
+          "exit_date": "2026-01-08"
+        },
+        {
+          "entry_index": 5038,
+          "entry": 222.0365766676537,
+          "entry_signal": 5037,
+          "entry_policy": 0,
+          "entry_reason": "exit_review",
+          "initial_risk_fraction": 0.07406008189575894,
+          "exit_index": 5069,
+          "exit_price": 242.9183972705422,
+          "exit_signal": 5068,
+          "exit_reason": "entry_invalidated",
+          "context": "uncertain",
+          "handoff_index": 5045,
+          "entry_score": 0.09960747197460305,
+          "exit_policy": 0,
+          "net_return": 0.09295325983614888,
+          "entry_date": "2026-05-15",
+          "exit_date": "2026-07-01"
+        },
+        {
+          "entry_index": 4817,
+          "entry": 187.2692631700994,
+          "entry_signal": 4816,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.14812016379151788,
+          "exit_index": 4872,
+          "exit_price": 201.40403325157345,
+          "exit_signal": 4871,
+          "exit_reason": "entry_invalidated",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": -0.09567789559557031,
+          "exit_policy": 0,
+          "net_return": 0.0744033829366717,
+          "entry_date": "2025-06-30",
+          "exit_date": "2025-09-17"
+        },
+        {
+          "entry_index": 4763,
+          "entry": 145.90758234322792,
+          "entry_signal": 4762,
+          "entry_policy": 0,
+          "entry_reason": "exit_review",
+          "initial_risk_fraction": 0.07406008189575894,
+          "exit_index": 4774,
+          "exit_price": 154.50555321012212,
+          "exit_signal": 4773,
+          "exit_reason": "entry_invalidated",
+          "context": "uncertain",
+          "handoff_index": 4767,
+          "entry_score": 0.10944897295219827,
+          "exit_policy": 0,
+          "net_return": 0.057869114080660644,
+          "entry_date": "2025-04-10",
+          "exit_date": "2025-04-28"
+        },
+        {
+          "entry_index": 5084,
+          "entry": 232.20082237504417,
+          "entry_signal": 5083,
+          "entry_policy": 0,
+          "entry_reason": "exit_review",
+          "initial_risk_fraction": 0.07406008189575894,
+          "exit_index": 5088,
+          "exit_price": 244.766265749216,
+          "exit_signal": 5087,
+          "exit_reason": "entry_invalidated",
+          "context": "uncertain",
+          "handoff_index": 5087,
+          "entry_score": 0.11969792517045387,
+          "exit_policy": 0,
+          "net_return": 0.05306096380009517,
+          "entry_date": "2026-07-23",
+          "exit_date": "2026-07-29"
+        }
+      ]
+    },
+    "XLU_late": {
+      "arm": "stop",
+      "models": {
+        "price": {
+          "kind": "price",
+          "model": {
+            "beta": [
+              0.01622967776716486,
+              -0.039397638970704064,
+              -0.04221272332478351,
+              0.1307824550343639,
+              -0.09601088778554212,
+              -0.005340155656375118
+            ],
+            "mean": [
+              0.0,
+              0.024986502054801997,
+              0.04881980907891427,
+              0.12559535293530708,
+              0.6938847350975064,
+              0.0362208987426712
+            ],
+            "scale": [
+              1.0,
+              0.7187094987964938,
+              0.694552530985993,
+              1.0203301775471267,
+              1.6224122469063873,
+              0.6115176893286374
+            ],
+            "ridge": 1.0,
+            "constant": 0.01622967776737957,
+            "rows": 756
+          },
+          "enabled": true,
+          "margin": 0.05,
+          "change": 0.1,
+          "selection": {
+            "candidates": [
+              {
+                "ridge": null,
+                "loss": 0.42356374635845273,
+                "fold_losses": [
+                  0.37030013833784153,
+                  0.4360461945546723,
+                  0.46434490618284446
+                ]
+              },
+              {
+                "ridge": 1.0,
+                "loss": 0.41903135503707917,
+                "fold_losses": [
+                  0.3700370801886602,
+                  0.41633008936381644,
+                  0.47072689555876074
+                ]
+              },
+              {
+                "ridge": 10.0,
+                "loss": 0.4191911213446249,
+                "fold_losses": [
+                  0.3702948607259868,
+                  0.4169247522234992,
+                  0.4703537510843887
+                ]
+              },
+              {
+                "ridge": 100.0,
+                "loss": 0.42033476305170686,
+                "fold_losses": [
+                  0.37134752705434876,
+                  0.42088256775295074,
+                  0.4687741943478209
+                ]
+              }
+            ],
+            "chosen": 1.0,
+            "folds": [
+              {
+                "first": "2021-06-30",
+                "last": "2021-12-28",
+                "training_last_origin": "2021-06-25",
+                "training_last_maturity": "2021-06-29",
+                "rows": 376,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.37030013833784153,
+                  "1.0": 0.3700370801886602,
+                  "10.0": 0.3702948607259868,
+                  "100.0": 0.37134752705434876
+                }
+              },
+              {
+                "first": "2021-12-29",
+                "last": "2022-06-29",
+                "training_last_origin": "2021-12-23",
+                "training_last_maturity": "2021-12-28",
+                "rows": 502,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.4360461945546723,
+                  "1.0": 0.41633008936381644,
+                  "10.0": 0.4169247522234992,
+                  "100.0": 0.42088256775295074
+                }
+              },
+              {
+                "first": "2022-06-30",
+                "last": "2022-12-28",
+                "training_last_origin": "2022-06-27",
+                "training_last_maturity": "2022-06-29",
+                "rows": 628,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.46434490618284446,
+                  "1.0": 0.47072689555876074,
+                  "10.0": 0.4703537510843887,
+                  "100.0": 0.4687741943478209
+                }
+              }
+            ],
+            "fold_wins": 2,
+            "relative_loss_gain": 0.010700612033821
+          },
+          "first_origin": "2019-12-30",
+          "last_origin": "2022-12-28",
+          "last_maturity": "2022-12-30"
+        },
+        "volume": {
+          "kind": "volume",
+          "model": {
+            "beta": [
+              0.016229677767164875,
+              -0.0210317779251606,
+              0.0035894069841264976,
+              0.06776188840858462,
+              -0.06713708195801159,
+              -0.008086863758968416,
+              -0.014752130136239019,
+              -0.010556067894631396,
+              -0.008333358755595642
+            ],
+            "mean": [
+              0.0,
+              0.024986502054801997,
+              0.04881980907891427,
+              0.12559535293530708,
+              0.6938847350975064,
+              0.0362208987426712,
+              -0.049708012593788584,
+              0.050609473258060436,
+              -0.021529029699536118
+            ],
+            "scale": [
+              1.0,
+              0.7187094987964938,
+              0.694552530985993,
+              1.0203301775471267,
+              1.6224122469063873,
+              0.6115176893286374,
+              0.2828081240360581,
+              0.5666964890063206,
+              0.18032811367907003
+            ],
+            "ridge": 100.0,
+            "constant": 0.01622967776737957,
+            "rows": 756
+          },
+          "enabled": false,
+          "margin": 0.05,
+          "change": 0.1,
+          "selection": {
+            "candidates": [
+              {
+                "ridge": null,
+                "loss": 0.42356374635845273,
+                "fold_losses": [
+                  0.37030013833784153,
+                  0.4360461945546723,
+                  0.46434490618284446
+                ]
+              },
+              {
+                "ridge": 1.0,
+                "loss": 0.4229903007005203,
+                "fold_losses": [
+                  0.37940284176331146,
+                  0.41498029079306703,
+                  0.47458776954518245
+                ]
+              },
+              {
+                "ridge": 10.0,
+                "loss": 0.42278821844750775,
+                "fold_losses": [
+                  0.3788656510479126,
+                  0.4156225764205894,
+                  0.4738764278740212
+                ]
+              },
+              {
+                "ridge": 100.0,
+                "loss": 0.42222511561596665,
+                "fold_losses": [
+                  0.37620826900438675,
+                  0.4201247516763776,
+                  0.4703423261671355
+                ]
+              }
+            ],
+            "chosen": 100.0,
+            "folds": [
+              {
+                "first": "2021-06-30",
+                "last": "2021-12-28",
+                "training_last_origin": "2021-06-25",
+                "training_last_maturity": "2021-06-29",
+                "rows": 376,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.37030013833784153,
+                  "1.0": 0.37940284176331146,
+                  "10.0": 0.3788656510479126,
+                  "100.0": 0.37620826900438675
+                }
+              },
+              {
+                "first": "2021-12-29",
+                "last": "2022-06-29",
+                "training_last_origin": "2021-12-23",
+                "training_last_maturity": "2021-12-28",
+                "rows": 502,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.4360461945546723,
+                  "1.0": 0.41498029079306703,
+                  "10.0": 0.4156225764205894,
+                  "100.0": 0.4201247516763776
+                }
+              },
+              {
+                "first": "2022-06-30",
+                "last": "2022-12-28",
+                "training_last_origin": "2022-06-27",
+                "training_last_maturity": "2022-06-29",
+                "rows": 628,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.46434490618284446,
+                  "1.0": 0.47458776954518245,
+                  "10.0": 0.4738764278740212,
+                  "100.0": 0.4703423261671355
+                }
+              }
+            ],
+            "fold_wins": 1,
+            "relative_loss_gain": 0.003160399713136086
+          },
+          "first_origin": "2019-12-30",
+          "last_origin": "2022-12-28",
+          "last_maturity": "2022-12-30"
+        }
+      },
+      "paired_exits": [
+        {
+          "entry": "2024-07-12",
+          "old_exit": "2024-10-11",
+          "new_exit": "2024-08-09",
+          "old_return": 0.10933683017763585,
+          "new_return": 0.03488514830979539,
+          "gain": -0.07445168186784046
+        },
+        {
+          "entry": "2025-07-23",
+          "old_exit": "2025-08-20",
+          "new_exit": "2025-08-18",
+          "old_return": 0.0037738278371735046,
+          "new_return": -0.001698004424908195,
+          "gain": -0.0054718322620816995
+        },
+        {
+          "entry": "2024-04-24",
+          "old_exit": "2024-06-03",
+          "new_exit": "2024-05-20",
+          "old_return": 0.10324646967003481,
+          "new_return": 0.10172700327297002,
+          "gain": -0.0015194663970647948
+        },
+        {
+          "entry": "2025-04-21",
+          "old_exit": "2025-06-10",
+          "new_exit": "2025-05-30",
+          "old_return": 0.04364709391661359,
+          "new_return": 0.04429233191988069,
+          "gain": 0.0006452380032671012
+        },
+        {
+          "entry": "2026-02-12",
+          "old_exit": "2026-03-13",
+          "new_exit": "2026-03-04",
+          "old_return": 0.04762347207019868,
+          "new_return": 0.05029990273873963,
+          "gain": 0.0026764306685409522
+        },
+        {
+          "entry": "2024-01-05",
+          "old_exit": "2024-01-18",
+          "new_exit": "2024-01-16",
+          "old_return": -0.04441401689668578,
+          "new_return": -0.019516829583417383,
+          "gain": 0.0248971873132684
+        },
+        {
+          "entry": "2024-11-20",
+          "old_exit": "2024-12-10",
+          "new_exit": "2024-12-06",
+          "old_return": -0.026284365206681093,
+          "new_return": 0.0006118567176496281,
+          "gain": 0.02689622192433072
+        },
+        {
+          "entry": "2025-09-25",
+          "old_exit": "2025-10-29",
+          "new_exit": "2025-10-16",
+          "old_return": 0.04479438226736132,
+          "new_return": 0.08026997489944421,
+          "gain": 0.035475592632082886
+        }
+      ],
+      "metrics": [
+        {
+          "symbol": "XLU",
+          "era": "late",
+          "arm": "baseline",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": 0.05925895503426726,
+          "sharpe": 0.587032331822733,
+          "maxdd": -0.15586882601967034,
+          "calmar": 0.38018477810815676,
+          "sessions": 951,
+          "ann_vol": 0.1079887321478564,
+          "cumulative": 0.24266289278604347,
+          "correlation": 0.661169404671318,
+          "beta": 0.43631654927491337,
+          "alpha_annual": 0.023656828090863356,
+          "alpha_t_hac": 0.5906361473098806,
+          "down_capture": 0.4284317126916739,
+          "up_capture": 0.45190798765688917,
+          "ic5": -0.03022387979044249,
+          "closed_trades": 22,
+          "wins": 10,
+          "exposure": 0.4416403785488959,
+          "any_session_exposure": 0.4647739221871714,
+          "yearly": {
+            "2023": -0.020897295193075704,
+            "2024": 0.14230278255577544,
+            "2025": 0.03693223049651628,
+            "2026": 0.07150319745443223
+          },
+          "turnover_annual": 11.924986713543303,
+          "cost_bp_annual": 59.62493356771657,
+          "stop_slippage_bp_annual": 0.0,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 8,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 0,
+          "buyhold": 0.3405477951939757,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        },
+        {
+          "symbol": "XLU",
+          "era": "late",
+          "arm": "stop",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": 0.11056937713722581,
+          "sharpe": 1.0236130094790463,
+          "maxdd": -0.08460296902749342,
+          "calmar": 1.3069207665902847,
+          "sessions": 951,
+          "ann_vol": 0.10817374521163005,
+          "cumulative": 0.48552776731974534,
+          "correlation": 0.6601341763070991,
+          "beta": 0.43637973949191666,
+          "alpha_annual": 0.07098624889563562,
+          "alpha_t_hac": 1.8769199507997167,
+          "down_capture": 0.39207769111996504,
+          "up_capture": 0.46433277846833626,
+          "ic5": -0.03022387979044249,
+          "closed_trades": 23,
+          "wins": 12,
+          "exposure": 0.4185068349106204,
+          "any_session_exposure": 0.4426919032597266,
+          "yearly": {
+            "2023": 0.0359495484371255,
+            "2024": 0.20010819399751445,
+            "2025": 0.1122955281688891,
+            "2026": 0.07424063518426816
+          },
+          "turnover_annual": 12.453024171525295,
+          "cost_bp_annual": 62.26512085762652,
+          "stop_slippage_bp_annual": 0.0,
+          "recovery_closed": 4,
+          "recovery_wins": 3,
+          "recovery_mean": 0.03571420391131078,
+          "warnings": 19,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 0,
+          "buyhold": 0.3405477951939757,
+          "enabled": true,
+          "entry_invalidations": 11,
+          "handoffs": 4,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        },
+        {
+          "symbol": "XLU",
+          "era": "late",
+          "arm": "review",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": 0.05925895503426726,
+          "sharpe": 0.587032331822733,
+          "maxdd": -0.15586882601967034,
+          "calmar": 0.38018477810815676,
+          "sessions": 951,
+          "ann_vol": 0.1079887321478564,
+          "cumulative": 0.24266289278604347,
+          "correlation": 0.661169404671318,
+          "beta": 0.43631654927491337,
+          "alpha_annual": 0.023656828090863356,
+          "alpha_t_hac": 0.5906361473098806,
+          "down_capture": 0.4284317126916739,
+          "up_capture": 0.45190798765688917,
+          "ic5": -0.03022387979044249,
+          "closed_trades": 22,
+          "wins": 10,
+          "exposure": 0.4416403785488959,
+          "any_session_exposure": 0.4647739221871714,
+          "yearly": {
+            "2023": -0.020897295193075704,
+            "2024": 0.14230278255577544,
+            "2025": 0.03693223049651628,
+            "2026": 0.07150319745443223
+          },
+          "turnover_annual": 11.924986713543303,
+          "cost_bp_annual": 59.62493356771657,
+          "stop_slippage_bp_annual": 0.0,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 0,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 0,
+          "buyhold": 0.3405477951939757,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        }
+      ],
+      "largest_losses": [
+        {
+          "entry_index": 6498,
+          "entry": 38.79163993910477,
+          "entry_signal": 6497,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.12352680231774615,
+          "exit_index": 6507,
+          "exit_price": 37.733771880760855,
+          "exit_signal": 6506,
+          "exit_reason": "fast_down",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": -0.09988704932255321,
+          "exit_policy": 0,
+          "net_return": -0.028242759895877323,
+          "entry_date": "2024-10-21",
+          "exit_date": "2024-11-01"
+        },
+        {
+          "entry_index": 6208,
+          "entry": 28.681662447663815,
+          "entry_signal": 6207,
+          "entry_policy": 0,
+          "entry_reason": "exit_review",
+          "initial_risk_fraction": 0.06176340115887308,
+          "exit_index": 6230,
+          "exit_price": 27.976786980585537,
+          "exit_signal": 6229,
+          "exit_reason": "thesis_failed",
+          "context": "down",
+          "handoff_index": 6221,
+          "entry_score": 0.12797126361949263,
+          "exit_policy": 0,
+          "net_return": -0.025550759967045145,
+          "entry_date": "2023-08-25",
+          "exit_date": "2023-09-27"
+        },
+        {
+          "entry_index": 6097,
+          "entry": 30.129381540093647,
+          "entry_signal": 6096,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.06176340115887308,
+          "exit_index": 6104,
+          "exit_price": 29.51910677644892,
+          "exit_signal": 6103,
+          "exit_reason": "thesis_failed",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.1535892350685692,
+          "exit_policy": 0,
+          "net_return": -0.02123439266061633,
+          "entry_date": "2023-03-17",
+          "exit_date": "2023-03-28"
+        },
+        {
+          "entry_index": 6863,
+          "entry": 45.660555444932804,
+          "entry_signal": 6862,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.12352680231774615,
+          "exit_index": 6874,
+          "exit_price": 44.75306514692483,
+          "exit_signal": 6873,
+          "exit_reason": "thesis_failed",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.01186699282701265,
+          "exit_policy": 0,
+          "net_return": -0.020854345474473734,
+          "entry_date": "2026-04-08",
+          "exit_date": "2026-04-23"
+        },
+        {
+          "entry_index": 6299,
+          "entry": 29.62951249046168,
+          "entry_signal": 6298,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.12352680231774615,
+          "exit_index": 6305,
+          "exit_price": 29.08030411577576,
+          "exit_signal": 6304,
+          "exit_reason": "entry_invalidated",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.020660958411810856,
+          "exit_policy": 0,
+          "net_return": -0.019516829583417383,
+          "entry_date": "2024-01-05",
+          "exit_date": "2024-01-16"
+        }
+      ],
+      "largest_winners": [
+        {
+          "entry_index": 6374,
+          "entry": 30.590923360734507,
+          "entry_signal": 6373,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.12352680231774615,
+          "exit_index": 6392,
+          "exit_price": 33.73656602774978,
+          "exit_signal": 6391,
+          "exit_reason": "entry_invalidated",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.029242158392726827,
+          "exit_policy": 0,
+          "net_return": 0.10172700327297002,
+          "entry_date": "2024-04-24",
+          "exit_date": "2024-05-20"
+        },
+        {
+          "entry_index": 6239,
+          "entry": 26.435984366720263,
+          "entry_signal": 6238,
+          "entry_policy": 0,
+          "entry_reason": "exit_review",
+          "initial_risk_fraction": 0.06176340115887308,
+          "exit_index": 6291,
+          "exit_price": 28.909543012780578,
+          "exit_signal": 6290,
+          "exit_reason": "entry_invalidated",
+          "context": "down",
+          "handoff_index": 6242,
+          "entry_score": 0.11966821137776815,
+          "exit_policy": 0,
+          "net_return": 0.09247484476775547,
+          "entry_date": "2023-10-10",
+          "exit_date": "2023-12-22"
+        },
+        {
+          "entry_index": 6730,
+          "entry": 41.89023587475428,
+          "entry_signal": 6729,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.12352680231774615,
+          "exit_index": 6745,
+          "exit_price": 45.298039458710434,
+          "exit_signal": 6744,
+          "exit_reason": "entry_invalidated",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.05070802428332092,
+          "exit_policy": 0,
+          "net_return": 0.08026997489944421,
+          "entry_date": "2025-09-25",
+          "exit_date": "2025-10-16"
+        },
+        {
+          "entry_index": 6319,
+          "entry": 28.101886516328655,
+          "entry_signal": 6318,
+          "entry_policy": 0,
+          "entry_reason": "exit_review",
+          "initial_risk_fraction": 0.06176340115887308,
+          "exit_index": 6366,
+          "exit_price": 30.158156534710155,
+          "exit_signal": 6365,
+          "exit_reason": "entry_invalidated",
+          "context": "uncertain",
+          "handoff_index": 6331,
+          "entry_score": 0.1167661302631606,
+          "exit_policy": 0,
+          "net_return": 0.0720993208840981,
+          "entry_date": "2024-02-05",
+          "exit_date": "2024-04-12"
+        },
+        {
+          "entry_index": 6826,
+          "entry": 43.8742086191717,
+          "entry_signal": 6825,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.06176340115887308,
+          "exit_index": 6839,
+          "exit_price": 46.12718117456521,
+          "exit_signal": 6838,
+          "exit_reason": "entry_invalidated",
+          "context": "uncertain",
+          "handoff_index": null,
+          "entry_score": 0.09964112735018045,
+          "exit_policy": 0,
+          "net_return": 0.05029990273873963,
+          "entry_date": "2026-02-12",
+          "exit_date": "2026-03-04"
+        }
+      ]
+    },
+    "XLU_early": {
+      "arm": "stop",
+      "models": {
+        "price": {
+          "kind": "price",
+          "model": {
+            "beta": [
+              0.04142529088472084,
+              0.00402824196893018,
+              -0.05518720948229847,
+              -0.0012521177047415644,
+              -0.01700745352416736,
+              0.05365461048265225
+            ],
+            "mean": [
+              0.0,
+              0.04634857790730899,
+              0.08050093011267258,
+              0.19993464851594336,
+              1.1104709268495123,
+              0.10766539273616707
+            ],
+            "scale": [
+              1.0,
+              0.6205147628830264,
+              0.6106839898913159,
+              0.8355113310926048,
+              1.5126750807890499,
+              0.5816708403781183
+            ],
+            "ridge": 10.0,
+            "constant": 0.04142529088526882,
+            "rows": 756
+          },
+          "enabled": true,
+          "margin": 0.05,
+          "change": 0.1,
+          "selection": {
+            "candidates": [
+              {
+                "ridge": null,
+                "loss": 0.4050676612625681,
+                "fold_losses": [
+                  0.49481303521763204,
+                  0.36732196336791245,
+                  0.35306798520216
+                ]
+              },
+              {
+                "ridge": 1.0,
+                "loss": 0.40127645248475025,
+                "fold_losses": [
+                  0.4946835735777602,
+                  0.36319003927136234,
+                  0.34595574460512807
+                ]
+              },
+              {
+                "ridge": 10.0,
+                "loss": 0.401251728846532,
+                "fold_losses": [
+                  0.4946893373103183,
+                  0.36304989943855304,
+                  0.34601594979072464
+                ]
+              },
+              {
+                "ridge": 100.0,
+                "loss": 0.4016021117651652,
+                "fold_losses": [
+                  0.49503347485748905,
+                  0.3630443092446348,
+                  0.34672855119337176
+                ]
+              }
+            ],
+            "chosen": 10.0,
+            "folds": [
+              {
+                "first": "2018-06-28",
+                "last": "2018-12-27",
+                "training_last_origin": "2018-06-25",
+                "training_last_maturity": "2018-06-27",
+                "rows": 376,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.49481303521763204,
+                  "1.0": 0.4946835735777602,
+                  "10.0": 0.4946893373103183,
+                  "100.0": 0.49503347485748905
+                }
+              },
+              {
+                "first": "2018-12-28",
+                "last": "2019-06-28",
+                "training_last_origin": "2018-12-24",
+                "training_last_maturity": "2018-12-27",
+                "rows": 502,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.36732196336791245,
+                  "1.0": 0.36319003927136234,
+                  "10.0": 0.36304989943855304,
+                  "100.0": 0.3630443092446348
+                }
+              },
+              {
+                "first": "2019-07-01",
+                "last": "2019-12-27",
+                "training_last_origin": "2019-06-26",
+                "training_last_maturity": "2019-06-28",
+                "rows": 628,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.35306798520216,
+                  "1.0": 0.34595574460512807,
+                  "10.0": 0.34601594979072464,
+                  "100.0": 0.34672855119337176
+                }
+              }
+            ],
+            "fold_wins": 3,
+            "relative_loss_gain": 0.009420481516944856
+          },
+          "first_origin": "2016-12-27",
+          "last_origin": "2019-12-27",
+          "last_maturity": "2019-12-31"
+        },
+        "volume": {
+          "kind": "volume",
+          "model": {
+            "beta": [
+              0.04142529088472086,
+              0.0077154122779999465,
+              -0.1114611329036931,
+              -0.007307021076937542,
+              -0.015550600296897124,
+              0.04867296555681121,
+              0.006742077469165934,
+              0.07535052879161676,
+              0.0038502189087261714
+            ],
+            "mean": [
+              0.0,
+              0.04634857790730899,
+              0.08050093011267258,
+              0.19993464851594336,
+              1.1104709268495123,
+              0.10766539273616707,
+              -0.04136965216303288,
+              0.11208267458919818,
+              -0.015331330361753416
+            ],
+            "scale": [
+              1.0,
+              0.6205147628830264,
+              0.6106839898913159,
+              0.8355113310926048,
+              1.5126750807890499,
+              0.5816708403781183,
+              0.2749329201205072,
+              0.5964673360537517,
+              0.1602306239849374
+            ],
+            "ridge": 10.0,
+            "constant": 0.04142529088526882,
+            "rows": 756
+          },
+          "enabled": false,
+          "margin": 0.05,
+          "change": 0.1,
+          "selection": {
+            "candidates": [
+              {
+                "ridge": null,
+                "loss": 0.4050676612625681,
+                "fold_losses": [
+                  0.49481303521763204,
+                  0.36732196336791245,
+                  0.35306798520216
+                ]
+              },
+              {
+                "ridge": 1.0,
+                "loss": 0.4034453499525453,
+                "fold_losses": [
+                  0.4982594339811882,
+                  0.3689910468711741,
+                  0.34308556900527354
+                ]
+              },
+              {
+                "ridge": 10.0,
+                "loss": 0.40330372128422726,
+                "fold_losses": [
+                  0.4983913138063241,
+                  0.3682438270975899,
+                  0.3432760229487678
+                ]
+              },
+              {
+                "ridge": 100.0,
+                "loss": 0.40360262582663026,
+                "fold_losses": [
+                  0.49945678529755855,
+                  0.3662402406232816,
+                  0.3451108515590506
+                ]
+              }
+            ],
+            "chosen": 10.0,
+            "folds": [
+              {
+                "first": "2018-06-28",
+                "last": "2018-12-27",
+                "training_last_origin": "2018-06-25",
+                "training_last_maturity": "2018-06-27",
+                "rows": 376,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.49481303521763204,
+                  "1.0": 0.4982594339811882,
+                  "10.0": 0.4983913138063241,
+                  "100.0": 0.49945678529755855
+                }
+              },
+              {
+                "first": "2018-12-28",
+                "last": "2019-06-28",
+                "training_last_origin": "2018-12-24",
+                "training_last_maturity": "2018-12-27",
+                "rows": 502,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.36732196336791245,
+                  "1.0": 0.3689910468711741,
+                  "10.0": 0.3682438270975899,
+                  "100.0": 0.3662402406232816
+                }
+              },
+              {
+                "first": "2019-07-01",
+                "last": "2019-12-27",
+                "training_last_origin": "2019-06-26",
+                "training_last_maturity": "2019-06-28",
+                "rows": 628,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.35306798520216,
+                  "1.0": 0.34308556900527354,
+                  "10.0": 0.3432760229487678,
+                  "100.0": 0.3451108515590506
+                }
+              }
+            ],
+            "fold_wins": 1,
+            "relative_loss_gain": 0.00435467984001181
+          },
+          "first_origin": "2016-12-27",
+          "last_origin": "2019-12-27",
+          "last_maturity": "2019-12-31"
+        }
+      },
+      "paired_exits": [
+        {
+          "entry": "2021-10-20",
+          "old_exit": "2022-01-14",
+          "new_exit": "2021-10-22",
+          "old_return": 0.06378676955819707,
+          "new_return": 0.013349679929984593,
+          "gain": -0.05043708962821247
+        },
+        {
+          "entry": "2022-03-03",
+          "old_exit": "2022-04-25",
+          "new_exit": "2022-03-09",
+          "old_return": 0.07277248621401866,
+          "new_return": 0.039585680388985356,
+          "gain": -0.033186805825033305
+        },
+        {
+          "entry": "2020-10-02",
+          "old_exit": "2020-11-02",
+          "new_exit": "2020-10-07",
+          "old_return": 0.06162691600516812,
+          "new_return": 0.04584456135101589,
+          "gain": -0.01578235465415223
+        },
+        {
+          "entry": "2021-07-16",
+          "old_exit": "2021-09-17",
+          "new_exit": "2021-08-24",
+          "old_return": 0.023641046008231692,
+          "new_return": 0.04949807428535191,
+          "gain": 0.02585702827712022
+        },
+        {
+          "entry": "2020-11-11",
+          "old_exit": "2020-11-23",
+          "new_exit": "2020-11-12",
+          "old_return": -0.04314939353659619,
+          "new_return": -0.008199572560932844,
+          "gain": 0.03494982097566335
+        },
+        {
+          "entry": "2021-03-11",
+          "old_exit": "2021-06-18",
+          "new_exit": "2021-04-20",
+          "old_return": 0.04766303572285269,
+          "new_return": 0.09203307184413956,
+          "gain": 0.04437003612128687
+        }
+      ],
+      "metrics": [
+        {
+          "symbol": "XLU",
+          "era": "early",
+          "arm": "baseline",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": 0.07146390527714153,
+          "sharpe": 0.5954620764188462,
+          "maxdd": -0.1286067504876358,
+          "calmar": 0.555677715253462,
+          "sessions": 756,
+          "ann_vol": 0.13016841805065651,
+          "cumulative": 0.2300779576824743,
+          "correlation": 0.49636267690028246,
+          "beta": 0.2405802593266349,
+          "alpha_annual": 0.054221304758024266,
+          "alpha_t_hac": 0.895008651019146,
+          "down_capture": 0.4193315848333001,
+          "up_capture": 0.44524214611812024,
+          "ic5": 0.08252769357169165,
+          "closed_trades": 15,
+          "wins": 9,
+          "exposure": 0.5701058201058201,
+          "any_session_exposure": 0.58994708994709,
+          "yearly": {
+            "2020": 0.03244253461360258,
+            "2021": 0.1359185082665808,
+            "2022": 0.04886494825617249
+          },
+          "turnover_annual": 10.297001730285965,
+          "cost_bp_annual": 51.48500865142981,
+          "stop_slippage_bp_annual": 8.133429861497632,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 3,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 5,
+          "buyhold": 0.2001199369476825,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        },
+        {
+          "symbol": "XLU",
+          "era": "early",
+          "arm": "stop",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": 0.10631766189205583,
+          "sharpe": 0.7113770082246441,
+          "maxdd": -0.13687185930562273,
+          "calmar": 0.7767678647124819,
+          "sessions": 756,
+          "ann_vol": 0.15992472484652673,
+          "cumulative": 0.3540650772349474,
+          "correlation": 0.6170044645906224,
+          "beta": 0.36741692869803444,
+          "alpha_annual": 0.07819946563305893,
+          "alpha_t_hac": 1.2676719841536686,
+          "down_capture": 0.46220235185302877,
+          "up_capture": 0.5106467672043614,
+          "ic5": 0.08252769357169165,
+          "closed_trades": 29,
+          "wins": 17,
+          "exposure": 0.5462962962962963,
+          "any_session_exposure": 0.5846560846560847,
+          "yearly": {
+            "2020": 0.17667033119428188,
+            "2021": 0.15064864158800284,
+            "2022": 9.672483142453281e-05
+          },
+          "turnover_annual": 19.60042455072805,
+          "cost_bp_annual": 98.00212275364035,
+          "stop_slippage_bp_annual": 11.351292142695883,
+          "recovery_closed": 16,
+          "recovery_wins": 8,
+          "recovery_mean": 0.001939317000541431,
+          "warnings": 38,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 7,
+          "buyhold": 0.2001199369476825,
+          "enabled": true,
+          "entry_invalidations": 16,
+          "handoffs": 4,
+          "one_session_trades": 3,
+          "cancelled_recoveries": 1
+        },
+        {
+          "symbol": "XLU",
+          "era": "early",
+          "arm": "review",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": 0.07146390527714153,
+          "sharpe": 0.5954620764188462,
+          "maxdd": -0.1286067504876358,
+          "calmar": 0.555677715253462,
+          "sessions": 756,
+          "ann_vol": 0.13016841805065651,
+          "cumulative": 0.2300779576824743,
+          "correlation": 0.49636267690028246,
+          "beta": 0.2405802593266349,
+          "alpha_annual": 0.054221304758024266,
+          "alpha_t_hac": 0.895008651019146,
+          "down_capture": 0.4193315848333001,
+          "up_capture": 0.44524214611812024,
+          "ic5": 0.08252769357169165,
+          "closed_trades": 15,
+          "wins": 9,
+          "exposure": 0.5701058201058201,
+          "any_session_exposure": 0.58994708994709,
+          "yearly": {
+            "2020": 0.03244253461360258,
+            "2021": 0.1359185082665808,
+            "2022": 0.04886494825617249
+          },
+          "turnover_annual": 10.297001730285965,
+          "cost_bp_annual": 51.48500865142981,
+          "stop_slippage_bp_annual": 8.133429861497632,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 0,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 5,
+          "buyhold": 0.2001199369476825,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        }
+      ],
+      "largest_losses": [
+        {
+          "entry_index": 5820,
+          "entry": 29.77304188219678,
+          "entry_signal": 5819,
+          "entry_policy": 0,
+          "entry_reason": "exit_review",
+          "initial_risk_fraction": 0.057784757305933514,
+          "exit_index": 5831,
+          "exit_price": 28.002833850765704,
+          "exit_signal": 5831,
+          "exit_reason": "intraday_protection",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.11084002821519566,
+          "exit_policy": 0,
+          "net_return": -0.0603968139358102,
+          "entry_date": "2022-02-08",
+          "exit_date": "2022-02-24"
+        },
+        {
+          "entry_index": 5336,
+          "entry": 26.187919869801203,
+          "entry_signal": 5335,
+          "entry_policy": 0,
+          "entry_reason": "exit_review",
+          "initial_risk_fraction": 0.057784757305933514,
+          "exit_index": 5337,
+          "exit_price": 24.66231994713962,
+          "exit_signal": 5337,
+          "exit_reason": "intraday_protection",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.17962627501063336,
+          "exit_policy": 0,
+          "net_return": -0.059197138425603923,
+          "entry_date": "2020-03-10",
+          "exit_date": "2020-03-11"
+        },
+        {
+          "entry_index": 5906,
+          "entry": 30.74463147740802,
+          "entry_signal": 5905,
+          "entry_policy": 0,
+          "entry_reason": "exit_review",
+          "initial_risk_fraction": 0.057784757305933514,
+          "exit_index": 5907,
+          "exit_price": 28.953576378821122,
+          "exit_signal": 5907,
+          "exit_reason": "intraday_protection",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.18659263021698888,
+          "exit_policy": 0,
+          "net_return": -0.059197138425603923,
+          "entry_date": "2022-06-13",
+          "exit_date": "2022-06-14"
+        },
+        {
+          "entry_index": 5974,
+          "entry": 32.99029109241818,
+          "entry_signal": 5973,
+          "entry_policy": 0,
+          "entry_reason": "exit_review",
+          "initial_risk_fraction": 0.057784757305933514,
+          "exit_index": 5978,
+          "exit_price": 31.068413150626604,
+          "exit_signal": 5978,
+          "exit_reason": "intraday_protection",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.18197255187600753,
+          "exit_policy": 0,
+          "net_return": -0.059197138425603923,
+          "entry_date": "2022-09-20",
+          "exit_date": "2022-09-26"
+        },
+        {
+          "entry_index": 5350,
+          "entry": 23.030043221092306,
+          "entry_signal": 5349,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.057784757305933514,
+          "exit_index": 5352,
+          "exit_price": 21.81349406388454,
+          "exit_signal": 5352,
+          "exit_reason": "intraday_protection",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": -0.017217132441908714,
+          "exit_policy": 0,
+          "net_return": -0.05377114311453424,
+          "entry_date": "2020-03-30",
+          "exit_date": "2020-04-01"
+        }
+      ],
+      "largest_winners": [
+        {
+          "entry_index": 5589,
+          "entry": 25.920563080822618,
+          "entry_signal": 5588,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.057784757305933514,
+          "exit_index": 5616,
+          "exit_price": 28.334432397341722,
+          "exit_signal": 5615,
+          "exit_reason": "entry_invalidated",
+          "context": "uncertain",
+          "handoff_index": null,
+          "entry_score": 0.011188310762880294,
+          "exit_policy": 0,
+          "net_return": 0.09203307184413956,
+          "entry_date": "2021-03-11",
+          "exit_date": "2021-04-20"
+        },
+        {
+          "entry_index": 5354,
+          "entry": 21.78339949059992,
+          "entry_signal": 5353,
+          "entry_policy": 0,
+          "entry_reason": "exit_review",
+          "initial_risk_fraction": 0.057784757305933514,
+          "exit_index": 5365,
+          "exit_price": 23.440700705506416,
+          "exit_signal": 5365,
+          "exit_reason": "intraday_protection",
+          "context": "down",
+          "handoff_index": 5354,
+          "entry_score": 0.20805999863865418,
+          "exit_policy": 0,
+          "net_return": 0.07500538331490247,
+          "entry_date": "2020-04-03",
+          "exit_date": "2020-04-21"
+        },
+        {
+          "entry_index": 5842,
+          "entry": 30.692333434384427,
+          "entry_signal": 5841,
+          "entry_policy": 0,
+          "entry_reason": "exit_review",
+          "initial_risk_fraction": 0.057784757305933514,
+          "exit_index": 5857,
+          "exit_price": 32.47764138648069,
+          "exit_signal": 5856,
+          "exit_reason": "entry_invalidated",
+          "context": "uncertain",
+          "handoff_index": 5842,
+          "entry_score": 0.1575556997617164,
+          "exit_policy": 0,
+          "net_return": 0.05711024041760937,
+          "entry_date": "2022-03-11",
+          "exit_date": "2022-04-01"
+        },
+        {
+          "entry_index": 5330,
+          "entry": 25.37589493880493,
+          "entry_signal": 5329,
+          "entry_policy": 0,
+          "entry_reason": "exit_review",
+          "initial_risk_fraction": 0.057784757305933514,
+          "exit_index": 5332,
+          "exit_price": 26.752281160380242,
+          "exit_signal": 5331,
+          "exit_reason": "entry_invalidated",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.36600260925648076,
+          "exit_policy": 0,
+          "net_return": 0.053186195526325974,
+          "entry_date": "2020-03-02",
+          "exit_date": "2020-03-04"
+        },
+        {
+          "entry_index": 5375,
+          "entry": 23.169468838337952,
+          "entry_signal": 5374,
+          "entry_policy": 0,
+          "entry_reason": "exit_review",
+          "initial_risk_fraction": 0.057784757305933514,
+          "exit_index": 5401,
+          "exit_price": 24.41421297897888,
+          "exit_signal": 5401,
+          "exit_reason": "intraday_protection",
+          "context": "down",
+          "handoff_index": 5389,
+          "entry_score": 0.1807083416414218,
+          "exit_policy": 0,
+          "net_return": 0.052670267807291005,
+          "entry_date": "2020-05-05",
+          "exit_date": "2020-06-11"
+        }
+      ]
+    },
+    "GLD_late": {
+      "arm": "review",
+      "models": {
+        "price": {
+          "kind": "price",
+          "model": {
+            "beta": [
+              0.02353707607729557,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "mean": [
+              0.0,
+              0.0319777011925404,
+              0.05608301407190679,
+              0.12181600769402484,
+              0.3381809930915785,
+              0.053339016701534646
+            ],
+            "scale": [
+              1.0,
+              0.8060078555464173,
+              0.8193502345775069,
+              1.1404735769068928,
+              2.0357310266328885,
+              0.6015132816216029
+            ],
+            "ridge": null,
+            "constant": 0.02353707607729557,
+            "rows": 756
+          },
+          "enabled": false,
+          "margin": 0.05,
+          "change": 0.1,
+          "selection": {
+            "candidates": [
+              {
+                "ridge": null,
+                "loss": 0.6732390474153723,
+                "fold_losses": [
+                  0.6377548725340416,
+                  0.8352226378195309,
+                  0.5467396318925444
+                ]
+              },
+              {
+                "ridge": 1.0,
+                "loss": 0.6831734937929922,
+                "fold_losses": [
+                  0.6475302474778595,
+                  0.8545652422645778,
+                  0.5474249916365391
+                ]
+              },
+              {
+                "ridge": 10.0,
+                "loss": 0.6829841012982812,
+                "fold_losses": [
+                  0.6471851445735434,
+                  0.8543875880130587,
+                  0.547379571308242
+                ]
+              },
+              {
+                "ridge": 100.0,
+                "loss": 0.681600271251026,
+                "fold_losses": [
+                  0.6449488888536525,
+                  0.852024454648473,
+                  0.547827470250952
+                ]
+              }
+            ],
+            "chosen": null,
+            "folds": [
+              {
+                "first": "2021-06-30",
+                "last": "2021-12-28",
+                "training_last_origin": "2021-06-25",
+                "training_last_maturity": "2021-06-29",
+                "rows": 376,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.6377548725340416,
+                  "1.0": 0.6475302474778595,
+                  "10.0": 0.6471851445735434,
+                  "100.0": 0.6449488888536525
+                }
+              },
+              {
+                "first": "2021-12-29",
+                "last": "2022-06-29",
+                "training_last_origin": "2021-12-23",
+                "training_last_maturity": "2021-12-28",
+                "rows": 502,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.8352226378195309,
+                  "1.0": 0.8545652422645778,
+                  "10.0": 0.8543875880130587,
+                  "100.0": 0.852024454648473
+                }
+              },
+              {
+                "first": "2022-06-30",
+                "last": "2022-12-28",
+                "training_last_origin": "2022-06-27",
+                "training_last_maturity": "2022-06-29",
+                "rows": 628,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.5467396318925444,
+                  "1.0": 0.5474249916365391,
+                  "10.0": 0.547379571308242,
+                  "100.0": 0.547827470250952
+                }
+              }
+            ],
+            "fold_wins": 0,
+            "relative_loss_gain": 0.0
+          },
+          "first_origin": "2019-12-30",
+          "last_origin": "2022-12-28",
+          "last_maturity": "2022-12-30"
+        },
+        "volume": {
+          "kind": "volume",
+          "model": {
+            "beta": [
+              0.02353707607729557,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "mean": [
+              0.0,
+              0.0319777011925404,
+              0.05608301407190679,
+              0.12181600769402484,
+              0.3381809930915785,
+              0.053339016701534646,
+              -0.0621532751295316,
+              0.05414394215060387,
+              -0.013498408803522014
+            ],
+            "scale": [
+              1.0,
+              0.8060078555464173,
+              0.8193502345775069,
+              1.1404735769068928,
+              2.0357310266328885,
+              0.6015132816216029,
+              0.3198921718372723,
+              0.5730381757080222,
+              0.193586211323276
+            ],
+            "ridge": null,
+            "constant": 0.02353707607729557,
+            "rows": 756
+          },
+          "enabled": false,
+          "margin": 0.05,
+          "change": 0.1,
+          "selection": {
+            "candidates": [
+              {
+                "ridge": null,
+                "loss": 0.6732390474153723,
+                "fold_losses": [
+                  0.6377548725340416,
+                  0.8352226378195309,
+                  0.5467396318925444
+                ]
+              },
+              {
+                "ridge": 1.0,
+                "loss": 0.6861093401524602,
+                "fold_losses": [
+                  0.6375355207545985,
+                  0.8738066135230529,
+                  0.5469858861797292
+                ]
+              },
+              {
+                "ridge": 10.0,
+                "loss": 0.6856960500544727,
+                "fold_losses": [
+                  0.637500065383025,
+                  0.8724545483483348,
+                  0.5471335364320581
+                ]
+              },
+              {
+                "ridge": 100.0,
+                "loss": 0.6830770686677029,
+                "fold_losses": [
+                  0.6377167316768326,
+                  0.863887942510739,
+                  0.5476265318155369
+                ]
+              }
+            ],
+            "chosen": null,
+            "folds": [
+              {
+                "first": "2021-06-30",
+                "last": "2021-12-28",
+                "training_last_origin": "2021-06-25",
+                "training_last_maturity": "2021-06-29",
+                "rows": 376,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.6377548725340416,
+                  "1.0": 0.6375355207545985,
+                  "10.0": 0.637500065383025,
+                  "100.0": 0.6377167316768326
+                }
+              },
+              {
+                "first": "2021-12-29",
+                "last": "2022-06-29",
+                "training_last_origin": "2021-12-23",
+                "training_last_maturity": "2021-12-28",
+                "rows": 502,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.8352226378195309,
+                  "1.0": 0.8738066135230529,
+                  "10.0": 0.8724545483483348,
+                  "100.0": 0.863887942510739
+                }
+              },
+              {
+                "first": "2022-06-30",
+                "last": "2022-12-28",
+                "training_last_origin": "2022-06-27",
+                "training_last_maturity": "2022-06-29",
+                "rows": 628,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.5467396318925444,
+                  "1.0": 0.5469858861797292,
+                  "10.0": 0.5471335364320581,
+                  "100.0": 0.5476265318155369
+                }
+              }
+            ],
+            "fold_wins": 0,
+            "relative_loss_gain": 0.0
+          },
+          "first_origin": "2019-12-30",
+          "last_origin": "2022-12-28",
+          "last_maturity": "2022-12-30"
+        }
+      },
+      "paired_exits": [],
+      "metrics": [
+        {
+          "symbol": "GLD",
+          "era": "late",
+          "arm": "baseline",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": 0.11777214898208066,
+          "sharpe": 0.9170359598583966,
+          "maxdd": -0.15128424686315867,
+          "calmar": 0.7784825679081395,
+          "sessions": 951,
+          "ann_vol": 0.13078148257185693,
+          "cumulative": 0.5222153070354723,
+          "correlation": 0.5894662747674038,
+          "beta": 0.38328048602282505,
+          "alpha_annual": 0.029657413642531293,
+          "alpha_t_hac": 0.559942074843964,
+          "down_capture": 0.43144109958704263,
+          "up_capture": 0.44605632996747085,
+          "ic5": 0.008483981004302213,
+          "closed_trades": 29,
+          "wins": 14,
+          "exposure": 0.4773922187171398,
+          "any_session_exposure": 0.5078864353312302,
+          "yearly": {
+            "2023": 0.02384178913977575,
+            "2024": 0.09862658916282663,
+            "2025": 0.3058744751546536,
+            "2026": 0.036314784894898144
+          },
+          "turnover_annual": 15.301643878858837,
+          "cost_bp_annual": 76.50821939429422,
+          "stop_slippage_bp_annual": 8.94372602655229,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 10,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 7,
+          "buyhold": 1.2518864132284095,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        },
+        {
+          "symbol": "GLD",
+          "era": "late",
+          "arm": "stop",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": 0.11777214898208066,
+          "sharpe": 0.9170359598583966,
+          "maxdd": -0.15128424686315867,
+          "calmar": 0.7784825679081395,
+          "sessions": 951,
+          "ann_vol": 0.13078148257185693,
+          "cumulative": 0.5222153070354723,
+          "correlation": 0.5894662747674038,
+          "beta": 0.38328048602282505,
+          "alpha_annual": 0.029657413642531293,
+          "alpha_t_hac": 0.559942074843964,
+          "down_capture": 0.43144109958704263,
+          "up_capture": 0.44605632996747085,
+          "ic5": 0.008483981004302213,
+          "closed_trades": 29,
+          "wins": 14,
+          "exposure": 0.4773922187171398,
+          "any_session_exposure": 0.5078864353312302,
+          "yearly": {
+            "2023": 0.02384178913977575,
+            "2024": 0.09862658916282663,
+            "2025": 0.3058744751546536,
+            "2026": 0.036314784894898144
+          },
+          "turnover_annual": 15.301643878858837,
+          "cost_bp_annual": 76.50821939429422,
+          "stop_slippage_bp_annual": 8.94372602655229,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 0,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 7,
+          "buyhold": 1.2518864132284095,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        },
+        {
+          "symbol": "GLD",
+          "era": "late",
+          "arm": "review",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": 0.11777214898208066,
+          "sharpe": 0.9170359598583966,
+          "maxdd": -0.15128424686315867,
+          "calmar": 0.7784825679081395,
+          "sessions": 951,
+          "ann_vol": 0.13078148257185693,
+          "cumulative": 0.5222153070354723,
+          "correlation": 0.5894662747674038,
+          "beta": 0.38328048602282505,
+          "alpha_annual": 0.029657413642531293,
+          "alpha_t_hac": 0.559942074843964,
+          "down_capture": 0.43144109958704263,
+          "up_capture": 0.44605632996747085,
+          "ic5": 0.008483981004302213,
+          "closed_trades": 29,
+          "wins": 14,
+          "exposure": 0.4773922187171398,
+          "any_session_exposure": 0.5078864353312302,
+          "yearly": {
+            "2023": 0.02384178913977575,
+            "2024": 0.09862658916282663,
+            "2025": 0.3058744751546536,
+            "2026": 0.036314784894898144
+          },
+          "turnover_annual": 15.301643878858837,
+          "cost_bp_annual": 76.50821939429422,
+          "stop_slippage_bp_annual": 8.94372602655229,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 0,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 7,
+          "buyhold": 1.2518864132284095,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        }
+      ],
+      "largest_losses": [
+        {
+          "entry_index": 5348,
+          "entry": 470.0899963378906,
+          "entry_signal": 5347,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.05629975960512712,
+          "exit_index": 5350,
+          "exit_price": 447.9199595491817,
+          "exit_signal": 5350,
+          "exit_reason": "intraday_protection",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.02353707607729557,
+          "exit_policy": 0,
+          "net_return": -0.04811362308579126,
+          "entry_date": "2026-02-24",
+          "exit_date": "2026-02-26"
+        },
+        {
+          "entry_index": 5402,
+          "entry": 430.70001220703125,
+          "entry_signal": 5401,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.05629975960512712,
+          "exit_index": 5407,
+          "exit_price": 412.45001220703125,
+          "exit_signal": 5406,
+          "exit_reason": "thesis_failed",
+          "context": "uncertain",
+          "handoff_index": null,
+          "entry_score": 0.02353707607729557,
+          "exit_policy": 0,
+          "net_return": -0.04333002870055913,
+          "entry_date": "2026-05-12",
+          "exit_date": "2026-05-19"
+        },
+        {
+          "entry_index": 5200,
+          "entry": 314.0,
+          "entry_signal": 5199,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.05629975960512712,
+          "exit_index": 5206,
+          "exit_price": 304.5899963378906,
+          "exit_signal": 5205,
+          "exit_reason": "fast_down",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.02353707607729557,
+          "exit_policy": 0,
+          "net_return": -0.0309377115909506,
+          "entry_date": "2025-07-23",
+          "exit_date": "2025-07-31"
+        },
+        {
+          "entry_index": 5050,
+          "entry": 247.80999755859375,
+          "entry_signal": 5049,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.05629975960512712,
+          "exit_index": 5056,
+          "exit_price": 241.41000366210938,
+          "exit_signal": 5055,
+          "exit_reason": "fast_down",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.02353707607729557,
+          "exit_policy": 0,
+          "net_return": -0.026799900411187738,
+          "entry_date": "2024-12-12",
+          "exit_date": "2024-12-20"
+        },
+        {
+          "entry_index": 4646,
+          "entry": 186.55999755859375,
+          "entry_signal": 4645,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.05629975960512712,
+          "exit_index": 4656,
+          "exit_price": 182.25,
+          "exit_signal": 4655,
+          "exit_reason": "thesis_failed",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.02353707607729557,
+          "exit_policy": 0,
+          "net_return": -0.0240788836723832,
+          "entry_date": "2023-05-05",
+          "exit_date": "2023-05-19"
+        }
+      ],
+      "largest_winners": [
+        {
+          "entry_index": 5227,
+          "entry": 314.7200012207031,
+          "entry_signal": 5226,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.05629975960512712,
+          "exit_index": 5263,
+          "exit_price": 385.2386178180911,
+          "exit_signal": 5263,
+          "exit_reason": "intraday_protection",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.02353707607729557,
+          "exit_policy": 0,
+          "net_return": 0.2228443385567822,
+          "entry_date": "2025-08-29",
+          "exit_date": "2025-10-21"
+        },
+        {
+          "entry_index": 4853,
+          "entry": 194.14999389648438,
+          "entry_signal": 4852,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.05629975960512712,
+          "exit_index": 4891,
+          "exit_price": 216.77000427246094,
+          "exit_signal": 4890,
+          "exit_reason": "fast_down",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.02353707607729557,
+          "exit_policy": 0,
+          "net_return": 0.11539196192035783,
+          "entry_date": "2024-03-04",
+          "exit_date": "2024-04-26"
+        },
+        {
+          "entry_index": 5319,
+          "entry": 421.5199890136719,
+          "entry_signal": 5318,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.05629975960512712,
+          "exit_index": 5331,
+          "exit_price": 470.59310924661406,
+          "exit_signal": 5331,
+          "exit_reason": "intraday_protection",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.02353707607729557,
+          "exit_policy": 0,
+          "net_return": 0.11530357650745793,
+          "entry_date": "2026-01-12",
+          "exit_date": "2026-01-29"
+        },
+        {
+          "entry_index": 5069,
+          "entry": 246.33999633789062,
+          "entry_signal": 5068,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.05629975960512712,
+          "exit_index": 5103,
+          "exit_price": 269.010009765625,
+          "exit_signal": 5102,
+          "exit_reason": "fast_down",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.02353707607729557,
+          "exit_policy": 0,
+          "net_return": 0.09093585365256085,
+          "entry_date": "2025-01-13",
+          "exit_date": "2025-03-04"
+        },
+        {
+          "entry_index": 5461,
+          "entry": 389.5,
+          "entry_signal": 5460,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.05629975960512712,
+          "exit_index": 5478,
+          "exit_price": 405.93818033254274,
+          "exit_signal": 5478,
+          "exit_reason": "intraday_protection",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": 0.02353707607729557,
+          "exit_policy": 0,
+          "net_return": 0.04116160467231467,
+          "entry_date": "2026-08-06",
+          "exit_date": "2026-08-31"
+        }
+      ]
+    },
+    "MBB_late": {
+      "arm": "review",
+      "models": {
+        "price": {
+          "kind": "price",
+          "model": {
+            "beta": [
+              -0.03800578864915567,
+              0.026147309589492188,
+              -0.051899097451099364,
+              0.04842016112660344,
+              0.033229061931068234,
+              -0.02579696747655944
+            ],
+            "mean": [
+              0.0,
+              -0.030482368905668748,
+              -0.04506587573432456,
+              -0.09784778714609048,
+              -0.3314752074544041,
+              -0.022983678051564323
+            ],
+            "scale": [
+              1.0,
+              0.8088042539717463,
+              0.7651264437759172,
+              1.0789503712359123,
+              2.4009552216088488,
+              0.6334624733132139
+            ],
+            "ridge": 100.0,
+            "constant": -0.038005788649658395,
+            "rows": 756
+          },
+          "enabled": false,
+          "margin": 0.05,
+          "change": 0.1,
+          "selection": {
+            "candidates": [
+              {
+                "ridge": null,
+                "loss": 0.7523616245419835,
+                "fold_losses": [
+                  0.6257507436893738,
+                  0.9518629762557036,
+                  0.6794711536808733
+                ]
+              },
+              {
+                "ridge": 1.0,
+                "loss": 0.7524324601062212,
+                "fold_losses": [
+                  0.6230150028445889,
+                  0.9491714371318267,
+                  0.6851109403422478
+                ]
+              },
+              {
+                "ridge": 10.0,
+                "loss": 0.7521320460292203,
+                "fold_losses": [
+                  0.6230217522436953,
+                  0.9481980470927809,
+                  0.6851763387511846
+                ]
+              },
+              {
+                "ridge": 100.0,
+                "loss": 0.7515845425715755,
+                "fold_losses": [
+                  0.6248148736186475,
+                  0.945577344136976,
+                  0.6843614099591027
+                ]
+              }
+            ],
+            "chosen": 100.0,
+            "folds": [
+              {
+                "first": "2021-06-30",
+                "last": "2021-12-28",
+                "training_last_origin": "2021-06-25",
+                "training_last_maturity": "2021-06-29",
+                "rows": 376,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.6257507436893738,
+                  "1.0": 0.6230150028445889,
+                  "10.0": 0.6230217522436953,
+                  "100.0": 0.6248148736186475
+                }
+              },
+              {
+                "first": "2021-12-29",
+                "last": "2022-06-29",
+                "training_last_origin": "2021-12-23",
+                "training_last_maturity": "2021-12-28",
+                "rows": 502,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.9518629762557036,
+                  "1.0": 0.9491714371318267,
+                  "10.0": 0.9481980470927809,
+                  "100.0": 0.945577344136976
+                }
+              },
+              {
+                "first": "2022-06-30",
+                "last": "2022-12-28",
+                "training_last_origin": "2022-06-27",
+                "training_last_maturity": "2022-06-29",
+                "rows": 628,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.6794711536808733,
+                  "1.0": 0.6851109403422478,
+                  "10.0": 0.6851763387511846,
+                  "100.0": 0.6843614099591027
+                }
+              }
+            ],
+            "fold_wins": 2,
+            "relative_loss_gain": 0.0010328569999581427
+          },
+          "first_origin": "2019-12-30",
+          "last_origin": "2022-12-28",
+          "last_maturity": "2022-12-30"
+        },
+        "volume": {
+          "kind": "volume",
+          "model": {
+            "beta": [
+              -0.03800578864915568,
+              0.024503595771357002,
+              -0.019754938389488313,
+              0.055312034021116264,
+              0.03459114920385188,
+              -0.024852992229192447,
+              -0.024921288882597325,
+              -0.06242478784983952,
+              -0.0204236081553742
+            ],
+            "mean": [
+              0.0,
+              -0.030482368905668748,
+              -0.04506587573432456,
+              -0.09784778714609048,
+              -0.3314752074544041,
+              -0.022983678051564323,
+              -0.12147102170976165,
+              0.04338120471829836,
+              -0.012525202865933477
+            ],
+            "scale": [
+              1.0,
+              0.8088042539717463,
+              0.7651264437759172,
+              1.0789503712359123,
+              2.4009552216088488,
+              0.6334624733132139,
+              0.43022308267852793,
+              0.5823514054046202,
+              0.28183085444843237
+            ],
+            "ridge": 100.0,
+            "constant": -0.038005788649658395,
+            "rows": 756
+          },
+          "enabled": true,
+          "margin": 0.05,
+          "change": 0.1,
+          "selection": {
+            "candidates": [
+              {
+                "ridge": null,
+                "loss": 0.7523616245419835,
+                "fold_losses": [
+                  0.6257507436893738,
+                  0.9518629762557036,
+                  0.6794711536808733
+                ]
+              },
+              {
+                "ridge": 1.0,
+                "loss": 0.7491671764208016,
+                "fold_losses": [
+                  0.6248751593337084,
+                  0.9351740371132209,
+                  0.6874523328154755
+                ]
+              },
+              {
+                "ridge": 10.0,
+                "loss": 0.7487009262828895,
+                "fold_losses": [
+                  0.6243714714634222,
+                  0.9343949072010557,
+                  0.687336400184191
+                ]
+              },
+              {
+                "ridge": 100.0,
+                "loss": 0.747857825394973,
+                "fold_losses": [
+                  0.6241125933890671,
+                  0.9334637819359256,
+                  0.6859971008599264
+                ]
+              }
+            ],
+            "chosen": 100.0,
+            "folds": [
+              {
+                "first": "2021-06-30",
+                "last": "2021-12-28",
+                "training_last_origin": "2021-06-25",
+                "training_last_maturity": "2021-06-29",
+                "rows": 376,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.6257507436893738,
+                  "1.0": 0.6248751593337084,
+                  "10.0": 0.6243714714634222,
+                  "100.0": 0.6241125933890671
+                }
+              },
+              {
+                "first": "2021-12-29",
+                "last": "2022-06-29",
+                "training_last_origin": "2021-12-23",
+                "training_last_maturity": "2021-12-28",
+                "rows": 502,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.9518629762557036,
+                  "1.0": 0.9351740371132209,
+                  "10.0": 0.9343949072010557,
+                  "100.0": 0.9334637819359256
+                }
+              },
+              {
+                "first": "2022-06-30",
+                "last": "2022-12-28",
+                "training_last_origin": "2022-06-27",
+                "training_last_maturity": "2022-06-29",
+                "rows": 628,
+                "validation_rows": 126,
+                "losses": {
+                  "None": 0.6794711536808733,
+                  "1.0": 0.6874523328154755,
+                  "10.0": 0.687336400184191,
+                  "100.0": 0.6859971008599264
+                }
+              }
+            ],
+            "fold_wins": 2,
+            "relative_loss_gain": 0.0059862159367209955
+          },
+          "first_origin": "2019-12-30",
+          "last_origin": "2022-12-28",
+          "last_maturity": "2022-12-30"
+        }
+      },
+      "paired_exits": [
+        {
+          "entry": "2025-08-04",
+          "old_exit": "2025-11-04",
+          "new_exit": "2025-08-06",
+          "old_return": 0.025712044475166618,
+          "new_return": 0.000600097357232654,
+          "gain": -0.025111947117933964
+        },
+        {
+          "entry": "2025-11-26",
+          "old_exit": "2026-03-09",
+          "new_exit": "2025-12-18",
+          "old_return": 0.0094117484748657,
+          "new_return": 0.00012125911420546309,
+          "gain": -0.009290489360660237
+        },
+        {
+          "entry": "2026-06-17",
+          "old_exit": "2026-07-07",
+          "new_exit": "2026-06-29",
+          "old_return": -0.007274715774589269,
+          "new_return": 5.4276369609862485e-05,
+          "gain": 0.007328992144199131
+        },
+        {
+          "entry": "2023-01-09",
+          "old_exit": "2023-02-06",
+          "new_exit": "2023-01-12",
+          "old_return": -0.0005433555128548928,
+          "new_return": 0.009521941290634883,
+          "gain": 0.010065296803489776
+        }
+      ],
+      "metrics": [
+        {
+          "symbol": "MBB",
+          "era": "late",
+          "arm": "baseline",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": -0.009629514553913698,
+          "sharpe": -0.23632524825917306,
+          "maxdd": -0.0978967819104315,
+          "calmar": -0.09836395401356512,
+          "sessions": 951,
+          "ann_vol": 0.03790656883587062,
+          "cumulative": -0.0358573838054147,
+          "correlation": 0.5559748180472562,
+          "beta": 0.3227128426942844,
+          "alpha_annual": -0.020273964508381676,
+          "alpha_t_hac": -1.343343897171539,
+          "down_capture": 0.39189903228836886,
+          "up_capture": 0.33748915549179237,
+          "ic5": -0.03548801255635567,
+          "closed_trades": 25,
+          "wins": 8,
+          "exposure": 0.41219768664563616,
+          "any_session_exposure": 0.4384858044164038,
+          "yearly": {
+            "2023": -0.04653637511981257,
+            "2024": -0.007190557309448398,
+            "2025": 0.015112154756012464,
+            "2026": 0.003361016388262472
+          },
+          "turnover_annual": 13.484358302088227,
+          "cost_bp_annual": 67.4217915104412,
+          "stop_slippage_bp_annual": 25.062795756629004,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 14,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 19,
+          "buyhold": 0.1323334073293465,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        },
+        {
+          "symbol": "MBB",
+          "era": "late",
+          "arm": "stop",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": -0.009629514553913698,
+          "sharpe": -0.23632524825917306,
+          "maxdd": -0.0978967819104315,
+          "calmar": -0.09836395401356512,
+          "sessions": 951,
+          "ann_vol": 0.03790656883587062,
+          "cumulative": -0.0358573838054147,
+          "correlation": 0.5559748180472562,
+          "beta": 0.3227128426942844,
+          "alpha_annual": -0.020273964508381676,
+          "alpha_t_hac": -1.343343897171539,
+          "down_capture": 0.39189903228836886,
+          "up_capture": 0.33748915549179237,
+          "ic5": -0.03548801255635567,
+          "closed_trades": 25,
+          "wins": 8,
+          "exposure": 0.41219768664563616,
+          "any_session_exposure": 0.4384858044164038,
+          "yearly": {
+            "2023": -0.04653637511981257,
+            "2024": -0.007190557309448398,
+            "2025": 0.015112154756012464,
+            "2026": 0.003361016388262472
+          },
+          "turnover_annual": 13.484358302088227,
+          "cost_bp_annual": 67.4217915104412,
+          "stop_slippage_bp_annual": 25.062795756629004,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 0,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 19,
+          "buyhold": 0.1323334073293465,
+          "enabled": false,
+          "entry_invalidations": 0,
+          "handoffs": 0,
+          "one_session_trades": 0,
+          "cancelled_recoveries": 0
+        },
+        {
+          "symbol": "MBB",
+          "era": "late",
+          "arm": "review",
+          "cost_bp": 5,
+          "delay": 0,
+          "cagr": -0.013744175587433904,
+          "sharpe": -0.3718897900262594,
+          "maxdd": -0.09735520638686901,
+          "calmar": -0.14117555801604956,
+          "sessions": 951,
+          "ann_vol": 0.03551849472201856,
+          "cumulative": -0.0508872152340718,
+          "correlation": 0.517140714520038,
+          "beta": 0.28126127121293604,
+          "alpha_annual": -0.023071182313697095,
+          "alpha_t_hac": -1.5513945453852833,
+          "down_capture": 0.3391688234521186,
+          "up_capture": 0.27931974224511696,
+          "ic5": -0.03548801255635567,
+          "closed_trades": 31,
+          "wins": 13,
+          "exposure": 0.3312302839116719,
+          "any_session_exposure": 0.3638275499474238,
+          "yearly": {
+            "2023": -0.04633598082336232,
+            "2024": -0.00719055730944862,
+            "2025": -0.001588783108429026,
+            "2026": 0.004030892002369946
+          },
+          "turnover_annual": 16.40758566105097,
+          "cost_bp_annual": 82.03792830525492,
+          "stop_slippage_bp_annual": 22.43012337397813,
+          "recovery_closed": 0,
+          "recovery_wins": 0,
+          "recovery_mean": null,
+          "warnings": 7,
+          "resets": 0,
+          "changes": 0,
+          "stop_fills": 17,
+          "buyhold": 0.1323334073293465,
+          "enabled": true,
+          "entry_invalidations": 7,
+          "handoffs": 0,
+          "one_session_trades": 1,
+          "cancelled_recoveries": 0
+        }
+      ],
+      "largest_losses": [
+        {
+          "entry_index": 4247,
+          "entry": 84.07164234569588,
+          "entry_signal": 4246,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.015155220746744115,
+          "exit_index": 4249,
+          "exit_price": 82.65179797122494,
+          "exit_signal": 4249,
+          "exit_reason": "intraday_protection",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": -0.0530868929522811,
+          "exit_policy": 0,
+          "net_return": -0.0178711254505749,
+          "entry_date": "2024-02-01",
+          "exit_date": "2024-02-05"
+        },
+        {
+          "entry_index": 4041,
+          "entry": 83.05825108021732,
+          "entry_signal": 4040,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.015155220746744115,
+          "exit_index": 4047,
+          "exit_price": 81.74903712690138,
+          "exit_signal": 4047,
+          "exit_reason": "intraday_protection",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": -0.047961144494662294,
+          "exit_policy": 0,
+          "net_return": -0.016746345104328708,
+          "entry_date": "2023-04-06",
+          "exit_date": "2023-04-17"
+        },
+        {
+          "entry_index": 4539,
+          "entry": 88.14631885903438,
+          "entry_signal": 4538,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.015155220746744115,
+          "exit_index": 4543,
+          "exit_price": 86.90268388023416,
+          "exit_signal": 4543,
+          "exit_reason": "intraday_protection",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": -0.03546703887811699,
+          "exit_policy": 0,
+          "net_return": -0.015094155380227181,
+          "entry_date": "2025-04-02",
+          "exit_date": "2025-04-08"
+        },
+        {
+          "entry_index": 4557,
+          "entry": 87.53685877368983,
+          "entry_signal": 4556,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.015155220746744115,
+          "exit_index": 4567,
+          "exit_price": 86.57010872126166,
+          "exit_signal": 4567,
+          "exit_reason": "intraday_protection",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": -0.17891022572331347,
+          "exit_policy": 0,
+          "net_return": -0.012032381701630568,
+          "entry_date": "2025-04-29",
+          "exit_date": "2025-05-13"
+        },
+        {
+          "entry_index": 4060,
+          "entry": 82.77252638534482,
+          "entry_signal": 4059,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.015155220746744115,
+          "exit_index": 4070,
+          "exit_price": 81.8752840796063,
+          "exit_signal": 4069,
+          "exit_reason": "fast_down",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": -0.05075573742068591,
+          "exit_policy": 0,
+          "net_return": -0.011828522281373988,
+          "entry_date": "2023-05-04",
+          "exit_date": "2023-05-18"
+        }
+      ],
+      "largest_winners": [
+        {
+          "entry_index": 4357,
+          "entry": 84.49350854468707,
+          "entry_signal": 4356,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.015155220746744115,
+          "exit_index": 4417,
+          "exit_price": 86.87677205718242,
+          "exit_signal": 4416,
+          "exit_reason": "fast_down",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": -0.02316523285595492,
+          "exit_policy": 0,
+          "net_return": 0.027178776176649322,
+          "entry_date": "2024-07-11",
+          "exit_date": "2024-10-04"
+        },
+        {
+          "entry_index": 4924,
+          "entry": 89.44000244140625,
+          "entry_signal": 4923,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.0075776103733720575,
+          "exit_index": 4925,
+          "exit_price": 91.01000213623047,
+          "exit_signal": 4924,
+          "exit_reason": "entry_invalidated",
+          "context": "down",
+          "handoff_index": null,
+          "entry_score": -0.12934475805652504,
+          "exit_policy": 0,
+          "net_return": 0.01653661823094077,
+          "entry_date": "2026-10-14",
+          "exit_date": "2026-10-15"
+        },
+        {
+          "entry_index": 4641,
+          "entry": 89.53121185711267,
+          "entry_signal": 4640,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.015155220746744115,
+          "exit_index": 4659,
+          "exit_price": 90.85517483708871,
+          "exit_signal": 4658,
+          "exit_reason": "entry_invalidated",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": 0.08075007193384234,
+          "exit_policy": 0,
+          "net_return": 0.01377344486291543,
+          "entry_date": "2025-08-28",
+          "exit_date": "2025-09-24"
+        },
+        {
+          "entry_index": 3980,
+          "entry": 81.83728987158145,
+          "entry_signal": 3979,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.0075776103733720575,
+          "exit_index": 3983,
+          "exit_price": 82.69919760979877,
+          "exit_signal": 3982,
+          "exit_reason": "entry_invalidated",
+          "context": "uncertain",
+          "handoff_index": null,
+          "entry_score": 0.015323346079767439,
+          "exit_policy": 0,
+          "net_return": 0.009521941290634883,
+          "entry_date": "2023-01-09",
+          "exit_date": "2023-01-12"
+        },
+        {
+          "entry_index": 4580,
+          "entry": 86.87577895299037,
+          "entry_signal": 4579,
+          "entry_policy": 0,
+          "entry_reason": "ordinary",
+          "initial_risk_fraction": 0.015155220746744115,
+          "exit_index": 4610,
+          "exit_price": 87.78102514932664,
+          "exit_signal": 4609,
+          "exit_reason": "fast_down",
+          "context": "up",
+          "handoff_index": null,
+          "entry_score": -0.11598914857248462,
+          "exit_policy": 0,
+          "net_return": 0.009410091622978234,
+          "entry_date": "2025-06-02",
+          "exit_date": "2025-07-16"
+        }
+      ]
+    }
+  },
+  "limitation": "Descriptive analysis of frozen results. No post-evaluation changes or additional parameter selection."
+}

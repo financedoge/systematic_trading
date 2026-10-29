@@ -1,0 +1,18 @@
+[
+  {
+    "case": "broadtrend_c5d0",
+    "status": "succeeded",
+    "max_native_reference_usd": 0.0,
+    "limitation": "Accounting-only execution-open oracle. Independent native LEAN and app whole-share/cent-price accounting; not independent causal HMM inference or validation of fractional strategy execution.",
+    "receipt_sha256": "0095fe1e8fac56d911b8f08acf2b1b9f327f3e348a8fc5cda1e208144ab2d536",
+    "bundle_sha256": "22a441e4a801c32d72e647403a11f025ba8d11aacbed2f54e0f6c2c6820145af"
+  },
+  {
+    "case": "blend_c5d0",
+    "status": "succeeded",
+    "max_native_reference_usd": 0.0,
+    "limitation": "Accounting-only execution-open oracle. Independent native LEAN and app whole-share/cent-price accounting; not independent causal HMM inference or validation of fractional strategy execution.",
+    "receipt_sha256": "c8e8d81d397de2ba020b2043d6d185f287f6905ac4c73eba32be1c1fd17dc673",
+    "bundle_sha256": "ec3cfac8b2c7742c5c19ac4e7fe9b5e6d1ccac9f7b1d9d96b7adfe48ec92fd86"
+  }
+]

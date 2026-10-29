@@ -1,0 +1,30 @@
+{
+  "files": {
+    "asset-results.json": "42101c91b0cc0584c747c462a62c3c172db4901eea6a481649441c89caa0b3ae",
+    "chart-data.json.gz": "fc733270b2d8af3cf3676e51b16b6c8d7eb111c253fb8641d35ca36680ccebdd",
+    "equation-proof.png": "fa6b3a9dc3e2cc4fd77bca13a2115a924d49595adf92a9a52f4352eeacbe6a8a",
+    "equations.json": "5c7f515c03edb4315ec1134c214b05c65ef7c5637ea2f9b1598c67b7ebe31095",
+    "findings.html": "f320649b0e4c50f7800ef865f2ccb072b4ee4829874316d0e19545cea2ee69a2",
+    "fit-manifest.json": "7d26c23f05228b2bc9b16e17edd30d1ae517d9bd2c87173e53b633f945cec46a",
+    "fits.json": "4693d809011e212039ed47cf16201504906ec5a5f723ac43dfb11cfaa9367e65",
+    "GLD_early.png": "8dd94cc5cb4e801e3df7763b9371bd02090ea046aa9200633e0da0927b5dce1c",
+    "GLD_late.png": "0640ceae2eb28b25c2669f73a87beda613f783aac181fcc47efd0e59ebc1dacf",
+    "INDA_late.png": "9a7bc70cdb6039eb7da82de4aa5d5f75afcbf673d6c95887f0f7cd3281ae0703",
+    "index.html": "66091b160af813c80f0b729aaffe8934fee6adb577585ee24df436d4d4cdd977",
+    "MCHI_early.png": "61859a1a9887cc924b7425c6a36da6a597f944c1d1ce3d491f3af2d5d632d491",
+    "native-checks.json": "9918bc529e86f663a728885c046a29df024c11f6720bb1fcde4c4b64f84ba326",
+    "protocol.json": "c472d56e579a4981db65d727d80170bc4680a693966ab9792a991cad3951a30d",
+    "summary.json": "eaab57208856b50e81295efb072c0e578e9a0edbc5394ea21286f9723fd7b62b",
+    "TLT_late.png": "1d27d24a86f5679597ea21aadbeb99b85e2881a46f67d9db0936651c4d40f3ef",
+    "USO_late.png": "879475bdcc8c96bf8b6247b75acfb7c7f664655de8ac73e20dd8359ddbba704d",
+    "validation.json": "8f61eecac9c38cabbd640bedde107340debb6ee24ac3b407b56f892deca13a5b",
+    "weakest-cases.json": "dee72a0d65490e5a7c6ed6d01e812fce39df14766ddd8c8f931c616d2d3a2c51",
+    "WEAT_late.png": "13de582f628706dda8dfa7fa4afe8a26bd401eff876ca3f7cfe15d907d9985e2"
+  },
+  "report_code": {
+    "scripts/build_thesis_exit_report.py": "e9607518116b8bf7efe8284fbc2cfa1cf7e8fa9a59c3dd43013e8ef55b91cbed",
+    "scripts/assets/thesis-exit-script.js": "ce0a7408e9c02e2656a2b50d33ca7dfc6ef5c7f39e5f1c64c2c2aae7699aed19",
+    "tests/thesis_exit_controls.cjs": "02adea7d8526c71d4580546b1fbd5314aac03b11fa547b07f51b2a27343aa35c",
+    "scripts/validate_thesis_exit.py": "330458493f41f52e6b90177808667a49eb183fac5b924b8477a584788e749b6d"
+  }
+}

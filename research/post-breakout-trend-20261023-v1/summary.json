@@ -1,0 +1,1218 @@
+{
+  "families": [
+    {
+      "era": "late",
+      "variant": "trend_fit",
+      "cost_bp": 5,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0,
+      "guard_fraction": 1.0,
+      "improved_cagr": 0,
+      "impaired_cagr": 0,
+      "unchanged": 99,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "trend_fit",
+      "cost_bp": 5,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0,
+      "guard_fraction": 1.0,
+      "improved_cagr": 0,
+      "impaired_cagr": 0,
+      "unchanged": 99,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "trend_fit",
+      "cost_bp": 10,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0,
+      "guard_fraction": 1.0,
+      "improved_cagr": 0,
+      "impaired_cagr": 0,
+      "unchanged": 99,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "trend_fit",
+      "cost_bp": 10,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0,
+      "guard_fraction": 1.0,
+      "improved_cagr": 0,
+      "impaired_cagr": 0,
+      "unchanged": 99,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "trend_fit",
+      "cost_bp": 20,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0,
+      "guard_fraction": 1.0,
+      "improved_cagr": 0,
+      "impaired_cagr": 0,
+      "unchanged": 99,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "trend_fit",
+      "cost_bp": 20,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0,
+      "guard_fraction": 1.0,
+      "improved_cagr": 0,
+      "impaired_cagr": 0,
+      "unchanged": 99,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "shared_trend",
+      "cost_bp": 5,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": -0.02491891686071479,
+      "median_paired_sharpe_difference": -0.21092532605874093,
+      "median_sharpe_gain": -0.4010471689452745,
+      "lower_quartile_cagr_gain": -0.005373349928272986,
+      "guard_fraction": 0.37373737373737376,
+      "improved_cagr": 28,
+      "impaired_cagr": 70,
+      "unchanged": 1,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "shared_trend",
+      "cost_bp": 5,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": -0.01937525648224936,
+      "median_paired_sharpe_difference": -0.1653637225940635,
+      "median_sharpe_gain": -0.26982423427988766,
+      "lower_quartile_cagr_gain": -0.004707669843190709,
+      "guard_fraction": 0.3838383838383838,
+      "improved_cagr": 32,
+      "impaired_cagr": 65,
+      "unchanged": 2,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "shared_trend",
+      "cost_bp": 10,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": -0.02622386846359115,
+      "median_paired_sharpe_difference": -0.28422671809485,
+      "median_sharpe_gain": -0.41897778920088063,
+      "lower_quartile_cagr_gain": -0.006125109924924099,
+      "guard_fraction": 0.36363636363636365,
+      "improved_cagr": 27,
+      "impaired_cagr": 71,
+      "unchanged": 1,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "shared_trend",
+      "cost_bp": 10,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": -0.02087408284885217,
+      "median_paired_sharpe_difference": -0.19929630988868607,
+      "median_sharpe_gain": -0.2955105176229451,
+      "lower_quartile_cagr_gain": -0.005492651380954283,
+      "guard_fraction": 0.37373737373737376,
+      "improved_cagr": 32,
+      "impaired_cagr": 65,
+      "unchanged": 2,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "shared_trend",
+      "cost_bp": 20,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": -0.028826492158470995,
+      "median_paired_sharpe_difference": -0.3279748018263181,
+      "median_sharpe_gain": -0.46678049843311437,
+      "lower_quartile_cagr_gain": -0.009215990078366487,
+      "guard_fraction": 0.36363636363636365,
+      "improved_cagr": 26,
+      "impaired_cagr": 72,
+      "unchanged": 1,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "shared_trend",
+      "cost_bp": 20,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": -0.02265715190056583,
+      "median_paired_sharpe_difference": -0.25055462656697647,
+      "median_sharpe_gain": -0.3398505824361096,
+      "lower_quartile_cagr_gain": -0.007675515735828864,
+      "guard_fraction": 0.37373737373737376,
+      "improved_cagr": 31,
+      "impaired_cagr": 66,
+      "unchanged": 2,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "trend_fit",
+      "cost_bp": 5,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.046187343829475674,
+      "lower_quartile_cagr_gain": -0.008400725418052951,
+      "guard_fraction": 0.9767441860465116,
+      "improved_cagr": 0,
+      "impaired_cagr": 3,
+      "unchanged": 83,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "trend_fit",
+      "cost_bp": 5,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.026405882988734586,
+      "lower_quartile_cagr_gain": -0.0010875305734825147,
+      "guard_fraction": 0.9651162790697675,
+      "improved_cagr": 0,
+      "impaired_cagr": 3,
+      "unchanged": 83,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "trend_fit",
+      "cost_bp": 10,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.0330312748680088,
+      "lower_quartile_cagr_gain": -0.008226670243818512,
+      "guard_fraction": 0.9767441860465116,
+      "improved_cagr": 0,
+      "impaired_cagr": 3,
+      "unchanged": 83,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "trend_fit",
+      "cost_bp": 10,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.026009301002118596,
+      "lower_quartile_cagr_gain": -0.001979995843079535,
+      "guard_fraction": 0.9651162790697675,
+      "improved_cagr": 0,
+      "impaired_cagr": 3,
+      "unchanged": 83,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "trend_fit",
+      "cost_bp": 20,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.02852897925933645,
+      "lower_quartile_cagr_gain": -0.007801961658943257,
+      "guard_fraction": 0.9767441860465116,
+      "improved_cagr": 0,
+      "impaired_cagr": 3,
+      "unchanged": 83,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "trend_fit",
+      "cost_bp": 20,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.027325551529018832,
+      "lower_quartile_cagr_gain": -0.0037567415558976414,
+      "guard_fraction": 0.9651162790697675,
+      "improved_cagr": 0,
+      "impaired_cagr": 3,
+      "unchanged": 83,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "shared_trend",
+      "cost_bp": 5,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": -0.007144972945795192,
+      "median_paired_sharpe_difference": -0.05685239423938106,
+      "median_sharpe_gain": -0.07936274543547342,
+      "lower_quartile_cagr_gain": 0.001734318687254932,
+      "guard_fraction": 0.5348837209302325,
+      "improved_cagr": 35,
+      "impaired_cagr": 50,
+      "unchanged": 1,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "shared_trend",
+      "cost_bp": 5,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": -0.001855374497445328,
+      "median_paired_sharpe_difference": -5.551115123125783e-17,
+      "median_sharpe_gain": 0.022792374299306528,
+      "lower_quartile_cagr_gain": 0.007056747917610573,
+      "guard_fraction": 0.5697674418604651,
+      "improved_cagr": 37,
+      "impaired_cagr": 47,
+      "unchanged": 2,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "shared_trend",
+      "cost_bp": 10,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": -0.00742393706614819,
+      "median_paired_sharpe_difference": -0.07049186578094771,
+      "median_sharpe_gain": -0.08932988028955502,
+      "lower_quartile_cagr_gain": -0.00022663178173570886,
+      "guard_fraction": 0.5232558139534884,
+      "improved_cagr": 34,
+      "impaired_cagr": 51,
+      "unchanged": 1,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "shared_trend",
+      "cost_bp": 10,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": -0.0020420338246522896,
+      "median_paired_sharpe_difference": -0.0062873158756582,
+      "median_sharpe_gain": -0.011158769817382383,
+      "lower_quartile_cagr_gain": 0.005666570638116514,
+      "guard_fraction": 0.5581395348837209,
+      "improved_cagr": 37,
+      "impaired_cagr": 47,
+      "unchanged": 2,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "shared_trend",
+      "cost_bp": 20,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": -0.010190050949246077,
+      "median_paired_sharpe_difference": -0.1135884049697159,
+      "median_sharpe_gain": -0.09860469673368816,
+      "lower_quartile_cagr_gain": -0.0032653837265223806,
+      "guard_fraction": 0.47674418604651164,
+      "improved_cagr": 32,
+      "impaired_cagr": 53,
+      "unchanged": 1,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "shared_trend",
+      "cost_bp": 20,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": -0.0034041251117195026,
+      "median_paired_sharpe_difference": -0.027720242737723423,
+      "median_sharpe_gain": -0.05651678959960177,
+      "lower_quartile_cagr_gain": 0.006020428029930663,
+      "guard_fraction": 0.5232558139534884,
+      "improved_cagr": 36,
+      "impaired_cagr": 48,
+      "unchanged": 2,
+      "passed": false
+    }
+  ],
+  "portfolio_gates": [
+    {
+      "era": "late",
+      "scenario": "trend_fit_selection_dynamic",
+      "cost_bp": 5,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_selection_dynamic",
+      "cost_bp": 5,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_selection_dynamic",
+      "cost_bp": 10,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_selection_dynamic",
+      "cost_bp": 10,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_selection_dynamic",
+      "cost_bp": 20,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_selection_dynamic",
+      "cost_bp": 20,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_overlay_dynamic",
+      "cost_bp": 5,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_overlay_dynamic",
+      "cost_bp": 5,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_overlay_dynamic",
+      "cost_bp": 10,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_overlay_dynamic",
+      "cost_bp": 10,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_overlay_dynamic",
+      "cost_bp": 20,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_overlay_dynamic",
+      "cost_bp": 20,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_selection_monthly",
+      "cost_bp": 5,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_selection_monthly",
+      "cost_bp": 5,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_selection_monthly",
+      "cost_bp": 10,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_selection_monthly",
+      "cost_bp": 10,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_selection_monthly",
+      "cost_bp": 20,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_selection_monthly",
+      "cost_bp": 20,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_overlay_monthly",
+      "cost_bp": 5,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_overlay_monthly",
+      "cost_bp": 5,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_overlay_monthly",
+      "cost_bp": 10,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_overlay_monthly",
+      "cost_bp": 10,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_overlay_monthly",
+      "cost_bp": 20,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "trend_fit_overlay_monthly",
+      "cost_bp": 20,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "early",
+      "scenario": "trend_fit_selection_dynamic",
+      "cost_bp": 5,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "momentum_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "era": "early",
+      "scenario": "trend_fit_selection_dynamic",
+      "cost_bp": 5,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "momentum_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "era": "early",
+      "scenario": "trend_fit_selection_dynamic",
+      "cost_bp": 10,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "momentum_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "early",
+      "scenario": "trend_fit_selection_dynamic",
+      "cost_bp": 10,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "momentum_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "era": "early",
+      "scenario": "trend_fit_selection_dynamic",
+      "cost_bp": 20,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "momentum_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "early",
+      "scenario": "trend_fit_selection_dynamic",
+      "cost_bp": 20,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "momentum_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "era": "early",
+      "scenario": "trend_fit_selection_monthly",
+      "cost_bp": 5,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "momentum_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "early",
+      "scenario": "trend_fit_selection_monthly",
+      "cost_bp": 5,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "momentum_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "early",
+      "scenario": "trend_fit_selection_monthly",
+      "cost_bp": 10,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "momentum_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "early",
+      "scenario": "trend_fit_selection_monthly",
+      "cost_bp": 10,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "momentum_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "early",
+      "scenario": "trend_fit_selection_monthly",
+      "cost_bp": 20,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "momentum_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "early",
+      "scenario": "trend_fit_selection_monthly",
+      "cost_bp": 20,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "momentum_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": false
+    }
+  ]
+}

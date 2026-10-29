@@ -12,6 +12,9 @@ def _allocation_note(detail):
     """
     if not detail or detail.get("allocation_ready"):
         return None, None
+    if detail.get("current_signal_available") is False:
+        return ("Historical only · current signal calculation is not implemented; new prices alone cannot extend this report.",
+                "Historical only; current signal unavailable")
     if detail.get("calculation_status") != "Current":
         return ("Catching up · allocation unavailable until all missed calculations are complete.",
                 "Catching up; allocation unavailable")

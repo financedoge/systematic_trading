@@ -1,0 +1,157 @@
+{
+  "late": {
+    "symbol": "TLT",
+    "era": "late",
+    "arm": "guarded",
+    "cost_bp": 5,
+    "delay": 0,
+    "cagr": -0.06100559396140115,
+    "sharpe": -0.6190360181855094,
+    "maxdd": -0.24472626502923067,
+    "calmar": -0.24928094233822634,
+    "sessions": 951,
+    "ann_vol": 0.09446588074661336,
+    "cumulative": -0.2114388299327632,
+    "correlation": 0.652565925763506,
+    "beta": 0.43644669792456153,
+    "alpha_annual": -0.055210193265666695,
+    "alpha_t_hac": -1.5107187494696788,
+    "down_capture": 0.4697818495368505,
+    "up_capture": 0.40641358794718196,
+    "ic5": -0.06453245190506063,
+    "closed_trades": 23,
+    "wins": 6,
+    "exposure": 0.45951629863301785,
+    "regimes": {
+      "up": {
+        "sessions": 275,
+        "exposure": 0.5127272727272727,
+        "strategy_mean": -0.00042666251912413605,
+        "asset_mean": -0.0007009280538128851,
+        "closed": 4,
+        "losing": 3,
+        "mean_trade": -0.015032408654616303
+      },
+      "down": {
+        "sessions": 310,
+        "exposure": 0.4645161290322581,
+        "strategy_mean": 0.00025685642830926254,
+        "asset_mean": 0.0005955688559515481,
+        "closed": 9,
+        "losing": 6,
+        "mean_trade": 0.001842057663935205
+      },
+      "uncertain": {
+        "sessions": 366,
+        "exposure": 0.41530054644808745,
+        "strategy_mean": -0.0004999380141932398,
+        "asset_mean": -5.4986038271347576e-05,
+        "closed": 10,
+        "losing": 8,
+        "mean_trade": -0.01863692798617641
+      }
+    },
+    "yearly": {
+      "2023": -0.004553117453794386,
+      "2024": -0.13062333969691198,
+      "2025": -0.04802649781750279,
+      "2026": -0.042840178058867084
+    },
+    "guard": {
+      "enabled": false
+    },
+    "enabled": false,
+    "blocked_sessions": 0,
+    "turnover_annual": 12.44895840364301,
+    "cost_bp_annual": 62.24479201821508,
+    "adaptive_incumbent_cumulative": -0.17657343636445688,
+    "adaptive_incumbent_sharpe": -0.5755754315783669,
+    "incumbent_dependence": {
+      "correlation": 0.579740579256987,
+      "beta": 0.342320989043681,
+      "alpha_annual": -0.04544031604816266,
+      "alpha_t_hac": -1.3263211366532557,
+      "down_capture": 0.3604797166592726,
+      "up_capture": 0.30824488217008017
+    },
+    "buyhold": -0.08838584129827132
+  },
+  "early": {
+    "symbol": "ITA",
+    "era": "early",
+    "arm": "guarded",
+    "cost_bp": 5,
+    "delay": 0,
+    "cagr": -0.12985771582195282,
+    "sharpe": -1.2068352670994695,
+    "maxdd": -0.3932629732102707,
+    "calmar": -0.33020580290563034,
+    "sessions": 756,
+    "ann_vol": 0.11018998561601336,
+    "cumulative": -0.3411738624751328,
+    "correlation": 0.3363396204643161,
+    "beta": 0.11246725106914804,
+    "alpha_annual": -0.14057907511086742,
+    "alpha_t_hac": -2.39343929881776,
+    "down_capture": 0.26097191037505574,
+    "up_capture": 0.17578735950010957,
+    "ic5": -0.14895108327745746,
+    "closed_trades": 13,
+    "wins": 2,
+    "exposure": 0.328042328042328,
+    "regimes": {
+      "up": {
+        "sessions": 324,
+        "exposure": 0.44753086419753085,
+        "strategy_mean": -0.000244292359259943,
+        "asset_mean": 5.171747742890556e-06,
+        "closed": 4,
+        "losing": 4,
+        "mean_trade": -0.02868397842402598
+      },
+      "down": {
+        "sessions": 216,
+        "exposure": 0.16203703703703703,
+        "strategy_mean": -0.00032137375715211907,
+        "asset_mean": 0.002058004281973348,
+        "closed": 6,
+        "losing": 5,
+        "mean_trade": -0.03215355929099908
+      },
+      "uncertain": {
+        "sessions": 216,
+        "exposure": 0.3148148148148148,
+        "strategy_mean": -0.001159148269549469,
+        "asset_mean": -0.0011274746446484378,
+        "closed": 3,
+        "losing": 2,
+        "mean_trade": -0.04201238361364464
+      }
+    },
+    "yearly": {
+      "2020": -0.1406817189174011,
+      "2021": -0.07601414773267379,
+      "2022": -0.17024200057491035
+    },
+    "guard": {
+      "enabled": true,
+      "count": 2,
+      "advance": 1.0
+    },
+    "enabled": true,
+    "blocked_sessions": 100,
+    "turnover_annual": 8.99382454400502,
+    "cost_bp_annual": 44.969122720025105,
+    "adaptive_incumbent_cumulative": -0.2322070953219999,
+    "adaptive_incumbent_sharpe": -0.39412423213188313,
+    "incumbent_dependence": {
+      "correlation": 0.543710605876741,
+      "beta": 0.2995149045777147,
+      "alpha_annual": -0.09177899608225462,
+      "alpha_t_hac": -1.0062341606186842,
+      "down_capture": 0.47797220847468214,
+      "up_capture": 0.4192440719519396
+    },
+    "buyhold": 0.03456623654293978
+  }
+}

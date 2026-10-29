@@ -1,0 +1,1868 @@
+{
+  "families": [
+    {
+      "era": "late",
+      "variant": "exit_fit",
+      "cost_bp": 5,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": -0.0007632001480856743,
+      "guard_fraction": 0.98989898989899,
+      "improved_cagr": 1,
+      "impaired_cagr": 2,
+      "unchanged": 96,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "exit_fit",
+      "cost_bp": 5,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": -0.0007318879491771124,
+      "guard_fraction": 0.98989898989899,
+      "improved_cagr": 1,
+      "impaired_cagr": 2,
+      "unchanged": 96,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "exit_fit",
+      "cost_bp": 10,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": -0.0010264890804734805,
+      "guard_fraction": 0.98989898989899,
+      "improved_cagr": 1,
+      "impaired_cagr": 2,
+      "unchanged": 96,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "exit_fit",
+      "cost_bp": 10,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": -0.000834159752819863,
+      "guard_fraction": 0.98989898989899,
+      "improved_cagr": 1,
+      "impaired_cagr": 2,
+      "unchanged": 96,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "exit_fit",
+      "cost_bp": 20,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": -0.0015522306903925642,
+      "guard_fraction": 0.98989898989899,
+      "improved_cagr": 1,
+      "impaired_cagr": 2,
+      "unchanged": 96,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "exit_fit",
+      "cost_bp": 20,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": -0.002019066801192182,
+      "guard_fraction": 0.98989898989899,
+      "improved_cagr": 1,
+      "impaired_cagr": 2,
+      "unchanged": 96,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "trend_fit",
+      "cost_bp": 5,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": -5.551115123125783e-17,
+      "guard_fraction": 0.98989898989899,
+      "improved_cagr": 1,
+      "impaired_cagr": 1,
+      "unchanged": 97,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "trend_fit",
+      "cost_bp": 5,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": -0.001250884290729004,
+      "guard_fraction": 0.98989898989899,
+      "improved_cagr": 0,
+      "impaired_cagr": 2,
+      "unchanged": 97,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "trend_fit",
+      "cost_bp": 10,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0,
+      "guard_fraction": 0.98989898989899,
+      "improved_cagr": 1,
+      "impaired_cagr": 1,
+      "unchanged": 97,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "trend_fit",
+      "cost_bp": 10,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": -0.0013152370414137304,
+      "guard_fraction": 0.98989898989899,
+      "improved_cagr": 0,
+      "impaired_cagr": 2,
+      "unchanged": 97,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "trend_fit",
+      "cost_bp": 20,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0,
+      "guard_fraction": 0.98989898989899,
+      "improved_cagr": 1,
+      "impaired_cagr": 1,
+      "unchanged": 97,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "trend_fit",
+      "cost_bp": 20,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": -0.0014434977570689234,
+      "guard_fraction": 0.98989898989899,
+      "improved_cagr": 0,
+      "impaired_cagr": 2,
+      "unchanged": 97,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "range_fit",
+      "cost_bp": 5,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.023668603792758536,
+      "lower_quartile_cagr_gain": -0.0022545281160413766,
+      "guard_fraction": 0.9797979797979798,
+      "improved_cagr": 0,
+      "impaired_cagr": 2,
+      "unchanged": 97,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "range_fit",
+      "cost_bp": 5,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.029621106337465286,
+      "lower_quartile_cagr_gain": -0.001250884290729004,
+      "guard_fraction": 0.9797979797979798,
+      "improved_cagr": 0,
+      "impaired_cagr": 2,
+      "unchanged": 97,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "range_fit",
+      "cost_bp": 10,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.0068701056612604505,
+      "lower_quartile_cagr_gain": -0.0021866367733145986,
+      "guard_fraction": 0.9797979797979798,
+      "improved_cagr": 0,
+      "impaired_cagr": 2,
+      "unchanged": 97,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "range_fit",
+      "cost_bp": 10,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.022666776717584936,
+      "lower_quartile_cagr_gain": -0.0013152370414137304,
+      "guard_fraction": 0.9797979797979798,
+      "improved_cagr": 0,
+      "impaired_cagr": 2,
+      "unchanged": 97,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "range_fit",
+      "cost_bp": 20,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.010287781123255957,
+      "lower_quartile_cagr_gain": -0.002051298390740086,
+      "guard_fraction": 0.9797979797979798,
+      "improved_cagr": 0,
+      "impaired_cagr": 2,
+      "unchanged": 97,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "range_fit",
+      "cost_bp": 20,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.009109612143935852,
+      "lower_quartile_cagr_gain": -0.002019066801192182,
+      "guard_fraction": 0.9797979797979798,
+      "improved_cagr": 0,
+      "impaired_cagr": 2,
+      "unchanged": 97,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "joint_fit",
+      "cost_bp": 5,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.023668603792758536,
+      "lower_quartile_cagr_gain": -0.003313352277691528,
+      "guard_fraction": 0.9494949494949495,
+      "improved_cagr": 3,
+      "impaired_cagr": 7,
+      "unchanged": 89,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "joint_fit",
+      "cost_bp": 5,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.029621106337465286,
+      "lower_quartile_cagr_gain": -0.003920512809128085,
+      "guard_fraction": 0.9494949494949495,
+      "improved_cagr": 2,
+      "impaired_cagr": 8,
+      "unchanged": 89,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "joint_fit",
+      "cost_bp": 10,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.0068701056612604505,
+      "lower_quartile_cagr_gain": -0.0036608229976850537,
+      "guard_fraction": 0.9494949494949495,
+      "improved_cagr": 3,
+      "impaired_cagr": 7,
+      "unchanged": 89,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "joint_fit",
+      "cost_bp": 10,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.022666776717584936,
+      "lower_quartile_cagr_gain": -0.004048778050751156,
+      "guard_fraction": 0.9494949494949495,
+      "improved_cagr": 2,
+      "impaired_cagr": 8,
+      "unchanged": 89,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "joint_fit",
+      "cost_bp": 20,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.010287781123255957,
+      "lower_quartile_cagr_gain": -0.0037876466584362833,
+      "guard_fraction": 0.9494949494949495,
+      "improved_cagr": 3,
+      "impaired_cagr": 7,
+      "unchanged": 89,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "joint_fit",
+      "cost_bp": 20,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.009109612143935852,
+      "lower_quartile_cagr_gain": -0.004975799288548799,
+      "guard_fraction": 0.9393939393939394,
+      "improved_cagr": 2,
+      "impaired_cagr": 8,
+      "unchanged": 89,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "first_lower_control",
+      "cost_bp": 5,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": -0.02302636301035821,
+      "median_paired_sharpe_difference": -0.20861311018709466,
+      "median_sharpe_gain": -0.2902041020390398,
+      "lower_quartile_cagr_gain": -0.005930620707580103,
+      "guard_fraction": 0.36363636363636365,
+      "improved_cagr": 23,
+      "impaired_cagr": 74,
+      "unchanged": 2,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "first_lower_control",
+      "cost_bp": 5,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": -0.017327986155612818,
+      "median_paired_sharpe_difference": -0.16099513309833777,
+      "median_sharpe_gain": -0.2240350028665826,
+      "lower_quartile_cagr_gain": -0.0031034422776690107,
+      "guard_fraction": 0.3939393939393939,
+      "improved_cagr": 28,
+      "impaired_cagr": 69,
+      "unchanged": 2,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "first_lower_control",
+      "cost_bp": 10,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": -0.023645033630314227,
+      "median_paired_sharpe_difference": -0.28069952945177185,
+      "median_sharpe_gain": -0.30929169324678296,
+      "lower_quartile_cagr_gain": -0.008464462009513174,
+      "guard_fraction": 0.36363636363636365,
+      "improved_cagr": 23,
+      "impaired_cagr": 74,
+      "unchanged": 2,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "first_lower_control",
+      "cost_bp": 10,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": -0.02022970613168873,
+      "median_paired_sharpe_difference": -0.19485410967573508,
+      "median_sharpe_gain": -0.25724268084239266,
+      "lower_quartile_cagr_gain": -0.004346839624333132,
+      "guard_fraction": 0.3939393939393939,
+      "improved_cagr": 28,
+      "impaired_cagr": 69,
+      "unchanged": 2,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "first_lower_control",
+      "cost_bp": 20,
+      "delay": 0,
+      "cases": 99,
+      "median_cagr_difference": -0.024873224698718333,
+      "median_paired_sharpe_difference": -0.3554916170429001,
+      "median_sharpe_gain": -0.36496830115210777,
+      "lower_quartile_cagr_gain": -0.011305578727566434,
+      "guard_fraction": 0.3434343434343434,
+      "improved_cagr": 22,
+      "impaired_cagr": 75,
+      "unchanged": 2,
+      "passed": false
+    },
+    {
+      "era": "late",
+      "variant": "first_lower_control",
+      "cost_bp": 20,
+      "delay": 1,
+      "cases": 99,
+      "median_cagr_difference": -0.022856359544549787,
+      "median_paired_sharpe_difference": -0.30952685034959254,
+      "median_sharpe_gain": -0.3244800174598407,
+      "lower_quartile_cagr_gain": -0.00654441373486897,
+      "guard_fraction": 0.3838383838383838,
+      "improved_cagr": 28,
+      "impaired_cagr": 69,
+      "unchanged": 2,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "exit_fit",
+      "cost_bp": 5,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.025396795982016468,
+      "lower_quartile_cagr_gain": -0.008400725418052951,
+      "guard_fraction": 0.9534883720930233,
+      "improved_cagr": 2,
+      "impaired_cagr": 3,
+      "unchanged": 81,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "exit_fit",
+      "cost_bp": 5,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0,
+      "guard_fraction": 0.9651162790697675,
+      "improved_cagr": 1,
+      "impaired_cagr": 3,
+      "unchanged": 82,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "exit_fit",
+      "cost_bp": 10,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.017356275934774096,
+      "lower_quartile_cagr_gain": -0.008226670243818512,
+      "guard_fraction": 0.9534883720930233,
+      "improved_cagr": 2,
+      "impaired_cagr": 3,
+      "unchanged": 81,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "exit_fit",
+      "cost_bp": 10,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0,
+      "guard_fraction": 0.9651162790697675,
+      "improved_cagr": 1,
+      "impaired_cagr": 3,
+      "unchanged": 82,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "exit_fit",
+      "cost_bp": 20,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.020664598063680206,
+      "lower_quartile_cagr_gain": -0.007801961658943257,
+      "guard_fraction": 0.9534883720930233,
+      "improved_cagr": 2,
+      "impaired_cagr": 3,
+      "unchanged": 81,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "exit_fit",
+      "cost_bp": 20,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0,
+      "guard_fraction": 0.9651162790697675,
+      "improved_cagr": 1,
+      "impaired_cagr": 3,
+      "unchanged": 82,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "trend_fit",
+      "cost_bp": 5,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.014515216735377284,
+      "lower_quartile_cagr_gain": -8.326672684688674e-17,
+      "guard_fraction": 1.0,
+      "improved_cagr": 1,
+      "impaired_cagr": 0,
+      "unchanged": 85,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "trend_fit",
+      "cost_bp": 5,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0029818663035797444,
+      "guard_fraction": 1.0,
+      "improved_cagr": 1,
+      "impaired_cagr": 0,
+      "unchanged": 85,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "trend_fit",
+      "cost_bp": 10,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.013629067577001108,
+      "lower_quartile_cagr_gain": 8.326672684688674e-17,
+      "guard_fraction": 1.0,
+      "improved_cagr": 1,
+      "impaired_cagr": 0,
+      "unchanged": 85,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "trend_fit",
+      "cost_bp": 10,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0029785177823247744,
+      "guard_fraction": 1.0,
+      "improved_cagr": 1,
+      "impaired_cagr": 0,
+      "unchanged": 85,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "trend_fit",
+      "cost_bp": 20,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.026945922935963817,
+      "lower_quartile_cagr_gain": 0.0,
+      "guard_fraction": 1.0,
+      "improved_cagr": 1,
+      "impaired_cagr": 0,
+      "unchanged": 85,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "trend_fit",
+      "cost_bp": 20,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0029718320461675773,
+      "guard_fraction": 1.0,
+      "improved_cagr": 1,
+      "impaired_cagr": 0,
+      "unchanged": 85,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "range_fit",
+      "cost_bp": 5,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0,
+      "guard_fraction": 1.0,
+      "improved_cagr": 1,
+      "impaired_cagr": 0,
+      "unchanged": 85,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "range_fit",
+      "cost_bp": 5,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0029818663035797444,
+      "guard_fraction": 1.0,
+      "improved_cagr": 1,
+      "impaired_cagr": 0,
+      "unchanged": 85,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "range_fit",
+      "cost_bp": 10,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0,
+      "guard_fraction": 1.0,
+      "improved_cagr": 1,
+      "impaired_cagr": 0,
+      "unchanged": 85,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "range_fit",
+      "cost_bp": 10,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0029785177823247744,
+      "guard_fraction": 1.0,
+      "improved_cagr": 1,
+      "impaired_cagr": 0,
+      "unchanged": 85,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "range_fit",
+      "cost_bp": 20,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0,
+      "guard_fraction": 1.0,
+      "improved_cagr": 1,
+      "impaired_cagr": 0,
+      "unchanged": 85,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "range_fit",
+      "cost_bp": 20,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": 0.0029617601753437472,
+      "guard_fraction": 1.0,
+      "improved_cagr": 1,
+      "impaired_cagr": 0,
+      "unchanged": 85,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "joint_fit",
+      "cost_bp": 5,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": -0.003776162520782167,
+      "guard_fraction": 0.9418604651162791,
+      "improved_cagr": 4,
+      "impaired_cagr": 4,
+      "unchanged": 78,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "joint_fit",
+      "cost_bp": 5,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.009208717958598484,
+      "lower_quartile_cagr_gain": 0.0060316009424946915,
+      "guard_fraction": 0.9651162790697675,
+      "improved_cagr": 4,
+      "impaired_cagr": 3,
+      "unchanged": 79,
+      "passed": true
+    },
+    {
+      "era": "early",
+      "variant": "joint_fit",
+      "cost_bp": 10,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.0,
+      "lower_quartile_cagr_gain": -0.0042204536011825056,
+      "guard_fraction": 0.9418604651162791,
+      "improved_cagr": 5,
+      "impaired_cagr": 3,
+      "unchanged": 78,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "joint_fit",
+      "cost_bp": 10,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.010651067484756166,
+      "lower_quartile_cagr_gain": 0.0057802277656013035,
+      "guard_fraction": 0.9651162790697675,
+      "improved_cagr": 4,
+      "impaired_cagr": 3,
+      "unchanged": 79,
+      "passed": true
+    },
+    {
+      "era": "early",
+      "variant": "joint_fit",
+      "cost_bp": 20,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": -0.0023543528835659466,
+      "lower_quartile_cagr_gain": -0.005027644305233475,
+      "guard_fraction": 0.9418604651162791,
+      "improved_cagr": 5,
+      "impaired_cagr": 3,
+      "unchanged": 78,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "joint_fit",
+      "cost_bp": 20,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": 0.0,
+      "median_paired_sharpe_difference": 0.0,
+      "median_sharpe_gain": 0.009479086540384762,
+      "lower_quartile_cagr_gain": 0.004781898935320994,
+      "guard_fraction": 0.9651162790697675,
+      "improved_cagr": 4,
+      "impaired_cagr": 3,
+      "unchanged": 79,
+      "passed": true
+    },
+    {
+      "era": "early",
+      "variant": "first_lower_control",
+      "cost_bp": 5,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": -0.011636590230247434,
+      "median_paired_sharpe_difference": -0.08408554389189082,
+      "median_sharpe_gain": -0.17184530220259264,
+      "lower_quartile_cagr_gain": -0.008620204303162265,
+      "guard_fraction": 0.46511627906976744,
+      "improved_cagr": 29,
+      "impaired_cagr": 56,
+      "unchanged": 1,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "first_lower_control",
+      "cost_bp": 5,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": -0.001565826219459221,
+      "median_paired_sharpe_difference": 0.08613543672012794,
+      "median_sharpe_gain": 0.10743828517045917,
+      "lower_quartile_cagr_gain": 0.007940470203970845,
+      "guard_fraction": 0.5813953488372093,
+      "improved_cagr": 40,
+      "impaired_cagr": 45,
+      "unchanged": 1,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "first_lower_control",
+      "cost_bp": 10,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": -0.012640257079668538,
+      "median_paired_sharpe_difference": -0.0979092363393757,
+      "median_sharpe_gain": -0.17685142913005708,
+      "lower_quartile_cagr_gain": -0.0092200670850969,
+      "guard_fraction": 0.46511627906976744,
+      "improved_cagr": 27,
+      "impaired_cagr": 58,
+      "unchanged": 1,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "first_lower_control",
+      "cost_bp": 10,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": -0.0027945280677936224,
+      "median_paired_sharpe_difference": 0.05049247487923667,
+      "median_sharpe_gain": 0.07923355917245561,
+      "lower_quartile_cagr_gain": 0.004619559211970464,
+      "guard_fraction": 0.5813953488372093,
+      "improved_cagr": 38,
+      "impaired_cagr": 47,
+      "unchanged": 1,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "first_lower_control",
+      "cost_bp": 20,
+      "delay": 0,
+      "cases": 86,
+      "median_cagr_difference": -0.013749959239580611,
+      "median_paired_sharpe_difference": -0.17870418758379294,
+      "median_sharpe_gain": -0.20978950130020782,
+      "lower_quartile_cagr_gain": -0.012987787084419805,
+      "guard_fraction": 0.43023255813953487,
+      "improved_cagr": 26,
+      "impaired_cagr": 59,
+      "unchanged": 1,
+      "passed": false
+    },
+    {
+      "era": "early",
+      "variant": "first_lower_control",
+      "cost_bp": 20,
+      "delay": 1,
+      "cases": 86,
+      "median_cagr_difference": -0.004657739885194467,
+      "median_paired_sharpe_difference": 0.018325767624057517,
+      "median_sharpe_gain": -0.007477994174777486,
+      "lower_quartile_cagr_gain": 0.0021328855744841,
+      "guard_fraction": 0.5348837209302325,
+      "improved_cagr": 37,
+      "impaired_cagr": 48,
+      "unchanged": 1,
+      "passed": false
+    }
+  ],
+  "portfolio_gates": [
+    {
+      "era": "late",
+      "scenario": "joint_fit_selection_dynamic",
+      "cost_bp": 5,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_selection_dynamic",
+      "cost_bp": 5,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_selection_dynamic",
+      "cost_bp": 10,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_selection_dynamic",
+      "cost_bp": 10,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_selection_dynamic",
+      "cost_bp": 20,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": true,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_selection_dynamic",
+      "cost_bp": 20,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": false,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_overlay_dynamic",
+      "cost_bp": 5,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_overlay_dynamic",
+      "cost_bp": 5,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_overlay_dynamic",
+      "cost_bp": 10,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_overlay_dynamic",
+      "cost_bp": 10,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_overlay_dynamic",
+      "cost_bp": 20,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_overlay_dynamic",
+      "cost_bp": 20,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_selection_monthly",
+      "cost_bp": 5,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_selection_monthly",
+      "cost_bp": 5,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_selection_monthly",
+      "cost_bp": 10,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_selection_monthly",
+      "cost_bp": 10,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_selection_monthly",
+      "cost_bp": 20,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_selection_monthly",
+      "cost_bp": 20,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_overlay_monthly",
+      "cost_bp": 5,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_overlay_monthly",
+      "cost_bp": 5,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_overlay_monthly",
+      "cost_bp": 10,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_overlay_monthly",
+      "cost_bp": 10,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_overlay_monthly",
+      "cost_bp": 20,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "late",
+      "scenario": "joint_fit_overlay_monthly",
+      "cost_bp": 20,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_overlay_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "FR25",
+          "sharpe": false,
+          "cagr": false,
+          "drawdown": true,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "early",
+      "scenario": "joint_fit_selection_dynamic",
+      "cost_bp": 5,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "momentum_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "era": "early",
+      "scenario": "joint_fit_selection_dynamic",
+      "cost_bp": 5,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "momentum_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "era": "early",
+      "scenario": "joint_fit_selection_dynamic",
+      "cost_bp": 10,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "momentum_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "era": "early",
+      "scenario": "joint_fit_selection_dynamic",
+      "cost_bp": 10,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "momentum_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "era": "early",
+      "scenario": "joint_fit_selection_dynamic",
+      "cost_bp": 20,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "momentum_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "era": "early",
+      "scenario": "joint_fit_selection_dynamic",
+      "cost_bp": 20,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        },
+        {
+          "reference": "momentum_dynamic",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "era": "early",
+      "scenario": "joint_fit_selection_monthly",
+      "cost_bp": 5,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "momentum_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "early",
+      "scenario": "joint_fit_selection_monthly",
+      "cost_bp": 5,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "momentum_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "early",
+      "scenario": "joint_fit_selection_monthly",
+      "cost_bp": 10,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "momentum_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "early",
+      "scenario": "joint_fit_selection_monthly",
+      "cost_bp": 10,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "momentum_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "early",
+      "scenario": "joint_fit_selection_monthly",
+      "cost_bp": 20,
+      "delay": 0,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "momentum_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "era": "early",
+      "scenario": "joint_fit_selection_monthly",
+      "cost_bp": 20,
+      "delay": 1,
+      "comparisons": [
+        {
+          "reference": "baseline_selection_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": false,
+          "passed": false
+        },
+        {
+          "reference": "momentum_monthly",
+          "sharpe": true,
+          "cagr": true,
+          "drawdown": true,
+          "passed": true
+        }
+      ],
+      "passed": false
+    }
+  ],
+  "component_distributions": [
+    {
+      "era": "late",
+      "domain": "short",
+      "range": {
+        "legacy": 47,
+        "flat_21": 2,
+        "rising_21": 1,
+        "rising_63": 1
+      },
+      "trend": {
+        "none": 47,
+        "avoid_down": 4
+      },
+      "exit": {
+        "legacy": 47,
+        "breakeven": 4
+      }
+    },
+    {
+      "era": "late",
+      "domain": "long",
+      "range": {
+        "legacy": 50,
+        "flat_126": 1
+      },
+      "trend": {
+        "none": 48,
+        "avoid_down": 3
+      },
+      "exit": {
+        "legacy": 50,
+        "breakeven": 1
+      }
+    },
+    {
+      "era": "early",
+      "domain": "short",
+      "range": {
+        "legacy": 47,
+        "rising_21": 1,
+        "flat_21": 1
+      },
+      "trend": {
+        "none": 46,
+        "avoid_down": 2,
+        "up_only": 1
+      },
+      "exit": {
+        "legacy": 45,
+        "atr_1": 1,
+        "breakeven": 2,
+        "atr_2": 1
+      }
+    },
+    {
+      "era": "early",
+      "domain": "long",
+      "range": {
+        "legacy": 48,
+        "flat_126": 1
+      },
+      "trend": {
+        "none": 48,
+        "avoid_down": 1
+      },
+      "exit": {
+        "legacy": 48,
+        "breakeven": 1
+      }
+    }
+  ],
+  "total_cases": 7344,
+  "portfolio_cases": 102
+}

@@ -1,0 +1,23 @@
+{
+  "completed_local_date": "2026-10-28",
+  "timezone": "Asia/Shanghai",
+  "focused_python_tests": 41,
+  "offline_chart_combinations": 306,
+  "offline_controls": "All arms and ETFs; exact OHLC dates; two-click zoom; empty intervals; interval NAV; weakest-era and incident shortcuts.",
+  "native_accounting_cases": 4,
+  "native_max_dollar_error": 0,
+  "visually_inspected": [
+    "equation-proof.png",
+    "TLT_late.png",
+    "IWM_early.png",
+    "CPER-incident.png",
+    "IWM-incident.png"
+  ],
+  "browser_layout_certified": false,
+  "native_limit": "Synthetic ordered-fill accounting, not market execution or inference validation",
+  "reference_control_cases": 612,
+  "disabled_review_control_cases": 612,
+  "main_cases": 1836,
+  "diagnostic_cases": 612,
+  "recovery_gate_audit": "Every recorded primary recovery signal independently reproduced from saved charts"
+}

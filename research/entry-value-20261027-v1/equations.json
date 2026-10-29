@@ -1,0 +1,14 @@
+[
+  "x_t=b^{fast}_t/\\sigma,\\quad f_D=N(-a,v),\\quad f_R=N(0,v_R),\\quad f_U=N(a,v)",
+  "0.2\\leq a\\leq2,\\quad0.01\\leq v\\leq4,\\quad0.000025\\leq v_R\\leq0.01,\\quad\\log\\frac{f_U(x)}{f_D(x)}=\\frac{2ax}{v}",
+  "p_t(s)=\\frac{f_s(x_t)\\sum_jp_{t-1}(j)A_{js}}{\\sum_k f_k(x_t)\\sum_jp_{t-1}(j)A_{jk}},\\quad 0.65\\leq A_{ss}\\leq0.98",
+  "H=\\operatorname{clip}\\left(\\operatorname{round}\\left(1/(1-A^{prefix}_{UU})\\right),5,21\\right)",
+  "R_i=\\log(O_{i+H+1}/O_{i+1}),\\quad D_i=\\max\\left(0,-\\min_{P\\in\\mathcal{P}_i}\\log(P/O_{i+1})\\right)",
+  "\\mathcal{P}_i=\\{O_{i+1},\\ldots,O_{i+H+1},C_{i+1},\\ldots,C_{i+H}\\},\\quad Y_i=(R_i,D_i)/(\\sigma\\sqrt{H})",
+  "\\phi_t=(1,p_U-p_D,p_R,b_f/\\sigma,b_s/\\sigma,(\\log C-\\ell_f)/\\sigma,(\\log C-\\ell_s)/\\sigma,p^s_U-p^s_D,p_Up^s_D,\\log(V/\\overline{V}))",
+  "\\overline{V}_t=\\overline{V}_{t-1}+\\frac{2}{64}(V_t-\\overline{V}_{t-1}),\\quad \\rho=2^{-1/L},\\quad L\\in\\{63,252\\}",
+  "i=t-H-1:\\quad S_t=\\rho S_{t-1}+\\phi_i\\phi_i^T/H,\\quad B_t=\\rho B_{t-1}+\\phi_iY_i/H",
+  "\\widehat{Y}_t=\\phi_t^T(4I+S_t)^{-1}B_t,\\quad (\\widehat{R}_t,\\widehat{D}_t)=\\sigma\\sqrt{H}\\,\\widehat{Y}_t,\\quad\\widehat{D}_t\\leftarrow\\max(0,\\widehat{D}_t)",
+  "U_t=\\widehat{R}_t-\\log\\left(\\frac{1+f}{1-f}\\right)-0.25\\widehat{D}_t,\\quad \\mathrm{enter}_C=\\mathrm{eligible}_B\\ \\mathrm{and}\\ U_t>0",
+  "\\mathrm{validation\\ loss}=\\frac{\\operatorname{MSE}(\\widehat{R},R)+0.5\\operatorname{MSE}(\\widehat{D},D)}{\\sigma_{prefix}^2H}"
+]

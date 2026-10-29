@@ -1,0 +1,25 @@
+{
+  "python_tests_unique": 70,
+  "python_status": "passed:69-test combined suite plus one added wrong-symbol test;5 monitoring tests rerun after identity validation",
+  "chart_combinations": 102,
+  "date_hover_zoom_empty_interval": "passed",
+  "static_visual_inspection": [
+    "portfolio.png",
+    "TLT_late.png"
+  ],
+  "native_accounting_fixtures": 2,
+  "native_max_reference_difference_usd": 0.0,
+  "portfolio_cases": 24,
+  "source_reproduction": "51 ETF signal/NAV histories and full-pool portfolio exact",
+  "browser_layout_certification": false,
+  "served_report_verified": true,
+  "resource_guard_preserved": true,
+  "served_verification_at": "2026-10-29T12:27:00.450605+00:00",
+  "atomic_document_versions_verified": true,
+  "allocation_unchanged": true,
+  "git_delivery": {
+    "focused_regression_tests": 68,
+    "wheel_model_bytes_verified": true,
+    "isolated_packaged_model_import": "passed"
+  }
+}

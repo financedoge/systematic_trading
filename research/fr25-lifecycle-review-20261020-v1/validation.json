@@ -1,0 +1,21 @@
+{
+  "identity": "fr25_lifecycle_conditional_v1",
+  "implementation": "1.1.0",
+  "passed": true,
+  "checks": {
+    "exact_nav": true,
+    "exact_filled_positions": true,
+    "targets_within_1e_minus_12": true,
+    "provenance": true,
+    "currency": true,
+    "held_value_reconciles": true,
+    "weights_reconcile": true,
+    "targets_include_cash": true,
+    "allocation_in_output": true,
+    "frozen_boundary_disclosed": true,
+    "future_not_claimed": true,
+    "rendered_currency": true
+  },
+  "runtime_publication_verified": false,
+  "note": "Offline historical USD report. Running app publication and current-signal extension remain separate, unverified gates."
+}

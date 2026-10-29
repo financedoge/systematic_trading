@@ -1,0 +1,23 @@
+[
+  {
+    "scenario": "late_break63_trail6_dynamic_c5d0",
+    "max_nav_difference": 0.0,
+    "status": "succeeded",
+    "bundle_sha256": "fe191bae9c1626daa6b169ef5449ba20333ab7be72b533c4ff563743eb5b929d",
+    "receipt_sha256": "1cf515f73406472a742a02eac3b8eabfeb1beed1b1372e8cde42be80634f155d"
+  },
+  {
+    "scenario": "late_break63_trail6_dynamic_c5d1",
+    "max_nav_difference": 0.0,
+    "status": "succeeded",
+    "bundle_sha256": "a6d94164d2587d1b912da1ea7084b2b2614ce7658abaa500dfb42f61d651adb9",
+    "receipt_sha256": "d33a473f643dcfe8e4d0c6539eac992d56e683e85459ef30c31e3a2d885b9895"
+  },
+  {
+    "scenario": "late_momentum_dynamic_c5d0",
+    "max_nav_difference": 0.0,
+    "status": "succeeded",
+    "bundle_sha256": "bf8b32c49c9291959908036dcadf3235683113f86dbd5c7c3b0b08789206a76b",
+    "receipt_sha256": "c427995f6201a2b8ec72064f94419801ca90d18efd4251930b2689124e3ed572"
+  }
+]

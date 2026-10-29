@@ -29,6 +29,9 @@ let monitoringRevision=0, monitoringChange=null;
    has no approved execution contract. Labelling the second as the first made a
    deliberate gate look like a stuck calculation. */
 function allocationAction(item){
+  if(item.current_signal_available===false){
+    return `<button disabled title="Current signal calculation is not implemented">Historical only</button>`;
+  }
   if(item.allocation_ready){
     return `<a class="button sc-promote" data-strategy="${esc(item.strategy_id)}" href="/strategies?allocate=${encodeURIComponent(item.strategy_id)}">Promote / allocate</a>`;
   }

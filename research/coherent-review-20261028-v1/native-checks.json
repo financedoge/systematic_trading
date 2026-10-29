@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "CPER",
+    "era": "late",
+    "status": "succeeded",
+    "events": 1000,
+    "fills": 49,
+    "max_native_reference_dollars": 0.0,
+    "max_whole_unit_vs_fractional_nav": 0.00021858762909698903,
+    "native_return": 0.03497068999999997,
+    "fractional_return": 0.03518123478439117,
+    "limitation": "Synthetic accounting event clock: each frozen fill and daily close mark occupies one engine session. Prices at fill events are modeled fills, not market opens. Validates ordering, sizing, fees and NAV only; does not independently prove intraday fills or HMM/learning.",
+    "receipt_sha256": "6bc73b97e5bc4b84ad7bb7b8da6d940fa6fb8a0adb8421d1d1974c5092bd277e",
+    "bundle_sha256": "4e28f3f80f661821d8d735e0d9dbe7d8a30622103390c94a4895e077f995c1d2",
+    "event_mapping_sha256": "84c10ba2c0b3c6d23b1a49da3f5faa537e9a7eb70ef613a766925330ab053d24"
+  },
+  {
+    "symbol": "IWM",
+    "era": "late",
+    "status": "succeeded",
+    "events": 1005,
+    "fills": 54,
+    "max_native_reference_dollars": 0.0,
+    "max_whole_unit_vs_fractional_nav": 0.0001362561206084134,
+    "native_return": 0.048298229999999887,
+    "fractional_return": 0.04834908413243899,
+    "limitation": "Synthetic accounting event clock: each frozen fill and daily close mark occupies one engine session. Prices at fill events are modeled fills, not market opens. Validates ordering, sizing, fees and NAV only; does not independently prove intraday fills or HMM/learning.",
+    "receipt_sha256": "d87536c96781a67c91f4823031292eb07479b3031a6daf7ed182242c373f15ea",
+    "bundle_sha256": "e4e02ea1f3f167173c9934121e908e1bc4dbbe95773a118f58c88f1af1590365",
+    "event_mapping_sha256": "214811c2d303e5822442f7b10a93a79cef672705c84e6d0172ece4758ffb2608"
+  },
+  {
+    "symbol": "CORN",
+    "era": "late",
+    "status": "succeeded",
+    "events": 985,
+    "fills": 34,
+    "max_native_reference_dollars": 0.0,
+    "max_whole_unit_vs_fractional_nav": 0.00014309863712291815,
+    "native_return": -0.22736613000000006,
+    "fractional_return": -0.22731209641573324,
+    "limitation": "Synthetic accounting event clock: each frozen fill and daily close mark occupies one engine session. Prices at fill events are modeled fills, not market opens. Validates ordering, sizing, fees and NAV only; does not independently prove intraday fills or HMM/learning.",
+    "receipt_sha256": "d62df41f2a45c8d63d65c9b11c5154a413afeb598ec8db5b6f9b2ea8b06f3c19",
+    "bundle_sha256": "fe86bb39d9ac49b61b19894ade9e475a5d5fe50faf0f0e93c47ec3a4a155ae12",
+    "event_mapping_sha256": "0d720e8c64a25790ae512889d95025314f5e021b9f4701d46814dc2fb4e763a2"
+  },
+  {
+    "symbol": "MCHI",
+    "era": "early",
+    "status": "succeeded",
+    "events": 808,
+    "fills": 52,
+    "max_native_reference_dollars": 0.0,
+    "max_whole_unit_vs_fractional_nav": 0.0002792148257080296,
+    "native_return": -0.34971807999999993,
+    "fractional_return": -0.34962002363340505,
+    "limitation": "Synthetic accounting event clock: each frozen fill and daily close mark occupies one engine session. Prices at fill events are modeled fills, not market opens. Validates ordering, sizing, fees and NAV only; does not independently prove intraday fills or HMM/learning.",
+    "receipt_sha256": "bcb49a0f0e000b45f6992d2d3cff79fbf6f9560049ea4b5c712773c4060bc988",
+    "bundle_sha256": "196a93bc90f9ec9307e6105cd0df4295f96f4df225dcce19c88f66e3f9651732",
+    "event_mapping_sha256": "42a23064b24ca4d8ab2128908ddb09b74c6379f144a4804cf1bf5c686b07e53e"
+  }
+]

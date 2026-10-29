@@ -1,0 +1,16 @@
+{
+  "focused_pytest_passed": 18,
+  "ruff": "passed",
+  "offline_controls": {
+    "status": "passed",
+    "available_etf_domain_detail_records": 204,
+    "focused_chart_views": 31,
+    "browser_layout_certified": false
+  },
+  "checks": [
+    "All104 later accounting totals and state counts",
+    "All204 CSV rows and column alignment",
+    "Upstream and output hashes",
+    "Four static figures visually inspected"
+  ]
+}

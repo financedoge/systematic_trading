@@ -1,0 +1,23 @@
+[
+  {
+    "scenario": "trend_fit_overlay_dynamic_c5d0",
+    "max_nav_difference": 0.0,
+    "status": "succeeded",
+    "bundle_sha256": "f6fc63149a3ca5f666bb081c6d8edbdb172673ef701356c3fc08f00fec951792",
+    "receipt_sha256": "471ace65ef63daa1274f95f3fa0eeb7f6edb034c07f2fd96ab0f75c934f0dfe6"
+  },
+  {
+    "scenario": "trend_fit_overlay_dynamic_c5d1",
+    "max_nav_difference": 0.0,
+    "status": "succeeded",
+    "bundle_sha256": "cdf22d31884b26cef628208ca8577ec9e2925b72fb0fc193ad3e4e909d57e8d9",
+    "receipt_sha256": "7f47ac652b4c83bd801575a6dda0e7de282cc181cfc0ec24d74cae2f3d28968f"
+  },
+  {
+    "scenario": "trend_fit_selection_dynamic_c5d0",
+    "max_nav_difference": 0.0,
+    "status": "succeeded",
+    "bundle_sha256": "fafe6bd952c13afbb7c65a823282fa2df2967e5f9d2a8a1fec381385c8207f30",
+    "receipt_sha256": "cf25d942d73615ab9e1ca3dd10326889de90cbce9d82c94d2d8a2cd6088dd532"
+  }
+]

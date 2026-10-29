@@ -4,6 +4,18 @@ The October 24 [durable intent recovery repair](rebalance-intent-recovery-2026-1
 supersedes the narrow renewal eligibility and manual-only partial-fill limitations
 below. This document retains the original incident and deployment evidence.
 
+## October 20 review correction
+
+Automatic renewal now considers only the newest allocation-bound intent, ordered
+by target date then creation time. A newer independent pending, approved/claimed,
+or rejected proposal blocks revival of an older missed target, including when
+the newer proposal was created outside the prepared-renewal path. Renewal lineage
+alone is insufficient; tied newest intents require review. The selected intent
+must still carry prepared-account evidence and pass every existing renewal,
+approval, reconciliation and broker-attempt guard. See the
+[correction review](conditional-lifecycle-review-2026-10-20.md). This source repair
+has not yet been verified in the running application.
+
 ## Incident
 
 The FR25 14-ETF allocation `allocation-fe2d3613-4694-4d27-925a-c53536932eab`

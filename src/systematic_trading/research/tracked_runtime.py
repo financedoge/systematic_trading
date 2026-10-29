@@ -45,6 +45,9 @@ CALCULATION_PACKAGES = ("research", "lean", "signals", "portfolio", "backtest")
 CALCULATION_EXTRA_SOURCES = (
     "recorders/economics.py", "runtime_io.py", "presentation/templates.py",
     "presentation/assets/backtest/reporting_html_template.html",
+    "research/fr25_lifecycle_conditional_parameters.json",
+    "research/fr25_lifecycle_inputs.json",
+    "research/broadtrend_models_v1.json",
 )
 
 
@@ -239,12 +242,15 @@ def _refresh_tracked_strategies(settings, store, analytics):
     p = config["calculation"]
     keys = list(dict.fromkeys(config["monitored_strategy_ids"]))
     definitions = [registered_strategy_definition(k) for k in keys]
+    from systematic_trading.research import broadtrend
+    broadtrend_definitions = [d for d in definitions if d.key == broadtrend.KEY]
+    definitions = [d for d in definitions if d.key != broadtrend.KEY]
     from systematic_trading.research.fr25_lifecycle_conditional import KEY as FR25_CONDITIONAL_KEY
     conditional_definitions = [d for d in definitions if d.key == FR25_CONDITIONAL_KEY]
     definitions = [d for d in definitions if d.key != FR25_CONDITIONAL_KEY]
     if any(d.universe_key not in ("multi_asset", "multi_asset_14") or d.scheduler != "static_monthly" for d in definitions):
         raise ValueError("Tracked definitions must implement the monthly multi-asset contract")
-    requested_definitions = [*definitions, *conditional_definitions]
+    requested_definitions = [*definitions, *conditional_definitions, *broadtrend_definitions]
     # The 14-candidate family shares one universe, one model recipe and one set of pinned inputs.
     # A new 14-ETF recipe must join this set, or it is prepared against the 12-ETF pool and fails.
     m1_family = {'research_m1_14_v1', 'research_fr25_14_v1', 'research_fr25_alpha_tilt_5_v1'}
@@ -293,6 +299,15 @@ def _refresh_tracked_strategies(settings, store, analytics):
             m1_inputs['financial']=financial_inputs(analytics,m1_inputs['bars'],p['start'])
             m1_inputs['provenance']['financial']=m1_inputs['financial']['provenance']
         inputs['provenance']['m1_14'] = m1_inputs['provenance']
+    if conditional_definitions:
+        from systematic_trading.research.fr25_lifecycle_conditional import verified_input_provenance
+        inputs["provenance"]["fr25_conditional"] = verified_input_provenance()
+    broadtrend_inputs = None
+    if broadtrend_definitions:
+        broadtrend_inputs = broadtrend.load_inputs(settings, analytics, config)
+        if broadtrend_inputs['provenance']['batch'] != inputs['provenance']['batch']:
+            raise ValueError('BroadTrend and parent price publications differ')
+        inputs['provenance']['broadtrend'] = broadtrend_inputs['provenance']
     fx_publication=analytics.latest('governance/fx-usd-cnh') if usd_definitions else None
     revision=digest(encode([calculation_revision(config, inputs, requested_definitions),
         selected_sota.to_dict(),(fx_publication or {}).get('version')]))
@@ -505,12 +520,17 @@ def _refresh_tracked_strategies(settings, store, analytics):
             _LOADED_CODE_HASHES, inputs)
         documents.extend(cond_documents)
         observations.extend(cond_observations)
-        if cond_provenance.get("panel_sha256") is None:
-            raise ValueError("Conditional candidate provenance is incomplete")
+        if cond_provenance.get("manifest_sha256") != inputs["provenance"]["fr25_conditional"]["manifest_sha256"]:
+            raise ValueError("Conditional candidate provenance changed")
     if prepared_usd is not None:
         from systematic_trading.research.usd_monitored import complete_cross_pool_reports
         usd_documents,usd_observations,_=complete_cross_pool_reports(prepared_usd,root/'m1_14',m1_inputs)
         documents.extend(usd_documents);observations.extend(usd_observations)
+    if broadtrend_inputs is not None:
+        progress('replaying_broadtrend')
+        from systematic_trading.research.broadtrend_monitoring import calculate as calculate_broadtrend
+        bt_documents, bt_observations, _ = calculate_broadtrend(settings, config, root, broadtrend_inputs, documents)
+        documents.extend(bt_documents); observations.extend(bt_observations)
     # Keep the last complete report for archived entries. Their portfolios are not extended.
     previous=published_strategies(analytics)
     archive_keys=[]
@@ -532,6 +552,10 @@ def _refresh_tracked_strategies(settings, store, analytics):
         raise ValueError('SOTA changed during calculation; refresh matched benchmarks')
     if calculation_code_hashes()!=_LOADED_CODE_HASHES:
         raise ValueError("Calculation implementation changed before publication")
+    if conditional_definitions and verified_input_provenance() != inputs["provenance"]["fr25_conditional"]:
+        raise ValueError("Conditional input files changed before publication")
+    if broadtrend_inputs is not None and broadtrend.load_inputs(settings, analytics, config)['provenance'] != inputs['provenance']['broadtrend']:
+        raise ValueError('BroadTrend governed inputs changed before publication')
     if inputs.get('economic'):
         from systematic_trading.research.economic_tracking import economic_inputs
         if economic_inputs(analytics,inputs['latest_bars'],p['start'])['provenance'] != inputs['provenance']['economic']:

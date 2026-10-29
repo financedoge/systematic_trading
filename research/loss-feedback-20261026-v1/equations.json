@@ -1,0 +1,9 @@
+[
+  "\\mathcal{G}=\\{r_i:r_i>0,\\ i\\ \\mathrm{closed\\ in\\ training}\\},\\quad \\bar g=\\frac{1}{n_g}\\sum_{g\\in\\mathcal{G}}g",
+  "\\sigma_g=\\sqrt{\\frac{\\sum_{g\\in\\mathcal{G}}(g-\\bar g)^2}{n_g-1}},\\quad n_g\\geq5,\\qquad \\tau=\\max(\\sigma_g,2f,10^{-6})",
+  "r_t^{\\rm mark}=\\frac{C_t}{O_e}\\frac{1-f}{1+f}-1,\\quad r_t^{\\rm mark}<-\\tau\\ \\Rightarrow\\ \\mathrm{exit\\ at}\\ O_{t+1+\\Delta}",
+  "r_n^{\\rm net}<-\\tau\\ \\mathrm{or\\ marked\\ loss\\ exit}\\ \\Rightarrow\\ \\mathrm{pause};\\quad\\mathrm{losing\\ protective\\ exit}\\ \\Rightarrow\\ \\mathrm{defensive}",
+  "L_n=(L_{n-1}+1)\\,\\mathbf{1}\\{r_n^{\\rm net}<0\\},\\quad L_n=3\\Rightarrow h=0.5,\\quad L_n=4\\Rightarrow h=0",
+  "q_e=\\frac{h_e B_{e^-}}{O_e(1+f)},\\quad B_e=(1-h_e)B_{e^-},\\quad N_t=B_t+q_t C_t",
+  "\\ell_{t+1}=\\max(\\ell_t,M_t-k_t\\hat\\sigma_r O_e),\\quad k_t=\\frac{1}{2} k_t^{\\rm original}\\ \\mathrm{in\\ defensive/probation}"
+]

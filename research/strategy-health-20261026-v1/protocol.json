@@ -1,0 +1,19 @@
+{
+  "identity": "strategy-health-20261026-v1",
+  "purpose": "Diagnostic only, no adaptive returns or new model fit",
+  "source_inputs": {
+    "chart-data.json.gz": "0ef97f6ceb8eafd48bfb63c92afb0aa6125340300afb2e9366a251d663fcd8ee",
+    "asset-results.json": "5a29d102ada06ba6f9daf3bd896c66b75955a8e280766c01a163e9c3dd683c31",
+    "diagnostics.json": "c3b5dcc2e577daf85bd59fc50a243dc0cecfaf32baf003417daa88e5a9cc6366",
+    "protocol.json": "45065827882125899586431e72b071ceb0cf5d8d919462cd4bbdf1891718c831",
+    "fit-manifest.json": "72ccde86f65eb31c1842f1c9736d3ef16c156c850b3f069a67249da37b08e9b5"
+  },
+  "rules": "Full risky ETF pool; training-selected primary 5bp/side,next open; reset monitor at evaluation boundary; newly entered completed trades only; net<0 loss; zero breaks streak; first3/4 close events actionable next session. MFE/MAE use held closes excluding exit-day close and are hindsight diagnostics.",
+  "controller": "Research reference: actual3 losses defensive at.5 risk,4 pause/refit event; fresh shadow4 trades >=3 wins and positive sumR/compound return ->.25 probation;3 actual probation trades >=2 wins and positive sumR/compound return ->normal;2 probation losses repause. One declared refit candidate per pause. No fitting or routing authority.",
+  "code": {
+    "scripts/audit_strategy_health.py": "e1c3d0c9f03cdf4e5b248c808e3c6340cd890f6e0f029f584fdde00e8cbb0e82",
+    "src/systematic_trading/research/strategy_health.py": "bc8c173c62c062ed1540158365db6ba47710fef92c2c1d6c94e10f1c48e5ba8a",
+    "tests/test_strategy_health.py": "ed84064a7985dd596c6e4ae23da2c1288c51848a817222e810860b272375dce0",
+    "tests/test_strategy_health_audit.py": "2b4f68fb9ada5d00dd84c6aa802e3aa0f25981c4337d3e235ca77689d1ba5a73"
+  }
+}

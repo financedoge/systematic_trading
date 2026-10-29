@@ -1,0 +1,164 @@
+[
+  {
+    "era": "late",
+    "domain": "short",
+    "score": "state",
+    "horizon": 5,
+    "mean_ic": -0.007753285350685001,
+    "p": 0.4663252535959206,
+    "sessions": 942
+  },
+  {
+    "era": "late",
+    "domain": "short",
+    "score": "extension",
+    "horizon": 5,
+    "mean_ic": -0.007230779127773597,
+    "p": 0.4988910334824066,
+    "sessions": 942
+  },
+  {
+    "era": "late",
+    "domain": "long",
+    "score": "state",
+    "horizon": 5,
+    "mean_ic": -0.021077352956766358,
+    "p": 0.04168970279683156,
+    "sessions": 942
+  },
+  {
+    "era": "late",
+    "domain": "long",
+    "score": "extension",
+    "horizon": 5,
+    "mean_ic": -0.015465695473921107,
+    "p": 0.11767495573902144,
+    "sessions": 942
+  },
+  {
+    "era": "late",
+    "domain": "short",
+    "score": "state",
+    "horizon": 21,
+    "mean_ic": 0.006039404864409585,
+    "p": 0.7629986640856394,
+    "sessions": 926
+  },
+  {
+    "era": "late",
+    "domain": "short",
+    "score": "extension",
+    "horizon": 21,
+    "mean_ic": -0.0034029744594506308,
+    "p": 0.8741000899250544,
+    "sessions": 926
+  },
+  {
+    "era": "late",
+    "domain": "long",
+    "score": "state",
+    "horizon": 21,
+    "mean_ic": -0.03397521939545189,
+    "p": 0.11323393549652026,
+    "sessions": 926
+  },
+  {
+    "era": "late",
+    "domain": "long",
+    "score": "extension",
+    "horizon": 21,
+    "mean_ic": -0.019310774677412212,
+    "p": 0.3295935611009603,
+    "sessions": 926
+  },
+  {
+    "era": "late",
+    "domain": "short",
+    "score": "state",
+    "horizon": 63,
+    "mean_ic": 0.034798535762906806,
+    "p": 0.2585990321125549,
+    "sessions": 884
+  },
+  {
+    "era": "late",
+    "domain": "short",
+    "score": "extension",
+    "horizon": 63,
+    "mean_ic": 0.018593715748680892,
+    "p": 0.5351488741257049,
+    "sessions": 884
+  },
+  {
+    "era": "late",
+    "domain": "long",
+    "score": "state",
+    "horizon": 63,
+    "mean_ic": -0.011490297364163215,
+    "p": 0.7357344306943193,
+    "sessions": 884
+  },
+  {
+    "era": "late",
+    "domain": "long",
+    "score": "extension",
+    "horizon": 63,
+    "mean_ic": -0.010475142704042073,
+    "p": 0.7296107481984435,
+    "sessions": 884
+  },
+  {
+    "era": "early",
+    "domain": "short",
+    "score": "state",
+    "horizon": 5,
+    "mean_ic": 0.019749917021631806,
+    "p": 0.08007980048302014,
+    "sessions": 751
+  },
+  {
+    "era": "early",
+    "domain": "long",
+    "score": "state",
+    "horizon": 5,
+    "mean_ic": 0.041557153925514366,
+    "p": 0.0005269644765573659,
+    "sessions": 690
+  },
+  {
+    "era": "early",
+    "domain": "short",
+    "score": "state",
+    "horizon": 21,
+    "mean_ic": 0.038591609867676326,
+    "p": 0.06857228990390601,
+    "sessions": 735
+  },
+  {
+    "era": "early",
+    "domain": "long",
+    "score": "state",
+    "horizon": 21,
+    "mean_ic": 0.07772836902136993,
+    "p": 0.0008880181350415779,
+    "sessions": 674
+  },
+  {
+    "era": "early",
+    "domain": "short",
+    "score": "state",
+    "horizon": 63,
+    "mean_ic": 0.06930913934291755,
+    "p": 0.05237772519864661,
+    "sessions": 693
+  },
+  {
+    "era": "early",
+    "domain": "long",
+    "score": "state",
+    "horizon": 63,
+    "mean_ic": 0.11095813424297522,
+    "p": 0.0002048454154995533,
+    "sessions": 632
+  }
+]

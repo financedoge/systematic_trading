@@ -1,0 +1,41 @@
+{
+  "files": {
+    "asset-results.json": "d528666ea507755a9fb607e8919f616529c2b51295ef261a223fdff13a0da2b7",
+    "chart-data.json.gz": "a4cb893f7f886206181b19ef11dcdaac280db212bbf0e6361fc3c59f4341d33d",
+    "CPER-incident.json": "446e10c8fb8698b9805026f79b03675e9e173aa31d662903ccd7264559b817bd",
+    "CPER-incident.png": "40822a2b51cbe9595baa5ac41abcb248b8786754a9e7fdf1bc4a443a85d8135c",
+    "CPER_late.png": "d4fc8d7918ef36c1fabe276dd60f6243d4aab6b5e2ea5c72cc9a92417414cfb4",
+    "equation-proof.png": "a7b9c88a0bdf8faf09f7958ae0a556985381848924e0bd0fd9bb7020d810a450",
+    "equations.json": "92e9e6f691d1a466857a356bf9518bb63ca06445a262c0d2f519823799be89d4",
+    "failure-audit.json": "1f537031d23d6575030e5ce47a72b38c4a064a8cf71e747474a025669fd96088",
+    "findings.html": "3b7150e0882bde955c6c398e38c620650187b8c89914f9649c9903a41dfe1c29",
+    "fit-manifest.json": "be1ce5e888c76adb93e257f8fafe3482952b34621d665fff928384d034affe80",
+    "fits.json": "81035907472cba68237a311b2c288fc45f0eb83a7af26f46b5231a767538ec3f",
+    "GLD_early.png": "c1a70baf453f6830e23dfb2dda22edfc30268ba5afe367d0d4ab738caf8cd0e0",
+    "GLD_late.png": "e8eb6f790d4be3e0996b2504b6b7bfd2617156d115789046cec687b556e9f2ea",
+    "INDA_late.png": "f05d081968f0b6966273e7975439fdc593978cc694580dd3c6bfd7a17ae821a4",
+    "index.html": "4e18329e5de52eef209917868136fd332d93128586a8a2096c0aefe239afde8a",
+    "ITA_early.png": "7fc656fd317c0b918a958eaf4d07a4830823651eaa389f3979eac1633973a3b9",
+    "IWM-incident.png": "4a3ea2cb7ffce3847579351da414c693f743d4036fa2e460f2ccf0adc85cf0b1",
+    "IWM_early.png": "dcdfdb6765722dd90698ac3f22aedad892b7df8a3adb40d23f1cefafdb0eeb81",
+    "MCHI_late.png": "ee827cbf0573138d8dc2a6a1dab6f0c1e5f429c61b0f3e2e2a506dc457a78952",
+    "native-checks.json": "66f38b97c735d15fee3dbbcbe5d582aaed20ea9498eabad8335f8f3ea4ceb77b",
+    "protocol-clarifications.json": "942ff2dc3e77cc56696b34c713243ed22255648acaeceba93709fce0c2906ce6",
+    "protocol.json": "3473303edc16cedb865ec771a3aa46003c64b722dd683b400cbafc5b12a83406",
+    "report-checks.json": "302fe7753abb996bbebe092f5014cd5c312434d91ac6c8724a0726e85ba534e4",
+    "summary.json": "625da00698504e6b5c593487fe3f9f1aee3e9a5b00ef39000f6086b3c2f9b2a3",
+    "TLT_late.png": "49e21e6c4c5bdf01ffd600fe0f860af3f9c5f610641bd65592d08a59dc895d6f",
+    "validation.json": "1823d24f2f7e6c5ce04809b4b98173fe8cabf75e05446eb214b3134073f9e511",
+    "weakest-cases.json": "efca15fb28f4ca4b91934e4cc3fee71338ac2124cc59f0e7f234875dab7808ca",
+    "WEAT_late.png": "0ab0fe071291eb102efab86be0abfccea83d5c8e5ca67f3aa1b8c76a5a7860b3"
+  },
+  "report_code": {
+    "scripts/build_entry_value_report.py": "7354cae1a7dcf434701fbf8e9e19585e68fb66dcb5c6622a5c39415f51e01078",
+    "scripts/assets/entry-value-script.js": "2dd7d336631af30289cc18c8eed962d204add601da2ebc8dcbe1014bea6d3ef4",
+    "scripts/build_regime_entry_report.py": "e4dbf8249ae6be5974d96c7ae1b4288a20c81e0849be16f381b1fe09542dbc78",
+    "tests/entry_value_controls.cjs": "8727871bca9271e5d6a6c7e7cce2244da6d3cff6cb4300319c39cf8b3dead85a",
+    "tests/test_entry_value_contract.py": "9b699e096893f91a36545173fda03c672c02f3dbfcff33816eea2c6bae38d66e",
+    "scripts/validate_entry_value.py": "1c52444c9b03e824661580f898bac4be42265d4e1f590e11cf83e3b554301620",
+    "scripts/analyze_entry_value.py": "6db628c52f79d6d40270fd4a54f15bc9d663c39014890a97fdf39124db5cc90c"
+  }
+}

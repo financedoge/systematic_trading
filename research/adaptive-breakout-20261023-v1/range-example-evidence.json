@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "EMB",
+    "components": {
+      "range": "flat_21",
+      "trend": "avoid_down",
+      "exit": "breakeven"
+    },
+    "crossing": "2023-03-22",
+    "prior_window_start": "2023-02-21",
+    "prior_window_end": "2023-03-21",
+    "upper": 70.7047348022461,
+    "lower": 69.72183990478516,
+    "boundary": 70.89218527292773,
+    "legacy_valid": true
+  },
+  {
+    "symbol": "TIP",
+    "components": {
+      "range": "rising_63",
+      "trend": "none",
+      "exit": "breakeven"
+    },
+    "crossing": "2024-08-02",
+    "prior_window_start": "2024-05-02",
+    "prior_window_end": "2024-08-01",
+    "upper": 100.53027284667098,
+    "lower": 99.60085041075978,
+    "boundary": 100.61988592056046,
+    "legacy_valid": true
+  }
+]

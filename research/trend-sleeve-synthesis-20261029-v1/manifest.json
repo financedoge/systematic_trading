@@ -1,0 +1,32 @@
+{
+  "files": {
+    "chart-data.json.gz": "d044aafaf13fbcab13f27ded947b1125181e4eb1d5cef61e1c129a3cfae426e4",
+    "comparison.json": "5ce45aac2a4bd80d8f8dbd04639c87c02a53ece58b69ed35c0c39d0818a396d9",
+    "CORN_late.png": "c094aaf250a1433286adc6a0dc05c11a17c2121ab786bc3d9b758e053388385a",
+    "daily-flow.png": "577d816e89b20d73da84f5653c958705aa06136d37dad1740619b6143095ea9c",
+    "daily-flow.svg": "943b5ca97ea47254a69199f008fa22e217656e9e3c3c366883f75ca3255889d8",
+    "equation-proof.png": "b688bcf93931e502e7af527569854c2dac39cbbf3a6690f9cc492284ccec8f77",
+    "equations.json": "79992bf459db5b9487d09e0c94541824b7361c9b3d1f41beaa36e3e64e3fee38",
+    "index.html": "b9fc647e95a87de92408395042271e2f46798f2a0dc95a7817cac5c9af5be400",
+    "MCHI_early.png": "7e1e76c2ed68aaea213ed0f40bad6f91aeb71766b11310e0ef9f298bd88838c8",
+    "portfolio-design.json": "2ee8470fb7a9321e5cb8bbaa74c7291ad7e36d642ed464fc17cb6b0b1af15082",
+    "portfolio-flow.png": "8845e66622f4994778abc8e2baca7a1ae0f04b161ba1d60575dfe6a7af59c05a",
+    "portfolio-flow.svg": "58be0ac1f2637a3b1787807dba2eb9fadab3fed0dc4f40caaac5cc5af5d0d990",
+    "provenance.json": "9b1efba0d6a62a5521975d4cab7a70ed022bf353de3e5a78e2dffc888000e236",
+    "qa.json": "f610def825db9d55230f89cdfc37c09a890c4c75174acb5e2a62960d39586d00",
+    "rank-preview.json": "23f76ab5552835ba9507af2b886d54fe5c837bf4f3de0db43903a101c4d226c5",
+    "selected-models.json": "b75505f4693e0f2375cc622d7d5cb3f681902aecf41f830c6b3bfabaf9b368d7",
+    "selected-results.json": "abdc7c33ed86da8be5fe19f02f824b498748ebb7414a6b8b440f40f784852858",
+    "weakest-cases.json": "5b36e5a77a33f30bf6c54f6409d98425c056872583593145ace5fa69e28b1094"
+  },
+  "sources": {
+    "scripts/seal_trend_sleeve_synthesis.py": "e5b3f9ca48020bdf7b22dd21ae6a7d906d2f0f341292f67bdd4984f0687a0d41",
+    "scripts/build_trend_sleeve_synthesis.py": "55e0d9477a377bc60747d8ca940dea64a4083c0d4fd00cef37e15edefa2d5e86",
+    "scripts/assets/trend-sleeve-synthesis.html": "6e96f9a2a740c9b80be85ebf1ea427c4d9c6ecf81c634eb0bd7c91b09184234d",
+    "scripts/assets/trend-sleeve-synthesis.js": "d130b53fb798304922af72a2c9e3518cd3287b1f2ce7b58c3fa628efe08b86d4",
+    "scripts/assets/trend-sleeve-equations.json": "3f49d632897feb76f71db061901d32267afc74696a458a785257445f6d6f8ebc",
+    "tests/test_trend_sleeve_synthesis.py": "a9ac651076e680be14b5009fa53842bb72742a681cffce4d361bb2e4f605897d",
+    "tests/trend_sleeve_synthesis_controls.cjs": "38d588e291eb5f6a86822b5a6ac36ff08b20a4c84db2fd6f2b637bb0057267cc",
+    "docs/trend-sleeve-synthesis-2026-10-29.md": "74ed716fc45001eef0a6fc34f69ad8363e023782b090df8d057bf287d7be11ec"
+  }
+}

@@ -1,0 +1,782 @@
+[
+  {
+    "symbol": "AGG",
+    "confirm_sessions": 2,
+    "legacy_episodes": 19,
+    "corrected_episodes": 19,
+    "legacy_active": 0.723935389133627,
+    "corrected_active": 0.723935389133627,
+    "entry_close_exits": 1,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "BIL",
+    "confirm_sessions": 1,
+    "legacy_episodes": 6,
+    "corrected_episodes": 7,
+    "legacy_active": 1.0,
+    "corrected_active": 0.8766519823788547,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "CORN",
+    "confirm_sessions": 1,
+    "legacy_episodes": 13,
+    "corrected_episodes": 14,
+    "legacy_active": 0.17963778756730298,
+    "corrected_active": 0.1811062163485071,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "CPER",
+    "confirm_sessions": 3,
+    "legacy_episodes": 14,
+    "corrected_episodes": 14,
+    "legacy_active": 0.2305433186490455,
+    "corrected_active": 0.2310327949094469,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "DBA",
+    "confirm_sessions": 4,
+    "legacy_episodes": 15,
+    "corrected_episodes": 15,
+    "legacy_active": 0.42388644150758686,
+    "corrected_active": 0.42388644150758686,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "DBB",
+    "confirm_sessions": 2,
+    "legacy_episodes": 14,
+    "corrected_episodes": 14,
+    "legacy_active": 0.6529613313754283,
+    "corrected_active": 0.6534508076358296,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "DBC",
+    "confirm_sessions": 3,
+    "legacy_episodes": 13,
+    "corrected_episodes": 11,
+    "legacy_active": 0.5859030837004405,
+    "corrected_active": 0.7591776798825257,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "EEM",
+    "confirm_sessions": 2,
+    "legacy_episodes": 35,
+    "corrected_episodes": 36,
+    "legacy_active": 0.2310327949094469,
+    "corrected_active": 0.2310327949094469,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "EFA",
+    "confirm_sessions": 4,
+    "legacy_episodes": 24,
+    "corrected_episodes": 25,
+    "legacy_active": 0.7689672050905532,
+    "corrected_active": 0.7694566813509545,
+    "entry_close_exits": 2,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "EMB",
+    "confirm_sessions": 2,
+    "legacy_episodes": 9,
+    "corrected_episodes": 8,
+    "legacy_active": 0.6324033284385707,
+    "corrected_active": 0.6255506607929515,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "EWA",
+    "confirm_sessions": 3,
+    "legacy_episodes": 36,
+    "corrected_episodes": 35,
+    "legacy_active": 0.6382770435633872,
+    "corrected_active": 0.6382770435633872,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "EWC",
+    "confirm_sessions": 5,
+    "legacy_episodes": 14,
+    "corrected_episodes": 14,
+    "legacy_active": 0.8169358786098874,
+    "corrected_active": 0.8174253548702888,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "EWG",
+    "confirm_sessions": 4,
+    "legacy_episodes": 23,
+    "corrected_episodes": 23,
+    "legacy_active": 0.582476749877631,
+    "corrected_active": 0.5814977973568282,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "EWH",
+    "confirm_sessions": 4,
+    "legacy_episodes": 18,
+    "corrected_episodes": 19,
+    "legacy_active": 0.7792462065589819,
+    "corrected_active": 0.7787567302985805,
+    "entry_close_exits": 3,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "EWJ",
+    "confirm_sessions": 4,
+    "legacy_episodes": 21,
+    "corrected_episodes": 21,
+    "legacy_active": 0.3186490455212922,
+    "corrected_active": 0.3186490455212922,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "EWT",
+    "confirm_sessions": 1,
+    "legacy_episodes": 20,
+    "corrected_episodes": 23,
+    "legacy_active": 0.8521781693587861,
+    "corrected_active": 0.8590308370044053,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "EWU",
+    "confirm_sessions": 1,
+    "legacy_episodes": 11,
+    "corrected_episodes": 22,
+    "legacy_active": 0.9882525697503671,
+    "corrected_active": 0.793930494371023,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "EWY",
+    "confirm_sessions": 3,
+    "legacy_episodes": 36,
+    "corrected_episodes": 36,
+    "legacy_active": 0.5315712187958884,
+    "corrected_active": 0.5320606950562897,
+    "entry_close_exits": 1,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "GLD",
+    "confirm_sessions": 1,
+    "legacy_episodes": 35,
+    "corrected_episodes": 39,
+    "legacy_active": 0.30934899657366616,
+    "corrected_active": 0.31522271169848265,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "HYG",
+    "confirm_sessions": 1,
+    "legacy_episodes": 23,
+    "corrected_episodes": 26,
+    "legacy_active": 0.3671071953010279,
+    "corrected_active": 0.4331864904552129,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "IAT",
+    "confirm_sessions": 5,
+    "legacy_episodes": 19,
+    "corrected_episodes": 20,
+    "legacy_active": 0.5203132648066568,
+    "corrected_active": 0.5036710719530103,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "IBB",
+    "confirm_sessions": 3,
+    "legacy_episodes": 6,
+    "corrected_episodes": 6,
+    "legacy_active": 0.9461576113558492,
+    "corrected_active": 0.9461576113558492,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "IBND",
+    "confirm_sessions": 2,
+    "legacy_episodes": 16,
+    "corrected_episodes": 16,
+    "legacy_active": 0.34508076358296624,
+    "corrected_active": 0.34508076358296624,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "IEF",
+    "confirm_sessions": 2,
+    "legacy_episodes": 13,
+    "corrected_episodes": 13,
+    "legacy_active": 0.7244248653940284,
+    "corrected_active": 0.7209985315712188,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "IGOV",
+    "confirm_sessions": 4,
+    "legacy_episodes": 10,
+    "corrected_episodes": 10,
+    "legacy_active": 0.23250122369065102,
+    "corrected_active": 0.23201174743024963,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "INDA",
+    "confirm_sessions": 3,
+    "legacy_episodes": 11,
+    "corrected_episodes": 11,
+    "legacy_active": 0.4698972099853157,
+    "corrected_active": 0.4684287812041116,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "ITA",
+    "confirm_sessions": 5,
+    "legacy_episodes": 14,
+    "corrected_episodes": 14,
+    "legacy_active": 0.7983357807146353,
+    "corrected_active": 0.797846304454234,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "IWM",
+    "confirm_sessions": 4,
+    "legacy_episodes": 16,
+    "corrected_episodes": 18,
+    "legacy_active": 0.6260401370533529,
+    "corrected_active": 0.6255506607929515,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "LEMB",
+    "confirm_sessions": 1,
+    "legacy_episodes": 20,
+    "corrected_episodes": 21,
+    "legacy_active": 0.3166911404796867,
+    "corrected_active": 0.28487518355359764,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "LQD",
+    "confirm_sessions": 2,
+    "legacy_episodes": 28,
+    "corrected_episodes": 25,
+    "legacy_active": 0.6108663729809104,
+    "corrected_active": 0.5305922662750857,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "MBB",
+    "confirm_sessions": 6,
+    "legacy_episodes": 13,
+    "corrected_episodes": 13,
+    "legacy_active": 0.478218306412139,
+    "corrected_active": 0.4777288301517376,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "MCHI",
+    "confirm_sessions": 2,
+    "legacy_episodes": 12,
+    "corrected_episodes": 12,
+    "legacy_active": 0.21488007831620168,
+    "corrected_active": 0.21341164953499756,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "MDY",
+    "confirm_sessions": 5,
+    "legacy_episodes": 34,
+    "corrected_episodes": 34,
+    "legacy_active": 0.6754772393538914,
+    "corrected_active": 0.680372001957905,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "PPLT",
+    "confirm_sessions": 1,
+    "legacy_episodes": 17,
+    "corrected_episodes": 22,
+    "legacy_active": 0.42976015663240336,
+    "corrected_active": 0.425354870288791,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "SHY",
+    "confirm_sessions": 2,
+    "legacy_episodes": 11,
+    "corrected_episodes": 11,
+    "legacy_active": 0.8746940773372491,
+    "corrected_active": 0.8746940773372491,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "SLV",
+    "confirm_sessions": 2,
+    "legacy_episodes": 48,
+    "corrected_episodes": 44,
+    "legacy_active": 0.3641703377386197,
+    "corrected_active": 0.3000489476260401,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "SOXX",
+    "confirm_sessions": 3,
+    "legacy_episodes": 23,
+    "corrected_episodes": 23,
+    "legacy_active": 0.644640234948605,
+    "corrected_active": 0.6451297112090064,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "SPY",
+    "confirm_sessions": 4,
+    "legacy_episodes": 13,
+    "corrected_episodes": 13,
+    "legacy_active": 0.956436612824278,
+    "corrected_active": 0.956436612824278,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "TIP",
+    "confirm_sessions": 5,
+    "legacy_episodes": 9,
+    "corrected_episodes": 11,
+    "legacy_active": 0.7112090063631914,
+    "corrected_active": 0.7112090063631914,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "TLT",
+    "confirm_sessions": 1,
+    "legacy_episodes": 34,
+    "corrected_episodes": 40,
+    "legacy_active": 0.3935389133627019,
+    "corrected_active": 0.4136074400391581,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "USO",
+    "confirm_sessions": 4,
+    "legacy_episodes": 14,
+    "corrected_episodes": 14,
+    "legacy_active": 0.22662750856583455,
+    "corrected_active": 0.23152227116984828,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "VGK",
+    "confirm_sessions": 5,
+    "legacy_episodes": 18,
+    "corrected_episodes": 18,
+    "legacy_active": 0.5898188937836515,
+    "corrected_active": 0.5898188937836515,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "WEAT",
+    "confirm_sessions": 3,
+    "legacy_episodes": 22,
+    "corrected_episodes": 22,
+    "legacy_active": 0.2540381791483113,
+    "corrected_active": 0.2564855604503182,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "XLB",
+    "confirm_sessions": 1,
+    "legacy_episodes": 9,
+    "corrected_episodes": 10,
+    "legacy_active": 0.9848262359275575,
+    "corrected_active": 0.9853157121879589,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "XLC",
+    "confirm_sessions": 4,
+    "legacy_episodes": 11,
+    "corrected_episodes": 11,
+    "legacy_active": 0.4547234459128732,
+    "corrected_active": 0.4547234459128732,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "XLE",
+    "confirm_sessions": 5,
+    "legacy_episodes": 17,
+    "corrected_episodes": 18,
+    "legacy_active": 0.5912873225648556,
+    "corrected_active": 0.5912873225648556,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "XLI",
+    "confirm_sessions": 3,
+    "legacy_episodes": 7,
+    "corrected_episodes": 8,
+    "legacy_active": 0.9583945178658835,
+    "corrected_active": 0.9583945178658835,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "XLK",
+    "confirm_sessions": 5,
+    "legacy_episodes": 12,
+    "corrected_episodes": 12,
+    "legacy_active": 0.7161037689672051,
+    "corrected_active": 0.7161037689672051,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "XLP",
+    "confirm_sessions": 6,
+    "legacy_episodes": 8,
+    "corrected_episodes": 8,
+    "legacy_active": 1.0,
+    "corrected_active": 1.0,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "XLU",
+    "confirm_sessions": 3,
+    "legacy_episodes": 7,
+    "corrected_episodes": 7,
+    "legacy_active": 0.723935389133627,
+    "corrected_active": 0.7234459128732257,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "XLV",
+    "confirm_sessions": 1,
+    "legacy_episodes": 9,
+    "corrected_episodes": 11,
+    "legacy_active": 1.0,
+    "corrected_active": 1.0,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  },
+  {
+    "symbol": "XLY",
+    "confirm_sessions": 6,
+    "legacy_episodes": 13,
+    "corrected_episodes": 13,
+    "legacy_active": 0.3352912383749388,
+    "corrected_active": 0.3357807146353402,
+    "entry_close_exits": 0,
+    "legacy_exit_delay_lengths": [
+      1
+    ],
+    "corrected_exit_delay_lengths": [
+      2
+    ]
+  }
+]

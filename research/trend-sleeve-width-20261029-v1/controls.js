@@ -1,0 +1,52 @@
+const el=id=>document.getElementById(id),pct=x=>x==null?'—':(100*x).toFixed(2)+'%',num=x=>x==null?'—':x.toFixed(3);
+const symbols=()=>Object.keys(DATA.charts).filter(k=>k.endsWith('_'+el('era').value)).map(k=>k.split('_')[0]).sort();
+let indices=[],pin=null;
+function c(){return DATA.charts[el('etf').value+'_'+el('era').value]}
+function choose(full=true){const old=el('etf').value,ss=symbols();el('etf').innerHTML=ss.map(s=>`<option>${s}</option>`).join('');el('etf').value=ss.includes(old)?old:ss[0];if(full){let q=c();el('from').value=q.days[0];el('to').value=q.days.at(-1)}pin=null;render()}
+function render(){const q=c(),key=el('etf').value+'_'+el('era').value;indices=q.days.map((d,i)=>d>=el('from').value&&d<=el('to').value?i:-1).filter(i=>i>=0);
+ el('parameters').textContent=JSON.stringify(DATA.models[key],null,2);
+ if(indices.length<2){el('chart').innerHTML='<text x="40" y="50">No complete date interval.</text>';el('chartmetrics').textContent='Select at least two available sessions.';el('trades').innerHTML='';return}
+ const first=indices[0],last=indices.at(-1),vals=indices.map(i=>q.nav[i]).filter(x=>x!=null);let ret=vals.length>1?vals.at(-1)/vals[0]-1:null;
+ el('chartmetrics').textContent=`${el('etf').value}: ${q.days[first]}–${q.days[last]}. Selected-interval account return ${pct(ret)} (existing account, not restarted). Training cutoff ${DATA.models[key].training_end}. Full daily model; 5 bp per side; next-open fills.`;
+ const x=j=>75+1090*j/(indices.length-1),panels=[[25,290],[320,415],[450,555],[585,680],[725,905]];let svg='';
+ function panel(bounds,label){let [lo,hi]=bounds;svg+=`<rect x="75" y="${lo}" width="1090" height="${hi-lo}" fill="white" stroke="#cfdee3"/><text x="80" y="${lo+16}" font-size="13">${label}</text>`}
+ function line(values,bounds,color,min,max){let [lo,hi]=bounds,path='',on=false;const y=v=>hi-10-(hi-lo-35)*(v-min)/(max-min||1);indices.forEach((i,j)=>{const v=values[i];if(v==null||!Number.isFinite(v)){on=false;return}path+=(on?'L':'M')+x(j).toFixed(1)+','+y(v).toFixed(1);on=true});svg+=`<path d="${path}" fill="none" stroke="${color}" stroke-width="1.4"/>`;return y}
+ const prices=indices.flatMap(i=>[q.high[i],q.low[i],q.stop[i]]).filter(v=>v!=null),pmin=Math.min(...prices),pmax=Math.max(...prices);panel(panels[0],'Adjusted OHLC / close · red closing boundary · green buys / red sells');const py=line(q.close,panels[0],'#244c61',pmin,pmax);line(q.stop,panels[0],'#ba465a',pmin,pmax);
+ indices.forEach((i,j)=>{svg+=`<path d="M${x(j)},${py(q.high[i])}V${py(q.low[i])}" stroke="#8da2b1" opacity=".55"/>`});
+ q.fills.filter(f=>f.day>=q.days[first]&&f.day<=q.days[last]).forEach(f=>{const j=indices.findIndex(i=>q.days[i]===f.day);if(j<0)return;const xx=x(j),yy=py(f.price),b=f.side==='buy';svg+=`<path d="M${xx-4},${yy+(b?4:-4)}L${xx},${yy+(b?-4:4)}L${xx+4},${yy+(b?4:-4)}Z" fill="${b?'#008776':'#ba465a'}"/>`});
+ panel(panels[1],'Audited raw ETF share volume');let vm=Math.max(...indices.map(i=>q.volume[i]));indices.forEach((i,j)=>{let h=55*q.volume[i]/vm;svg+=`<rect x="${x(j)}" y="${405-h}" width="${Math.max(.5,1000/indices.length)}" height="${h}" fill="#94a9b4"/>`});
+ panel(panels[2],'Fast HMM: green up / gold neutral / red down');[['fast_up','#008776'],['neutral','#b29538'],['fast_down','#ba465a']].forEach(([k,col])=>line(q[k],panels[2],col,0,1));
+ panel(panels[3],'Slow slope: green up / red down');[['slow_up','#008776'],['slow_down','#ba465a']].forEach(([k,col])=>line(q[k],panels[3],col,0,1));
+ panel(panels[4],'Strategy account NAV (initial 100)');line(q.nav,panels[4],'#008776',Math.min(...vals),Math.max(...vals));
+ for(let j=0;j<5;j++){let a=Math.round(j*(indices.length-1)/4);svg+=`<text x="${x(a)}" y="930" font-size="12" text-anchor="middle">${q.days[indices[a]]}</text>`}
+ el('chart').innerHTML=svg;
+ el('trades').innerHTML=q.trades.filter(t=>t.entry_date<=q.days[last]&&(!t.exit_date||t.exit_date>=q.days[first])).map(t=>`<tr><td>${t.entry_date}</td><td>${t.exit_date||'Open'}</td><td>${t.entry.toFixed(2)}</td><td>${t.exit_price==null?'—':t.exit_price.toFixed(2)}</td><td>${pct(t.net_return)}</td><td>${t.exit_reason||'Holding'}</td><td>${pct(t.initial_risk_fraction)}</td></tr>`).join('');
+}
+function at(event){let rect=el('chart').getBoundingClientRect();let f=((event.clientX-rect.left)/rect.width*1200-75)/1090;return indices[Math.max(0,Math.min(indices.length-1,Math.round(f*(indices.length-1))))]}
+el('era').value='late';el('etf').value=DATA.weakest.late;choose();
+el('era').addEventListener('change',()=>choose());el('etf').addEventListener('change',()=>choose());el('full').addEventListener('click',()=>choose());
+el('weakest').addEventListener('click',()=>{el('etf').value=DATA.weakest[el('era').value];choose()});
+for(const k of ['from','to'])el(k).addEventListener('change',()=>{pin=null;render()});
+el('chart').addEventListener('mousemove',e=>{let i=at(e);if(i==null)return;let q=c();el('readout').textContent=`${q.days[i]} · O ${q.open[i].toFixed(2)} H ${q.high[i].toFixed(2)} L ${q.low[i].toFixed(2)} C ${q.close[i].toFixed(2)} · raw volume ${q.volume[i].toLocaleString()} · boundary ${q.stop[i]==null?'—':q.stop[i].toFixed(2)} · fast up ${pct(q.fast_up[i])} / down ${pct(q.fast_down[i])} · NAV ${q.nav[i]==null?'—':q.nav[i].toFixed(2)}`});
+el('chart').addEventListener('click',e=>{let i=at(e);if(i==null)return;if(pin==null){pin=i;el('readout').textContent='Start '+c().days[i]+' selected; click the other endpoint.'}else{el('from').value=c().days[Math.min(i,pin)];el('to').value=c().days[Math.max(i,pin)];pin=null;render()}});
+function portfolio(){return DATA.portfolio[el('pera').value+'_'+el('parm').value+'_c5d0']}
+function portfolioDates(){const z=portfolio();el('pdate').innerHTML=z.decisions.map(d=>`<option>${d.date}</option>`).join('');el('pdate').value=z.decisions.at(-1).date;portfolioTable()}
+function portfolioTable(){const z=portfolio(),d=z.decisions.find(d=>d.date===el('pdate').value),rr=z.ranks.find(x=>x.date===d.date);const rows=rr?rr.rows:z.symbols.map((symbol,index)=>({symbol,index}));
+ el('pinfo').textContent=`Decision ${d.date}; execute ${d.execution_date}; ${d.weights.filter(w=>w>0).length} funded sleeves; intended cash ${pct(d.theoretical.at(-1))}. Holdings can differ at execution because pending daily exits take priority.`;
+ el('pranks').innerHTML=rows.map((r,i)=>`<tr class="${d.weights[r.index]>0?'selected':''}"><td><button data-symbol="${r.symbol}">${i+1} · ${r.symbol}</button></td><td>${pct(r.short_return)}</td><td>${num(r.short_sharpe)}</td><td>${pct(r.long_return)}</td><td>${num(r.long_sharpe)}</td><td>${num(r.score)}</td><td>${pct(d.weights[r.index])}</td><td>${pct(d.theoretical[r.index])}</td></tr>`).join('');
+ const a=DATA.attribution[el('pera').value+'_'+el('parm').value+'_c5d0'];el('pattrs').innerHTML=a.map(r=>`<tr><td><button data-symbol="${r.symbol}">${r.symbol}</button></td><td>${pct(r.pnl)}</td><td>${pct(r.fee)}</td><td>${pct(r.average_weight)}</td><td>${r.selected_days}</td><td>${r.fills}</td></tr>`).join('');
+}
+const shadowRender=render;
+render=function(){shadowRender();if(indices.length<2){el('actualfills').innerHTML='';return}const q=c(),z=DATA.portfolio[el('era').value+'_'+el('parm').value+'_c5d0'];
+ const fills=z.fills.filter(f=>f.symbol===el('etf').value&&f.date>=el('from').value&&f.date<=el('to').value);
+ el('actualfills').innerHTML=fills.map(f=>`<tr><td>${f.date}</td><td>${f.side}</td><td>${f.reason}</td><td>${f.price.toFixed(2)}</td><td>${pct(f.notional)}</td><td>${pct(f.fee)}</td></tr>`).join('');
+ const prices=indices.flatMap(i=>[q.high[i],q.low[i],q.stop[i]]).filter(v=>v!=null),lo=Math.min(...prices),hi=Math.max(...prices);let svg='';
+ fills.forEach(f=>{const j=indices.findIndex(i=>q.days[i]===f.date);if(j<0)return;const x=75+1090*j/(indices.length-1),y=280-230*(f.price-lo)/(hi-lo||1);svg+=`<circle cx="${x}" cy="${y}" r="4.5" fill="none" stroke="#d78020" stroke-width="1.5"><title>${f.date} ${f.side} ${f.reason} ${f.price.toFixed(2)}</title></circle>`});el('chart').innerHTML+=svg;
+};
+for(const k of ['pera','parm'])el(k).addEventListener('change',portfolioDates);el('pdate').addEventListener('change',portfolioTable);
+for(const k of ['pranks','pattrs'])el(k).addEventListener('click',e=>{const symbol=e.target.dataset?.symbol;if(!symbol)return;el('era').value=el('pera').value;choose();el('etf').value=symbol;choose();el('chart').scrollIntoView?.({behavior:'smooth'})});
+el('worstcontributor').addEventListener('click',()=>{el('etf').value=DATA.attribution[el('era').value+'_'+el('parm').value+'_c5d0'][0].symbol;choose()});
+el('pera').value='late';el('parm').value='equal';portfolioDates();render();
+
+function selectWidth(){const v=DATA.width_data[el("width").value];DATA.portfolio=v.portfolio;DATA.attribution=v.attribution;portfolioDates();render()}
+el("width").value="30";el("width").addEventListener("change",selectWidth);el("parm").addEventListener("change",()=>{portfolioDates();render()});selectWidth();el("etf").value=DATA.attribution[el("era").value+"_"+el("parm").value+"_c5d0"][0].symbol;choose();

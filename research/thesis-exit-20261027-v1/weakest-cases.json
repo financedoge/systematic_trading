@@ -1,0 +1,83 @@
+{
+  "late": {
+    "symbol": "TLT",
+    "era": "late",
+    "arm": "directional",
+    "cost_bp": 5,
+    "delay": 0,
+    "cagr": -0.05017866128521342,
+    "sharpe": -0.5755754315783669,
+    "maxdd": -0.2159054295549564,
+    "calmar": -0.2324103723961281,
+    "sessions": 951,
+    "ann_vol": 0.08340037188099794,
+    "cumulative": -0.17657343636445688,
+    "closed_trades": 20,
+    "wins": 7,
+    "exposure": 0.34279705573080965,
+    "yearly": {
+      "2023": 0.033132007240825656,
+      "2024": -0.06447352923434535,
+      "2025": -0.12140063852930694,
+      "2026": -0.030334167458127337
+    },
+    "rule": {
+      "enabled": false
+    },
+    "enabled": false,
+    "turnover_annual": 10.610219694629656,
+    "cost_bp_annual": 53.05109847314831,
+    "changes": 10,
+    "reset_count": 4,
+    "empty_evidence_sessions": 189,
+    "exit_reasons": {
+      "protection": 10,
+      "fast_down": 10,
+      "thesis_failed": 0,
+      "shallow_decline": 0
+    },
+    "frozen_cumulative": -0.12484797525192715,
+    "buyhold": -0.08838584129827132
+  },
+  "early": {
+    "symbol": "MCHI",
+    "era": "early",
+    "arm": "directional",
+    "cost_bp": 5,
+    "delay": 0,
+    "cagr": -0.16304194340654332,
+    "sharpe": -0.8399011870147368,
+    "maxdd": -0.5913546758826407,
+    "calmar": -0.2757092317959457,
+    "sessions": 756,
+    "ann_vol": 0.19030828169913838,
+    "cumulative": -0.41371189533373465,
+    "closed_trades": 29,
+    "wins": 7,
+    "exposure": 0.48677248677248675,
+    "yearly": {
+      "2020": 0.09614121806171827,
+      "2021": -0.21606439112055553,
+      "2022": -0.3177175786603088
+    },
+    "rule": {
+      "enabled": true,
+      "floor": 0.3,
+      "count": 2
+    },
+    "enabled": true,
+    "turnover_annual": 19.325075829886085,
+    "cost_bp_annual": 96.62537914943049,
+    "changes": 19,
+    "reset_count": 6,
+    "empty_evidence_sessions": 139,
+    "exit_reasons": {
+      "protection": 14,
+      "fast_down": 14,
+      "thesis_failed": 1,
+      "shallow_decline": 0
+    },
+    "frozen_cumulative": -0.3111315644130668,
+    "buyhold": -0.24211480662551388
+  }
+}

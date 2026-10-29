@@ -1,0 +1,7 @@
+{
+  "stage": "training only; no evaluation run or results examined",
+  "original_protocol": "4f78153f712fb4224cc210805ae997f7776b9595c3eb6c35484d650aa6b52ae2",
+  "replacement_protocol": "a464de989ffd329ab2944816687470cb38915612f105c436d59fde247f276378",
+  "reason": "Initialization invariant: enforce the declared minimum directional mean at both EM starting points, including the initial likelihood evaluation. Added a one-iteration constraint test. Stopped the first training pass and restarted all training; no partial fit is reused. Candidate set, selection and assessment are unchanged.",
+  "original_retained": "protocol.initial.json"
+}

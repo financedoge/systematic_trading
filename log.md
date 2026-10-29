@@ -1,5 +1,62 @@
 # Project Log
 
+## 2026-10-29 — Backtest N15, then operator-requested N20/N30
+
+Completed fixed N15, then the operator-requested N20/N30 extension with unchanged
+63/252 strategy ranks, daily symmetric-HMM policy, monthly capital, cash and costs.
+N30 improves diversification and later Sharpe; it does not repair weak selection.
+Equal monthly net return / Sharpe: later N15 18.15%/.776, N20 13.84%/.682,
+N30 16.72%/.917; earlier −4.19%/−.217, −4.53%/−.269, −4.03%/−.251.
+Unranked full pool: 17.50%/1.144 later, −1.13%/−.049 earlier. N30 passes
+8/12 guarded comparisons versus N15, 0/12 versus unranked. No width is optimal
+or promoted. N fixed by operator; prior proposal to search6/10/15/20/30 deferred.
+
+N30 averages16.51/15.35 active ETFs, still45%/49%cash. Strategy-risk parity
+reduces concentration but gives10.77%/−3.90%return. Dynamic10%L1 has a width
+interaction (one sleeve cash flip=2/N); more trading offers no stable replacement.
+Raw-price rank/hold controls have better returns but more exposure/drawdown;
+future isolation should separate rank source from daily gate with matched cash.
+
+Post-fit252day warmup makes funded periods2024-02-01..2026-10-16 and
+2021-01-04..2022-12-30; repeatedly inspected development evidence.226portfolio
+cases,612exact shadow matches,20tests,five native accounting fixtures. All100ETF
+charts, three widths, dated ranks/fills and full attribution. N30 weakest actual
+equal contributors CPERlater−.960pp/PPLTearly−1.187pp; risk WEAT/GLD. Weakest
+shadows TLT−18.56%/MCHI−31.99%. No production, monitoring or broker changes.
+[Width comparison](docs/trend-sleeve-width-2026-10-29.md) ·
+[N15 methods](docs/trend-sleeve-portfolio-2026-10-29.md).
+
+## 2026-10-29 — Close single-ETF exploration; specify monthly strategy ranking
+
+Operator ends this research direction, requests lessons, one selected algorithm,
+full math/flowcharts and limitations, then clarifies continuous strategy records,
+monthly top-N membership and daily member buy/sell signals. Larger N should be
+examined for diversification. No further reviewer tuning requested.
+
+Retain entry-value B as exact alias `symmetric-trend-sleeve-v1`: symmetric fast
+HMM, two Kalman filters, fixed per-ETF policy, selected simple thesis exit and
+closing protection. This is transparent research continuity, not a proven best
+strategy; original fixed detector has stronger later medians. Standing stops
+remain separate. Chosen Sharpe medians .392/.322, cumulative12.35%/7.38%.
+Weakest CORN later−23.25%, MCHI earlier−34.29%, with dedicated figures/all charts.
+
+Prepared23 equations,2 flows,102 exact snapshots and612 baseline-return matches.
+Pinned published inputs verified; no fitting/new prices. Historical Oct16 rank
+preview uses63/252d strategy return/Sharpe, equal percentile score,N6/10/15/20/30,
+EW/ERC. All51 risky ETFs considered; EMB short variancezero leaves50rankable.
+N15 illustrative: EW40%invested/60%cash; ERC59.73%invested and22.29%capital SHY.
+Larger N alone does not establish diversified exposure.
+
+Next: month-end selection/capital, next-open fills, daily member signals,
+continuous unselected shadow records, no state reset/cash redistribution.
+Strategy covariance uses50%diagonal shrinkage/5%annual volfloor. Monthly primary,
+separate10%cash-inclusive target-change control. Select N in prior chronological
+validation, preferring largest near-best plateau; show full curve. Require causal
+post-fit ranking warmup, actual netted fill/cash accounting, costs charged once,
+full-pool controls and chronological robustness. No portfolio performance,
+monitoring, promotion, allocation, broker or live change in this synthesis.
+[Full specification](docs/trend-sleeve-synthesis-2026-10-29.md).
+
 ## 2026-10-29 — Historical-data outage and guarded storage recovery
 
 The operator reports a connected IB Gateway but stale strategies and no recovered
@@ -78,6 +135,621 @@ claim end-to-end recovery until those steps pass. No Gateway login/2FA or data
 freshness guard was bypassed. Existing unrelated research changes remain intact.
 Compact before/activation/after evidence and prior error-log tail are retained in
 `var/live/recovery-activation-2026-10-28/`.
+
+## 2026-10-28 — Coherent decision review; consistency without broad trading gain
+
+Operator authorizes testing the proposed shared-value/evidence-change direction.
+Completed per-ETF price and price/volume forecasts of the same next-session
+underlying return, independent of held/cash state. Purged expanding validation
+chooses constant/ridge; only nonconstant >0.5% MSE improvement with two winning
+folds activates review. Fixed .05 action margin/.10 evidence change, original
+standing protection, recovery handoff including pending delayed buys. No online
+coefficient resets or post-evaluation retuning. Protocol SHA256
+0d6536c40954294011db18ae7aae33ec5f65302204d2c869f8356ff055a4c459;
+same verified published audited batch and adjusted OHLC/raw volume. One-session
+target is not a Bellman value or actual stop-clipped PnL. Reused eras are
+development evidence; reviewer independence does not make the parent fully nested.
+
+1,836 main/816 diagnostic cases, 52/50 ETFs. Both challengers fail all 12
+era/friction gates. Median Sharpe A/B/C later .402/.397/.402, earlier all .312.
+Just five asset/era/model fits activate; each worsens evaluation forecast MSE
+versus constant. XLU B improves return 24.27%→48.55% later, 23.01%→35.41%
+earlier; all cost/delay return comparisons positive, but later harshest margin
+only .30pp and earlier 10bp no-delay Sharpe/DD worsen. ITA C 38.48%→19.72%:
+October12,2023 entry sold October20 at−2.31% versus A January10,2024 at+10.56%.
+LEMB B/MBB C also worsen. WEAT−15.98%/GLD+52.22% preserved via abstention,
+not active improvement. CPER/IWM nominated windows remain+10.00%/−9.64%.
+
+Weakest CORN later−22.73%, MCHI earlier−34.96%, both disabled and unchanged.
+CORN July19–31,2023 loses6.27% after fast rebound inside slow decline; MCHI
+June29–July8,2021 loses8.75% including gap through active stop. All ETF charts,
+exact date selection, formulas, strongest/weakest inspection images retained.
+42 focused Python tests, 306 offline chart combinations, 612 exact parent and
+disabled controls pass; ledger error5.55e−15. Native Windows LEAN accounting
+CPER/IWM/CORN later and MCHI earlier matches independent reference to$0.
+Synthetic clocks do not verify execution/inference; browser layout not certified.
+
+Keep the research baseline. Next examine trade-thesis horizon and temporary
+pullback versus failure, preserving coherent decisions and abstention. No
+portfolio overlay, monitoring, promotion, broker or live change.
+[Results and recipe](docs/coherent-review-results-2026-10-28.md).
+
+## 2026-10-28 — Train the reviewer; reject inconsistent decision values
+
+Operator authorizes training the reviewer. Completed per-ETF price and price/volume
+protected-path regressions, episode weighting, chronological reviewer calibration,
+training-selected margins and HMM recovery handoff. Frozen protocol
+38a22ef38f411fe536aead6b686ef7c3b974cf3d3ab057b4b1490360068a66c9;
+same verified audited published batch, adjusted OHLC/raw volume. Parent HMM uses
+outer-training snapshot during internal calibration; not fully nested validation.
+Historical evaluation is repeatedly inspected development evidence.
+
+1,836 main/612 diagnostic cases across 52/50 ETFs. Both challengers fail all 12
+era/friction gates. Later median Sharpe A/B/C .402/.241/.251; earlier
+.312/.202/.182. C recovery counts 704 later/544 earlier, unlike previous inactive
+review, but net outcomes worsen. DBA +24.93%→+50.18%, SLV +50.80%→+114.63%, while
+GLD +52.22%→+6.65%. SOXX price-only +76.82%→−52.36%; C disabled by training.
+
+Weakest C WEAT later −45.79% versus A −15.98%; constant holding value −.45974
+and positive recovery value create 315 one-session trades, 312 recoveries, annual
+fee drag 834 bp. GLD's constant holding value −.79972 cuts all 35 completed trades
+at the following open. Recovery targets assume no learned exits, so actual policy
+and label continuation differ. HMM handoff does not solve this model conflict.
+Weakest earlier MCHI −34.96% with reviewers disabled; June29–July8,2021 loss8.75%
+includes gap from above active69.30 stop to67.42 scheduled exit opening fill.
+CPER selected interval unchanged+10.00%; IWM −9.64%→B+.14%/C−1.25%, but full-era
+IWM worsens +4.83%→−6.74%/−14.82%. Shadow learning worsens median error in all
+task/era comparisons; no trading authority granted.
+
+612 exact parent and disabled-review paths; ledger error2.91e−14.41 focused tests,
+306 offline chart combinations and four native Windows LEAN accounting fixtures
+pass (CPER/IWM/WEAT later, MCHI earlier; reference differences$0). Report includes
+three main arms, formulas, allETF charts, weakest/incident views and isolated
+review-value points. Native synthetic clocks validate accounting, not execution;
+browser layout not certified. Frozen sources unchanged after evaluation. No
+overlay/promotion/broker/live changes. Next unify action values and continuation
+policy, test same-information decision consistency and abstention, and validate
+rolling nested fits before further adaptive complexity.
+[Results](docs/trained-review-results-2026-10-28.md).
+
+## 2026-10-28 — Independent decision review and adaptive model evidence
+
+Operator authorizes the proposed literature-informed review study. Implemented
+three single-ETF comparisons: frozen standing protection, separate price/volume
+entry/exit review, and review with established/recent model averaging. Per-ETF
+fits use only matured five-session labels. Model weights score stored forecasts
+before updates; loss/reversal warnings accelerate forgetting without forced
+switches, stops widening or permanent pauses. No HMM refit or BOCPD claim.
+
+Protocol2fdb1cc9e3f982591d4fef9e8452d54ae55eacdb028ca32d7036028dc6feaade;
+same audited published batch and adjusted OHLC/raw volume. No parent source edits
+or evaluation tuning.1,836 main/612 diagnostic cases on52/50 ETFs.612 exact
+standing-stop controls,612 exact disabled-review paths, ledger error5.55e-15.
+41 tests,306 offline chart combinations and4 native event-accounting fixtures
+pass (CPER late,IWM late,TLT late,IWM early; native/reference$0 differences).
+Representative incident/weakest/equation figures inspected; browser layout not
+certified. Native synthetic clocks validate accounting, not intraday execution.
+
+Both challengers fail all12 era/friction gates. Later Sharpe medians all .402;
+earlier A/B/C .312/.312/.268. CPER+10.00% and IWM−9.64% nominated windows unchanged.
+Recovery audit: later adaptive482 evidence crossings,22 pass nearby price,1 passes
+all filters then cancelled at open; no executed recovery. Earlier3 adaptive
+recoveries win, too few for efficacy claims. Fixed/adaptive forecasts fail median
+Brier comparison with training base rates; adaptive forecast IC−.040/−.004.
+Warnings without proven forecast edge can worsen outcomes.
+
+Weakest adaptive TLT later−24.49%, IWM earlier−32.05%. TLT fixed review improves
+two exits but adaptation erases benefits and cuts August2024 upswing. IWM retains
+7.28% initial risk and aMay2020 one-day−7.42% loss. PPLT fixed reviewer cuts an
+April2025 winner from35.48% to12.09%, later re-entering for−11.44%; full-era return
++21.60%→−4.08%. All ETF charts, exact dates, evidence/weights, fills/stops and
+formulas ready. Retain research baseline; next test decision-conditioned
+reclaim/adverse-excursion labels, simplify repeated confirmation gates and study
+an independent entry risk budget. Adaptation stays experimental until predictive
+shadow controls improve. No overlay, recurring calculation, promotion or broker
+changes. See docs/decision-review-results-2026-10-28.md and
+research/decision-review-20261028-v1/index.html.
+
+## 2026-10-27 — Standing stops and reviewing reversed decisions
+
+Final verification completed October28 Asia/Shanghai:48 focused tests and306
+offline chart combinations pass; native CPER/IWM/TLT/PPLT event-accounting
+differences$0.00. Static incident/weakest figures and mathematical rendering
+inspected; browser layout not certified.
+
+Operator chooses entry-value B baseline and nominates CPER2025-03-04..09-04,
+IWM2024-07-01..12-01. New frozen full-pool study:original B0, standing stop B1,
+and B2 with near-exit recovery plus discounted three-policy shadow learning and
+warning resets to recent21 observed returns. Same pinned published audited batch,
+adjusted OHLC/raw volume. Protocol8c639aee04780ed2651372910d57c131c1a780e2b89b6a1534e897a1ed8c86f9.
+
+All612 original B controls match exactly. First event-engine control validation
+found30 delayed-exit cases erasing rearming observed while awaiting fill; fixed
+before accepting evaluation, no threshold tuning, all102 training fits unchanged.
+Correctness amendment and original protocol/source/checks retained. New close-only
+engine now matches all612 paths exactly; multi-fill ledger max6.44e-15.
+1,836 main cases plus1,632 diagnostics. CPER interval-15.45%→+10.00%/+11.81%;
+IWM-14.04%→-9.64%/-11.60%. CPER July28 intraday touch exits before later crash;
+April30 illustrates premature-stop cost. IWM recovery never triggers during
+user interval because up-HMM evidence arrives after the nearby-price band is
+exceeded. Adaptive wider July policy erases early-stop benefit. B2 lowers later
+median Sharpe .392→.350; earlier .322→.326, but preservation fails. Both B1/B2
+fail all12 era/friction gates. Weakest TLT later-23.36%,PPLT earlier-41.52%.
+
+All ETF charts, exact-date OHLC/candles, interval PnL, trade/warning tables and
+mathematics retained. Same-close low-touch estimates conditional only:daily bars
+cannot establish auction cutoff feasibility. Native Windows accounting checks
+use explicitly synthetic ordered event fixtures, never research price substitutes;
+they do not validate intraday fills/inference. No broker/runtime/overlay/monitoring
+or promotion changes. Next separate independent disaster boundary, exit
+invalidation without the same HMM gate, partial recovery and tempered memory
+review; retain B0 until broad evidence supports replacement. Report:
+research/stop-review-20261027-v1/index.html; docs/stop-review-results-2026-10-27.md.
+
+## 2026-10-27 — Directional HMM repaired; online entry-value gate rejected
+
+Operator approved next round after regime-entry rejection. Frozen protocol
+3473303edc16cedb865ec771a3aa46003c64b722dd683b400cbafc5b12a83406; pinned
+audited batch unchanged. Three fixed-policy arms: original, symmetric fast HMM,
+and symmetric HMM with discounted mature-label return/adverse forecast gate.
+Full52/50 ETF pool,1,836 cases; single-ETF only. Shared directional variance
+and opposite means make log-emission U/D odds strictly increase with slope.
+Prefix refits and chronological final252 forecasts select model/memory; fixed
+risk penalty.25. Both challengers fail all12 cost/delay acceptance cases.
+B median Sharpe .392/.322 vs A .419/.276; C -.007/.000. Mostly intercept-only
+selection46/51 and45/49, negative median forecast IC. C spends nearly all time
+in cash yet still admits late bad setups. CPER later-31.51%, including July24–31
+2025-24.96% trade; IWM earlier-17.53%,six losses. TLT/WEAT rebound capture fails.
+
+Recorded text-only clarification for inherited descriptive-volume sentence
+(C's explicit full-feature model uses audited raw volume) and unused legacy
+prefix metadata; actual prefix_end/new fits govern. Dependency test verifies
+legacy HMM cannot affect features/eligibility. No frozen models/results edited.
+40 tests,612 exact A controls,independent ledger error6.22e-15; nativeINDA/GLD/
+CPER app-reference NAV discrepancies$0.00.306 chart combinations tested offline;
+static math/incident figures inspected, browser layout not certified. Report
+research/entry-value-20261027-v1/index.html and docs/entry-value-results-2026-10-27.md.
+No promotion, monitoring, paper, overlay or live changes. Next study setup-specific
+continuation before invalidation, with separate independent sizing/boundary
+component; do not calibrate on these inspected failures or assume tighter daily
+stops would fill before a sudden crash. All results remain development evidence.
+
+## 2026-10-27 — Market dependence and HMM/entry component rejection
+
+Operator requested better range/down-market detection and fewer false breakouts,
+while approving the previous re-entry/attribution direction. Audited current
+adaptive thesis B daily returns: later median correlation .601,beta .360,
+annualized descriptive intercept-.49%; earlier .542/.293/+.59%. Correlation
+alone is not a trading objective. Kept overlays excluded.
+
+New protocol a464de989ffd329ab2944816687470cb38915612f105c436d59fde247f276378
+pins parent/audited histories. Three fixed-policy component arms isolate market
+signals from shadow-policy feedback: original detector and selected thesis exit;
+new per-ETF HMM with separate emission variances and narrow zero-mean range;
+plus adverse-context/post-loss confirmation. Four guard choices with training
+guards/disable; no evaluation tuning. One initialization-bound correction before
+evaluation was recorded, original protocol retained, all fitting restarted.
+
+1,836 cases, neither challenger passes12 era/friction cases. Later median
+Sharpe .419/.367/.247; earlier .276/.255/.309 but preservation/return guards fail.
+WEAT fixed-control improvement does not imply large incumbent improvement:
+-32.51→-13.21%, actual adaptive incumbent-13.88%. TLT weakest later-21.14%,
+extra trades and2024 rebound fragmentation; ITA weakest earlier-34.12%,
+confirmation misses profitable2020 rebounds. An economic specification failure
+is exposed: wide negative-state Gaussian tails absorb large positive slopes.
+ITA April9,2020 +.970 normalized slope gets99.89% down. Opposite-sign high-score
+states in11/51 later and17/49 earlier risky ETFs. Keep rejected results frozen.
+
+31 implementation tests,612 exact fixed controls (<9.4e-15), independent ledger
+(<5.8e-15),306 offline chart combinations and three native Windows accounting
+checks pass. These are not economic acceptance. All ETF charts,8 figures,
+mathematics, fitted matrices, semantic audit and weakest-case inspection ready.
+No browser-layout certification. Next directional semantic tests before fitting,
+conditional future-return/downside forecast validation, and entry value relative
+to structural invalidation; reconnect adaptive policy only after component
+improvement. No monitored/paper/live/runtime/broker changes.
+[Results](docs/regime-entry-results-2026-10-27.md).
+
+## 2026-10-27 — Full-pool thesis invalidation and shallow-decline exits
+
+Operator approved the incident's recommended simple thesis exit and shallow-decline
+investigation. New frozen protocol c472d56e579a4981db65d727d80170bc4680a693966ab9792a991cad3951a30d.
+Keep parent reset-policy untouched. Three algorithms: exact parent C; persistent
+low up probability with nonpositive fast slope and extra lenience during slow up;
+plus HMM-neutral mass weighted by Gaussian negative-slope evidence. The latter is
+an exit heuristic, not HMM refitting or a calibrated posterior. Fit six tuples per
+ETF on final 756 training returns, fixed base-policy scores; disable additions
+that fail Sharpe/return/DD/trade-count checks. Recompute training payoff seeds and
+evaluation shadow trades using the same exits. No external prices or portfolios.
+
+1,836 evaluation cases. New exits enable for 27/28 later and 10/14 earlier risky
+ETFs. INDA's December 3 entry exits December 19 at -1.12%, versus February 27
+at -10.82%. Later cumulative A/B/C -18.99%/-0.57%/-7.82%; B drawdown 15.44%
+versus 35.25%. Later median Sharpe 0.370/0.415/0.403, but preservation 86.3%/84.3%
+misses 90%. Earlier GLD +14.70% becomes -12.74%/-0.38%. The earlier exit permits
+fresh losing COVID-period entries, and altered shadow rewards change later policy.
+USO similarly saves one loss then re-enters into another. B passes 1/12 era/friction
+gates, C none. No blanket adoption; these are previously inspected development eras.
+
+Weakest C TLT later -17.66%, unchanged because all additions failed training;
+MCHI earlier -41.37%, with 29 closed trades/seven winners. Its Gaussian-slope family
+makes B=C; one actual thesis exit nevertheless changes later learning paths. All
+ETF charts and seven static figures include three states, slow context, actual
+fills/stops, exit evidence, NAV and exact-date inspection. INDA incident and GLD
+2020 shortcuts included. Next separate exit and learning effects, test genuinely
+renewed re-entry evidence, and preserve independent risk-boundary research.
+
+44 tests passed; 612 exact controls have zero NAV difference; independent ledger
+error <5.8e-15; 306 offline chart combinations. Native INDA delay0, GLD delay1,
+TLT delay0 match the application whole-unit reference exactly; fractional NAV
+differs, maximum normalized path difference 1.03pp for GLD. Native does not
+independently validate learning logic. No broker, runtime, monitoring, promotion,
+funding or overlay changes. See docs/thesis-exit-results-2026-10-27.md and
+research/thesis-exit-20261027-v1/index.html.
+
+## 2026-10-27 — INDA failed-reversal holding-period review
+
+Operator asks why the December 3, 2024 entry persisted through February 27, 2025
+despite obvious deterioration, and proposes daily testing of the entry hypothesis.
+Replayed the frozen reset-policy model on the pinned audited inputs: entry/exit
+and trade return match exactly, cached NAV within 1.12e-16. No frozen code changed.
+Entry fast up 68.91%, slow down 81.64%, but selected policy disables context.
+Fast up falls to 15.16% on December 16 and 3.83% on December 17; neutral absorbs
+moderate declines. The down state's fitted fast-slope mean is about -0.823% per
+session; this is a filtered-slope emission, not a daily return forecast. Fast down
+peaks at 66.30%, below the 70% exit threshold. Initial stop distance 11.25%, later
+stop $49.242; February 14 evidence reset retains the same position and policy.
+February 26 close breaches the stop; February 27 open exit loses 10.82% net.
+
+Two descriptive rules, no optimization: up probability below 20% for two closes
+would sell December 18 at -0.59%; two negative fast slopes sell December 19 at
+-1.12%. These are inspected-event counterfactuals, not new validation; later
+re-entry paths are not simulated. Report includes all three fast state probabilities,
+fast/slow slopes, prices/fills/protection, volume and exact-date daily table.
+Recommend testing context-dependent thesis invalidation, conditional predictive
+likelihood evidence and independent price-risk limits, with coordinated re-entry.
+Do not multiply correlated HMM posteriors or call daily repeated nominal p-values
+valid hypothesis testing. Full market-model refitting remains separate. No runtime,
+broker, promotion, portfolio or overlay changes. Artifacts and replay recipe:
+research/inda-trade-20261027-v1/ and scripts/inspect_inda_reset_trade.py.
+
+## 2026-10-26 — Hard Bayesian resets and confirmed HMM transition experiment
+
+Operator adds full forgetting after big drawdown/3–4losses and possible HMM
+regime-change reset. Audited existing memory: trainingcap4(mean not years of
+undiminished counts),medianseed2.49; preceding75%forgetting leaves medianselected
+effective0.59. Underlying market fits still frozen. Implemented protocol
+0b2857f166d62a570bbc4e38a34501df903e10e07a940d8006b357e8b093241d:
+continuous, hardloss/DDreset, plusconfirmedHMMtransition. Filtered joint transition
+q>=.8 with destinationposterior>=.9 for3closes; causal confirmation,20session
+shared/63HMM cooldowns. Reset N,S,W,fresh tozero; retain properneutralprior/current
+policy fallback, binding orders/stops; only entry-after-reset trades supply payoff.
+Ordinary losingstop alone noreset. Never health-pauses; no portfolio tests.
+
+Full1,836cases: medianSharpe .284→.370later/.195→.217earlier, but preservation
+72.5%/69.4% fails90%; neitherresetpassesany12era/frictiongates. GLD+88.30%→+90.66%,
+WEAT-10.69%→-13.88%, TLT-12.59%→-17.66%. PPLTlater+3.66%→+36.93%, but earlier
+A/B/C-26.42%/-31.77%/-40.98%. HMM resets in4later/14earlier riskyETFs, sparse and
+not extra forGLD/WEAT/TLT. WEAT261sessionswithoutfreshoutcome vs2continuous yet
+15actualtrades; fullforgetting can delaylearning and discard triggering-loss data.
+WeakestC INDA-18.99%later/PPLT-40.98%earlier chartsready. INDA2025Feb14markedloss
+reset keepssamepolicy and trade eventuallyloses10.82%; resetisnotstoploss.
+TLTNovember2023reboundpreserved+11.43%inallarms; differentfailurefrompriorstudy.
+
+15focusedtests,612exactcontinuouscontrols(zeroerror),independentledger5.6e-15,
+306offlinecharts and3nativeWindowschecks pass. Nativewhole-unitreferenceexact;
+largestfractionalnormalizedNAVdifference1.35ppdelayedGLD, disclosed. Fivefigures
+and9equationsprepared; no browser-layoutcertification. Next: predictive/marked
+dailyfeedback, estimatedrecentchangeboundary, incumbent/freshchallenger, separate
+structuraldriftfromHMMstates. No fullHMMrefitclaim, no broker/runtime/promotion.
+See docs/reset-policy-results-2026-10-26.md.
+
+## 2026-10-26 — Continuous Bayesian policy adaptation, single ETFs only
+
+Operator asks to replace loss-triggered long pauses with learning and explicitly
+defers every portfolio overlay/monthly rebalance test. Implemented three-arm
+protocol52a79975a9ac143da7659fc2631bec4db88004647a2e3fb54ac141210c923635:
+frozen per-ETF policy; discounted Bayesian learning over nine entry/exit/protection
+tuples; same learning with warning-accelerated forgetting. Parent latent filters
+remain fixed. No health pause. Separate shadow policy ledgers, completed causal
+payoffs, magnitude-aware Normal posterior and diagnostic Beta win-rate; actual
+losses trigger updates without double counting. Queued orders bind, adopted
+protection cannot widen. Initial states sealed before evaluation. First attempted
+evaluation aborted on duplicate Calmar output keyword; only writer repaired,
+original protocol/repair receipt retained, no settings changed after results.
+
+All1,836ETF/friction cases complete. Ordinary B improves GLD+56.69% ->+88.30%,
+WEAT-32.51% ->-10.69%; warning C+85.34%/-18.17%. Neither passes full-pool guards
+in either era/any friction. Later medianSharpe A/B/C .412/.284/.277; earlier
+.276/.195/.195. Primary weakest C: TLT-24.08% later, PPLT-32.56% earlier.
+TLT loss-streak update2023-09-22 tightens protection7.5 ->2.5volunits; November
+trade stops2023-11-10+1.23% versus B until2024-01-05+11.43%. Full-reset rearming
+misses the continuing rise; wider shadow winner only known January. WEAT initial
+two losses6.99%/9.01% unchanged: learning request is not emergency risk control.
+
+16focused tests pass,612fixed controls match8.9e-15, independent ledger5.2e-15,
+306offline chart cases and four static figures/nine equations inspected. Three
+native Windows single-ETF runs match application whole-unit reference exactly;
+fractional NAV differences explicitly reported (GLDdelay1terminal+113.17% vs
++114.29%). No claim of independent learning validation or browser-layout QA.
+Report has actual parameter tables, warning/change histories, dates and everyETF.
+Next declared hypotheses: hard risk independent of learning, unfinished/daily
+reward, separate exit/re-entry credit, context-conditioned retained evidence.
+No overlay/runtime/promotion/broker changes. See docs/online-policy-results-2026-10-26.md.
+
+## 2026-10-26 — Single-large-loss and protective-stop feedback, actual simulations
+
+Operator requests warnings for a single large loss (one sigma of tested gains)
+and losing protective exits, beyond3/4 consecutive losses. Frozen three-arm
+protocol814ecf84e479e300abd093af17e37deb773d344ea207532675aba37c29059ff0:
+A existing fitted per-ETF policy, B streak/defensive/pause recovery, C additional
+marked/realized loss and losing-stop features. Calibrated winner-return sigma
+from completed training trades before evaluation; require5winners, no proxy when
+unavailable(CPER later/BIL). All arms start fresh and flat at each era boundary.
+
+Re-simulated1,836 ETF/friction cases and138 portfolio cases on pinned published
+audited histories, 5/10/20bp each side and0/1extra-session delay. Actual fractional
+cash/share ledger, fixed entry risk budgets, close decisions/next-open fills,
+no retroactive erase of the warning loss. Marked losses request earlier exit;
+completed large losses pause and emit refit-review events. No online market-model
+refit is performed. Frozen reference outcomes govern fresh shadow recovery.
+
+WEAT training winner sigma4.2067%(13winners/32trades): C exits January5,2023 for
+-5.36% and pauses925/951sessions, recovering to probation September15,2026.
+A returns-32.51%, B-22.45%. GLD A+56.69% falls toC+10.66%; later medianSharpe
+.412 -> -.102. Neither adaptive arm passes full-pool guards in either era/any
+friction. Monthly C selection improves Sharpe/DD versus monthly A in both eras/
+all6frictions within1ppCAGR, a limited allocation result; it does not consistently
+beat stronger controls. Dynamic C overlay10.93%CAGR/1.470Sharpe/DD5.98% fails
+return preservation versus A13.18%CAGR; FR25 remains empirical16.51%/1.450.
+
+612 fixed controls match prior simulator under the fresh-start convention to
+8.9e-15 NAV; independent ledger error4.9e-15.29focused tests pass. Three native
+Windows LEAN replays have zero NAV difference.306 offline chart controls cover
+every ETF/era/arm, dates/hover/two-click selection and weakest defaults. Four static
+figures and seven equations inspected. Weakest C cases EWH(-20.57%) and EWY(-19.36%)
+are ready, alongside WEAT and harmed-winner GLD. No browser-layout certification,
+runtime/promotion changes or broker effects. Retain severity as a feature; redesign
+response/recovery and test bounded refitting separately before the multiscale work.
+See docs/loss-feedback-results-2026-10-26.md.
+
+## 2026-10-26 — Learning from losses: controller and full-pool warning audit
+
+Operator accepts the structural/intermediate/fast and spectral research direction,
+and requests strategy win-rate/recent-return feedback with3–4 consecutive losses
+triggering mode change/refitting. Implemented a research-only health controller:
+three closed net losses -> half-risk defensive state, four -> pause/refit-review
+event, fresh shadow recovery -> quarter-risk probation. Actual outcomes and shadow
+recovery are separate; versions, availability, delayed knowledge, next-session
+actions, one declared candidate per pause and failed recovery are explicit.
+Recent risk-normalized expectancy/win rate are descriptive; sequential shortfall
+and adaptive entry/exit/refit integration remain specified future work. No orders,
+runtime activation, model refits or adaptive-return claims.
+
+Pinned diagnostic recipe audits all51 later/49 earlier risky ETF cases on frozen
+training-selected policies, excluding carried-in/open trade outcomes and starting
+health neutral each era. WEAT first3 losses close2023-06-29 at-17.21% cumulative;
+first4 close2023-08-01 at-20.28%; reactions start next session. June/July2023
+positions reach+8.75%/+7.09% held-close gains then exit-2.18%/-3.71% net. Seven
+of ten losers have positive gross close excursions, although one is only+.17%.
+Entry lag and exit giveback require separate diagnosis. Later27/41 profitable
+cases also have a three-loss streak; GLD has one in both eras. Avoid equating
+streaks with a confirmed market regime change or automatic full-model retraining.
+
+Seventeen controller/audit tests pass, including prefix invariance, duplicate/
+backdated evidence, fresh recovery, version identity and no exit-day-close lookahead.
+WEAT/MCHI warning charts visually inspected. Source report hashes and all52 frozen
+ETF fits verified. New compact report contains the full pool, exact trade dates,
+warning markers and gross excursion/net return distinctions. The accepted research
+direction now includes the common health controller, feedback-disabled controls,
+event/scheduled refit controls and dynamic/monthly portfolio adoption, with only
+three main market-model families. Existing research outcomes and operational
+changes remain untouched. See docs/strategy-health-framework-2026-10-26.md.
+
+## 2026-10-26 — Structural regimes, spectral direction and weakest-case charts
+
+Operator proposes a multi-year TLT range, three interacting timescales and
+frequency analysis, questions FR25's regime dependence, and requests WEAT plus
+a ready weakest-ETF chart every round. Prepared a research direction, not a new
+fitted strategy. The current model is two Kalman slope filters plus one fast HMM;
+its boundary-hitting smoothness fits do not establish learned adaptive horizons.
+Pinned audited TLT closes support range-like behavior particularly after late
+2023, but a driftless random walk must be distinguished from mean reversion.
+
+Propose structural/intermediate/fast roles, explicit duration and change-point
+uncertainty, then a causal time-frequency diagnostic atlas across the full pool.
+Only three later comparisons: matched two-scale control, duration-aware hierarchy,
+and that hierarchy plus spectral features. Retain chronological selection,
+cost/delay and dynamic/fixed-interval controls; all already inspected dates remain
+development evidence. Macro stories are hypotheses; external methodological
+references supply no new price inputs. FR25 is an empirical incumbent requiring
+its own attribution and stability checks, not a universal gold standard. Existing
+frozen verdicts and operational/promotion authority remain unchanged.
+
+Report now defaults to the weakest training-selected risky ETF by primary net
+cumulative return: later WEAT/B -32.51%, Sharpe -.619, maximum drawdown35.11%,
+10/14 closed losses; gross -31.56%. Earlier weakest is MCHI/A -29.80%. Added raw
+audited volume, a weakest-case button for both eras, WEAT full/2023 close-up and
+MCHI earlier figures, plus compact weakest-case metrics/trade records. Standing
+AGENTS/playbook instructions require this inspection each round and preserve
+visual comments as hypotheses for a newly declared experiment.
+
+Two report tests pass, including JSON-null context rendering; all312 selector
+combinations/306 charts pass offline controls; Ruff passes and three new figures
+were visually inspected. No browser-layout certification; local-file browser
+restriction respected. No signal, fit, trading parameter or performance changes.
+See docs/regime-hierarchy-direction-2026-10-26.md and the updated latent-slope report.
+
+## 2026-10-26 — Continuous slopes, three mathematical models and all ETF charts
+
+Completed the operator-approved continuous-slope extension, frozen October 25 as
+latent-slope-20261025-v1. Separate slow/fast local-linear price filters, with
+Gaussian fast direction (A), fast-slope HMM (B), and slow-context exits (C).
+Three main report choices only, 306 ETF/era/model charts, actual fitted values,
+31 rendered equations and precise decoding of prior variant names. Date inputs,
+crosshair/two-click selection and model-preserving ETF navigation remain.
+
+Protocol45065827882125899586431e72b071ceb0cf5d8d919462cd4bbdf1891718c831;
+signals184c74e448ff5270d674e56d00e32a5964d7ed2ebe72968989b0f0bcfa857ef8.
+Published audited inputs pinned/verified; all52 fits sealed before3060 asset/friction
+and102 portfolio cases. Per-ETF training choice, both inspected chronologies,
+5/10/20bp and0/1 extra-session delays, dynamic/monthly portfolio controls.
+
+Later median Sharpe A/B/C .374/.449/.461 versus prior .319; earlier
+.340/.291/.271 versus .214. TLT C -12.48%/-.340/DD16.87% versus prior
+-18.53%/-.656/DD20.36%; B -11.45%. C captures November6,2023–January9,2024
+for+11.59% and July17–September27,2024 for+5.51%; full interval gains +5.12%
+and+4.41%. Slow context confirms down310/up275 of951 later sessions. EWA/MCHI
+improve; CORN C -14.19%; GLD C+76.60% versus prior+85.78%, while training selects
+A+58.32%. WEAT B worst -32.51%,10/14 closed losses; gross loss31.56%.
+
+All102 slow lambda fits and100/102 fast fits hit their upper bounds. Do not call
+this unconstrained or online timescale learning. No family preservation gate
+passes. Four earlier dynamic-selector/friction gates pass, none later; dynamic
+overlay13.46% CAGR/1.372 Sharpe/DD7.48% versus FR25 16.51%/1.450/DD8.65%.
+Keep research-only; revisit false rebounds and slow-context smoothness before
+a new declared design. No silent event-date tuning or promotion.
+
+35 focused tests/Ruff pass. Training prefixes/scores reproduce; independent
+asset-ledger relative NAV error2.976e-14. All612 asset and66 portfolio controls
+match exactly;3 native Windows LEAN replays have zero NAV difference. Offline
+Node tests cover312 selectable combinations/306 charts;8 figures and4 equation
+proof sheets inspected. Browser local-file restriction remains; no alternate
+browser/server path used or layout certification claimed. Shared arrays and a
+compressed chart cache retire only the redundant122MB presentation cache;
+all frozen model/input/fit/result evidence and unrelated operational edits remain.
+See docs/latent-slope-research-2026-10-26.md and the linked report.
+
+## 2026-10-25 — TLT countertrend capture and coupled daily latent trends
+
+Operator requested TLT's late-2023 and mid-2024 rebounds, interacting long/short
+HMMs without fixed trend windows, context-sensitive exits, and better chart date
+selection. Preserved frozen prior models and unrelated operational changes. Added
+exact start/end/session date inputs, hover crosshairs, two-click selection and
+copyable intervals to the existing multiscale report and the new focused report.
+The new charts show 2021 price context but hide future-trained state labels before
+the evaluation boundary; earlier evaluation is separately selectable.
+
+Frozen coupled daily-trend protocol
+80b4e47541b5d047e59805191c56bd0fd622fe7696f04036922c6d8c35d5f25f;
+published/audited adjusted prices and raw volume only. Eight paired families,
+144 training policies per ETF/cutoff, all 52 fits sealed before 6,120 asset/friction
+and 102 portfolio cases. Independent/coupled nine-state additive drift models,
+uniform/context exits, price/volume controls. Persistence constraints identify
+timescales; no trend lookback features. Research-only, no deployment/approval edits.
+
+Prior TLT December 15, 2023 entry missed the October–December 22.63% rebound and
+exited March 4 for −4.55%; June 27, 2024 entry reached +9.41% but kept +0.47%.
+New selected buys November 3 and exits January 5 for +9.24%. June–October 2024
+loses 0.98% (−2.28%, then +1.33%). Full later TLT −17.81%, Sharpe−0.596, DD25.13%
+versus prior −18.53%/−0.656/DD20.36%. Independent model −15.49% and same event
+trades. No slow-up/down confirmation in 951 sessions: context rules never activate.
+Daily return factors did not learn the intended broad downward corridor. Volume
+changes also leave these TLT event trades unchanged; do not credit coupling for
+the captured rally. GLD falls +85.78% to +18.02%; no family or portfolio gate
+passes. Dynamic overlay11.35% CAGR/1.401 Sharpe vs FR25 16.51%/1.450.
+
+32 focused tests, Ruff, all prefix/score checks, 66 exact portfolio controls and
+three native Windows LEAN comparisons pass (zero NAV difference). Independent
+asset ledger error3.864e-14. Offline controls cover118 charts and1040 combinations;
+four static figures retained, browser layout not certified. Report and findings:
+research/coupled-trends-20261025-v1/index.html,
+docs/tlt-coupled-trends-2026-10-25.md. Next declared research should test a continuous
+latent slow price slope plus a fast switching rebound component, directly checking
+corridor recognition and recovery timing before interpreting net improvements.
+
+## 2026-10-25 — Multiscale contexts, adaptive windows, protection and HMM comparison
+
+Operator requested specific GLD/CORN/EWA failure diagnosis and TLT/MCHI charts,
+then added HMM regime modelling while implementation was underway. Incorporated
+HMMs before sealing protocol or new fitting. Prior GLD long never confirms down
+in 2026: 126-session slope stays upward until June, then quality/volume/persistence
+conditions fail jointly. EWA's 21-day setting was range, not its 10-day up / 42-day
+down pair, and the previous strategy had no separate stop-loss. Four of five EWA
+exits with complete next-21-day history precede gains; only two of 11 MCHI exits
+do. Future exit diagnostics remain excluded from trading inputs.
+
+New research-only modules compare fixed multiscale, adaptive horizons, protective
+trails, stress tightening and unprotected/protected/stress HMMs, each paired with
+price/volume. HMMs independently fit fast/slow three-state diagonal Gaussian
+emissions and persistence; combine forward probabilities for decisions. No
+retrospective smoothing in signals. This is not a factorial HMM or hidden horizon
+model. A NumPy EM/filter avoids a Python 3.14 hmmlearn compiler dependency; short
+sequence exhaustive enumeration validates filtering, posteriors and transition
+counts. Protection is tested at closes and filled later, with gap risk explicit.
+
+Frozen protocol 60ef669a458665a043b5d790b24fe1dd440a1352b7b7d84957d87420f2e9a86b
+pins audited inputs and code before 45,696 initial scores plus finalist frictions.
+All 52 per-ETF files sealed before evaluation. Completed 9,792 asset/friction and
+102 portfolio cases; matched prior control is short/long position union, with
+identical 0.5+0.5*position portfolio overlay. Both chronologies are development
+history. Old model/runner hashes remain unchanged; original report gains missing
+TLT/MCHI domains and GLD short charts without altering results.
+
+GLD selected fixed model exits March 26, +85.78% / 18.52% DD. CORN selected protected
+HMM -9.86% versus union -29.19%; MCHI +7.95% versus -9.72%. EWA -18.00%, TLT -18.53%
+remain poor. Later selected median Sharpe 0.319 vs union 0.615, only three of 51
+improve CAGR; earlier 0.214 vs 0.198. No family passes preservation. HMM price has
+earlier median Sharpe 0.292, but sharper exits damage later participation. Near-
+binary probabilities need semantic/calibration/covariance diagnosis. Dynamic
+overlay 13.95% CAGR / 1.339 Sharpe trails FR25 16.51% / 1.450. Six earlier dynamic
+selector gates pass, none later; no promotion, monitoring or runtime changes.
+
+All training scores/prefixes reproduce, event-ledger relative NAV error <=2.91e-14;
+54 unchanged portfolio controls exact, three native Windows LEAN checks zero NAV
+difference. Twenty-six focused tests and Ruff pass. Offline report checks cover
+1,632 details, 118 charts, 608 windows; nine static figures inspected. Browser
+layout is not certified. Full table includes fees, delays, parameters, actual
+trades, daily windows/protection and filtered HMM probabilities. Next hypothesis
+requires HMM state/covariance/duration and missed-recovery diagnosis before more
+latent-state or horizon parameters; do not retune this completed run.
+[Findings](docs/multiscale-hmm-research-2026-10-25.md) ·
+[Interactive research report](research/multiscale-modes-20261025-v1/index.html).
+
+## 2026-10-25 — Fit separate range/up/down detectors and trade mode transitions
+
+The operator requested separate identification parameters for range-bound, upward
+and downward corridors, comparing price/volume methods and buying range/down-to-up
+while selling only on confirmed down. Implemented a separate causal research model
+and runner, preserving prior frozen strategies and unrelated operational work.
+Three methods (regression, channel structure, average corridor), each price-only
+and volume-confirmed, have independent range/up/down blocks jointly selected by
+training trading outcomes. Range/uncertain modes retain holdings; initial unknown
+to up does not buy. No TP/SL, time exit or cooldown overrides the primary rule.
+Intact prior-range priority, cross-timescale conflict arbitration, binding delayed
+orders and cash-funded fee accounting are explicit and tested.
+
+Protocol 8e230d2622e0be26436a48c0592d06f22264803521004dde811e268c999bb656
+pins the audited adjusted OHLC/raw-volume batch and runner/model hashes before
+fitting. All 52 ETF fit files sealed before evaluation: 104 later / 100 earlier
+ETF-domain fits, 384 configurations each, 78,336 initial fits and six-friction
+finalist rescoring. Completed 8,568 asset/friction and 102 portfolio cases with
+dynamic/monthly controls. Historical membership/vintage limitations remain; both
+chronologies are previously inspected development evidence, not fresh holdouts.
+
+Later selected modes: 92/102 risky cases positive, 74 improve prior breakout CAGR,
+median Sharpe 0.562; earlier 59/98 positive, median Sharpe 0.190. Only 15 later
+cases beat own buy-hold CAGR; no positive alpha survives Holm in either era.
+GLD long +94.09%, IAT short +64.48%, SOXX short +374.90% show better participation.
+SLV long +69.78% suffers 52.96% drawdown: first down confirmation July 6 follows
+the January 28 peak, with eight further up-retained sessions before July 16 down
+and July 17 sale. Its long down window causes most lag; arbitration adds delay.
+IAT's range label covers 88.85% of sessions, exposing semantic ambiguity despite
+profit. CORN short -29.19% is worst; EWA short loses 19.47% versus buy-hold +45.80%.
+Dynamic mode overlay 15.51% CAGR / 1.430 Sharpe trails FR25 16.51% / 1.450;
+all 36 portfolio gates fail. No SOTA, monitoring, allocation or execution changes.
+
+Validation: all selected training scores/prefixes reproduce; event-ledger relative
+NAV error at most 2.31e-14; 66 matched controls exact; three native Windows LEAN
+checks have zero NAV error. Eighteen focused tests, Ruff and offline report controls
+covering 1,428 detail records / 30 chart windows pass. Six static figures inspected;
+browser layout is not certified. The report retains all ETF fits, costs/delays,
+state charts, trade ledgers, input/output hashes and limitations.
+Next hypothesis is a separate predeclared study of faster down detection,
+state-dependent conflict handling and range-shape identification independent of
+return utility. Do not retune this completed experiment on its evaluation failures.
+[Findings](docs/trend-mode-research-2026-10-25.md) ·
+[Full ETF inspection](research/trend-modes-20261025-v1/index.html).
 
 ## 2026-10-24 — Diagnose October 21 missed batch and implement durable intent recovery
 
@@ -2547,3 +3219,334 @@ multi-asset strategies while this candidate uses a dynamic target-change clock; 
 tracking/reporting only with no execution authority. Promotion record updated at
 `config/strategy-promotions/fr25-lifecycle-conditional-2026-10-19.json`; rollback = remove the key,
 restart guarded launchers, verify the prior six-strategy publication, retain the candidate artifact.
+
+## 2026-10-20 — Review recent fixes and correct the conditional lifecycle evidence
+
+The operator requested review of the recent agent work and continuation of the
+research plan, then explicitly selected the conditional FR25/lifecycle correction
+and timing/cost retest. Reviewed `ffa3996` and the preceding calculation/backup work.
+
+**Execution finding.** Automatic renewal could skip a newer independent pending,
+approved/claimed or rejected prepared proposal and revive an older target within
+the same allocation. Three regression tests reproduced the failure. Renewal now
+considers only the newest target-date/creation-time intent; ties require review.
+All normal policy, reconciliation, broker-attempt and approval checks remain.
+No application restart or broker action was performed.
+
+**Candidate corrections.** The prior implementation labelled a USD=1 replay as
+CNH, reported target-derived quantities and fixed 2% cash instead of actual engine
+positions/cash, supplied no actual fills/latest targets, omitted cash from L1
+triggers, and did not reproduce Rule A's ordering/parking/core-cash contracts.
+Its 52-ETF strategy metadata inherited a 14-ETF universe. Frozen panel and
+parameter files were neither verified nor bound fully into calculation revisions.
+Implementation 1.1.0 repairs these contracts, uses actual simulated fills and the
+initial cash anchor, verifies 58 retained files and 107 published source receipts,
+and includes JSON inputs in revisions and pre-publication checks. A retention pin
+protects the monitored candidate's input batch while its future is reviewed.
+
+The prior “missing 23 ETFs” explanation did not explain the monitoring cutoff:
+the module is hard-wired to a panel and breadth series ending October 12 and
+cannot extend when new prices arrive. It is now explicitly historical-only,
+with current-signal availability and allocation readiness false. Membership is
+unchanged. The old validator's saved-page comparison and claimed runtime
+verification are replaced by fresh calculation/holdings/report checks, with the
+running-app publication explicitly unverified.
+
+**Research.** Predeclared `research/fr25-lifecycle-review-20261020-v1`: fixed
+parameters, all 52 supported ETFs, published batch `5688bb09…`, 12 constructions
+across six cost/delay combinations = 72 replays. Initial capital/first-session
+cost is included, Sortino uses downside RMS over all sessions, and random
+conditions use the same 10% trigger as the primary. Delayed replay retains the
+original decision-close references. Final cap is 45%, excess cash preserved.
+
+5 bp, next open: FR25 CAGR 16.51%, Sharpe 1.450, DD -8.65%; dynamic conditional
+15.85%/1.459/-7.64%; monthly conditional 15.96%/1.462/-8.39%. Primary final NAV
+remains USD 1,738,429.33, 55 rebalances; its changed CAGR reflects inclusion of
+initial capital/first session. The primary passes only 2/6 friction gates. Every
+added-delay gate fails, as does Sortino at 20 bp without extra delay. Two of three
+matched random conditions beat its base Sharpe. Yearly Sharpe differences are
+negative in 2025 and 2026. **Do not promote; do not rescue the fixed candidate
+with further tuning on this inspected sample.**
+
+**Verification.** Initial focused review 170 passed/2 skipped; changed-path suite
+122 passed/2 skipped; additional lifecycle/report/metrics suite 37 passed (these
+overlap). Four independent native Windows LEAN scenarios match the study NAV
+exactly: FR25, monthly conditional, dynamic conditional and delayed dynamic.
+Fresh app-module replay matches study NAV/positions exactly and targets within
+1e-12; actual holdings reconcile to NAV. Shared full report rendered and its
+client-side allocation contract exercised; no browser-layout certification.
+Ruff and documentation checks pass.
+
+**Boundaries and next actions.** No monitoring membership, allocation, funding,
+approval policy or broker state was changed. Source fixes await guarded deployment
+and publication verification. Current signal extension requires app-owned daily
+FR25/stable-breadth calculations on new audited inputs; the existing frozen files
+are insufficient. Daily open/delay stress is not observed historical TWAP evidence
+or a queued/partial-order simulation. Keep this candidate's corrected historical
+report for operator review. The separate full-pool cash-relative retest remains
+next in the broader research plan. Details:
+`docs/conditional-lifecycle-review-2026-10-20.md`.
+
+Final renewal coverage also checks newer allocation intents outside the
+prepared-account path; these block revival of the older prepared target.
+Renewal/deferred suite: 48 passed/1 skipped. Final report manifest and actual
+report client-side renderer verified; 104 documents/566 local links pass.
+
+## 2026-10-21 — Corrected breakout signals and individually fitted ETF audit
+
+The operator clarified the research question: does the algorithm fitted on each
+ETF produce positive net return, alpha and IC, is the earlier GLD claim true,
+and does it improve full-pool selection or an overlay on FR25? A preliminary
+shared-parameter study is retained as supplementary evidence, not an answer to
+individually fitted signal quality.
+
+**Implementation audit.** Frozen legacy lifecycle behavior is retained. New
+research engine `breakout-revisit-1.0.0` counts the crossing close toward
+confirmation, checks stops on the entry close, applies symmetric buy/sell delays,
+honors continuation cooldown, freezes initial ATR at confirmation, funds fees
+without leverage and separates closing decisions from actual holdings. Stops
+are closing decisions followed by open fills, not hypothetical intraday orders.
+Future-prefix, accounting, cooldown, fee and delay checks pass.
+
+**Declared fitted study.** `fitted-breakout-audit-20261021-v1` uses the existing
+hash-verified published adjusted-price / raw-volume histories, all 52 supported
+ETFs, short and long domains, and independent training cutoffs at 2019 and 2022.
+The bounded search has 241 candidates per ETF/domain/cutoff and rescores its
+training finalists at 5/10/20 bp and 0/1 extra sessions. Four early fits lack
+sufficient history; no future-trained fallback is used. Original GLD vectors,
+legacy versus corrected replay, own-ETF refits and GLD transfer are separate.
+Full-history state carries into each evaluation. Chronologies have been inspected
+previously and are development evidence, not pristine holdouts. The new search
+budget is much smaller than the original GLD optimization and does not claim
+equivalent optimization effort.
+
+**Findings.** Original GLD corrected short/long at 5 bp, 2023–October 16:
+CAGR 9.47%/11.63%, Sharpe 1.004/1.290, drawdown -12.19%/-11.35%; GLD buy/hold
+24.00%/1.171/-26.40%. Long alpha +3.29% has p=.377 and state IC .025 has p=.832.
+The original earlier procedure fails to generalize (short/long 2016–2022 CAGR
+1.08%/.58%, negative alpha). The separate bounded GLD short refit produces
+7.26% CAGR; it is not the original optimized GLD fit.
+
+Among 51 risky ETFs, later refits have only 1 meaningful positive short alpha
+and 3 positive long alphas, none reliable after Holm correction. Numerical
+intercepts below 1e-8 annual magnitude count as zero. Median primary state IC
+is -.097 short / -.054 long. Only 2 ETFs per domain beat buy/hold CAGR.
+Earlier cross-sectional signal evidence does not persist in the later period.
+Positive strategy P&L alone does not demonstrate alpha or useful selection.
+
+**Portfolio use.** 102 matched cases use the full price-supported pool and its
+causal liquidity admission mask, fixed six slots and BIL parking, dynamic versus
+monthly clocks, all six frictions, original-fit overlays, a training-estimated
+constant-exposure control and three common-block shuffled-state controls.
+Dynamic fitted selection returns 6.87% / .593 Sharpe versus matched momentum
+10.60% / .781. Dynamic fitted overlay returns 12.34% / 1.395 versus FR25
+16.51% / 1.450; constant exposure reduction reaches 13.43% / 1.593 and all
+three dynamic shuffled controls beat the real overlay's Sharpe. All 24
+selection/overlay SOTA gates fail. No annual cost ceiling was imposed.
+Do not promote or describe this family as validated selection alpha.
+
+**Verification / retention.** 3,096 return/alpha cases and 516 IC records retained;
+every corrected asset path reconciles to an independent event ledger. Three
+native Windows LEAN portfolio cases match exactly. Focused suite 41 passed,
+Ruff passed, shared full report allocation renderer and holdings checks passed.
+The supplementary unfitted study has 136 replays and three exact native checks;
+its price-supported selection omitted the legacy liquidity mask and is disclosed.
+Compact protocols, sealed fits, results, recipes and receipts retained. No new
+provider histories, running-service changes, membership, approval, funding,
+allocation or broker actions. Details: `docs/fitted-breakout-signal-audit-2026-10-21.md`.
+The wider plan's full-pool cash-relative replay remains open; additional ETFs
+need audited publication before any new study.
+
+## 2026-10-21 — GLD visual decision inspection
+
+The operator requested plots to inspect range boxes, breakout and buy decisions,
+and dynamic TP/SL levels before discussing the idea further. Created
+`research/gld-breakout-inspection-20261021-v1/index.html` with both original GLD
+fits under corrected execution, without refitting or changing the frozen engine.
+The offline report includes all 39 short / 13 long historical trades, 206 raw
+crossings, trade/date selectors, zoom, exact daily inspection, prior-window
+qualification tests, stop decomposition, heat flags and CSV downloads. A static
+two-panel figure shows the first post-2022 trade in each fit.
+
+All boxes use the selected prior close window and end before the crossing.
+They are recognized at the crossing, not known at their historical start.
+The range is the central 90% of log closes, not an intraday high/low rectangle.
+Confirmation, entry, exit decision and actual fill prices/dates are distinct.
+The initial risk ATR is from confirmation; the trailing ATR updates daily.
+There is no fixed TP: a profit threshold activates the ratcheted closing exit.
+The sticky heat flag may activate earlier and only tightens an existing trail.
+The first 2023 long trade starts at $187.54 with a $166.89 effective risk floor;
+the $207.69 trailing threshold is first reached April 1, 2024, almost a year later.
+
+Independent stop decomposition exactly matches all 2,930 held-session levels.
+Prior-window quantiles and actual next-open fills are checked. Seventeen focused
+tests pass, including eight new inspection tests for causal boxes, delayed
+queued exits, ratchets and rejection of corrupted stop evidence. Offline Node
+checks exercise both domains, every trade and crossing, all overlays, zoom,
+cursor/pin and CSV column alignment; they pass. Scientific plot visually checked.
+The browser tool rejected the local-file URL, so no browser-layout certification
+or automatic opening is claimed. No workaround or external publication used.
+
+## 2026-10-23 — Per-ETF breakout tables, failure attribution and structural exit tests
+
+The operator requested independently fitted short/long results across the ETF
+pool, diagnosis of weak cases without sacrificing stronger cases, then tighter
+profit protection, trend direction and redesigned ranges. The full table verifies
+the October 21 sealed per-ETF refits:104 later/100 earlier fits, no GLD transfer and
+no claim of rerunning the original 27-coordinate optimizer on October 23. Standard
+displayed Calmar uses actual maximum drawdown; the old optimizer's 3% floor stays
+frozen. All 104 later trade paths and stop decompositions reconcile exactly.
+Report: `research/etf-breakout-failure-review-20261023-v1/index.html`.
+
+Diagnosis: IAT/XLY percentage trails can activate while remaining below initial
+protection;20 closed episodes arm but exit at the unchanged floor. XLB/MCHI losses
+often never arm. EWY/SLV miss large rallies through sparse entries. WEAT/CORN
+absolute losses partly preserve capital relative to larger underlying declines.
+Cash exposure, overnight/intraday contributions and actual fee drag are separated
+without claiming descriptive state counts establish causal attribution.
+
+A new predeclared 90-candidate component fit per ETF/domain/cutoff separately tests
+exits, trend gates, flat/rising consolidation and their combination. Training
+selection includes baseline and six cost/delay cases with return/drawdown guards.
+All choices sealed before evaluation. A display serializer's rounding was caught
+during preflight before evaluation; incomplete fits were discarded and the same
+grid rerun at full precision. Previous protocol/correction receipt retained.
+No search thresholds or acceptance criteria changed in response to results.
+
+Component study:7,344 asset/friction cases and 102 portfolio cases. Forced first-
+lower-close exits improve IAT short -29.93% to +13.92% cumulative and XLY -19.32%
+to -1.02%, but cut GLD long +51.45% to +13.08% and PPLT +40.32% to -34.31%.
+Combined training-selected changes improve EMB, damage IWM/TIP and do not meet
+the family design. All 24 later portfolio gates fail;6/12 earlier pass without
+later transfer. Three native accounting checks have zero NAV difference.
+Report: `research/adaptive-breakout-20261023-v1/index.html`.
+
+The operator clarified the desired long-only exit: retain a breakout as it forms
+a new rising trend, sell on that trend's failure, and accommodate GLD/IAT without
+selling every normal pullback. A separate 13-candidate study fits post-entry rising
+support through yesterday, with 10/21/42/63 maximum windows and 0.5/1/2 prior-ATR
+buffers, plus baseline. Positive-slope support ratchets; original initial risk
+and pre-establishment failed-breakout time exit remain. Entry/re-entry stay fixed.
+
+This study has 3,672 asset/friction and 102 portfolio cases. No later fit clears
+the training preservation requirements. The fixed 21/1 control changes GLD long
++51.45% to +10.40%, IAT short -29.93% to -5.07%, IAT long +6.72% to +10.05%,
+MCHI long -20.03% to +27.83%, and PPLT long +40.32% to +36.25% with higher Sharpe.
+It improves 28/99 eligible later CAGR cases and worsens 70. IAT's July 2023 trade
+exits +6.03% instead of -12.10%, but subsequent false entries still hurt. GLD
+exposure falls 40.06% to 10.83%; its existing continuation flag is off. Breaking a
+steep local line can be deceleration rather than broad trend failure, and fixed
+sparse re-entry can miss continuation. All 24 later portfolio gates fail;4/12
+earlier pass. Report: `research/post-breakout-trend-20261023-v1/index.html`.
+
+Both studies reproduce all 1,224 baseline metrics exactly, reconcile independent
+event ledgers and regime log-return contributions, and reproduce sealed training
+prefixes. Final focused suite 45 passed; Ruff and three standalone report-control
+suites pass; scientific figures visually checked. Three native checks in each
+new experiment have zero NAV difference. Selected-portfolio receipts validate
+accounting, not the new signal's predictive value. Browser
+layout is not certified. Same pinned published batch throughOctober 16, portfolios
+throughOctober 12; no provider downloads/splicing, broker, funding, approval,
+monitoring, runtime or promotion changes. Both eras remain inspected development
+evidence. Preserve compact fits, protocols, charts, results, recipes and receipts.
+
+Next hypothesis: causal higher-low or multiple-timescale structure to distinguish
+trend deceleration/consolidation from reversal, coordinated with continuation
+re-entry and separate protection against trades that never trend. Do not retrofit
+the completed experiments or choose an ETF subset from these evaluation outcomes.
+Details: `docs/breakout-components-review-2026-10-23.md`.
+
+## 2026-10-23 — Full-pool trend-exit worst-case replay
+
+Operator requests the actual trend exit across the full ETF table and inspection
+of the worst result. Replayed all104 later ETF/domain fixed21/1 control paths and
+their104 matched baselines from the same pinned published inputs and sealed fits.
+Saved metrics reproduce with zero error; no optimizer or strategy code changed.
+The new paired52-ETF table explicitly distinguishes common exit control from
+training-selected retention of the prior exit. Earlier aggregate evidence and
+all six cost/delay cases remain accessible. BIL is a labelled cash reference;
+limited-training rows stay visible with flags, excluded only from prior declared
+family gates. No new portfolio selection or promotion result is implied.
+
+Risky pool:56/102 positive,46 negative;28 improve,73 worsen,one unchanged versus
+previous exit. Worst net result SLV long -20.31% (previous +84.41%,buy-hold+133.92%).
+Five of six trades lose; initial risk18.5–24.0%, late support formation below entry,
+closing overshoot/next-open gaps, and disabled continuation are separate failure
+mechanisms. October2024 trade -13.57%; March2025 -8.96%; no holding after June25,2025
+while price rises58.35% from that sale to cutoff. Fees only0.48pp of cumulative
+loss. One added execution session worsens to-30.85%. TLT short -15.93% has five of
+ten exits before support forms. SOXX short is largest degradation,+187.66% to
++24.62%, despite continuation enabled. These are descriptive inspected cases,
+not an ETF eligibility screen or evaluation-selected parameter recommendations.
+
+All15,875 held-session boundaries independently reconstructed within6.48e-12 USD;
+event ledger within1.12e-15 relative NAV; trade and daily log accounting reconcile.
+Independent least-squares zero-slope numerical residue on symmetric SHY prices
+handled at1e-14 tolerance; no frozen engine or economic outcome change. Eighteen
+focused tests,Ruff,offline controls for204 detail records and31 chart views pass.
+Static charts inspected; browser layout not certified. Retain compact report,
+trade ledgers, chart series, runner and identity/verification receipts.
+Report:`research/trend-exit-failure-review-20261023-v1/index.html`.
+Next: discuss causal support establishment, initial failure protection and
+coordinated continuation before a separately declared train-only full-pool test.
+
+
+## 2026-10-29 — BroadTrend strategy, monitored registration and FR25 blend
+
+Operator authorized naming/documenting the full pool, monitored membership and
+70%FR25/30%new-strategy research. Added BroadTrend v1,51 frozen2022models and
+identity/history pins, causal daily app replay, monthly sleeve-capital ledger,
+standard reports/current intents, calculation revision bindings and explicit
+monitoring adapter. Registered event broadtrend-monitor-20261029-v1 atmembership
+revision6; SOTA/capital revision7 unchanged. No funding, policy or broker checks
+changed. Guarded operator/dispatcher restarts load the implementation.
+
+Full model reproduction exact;70unique focused/regression tests pass,51identity
+inputs checked. Matched24blend/friction cases reconcile,100%controls reproduce;
+2native accounting-oracle fixtures agree$0.00 with independent app reference.
+PrimaryFR25vs70/30return62.89%vs47.94%,CAGR19.95%vs15.72%,Sharpe1.649vs1.640,
+DD8.64%vs7.66%. Monthly anddynamic each0/6guarded improvements. All51ETF
+inspectors,TLT/LQDweak cases,102offlinechart interactions and staticfigureQA pass.
+Report research/broadtrend-fr25-20261029-v1/index.html; full mathematical spec
+in docs/broadtrend-strategy-v1.md. No untouched-OOS or universal-optimum claim.
+
+Outstanding: app publication. Calculator preview reachesOct27(USO limiting),
+but full app refresh twice deferred because availableRAM afterinputload falls
+below the unchanged10GiB requirement. Membership/catalog are verified
+Monitored/Catching up; normal serving report not yet published. Requested normal
+refresh and asked operator to free memory. Do not bypass resource/native checks,
+manual-patch publication, or call activation complete. Finish normal refresh,
+verify served report/generation and unchanged allocation when headroom permits.
+
+## 2026-10-29 — BroadTrend monitored publication verified
+
+After the operator replied ready, verified that the normal application refresh
+had already completed at 07:51 UTC; no redundant recalculation was started.
+At 12:27 UTC the monitored catalog, detail API and HTTP 200 report agreed with
+the atomic calculation and serving publications. Calculation revision
+e9d5aef488bc7c62e355112f1c5075a4439a0367f5f0c52d072d3719b87f0f6d;
+serving revision 9c35b32308c6db2414c5c4039fcf88a5c11075967fbea9d34597b982aa03712a.
+Verified generation 6, the pinned model hash, all 51 ETF states, 688 chart points,
+two benchmarks and the exact decision flow embedded in the served report.
+Simulated book holds 22 ETFs and 56.28% cash through October 27. USO alone lacks
+October 28, so Catching up remains a data-coverage warning, not a publication
+blocker. Prospective monitoring starts October 30; no prospective observations
+exist yet. Entire allocation control equals the saved revision 7 snapshot:
+100% FR25, no pending allocation. BroadTrend remains monitored and unfunded.
+Updated status docs, research report and verification receipt; original blend
+results are unchanged. Resource and broker guards remain intact.
+
+## 2026-10-29 — Research and BroadTrend Git delivery check
+
+Operator requested commit and push. Include the accumulated conditional-FR25,
+single-ETF trend/reviewer and portfolio research, BroadTrend application adapter,
+documentation, tests and compact evidence. Exclude the changing runtime broker
+reconciliation snapshot. Keep bulky generated chart/asset arrays on disk under
+explicit Git ignore rules; no research or operational evidence was deleted.
+Found and corrected the distribution manifest's omission of BroadTrend's model
+JSON. Built the wheel, verified exact model bytes and loaded all 51 models from
+the extracted distribution in an isolated Python process. All 68 focused
+BroadTrend/lifecycle/tracked-runtime/conditional-FR25 regression tests passed.
+The initial no-isolation wheel attempt lacked the local build backend; the
+normal isolated build succeeded without changing the application environment.
+Build verification: var/maintenance/broadtrend-git-delivery/verification.json.

@@ -1,0 +1,11 @@
+{
+  "source_inputs_and_sealed_fits_verified": true,
+  "available_independent_fits": 204,
+  "later_replays": 104,
+  "all_saved_return_metrics_reproduced": true,
+  "interval_accounting_max_error": 6.349087922075114e-16,
+  "all_trade_stop_components_reconciled": true,
+  "trade_contributions_sum_to_nav": true,
+  "standard_calmar": "Actual maximum drawdown; optimizer's 3% floor retained only in archived fit scores",
+  "no_new_fitting": "Verified retained individual refits; no GLD transfer and no evaluation-based parameter changes"
+}

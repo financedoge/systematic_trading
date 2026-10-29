@@ -1,0 +1,10 @@
+{
+  "reason": "Full-pool control validation found opening exit fills erased rearming observed during a delayed exit wait. Preserve that rearm; allow ordinary signal at exit close for subsequent-open entry. Recovery still requires a later session; protective exits invalidate/rearm independently.",
+  "evidence": "Original B matched saved 612 cases exactly; 30 delayed control cases differed in new close-only event engine. No evaluation summary or returns were accepted; fix is contract parity, not tuned performance.",
+  "previous_protocol": "768cfe132021d93010d567c99e57ddd0f5a6807c07ec1b1a69a157adecbe25b3",
+  "new_protocol": "8c639aee04780ed2651372910d57c131c1a780e2b89b6a1534e897a1ed8c86f9",
+  "training_cases_changed": 0,
+  "regression_tests": "7a212afc42fef2f27946b8b20e80675dd16997f6a309c567d5a12ac8e5c9e8e4",
+  "original_control_errors": "710684f6d42199e1a3b451e5b455dd6d10c338c8819772a2ab9b1c80ab02fe38",
+  "diagnostic_correction": "Baseline any-session exposure includes both prior-close and current-close holdings; NAV and trading unchanged."
+}

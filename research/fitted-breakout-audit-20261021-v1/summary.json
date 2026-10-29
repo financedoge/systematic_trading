@@ -1,0 +1,72 @@
+{
+  "families": [
+    {
+      "era": "early",
+      "domain": "short",
+      "available": 49,
+      "fit_evidence": 49,
+      "positive_return": 32,
+      "beat_buyhold_return": 21,
+      "beat_buyhold_sharpe": 18,
+      "positive_alpha": 21,
+      "significant_positive_alpha": 0,
+      "median_alpha": -0.0016856848327260793,
+      "ic_available": 47,
+      "positive_ic": 19,
+      "median_ic": -0.10056202136245951,
+      "significant_positive_ic": 0
+    },
+    {
+      "era": "early",
+      "domain": "long",
+      "available": 49,
+      "fit_evidence": 37,
+      "positive_return": 31,
+      "beat_buyhold_return": 22,
+      "beat_buyhold_sharpe": 22,
+      "positive_alpha": 21,
+      "significant_positive_alpha": 0,
+      "median_alpha": -0.0012385931676078944,
+      "ic_available": 45,
+      "positive_ic": 20,
+      "median_ic": -0.03887527593097736,
+      "significant_positive_ic": 1
+    },
+    {
+      "era": "late",
+      "domain": "short",
+      "available": 51,
+      "fit_evidence": 51,
+      "positive_return": 39,
+      "beat_buyhold_return": 2,
+      "beat_buyhold_sharpe": 3,
+      "positive_alpha": 1,
+      "significant_positive_alpha": 0,
+      "median_alpha": -0.038260529789558594,
+      "ic_available": 45,
+      "positive_ic": 13,
+      "median_ic": -0.09722435702328627,
+      "significant_positive_ic": 0
+    },
+    {
+      "era": "late",
+      "domain": "long",
+      "available": 51,
+      "fit_evidence": 48,
+      "positive_return": 37,
+      "beat_buyhold_return": 2,
+      "beat_buyhold_sharpe": 5,
+      "positive_alpha": 3,
+      "significant_positive_alpha": 0,
+      "median_alpha": -0.03591092614464679,
+      "ic_available": 48,
+      "positive_ic": 14,
+      "median_ic": -0.0542378186232199,
+      "significant_positive_ic": 0
+    }
+  ],
+  "alpha_positive_tolerance": 1e-08,
+  "decision": "Do not use fitted lifecycle as a validated selection alpha or SOTA overlay. GLD long remains a historical risk-shaping observation.",
+  "portfolio_gates_passed": 0,
+  "portfolio_gates": 24
+}

@@ -1,0 +1,94 @@
+{
+  "checked_at": "2026-10-29T12:27:00.450605+00:00",
+  "membership_revision": 6,
+  "catalog": {
+    "strategy_id": "broadtrend_full_pool_v1",
+    "name": "BroadTrend · Full-Pool ETF Trend",
+    "lifecycle": "monitored",
+    "app_tracking": true,
+    "report_available": true,
+    "report_url": "/api/v1/strategies/broadtrend_full_pool_v1/report",
+    "accounting_currency": "USD",
+    "calculation_status": "Catching up",
+    "current_signal_available": true,
+    "monitoring_generation": 6,
+    "allocation_ready": false,
+    "execution_enabled": false,
+    "trading_capital_weight": "0"
+  },
+  "served_report_verified": true,
+  "allocation_unchanged": true,
+  "allocation_revision": 7,
+  "allocation_sota": "research_fr25_14_v1",
+  "implementation_complete": true,
+  "activation_complete": true,
+  "resource_guard_preserved": true,
+  "normal_application_publication": true,
+  "publications": {
+    "tracked-strategies/calculations": {
+      "version": "e9d5aef488bc7c62e355112f1c5075a4439a0367f5f0c52d072d3719b87f0f6d",
+      "published_at": "2026-10-29T07:51:05.100556+00:00",
+      "datasets": {
+        "documents": {
+          "key": "documents/tracked-strategies/calculations/e9d5aef488bc7c62e355112f1c5075a4439a0367f5f0c52d072d3719b87f0f6d",
+          "revision": "ab9e62e4276ab74fa4991034f325eed90756345016c9503526001c0e9b2787e2",
+          "manifest_sha256": "d94ed6d951f56c579041dd8c73a688a586d6d731a8053bc1b2a336bff2e5e9bf"
+        },
+        "observations": {
+          "key": "observations/tracked-strategies/calculations/e9d5aef488bc7c62e355112f1c5075a4439a0367f5f0c52d072d3719b87f0f6d",
+          "revision": "cb97891cd38334adea9f4fe2316d5e45763cf3d5d3f691c300deaa8ccb1a30db",
+          "manifest_sha256": "a7ffdf04303918bf5b6a7ebc41db7447132dc831b46d8f3f0839cd0ac67d6229"
+        }
+      }
+    },
+    "strategy-serving": {
+      "version": "9c35b32308c6db2414c5c4039fcf88a5c11075967fbea9d34597b982aa03712a",
+      "published_at": "2026-10-29T07:51:39.039564+00:00",
+      "datasets": {
+        "documents": {
+          "key": "documents/strategy-serving/9c35b32308c6db2414c5c4039fcf88a5c11075967fbea9d34597b982aa03712a",
+          "revision": "c79e216babffe60a2f8126b7df7d3303b2198e597fc874d7f79b50eceb4df682",
+          "manifest_sha256": "b2862b40b6f6141aa457aea42c14d27695d413471d8af51ca5e6df35a80e9ae4"
+        },
+        "observations": {
+          "key": "observations/strategy-serving/9c35b32308c6db2414c5c4039fcf88a5c11075967fbea9d34597b982aa03712a",
+          "revision": "842aba5d62986f9e2e1e8f8c2c07ed27ea65add07140b91b0fb74b9d794393bc",
+          "manifest_sha256": "4585a0e393a14c96f364e6e9b6619fa2e54d04afe5d76f54732e2a4b2c863120"
+        }
+      }
+    }
+  },
+  "document_sha256": {
+    "tracked-strategies/calculations/catalog": "7f30168f9db4d083aa79aad38debea04b21a907a9b5c629d32e5dbdd33a68eae",
+    "tracked-strategies/calculations/detail/broadtrend_full_pool_v1": "fb6e128701ccb37c376621910d1dd26ccf28c1db3fbbe6b6782e9f9dc1da9271",
+    "tracked-strategies/calculations/report/broadtrend_full_pool_v1": "e2999e79de29bba52f818d1e4a4dd6b50f5d4861b17f243f5487714adcd7a71d",
+    "strategy-serving/catalog": "0fce357cc64f19cdea9dbb8f3cf8e482a826376f334dfd77aa96542897f673c9",
+    "strategy-serving/detail/broadtrend_full_pool_v1": "8a31eff6afe8476cbf5b5308dad25d0ae4c295c39932ee132d9593a6acacbb4c",
+    "strategy-serving/report/broadtrend_full_pool_v1": "29e1ec4d5356da1c16b25e0985b74f602ec7e63662d0bc9f323b97c248546e5f"
+  },
+  "served_report_http_status": 200,
+  "served_report_sha256": "b5551ef6b9e2f82c6e0d598b5d2ea49790b3c210672fd8e83ffcf82d501c990b",
+  "through": "2026-10-27",
+  "expected_through": "2026-10-28",
+  "data_current": false,
+  "lagging_symbols": {
+    "USO": "2026-10-27"
+  },
+  "input_batch": "3bab15ae469b30761987937383db8e751060942a355887f709f805e04388842c",
+  "model_sha256": "40cb164b06d0052ab7f7641d6446d0ee9f93c810ae8204d05f3b6114e74a994e",
+  "identity_count": 51,
+  "all_51_identities_verified": true,
+  "chart_sessions": 688,
+  "benchmark_count": 2,
+  "decision_flow_verified": true,
+  "simulated_holding_count": 22,
+  "simulated_cash_weight": 0.5628469349179401,
+  "target_known_through": "2026-10-27",
+  "target_session": "2026-10-28",
+  "prospective_start": "2026-10-30",
+  "prospective_observations": 0,
+  "calculator_preview_through": "2026-10-27",
+  "preview_is_recurring_monitor": false,
+  "blocker": null,
+  "note": "Monitoring publication is complete. Catching up reflects USO coverage through October 27 versus expected October 28, not missing calculation/publication. No new refresh, funding or broker change was needed during verification."
+}

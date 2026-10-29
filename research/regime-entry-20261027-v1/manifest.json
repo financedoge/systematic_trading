@@ -1,0 +1,34 @@
+{
+  "files": {
+    "asset-results.json": "25efef453dd6d4e379ec4a0afe65eefd6a32b46bbc03f09fe9050585479e0f2a",
+    "chart-data.json.gz": "1c35aa34e95b9cdb64dab9aed8b27026c13c0419968321a4bfdb9dcc1dd6f808",
+    "equation-proof.png": "d25acac42f1869bd676d9fdc12684d631e3045e7202e0e289a7a4eee2e7308fa",
+    "equations.json": "373a0f12b95b3a7186457cabfd65e3752c9a244a2211e6f2ec5c844290d79369",
+    "findings.html": "200ba4d82acfce92df29b28265cfe9adae967d1997d8a3f38e3ef917cad105aa",
+    "fit-manifest.json": "b4d39b4c7b8efeea1f6f1b1978eec15295544738e00f4ccc6c5d384d6adcd8d5",
+    "fits.json": "9bd694847739b74c75f33b9229084b8a739d6631726907ab73b3714a2176e9f0",
+    "GLD_early.png": "d19d40fe0282cff0a0ba636fdf68e1aeb7a98380fac961e9626b0e093e47631e",
+    "GLD_late.png": "6383c38b142d612d6e0905c117ba4a880e6d1c76bc705fd8da8369f0adec26db",
+    "INDA_late.png": "2ece7673e8ce623563c8a6404a24d16477768d67458e2dd8b59dd414e5d9f785",
+    "index.html": "1b2b746b6d387dc1870473ca28713f139406f92ac97f4c90b9dc47034eeead91",
+    "ITA_early.png": "cadf2e5dbf1ce691fc0ea9f237b5a8e2e9bb91e54ae30785ce9013403c899263",
+    "MCHI_late.png": "6a12f699b97d5dc0d42b5058b32dfed2671e7eece5c1f1594b0afef965ae651e",
+    "native-checks.json": "6beb244529da084eb7444948c283e32fe89a285e0903630edc1eb34c4487e9f9",
+    "protocol-amendments.json": "bb2e893313ae3264ca8b5dd27ab83e181c9135bfe4653c15765ef12c1445eaa0",
+    "protocol.initial.json": "4f78153f712fb4224cc210805ae997f7776b9595c3eb6c35484d650aa6b52ae2",
+    "protocol.json": "a464de989ffd329ab2944816687470cb38915612f105c436d59fde247f276378",
+    "state-semantics-audit.json": "742a953efba598fbbe850ae47a902e61ead7de50dcf80713ecb2b6b1882ae519",
+    "summary.json": "a029bf10ef8085a765e8da76f4c565dde3378756cb2c843a7046f55109f1932e",
+    "TLT_late.png": "5bd4bf5d40c9f31f7d8f4c27669ba7fa837f24e3a1fcc1624d888b0dbc309373",
+    "USO_late.png": "805af4a3fa60a4919af1eb49ff8c432e319ccdd9a7575e30d05f1644fe64f0df",
+    "validation.json": "9f0d1fa04ba639638bcdbf3d8f2c6502502ef2c00cc8c8a1af4886790340ef49",
+    "weakest-cases.json": "7355d530859c38650cd45f32d16d53aa0d38d1181f613a33638d692cbf5dadd3",
+    "WEAT_late.png": "12bd1dff037b88b95c99be03dbbebb65ffe98726da5ea6070cbb7b75a448ebfe"
+  },
+  "report_code": {
+    "scripts/build_regime_entry_report.py": "e4dbf8249ae6be5974d96c7ae1b4288a20c81e0849be16f381b1fe09542dbc78",
+    "scripts/assets/regime-entry-script.js": "38b6fc6108510f7f31d1e27f93574bb6199a07b163d0b8dfad42bc53dfe96d83",
+    "tests/regime_entry_controls.cjs": "61e9ce3e45e6a5025e14edf984d8094e0e0d99be931714bf60889705b0ddadb8",
+    "scripts/validate_regime_entry.py": "2b4c406baceaf46a623862a63dd59f15b99c30cbc174ede617c787cffca9fc88"
+  }
+}

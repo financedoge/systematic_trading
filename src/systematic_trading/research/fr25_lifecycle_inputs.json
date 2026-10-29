@@ -1,0 +1,545 @@
+{
+  "schema_version": 1,
+  "identity": "fr25-lifecycle-conditional-frozen-inputs",
+  "files": {
+    "var/research/range-breakout-20261018-v2/assets/AGG.npz": "b1cfd91527774ace7e1e8d30d469b01c44186ba8bbcb10794c776edc34705c63",
+    "var/research/range-breakout-20261018-v2/assets/BIL.npz": "9dc82ca495376bdc012e0f977bcbf4a0faef789c54e51b69bfde183b0130f0ed",
+    "var/research/range-breakout-20261018-v2/assets/CORN.npz": "65c1a6a5648b002acb5eaa5f77f83af1708ddb60cdfd3c86dcc0e9bbd0230d51",
+    "var/research/range-breakout-20261018-v2/assets/CPER.npz": "2df30b3c3b34241e910a5b4662790f067cf881ea461c245784988692f80931f6",
+    "var/research/range-breakout-20261018-v2/assets/DBA.npz": "d0f75e454f6a244d640171e833e82e986a738ae952467aae3ff0d2c4e952b22b",
+    "var/research/range-breakout-20261018-v2/assets/DBB.npz": "73e7c14a1cba8dba0e790e5e9b50ddb5c039f01551d36e5d706d5218ba68a583",
+    "var/research/range-breakout-20261018-v2/assets/DBC.npz": "2f01f60bd90ff1b8f28f36195099f383ee9c3698d7f354184bac6a9efdf38936",
+    "var/research/range-breakout-20261018-v2/assets/EEM.npz": "49f283ddb7062e20981c01abe58f0df08cc420bf6aaf988ad2ff3d5cf9cab8f8",
+    "var/research/range-breakout-20261018-v2/assets/EFA.npz": "999324d4c6da24d7742c7e36253ffa39de3cf47af4d0f8c3f33c11439607d231",
+    "var/research/range-breakout-20261018-v2/assets/EMB.npz": "e1b50c93b035a542ab2e156bff445db8204b3b8a91781295e6996f9c8b94c41b",
+    "var/research/range-breakout-20261018-v2/assets/EWA.npz": "800b1a1ca10e2601cc722d6d4fae0b40c0cc97f1ac40461a993d89befae3c572",
+    "var/research/range-breakout-20261018-v2/assets/EWC.npz": "788e520ae80cb47eff6ac75d5243efb0f858a2f58daa1f17b58fdb5a24fb7184",
+    "var/research/range-breakout-20261018-v2/assets/EWG.npz": "0c189ba9ef6ce84eaeb29786972661719e1271378fe4497bd5026c5cafc3596c",
+    "var/research/range-breakout-20261018-v2/assets/EWH.npz": "d6c2591f15965436a44dd6d0ee7b1b5058aa3d0b9ee5b2a3d88bfb6c9b077f82",
+    "var/research/range-breakout-20261018-v2/assets/EWJ.npz": "e95be9bc5782ef39cc417cf30effa488240c379d52dd314b5a71a0b4d1ecb235",
+    "var/research/range-breakout-20261018-v2/assets/EWT.npz": "dd366bd629bac3f56488ca4ad32da38ac1424ae16c8263ad7c9d6c41dfc4155b",
+    "var/research/range-breakout-20261018-v2/assets/EWU.npz": "6e960ff743a83d047a17b7a2e93d5dae603e4abc36a37e55c0781ecb9d60e557",
+    "var/research/range-breakout-20261018-v2/assets/EWY.npz": "ec38cf9a2a6e486f27d3c2db4ba16a938fad19613a1a940a5dc6f8208250a803",
+    "var/research/range-breakout-20261018-v2/assets/GLD.npz": "968d382f0b7c45949b67d891cb2018bc6e4f5d05be33f5d38c12bca12f3088b9",
+    "var/research/range-breakout-20261018-v2/assets/HYG.npz": "621755a7ff74d7a06469485c6d8febee151a0bb084a8be613c46f474332d76c1",
+    "var/research/range-breakout-20261018-v2/assets/IAT.npz": "294bb8e2c13bc439ee232ef5d0557ad23340c833e4993e0d287aafdbd4f18be6",
+    "var/research/range-breakout-20261018-v2/assets/IBB.npz": "59832a745e25f2797edce9e2c42bbc36ca25d1c060f1280afb3e9158fd9ce6c9",
+    "var/research/range-breakout-20261018-v2/assets/IBND.npz": "490ae4377ddd95d5493e80708099201451771c45af8139d4818c43d70820d9d2",
+    "var/research/range-breakout-20261018-v2/assets/IEF.npz": "ac4e35deb4c3de939c2ed19a83ee71225b70811da8b6941674ef54fe1675a24e",
+    "var/research/range-breakout-20261018-v2/assets/IGOV.npz": "368ed1fa51a46168b61a5c10aaa6090ff93a89df3ca31638209d2c9c59465aa0",
+    "var/research/range-breakout-20261018-v2/assets/INDA.npz": "ccc3e1dc88b20633070425b7c9a4884a2bcb32ad0f660bfeb818f9f1e1a96a42",
+    "var/research/range-breakout-20261018-v2/assets/ITA.npz": "2e05b6197cfa0b518730d42736ebe127fab80a0fbbdc4f1006b072e3d7063726",
+    "var/research/range-breakout-20261018-v2/assets/IWM.npz": "bdfce4d16fe5f3690308375c441186073043f84e2122f66f60806442f565f056",
+    "var/research/range-breakout-20261018-v2/assets/LEMB.npz": "c134906d3d79f88c03c6965dfbf1ca346d97964165a1321e1b52ac502f4feab0",
+    "var/research/range-breakout-20261018-v2/assets/LQD.npz": "b07438cb3112af8bffa988863f22b8dd6edb4e248f2fd5ab0916545b4025c496",
+    "var/research/range-breakout-20261018-v2/assets/MBB.npz": "b9e1311acf73ea22fffc2dd493779886690f81ac192749f13e73b4d3aaf2512a",
+    "var/research/range-breakout-20261018-v2/assets/MCHI.npz": "1cfdb57fbc9ab2b9bb9bebd5b37a3afdfd909a05811c6bf4ff4292e1bef2d47c",
+    "var/research/range-breakout-20261018-v2/assets/MDY.npz": "eda392000a0a24e0294ddb104e8397c5b3461816c8cc4f0ee31bd9e132f47dd6",
+    "var/research/range-breakout-20261018-v2/assets/PPLT.npz": "8062b5bfd1c028c6793c526b975bf164523b709fbf15f34edf89b2528739d18f",
+    "var/research/range-breakout-20261018-v2/assets/SHY.npz": "18815b8696fbaa8b4cb95a8eff3f6400826b07ded92576cc3bad2610e8cff8ee",
+    "var/research/range-breakout-20261018-v2/assets/SLV.npz": "8a39b20e9e41788feae3b86c2c5add331c85f154e4db112c9a6ff6825b73839f",
+    "var/research/range-breakout-20261018-v2/assets/SOXX.npz": "e7fb3c473a14c6e89c703cbc94b44425ba371972ef7aebd8867514166ea701a3",
+    "var/research/range-breakout-20261018-v2/assets/SPY.npz": "14aecb66c4e7bee9af07eaa1cf970277604815be7c810b21e8478bad58cfac09",
+    "var/research/range-breakout-20261018-v2/assets/TIP.npz": "287d9587dec5d1045189014e1fed4526220598cd1a749e6cefafcb7514577dba",
+    "var/research/range-breakout-20261018-v2/assets/TLT.npz": "1ff17fc7f2dcce51d58518905c93806975fd2ab58119caf96103e9c8203e9dfa",
+    "var/research/range-breakout-20261018-v2/assets/USO.npz": "1c91db40e107600b584004f391ae59d1a1bd7f0a5d4148cc1a9d9edba46ff447",
+    "var/research/range-breakout-20261018-v2/assets/VGK.npz": "cb2b94f3641a5753ffa81d050506f78e294cabc75c8b77d4b1c502c290648e72",
+    "var/research/range-breakout-20261018-v2/assets/WEAT.npz": "43b91d905123f12d272aed935a3a5b3c97979baa7659148b67cd1c33c0e5fea5",
+    "var/research/range-breakout-20261018-v2/assets/XLB.npz": "8597bd29e644e83a9d2eaa6ad74b6dd5a6cd9610f336b3f8eefeb31811553258",
+    "var/research/range-breakout-20261018-v2/assets/XLC.npz": "bb63e72237f7ae13462cb0d65043c0f55314b342b2c1161fee53090d9ea676a6",
+    "var/research/range-breakout-20261018-v2/assets/XLE.npz": "a9e7397d86177fa9b8b4833daade6f046147d160cdac07f05fcb9c678287f5a8",
+    "var/research/range-breakout-20261018-v2/assets/XLI.npz": "7943e16cfe5042292b98cbd19812a6cc2c9335621eea2ff1c038a07cc3a0a77b",
+    "var/research/range-breakout-20261018-v2/assets/XLK.npz": "25033e70cfcc49987ea6f7ea22e4824b478aaa707140119a87b86fa27601e7aa",
+    "var/research/range-breakout-20261018-v2/assets/XLP.npz": "c55290c62981e0bfd55b5b33c209e1f7737879e94e3ca71327708d423385f6dd",
+    "var/research/range-breakout-20261018-v2/assets/XLU.npz": "779b2107760559fbe3e5d5173be0f4b76c612ab984e1d0c616189da0d28ef121",
+    "var/research/range-breakout-20261018-v2/assets/XLV.npz": "f4a70272b2c3c1ad7639eda5a2fa93a1815b85e43e744ec8341fc0943c1015a1",
+    "var/research/range-breakout-20261018-v2/assets/XLY.npz": "20627e0cbbc70f5b92ea331fae2c71f6df91392bbef4dfdf143c018b3fe6b7f0",
+    "var/research/range-breakout-20261018-v2/price_pin.json": "f34d8e2c50a10722ec322ef1912f4016ee10a3d92956a116eb64960ed5de9240",
+    "var/research/range-breakout-20261018-v2/input_receipt.json": "cbf5e38d9e5047d26e0d05af6601fd248b87f51299acc95d62d701cd27a923bc",
+    "var/research/range-breakout-20261018-v2/pool/inputs.npz": "6119a0d21b1b0ba0ab50281dbd5234932e634790944811d11feb64af4c8db9c5",
+    "var/research/range-breakout-20261018-v2/pool/recipe.json": "3527fd37a773f9910b8084b996606bd4059e32c90fb8ae779b36faae6fb10a5f",
+    "var/research/range-breakout-20261018-v2/pool/receipt.json": "2fcd592c1f518abefe9fd2b930fd1a5defaee57cc1ea0e8928ddf3eee458d798",
+    "src/systematic_trading/research/fr25_lifecycle_conditional_parameters.json": "6b4dac1a82bfb8e8f96937c4f5bbf102250f9a5361836f7abc9090ab2034f2c0"
+  },
+  "price_pin": {
+    "batch": "5688bb093a7481231f05b8ba4d84e3e26e016231ffeb42576b4e7aca12cf99bd",
+    "root": "D:\\projects\\systematic_trading\\var\\governance\\listed-2026-10-16-a861d1534a00",
+    "through": "2026-10-16"
+  },
+  "through": "2026-10-12",
+  "accounting_currency": "USD",
+  "limitations": [
+    "Frozen historical panel; extending requires application-owned FR25 targets and stable breadth signals on a new audited batch.",
+    "Adjusted USD research units; historical publication availability and membership uncertified; no FX or intraday TWAP data."
+  ],
+  "universe_members": [
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "AGG",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "AGG"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "BIL",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "BIL"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "CORN",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "CORN"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "CPER",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "CPER"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "DBA",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "DBA"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "DBB",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "DBB"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "DBC",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "DBC"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EEM",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EEM"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EFA",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EFA"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EMB",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EMB"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EWA",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EWA"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EWC",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EWC"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EWG",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EWG"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EWH",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EWH"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EWJ",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EWJ"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EWT",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EWT"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EWU",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EWU"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EWY",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EWY"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "GLD",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "GLD"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "HYG",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "HYG"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "IAT",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "IAT"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "IBB",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "IBB"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "IBND",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "IBND"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "IEF",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "IEF"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "IGOV",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "IGOV"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "INDA",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "INDA"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "ITA",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "ITA"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "IWM",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "IWM"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "LEMB",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "LEMB"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "LQD",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "LQD"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "MBB",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "MBB"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "MCHI",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "MCHI"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "MDY",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "MDY"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "PPLT",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "PPLT"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "SHY",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "SHY"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "SLV",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "SLV"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "SOXX",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "SOXX"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "SPY",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "SPY"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "TIP",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "TIP"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "TLT",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "TLT"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "USO",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "USO"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "VGK",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "VGK"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "WEAT",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "WEAT"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLB",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLB"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLC",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLC"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLE",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLE"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLI",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLI"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLK",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLK"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLP",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLP"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLU",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLU"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLV",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLV"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLY",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLY"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "asset_cases": 3672,
+  "event_ledger_max_relative_error": 1.5543122344752192e-15,
+  "training_selection_reproduced": true,
+  "all_fits_sealed_before_evaluation": true,
+  "signal_sha256": "ff3aa943ac87533f255e9c7c0dff49d0894761840f9e1eb5f280240f4c46a691"
+}

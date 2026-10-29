@@ -1,0 +1,9 @@
+{
+  "cases": 120,
+  "independent_ledger_max_error": 2.3425705819590803e-14,
+  "erc_max_error": 1.5230209168826114e-07,
+  "contribution_max_error": 2.218364381079141e-14,
+  "protocol": "6fbec5a1c4126f0072c62bf0d6d1e67991de0c63fb60d36ab8dfb850045be200",
+  "results": "a8a95f2ab1ff7f1b0071ed616a74fc6b1d0ef01b07fb59dd722c4f1d2a442ab9",
+  "shadows": "06297aad86d9d1939d4ab78d0a3e25e2963604493f0143e2f64e9ed328a43454"
+}

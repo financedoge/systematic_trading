@@ -1,0 +1,44 @@
+{
+  "status": "complete",
+  "research_decision": "Reject both trained challengers; zero of twelve acceptance settings pass for either.",
+  "focused_python_tests": 41,
+  "test_scope": [
+    "tests/test_trained_review.py",
+    "tests/test_trained_review_contract.py",
+    "tests/test_stop_review.py",
+    "tests/test_decision_review.py"
+  ],
+  "test_note": "38 model tests passed; three final artifact contract tests passed after correcting the test's handling of pre-evaluation missing chart values.",
+  "offline_chart_combinations": 306,
+  "chart_controls": "ETF/era/arm selectors, date inputs, hover OHLC, two-click zoom, interval NAV, events/trades, weakest cases, incident shortcuts and isolated review points passed.",
+  "visual_inspection": [
+    "equation-proof.png",
+    "WEAT_late.png",
+    "MCHI_early.png",
+    "WEAT-churn.png",
+    "MCHI-loss.png",
+    "CPER-incident.png",
+    "IWM-incident.png",
+    "GLD_late.png"
+  ],
+  "visual_correction": "Added visible markers for isolated holding/recovery forecasts and one-session stop levels; disabled reviewer status shown explicitly; incident NAV/volume axes use the selected dates.",
+  "browser_layout_verified": false,
+  "report_links_and_placeholders": "passed",
+  "main_cases": 1836,
+  "diagnostic_cases": 612,
+  "exact_parent_controls": 612,
+  "exact_disabled_controls": 612,
+  "max_independent_ledger_error": 2.90878432451791e-14,
+  "native_accounting_fixtures": 4,
+  "native_reference_max_dollars": 0.0,
+  "native_scope": "Frozen fills/marks on synthetic accounting event calendars; not a validation of market execution or reviewer inference.",
+  "known_design_failures": [
+    "Separate learned recovery and holding values can contradict each other.",
+    "Constant negative holding values can cut every position without changed evidence.",
+    "Recovery labels omit learned exits that occur in the traded continuation policy.",
+    "Internal reviewer calibration uses the full outer-training parent snapshot; it is not nested parent-pipeline validation.",
+    "Shadow adaptation fails median prediction-error comparisons and has no trading authority."
+  ],
+  "frozen_behavior_changed_after_evaluation": false,
+  "live_changes": false
+}

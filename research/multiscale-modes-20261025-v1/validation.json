@@ -1,0 +1,7 @@
+{
+  "asset_cases": 9792,
+  "ledger_max_relative_error": 2.90878432451791e-14,
+  "training_prefix_and_scores_reproduced": true,
+  "all_fits_sealed_before_evaluation": true,
+  "signal_sha256": "d21cd979b3e5431a7acbb3cbeada91bf9c475ef31947255446364377d5f5cee8"
+}

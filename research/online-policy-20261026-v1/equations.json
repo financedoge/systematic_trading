@@ -1,0 +1,11 @@
+[
+  "e_j=\\mathrm{clip}(e_0+d_j,0.5,0.9),\\quad d_j\\in\\{-0.1,0,0.1\\},\\quad a_j\\in\\{0.5,1,1.5\\}",
+  "x_j=\\mathrm{clip}(x_0+0.2(a_j-1),0.45,0.9),\\quad k_{j,t}=a_j k_{0,t}",
+  "x^{up}_j=\\mathrm{clip}(0.85+0.2(a_j-1),0.65,0.95),\\quad k_{0,t}=k_{wide}\\ \\mathrm{if\\ aligned\\ and\\ context,\\ else}\\ k_{tight}",
+  "r_i=\\frac{O_{exit}}{O_{entry}}\\frac{1-f}{1+f}-1,\\quad y_i=\\mathrm{clip}\\left(\\frac{r_i}{\\hat\\sigma\\sqrt{D_i}},-3,3\\right)",
+  "\\rho=2^{-1/126},\\quad (N,S,W)\\leftarrow\\rho(N,S,W),\\quad (N_j,S_j,W_j)\\leftarrow(N_j+1,S_j+y_i,W_j+\\mathbf{1}_{r_i>0})",
+  "\\mu_j\\mid\\mathcal{D}_t\\sim N\\left(\\frac{S_j}{4+N_j},\\frac{1}{4+N_j}\\right),\\quad \\widehat p_j=\\frac{1+W_j}{2+N_j}",
+  "u_j=\\frac{S_j}{4+N_j}-\\frac{0.25}{\\sqrt{4+N_j}},\\quad j^*=\\arg\\max_j u_j,\\quad \\mathrm{switch\\ if}\\ u_{j^*}>u_{current}+0.05",
+  "\\mathrm{warning}\\Rightarrow(N,S,W)_{old}\\leftarrow0.25(N,S,W)_{old},\\quad \\Delta t_{warnings}\\geq20",
+  "\\ell_{t+1}=\\max(\\ell_t,M_t-k_{j,t}\\hat\\sigma O_{entry}),\\quad \\mathrm{exit\\ if}\\ C_t<\\ell_t\\ \\mathrm{or}\\ P_t(down)\\geq x_{j,t}"
+]

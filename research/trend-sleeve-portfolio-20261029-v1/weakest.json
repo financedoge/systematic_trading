@@ -1,0 +1,18 @@
+[
+  {
+    "era": "late",
+    "symbol": "TLT",
+    "cumulative": -0.1856097057349415,
+    "first": "2024-01-31",
+    "last": "2026-10-16",
+    "definition": "Continuously running shadow account on portfolio evaluation window; may carry existing position at boundary."
+  },
+  {
+    "era": "early",
+    "symbol": "MCHI",
+    "cumulative": -0.31990902836425017,
+    "first": "2020-12-31",
+    "last": "2022-12-30",
+    "definition": "Continuously running shadow account on portfolio evaluation window; may carry existing position at boundary."
+  }
+]

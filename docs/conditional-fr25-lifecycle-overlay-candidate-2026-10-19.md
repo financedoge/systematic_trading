@@ -92,7 +92,18 @@ One portfolio in the shared application accounting engine:
 - All intra-FR25, intra-sleeve and inter-sleeve trades are charged; execution delay is
   explicit.
 
-## Evidence (2023-01-03 to 2026-10-12, shared engine, next-open fills)
+## October 20 correction notice
+
+The evidence and monitoring claims below are historical and superseded by the
+[independent review and corrected retest](conditional-lifecycle-review-2026-10-20.md).
+The corrected primary has 15.85% CAGR / 1.459 Sharpe, passes only 2/6 friction
+gates, fails every added-delay gate, and trails two matched placebo controls in
+base Sharpe. Its runtime is a frozen USD history, not current CNH monitoring.
+Implementation 1.1.0 corrects the accounting/report and input contracts; deployment
+and genuine current-signal extension are separate remaining gates. No promotion
+or membership change follows.
+
+## Historical evidence (2023-01-03 to 2026-10-12, shared engine, next-open fills)
 
 | Scenario (5bp) | CAGR | Sharpe | Sortino | Max DD | Calmar | Turnover |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "purpose": "Retain the monitored conditional candidate's frozen historical inputs until its membership and replacement-input decision are reviewed. The retention planner reads config JSON references.",
+  "strategy_key": "fr25_lifecycle_conditional_v1",
+  "input_manifest": "src/systematic_trading/research/fr25_lifecycle_inputs.json",
+  "batch": "5688bb093a7481231f05b8ba4d84e3e26e016231ffeb42576b4e7aca12cf99bd",
+  "governed_root": "var/governance/listed-2026-10-16-a861d1534a00",
+  "derived_inputs": [
+    "var/research/range-breakout-20261018-v2/assets",
+    "var/research/range-breakout-20261018-v2/pool",
+    "var/research/range-breakout-20261018-v2/input_receipt.json",
+    "var/research/range-breakout-20261018-v2/price_pin.json"
+  ],
+  "release_condition": "Remove this pin only after the monitored strategy no longer depends on these inputs; retain compact review findings and an artifact-retirement receipt."
+}

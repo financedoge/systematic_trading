@@ -1,0 +1,31 @@
+{
+  "unit_tests": 40,
+  "unit_groups": {
+    "entry_value_and_frozen_execution": 38,
+    "additional_dependency_and_recovery": 2
+  },
+  "offline_chart_combinations": 306,
+  "interactive_checks": [
+    "ETF/era/arm selection",
+    "exact dates and hover",
+    "two-click zoom",
+    "empty interval",
+    "six incident shortcuts"
+  ],
+  "static_figures_inspected": [
+    "CPER_late",
+    "GLD_early",
+    "GLD_late",
+    "INDA_late",
+    "ITA_early",
+    "IWM_early",
+    "MCHI_late",
+    "TLT_late",
+    "WEAT_late",
+    "CPER-incident",
+    "IWM-incident",
+    "equation-proof"
+  ],
+  "browser_layout_certified": false,
+  "economic_source_files_unchanged_since_protocol": true
+}

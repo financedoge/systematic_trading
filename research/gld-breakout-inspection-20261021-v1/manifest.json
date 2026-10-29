@@ -1,0 +1,16 @@
+{
+  "inputs": {
+    "protocol_sha256": "fe4e69be2bc5c5568a5967b1ef09ba34429daf26e5b5eea26b71bf919d8a3d49",
+    "gld_sha256": "968d382f0b7c45949b67d891cb2018bc6e4f5d05be33f5d38c12bca12f3088b9"
+  },
+  "outputs": {
+    "episodes.csv": "5fe3f7955717a6ec52c6229bb3630dfe52fee7bb043f808b39c44bef2822dd08",
+    "gld-inspection.png": "3d7011132a94c2844fd9e9ddf7bf3ca238a0f27a1a66dcbdbd79e862ee1093ff",
+    "index.html": "bd5e7f9d4cec8eb0c4daf5b4674ea752f5abbd76fe5c8847d4fbb4261900b0d4",
+    "validation.json": "e9dae14d5f0d97cac75cfeb3abc15d88ec64fd6494c83a44542ba76a4bb5528f"
+  },
+  "sources": {
+    "scripts\\build_gld_breakout_inspection.py": "db2ae6f0d4527699b0ada20959e4b619b194585e3463695b889c71c717a10e28",
+    "scripts\\assets\\gld-breakout-inspection.html": "ddba6b63aa2aeade8ad0603a94e0cee212a75b1148bbad78eefae2aad7463c1e"
+  }
+}

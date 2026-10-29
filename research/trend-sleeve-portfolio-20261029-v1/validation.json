@@ -1,0 +1,9 @@
+{
+  "portfolio_cases": 106,
+  "independent_ledger_max_error": 2.220446049250313e-14,
+  "erc_max_error": 1.0472578078346562e-07,
+  "contribution_max_error": 2.0095036745715333e-14,
+  "protocol": "82c62808a38eceba0a8e4fb2c07a8153ec009e672c293e103ea37fcba645cce8",
+  "shadows": "06297aad86d9d1939d4ab78d0a3e25e2963604493f0143e2f64e9ed328a43454",
+  "results": "121d2c5aa2210f4c83ef3e1a607a6f823a07926ca61ceefa9e55e19b7043e8ed"
+}

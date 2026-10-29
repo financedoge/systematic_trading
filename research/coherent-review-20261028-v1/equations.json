@@ -1,0 +1,16 @@
+[
+  "a_t=\\max(ATR_{20,t}/C_t,0.0001),\\quad Y_t=(O_{t+2}/O_{t+1}-1)/a_t",
+  "r_t=\\log(C_t/C_{t-1}),\\quad CL_t=(C_t-L_t)/(H_t-L_t)",
+  "x^P_t=[1,\\ r_t/a_t,\\ (r_t+r_{t-1}+r_{t-2})/(\\sqrt{3}a_t),\\ (C_t-EMA_{10,t})/(C_ta_t),\\ (EMA_{10,t}-EMA_{60,t})/(C_ta_t),\\ 2CL_t-1]",
+  "v_t=\\log(V_t/EMA_{20,t}(V)),\\quad VP_t=\\frac{\\sum_{i=t-2}^t sign(C_i-C_{i-1})V_i}{\\sum_{i=t-2}^tV_i},\\quad x^V_t=[x^P_t,v_t,VP_t,(2CL_t-1)v_t]",
+  "z_t=(clip(x_t,-5,5)-\\bar x_{train})/\\max(sd_{train},0.1),\\quad \\hat\\beta=(Z^TZ+\\lambda I^*)^{-1}Z^TY,\\quad\\lambda\\in\\{1,10,100\\}",
+  "\\mathrm{constant\\ control}:\\ \\hat Y_t=\\bar Y_{train};\\quad\\lambda^*=\\arg\\min_\\lambda\\frac{1}{3}\\sum_{k=1}^3 MSE_k(\\lambda)",
+  "Enabled=1\\ \\mathrm{only\\ if\\ nonconstant},\\ \\overline{MSE}_{fit}<0.995\\overline{MSE}_{constant},\\ \\#\\{k:MSE_{fit,k}<MSE_{constant,k}\\}\\geq2",
+  "u_t=z_t\\hat\\beta,\\quad u^{buy}_t=\\left[(1+a_tu_t)\\frac{1-f}{1+f}-1\\right]/a_t,\\quad m=0.05,\\quad\\delta=0.10",
+  "\\mathrm{add\\ exit\\ if}\\quad u_t<-m\\quad\\mathrm{and}\\quad u_t<u_{entry\\ signal}-\\delta",
+  "\\mathrm{recover\\ if}\\quad u^{buy}_t>m\\quad\\mathrm{and}\\quad u_t>u_{sale\\ close}+\\delta,\\quad 1\\leq t-t_{sale}\\leq20",
+  "u_t=u_{anchor}\\ \\Rightarrow\\ \\mathrm{no\\ review\\ reversal};\\quad \\{u_t<-m\\}\\cap\\{u^{buy}_t>m\\}=\\varnothing\\quad(f\\geq0)",
+  "\\mathrm{recovery\\ fill}:\\ |O_{t+1+delay}-C_t|\\leq ATR_t;\\quad\\mathrm{else\\ cancel}",
+  "S_{entry}=O_{entry}-d\\sigma O_{entry},\\quad S_{t+1}=\\max(S_t,Peak_t-d_t\\sigma O_{entry}),\\quad L_t\\leq S_t\\Rightarrow F_t=\\min(O_t,S_t)(1-s)",
+  "Owned_{recovery}=1\\ \\mathrm{until\\ eligible\\ HMM\\ up};\\quad\\mathrm{protection\\ always\\ active}"
+]

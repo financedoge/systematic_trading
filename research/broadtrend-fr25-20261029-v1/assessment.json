@@ -1,0 +1,110 @@
+[
+  {
+    "arm": "blend",
+    "cost_bp": 5,
+    "delay": 0,
+    "sharpe_gain": -0.009343386503622764,
+    "cagr_gain": -0.0422809574595,
+    "drawdown_change": -0.009788056530892542,
+    "passes": false
+  },
+  {
+    "arm": "blend_dynamic",
+    "cost_bp": 5,
+    "delay": 0,
+    "sharpe_gain": -0.015392426995888275,
+    "cagr_gain": -0.04232459906512309,
+    "drawdown_change": -0.010470542088121815,
+    "passes": false
+  },
+  {
+    "arm": "blend",
+    "cost_bp": 5,
+    "delay": 1,
+    "sharpe_gain": -0.015015206675228487,
+    "cagr_gain": -0.04002922014343957,
+    "drawdown_change": -0.0073373543776500405,
+    "passes": false
+  },
+  {
+    "arm": "blend_dynamic",
+    "cost_bp": 5,
+    "delay": 1,
+    "sharpe_gain": 0.011195570458058635,
+    "cagr_gain": -0.03750346027834617,
+    "drawdown_change": -0.007514410790240067,
+    "passes": false
+  },
+  {
+    "arm": "blend",
+    "cost_bp": 10,
+    "delay": 0,
+    "sharpe_gain": -0.023078891999546824,
+    "cagr_gain": -0.04251231638605435,
+    "drawdown_change": -0.009517606866994321,
+    "passes": false
+  },
+  {
+    "arm": "blend_dynamic",
+    "cost_bp": 10,
+    "delay": 0,
+    "sharpe_gain": -0.03120301601951847,
+    "cagr_gain": -0.04280144907733652,
+    "drawdown_change": -0.010082859120341792,
+    "passes": false
+  },
+  {
+    "arm": "blend",
+    "cost_bp": 10,
+    "delay": 1,
+    "sharpe_gain": -0.02858595569418587,
+    "cagr_gain": -0.04026552546239359,
+    "drawdown_change": -0.004843830772490509,
+    "passes": false
+  },
+  {
+    "arm": "blend_dynamic",
+    "cost_bp": 10,
+    "delay": 1,
+    "sharpe_gain": -0.0042646392502030395,
+    "cagr_gain": -0.037977478817668775,
+    "drawdown_change": -0.0049148252603877784,
+    "passes": false
+  },
+  {
+    "arm": "blend",
+    "cost_bp": 20,
+    "delay": 0,
+    "sharpe_gain": -0.05036348263149648,
+    "cagr_gain": -0.04296420830966641,
+    "drawdown_change": -0.008980866234530205,
+    "passes": false
+  },
+  {
+    "arm": "blend_dynamic",
+    "cost_bp": 20,
+    "delay": 0,
+    "sharpe_gain": -0.06264194960684777,
+    "cagr_gain": -0.043737525087555795,
+    "drawdown_change": -0.009313441018595547,
+    "passes": false
+  },
+  {
+    "arm": "blend",
+    "cost_bp": 20,
+    "delay": 1,
+    "sharpe_gain": -0.05558064325737555,
+    "cagr_gain": -0.04072729938377906,
+    "drawdown_change": -0.004488194333688966,
+    "passes": false
+  },
+  {
+    "arm": "blend_dynamic",
+    "cost_bp": 20,
+    "delay": 1,
+    "sharpe_gain": -0.03512855594986597,
+    "cagr_gain": -0.03890836403448561,
+    "drawdown_change": -0.004348742271266248,
+    "passes": false
+  }
+]

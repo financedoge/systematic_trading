@@ -1,0 +1,58 @@
+{
+  "identity": "trend-sleeve-width-20261029-v1",
+  "request": "Operator requests N20 and N30 after seeing N15. Subsequent development experiment, not fresh width validation.",
+  "parent_protocol": "82c62808a38eceba0a8e4fb2c07a8153ec009e672c293e103ea37fcba645cce8",
+  "parent_results": "121d2c5aa2210f4c83ef3e1a607a6f823a07926ca61ceefa9e55e19b7043e8ed",
+  "shadows": "06297aad86d9d1939d4ab78d0a3e25e2963604493f0143e2f64e9ed328a43454",
+  "widths": [
+    20,
+    30
+  ],
+  "rank_windows": [
+    63,
+    252
+  ],
+  "allocation": [
+    "equal",
+    "risk"
+  ],
+  "clock": [
+    "monthly",
+    "dynamic"
+  ],
+  "frictions": [
+    [
+      5,
+      0
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      10,
+      0
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      20,
+      0
+    ],
+    [
+      20,
+      1
+    ]
+  ],
+  "scope": "All same supported risky strategies, dates, warmup, covariance, fees, cash and self-financing execution as N15. Only N changes. Compare N15, N20, N30 and unranked full pool. No ETF/model/rank-threshold fitting or width-specific timing tuning.",
+  "dynamic": "Same cash-inclusive L1>=.10 versus last adopted target, plus month-end. One EW sleeve state flip changes L1 by2/N: N15=.1333,N20=.10,N30=.0667. This changes trigger frequency; monthly isolates width from that interaction.",
+  "controls": "Retain exact N15/all-pool/BIL/FR25 results. Also run same raw-price four-rank, always-invested, equal-capital N20/N30 selectors at all frictions.",
+  "assessment": "Higher net Sharpe with CAGR no more1pp worse and maxDD no more2pp worse vs matched N15; report both eras/sixfrictions, and same comparisons to all-pool sleeves. Show full 15/20/30 curve, cash, effective active breadth, turnover, costs, contribution concentration. No claim of global optimal N.",
+  "weakest": "Same independently running virtual strategies/window: TLTlate/MCHIearly unchanged. Identify actual worstcontributor separately for each width/weight and provide dated fill inspector for all100ETF/era charts.",
+  "code": {
+    "scripts/research_trend_sleeve_width.py": "51989599b294602d8e9a57e4eb0717de5824c7ab9c02a9a12717147507cd56f8",
+    "src/systematic_trading/research/trend_sleeve_portfolio.py": "8bba075432e6953746e9649483bb36c58f9ed62d2f0e40cd69c95935a6b82382"
+  }
+}

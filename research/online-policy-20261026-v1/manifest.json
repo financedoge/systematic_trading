@@ -1,0 +1,26 @@
+{
+  "files": {
+    "asset-results.json": "bf49d246b2aab3c40779a8785c3232e594676781f17056f21f0b464f985323c6",
+    "chart-data.json.gz": "efe1003e9035ada4ac9dc5720e7760b68e2efb8bbf9ac73d866e3c5cab34eb8b",
+    "equation-proof.png": "3dfa0eb18dc50328bb8d822df21f822eb36608daa8eaadf5ace225742a8ddb90",
+    "equations.json": "7036dd615477815720edba6c9cd0828ca4f0c45fd5fce6c151a2174eee87a65d",
+    "GLD_late.png": "f6b5a4fac9c97f2f0fbb8492c18575e926f9864b2111d977e19ca5b327bf2bc6",
+    "index.html": "dc7ae7f422bdc94b23558ac86836db0d2e9118482f93a02d1b8c4fa08e7eb247",
+    "initial-manifest.json": "33c0bc2fb579e09fe3694bc9f174902954c25b400edf3d3954f91f360530d92e",
+    "initial.json": "85045a74b9a191985f063bc02718ec2c991fced44a46c323179ceb205088e453",
+    "native-checks.json": "050e7fb0ca7a65334bb8a4487de0d84da3231c26bc74599e3ae864e3e207e655",
+    "PPLT_early.png": "151e4c3ee9b26d57a87b184abe0a754ec58c983af0679e8d3ad9d2dad8c08daa",
+    "protocol-before-output-repair.json": "94a99dde9fdbe0d581c6554838357773e5d6b07d6e40eaa34e7f3b34f60e9917",
+    "protocol-repair.json": "3935b53b3cac6f338e96e15525d21318900048ae702fc11f290ab5ecc6865e3f",
+    "protocol.json": "52a79975a9ac143da7659fc2631bec4db88004647a2e3fb54ac141210c923635",
+    "summary.json": "5037b88a935dfd6161b2142533f7e5fa8b176576f935b4614bc6bd94c3179e54",
+    "TLT_late.png": "57469b950797cda29a8989be7557871292578052afdd4517098695ab1a001015",
+    "validation.json": "579be11c13e56ed66ff69153692a9ff82ff5c609a906a6e02d14ae2478c8946b",
+    "weakest-cases.json": "089025c17689ecdd3ae93c6f0a6a14b50c7b9976674564e20321c255121e4df1",
+    "WEAT_late.png": "7d180fe37b95d46b0cd90a7ce7338481840265eface894d4c53ca0ef86d113dd"
+  },
+  "report_code": {
+    "scripts/build_online_policy_report.py": "579348c725e51500cee7d3ee8f3f814cc3f5503fac99046488afb77fec9ffdd2",
+    "scripts/assets/online-policy-script.js": "0d5394af09c4b3816039372284c975794edc0793150f2260fa918c0a98f8c4a6"
+  }
+}

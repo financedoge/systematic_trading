@@ -203,6 +203,17 @@ def test_allocatable_strategy_gets_no_allocation_note():
     assert _allocation_note(None) == (None, None)
 
 
+def test_frozen_historical_report_is_never_a_current_calculation():
+    from systematic_trading.research.strategy_lifecycle import calculation_ready
+    from systematic_trading.web.strategy_refresh import _allocation_note
+    detail = dict(strategy_id="frozen", lifecycle="monitored", app_tracking=True,
+                  current_signal_available=False, end_date="2026-10-12", allocation_ready=False)
+    assert not calculation_ready(detail, dict(monitored=["frozen"], generations={}), "2026-10-12")
+    note, label = _allocation_note(detail)
+    assert "Historical only" in note and "new prices alone" in note
+    assert "Catching up" not in label
+
+
 def test_refresh_banner_separates_the_two_states():
     from systematic_trading.web.strategy_refresh import report_refresh_banner
     publication = dict(published_at="2026-10-10T02:00:00+00:00", version="v1")
@@ -228,3 +239,5 @@ def test_lifecycle_actions_distinguish_a_gate_from_a_pending_calculation():
     catching = JS.index(">Catching up</button>")
     assert guard < catching, "the catching-up label must sit behind the calculation-status guard"
     assert ">Not allocatable</button>" in JS
+    assert "item.current_signal_available===false" in JS
+    assert ">Historical only</button>" in JS

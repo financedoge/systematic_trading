@@ -1,0 +1,221 @@
+{
+  "late": {
+    "symbol": "CPER",
+    "era": "late",
+    "arm": "value",
+    "cost_bp": 5,
+    "delay": 0,
+    "cagr": -0.09541251601731326,
+    "sharpe": -0.7755106445452288,
+    "maxdd": -0.31940820710853934,
+    "calmar": -0.29871654482845134,
+    "sessions": 951,
+    "ann_vol": 0.11915113860941583,
+    "cumulative": -0.31505963127339887,
+    "correlation": 0.4563758220690053,
+    "beta": 0.20285554351797797,
+    "alpha_annual": -0.12870789193779258,
+    "alpha_t_hac": -1.6348308699419543,
+    "down_capture": 0.10058787955695005,
+    "up_capture": 0.03020691296168955,
+    "ic5": -0.14657242562635883,
+    "closed_trades": 4,
+    "wins": 1,
+    "exposure": 0.029442691903259727,
+    "regimes": {
+      "up": {
+        "sessions": 558,
+        "exposure": 0.05017921146953405,
+        "strategy_mean": -0.0006249305232869869,
+        "asset_mean": 0.0004508447800873697,
+        "closed": 4,
+        "losing": 3,
+        "mean_trade": -0.08451025241042584
+      },
+      "down": {
+        "sessions": 157,
+        "exposure": 0.0,
+        "strategy_mean": 0.0,
+        "asset_mean": 0.0029630729917472275,
+        "closed": 0,
+        "losing": 0,
+        "mean_trade": null
+      },
+      "uncertain": {
+        "sessions": 236,
+        "exposure": 0.0,
+        "strategy_mean": 0.0,
+        "asset_mean": -0.00017532957354805928,
+        "closed": 0,
+        "losing": 0,
+        "mean_trade": null
+      }
+    },
+    "yearly": {
+      "2023": 0.0,
+      "2024": -0.05435860516450608,
+      "2025": -0.2495745321910876,
+      "2026": -0.034796865333581506
+    },
+    "guard": {
+      "kind": "intercept",
+      "memory": 252,
+      "score": 2.2224059772380618,
+      "metrics": {
+        "count": 239,
+        "ic": -0.24725006312411887,
+        "return_mse": 0.003979924151797348,
+        "downside_mse": 0.0023828614480125793,
+        "mean_predicted_return": 0.003035866216548765,
+        "mean_return": -0.00814507558898207,
+        "mean_predicted_downside": 0.02943891846781766,
+        "mean_downside": 0.04433950746410774
+      }
+    },
+    "enabled": true,
+    "blocked_sessions": 308,
+    "forecast": {
+      "count": 939,
+      "ic": -0.08762972040915935,
+      "return_mse": 0.002945060562411378,
+      "downside_mse": 0.0016674534496437265,
+      "mean_predicted_return": 0.0038060136127524907,
+      "mean_return": 0.006257419141092601,
+      "mean_predicted_downside": 0.02828856899866215,
+      "mean_downside": 0.03041608172168717
+    },
+    "forecast_null": {
+      "count": 939,
+      "ic": -0.08762972040915935,
+      "return_mse": 0.002945060562411378,
+      "downside_mse": 0.0016674534496437265,
+      "mean_predicted_return": 0.0038060136127524907,
+      "mean_return": 0.006257419141092601,
+      "mean_predicted_downside": 0.02828856899866215,
+      "mean_downside": 0.03041608172168717
+    },
+    "horizon": 12,
+    "turnover_annual": 2.115188620128887,
+    "cost_bp_annual": 10.575943100644437,
+    "adaptive_incumbent_cumulative": 0.357916989490876,
+    "adaptive_incumbent_sharpe": 0.5798711047199584,
+    "incumbent_dependence": {
+      "correlation": 0.6035008783988969,
+      "beta": 0.3659956953661476,
+      "alpha_annual": 0.028765829105109917,
+      "alpha_t_hac": 0.45875624820772165,
+      "down_capture": 0.4010421729648477,
+      "up_capture": 0.4153813656748495
+    },
+    "buyhold": 0.7113246810715135
+  },
+  "early": {
+    "symbol": "IWM",
+    "era": "early",
+    "arm": "value",
+    "cost_bp": 5,
+    "delay": 0,
+    "cagr": -0.062240979729693,
+    "sharpe": -1.0101124336954308,
+    "maxdd": -0.19414768291278162,
+    "calmar": -0.3205857458399541,
+    "sessions": 756,
+    "ann_vol": 0.06171171710005296,
+    "cumulative": -0.1753422383094284,
+    "correlation": 0.18768513933443406,
+    "beta": 0.03719741456946392,
+    "alpha_annual": -0.06525946173776127,
+    "alpha_t_hac": -2.1100201375433776,
+    "down_capture": 0.07874686405785424,
+    "up_capture": 0.04098604991019984,
+    "ic5": -0.00740726134520439,
+    "closed_trades": 6,
+    "wins": 0,
+    "exposure": 0.07671957671957672,
+    "regimes": {
+      "up": {
+        "sessions": 316,
+        "exposure": 0.18354430379746836,
+        "strategy_mean": -0.0005917953108935927,
+        "asset_mean": 0.000792877060728022,
+        "closed": 6,
+        "losing": 6,
+        "mean_trade": -0.03134044025072021
+      },
+      "down": {
+        "sessions": 228,
+        "exposure": 0.0,
+        "strategy_mean": 0.0,
+        "asset_mean": 0.0010768306222545547,
+        "closed": 0,
+        "losing": 0,
+        "mean_trade": null
+      },
+      "uncertain": {
+        "sessions": 212,
+        "exposure": 0.0,
+        "strategy_mean": 0.0,
+        "asset_mean": -0.001227682899719877,
+        "closed": 0,
+        "losing": 0,
+        "mean_trade": null
+      }
+    },
+    "yearly": {
+      "2020": 0.0,
+      "2021": -0.1753422383094284,
+      "2022": 0.0
+    },
+    "guard": {
+      "kind": "intercept",
+      "memory": 252,
+      "score": 0.4851017573531009,
+      "metrics": {
+        "count": 241,
+        "ic": -0.4844098281951923,
+        "return_mse": 0.0008918304260359986,
+        "downside_mse": 0.00033017681791336443,
+        "mean_predicted_return": 0.0018759401895059704,
+        "mean_return": 0.007524723953990913,
+        "mean_predicted_downside": 0.019768758629352227,
+        "mean_downside": 0.017211666461192314
+      }
+    },
+    "enabled": true,
+    "blocked_sessions": 209,
+    "forecast": {
+      "count": 746,
+      "ic": -0.15559421051425953,
+      "return_mse": 0.0038146067595395093,
+      "downside_mse": 0.0025268546298723945,
+      "mean_predicted_return": 0.0031458098293177645,
+      "mean_return": 0.0011661727433047487,
+      "mean_predicted_downside": 0.02837819122037599,
+      "mean_downside": 0.039315290911927966
+    },
+    "forecast_null": {
+      "count": 746,
+      "ic": -0.15559421051425953,
+      "return_mse": 0.0038146067595395093,
+      "downside_mse": 0.0025268546298723945,
+      "mean_predicted_return": 0.0031458098293177645,
+      "mean_return": 0.0011661727433047487,
+      "mean_predicted_downside": 0.02837819122037599,
+      "mean_downside": 0.039315290911927966
+    },
+    "horizon": 10,
+    "turnover_annual": 4.002979838977551,
+    "cost_bp_annual": 20.014899194887757,
+    "adaptive_incumbent_cumulative": -0.25744863399013473,
+    "adaptive_incumbent_sharpe": -0.5189234883853071,
+    "incumbent_dependence": {
+      "correlation": 0.4904197024694212,
+      "beta": 0.2596017522930858,
+      "alpha_annual": -0.10593634115716663,
+      "alpha_t_hac": -1.242847726745043,
+      "down_capture": 0.3437736394984423,
+      "up_capture": 0.2817517673255314
+    },
+    "buyhold": 0.08560532560502421
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "early-attribution.json": "85ebed2230fa367d8abf9ec5a83095219da277aa6e9c4ebddb6cc72ae1dcc229",
+  "implementation-audit.json": "d4e9150dbdd47cea4ddb700c951fdff3cbaaf3fd02f82cf5002feec993fe6237",
+  "index.html": "b7ecad052886145212489b4e23a2f40619d3d341a16133410dc794ffdcb1a7f1",
+  "late-attribution.json": "ec4b93893730556b5a37266fe105d732565238c524ac9fc5fcab43950ca204e9",
+  "native-checks.json": "8f39eefad6ebc157dbb86838090252bdb9535487f9e4ab6b7d33fc72dcfdfcdc",
+  "protocol-preflight.json": "67483662decd438d7718632eab153158fbf99735ddfead30173395fcff0c2cfa",
+  "protocol.json": "9637bdab35658265cf2403f02fbd054c73dc90dfcab98eac0ef79fc47b4f698c",
+  "results.json": "e1b2831f545d258c29bb1a1bdf4d23b30d7d1b3f59829a6fe85b86a0bf7b65c5",
+  "validation.json": "bb3a61c2d15ecc494dd688abf658763968bb4b061f8fc7b2cc73bec4b28ce261"
+}

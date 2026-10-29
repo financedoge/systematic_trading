@@ -1,0 +1,1024 @@
+{
+  "AGG": {
+    "late": {
+      "winning_trades": 21,
+      "completed_trades": 41,
+      "winner_sigma": 0.024473398823623805,
+      "winner_mean": 0.033125622917739767,
+      "all_trade_sigma": 0.027499080279201834,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 23,
+      "completed_trades": 42,
+      "winner_sigma": 0.02424547646676341,
+      "winner_mean": 0.023639445261527576,
+      "all_trade_sigma": 0.0235479876333786,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "BIL": {
+    "late": {
+      "winning_trades": 3,
+      "completed_trades": 8,
+      "winner_sigma": null,
+      "winner_mean": 0.01580484194126323,
+      "all_trade_sigma": 0.016277323830604366,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 2,
+      "completed_trades": 6,
+      "winner_sigma": null,
+      "winner_mean": 0.001265878431788492,
+      "all_trade_sigma": 0.0016273223190484856,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "CORN": {
+    "late": {
+      "winning_trades": 9,
+      "completed_trades": 28,
+      "winner_sigma": 0.24449474461798565,
+      "winner_mean": 0.1744601984975608,
+      "all_trade_sigma": 0.16896946275776406,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 6,
+      "completed_trades": 27,
+      "winner_sigma": 0.07786687701268405,
+      "winner_mean": 0.057806406487137085,
+      "all_trade_sigma": 0.05376551052282455,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "CPER": {
+    "late": {
+      "winning_trades": 4,
+      "completed_trades": 11,
+      "winner_sigma": null,
+      "winner_mean": 0.18259047757338692,
+      "all_trade_sigma": 0.1376413954308003,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    }
+  },
+  "DBA": {
+    "late": {
+      "winning_trades": 14,
+      "completed_trades": 48,
+      "winner_sigma": 0.05809177177336885,
+      "winner_mean": 0.06681015158186461,
+      "all_trade_sigma": 0.05274135366705205,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 10,
+      "completed_trades": 32,
+      "winner_sigma": 0.040977052381000585,
+      "winner_mean": 0.06424942656601766,
+      "all_trade_sigma": 0.047545279491754605,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "DBB": {
+    "late": {
+      "winning_trades": 22,
+      "completed_trades": 52,
+      "winner_sigma": 0.0555342066341706,
+      "winner_mean": 0.08035627527182579,
+      "all_trade_sigma": 0.07436452627930143,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 30,
+      "completed_trades": 77,
+      "winner_sigma": 0.0495601428918894,
+      "winner_mean": 0.052180589130222256,
+      "all_trade_sigma": 0.05238512052531554,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "DBC": {
+    "late": {
+      "winning_trades": 34,
+      "completed_trades": 73,
+      "winner_sigma": 0.06316089186747945,
+      "winner_mean": 0.05928504878858873,
+      "all_trade_sigma": 0.06417739110616151,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 28,
+      "completed_trades": 56,
+      "winner_sigma": 0.042523336854999,
+      "winner_mean": 0.043169241942624094,
+      "all_trade_sigma": 0.0484604244815837,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "EEM": {
+    "late": {
+      "winning_trades": 26,
+      "completed_trades": 59,
+      "winner_sigma": 0.1354314808685456,
+      "winner_mean": 0.12068857601421032,
+      "all_trade_sigma": 0.12646250212214896,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 22,
+      "completed_trades": 46,
+      "winner_sigma": 0.10563857629091658,
+      "winner_mean": 0.11557092543450395,
+      "all_trade_sigma": 0.1135763427142003,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "EFA": {
+    "late": {
+      "winning_trades": 25,
+      "completed_trades": 57,
+      "winner_sigma": 0.11363406057698416,
+      "winner_mean": 0.10185090506566802,
+      "all_trade_sigma": 0.10675356455114102,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 27,
+      "completed_trades": 57,
+      "winner_sigma": 0.0825154299507008,
+      "winner_mean": 0.08799785991210547,
+      "all_trade_sigma": 0.09137888895001162,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "EMB": {
+    "late": {
+      "winning_trades": 27,
+      "completed_trades": 59,
+      "winner_sigma": 0.03910800740465516,
+      "winner_mean": 0.04850599904247454,
+      "all_trade_sigma": 0.041467513709444945,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 23,
+      "completed_trades": 51,
+      "winner_sigma": 0.035660115582901726,
+      "winner_mean": 0.04389191441204221,
+      "all_trade_sigma": 0.03694291847783753,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "EWA": {
+    "late": {
+      "winning_trades": 24,
+      "completed_trades": 50,
+      "winner_sigma": 0.085966535042773,
+      "winner_mean": 0.10666311079748673,
+      "all_trade_sigma": 0.10593538491762185,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 23,
+      "completed_trades": 59,
+      "winner_sigma": 0.06911354449881374,
+      "winner_mean": 0.07860983121952941,
+      "all_trade_sigma": 0.07325184547189613,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "EWC": {
+    "late": {
+      "winning_trades": 24,
+      "completed_trades": 49,
+      "winner_sigma": 0.11023727518477061,
+      "winner_mean": 0.12695642873226445,
+      "all_trade_sigma": 0.12190605408015903,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 22,
+      "completed_trades": 49,
+      "winner_sigma": 0.10698488566340894,
+      "winner_mean": 0.10304293227974282,
+      "all_trade_sigma": 0.10582438266690916,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "EWG": {
+    "late": {
+      "winning_trades": 30,
+      "completed_trades": 85,
+      "winner_sigma": 0.07852205040055406,
+      "winner_mean": 0.10239557147476483,
+      "all_trade_sigma": 0.0844286187226217,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 34,
+      "completed_trades": 81,
+      "winner_sigma": 0.07688539370371064,
+      "winner_mean": 0.08954488892596046,
+      "all_trade_sigma": 0.08299847999578032,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "EWH": {
+    "late": {
+      "winning_trades": 33,
+      "completed_trades": 76,
+      "winner_sigma": 0.10778598256320536,
+      "winner_mean": 0.11606390095086272,
+      "all_trade_sigma": 0.11213941089761986,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 30,
+      "completed_trades": 68,
+      "winner_sigma": 0.1103326592173847,
+      "winner_mean": 0.12219197351407836,
+      "all_trade_sigma": 0.11655266590822574,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "EWJ": {
+    "late": {
+      "winning_trades": 34,
+      "completed_trades": 83,
+      "winner_sigma": 0.09298061211363323,
+      "winner_mean": 0.08351662818024111,
+      "all_trade_sigma": 0.08827787445746586,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 35,
+      "completed_trades": 83,
+      "winner_sigma": 0.08019057408280501,
+      "winner_mean": 0.07682690942338899,
+      "all_trade_sigma": 0.08061882098613526,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "EWT": {
+    "late": {
+      "winning_trades": 26,
+      "completed_trades": 66,
+      "winner_sigma": 0.16525789350080253,
+      "winner_mean": 0.14006198263871392,
+      "all_trade_sigma": 0.14227222509909335,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 23,
+      "completed_trades": 58,
+      "winner_sigma": 0.11406199149413752,
+      "winner_mean": 0.11922243844253833,
+      "all_trade_sigma": 0.11404596042469878,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "EWU": {
+    "late": {
+      "winning_trades": 64,
+      "completed_trades": 159,
+      "winner_sigma": 0.0484071834363898,
+      "winner_mean": 0.05150392862570707,
+      "all_trade_sigma": 0.0539666938924547,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 26,
+      "completed_trades": 74,
+      "winner_sigma": 0.058962436302647116,
+      "winner_mean": 0.0744645468679966,
+      "all_trade_sigma": 0.07125245504040104,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "EWY": {
+    "late": {
+      "winning_trades": 58,
+      "completed_trades": 126,
+      "winner_sigma": 0.06112598844138503,
+      "winner_mean": 0.0692535982093911,
+      "all_trade_sigma": 0.07036237425434165,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 51,
+      "completed_trades": 107,
+      "winner_sigma": 0.06262274412276532,
+      "winner_mean": 0.06936758166309495,
+      "all_trade_sigma": 0.07145951104710813,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "GLD": {
+    "late": {
+      "winning_trades": 52,
+      "completed_trades": 119,
+      "winner_sigma": 0.05267732893091446,
+      "winner_mean": 0.053234920259594656,
+      "all_trade_sigma": 0.05490150364092006,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 23,
+      "completed_trades": 50,
+      "winner_sigma": 0.056996217583841324,
+      "winner_mean": 0.06699252550718111,
+      "all_trade_sigma": 0.06474823520420372,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "HYG": {
+    "late": {
+      "winning_trades": 14,
+      "completed_trades": 25,
+      "winner_sigma": 0.046700626980479366,
+      "winner_mean": 0.044255425981360105,
+      "all_trade_sigma": 0.04820023440506161,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 9,
+      "completed_trades": 15,
+      "winner_sigma": 0.06560903774744535,
+      "winner_mean": 0.07494990754114708,
+      "all_trade_sigma": 0.07460838232749824,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "IAT": {
+    "late": {
+      "winning_trades": 41,
+      "completed_trades": 100,
+      "winner_sigma": 0.06375734017372921,
+      "winner_mean": 0.05699642414376896,
+      "all_trade_sigma": 0.06636035760591528,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 34,
+      "completed_trades": 79,
+      "winner_sigma": 0.052320715567973713,
+      "winner_mean": 0.05115433411219511,
+      "all_trade_sigma": 0.05982911666390672,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "IBB": {
+    "late": {
+      "winning_trades": 35,
+      "completed_trades": 69,
+      "winner_sigma": 0.08875735966052584,
+      "winner_mean": 0.10010012795864867,
+      "all_trade_sigma": 0.10298762305331283,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 29,
+      "completed_trades": 54,
+      "winner_sigma": 0.08724252060658154,
+      "winner_mean": 0.09780512569586178,
+      "all_trade_sigma": 0.10282057879745408,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "IBND": {
+    "late": {
+      "winning_trades": 14,
+      "completed_trades": 25,
+      "winner_sigma": 0.030703458862137892,
+      "winner_mean": 0.025559058812730732,
+      "all_trade_sigma": 0.03354043229858226,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 15,
+      "completed_trades": 38,
+      "winner_sigma": 0.01682754518499847,
+      "winner_mean": 0.020236432432503133,
+      "all_trade_sigma": 0.020092951563972707,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "IEF": {
+    "late": {
+      "winning_trades": 36,
+      "completed_trades": 69,
+      "winner_sigma": 0.028485321103616474,
+      "winner_mean": 0.02675265422009216,
+      "all_trade_sigma": 0.029009779934715974,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 34,
+      "completed_trades": 69,
+      "winner_sigma": 0.029969947552224097,
+      "winner_mean": 0.0247465700977375,
+      "all_trade_sigma": 0.0283707808189273,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "IGOV": {
+    "late": {
+      "winning_trades": 12,
+      "completed_trades": 36,
+      "winner_sigma": 0.03805855857433444,
+      "winner_mean": 0.040591554549855025,
+      "all_trade_sigma": 0.03624459882028323,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 10,
+      "completed_trades": 34,
+      "winner_sigma": 0.04136015033277373,
+      "winner_mean": 0.04432843074518862,
+      "all_trade_sigma": 0.03656288249522663,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "INDA": {
+    "late": {
+      "winning_trades": 12,
+      "completed_trades": 28,
+      "winner_sigma": 0.08997317069695811,
+      "winner_mean": 0.09599938387828709,
+      "all_trade_sigma": 0.09474565795780998,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 9,
+      "completed_trades": 20,
+      "winner_sigma": 0.09677719509006848,
+      "winner_mean": 0.07118954575367543,
+      "all_trade_sigma": 0.08219246269622561,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "ITA": {
+    "late": {
+      "winning_trades": 15,
+      "completed_trades": 36,
+      "winner_sigma": 0.2186178120258327,
+      "winner_mean": 0.19068915679740014,
+      "all_trade_sigma": 0.18629229926801366,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 16,
+      "completed_trades": 36,
+      "winner_sigma": 0.21474477453826726,
+      "winner_mean": 0.14780260772047565,
+      "all_trade_sigma": 0.17047207214000934,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "IWM": {
+    "late": {
+      "winning_trades": 28,
+      "completed_trades": 59,
+      "winner_sigma": 0.098964563199846,
+      "winner_mean": 0.10122703195682455,
+      "all_trade_sigma": 0.10364315160058113,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 25,
+      "completed_trades": 56,
+      "winner_sigma": 0.0890108836553319,
+      "winner_mean": 0.10123795132290735,
+      "all_trade_sigma": 0.09644887352901499,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "LEMB": {
+    "late": {
+      "winning_trades": 18,
+      "completed_trades": 30,
+      "winner_sigma": 0.028730328277902242,
+      "winner_mean": 0.029043329517789023,
+      "all_trade_sigma": 0.030938866703227805,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 9,
+      "completed_trades": 18,
+      "winner_sigma": 0.04119286668865771,
+      "winner_mean": 0.06110784984277687,
+      "all_trade_sigma": 0.051364968239766065,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "LQD": {
+    "late": {
+      "winning_trades": 26,
+      "completed_trades": 42,
+      "winner_sigma": 0.04222678629663942,
+      "winner_mean": 0.0421509966358832,
+      "all_trade_sigma": 0.043157363201830445,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 22,
+      "completed_trades": 42,
+      "winner_sigma": 0.045052726044156756,
+      "winner_mean": 0.043727937819652014,
+      "all_trade_sigma": 0.04222186978469376,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "MBB": {
+    "late": {
+      "winning_trades": 20,
+      "completed_trades": 28,
+      "winner_sigma": 0.024583644658491003,
+      "winner_mean": 0.019774890105746033,
+      "all_trade_sigma": 0.02430772324692552,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 17,
+      "completed_trades": 30,
+      "winner_sigma": 0.013167494614556088,
+      "winner_mean": 0.01744262450228516,
+      "all_trade_sigma": 0.01573495631823027,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "MCHI": {
+    "late": {
+      "winning_trades": 19,
+      "completed_trades": 42,
+      "winner_sigma": 0.10451030521394782,
+      "winner_mean": 0.0864419936969145,
+      "all_trade_sigma": 0.09558953558532869,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 21,
+      "completed_trades": 48,
+      "winner_sigma": 0.09745513895299403,
+      "winner_mean": 0.07143922324976254,
+      "all_trade_sigma": 0.08454971462204822,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "MDY": {
+    "late": {
+      "winning_trades": 33,
+      "completed_trades": 71,
+      "winner_sigma": 0.10580852242905138,
+      "winner_mean": 0.1054646201420909,
+      "all_trade_sigma": 0.10678182885229467,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 30,
+      "completed_trades": 66,
+      "winner_sigma": 0.09314534096980419,
+      "winner_mean": 0.10048099442734885,
+      "all_trade_sigma": 0.09888278340019496,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "PPLT": {
+    "late": {
+      "winning_trades": 14,
+      "completed_trades": 38,
+      "winner_sigma": 0.07428097730988867,
+      "winner_mean": 0.06204176945334113,
+      "all_trade_sigma": 0.07074484232002706,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 21,
+      "completed_trades": 54,
+      "winner_sigma": 0.03618215643210366,
+      "winner_mean": 0.03561848221474077,
+      "all_trade_sigma": 0.04068595892125167,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "SHY": {
+    "late": {
+      "winning_trades": 15,
+      "completed_trades": 29,
+      "winner_sigma": 0.027991899466594927,
+      "winner_mean": 0.02139396016144346,
+      "all_trade_sigma": 0.023444397924026642,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 16,
+      "completed_trades": 29,
+      "winner_sigma": 0.02373547277406451,
+      "winner_mean": 0.017221076890613196,
+      "all_trade_sigma": 0.020226088936408346,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "SLV": {
+    "late": {
+      "winning_trades": 42,
+      "completed_trades": 109,
+      "winner_sigma": 0.10151279056663931,
+      "winner_mean": 0.09620249991462523,
+      "all_trade_sigma": 0.09730992230352466,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 41,
+      "completed_trades": 98,
+      "winner_sigma": 0.08452126085675508,
+      "winner_mean": 0.08053862401977278,
+      "all_trade_sigma": 0.08204006221450405,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "SOXX": {
+    "late": {
+      "winning_trades": 29,
+      "completed_trades": 72,
+      "winner_sigma": 0.18457630395177516,
+      "winner_mean": 0.1545055303250372,
+      "all_trade_sigma": 0.15923050454642731,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 58,
+      "completed_trades": 123,
+      "winner_sigma": 0.03817783543559599,
+      "winner_mean": 0.05651067287446625,
+      "all_trade_sigma": 0.05431227130434444,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "SPY": {
+    "late": {
+      "winning_trades": 41,
+      "completed_trades": 91,
+      "winner_sigma": 0.09624797661232086,
+      "winner_mean": 0.08640638050218913,
+      "all_trade_sigma": 0.08927334393175083,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 39,
+      "completed_trades": 87,
+      "winner_sigma": 0.09542174158519684,
+      "winner_mean": 0.07819188191878669,
+      "all_trade_sigma": 0.08567562087390901,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "TIP": {
+    "late": {
+      "winning_trades": 18,
+      "completed_trades": 42,
+      "winner_sigma": 0.030391886300986957,
+      "winner_mean": 0.03462154559029752,
+      "all_trade_sigma": 0.03168872474966992,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 19,
+      "completed_trades": 46,
+      "winner_sigma": 0.029257581717747737,
+      "winner_mean": 0.031302201276957896,
+      "all_trade_sigma": 0.02784031862215822,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "TLT": {
+    "late": {
+      "winning_trades": 32,
+      "completed_trades": 65,
+      "winner_sigma": 0.060894830004301334,
+      "winner_mean": 0.05847382730532841,
+      "all_trade_sigma": 0.061333493582485014,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 26,
+      "completed_trades": 63,
+      "winner_sigma": 0.05731808718347491,
+      "winner_mean": 0.061144174387354686,
+      "all_trade_sigma": 0.05668926750885909,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "USO": {
+    "late": {
+      "winning_trades": 36,
+      "completed_trades": 75,
+      "winner_sigma": 0.11653843139725877,
+      "winner_mean": 0.10051097271261653,
+      "all_trade_sigma": 0.11434841350240411,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 34,
+      "completed_trades": 65,
+      "winner_sigma": 0.06464816700939066,
+      "winner_mean": 0.06462688449101395,
+      "all_trade_sigma": 0.07577086265406204,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "VGK": {
+    "late": {
+      "winning_trades": 24,
+      "completed_trades": 54,
+      "winner_sigma": 0.07769160279963193,
+      "winner_mean": 0.07956118170081268,
+      "all_trade_sigma": 0.08672066708001537,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 18,
+      "completed_trades": 43,
+      "winner_sigma": 0.08247009774477135,
+      "winner_mean": 0.08015618734196221,
+      "all_trade_sigma": 0.08483912431720021,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "WEAT": {
+    "late": {
+      "winning_trades": 13,
+      "completed_trades": 32,
+      "winner_sigma": 0.042066661129238465,
+      "winner_mean": 0.07253270105167099,
+      "all_trade_sigma": 0.07229932037130547,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 8,
+      "completed_trades": 22,
+      "winner_sigma": 0.04363087690278971,
+      "winner_mean": 0.053017282167825974,
+      "all_trade_sigma": 0.06106049258272794,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "XLB": {
+    "late": {
+      "winning_trades": 29,
+      "completed_trades": 70,
+      "winner_sigma": 0.09658976409208497,
+      "winner_mean": 0.09442198960528193,
+      "all_trade_sigma": 0.09608150226201323,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 28,
+      "completed_trades": 62,
+      "winner_sigma": 0.09360237406456726,
+      "winner_mean": 0.08644403121771593,
+      "all_trade_sigma": 0.09458746417140106,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "XLC": {
+    "late": {
+      "winning_trades": 5,
+      "completed_trades": 10,
+      "winner_sigma": 0.11666111172047518,
+      "winner_mean": 0.12862054942597445,
+      "all_trade_sigma": 0.130168072832549,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    }
+  },
+  "XLE": {
+    "late": {
+      "winning_trades": 30,
+      "completed_trades": 80,
+      "winner_sigma": 0.10831569414768774,
+      "winner_mean": 0.09627224745467618,
+      "all_trade_sigma": 0.09717187369825846,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 25,
+      "completed_trades": 64,
+      "winner_sigma": 0.14552978790031096,
+      "winner_mean": 0.11312836851272802,
+      "all_trade_sigma": 0.12458783149467959,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "XLI": {
+    "late": {
+      "winning_trades": 29,
+      "completed_trades": 62,
+      "winner_sigma": 0.12814320496576453,
+      "winner_mean": 0.1032049454153996,
+      "all_trade_sigma": 0.11648283981977554,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 24,
+      "completed_trades": 56,
+      "winner_sigma": 0.14397840613259003,
+      "winner_mean": 0.11731599261757769,
+      "all_trade_sigma": 0.12461381788948522,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "XLK": {
+    "late": {
+      "winning_trades": 30,
+      "completed_trades": 75,
+      "winner_sigma": 0.14521770452780797,
+      "winner_mean": 0.13325012881015533,
+      "all_trade_sigma": 0.13476775183218276,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 24,
+      "completed_trades": 61,
+      "winner_sigma": 0.14191860790345748,
+      "winner_mean": 0.11869550651960852,
+      "all_trade_sigma": 0.1270294753790474,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "XLP": {
+    "late": {
+      "winning_trades": 32,
+      "completed_trades": 66,
+      "winner_sigma": 0.050981409609694245,
+      "winner_mean": 0.060462000672497206,
+      "all_trade_sigma": 0.0594467529485499,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 27,
+      "completed_trades": 57,
+      "winner_sigma": 0.06302659546159317,
+      "winner_mean": 0.06415843599791599,
+      "all_trade_sigma": 0.064509783897305,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "XLU": {
+    "late": {
+      "winning_trades": 27,
+      "completed_trades": 54,
+      "winner_sigma": 0.09081211474435064,
+      "winner_mean": 0.09709188229025957,
+      "all_trade_sigma": 0.0981060539889083,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 31,
+      "completed_trades": 55,
+      "winner_sigma": 0.06512670593404696,
+      "winner_mean": 0.07712377846400283,
+      "all_trade_sigma": 0.0786173985223038,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "XLV": {
+    "late": {
+      "winning_trades": 35,
+      "completed_trades": 75,
+      "winner_sigma": 0.08416508342370518,
+      "winner_mean": 0.0614027449799661,
+      "all_trade_sigma": 0.07465917960625056,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 29,
+      "completed_trades": 63,
+      "winner_sigma": 0.09051162177381283,
+      "winner_mean": 0.06305182380288411,
+      "all_trade_sigma": 0.07787916959557556,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  },
+  "XLY": {
+    "late": {
+      "winning_trades": 24,
+      "completed_trades": 60,
+      "winner_sigma": 0.12300296836877564,
+      "winner_mean": 0.13723775728356513,
+      "all_trade_sigma": 0.12266497158698018,
+      "training_end": "2022-12-30",
+      "cost_bp": 5
+    },
+    "early": {
+      "winning_trades": 22,
+      "completed_trades": 54,
+      "winner_sigma": 0.11340387558362293,
+      "winner_mean": 0.11974988920572532,
+      "all_trade_sigma": 0.10966648053706532,
+      "training_end": "2019-12-31",
+      "cost_bp": 5
+    }
+  }
+}

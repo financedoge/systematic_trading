@@ -1,0 +1,2381 @@
+{
+  "rows": [
+    {
+      "symbol": "AGG",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 115,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.27357920220118914
+        ],
+        [
+          0.009417048665806897
+        ],
+        [
+          0.008249490822508261
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "AGG",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 57,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.2061272976857841
+        ],
+        [
+          0.00985684699536361
+        ],
+        [
+          0.01125331104176692
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "BIL",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.017684230563338482
+        ],
+        [
+          0.0008894001902452303
+        ],
+        [
+          0.015030259361291652
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "BIL",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.01655088105179777
+        ],
+        [
+          0.000953319838933803
+        ],
+        [
+          0.010507936138546838
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "CORN",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.03957949804098166
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.04640198490530987
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "CORN",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.03662536460710785
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.04782716737493711
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "CPER",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.08428017839598383
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.040188346302215495
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "DBA",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.0694950475979232
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.04059418492380827
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "DBA",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.06976257949528156
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.045218246582327495
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "DBB",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.05390521272212384
+        ],
+        [
+          0.009775156241362454
+        ],
+        [
+          0.029759341494018213
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "DBB",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.051734667052396904
+        ],
+        [
+          0.009059865721128135
+        ],
+        [
+          0.028767841122515268
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "DBC",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.07148104411653149
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.02984730840499437
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "DBC",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.0638454505951576
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.029506340347035497
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EEM",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.07921685861421705
+        ],
+        [
+          0.009704677557303384
+        ],
+        [
+          0.021028585735187334
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EEM",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.07834864154044048
+        ],
+        [
+          0.009549920980731656
+        ],
+        [
+          0.0209369259242306
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EFA",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 12,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.18683624444337157
+        ],
+        [
+          0.008466244880241539
+        ],
+        [
+          0.01084185451939911
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EFA",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 37,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.11616558041564984
+        ],
+        [
+          0.0025000000000000005
+        ],
+        [
+          0.013085582058202152
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EMB",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 37,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.2383528760213499
+        ],
+        [
+          0.0025000000000000005
+        ],
+        [
+          0.008156047530299866
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EMB",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.04390218903413864
+        ],
+        [
+          0.0069024179003393405
+        ],
+        [
+          0.028839141175431557
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EWA",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.09346022031264112
+        ],
+        [
+          0.009202725390668357
+        ],
+        [
+          0.027325183480505444
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EWA",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 1,
+      "directional_variances": [
+        [
+          0.07216989585159805
+        ],
+        [
+          0.0025000000000000005
+        ],
+        [
+          0.02848073933704275
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EWC",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.2758924125086691
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.011862017598708844
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EWC",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 26,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.25312582049777776
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.011799804431908084
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EWG",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.08778951374398018
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.028906521943744722
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EWG",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 1,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.0686291113389939
+        ],
+        [
+          0.0025000000000000005
+        ],
+        [
+          0.026824181903323252
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EWH",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.044930338702217576
+        ],
+        [
+          0.009385993375722814
+        ],
+        [
+          0.03312172919102215
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EWH",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.043707775389573905
+        ],
+        [
+          0.009314518133303884
+        ],
+        [
+          0.031717191904545035
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EWJ",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.04549234391898282
+        ],
+        [
+          0.008689696417981549
+        ],
+        [
+          0.03570744283050046
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EWJ",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.04189208514344266
+        ],
+        [
+          0.008587202072342716
+        ],
+        [
+          0.035391186932611694
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EWT",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.04730617512717582
+        ],
+        [
+          0.0025000000000000005
+        ],
+        [
+          0.025999051214614186
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EWT",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.044200801897778884
+        ],
+        [
+          0.0025000000000000005
+        ],
+        [
+          0.025715423644398654
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EWU",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.08227048109276866
+        ],
+        [
+          0.008534037039409028
+        ],
+        [
+          0.023401951766711324
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EWU",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.0596897786229792
+        ],
+        [
+          0.008352717519973851
+        ],
+        [
+          0.020870774161177923
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EWY",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.0783018494352002
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.02874797612467539
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "EWY",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 1,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.07426947565480585
+        ],
+        [
+          0.009987901792556406
+        ],
+        [
+          0.027801357333771325
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "GLD",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.05992380561556712
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.040093346025903906
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "GLD",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.06267729424315346
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.0398967631007591
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "HYG",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.20147529913400627
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.0941168025415853
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "HYG",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 80,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.30310520342480507
+        ],
+        [
+          0.0025000000000000005
+        ],
+        [
+          0.004533844401251481
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "IAT",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.08309294415932478
+        ],
+        [
+          0.008159797608245813
+        ],
+        [
+          0.037266466292489635
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "IAT",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.06982393723123483
+        ],
+        [
+          0.0025000000000000005
+        ],
+        [
+          0.03426463199181603
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "IBB",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.05914869429426588
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.02506221545909312
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "IBB",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.06193282368308014
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.025972590340062312
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "IBND",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.10830724501001246
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.039707768466097186
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "IBND",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.042632520583839324
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.025989550498922924
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "IEF",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.03692077557348669
+        ],
+        [
+          0.009088692974679305
+        ],
+        [
+          0.03769479370862541
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "IEF",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.03433679056719462
+        ],
+        [
+          0.009311519878024109
+        ],
+        [
+          0.036321763746940794
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "IGOV",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.07417136724967098
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.03889481555428931
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "IGOV",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.04854385072653531
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.031787429865227985
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "INDA",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.0721266092030299
+        ],
+        [
+          0.0025000000000000005
+        ],
+        [
+          0.020361590335998575
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "INDA",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.04173185331409402
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.023136924529535988
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "ITA",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 9,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.3187257911394458
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.011660620686297772
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "ITA",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 44,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.20049733232815148
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.015647894184631656
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "IWM",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.11286036409535609
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.020987229622111223
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "IWM",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 4,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.10182957501722119
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.01882199629630735
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "LEMB",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.11998110616859366
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.03507142434108052
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "LEMB",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.05259794764994096
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.035533805825080055
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "LQD",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 53,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.37888069756073794
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.009036730642669124
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "LQD",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 57,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.2458779593389116
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.011372953084233202
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "MBB",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.09580593466985382
+        ],
+        [
+          0.008883914746685422
+        ],
+        [
+          0.04591665951136026
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "MBB",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.050840781261035486
+        ],
+        [
+          0.00956198698506223
+        ],
+        [
+          0.03783507174353596
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "MCHI",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.05146567349420393
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.02791231708345863
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "MCHI",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.055352129148882746
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.02595468936273643
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "MDY",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.15803668915809901
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.019636705473302176
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "MDY",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.08430577031954113
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.02590206408745178
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "PPLT",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 1,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.07955126003131914
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.038910832290736684
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "PPLT",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.050578274599234155
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.04286863505915702
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "SHY",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.05997632076484225
+        ],
+        [
+          0.009103798496866532
+        ],
+        [
+          0.06189781036449902
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "SHY",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.03472166964390403
+        ],
+        [
+          0.009615281558443956
+        ],
+        [
+          0.05432178254249756
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "SLV",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.07922750478058853
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.03808692014308418
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "SLV",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.07488489568959772
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.03379645284277792
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "SOXX",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.049172109304044934
+        ],
+        [
+          0.009598121694977597
+        ],
+        [
+          0.026464564481744276
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "SOXX",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.04932365946179957
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.028696694677853227
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "SPY",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 13,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.1917110722131241
+        ],
+        [
+          0.009968918144041905
+        ],
+        [
+          0.012018418926717988
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "SPY",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 39,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.13588430074152755
+        ],
+        [
+          0.0025000000000000005
+        ],
+        [
+          0.01358929028802716
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "TIP",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.09021956227895239
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.05263868185776537
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "TIP",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.06555168252951231
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.04776383575979617
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "TLT",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.0356025108506083
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.040816750487993145
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "TLT",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.036002826327978875
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.0430424941398519
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "USO",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 26,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.2035182661026529
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.01683897378306574
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "USO",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.0553888714307872
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.0259996421202876
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "VGK",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.09599323026215249
+        ],
+        [
+          0.009751233785033725
+        ],
+        [
+          0.0262461329857681
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "VGK",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.0691724783766201
+        ],
+        [
+          0.0025000000000000005
+        ],
+        [
+          0.023255618619290302
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "WEAT",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.030321345994484498
+        ],
+        [
+          0.009446920564134355
+        ],
+        [
+          0.07354093665522887
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "WEAT",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.031958103013142496
+        ],
+        [
+          0.009579198753260142
+        ],
+        [
+          0.044523580238279126
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLB",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.08071949110445291
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.029539972688098517
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLB",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.07498364201734248
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.029439848097478287
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLC",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.06910215288459876
+        ],
+        [
+          0.009208578489518683
+        ],
+        [
+          0.015323734357629019
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLE",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 3,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.23305337247655375
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.011593598321034007
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLE",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 5,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.06686141467499511
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.021399773906019253
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLI",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.1023878410490706
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.03128490032232838
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLI",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.08841728789731122
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.03049613674506634
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLK",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.05788816403842058
+        ],
+        [
+          0.008565217727275157
+        ],
+        [
+          0.02815325873417188
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLK",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 1,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.07113835226019365
+        ],
+        [
+          0.0025000000000000005
+        ],
+        [
+          0.02763217775407992
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLP",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.07277924950449884
+        ],
+        [
+          0.009840687426120244
+        ],
+        [
+          0.024575889168287037
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLP",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 29,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.11405577880295578
+        ],
+        [
+          0.0025000000000000005
+        ],
+        [
+          0.014627337622631114
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLU",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 10,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.23436293902875016
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.012901842934750675
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLU",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 28,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.1679399044157595
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.01752267977853006
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLV",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 9,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.20240603951249087
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.014164944737034748
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLV",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 29,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.18820789900274557
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.015298091413239583
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLY",
+      "era": "late",
+      "days": 951,
+      "down_score_above80_with_positive_slope": 0,
+      "up_score_above80_with_negative_slope": 0,
+      "directional_variances": [
+        [
+          0.08613257987491624
+        ],
+        [
+          0.010000000000000002
+        ],
+        [
+          0.03566476782008973
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    },
+    {
+      "symbol": "XLY",
+      "era": "early",
+      "days": 756,
+      "down_score_above80_with_positive_slope": 4,
+      "up_score_above80_with_negative_slope": 2,
+      "directional_variances": [
+        [
+          0.073258696570916
+        ],
+        [
+          0.0025000000000000005
+        ],
+        [
+          0.03652632798505214
+        ]
+      ],
+      "meaning": "Descriptive semantic mismatch, not latent-state accuracy against ground truth. No refit or result selection from this audit."
+    }
+  ],
+  "incidents": {
+    "INDA_late": [],
+    "INDA_early": [],
+    "ITA_late": [
+      {
+        "day": "2024-11-12",
+        "close": 153.6816864013672,
+        "normalized_fast_slope": 0.6042406305734467,
+        "down": 0.9648103499475497,
+        "range": 2.7156839219382673e-08,
+        "up": 0.03518962289561102
+      },
+      {
+        "day": "2024-11-13",
+        "close": 154.24501037597656,
+        "normalized_fast_slope": 0.5864928720193313,
+        "down": 0.9905559776677622,
+        "range": 5.891181200815397e-08,
+        "up": 0.009443963420426
+      },
+      {
+        "day": "2024-11-14",
+        "close": 149.4022979736328,
+        "normalized_fast_slope": 0.3562588123967349,
+        "down": 0.8574253220597112,
+        "range": 0.0014961050865657918,
+        "up": 0.14107857285372297
+      },
+      {
+        "day": "2025-01-23",
+        "close": 157.10543823242188,
+        "normalized_fast_slope": 0.6799795266734772,
+        "down": 0.8619437004383289,
+        "range": 2.824508258695279e-09,
+        "up": 0.13805629673716285
+      },
+      {
+        "day": "2025-01-24",
+        "close": 155.34112548828125,
+        "normalized_fast_slope": 0.6188429712443991,
+        "down": 0.9864371948373873,
+        "range": 1.0406451842373767e-08,
+        "up": 0.013562794756160772
+      },
+      {
+        "day": "2025-01-27",
+        "close": 153.6560821533203,
+        "normalized_fast_slope": 0.4715593300657387,
+        "down": 0.9475654345790875,
+        "range": 1.7996893095697513e-05,
+        "up": 0.052416568527816905
+      },
+      {
+        "day": "2026-01-15",
+        "close": 240.6055450439453,
+        "normalized_fast_slope": 0.6328795135016322,
+        "down": 0.956683419228655,
+        "range": 7.339276354921391e-09,
+        "up": 0.043316573432068586
+      },
+      {
+        "day": "2026-01-16",
+        "close": 243.15911865234375,
+        "normalized_fast_slope": 0.6391465926201464,
+        "down": 0.9973500046903764,
+        "range": 2.7505851610378627e-09,
+        "up": 0.0026499925590384964
+      },
+      {
+        "day": "2026-01-20",
+        "close": 237.30381774902344,
+        "normalized_fast_slope": 0.460618839602774,
+        "down": 0.9611820279508134,
+        "range": 2.925679865245246e-05,
+        "up": 0.03878871525053411
+      }
+    ],
+    "ITA_early": [
+      {
+        "day": "2020-03-26",
+        "close": 75.40870666503906,
+        "normalized_fast_slope": 0.846827583247361,
+        "down": 0.9999348597292349,
+        "range": 4.633006013875746e-15,
+        "up": 6.514027076055249e-05
+      },
+      {
+        "day": "2020-03-27",
+        "close": 70.65359497070312,
+        "normalized_fast_slope": 1.3983502591831973,
+        "down": 0.9999999999999992,
+        "range": 3.3890480189458413e-40,
+        "up": 7.492890026697876e-16
+      },
+      {
+        "day": "2020-03-30",
+        "close": 69.96141815185547,
+        "normalized_fast_slope": 1.5786420159730832,
+        "down": 1.0,
+        "range": 3.8998207984272833e-51,
+        "up": 4.041721783475417e-21
+      },
+      {
+        "day": "2020-03-31",
+        "close": 68.19781494140625,
+        "normalized_fast_slope": 1.4120106397984136,
+        "down": 0.9999999999999997,
+        "range": 5.599963896193334e-41,
+        "up": 3.1755416888197746e-16
+      },
+      {
+        "day": "2020-04-01",
+        "close": 64.69902038574219,
+        "normalized_fast_slope": 0.8719195522893592,
+        "down": 0.9999694482145144,
+        "range": 6.234910443700979e-16,
+        "up": 3.0551785484912607e-05
+      },
+      {
+        "day": "2020-04-02",
+        "close": 64.40032958984375,
+        "normalized_fast_slope": 0.42936210082342047,
+        "down": 0.9226262149840649,
+        "range": 0.00020471817595519025,
+        "up": 0.0771690668399799
+      },
+      {
+        "day": "2020-04-09",
+        "close": 73.7162094116211,
+        "normalized_fast_slope": 0.9699701666205882,
+        "down": 0.9989374235859095,
+        "range": 1.2960306641005812e-18,
+        "up": 0.001062576414090482
+      },
+      {
+        "day": "2020-04-13",
+        "close": 71.41213989257812,
+        "normalized_fast_slope": 0.8810650469874886,
+        "down": 0.9999744024744113,
+        "range": 2.9602418063233016e-16,
+        "up": 2.5597525588504823e-05
+      },
+      {
+        "day": "2020-04-14",
+        "close": 72.60682678222656,
+        "normalized_fast_slope": 0.8550375264249414,
+        "down": 0.9999488045179485,
+        "range": 2.4195650255177835e-15,
+        "up": 5.119548204911106e-05
+      },
+      {
+        "day": "2020-04-15",
+        "close": 71.09451293945312,
+        "normalized_fast_slope": 0.6418511268345493,
+        "down": 0.9921353209157145,
+        "range": 6.3843327878674744e-09,
+        "up": 0.007864672699952658
+      },
+      {
+        "day": "2020-04-16",
+        "close": 70.00882720947266,
+        "normalized_fast_slope": 0.36073606746491066,
+        "down": 0.8403714262889037,
+        "range": 0.002194123895210868,
+        "up": 0.1574344498158855
+      },
+      {
+        "day": "2020-05-27",
+        "close": 79.2630615234375,
+        "normalized_fast_slope": 1.2021479372768678,
+        "down": 0.999999996564052,
+        "range": 1.345257025868536e-29,
+        "up": 3.435948012466423e-09
+      },
+      {
+        "day": "2020-05-28",
+        "close": 78.94068145751953,
+        "normalized_fast_slope": 1.33504047243348,
+        "down": 0.9999999999999666,
+        "range": 1.1300937036199492e-36,
+        "up": 3.335321066486948e-14
+      },
+      {
+        "day": "2020-05-29",
+        "close": 78.01145935058594,
+        "normalized_fast_slope": 1.2410449066827844,
+        "down": 0.9999999999938911,
+        "range": 9.521819892398304e-32,
+        "up": 6.1088840855008786e-12
+      },
+      {
+        "day": "2020-06-01",
+        "close": 78.826904296875,
+        "normalized_fast_slope": 1.1452746844747288,
+        "down": 0.9999999992772451,
+        "range": 4.191443446181311e-27,
+        "up": 7.227548390095236e-10
+      },
+      {
+        "day": "2020-06-02",
+        "close": 79.00230407714844,
+        "normalized_fast_slope": 1.0062003136947522,
+        "down": 0.9999997171793747,
+        "range": 4.918829049789061e-21,
+        "up": 2.828206252033847e-07
+      },
+      {
+        "day": "2020-06-03",
+        "close": 83.2027587890625,
+        "normalized_fast_slope": 1.1527326198292527,
+        "down": 0.9999999994918438,
+        "range": 1.88077499734912e-27,
+        "up": 5.081562497586877e-10
+      },
+      {
+        "day": "2020-06-04",
+        "close": 84.56338500976562,
+        "normalized_fast_slope": 1.2530091817349482,
+        "down": 0.9999999999967605,
+        "range": 2.355106396538367e-32,
+        "up": 3.239617726744161e-12
+      },
+      {
+        "day": "2020-06-05",
+        "close": 88.5931396484375,
+        "normalized_fast_slope": 1.5005902239757993,
+        "down": 1.0,
+        "range": 3.1002264838005157e-46,
+        "up": 9.727611737850166e-19
+      },
+      {
+        "day": "2020-06-08",
+        "close": 91.89755249023438,
+        "normalized_fast_slope": 1.7618765072852254,
+        "down": 1.0,
+        "range": 1.2566182373465477e-63,
+        "up": 2.531388966809435e-27
+      },
+      {
+        "day": "2020-06-09",
+        "close": 88.73535919189453,
+        "normalized_fast_slope": 1.5745031538402838,
+        "down": 1.0,
+        "range": 7.197929813637819e-51,
+        "up": 5.454578774642005e-21
+      },
+      {
+        "day": "2020-06-10",
+        "close": 85.84815979003906,
+        "normalized_fast_slope": 1.127558259714302,
+        "down": 0.9999999983527675,
+        "range": 2.7536223900134364e-26,
+        "up": 1.6472324447143275e-09
+      },
+      {
+        "day": "2020-06-11",
+        "close": 78.60881042480469,
+        "normalized_fast_slope": 0.21538559879389005,
+        "down": 0.855593687157892,
+        "range": 0.09226335272077989,
+        "up": 0.052142960121328095
+      },
+      {
+        "day": "2020-11-09",
+        "close": 82.27932739257812,
+        "normalized_fast_slope": 0.8208309589819538,
+        "down": 0.9188801889076006,
+        "range": 2.1618274998694865e-13,
+        "up": 0.08111981109218322
+      },
+      {
+        "day": "2020-11-10",
+        "close": 85.02372741699219,
+        "normalized_fast_slope": 1.251686487709428,
+        "down": 0.9999999999635362,
+        "range": 2.9782267184137287e-32,
+        "up": 3.6463902469740043e-11
+      },
+      {
+        "day": "2020-11-11",
+        "close": 83.50379943847656,
+        "normalized_fast_slope": 1.316754437157813,
+        "down": 0.9999999999999043,
+        "range": 1.0962561325346491e-35,
+        "up": 9.573331392336836e-14
+      },
+      {
+        "day": "2020-11-12",
+        "close": 82.46038055419922,
+        "normalized_fast_slope": 1.1764639436983173,
+        "down": 0.9999999998379523,
+        "range": 1.4178695963825485e-28,
+        "up": 1.620476568585366e-10
+      },
+      {
+        "day": "2020-11-13",
+        "close": 85.16190338134766,
+        "normalized_fast_slope": 1.1893795956126714,
+        "down": 0.9999999999142062,
+        "range": 3.395055884394947e-29,
+        "up": 8.579379190926319e-11
+      },
+      {
+        "day": "2020-11-16",
+        "close": 87.57274627685547,
+        "normalized_fast_slope": 1.272715499260278,
+        "down": 0.9999999999988811,
+        "range": 2.2899447209832507e-33,
+        "up": 1.1188868956095554e-12
+      },
+      {
+        "day": "2020-11-17",
+        "close": 88.21595001220703,
+        "normalized_fast_slope": 1.2688205342973078,
+        "down": 0.9999999999986169,
+        "range": 3.640446432698783e-33,
+        "up": 1.3830276557399364e-12
+      },
+      {
+        "day": "2020-11-18",
+        "close": 87.95393371582031,
+        "normalized_fast_slope": 1.1468429662814157,
+        "down": 0.9999999993286727,
+        "range": 3.542989111216707e-27,
+        "up": 6.713273263578208e-10
+      },
+      {
+        "day": "2020-11-19",
+        "close": 88.38748931884766,
+        "normalized_fast_slope": 1.0073371581693278,
+        "down": 0.9999997294016413,
+        "range": 4.4206158391927086e-21,
+        "up": 2.7059835864257336e-07
+      },
+      {
+        "day": "2020-11-20",
+        "close": 86.7770767211914,
+        "normalized_fast_slope": 0.7257729262805013,
+        "down": 0.9985095951923247,
+        "range": 3.180893468209356e-11,
+        "up": 0.0014904047758663508
+      },
+      {
+        "day": "2020-11-23",
+        "close": 89.0640640258789,
+        "normalized_fast_slope": 0.6466083987566057,
+        "down": 0.9916525358969187,
+        "range": 4.814814102313657e-09,
+        "up": 0.00834745928826715
+      },
+      {
+        "day": "2020-11-24",
+        "close": 91.27005004882812,
+        "normalized_fast_slope": 0.6935208707228488,
+        "down": 0.9943709633779954,
+        "range": 2.6577126661753303e-10,
+        "up": 0.005629036356233361
+      },
+      {
+        "day": "2020-11-25",
+        "close": 90.70307159423828,
+        "normalized_fast_slope": 0.6300837676915757,
+        "down": 0.9847451531424056,
+        "range": 1.2710627435564608e-08,
+        "up": 0.015254834146967012
+      },
+      {
+        "day": "2020-11-27",
+        "close": 90.20755004882812,
+        "normalized_fast_slope": 0.5058770548361573,
+        "down": 0.8856391571966752,
+        "range": 7.592093501104666e-06,
+        "up": 0.11435325070982376
+      },
+      {
+        "day": "2021-03-17",
+        "close": 101.04095458984375,
+        "normalized_fast_slope": 0.6820852439160529,
+        "down": 0.8530356087566707,
+        "range": 6.52724911008351e-10,
+        "up": 0.1469643905906043
+      },
+      {
+        "day": "2022-10-26",
+        "close": 100.02798461914062,
+        "normalized_fast_slope": 0.7258453656335625,
+        "down": 0.9458625107500624,
+        "range": 3.9783564962522444e-11,
+        "up": 0.05413748921015406
+      },
+      {
+        "day": "2022-10-27",
+        "close": 101.71678924560547,
+        "normalized_fast_slope": 0.7257473531225619,
+        "down": 0.9894316032046183,
+        "range": 3.327072583136102e-11,
+        "up": 0.01056839676211089
+      },
+      {
+        "day": "2022-10-28",
+        "close": 104.41500091552734,
+        "normalized_fast_slope": 0.8272461495300437,
+        "down": 0.9997538223385195,
+        "range": 2.1469593420622566e-14,
+        "up": 0.00024617766145898615
+      },
+      {
+        "day": "2022-10-31",
+        "close": 104.05589294433594,
+        "normalized_fast_slope": 0.8049435983952097,
+        "down": 0.9997821667050247,
+        "range": 1.153425689198735e-13,
+        "up": 0.0002178332948600441
+      },
+      {
+        "day": "2022-11-01",
+        "close": 104.18205261230469,
+        "normalized_fast_slope": 0.7337867678879553,
+        "down": 0.9987265163517346,
+        "range": 1.8509380085778807e-11,
+        "up": 0.0012734836297560574
+      },
+      {
+        "day": "2022-11-02",
+        "close": 102.67765808105469,
+        "normalized_fast_slope": 0.5411147097177736,
+        "down": 0.963199329874129,
+        "range": 1.5003635625804971e-06,
+        "up": 0.036799169762308584
+      }
+    ],
+    "TLT_late": [],
+    "TLT_early": [],
+    "WEAT_late": [],
+    "WEAT_early": []
+  },
+  "protocol_sha256": "a464de989ffd329ab2944816687470cb38915612f105c436d59fde247f276378",
+  "script_sha256": "c124ba5b87b6906e5dc41140d6e3e3e7e0c8b1014aa6636003cc0c9fa0933713",
+  "verdict": "Reject directional interpretation of unconstrained unequal-variance Gaussian tails; implementation checks do not certify economic labels."
+}

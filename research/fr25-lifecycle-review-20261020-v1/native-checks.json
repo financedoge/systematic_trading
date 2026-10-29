@@ -1,0 +1,30 @@
+[
+  {
+    "scenario": "FR25_c5d0",
+    "max_nav_difference": 0.0,
+    "bundle_sha256": "e6cfd859d1205d1b377e16a611604ec9be6c825db9694c480de6953bfec1d3f4",
+    "run_receipt_sha256": "b432ddb58c756cfe13df292eb405124596d35d0b79aa80fe99af293d5ce3f70e",
+    "status": "succeeded"
+  },
+  {
+    "scenario": "conditional_monthly_c5d0",
+    "max_nav_difference": 0.0,
+    "bundle_sha256": "005d1d3b195cd0d11cabaf01dd62095a48d3488fb3d9b95dff13395aabc1828f",
+    "run_receipt_sha256": "9d2ae248e0483d17a6b3a90dc79800e990e8e07031fac2c562d294304b3d22b6",
+    "status": "succeeded"
+  },
+  {
+    "scenario": "conditional_dynamic_0.10_c5d0",
+    "max_nav_difference": 0.0,
+    "bundle_sha256": "468c25ab26333807ed5ac49bbda875f9c633cd0cd1f5f1914ec0d60c4eed5da7",
+    "run_receipt_sha256": "336f43473641254b44226a2da65be65d17e52aa55382e2c820f60cb531f98df6",
+    "status": "succeeded"
+  },
+  {
+    "scenario": "conditional_dynamic_0.10_c5d1",
+    "max_nav_difference": 0.0,
+    "bundle_sha256": "f62aa8f6e5aebe210ce2087fd7a615f418ca37a76e766bca5ac85b68ff398b95",
+    "run_receipt_sha256": "46ae62323088404cbbad10cb1c2f6639deb42e0359acde2953eea377bd2f0eb5",
+    "status": "succeeded"
+  }
+]

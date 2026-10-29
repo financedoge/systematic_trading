@@ -1,0 +1,286 @@
+{
+  "TLT_late": {
+    "baseline": [
+      {
+        "entry_date": "2023-11-03",
+        "exit_date": "2024-01-08",
+        "entry": 78.41665430536511,
+        "exit_price": 85.51197518470879,
+        "net_return": 0.08939238355518131,
+        "exit_reason": "fast_down",
+        "initial_risk_fraction": 0.04494846993424516
+      },
+      {
+        "entry_date": "2024-08-02",
+        "exit_date": "2024-09-25",
+        "entry": 88.20739563767549,
+        "exit_price": 89.64397375719716,
+        "net_return": 0.01527058967804118,
+        "exit_reason": "fast_down",
+        "initial_risk_fraction": 0.08989693986849032
+      },
+      {
+        "entry_date": "2025-01-23",
+        "exit_date": "2025-03-27",
+        "entry": 80.152471845904,
+        "exit_price": 82.57046357159689,
+        "net_return": 0.029137748006209607,
+        "exit_reason": "intraday_protection",
+        "initial_risk_fraction": 0.04494846993424516
+      }
+    ],
+    "stop": [
+      {
+        "entry_date": "2023-11-03",
+        "exit_date": "2023-12-19",
+        "entry": 78.41665430536511,
+        "exit_price": 87.84905199468719,
+        "net_return": 0.11916591727457537,
+        "exit_reason": "entry_invalidated",
+        "initial_risk_fraction": 0.04494846993424516
+      },
+      {
+        "entry_date": "2024-08-02",
+        "exit_date": "2024-09-25",
+        "entry": 88.20739563767549,
+        "exit_price": 89.64397375719716,
+        "net_return": 0.01527058967804118,
+        "exit_reason": "fast_down",
+        "initial_risk_fraction": 0.08989693986849032
+      },
+      {
+        "entry_date": "2025-01-23",
+        "exit_date": "2025-03-05",
+        "entry": 80.152471845904,
+        "exit_price": 85.27384141867013,
+        "net_return": 0.06283197799117812,
+        "exit_reason": "entry_invalidated",
+        "initial_risk_fraction": 0.04494846993424516
+      }
+    ],
+    "review": [
+      {
+        "entry_date": "2023-11-03",
+        "exit_date": "2024-01-08",
+        "entry": 78.41665430536511,
+        "exit_price": 85.51197518470879,
+        "net_return": 0.08939238355518131,
+        "exit_reason": "entry_invalidated",
+        "initial_risk_fraction": 0.04494846993424516
+      },
+      {
+        "entry_date": "2024-08-02",
+        "exit_date": "2024-08-07",
+        "entry": 88.20739563767549,
+        "exit_price": 87.25255459527423,
+        "net_return": -0.011813635183174798,
+        "exit_reason": "entry_invalidated",
+        "initial_risk_fraction": 0.08989693986849032
+      },
+      {
+        "entry_date": "2025-01-23",
+        "exit_date": "2025-03-27",
+        "entry": 80.152471845904,
+        "exit_price": 82.57046357159689,
+        "net_return": 0.029137748006209607,
+        "exit_reason": "intraday_protection",
+        "initial_risk_fraction": 0.04494846993424516
+      }
+    ]
+  },
+  "IWM_early": {
+    "baseline": [
+      {
+        "entry_date": "2020-02-14",
+        "exit_date": "2020-02-25",
+        "entry": 155.35943584605587,
+        "exit_price": 144.08069341782786,
+        "net_return": -0.07352466913319622,
+        "exit_reason": "intraday_protection",
+        "initial_risk_fraction": 0.07278595297556949
+      },
+      {
+        "entry_date": "2020-05-12",
+        "exit_date": "2020-05-13",
+        "entry": 122.27201258013744,
+        "exit_price": 113.3156414584402,
+        "net_return": -0.07417584729543425,
+        "exit_reason": "intraday_protection",
+        "initial_risk_fraction": 0.07278595297556949
+      },
+      {
+        "entry_date": "2022-05-31",
+        "exit_date": "2022-06-13",
+        "entry": 176.58516976917338,
+        "exit_price": 164.38880955131987,
+        "net_return": -0.06999832936273287,
+        "exit_reason": "intraday_protection",
+        "initial_risk_fraction": 0.07278595297556949
+      }
+    ],
+    "stop": [
+      {
+        "entry_date": "2020-02-14",
+        "exit_date": "2020-02-25",
+        "entry": 155.35943584605587,
+        "exit_price": 144.08069341782786,
+        "net_return": -0.07352466913319622,
+        "exit_reason": "intraday_protection",
+        "initial_risk_fraction": 0.07278595297556949
+      },
+      {
+        "entry_date": "2020-05-12",
+        "exit_date": "2020-05-13",
+        "entry": 122.27201258013744,
+        "exit_price": 113.3156414584402,
+        "net_return": -0.07417584729543425,
+        "exit_reason": "intraday_protection",
+        "initial_risk_fraction": 0.07278595297556949
+      },
+      {
+        "entry_date": "2022-05-31",
+        "exit_date": "2022-06-13",
+        "entry": 176.58516976917338,
+        "exit_price": 164.38880955131987,
+        "net_return": -0.06999832936273287,
+        "exit_reason": "intraday_protection",
+        "initial_risk_fraction": 0.07278595297556949
+      }
+    ],
+    "review": [
+      {
+        "entry_date": "2020-02-14",
+        "exit_date": "2020-02-25",
+        "entry": 155.35943584605587,
+        "exit_price": 144.08069341782786,
+        "net_return": -0.07352466913319622,
+        "exit_reason": "intraday_protection",
+        "initial_risk_fraction": 0.07278595297556949
+      },
+      {
+        "entry_date": "2020-05-12",
+        "exit_date": "2020-05-13",
+        "entry": 122.27201258013744,
+        "exit_price": 113.3156414584402,
+        "net_return": -0.07417584729543425,
+        "exit_reason": "intraday_protection",
+        "initial_risk_fraction": 0.07278595297556949
+      },
+      {
+        "entry_date": "2022-05-31",
+        "exit_date": "2022-06-13",
+        "entry": 176.58516976917338,
+        "exit_price": 164.38880955131987,
+        "net_return": -0.06999832936273287,
+        "exit_reason": "intraday_protection",
+        "initial_risk_fraction": 0.07278595297556949
+      }
+    ]
+  },
+  "PPLT_late": {
+    "baseline": [
+      {
+        "entry_date": "2025-04-21",
+        "exit_date": "2025-07-30",
+        "entry": 8.845000267028809,
+        "exit_price": 11.995328769473453,
+        "net_return": 0.3548150450645997,
+        "exit_reason": "intraday_protection",
+        "initial_risk_fraction": 0.07307349907970771
+      }
+    ],
+    "stop": [
+      {
+        "entry_date": "2025-04-21",
+        "exit_date": "2025-05-28",
+        "entry": 8.845000267028809,
+        "exit_price": 9.923999786376953,
+        "net_return": 0.1208683376830495,
+        "exit_reason": "entry_invalidated",
+        "initial_risk_fraction": 0.07307349907970771
+      },
+      {
+        "entry_date": "2025-07-18",
+        "exit_date": "2025-07-31",
+        "entry": 13.35200023651123,
+        "exit_price": 11.836000442504883,
+        "net_return": -0.11442704106821988,
+        "exit_reason": "fast_down",
+        "initial_risk_fraction": 0.14614699815941543
+      }
+    ],
+    "review": [
+      {
+        "entry_date": "2025-04-21",
+        "exit_date": "2025-07-30",
+        "entry": 8.845000267028809,
+        "exit_price": 11.995328769473453,
+        "net_return": 0.3548150450645997,
+        "exit_reason": "intraday_protection",
+        "initial_risk_fraction": 0.07307349907970771
+      }
+    ]
+  },
+  "IAT_early": {
+    "baseline": [
+      {
+        "entry_date": "2020-10-06",
+        "exit_date": "2021-01-27",
+        "entry": 29.52061380679339,
+        "exit_price": 39.633922982024195,
+        "net_return": 0.341242737201777,
+        "exit_reason": "fast_down",
+        "initial_risk_fraction": 0.09871647304576349
+      },
+      {
+        "entry_date": "2021-02-08",
+        "exit_date": "2021-03-24",
+        "entry": 42.41376860663736,
+        "exit_price": 46.96260750849173,
+        "net_return": 0.10614241346170661,
+        "exit_reason": "fast_down",
+        "initial_risk_fraction": 0.09871647304576349
+      }
+    ],
+    "stop": [
+      {
+        "entry_date": "2020-10-06",
+        "exit_date": "2021-01-27",
+        "entry": 29.52061380679339,
+        "exit_price": 39.633922982024195,
+        "net_return": 0.341242737201777,
+        "exit_reason": "fast_down",
+        "initial_risk_fraction": 0.09871647304576349
+      },
+      {
+        "entry_date": "2021-02-08",
+        "exit_date": "2021-03-24",
+        "entry": 42.41376860663736,
+        "exit_price": 46.96260750849173,
+        "net_return": 0.10614241346170661,
+        "exit_reason": "fast_down",
+        "initial_risk_fraction": 0.09871647304576349
+      }
+    ],
+    "review": [
+      {
+        "entry_date": "2020-10-06",
+        "exit_date": "2020-11-12",
+        "entry": 29.52061380679339,
+        "exit_price": 34.03012537531127,
+        "net_return": 0.15160587374616386,
+        "exit_reason": "entry_invalidated",
+        "initial_risk_fraction": 0.09871647304576349
+      },
+      {
+        "entry_date": "2021-02-08",
+        "exit_date": "2021-02-26",
+        "entry": 42.41376860663736,
+        "exit_price": 46.87837673525759,
+        "net_return": 0.10415846845234755,
+        "exit_reason": "entry_invalidated",
+        "initial_risk_fraction": 0.09871647304576349
+      }
+    ]
+  }
+}

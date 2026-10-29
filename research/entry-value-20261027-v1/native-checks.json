@@ -1,0 +1,38 @@
+[
+  {
+    "symbol": "INDA",
+    "delay": 0,
+    "status": "succeeded",
+    "max_native_reference_dollars": 0.0,
+    "fractional_return": 0.04030241353921138,
+    "app_whole_unit_return": 0.040303640000000085,
+    "max_fractional_nav_difference": 0.0002566867159483621,
+    "limitation": "Native validates whole-unit application accounting of frozen single-ETF signals, not independent fitting or inference of the HMM.",
+    "receipt_sha256": "577da73ea1638dbcf7fc12da1048a0062d3e3dfd0d1f544cf6e28a55eadd3563",
+    "bundle_sha256": "ec5564c56327d240c9ddb153874b970b7c3cfb2d75e112d1b8d544aabe694b98"
+  },
+  {
+    "symbol": "GLD",
+    "delay": 1,
+    "status": "succeeded",
+    "max_native_reference_dollars": 0.0,
+    "fractional_return": 0.48970275657944917,
+    "app_whole_unit_return": 0.48872488999999986,
+    "max_fractional_nav_difference": 0.00249961954136535,
+    "limitation": "Native validates whole-unit application accounting of frozen single-ETF signals, not independent fitting or inference of the HMM.",
+    "receipt_sha256": "605e95f8163be7ccd1fdc84fca6bd26f98bb18174872f2cd5405a377e3408272",
+    "bundle_sha256": "675b4238fe5eaab87a2ae613268b0517107801f4589e7efb95cdf97eb788c15f"
+  },
+  {
+    "symbol": "CPER",
+    "delay": 0,
+    "status": "succeeded",
+    "max_native_reference_dollars": 0.0,
+    "fractional_return": -0.31505963127339887,
+    "app_whole_unit_return": -0.31334716000000007,
+    "max_fractional_nav_difference": 0.0017944965751288677,
+    "limitation": "Native validates whole-unit application accounting of frozen single-ETF signals, not independent fitting or inference of the HMM.",
+    "receipt_sha256": "cea73416211f642f7ea1cbe646472fdd615013813bdf8c0787f52474ced088d9",
+    "bundle_sha256": "31a6de27911222a55cb3a118de49407417df1df2ba85040cb59ccec2493e20a1"
+  }
+]

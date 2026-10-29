@@ -1,0 +1,7 @@
+{
+  "control_cases": 612,
+  "max_control_nav_error": 8.881784197001252e-15,
+  "max_independent_ledger_error": 5.10702591327572e-15,
+  "asset_cases": 1836,
+  "chart_sha256": "efe1003e9035ada4ac9dc5720e7760b68e2efb8bbf9ac73d866e3c5cab34eb8b"
+}

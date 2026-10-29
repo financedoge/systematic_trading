@@ -1,0 +1,6 @@
+{
+  "reason": "Duplicate calmar output keyword; first case aborted before any evaluation results. No model or parameter changes.",
+  "old": "94a99dde9fdbe0d581c6554838357773e5d6b07d6e40eaa34e7f3b34f60e9917",
+  "new": "52a79975a9ac143da7659fc2631bec4db88004647a2e3fb54ac141210c923635",
+  "initial": "85045a74b9a191985f063bc02718ec2c991fced44a46c323179ceb205088e453"
+}

@@ -1,0 +1,7 @@
+{
+  "protocol": "3473303edc16cedb865ec771a3aa46003c64b722dd683b400cbafc5b12a83406",
+  "stage": "Evaluation running; no evaluation results inspected",
+  "clarification": "The execution paragraph inherited the parent sentence Raw audited volume descriptive only. That sentence describes A/B. C full-feature forecast uses audited raw volume exactly as explicitly predeclared in the forecasts field. Intercept-only forecasts do not use volume. No model, data, selection, or execution change.",
+  "frozen_model_unchanged": true,
+  "prefix_metadata": "prefix_models contains unused inherited original-HMM and training_end fields. The authoritative calibration boundary is prefix_end. Both Kalman fits and sigma are actually refitted on that prefix, and the symmetric prefix_hmm replaces original-HMM probabilities before forecast inputs. Additional dependency test verifies changing inherited original HMM cannot change forecast features or entry/exit eligibility. No model or evidence changes."
+}

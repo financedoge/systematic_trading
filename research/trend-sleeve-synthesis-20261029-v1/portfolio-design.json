@@ -1,0 +1,77 @@
+{
+  "status": "Specified for next experiment; not backtested or adopted",
+  "algorithm": "symmetric-trend-sleeve-v1 (entry-value B)",
+  "universe": "Full supported risky pool; BIL cash reference; complete aligned causal records",
+  "tracking": "All virtual strategies continue daily while unselected; preserve states and cash days",
+  "rank": {
+    "primary_windows": [
+      63,
+      252
+    ],
+    "sensitivity_windows": [
+      21,
+      126
+    ],
+    "components": [
+      "short return",
+      "short Sharpe",
+      "long return",
+      "long Sharpe"
+    ],
+    "weights": [
+      0.25,
+      0.25,
+      0.25,
+      0.25
+    ],
+    "positive_return_gate": false
+  },
+  "widths": [
+    6,
+    10,
+    15,
+    20,
+    30
+  ],
+  "preview_width": 15,
+  "preview_width_is_optimal": false,
+  "width_selection": "Prior chronological validation; largest N within .05 Sharpe, 1pp CAGR and 2pp drawdown of best; report full curve",
+  "allocation": [
+    "equal sleeve capital",
+    "equal strategy-risk contribution"
+  ],
+  "risk": {
+    "observations": 252,
+    "diagonal_shrinkage": 0.5,
+    "annual_volatility_floor": 0.05,
+    "uses": "net strategy account covariance including cash",
+    "leverage": false
+  },
+  "timing": {
+    "primary": "month-end close to next open",
+    "control": "month-end or theoretical/last-adopted cash-inclusive L1 >= .10",
+    "daily_signal_trading": true
+  },
+  "cash": "Sleeve retains cash after exit; no daily redistribution; budgets drift",
+  "joining": "Join existing virtual state/protection next open; pending exit takes priority; departing member liquidated but shadow continues",
+  "accounting": "Actual netted cash/share fills; charge costs once; shadow net returns drive ranks only",
+  "warmup": "252 post-fit return observations; no fitted pre-cutoff NAV masquerading as causal ranking history",
+  "frictions": {
+    "each_side_bp": [
+      5,
+      10,
+      20
+    ],
+    "extra_delay": [
+      0,
+      1
+    ]
+  },
+  "controls": [
+    "unranked full-pool sleeves",
+    "matched raw-ETF momentum",
+    "cash and ETF buy/hold",
+    "FR25 on compatible data"
+  ],
+  "authority": "No monitoring, promotion, allocation or broker changes"
+}

@@ -1,0 +1,5678 @@
+{
+  "version": "broadtrend-models-1.0.0",
+  "strategy": "broadtrend-full-pool-v1",
+  "selected_models_sha256": "b75505f4693e0f2375cc622d7d5cb3f681902aecf41f830c6b3bfabaf9b368d7",
+  "training_input_batch": "5688bb093a7481231f05b8ba4d84e3e26e016231ffeb42576b4e7aca12cf99bd",
+  "training_end": "2022-12-30",
+  "shadow_anchor": "2022-12-30",
+  "portfolio_anchor": "2024-01-31",
+  "prospective_start": "2026-10-30",
+  "models": {
+    "AGG": {
+      "symbol": "AGG",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 8.099564992440954e-05,
+        "nll": -15028.776292249646,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 4597
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 1.013589774171692e-05,
+        "nll": -18876.418427620683,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 4597
+      },
+      "sigma": 0.0032046703807897202,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.31191537731598895
+          ],
+          [
+            0.0
+          ],
+          [
+            0.31191537731598895
+          ]
+        ],
+        "variance": [
+          [
+            0.05938970109135628
+          ],
+          [
+            0.009525048500283956
+          ],
+          [
+            0.05938970109135628
+          ]
+        ],
+        "transition": [
+          [
+            0.8965999418515931,
+            0.10050090689612637,
+            0.002899151252280552
+          ],
+          [
+            0.03824840207896736,
+            0.9038377238233195,
+            0.057913874097713154
+          ],
+          [
+            0.00022924994160414283,
+            0.09025828793132748,
+            0.9095124621270684
+          ]
+        ],
+        "initial": [
+          0.22395966551368218,
+          0.698071642451125,
+          0.0779686920351928
+        ],
+        "band": 0.1,
+        "objective": 1113.0370915480503,
+        "log_likelihood": 1116.4868094194867,
+        "iteration": 20,
+        "start": 0.31191537731598895
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.6,
+        "exit": 0.6,
+        "tight": 3.0,
+        "wide": 6.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2003-09-29",
+      "isin": "US4642872265"
+    },
+    "CORN": {
+      "symbol": "CORN",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0021219694825204043,
+        "nll": -4765.211820210605,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 2912
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.0001901430124844818,
+        "nll": -7688.846677434073,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 2912
+      },
+      "sigma": 0.014364672141883816,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.33988084038146044
+          ],
+          [
+            0.0
+          ],
+          [
+            0.33988084038146044
+          ]
+        ],
+        "variance": [
+          [
+            0.04282379437402484
+          ],
+          [
+            0.00998131459574156
+          ],
+          [
+            0.04282379437402484
+          ]
+        ],
+        "transition": [
+          [
+            0.8905344392464533,
+            0.10807567824074199,
+            0.0013898825128047419
+          ],
+          [
+            0.07103720812413028,
+            0.8661599648320435,
+            0.06280282704382623
+          ],
+          [
+            0.0003148123689653625,
+            0.10959361992604633,
+            0.8900915677049883
+          ]
+        ],
+        "initial": [
+          0.0769374289411147,
+          0.08504686305472191,
+          0.8380157080041633
+        ],
+        "band": 0.1,
+        "objective": 666.6559387762479,
+        "log_likelihood": 670.270721734448,
+        "iteration": 24,
+        "start": 0.33988084038146044
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.75,
+        "exit": 0.6,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2010-06-09",
+      "isin": "US88166A1025"
+    },
+    "CPER": {
+      "symbol": "CPER",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.002611603263177177,
+        "nll": -1293.5104449163418,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 844
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00025613954466637646,
+        "nll": -2102.7649718106804,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 844
+      },
+      "sigma": 0.014829003712355905,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.40758892708582756
+          ],
+          [
+            0.0
+          ],
+          [
+            0.40758892708582756
+          ]
+        ],
+        "variance": [
+          [
+            0.05934426977884098
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.05934426977884098
+          ]
+        ],
+        "transition": [
+          [
+            0.8791438296060556,
+            0.12001042624215562,
+            0.0008457441517887471
+          ],
+          [
+            0.047628242535166,
+            0.885512847163933,
+            0.06685891030090102
+          ],
+          [
+            0.0009863204476292598,
+            0.10278065378288556,
+            0.8962330257694852
+          ]
+        ],
+        "initial": [
+          0.09173695547251427,
+          0.830456306460638,
+          0.07780673806684779
+        ],
+        "band": 0.1,
+        "objective": 112.1005336162015,
+        "log_likelihood": 115.63054410196567,
+        "iteration": 21,
+        "start": 0.40758892708582756
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.6,
+        "exit": 0.6,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2018-08-24",
+      "isin": "US9117181043"
+    },
+    "DBA": {
+      "symbol": "DBA",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0012367414260787922,
+        "nll": -7194.517611171243,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 3774
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.0001199255709325362,
+        "nll": -10834.600104428715,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 3774
+      },
+      "sigma": 0.010890431292780459,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.36021930509168787
+          ],
+          [
+            0.0
+          ],
+          [
+            0.36021930509168787
+          ]
+        ],
+        "variance": [
+          [
+            0.05592082127423634
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.05592082127423634
+          ]
+        ],
+        "transition": [
+          [
+            0.8974241852397526,
+            0.09850472499389705,
+            0.004071089766350304
+          ],
+          [
+            0.05459853548639013,
+            0.8967999952642164,
+            0.04860146924939347
+          ],
+          [
+            0.00595563435919569,
+            0.0960686194452802,
+            0.8979757461955241
+          ]
+        ],
+        "initial": [
+          0.07692339944067984,
+          0.07692308410369772,
+          0.8461535164556224
+        ],
+        "band": 0.1,
+        "objective": 698.547176954729,
+        "log_likelihood": 701.6758824017521,
+        "iteration": 24,
+        "start": 0.36021930509168787
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.6,
+        "exit": 0.6,
+        "tight": 3.0,
+        "wide": 6.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2007-01-05",
+      "isin": "US46140H1068"
+    },
+    "DBB": {
+      "symbol": "DBB",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0022374070983301555,
+        "nll": -6075.833038220496,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 3774
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.0002149726171511592,
+        "nll": -9733.272651345935,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 3774
+      },
+      "sigma": 0.014893007487100967,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3433411113805398
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3433411113805398
+          ]
+        ],
+        "variance": [
+          [
+            0.04155769365783254
+          ],
+          [
+            0.009543944077142463
+          ],
+          [
+            0.04155769365783254
+          ]
+        ],
+        "transition": [
+          [
+            0.8972065764869139,
+            0.10257354866058888,
+            0.00021987485249720478
+          ],
+          [
+            0.06869030516076753,
+            0.8593666523521288,
+            0.07194304248710363
+          ],
+          [
+            0.0001577796887494696,
+            0.101431712763483,
+            0.8984105075477675
+          ]
+        ],
+        "initial": [
+          0.07692310951394195,
+          0.07692945300705885,
+          0.8461474374789993
+        ],
+        "band": 0.1,
+        "objective": 843.6891046851154,
+        "log_likelihood": 847.532524726097,
+        "iteration": 24,
+        "start": 0.3433411113805398
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.75,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2007-01-05",
+      "isin": "US46140H7008"
+    },
+    "DBC": {
+      "symbol": "DBC",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.001964795726213081,
+        "nll": -6706.232923461689,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 4004
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.0001690115966000142,
+        "nll": -10808.018109399069,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 4004
+      },
+      "sigma": 0.012517860147988932,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.36642021863528196
+          ],
+          [
+            0.0
+          ],
+          [
+            0.36642021863528196
+          ]
+        ],
+        "variance": [
+          [
+            0.05014006757164766
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.05014006757164766
+          ]
+        ],
+        "transition": [
+          [
+            0.9000312886014934,
+            0.09906646370208101,
+            0.0009022476964255934
+          ],
+          [
+            0.06603388630540374,
+            0.8584602776624717,
+            0.07550583603212456
+          ],
+          [
+            0.00014350754002718198,
+            0.09344836329011424,
+            0.9064081291698586
+          ]
+        ],
+        "initial": [
+          0.07697510551640785,
+          0.08399118015919668,
+          0.8390337143243954
+        ],
+        "band": 0.1,
+        "objective": 572.3124867582997,
+        "log_likelihood": 576.0010448012392,
+        "iteration": 24,
+        "start": 0.36642021863528196
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.6,
+        "exit": 0.6,
+        "tight": 3.0,
+        "wide": 6.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2006-02-06",
+      "isin": null
+    },
+    "EEM": {
+      "symbol": "EEM",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0024925057257331245,
+        "nll": -7333.113314047052,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 4713
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.0003092597774587161,
+        "nll": -11297.994523480727,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 4713
+      },
+      "sigma": 0.01781440555130132,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3170493318393167
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3170493318393167
+          ]
+        ],
+        "variance": [
+          [
+            0.04389685784611224
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.04389685784611224
+          ]
+        ],
+        "transition": [
+          [
+            0.891030702067692,
+            0.10304766880714901,
+            0.005921629125159029
+          ],
+          [
+            0.05037250213122057,
+            0.8841386901670759,
+            0.06548880770170351
+          ],
+          [
+            0.0015113435318641509,
+            0.10313179350709296,
+            0.8953568629610429
+          ]
+        ],
+        "initial": [
+          0.08199592835095276,
+          0.8374367730684026,
+          0.0805672985806446
+        ],
+        "band": 0.1,
+        "objective": 1221.1055534086058,
+        "log_likelihood": 1224.3758501022153,
+        "iteration": 24,
+        "start": 0.3170493318393167
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.6,
+        "exit": 0.6,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2003-04-14",
+      "isin": "US4642872349"
+    },
+    "EFA": {
+      "symbol": "EFA",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.001531004063011619,
+        "nll": -9212.232283853555,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 5119
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.0001809845720207718,
+        "nll": -13642.559840093465,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 5119
+      },
+      "sigma": 0.013615535141769098,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.33111246945137185
+          ],
+          [
+            0.0
+          ],
+          [
+            0.33111246945137185
+          ]
+        ],
+        "variance": [
+          [
+            0.05180490126277423
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.05180490126277423
+          ]
+        ],
+        "transition": [
+          [
+            0.8915031778124101,
+            0.10463733024195926,
+            0.0038594919456306823
+          ],
+          [
+            0.0458609680155247,
+            0.889183241261044,
+            0.06495579072343133
+          ],
+          [
+            0.00031530867352854125,
+            0.10746118403726161,
+            0.8922235072892098
+          ]
+        ],
+        "initial": [
+          0.8461538072970647,
+          0.07692308697839419,
+          0.07692310572454115
+        ],
+        "band": 0.1,
+        "objective": 1156.716465066641,
+        "log_likelihood": 1160.1824340369253,
+        "iteration": 24,
+        "start": 0.33111246945137185
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.6,
+        "exit": 0.6,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.1,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2001-08-27",
+      "isin": "US4642874659"
+    },
+    "EMB": {
+      "symbol": "EMB",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.00045400172616826424,
+        "nll": -8404.249556390248,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 3491
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 4.3601417617267094e-05,
+        "nll": -11788.213499103715,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 3491
+      },
+      "sigma": 0.007214247992627709,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.34163430266265965
+          ],
+          [
+            0.0
+          ],
+          [
+            0.34163430266265965
+          ]
+        ],
+        "variance": [
+          [
+            0.0860344388505568
+          ],
+          [
+            0.00924232013222832
+          ],
+          [
+            0.0860344388505568
+          ]
+        ],
+        "transition": [
+          [
+            0.899175088400669,
+            0.08097838031178042,
+            0.019846531287550626
+          ],
+          [
+            0.031182850388363235,
+            0.9316999487843367,
+            0.037117200827300065
+          ],
+          [
+            0.0003803824566486529,
+            0.09291504154987025,
+            0.9067045759934811
+          ]
+        ],
+        "initial": [
+          0.8461453306038003,
+          0.07692307693870395,
+          0.0769315924574959
+        ],
+        "band": 0.1,
+        "objective": 864.442236942147,
+        "log_likelihood": 867.6391410793835,
+        "iteration": 24,
+        "start": 0.34163430266265965
+      },
+      "policy": {
+        "family": "slope",
+        "label": "slope",
+        "entry": 0.75,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.3,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2008-02-21",
+      "isin": "US4642882819"
+    },
+    "EWA": {
+      "symbol": "EWA",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.002610608193797317,
+        "nll": -7227.0854285767455,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 4715
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00029742109535950634,
+        "nll": -11394.808423428038,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 4715
+      },
+      "sigma": 0.01737542725153585,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.33760512665384274
+          ],
+          [
+            0.0
+          ],
+          [
+            0.33760512665384274
+          ]
+        ],
+        "variance": [
+          [
+            0.0563019828058272
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.0563019828058272
+          ]
+        ],
+        "transition": [
+          [
+            0.8987683694214491,
+            0.09728402288070133,
+            0.003947607697849558
+          ],
+          [
+            0.04267015296431434,
+            0.8978816120225619,
+            0.05944823501312377
+          ],
+          [
+            0.0005990964029081418,
+            0.101231057689081,
+            0.8981698459080109
+          ]
+        ],
+        "initial": [
+          0.11918910027889838,
+          0.7820645626162397,
+          0.09874633710486196
+        ],
+        "band": 0.1,
+        "objective": 1052.720986378323,
+        "log_likelihood": 1056.0739107839772,
+        "iteration": 24,
+        "start": 0.33760512665384274
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.75,
+        "exit": 0.6,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.3,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2003-04-10",
+      "isin": "US4642861037"
+    },
+    "EWC": {
+      "symbol": "EWC",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.002081974060226128,
+        "nll": -8224.658417211389,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 4997
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00022123466010176587,
+        "nll": -12815.690537129645,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 4997
+      },
+      "sigma": 0.014226316714234107,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.35294781201701486
+          ],
+          [
+            0.0
+          ],
+          [
+            0.35294781201701486
+          ]
+        ],
+        "variance": [
+          [
+            0.07222015571378243
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.07222015571378243
+          ]
+        ],
+        "transition": [
+          [
+            0.8817470024305887,
+            0.11432290150880295,
+            0.003930096060608385
+          ],
+          [
+            0.05200697151559499,
+            0.8805962018795191,
+            0.06739682660488587
+          ],
+          [
+            0.0014501772385154444,
+            0.09357777696761309,
+            0.9049720457938715
+          ]
+        ],
+        "initial": [
+          0.07697703053888258,
+          0.07702508628066791,
+          0.8459978831804494
+        ],
+        "band": 0.1,
+        "objective": 487.9286659312707,
+        "log_likelihood": 491.24916261916724,
+        "iteration": 24,
+        "start": 0.35294781201701486
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.6,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.2,
+        "count": 3
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2002-02-27",
+      "isin": "US4642865095"
+    },
+    "EWG": {
+      "symbol": "EWG",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0027125306003851902,
+        "nll": -9407.25079372534,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 6215
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.0002982311207291217,
+        "nll": -15011.428270136432,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 6215
+      },
+      "sigma": 0.016715044452921383,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.346366328265877
+          ],
+          [
+            0.0
+          ],
+          [
+            0.346366328265877
+          ]
+        ],
+        "variance": [
+          [
+            0.05619377059664512
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.05619377059664512
+          ]
+        ],
+        "transition": [
+          [
+            0.8878762505418669,
+            0.10750303728206348,
+            0.004620712176069599
+          ],
+          [
+            0.05952144746356619,
+            0.8739673340520585,
+            0.0665112184843753
+          ],
+          [
+            0.0001869816285733025,
+            0.10256362153299639,
+            0.8972493968384303
+          ]
+        ],
+        "initial": [
+          0.18204462687737208,
+          0.7392531066822188,
+          0.07870226644040917
+        ],
+        "band": 0.1,
+        "objective": 946.6379654566889,
+        "log_likelihood": 950.1604427273099,
+        "iteration": 24,
+        "start": 0.346366328265877
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.75,
+        "exit": 0.6,
+        "tight": 3.0,
+        "wide": 6.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.2,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "1997-04-23",
+      "isin": "US4642868065"
+    },
+    "EWH": {
+      "symbol": "EWH",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.002683625775724485,
+        "nll": -9616.745320247326,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 6331
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.0002894063750278909,
+        "nll": -15386.691252093988,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 6331
+      },
+      "sigma": 0.017759960155995635,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.32419759831081074
+          ],
+          [
+            0.0
+          ],
+          [
+            0.32419759831081074
+          ]
+        ],
+        "variance": [
+          [
+            0.038889383408412935
+          ],
+          [
+            0.009613489328847372
+          ],
+          [
+            0.038889383408412935
+          ]
+        ],
+        "transition": [
+          [
+            0.8965444592450359,
+            0.09650422872412606,
+            0.006951312030838037
+          ],
+          [
+            0.05012559582247128,
+            0.8933467525863965,
+            0.05652765159113221
+          ],
+          [
+            0.00042276678326737927,
+            0.09989560761581272,
+            0.8996816256009199
+          ]
+        ],
+        "initial": [
+          0.8459250424484842,
+          0.07714833352607582,
+          0.07692662402544001
+        ],
+        "band": 0.1,
+        "objective": 1932.2032419123689,
+        "log_likelihood": 1935.5436748779798,
+        "iteration": 24,
+        "start": 0.32419759831081074
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.75,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.2,
+        "count": 3
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "1996-11-05",
+      "isin": null
+    },
+    "EWJ": {
+      "symbol": "EWJ",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0016310898407512133,
+        "nll": -11479.32070449082,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 6493
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00021005270075127595,
+        "nll": -16820.82852422216,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 6493
+      },
+      "sigma": 0.014514784322959577,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.329441270445975
+          ],
+          [
+            0.0
+          ],
+          [
+            0.329441270445975
+          ]
+        ],
+        "variance": [
+          [
+            0.04067799010713333
+          ],
+          [
+            0.008808405855178881
+          ],
+          [
+            0.04067799010713333
+          ]
+        ],
+        "transition": [
+          [
+            0.8929904803139123,
+            0.10535221408063583,
+            0.0016573056054519095
+          ],
+          [
+            0.05850518241874944,
+            0.8739165119819312,
+            0.06757830559931935
+          ],
+          [
+            0.00011884075709447492,
+            0.10927990541692231,
+            0.8906012538259832
+          ]
+        ],
+        "initial": [
+          0.8461097373540479,
+          0.07694527954652775,
+          0.07694498309942446
+        ],
+        "band": 0.1,
+        "objective": 1798.3271403973329,
+        "log_likelihood": 1801.9987145646128,
+        "iteration": 24,
+        "start": 0.329441270445975
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.75,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "1996-03-18",
+      "isin": null
+    },
+    "EWT": {
+      "symbol": "EWT",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0024941954020672678,
+        "nll": -8034.645045657189,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 5165
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.0002859821198355244,
+        "nll": -12583.614712386643,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 5165
+      },
+      "sigma": 0.01776442929844365,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.31252834620434605
+          ],
+          [
+            0.0
+          ],
+          [
+            0.31252834620434605
+          ]
+        ],
+        "variance": [
+          [
+            0.036337980445874246
+          ],
+          [
+            0.008430918485415868
+          ],
+          [
+            0.036337980445874246
+          ]
+        ],
+        "transition": [
+          [
+            0.8987786017962919,
+            0.09864491440975248,
+            0.0025764837939556335
+          ],
+          [
+            0.05784895788570555,
+            0.8644200891262639,
+            0.07773095298803055
+          ],
+          [
+            0.00017803703767645034,
+            0.10179680518756833,
+            0.8980251577747552
+          ]
+        ],
+        "initial": [
+          0.846153042100165,
+          0.07692370778600616,
+          0.07692325011382886
+        ],
+        "band": 0.1,
+        "objective": 1541.7176443191806,
+        "log_likelihood": 1545.293585540282,
+        "iteration": 24,
+        "start": 0.31252834620434605
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.75,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.2,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2001-06-21",
+      "isin": "US46434G7723"
+    },
+    "EWU": {
+      "symbol": "EWU",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0016064380545867658,
+        "nll": -10790.12565122821,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 6077
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.000211203573050829,
+        "nll": -15726.532497936923,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 6077
+      },
+      "sigma": 0.014805393453245613,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.32057357565919925
+          ],
+          [
+            0.0
+          ],
+          [
+            0.32057357565919925
+          ]
+        ],
+        "variance": [
+          [
+            0.050148177485736585
+          ],
+          [
+            0.008942644210292758
+          ],
+          [
+            0.050148177485736585
+          ]
+        ],
+        "transition": [
+          [
+            0.8861392041424858,
+            0.10333409310499363,
+            0.010526702752520557
+          ],
+          [
+            0.05113932801292035,
+            0.8916641324563224,
+            0.05719653953075729
+          ],
+          [
+            0.00011959932382093225,
+            0.10726576457631462,
+            0.8926146360998645
+          ]
+        ],
+        "initial": [
+          0.0772524155303994,
+          0.0780552616681352,
+          0.8446923228014654
+        ],
+        "band": 0.1,
+        "objective": 1606.4103435768247,
+        "log_likelihood": 1609.8848902733675,
+        "iteration": 24,
+        "start": 0.32057357565919925
+      },
+      "policy": {
+        "family": "slope",
+        "label": "slope",
+        "entry": 0.6,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.3,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "1997-11-06",
+      "isin": "US46435G3341"
+    },
+    "EWY": {
+      "symbol": "EWY",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0032446705362843163,
+        "nll": -7238.550772917904,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 5083
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.0003894385910959806,
+        "nll": -11599.079630064312,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 5083
+      },
+      "sigma": 0.019956876766326355,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.32268411976456507
+          ],
+          [
+            0.0
+          ],
+          [
+            0.32268411976456507
+          ]
+        ],
+        "variance": [
+          [
+            0.05008870158866055
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.05008870158866055
+          ]
+        ],
+        "transition": [
+          [
+            0.891556450087142,
+            0.10577834913938601,
+            0.002665200773471989
+          ],
+          [
+            0.05451623338965975,
+            0.8781591179951622,
+            0.06732464861517803
+          ],
+          [
+            0.0001508688737780094,
+            0.10219478648318849,
+            0.8976543446430335
+          ]
+        ],
+        "initial": [
+          0.07692360922869636,
+          0.07692337774158371,
+          0.8461530130297199
+        ],
+        "band": 0.1,
+        "objective": 1070.7660379566032,
+        "log_likelihood": 1074.3454934761683,
+        "iteration": 24,
+        "start": 0.32268411976456507
+      },
+      "policy": {
+        "family": "slope",
+        "label": "slope",
+        "entry": 0.75,
+        "exit": 0.75,
+        "tight": 3.0,
+        "wide": 6.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.3,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2001-10-23",
+      "isin": null
+    },
+    "GLD": {
+      "symbol": "GLD",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0012065251894149965,
+        "nll": -8267.70091288375,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 4309
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.0001441369533412863,
+        "nll": -11974.309968455667,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 4309
+      },
+      "sigma": 0.011259951921025423,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3641233567965948
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3641233567965948
+          ]
+        ],
+        "variance": [
+          [
+            0.0487064293505964
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.0487064293505964
+          ]
+        ],
+        "transition": [
+          [
+            0.8857499930247681,
+            0.11282682940099942,
+            0.0014231775742324885
+          ],
+          [
+            0.07225354618833665,
+            0.8497835742791748,
+            0.0779628795324885
+          ],
+          [
+            0.0012658655736905063,
+            0.09511870649400019,
+            0.9036154279323093
+          ]
+        ],
+        "initial": [
+          0.07692312983868844,
+          0.07692311233578623,
+          0.8461537578255253
+        ],
+        "band": 0.1,
+        "objective": 592.9415623074742,
+        "log_likelihood": 596.4304924351286,
+        "iteration": 24,
+        "start": 0.3641233567965948
+      },
+      "policy": {
+        "family": "slope",
+        "label": "slope",
+        "entry": 0.6,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.3,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2004-11-18",
+      "isin": null
+    },
+    "HYG": {
+      "symbol": "HYG",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0005642989683535005,
+        "nll": -8525.741178544857,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 3709
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 6.0416797045266815e-05,
+        "nll": -11919.447531259952,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 3709
+      },
+      "sigma": 0.0073720097989879,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.42651867940087046
+          ],
+          [
+            0.0
+          ],
+          [
+            0.42651867940087046
+          ]
+        ],
+        "variance": [
+          [
+            0.14225053858398684
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.14225053858398684
+          ]
+        ],
+        "transition": [
+          [
+            0.8925349604789892,
+            0.08174643387642892,
+            0.025718605644581907
+          ],
+          [
+            0.02280479966480283,
+            0.9580403433369609,
+            0.019154856998236307
+          ],
+          [
+            0.003921211931366561,
+            0.08571467856957145,
+            0.910364109499062
+          ]
+        ],
+        "initial": [
+          0.0826373444292954,
+          0.8048279600991669,
+          0.11253469547153783
+        ],
+        "band": 0.1,
+        "objective": 903.1331366731551,
+        "log_likelihood": 906.0994543669392,
+        "iteration": 23,
+        "start": 0.42651867940087046
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.6,
+        "exit": 0.6,
+        "tight": 3.0,
+        "wide": 6.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2007-04-11",
+      "isin": null
+    },
+    "IAT": {
+      "symbol": "IAT",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.003768089608310551,
+        "nll": -5318.914663264515,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 3942
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.0004520948754423949,
+        "nll": -8701.34554728445,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 3942
+      },
+      "sigma": 0.021022193413666717,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3434851299676133
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3434851299676133
+          ]
+        ],
+        "variance": [
+          [
+            0.05974961610680491
+          ],
+          [
+            0.008618219986705509
+          ],
+          [
+            0.05974961610680491
+          ]
+        ],
+        "transition": [
+          [
+            0.882643623550364,
+            0.10999676480171629,
+            0.00735961164791974
+          ],
+          [
+            0.04657729559703376,
+            0.9040127753243379,
+            0.04940992907862836
+          ],
+          [
+            0.0002682882319106969,
+            0.11569076510000156,
+            0.8840409466680877
+          ]
+        ],
+        "initial": [
+          0.07810599687906465,
+          0.8415315493777084,
+          0.08036245374322697
+        ],
+        "band": 0.1,
+        "objective": 1094.329056740424,
+        "log_likelihood": 1097.7683069614982,
+        "iteration": 24,
+        "start": 0.3434851299676133
+      },
+      "policy": {
+        "family": "slope",
+        "label": "slope",
+        "entry": 0.75,
+        "exit": 0.6,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2006-05-05",
+      "isin": "US4642887784"
+    },
+    "IBB": {
+      "symbol": "IBB",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0024269954302935724,
+        "nll": -8246.411213463116,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 5255
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00027947867354639037,
+        "nll": -12863.325073586897,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 5255
+      },
+      "sigma": 0.016874968560203367,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3385985982793666
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3385985982793666
+          ]
+        ],
+        "variance": [
+          [
+            0.0398303801576097
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.0398303801576097
+          ]
+        ],
+        "transition": [
+          [
+            0.883138528102471,
+            0.115689824274309,
+            0.0011716476232200587
+          ],
+          [
+            0.06547742860655363,
+            0.8592664459160562,
+            0.0752561254773902
+          ],
+          [
+            8.652840937220972e-05,
+            0.09612922640995489,
+            0.9037842451806729
+          ]
+        ],
+        "initial": [
+          0.07804669395764031,
+          0.8435479652267691,
+          0.07840534081559047
+        ],
+        "band": 0.1,
+        "objective": 1207.4246397654042,
+        "log_likelihood": 1211.1853127358086,
+        "iteration": 24,
+        "start": 0.3385985982793666
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.6,
+        "exit": 0.6,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2001-02-12",
+      "isin": "US4642875565"
+    },
+    "IBND": {
+      "symbol": "IBND",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.00037653937614058884,
+        "nll": -7100.179486264682,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 2839
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 3.892492764755535e-05,
+        "nll": -9747.625470406514,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 2839
+      },
+      "sigma": 0.005883295269096518,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.37206540400110605
+          ],
+          [
+            0.0
+          ],
+          [
+            0.37206540400110605
+          ]
+        ],
+        "variance": [
+          [
+            0.07220011011766037
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.07220011011766037
+          ]
+        ],
+        "transition": [
+          [
+            0.8951626385269186,
+            0.10098450071192439,
+            0.0038528607611570337
+          ],
+          [
+            0.05645442930181289,
+            0.8851239112902525,
+            0.058421659407934645
+          ],
+          [
+            0.0009558291840243765,
+            0.10184543171671256,
+            0.8971987390992631
+          ]
+        ],
+        "initial": [
+          0.8461529486582466,
+          0.07692334108963468,
+          0.0769237102521186
+        ],
+        "band": 0.1,
+        "objective": 221.7495067808365,
+        "log_likelihood": 225.0877332324834,
+        "iteration": 24,
+        "start": 0.37206540400110605
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.75,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.2,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2010-09-22",
+      "isin": "US78464A1512"
+    },
+    "IEF": {
+      "symbol": "IEF",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.00019315102262882844,
+        "nll": -13864.610326317856,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 4891
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 1.820121247487554e-05,
+        "nll": -18652.047529732252,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 4891
+      },
+      "sigma": 0.004250381052884673,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3387274326873363
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3387274326873363
+          ]
+        ],
+        "variance": [
+          [
+            0.03736836220704168
+          ],
+          [
+            0.009088293986430797
+          ],
+          [
+            0.03736836220704168
+          ]
+        ],
+        "transition": [
+          [
+            0.8874812229421019,
+            0.11237575435763622,
+            0.0001430227002619292
+          ],
+          [
+            0.07760481682967402,
+            0.8394159118543862,
+            0.08297927131593974
+          ],
+          [
+            0.00011716899808791195,
+            0.08909485179783969,
+            0.9107879792040724
+          ]
+        ],
+        "initial": [
+          0.8461538461280093,
+          0.07692307692317298,
+          0.07692307694881774
+        ],
+        "band": 0.1,
+        "objective": 1106.2715327619767,
+        "log_likelihood": 1110.2292702013194,
+        "iteration": 24,
+        "start": 0.3387274326873363
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.75,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2002-07-30",
+      "isin": null
+    },
+    "IGOV": {
+      "symbol": "IGOV",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.00031832077499334015,
+        "nll": -8243.326868190345,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 3189
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 3.222445266150932e-05,
+        "nll": -11250.556352003554,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 3189
+      },
+      "sigma": 0.005325447533150684,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3771392830570867
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3771392830570867
+          ]
+        ],
+        "variance": [
+          [
+            0.0564430979461244
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.0564430979461244
+          ]
+        ],
+        "transition": [
+          [
+            0.9011933837534486,
+            0.09580109995985876,
+            0.0030055162866926433
+          ],
+          [
+            0.059847173936320296,
+            0.8746187354444525,
+            0.06553409061922726
+          ],
+          [
+            0.0012438706964499051,
+            0.10382769629919444,
+            0.8949284330043557
+          ]
+        ],
+        "initial": [
+          0.8461509341712057,
+          0.07692558278479468,
+          0.07692348304399951
+        ],
+        "band": 0.1,
+        "objective": 408.4496694589401,
+        "log_likelihood": 411.7964616126565,
+        "iteration": 24,
+        "start": 0.3771392830570867
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.75,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2009-05-04",
+      "isin": "US4642881175"
+    },
+    "INDA": {
+      "symbol": "INDA",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0020129165610965997,
+        "nll": -3782.83618745325,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 2275
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00019573443496498095,
+        "nll": -5973.944065766649,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 2275
+      },
+      "sigma": 0.014995130154543956,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.309960364324367
+          ],
+          [
+            0.0
+          ],
+          [
+            0.309960364324367
+          ]
+        ],
+        "variance": [
+          [
+            0.04740782818177197
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.04740782818177197
+          ]
+        ],
+        "transition": [
+          [
+            0.8724273182175549,
+            0.12711994749027333,
+            0.00045273429217173434
+          ],
+          [
+            0.062138201547496365,
+            0.8643562005723326,
+            0.073505597880171
+          ],
+          [
+            0.00017944440374264051,
+            0.09708302953013968,
+            0.9027375260661177
+          ]
+        ],
+        "initial": [
+          0.08759847855324814,
+          0.8342660454656948,
+          0.078135475981057
+        ],
+        "band": 0.1,
+        "objective": 470.30303011452315,
+        "log_likelihood": 474.1061412830753,
+        "iteration": 21,
+        "start": 0.309960364324367
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.6,
+        "exit": 0.6,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.3,
+        "count": 3
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2012-12-18",
+      "isin": "US46429B5984"
+    },
+    "ITA": {
+      "symbol": "ITA",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.002432514933388223,
+        "nll": -6181.50795913766,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 3942
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.0002514365943442469,
+        "nll": -9857.733635024286,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 3942
+      },
+      "sigma": 0.014812016379151789,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.35857900394528985
+          ],
+          [
+            0.0
+          ],
+          [
+            0.35857900394528985
+          ]
+        ],
+        "variance": [
+          [
+            0.08425760105175951
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.08425760105175951
+          ]
+        ],
+        "transition": [
+          [
+            0.881996234380245,
+            0.11145741775264428,
+            0.006546347867110729
+          ],
+          [
+            0.05188821891440894,
+            0.8783221276131835,
+            0.06978965347240755
+          ],
+          [
+            0.00017044663225862614,
+            0.1016867994059204,
+            0.898142753961821
+          ]
+        ],
+        "initial": [
+          0.0769728737634552,
+          0.07702173088198194,
+          0.8460053953545629
+        ],
+        "band": 0.1,
+        "objective": 183.01653151981483,
+        "log_likelihood": 186.52169589083698,
+        "iteration": 24,
+        "start": 0.35857900394528985
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.75,
+        "exit": 0.6,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2006-05-05",
+      "isin": "US4642887602"
+    },
+    "IWM": {
+      "symbol": "IWM",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0022279952463469216,
+        "nll": -8759.75143928741,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 5434
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00023935281759698577,
+        "nll": -13722.586402423014,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 5434
+      },
+      "sigma": 0.015350492832587298,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3340754297717782
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3340754297717782
+          ]
+        ],
+        "variance": [
+          [
+            0.05389731670849555
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.05389731670849555
+          ]
+        ],
+        "transition": [
+          [
+            0.8766450453015018,
+            0.11992013217903982,
+            0.003434822519458419
+          ],
+          [
+            0.06201566381942174,
+            0.8679280717234601,
+            0.07005626445711816
+          ],
+          [
+            0.00011185455969035312,
+            0.09789689994752544,
+            0.9019912454927842
+          ]
+        ],
+        "initial": [
+          0.0802026545247302,
+          0.8402255447318294,
+          0.07957180074344035
+        ],
+        "band": 0.1,
+        "objective": 887.9350835476017,
+        "log_likelihood": 891.5676481342484,
+        "iteration": 24,
+        "start": 0.3340754297717782
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.75,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.2,
+        "count": 3
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2000-05-26",
+      "isin": "US4642876555"
+    },
+    "LEMB": {
+      "symbol": "LEMB",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0005857645841273608,
+        "nll": -5750.1502600960375,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 2522
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 4.3357512176742185e-05,
+        "nll": -8523.222321098352,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 2522
+      },
+      "sigma": 0.006172349537979853,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3894899521859048
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3894899521859048
+          ]
+        ],
+        "variance": [
+          [
+            0.07789167781461993
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.07789167781461993
+          ]
+        ],
+        "transition": [
+          [
+            0.9080917063975734,
+            0.09159621033858657,
+            0.0003120832638400154
+          ],
+          [
+            0.05600643434621566,
+            0.8817356063014182,
+            0.0622579593523661
+          ],
+          [
+            0.00018981366773125093,
+            0.09863250465668787,
+            0.9011776816755809
+          ]
+        ],
+        "initial": [
+          0.07788612901295988,
+          0.834430477466518,
+          0.08768339352052215
+        ],
+        "band": 0.1,
+        "objective": 94.1917394407688,
+        "log_likelihood": 97.90406790720374,
+        "iteration": 24,
+        "start": 0.3894899521859048
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.6,
+        "exit": 0.6,
+        "tight": 3.0,
+        "wide": 6.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.1,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2011-12-22",
+      "isin": "US4642865178"
+    },
+    "LQD": {
+      "symbol": "LQD",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.000291424061297668,
+        "nll": -12858.758866713131,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 4891
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 3.0612175249796755e-05,
+        "nll": -17380.608596961923,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 4891
+      },
+      "sigma": 0.005331539119066626,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3415519398439985
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3415519398439985
+          ]
+        ],
+        "variance": [
+          [
+            0.09477188137411165
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.09477188137411165
+          ]
+        ],
+        "transition": [
+          [
+            0.8961060019209064,
+            0.10349940955563164,
+            0.0003945885234619722
+          ],
+          [
+            0.032674374724508015,
+            0.9178289148015857,
+            0.049496710473906316
+          ],
+          [
+            0.0004335244933754741,
+            0.09406659619944463,
+            0.9054998793071799
+          ]
+        ],
+        "initial": [
+          0.846153487357279,
+          0.07692307694914609,
+          0.07692343569357485
+        ],
+        "band": 0.1,
+        "objective": 701.5857805431785,
+        "log_likelihood": 705.1633967847279,
+        "iteration": 24,
+        "start": 0.3415519398439985
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.6,
+        "exit": 0.6,
+        "tight": 3.0,
+        "wide": 6.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.1,
+        "count": 3
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2002-07-30",
+      "isin": null
+    },
+    "MBB": {
+      "symbol": "MBB",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 5.606656633532051e-05,
+        "nll": -12859.66203413577,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 3724
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 6.169880640794649e-06,
+        "nll": -16215.968603167588,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 3724
+      },
+      "sigma": 0.0025258701244573523,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3734466640230732
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3734466640230732
+          ]
+        ],
+        "variance": [
+          [
+            0.06774514797231435
+          ],
+          [
+            0.009891192093962107
+          ],
+          [
+            0.06774514797231435
+          ]
+        ],
+        "transition": [
+          [
+            0.9045401627729762,
+            0.0795457888512353,
+            0.015914048375788487
+          ],
+          [
+            0.021995285131806014,
+            0.946004601356051,
+            0.032000113512142964
+          ],
+          [
+            0.0033992296721342087,
+            0.08561970836281443,
+            0.9109810619650514
+          ]
+        ],
+        "initial": [
+          0.07692309042994792,
+          0.07692307692307693,
+          0.8461538326469752
+        ],
+        "band": 0.1,
+        "objective": 1246.4757513973732,
+        "log_likelihood": 1249.455163588968,
+        "iteration": 24,
+        "start": 0.3734466640230732
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.75,
+        "exit": 0.6,
+        "tight": 3.0,
+        "wide": 6.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2007-03-20",
+      "isin": "US4642885887"
+    },
+    "MCHI": {
+      "symbol": "MCHI",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.002521560452512785,
+        "nll": -3897.0482332845277,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 2514
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.0002868680694607417,
+        "nll": -6121.031079951234,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 2514
+      },
+      "sigma": 0.016163659010787527,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3446132512828552
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3446132512828552
+          ]
+        ],
+        "variance": [
+          [
+            0.0396303249490629
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.0396303249490629
+          ]
+        ],
+        "transition": [
+          [
+            0.8921267113955279,
+            0.10536853142201294,
+            0.002504757182459137
+          ],
+          [
+            0.07311413861667011,
+            0.8418714619974127,
+            0.08501439938591719
+          ],
+          [
+            0.00018154400762311848,
+            0.10521125125673707,
+            0.8946072047356398
+          ]
+        ],
+        "initial": [
+          0.07704110168702796,
+          0.08545286836773815,
+          0.8375060299452339
+        ],
+        "band": 0.1,
+        "objective": 491.13369800580114,
+        "log_likelihood": 494.7850313176736,
+        "iteration": 24,
+        "start": 0.3446132512828552
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.75,
+        "exit": 0.6,
+        "tight": 3.0,
+        "wide": 6.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2012-01-05",
+      "isin": null
+    },
+    "MDY": {
+      "symbol": "MDY",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0018005444053218998,
+        "nll": -11536.511749394827,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 6713
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00020037736820337568,
+        "nll": -17549.041848992587,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 6713
+      },
+      "sigma": 0.01383848579268571,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.33447603179653534
+          ],
+          [
+            0.0
+          ],
+          [
+            0.33447603179653534
+          ]
+        ],
+        "variance": [
+          [
+            0.05625953791106651
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.05625953791106651
+          ]
+        ],
+        "transition": [
+          [
+            0.8755645040123782,
+            0.12064184844495836,
+            0.00379364754266346
+          ],
+          [
+            0.05691039703645359,
+            0.873958604479287,
+            0.06913099848425944
+          ],
+          [
+            0.00010692484555776578,
+            0.0955972689600236,
+            0.9042958061944186
+          ]
+        ],
+        "initial": [
+          0.07873205016005722,
+          0.8338817773258541,
+          0.08738617251408869
+        ],
+        "band": 0.1,
+        "objective": 1096.4346960900168,
+        "log_likelihood": 1100.0479773602074,
+        "iteration": 24,
+        "start": 0.33447603179653534
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.75,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.3,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "1995-05-04",
+      "isin": "US78467Y1073"
+    },
+    "PPLT": {
+      "symbol": "PPLT",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0022977464946484674,
+        "nll": -4815.384985224062,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 3016
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00026272082997045844,
+        "nll": -7475.8885718561605,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 3016
+      },
+      "sigma": 0.014614699815941542,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3723071393651218
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3723071393651218
+          ]
+        ],
+        "variance": [
+          [
+            0.060078400338062915
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.060078400338062915
+          ]
+        ],
+        "transition": [
+          [
+            0.8987982882104595,
+            0.10098835522487429,
+            0.00021335656466623006
+          ],
+          [
+            0.07197660345148409,
+            0.8505048062799769,
+            0.07751859026853897
+          ],
+          [
+            0.00033624602022010126,
+            0.11607297452448871,
+            0.8835907794552912
+          ]
+        ],
+        "initial": [
+          0.08057055712042979,
+          0.8406684371836097,
+          0.07876100569596044
+        ],
+        "band": 0.1,
+        "objective": 254.07959797142468,
+        "log_likelihood": 257.9045007036717,
+        "iteration": 24,
+        "start": 0.3723071393651218
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.6,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2010-01-08",
+      "isin": "US0032601066"
+    },
+    "SHY": {
+      "symbol": "SHY",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 7.970044871104999e-06,
+        "nll": -21660.33184508336,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 4891
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 7.395810685774684e-07,
+        "nll": -26485.37430218319,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 4891
+      },
+      "sigma": 0.0008991414234145714,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.378000957567513
+          ],
+          [
+            0.0
+          ],
+          [
+            0.378000957567513
+          ]
+        ],
+        "variance": [
+          [
+            0.061612508011248394
+          ],
+          [
+            0.009280169073053932
+          ],
+          [
+            0.061612508011248394
+          ]
+        ],
+        "transition": [
+          [
+            0.8809433624048688,
+            0.10840622088708579,
+            0.010650416708045393
+          ],
+          [
+            0.028982340134188874,
+            0.934536127143377,
+            0.03648153272243415
+          ],
+          [
+            0.0025038901965648377,
+            0.06969072471972691,
+            0.9278053850837082
+          ]
+        ],
+        "initial": [
+          0.8459183363292769,
+          0.0771492407794797,
+          0.0769324228912435
+        ],
+        "band": 0.1,
+        "objective": 1501.0646738433834,
+        "log_likelihood": 1504.1267786703347,
+        "iteration": 24,
+        "start": 0.378000957567513
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.75,
+        "exit": 0.6,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2002-07-30",
+      "isin": "US4642874576"
+    },
+    "SLV": {
+      "symbol": "SLV",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.004359486992562622,
+        "nll": -5037.9519653252555,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 3947
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00044540372070242523,
+        "nll": -8741.809023016462,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 3947
+      },
+      "sigma": 0.020120843904356797,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.37444739202624794
+          ],
+          [
+            0.0
+          ],
+          [
+            0.37444739202624794
+          ]
+        ],
+        "variance": [
+          [
+            0.057458666753797946
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.057458666753797946
+          ]
+        ],
+        "transition": [
+          [
+            0.8920625685023272,
+            0.10676756768481091,
+            0.0011698638128618604
+          ],
+          [
+            0.05953686362543909,
+            0.8796975822870116,
+            0.06076555408754936
+          ],
+          [
+            0.0006296505838827733,
+            0.09667737395983421,
+            0.902692975456283
+          ]
+        ],
+        "initial": [
+          0.845989431983924,
+          0.07708365675929499,
+          0.07692691125678111
+        ],
+        "band": 0.1,
+        "objective": 595.0646389320198,
+        "log_likelihood": 598.5650806820591,
+        "iteration": 24,
+        "start": 0.37444739202624794
+      },
+      "policy": {
+        "family": "slope",
+        "label": "slope",
+        "entry": 0.6,
+        "exit": 0.75,
+        "tight": 3.0,
+        "wide": 6.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2006-04-28",
+      "isin": "US46428Q1094"
+    },
+    "SOXX": {
+      "symbol": "SOXX",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.003285791753371727,
+        "nll": -7301.534394241753,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 5150
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00040621685409408966,
+        "nll": -11643.35338606773,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 5150
+      },
+      "sigma": 0.02066200053057128,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3327360327743021
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3327360327743021
+          ]
+        ],
+        "variance": [
+          [
+            0.03672927815149649
+          ],
+          [
+            0.009575155024668512
+          ],
+          [
+            0.03672927815149649
+          ]
+        ],
+        "transition": [
+          [
+            0.8857317028533848,
+            0.11402015281823169,
+            0.00024814432838355337
+          ],
+          [
+            0.06030693675926593,
+            0.8660660078275756,
+            0.07362705541315849
+          ],
+          [
+            0.00014879552462316947,
+            0.09928597327837113,
+            0.9005652311970057
+          ]
+        ],
+        "initial": [
+          0.10212238657434453,
+          0.8175821728227582,
+          0.08029544060289724
+        ],
+        "band": 0.1,
+        "objective": 1412.3460890904978,
+        "log_likelihood": 1416.193941903614,
+        "iteration": 24,
+        "start": 0.3327360327743021
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.6,
+        "exit": 0.6,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.3,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2001-07-13",
+      "isin": "US4642875235"
+    },
+    "SPY": {
+      "symbol": "SPY",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0011187173705260371,
+        "nll": -14251.044605322404,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 7284
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00014454613134618925,
+        "nll": -20231.233776891564,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 7284
+      },
+      "sigma": 0.01193329886135624,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.32641357213827465
+          ],
+          [
+            0.0
+          ],
+          [
+            0.32641357213827465
+          ]
+        ],
+        "variance": [
+          [
+            0.048604651741193126
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.048604651741193126
+          ]
+        ],
+        "transition": [
+          [
+            0.8844231830955783,
+            0.11036779963608544,
+            0.005209017268336247
+          ],
+          [
+            0.052400218587944095,
+            0.8757625542820514,
+            0.0718372271300045
+          ],
+          [
+            0.00010049252105555668,
+            0.10101507438351047,
+            0.898884433095434
+          ]
+        ],
+        "initial": [
+          0.07815539579017682,
+          0.8316038442280863,
+          0.09024075998173678
+        ],
+        "band": 0.1,
+        "objective": 1505.9452291033015,
+        "log_likelihood": 1509.5218203454044,
+        "iteration": 24,
+        "start": 0.32641357213827465
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.75,
+        "exit": 0.75,
+        "tight": 3.0,
+        "wide": 6.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "1993-01-29",
+      "isin": null
+    },
+    "TIP": {
+      "symbol": "TIP",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.00013577359824082946,
+        "nll": -13696.860404883551,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 4549
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 1.874768218859491e-05,
+        "nll": -17280.531144448436,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 4549
+      },
+      "sigma": 0.00396856371253325,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3590795821082709
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3590795821082709
+          ]
+        ],
+        "variance": [
+          [
+            0.06770199697842356
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.06770199697842356
+          ]
+        ],
+        "transition": [
+          [
+            0.8757028668598931,
+            0.12348441467946975,
+            0.0008127184606371832
+          ],
+          [
+            0.05250450402898109,
+            0.8827196874802355,
+            0.06477580849078336
+          ],
+          [
+            0.0024930306153100527,
+            0.09770711179593591,
+            0.899799857588754
+          ]
+        ],
+        "initial": [
+          0.07699323513960982,
+          0.10907351998884399,
+          0.8139332448715461
+        ],
+        "band": 0.1,
+        "objective": 551.1184677557433,
+        "log_likelihood": 554.5649987441409,
+        "iteration": 24,
+        "start": 0.3590795821082709
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.75,
+        "exit": 0.6,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.1,
+        "count": 3
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2003-12-05",
+      "isin": "US4642871762"
+    },
+    "TLT": {
+      "symbol": "TLT",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0008143435180854232,
+        "nll": -10345.756151703637,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 4891
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 8.326073391918171e-05,
+        "nll": -14933.69205891121,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 4891
+      },
+      "sigma": 0.008989693986849031,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3277783751197786
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3277783751197786
+          ]
+        ],
+        "variance": [
+          [
+            0.038607425018251484
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.038607425018251484
+          ]
+        ],
+        "transition": [
+          [
+            0.8816123826458334,
+            0.11823861149509919,
+            0.00014900585906739327
+          ],
+          [
+            0.08241822532122929,
+            0.8342010848905721,
+            0.08338068978819861
+          ],
+          [
+            0.00012856213260715638,
+            0.09785863365830082,
+            0.902012804209092
+          ]
+        ],
+        "initial": [
+          0.8461538452085834,
+          0.0769230774750323,
+          0.07692307731638433
+        ],
+        "band": 0.1,
+        "objective": 1000.3528118396339,
+        "log_likelihood": 1004.3461025531801,
+        "iteration": 24,
+        "start": 0.3277783751197786
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.75,
+        "exit": 0.6,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2002-07-30",
+      "isin": null
+    },
+    "USO": {
+      "symbol": "USO",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.00884633220131273,
+        "nll": -3653.401051315982,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 3960
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.0006349266635882844,
+        "nll": -8068.635182417369,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 3960
+      },
+      "sigma": 0.02386211194081145,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3766969845579502
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3766969845579502
+          ]
+        ],
+        "variance": [
+          [
+            0.08864268644096203
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.08864268644096203
+          ]
+        ],
+        "transition": [
+          [
+            0.9058892261052718,
+            0.08549419043249025,
+            0.008616583462237962
+          ],
+          [
+            0.052879735448615524,
+            0.8932377738472024,
+            0.0538824907041821
+          ],
+          [
+            0.00022275183749380858,
+            0.09648312753305217,
+            0.903294120629454
+          ]
+        ],
+        "initial": [
+          0.11252929258116329,
+          0.8083990270772675,
+          0.07907168034156917
+        ],
+        "band": 0.1,
+        "objective": 156.7943866609921,
+        "log_likelihood": 160.1482645441356,
+        "iteration": 18,
+        "start": 0.3766969845579502
+      },
+      "policy": {
+        "family": "slope",
+        "label": "slope",
+        "entry": 0.75,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.3,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2006-04-10",
+      "isin": null
+    },
+    "VGK": {
+      "symbol": "VGK",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.002011370828931829,
+        "nll": -7040.195404281624,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 4233
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00023810516057665916,
+        "nll": -10700.739010127229,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 4233
+      },
+      "sigma": 0.015163893926716769,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3457363580533495
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3457363580533495
+          ]
+        ],
+        "variance": [
+          [
+            0.058649134307683225
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.058649134307683225
+          ]
+        ],
+        "transition": [
+          [
+            0.8885314817784158,
+            0.1033476698080502,
+            0.00812084841353401
+          ],
+          [
+            0.04683484951497789,
+            0.897160672257821,
+            0.05600447822720108
+          ],
+          [
+            0.0005889611495111318,
+            0.10583751882215942,
+            0.8935735200283295
+          ]
+        ],
+        "initial": [
+          0.07887276923212812,
+          0.8305209625314742,
+          0.09060626823639775
+        ],
+        "band": 0.1,
+        "objective": 854.9909582505974,
+        "log_likelihood": 858.3135208991628,
+        "iteration": 24,
+        "start": 0.3457363580533495
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.6,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.1,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2005-03-10",
+      "isin": null
+    },
+    "WEAT": {
+      "symbol": "WEAT",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0030221954869452295,
+        "nll": -3343.9108626367934,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 2291
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00030019133997346686,
+        "nll": -5526.072650503995,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 2291
+      },
+      "sigma": 0.016751336287176146,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.33825459733915497
+          ],
+          [
+            0.0
+          ],
+          [
+            0.33825459733915497
+          ]
+        ],
+        "variance": [
+          [
+            0.049386770839388125
+          ],
+          [
+            0.00951116214371764
+          ],
+          [
+            0.049386770839388125
+          ]
+        ],
+        "transition": [
+          [
+            0.9059101728441018,
+            0.0938195666428281,
+            0.0002702605130700896
+          ],
+          [
+            0.08833123321447683,
+            0.8380616719113474,
+            0.07360709487417576
+          ],
+          [
+            0.00028275257392156337,
+            0.09913248115404512,
+            0.9005847662720333
+          ]
+        ],
+        "initial": [
+          0.07831232156245752,
+          0.8434917742105104,
+          0.07819590422703215
+        ],
+        "band": 0.1,
+        "objective": 312.058832561249,
+        "log_likelihood": 315.84746241499494,
+        "iteration": 24,
+        "start": 0.33825459733915497
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.75,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2012-11-26",
+      "isin": "US88166A8707"
+    },
+    "XLB": {
+      "symbol": "XLB",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0020820929263484873,
+        "nll": -9536.290657342128,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 5794
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00025384021063799334,
+        "nll": -14461.455497771409,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 5794
+      },
+      "sigma": 0.015349348163643962,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.34988628432961005
+          ],
+          [
+            0.0
+          ],
+          [
+            0.34988628432961005
+          ]
+        ],
+        "variance": [
+          [
+            0.051923860520476824
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.051923860520476824
+          ]
+        ],
+        "transition": [
+          [
+            0.8873861613177877,
+            0.10553540069051719,
+            0.0070784379916951235
+          ],
+          [
+            0.05701476985143495,
+            0.8778343475628099,
+            0.06515088258575517
+          ],
+          [
+            0.00013536049680265563,
+            0.09422013394085357,
+            0.9056445055623438
+          ]
+        ],
+        "initial": [
+          0.07786301844114171,
+          0.7753904663935464,
+          0.14674651516531184
+        ],
+        "band": 0.1,
+        "objective": 1002.9929257856352,
+        "log_likelihood": 1006.4809159352081,
+        "iteration": 24,
+        "start": 0.34988628432961005
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.6,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.1,
+        "count": 3
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "1998-12-22",
+      "isin": "US81369Y1001"
+    },
+    "XLC": {
+      "symbol": "XLC",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.001990525479793235,
+        "nll": -1486.5249210769948,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 891
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00025512736716666893,
+        "nll": -2221.626027353306,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 891
+      },
+      "sigma": 0.015882049972878207,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3254856310584535
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3254856310584535
+          ]
+        ],
+        "variance": [
+          [
+            0.04179591450336499
+          ],
+          [
+            0.009490272689020173
+          ],
+          [
+            0.04179591450336499
+          ]
+        ],
+        "transition": [
+          [
+            0.9029282806284421,
+            0.09268094671077486,
+            0.004390772660783041
+          ],
+          [
+            0.06165009647171971,
+            0.8541594536556985,
+            0.08419044987258184
+          ],
+          [
+            0.0007199123706388289,
+            0.10593146067231773,
+            0.8933486269570434
+          ]
+        ],
+        "initial": [
+          0.07692489981412051,
+          0.07695689097546099,
+          0.8461182092104185
+        ],
+        "band": 0.1,
+        "objective": 186.50948357966496,
+        "log_likelihood": 189.91923419263637,
+        "iteration": 24,
+        "start": 0.3254856310584535
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.6,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "2018-06-19",
+      "isin": "US81369Y8527"
+    },
+    "XLE": {
+      "symbol": "XLE",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0032926324921423544,
+        "nll": -8208.5556018998,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 5794
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00035501396040355995,
+        "nll": -13489.65065774598,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 5794
+      },
+      "sigma": 0.01860341391691321,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.34028503023500173
+          ],
+          [
+            0.0
+          ],
+          [
+            0.34028503023500173
+          ]
+        ],
+        "variance": [
+          [
+            0.061170297240735146
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.061170297240735146
+          ]
+        ],
+        "transition": [
+          [
+            0.8795705017634322,
+            0.11697533292088441,
+            0.0034541653156833713
+          ],
+          [
+            0.0584480638411578,
+            0.8766572125226364,
+            0.0648947236362058
+          ],
+          [
+            0.00046141146710416216,
+            0.09624527578716807,
+            0.9032933127457278
+          ]
+        ],
+        "initial": [
+          0.0799479652623221,
+          0.8418007088565365,
+          0.0782513258811414
+        ],
+        "band": 0.1,
+        "objective": 803.1237197742678,
+        "log_likelihood": 806.5859576789867,
+        "iteration": 24,
+        "start": 0.34028503023500173
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.75,
+        "exit": 0.6,
+        "tight": 3.0,
+        "wide": 6.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.2,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "1998-12-22",
+      "isin": "US81369Y5069"
+    },
+    "XLI": {
+      "symbol": "XLI",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0018191952575683827,
+        "nll": -9887.918129890764,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 5771
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00019873591966719162,
+        "nll": -15110.211808007705,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 5771
+      },
+      "sigma": 0.013681842468142857,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.35705715762640616
+          ],
+          [
+            0.0
+          ],
+          [
+            0.35705715762640616
+          ]
+        ],
+        "variance": [
+          [
+            0.0612587186087457
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.0612587186087457
+          ]
+        ],
+        "transition": [
+          [
+            0.8902225489453456,
+            0.1020447293488952,
+            0.007732721705759218
+          ],
+          [
+            0.049475829048886553,
+            0.8897201792274704,
+            0.06080399172364307
+          ],
+          [
+            0.00014993437693327773,
+            0.09623417386325722,
+            0.9036158917598095
+          ]
+        ],
+        "initial": [
+          0.8461538155940107,
+          0.07692308436266115,
+          0.07692310004332807
+        ],
+        "band": 0.1,
+        "objective": 875.4803583500094,
+        "log_likelihood": 878.9269848483311,
+        "iteration": 24,
+        "start": 0.35705715762640616
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.6,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.1,
+        "count": 3
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "1999-01-27",
+      "isin": "US81369Y7040"
+    },
+    "XLK": {
+      "symbol": "XLK",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0022312691672899563,
+        "nll": -9335.82708020866,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 5794
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00026861024003821957,
+        "nll": -14297.611519980692,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 5794
+      },
+      "sigma": 0.016525436148274057,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.33032386181754025
+          ],
+          [
+            0.0
+          ],
+          [
+            0.33032386181754025
+          ]
+        ],
+        "variance": [
+          [
+            0.043435451492766924
+          ],
+          [
+            0.009177797385069505
+          ],
+          [
+            0.043435451492766924
+          ]
+        ],
+        "transition": [
+          [
+            0.8997681630199273,
+            0.09266787266563549,
+            0.007563964314437165
+          ],
+          [
+            0.050805948281202426,
+            0.8809526802553498,
+            0.06824137146344779
+          ],
+          [
+            0.00018929461116627263,
+            0.1020387798302223,
+            0.8977719255586114
+          ]
+        ],
+        "initial": [
+          0.07692327077353586,
+          0.07692308168361747,
+          0.8461536475428467
+        ],
+        "band": 0.1,
+        "objective": 1504.4241068602742,
+        "log_likelihood": 1507.8569687094337,
+        "iteration": 24,
+        "start": 0.33032386181754025
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.6,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.1,
+        "count": 3
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "1998-12-22",
+      "isin": "US81369Y8030"
+    },
+    "XLP": {
+      "symbol": "XLP",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0007113335708089699,
+        "nll": -12647.632167750135,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 5794
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 9.204838752695746e-05,
+        "nll": -17400.145028066145,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 5794
+      },
+      "sigma": 0.009828008830413574,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.320816817858761
+          ],
+          [
+            0.0
+          ],
+          [
+            0.320816817858761
+          ]
+        ],
+        "variance": [
+          [
+            0.043732388772667365
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.043732388772667365
+          ]
+        ],
+        "transition": [
+          [
+            0.886266926716363,
+            0.10809565218601866,
+            0.005637421097618362
+          ],
+          [
+            0.04534330003218631,
+            0.8910186199339317,
+            0.06363808003388197
+          ],
+          [
+            0.00018415932923342092,
+            0.09525546354056148,
+            0.9045603771302051
+          ]
+        ],
+        "initial": [
+          0.8461228015976756,
+          0.0769297975747445,
+          0.07694740082757986
+        ],
+        "band": 0.1,
+        "objective": 1566.0289319079245,
+        "log_likelihood": 1569.4920756377792,
+        "iteration": 24,
+        "start": 0.320816817858761
+      },
+      "policy": {
+        "family": "switch",
+        "label": "switch",
+        "entry": 0.75,
+        "exit": 0.75,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": false,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.2,
+        "count": 3
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "1998-12-22",
+      "isin": "US81369Y3080"
+    },
+    "XLU": {
+      "symbol": "XLU",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0012465052361108429,
+        "nll": -11022.537923588538,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 5794
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00015534612811744474,
+        "nll": -15884.025218941744,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 5794
+      },
+      "sigma": 0.012352680231774615,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3414208358921247
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3414208358921247
+          ]
+        ],
+        "variance": [
+          [
+            0.05874789367435069
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.05874789367435069
+          ]
+        ],
+        "transition": [
+          [
+            0.8904212310486574,
+            0.10228800837281135,
+            0.007290760578531212
+          ],
+          [
+            0.04337724030057495,
+            0.8936740707900682,
+            0.06294868890935683
+          ],
+          [
+            0.00018918639809037627,
+            0.10162803478767315,
+            0.8981827788142365
+          ]
+        ],
+        "initial": [
+          0.792343638167137,
+          0.13030538860546442,
+          0.07735097322739848
+        ],
+        "band": 0.1,
+        "objective": 1095.6811542277485,
+        "log_likelihood": 1099.118667249411,
+        "iteration": 24,
+        "start": 0.3414208358921247
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.6,
+        "exit": 0.6,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.1,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "1998-12-22",
+      "isin": "US81369Y8865"
+    },
+    "XLV": {
+      "symbol": "XLV",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0011005522389705975,
+        "nll": -11383.30636095146,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 5794
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00014031213787557513,
+        "nll": -16178.899883301656,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 5794
+      },
+      "sigma": 0.011560686925196701,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.333285534647293
+          ],
+          [
+            0.0
+          ],
+          [
+            0.333285534647293
+          ]
+        ],
+        "variance": [
+          [
+            0.053533248180813835
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.053533248180813835
+          ]
+        ],
+        "transition": [
+          [
+            0.8787484036406565,
+            0.1140174584975171,
+            0.007234137861826361
+          ],
+          [
+            0.058625690124829294,
+            0.8692226121101577,
+            0.07215169776501298
+          ],
+          [
+            0.00010107286620390752,
+            0.10104345572250735,
+            0.8988554714112887
+          ]
+        ],
+        "initial": [
+          0.07704110825829616,
+          0.08538658249195813,
+          0.8375723092497457
+        ],
+        "band": 0.1,
+        "objective": 943.8366469832673,
+        "log_likelihood": 947.4081674266088,
+        "iteration": 24,
+        "start": 0.333285534647293
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.75,
+        "exit": 0.6,
+        "tight": 3.0,
+        "wide": 6.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": false
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "1998-12-22",
+      "isin": "US81369Y2090"
+    },
+    "XLY": {
+      "symbol": "XLY",
+      "era": "late",
+      "training_end": "2022-12-30",
+      "slow": {
+        "ratio": 1.0000000000000004e-06,
+        "variance": 0.0019262781273999422,
+        "nll": -9761.630594520917,
+        "bounds": [
+          1e-10,
+          1e-06
+        ],
+        "optimizer_success": true,
+        "evaluations": 12,
+        "training_rows": 5794
+      },
+      "fast": {
+        "ratio": 0.010000000000000004,
+        "variance": 0.00022400660444189563,
+        "nll": -14823.66578992655,
+        "bounds": [
+          1e-05,
+          0.01
+        ],
+        "optimizer_success": true,
+        "evaluations": 11,
+        "training_rows": 5794
+      },
+      "sigma": 0.01446045255806389,
+      "fast_hmm": {
+        "means": [
+          [
+            -0.3541320378971408
+          ],
+          [
+            0.0
+          ],
+          [
+            0.3541320378971408
+          ]
+        ],
+        "variance": [
+          [
+            0.05753663539520597
+          ],
+          [
+            0.010000000000000002
+          ],
+          [
+            0.05753663539520597
+          ]
+        ],
+        "transition": [
+          [
+            0.8892168337123901,
+            0.09989123537683076,
+            0.010891930910779111
+          ],
+          [
+            0.0491286253481824,
+            0.8916212921069102,
+            0.059250082544907386
+          ],
+          [
+            0.0025240751223344774,
+            0.09836003278931112,
+            0.8991158920883544
+          ]
+        ],
+        "initial": [
+          0.07768785465758256,
+          0.1856269582150259,
+          0.7366851871273914
+        ],
+        "band": 0.1,
+        "objective": 1056.6541312235752,
+        "log_likelihood": 1059.7997631836397,
+        "iteration": 24,
+        "start": 0.3541320378971408
+      },
+      "policy": {
+        "family": "context",
+        "label": "context",
+        "entry": 0.75,
+        "exit": 0.6,
+        "tight": 5.0,
+        "wide": 10.0,
+        "reset": 0.5,
+        "context": true,
+        "aligned_exit": 0.85,
+        "entry_delta": 0.0,
+        "protection_scale": 1.0
+      },
+      "thesis_rule": {
+        "enabled": true,
+        "floor": 0.3,
+        "count": 2
+      },
+      "inherited_training_evidence": true,
+      "note": "Legacy family/label records inherited parameter selection; fast inference is the symmetric HMM for every ETF.",
+      "history_start": "1998-12-22",
+      "isin": "US81369Y4070"
+    }
+  },
+  "universe_members": [
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "AGG",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "AGG"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "CORN",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "CORN"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "CPER",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "CPER"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "DBA",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "DBA"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "DBB",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "DBB"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "DBC",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "DBC"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EEM",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EEM"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EFA",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EFA"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EMB",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EMB"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EWA",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EWA"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EWC",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EWC"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EWG",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EWG"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EWH",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EWH"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EWJ",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EWJ"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EWT",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EWT"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EWU",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EWU"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "EWY",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "EWY"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "GLD",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "GLD"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "HYG",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "HYG"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "IAT",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "IAT"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "IBB",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "IBB"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "IBND",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "IBND"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "IEF",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "IEF"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "IGOV",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "IGOV"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "INDA",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "INDA"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "ITA",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "ITA"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "IWM",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "IWM"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "LEMB",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "LEMB"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "LQD",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "LQD"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "MBB",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "MBB"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "MCHI",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "MCHI"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "MDY",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "MDY"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "PPLT",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "PPLT"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "SHY",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "SHY"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "SLV",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "SLV"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "SOXX",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "SOXX"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "SPY",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "SPY"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "TIP",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "TIP"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "TLT",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "TLT"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "USO",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "USO"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "VGK",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "VGK"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "WEAT",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "WEAT"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLB",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLB"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLC",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLC"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLE",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLE"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLI",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLI"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLK",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLK"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLP",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLP"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLU",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLU"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLV",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLV"
+    },
+    {
+      "asset_class": "etf",
+      "country": "US",
+      "exchange": "NYSE",
+      "name": "XLY",
+      "quote_currency": "USD",
+      "sector": "research",
+      "symbol": "XLY"
+    }
+  ]
+}

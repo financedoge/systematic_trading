@@ -36,7 +36,8 @@ def required_generation(state, key):
 def replay_supported(key):
     try:
         d = registered_strategy_definition(key)
-        return d.universe_key in ('multi_asset','multi_asset_14') and d.scheduler=='static_monthly'
+        return (d.universe_key in ('multi_asset','multi_asset_14') and d.scheduler=='static_monthly') or (
+            d.key=='broadtrend_full_pool_v1' and d.universe_key=='broadtrend_51_v1' and d.scheduler=='monthly_capital_daily_signals')
     except ValueError:
         return False
 
@@ -93,6 +94,7 @@ def require_monitored(settings, store, keys):
 def calculation_ready(detail, state, through=None):
     key=detail['strategy_id']
     return (key in state['monitored'] and detail.get('lifecycle')=='monitored'
+        and detail.get('current_signal_available', True)
         and detail.get('monitoring_generation',0)==required_generation(state,key)
         and detail.get('app_tracking',False) and (through is None or detail.get('end_date','')>=through))
 
@@ -105,7 +107,7 @@ def decorate_catalog(payload, settings, store):
         definition=registered_strategy_definition(key)
         payload['strategies'].append(dict(strategy_id=key,name=definition.name,lifecycle='monitored',
             app_tracking=False,report_available=False,report_url=None,allocation=[],
-            accounting_currency='USD' if key in {'research_fallback_f3_v1','research_economic_context_ridge_v1','research_m1_14_v1','research_fr25_14_v1','research_fr25_alpha_tilt_5_v1'} else 'CNH'))
+            accounting_currency='USD' if key in {'research_fallback_f3_v1','research_economic_context_ridge_v1','research_m1_14_v1','research_fr25_14_v1','research_fr25_alpha_tilt_5_v1','fr25_lifecycle_conditional_v1','broadtrend_full_pool_v1'} else 'CNH'))
     for row in payload['strategies']:
         key=row['strategy_id'];ready=calculation_ready(row,state,through)
         # Monitoring a new pool does not extend the separately guarded broker
@@ -115,6 +117,8 @@ def decorate_catalog(payload, settings, store):
         row.update(lifecycle='monitored' if key in state['monitored'] else 'archived',
             calculation_status='Current' if ready else 'Catching up' if key in state['monitored'] else 'Paused',
             allocation_ready=ready and allocation_supported,can_restore=replay_supported(key),archive_blocker=archive_blocker(store,key))
+        if key in state['monitored'] and row.get('current_signal_available') is False:
+            row['calculation_status'] = 'Historical only'
         from systematic_trading.storage.artifact_retention import retirement_for_path
         retirement = retirement_for_path(settings.data_dir, row['artifact_path']) if row.get('artifact_path') else None
         if retirement:

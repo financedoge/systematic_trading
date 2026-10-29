@@ -1,0 +1,23 @@
+[
+  {
+    "scenario": "selected_overlay_dynamic_c5d0",
+    "max_nav_difference": 0.0,
+    "status": "succeeded",
+    "bundle_sha256": "e07610143905737c08ec9c9d57b28f27228d5910c4d0b59a3fb4b6c74fd264e9",
+    "receipt_sha256": "277bae715207fc6c5b219fae02cdb7ef9e4d1d5d92f621ca606ee4486663a32b"
+  },
+  {
+    "scenario": "selected_overlay_dynamic_c5d1",
+    "max_nav_difference": 0.0,
+    "status": "succeeded",
+    "bundle_sha256": "aa809808349eae2e4caa88ece24796a4570e5c4a981bcd737252e369c5fd2b3e",
+    "receipt_sha256": "f365e9507cfcaa1eabad6521e3bba77341810b3bb9ee3d0cb4fe83c1e81fcdbc"
+  },
+  {
+    "scenario": "selected_selection_dynamic_c5d0",
+    "max_nav_difference": 0.0,
+    "status": "succeeded",
+    "bundle_sha256": "16fcfa57b34edf2ba6e5c1be88623bb8c4e09be23b52b9803564f0d40a55d5d4",
+    "receipt_sha256": "7f58a4b459568e28acadd4255ed1cc79537bb5574801435551c9ff8a220e288d"
+  }
+]

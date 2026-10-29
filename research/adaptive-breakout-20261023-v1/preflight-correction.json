@@ -1,0 +1,23 @@
+{
+  "reason": "Training serializer reused display rounding. Detected before any evaluation. Re-run same declared grid with full precision; no changes to candidates, objective, or acceptance.",
+  "discarded_incomplete_fit_files": [
+    "AGG.json",
+    "BIL.json",
+    "CORN.json",
+    "CPER.json",
+    "DBA.json",
+    "DBB.json",
+    "DBC.json",
+    "EEM.json",
+    "EFA.json",
+    "EMB.json",
+    "EWA.json",
+    "EWC.json",
+    "EWG.json",
+    "EWH.json",
+    "EWJ.json",
+    "EWT.json",
+    "EWU.json"
+  ],
+  "evaluation_started": false
+}

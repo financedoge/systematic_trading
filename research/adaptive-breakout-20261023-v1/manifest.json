@@ -1,0 +1,24 @@
+{
+  "files": {
+    "index.html": "2df2df46c0c1b61c3dda00beb90450cd87559d5991bf693e7ed26471d9e0d307",
+    "asset-results.json": "fc625ac2938a323fd2ea1d8f213a97004af6e5abbb5a74852ed6dc0ce4a85ced",
+    "selected-components.json": "006c0e960d5bb6a5a17ebf3d90836825f17a8699b82c9406c9ac24c0be37481e",
+    "regime-attribution.json": "ce8db5101d3cf57a8c9d583c93c66271f819611cf27bafd2b9faf0389273faff",
+    "portfolio-results.json": "9d45ccee4d0d46573439930e26ca097d6af3335239f2e73256bfc5a010af15d6",
+    "summary.json": "4701c461c5edd12df8373ecd628cbf3fe30f7f98c579185ec29a7d8806e9c382",
+    "validation.json": "923c29004f627381210e853ce12746e5a46b8c539b60c630d7332a7aac51331f",
+    "protocol.json": "c5bbd6baa4857dc19433ca81aef7aa524fa14ab77a710a0a2e9c1f4faf004818",
+    "fit-manifest.json": "1494447c24872b19ca09c3bdfc3ae68081ce11d470e2e1c8254ce484ae16bb02",
+    "per-etf-component-results.csv": "01409dd87b44e73cf0138bbc64daf8a6402775abde4090665c95b1264710d9bd",
+    "component-tradeoffs.png": "8bd0c3ef3b80dcfa76608d2ac13ef92517fb8786aa0581171a40e9061f2d6903",
+    "range-examples.png": "ba4481f5b8e525fd0548b999cc939b6d7658c6781f91e4eabe4823718cf09242",
+    "range-example-evidence.json": "112b1df2a286089e15ffceafcb78f6ae0945d59925b0c8661c9ebecc8c045a00",
+    "native-checks.json": "de2ad14924522514566b032a6bcecc5cd15ab862c58c70d0bfdd503bb9b08f1b",
+    "baseline-validation.json": "f8ae997dfd710c8a8f6d4c1a5aac0c300bd9b9809938d5068f60cd86dcd9481c"
+  },
+  "report_code": {
+    "scripts/build_adaptive_breakout_report.py": "e52cddd7c26a06f46f670ce38a66149eae7ce8afbdf7ad09c07ccaca0057afa1",
+    "scripts/assets/adaptive-breakout-review.html": "3d0f67b32bf19e95f12c814be55bf42c0055d5eba82022552309341c1578a630",
+    "scripts/validate_adaptive_breakout.py": "b16216a426d492c493f5e1051a97bfc8e80122e477f5baa32056ad3922fa7971"
+  }
+}

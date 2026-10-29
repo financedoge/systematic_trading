@@ -1,0 +1,33 @@
+{
+  "files": {
+    "asset-results.json": "824b230d485f407764e0ae75ad87b1fbc83a857a9848aaf2e0f797d3743624b4",
+    "chart-data.json": "d49d1c348d04d5dca62497b40334c6ee19b0c5b330b492ca3cfe94cc07aec49e",
+    "control-validation.json": "036aad8e1ee68f4f19b629994d7e108b7d1b964415029cc902a88d1823dc7a4e",
+    "corn_short.png": "4e430c7425d401058b5b53a1efb32b3e400d91356c079aeda09d36422a9b217c",
+    "diagnostics.json": "d0809faa37e9b1cf085428e9141c6fb89eb2b2f32c2800c7d100fbc4473b9570",
+    "ewa_short.png": "c0fb021503a75542c17fdb4e1b48f7df2114aed927d53516ab33b3000af5e716",
+    "fit-manifest.json": "b86d2a0f99851b36e644c304504f08062d6bf80b2b16d10d08327201c5de18da",
+    "full-etf-table.csv": "ccba96ee7e4c100a7fa20b57e6ab44e5ef8cf9acd76a29f5a6dd0932ae1113a1",
+    "gld_long.png": "402a7813f6d864fb46a2d35f06a6b3cd71781c570668a092c596254a93f4548a",
+    "gld_short.png": "eadb01098920e76264ecb911df20090b9d5fbfa13c13983a8a2c96967c0434f3",
+    "iat_short.png": "54f204df38d6c7545663ecbcb9dc89ebeb45f5e87ad579f41718c707713658a6",
+    "index.html": "45ea92725e37de2187b5c14454b7dfb964e7ebabacc7ef56d8fd7f5d475948a7",
+    "mchi_long.png": "e2511a27a7f7bd448fb387c3d26a1925d3728e7217c8bb87f4a54ec77c8c79d7",
+    "mchi_short.png": "00b341a09d21f5b9f3d3717cc9380133b02e0a51eb7703e19413b789b098757a",
+    "native-checks.json": "95bb13cee4997f3bf6bed460a3722d2ce359560f26f5e83fdb1913f6a8d3d43a",
+    "portfolio-results.json": "84f0aa17ebdd9193339f3eb86be7ed8a734f5f44207fdd9223646626d9f14f65",
+    "protocol.json": "8e230d2622e0be26436a48c0592d06f22264803521004dde811e268c999bb656",
+    "selected-parameters.json": "58fef391a6ecc3e09aa2a9daa813ef20bb4947361b40b42c933a15289367cced",
+    "slv_long.png": "a3249c92f3e57b79f06aa902e3f0989f90ef19aaee89cf08f50c8df3b5e6a7ec",
+    "soxx_short.png": "84c4fadf306d03275d684480aed56e3c56158fd285b41cf9a5c8645cbfd7a798",
+    "summary.json": "81a7d4ca554e809eae9a8ecaea09787d1c2193e764d8f889eda8e9205a871e6c",
+    "tlt_long.png": "4f528d17575a3c6b2462a88b372a9b8d3cee7226111d28baae0944757f83866a",
+    "tlt_short.png": "a1571ceee98213abb155e5d359eabc3b18ffa347dfda351b995072eddfa62880",
+    "validation.json": "29d72239c78961feda216a86c0a29f233e93331edadf17f8569f76cfd3aef020"
+  },
+  "report_code": {
+    "scripts/build_trend_modes_report.py": "6fe2a251bc2f25715c6d76e620d6956dae0c45f7a32548fa662967b3023fab92",
+    "scripts/assets/trend-modes-review.html": "3bf6d496c76d528a7ea372d13f7fac7b8647c478ff0b82aaf7061a5e276e58c4",
+    "scripts/validate_trend_modes.py": "e83ceab704afba215c59ef5113baad9572a4305daa60276c0540b8551759ebb6"
+  }
+}

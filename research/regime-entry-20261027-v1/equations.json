@@ -1,0 +1,12 @@
+[
+  "x_t=b^{fast}_t/\\sigma_{train},\\quad x_t\\mid z_t=s\\sim N(\\mu_s,v_s),\\quad b\\in\\{0.05,0.10\\}",
+  "-2\\leq\\mu_D\\leq-2b,\\quad\\mu_R=0,\\quad 2b\\leq\\mu_U\\leq2",
+  "0.000025\\leq v_s\\leq4,\\quad v_R\\leq b^2,\\quad0.65\\leq A_{ss}\\leq0.98",
+  "p_t(s)=\\frac{f_s(x_t)\\sum_jp_{t-1}(j)A_{js}}{\\sum_i f_i(x_t)\\sum_jp_{t-1}(j)A_{ji}}",
+  "G_t=\\{p^{slow}_{U,t}<0.7\\}\\ \\mathrm{or}\\ \\{\\mathrm{last\\ closed\\ trade\\ lost}\\}",
+  "G_t:\\quad p_{U,t}\\geq\\max(0.8,e),\\quad b^{fast}_t>0,\\quad c_t\\geq k+\\mathbf{1}_{loss}",
+  "G_t:\\quad\\log(P_t/P_{a-1})\\geq h\\sigma_{train}+2f,\\quad k\\in\\{2,3\\},\\quad h\\in\\{0.5,1\\}",
+  "\\mathrm{after\\ loss}:\\quad\\exists u\\geq t_{exit}:p_{U,u}<0.5\\quad\\mathrm{before\\ new\\ confirmation}",
+  "r^{strategy}_t=\\alpha+\\beta r^{ETF}_t+\\epsilon_t,\\quad\\alpha_{annual}=252\\alpha",
+  "IC_5=\\mathrm{Spearman}\\left(p_{U,t}-p_{D,t},\\ O_{t+6+d}/O_{t+1+d}-1\\right)"
+]

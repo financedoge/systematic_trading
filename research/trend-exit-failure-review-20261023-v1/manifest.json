@@ -1,0 +1,20 @@
+{
+  "files": {
+    "full-etf-table.csv": "9dac2e2d20bf6b48974d54dfcc175fab110cd47dad6d48469b3077e7a85a4f56",
+    "index.html": "12a6c2215608a854446b640e9feecea89f75cb5590de657f38701e0fe7c7d7a0",
+    "protocol.json": "32af26eef95449c417c10fd3c389021728940ece7d8c8782a99964996b90aa83",
+    "qa.json": "1dd7af39cf8f0b373f9661b0dc7f9f961b52b0e3ba08fa1d60256f8b7832ef6f",
+    "results.json": "caec5410e1fa1ad485c63326ef0a83091008c7c89316b57147ec1714b5ebf27b",
+    "slv_long.png": "48da1c7ec3c37267f5001f3e94b1783f1cd47ca192654f112ff04f4aa51aeaeb",
+    "soxx_short.png": "e7d8ad62c8bf0f12ae85d257117fc5f92222028063f519cb8598f4589b15c3f0",
+    "tlt_short.png": "b0fa9f71e14c34285503daac1a775e0957ba6fc6874bae32a27e561f6c8e0180",
+    "validation.json": "3be08545a38af659c15ff455568e731a316c1b9cd398c3a77f0a24802c21c249",
+    "worst-trade.png": "fc149391c1dcbfac2c61adffbe87a12d215c0281d94342964c3a60bd777375ec"
+  },
+  "code": {
+    "scripts/build_trend_exit_failure_report.py": "e290561434e705b2d72ff969ee836b836575cfcbc6efd4116a7770344aec503b",
+    "scripts/assets/trend-exit-failure-review.html": "c1b187e3b0b23cec1ca219e394e927daf07f655b676469819e3044ce7fc50cf5",
+    "tests/test_trend_exit_failure_report.py": "eb101ad004bf340e81948b7bc1d58f1aa187036aec298185829eb17ec759bdb1",
+    "tests/trend_exit_failure_controls.cjs": "079c286b0897c7a3b7e8c39ad950a3c6e07776fd964c3955bbb3146b023c1a15"
+  }
+}

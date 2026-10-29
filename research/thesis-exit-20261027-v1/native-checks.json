@@ -1,0 +1,38 @@
+[
+  {
+    "symbol": "INDA",
+    "delay": 0,
+    "status": "succeeded",
+    "max_native_reference_dollars": 0.0,
+    "fractional_return": -0.07818416534845696,
+    "app_whole_unit_return": -0.07839680000000004,
+    "max_fractional_nav_difference": 0.0005300849616525216,
+    "limitation": "Native validates whole-unit application accounting of frozen single-ETF signals, not the online-learning implementation independently.",
+    "receipt_sha256": "77be52efc46d981d4f5f77e28a7f6c8b4ab05417ff266bdd595a1af1f6fb497f",
+    "bundle_sha256": "9c1fe3eebfacb6e9d49f671e7797b4810eb47a8900e5c3fa2279aedb881f4c6f"
+  },
+  {
+    "symbol": "GLD",
+    "delay": 1,
+    "status": "succeeded",
+    "max_native_reference_dollars": 0.0,
+    "fractional_return": 0.9649386659289023,
+    "app_whole_unit_return": 0.9565883799999999,
+    "max_fractional_nav_difference": 0.010258694940473934,
+    "limitation": "Native validates whole-unit application accounting of frozen single-ETF signals, not the online-learning implementation independently.",
+    "receipt_sha256": "392eed9bf3c3cf641783fdb126d4c39a01b48eed538670bebdd38d3b34b32511",
+    "bundle_sha256": "52be0563f67a7f64909629551031b5fafb473e5382fc97cb662e5ab9f78e23da"
+  },
+  {
+    "symbol": "TLT",
+    "delay": 0,
+    "status": "succeeded",
+    "max_native_reference_dollars": 0.0,
+    "fractional_return": -0.17657343636445688,
+    "app_whole_unit_return": -0.17620696999999996,
+    "max_fractional_nav_difference": 0.0006401121313308611,
+    "limitation": "Native validates whole-unit application accounting of frozen single-ETF signals, not the online-learning implementation independently.",
+    "receipt_sha256": "4ca931b5d05788e45f691f9b00ba7b105cfa815b384e0ffa0149b2d47350064a",
+    "bundle_sha256": "b1e2df709b6d9b2af11869951ff4a95c5800aec674e504002cde79b6a73cc5f8"
+  }
+]

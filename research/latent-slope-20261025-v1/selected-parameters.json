@@ -1,0 +1,6530 @@
+[
+  {
+    "symbol": "AGG",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "AGG",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "AGG",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "AGG",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "AGG",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "AGG",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "AGG",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "AGG",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "BIL",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "BIL",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "BIL",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "BIL",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "BIL",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "BIL",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "BIL",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "BIL",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "CORN",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "CORN",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "CORN",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "CORN",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "CORN",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "CORN",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "CORN",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "CORN",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "CPER",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "CPER",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "CPER",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "CPER",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBA",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBA",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBA",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "DBA",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBA",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBA",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBA",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "DBA",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBB",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBB",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBB",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "DBB",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBB",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBB",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBB",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "DBB",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBC",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBC",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBC",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "DBC",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBC",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBC",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "DBC",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "DBC",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EEM",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EEM",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EEM",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EEM",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EEM",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EEM",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EEM",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EEM",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EFA",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EFA",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EFA",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EFA",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EFA",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EFA",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EFA",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EFA",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EMB",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EMB",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EMB",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EMB",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EMB",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EMB",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EMB",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EMB",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWA",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWA",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWA",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWA",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWA",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWA",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWA",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWA",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWC",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWC",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWC",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWC",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWC",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWC",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWC",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWC",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWG",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWG",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWG",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWG",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWG",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWG",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWG",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWG",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWH",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWH",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWH",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWH",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWH",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWH",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWH",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWH",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWJ",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWJ",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWJ",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWJ",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWJ",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWJ",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWJ",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWJ",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWT",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWT",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWT",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWT",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWT",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWT",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWT",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWT",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWU",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWU",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWU",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWU",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWU",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWU",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWU",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWU",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWY",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWY",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWY",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWY",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWY",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWY",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "EWY",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "EWY",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "GLD",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "GLD",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "GLD",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "GLD",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "GLD",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "GLD",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "GLD",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "GLD",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "HYG",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "HYG",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "HYG",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "HYG",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "HYG",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "HYG",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "HYG",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "HYG",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IAT",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IAT",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IAT",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IAT",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IAT",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IAT",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IAT",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IAT",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IBB",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IBB",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IBB",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IBB",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IBB",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IBB",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IBB",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IBB",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IBND",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IBND",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IBND",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IBND",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IBND",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IBND",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IBND",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IBND",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IEF",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IEF",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IEF",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IEF",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IEF",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IEF",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IEF",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IEF",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IGOV",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IGOV",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IGOV",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IGOV",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IGOV",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IGOV",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IGOV",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IGOV",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "INDA",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "INDA",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "INDA",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "INDA",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "INDA",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "INDA",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "INDA",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "INDA",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "ITA",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "ITA",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "ITA",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "ITA",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "ITA",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "ITA",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "ITA",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "ITA",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IWM",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IWM",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IWM",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IWM",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IWM",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IWM",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "IWM",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "IWM",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "LEMB",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "LEMB",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "LEMB",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "LEMB",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "LEMB",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "LEMB",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "LEMB",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "LEMB",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "LQD",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "LQD",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "LQD",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "LQD",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "LQD",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "LQD",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "LQD",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "LQD",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "MBB",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "MBB",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "MBB",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "MBB",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "MBB",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "MBB",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "MBB",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "MBB",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "MCHI",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "MCHI",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "MCHI",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "MCHI",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "MCHI",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "MCHI",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "MCHI",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "MCHI",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "MDY",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "MDY",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "MDY",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "MDY",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "MDY",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "MDY",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "MDY",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "MDY",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "PPLT",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "PPLT",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "PPLT",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "PPLT",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "PPLT",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "PPLT",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "PPLT",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "PPLT",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SHY",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SHY",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SHY",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "SHY",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "SHY",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SHY",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SHY",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "SHY",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "SLV",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SLV",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SLV",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "SLV",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SLV",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SLV",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SLV",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "SLV",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SOXX",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SOXX",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SOXX",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "SOXX",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "SOXX",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SOXX",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SOXX",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "SOXX",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SPY",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SPY",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SPY",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "SPY",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "SPY",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SPY",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "SPY",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "SPY",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "TIP",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "TIP",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "TIP",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "TIP",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "TIP",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "TIP",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "TIP",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "TIP",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "TLT",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "TLT",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "TLT",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "TLT",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "TLT",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "TLT",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "TLT",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "TLT",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "USO",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "USO",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "USO",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "USO",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "USO",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "USO",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "USO",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "USO",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "VGK",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "VGK",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "VGK",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "VGK",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "VGK",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "VGK",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "VGK",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "VGK",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "WEAT",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "WEAT",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "WEAT",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "WEAT",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "WEAT",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "WEAT",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "WEAT",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "WEAT",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLB",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLB",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLB",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLB",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLB",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLB",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLB",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLB",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLC",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLC",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLC",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLC",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLE",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLE",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLE",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLE",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLE",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLE",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLE",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLE",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLI",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLI",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLI",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLI",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLI",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLI",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLI",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLI",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLK",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLK",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLK",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLK",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLK",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLK",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLK",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLK",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLP",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLP",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLP",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLP",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLP",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLP",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLP",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLP",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLU",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLU",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLU",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLU",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLU",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLU",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLU",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLU",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLV",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLV",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLV",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLV",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLV",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLV",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLV",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLV",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 3.0,
+      "wide": 6.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLY",
+    "era": "late",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.6,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLY",
+    "era": "late",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLY",
+    "era": "late",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLY",
+    "era": "late",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.75,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLY",
+    "era": "early",
+    "variant": "slope",
+    "evidence": true,
+    "parameters": {
+      "family": "slope",
+      "label": "slope",
+      "entry": 0.75,
+      "exit": 0.75,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLY",
+    "era": "early",
+    "variant": "switch",
+    "evidence": true,
+    "parameters": {
+      "family": "switch",
+      "label": "switch",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": false
+    }
+  },
+  {
+    "symbol": "XLY",
+    "era": "early",
+    "variant": "context",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  },
+  {
+    "symbol": "XLY",
+    "era": "early",
+    "variant": "selected",
+    "evidence": true,
+    "parameters": {
+      "family": "context",
+      "label": "context",
+      "entry": 0.6,
+      "exit": 0.6,
+      "tight": 5.0,
+      "wide": 10.0,
+      "reset": 0.5,
+      "context": true
+    }
+  }
+]

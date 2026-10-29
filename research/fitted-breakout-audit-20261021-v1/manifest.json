@@ -1,0 +1,16 @@
+{
+  "asset-results.json": "f72e348e8fef8d4ab31ea4000b1a6d7807a4f46a481c569a9f294fac7b1161f9",
+  "cross-sectional-ic.json": "d74b359ce8a4ff267b6602b4d55cd99d695a0021159ca7fddf0ed82286928470",
+  "fit-manifest.json": "63ce9f9d7d90953f95512ee20fd12632221d20655075b2a7f0bef19560282b95",
+  "gld-claim-audit.json": "ddaaefab264d9caa717ab9d25f5fff946588be1372c52aac1d1663a18f2aa625",
+  "index.html": "a99e13af3e14e94d0e29fb5c555ba959b75df2ada35db7ba742a8450aa340ec0",
+  "information-coefficients.json": "323cd013f9fd7f5a365a351b37a0f833900c040336d35af342afea2bd7bda851",
+  "native-checks.json": "c4d08c55ad585e22acbec6849f199a91ad988ec9fc10e1ec0ff3713b1ebe08e2",
+  "portfolio-results.json": "ef44a777687ac8798b0abaa78f0fd0ee571ac590668c9ecee024b06be8a33872",
+  "protocol.json": "fe4e69be2bc5c5568a5967b1ef09ba34429daf26e5b5eea26b71bf919d8a3d49",
+  "sealed-fits.json": "96983c5e960ef5371972ae947f65c0917c4186fd2a3937651e2a39021a50c222",
+  "signal-evidence.png": "eeba7e14199456aa47a0af99dd18d9d080db0a31ba0b30c653acd2021248ba92",
+  "signal-manifest.json": "4e3b75a10b2a4062c55a83545ca9550c5446d5e9d11f96b87375fa9384b52fd8",
+  "summary.json": "41dc3e0c70a864e980d49ce9c86984ee11f5e68495adf65843742190f62540e7",
+  "validation.json": "96bc80ab2195741abd88c7e8f7ae100c8cedb074313f650220ae79bde4767e47"
+}

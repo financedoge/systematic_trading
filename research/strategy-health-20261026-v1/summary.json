@@ -1,0 +1,24 @@
+{
+  "late": {
+    "cases": 51,
+    "with_three": 37,
+    "with_four": 22,
+    "profitable_cases": 41,
+    "profitable_with_three": 27,
+    "profitable_with_four": 13,
+    "weakest": "WEAT"
+  },
+  "early": {
+    "cases": 49,
+    "with_three": 39,
+    "with_four": 28,
+    "profitable_cases": 32,
+    "profitable_with_three": 24,
+    "profitable_with_four": 17,
+    "weakest": "MCHI"
+  },
+  "iid_fair_outcome_example": {
+    "at_least_3_losses_in14": 0.64794921875,
+    "at_least_4_losses_in14": 0.34869384765625
+  }
+}

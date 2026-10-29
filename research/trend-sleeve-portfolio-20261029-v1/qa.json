@@ -1,0 +1,14 @@
+{
+  "tests": 17,
+  "chart_combinations": 100,
+  "allocation_dates": 171,
+  "native_cases": 3,
+  "tests_status": "passed",
+  "hover_interval_empty_range": "passed",
+  "static_figures_visually_inspected": true,
+  "browser_layout": "Not certified; controls tested offline with Node DOM harness. No browser automation bypass.",
+  "local_links_checked": 13,
+  "combined_focused_tests": 20,
+  "known_test_warning": "NumPy generic timedelta deprecation in an isolated synthetic fixture; frozen test file unchanged.",
+  "scope": "Research artifacts only; no live, broker, approval or recurring tracking changes."
+}

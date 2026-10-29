@@ -1,0 +1,19 @@
+{
+  "identity": "etf-breakout-failure-review-20261023-v1",
+  "created_utc": "2026-10-23T13:15:57.323225+00:00",
+  "question": "Show individually fitted short/long ETF results and diagnose weak cases without sacrificing stronger cases.",
+  "fit_identity": "Reuse verified sealed independent per-ETF refits from October 21; no transfer of GLD parameters, no new test-period fitting. 241 candidates / ETF / domain / cutoff, six-friction training-finalist selection.",
+  "source_protocol_sha256": "fe4e69be2bc5c5568a5967b1ef09ba34429daf26e5b5eea26b71bf919d8a3d49",
+  "published_batch": "5688bb093a7481231f05b8ba4d84e3e26e016231ffeb42576b4e7aca12cf99bd",
+  "source_results_sha256": "f72e348e8fef8d4ab31ea4000b1a6d7807a4f46a481c569a9f294fac7b1161f9",
+  "sealed_fits_sha256": "96983c5e960ef5371972ae947f65c0917c4186fd2a3937651e2a39021a50c222",
+  "source_code_hashes": {
+    "scripts\\build_etf_breakout_failure_report.py": "dd227d7f0f06bd5cb1502cc761c67cd2661f03bfd74a5d81563b08bf6d5b892f",
+    "scripts\\assets\\etf-breakout-failure-review.html": "949e5704ba5c52a9b9926f201e15a434396fbee8799947b28c0bc7cf7fbc5531"
+  },
+  "evaluation": "Primary 2023-01-03..2026-10-16 after fitting through2022; earlier independent 2020-01-02..2022-12-30 after fitting through2019. 5bp/side and next-open execution. Retain all cost/delay sensitivities. Both periods previously inspected.",
+  "metrics": "Cumulative from anchored NAV, CAGR252, Sharpe riskfree0. Standard Calmar=CAGR/abs(maxDD), unavailable for zero drawdown; retain legacy 3% denominator floor only as optimizer/archived metric. State IC21 vs next-open-to-close ETF return above BIL; approximate overlapping-label HAC p and Holm family adjustment.",
+  "diagnosis": "Fixed sealed parameters. Replay every later ETF/domain; exact overnight/intraday captured and uninvested log-return decomposition with entry/exit fees. Trade stops reconstructed independently. Report closing states, trades, training comparison, yearly metrics and all friction cases. Distinguish absolute loss from opportunity cost and sparse evidence.",
+  "selection": "Descriptive weak cases: six lowest later CAGRs plus four worst CAGR differences vs own buy-hold. Stronger cases: positive-return positive Sharpe differences. These post-result labels must not become asset gates or optimization targets.",
+  "improvements": "Propose testable changes only; no new hyperparameter selection or variant winner based on the inspected evaluation sample. Future test must retain full pool, train-only selection, fixed-monthly/dynamic controls, net outcomes and good-case return/drawdown guardrails."
+}

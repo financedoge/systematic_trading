@@ -1,0 +1,2724 @@
+{
+  "CPER": {
+    "first": "2025-03-04",
+    "last": "2025-09-04",
+    "actual_last_session": "2025-09-04",
+    "arms": {
+      "baseline": {
+        "window_return": -0.15448676940322847,
+        "trades": [
+          {
+            "entry_index": 1641,
+            "entry": 29.530000686645508,
+            "entry_signal": 1640,
+            "entry_policy": 0,
+            "exit_policy": 0,
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1661,
+            "exit_price": 28.170000076293945,
+            "exit_signal": 1660,
+            "exit_reason": "protection",
+            "context": "up",
+            "net_return": -0.047008347449668975,
+            "entry_date": "2025-03-07",
+            "exit_date": "2025-04-04"
+          },
+          {
+            "entry_index": 1671,
+            "entry": 30.020000457763672,
+            "entry_signal": 1670,
+            "entry_policy": 0,
+            "exit_policy": 0,
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1681,
+            "exit_price": 29.5,
+            "exit_signal": 1680,
+            "exit_reason": "fast_down",
+            "context": "up",
+            "net_return": -0.01830398756682483,
+            "entry_date": "2025-04-21",
+            "exit_date": "2025-05-05"
+          },
+          {
+            "entry_index": 1696,
+            "entry": 30.0,
+            "entry_signal": 1695,
+            "entry_policy": 0,
+            "exit_policy": 0,
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1741,
+            "exit_price": 27.139999389648438,
+            "exit_signal": 1740,
+            "exit_reason": "protection",
+            "context": "up",
+            "net_return": -0.09623756821743745,
+            "entry_date": "2025-05-27",
+            "exit_date": "2025-07-31"
+          }
+        ]
+      },
+      "stop": {
+        "window_return": 0.1000443595635978,
+        "trades": [
+          {
+            "entry_index": 1641,
+            "entry": 29.530000686645508,
+            "entry_signal": 1640,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1660,
+            "exit_price": 30.484750000000002,
+            "exit_signal": 1660,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": 0.03129968766069524,
+            "entry_date": "2025-03-07",
+            "exit_date": "2025-04-03"
+          },
+          {
+            "entry_index": 1671,
+            "entry": 30.020000457763672,
+            "entry_signal": 1670,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1678,
+            "exit_price": 28.369975035626453,
+            "exit_signal": 1678,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.05590876727785721,
+            "entry_date": "2025-04-21",
+            "exit_date": "2025-04-30"
+          },
+          {
+            "entry_index": 1696,
+            "entry": 30.0,
+            "entry_signal": 1695,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1738,
+            "exit_price": 33.92867478828588,
+            "exit_signal": 1738,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": 0.1298254356452353,
+            "entry_date": "2025-05-27",
+            "exit_date": "2025-07-28"
+          }
+        ]
+      },
+      "review": {
+        "window_return": 0.11806496349874762,
+        "trades": [
+          {
+            "entry_index": 1641,
+            "entry": 29.530000686645508,
+            "entry_signal": 1640,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1660,
+            "exit_price": 30.484750000000002,
+            "exit_signal": 1660,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": 0.03129968766069524,
+            "entry_date": "2025-03-07",
+            "exit_date": "2025-04-03"
+          },
+          {
+            "entry_index": 1671,
+            "entry": 30.020000457763672,
+            "entry_signal": 1670,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1678,
+            "exit_price": 28.369975035626453,
+            "exit_signal": 1678,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.05590876727785721,
+            "entry_date": "2025-04-21",
+            "exit_date": "2025-04-30"
+          },
+          {
+            "entry_index": 1696,
+            "entry": 30.0,
+            "entry_signal": 1695,
+            "entry_policy": 1,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.055608763921334646,
+            "exit_index": 1738,
+            "exit_price": 34.48448438367962,
+            "exit_signal": 1738,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 1,
+            "net_return": 0.14833390443071082,
+            "entry_date": "2025-05-27",
+            "exit_date": "2025-07-28"
+          }
+        ]
+      },
+      "recovery_fixed": {
+        "window_return": 0.1000443595635978,
+        "trades": [
+          {
+            "entry_index": 1641,
+            "entry": 29.530000686645508,
+            "entry_signal": 1640,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1660,
+            "exit_price": 30.484750000000002,
+            "exit_signal": 1660,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": 0.03129968766069524,
+            "entry_date": "2025-03-07",
+            "exit_date": "2025-04-03"
+          },
+          {
+            "entry_index": 1671,
+            "entry": 30.020000457763672,
+            "entry_signal": 1670,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1678,
+            "exit_price": 28.369975035626453,
+            "exit_signal": 1678,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.05590876727785721,
+            "entry_date": "2025-04-21",
+            "exit_date": "2025-04-30"
+          },
+          {
+            "entry_index": 1696,
+            "entry": 30.0,
+            "entry_signal": 1695,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1738,
+            "exit_price": 33.92867478828588,
+            "exit_signal": 1738,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": 0.1298254356452353,
+            "entry_date": "2025-05-27",
+            "exit_date": "2025-07-28"
+          }
+        ]
+      },
+      "learning_no_reset": {
+        "window_return": 0.1000443595635978,
+        "trades": [
+          {
+            "entry_index": 1641,
+            "entry": 29.530000686645508,
+            "entry_signal": 1640,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1660,
+            "exit_price": 30.484750000000002,
+            "exit_signal": 1660,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": 0.03129968766069524,
+            "entry_date": "2025-03-07",
+            "exit_date": "2025-04-03"
+          },
+          {
+            "entry_index": 1671,
+            "entry": 30.020000457763672,
+            "entry_signal": 1670,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1678,
+            "exit_price": 28.369975035626453,
+            "exit_signal": 1678,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.05590876727785721,
+            "entry_date": "2025-04-21",
+            "exit_date": "2025-04-30"
+          },
+          {
+            "entry_index": 1696,
+            "entry": 30.0,
+            "entry_signal": 1695,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1738,
+            "exit_price": 33.92867478828588,
+            "exit_signal": 1738,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": 0.1298254356452353,
+            "entry_date": "2025-05-27",
+            "exit_date": "2025-07-28"
+          }
+        ]
+      },
+      "conditional_touch_close": {
+        "window_return": 0.11761430537002937,
+        "trades": [
+          {
+            "entry_index": 1641,
+            "entry": 29.530000686645508,
+            "entry_signal": 1640,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1660,
+            "exit_price": 30.054964694976807,
+            "exit_signal": 1660,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": 0.01676004240096418,
+            "entry_date": "2025-03-07",
+            "exit_date": "2025-04-03"
+          },
+          {
+            "entry_index": 1671,
+            "entry": 30.020000457763672,
+            "entry_signal": 1670,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1678,
+            "exit_price": 28.52573091506958,
+            "exit_signal": 1678,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.05072554945540486,
+            "entry_date": "2025-04-21",
+            "exit_date": "2025-04-30"
+          },
+          {
+            "entry_index": 1696,
+            "entry": 30.0,
+            "entry_signal": 1695,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1738,
+            "exit_price": 34.77260591506958,
+            "exit_signal": 1738,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": 0.1579283562256224,
+            "entry_date": "2025-05-27",
+            "exit_date": "2025-07-28"
+          }
+        ]
+      },
+      "stop_slip20": {
+        "window_return": 0.09509911261965787,
+        "trades": [
+          {
+            "entry_index": 1641,
+            "entry": 29.530000686645508,
+            "entry_signal": 1640,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1660,
+            "exit_price": 30.439,
+            "exit_signal": 1660,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": 0.029751964267507702,
+            "entry_date": "2025-03-07",
+            "exit_date": "2025-04-03"
+          },
+          {
+            "entry_index": 1671,
+            "entry": 30.020000457763672,
+            "entry_signal": 1670,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1678,
+            "exit_price": 28.327398784947672,
+            "exit_signal": 1678,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.057325612549576244,
+            "entry_date": "2025-04-21",
+            "exit_date": "2025-04-30"
+          },
+          {
+            "entry_index": 1696,
+            "entry": 30.0,
+            "entry_signal": 1695,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1738,
+            "exit_price": 33.87775631686774,
+            "exit_signal": 1738,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": 0.12812984969879437,
+            "entry_date": "2025-05-27",
+            "exit_date": "2025-07-28"
+          }
+        ]
+      },
+      "stop_slip50": {
+        "window_return": 0.08525312587619238,
+        "trades": [
+          {
+            "entry_index": 1641,
+            "entry": 29.530000686645508,
+            "entry_signal": 1640,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1660,
+            "exit_price": 30.3475,
+            "exit_signal": 1660,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": 0.02665651748113218,
+            "entry_date": "2025-03-07",
+            "exit_date": "2025-04-03"
+          },
+          {
+            "entry_index": 1671,
+            "entry": 30.020000457763672,
+            "entry_signal": 1670,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1678,
+            "exit_price": 28.242246283590116,
+            "exit_signal": 1678,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.060159303093014316,
+            "entry_date": "2025-04-21",
+            "exit_date": "2025-04-30"
+          },
+          {
+            "entry_index": 1696,
+            "entry": 30.0,
+            "entry_signal": 1695,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1738,
+            "exit_price": 33.77591937403147,
+            "exit_signal": 1738,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": 0.1247386778059123,
+            "entry_date": "2025-05-27",
+            "exit_date": "2025-07-28"
+          }
+        ]
+      },
+      "conservative_stop": {
+        "window_return": 0.08453552643837647,
+        "trades": [
+          {
+            "entry_index": 1641,
+            "entry": 29.530000686645508,
+            "entry_signal": 1640,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1660,
+            "exit_price": 30.054964694976807,
+            "exit_signal": 1660,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": 0.01676004240096418,
+            "entry_date": "2025-03-07",
+            "exit_date": "2025-04-03"
+          },
+          {
+            "entry_index": 1671,
+            "entry": 30.020000457763672,
+            "entry_signal": 1670,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1678,
+            "exit_price": 28.369975035626453,
+            "exit_signal": 1678,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.05590876727785721,
+            "entry_date": "2025-04-21",
+            "exit_date": "2025-04-30"
+          },
+          {
+            "entry_index": 1696,
+            "entry": 30.0,
+            "entry_signal": 1695,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07414501856177953,
+            "exit_index": 1738,
+            "exit_price": 33.92867478828588,
+            "exit_signal": 1738,
+            "exit_reason": "intraday_protection",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": 0.1298254356452353,
+            "entry_date": "2025-05-27",
+            "exit_date": "2025-07-28"
+          }
+        ]
+      }
+    },
+    "fixed_entry_first_stop": [
+      {
+        "entry": "2025-03-07",
+        "baseline_exit": "2025-04-04",
+        "baseline_return": -0.047008347449668975,
+        "first_touch": "2025-04-03",
+        "open": 30.5,
+        "high": 30.549999237060547,
+        "low": 30.040000915527344,
+        "close": 30.06999969482422,
+        "stop": 30.560497550959305,
+        "standing_fill": 30.484750000000002,
+        "standing_return": 0.03129968766069524,
+        "conditional_close_return": 0.01676004240096418
+      },
+      {
+        "entry": "2025-04-21",
+        "baseline_exit": "2025-05-05",
+        "baseline_return": -0.01830398756682483,
+        "first_touch": "2025-04-30",
+        "open": 28.6200008392334,
+        "high": 28.8700008392334,
+        "low": 28.270000457763672,
+        "close": 28.540000915527344,
+        "stop": 28.384167119186046,
+        "standing_fill": 28.369975035626453,
+        "standing_return": -0.05590876727785721,
+        "conditional_close_return": -0.05072554945540486
+      },
+      {
+        "entry": "2025-05-27",
+        "baseline_exit": "2025-07-31",
+        "baseline_return": -0.09623756821743745,
+        "first_touch": "2025-07-28",
+        "open": 35.54999923706055,
+        "high": 35.65999984741211,
+        "low": 33.709999084472656,
+        "close": 34.790000915527344,
+        "stop": 33.945647612091925,
+        "standing_fill": 33.92867478828588,
+        "standing_return": 0.1298254356452353,
+        "conditional_close_return": 0.1579283562256224
+      }
+    ],
+    "stop_review_windows": [
+      {
+        "exit_date": "2025-04-03",
+        "exit_fill": 30.484750000000002,
+        "upper": 31.095304331939058,
+        "observations": [
+          {
+            "day": "2025-04-04",
+            "close": 27.520000457763672,
+            "up": 1.2551192706209551e-09,
+            "down": 0.9999999987448808,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-04-07",
+            "close": 26.68000030517578,
+            "up": 5.442486103422193e-13,
+            "down": 0.9999999999994558,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-04-08",
+            "close": 25.719999313354492,
+            "up": 2.9207242805496434e-15,
+            "down": 0.9999999999999971,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-04-09",
+            "close": 27.739999771118164,
+            "up": 2.3258612742098403e-13,
+            "down": 0.9999999999997674,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-04-10",
+            "close": 27.489999771118164,
+            "up": 1.1408364274886569e-11,
+            "down": 0.9999999999885916,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-04-11",
+            "close": 28.510000228881836,
+            "up": 8.716752398961116e-09,
+            "down": 0.9999999912832471,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-04-14",
+            "close": 29.399999618530273,
+            "up": 1.4781052507921383e-05,
+            "down": 0.9963825761700654,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-04-15",
+            "close": 29.010000228881836,
+            "up": 0.000496591234819017,
+            "down": 0.4292503478436134,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-04-16",
+            "close": 29.31999969482422,
+            "up": 0.2695354988200892,
+            "down": 0.10060238889304315,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": true,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-04-17",
+            "close": 29.469999313354492,
+            "up": 0.9972590843637549,
+            "down": 0.0015248951893050494,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          }
+        ]
+      },
+      {
+        "exit_date": "2025-04-30",
+        "exit_fill": 28.369975035626453,
+        "upper": 29.197804831507895,
+        "observations": [
+          {
+            "day": "2025-05-01",
+            "close": 28.81999969482422,
+            "up": 0.1206107873169743,
+            "down": 0.31718163127629373,
+            "conditions": {
+              "near_exit": true,
+              "up": false,
+              "down": true,
+              "slope": false,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-05-02",
+            "close": 29.100000381469727,
+            "up": 0.00507967889119164,
+            "down": 0.9748133175353138,
+            "conditions": {
+              "near_exit": true,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-05-05",
+            "close": 29.239999771118164,
+            "up": 9.786494351805174e-05,
+            "down": 0.9973644466946567,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-05-06",
+            "close": 29.65999984741211,
+            "up": 6.654015331778612e-05,
+            "down": 0.9507884035109173,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-05-07",
+            "close": 28.739999771118164,
+            "up": 8.693753011225863e-05,
+            "down": 0.9931275344486347,
+            "conditions": {
+              "near_exit": true,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-05-08",
+            "close": 28.579999923706055,
+            "up": 1.2177148281344462e-05,
+            "down": 0.999301375277098,
+            "conditions": {
+              "near_exit": true,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-05-09",
+            "close": 28.940000534057617,
+            "up": 1.745336767652176e-05,
+            "down": 0.9953996872547036,
+            "conditions": {
+              "near_exit": true,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-05-12",
+            "close": 28.920000076293945,
+            "up": 4.822360788690348e-05,
+            "down": 0.9758916865217201,
+            "conditions": {
+              "near_exit": true,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": false,
+              "location": true,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-05-13",
+            "close": 29.40999984741211,
+            "up": 0.0005025941666121077,
+            "down": 0.633112495403611,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-05-14",
+            "close": 29.0,
+            "up": 0.0037930191152981034,
+            "down": 0.22042268604965312,
+            "conditions": {
+              "near_exit": true,
+              "up": false,
+              "down": true,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          }
+        ]
+      },
+      {
+        "exit_date": "2025-07-28",
+        "exit_fill": 33.92867478828588,
+        "upper": 34.710841049744985,
+        "observations": [
+          {
+            "day": "2025-07-29",
+            "close": 35.0,
+            "up": 0.5000320287850232,
+            "down": 0.0009958420697833354,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": true,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-07-30",
+            "close": 28.239999771118164,
+            "up": 1.5922821901556533e-06,
+            "down": 0.9999984077178098,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-07-31",
+            "close": 27.450000762939453,
+            "up": 6.480912559299944e-16,
+            "down": 0.9999999999999993,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": false,
+              "location": true,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-08-01",
+            "close": 27.56999969482422,
+            "up": 4.717273735002873e-18,
+            "down": 1.0,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": true,
+              "location": true,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-08-04",
+            "close": 27.719999313354492,
+            "up": 4.238547603825793e-18,
+            "down": 1.0,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": true,
+              "location": true,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-08-05",
+            "close": 27.209999084472656,
+            "up": 1.40485520642385e-17,
+            "down": 1.0,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-08-06",
+            "close": 27.459999084472656,
+            "up": 7.568828000209287e-16,
+            "down": 0.9999999999999992,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-08-07",
+            "close": 27.479999542236328,
+            "up": 9.428695767962199e-14,
+            "down": 0.9999999999999056,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-08-08",
+            "close": 27.770000457763672,
+            "up": 2.8105925526986387e-11,
+            "down": 0.9999999999718941,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2025-08-11",
+            "close": 27.690000534057617,
+            "up": 3.445066894005405e-09,
+            "down": 0.9999999965549331,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": false,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          }
+        ]
+      }
+    ],
+    "counterfactual_limit": "Fixed baseline entry/stop path until first touch, holding one trade constant. Not compounded portfolio performance; same-close hypothetical execution unverified."
+  },
+  "IWM": {
+    "first": "2024-07-01",
+    "last": "2024-12-01",
+    "actual_last_session": "2024-11-29",
+    "arms": {
+      "baseline": {
+        "window_return": -0.14036077380331746,
+        "trades": [
+          {
+            "entry_index": 6069,
+            "entry": 209.63031529270995,
+            "entry_signal": 6068,
+            "entry_policy": 0,
+            "exit_policy": 0,
+            "initial_risk_fraction": 0.07675246416293649,
+            "exit_index": 6084,
+            "exit_price": 193.14606453131336,
+            "exit_signal": 6083,
+            "exit_reason": "fast_down",
+            "context": "uncertain",
+            "net_return": -0.0795557659581404,
+            "entry_date": "2024-07-15",
+            "exit_date": "2024-08-05"
+          },
+          {
+            "entry_index": 6095,
+            "entry": 209.7279134082756,
+            "entry_signal": 6094,
+            "entry_policy": 0,
+            "exit_policy": 0,
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6108,
+            "exit_price": 203.1498340117183,
+            "exit_signal": 6107,
+            "exit_reason": "fast_down",
+            "context": "up",
+            "net_return": -0.032332976551448955,
+            "entry_date": "2024-08-20",
+            "exit_date": "2024-09-09"
+          },
+          {
+            "entry_index": 6116,
+            "entry": 219.26325580068743,
+            "entry_signal": 6115,
+            "entry_policy": 0,
+            "exit_policy": 0,
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6129,
+            "exit_price": 213.1269255696744,
+            "exit_signal": 6128,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "net_return": -0.02895765924476945,
+            "entry_date": "2024-09-19",
+            "exit_date": "2024-10-08"
+          },
+          {
+            "entry_index": 6136,
+            "entry": 222.214885192381,
+            "entry_signal": 6135,
+            "entry_policy": 0,
+            "exit_policy": 0,
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6146,
+            "exit_price": 216.642625376492,
+            "exit_signal": 6145,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "net_return": -0.026050433881037116,
+            "entry_date": "2024-10-17",
+            "exit_date": "2024-10-31"
+          },
+          {
+            "entry_index": 6151,
+            "entry": 231.98837931048467,
+            "entry_signal": 6150,
+            "entry_policy": 0,
+            "exit_policy": 0,
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6177,
+            "exit_price": 228.09074004223956,
+            "exit_signal": 6176,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "net_return": -0.01778371844388771,
+            "entry_date": "2024-11-07",
+            "exit_date": "2024-12-16"
+          }
+        ]
+      },
+      "stop": {
+        "window_return": -0.09644365880690353,
+        "trades": [
+          {
+            "entry_index": 6069,
+            "entry": 209.63031529270995,
+            "entry_signal": 6068,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07675246416293649,
+            "exit_index": 6083,
+            "exit_price": 203.01348061544832,
+            "exit_signal": 6083,
+            "exit_reason": "intraday_protection",
+            "context": "uncertain",
+            "exit_policy": 0,
+            "net_return": -0.03253225418443051,
+            "entry_date": "2024-07-15",
+            "exit_date": "2024-08-02"
+          },
+          {
+            "entry_index": 6095,
+            "entry": 209.7279134082756,
+            "entry_signal": 6094,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6108,
+            "exit_price": 203.1498340117183,
+            "exit_signal": 6107,
+            "exit_reason": "fast_down",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.032332976551448955,
+            "entry_date": "2024-08-20",
+            "exit_date": "2024-09-09"
+          },
+          {
+            "entry_index": 6116,
+            "entry": 219.26325580068743,
+            "entry_signal": 6115,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6129,
+            "exit_price": 213.1269255696744,
+            "exit_signal": 6128,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.02895765924476945,
+            "entry_date": "2024-09-19",
+            "exit_date": "2024-10-08"
+          },
+          {
+            "entry_index": 6136,
+            "entry": 222.214885192381,
+            "entry_signal": 6135,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6146,
+            "exit_price": 216.642625376492,
+            "exit_signal": 6145,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.026050433881037116,
+            "entry_date": "2024-10-17",
+            "exit_date": "2024-10-31"
+          },
+          {
+            "entry_index": 6151,
+            "entry": 231.98837931048467,
+            "entry_signal": 6150,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6177,
+            "exit_price": 228.09074004223956,
+            "exit_signal": 6176,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.01778371844388771,
+            "entry_date": "2024-11-07",
+            "exit_date": "2024-12-16"
+          }
+        ]
+      },
+      "review": {
+        "window_return": -0.11602251751574988,
+        "trades": [
+          {
+            "entry_index": 6069,
+            "entry": 209.63031529270995,
+            "entry_signal": 6068,
+            "entry_policy": 2,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.0959405802036706,
+            "exit_index": 6084,
+            "exit_price": 193.04949149904772,
+            "exit_signal": 6084,
+            "exit_reason": "intraday_protection",
+            "context": "uncertain",
+            "exit_policy": 2,
+            "net_return": -0.0800159880751613,
+            "entry_date": "2024-07-15",
+            "exit_date": "2024-08-05"
+          },
+          {
+            "entry_index": 6095,
+            "entry": 209.7279134082756,
+            "entry_signal": 6094,
+            "entry_policy": 1,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.11512869624440474,
+            "exit_index": 6108,
+            "exit_price": 203.1498340117183,
+            "exit_signal": 6107,
+            "exit_reason": "fast_down",
+            "context": "up",
+            "exit_policy": 1,
+            "net_return": -0.032332976551448955,
+            "entry_date": "2024-08-20",
+            "exit_date": "2024-09-09"
+          },
+          {
+            "entry_index": 6115,
+            "entry": 213.96365888662325,
+            "entry_signal": 6114,
+            "entry_policy": 1,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.11512869624440474,
+            "exit_index": 6128,
+            "exit_price": 214.116030766764,
+            "exit_signal": 6127,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 1,
+            "net_return": -0.0002880729673142568,
+            "entry_date": "2024-09-18",
+            "exit_date": "2024-10-07"
+          },
+          {
+            "entry_index": 6136,
+            "entry": 222.214885192381,
+            "entry_signal": 6135,
+            "entry_policy": 1,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.11512869624440474,
+            "exit_index": 6145,
+            "exit_price": 216.49575387071076,
+            "exit_signal": 6144,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 1,
+            "net_return": -0.026710716865894213,
+            "entry_date": "2024-10-17",
+            "exit_date": "2024-10-30"
+          },
+          {
+            "entry_index": 6151,
+            "entry": 231.98837931048467,
+            "entry_signal": 6150,
+            "entry_policy": 1,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.11512869624440474,
+            "exit_index": 6176,
+            "exit_price": 229.52052560368162,
+            "exit_signal": 6175,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 1,
+            "net_return": -0.011626701033526587,
+            "entry_date": "2024-11-07",
+            "exit_date": "2024-12-13"
+          }
+        ]
+      },
+      "recovery_fixed": {
+        "window_return": -0.09644365880690309,
+        "trades": [
+          {
+            "entry_index": 6069,
+            "entry": 209.63031529270995,
+            "entry_signal": 6068,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07675246416293649,
+            "exit_index": 6083,
+            "exit_price": 203.01348061544832,
+            "exit_signal": 6083,
+            "exit_reason": "intraday_protection",
+            "context": "uncertain",
+            "exit_policy": 0,
+            "net_return": -0.03253225418443051,
+            "entry_date": "2024-07-15",
+            "exit_date": "2024-08-02"
+          },
+          {
+            "entry_index": 6095,
+            "entry": 209.7279134082756,
+            "entry_signal": 6094,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6108,
+            "exit_price": 203.1498340117183,
+            "exit_signal": 6107,
+            "exit_reason": "fast_down",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.032332976551448955,
+            "entry_date": "2024-08-20",
+            "exit_date": "2024-09-09"
+          },
+          {
+            "entry_index": 6116,
+            "entry": 219.26325580068743,
+            "entry_signal": 6115,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6129,
+            "exit_price": 213.1269255696744,
+            "exit_signal": 6128,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.02895765924476945,
+            "entry_date": "2024-09-19",
+            "exit_date": "2024-10-08"
+          },
+          {
+            "entry_index": 6136,
+            "entry": 222.214885192381,
+            "entry_signal": 6135,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6146,
+            "exit_price": 216.642625376492,
+            "exit_signal": 6145,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.026050433881037116,
+            "entry_date": "2024-10-17",
+            "exit_date": "2024-10-31"
+          },
+          {
+            "entry_index": 6151,
+            "entry": 231.98837931048467,
+            "entry_signal": 6150,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6177,
+            "exit_price": 228.09074004223956,
+            "exit_signal": 6176,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.01778371844388771,
+            "entry_date": "2024-11-07",
+            "exit_date": "2024-12-16"
+          }
+        ]
+      },
+      "learning_no_reset": {
+        "window_return": -0.14079059341641564,
+        "trades": [
+          {
+            "entry_index": 6069,
+            "entry": 209.63031529270995,
+            "entry_signal": 6068,
+            "entry_policy": 2,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.0959405802036706,
+            "exit_index": 6084,
+            "exit_price": 193.04949149904772,
+            "exit_signal": 6084,
+            "exit_reason": "intraday_protection",
+            "context": "uncertain",
+            "exit_policy": 2,
+            "net_return": -0.0800159880751613,
+            "entry_date": "2024-07-15",
+            "exit_date": "2024-08-05"
+          },
+          {
+            "entry_index": 6095,
+            "entry": 209.7279134082756,
+            "entry_signal": 6094,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6108,
+            "exit_price": 203.1498340117183,
+            "exit_signal": 6107,
+            "exit_reason": "fast_down",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.032332976551448955,
+            "entry_date": "2024-08-20",
+            "exit_date": "2024-09-09"
+          },
+          {
+            "entry_index": 6116,
+            "entry": 219.26325580068743,
+            "entry_signal": 6115,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6129,
+            "exit_price": 213.1269255696744,
+            "exit_signal": 6128,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.02895765924476945,
+            "entry_date": "2024-09-19",
+            "exit_date": "2024-10-08"
+          },
+          {
+            "entry_index": 6136,
+            "entry": 222.214885192381,
+            "entry_signal": 6135,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6146,
+            "exit_price": 216.642625376492,
+            "exit_signal": 6145,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.026050433881037116,
+            "entry_date": "2024-10-17",
+            "exit_date": "2024-10-31"
+          },
+          {
+            "entry_index": 6151,
+            "entry": 231.98837931048467,
+            "entry_signal": 6150,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6177,
+            "exit_price": 228.09074004223956,
+            "exit_signal": 6176,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.01778371844388771,
+            "entry_date": "2024-11-07",
+            "exit_date": "2024-12-16"
+          }
+        ]
+      },
+      "conditional_touch_close": {
+        "window_return": -0.09294588115790914,
+        "trades": [
+          {
+            "entry_index": 6069,
+            "entry": 209.63031529270995,
+            "entry_signal": 6068,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07675246416293649,
+            "exit_index": 6083,
+            "exit_price": 203.79937075042724,
+            "exit_signal": 6083,
+            "exit_reason": "intraday_protection",
+            "context": "uncertain",
+            "exit_policy": 0,
+            "net_return": -0.02878706763306571,
+            "entry_date": "2024-07-15",
+            "exit_date": "2024-08-02"
+          },
+          {
+            "entry_index": 6095,
+            "entry": 209.7279134082756,
+            "entry_signal": 6094,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6108,
+            "exit_price": 203.1498340117183,
+            "exit_signal": 6107,
+            "exit_reason": "fast_down",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.032332976551448955,
+            "entry_date": "2024-08-20",
+            "exit_date": "2024-09-09"
+          },
+          {
+            "entry_index": 6116,
+            "entry": 219.26325580068743,
+            "entry_signal": 6115,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6129,
+            "exit_price": 213.1269255696744,
+            "exit_signal": 6128,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.02895765924476945,
+            "entry_date": "2024-09-19",
+            "exit_date": "2024-10-08"
+          },
+          {
+            "entry_index": 6136,
+            "entry": 222.214885192381,
+            "entry_signal": 6135,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6146,
+            "exit_price": 216.642625376492,
+            "exit_signal": 6145,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.026050433881037116,
+            "entry_date": "2024-10-17",
+            "exit_date": "2024-10-31"
+          },
+          {
+            "entry_index": 6151,
+            "entry": 231.98837931048467,
+            "entry_signal": 6150,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6177,
+            "exit_price": 228.09074004223956,
+            "exit_signal": 6176,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.01778371844388771,
+            "entry_date": "2024-11-07",
+            "exit_date": "2024-12-16"
+          }
+        ]
+      },
+      "stop_slip20": {
+        "window_return": -0.09779967132495204,
+        "trades": [
+          {
+            "entry_index": 6069,
+            "entry": 209.63031529270995,
+            "entry_signal": 6068,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07675246416293649,
+            "exit_index": 6083,
+            "exit_price": 202.70880805824655,
+            "exit_signal": 6083,
+            "exit_reason": "intraday_protection",
+            "context": "uncertain",
+            "exit_policy": 0,
+            "net_return": -0.033984181766945065,
+            "entry_date": "2024-07-15",
+            "exit_date": "2024-08-02"
+          },
+          {
+            "entry_index": 6095,
+            "entry": 209.7279134082756,
+            "entry_signal": 6094,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6108,
+            "exit_price": 203.1498340117183,
+            "exit_signal": 6107,
+            "exit_reason": "fast_down",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.032332976551448955,
+            "entry_date": "2024-08-20",
+            "exit_date": "2024-09-09"
+          },
+          {
+            "entry_index": 6116,
+            "entry": 219.26325580068743,
+            "entry_signal": 6115,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6129,
+            "exit_price": 213.1269255696744,
+            "exit_signal": 6128,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.02895765924476945,
+            "entry_date": "2024-09-19",
+            "exit_date": "2024-10-08"
+          },
+          {
+            "entry_index": 6136,
+            "entry": 222.214885192381,
+            "entry_signal": 6135,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6146,
+            "exit_price": 216.642625376492,
+            "exit_signal": 6145,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.026050433881037116,
+            "entry_date": "2024-10-17",
+            "exit_date": "2024-10-31"
+          },
+          {
+            "entry_index": 6151,
+            "entry": 231.98837931048467,
+            "entry_signal": 6150,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6177,
+            "exit_price": 228.09074004223956,
+            "exit_signal": 6176,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.01778371844388771,
+            "entry_date": "2024-11-07",
+            "exit_date": "2024-12-16"
+          }
+        ]
+      },
+      "stop_slip50": {
+        "window_return": -0.10051169636104973,
+        "trades": [
+          {
+            "entry_index": 6069,
+            "entry": 209.63031529270995,
+            "entry_signal": 6068,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07675246416293649,
+            "exit_index": 6083,
+            "exit_price": 202.09946294384298,
+            "exit_signal": 6083,
+            "exit_reason": "intraday_protection",
+            "context": "uncertain",
+            "exit_policy": 0,
+            "net_return": -0.03688803693197451,
+            "entry_date": "2024-07-15",
+            "exit_date": "2024-08-02"
+          },
+          {
+            "entry_index": 6095,
+            "entry": 209.7279134082756,
+            "entry_signal": 6094,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6108,
+            "exit_price": 203.1498340117183,
+            "exit_signal": 6107,
+            "exit_reason": "fast_down",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.032332976551448955,
+            "entry_date": "2024-08-20",
+            "exit_date": "2024-09-09"
+          },
+          {
+            "entry_index": 6116,
+            "entry": 219.26325580068743,
+            "entry_signal": 6115,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6129,
+            "exit_price": 213.1269255696744,
+            "exit_signal": 6128,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.02895765924476945,
+            "entry_date": "2024-09-19",
+            "exit_date": "2024-10-08"
+          },
+          {
+            "entry_index": 6136,
+            "entry": 222.214885192381,
+            "entry_signal": 6135,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6146,
+            "exit_price": 216.642625376492,
+            "exit_signal": 6145,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.026050433881037116,
+            "entry_date": "2024-10-17",
+            "exit_date": "2024-10-31"
+          },
+          {
+            "entry_index": 6151,
+            "entry": 231.98837931048467,
+            "entry_signal": 6150,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6177,
+            "exit_price": 228.09074004223956,
+            "exit_signal": 6176,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.01778371844388771,
+            "entry_date": "2024-11-07",
+            "exit_date": "2024-12-16"
+          }
+        ]
+      },
+      "conservative_stop": {
+        "window_return": -0.09644365880690353,
+        "trades": [
+          {
+            "entry_index": 6069,
+            "entry": 209.63031529270995,
+            "entry_signal": 6068,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.07675246416293649,
+            "exit_index": 6083,
+            "exit_price": 203.01348061544832,
+            "exit_signal": 6083,
+            "exit_reason": "intraday_protection",
+            "context": "uncertain",
+            "exit_policy": 0,
+            "net_return": -0.03253225418443051,
+            "entry_date": "2024-07-15",
+            "exit_date": "2024-08-02"
+          },
+          {
+            "entry_index": 6095,
+            "entry": 209.7279134082756,
+            "entry_signal": 6094,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6108,
+            "exit_price": 203.1498340117183,
+            "exit_signal": 6107,
+            "exit_reason": "fast_down",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.032332976551448955,
+            "entry_date": "2024-08-20",
+            "exit_date": "2024-09-09"
+          },
+          {
+            "entry_index": 6116,
+            "entry": 219.26325580068743,
+            "entry_signal": 6115,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6129,
+            "exit_price": 213.1269255696744,
+            "exit_signal": 6128,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.02895765924476945,
+            "entry_date": "2024-09-19",
+            "exit_date": "2024-10-08"
+          },
+          {
+            "entry_index": 6136,
+            "entry": 222.214885192381,
+            "entry_signal": 6135,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6146,
+            "exit_price": 216.642625376492,
+            "exit_signal": 6145,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.026050433881037116,
+            "entry_date": "2024-10-17",
+            "exit_date": "2024-10-31"
+          },
+          {
+            "entry_index": 6151,
+            "entry": 231.98837931048467,
+            "entry_signal": 6150,
+            "entry_policy": 0,
+            "entry_reason": "ordinary",
+            "initial_risk_fraction": 0.15350492832587298,
+            "exit_index": 6177,
+            "exit_price": 228.09074004223956,
+            "exit_signal": 6176,
+            "exit_reason": "thesis_failed",
+            "context": "up",
+            "exit_policy": 0,
+            "net_return": -0.01778371844388771,
+            "entry_date": "2024-11-07",
+            "exit_date": "2024-12-16"
+          }
+        ]
+      }
+    },
+    "fixed_entry_first_stop": [
+      {
+        "entry": "2024-07-15",
+        "baseline_exit": "2024-08-05",
+        "baseline_return": -0.0795557659581404,
+        "first_touch": "2024-08-02",
+        "open": 203.83301069528707,
+        "high": 206.11679563485652,
+        "low": 202.01769102459903,
+        "close": 203.9013214111328,
+        "stop": 203.11503813451557,
+        "standing_fill": 203.01348061544832,
+        "standing_return": -0.03253225418443051,
+        "conditional_close_return": -0.02878706763306571
+      }
+    ],
+    "stop_review_windows": [
+      {
+        "exit_date": "2024-08-02",
+        "exit_fill": 203.01348061544832,
+        "upper": 207.5828226814251,
+        "observations": [
+          {
+            "day": "2024-08-05",
+            "close": 197.3427734375,
+            "up": 1.4723119986161397e-05,
+            "down": 0.9999852767415112,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": false,
+              "location": true,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-08-06",
+            "close": 199.4899139404297,
+            "up": 2.3980242595426777e-07,
+            "down": 0.9999997601974729,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": true,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-08-07",
+            "close": 197.12806701660156,
+            "up": 1.064711002343884e-07,
+            "down": 0.9999998935288988,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-08-08",
+            "close": 201.9201202392578,
+            "up": 6.933684744170142e-07,
+            "down": 0.999999306600951,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-08-09",
+            "close": 201.50042724609375,
+            "up": 3.998012440088983e-06,
+            "down": 0.9999959028622741,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": false,
+              "location": true,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-08-12",
+            "close": 199.6851348876953,
+            "up": 1.1835805469446811e-05,
+            "down": 0.9999816243052564,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-08-13",
+            "close": 202.97415161132812,
+            "up": 0.00010757224280928076,
+            "down": 0.995073345339026,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-08-14",
+            "close": 201.71514892578125,
+            "up": 0.00041358890718207604,
+            "down": 0.9320668101264243,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-08-15",
+            "close": 206.94639587402344,
+            "up": 0.005632194188890215,
+            "down": 0.3866493700070089,
+            "conditions": {
+              "near_exit": true,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-08-16",
+            "close": 207.4929656982422,
+            "up": 0.11284249445869828,
+            "down": 0.09562934795148169,
+            "conditions": {
+              "near_exit": true,
+              "up": false,
+              "down": true,
+              "slope": true,
+              "bullish_close": true,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          }
+        ]
+      },
+      {
+        "exit_date": "2024-09-09",
+        "exit_fill": 203.1498340117183,
+        "upper": 207.40760538740082,
+        "observations": [
+          {
+            "day": "2024-09-10",
+            "close": 203.30599975585938,
+            "up": 2.3182949325313776e-05,
+            "down": 0.999915828768709,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": false,
+              "location": true,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-09-11",
+            "close": 203.9013214111328,
+            "up": 4.008498618087007e-05,
+            "down": 0.9996201683473391,
+            "conditions": {
+              "near_exit": true,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-09-12",
+            "close": 206.5267333984375,
+            "up": 0.00018725468202583016,
+            "down": 0.983201841197737,
+            "conditions": {
+              "near_exit": true,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-09-13",
+            "close": 211.621337890625,
+            "up": 0.0022865908377012684,
+            "down": 0.5315915845447489,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-09-16",
+            "close": 212.382568359375,
+            "up": 0.056681261811284175,
+            "down": 0.1266840374398437,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": true,
+              "slope": true,
+              "bullish_close": false,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-09-17",
+            "close": 214.1393585205078,
+            "up": 0.7417139984962894,
+            "down": 0.03359821068064121,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-09-18",
+            "close": 214.17837524414062,
+            "up": 0.9969129880490937,
+            "down": 0.0008567745238057666,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": true,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-09-19",
+            "close": 218.58982849121094,
+            "up": 0.9999910760391647,
+            "down": 3.398393295450638e-06,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": false,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-09-20",
+            "close": 216.2474822998047,
+            "up": 0.9999883059287518,
+            "down": 4.797017875336812e-07,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-09-23",
+            "close": 215.45692443847656,
+            "up": 0.9998414174703328,
+            "down": 1.0624624472661052e-06,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          }
+        ]
+      },
+      {
+        "exit_date": "2024-10-08",
+        "exit_fill": 213.1269255696744,
+        "upper": 216.889330690798,
+        "observations": [
+          {
+            "day": "2024-10-09",
+            "close": 213.54800415039062,
+            "up": 0.01065964789811965,
+            "down": 0.031043419990226195,
+            "conditions": {
+              "near_exit": true,
+              "up": false,
+              "down": true,
+              "slope": true,
+              "bullish_close": true,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-10-10",
+            "close": 212.36305236816406,
+            "up": 0.010633231363960948,
+            "down": 0.031666781760424464,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": true,
+              "slope": false,
+              "bullish_close": false,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-10-11",
+            "close": 216.6818084716797,
+            "up": 0.01652010761060993,
+            "down": 0.013506320389104414,
+            "conditions": {
+              "near_exit": true,
+              "up": false,
+              "down": true,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-10-14",
+            "close": 218.27809143066406,
+            "up": 0.06144023129473126,
+            "down": 0.010722936347976338,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": true,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-10-15",
+            "close": 218.45436096191406,
+            "up": 0.2357053484384217,
+            "down": 0.012576969233756913,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": true,
+              "slope": true,
+              "bullish_close": true,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-10-16",
+            "close": 222.04844665527344,
+            "up": 0.9270954287841047,
+            "down": 0.0050809394265952865,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-10-17",
+            "close": 221.44122314453125,
+            "up": 0.9978964228660897,
+            "down": 0.00017882468240082357,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-10-18",
+            "close": 220.98097229003906,
+            "up": 0.9979142014069589,
+            "down": 9.160711270391174e-06,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-10-21",
+            "close": 217.50440979003906,
+            "up": 0.953341501012002,
+            "down": 2.4325364600910574e-05,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-10-22",
+            "close": 216.6818084716797,
+            "up": 0.6811071645221922,
+            "down": 0.0008682137705598323,
+            "conditions": {
+              "near_exit": true,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": false,
+              "location": true,
+              "volume": false
+            },
+            "qualifies": false
+          }
+        ]
+      },
+      {
+        "exit_date": "2024-10-31",
+        "exit_fill": 216.642625376492,
+        "upper": 219.99504405140914,
+        "observations": [
+          {
+            "day": "2024-11-01",
+            "close": 214.44895935058594,
+            "up": 0.011341990138495798,
+            "down": 0.0738656119437167,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": true,
+              "slope": false,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-11-04",
+            "close": 215.5360107421875,
+            "up": 0.010608263130830211,
+            "down": 0.05578609047689802,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": true,
+              "slope": true,
+              "bullish_close": true,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-11-05",
+            "close": 219.59034729003906,
+            "up": 0.017013449060636954,
+            "down": 0.01660317779358301,
+            "conditions": {
+              "near_exit": true,
+              "up": false,
+              "down": true,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-11-06",
+            "close": 232.3115692138672,
+            "up": 0.9859412101156624,
+            "down": 0.006155961459565881,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-11-07",
+            "close": 231.4889373779297,
+            "up": 0.9999952978215141,
+            "down": 4.685572166937268e-06,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-11-08",
+            "close": 233.1929168701172,
+            "up": 0.9999999771024234,
+            "down": 2.287264920822814e-08,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-11-11",
+            "close": 236.69888305664062,
+            "up": 0.999999992963391,
+            "down": 7.0365556414689e-09,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-11-12",
+            "close": 232.54660034179688,
+            "up": 0.9999999767605438,
+            "down": 2.3207260564441e-08,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-11-13",
+            "close": 230.24520874023438,
+            "up": 0.9999994265025666,
+            "down": 1.8748844102473794e-07,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-11-14",
+            "close": 227.1408233642578,
+            "up": 0.9974892169639776,
+            "down": 2.866053348068846e-06,
+            "conditions": {
+              "near_exit": false,
+              "up": true,
+              "down": true,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          }
+        ]
+      },
+      {
+        "exit_date": "2024-12-16",
+        "exit_fill": 228.09074004223956,
+        "upper": 231.57102791445374,
+        "observations": [
+          {
+            "day": "2024-12-17",
+            "close": 226.96067810058594,
+            "up": 0.0007110846247793329,
+            "down": 0.9784673992917969,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-12-18",
+            "close": 216.91261291503906,
+            "up": 1.3078033243412103e-05,
+            "down": 0.9999850785796054,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-12-19",
+            "close": 215.9500274658203,
+            "up": 1.5222502645672838e-06,
+            "down": 0.9999984763637534,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": false,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-12-20",
+            "close": 217.973388671875,
+            "up": 1.7868027816435778e-06,
+            "down": 0.9999982102497559,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-12-23",
+            "close": 217.47247314453125,
+            "up": 3.161048128670118e-06,
+            "down": 0.9999968021464541,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": false,
+              "location": true,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-12-24",
+            "close": 219.41726684570312,
+            "up": 1.4278165689465823e-05,
+            "down": 0.9999730399860063,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-12-26",
+            "close": 221.66651916503906,
+            "up": 0.0001127475202966575,
+            "down": 0.9945001657005919,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": true,
+              "location": true,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-12-27",
+            "close": 218.43504333496094,
+            "up": 0.00024222439792489427,
+            "down": 0.9763945224129417,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": true
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-12-30",
+            "close": 216.7554473876953,
+            "up": 0.0003787995129235397,
+            "down": 0.9644202849921472,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": false,
+              "location": true,
+              "volume": false
+            },
+            "qualifies": false
+          },
+          {
+            "day": "2024-12-31",
+            "close": 217.0304718017578,
+            "up": 0.0006416555123822308,
+            "down": 0.9237458918261986,
+            "conditions": {
+              "near_exit": false,
+              "up": false,
+              "down": false,
+              "slope": true,
+              "bullish_close": false,
+              "location": false,
+              "volume": false
+            },
+            "qualifies": false
+          }
+        ]
+      }
+    ],
+    "counterfactual_limit": "Fixed baseline entry/stop path until first touch, holding one trade constant. Not compounded portfolio performance; same-close hypothetical execution unverified."
+  }
+}

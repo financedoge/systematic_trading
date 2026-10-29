@@ -1,0 +1,4826 @@
+{
+  "late_equal_c5d0": [
+    {
+      "symbol": "IAT",
+      "pnl": -0.015349619284203541,
+      "fee": 0.000558714456099844,
+      "average_weight": 0.013245636965853201,
+      "selected_days": 207,
+      "fills": 20
+    },
+    {
+      "symbol": "USO",
+      "pnl": -0.006826674589068143,
+      "fee": 0.0003432412179129848,
+      "average_weight": 0.003835236636082929,
+      "selected_days": 95,
+      "fills": 10
+    },
+    {
+      "symbol": "CPER",
+      "pnl": -0.006731456703110006,
+      "fee": 0.0002612130410877351,
+      "average_weight": 0.0052217529466743505,
+      "selected_days": 105,
+      "fills": 9
+    },
+    {
+      "symbol": "MDY",
+      "pnl": -0.00637906348163698,
+      "fee": 0.00042012714267567164,
+      "average_weight": 0.007563631496501052,
+      "selected_days": 168,
+      "fills": 14
+    },
+    {
+      "symbol": "EWJ",
+      "pnl": -0.006118624499792021,
+      "fee": 0.00045708850476209174,
+      "average_weight": 0.008397183495518023,
+      "selected_days": 128,
+      "fills": 13
+    },
+    {
+      "symbol": "XLV",
+      "pnl": -0.00586199884434618,
+      "fee": 0.0005665946344450929,
+      "average_weight": 0.015186021409501366,
+      "selected_days": 211,
+      "fills": 20
+    },
+    {
+      "symbol": "IWM",
+      "pnl": -0.005845630032055733,
+      "fee": 0.0003686514324370986,
+      "average_weight": 0.006825166153673883,
+      "selected_days": 127,
+      "fills": 12
+    },
+    {
+      "symbol": "DBC",
+      "pnl": -0.004069086533133247,
+      "fee": 0.0003518024920582255,
+      "average_weight": 0.0042659239637330496,
+      "selected_days": 74,
+      "fills": 10
+    },
+    {
+      "symbol": "WEAT",
+      "pnl": -0.004022711107627752,
+      "fee": 0.00014328458947316798,
+      "average_weight": 0.0025630287609575606,
+      "selected_days": 40,
+      "fills": 4
+    },
+    {
+      "symbol": "IGOV",
+      "pnl": -0.0026497455703204252,
+      "fee": 0.00013370645221926186,
+      "average_weight": 0.0026016890661896045,
+      "selected_days": 64,
+      "fills": 5
+    },
+    {
+      "symbol": "XLP",
+      "pnl": -0.002263649903372865,
+      "fee": 0.0006709158249084303,
+      "average_weight": 0.01403171682479133,
+      "selected_days": 292,
+      "fills": 25
+    },
+    {
+      "symbol": "IEF",
+      "pnl": -0.0020113587008189176,
+      "fee": 0.00019944361861988678,
+      "average_weight": 0.004894969875934736,
+      "selected_days": 84,
+      "fills": 8
+    },
+    {
+      "symbol": "XLE",
+      "pnl": -0.0017187324170887211,
+      "fee": 0.0005651698443593763,
+      "average_weight": 0.0077230865371037604,
+      "selected_days": 134,
+      "fills": 17
+    },
+    {
+      "symbol": "INDA",
+      "pnl": -0.0014919635177547967,
+      "fee": 0.00040502692491017634,
+      "average_weight": 0.00963788347618075,
+      "selected_days": 189,
+      "fills": 15
+    },
+    {
+      "symbol": "MBB",
+      "pnl": -0.0013111377326563106,
+      "fee": 0.00019831520908016945,
+      "average_weight": 0.0011789853743548566,
+      "selected_days": 42,
+      "fills": 6
+    },
+    {
+      "symbol": "TIP",
+      "pnl": -0.0012110634721546095,
+      "fee": 0.00013507718855391054,
+      "average_weight": 0.0013778876805808438,
+      "selected_days": 44,
+      "fills": 4
+    },
+    {
+      "symbol": "TLT",
+      "pnl": -0.0011846711476350329,
+      "fee": 6.625998569466393e-05,
+      "average_weight": 0.0018326415438473151,
+      "selected_days": 21,
+      "fills": 2
+    },
+    {
+      "symbol": "EFA",
+      "pnl": -0.0010699902063792404,
+      "fee": 0.00041936444898177464,
+      "average_weight": 0.0076528829965721076,
+      "selected_days": 158,
+      "fills": 14
+    },
+    {
+      "symbol": "EWT",
+      "pnl": -0.0006086611800008189,
+      "fee": 0.0006858129492154218,
+      "average_weight": 0.009758117855023002,
+      "selected_days": 181,
+      "fills": 21
+    },
+    {
+      "symbol": "LEMB",
+      "pnl": -6.721474664950723e-05,
+      "fee": 0.00033886296821972867,
+      "average_weight": 0.003866374205231819,
+      "selected_days": 64,
+      "fills": 10
+    },
+    {
+      "symbol": "DBA",
+      "pnl": -2.0750260767740344e-05,
+      "fee": 0.0006333651086983458,
+      "average_weight": 0.014458224517698206,
+      "selected_days": 273,
+      "fills": 22
+    },
+    {
+      "symbol": "AGG",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 0,
+      "fills": 0
+    },
+    {
+      "symbol": "CORN",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 0,
+      "fills": 0
+    },
+    {
+      "symbol": "EMB",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 20,
+      "fills": 0
+    },
+    {
+      "symbol": "XLI",
+      "pnl": 5.293701974815783e-05,
+      "fee": 0.0004279596059839972,
+      "average_weight": 0.01182817052018498,
+      "selected_days": 229,
+      "fills": 16
+    },
+    {
+      "symbol": "VGK",
+      "pnl": 0.0001689293627012249,
+      "fee": 0.0006875151679911116,
+      "average_weight": 0.014976385829651844,
+      "selected_days": 268,
+      "fills": 24
+    },
+    {
+      "symbol": "LQD",
+      "pnl": 0.000171674613177027,
+      "fee": 6.702735793578394e-05,
+      "average_weight": 9.72031060974675e-05,
+      "selected_days": 20,
+      "fills": 2
+    },
+    {
+      "symbol": "IBND",
+      "pnl": 0.0006201879925834802,
+      "fee": 0.00013392454379784058,
+      "average_weight": 0.0038093210129433244,
+      "selected_days": 83,
+      "fills": 6
+    },
+    {
+      "symbol": "HYG",
+      "pnl": 0.0014358665195889,
+      "fee": 0.00034849161875341193,
+      "average_weight": 0.026332674386852422,
+      "selected_days": 291,
+      "fills": 20
+    },
+    {
+      "symbol": "EWA",
+      "pnl": 0.0014832561969525125,
+      "fee": 0.0001366118899626586,
+      "average_weight": 0.0044349232175814254,
+      "selected_days": 106,
+      "fills": 5
+    },
+    {
+      "symbol": "MCHI",
+      "pnl": 0.0028569645957430886,
+      "fee": 0.00048280673550784946,
+      "average_weight": 0.0169581791074425,
+      "selected_days": 253,
+      "fills": 20
+    },
+    {
+      "symbol": "DBB",
+      "pnl": 0.0031479591799920296,
+      "fee": 0.00032159392397650084,
+      "average_weight": 0.012548755807867965,
+      "selected_days": 199,
+      "fills": 14
+    },
+    {
+      "symbol": "SHY",
+      "pnl": 0.0034100367884279314,
+      "fee": 0.0004365356656393142,
+      "average_weight": 0.030031765109127112,
+      "selected_days": 354,
+      "fills": 25
+    },
+    {
+      "symbol": "IBB",
+      "pnl": 0.0038172493496121764,
+      "fee": 0.00038731239190925056,
+      "average_weight": 0.013942921335696436,
+      "selected_days": 176,
+      "fills": 15
+    },
+    {
+      "symbol": "XLB",
+      "pnl": 0.004322046367894482,
+      "fee": 0.0004296236585965625,
+      "average_weight": 0.00948422242322622,
+      "selected_days": 200,
+      "fills": 14
+    },
+    {
+      "symbol": "SLV",
+      "pnl": 0.005037753817127276,
+      "fee": 0.0008710813632846452,
+      "average_weight": 0.010101414398816273,
+      "selected_days": 322,
+      "fills": 25
+    },
+    {
+      "symbol": "XLU",
+      "pnl": 0.005347059486332276,
+      "fee": 0.00038842057027911256,
+      "average_weight": 0.012953827027113266,
+      "selected_days": 263,
+      "fills": 16
+    },
+    {
+      "symbol": "EEM",
+      "pnl": 0.005694285209560678,
+      "fee": 0.0005378919331246812,
+      "average_weight": 0.015167126949786433,
+      "selected_days": 263,
+      "fills": 21
+    },
+    {
+      "symbol": "XLY",
+      "pnl": 0.006055148901397934,
+      "fee": 0.0006981687561341681,
+      "average_weight": 0.013349478547267871,
+      "selected_days": 272,
+      "fills": 24
+    },
+    {
+      "symbol": "ITA",
+      "pnl": 0.006523271621406773,
+      "fee": 0.0006655740919552006,
+      "average_weight": 0.02612276522722696,
+      "selected_days": 378,
+      "fills": 29
+    },
+    {
+      "symbol": "EWU",
+      "pnl": 0.008758968180487993,
+      "fee": 0.0006273607303546281,
+      "average_weight": 0.016341506826131856,
+      "selected_days": 330,
+      "fills": 25
+    },
+    {
+      "symbol": "SPY",
+      "pnl": 0.008891798450875819,
+      "fee": 0.0007110192558954468,
+      "average_weight": 0.03319113072399362,
+      "selected_days": 440,
+      "fills": 31
+    },
+    {
+      "symbol": "EWG",
+      "pnl": 0.01064495459531285,
+      "fee": 0.000777509032813014,
+      "average_weight": 0.017791375173589856,
+      "selected_days": 396,
+      "fills": 28
+    },
+    {
+      "symbol": "XLC",
+      "pnl": 0.01145979906781761,
+      "fee": 0.0004096930708118357,
+      "average_weight": 0.023800550194858987,
+      "selected_days": 332,
+      "fills": 21
+    },
+    {
+      "symbol": "SOXX",
+      "pnl": 0.012105046325395136,
+      "fee": 0.0007447399154084181,
+      "average_weight": 0.015355380336935051,
+      "selected_days": 271,
+      "fills": 23
+    },
+    {
+      "symbol": "EWC",
+      "pnl": 0.014289603195793832,
+      "fee": 0.0007986099128231554,
+      "average_weight": 0.02246366251151348,
+      "selected_days": 491,
+      "fills": 30
+    },
+    {
+      "symbol": "EWH",
+      "pnl": 0.01562488618265622,
+      "fee": 0.0003734771343429337,
+      "average_weight": 0.012728414017813579,
+      "selected_days": 211,
+      "fills": 14
+    },
+    {
+      "symbol": "XLK",
+      "pnl": 0.015668884509623518,
+      "fee": 0.000793892507877203,
+      "average_weight": 0.019320261376070378,
+      "selected_days": 355,
+      "fills": 28
+    },
+    {
+      "symbol": "GLD",
+      "pnl": 0.0187837207601392,
+      "fee": 0.0009990050233211164,
+      "average_weight": 0.02328112645417504,
+      "selected_days": 407,
+      "fills": 37
+    },
+    {
+      "symbol": "PPLT",
+      "pnl": 0.028183881233321457,
+      "fee": 0.0005434205688520785,
+      "average_weight": 0.010735253076244459,
+      "selected_days": 263,
+      "fills": 16
+    },
+    {
+      "symbol": "EWY",
+      "pnl": 0.06376349183643111,
+      "fee": 0.0007219151551631239,
+      "average_weight": 0.01630570307118389,
+      "selected_days": 306,
+      "fills": 25
+    }
+  ],
+  "late_risk_c5d0": [
+    {
+      "symbol": "USO",
+      "pnl": -0.006974100364018599,
+      "fee": 0.00021455686331356495,
+      "average_weight": 0.0023768413769341625,
+      "selected_days": 95,
+      "fills": 10
+    },
+    {
+      "symbol": "DBC",
+      "pnl": -0.006944374612906147,
+      "fee": 0.0003974584953080363,
+      "average_weight": 0.004793888058566933,
+      "selected_days": 74,
+      "fills": 10
+    },
+    {
+      "symbol": "XLV",
+      "pnl": -0.006726237832268163,
+      "fee": 0.0007318318982711078,
+      "average_weight": 0.01785549890533918,
+      "selected_days": 211,
+      "fills": 20
+    },
+    {
+      "symbol": "IAT",
+      "pnl": -0.006520343044905682,
+      "fee": 0.0003046785249433755,
+      "average_weight": 0.008092014559588658,
+      "selected_days": 207,
+      "fills": 20
+    },
+    {
+      "symbol": "MDY",
+      "pnl": -0.005238247872625922,
+      "fee": 0.0003768838988550073,
+      "average_weight": 0.006581215830475087,
+      "selected_days": 168,
+      "fills": 14
+    },
+    {
+      "symbol": "IEF",
+      "pnl": -0.004371958403465561,
+      "fee": 0.0003987745285872514,
+      "average_weight": 0.008784063240899502,
+      "selected_days": 84,
+      "fills": 8
+    },
+    {
+      "symbol": "EWJ",
+      "pnl": -0.004006893162577649,
+      "fee": 0.00036568205616989587,
+      "average_weight": 0.006979494943899228,
+      "selected_days": 128,
+      "fills": 13
+    },
+    {
+      "symbol": "WEAT",
+      "pnl": -0.003171837916596192,
+      "fee": 0.00012543037219931143,
+      "average_weight": 0.002371761745260493,
+      "selected_days": 40,
+      "fills": 4
+    },
+    {
+      "symbol": "CPER",
+      "pnl": -0.00293264704626473,
+      "fee": 0.00015731119155539615,
+      "average_weight": 0.003109808277346139,
+      "selected_days": 105,
+      "fills": 9
+    },
+    {
+      "symbol": "IGOV",
+      "pnl": -0.0029099086748057357,
+      "fee": 0.00016834664581907724,
+      "average_weight": 0.00329152418377089,
+      "selected_days": 64,
+      "fills": 5
+    },
+    {
+      "symbol": "XLE",
+      "pnl": -0.00289050626762933,
+      "fee": 0.0006684415569245477,
+      "average_weight": 0.009372582387479705,
+      "selected_days": 134,
+      "fills": 17
+    },
+    {
+      "symbol": "XLP",
+      "pnl": -0.002853469511518056,
+      "fee": 0.0009319678861613595,
+      "average_weight": 0.019826612987501307,
+      "selected_days": 292,
+      "fills": 25
+    },
+    {
+      "symbol": "IWM",
+      "pnl": -0.0026009259193458365,
+      "fee": 0.0002754806289057799,
+      "average_weight": 0.005456555236042924,
+      "selected_days": 127,
+      "fills": 12
+    },
+    {
+      "symbol": "TIP",
+      "pnl": -0.0024401368686698135,
+      "fee": 0.00027665488531498065,
+      "average_weight": 0.0029305710327211117,
+      "selected_days": 44,
+      "fills": 4
+    },
+    {
+      "symbol": "MBB",
+      "pnl": -0.0024156866395304783,
+      "fee": 0.0003581020474938875,
+      "average_weight": 0.002078828540982049,
+      "selected_days": 42,
+      "fills": 6
+    },
+    {
+      "symbol": "VGK",
+      "pnl": -0.002347383175584491,
+      "fee": 0.0006605990531397615,
+      "average_weight": 0.013112883365469188,
+      "selected_days": 268,
+      "fills": 24
+    },
+    {
+      "symbol": "EFA",
+      "pnl": -0.001974514343241021,
+      "fee": 0.00037994821776427733,
+      "average_weight": 0.006208973733843661,
+      "selected_days": 158,
+      "fills": 14
+    },
+    {
+      "symbol": "INDA",
+      "pnl": -0.0010096941012752228,
+      "fee": 0.00041801285342585055,
+      "average_weight": 0.009884882318301782,
+      "selected_days": 189,
+      "fills": 15
+    },
+    {
+      "symbol": "TLT",
+      "pnl": -0.0010053500753222624,
+      "fee": 5.6230357042091675e-05,
+      "average_weight": 0.0015315282859407707,
+      "selected_days": 21,
+      "fills": 2
+    },
+    {
+      "symbol": "DBA",
+      "pnl": -0.0007234570472701313,
+      "fee": 0.0009762253352736368,
+      "average_weight": 0.02307459639557649,
+      "selected_days": 273,
+      "fills": 22
+    },
+    {
+      "symbol": "MCHI",
+      "pnl": -0.00032419067547316983,
+      "fee": 0.00024589341531714587,
+      "average_weight": 0.007564576452105244,
+      "selected_days": 253,
+      "fills": 20
+    },
+    {
+      "symbol": "XLI",
+      "pnl": -0.00023113573336986217,
+      "fee": 0.0004365285135636746,
+      "average_weight": 0.011474751843582294,
+      "selected_days": 229,
+      "fills": 16
+    },
+    {
+      "symbol": "LEMB",
+      "pnl": -4.997314731622929e-05,
+      "fee": 0.0006693811096901181,
+      "average_weight": 0.007546085426177949,
+      "selected_days": 64,
+      "fills": 10
+    },
+    {
+      "symbol": "AGG",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 0,
+      "fills": 0
+    },
+    {
+      "symbol": "CORN",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 0,
+      "fills": 0
+    },
+    {
+      "symbol": "EMB",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 20,
+      "fills": 0
+    },
+    {
+      "symbol": "LQD",
+      "pnl": 0.0002969934090830064,
+      "fee": 0.00011595589567251888,
+      "average_weight": 0.0001668279799117565,
+      "selected_days": 20,
+      "fills": 2
+    },
+    {
+      "symbol": "EWA",
+      "pnl": 0.0011291303660583719,
+      "fee": 0.0001251845784561312,
+      "average_weight": 0.003928089756224989,
+      "selected_days": 106,
+      "fills": 5
+    },
+    {
+      "symbol": "SLV",
+      "pnl": 0.0016117700755515843,
+      "fee": 0.00044073822299183586,
+      "average_weight": 0.005221172815010636,
+      "selected_days": 322,
+      "fills": 25
+    },
+    {
+      "symbol": "IBND",
+      "pnl": 0.0017383974888976004,
+      "fee": 0.00021161762613667532,
+      "average_weight": 0.006268620043010358,
+      "selected_days": 83,
+      "fills": 6
+    },
+    {
+      "symbol": "EWT",
+      "pnl": 0.001875846007660306,
+      "fee": 0.0004481058600415363,
+      "average_weight": 0.006565211805470057,
+      "selected_days": 181,
+      "fills": 21
+    },
+    {
+      "symbol": "IBB",
+      "pnl": 0.00218606661630212,
+      "fee": 0.0003227106500187169,
+      "average_weight": 0.011210955757038498,
+      "selected_days": 176,
+      "fills": 15
+    },
+    {
+      "symbol": "ITA",
+      "pnl": 0.002193027979595679,
+      "fee": 0.0005660979808741458,
+      "average_weight": 0.020176266579687716,
+      "selected_days": 378,
+      "fills": 29
+    },
+    {
+      "symbol": "HYG",
+      "pnl": 0.0033217504557063538,
+      "fee": 0.0006982176915681245,
+      "average_weight": 0.04542514588525613,
+      "selected_days": 291,
+      "fills": 20
+    },
+    {
+      "symbol": "DBB",
+      "pnl": 0.003618165577762964,
+      "fee": 0.0003172679208745306,
+      "average_weight": 0.012150550455407791,
+      "selected_days": 199,
+      "fills": 14
+    },
+    {
+      "symbol": "XLY",
+      "pnl": 0.003658409235930189,
+      "fee": 0.0005456140048998486,
+      "average_weight": 0.009585675211855486,
+      "selected_days": 272,
+      "fills": 24
+    },
+    {
+      "symbol": "XLB",
+      "pnl": 0.004360266842148915,
+      "fee": 0.0004248378263309618,
+      "average_weight": 0.009489003887674268,
+      "selected_days": 200,
+      "fills": 14
+    },
+    {
+      "symbol": "EEM",
+      "pnl": 0.004463280271683125,
+      "fee": 0.0004091706440714811,
+      "average_weight": 0.01114439462454094,
+      "selected_days": 263,
+      "fills": 21
+    },
+    {
+      "symbol": "XLU",
+      "pnl": 0.0054714916328610745,
+      "fee": 0.0004761267094347362,
+      "average_weight": 0.01233660692265239,
+      "selected_days": 263,
+      "fills": 16
+    },
+    {
+      "symbol": "EWG",
+      "pnl": 0.006446052195003362,
+      "fee": 0.0007903397039369785,
+      "average_weight": 0.01563261438127594,
+      "selected_days": 396,
+      "fills": 28
+    },
+    {
+      "symbol": "SOXX",
+      "pnl": 0.008104604210075897,
+      "fee": 0.00032650118140037967,
+      "average_weight": 0.007099891454409397,
+      "selected_days": 271,
+      "fills": 23
+    },
+    {
+      "symbol": "XLC",
+      "pnl": 0.008354030507799072,
+      "fee": 0.0003276551763671965,
+      "average_weight": 0.01782290939979277,
+      "selected_days": 332,
+      "fills": 21
+    },
+    {
+      "symbol": "SPY",
+      "pnl": 0.008402468163573634,
+      "fee": 0.0006023809439934483,
+      "average_weight": 0.026957198480837066,
+      "selected_days": 440,
+      "fills": 31
+    },
+    {
+      "symbol": "EWU",
+      "pnl": 0.008486037499955083,
+      "fee": 0.0007037703337532162,
+      "average_weight": 0.01732199534518053,
+      "selected_days": 330,
+      "fills": 25
+    },
+    {
+      "symbol": "SHY",
+      "pnl": 0.010012073311177221,
+      "fee": 0.001437895752303483,
+      "average_weight": 0.08967591158594454,
+      "selected_days": 354,
+      "fills": 25
+    },
+    {
+      "symbol": "EWH",
+      "pnl": 0.010366959832899222,
+      "fee": 0.00034038620834985275,
+      "average_weight": 0.009598014404847699,
+      "selected_days": 211,
+      "fills": 14
+    },
+    {
+      "symbol": "EWC",
+      "pnl": 0.012573915432320162,
+      "fee": 0.0008702892156808901,
+      "average_weight": 0.022780733164875853,
+      "selected_days": 491,
+      "fills": 30
+    },
+    {
+      "symbol": "PPLT",
+      "pnl": 0.013103978379084542,
+      "fee": 0.0002626635258266493,
+      "average_weight": 0.00542045840058607,
+      "selected_days": 263,
+      "fills": 16
+    },
+    {
+      "symbol": "GLD",
+      "pnl": 0.013750974823382379,
+      "fee": 0.0009475032598881146,
+      "average_weight": 0.021278172305525412,
+      "selected_days": 407,
+      "fills": 37
+    },
+    {
+      "symbol": "XLK",
+      "pnl": 0.017663024128613394,
+      "fee": 0.0005747100273755473,
+      "average_weight": 0.0146011309658198,
+      "selected_days": 355,
+      "fills": 28
+    },
+    {
+      "symbol": "EWY",
+      "pnl": 0.03810592348458452,
+      "fee": 0.0003612679887491588,
+      "average_weight": 0.009455012478346765,
+      "selected_days": 306,
+      "fills": 25
+    }
+  ],
+  "late_all_c5d0": [
+    {
+      "symbol": "TLT",
+      "pnl": -0.004087576503497882,
+      "fee": 0.00036112993825535564,
+      "average_weight": 0.008771871756522045,
+      "selected_days": 680,
+      "fills": 48
+    },
+    {
+      "symbol": "CORN",
+      "pnl": -0.0029401379676655143,
+      "fee": 0.00025311487608917297,
+      "average_weight": 0.00995296685933404,
+      "selected_days": 680,
+      "fills": 38
+    },
+    {
+      "symbol": "INDA",
+      "pnl": -0.0023946577430808812,
+      "fee": 0.00035216343396911483,
+      "average_weight": 0.007263634070900903,
+      "selected_days": 680,
+      "fills": 46
+    },
+    {
+      "symbol": "LQD",
+      "pnl": -0.0016750317302419182,
+      "fee": 0.00036329117364545757,
+      "average_weight": 0.009193717216907123,
+      "selected_days": 680,
+      "fills": 49
+    },
+    {
+      "symbol": "IGOV",
+      "pnl": -0.0015603064534205316,
+      "fee": 0.00029607070493249254,
+      "average_weight": 0.007893322430252439,
+      "selected_days": 680,
+      "fills": 39
+    },
+    {
+      "symbol": "TIP",
+      "pnl": -0.0006497384326677773,
+      "fee": 0.0003418972767628143,
+      "average_weight": 0.008272616436196978,
+      "selected_days": 680,
+      "fills": 45
+    },
+    {
+      "symbol": "EWJ",
+      "pnl": -0.0005081359284578616,
+      "fee": 0.0003273486979472597,
+      "average_weight": 0.014417690818479687,
+      "selected_days": 680,
+      "fills": 51
+    },
+    {
+      "symbol": "AGG",
+      "pnl": -0.0005035552280627113,
+      "fee": 0.0003394848582753234,
+      "average_weight": 0.01069011094917967,
+      "selected_days": 680,
+      "fills": 51
+    },
+    {
+      "symbol": "MDY",
+      "pnl": -0.0003176624567678369,
+      "fee": 0.0003769289141213695,
+      "average_weight": 0.008576389941343179,
+      "selected_days": 680,
+      "fills": 50
+    },
+    {
+      "symbol": "EMB",
+      "pnl": -0.00022816327580679359,
+      "fee": 0.00031115040818316896,
+      "average_weight": 0.006547585321984331,
+      "selected_days": 680,
+      "fills": 38
+    },
+    {
+      "symbol": "IWM",
+      "pnl": -0.00015651229489712032,
+      "fee": 0.00041438660005655825,
+      "average_weight": 0.010422626490615322,
+      "selected_days": 680,
+      "fills": 55
+    },
+    {
+      "symbol": "IEF",
+      "pnl": -2.253754374958772e-05,
+      "fee": 0.0003228098905117574,
+      "average_weight": 0.009638266019668754,
+      "selected_days": 680,
+      "fills": 45
+    },
+    {
+      "symbol": "XLP",
+      "pnl": 0.00012241207630737114,
+      "fee": 0.0003680979559392374,
+      "average_weight": 0.009491234483129414,
+      "selected_days": 680,
+      "fills": 52
+    },
+    {
+      "symbol": "MBB",
+      "pnl": 0.00027228877804772453,
+      "fee": 0.0003626241691626073,
+      "average_weight": 0.010059742991823722,
+      "selected_days": 680,
+      "fills": 52
+    },
+    {
+      "symbol": "USO",
+      "pnl": 0.000376258595237414,
+      "fee": 0.000458300890560444,
+      "average_weight": 0.006784704335664365,
+      "selected_days": 680,
+      "fills": 53
+    },
+    {
+      "symbol": "LEMB",
+      "pnl": 0.0006787574275403794,
+      "fee": 0.00033611740629076924,
+      "average_weight": 0.007717931831955093,
+      "selected_days": 680,
+      "fills": 44
+    },
+    {
+      "symbol": "CPER",
+      "pnl": 0.0008002752622021511,
+      "fee": 0.00034754069861721396,
+      "average_weight": 0.012223876665279425,
+      "selected_days": 680,
+      "fills": 53
+    },
+    {
+      "symbol": "IBND",
+      "pnl": 0.000832495664910291,
+      "fee": 0.0003544801658822914,
+      "average_weight": 0.007518231563967369,
+      "selected_days": 680,
+      "fills": 43
+    },
+    {
+      "symbol": "EWA",
+      "pnl": 0.0010285202100432235,
+      "fee": 0.00022940646093123625,
+      "average_weight": 0.005055628124078567,
+      "selected_days": 680,
+      "fills": 29
+    },
+    {
+      "symbol": "SHY",
+      "pnl": 0.0012641171863552233,
+      "fee": 0.00022229277902407443,
+      "average_weight": 0.015093046489597063,
+      "selected_days": 680,
+      "fills": 46
+    },
+    {
+      "symbol": "XLV",
+      "pnl": 0.0014806848564147771,
+      "fee": 0.00028550424715797324,
+      "average_weight": 0.012180211420049351,
+      "selected_days": 680,
+      "fills": 46
+    },
+    {
+      "symbol": "WEAT",
+      "pnl": 0.0015098126935597087,
+      "fee": 0.0002552919865001477,
+      "average_weight": 0.007390386383388325,
+      "selected_days": 680,
+      "fills": 36
+    },
+    {
+      "symbol": "HYG",
+      "pnl": 0.001569078214450616,
+      "fee": 8.60547935911551e-05,
+      "average_weight": 0.018060200628505923,
+      "selected_days": 680,
+      "fills": 37
+    },
+    {
+      "symbol": "XLI",
+      "pnl": 0.0022782132974162672,
+      "fee": 0.00031279764705909415,
+      "average_weight": 0.009666350928681122,
+      "selected_days": 680,
+      "fills": 45
+    },
+    {
+      "symbol": "XLC",
+      "pnl": 0.002706928545547961,
+      "fee": 0.00027564927677327454,
+      "average_weight": 0.013968056930876679,
+      "selected_days": 680,
+      "fills": 47
+    },
+    {
+      "symbol": "XLY",
+      "pnl": 0.0028820121947857914,
+      "fee": 0.0003905843910994887,
+      "average_weight": 0.008701991941855268,
+      "selected_days": 680,
+      "fills": 50
+    },
+    {
+      "symbol": "XLE",
+      "pnl": 0.00291873229210298,
+      "fee": 0.00044941708315408136,
+      "average_weight": 0.00891965945407012,
+      "selected_days": 680,
+      "fills": 57
+    },
+    {
+      "symbol": "DBC",
+      "pnl": 0.003017857576000869,
+      "fee": 0.0003928487844838954,
+      "average_weight": 0.009144904244085343,
+      "selected_days": 680,
+      "fills": 49
+    },
+    {
+      "symbol": "EFA",
+      "pnl": 0.0030236297996402662,
+      "fee": 0.000399393076605608,
+      "average_weight": 0.01020912262749439,
+      "selected_days": 680,
+      "fills": 52
+    },
+    {
+      "symbol": "IBB",
+      "pnl": 0.0032053468417289604,
+      "fee": 0.0002747437903230955,
+      "average_weight": 0.011554480214533338,
+      "selected_days": 680,
+      "fills": 45
+    },
+    {
+      "symbol": "VGK",
+      "pnl": 0.003822653502259043,
+      "fee": 0.00033518203476032857,
+      "average_weight": 0.009183247546948842,
+      "selected_days": 680,
+      "fills": 45
+    },
+    {
+      "symbol": "DBA",
+      "pnl": 0.004528526494577066,
+      "fee": 0.00027070796577198796,
+      "average_weight": 0.01094049669731244,
+      "selected_days": 680,
+      "fills": 43
+    },
+    {
+      "symbol": "EWU",
+      "pnl": 0.004537370475769309,
+      "fee": 0.0003147257685404889,
+      "average_weight": 0.00863203925820045,
+      "selected_days": 680,
+      "fills": 44
+    },
+    {
+      "symbol": "IAT",
+      "pnl": 0.004578784587644413,
+      "fee": 0.00027041881645511844,
+      "average_weight": 0.012322248785545477,
+      "selected_days": 680,
+      "fills": 47
+    },
+    {
+      "symbol": "XLB",
+      "pnl": 0.004822848045894594,
+      "fee": 0.0002940022777346758,
+      "average_weight": 0.008627684618904358,
+      "selected_days": 680,
+      "fills": 42
+    },
+    {
+      "symbol": "EWH",
+      "pnl": 0.005342545683388073,
+      "fee": 0.0003385300517659357,
+      "average_weight": 0.008712989391456686,
+      "selected_days": 680,
+      "fills": 46
+    },
+    {
+      "symbol": "EWG",
+      "pnl": 0.0054407604471034205,
+      "fee": 0.000316832694030527,
+      "average_weight": 0.007922847873246859,
+      "selected_days": 680,
+      "fills": 41
+    },
+    {
+      "symbol": "EEM",
+      "pnl": 0.00554441585089375,
+      "fee": 0.0002765914983664683,
+      "average_weight": 0.012040570649632104,
+      "selected_days": 680,
+      "fills": 47
+    },
+    {
+      "symbol": "SPY",
+      "pnl": 0.005815532362734999,
+      "fee": 0.00019965209612970235,
+      "average_weight": 0.015322737269436169,
+      "selected_days": 680,
+      "fills": 43
+    },
+    {
+      "symbol": "ITA",
+      "pnl": 0.005839010127479399,
+      "fee": 0.0002544182384457076,
+      "average_weight": 0.013297115148402658,
+      "selected_days": 680,
+      "fills": 46
+    },
+    {
+      "symbol": "XLU",
+      "pnl": 0.006225123250142627,
+      "fee": 0.00032399141470935153,
+      "average_weight": 0.00891586382102558,
+      "selected_days": 680,
+      "fills": 44
+    },
+    {
+      "symbol": "EWC",
+      "pnl": 0.006333862345944858,
+      "fee": 0.00029364833633981535,
+      "average_weight": 0.009550075988542557,
+      "selected_days": 680,
+      "fills": 42
+    },
+    {
+      "symbol": "EWT",
+      "pnl": 0.006495627177440891,
+      "fee": 0.0004231424453754188,
+      "average_weight": 0.01157427272551771,
+      "selected_days": 680,
+      "fills": 57
+    },
+    {
+      "symbol": "DBB",
+      "pnl": 0.007057068957623513,
+      "fee": 0.0002330926815453288,
+      "average_weight": 0.012524137557096412,
+      "selected_days": 680,
+      "fills": 43
+    },
+    {
+      "symbol": "MCHI",
+      "pnl": 0.008319399623153902,
+      "fee": 0.0002974927518022176,
+      "average_weight": 0.010274066866720485,
+      "selected_days": 680,
+      "fills": 44
+    },
+    {
+      "symbol": "XLK",
+      "pnl": 0.009547088274306746,
+      "fee": 0.00037969852107628746,
+      "average_weight": 0.011179159286139604,
+      "selected_days": 680,
+      "fills": 52
+    },
+    {
+      "symbol": "GLD",
+      "pnl": 0.009676508494220925,
+      "fee": 0.0004188337322212157,
+      "average_weight": 0.010800946794799066,
+      "selected_days": 680,
+      "fills": 56
+    },
+    {
+      "symbol": "PPLT",
+      "pnl": 0.011307067842394389,
+      "fee": 0.00036014154098830046,
+      "average_weight": 0.01023692514306701,
+      "selected_days": 680,
+      "fills": 48
+    },
+    {
+      "symbol": "SOXX",
+      "pnl": 0.012874121359447476,
+      "fee": 0.00046982636629213444,
+      "average_weight": 0.010864137841972292,
+      "selected_days": 680,
+      "fills": 58
+    },
+    {
+      "symbol": "SLV",
+      "pnl": 0.013213160886683605,
+      "fee": 0.00034081339460555676,
+      "average_weight": 0.009456072876923783,
+      "selected_days": 680,
+      "fills": 43
+    },
+    {
+      "symbol": "EWY",
+      "pnl": 0.018785835553305305,
+      "fee": 0.00039239618313767586,
+      "average_weight": 0.009648550882861456,
+      "selected_days": 680,
+      "fills": 51
+    }
+  ],
+  "late_equal_dynamic_c5d0": [
+    {
+      "symbol": "CPER",
+      "pnl": -0.02883877568460913,
+      "fee": 0.0008440689423712207,
+      "average_weight": 0.008030910863121379,
+      "selected_days": 138,
+      "fills": 80
+    },
+    {
+      "symbol": "USO",
+      "pnl": -0.013433342931427221,
+      "fee": 0.0007051085456664747,
+      "average_weight": 0.004980300763620106,
+      "selected_days": 93,
+      "fills": 50
+    },
+    {
+      "symbol": "EWT",
+      "pnl": -0.010376424511164599,
+      "fee": 0.0015470547207114167,
+      "average_weight": 0.013036532787291501,
+      "selected_days": 194,
+      "fills": 134
+    },
+    {
+      "symbol": "XLI",
+      "pnl": -0.009228210243813043,
+      "fee": 0.0015504643642347783,
+      "average_weight": 0.014209716136324727,
+      "selected_days": 202,
+      "fills": 130
+    },
+    {
+      "symbol": "XLV",
+      "pnl": -0.00791352481821845,
+      "fee": 0.001146974543318086,
+      "average_weight": 0.014312366941973017,
+      "selected_days": 184,
+      "fills": 139
+    },
+    {
+      "symbol": "CORN",
+      "pnl": -0.0049083126329892875,
+      "fee": 0.0004948225496203462,
+      "average_weight": 0.0011731983621944418,
+      "selected_days": 13,
+      "fills": 19
+    },
+    {
+      "symbol": "INDA",
+      "pnl": -0.004093665989109077,
+      "fee": 0.0007682606015320592,
+      "average_weight": 0.00990162921820567,
+      "selected_days": 161,
+      "fills": 92
+    },
+    {
+      "symbol": "XLY",
+      "pnl": -0.0035038522138108185,
+      "fee": 0.0011521269199286982,
+      "average_weight": 0.012652275835236476,
+      "selected_days": 230,
+      "fills": 124
+    },
+    {
+      "symbol": "XLE",
+      "pnl": -0.0032318647977704483,
+      "fee": 0.001039896291375324,
+      "average_weight": 0.00903222122829455,
+      "selected_days": 129,
+      "fills": 87
+    },
+    {
+      "symbol": "IGOV",
+      "pnl": -0.00314403101133591,
+      "fee": 0.00027873412897081953,
+      "average_weight": 0.0050043957055361625,
+      "selected_days": 75,
+      "fills": 49
+    },
+    {
+      "symbol": "WEAT",
+      "pnl": -0.0031418195282613684,
+      "fee": 0.0003120428275327599,
+      "average_weight": 0.0032402345773132587,
+      "selected_days": 70,
+      "fills": 33
+    },
+    {
+      "symbol": "EWJ",
+      "pnl": -0.0030752300041178428,
+      "fee": 0.0007882172935230811,
+      "average_weight": 0.009816691529406773,
+      "selected_days": 138,
+      "fills": 90
+    },
+    {
+      "symbol": "IWM",
+      "pnl": -0.0030656304767234773,
+      "fee": 0.00040370596751510967,
+      "average_weight": 0.007544751413576358,
+      "selected_days": 111,
+      "fills": 75
+    },
+    {
+      "symbol": "TIP",
+      "pnl": -0.002871975021840075,
+      "fee": 0.0006190016445494699,
+      "average_weight": 0.004314522701800087,
+      "selected_days": 49,
+      "fills": 50
+    },
+    {
+      "symbol": "XLP",
+      "pnl": -0.0021961678652667647,
+      "fee": 0.0011030242141870754,
+      "average_weight": 0.013921182233015866,
+      "selected_days": 275,
+      "fills": 132
+    },
+    {
+      "symbol": "MBB",
+      "pnl": -0.0021019022574369013,
+      "fee": 0.0002075263803287946,
+      "average_weight": 0.000978068514573283,
+      "selected_days": 27,
+      "fills": 12
+    },
+    {
+      "symbol": "EMB",
+      "pnl": -0.0014348534905254348,
+      "fee": 0.0002745765177051005,
+      "average_weight": 0.0008821329125384568,
+      "selected_days": 39,
+      "fills": 12
+    },
+    {
+      "symbol": "TLT",
+      "pnl": -0.001248139954908916,
+      "fee": 0.00013371719021303358,
+      "average_weight": 0.00019602043596980112,
+      "selected_days": 2,
+      "fills": 4
+    },
+    {
+      "symbol": "DBC",
+      "pnl": -0.0009427753457558308,
+      "fee": 0.0007593059767120092,
+      "average_weight": 0.006463992273991779,
+      "selected_days": 97,
+      "fills": 65
+    },
+    {
+      "symbol": "LQD",
+      "pnl": -0.0009406798968219538,
+      "fee": 0.0003409321163747974,
+      "average_weight": 0.0008820781149955127,
+      "selected_days": 45,
+      "fills": 13
+    },
+    {
+      "symbol": "IAT",
+      "pnl": -0.0007399846461789389,
+      "fee": 0.0009173942929930645,
+      "average_weight": 0.017060175326615176,
+      "selected_days": 231,
+      "fills": 157
+    },
+    {
+      "symbol": "IEF",
+      "pnl": -0.0006999527900894984,
+      "fee": 0.0002809513171146688,
+      "average_weight": 0.004607840272275619,
+      "selected_days": 58,
+      "fills": 43
+    },
+    {
+      "symbol": "MDY",
+      "pnl": -0.000627230327651806,
+      "fee": 0.0006717184819739032,
+      "average_weight": 0.00862346780157568,
+      "selected_days": 136,
+      "fills": 77
+    },
+    {
+      "symbol": "AGG",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 0,
+      "fills": 0
+    },
+    {
+      "symbol": "SLV",
+      "pnl": 0.0004745027130867163,
+      "fee": 0.0012169303007090637,
+      "average_weight": 0.011786714947826004,
+      "selected_days": 328,
+      "fills": 119
+    },
+    {
+      "symbol": "HYG",
+      "pnl": 0.0009365340913207055,
+      "fee": 0.0017131952516989644,
+      "average_weight": 0.028920574115742483,
+      "selected_days": 297,
+      "fills": 262
+    },
+    {
+      "symbol": "LEMB",
+      "pnl": 0.000975235987098713,
+      "fee": 0.000793027396896138,
+      "average_weight": 0.008036546568245508,
+      "selected_days": 108,
+      "fills": 76
+    },
+    {
+      "symbol": "DBB",
+      "pnl": 0.0011247917574949272,
+      "fee": 0.0008501352939284616,
+      "average_weight": 0.01596499961386459,
+      "selected_days": 237,
+      "fills": 148
+    },
+    {
+      "symbol": "EEM",
+      "pnl": 0.0021306795040900777,
+      "fee": 0.0008056552277311042,
+      "average_weight": 0.01579121741656673,
+      "selected_days": 242,
+      "fills": 151
+    },
+    {
+      "symbol": "DBA",
+      "pnl": 0.002192103384157194,
+      "fee": 0.0009705265277428295,
+      "average_weight": 0.013905555591307054,
+      "selected_days": 244,
+      "fills": 130
+    },
+    {
+      "symbol": "SHY",
+      "pnl": 0.0024110664118984454,
+      "fee": 0.001217277051419065,
+      "average_weight": 0.028131349473096375,
+      "selected_days": 343,
+      "fills": 256
+    },
+    {
+      "symbol": "XLB",
+      "pnl": 0.003430068826522213,
+      "fee": 0.0012738474867699892,
+      "average_weight": 0.01315296728413733,
+      "selected_days": 224,
+      "fills": 123
+    },
+    {
+      "symbol": "EWA",
+      "pnl": 0.004099289571737596,
+      "fee": 0.0002278240410061183,
+      "average_weight": 0.004415235828946737,
+      "selected_days": 101,
+      "fills": 40
+    },
+    {
+      "symbol": "IBND",
+      "pnl": 0.005934965992127062,
+      "fee": 0.0005562776059763165,
+      "average_weight": 0.00881981061462614,
+      "selected_days": 130,
+      "fills": 78
+    },
+    {
+      "symbol": "VGK",
+      "pnl": 0.006849538391047266,
+      "fee": 0.0009570810718511158,
+      "average_weight": 0.017552249642195115,
+      "selected_days": 254,
+      "fills": 152
+    },
+    {
+      "symbol": "EFA",
+      "pnl": 0.007036254910585744,
+      "fee": 0.0010036958930643148,
+      "average_weight": 0.01265455538160265,
+      "selected_days": 183,
+      "fills": 107
+    },
+    {
+      "symbol": "SOXX",
+      "pnl": 0.007313144623287515,
+      "fee": 0.0021074134450697864,
+      "average_weight": 0.01614797403579006,
+      "selected_days": 285,
+      "fills": 159
+    },
+    {
+      "symbol": "MCHI",
+      "pnl": 0.007552439677881165,
+      "fee": 0.0008949668719379399,
+      "average_weight": 0.016484760374936812,
+      "selected_days": 246,
+      "fills": 155
+    },
+    {
+      "symbol": "EWC",
+      "pnl": 0.00802372652279597,
+      "fee": 0.0012664209399696536,
+      "average_weight": 0.022443313558532785,
+      "selected_days": 466,
+      "fills": 211
+    },
+    {
+      "symbol": "EWG",
+      "pnl": 0.008969411900615983,
+      "fee": 0.0015933343587654393,
+      "average_weight": 0.017247240856751053,
+      "selected_days": 336,
+      "fills": 161
+    },
+    {
+      "symbol": "XLU",
+      "pnl": 0.009027075635939606,
+      "fee": 0.0008547587276513142,
+      "average_weight": 0.014110713544542844,
+      "selected_days": 260,
+      "fills": 133
+    },
+    {
+      "symbol": "SPY",
+      "pnl": 0.009946745076939668,
+      "fee": 0.0011708719763382633,
+      "average_weight": 0.030888545741251702,
+      "selected_days": 411,
+      "fills": 265
+    },
+    {
+      "symbol": "XLC",
+      "pnl": 0.010909834652128046,
+      "fee": 0.0008846229221998826,
+      "average_weight": 0.023056869543544408,
+      "selected_days": 309,
+      "fills": 198
+    },
+    {
+      "symbol": "ITA",
+      "pnl": 0.01300766442097552,
+      "fee": 0.0010962483857683476,
+      "average_weight": 0.02548670626728441,
+      "selected_days": 339,
+      "fills": 225
+    },
+    {
+      "symbol": "EWH",
+      "pnl": 0.013287818726056702,
+      "fee": 0.0008401370848830369,
+      "average_weight": 0.01599764926645455,
+      "selected_days": 232,
+      "fills": 137
+    },
+    {
+      "symbol": "EWU",
+      "pnl": 0.013379101999909004,
+      "fee": 0.0010681260827971226,
+      "average_weight": 0.01882862771979075,
+      "selected_days": 335,
+      "fills": 168
+    },
+    {
+      "symbol": "IBB",
+      "pnl": 0.014091879123802012,
+      "fee": 0.0009113642408909857,
+      "average_weight": 0.01719674309824548,
+      "selected_days": 212,
+      "fills": 152
+    },
+    {
+      "symbol": "PPLT",
+      "pnl": 0.01761368277637119,
+      "fee": 0.0009636416170205513,
+      "average_weight": 0.012167230743959518,
+      "selected_days": 272,
+      "fills": 122
+    },
+    {
+      "symbol": "XLK",
+      "pnl": 0.02144606134461611,
+      "fee": 0.0013309469451025524,
+      "average_weight": 0.02207193767557658,
+      "selected_days": 355,
+      "fills": 201
+    },
+    {
+      "symbol": "GLD",
+      "pnl": 0.027521400387572052,
+      "fee": 0.0015483177902760894,
+      "average_weight": 0.02607879511111348,
+      "selected_days": 434,
+      "fills": 242
+    },
+    {
+      "symbol": "EWY",
+      "pnl": 0.05848797847270928,
+      "fee": 0.0010028936180302957,
+      "average_weight": 0.016794209407510478,
+      "selected_days": 320,
+      "fills": 150
+    }
+  ],
+  "late_risk_dynamic_c5d0": [
+    {
+      "symbol": "CPER",
+      "pnl": -0.01707213715535346,
+      "fee": 0.00048669605419355167,
+      "average_weight": 0.00477664284631474,
+      "selected_days": 140,
+      "fills": 75
+    },
+    {
+      "symbol": "XLI",
+      "pnl": -0.011510951281897785,
+      "fee": 0.0017846429650627204,
+      "average_weight": 0.013480819755032493,
+      "selected_days": 205,
+      "fills": 127
+    },
+    {
+      "symbol": "XLV",
+      "pnl": -0.00924723714613355,
+      "fee": 0.0016015262207958612,
+      "average_weight": 0.016173227047078503,
+      "selected_days": 184,
+      "fills": 135
+    },
+    {
+      "symbol": "USO",
+      "pnl": -0.008476524159657734,
+      "fee": 0.0005211847693696991,
+      "average_weight": 0.0032980737096480056,
+      "selected_days": 92,
+      "fills": 48
+    },
+    {
+      "symbol": "EWT",
+      "pnl": -0.005054425055825296,
+      "fee": 0.0011171676796831876,
+      "average_weight": 0.008889977394544803,
+      "selected_days": 202,
+      "fills": 130
+    },
+    {
+      "symbol": "CORN",
+      "pnl": -0.004726265397566896,
+      "fee": 0.000512326773226379,
+      "average_weight": 0.0011499838460683138,
+      "selected_days": 13,
+      "fills": 19
+    },
+    {
+      "symbol": "XLE",
+      "pnl": -0.004544818339736615,
+      "fee": 0.0012858924818285676,
+      "average_weight": 0.010259792740684769,
+      "selected_days": 130,
+      "fills": 84
+    },
+    {
+      "symbol": "TIP",
+      "pnl": -0.004503656484004559,
+      "fee": 0.001287044804720315,
+      "average_weight": 0.007850024727346557,
+      "selected_days": 48,
+      "fills": 50
+    },
+    {
+      "symbol": "INDA",
+      "pnl": -0.003810684912934589,
+      "fee": 0.000853093679836927,
+      "average_weight": 0.009605235937634328,
+      "selected_days": 161,
+      "fills": 92
+    },
+    {
+      "symbol": "MBB",
+      "pnl": -0.003609444446779824,
+      "fee": 0.00048230346171755954,
+      "average_weight": 0.0018249325739587538,
+      "selected_days": 26,
+      "fills": 12
+    },
+    {
+      "symbol": "XLY",
+      "pnl": -0.0035985883677437987,
+      "fee": 0.0010182568010945474,
+      "average_weight": 0.009541661398011807,
+      "selected_days": 226,
+      "fills": 122
+    },
+    {
+      "symbol": "IGOV",
+      "pnl": -0.003259301839310603,
+      "fee": 0.0004042967326845135,
+      "average_weight": 0.005503130976451518,
+      "selected_days": 75,
+      "fills": 49
+    },
+    {
+      "symbol": "XLP",
+      "pnl": -0.002411441104123664,
+      "fee": 0.0016320959800474877,
+      "average_weight": 0.019211549888414274,
+      "selected_days": 274,
+      "fills": 128
+    },
+    {
+      "symbol": "WEAT",
+      "pnl": -0.0023324728850052236,
+      "fee": 0.000330154880458251,
+      "average_weight": 0.0028383107229316344,
+      "selected_days": 72,
+      "fills": 32
+    },
+    {
+      "symbol": "EMB",
+      "pnl": -0.0018243212384585002,
+      "fee": 0.0003937134413728349,
+      "average_weight": 0.001071997758988878,
+      "selected_days": 35,
+      "fills": 12
+    },
+    {
+      "symbol": "EWJ",
+      "pnl": -0.0017899714165505202,
+      "fee": 0.0007047037314848927,
+      "average_weight": 0.00783443158854209,
+      "selected_days": 138,
+      "fills": 90
+    },
+    {
+      "symbol": "IWM",
+      "pnl": -0.0016030528288415709,
+      "fee": 0.00043158170779443374,
+      "average_weight": 0.005942006035667503,
+      "selected_days": 112,
+      "fills": 72
+    },
+    {
+      "symbol": "LQD",
+      "pnl": -0.0013460215358852316,
+      "fee": 0.0004248793145900274,
+      "average_weight": 0.0010196232041950995,
+      "selected_days": 44,
+      "fills": 13
+    },
+    {
+      "symbol": "SLV",
+      "pnl": -0.001248207784731779,
+      "fee": 0.0007559599578486327,
+      "average_weight": 0.006396154604980528,
+      "selected_days": 330,
+      "fills": 114
+    },
+    {
+      "symbol": "IEF",
+      "pnl": -0.0010630087313759664,
+      "fee": 0.0006660850233877963,
+      "average_weight": 0.008751249976670483,
+      "selected_days": 58,
+      "fills": 41
+    },
+    {
+      "symbol": "DBC",
+      "pnl": -0.0008901290998404682,
+      "fee": 0.000975805580864852,
+      "average_weight": 0.006884719803525432,
+      "selected_days": 97,
+      "fills": 63
+    },
+    {
+      "symbol": "TLT",
+      "pnl": -0.0008410547362421863,
+      "fee": 0.00010587887451377772,
+      "average_weight": 0.00015236065478035896,
+      "selected_days": 2,
+      "fills": 4
+    },
+    {
+      "symbol": "HYG",
+      "pnl": -0.0003150292011445052,
+      "fee": 0.003981280078493554,
+      "average_weight": 0.0498822863359106,
+      "selected_days": 297,
+      "fills": 253
+    },
+    {
+      "symbol": "IAT",
+      "pnl": -0.0001575932126477225,
+      "fee": 0.0006516216258591527,
+      "average_weight": 0.009759267011884572,
+      "selected_days": 224,
+      "fills": 152
+    },
+    {
+      "symbol": "AGG",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 0,
+      "fills": 0
+    },
+    {
+      "symbol": "MCHI",
+      "pnl": 0.0001949601455435814,
+      "fee": 0.0005254726739648203,
+      "average_weight": 0.007404988601480784,
+      "selected_days": 246,
+      "fills": 146
+    },
+    {
+      "symbol": "MDY",
+      "pnl": 0.00031934965004629524,
+      "fee": 0.0007522465589344476,
+      "average_weight": 0.008669957903722594,
+      "selected_days": 136,
+      "fills": 76
+    },
+    {
+      "symbol": "LEMB",
+      "pnl": 0.0006756402979406139,
+      "fee": 0.0018828319690625747,
+      "average_weight": 0.01585076511989255,
+      "selected_days": 110,
+      "fills": 65
+    },
+    {
+      "symbol": "DBB",
+      "pnl": 0.0008796660337897211,
+      "fee": 0.0009750656322128539,
+      "average_weight": 0.014302900482405376,
+      "selected_days": 235,
+      "fills": 142
+    },
+    {
+      "symbol": "EEM",
+      "pnl": 0.001548536129716622,
+      "fee": 0.0006745435115357227,
+      "average_weight": 0.01118721536762527,
+      "selected_days": 241,
+      "fills": 142
+    },
+    {
+      "symbol": "EWA",
+      "pnl": 0.002467482202440566,
+      "fee": 0.00036163686963801625,
+      "average_weight": 0.0042174536633925,
+      "selected_days": 101,
+      "fills": 37
+    },
+    {
+      "symbol": "EWG",
+      "pnl": 0.0025557788688530467,
+      "fee": 0.0017921739932513748,
+      "average_weight": 0.01488339760719192,
+      "selected_days": 336,
+      "fills": 154
+    },
+    {
+      "symbol": "SOXX",
+      "pnl": 0.004440030495278824,
+      "fee": 0.0010142653439935531,
+      "average_weight": 0.007589758217058392,
+      "selected_days": 281,
+      "fills": 152
+    },
+    {
+      "symbol": "XLB",
+      "pnl": 0.004987486595991623,
+      "fee": 0.0014754996302431106,
+      "average_weight": 0.013826014795236635,
+      "selected_days": 224,
+      "fills": 122
+    },
+    {
+      "symbol": "VGK",
+      "pnl": 0.0050151796495039366,
+      "fee": 0.001201518219239302,
+      "average_weight": 0.016238579719496205,
+      "selected_days": 255,
+      "fills": 145
+    },
+    {
+      "symbol": "XLU",
+      "pnl": 0.005151890892923952,
+      "fee": 0.0014236537089347833,
+      "average_weight": 0.01256275172279842,
+      "selected_days": 262,
+      "fills": 134
+    },
+    {
+      "symbol": "SHY",
+      "pnl": 0.0053812512221955485,
+      "fee": 0.004820104908268992,
+      "average_weight": 0.0802833489152842,
+      "selected_days": 343,
+      "fills": 241
+    },
+    {
+      "symbol": "DBA",
+      "pnl": 0.005390923599535845,
+      "fee": 0.0018310434285684558,
+      "average_weight": 0.0218592098813189,
+      "selected_days": 244,
+      "fills": 128
+    },
+    {
+      "symbol": "EFA",
+      "pnl": 0.005554219094777189,
+      "fee": 0.0011018595998856747,
+      "average_weight": 0.011609154012886006,
+      "selected_days": 182,
+      "fills": 100
+    },
+    {
+      "symbol": "EWC",
+      "pnl": 0.005774300187870389,
+      "fee": 0.0017286506181273926,
+      "average_weight": 0.023266733125946164,
+      "selected_days": 469,
+      "fills": 206
+    },
+    {
+      "symbol": "XLC",
+      "pnl": 0.006966467268200745,
+      "fee": 0.0009456439626561546,
+      "average_weight": 0.01770859756115068,
+      "selected_days": 310,
+      "fills": 192
+    },
+    {
+      "symbol": "IBND",
+      "pnl": 0.007530253916628963,
+      "fee": 0.0009349522335766935,
+      "average_weight": 0.0128898450462125,
+      "selected_days": 130,
+      "fills": 71
+    },
+    {
+      "symbol": "EWH",
+      "pnl": 0.007672609891835955,
+      "fee": 0.0009314190338919289,
+      "average_weight": 0.013161711855127824,
+      "selected_days": 231,
+      "fills": 125
+    },
+    {
+      "symbol": "SPY",
+      "pnl": 0.008085780649814793,
+      "fee": 0.001199901796030715,
+      "average_weight": 0.024983900032638208,
+      "selected_days": 411,
+      "fills": 254
+    },
+    {
+      "symbol": "ITA",
+      "pnl": 0.008477609088718023,
+      "fee": 0.0010357482644786755,
+      "average_weight": 0.019408787347475157,
+      "selected_days": 339,
+      "fills": 213
+    },
+    {
+      "symbol": "PPLT",
+      "pnl": 0.009001260849054444,
+      "fee": 0.0005585885956339389,
+      "average_weight": 0.006189920143589624,
+      "selected_days": 273,
+      "fills": 116
+    },
+    {
+      "symbol": "IBB",
+      "pnl": 0.011398278952348394,
+      "fee": 0.000996458977910457,
+      "average_weight": 0.014056130174406526,
+      "selected_days": 212,
+      "fills": 147
+    },
+    {
+      "symbol": "EWU",
+      "pnl": 0.015082156567778273,
+      "fee": 0.0014739452619641287,
+      "average_weight": 0.020530667313877184,
+      "selected_days": 339,
+      "fills": 162
+    },
+    {
+      "symbol": "XLK",
+      "pnl": 0.020115395555114882,
+      "fee": 0.0011064556615158977,
+      "average_weight": 0.016613517462867648,
+      "selected_days": 352,
+      "fills": 193
+    },
+    {
+      "symbol": "GLD",
+      "pnl": 0.023238599201508687,
+      "fee": 0.0017710912582740391,
+      "average_weight": 0.023978483468325262,
+      "selected_days": 433,
+      "fills": 229
+    },
+    {
+      "symbol": "EWY",
+      "pnl": 0.035559628492187856,
+      "fee": 0.0005733014858584037,
+      "average_weight": 0.009981527488115054,
+      "selected_days": 320,
+      "fills": 146
+    }
+  ],
+  "late_equal_c5d1": [
+    {
+      "symbol": "USO",
+      "pnl": -0.013577464073457673,
+      "fee": 0.00032422020591582504,
+      "average_weight": 0.0035192498332599063,
+      "selected_days": 94,
+      "fills": 10
+    },
+    {
+      "symbol": "WEAT",
+      "pnl": -0.013184022959482029,
+      "fee": 0.00041401457118037566,
+      "average_weight": 0.005076695703363529,
+      "selected_days": 132,
+      "fills": 13
+    },
+    {
+      "symbol": "CPER",
+      "pnl": -0.011657218432309711,
+      "fee": 0.0004774880470396983,
+      "average_weight": 0.010623359899814045,
+      "selected_days": 167,
+      "fills": 16
+    },
+    {
+      "symbol": "SLV",
+      "pnl": -0.007979909390976498,
+      "fee": 0.0007544945412781158,
+      "average_weight": 0.00965931966752199,
+      "selected_days": 291,
+      "fills": 23
+    },
+    {
+      "symbol": "XLP",
+      "pnl": -0.0061251586668360815,
+      "fee": 0.0003334039892747658,
+      "average_weight": 0.00429372426611398,
+      "selected_days": 127,
+      "fills": 11
+    },
+    {
+      "symbol": "TLT",
+      "pnl": -0.005425679520895473,
+      "fee": 0.00012357044756962653,
+      "average_weight": 0.0005739687130413023,
+      "selected_days": 21,
+      "fills": 4
+    },
+    {
+      "symbol": "EEM",
+      "pnl": -0.005118538973582668,
+      "fee": 0.00036068785661980726,
+      "average_weight": 0.007340409564884132,
+      "selected_days": 128,
+      "fills": 12
+    },
+    {
+      "symbol": "CORN",
+      "pnl": -0.00431083582235963,
+      "fee": 7.493687731455794e-05,
+      "average_weight": 0.0020373553984213543,
+      "selected_days": 21,
+      "fills": 2
+    },
+    {
+      "symbol": "XLI",
+      "pnl": -0.0042178246312449385,
+      "fee": 0.00042711663660450767,
+      "average_weight": 0.009638915877357844,
+      "selected_days": 190,
+      "fills": 15
+    },
+    {
+      "symbol": "XLY",
+      "pnl": -0.003717338491890977,
+      "fee": 0.0004790187736540978,
+      "average_weight": 0.010038346696528281,
+      "selected_days": 227,
+      "fills": 18
+    },
+    {
+      "symbol": "ITA",
+      "pnl": -0.003448441920782231,
+      "fee": 0.0006294234034665047,
+      "average_weight": 0.0185962082972526,
+      "selected_days": 293,
+      "fills": 24
+    },
+    {
+      "symbol": "IEF",
+      "pnl": -0.0030826674961520334,
+      "fee": 0.00019538124989059246,
+      "average_weight": 0.004888543305173895,
+      "selected_days": 84,
+      "fills": 8
+    },
+    {
+      "symbol": "XLE",
+      "pnl": -0.0030004300148660885,
+      "fee": 0.0003964288833667524,
+      "average_weight": 0.0053787969540067876,
+      "selected_days": 91,
+      "fills": 11
+    },
+    {
+      "symbol": "XLV",
+      "pnl": -0.0028600329138721474,
+      "fee": 0.00035280506419235427,
+      "average_weight": 0.013125534657757685,
+      "selected_days": 167,
+      "fills": 14
+    },
+    {
+      "symbol": "LQD",
+      "pnl": -0.0026187502646158357,
+      "fee": 0.0003279180220407264,
+      "average_weight": 0.0015697357410005314,
+      "selected_days": 85,
+      "fills": 10
+    },
+    {
+      "symbol": "MBB",
+      "pnl": -0.002455283261636306,
+      "fee": 0.00019321552954662527,
+      "average_weight": 0.0011792934380194006,
+      "selected_days": 42,
+      "fills": 6
+    },
+    {
+      "symbol": "DBA",
+      "pnl": -0.0024337197524202407,
+      "fee": 0.0005635901920344373,
+      "average_weight": 0.013358315500636769,
+      "selected_days": 249,
+      "fills": 19
+    },
+    {
+      "symbol": "TIP",
+      "pnl": -0.002055083647651164,
+      "fee": 0.00032749992188214243,
+      "average_weight": 0.00381931579106002,
+      "selected_days": 84,
+      "fills": 11
+    },
+    {
+      "symbol": "LEMB",
+      "pnl": -0.0018051911220866904,
+      "fee": 0.0004010526076051315,
+      "average_weight": 0.006986543107786324,
+      "selected_days": 104,
+      "fills": 13
+    },
+    {
+      "symbol": "EWA",
+      "pnl": -0.0014735620535859598,
+      "fee": 0.000277989111328248,
+      "average_weight": 0.006125773306791352,
+      "selected_days": 168,
+      "fills": 9
+    },
+    {
+      "symbol": "AGG",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 1,
+      "fills": 0
+    },
+    {
+      "symbol": "EMB",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 20,
+      "fills": 0
+    },
+    {
+      "symbol": "IWM",
+      "pnl": 0.00032519858445060907,
+      "fee": 0.0005013971946388928,
+      "average_weight": 0.010005783951746523,
+      "selected_days": 167,
+      "fills": 16
+    },
+    {
+      "symbol": "IGOV",
+      "pnl": 0.00047628296122055266,
+      "fee": 0.00019804924268688453,
+      "average_weight": 0.008024831793067323,
+      "selected_days": 147,
+      "fills": 10
+    },
+    {
+      "symbol": "IAT",
+      "pnl": 0.0006409580627594932,
+      "fee": 0.0006211348049058021,
+      "average_weight": 0.014255015761844243,
+      "selected_days": 226,
+      "fills": 22
+    },
+    {
+      "symbol": "INDA",
+      "pnl": 0.0010040504719122359,
+      "fee": 0.00027287431231443147,
+      "average_weight": 0.008459216075840246,
+      "selected_days": 169,
+      "fills": 11
+    },
+    {
+      "symbol": "EWC",
+      "pnl": 0.0012591041257558713,
+      "fee": 0.0004944494004155845,
+      "average_weight": 0.009930590211896063,
+      "selected_days": 243,
+      "fills": 16
+    },
+    {
+      "symbol": "MDY",
+      "pnl": 0.0014931716217673283,
+      "fee": 0.0004235618274944233,
+      "average_weight": 0.009729218838949736,
+      "selected_days": 189,
+      "fills": 15
+    },
+    {
+      "symbol": "EWG",
+      "pnl": 0.001499931138236181,
+      "fee": 0.00046779244854698576,
+      "average_weight": 0.00745420071421957,
+      "selected_days": 187,
+      "fills": 15
+    },
+    {
+      "symbol": "DBB",
+      "pnl": 0.0020999109966412365,
+      "fee": 0.0004387902543779217,
+      "average_weight": 0.014387961910187064,
+      "selected_days": 241,
+      "fills": 18
+    },
+    {
+      "symbol": "VGK",
+      "pnl": 0.0026327111786799157,
+      "fee": 0.0006775660410672798,
+      "average_weight": 0.017220979374661417,
+      "selected_days": 312,
+      "fills": 26
+    },
+    {
+      "symbol": "SHY",
+      "pnl": 0.0027197871548820243,
+      "fee": 0.0004493477374624022,
+      "average_weight": 0.02805419418317183,
+      "selected_days": 363,
+      "fills": 26
+    },
+    {
+      "symbol": "EFA",
+      "pnl": 0.002741737378469954,
+      "fee": 0.0003435596237522409,
+      "average_weight": 0.012895805082606718,
+      "selected_days": 227,
+      "fills": 15
+    },
+    {
+      "symbol": "MCHI",
+      "pnl": 0.0028686608352512166,
+      "fee": 0.0004026236092837213,
+      "average_weight": 0.016308778040943762,
+      "selected_days": 230,
+      "fills": 18
+    },
+    {
+      "symbol": "SPY",
+      "pnl": 0.0029396361546415025,
+      "fee": 0.0006270129022474996,
+      "average_weight": 0.02574651422484668,
+      "selected_days": 357,
+      "fills": 26
+    },
+    {
+      "symbol": "XLB",
+      "pnl": 0.0029864913571320253,
+      "fee": 0.0003632224559854355,
+      "average_weight": 0.008723996208102632,
+      "selected_days": 219,
+      "fills": 12
+    },
+    {
+      "symbol": "EWJ",
+      "pnl": 0.0034481254489114755,
+      "fee": 0.00036220401826102055,
+      "average_weight": 0.00994031167328008,
+      "selected_days": 144,
+      "fills": 12
+    },
+    {
+      "symbol": "IBND",
+      "pnl": 0.004409261622892038,
+      "fee": 0.0003343761416079111,
+      "average_weight": 0.010226616850578983,
+      "selected_days": 190,
+      "fills": 15
+    },
+    {
+      "symbol": "HYG",
+      "pnl": 0.004913888541882946,
+      "fee": 0.0003378477575789381,
+      "average_weight": 0.03360200986902422,
+      "selected_days": 356,
+      "fills": 23
+    },
+    {
+      "symbol": "XLC",
+      "pnl": 0.006375535661806471,
+      "fee": 0.0004026929500278129,
+      "average_weight": 0.019558112425821967,
+      "selected_days": 290,
+      "fills": 19
+    },
+    {
+      "symbol": "XLU",
+      "pnl": 0.007596209369094815,
+      "fee": 0.0004455426423103608,
+      "average_weight": 0.013466672410885611,
+      "selected_days": 285,
+      "fills": 18
+    },
+    {
+      "symbol": "EWU",
+      "pnl": 0.009087249117106882,
+      "fee": 0.0008204058968822247,
+      "average_weight": 0.020444573866936846,
+      "selected_days": 377,
+      "fills": 33
+    },
+    {
+      "symbol": "XLK",
+      "pnl": 0.009331885375631989,
+      "fee": 0.0007119384701308848,
+      "average_weight": 0.017795813372367655,
+      "selected_days": 315,
+      "fills": 26
+    },
+    {
+      "symbol": "IBB",
+      "pnl": 0.010465168758076219,
+      "fee": 0.0003796665717128682,
+      "average_weight": 0.014697676247957571,
+      "selected_days": 196,
+      "fills": 16
+    },
+    {
+      "symbol": "EWT",
+      "pnl": 0.015291472915292625,
+      "fee": 0.0008959257860296003,
+      "average_weight": 0.017405312614274988,
+      "selected_days": 303,
+      "fills": 29
+    },
+    {
+      "symbol": "DBC",
+      "pnl": 0.01603477833930389,
+      "fee": 0.0003467774183920277,
+      "average_weight": 0.007332953195008145,
+      "selected_days": 137,
+      "fills": 11
+    },
+    {
+      "symbol": "GLD",
+      "pnl": 0.017087484681580722,
+      "fee": 0.001034663723215741,
+      "average_weight": 0.02247099223066111,
+      "selected_days": 408,
+      "fills": 38
+    },
+    {
+      "symbol": "SOXX",
+      "pnl": 0.021263012582890914,
+      "fee": 0.0007133253164033253,
+      "average_weight": 0.015919203062462174,
+      "selected_days": 291,
+      "fills": 24
+    },
+    {
+      "symbol": "PPLT",
+      "pnl": 0.021342504638806433,
+      "fee": 0.0003698090747712916,
+      "average_weight": 0.008849081488562357,
+      "selected_days": 221,
+      "fills": 12
+    },
+    {
+      "symbol": "EWH",
+      "pnl": 0.022159944302471805,
+      "fee": 0.00035608361801925517,
+      "average_weight": 0.014963146029139288,
+      "selected_days": 264,
+      "fills": 16
+    },
+    {
+      "symbol": "EWY",
+      "pnl": 0.045699885010420646,
+      "fee": 0.0008074636701541982,
+      "average_weight": 0.01798274790616021,
+      "selected_days": 346,
+      "fills": 29
+    }
+  ],
+  "early_equal_c5d0": [
+    {
+      "symbol": "XLY",
+      "pnl": -0.024767665716819653,
+      "fee": 0.0005681853593800978,
+      "average_weight": 0.011685890815615621,
+      "selected_days": 188,
+      "fills": 20
+    },
+    {
+      "symbol": "SOXX",
+      "pnl": -0.014753353622958015,
+      "fee": 0.00044557495075249975,
+      "average_weight": 0.010634778665460478,
+      "selected_days": 167,
+      "fills": 16
+    },
+    {
+      "symbol": "EWA",
+      "pnl": -0.011291282316053374,
+      "fee": 0.0002604776033785087,
+      "average_weight": 0.007258854267425787,
+      "selected_days": 148,
+      "fills": 9
+    },
+    {
+      "symbol": "PPLT",
+      "pnl": -0.009424427657931453,
+      "fee": 0.000128975774400792,
+      "average_weight": 0.0015474751101382375,
+      "selected_days": 43,
+      "fills": 4
+    },
+    {
+      "symbol": "CORN",
+      "pnl": -0.008753268443446973,
+      "fee": 0.00044583732643381285,
+      "average_weight": 0.01006300006155121,
+      "selected_days": 190,
+      "fills": 16
+    },
+    {
+      "symbol": "WEAT",
+      "pnl": -0.008118348998432138,
+      "fee": 0.0007795155542110526,
+      "average_weight": 0.02001559359650255,
+      "selected_days": 337,
+      "fills": 27
+    },
+    {
+      "symbol": "INDA",
+      "pnl": -0.0069980549270661505,
+      "fee": 0.0006571197012940076,
+      "average_weight": 0.025674556453627095,
+      "selected_days": 340,
+      "fills": 24
+    },
+    {
+      "symbol": "GLD",
+      "pnl": -0.005729361817820674,
+      "fee": 0.00019865296729892066,
+      "average_weight": 0.0031663962054134438,
+      "selected_days": 103,
+      "fills": 6
+    },
+    {
+      "symbol": "SLV",
+      "pnl": -0.005196001567864223,
+      "fee": 6.508237999133925e-05,
+      "average_weight": 0.00077931821438405,
+      "selected_days": 20,
+      "fills": 2
+    },
+    {
+      "symbol": "EWU",
+      "pnl": -0.004782701393693394,
+      "fee": 0.0005196018391711759,
+      "average_weight": 0.014353345480057103,
+      "selected_days": 187,
+      "fills": 18
+    },
+    {
+      "symbol": "EWJ",
+      "pnl": -0.003904462922008461,
+      "fee": 0.00016520041572868637,
+      "average_weight": 0.007006052248475636,
+      "selected_days": 59,
+      "fills": 6
+    },
+    {
+      "symbol": "SPY",
+      "pnl": -0.0035296097600512636,
+      "fee": 0.0005793132040966506,
+      "average_weight": 0.019869539455699137,
+      "selected_days": 253,
+      "fills": 22
+    },
+    {
+      "symbol": "IBB",
+      "pnl": -0.0031076625977459324,
+      "fee": 0.0001967689219606459,
+      "average_weight": 0.004788492648617829,
+      "selected_days": 61,
+      "fills": 7
+    },
+    {
+      "symbol": "EFA",
+      "pnl": -0.0028401065101912107,
+      "fee": 0.00026224173918046486,
+      "average_weight": 0.006973263161867531,
+      "selected_days": 80,
+      "fills": 8
+    },
+    {
+      "symbol": "EMB",
+      "pnl": -0.002589724448521127,
+      "fee": 0.0001939709371466324,
+      "average_weight": 0.004533394207386695,
+      "selected_days": 63,
+      "fills": 6
+    },
+    {
+      "symbol": "MCHI",
+      "pnl": -0.001781655475569746,
+      "fee": 6.450147563114028e-05,
+      "average_weight": 0.00025309075348188775,
+      "selected_days": 44,
+      "fills": 2
+    },
+    {
+      "symbol": "IBND",
+      "pnl": -0.0016711575238704246,
+      "fee": 0.0002498490647916268,
+      "average_weight": 0.0035434425674087944,
+      "selected_days": 104,
+      "fills": 9
+    },
+    {
+      "symbol": "XLP",
+      "pnl": -0.0013819097976620984,
+      "fee": 0.0004572800133288453,
+      "average_weight": 0.01575389542084975,
+      "selected_days": 187,
+      "fills": 18
+    },
+    {
+      "symbol": "IWM",
+      "pnl": -0.0013326191481967083,
+      "fee": 0.00019860485850412433,
+      "average_weight": 0.00539611207144337,
+      "selected_days": 61,
+      "fills": 6
+    },
+    {
+      "symbol": "EWY",
+      "pnl": -0.0011727677205481902,
+      "fee": 0.00013087559294275303,
+      "average_weight": 0.0030116419437131426,
+      "selected_days": 84,
+      "fills": 4
+    },
+    {
+      "symbol": "HYG",
+      "pnl": -0.0011251332579957725,
+      "fee": 0.0002609643234311004,
+      "average_weight": 0.026205413228039782,
+      "selected_days": 253,
+      "fills": 14
+    },
+    {
+      "symbol": "TIP",
+      "pnl": -0.0011161036262385218,
+      "fee": 0.00045512888289260853,
+      "average_weight": 0.008331362794396434,
+      "selected_days": 190,
+      "fills": 15
+    },
+    {
+      "symbol": "EWH",
+      "pnl": -0.0011106782303313186,
+      "fee": 0.00013329157727695568,
+      "average_weight": 0.0013206973962532017,
+      "selected_days": 19,
+      "fills": 4
+    },
+    {
+      "symbol": "IGOV",
+      "pnl": -0.0010086929523566127,
+      "fee": 6.616208455777141e-05,
+      "average_weight": 0.0010504684918615985,
+      "selected_days": 19,
+      "fills": 2
+    },
+    {
+      "symbol": "IEF",
+      "pnl": -0.0006408528751564914,
+      "fee": 0.00012481857340212495,
+      "average_weight": 0.0024970868122474363,
+      "selected_days": 106,
+      "fills": 5
+    },
+    {
+      "symbol": "SHY",
+      "pnl": -0.0005323249100757429,
+      "fee": 0.00012587450635901125,
+      "average_weight": 0.0018472837898885896,
+      "selected_days": 43,
+      "fills": 5
+    },
+    {
+      "symbol": "LQD",
+      "pnl": -1.5927890608466856e-06,
+      "fee": 0.00012664984827535767,
+      "average_weight": 0.001888565307555167,
+      "selected_days": 84,
+      "fills": 4
+    },
+    {
+      "symbol": "TLT",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 0,
+      "fills": 0
+    },
+    {
+      "symbol": "AGG",
+      "pnl": 6.518409443457857e-05,
+      "fee": 0.00019068709459272985,
+      "average_weight": 0.0023917673829030074,
+      "selected_days": 85,
+      "fills": 7
+    },
+    {
+      "symbol": "VGK",
+      "pnl": 8.851812877534314e-05,
+      "fee": 0.00019482535902936188,
+      "average_weight": 0.007640104009298146,
+      "selected_days": 103,
+      "fills": 8
+    },
+    {
+      "symbol": "EWT",
+      "pnl": 9.09344722742943e-05,
+      "fee": 0.0004658499833752373,
+      "average_weight": 0.023749336717902244,
+      "selected_days": 249,
+      "fills": 21
+    },
+    {
+      "symbol": "IAT",
+      "pnl": 0.00024059639184898993,
+      "fee": 0.0002660430786965697,
+      "average_weight": 0.018628313597389066,
+      "selected_days": 213,
+      "fills": 13
+    },
+    {
+      "symbol": "LEMB",
+      "pnl": 0.0005282320522981155,
+      "fee": 3.256359272549083e-05,
+      "average_weight": 0.0028323588553475724,
+      "selected_days": 21,
+      "fills": 1
+    },
+    {
+      "symbol": "XLB",
+      "pnl": 0.000778334005358909,
+      "fee": 0.0004623896000416827,
+      "average_weight": 0.026925562442641444,
+      "selected_days": 336,
+      "fills": 21
+    },
+    {
+      "symbol": "DBA",
+      "pnl": 0.0009694737258542773,
+      "fee": 0.0003318919319959402,
+      "average_weight": 0.008760493736568023,
+      "selected_days": 105,
+      "fills": 11
+    },
+    {
+      "symbol": "XLV",
+      "pnl": 0.001164103555870908,
+      "fee": 0.0005295599868384435,
+      "average_weight": 0.02041449478848411,
+      "selected_days": 252,
+      "fills": 22
+    },
+    {
+      "symbol": "MDY",
+      "pnl": 0.00161806219229316,
+      "fee": 0.0001964048194430447,
+      "average_weight": 0.004375999010418308,
+      "selected_days": 64,
+      "fills": 6
+    },
+    {
+      "symbol": "MBB",
+      "pnl": 0.0017286987356529356,
+      "fee": 0.0002578509066265016,
+      "average_weight": 0.002792939592625981,
+      "selected_days": 127,
+      "fills": 9
+    },
+    {
+      "symbol": "EEM",
+      "pnl": 0.0018324258618919228,
+      "fee": 6.758335459991677e-05,
+      "average_weight": 0.005046489458935457,
+      "selected_days": 102,
+      "fills": 3
+    },
+    {
+      "symbol": "EWC",
+      "pnl": 0.002104121605136568,
+      "fee": 0.00013586271862320822,
+      "average_weight": 0.012187569715641212,
+      "selected_days": 106,
+      "fills": 7
+    },
+    {
+      "symbol": "ITA",
+      "pnl": 0.0023429203633703495,
+      "fee": 6.390886008283031e-05,
+      "average_weight": 0.0027996865023779817,
+      "selected_days": 21,
+      "fills": 2
+    },
+    {
+      "symbol": "XLU",
+      "pnl": 0.0024845188942160526,
+      "fee": 0.00048717253942133065,
+      "average_weight": 0.018119245666967584,
+      "selected_days": 228,
+      "fills": 19
+    },
+    {
+      "symbol": "EWG",
+      "pnl": 0.003059350810887881,
+      "fee": 0.000134616720504856,
+      "average_weight": 0.01321829770536221,
+      "selected_days": 129,
+      "fills": 7
+    },
+    {
+      "symbol": "XLK",
+      "pnl": 0.0033744838114803527,
+      "fee": 0.0005834400564819915,
+      "average_weight": 0.031610123992351524,
+      "selected_days": 355,
+      "fills": 27
+    },
+    {
+      "symbol": "DBC",
+      "pnl": 0.006443201046716664,
+      "fee": 0.0005992695146751118,
+      "average_weight": 0.01487053759200952,
+      "selected_days": 251,
+      "fills": 22
+    },
+    {
+      "symbol": "DBB",
+      "pnl": 0.007063734663437268,
+      "fee": 0.0006667903026106161,
+      "average_weight": 0.026481497971970636,
+      "selected_days": 398,
+      "fills": 30
+    },
+    {
+      "symbol": "XLI",
+      "pnl": 0.009052245925649995,
+      "fee": 0.0005937416821406671,
+      "average_weight": 0.019032321084816204,
+      "selected_days": 313,
+      "fills": 23
+    },
+    {
+      "symbol": "USO",
+      "pnl": 0.017041246410054077,
+      "fee": 0.0006119214759803641,
+      "average_weight": 0.028570476763403414,
+      "selected_days": 339,
+      "fills": 27
+    },
+    {
+      "symbol": "XLE",
+      "pnl": 0.02473421885851699,
+      "fee": 0.0006287630508274685,
+      "average_weight": 0.0266763836426147,
+      "selected_days": 315,
+      "fills": 26
+    }
+  ],
+  "early_risk_c5d0": [
+    {
+      "symbol": "XLY",
+      "pnl": -0.017486963259954226,
+      "fee": 0.0003874134335500065,
+      "average_weight": 0.008145043540971715,
+      "selected_days": 188,
+      "fills": 20
+    },
+    {
+      "symbol": "CORN",
+      "pnl": -0.010915219931184675,
+      "fee": 0.0004519722130325004,
+      "average_weight": 0.009262722541358825,
+      "selected_days": 190,
+      "fills": 16
+    },
+    {
+      "symbol": "SOXX",
+      "pnl": -0.008406668779727986,
+      "fee": 0.0002805100094044991,
+      "average_weight": 0.00737652961663765,
+      "selected_days": 167,
+      "fills": 16
+    },
+    {
+      "symbol": "EWA",
+      "pnl": -0.008166260786945708,
+      "fee": 0.00020018249922734813,
+      "average_weight": 0.005545384177798004,
+      "selected_days": 148,
+      "fills": 9
+    },
+    {
+      "symbol": "PPLT",
+      "pnl": -0.007162593010439532,
+      "fee": 0.00010873872244896052,
+      "average_weight": 0.001445151215090935,
+      "selected_days": 43,
+      "fills": 4
+    },
+    {
+      "symbol": "WEAT",
+      "pnl": -0.0070668836224927626,
+      "fee": 0.0006403905649648484,
+      "average_weight": 0.016776910829656776,
+      "selected_days": 337,
+      "fills": 27
+    },
+    {
+      "symbol": "GLD",
+      "pnl": -0.006856457444050919,
+      "fee": 0.00025148610956582515,
+      "average_weight": 0.004171562166527996,
+      "selected_days": 103,
+      "fills": 6
+    },
+    {
+      "symbol": "INDA",
+      "pnl": -0.005936128472202855,
+      "fee": 0.0005515911155796486,
+      "average_weight": 0.01882732352984638,
+      "selected_days": 340,
+      "fills": 24
+    },
+    {
+      "symbol": "EWU",
+      "pnl": -0.005277358667946117,
+      "fee": 0.00045981110478098333,
+      "average_weight": 0.012367775555683547,
+      "selected_days": 187,
+      "fills": 18
+    },
+    {
+      "symbol": "TIP",
+      "pnl": -0.004959278950448667,
+      "fee": 0.0011409043791344997,
+      "average_weight": 0.021683497157722238,
+      "selected_days": 190,
+      "fills": 15
+    },
+    {
+      "symbol": "EWJ",
+      "pnl": -0.004119047939333367,
+      "fee": 0.00020251756065124926,
+      "average_weight": 0.00642685462461804,
+      "selected_days": 59,
+      "fills": 6
+    },
+    {
+      "symbol": "SPY",
+      "pnl": -0.0038722509209304047,
+      "fee": 0.00048375843363775107,
+      "average_weight": 0.015314525661315479,
+      "selected_days": 253,
+      "fills": 22
+    },
+    {
+      "symbol": "EMB",
+      "pnl": -0.0037917248203342187,
+      "fee": 0.00026600257127111786,
+      "average_weight": 0.005920468369484442,
+      "selected_days": 63,
+      "fills": 6
+    },
+    {
+      "symbol": "IBB",
+      "pnl": -0.003782584097636676,
+      "fee": 0.00017653152633595977,
+      "average_weight": 0.004212678047305504,
+      "selected_days": 61,
+      "fills": 7
+    },
+    {
+      "symbol": "IBND",
+      "pnl": -0.0033897284122489145,
+      "fee": 0.00048151068935839577,
+      "average_weight": 0.006778677822249381,
+      "selected_days": 104,
+      "fills": 9
+    },
+    {
+      "symbol": "SLV",
+      "pnl": -0.0032200272610393224,
+      "fee": 4.033236615661252e-05,
+      "average_weight": 0.0004939866064062674,
+      "selected_days": 20,
+      "fills": 2
+    },
+    {
+      "symbol": "XLP",
+      "pnl": -0.00275475587763456,
+      "fee": 0.000499000901742709,
+      "average_weight": 0.016441112257994914,
+      "selected_days": 187,
+      "fills": 18
+    },
+    {
+      "symbol": "IWM",
+      "pnl": -0.0024006498362134352,
+      "fee": 0.00014384307989897768,
+      "average_weight": 0.003650366314583867,
+      "selected_days": 61,
+      "fills": 6
+    },
+    {
+      "symbol": "IGOV",
+      "pnl": -0.002388984422519004,
+      "fee": 0.00015669802093949854,
+      "average_weight": 0.002499395356074225,
+      "selected_days": 19,
+      "fills": 2
+    },
+    {
+      "symbol": "EFA",
+      "pnl": -0.001852067563118882,
+      "fee": 0.00016758771202034475,
+      "average_weight": 0.0043350770513362665,
+      "selected_days": 80,
+      "fills": 8
+    },
+    {
+      "symbol": "IAT",
+      "pnl": -0.001709586922940381,
+      "fee": 0.0001881746016442537,
+      "average_weight": 0.010303347549729364,
+      "selected_days": 213,
+      "fills": 13
+    },
+    {
+      "symbol": "MCHI",
+      "pnl": -0.0015952594506913353,
+      "fee": 5.7753359162331116e-05,
+      "average_weight": 0.00022683763167486622,
+      "selected_days": 44,
+      "fills": 2
+    },
+    {
+      "symbol": "HYG",
+      "pnl": -0.0013682280880390409,
+      "fee": 0.0005330909673933484,
+      "average_weight": 0.04663811962814793,
+      "selected_days": 253,
+      "fills": 14
+    },
+    {
+      "symbol": "IEF",
+      "pnl": -0.0010937442509526087,
+      "fee": 0.00019827934029712592,
+      "average_weight": 0.004013390098043273,
+      "selected_days": 106,
+      "fills": 5
+    },
+    {
+      "symbol": "EWH",
+      "pnl": -0.0010868381418322182,
+      "fee": 0.00013043054794218662,
+      "average_weight": 0.001299590912130577,
+      "selected_days": 19,
+      "fills": 4
+    },
+    {
+      "symbol": "SHY",
+      "pnl": -0.0010206649736203758,
+      "fee": 0.0002402545325132179,
+      "average_weight": 0.003563046158083304,
+      "selected_days": 43,
+      "fills": 5
+    },
+    {
+      "symbol": "XLB",
+      "pnl": -0.0005863010894867071,
+      "fee": 0.0003444529140256972,
+      "average_weight": 0.018818875466447928,
+      "selected_days": 336,
+      "fills": 21
+    },
+    {
+      "symbol": "EWY",
+      "pnl": -0.0005833164048445903,
+      "fee": 0.00010438124239015655,
+      "average_weight": 0.0026162494597604313,
+      "selected_days": 84,
+      "fills": 4
+    },
+    {
+      "symbol": "VGK",
+      "pnl": -9.535910387361212e-05,
+      "fee": 0.00016599365399349865,
+      "average_weight": 0.005637090281268088,
+      "selected_days": 103,
+      "fills": 8
+    },
+    {
+      "symbol": "TLT",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 0,
+      "fills": 0
+    },
+    {
+      "symbol": "LQD",
+      "pnl": 2.8466583129219602e-05,
+      "fee": 0.00020954240203285347,
+      "average_weight": 0.0030944246248615598,
+      "selected_days": 84,
+      "fills": 4
+    },
+    {
+      "symbol": "EWT",
+      "pnl": 0.00028321217467609534,
+      "fee": 0.0003962272648826316,
+      "average_weight": 0.020402009424130535,
+      "selected_days": 249,
+      "fills": 21
+    },
+    {
+      "symbol": "AGG",
+      "pnl": 0.0006001616318856527,
+      "fee": 0.00038131101008945776,
+      "average_weight": 0.004950155723532262,
+      "selected_days": 85,
+      "fills": 7
+    },
+    {
+      "symbol": "EEM",
+      "pnl": 0.0006609703747372576,
+      "fee": 5.2325394308014216e-05,
+      "average_weight": 0.003129488150718486,
+      "selected_days": 102,
+      "fills": 3
+    },
+    {
+      "symbol": "LEMB",
+      "pnl": 0.0007397912299431685,
+      "fee": 4.560544974306784e-05,
+      "average_weight": 0.003993217136383918,
+      "selected_days": 21,
+      "fills": 1
+    },
+    {
+      "symbol": "ITA",
+      "pnl": 0.0014385134550719842,
+      "fee": 3.9238958594057884e-05,
+      "average_weight": 0.0017321611304482786,
+      "selected_days": 21,
+      "fills": 2
+    },
+    {
+      "symbol": "MDY",
+      "pnl": 0.0014588693399634237,
+      "fee": 0.00013027115042667654,
+      "average_weight": 0.0026750718374225525,
+      "selected_days": 64,
+      "fills": 6
+    },
+    {
+      "symbol": "EWC",
+      "pnl": 0.0018240275398612362,
+      "fee": 0.00012754144640054877,
+      "average_weight": 0.01104281793859875,
+      "selected_days": 106,
+      "fills": 7
+    },
+    {
+      "symbol": "EWG",
+      "pnl": 0.0022669418285451515,
+      "fee": 0.00013580639853575744,
+      "average_weight": 0.011772566397272208,
+      "selected_days": 129,
+      "fills": 7
+    },
+    {
+      "symbol": "XLV",
+      "pnl": 0.0024421474198332693,
+      "fee": 0.0006999054742080704,
+      "average_weight": 0.024416299024554895,
+      "selected_days": 252,
+      "fills": 22
+    },
+    {
+      "symbol": "XLU",
+      "pnl": 0.0026649080390019147,
+      "fee": 0.00047560927909822104,
+      "average_weight": 0.017487911302725295,
+      "selected_days": 228,
+      "fills": 19
+    },
+    {
+      "symbol": "XLI",
+      "pnl": 0.0027611347996542744,
+      "fee": 0.0005931858140849404,
+      "average_weight": 0.016661455706115633,
+      "selected_days": 313,
+      "fills": 23
+    },
+    {
+      "symbol": "XLK",
+      "pnl": 0.003516294986362024,
+      "fee": 0.00041418882035893195,
+      "average_weight": 0.021955027631281453,
+      "selected_days": 355,
+      "fills": 27
+    },
+    {
+      "symbol": "MBB",
+      "pnl": 0.005318507399286879,
+      "fee": 0.0007192025335913928,
+      "average_weight": 0.00833712386183476,
+      "selected_days": 127,
+      "fills": 9
+    },
+    {
+      "symbol": "DBC",
+      "pnl": 0.00762741749625283,
+      "fee": 0.0004747989361511329,
+      "average_weight": 0.013755462143682813,
+      "selected_days": 251,
+      "fills": 22
+    },
+    {
+      "symbol": "DBA",
+      "pnl": 0.00920646814786405,
+      "fee": 0.0005574924626041904,
+      "average_weight": 0.01713085191707789,
+      "selected_days": 105,
+      "fills": 11
+    },
+    {
+      "symbol": "USO",
+      "pnl": 0.010319474462878639,
+      "fee": 0.0003479119366701788,
+      "average_weight": 0.016443138238005812,
+      "selected_days": 339,
+      "fills": 27
+    },
+    {
+      "symbol": "DBB",
+      "pnl": 0.010907231786974864,
+      "fee": 0.000646734181722404,
+      "average_weight": 0.024343816353898855,
+      "selected_days": 398,
+      "fills": 30
+    },
+    {
+      "symbol": "XLE",
+      "pnl": 0.011618199974369855,
+      "fee": 0.0003186789985331405,
+      "average_weight": 0.013102163935647943,
+      "selected_days": 315,
+      "fills": 26
+    }
+  ],
+  "early_all_c5d0": [
+    {
+      "symbol": "MCHI",
+      "pnl": -0.0074993714206768435,
+      "fee": 0.00032373325809093533,
+      "average_weight": 0.0071357544991762735,
+      "selected_days": 503,
+      "fills": 40
+    },
+    {
+      "symbol": "IBB",
+      "pnl": -0.0072010058220402075,
+      "fee": 0.00028128603279456833,
+      "average_weight": 0.011767956917186103,
+      "selected_days": 503,
+      "fills": 40
+    },
+    {
+      "symbol": "IWM",
+      "pnl": -0.0064064172276585545,
+      "fee": 0.00031965018512212514,
+      "average_weight": 0.007546816229564271,
+      "selected_days": 503,
+      "fills": 40
+    },
+    {
+      "symbol": "PPLT",
+      "pnl": -0.006167304025271406,
+      "fee": 0.00035249973332502883,
+      "average_weight": 0.009904390939793036,
+      "selected_days": 503,
+      "fills": 42
+    },
+    {
+      "symbol": "SLV",
+      "pnl": -0.00534475371784238,
+      "fee": 0.00024875298331626444,
+      "average_weight": 0.00899540758253068,
+      "selected_days": 503,
+      "fills": 34
+    },
+    {
+      "symbol": "EEM",
+      "pnl": -0.0042521717725876795,
+      "fee": 0.00015301478746510222,
+      "average_weight": 0.007108601014153402,
+      "selected_days": 503,
+      "fills": 21
+    },
+    {
+      "symbol": "ITA",
+      "pnl": -0.003365813599909114,
+      "fee": 0.00031410514245785483,
+      "average_weight": 0.012420008335113562,
+      "selected_days": 503,
+      "fills": 42
+    },
+    {
+      "symbol": "IAT",
+      "pnl": -0.002721011235560806,
+      "fee": 0.0002032548590646502,
+      "average_weight": 0.010215712554906628,
+      "selected_days": 503,
+      "fills": 30
+    },
+    {
+      "symbol": "EWJ",
+      "pnl": -0.002706562454568773,
+      "fee": 0.00019356932847800428,
+      "average_weight": 0.009104079504428184,
+      "selected_days": 503,
+      "fills": 28
+    },
+    {
+      "symbol": "SOXX",
+      "pnl": -0.002566658153474546,
+      "fee": 0.000302212675677219,
+      "average_weight": 0.009907096139134283,
+      "selected_days": 503,
+      "fills": 42
+    },
+    {
+      "symbol": "EWC",
+      "pnl": -0.002428801060601824,
+      "fee": 0.0002602888520541294,
+      "average_weight": 0.013125694947810764,
+      "selected_days": 503,
+      "fills": 38
+    },
+    {
+      "symbol": "IGOV",
+      "pnl": -0.002309499083884449,
+      "fee": 0.00022048089712908207,
+      "average_weight": 0.006402091209672822,
+      "selected_days": 503,
+      "fills": 30
+    },
+    {
+      "symbol": "TLT",
+      "pnl": -0.0023091054395600508,
+      "fee": 0.0002442876335928899,
+      "average_weight": 0.009214132829010024,
+      "selected_days": 503,
+      "fills": 36
+    },
+    {
+      "symbol": "GLD",
+      "pnl": -0.001993655978824064,
+      "fee": 0.00023319878343615826,
+      "average_weight": 0.006727393617329637,
+      "selected_days": 503,
+      "fills": 27
+    },
+    {
+      "symbol": "EWY",
+      "pnl": -0.0016786683171386098,
+      "fee": 0.0002238086075212536,
+      "average_weight": 0.005223460287826155,
+      "selected_days": 503,
+      "fills": 27
+    },
+    {
+      "symbol": "XLY",
+      "pnl": -0.0016253806773834719,
+      "fee": 0.0002629602401181215,
+      "average_weight": 0.012486730508690187,
+      "selected_days": 503,
+      "fills": 40
+    },
+    {
+      "symbol": "MDY",
+      "pnl": -0.0014701904631709722,
+      "fee": 0.00024316672908799737,
+      "average_weight": 0.010049504229903977,
+      "selected_days": 503,
+      "fills": 34
+    },
+    {
+      "symbol": "DBA",
+      "pnl": -0.001028821445786916,
+      "fee": 0.00033817653927921626,
+      "average_weight": 0.00866035836440974,
+      "selected_days": 503,
+      "fills": 40
+    },
+    {
+      "symbol": "EFA",
+      "pnl": -0.0009818918975794417,
+      "fee": 0.00022284240829811519,
+      "average_weight": 0.012436964695529544,
+      "selected_days": 503,
+      "fills": 34
+    },
+    {
+      "symbol": "EWH",
+      "pnl": -0.0008777331993928411,
+      "fee": 0.00015240031427374553,
+      "average_weight": 0.010929832892015249,
+      "selected_days": 503,
+      "fills": 27
+    },
+    {
+      "symbol": "LEMB",
+      "pnl": -0.0006652141245785284,
+      "fee": 0.00019296674843859515,
+      "average_weight": 0.008318492031344533,
+      "selected_days": 503,
+      "fills": 28
+    },
+    {
+      "symbol": "IBND",
+      "pnl": -0.00041937831629635085,
+      "fee": 0.00017978611812554784,
+      "average_weight": 0.004811742575846789,
+      "selected_days": 503,
+      "fills": 23
+    },
+    {
+      "symbol": "SHY",
+      "pnl": -0.0003439088082983169,
+      "fee": 0.0001520621212570643,
+      "average_weight": 0.008081627873411271,
+      "selected_days": 503,
+      "fills": 25
+    },
+    {
+      "symbol": "IEF",
+      "pnl": -0.0002145061440899192,
+      "fee": 0.00020268471276122985,
+      "average_weight": 0.008077621846646515,
+      "selected_days": 503,
+      "fills": 31
+    },
+    {
+      "symbol": "TIP",
+      "pnl": -0.00010220633884209661,
+      "fee": 0.00024320023237502772,
+      "average_weight": 0.008434333656954843,
+      "selected_days": 503,
+      "fills": 36
+    },
+    {
+      "symbol": "EMB",
+      "pnl": -4.263956578399379e-05,
+      "fee": 0.00022436542331859112,
+      "average_weight": 0.005650770531895108,
+      "selected_days": 503,
+      "fills": 27
+    },
+    {
+      "symbol": "EWG",
+      "pnl": 4.601215632025167e-05,
+      "fee": 0.0001800165590648024,
+      "average_weight": 0.01089383368278594,
+      "selected_days": 503,
+      "fills": 30
+    },
+    {
+      "symbol": "EWT",
+      "pnl": 0.00014338824590837,
+      "fee": 0.00022503977407705358,
+      "average_weight": 0.011569046256352066,
+      "selected_days": 503,
+      "fills": 35
+    },
+    {
+      "symbol": "EWA",
+      "pnl": 0.00022452411707529828,
+      "fee": 0.00018273882632016927,
+      "average_weight": 0.011829852766989606,
+      "selected_days": 503,
+      "fills": 31
+    },
+    {
+      "symbol": "LQD",
+      "pnl": 0.0002778501904860968,
+      "fee": 0.00020409558327069357,
+      "average_weight": 0.007698612425493575,
+      "selected_days": 503,
+      "fills": 29
+    },
+    {
+      "symbol": "HYG",
+      "pnl": 0.00028150557692760945,
+      "fee": 8.064814020114554e-05,
+      "average_weight": 0.013201930446118797,
+      "selected_days": 503,
+      "fills": 22
+    },
+    {
+      "symbol": "MBB",
+      "pnl": 0.00043458925585048466,
+      "fee": 0.00016197231131327152,
+      "average_weight": 0.005752742349796428,
+      "selected_days": 503,
+      "fills": 22
+    },
+    {
+      "symbol": "XLK",
+      "pnl": 0.0005778809827654057,
+      "fee": 0.00020253811062119674,
+      "average_weight": 0.013009863884541022,
+      "selected_days": 503,
+      "fills": 36
+    },
+    {
+      "symbol": "INDA",
+      "pnl": 0.0006063285583565107,
+      "fee": 0.0002229094511969681,
+      "average_weight": 0.011460660176969213,
+      "selected_days": 503,
+      "fills": 32
+    },
+    {
+      "symbol": "SPY",
+      "pnl": 0.0006482707742222122,
+      "fee": 0.00024337776974640173,
+      "average_weight": 0.011457613162276892,
+      "selected_days": 503,
+      "fills": 39
+    },
+    {
+      "symbol": "CORN",
+      "pnl": 0.0008545287348145532,
+      "fee": 0.00035640639136156347,
+      "average_weight": 0.008911060725413542,
+      "selected_days": 503,
+      "fills": 43
+    },
+    {
+      "symbol": "AGG",
+      "pnl": 0.0008579482898802348,
+      "fee": 0.00020443278084611983,
+      "average_weight": 0.006661561863442125,
+      "selected_days": 503,
+      "fills": 29
+    },
+    {
+      "symbol": "XLP",
+      "pnl": 0.0008908401347686989,
+      "fee": 0.00022419858255155146,
+      "average_weight": 0.014110408005650625,
+      "selected_days": 503,
+      "fills": 36
+    },
+    {
+      "symbol": "DBB",
+      "pnl": 0.0009548594239615901,
+      "fee": 0.0002449458008636276,
+      "average_weight": 0.01087315563490348,
+      "selected_days": 503,
+      "fills": 37
+    },
+    {
+      "symbol": "VGK",
+      "pnl": 0.001076010659939564,
+      "fee": 0.0001829783184178516,
+      "average_weight": 0.0120277682366125,
+      "selected_days": 503,
+      "fills": 30
+    },
+    {
+      "symbol": "EWU",
+      "pnl": 0.001530726620166636,
+      "fee": 0.0002642874019205361,
+      "average_weight": 0.010404889383188037,
+      "selected_days": 503,
+      "fills": 36
+    },
+    {
+      "symbol": "XLV",
+      "pnl": 0.0019433761937702587,
+      "fee": 0.0002618250418296833,
+      "average_weight": 0.013050502622160063,
+      "selected_days": 503,
+      "fills": 40
+    },
+    {
+      "symbol": "XLB",
+      "pnl": 0.0028639599912414064,
+      "fee": 0.000183757150608765,
+      "average_weight": 0.012602662931958976,
+      "selected_days": 503,
+      "fills": 30
+    },
+    {
+      "symbol": "DBC",
+      "pnl": 0.0033228131853844612,
+      "fee": 0.00033895987795197827,
+      "average_weight": 0.010920532734339093,
+      "selected_days": 503,
+      "fills": 44
+    },
+    {
+      "symbol": "WEAT",
+      "pnl": 0.0038136383936567455,
+      "fee": 0.00029878312231462485,
+      "average_weight": 0.009911658238338446,
+      "selected_days": 503,
+      "fills": 39
+    },
+    {
+      "symbol": "XLU",
+      "pnl": 0.003913475988053375,
+      "fee": 0.00019296758168760864,
+      "average_weight": 0.013737890812437611,
+      "selected_days": 503,
+      "fills": 34
+    },
+    {
+      "symbol": "XLI",
+      "pnl": 0.004978115480286501,
+      "fee": 0.0002658474919927773,
+      "average_weight": 0.00972688758618799,
+      "selected_days": 503,
+      "fills": 36
+    },
+    {
+      "symbol": "XLE",
+      "pnl": 0.011364930008665695,
+      "fee": 0.00030039296527552414,
+      "average_weight": 0.011909482801607802,
+      "selected_days": 503,
+      "fills": 39
+    },
+    {
+      "symbol": "USO",
+      "pnl": 0.013792192842941798,
+      "fee": 0.00020563376977380618,
+      "average_weight": 0.01377391728509828,
+      "selected_days": 503,
+      "fills": 35
+    }
+  ],
+  "early_equal_dynamic_c5d0": [
+    {
+      "symbol": "XLY",
+      "pnl": -0.020899740524201307,
+      "fee": 0.0009801441617271036,
+      "average_weight": 0.011921055335237322,
+      "selected_days": 168,
+      "fills": 89
+    },
+    {
+      "symbol": "PPLT",
+      "pnl": -0.016816357765549593,
+      "fee": 0.0007234714815918016,
+      "average_weight": 0.0026425703400154736,
+      "selected_days": 44,
+      "fills": 30
+    },
+    {
+      "symbol": "SOXX",
+      "pnl": -0.014827982632331881,
+      "fee": 0.000928884144623289,
+      "average_weight": 0.012426214021813254,
+      "selected_days": 141,
+      "fills": 92
+    },
+    {
+      "symbol": "GLD",
+      "pnl": -0.010146098454413992,
+      "fee": 0.0005958355944158563,
+      "average_weight": 0.00622340167653395,
+      "selected_days": 96,
+      "fills": 51
+    },
+    {
+      "symbol": "EWA",
+      "pnl": -0.010138850364300931,
+      "fee": 0.0011189133998719693,
+      "average_weight": 0.013508946886672703,
+      "selected_days": 153,
+      "fills": 106
+    },
+    {
+      "symbol": "WEAT",
+      "pnl": -0.009915075874876042,
+      "fee": 0.0015201771281747678,
+      "average_weight": 0.02104971186509729,
+      "selected_days": 320,
+      "fills": 148
+    },
+    {
+      "symbol": "MDY",
+      "pnl": -0.00966878379026944,
+      "fee": 0.0004981576313793231,
+      "average_weight": 0.003833340481763602,
+      "selected_days": 52,
+      "fills": 36
+    },
+    {
+      "symbol": "CORN",
+      "pnl": -0.009062111665939386,
+      "fee": 0.0007940579673735262,
+      "average_weight": 0.012059897752767255,
+      "selected_days": 194,
+      "fills": 83
+    },
+    {
+      "symbol": "XLP",
+      "pnl": -0.00875465109830813,
+      "fee": 0.0009793437876288718,
+      "average_weight": 0.01788534013514987,
+      "selected_days": 207,
+      "fills": 133
+    },
+    {
+      "symbol": "IBB",
+      "pnl": -0.0070467660480891935,
+      "fee": 0.0003967437235605177,
+      "average_weight": 0.004755698241546955,
+      "selected_days": 55,
+      "fills": 40
+    },
+    {
+      "symbol": "IWM",
+      "pnl": -0.007040183051943213,
+      "fee": 0.00045478258294244804,
+      "average_weight": 0.0036983961713623406,
+      "selected_days": 38,
+      "fills": 34
+    },
+    {
+      "symbol": "EWT",
+      "pnl": -0.0061558532801789835,
+      "fee": 0.0005512388817171122,
+      "average_weight": 0.02385749290891087,
+      "selected_days": 247,
+      "fills": 159
+    },
+    {
+      "symbol": "MCHI",
+      "pnl": -0.0060722385635671745,
+      "fee": 0.00026554208452258735,
+      "average_weight": 0.0017215144420529521,
+      "selected_days": 46,
+      "fills": 16
+    },
+    {
+      "symbol": "INDA",
+      "pnl": -0.0030981899109022116,
+      "fee": 0.0010005173740414539,
+      "average_weight": 0.026495576234063917,
+      "selected_days": 329,
+      "fills": 187
+    },
+    {
+      "symbol": "TIP",
+      "pnl": -0.0028795935251740004,
+      "fee": 0.0007923662725842841,
+      "average_weight": 0.009414503679925662,
+      "selected_days": 206,
+      "fills": 73
+    },
+    {
+      "symbol": "EWH",
+      "pnl": -0.0027776949977129277,
+      "fee": 0.00022870167708996238,
+      "average_weight": 0.0035746363658099335,
+      "selected_days": 31,
+      "fills": 25
+    },
+    {
+      "symbol": "EWU",
+      "pnl": -0.0021863268769609897,
+      "fee": 0.0009228153363242087,
+      "average_weight": 0.016843784831628312,
+      "selected_days": 204,
+      "fills": 130
+    },
+    {
+      "symbol": "HYG",
+      "pnl": -0.00197162836345581,
+      "fee": 0.00083096480248783,
+      "average_weight": 0.01934396458068029,
+      "selected_days": 193,
+      "fills": 132
+    },
+    {
+      "symbol": "SLV",
+      "pnl": -0.0019422915531107315,
+      "fee": 0.0002274628112593841,
+      "average_weight": 0.0019859905601845237,
+      "selected_days": 34,
+      "fills": 17
+    },
+    {
+      "symbol": "DBA",
+      "pnl": -0.0019252375123186098,
+      "fee": 0.0005336953775157583,
+      "average_weight": 0.010603483707188374,
+      "selected_days": 126,
+      "fills": 72
+    },
+    {
+      "symbol": "SPY",
+      "pnl": -0.0019006329629390637,
+      "fee": 0.0010502572794820189,
+      "average_weight": 0.021753487880688503,
+      "selected_days": 286,
+      "fills": 155
+    },
+    {
+      "symbol": "IGOV",
+      "pnl": -0.0018205624618478334,
+      "fee": 0.00039570286362171304,
+      "average_weight": 0.002780264353567945,
+      "selected_days": 21,
+      "fills": 25
+    },
+    {
+      "symbol": "XLV",
+      "pnl": -0.0015952857170419008,
+      "fee": 0.0009303890225909172,
+      "average_weight": 0.018829291259717183,
+      "selected_days": 244,
+      "fills": 136
+    },
+    {
+      "symbol": "EWY",
+      "pnl": -0.0012677175374649784,
+      "fee": 0.0003326898015289568,
+      "average_weight": 0.003584548915947191,
+      "selected_days": 71,
+      "fills": 31
+    },
+    {
+      "symbol": "IBND",
+      "pnl": -0.0008368711323886216,
+      "fee": 0.0005845977140059141,
+      "average_weight": 0.005303030231621586,
+      "selected_days": 75,
+      "fills": 46
+    },
+    {
+      "symbol": "SHY",
+      "pnl": -9.909871848713233e-05,
+      "fee": 0.0001245352343842866,
+      "average_weight": 0.0019874664705895433,
+      "selected_days": 34,
+      "fills": 15
+    },
+    {
+      "symbol": "IEF",
+      "pnl": -9.125776501501149e-05,
+      "fee": 0.0003868146289350354,
+      "average_weight": 0.004501128032605009,
+      "selected_days": 115,
+      "fills": 35
+    },
+    {
+      "symbol": "EFA",
+      "pnl": -1.2381064220575366e-05,
+      "fee": 0.0006549566092714217,
+      "average_weight": 0.006893263930929321,
+      "selected_days": 66,
+      "fills": 56
+    },
+    {
+      "symbol": "TLT",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 0,
+      "fills": 0
+    },
+    {
+      "symbol": "ITA",
+      "pnl": 0.0001488942275956872,
+      "fee": 0.0002481281519653441,
+      "average_weight": 0.0018544303133741643,
+      "selected_days": 14,
+      "fills": 18
+    },
+    {
+      "symbol": "XLB",
+      "pnl": 0.00028425013184053827,
+      "fee": 0.0010036805828478848,
+      "average_weight": 0.025297431769584877,
+      "selected_days": 295,
+      "fills": 181
+    },
+    {
+      "symbol": "LQD",
+      "pnl": 0.00032925249055880943,
+      "fee": 0.0006365815101659955,
+      "average_weight": 0.006368406919605183,
+      "selected_days": 125,
+      "fills": 51
+    },
+    {
+      "symbol": "DBB",
+      "pnl": 0.00048276909020991037,
+      "fee": 0.0011426710281057962,
+      "average_weight": 0.024415977464948276,
+      "selected_days": 349,
+      "fills": 172
+    },
+    {
+      "symbol": "EWJ",
+      "pnl": 0.0006161125622965937,
+      "fee": 0.0004271530260312721,
+      "average_weight": 0.010342405559052357,
+      "selected_days": 84,
+      "fills": 75
+    },
+    {
+      "symbol": "EMB",
+      "pnl": 0.0009039397000435512,
+      "fee": 0.0003793046226563565,
+      "average_weight": 0.006232124360576163,
+      "selected_days": 72,
+      "fills": 45
+    },
+    {
+      "symbol": "EEM",
+      "pnl": 0.0009822345314921901,
+      "fee": 0.00013636457392030504,
+      "average_weight": 0.005038873988063306,
+      "selected_days": 74,
+      "fills": 39
+    },
+    {
+      "symbol": "AGG",
+      "pnl": 0.001591458533177739,
+      "fee": 0.0003844130679887982,
+      "average_weight": 0.005569713500277881,
+      "selected_days": 168,
+      "fills": 43
+    },
+    {
+      "symbol": "MBB",
+      "pnl": 0.0017160522429698647,
+      "fee": 0.0003168324596859069,
+      "average_weight": 0.003712979459263692,
+      "selected_days": 129,
+      "fills": 31
+    },
+    {
+      "symbol": "LEMB",
+      "pnl": 0.002469135271023051,
+      "fee": 0.00034379941952531986,
+      "average_weight": 0.003849594012467502,
+      "selected_days": 29,
+      "fills": 29
+    },
+    {
+      "symbol": "EWC",
+      "pnl": 0.0026574378968843167,
+      "fee": 0.00040757250333637896,
+      "average_weight": 0.015114430590816913,
+      "selected_days": 125,
+      "fills": 108
+    },
+    {
+      "symbol": "IAT",
+      "pnl": 0.002793817235226716,
+      "fee": 0.0006865295895198753,
+      "average_weight": 0.01828618077218166,
+      "selected_days": 204,
+      "fills": 127
+    },
+    {
+      "symbol": "EWG",
+      "pnl": 0.003956127896548022,
+      "fee": 0.0006038651409648925,
+      "average_weight": 0.015116778198842423,
+      "selected_days": 137,
+      "fills": 105
+    },
+    {
+      "symbol": "XLU",
+      "pnl": 0.004097572888369112,
+      "fee": 0.0008799240338091443,
+      "average_weight": 0.021880706612917727,
+      "selected_days": 252,
+      "fills": 153
+    },
+    {
+      "symbol": "XLK",
+      "pnl": 0.005345393288423744,
+      "fee": 0.0008146778477016681,
+      "average_weight": 0.03198559992651612,
+      "selected_days": 340,
+      "fills": 211
+    },
+    {
+      "symbol": "VGK",
+      "pnl": 0.00535242892270163,
+      "fee": 0.0009748141297894118,
+      "average_weight": 0.007820610164775662,
+      "selected_days": 79,
+      "fills": 67
+    },
+    {
+      "symbol": "DBC",
+      "pnl": 0.008758484591743738,
+      "fee": 0.0007309889577666821,
+      "average_weight": 0.020156889606030674,
+      "selected_days": 265,
+      "fills": 140
+    },
+    {
+      "symbol": "XLI",
+      "pnl": 0.010329348633479502,
+      "fee": 0.0009214761016699572,
+      "average_weight": 0.021200991673005206,
+      "selected_days": 290,
+      "fills": 150
+    },
+    {
+      "symbol": "USO",
+      "pnl": 0.019358875469825076,
+      "fee": 0.0013795541171160485,
+      "average_weight": 0.033281892988337475,
+      "selected_days": 371,
+      "fills": 233
+    },
+    {
+      "symbol": "XLE",
+      "pnl": 0.021425453035492963,
+      "fee": 0.0011363947701017545,
+      "average_weight": 0.029344289351495103,
+      "selected_days": 347,
+      "fills": 210
+    }
+  ],
+  "early_risk_dynamic_c5d0": [
+    {
+      "symbol": "GLD",
+      "pnl": -0.015017470334457222,
+      "fee": 0.0009671379451458774,
+      "average_weight": 0.008724261293606568,
+      "selected_days": 97,
+      "fills": 45
+    },
+    {
+      "symbol": "PPLT",
+      "pnl": -0.014312475050083071,
+      "fee": 0.0006118046323159063,
+      "average_weight": 0.0023452196705053122,
+      "selected_days": 44,
+      "fills": 30
+    },
+    {
+      "symbol": "XLY",
+      "pnl": -0.012176786042416026,
+      "fee": 0.0007771342076413528,
+      "average_weight": 0.00847430058592041,
+      "selected_days": 169,
+      "fills": 85
+    },
+    {
+      "symbol": "XLP",
+      "pnl": -0.01029796178543919,
+      "fee": 0.0012231623219848674,
+      "average_weight": 0.018605423638883387,
+      "selected_days": 208,
+      "fills": 129
+    },
+    {
+      "symbol": "CORN",
+      "pnl": -0.007668491013236171,
+      "fee": 0.0009086367092649699,
+      "average_weight": 0.011664151231287395,
+      "selected_days": 194,
+      "fills": 69
+    },
+    {
+      "symbol": "EWA",
+      "pnl": -0.007567509864270878,
+      "fee": 0.0008792256171460974,
+      "average_weight": 0.009895355778418928,
+      "selected_days": 157,
+      "fills": 104
+    },
+    {
+      "symbol": "SOXX",
+      "pnl": -0.007420689087164006,
+      "fee": 0.0006336891896868286,
+      "average_weight": 0.007892960272730058,
+      "selected_days": 141,
+      "fills": 86
+    },
+    {
+      "symbol": "TIP",
+      "pnl": -0.007010666279908789,
+      "fee": 0.003003896197515963,
+      "average_weight": 0.028075668572726545,
+      "selected_days": 198,
+      "fills": 65
+    },
+    {
+      "symbol": "IWM",
+      "pnl": -0.006381648763570395,
+      "fee": 0.00032929134458632627,
+      "average_weight": 0.002992176362032437,
+      "selected_days": 40,
+      "fills": 33
+    },
+    {
+      "symbol": "WEAT",
+      "pnl": -0.006035167419293889,
+      "fee": 0.0013374752598554784,
+      "average_weight": 0.016615480011905,
+      "selected_days": 317,
+      "fills": 134
+    },
+    {
+      "symbol": "IGOV",
+      "pnl": -0.005775188982793962,
+      "fee": 0.0011509199756892972,
+      "average_weight": 0.008611948935654163,
+      "selected_days": 21,
+      "fills": 22
+    },
+    {
+      "symbol": "EWT",
+      "pnl": -0.005746610570129547,
+      "fee": 0.0006140420740287655,
+      "average_weight": 0.020012979168286267,
+      "selected_days": 247,
+      "fills": 146
+    },
+    {
+      "symbol": "INDA",
+      "pnl": -0.005722425362520133,
+      "fee": 0.0010718857624888271,
+      "average_weight": 0.020959846430919738,
+      "selected_days": 332,
+      "fills": 173
+    },
+    {
+      "symbol": "MCHI",
+      "pnl": -0.005488626855396462,
+      "fee": 0.00024266996070576883,
+      "average_weight": 0.001584385382911441,
+      "selected_days": 46,
+      "fills": 16
+    },
+    {
+      "symbol": "MDY",
+      "pnl": -0.005469793767271351,
+      "fee": 0.00033325109976392614,
+      "average_weight": 0.00209881003162071,
+      "selected_days": 53,
+      "fills": 30
+    },
+    {
+      "symbol": "IBB",
+      "pnl": -0.0051130038713316445,
+      "fee": 0.000345516833408403,
+      "average_weight": 0.004603265543340288,
+      "selected_days": 55,
+      "fills": 39
+    },
+    {
+      "symbol": "EWU",
+      "pnl": -0.004421662688258861,
+      "fee": 0.000994625214245602,
+      "average_weight": 0.01453213534956281,
+      "selected_days": 200,
+      "fills": 123
+    },
+    {
+      "symbol": "SPY",
+      "pnl": -0.0033359517191678353,
+      "fee": 0.0010063594200735789,
+      "average_weight": 0.01702206632914765,
+      "selected_days": 288,
+      "fills": 142
+    },
+    {
+      "symbol": "HYG",
+      "pnl": -0.00313676031577568,
+      "fee": 0.0018347240798606724,
+      "average_weight": 0.034428359394647536,
+      "selected_days": 193,
+      "fills": 118
+    },
+    {
+      "symbol": "IBND",
+      "pnl": -0.00267562231073778,
+      "fee": 0.001474962775088276,
+      "average_weight": 0.011877285201585245,
+      "selected_days": 75,
+      "fills": 43
+    },
+    {
+      "symbol": "EWH",
+      "pnl": -0.002664509053372587,
+      "fee": 0.0002428197531237317,
+      "average_weight": 0.003421268721774486,
+      "selected_days": 31,
+      "fills": 20
+    },
+    {
+      "symbol": "LQD",
+      "pnl": -0.002046833396059705,
+      "fee": 0.0014828242580556617,
+      "average_weight": 0.0110708179288229,
+      "selected_days": 127,
+      "fills": 49
+    },
+    {
+      "symbol": "SLV",
+      "pnl": -0.0015467930454605826,
+      "fee": 0.0001239047756639228,
+      "average_weight": 0.0010914975187477105,
+      "selected_days": 32,
+      "fills": 14
+    },
+    {
+      "symbol": "IEF",
+      "pnl": -0.0009828524312139348,
+      "fee": 0.000952693790073849,
+      "average_weight": 0.008522240661204234,
+      "selected_days": 117,
+      "fills": 32
+    },
+    {
+      "symbol": "XLV",
+      "pnl": -0.0007459347103777412,
+      "fee": 0.0014029730383675427,
+      "average_weight": 0.020961805455191544,
+      "selected_days": 244,
+      "fills": 124
+    },
+    {
+      "symbol": "EWY",
+      "pnl": -0.0005721653527719179,
+      "fee": 0.0003027223083313059,
+      "average_weight": 0.0029648594664838613,
+      "selected_days": 71,
+      "fills": 29
+    },
+    {
+      "symbol": "XLB",
+      "pnl": -0.0004855030936004043,
+      "fee": 0.0008008725366291554,
+      "average_weight": 0.017875083842069758,
+      "selected_days": 300,
+      "fills": 172
+    },
+    {
+      "symbol": "EFA",
+      "pnl": -0.00018641638387406514,
+      "fee": 0.0005246560147649888,
+      "average_weight": 0.005083803274421588,
+      "selected_days": 67,
+      "fills": 53
+    },
+    {
+      "symbol": "SHY",
+      "pnl": -0.00018038450961805756,
+      "fee": 0.00025268343932631016,
+      "average_weight": 0.00369959174228221,
+      "selected_days": 34,
+      "fills": 14
+    },
+    {
+      "symbol": "TLT",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 0,
+      "fills": 0
+    },
+    {
+      "symbol": "EWJ",
+      "pnl": 1.5850748992760587e-05,
+      "fee": 0.0004975317457432775,
+      "average_weight": 0.009216843959416349,
+      "selected_days": 84,
+      "fills": 67
+    },
+    {
+      "symbol": "IAT",
+      "pnl": 0.00024097993597428104,
+      "fee": 0.0005391024209888369,
+      "average_weight": 0.010198526309271124,
+      "selected_days": 203,
+      "fills": 120
+    },
+    {
+      "symbol": "EMB",
+      "pnl": 0.0005530031176664337,
+      "fee": 0.0005825500276019922,
+      "average_weight": 0.007354134130361773,
+      "selected_days": 75,
+      "fills": 42
+    },
+    {
+      "symbol": "EEM",
+      "pnl": 0.0007242149691935428,
+      "fee": 0.00010722550725597784,
+      "average_weight": 0.003769515659685333,
+      "selected_days": 74,
+      "fills": 38
+    },
+    {
+      "symbol": "ITA",
+      "pnl": 0.0008736994699408834,
+      "fee": 0.00012743798383866835,
+      "average_weight": 0.001050930736749057,
+      "selected_days": 13,
+      "fills": 16
+    },
+    {
+      "symbol": "DBA",
+      "pnl": 0.001033291308912833,
+      "fee": 0.001055789839298828,
+      "average_weight": 0.016000898580633586,
+      "selected_days": 126,
+      "fills": 68
+    },
+    {
+      "symbol": "EWG",
+      "pnl": 0.002772653575232342,
+      "fee": 0.000724666339436379,
+      "average_weight": 0.012808695826276202,
+      "selected_days": 137,
+      "fills": 102
+    },
+    {
+      "symbol": "DBB",
+      "pnl": 0.0028750840227621285,
+      "fee": 0.0010692607025703529,
+      "average_weight": 0.021544542774545407,
+      "selected_days": 349,
+      "fills": 161
+    },
+    {
+      "symbol": "AGG",
+      "pnl": 0.0030383987482829654,
+      "fee": 0.0008965258639019728,
+      "average_weight": 0.011519053702349825,
+      "selected_days": 165,
+      "fills": 41
+    },
+    {
+      "symbol": "LEMB",
+      "pnl": 0.0031695617147239332,
+      "fee": 0.000461782450260809,
+      "average_weight": 0.0049694971266082116,
+      "selected_days": 29,
+      "fills": 24
+    },
+    {
+      "symbol": "EWC",
+      "pnl": 0.003405403217374461,
+      "fee": 0.00040280647393328424,
+      "average_weight": 0.01267751707535714,
+      "selected_days": 124,
+      "fills": 101
+    },
+    {
+      "symbol": "VGK",
+      "pnl": 0.003498473919387294,
+      "fee": 0.0007169757323194698,
+      "average_weight": 0.00481738713554651,
+      "selected_days": 78,
+      "fills": 63
+    },
+    {
+      "symbol": "MBB",
+      "pnl": 0.004071118342631198,
+      "fee": 0.0009379309236542902,
+      "average_weight": 0.009400219034066098,
+      "selected_days": 129,
+      "fills": 29
+    },
+    {
+      "symbol": "XLK",
+      "pnl": 0.005332970062723377,
+      "fee": 0.0007666746120687264,
+      "average_weight": 0.022456657376710536,
+      "selected_days": 341,
+      "fills": 197
+    },
+    {
+      "symbol": "XLI",
+      "pnl": 0.005781391292505678,
+      "fee": 0.0010802737989198963,
+      "average_weight": 0.018659539599106927,
+      "selected_days": 289,
+      "fills": 143
+    },
+    {
+      "symbol": "XLE",
+      "pnl": 0.007816401166931306,
+      "fee": 0.0007182938789518129,
+      "average_weight": 0.014481386047943077,
+      "selected_days": 346,
+      "fills": 195
+    },
+    {
+      "symbol": "XLU",
+      "pnl": 0.00906383431315666,
+      "fee": 0.0010011091480351495,
+      "average_weight": 0.022283991540017145,
+      "selected_days": 249,
+      "fills": 136
+    },
+    {
+      "symbol": "DBC",
+      "pnl": 0.009417606289808932,
+      "fee": 0.0007303302427877439,
+      "average_weight": 0.017526719112405633,
+      "selected_days": 267,
+      "fills": 135
+    },
+    {
+      "symbol": "USO",
+      "pnl": 0.012686147020807222,
+      "fee": 0.0008604875835271326,
+      "average_weight": 0.018195255107633115,
+      "selected_days": 369,
+      "fills": 218
+    }
+  ],
+  "early_equal_c5d1": [
+    {
+      "symbol": "XLY",
+      "pnl": -0.02315429623285294,
+      "fee": 0.0007481725089701818,
+      "average_weight": 0.01891511086509974,
+      "selected_days": 251,
+      "fills": 24
+    },
+    {
+      "symbol": "SOXX",
+      "pnl": -0.020142566742232464,
+      "fee": 0.0005441029233665796,
+      "average_weight": 0.008221635803952193,
+      "selected_days": 168,
+      "fills": 17
+    },
+    {
+      "symbol": "EWG",
+      "pnl": -0.008462035266835378,
+      "fee": 0.00020839198830215232,
+      "average_weight": 0.008232652571575662,
+      "selected_days": 84,
+      "fills": 7
+    },
+    {
+      "symbol": "EWA",
+      "pnl": -0.0070768695339972,
+      "fee": 0.0003443409254937809,
+      "average_weight": 0.019570616567189954,
+      "selected_days": 228,
+      "fills": 15
+    },
+    {
+      "symbol": "IBB",
+      "pnl": -0.006579239085714908,
+      "fee": 0.00026705347288952854,
+      "average_weight": 0.004972222298835342,
+      "selected_days": 63,
+      "fills": 8
+    },
+    {
+      "symbol": "EWC",
+      "pnl": -0.005936916207167612,
+      "fee": 0.0004140438683490253,
+      "average_weight": 0.015551931922792141,
+      "selected_days": 146,
+      "fills": 13
+    },
+    {
+      "symbol": "GLD",
+      "pnl": -0.0053124461563922,
+      "fee": 0.0002824317381998739,
+      "average_weight": 0.004901479390698609,
+      "selected_days": 107,
+      "fills": 8
+    },
+    {
+      "symbol": "XLB",
+      "pnl": -0.005245143315685999,
+      "fee": 0.00020525942659904223,
+      "average_weight": 0.010368882401615752,
+      "selected_days": 124,
+      "fills": 8
+    },
+    {
+      "symbol": "VGK",
+      "pnl": -0.005069463460926658,
+      "fee": 0.0002083808814014764,
+      "average_weight": 0.006345306088663496,
+      "selected_days": 84,
+      "fills": 6
+    },
+    {
+      "symbol": "XLU",
+      "pnl": -0.004482769715769595,
+      "fee": 0.0003817017696558562,
+      "average_weight": 0.012303882339942366,
+      "selected_days": 165,
+      "fills": 13
+    },
+    {
+      "symbol": "SPY",
+      "pnl": -0.0038716263243306175,
+      "fee": 0.0005520177564249822,
+      "average_weight": 0.019650654909556954,
+      "selected_days": 251,
+      "fills": 20
+    },
+    {
+      "symbol": "WEAT",
+      "pnl": -0.00378307149457654,
+      "fee": 0.0005576349235457735,
+      "average_weight": 0.017319164194493985,
+      "selected_days": 275,
+      "fills": 20
+    },
+    {
+      "symbol": "XLP",
+      "pnl": -0.002885746856018703,
+      "fee": 0.0004886045440290254,
+      "average_weight": 0.013161681842990328,
+      "selected_days": 165,
+      "fills": 16
+    },
+    {
+      "symbol": "XLV",
+      "pnl": -0.0027117957510856155,
+      "fee": 0.0004885249611176184,
+      "average_weight": 0.020904658402950863,
+      "selected_days": 250,
+      "fills": 20
+    },
+    {
+      "symbol": "TIP",
+      "pnl": -0.0023164005507736772,
+      "fee": 0.0006192338276912199,
+      "average_weight": 0.009374195811328735,
+      "selected_days": 233,
+      "fills": 21
+    },
+    {
+      "symbol": "EWT",
+      "pnl": -0.0023123794879952634,
+      "fee": 0.0006904321867817781,
+      "average_weight": 0.021505307629303312,
+      "selected_days": 249,
+      "fills": 24
+    },
+    {
+      "symbol": "IBND",
+      "pnl": -0.002178979565507739,
+      "fee": 0.000267185718900647,
+      "average_weight": 0.0035245671091617,
+      "selected_days": 146,
+      "fills": 9
+    },
+    {
+      "symbol": "IEF",
+      "pnl": -0.0018839338487903782,
+      "fee": 0.00020386014734717625,
+      "average_weight": 0.003403128764461702,
+      "selected_days": 128,
+      "fills": 7
+    },
+    {
+      "symbol": "EWJ",
+      "pnl": -0.0017742216896954191,
+      "fee": 0.00016953650674972332,
+      "average_weight": 0.006895038777364306,
+      "selected_days": 58,
+      "fills": 6
+    },
+    {
+      "symbol": "LQD",
+      "pnl": -0.0011809466592270462,
+      "fee": 6.861820076082566e-05,
+      "average_weight": 0.0009198610206150323,
+      "selected_days": 85,
+      "fills": 2
+    },
+    {
+      "symbol": "IGOV",
+      "pnl": -0.0011166159225681235,
+      "fee": 6.611031726465018e-05,
+      "average_weight": 0.001032685818501429,
+      "selected_days": 19,
+      "fills": 2
+    },
+    {
+      "symbol": "IWM",
+      "pnl": -0.0010271301617118622,
+      "fee": 0.00040642620352859994,
+      "average_weight": 0.008401016377405604,
+      "selected_days": 103,
+      "fills": 13
+    },
+    {
+      "symbol": "EFA",
+      "pnl": -0.0010270013518822898,
+      "fee": 6.901222692744954e-05,
+      "average_weight": 0.0018532324739293916,
+      "selected_days": 20,
+      "fills": 2
+    },
+    {
+      "symbol": "LEMB",
+      "pnl": -0.0005959284708826623,
+      "fee": 6.637079122747433e-05,
+      "average_weight": 0.002449963942757567,
+      "selected_days": 19,
+      "fills": 2
+    },
+    {
+      "symbol": "PPLT",
+      "pnl": -0.0005527467398241765,
+      "fee": 7.066468733781778e-05,
+      "average_weight": 0.001311101009267007,
+      "selected_days": 21,
+      "fills": 2
+    },
+    {
+      "symbol": "SHY",
+      "pnl": -0.0005430044821807953,
+      "fee": 0.00013587005284750058,
+      "average_weight": 0.0018466941685702065,
+      "selected_days": 43,
+      "fills": 5
+    },
+    {
+      "symbol": "MCHI",
+      "pnl": -0.000534912925048747,
+      "fee": 6.722226056322043e-05,
+      "average_weight": 0.0002554767660238812,
+      "selected_days": 44,
+      "fills": 2
+    },
+    {
+      "symbol": "EMB",
+      "pnl": -0.000176204818438475,
+      "fee": 6.943783799970757e-05,
+      "average_weight": 0.001862702609557768,
+      "selected_days": 20,
+      "fills": 2
+    },
+    {
+      "symbol": "DBA",
+      "pnl": -5.20295605164606e-05,
+      "fee": 0.0005636394267830154,
+      "average_weight": 0.012336584876825945,
+      "selected_days": 229,
+      "fills": 18
+    },
+    {
+      "symbol": "INDA",
+      "pnl": -3.889638707293519e-05,
+      "fee": 0.0006239622045075795,
+      "average_weight": 0.026235805842101,
+      "selected_days": 337,
+      "fills": 23
+    },
+    {
+      "symbol": "EWH",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 0,
+      "fills": 0
+    },
+    {
+      "symbol": "EWY",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 23,
+      "fills": 0
+    },
+    {
+      "symbol": "SLV",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 0,
+      "fills": 0
+    },
+    {
+      "symbol": "TLT",
+      "pnl": 0.0,
+      "fee": 0.0,
+      "average_weight": 0.0,
+      "selected_days": 0,
+      "fills": 0
+    },
+    {
+      "symbol": "MBB",
+      "pnl": 0.00048461069339047504,
+      "fee": 0.00014372788784680388,
+      "average_weight": 0.0009540216852900053,
+      "selected_days": 105,
+      "fills": 5
+    },
+    {
+      "symbol": "AGG",
+      "pnl": 0.0006243306150953986,
+      "fee": 0.0002720484659517045,
+      "average_weight": 0.0035555460096580323,
+      "selected_days": 107,
+      "fills": 9
+    },
+    {
+      "symbol": "HYG",
+      "pnl": 0.0011168773273894067,
+      "fee": 0.0002079076699824852,
+      "average_weight": 0.021301922535944866,
+      "selected_days": 188,
+      "fills": 11
+    },
+    {
+      "symbol": "MDY",
+      "pnl": 0.001346788876005919,
+      "fee": 0.00013837744429223283,
+      "average_weight": 0.004014016565235522,
+      "selected_days": 42,
+      "fills": 4
+    },
+    {
+      "symbol": "EWU",
+      "pnl": 0.0016901677475142868,
+      "fee": 0.0002825075969753489,
+      "average_weight": 0.00994176607365291,
+      "selected_days": 145,
+      "fills": 11
+    },
+    {
+      "symbol": "EEM",
+      "pnl": 0.0029266985021527848,
+      "fee": 6.813298581128394e-05,
+      "average_weight": 0.004976102432466419,
+      "selected_days": 102,
+      "fills": 3
+    },
+    {
+      "symbol": "ITA",
+      "pnl": 0.0030667124326503883,
+      "fee": 3.470951294711898e-05,
+      "average_weight": 0.005500806326845643,
+      "selected_days": 41,
+      "fills": 2
+    },
+    {
+      "symbol": "DBB",
+      "pnl": 0.005307827457832122,
+      "fee": 0.0006986670130492269,
+      "average_weight": 0.027392509066358747,
+      "selected_days": 419,
+      "fills": 31
+    },
+    {
+      "symbol": "IAT",
+      "pnl": 0.005820632812357632,
+      "fee": 0.00034321184430281343,
+      "average_weight": 0.014460721311406965,
+      "selected_days": 168,
+      "fills": 12
+    },
+    {
+      "symbol": "XLI",
+      "pnl": 0.010129533541711913,
+      "fee": 0.0005617747590357633,
+      "average_weight": 0.01732924038480293,
+      "selected_days": 229,
+      "fills": 20
+    },
+    {
+      "symbol": "CORN",
+      "pnl": 0.013271625191465708,
+      "fee": 0.0009033677009679968,
+      "average_weight": 0.01887486709672554,
+      "selected_days": 335,
+      "fills": 29
+    },
+    {
+      "symbol": "DBC",
+      "pnl": 0.013803634304956128,
+      "fee": 0.0008435952974933545,
+      "average_weight": 0.025046163996011273,
+      "selected_days": 334,
+      "fills": 30
+    },
+    {
+      "symbol": "XLK",
+      "pnl": 0.013906167861230317,
+      "fee": 0.0006273691495246943,
+      "average_weight": 0.035938017961987465,
+      "selected_days": 400,
+      "fills": 29
+    },
+    {
+      "symbol": "XLE",
+      "pnl": 0.03710128134855574,
+      "fee": 0.000884120911009912,
+      "average_weight": 0.030469088349084916,
+      "selected_days": 397,
+      "fills": 33
+    },
+    {
+      "symbol": "USO",
+      "pnl": 0.04134809889055015,
+      "fee": 0.0005788428588923977,
+      "average_weight": 0.03411384085867791,
+      "selected_days": 381,
+      "fills": 28
+    }
+  ]
+}

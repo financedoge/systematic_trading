@@ -1,0 +1,10 @@
+[
+  "a_t=\\mathbf{1}\\{p^{slow}_{up,t}\\geq0.7\\},\\quad \\theta_t=\\theta(1-0.5a_t),\\quad k_t=k+2a_t",
+  "c_t=\\left(c_{t-1}+1\\right)\\mathbf{1}\\{p^{fast}_{up,t}<\\theta_t\\}",
+  "B:\\quad \\mathrm{exit}_t=\\mathrm{parent\\ exit}_t\\ \\mathrm{or}\\ \\{c_t\\geq k_t,\\ b^{fast}_t\\leq0\\}",
+  "g_t=\\Phi\\left(\\frac{-0.02\\sigma_{train}-b^{fast}_t}{\\sqrt{V^{fast}_t}}\\right)",
+  "\\widetilde p_{down,t}=p^{HMM}_{down,t}+p^{HMM}_{neutral,t}g_t",
+  "C:\\quad \\mathrm{exit}_t=\\mathrm{exit}_{B,t}\\ \\mathrm{or}\\ \\{\\widetilde p_{down,t}\\geq e_t\\}",
+  "\\theta\\in\\{0.1,0.2,0.3\\},\\quad k\\in\\{2,3\\},\\quad\\mathrm{fill}=t+1+delay",
+  "\\mathrm{training\\ guards}:\\quad CAGR\\geq CAGR_A-0.01,\\quad DD\\leq DD_A+0.02,\\quad Sharpe>Sharpe_A"
+]

@@ -1,0 +1,14 @@
+{
+  "src/systematic_trading/research/trend_sleeve_portfolio.py": "8bba075432e6953746e9649483bb36c58f9ed62d2f0e40cd69c95935a6b82382",
+  "scripts/research_trend_sleeve_portfolio.py": "afcc5290c81d7d7aba17ef87ca33e7c9ac3367a100a77e3fe4dd2357210ef137",
+  "scripts/research_trend_sleeve_width.py": "51989599b294602d8e9a57e4eb0717de5824c7ab9c02a9a12717147507cd56f8",
+  "scripts/build_trend_sleeve_portfolio_report.py": "b40a26951a28f7e1b8b8e2a5699443795b7c507aca2231a187e6f1d9aade9c22",
+  "scripts/build_trend_sleeve_width_report.py": "f35eb4e332c56cbfcdbfc56e52b5994b260beb6765d1c6f991ff15615bb3f6fe",
+  "scripts/validate_trend_sleeve_portfolio.py": "54f522fcdece1d8db0766a5c3303b32050c4dae18585fdd90412f45b36a25911",
+  "scripts/assets/trend-sleeve-portfolio.js": "e25664b18bc8d55edafe67c3c3e68f7ad4f2647d642f432b27ff39a5edf962e0",
+  "tests/test_trend_sleeve_portfolio.py": "7273eff82caef8cddcf82a4d4c04907dfd3b0ebd9ecb12eb1a9fae6597ae1eba",
+  "tests/test_trend_sleeve_portfolio_evidence.py": "54a5aab0fc9cf8b7cf96ce1a82c4d0d9a57ca0dcecdcda3c696701bd694b69f8",
+  "tests/test_trend_sleeve_width_evidence.py": "5693f6d1f5cacb3cad7dc471986154c63c90642727a62905b720394ab50bb206",
+  "tests/trend_sleeve_portfolio_controls.cjs": "a1ae1c09bdab43f017a4a77507130e29344c054efa510a46c1f80e2d19a85a50",
+  "tests/trend_sleeve_width_controls.cjs": "a6143a01ea471158229330e20efd5f46af65c1439065a302bfc40f9a76631a8f"
+}

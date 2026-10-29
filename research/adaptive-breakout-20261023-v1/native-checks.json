@@ -1,0 +1,23 @@
+[
+  {
+    "scenario": "joint_fit_overlay_dynamic_c5d0",
+    "max_nav_difference": 0.0,
+    "status": "succeeded",
+    "bundle_sha256": "5e159bc56ba1fc6c5dccde96516cb0e8256122e903f6c2ba5d750274876127cb",
+    "receipt_sha256": "290e4dc613e2e3cdf61309915d93e8c3160a321e13539fe2d6f1e93d0187cb67"
+  },
+  {
+    "scenario": "joint_fit_overlay_dynamic_c5d1",
+    "max_nav_difference": 0.0,
+    "status": "succeeded",
+    "bundle_sha256": "feedddf2e875d0dc1bcea283c3b74b1208b8e5e99483e4f77f3a02e7bed78b97",
+    "receipt_sha256": "67e6fbc7183463b08cf5d1524c769ef63a385c81b530cbed753d33a62a1bc45d"
+  },
+  {
+    "scenario": "joint_fit_selection_dynamic_c5d0",
+    "max_nav_difference": 0.0,
+    "status": "succeeded",
+    "bundle_sha256": "05b4ad8559c392770df04b3bd4d1d38c8ebe75529e37d2da4a5b3e858a460e93",
+    "receipt_sha256": "58bb5f914a88d53ba608cb741cb22a775d7680b1cbfed28d40522f4e0844c774"
+  }
+]

@@ -1,0 +1,1010 @@
+{
+  "identity": "adaptive-breakout-20261023-v1",
+  "model": "breakout-adaptive-1.0.0",
+  "source_protocol_sha256": "fe4e69be2bc5c5568a5967b1ef09ba34429daf26e5b5eea26b71bf919d8a3d49",
+  "source_sealed_fits_sha256": "96983c5e960ef5371972ae947f65c0917c4186fd2a3937651e2a39021a50c222",
+  "published_batch": "5688bb093a7481231f05b8ba4d84e3e26e016231ffeb42576b4e7aca12cf99bd",
+  "universe": [
+    "AGG",
+    "BIL",
+    "CORN",
+    "CPER",
+    "DBA",
+    "DBB",
+    "DBC",
+    "EEM",
+    "EFA",
+    "EMB",
+    "EWA",
+    "EWC",
+    "EWG",
+    "EWH",
+    "EWJ",
+    "EWT",
+    "EWU",
+    "EWY",
+    "GLD",
+    "HYG",
+    "IAT",
+    "IBB",
+    "IBND",
+    "IEF",
+    "IGOV",
+    "INDA",
+    "ITA",
+    "IWM",
+    "LEMB",
+    "LQD",
+    "MBB",
+    "MCHI",
+    "MDY",
+    "PPLT",
+    "SHY",
+    "SLV",
+    "SOXX",
+    "SPY",
+    "TIP",
+    "TLT",
+    "USO",
+    "VGK",
+    "WEAT",
+    "XLB",
+    "XLC",
+    "XLE",
+    "XLI",
+    "XLK",
+    "XLP",
+    "XLU",
+    "XLV",
+    "XLY"
+  ],
+  "question": "Can individually selected exit protection, trend gating and a redesigned consolidation improve the weak cases without substantially damaging the stronger ones?",
+  "grids": {
+    "short": [
+      {
+        "range": "legacy",
+        "trend": "none",
+        "exit": "legacy"
+      },
+      {
+        "range": "legacy",
+        "trend": "none",
+        "exit": "breakeven"
+      },
+      {
+        "range": "legacy",
+        "trend": "none",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "legacy",
+        "trend": "none",
+        "exit": "atr_1"
+      },
+      {
+        "range": "legacy",
+        "trend": "none",
+        "exit": "atr_2"
+      },
+      {
+        "range": "legacy",
+        "trend": "none",
+        "exit": "first_lower"
+      },
+      {
+        "range": "legacy",
+        "trend": "avoid_down",
+        "exit": "legacy"
+      },
+      {
+        "range": "legacy",
+        "trend": "avoid_down",
+        "exit": "breakeven"
+      },
+      {
+        "range": "legacy",
+        "trend": "avoid_down",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "legacy",
+        "trend": "avoid_down",
+        "exit": "atr_1"
+      },
+      {
+        "range": "legacy",
+        "trend": "avoid_down",
+        "exit": "atr_2"
+      },
+      {
+        "range": "legacy",
+        "trend": "avoid_down",
+        "exit": "first_lower"
+      },
+      {
+        "range": "legacy",
+        "trend": "up_only",
+        "exit": "legacy"
+      },
+      {
+        "range": "legacy",
+        "trend": "up_only",
+        "exit": "breakeven"
+      },
+      {
+        "range": "legacy",
+        "trend": "up_only",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "legacy",
+        "trend": "up_only",
+        "exit": "atr_1"
+      },
+      {
+        "range": "legacy",
+        "trend": "up_only",
+        "exit": "atr_2"
+      },
+      {
+        "range": "legacy",
+        "trend": "up_only",
+        "exit": "first_lower"
+      },
+      {
+        "range": "flat_21",
+        "trend": "none",
+        "exit": "legacy"
+      },
+      {
+        "range": "flat_21",
+        "trend": "none",
+        "exit": "breakeven"
+      },
+      {
+        "range": "flat_21",
+        "trend": "none",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "flat_21",
+        "trend": "none",
+        "exit": "atr_1"
+      },
+      {
+        "range": "flat_21",
+        "trend": "none",
+        "exit": "atr_2"
+      },
+      {
+        "range": "flat_21",
+        "trend": "none",
+        "exit": "first_lower"
+      },
+      {
+        "range": "flat_21",
+        "trend": "avoid_down",
+        "exit": "legacy"
+      },
+      {
+        "range": "flat_21",
+        "trend": "avoid_down",
+        "exit": "breakeven"
+      },
+      {
+        "range": "flat_21",
+        "trend": "avoid_down",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "flat_21",
+        "trend": "avoid_down",
+        "exit": "atr_1"
+      },
+      {
+        "range": "flat_21",
+        "trend": "avoid_down",
+        "exit": "atr_2"
+      },
+      {
+        "range": "flat_21",
+        "trend": "avoid_down",
+        "exit": "first_lower"
+      },
+      {
+        "range": "flat_21",
+        "trend": "up_only",
+        "exit": "legacy"
+      },
+      {
+        "range": "flat_21",
+        "trend": "up_only",
+        "exit": "breakeven"
+      },
+      {
+        "range": "flat_21",
+        "trend": "up_only",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "flat_21",
+        "trend": "up_only",
+        "exit": "atr_1"
+      },
+      {
+        "range": "flat_21",
+        "trend": "up_only",
+        "exit": "atr_2"
+      },
+      {
+        "range": "flat_21",
+        "trend": "up_only",
+        "exit": "first_lower"
+      },
+      {
+        "range": "flat_63",
+        "trend": "none",
+        "exit": "legacy"
+      },
+      {
+        "range": "flat_63",
+        "trend": "none",
+        "exit": "breakeven"
+      },
+      {
+        "range": "flat_63",
+        "trend": "none",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "flat_63",
+        "trend": "none",
+        "exit": "atr_1"
+      },
+      {
+        "range": "flat_63",
+        "trend": "none",
+        "exit": "atr_2"
+      },
+      {
+        "range": "flat_63",
+        "trend": "none",
+        "exit": "first_lower"
+      },
+      {
+        "range": "flat_63",
+        "trend": "avoid_down",
+        "exit": "legacy"
+      },
+      {
+        "range": "flat_63",
+        "trend": "avoid_down",
+        "exit": "breakeven"
+      },
+      {
+        "range": "flat_63",
+        "trend": "avoid_down",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "flat_63",
+        "trend": "avoid_down",
+        "exit": "atr_1"
+      },
+      {
+        "range": "flat_63",
+        "trend": "avoid_down",
+        "exit": "atr_2"
+      },
+      {
+        "range": "flat_63",
+        "trend": "avoid_down",
+        "exit": "first_lower"
+      },
+      {
+        "range": "flat_63",
+        "trend": "up_only",
+        "exit": "legacy"
+      },
+      {
+        "range": "flat_63",
+        "trend": "up_only",
+        "exit": "breakeven"
+      },
+      {
+        "range": "flat_63",
+        "trend": "up_only",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "flat_63",
+        "trend": "up_only",
+        "exit": "atr_1"
+      },
+      {
+        "range": "flat_63",
+        "trend": "up_only",
+        "exit": "atr_2"
+      },
+      {
+        "range": "flat_63",
+        "trend": "up_only",
+        "exit": "first_lower"
+      },
+      {
+        "range": "rising_21",
+        "trend": "none",
+        "exit": "legacy"
+      },
+      {
+        "range": "rising_21",
+        "trend": "none",
+        "exit": "breakeven"
+      },
+      {
+        "range": "rising_21",
+        "trend": "none",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "rising_21",
+        "trend": "none",
+        "exit": "atr_1"
+      },
+      {
+        "range": "rising_21",
+        "trend": "none",
+        "exit": "atr_2"
+      },
+      {
+        "range": "rising_21",
+        "trend": "none",
+        "exit": "first_lower"
+      },
+      {
+        "range": "rising_21",
+        "trend": "avoid_down",
+        "exit": "legacy"
+      },
+      {
+        "range": "rising_21",
+        "trend": "avoid_down",
+        "exit": "breakeven"
+      },
+      {
+        "range": "rising_21",
+        "trend": "avoid_down",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "rising_21",
+        "trend": "avoid_down",
+        "exit": "atr_1"
+      },
+      {
+        "range": "rising_21",
+        "trend": "avoid_down",
+        "exit": "atr_2"
+      },
+      {
+        "range": "rising_21",
+        "trend": "avoid_down",
+        "exit": "first_lower"
+      },
+      {
+        "range": "rising_21",
+        "trend": "up_only",
+        "exit": "legacy"
+      },
+      {
+        "range": "rising_21",
+        "trend": "up_only",
+        "exit": "breakeven"
+      },
+      {
+        "range": "rising_21",
+        "trend": "up_only",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "rising_21",
+        "trend": "up_only",
+        "exit": "atr_1"
+      },
+      {
+        "range": "rising_21",
+        "trend": "up_only",
+        "exit": "atr_2"
+      },
+      {
+        "range": "rising_21",
+        "trend": "up_only",
+        "exit": "first_lower"
+      },
+      {
+        "range": "rising_63",
+        "trend": "none",
+        "exit": "legacy"
+      },
+      {
+        "range": "rising_63",
+        "trend": "none",
+        "exit": "breakeven"
+      },
+      {
+        "range": "rising_63",
+        "trend": "none",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "rising_63",
+        "trend": "none",
+        "exit": "atr_1"
+      },
+      {
+        "range": "rising_63",
+        "trend": "none",
+        "exit": "atr_2"
+      },
+      {
+        "range": "rising_63",
+        "trend": "none",
+        "exit": "first_lower"
+      },
+      {
+        "range": "rising_63",
+        "trend": "avoid_down",
+        "exit": "legacy"
+      },
+      {
+        "range": "rising_63",
+        "trend": "avoid_down",
+        "exit": "breakeven"
+      },
+      {
+        "range": "rising_63",
+        "trend": "avoid_down",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "rising_63",
+        "trend": "avoid_down",
+        "exit": "atr_1"
+      },
+      {
+        "range": "rising_63",
+        "trend": "avoid_down",
+        "exit": "atr_2"
+      },
+      {
+        "range": "rising_63",
+        "trend": "avoid_down",
+        "exit": "first_lower"
+      },
+      {
+        "range": "rising_63",
+        "trend": "up_only",
+        "exit": "legacy"
+      },
+      {
+        "range": "rising_63",
+        "trend": "up_only",
+        "exit": "breakeven"
+      },
+      {
+        "range": "rising_63",
+        "trend": "up_only",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "rising_63",
+        "trend": "up_only",
+        "exit": "atr_1"
+      },
+      {
+        "range": "rising_63",
+        "trend": "up_only",
+        "exit": "atr_2"
+      },
+      {
+        "range": "rising_63",
+        "trend": "up_only",
+        "exit": "first_lower"
+      }
+    ],
+    "long": [
+      {
+        "range": "legacy",
+        "trend": "none",
+        "exit": "legacy"
+      },
+      {
+        "range": "legacy",
+        "trend": "none",
+        "exit": "breakeven"
+      },
+      {
+        "range": "legacy",
+        "trend": "none",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "legacy",
+        "trend": "none",
+        "exit": "atr_1"
+      },
+      {
+        "range": "legacy",
+        "trend": "none",
+        "exit": "atr_2"
+      },
+      {
+        "range": "legacy",
+        "trend": "none",
+        "exit": "first_lower"
+      },
+      {
+        "range": "legacy",
+        "trend": "avoid_down",
+        "exit": "legacy"
+      },
+      {
+        "range": "legacy",
+        "trend": "avoid_down",
+        "exit": "breakeven"
+      },
+      {
+        "range": "legacy",
+        "trend": "avoid_down",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "legacy",
+        "trend": "avoid_down",
+        "exit": "atr_1"
+      },
+      {
+        "range": "legacy",
+        "trend": "avoid_down",
+        "exit": "atr_2"
+      },
+      {
+        "range": "legacy",
+        "trend": "avoid_down",
+        "exit": "first_lower"
+      },
+      {
+        "range": "legacy",
+        "trend": "up_only",
+        "exit": "legacy"
+      },
+      {
+        "range": "legacy",
+        "trend": "up_only",
+        "exit": "breakeven"
+      },
+      {
+        "range": "legacy",
+        "trend": "up_only",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "legacy",
+        "trend": "up_only",
+        "exit": "atr_1"
+      },
+      {
+        "range": "legacy",
+        "trend": "up_only",
+        "exit": "atr_2"
+      },
+      {
+        "range": "legacy",
+        "trend": "up_only",
+        "exit": "first_lower"
+      },
+      {
+        "range": "flat_126",
+        "trend": "none",
+        "exit": "legacy"
+      },
+      {
+        "range": "flat_126",
+        "trend": "none",
+        "exit": "breakeven"
+      },
+      {
+        "range": "flat_126",
+        "trend": "none",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "flat_126",
+        "trend": "none",
+        "exit": "atr_1"
+      },
+      {
+        "range": "flat_126",
+        "trend": "none",
+        "exit": "atr_2"
+      },
+      {
+        "range": "flat_126",
+        "trend": "none",
+        "exit": "first_lower"
+      },
+      {
+        "range": "flat_126",
+        "trend": "avoid_down",
+        "exit": "legacy"
+      },
+      {
+        "range": "flat_126",
+        "trend": "avoid_down",
+        "exit": "breakeven"
+      },
+      {
+        "range": "flat_126",
+        "trend": "avoid_down",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "flat_126",
+        "trend": "avoid_down",
+        "exit": "atr_1"
+      },
+      {
+        "range": "flat_126",
+        "trend": "avoid_down",
+        "exit": "atr_2"
+      },
+      {
+        "range": "flat_126",
+        "trend": "avoid_down",
+        "exit": "first_lower"
+      },
+      {
+        "range": "flat_126",
+        "trend": "up_only",
+        "exit": "legacy"
+      },
+      {
+        "range": "flat_126",
+        "trend": "up_only",
+        "exit": "breakeven"
+      },
+      {
+        "range": "flat_126",
+        "trend": "up_only",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "flat_126",
+        "trend": "up_only",
+        "exit": "atr_1"
+      },
+      {
+        "range": "flat_126",
+        "trend": "up_only",
+        "exit": "atr_2"
+      },
+      {
+        "range": "flat_126",
+        "trend": "up_only",
+        "exit": "first_lower"
+      },
+      {
+        "range": "flat_252",
+        "trend": "none",
+        "exit": "legacy"
+      },
+      {
+        "range": "flat_252",
+        "trend": "none",
+        "exit": "breakeven"
+      },
+      {
+        "range": "flat_252",
+        "trend": "none",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "flat_252",
+        "trend": "none",
+        "exit": "atr_1"
+      },
+      {
+        "range": "flat_252",
+        "trend": "none",
+        "exit": "atr_2"
+      },
+      {
+        "range": "flat_252",
+        "trend": "none",
+        "exit": "first_lower"
+      },
+      {
+        "range": "flat_252",
+        "trend": "avoid_down",
+        "exit": "legacy"
+      },
+      {
+        "range": "flat_252",
+        "trend": "avoid_down",
+        "exit": "breakeven"
+      },
+      {
+        "range": "flat_252",
+        "trend": "avoid_down",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "flat_252",
+        "trend": "avoid_down",
+        "exit": "atr_1"
+      },
+      {
+        "range": "flat_252",
+        "trend": "avoid_down",
+        "exit": "atr_2"
+      },
+      {
+        "range": "flat_252",
+        "trend": "avoid_down",
+        "exit": "first_lower"
+      },
+      {
+        "range": "flat_252",
+        "trend": "up_only",
+        "exit": "legacy"
+      },
+      {
+        "range": "flat_252",
+        "trend": "up_only",
+        "exit": "breakeven"
+      },
+      {
+        "range": "flat_252",
+        "trend": "up_only",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "flat_252",
+        "trend": "up_only",
+        "exit": "atr_1"
+      },
+      {
+        "range": "flat_252",
+        "trend": "up_only",
+        "exit": "atr_2"
+      },
+      {
+        "range": "flat_252",
+        "trend": "up_only",
+        "exit": "first_lower"
+      },
+      {
+        "range": "rising_126",
+        "trend": "none",
+        "exit": "legacy"
+      },
+      {
+        "range": "rising_126",
+        "trend": "none",
+        "exit": "breakeven"
+      },
+      {
+        "range": "rising_126",
+        "trend": "none",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "rising_126",
+        "trend": "none",
+        "exit": "atr_1"
+      },
+      {
+        "range": "rising_126",
+        "trend": "none",
+        "exit": "atr_2"
+      },
+      {
+        "range": "rising_126",
+        "trend": "none",
+        "exit": "first_lower"
+      },
+      {
+        "range": "rising_126",
+        "trend": "avoid_down",
+        "exit": "legacy"
+      },
+      {
+        "range": "rising_126",
+        "trend": "avoid_down",
+        "exit": "breakeven"
+      },
+      {
+        "range": "rising_126",
+        "trend": "avoid_down",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "rising_126",
+        "trend": "avoid_down",
+        "exit": "atr_1"
+      },
+      {
+        "range": "rising_126",
+        "trend": "avoid_down",
+        "exit": "atr_2"
+      },
+      {
+        "range": "rising_126",
+        "trend": "avoid_down",
+        "exit": "first_lower"
+      },
+      {
+        "range": "rising_126",
+        "trend": "up_only",
+        "exit": "legacy"
+      },
+      {
+        "range": "rising_126",
+        "trend": "up_only",
+        "exit": "breakeven"
+      },
+      {
+        "range": "rising_126",
+        "trend": "up_only",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "rising_126",
+        "trend": "up_only",
+        "exit": "atr_1"
+      },
+      {
+        "range": "rising_126",
+        "trend": "up_only",
+        "exit": "atr_2"
+      },
+      {
+        "range": "rising_126",
+        "trend": "up_only",
+        "exit": "first_lower"
+      },
+      {
+        "range": "rising_252",
+        "trend": "none",
+        "exit": "legacy"
+      },
+      {
+        "range": "rising_252",
+        "trend": "none",
+        "exit": "breakeven"
+      },
+      {
+        "range": "rising_252",
+        "trend": "none",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "rising_252",
+        "trend": "none",
+        "exit": "atr_1"
+      },
+      {
+        "range": "rising_252",
+        "trend": "none",
+        "exit": "atr_2"
+      },
+      {
+        "range": "rising_252",
+        "trend": "none",
+        "exit": "first_lower"
+      },
+      {
+        "range": "rising_252",
+        "trend": "avoid_down",
+        "exit": "legacy"
+      },
+      {
+        "range": "rising_252",
+        "trend": "avoid_down",
+        "exit": "breakeven"
+      },
+      {
+        "range": "rising_252",
+        "trend": "avoid_down",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "rising_252",
+        "trend": "avoid_down",
+        "exit": "atr_1"
+      },
+      {
+        "range": "rising_252",
+        "trend": "avoid_down",
+        "exit": "atr_2"
+      },
+      {
+        "range": "rising_252",
+        "trend": "avoid_down",
+        "exit": "first_lower"
+      },
+      {
+        "range": "rising_252",
+        "trend": "up_only",
+        "exit": "legacy"
+      },
+      {
+        "range": "rising_252",
+        "trend": "up_only",
+        "exit": "breakeven"
+      },
+      {
+        "range": "rising_252",
+        "trend": "up_only",
+        "exit": "atr_0.5"
+      },
+      {
+        "range": "rising_252",
+        "trend": "up_only",
+        "exit": "atr_1"
+      },
+      {
+        "range": "rising_252",
+        "trend": "up_only",
+        "exit": "atr_2"
+      },
+      {
+        "range": "rising_252",
+        "trend": "up_only",
+        "exit": "first_lower"
+      }
+    ]
+  },
+  "input": "Same verified published adjusted OHLC and audited raw volume. No source substitution or online prices. Retrospective supported membership; no historical-vintage certification.",
+  "ranges": "Prior closes only. Legacy own-ETF range unchanged. New flat: 10/90% band, efficiency<=.30, fitted absolute log drift<=half log band, width<=8 prior ATR20. New rising: positive OLS log slope, projected next-session 10/90% residual channel width<=4 prior ATR20. Both require last-third return volatility<=full-window volatility. Lengths21/63 short;126/252 long. Keep own-ETF buffer, confirmation, volume, initial risk, cooldown and reentry. Continuations retain their original breakout context.",
+  "trends": "Close-time own-ETF state: up if close>SMA200 and SMA200>SMA200 lag63; down if both reversed; mixed otherwise; unknown before sufficient history. Entry candidates: no gate; avoid down (up/mixed); up only. Gate all confirmation and continuation decisions, never retrospectively cancel binding orders. Broad-market regime is not conflated with the ETF's own trend.",
+  "exits": "Legacy; original trail plus entry-price floor after peak gain1 confirmationATR; replace trail by0.5/1/2 current ATR activated at gain1 confirmationATR, heat disabled; additional first lower close after peak gain1 confirmationATR. No automatic intraday sale. Retain initial stop/time exit/cooldown/reentry, close decisions, next-open fills and symmetric delay. First-lower always reported as a forced diagnostic, not a chosen winner.",
+  "fit": "90 candidates per available ETF/domain/era, on truncated training only, around its sealed independent27-parameter fit. Four selections: exit-only, trend-only, range-only, joint. Same original utility and chronological3-block/scarcity penalties. Best5 by5bp/no-delay score per family plus baseline rescored at all6 frictions. Require >=5 closed trades and >=5% exposure in every training friction, CAGR within1pp and DD within2pp of baseline at every friction, and worst-friction utility >baseline+.01; otherwise retain baseline. Tie-break grid order. No evaluation-based choice of assets, components or parameters. This refits structural/exit choices, not all27 original coordinates again.",
+  "evaluation": "Train through2022, evaluate2023-01-03..2026-10-16; separate train through2019, evaluate2020-01-02..2022-12-30. Seal all choices before evaluation. No future-trained fallback for insufficient histories. Carry chronological virtual state; idle cash zero. Both eras previously inspected; this is development evidence, not untouched confirmation.",
+  "metrics": "Net cumulative/CAGR, Sharpe rf0, standard Calmar, DD, actual traded-notional turnover/fees, exposure, alpha over same ETF and BIL, IC21 of desired state versus next-open excess return. Exact event-ledger parity. Regime attribution uses previous-close state, additive net log-return contributions (not invented standalone regime CAGRs).",
+  "frictions": [
+    [
+      5,
+      0
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      10,
+      0
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      20,
+      0
+    ],
+    [
+      20,
+      1
+    ]
+  ],
+  "portfolio": "Joint_fit versus sealed baseline and ungated momentum; full52 admitted pool, six98%/6 slots, positive126 momentum/63vol ranking, incumbent rank buffer8, BIL vacancies. Dynamic membership+month-end versus monthly. Overlay FR25*(.5+.25short+.25long), displaced weight BIL, core cash preserved; dynamic cash-inclusive last-adopted L1>=.10+monthly versus monthly. Signals use zero-delay virtual state; real portfolio fills stress both0/1 added sessions. All6 frictions. Later SOTA comparison throughOct12; both eras for selector versus matching baseline/momentum. Same app accounting, independent native checks for selected representative cases.",
+  "acceptance": "Per family/era/friction, exclude BIL and cases without original training evidence: improved median Sharpe and lower-quartile CAGR, >=90% cases lose <=1pp CAGR and worsen DD<=2pp versus paired baseline. Also report all cases and each previously highlighted strong/weak example; these labels do not select fits. Portfolio: higher Sharpe, CAGR within1pp, no worse DD versus matched baseline and FR25 (late) or momentum (early). Require chronology/friction stability; no post-result substitute winner.",
+  "code_hashes": {
+    "scripts/retest_adaptive_breakout.py": "b1e095b4aa4784caa13a3449e3407fd8b35ba4e4100b3f024e2dde29b94e17f7",
+    "src/systematic_trading/research/breakout_adaptive.py": "7ad9ff33328f6b127ca9ecb130d8bb2523285e8e02143f5c906e0ea013f937c9",
+    "scripts/run_fitted_breakout_portfolios.py": "89a75c3c5b48847fd1eb442ec4545becfb120eee76a6d6d5995d5d068aeb4c1f",
+    "scripts/revisit_breakout_research.py": "0304f7b9af5d173b3cfaab1e8057a12fdb0c7350e7f5a31a5d39f3f248a89605"
+  },
+  "authority": "Research only; no promotion, execution, allocation, broker, monitoring or service changes."
+}

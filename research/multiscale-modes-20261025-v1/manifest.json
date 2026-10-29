@@ -1,0 +1,34 @@
+{
+  "files": {
+    "asset-results.json": "0f636919121de92ca4c7d08cc1a83d3e8674fe94ae52eae41fbc6cfda93dfb3d",
+    "chart-data.json": "abf3be5b82c7842788d9b6242ec0f0ab968e4c1a07387b69f95201a372569490",
+    "control-validation.json": "957af2b85d2ad305938ed1d53a4eeb1dbbee54dd0e20a4a7af6b0a68c5d3b7a6",
+    "CORN_late_selected.png": "ae683c48bfad0721cd818fa88585b6ddb583ad2a21752d5f3869321a344d3214",
+    "diagnostics.json": "8d16eab2b437c9fc190c90e7c5b796b9fdc0b52fb4f9c7db9692892c7f2cd9ba",
+    "EWA_late_selected.png": "62b4fecaa0aa70e08593084f6cf2d978a4f0c8b28d55ae21f44ebcc0a26ae432",
+    "fit-manifest.json": "1e389d864727379f352216dfa3c85b2691b0016f2203a1a092c3bfde0e7c927b",
+    "full-etf-table.csv": "a053e36bf49f8f1a7e1b2c6e4221a5a73018bd6f63fbc07e7bbd0f2c4c1f06df",
+    "GLD_late_hmm_stress_volume.png": "2b90fab9cb8b6a84e361cbcd4508e16b090d155cab92040fda3db1b622b60d77",
+    "GLD_late_selected.png": "b1a4a343331744a4d894474bca61bef5c91a20ea67f0d8be28850c17567307eb",
+    "IAT_late_selected.png": "6a27332b069fa333012df9f6d56ebbc1b6f8411fac2a9b513ad1d35e0092802e",
+    "index.html": "a1600355463692c66bb3855015a8faf35c712934699a7285b7489c8710def247",
+    "MCHI_late_selected.png": "04eb1502488d5abeb9b04d53199aa5a6f2eb737a4cf00e1b8dcfa31b5a822ea2",
+    "native-checks.json": "469290746ea09d958509c600ae1e1620d21338af9505436cd750cf913a31ffca",
+    "parent-case-audit.json": "9071477e57aa2765365592fd4f35954b46bfd141a1c0b3240f8fd1347cf8e94a",
+    "portfolio-results.json": "5abef3d18dc2f10dc30ba9671986e5ddce5b12f853cb641bb5a16a717a5b92b9",
+    "protocol.json": "60ef669a458665a043b5d790b24fe1dd440a1352b7b7d84957d87420f2e9a86b",
+    "selected-parameters.json": "a0301c8f9006bab6a90fc5c1a5347b069bbe7122127eab485cda5d85a5701a93",
+    "SLV_late_selected.png": "686df5d356a8d5fcca1e23ca08f7326fa58e23277b1e34ee9738e9ab0391d4a4",
+    "SOXX_late_selected.png": "2249a18e7d91e131cf44d8344d0038f34d838b751ec7cb40b8aad78b12a24a4a",
+    "summary.json": "6a3b1d14d73bb79147578c4ec333f96d65bfa2d0866bc1073e4e490da3df5908",
+    "TLT_late_selected.png": "2d8c0afa07d297fc16ad443f18c5458a2e01eb3511a338dc8ad8bb6e82175c4f",
+    "validation.json": "2a4a2708131e7700e19b6baee4769dcf2be817af04213d00d01c1c860e545b93"
+  },
+  "report_code": {
+    "scripts/build_multiscale_modes_report.py": "8719f23308b42bdaef87a84cabef430107689bfaba70bf9505bd87b96f16de22",
+    "scripts/assets/multiscale-modes-review.html": "d1412548f8dd52a32d256e3a26f37915ff0ad6f4deacec27066f3ee4c1ce5ca6",
+    "scripts/assets/chart-date-controls.js": "b1bdcd09ebcce8488e0ab94f82c807654dc44b2e84351d0dee40bf1996e6c6b7",
+    "scripts/validate_multiscale_modes.py": "f8c110190ca1c66d599cb8c462b1027d72efc37e7ab961c6caa998784401d57a",
+    "scripts/analyze_mode_case_failures.py": "4e524af53e51030c964c92a1bb76165ae6dedcfa0cc2b93fe28e36051643d753"
+  }
+}

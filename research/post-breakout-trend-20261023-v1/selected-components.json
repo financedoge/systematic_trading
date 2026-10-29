@@ -1,0 +1,7355 @@
+[
+  {
+    "symbol": "AGG",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "AGG",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "AGG",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "AGG",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "AGG",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "AGG",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "AGG",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "AGG",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "AGG",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "AGG",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "AGG",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "AGG",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "BIL",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "BIL",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "BIL",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "BIL",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "BIL",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "BIL",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "BIL",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "BIL",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "BIL",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "BIL",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "BIL",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "BIL",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "CORN",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "CORN",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "CORN",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "CORN",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "CORN",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 2.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "CORN",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "CORN",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "CORN",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "CORN",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "CORN",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "CORN",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "CORN",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "CPER",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "CPER",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "CPER",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "CPER",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "CPER",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "CPER",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "DBA",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBA",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBA",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBA",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBA",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBA",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBA",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBA",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBA",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBA",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "DBA",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "DBA",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "DBB",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBB",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBB",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBB",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBB",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBB",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBB",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBB",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBB",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBB",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBB",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBB",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBC",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBC",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBC",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBC",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBC",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBC",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBC",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBC",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBC",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBC",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBC",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "DBC",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EEM",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EEM",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EEM",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EEM",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EEM",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EEM",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EEM",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EEM",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EEM",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EEM",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EEM",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EEM",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EFA",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EFA",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EFA",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EFA",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EFA",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EFA",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EFA",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EFA",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EFA",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EFA",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EFA",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EFA",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EMB",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EMB",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EMB",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EMB",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EMB",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EMB",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EMB",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EMB",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EMB",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EMB",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EMB",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EMB",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWA",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWA",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWA",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWA",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWA",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWA",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWA",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWA",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWA",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWA",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWA",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWA",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWC",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWC",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWC",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWC",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWC",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWC",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWC",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWC",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWC",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWC",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWC",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWC",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWG",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWG",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWG",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWG",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWG",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWG",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWG",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWG",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWG",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWG",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWG",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWG",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWH",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWH",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWH",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWH",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWH",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWH",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWH",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWH",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWH",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWH",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWH",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWH",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWJ",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWJ",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWJ",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWJ",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWJ",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWJ",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWJ",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWJ",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWJ",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWJ",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWJ",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWJ",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWT",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWT",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWT",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWT",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWT",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWT",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWT",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWT",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWT",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWT",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWT",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWT",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWU",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWU",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWU",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWU",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWU",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWU",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWU",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWU",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWU",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWU",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWU",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWU",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWY",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWY",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWY",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWY",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWY",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWY",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWY",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWY",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWY",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWY",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWY",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "EWY",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "GLD",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "GLD",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "GLD",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "GLD",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "GLD",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "GLD",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "GLD",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "GLD",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "GLD",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "GLD",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "GLD",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "GLD",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "HYG",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "HYG",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "HYG",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "HYG",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "HYG",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "HYG",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "HYG",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "HYG",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "HYG",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "HYG",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "HYG",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "HYG",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IAT",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IAT",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IAT",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IAT",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IAT",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IAT",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IAT",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IAT",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IAT",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IAT",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "IAT",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "IAT",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "IBB",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBB",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBB",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBB",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBB",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBB",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBB",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "IBB",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "IBB",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "IBB",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "IBB",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "IBB",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "IBND",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBND",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBND",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBND",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBND",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBND",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBND",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBND",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBND",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBND",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBND",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IBND",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IEF",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IEF",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IEF",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IEF",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IEF",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IEF",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IEF",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IEF",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IEF",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IEF",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "IEF",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "IEF",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "IGOV",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IGOV",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IGOV",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IGOV",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IGOV",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IGOV",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IGOV",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IGOV",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IGOV",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IGOV",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IGOV",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IGOV",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "INDA",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "INDA",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "INDA",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "INDA",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "INDA",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "INDA",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "INDA",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "INDA",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "INDA",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "INDA",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "INDA",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "INDA",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "ITA",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "ITA",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "ITA",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "ITA",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "ITA",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "ITA",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "ITA",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "ITA",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "ITA",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "ITA",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "ITA",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "ITA",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "IWM",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IWM",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IWM",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IWM",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IWM",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IWM",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IWM",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IWM",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IWM",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "IWM",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IWM",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "IWM",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "LEMB",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "LEMB",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "LEMB",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "LEMB",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "LEMB",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "LEMB",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "LEMB",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "LEMB",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "LEMB",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "LEMB",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "LEMB",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "LEMB",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "LQD",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "LQD",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "LQD",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "LQD",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "LQD",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "LQD",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "LQD",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "LQD",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "LQD",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "LQD",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "LQD",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "LQD",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "MBB",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MBB",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MBB",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "MBB",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MBB",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MBB",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "MBB",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MBB",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MBB",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "MBB",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MBB",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MBB",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "MCHI",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MCHI",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MCHI",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "MCHI",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MCHI",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MCHI",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "MCHI",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MCHI",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MCHI",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "MCHI",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MCHI",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MCHI",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "MDY",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MDY",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MDY",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "MDY",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MDY",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MDY",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "MDY",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MDY",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MDY",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "MDY",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MDY",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "MDY",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "PPLT",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "PPLT",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "PPLT",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "PPLT",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "PPLT",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "PPLT",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "PPLT",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "PPLT",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "PPLT",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "PPLT",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "PPLT",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 10,
+      "buffer_atr": 2.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "PPLT",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SHY",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SHY",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SHY",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SHY",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SHY",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SHY",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SHY",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SHY",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SHY",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SHY",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SHY",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SHY",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SLV",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SLV",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SLV",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SLV",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SLV",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 10,
+      "buffer_atr": 2.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SLV",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SLV",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SLV",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SLV",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SLV",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SLV",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SLV",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SOXX",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SOXX",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SOXX",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SOXX",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SOXX",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SOXX",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SOXX",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SOXX",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SOXX",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SOXX",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SOXX",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SOXX",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SPY",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SPY",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SPY",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SPY",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SPY",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SPY",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SPY",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SPY",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SPY",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "SPY",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SPY",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "SPY",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "TIP",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "TIP",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "TIP",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "TIP",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "TIP",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "TIP",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "TIP",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "TIP",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "TIP",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "TIP",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "TIP",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "TIP",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "TLT",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "TLT",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "TLT",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "TLT",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "TLT",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "TLT",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "TLT",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "TLT",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "TLT",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "TLT",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "TLT",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "TLT",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "USO",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "USO",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "USO",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "USO",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "USO",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "USO",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "USO",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "USO",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "USO",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "USO",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "USO",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "USO",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "VGK",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "VGK",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "VGK",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "VGK",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "VGK",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "VGK",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "VGK",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "VGK",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "VGK",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "VGK",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "VGK",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "VGK",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "WEAT",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "WEAT",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "WEAT",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "WEAT",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "WEAT",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "WEAT",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "WEAT",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "WEAT",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "WEAT",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "WEAT",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "WEAT",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "WEAT",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "XLB",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLB",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLB",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLB",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLB",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLB",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLB",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLB",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLB",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLB",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLB",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLB",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLC",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLC",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLC",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLC",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "XLC",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "XLC",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  },
+  {
+    "symbol": "XLE",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLE",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLE",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLE",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLE",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLE",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLE",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLE",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLE",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLE",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLE",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLE",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLI",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLI",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLI",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLI",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLI",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLI",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLI",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLI",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLI",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLI",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLI",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLI",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLK",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLK",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLK",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLK",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLK",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLK",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLK",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLK",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLK",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLK",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLK",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLK",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLP",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLP",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLP",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLP",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLP",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLP",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLP",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLP",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLP",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLP",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLP",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLP",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLU",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLU",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLU",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLU",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLU",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLU",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLU",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLU",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLU",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLU",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLU",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLU",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLV",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLV",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLV",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLV",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLV",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLV",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLV",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLV",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLV",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLV",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLV",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLV",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLY",
+    "domain": "short",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLY",
+    "domain": "short",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLY",
+    "domain": "short",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLY",
+    "domain": "short",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLY",
+    "domain": "short",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLY",
+    "domain": "short",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLY",
+    "domain": "long",
+    "era": "late",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLY",
+    "domain": "long",
+    "era": "late",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLY",
+    "domain": "long",
+    "era": "late",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": true
+  },
+  {
+    "symbol": "XLY",
+    "domain": "long",
+    "era": "early",
+    "variant": "baseline",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "XLY",
+    "domain": "long",
+    "era": "early",
+    "variant": "trend_fit",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "legacy",
+    "rule": null,
+    "training_evidence": false
+  },
+  {
+    "symbol": "XLY",
+    "domain": "long",
+    "era": "early",
+    "variant": "shared_trend",
+    "range": "legacy",
+    "trend": "none",
+    "exit": "post_trend",
+    "rule": {
+      "lookback": 21,
+      "buffer_atr": 1.0
+    },
+    "training_evidence": false
+  }
+]

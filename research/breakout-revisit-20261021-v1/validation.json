@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "checks": {
+    "held_value": true,
+    "weights": true,
+    "currency": true,
+    "native": true,
+    "full_pool": true,
+    "scenarios": true,
+    "client_allocation_renderer": true
+  },
+  "runtime_publication_verified": false,
+  "native_validation_script_sha256": "eb54de881fc6285923e5cc8b7355d4e94b98baf4a0f6ad60f38a3872390a5ed3",
+  "report_builder_sha256": "59161f8ef19db891930829e7eb46a72f8f5df95654b7414f446b1053896e96a2"
+}

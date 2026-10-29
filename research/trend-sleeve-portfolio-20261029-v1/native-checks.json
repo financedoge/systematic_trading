@@ -1,0 +1,41 @@
+[
+  {
+    "case": "early_equal_c5d0",
+    "status": "succeeded",
+    "sessions": 503,
+    "symbols": 49,
+    "max_native_reference_usd": 0.0,
+    "native_return": -0.04184465999999998,
+    "fractional_return": -0.04185691540164693,
+    "max_native_fractional_nav_difference": 0.0001977115580872324,
+    "limitation": "Accounting-only execution-open target oracle reconstructed from frozen fractional portfolio fills. Native checks whole-share/cent-price cash, fills and NAV against independent app reference. Execution-open reference prices are not a tradable prior-close strategy. Does not independently validate ranks, HMMs, ERC, causality or fractional research sizing.",
+    "receipt_sha256": "fb1d100d23267850e278f8b5d99d53c45ad05bba9a62aa6bc1967767ce86af9f",
+    "bundle_sha256": "1379068842d4a1b12a25e4d2fde1d12d15bc4ac125a8240a33a66a779fbb9bd7"
+  },
+  {
+    "case": "late_risk_c5d0",
+    "status": "succeeded",
+    "sessions": 680,
+    "symbols": 51,
+    "max_native_reference_usd": 0.0,
+    "native_return": 0.12041955999999998,
+    "fractional_return": 0.12063166549173054,
+    "max_native_fractional_nav_difference": 0.00029781729227762455,
+    "limitation": "Accounting-only execution-open target oracle reconstructed from frozen fractional portfolio fills. Native checks whole-share/cent-price cash, fills and NAV against independent app reference. Execution-open reference prices are not a tradable prior-close strategy. Does not independently validate ranks, HMMs, ERC, causality or fractional research sizing.",
+    "receipt_sha256": "aea1fd11f3507e38e984260b68007c5eccf1aac4f77811f66f156bdbbcfdac29",
+    "bundle_sha256": "57016e4b0fab9f46fd538833846650abcaba2919be91ad719bdf7536148c55ec"
+  },
+  {
+    "case": "late_equal_c5d1",
+    "status": "succeeded",
+    "sessions": 680,
+    "symbols": 51,
+    "max_native_reference_usd": 0.0,
+    "native_return": 0.13964041999999988,
+    "fractional_return": 0.13964688497726474,
+    "max_native_fractional_nav_difference": 0.00012193534016824437,
+    "limitation": "Accounting-only execution-open target oracle reconstructed from frozen fractional portfolio fills. Native checks whole-share/cent-price cash, fills and NAV against independent app reference. Execution-open reference prices are not a tradable prior-close strategy. Does not independently validate ranks, HMMs, ERC, causality or fractional research sizing.",
+    "receipt_sha256": "675bdd37f0f9e5177d990b9e05e76888206965c115e5abd087bbba0222efb154",
+    "bundle_sha256": "ce6331e3b787e5bd04264747376e8569ea7d5a2ca1da5c48864ca0db9397ba60"
+  }
+]

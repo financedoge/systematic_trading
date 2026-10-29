@@ -1,0 +1,11 @@
+{
+  "replayed_later_fits": 104,
+  "replayed_paths": 208,
+  "saved_metric_max_error": 0.0,
+  "independently_rebuilt_stop_sessions": 15875,
+  "stop_max_absolute_error": 6.480149750132114e-12,
+  "event_ledger_max_relative_error": 1.1102230246251565e-15,
+  "max_daily_log_accounting_error": 4.2175464509686122e-16,
+  "upstream_manifest_verified": true,
+  "frozen_protocol_and_52_fit_hashes_verified": true
+}

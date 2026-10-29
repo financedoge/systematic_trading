@@ -1,0 +1,19 @@
+{
+  "component_correlation": 0.6773138791974347,
+  "approximate_fr25_risk_share": 0.8653331606535645,
+  "bootstrap_difference_95": [
+    [
+      -0.15949271262925474,
+      -0.07468929683082565
+    ],
+    [
+      0.1444581477871309,
+      -0.013465440524971423
+    ]
+  ],
+  "bootstrap_columns": [
+    "Sharpe",
+    "CAGR"
+  ],
+  "bootstrap_note": "Paired circular21-session bootstrap of realized daily returns; not a new strategy replay or selection-adjusted inference."
+}

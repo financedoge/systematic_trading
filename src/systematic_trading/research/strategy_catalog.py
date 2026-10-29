@@ -197,6 +197,9 @@ def fr25_lifecycle_conditional_definition():
 
 
 def registered_strategy_definition(key: str) -> StrategyDefinition:
+    if key == 'broadtrend_full_pool_v1':
+        from .broadtrend import definition
+        return definition()
     parents = [legacy_sota_definition(), etf_activity_lag20_definition(), rolling_xgboost_1y_definition()]
     definitions = [*parents, *(usd_strategy_definition(d) for d in parents), risk_parity_definition(),
                    rolling_xgboost_1y_definition(activity=False), defensive_cash_definition(), economic_context_definition(), m1_14_definition(), fr25_definition(), alpha101_tilt_definition(), fr25_lifecycle_conditional_definition()]

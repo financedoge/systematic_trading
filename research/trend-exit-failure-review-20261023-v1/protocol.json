@@ -1,0 +1,15 @@
+{
+  "question": "Full-pool actual trend exits and worst-case inspection; no new fitting or strategy changes.",
+  "published_batch": "5688bb093a7481231f05b8ba4d84e3e26e016231ffeb42576b4e7aca12cf99bd",
+  "source_protocol_sha256": "03529d3641c81d565346a83c80ad7c87f90f5ad47bbe07fbd0cbba5c6b35d21a",
+  "source_manifest_sha256": "3f940daa42fe547582fb274829627f3e79fd6f853f67c580aa3ceff56955ae27",
+  "source_fit_manifest_sha256": "d17c6ad665de0acda2ce9ba1949f9175c476887da9f5b3c938a5df60fa2a809a",
+  "rule": {
+    "lookback": 21,
+    "buffer_atr": 1.0
+  },
+  "fitting": "Each ETF's sealed independently fitted entry/risk anchor. Fixed21/1 exit control, not individually selected exit. All104 later training selections retained the existing exit.",
+  "ranking": "All51 risky ETFs x2 domains, including inadequate-training rows with flags; BIL cash reference excluded from rankings. Worst net cumulative, largest change vs existing fit and largest gap vs buy-hold are separate descriptive ranks. Focus is two worst losses and largest deterioration.",
+  "inspection": "Replay104 later actual-control and104 baseline paths. Independent least-squares support reconstruction, ledger and exact log accounting. Earlier metrics and all six frictions are verified saved evidence. No new portfolio experiment; prior study retains dynamic/monthly controls. Post-result inspection is not a selection rule.",
+  "authority": "Research only, previously inspected history. No promotion, deployment or allocation changes."
+}

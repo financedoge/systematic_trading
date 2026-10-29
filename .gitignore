@@ -15,6 +15,13 @@ var/*.db
 var/backtests/
 research/**/*.html
 research/**/*.png
+# Bulky generated research arrays stay local alongside rendered reports.
+# Keep source recipes, selected model parameters, compact findings and manifests.
+research/**/chart-data.json
+research/**/chart-data.json.gz
+research/**/asset-results.json
+research/**/detail.json.gz
+research/**/report-data.json.gz
 var/live/*
 !var/live/account_snapshots/
 var/live/account_snapshots/*

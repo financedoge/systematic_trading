@@ -17,7 +17,7 @@ Run daily for lightweight checks and weekly for deeper challenger strategy revie
 
 Tracked candidates must be implemented as full executable strategy definitions and calculated by the application's analytics service. Agents may develop and validate that code, but must not become recurring calculation workers or maintain manually refreshed strategy cards. Use the shared full report with current held/target weights, NAV, matched benchmarks and the complete decision chart. See `AGENTS.md` and `docs/etf-activity-lag20-tracking.md`.
 
-1. Start from the current SOTA hurdle, not from a weak benchmark.
+1. Start with the research hypothesis and a matched benchmark set: current SOTA/FR25, cash, buy-and-hold and simple strategy controls. Per the operator's 2026-10-26 instruction, FR25 is an empirical incumbent, not a universal gold standard. Examine its regime/asset dependence as well as the challenger; preserve frozen historical gates and promotion controls.
 2. Define the research question and expected failure mode before running experiments.
 3. Use point-in-time features and explicit universe rules.
    Always include dynamic rebalancing as a research option alongside a fixed-interval control. Register the event/threshold grid before results, including joint selection-width/timing choices when relevant. Target-change events compare latest theoretical with last adopted target weights, including cash; adopted-target versus actual-held alignment stays in Trading. Evaluate net Sharpe with return/drawdown guards, actual traded notional and costs, execution delays and chronological parameter stability. Do not carry the current universe's preference for monthly rebalancing forward as a universal conclusion.
@@ -27,6 +27,12 @@ Tracked candidates must be implemented as full executable strategy definitions a
    The 44 bp annual-cost ceiling was retired by the operator on 2026-10-17. Extra trading cost is acceptable when incremental return exceeds incremental cost against a matched control. Replay the declared candidates and controls without an absolute-cost filter; judge net Sharpe with return/drawdown guards, cost/delay stress and chronological stability. IC/breakeven margins remain diagnostics, not portfolio-return evidence. Use `turnover_gate.screen` for current diagnostics; `legacy_screen` and the old frozen runners are historical reproduction only.
 7. Record artifacts and decide whether the candidate is rejected, retained for observation, or sent to promotion review.
 8. Update `docs/research-state.md` and `log.md` when the research state changes.
+   Before each handoff, identify the weakest risky ETF under the training-selected
+   policy using the declared primary net cumulative return (and each evaluation
+   era), prepare its dated price/volume, state, fill, protection and trade chart,
+   and make it easy to open. Keep the main comparison to two or three models with
+   mathematical definitions. Capture operator observations as new hypotheses;
+   do not silently tune on the inspected failure periods.
 9. On retirement/completion, apply the operator's storage policy: keep compact
    findings, the definition/runner and retirement receipt; discard unneeded bulky
    exploratory artifacts after checking active/paper/promotion dependencies. Exact
