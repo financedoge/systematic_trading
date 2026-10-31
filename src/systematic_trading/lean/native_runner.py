@@ -40,7 +40,7 @@ def runtime(*,require_acceptance=True):
     return config,provenance
 
 
-def run_native_bundle(*,bundle,output,image=None,timeout_seconds=900,cpus='2',memory='4g',contract='cnh',validation=False):
+def run_native_bundle(*,bundle,output,image=None,timeout_seconds=900,cpus='2',memory=None,contract='cnh',validation=False):
     from systematic_trading.lean.runner import lean_config,compare_outputs
     verify=verify_bundle
     algorithm='lean/algorithm.py'
@@ -55,12 +55,13 @@ def run_native_bundle(*,bundle,output,image=None,timeout_seconds=900,cpus='2',me
     bundle=bundle.resolve();output=output.resolve();output.mkdir(parents=True)
     engine=Path(config['engine_root']);python=Path(config['python_root']);dotnet=Path(config['dotnet_root']);data=Path(config['data_root'])
     oracle=output/'oracle';lean=output/'native';oracle.mkdir();lean.mkdir()
-    memory_bytes=int(str(memory).lower().removesuffix('g'))*1024**3
+    memory_bytes=None if memory is None else int(str(memory).lower().removesuffix('g'))*1024**3
     receipt=dict(run_id='st-native-lean-'+uuid4().hex[:12],status='running',bundle=str(bundle),
         manifest_sha256=sha256(bundle/'manifest.json'),promotion_eligible=False,
         engine=dict(runtime='windows-native-lean',source_commit=provenance['source_commit'],
             manifest_sha256=config['manifest_sha256'],patches=provenance['patches']),legacy_image_reference=image,
-        resources=dict(cpus=str(cpus),memory=str(memory),numerical_threads=1,engines='sequential'))
+        resources=dict(cpus=str(cpus),memory=memory,memory_policy='windows_managed' if memory is None else 'explicit_limit',
+            numerical_threads=1,engines='sequential'))
     write_json(output/'run.json',receipt)
     native_config=lean_config()
     native_config.update({'algorithm-location':str(bundle/'source/systematic_trading'/algorithm),

@@ -13,6 +13,7 @@ from systematic_trading.research.rolling_models import training_rows
 from systematic_trading.market_data.analytics_store import digest, encode
 from systematic_trading.research.rolling_tracking import rolling_xgboost_spec, monthly_training_records, monthly_fit_dates
 from systematic_trading.signals.library import signal_feature_ids
+from systematic_trading.research.file_pool import file_process_map, worker_count
 
 
 def initialize(records, cache, recipe_code, versions):
@@ -58,15 +59,15 @@ def train(root, attempt):
     recipe_code = {str(p.relative_to(source)): sha256(p) for p in
         [source/'research'/n for n in ('rolling_models.py', 'rolling_training.py', 'rolling_tracking.py')]
         + list((source/'signals').glob('*.py'))}
-    workers = min(2, os.cpu_count() or 1, len(dates), request.get('max_workers', 2))
+    workers = worker_count(len(dates), input_bytes=(attempt/'training_records.json').stat().st_size,
+        max_workers=request.get('max_workers'))
     if os.name=='nt':
-        # AppContainer denies multiprocessing's global named pipes. Train
-        # sequentially inside the already bounded, network-denied worker;
-        # do not widen its IPC or process permissions to regain parallelism.
-        workers=1
-        initialize(str(attempt/'training_records.json'),str(cache),recipe_code,versions)
-        for day in dates:
-            cutoff,model,cached=fit(day)
+        # File IPC needs no global named-pipe access. All children remain in
+        # the same network-denied AppContainer and lifetime Job.
+        results = file_process_map(fit, dates, workers=workers, directory=attempt/'fit-pool',
+            initializer=initialize,
+            initargs=(str(attempt/'training_records.json'), str(cache), recipe_code, versions))
+        for cutoff, model, cached in results:
             schedule[cutoff] = model
             cached_count += cached
     else:

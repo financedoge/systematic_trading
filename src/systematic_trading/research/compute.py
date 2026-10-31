@@ -1,4 +1,4 @@
-"""Serialize heavy calculations to preserve memory for storage and the operator."""
+"""CPU capacity and isolated native execution with Windows-managed memory."""
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 import os
@@ -14,21 +14,26 @@ def resource_plan(jobs, *, host_cpus, engine, docker_cpus=None, docker_memory_by
     if jobs < 1 or engine not in {"lean", "python"}:
         raise ValueError("A supported engine and at least one calculation are required")
     cores = max(1, min(host_cpus, docker_cpus) if engine == "lean" else host_cpus)
-    budget = min(2, cores)
-    if available_memory_bytes is not None and available_memory_bytes < 10 * 1024**3:
-        raise ValueError("Calculation deferred: need 4 GiB for one worker plus 6 GiB host memory headroom")
+    budget = cores
     memory_gib = (docker_memory_bytes or 0) / (1024**3)
     if engine == "lean":
+        # This branch is explicitly selected legacy Docker recovery only.
+        if available_memory_bytes is not None and available_memory_bytes < 10 * 1024**3:
+            raise ValueError("Legacy Docker calculation deferred: need 10 GiB host memory headroom")
         memory_workers = int(max(0, memory_gib-6)//4)
         if memory_workers < 1:
             raise ValueError("Calculations need 4 GiB per run plus 6 GiB service headroom")
         workers, per_run = 1, budget
     else:
-        workers, per_run = 1, 1
+        workers, per_run = 1, budget
     return dict(engine=engine, logical_cpus=host_cpus, usable_cpus=cores, cpu_budget=budget,
-        workers=workers, cpus_per_run=per_run, memory_per_run_gib=4,
+        workers=workers, cpus_per_run=per_run, memory_per_run_gib=4 if engine=='lean' else None,
         docker_memory_gib=round(memory_gib,2) if engine == "lean" else None, jobs=jobs,
-        model_fit_workers=budget, preparation_workers=1)
+        model_fit_workers=budget, preparation_workers=1,
+        internal_parallelism='available-RAM-aware file subprocesses; single-threaded estimators',
+        native_worker_slots=1,host_memory_reserve_gib=6 if engine=='lean' else None,
+        memory_policy='legacy_docker_limit' if engine=='lean' else 'windows_managed',
+        available_host_memory_bytes=available_memory_bytes)
 
 
 def host_available_memory():
@@ -54,8 +59,7 @@ def available_resources(jobs, engine):
     from systematic_trading.config import AppSettings
     if AppSettings().lean_runtime_backend=='native':
         result=resource_plan(jobs,host_cpus=host,engine='python',available_memory_bytes=host_available_memory())
-        result.update(engine='lean',runtime='windows-native',cpus_per_run=min(2,host),memory_per_run_gib=4,
-                      model_fit_workers=1 if os.name=='nt' else result['model_fit_workers'])
+        result.update(engine='lean',runtime='windows-native',cpus_per_run=host)
         return result
     result = subprocess.run(["docker", "info", "--format", '{"cpus":{{.NCPU}},"memory":{{.MemTotal}}}'],
         capture_output=True, text=True, check=True, timeout=30,
@@ -114,7 +118,7 @@ def prepare_in_process(request_path):
             run([sys.executable,'-B','-m','systematic_trading.research.calculation_worker',
                  str(request_path.resolve()),str(output/'bundle'),commit],output=output,
                 read_roots=[source,Path(sys.prefix),Path(sys.base_prefix),*inputs],
-                environment={'PYTHONPATH':str(source)},memory_bytes=4*1024**3,cpus=2,timeout=900)
+                environment={'PYTHONPATH':str(source)},cpus=getattr(os,'process_cpu_count',os.cpu_count)() or 1,timeout=900)
             verify_bundle(output/'bundle')
             (output/'bundle').rename(bundle)
         return

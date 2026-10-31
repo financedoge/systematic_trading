@@ -7,12 +7,12 @@ from systematic_trading.research.compute import resource_plan, parallel_results
 
 def test_native_workers_use_cpu_budget_without_overcommitting_docker_memory():
     plan=resource_plan(5,host_cpus=16,engine="lean",docker_cpus=16,docker_memory_bytes=16527273984)
-    assert plan["workers"]==1 and plan["cpus_per_run"]==2
-    assert plan["preparation_workers"]==1 and plan["model_fit_workers"]==2
-    assert plan["cpu_budget"]==2
+    assert plan["workers"]==1 and plan["cpus_per_run"]==16
+    assert plan["preparation_workers"]==1 and plan["model_fit_workers"]==16
+    assert plan["cpu_budget"]==16
     assert plan["workers"]*plan["memory_per_run_gib"]+6 <= plan["docker_memory_gib"]
     limited=resource_plan(5,host_cpus=16,engine="lean",docker_cpus=4,docker_memory_bytes=10*1024**3)
-    assert limited["workers"]==1 and limited["cpus_per_run"]==2
+    assert limited["workers"]==1 and limited["cpus_per_run"]==4
     with pytest.raises(ValueError,match="headroom"):
         resource_plan(5,host_cpus=16,engine="lean",docker_cpus=16,docker_memory_bytes=4*1024**3)
 
@@ -23,12 +23,23 @@ def test_python_pool_respects_available_cpu_count_and_job_count():
     assert resource_plan(5,host_cpus=1,engine="python")["workers"]==1
 
 
-def test_low_memory_defers_work_even_when_cpu_and_vm_capacity_are_large():
-    with pytest.raises(ValueError, match='deferred'):
-        resource_plan(5,host_cpus=32,engine='python',available_memory_bytes=5*1024**3)
-    with pytest.raises(ValueError, match='headroom'):
-        resource_plan(1,host_cpus=32,engine='python',available_memory_bytes=9*1024**3)
-    assert resource_plan(1,host_cpus=2,engine='python',available_memory_bytes=10*1024**3)['workers']==1
+@pytest.mark.parametrize('available_gib',[0,1,5,9,10,32])
+def test_native_memory_pressure_does_not_reject_whole_calculation(monkeypatch,available_gib):
+    from systematic_trading.research import compute
+    monkeypatch.setenv('ST_LEAN_RUNTIME_BACKEND','native')
+    monkeypatch.setattr(compute,'host_available_memory',lambda:available_gib*1024**3)
+    monkeypatch.setattr(compute.subprocess,'run',lambda *a,**k:pytest.fail('Native path must not query Docker'))
+    plan=compute.available_resources(8,'lean')
+    assert plan['workers']==1 and plan['runtime']=='windows-native'
+    assert plan['memory_policy']=='windows_managed'
+    assert plan['memory_per_run_gib'] is None and plan['host_memory_reserve_gib'] is None
+    assert plan['available_host_memory_bytes']==available_gib*1024**3
+
+
+def test_explicit_legacy_docker_memory_gate_remains():
+    with pytest.raises(ValueError,match='Legacy Docker'):
+        resource_plan(5,host_cpus=16,engine='lean',docker_cpus=16,
+            docker_memory_bytes=16*1024**3,available_memory_bytes=9*1024**3)
 
 
 def test_calculations_really_overlap_and_results_remain_keyed():

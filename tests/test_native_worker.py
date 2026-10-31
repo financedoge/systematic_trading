@@ -47,7 +47,10 @@ Path('result.json').write_text(json.dumps(result))
         output,receipt=worker(tmp_path,source,timeout=15)
     assert all(json.loads((output/'result.json').read_text()).values())
     assert receipt['peak_job_commit_bytes']>0
-    assert receipt['peak_job_commit_bytes']<receipt['memory_limit_bytes']
+    assert receipt['memory_limit_bytes'] is None
+    assert receipt['memory_policy']=='windows_managed'
+    assert receipt['job_limit_flags'] & (0x100|0x200)==0
+    assert receipt['job_limit_flags'] & 0x2000
 
 
 def test_commit_limit_rejects_large_allocation(tmp_path):
@@ -58,6 +61,38 @@ except MemoryError:Path('bounded.txt').write_text('yes')
 """,memory_bytes=128*1024**2,timeout=20)
     assert (output/'bounded.txt').read_text()=='yes'
     assert receipt['peak_job_commit_bytes']<=128*1024**2
+    assert receipt['memory_policy']=='explicit_limit'
+    assert receipt['job_limit_flags'] & (0x100|0x200)==0x300
+
+
+def test_default_worker_can_commit_more_than_old_four_gib_cap(tmp_path):
+    # Commit, but do not touch, the pages: this exercises the Windows quota
+    # without filling physical RAM or writing gigabytes of test artifacts.
+    output,receipt=worker(tmp_path,"""
+import ctypes as C
+from ctypes import wintypes as W
+from pathlib import Path
+k=C.WinDLL('kernel32',use_last_error=True)
+k.VirtualAlloc.argtypes=[C.c_void_p,C.c_size_t,W.DWORD,W.DWORD]
+k.VirtualAlloc.restype=C.c_void_p
+k.VirtualFree.argtypes=[C.c_void_p,C.c_size_t,W.DWORD]
+k.VirtualFree.restype=W.BOOL
+size=4*1024**3+64*1024**2
+p=k.VirtualAlloc(None,size,0x3000,0x04)
+if not p:raise C.WinError(C.get_last_error())
+try:Path('committed.txt').write_text(str(size))
+finally:
+    if not k.VirtualFree(p,0,0x8000):raise C.WinError(C.get_last_error())
+""",timeout=30)
+    assert int((output/'committed.txt').read_text())>4*1024**3
+    assert receipt['memory_limit_bytes'] is None
+    assert receipt['peak_job_commit_bytes']>4*1024**3
+
+
+@pytest.mark.parametrize('limit',[0,-1,True,'4g'])
+def test_invalid_explicit_limit_rejected_before_launch(tmp_path,limit):
+    with pytest.raises(ValueError,match='positive byte count'):
+        worker(tmp_path,'pass',memory_bytes=limit)
 
 
 def test_concurrent_callers_can_import_shared_python_runtime(tmp_path):

@@ -210,7 +210,7 @@ def _await_processes(launched, timeout_seconds):
     return done
 
 
-def run_bundle(*, bundle: Path, output: Path, image: str | None=None, timeout_seconds=900, cpus="2", memory="4g", runtime=None) -> dict:
+def run_bundle(*, bundle: Path, output: Path, image: str | None=None, timeout_seconds=900, cpus="2", memory=None, runtime=None) -> dict:
     if runtime is None:
         from systematic_trading.config import AppSettings
         runtime=AppSettings().lean_runtime_backend
@@ -218,6 +218,7 @@ def run_bundle(*, bundle: Path, output: Path, image: str | None=None, timeout_se
         from systematic_trading.lean.native_runner import run_native_bundle
         return run_native_bundle(bundle=bundle,output=output,image=image,timeout_seconds=timeout_seconds,cpus=cpus,memory=memory)
     if runtime!='docker':raise ValueError('Unknown LEAN runtime backend')
+    memory = '4g' if memory is None else memory
     verified = verify_bundle(bundle)
     if output.exists():
         raise FileExistsError(f'Run artifacts are immutable: {output}')

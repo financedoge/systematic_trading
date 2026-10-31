@@ -1,9 +1,64 @@
 # Application calculation resources
 
+## October 31 native memory policy
+
+The operator removed the default 4 GiB native process/Job quota and the 10 GiB
+free-physical-RAM admission gate. These were policy choices carried into the
+October 18 native migration, not requirements of Windows isolation. Normal
+native model, bundle, USD accounting, Python-reference and LEAN workers now use
+Windows-managed memory, including its existing system-managed pagefile. Receipts
+report `memory_limit_bytes: null` and `memory_policy: windows_managed`.
+
+Available RAM and estimated duplicated inputs size the number of independent
+workers started. There is no fixed 4 GiB scheduling budget or 6 GiB reservation;
+memory pressure reduces concurrency to one without rejecting the whole stage.
+Running workers can grow beyond the launch-time estimate. Windows allocation
+failure and paging latency remain possible; no RAM/pagefile setting is changed.
+
+AppContainer network denial, read-only inputs, credential exclusion, descendant
+cleanup, deadlines, shared-ACL serialization, deterministic estimators, independent
+LEAN validation and atomic publication remain enforced. The process-count ceiling
+allows the Windows venv redirector/interpreter pair for each CPU worker. Explicit
+memory limits remain available to tests or intentionally bounded recovery runs;
+legacy Docker retains its explicitly selected historical quota. DuckDB query
+budgets and storage-retention limits are separate and unchanged.
+
+## October 30 CPU parallelism — historical initial memory budget
+
+The operator requested using available CPU resources again. Native model fitting
+and USD/M1/FR25 preparation can now use the host CPU budget (16 logical CPUs on
+this workstation). Independent monthly fits/targets and complete accounting
+replays use subprocesses inside one restricted AppContainer and Windows Job.
+File transport avoids the global named pipes denied to the ordinary Windows
+process pool. Every estimator retains its single-threaded deterministic recipe;
+each portfolio's sessions remain chronological.
+
+Concurrency is bounded by independent work, available CPUs and duplicated input
+memory. The planner reserves 512 MiB plus four times serialized input size for
+the coordinator, then 256 MiB plus four times input size per child. The existing
+4 GiB aggregate Job ceiling, 10 GiB admission requirement, service headroom,
+storage budget and native validation remain enforced. Six workers fit the current
+67 MB M1/FR25 input. This is a conservative planning estimate, not a guaranteed
+maximum working set; the Job remains the hard limit.
+
+The external native-worker mutex still serializes separate AppContainers to
+protect inherited ACL updates. Independent LEAN/oracle validation remains serial;
+the CPU improvement is inside model/decision/accounting preparation. Network
+acquisition, ordered replay and publication can still leave CPU idle. Account
+operations already run in their own lane; their capture inventory now uses a
+single directory scan instead of repeated full path resolution/stat calls.
+
+Receipts record actual preparation workers, stage durations, child CPU times and
+peak aggregate commit. Serial/parallel targets, fits, fills and NAV are checked
+for equality. The reproducible read-only benchmark is
+`scripts/benchmark_calculation_parallelism.py`; it verifies retained application
+inputs and never publishes or changes broker state. See the current measurements
+in [calculation performance](calculation-performance.md).
+
 ## October 18 storage and memory policy
 
-The operator superseded the all-core preference below with memory/storage-first
-operation. The current app admits one heavy calculation, limits native workers to
+At that date the operator superseded the historical all-core preference below
+with memory/storage-first operation. The app admitted one heavy calculation and limited native workers to
 4 GiB and two CPUs, uses one Windows model-fit worker, and requires 10 GiB host
 memory available before starting. DuckDB uses 1 GB/two threads per query with two
 query slots. Generated artifacts have a 40 GiB admission budget, including a 2 GiB

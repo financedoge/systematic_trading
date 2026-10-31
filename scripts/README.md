@@ -20,6 +20,7 @@ should compose that logic and record explicit inputs/outputs.
 | Broker diagnosis | `probe_ib_tws_health.py`, `test_ib_paper_connection.py` |
 | Reconciliation and reviewed execution recovery | `reconcile_ib_paper_account.py`, `recover_ib_paper_executions.py`; follow [rollout controls](../docs/live-rollout.md) |
 | Native frozen backtest | `run_lean_backtest.py`; follow [LEAN contract](../docs/lean-backtesting.md) |
+| Read-only calculation scheduling benchmark | `benchmark_calculation_parallelism.py`; verified retained USD/M1 input, identical serial/parallel targets, no publication or broker changes |
 | Finite expanded ETF comparison | `run_etf_expansion.py prepare`, then `models`, then `replay`; pinned audited inputs, candidate-specific pre-test gate, app-owned models and native parity. Existing completed bundles are immutable; resumes execute the hash-verified frozen runner and package. |
 | Retrospective execution evidence | `analyze_execution_timing.py`, `analyze_execution_references.py`; see [findings](../docs/execution-reference-findings.md) |
 | Explicit log compression | `archive_logs.py`; [maintenance and recovery](../docs/repository-maintenance.md) |

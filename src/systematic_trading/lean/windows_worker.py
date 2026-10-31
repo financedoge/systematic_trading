@@ -1,4 +1,4 @@
-"""Native research isolation: zero-capability AppContainer and a bounded Job.
+"""Native research isolation: zero-capability AppContainer and a lifetime Job.
 
 The launcher never falls back to an unrestricted process if isolation fails.
 Input/runtime ACLs grant only read/execute; output is the only writable grant.
@@ -123,7 +123,7 @@ def worker_slot(timeout):
     """Serialize shared runtime ACL propagation across callers and processes.
 
     Concurrent icacls inheritance updates can lose another profile's grant on
-    child files. A session-wide slot also bounds aggregate research memory.
+    child files. The slot keeps independent sandbox ACL lifetimes separate.
     Windows releases an abandoned mutex when its owning process exits.
     """
     kernel = api()
@@ -143,7 +143,9 @@ def worker_slot(timeout):
         kernel.CloseHandle(handle)
 
 
-def run(command,*,output,read_roots,write_roots=(),environment=None,memory_bytes=4*1024**3,cpus=2,timeout=900):
+def run(command,*,output,read_roots,write_roots=(),environment=None,memory_bytes=None,cpus=2,timeout=900):
+    if memory_bytes is not None and (type(memory_bytes) is not int or memory_bytes < 1):
+        raise ValueError('Explicit worker memory limit must be a positive byte count')
     with worker_slot(timeout):
         return _profile_run(command, output=output, read_roots=read_roots, write_roots=write_roots,
             environment=environment, memory_bytes=memory_bytes, cpus=cpus, timeout=timeout)
@@ -192,8 +194,13 @@ def _run(command,*,output,read_roots,write_roots,environment,memory_bytes,cpus,t
     block=C.create_unicode_buffer('\0'.join(f'{k}={v}' for k,v in sorted(env.items()))+'\0\0')
     job=checked(kernel.CreateJobObjectW(None,None));info=ProcessInfo();attributes=None
     try:
-        limits=ExtendedLimits();limits.basic.flags=0x2000|0x200|0x100|0x8
-        limits.basic.active=32;limits.job_memory=memory_bytes;limits.process_memory=memory_bytes
+        limits=ExtendedLimits();limits.basic.flags=0x2000|0x8
+        # A venv launch can have both a redirector and an interpreter. Allow
+        # one such pair per CPU plus the coordinator, still bounding descendants.
+        limits.basic.active=max(32,2*(getattr(os,'process_cpu_count',os.cpu_count)() or 1)+4)
+        if memory_bytes is not None:
+            limits.basic.flags|=0x200|0x100
+            limits.job_memory=memory_bytes;limits.process_memory=memory_bytes
         checked(kernel.SetInformationJobObject(job,9,C.byref(limits),C.sizeof(limits)))
         cpu=CpuLimit(0x1|0x4,max(100,min(10000,int(cpus/max(1,os.cpu_count() or 1)*10000))))
         checked(kernel.SetInformationJobObject(job,15,C.byref(cpu),C.sizeof(cpu)))
@@ -220,6 +227,8 @@ def _run(command,*,output,read_roots,write_roots,environment,memory_bytes,cpus,t
         measured=ExtendedLimits()
         checked(kernel.QueryInformationJobObject(job,9,C.byref(measured),C.sizeof(measured),None))
         receipt=dict(appcontainer=sid_text,network_capabilities=[],memory_limit_bytes=memory_bytes,
+            memory_policy='explicit_limit' if memory_bytes is not None else 'windows_managed',
+            job_limit_flags=measured.basic.flags,active_process_limit=measured.basic.active,
             peak_process_commit_bytes=measured.peak_process,peak_job_commit_bytes=measured.peak_job,
             cpus=cpus,kill_descendants_on_close=True,exit_code=code.value)
         (output/'isolation.json').write_text(json.dumps(receipt,indent=2),encoding='utf8')

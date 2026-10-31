@@ -1,5 +1,58 @@
 # Tracked-calculation performance: measurements and levers
 
+## October 31, 2026 — Fixed native memory limits retired
+
+The operator removed the 4 GiB native process/Job ceiling and 10 GiB free-RAM
+admission requirement. A recorded October 31 refresh completed initial backtests
+but failed the later admission check; this was an application gate, not evidence
+of a Windows allocation failure. Native calculations now let Windows manage RAM
+and paging, with available-RAM-aware fan-out and no fixed worker memory budget.
+Isolation, parity, publication and trading controls remain unchanged. The October
+30 measurements below describe the earlier six-worker/4 GiB configuration and
+are not a measured speedup claim for this subsequent policy change.
+See [current resource policy](app-calculation-resources.md).
+
+## October 30, 2026 — Native Windows preparation and account inventory
+
+The deployed October 18 policy had one heavy worker, two CPU equivalents per
+Job, and serial Windows model/decision preparation. The operator requested more
+CPU utilization. Preparation now uses parallel file-coordinated child processes
+within the existing restricted 4 GiB Job; its CPU quota uses the available host
+budget. Memory and independent job counts determine actual parallelism. Native
+LEAN/oracle validation and shared ACL transitions retain their serial boundary.
+
+Final retained-input M1/FR25 comparison (120 monthly decisions, November 2016
+through October 2026, same frozen models and audited input manifest):
+
+| Measurement | Serial | Six workers |
+| --- | --- | --- |
+| Target calculation | 43.41 s | 10.14 s |
+| Including isolation setup/cleanup | 48.43 s | 14.07 s |
+| Peak aggregate Job commit | 0.41 GiB | 2.37 GiB |
+
+All target results are identical. This is a 4.28x calculation-stage improvement
+(3.44x including isolation), not a whole-refresh speedup. The earlier 24-decision
+comparison also matched exactly. Final raw receipts, source/input hashes and
+child CPU timings: `var/maintenance/calculation-cpu-20261030-final/`.
+
+Final account-history inventory over 26,956 captures decreased from 4.40 seconds
+to 0.38 seconds per scan, with identical path/size/mtime records (11.5x). Receipt:
+`var/maintenance/calculation-cpu-account-inventory.json`.
+The importer reuses that inventory and still checks changed/deleted captures
+before publication. Account calculations continue in their separate operations
+lane. Provider acquisition and missing FX can still delay freshness regardless
+of CPU capacity. No model recipe, accounting formula, broker policy or approval
+check changes.
+
+Replay the scheduling measurement with
+`scripts/benchmark_calculation_parallelism.py <verified-usd-or-m1-root> <new-output> --months 120`.
+It retains input/code hashes, actual worker counts, wall time and peak commit;
+it does not publish or submit orders. New calculation source hashes enter normal
+application revision identity. [Current resource policy](app-calculation-resources.md).
+
+The Docker measurements and proposals below are historical; Docker is not part
+of the deployed runtime and changing its settings is not a current remedy.
+
 ## P6.15 — Worker deployment and resource-budget review
 
 **Pending, operator requested 2026-10-11.** Reconsider the deployment and scheduling architecture;

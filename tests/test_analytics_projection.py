@@ -312,6 +312,42 @@ def test_account_import_only_writes_new_captures_and_handles_deletion(tmp_path):
     assert analytics.rows["account-history/one.json"] == []
 
 
+def test_fast_account_inventory_matches_signature_contract_and_detects_changes(tmp_path):
+    from systematic_trading.research.analytics_projection import account_capture_inventory, file_signature
+    paths=[tmp_path/'a.json',tmp_path/'b.json']
+    for path in paths:
+        path.write_text('{}')
+    (tmp_path/'ignored.txt').write_text('unrelated')
+    (tmp_path/'directory.json').mkdir()
+    inventory=account_capture_inventory(tmp_path)
+    assert [p for p,_ in inventory]==paths
+    assert [tuple(row) for _,row in inventory]==file_signature(paths)
+    paths[0].write_text('{"changed":true}')
+    assert account_capture_inventory(tmp_path)!=inventory
+
+
+def test_account_changed_during_import_cannot_publish(tmp_path,monkeypatch):
+    from systematic_trading.research import analytics_projection as projection
+    settings=AppSettings(data_dir=tmp_path)
+    root=tmp_path/'live/account_snapshots';root.mkdir(parents=True)
+    path=root/'one.json';path.write_text('{"as_of":"2026-10-30"}')
+    analytics=MemoryAnalytics()
+    assert projection.import_account_histories(settings,analytics)
+    writes=analytics.writes
+    original=projection.account_capture_inventory
+    calls=0
+    def inventory(folder):
+        nonlocal calls
+        calls+=1
+        if calls==2:
+            path.write_text('{"as_of":"2026-10-29"}')
+        return original(folder)
+    monkeypatch.setattr(projection,'account_capture_inventory',inventory)
+    with pytest.raises(RuntimeError,match='changed during import'):
+        projection.import_account_histories(settings,analytics)
+    assert analytics.writes==writes
+
+
 def test_request_market_view_preserves_date_and_pair_bounds_and_refresh():
     day = date(2023, 1, 3)
     rates = [FXRate(rate_date=day + timedelta(days=i), base_currency=Currency.USD, rate=str(7 + i)) for i in range(3)]

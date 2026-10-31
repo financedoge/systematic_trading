@@ -82,7 +82,7 @@ def calculation_revision(config, inputs, definitions):
         definitions=[d.to_dict() for d in definitions], code=_LOADED_CODE_HASHES)))
 
 
-def verified_run(bundle, output, image, engine="lean", *, cpus="2", memory="4g"):
+def verified_run(bundle, output, image, engine="lean", *, cpus="2", memory=None):
     if engine not in ("lean", "python"):
         raise ValueError("Unsupported tracked calculation engine")
     from systematic_trading.runtime_io import exclusive_lock
@@ -374,7 +374,7 @@ def _refresh_tracked_strategies(settings, store, analytics):
             raise ValueError('Monitoring changed during calculation; discard this batch and replay the current membership')
         bundle, output = jobs[key]
         return verified_run(bundle, output, p["image"], p.get("engine", "lean"),
-            cpus=str(resources["cpus_per_run"]), memory="4g")
+            cpus=str(resources["cpus_per_run"]))
     started = perf_counter()
     progress("running_backtests")
     for key, (economic, _, receipt) in parallel_results(jobs, calculate, resources["workers"]):

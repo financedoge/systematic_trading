@@ -238,8 +238,9 @@ def calculate(settings, analytics, config, definitions, sota, root, code_hashes,
         os.environ[variable]='1'
     if os.name=='nt':
         from systematic_trading.research.native_usd_preparation import prepare
-        economics=prepare(root,start=p['start'],cost=p['transaction_cost_bps'],urth=inputs['urth'])
-        workers=1
+        preparation={}
+        economics=prepare(root,start=p['start'],cost=p['transaction_cost_bps'],urth=inputs['urth'],receipt=preparation)
+        workers=preparation['workers']
     else:
       with ProcessPoolExecutor(max_workers=workers,initializer=worker_init,initargs=(str(root.resolve()),)) as pool:
         rows=dict(pool.map(targets_worker,decision_sessions(days,p['start'],'monthly')))

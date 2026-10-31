@@ -6,6 +6,61 @@ are preserved byte-for-byte in the [history archive](archive/README.md).
 Use [research state](research-state.md) for accepted conclusions and the
 [research plan](signal-decay-and-alpha-plan.md) for the ordered research programme.
 
+## Native calculation memory policy — 2026-10-31
+
+**Implemented and activated.** Removed the default 4 GiB process/Job quota and
+10 GiB free-RAM admission gate from normal native calculations. Windows manages
+RAM and paging. Available RAM and estimated input copies guide worker fanout,
+with a minimum of one worker and no fixed reservation or running-worker ceiling.
+Explicit bounded tests/recovery and historical Docker quotas remain supported.
+Windows isolation, independent validation, atomic publication, storage retention
+and broker/approval controls remain enforced; DuckDB query budgets are separate.
+
+65 unique focused tests pass, including 16 concurrent restricted children,
+low-RAM admission, explicit-cap enforcement, cleanup and native parity. A real
+restricted worker committed 4.08 GiB without a quota; a separate native LEAN
+fixture and Python reference both passed with Windows-managed memory. Changed-file
+Ruff, diff and documentation checks pass. Evidence:
+`var/maintenance/native-memory-20261031/`.
+
+Guarded operator/dispatcher restart at 14:14:17 Asia/Shanghai loaded the policy.
+Account refresh completed at 14:15:29 without errors; broker reconciliation
+matches. Policy revision 25 and complete allocation revision 7 are unchanged.
+Served strategy prices/NAV reach October 30. Normal strategy refresh is active;
+the compute panel still contains the previous process's failed source-change
+receipt until a new batch writes its receipt. This is not a completed new
+strategy-publication or whole-batch speedup claim.
+
+## Calculation CPU utilization — 2026-10-30
+
+**Implemented and activated.** Removed the two-CPU quota from native model and
+USD/M1 preparation. File-coordinated subprocesses parallelize independent fits,
+targets and complete replays inside the existing restricted 4 GiB Job; memory
+estimates bound duplicated inputs. Separate AppContainers/LEAN validation retain
+the ACL mutex, and every portfolio stays chronological. Account capture scans
+reuse one directory inventory while retaining pre-publication change checks.
+
+On identical pinned M1/FR25 inputs, 120 monthly decisions take 43.41 to 10.14 s
+with six workers (4.28x; including isolation 48.43 to 14.07 s), peak commit 2.37 GiB.
+Targets are identical. Account inventory: 26,956 captures, 4.40 to 0.38 s, identical
+signatures. 134 unique focused tests pass, one optional skip; real Windows tests
+verify parallel model/target/fill/NAV equality, inherited isolation and cleanup.
+Changed-file Ruff, diff and documentation checks pass. Full research-directory
+Ruff also reports two pre-existing unrelated unused variables/imports.
+
+Guarded dashboard/dispatcher restart at 23:02 Asia/Shanghai loaded the changes.
+Dashboard responds HTTP 200; account refresh completed at 23:02:58 without errors.
+Fresh broker reconciliation matches; paper policy revision 25 and complete
+allocation revision 7 are unchanged. The new local resource plan admits 16 CPUs;
+prior compute status remains the last completed receipt until a new batch runs.
+Market-data acquisition still precedes strategy catch-up, so this is not a
+completed fresh-publication or whole-batch speedup claim. Memory/storage gates,
+approvals and live-disabled defaults remain.
+Evidence: `var/maintenance/calculation-cpu-20261030-final/`,
+`var/maintenance/calculation-cpu-account-inventory.json`,
+`var/maintenance/calculation-cpu-activation/`;
+[measurements and limits](calculation-performance.md).
+
 ## BroadTrend strategy registration, monitoring and FR25 70/30 — 2026-10-29
 
 Delivery check passed: 68 focused regression tests and an isolated import from

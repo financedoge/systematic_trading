@@ -120,8 +120,9 @@ def calculate(settings,analytics,config,definitions,sota,root,code_hashes,inputs
     for v in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','NUMEXPR_NUM_THREADS'):os.environ[v]='1'
     if os.name=='nt':
         from systematic_trading.research.native_usd_preparation import prepare
-        economics=prepare(root,start=p['start'],cost=p['transaction_cost_bps'])
-        workers=1
+        preparation={}
+        economics=prepare(root,start=p['start'],cost=p['transaction_cost_bps'],receipt=preparation)
+        workers=preparation['workers']
     else:
       with ProcessPoolExecutor(max_workers=workers,initializer=worker_init,initargs=(str(root.resolve()),)) as pool:
         rows=dict(pool.map(targets_worker,decision_sessions(days,p['start'],'monthly')))

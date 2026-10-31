@@ -158,7 +158,8 @@ def prepare_model_schedule(settings, inputs, definition, start, code_hashes, *, 
         cache=root.parent/'fits';cache.mkdir(exist_ok=True)
         run([sys.executable,'-B','-m','systematic_trading.research.rolling_training',str(root.resolve()),str(attempt.resolve())],
             output=attempt,read_roots=[root/'request.json',source,Path(sys.prefix),Path(sys.base_prefix)],write_roots=[cache],
-            environment={'PYTHONPATH':str(source)},memory_bytes=4*1024**3,cpus=2,timeout=900)
+            environment={'PYTHONPATH':str(source)},
+            cpus=getattr(os,'process_cpu_count',os.cpu_count)() or 1,timeout=900)
         (attempt/'training.log').write_bytes((attempt/'worker.log').read_bytes())
     else:
       with (attempt/'training.log').open('w', encoding='utf8') as log:

@@ -23,3 +23,12 @@ def test_legacy_cli_still_requires_pinned_image(script,args,monkeypatch):
     monkeypatch.setattr('sys.argv',[script,*args,'--runtime','docker'])
     with pytest.raises(SystemExit) as error:main()
     assert error.value.code==2
+
+
+@pytest.mark.parametrize('memory',[None,'1g'])
+def test_native_runner_has_no_implicit_docker_quota(tmp_path,monkeypatch,memory):
+    from systematic_trading.lean import runner,native_runner
+    calls=[]
+    monkeypatch.setattr(native_runner,'run_native_bundle',lambda **kwargs:calls.append(kwargs))
+    runner.run_bundle(bundle=tmp_path/'bundle',output=tmp_path/'output',runtime='native',memory=memory)
+    assert calls[0]['memory']==memory

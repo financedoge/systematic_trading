@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from datetime import UTC, date, datetime
 from pathlib import Path
@@ -52,7 +53,11 @@ def extract_series(payload, *, family, entity, prefix=""):
 
 
 def file_signature(paths):
-    return [(str(p.resolve()), p.stat().st_size, p.stat().st_mtime_ns) for p in sorted(paths)]
+    result = []
+    for path in sorted(paths):
+        info = path.stat()
+        result.append((str(path.resolve()), info.st_size, info.st_mtime_ns))
+    return result
 
 
 def import_json_group(analytics, source_id, paths, family):
@@ -92,21 +97,43 @@ def import_json_group(analytics, source_id, paths, family):
                              provenance={"files": hashes, "file_signature": before, "extractor": extractor, "format": 1})
 
 
+def account_capture_inventory(root):
+    """Use one directory scan; Windows DirEntry retains file metadata.
+
+    Resolve the shared directory once, while preserving symlink target identity.
+    This returns the same path/size/mtime contract as file_signature.
+    """
+    if not root.exists():
+        return []
+    resolved = root.resolve()
+    with os.scandir(root) as entries:
+        result = []
+        for entry in entries:
+            if not entry.name.lower().endswith('.json') or not entry.is_file():
+                continue
+            path = Path(entry.path)
+            info = entry.stat()
+            canonical = path.resolve() if entry.is_symlink() else resolved / entry.name
+            result.append((path, [str(canonical), info.st_size, info.st_mtime_ns]))
+    return sorted(result)
+
+
 def import_account_histories(settings, analytics):
-    paths = sorted((settings.data_dir / "live" / "account_snapshots").glob("*.json"))
-    before = file_signature(paths)
+    root = settings.data_dir / "live" / "account_snapshots"
+    inventory = account_capture_inventory(root)
+    before = [signature for _, signature in inventory]
     index = analytics.publication_index("account-history/")
     current_sources, pending = set(), []
-    for path in paths:
+    for path, entry in inventory:
         source = "account-history/" + path.name
         current_sources.add(source)
-        signature = file_signature([path])
+        signature = [entry]
         prior = index.get(source)
-        if prior and json.loads(prior["provenance"]).get("signature") == json.loads(encode(signature)):
+        if prior and json.loads(prior["provenance"]).get("signature") == signature:
             continue
         raw = path.read_bytes()
         payload = json.loads(raw.decode("utf-8-sig"))
-        if file_signature([path]) != signature:
+        if [list(row) for row in file_signature([path])] != signature:
             raise RuntimeError(f"Account capture changed during import: {path}")
         row = observation(path.name, "account_snapshot", path.name, {"path": str(path), "snapshot": payload},
                           payload.get("as_of"), payload.get("captured_at"))
@@ -114,13 +141,16 @@ def import_account_histories(settings, analytics):
     for source in index.keys() - current_sources:
         if index[source]["version"] != "removed":
             pending.append((source, "removed", [], {"removed": True}))
-    if before != file_signature(paths):
+    # New captures can wait for the next cycle; every capture in this snapshot
+    # must still exist unchanged before the atomic publication.
+    current = dict(account_capture_inventory(root))
+    if any(current.get(path) != signature for path, signature in inventory):
         raise RuntimeError("Account history changed during import; refresh will retry")
     changed = analytics.publish_batch(pending)
     # Summary is a readiness marker. Individual immutable captures are stored
     # once, not recopied every minute as the history grows.
     changed |= analytics.publish("account-history", digest(encode(before)), [],
-                                 provenance={"file_signature": before, "count": len(paths), "layout": "per_capture_v1"})
+                                 provenance={"file_signature": before, "count": len(inventory), "layout": "per_capture_v1"})
     return changed
 
 

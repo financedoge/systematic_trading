@@ -45,7 +45,7 @@ def model_record(cutoff='2024-10-31'):
 def test_windows_training_does_not_require_global_named_pipe_pool(tmp_path,monkeypatch):
     from systematic_trading.research import rolling_training as training
     root=tmp_path/'model';attempt=root/'attempt';attempt.mkdir(parents=True)
-    write_json(root/'request.json',dict(recipe=rolling_xgboost_spec(),bars={},symbols=[],start='2024-11-01'))
+    write_json(root/'request.json',dict(recipe=rolling_xgboost_spec(),bars={},symbols=[],start='2024-11-01',max_workers=1))
     monkeypatch.setattr(training,'monthly_training_records',lambda *args:[])
     monkeypatch.setattr(training,'monthly_fit_dates',lambda *args:['2024-10-31','2024-11-29'])
     monkeypatch.setattr(training,'fit',lambda day:(day,model_record(day),False))

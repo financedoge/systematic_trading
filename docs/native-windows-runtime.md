@@ -44,8 +44,8 @@ migration grants no order, promotion or live-trading authority.
 | Native NATS | `var/dependencies/nats/nats-server.exe`; loopback 4222/8222 |
 | JetStream | `D:/systematic_trading_data/nats/jetstream`; 256 MiB memory store, 5 GiB file store |
 | LEAN/.NET/Python | Pinned roots and checksums in `config/native-runtime.json` |
-| Independent calculations | One heavy calculation; Windows AppContainer with no network capability, allowlisted environment, read-only inputs and a 4 GiB Job limit |
-| Worker admission | At least 10 GiB host memory available: 4 GiB for a worker plus 6 GiB service headroom |
+| Independent calculations | One isolated Job at a time; no default process/Job memory quota, Windows manages RAM and paging; host CPU budget available |
+| Worker admission | No fixed free-RAM threshold; available RAM and estimated input copies guide parallel worker count, with at least one worker |
 | DuckDB | In-memory connection per query, 1 GB engine memory, two threads, two concurrent queries, 10 GB temporary spill limit per query |
 
 DuckDB's engine budget does not bound Python objects returned to the application.
@@ -53,10 +53,17 @@ Analytics currently run in the API/analytics process, with typed queries and
 bounded fragments; a separate 3 GiB analytical process from the original plan is
 not implemented. Do not describe the whole API as capped at 3 GiB. LEAN and native
 model preparation/training have enforced process-tree limits. Windows model fits
-run sequentially to avoid global named-pipe access inside the restricted worker.
+and independent USD decisions/accounting replays use file IPC to parallelize
+without granting global named-pipe access. Numerical libraries remain single
+threaded per estimator. The input-size-aware pool uses current available RAM to
+choose fan-out, without a fixed aggregate memory ceiling or 10 GiB admission
+gate. Environment, network, input and process-tree restrictions are inherited;
+explicit memory quotas remain available for intentionally bounded tests/recovery.
 All native worker callers share a Windows mutex for the full isolated run,
 including ACL grant and cleanup. This prevents concurrent inherited-ACL updates
-from removing another worker's runtime access and keeps heavy work serialized.
+from removing another worker's runtime access. Separate AppContainers remain
+serialized; parallel children within a Job need no ACL changes. See
+[calculation resources](app-calculation-resources.md) for the CPU/memory planner.
 
 Parquet writes use compressed bounded row groups, independent readback, SHA-256
 verification and atomic content-addressed file installation before the PostgreSQL

@@ -3550,3 +3550,89 @@ BroadTrend/lifecycle/tracked-runtime/conditional-FR25 regression tests passed.
 The initial no-isolation wheel attempt lacked the local build backend; the
 normal isolated build succeeded without changing the application environment.
 Build verification: var/maintenance/broadtrend-git-delivery/verification.json.
+
+## 2026-10-30 — Calculation CPU parallelism and account inventory
+
+Operator requests using available resources to accelerate strategy/account work.
+Confirmed 16 logical CPUs but a two-CPU Job quota, serial native model fitting
+and serial USD/M1 preparation. Added file-coordinated child processes within the
+existing network-denied AppContainer and aggregate 4 GiB Job, avoiding restricted
+global named pipes. Input-size/CPU/job-aware scheduling parallelizes independent
+monthly fits/targets and complete accounting replays. Estimators stay single
+threaded and portfolio sessions stay chronological. Separate native workers and
+independent LEAN validation retain the existing ACL mutex. Ten-GiB host admission,
+storage gates, publication hashing and broker/approval checks remain unchanged.
+
+On verified retained M1/FR25 inputs, 120 monthly decisions (November 2016 through
+October 2026) reproduce exactly: 43.406 s serial versus 10.142 s with six workers,
+4.28x stage speedup. Including isolation: 48.431 to 14.066 s, 3.44x; peak parallel
+commit 2.365 GiB. Independent account inventory measurement: 26,956 captures,
+4.399 to 0.383 s with identical signatures. Single scans and reused metadata
+replace repeated resolution/stat work; capture mutation/deletion still blocks
+publication. These are component benchmarks, not a whole-refresh latency claim.
+
+134 unique focused tests pass with one optional skip, including real restricted
+Windows serial/parallel model equality using separate caches, target/fill/NAV
+equality, actual overlap, failure/timeout cleanup and inherited isolation. An
+initial new model fixture failed for insufficient warmup; extending synthetic
+warmup resolved it without changing production rules. Changed-file Ruff and diff
+checks pass. Whole research-directory Ruff finds pre-existing unused names in
+broadtrend_blend.py and decision_review.py; left unrelated work intact.
+
+Guarded operator/dispatcher restart at 23:02 Asia/Shanghai activated the code.
+Dashboard returns HTTP 200; account lane completed at 23:02:58 without errors,
+broker reconciliation matches. Policy revision 25 and full allocation revision 7
+are unchanged. Live remains disabled. Current resource discovery reports all 16
+CPUs and 13.42 GiB free host RAM. Strategy lane still waits in research ETF
+acquisition; prices/NAV remain October 28/21 versus expected October 29. No claim
+of a newly completed strategy publication. Next normal audited refresh uses the
+new scheduler when acquisition finishes; missing FX/provider issues still need
+their ordinary recovery path. No recurring agent task or automation was added.
+
+Evidence: `var/maintenance/calculation-cpu-20261030-final/`,
+`var/maintenance/calculation-cpu-account-inventory.json`,
+`var/maintenance/calculation-cpu-activation/`, and calculation-cpu test XML files.
+Recipe: `scripts/benchmark_calculation_parallelism.py`; resource/measurement docs
+updated. Existing PostgreSQL-readiness changes and runtime broker evidence were
+preserved.
+
+## 2026-10-31 — Remove fixed native calculation memory limits
+
+Operator rejects the application memory cap and asks about using virtual memory.
+History confirms the 4 GiB Job quota and 10 GiB free-RAM admission gate were
+explicitly retained during the October 18 native Windows migration; neither is
+required for Windows isolation. Removed both defaults from native preparation,
+model, accounting, reference and LEAN calculation paths. The existing automatic
+Windows pagefile can now contribute to worker commit without a separate app
+quota. No operating-system RAM/pagefile settings changed.
+
+Available physical RAM and estimated per-child input copies now guide concurrency
+without a fixed 4 GiB budget or 6 GiB reservation. Low free RAM reduces fanout to
+one rather than rejecting the whole stage. Windows allocation failure and paging
+latency remain possible. Raised the process-count allowance to accommodate all
+16 CPUs' Windows venv redirector/interpreter pairs. Explicit memory limits remain
+available for tests and deliberately bounded recovery; historical Docker and
+DuckDB query limits remain separate. Retained AppContainer network denial,
+credential exclusion, read-only inputs, kill-on-close cleanup, deadlines, shared
+ACL serialization, independent native validation and atomic publication. Trading
+guards, live-disabled defaults and storage retention are unchanged.
+
+65 unique focused tests pass with no failures/skips. Real restricted workers
+verify 16-child coexistence, deterministic models/targets/fills/NAV, cleanup,
+explicit-cap enforcement and more than 4 GiB commit without a default quota.
+The latter peaks at 4,382,453,760 aggregate committed bytes and exits successfully.
+A separate native LEAN fixture passes independent Python parity; both engine
+receipts contain null memory limits and no Job memory-limit flags. Changed-file
+Ruff, diff and documentation checks pass. This establishes functionality and
+removed limits, not a new whole-refresh performance measurement.
+
+Guarded operator/dispatcher restart at 14:14:17 Asia/Shanghai activated the change.
+Account lane completed at 14:15:29 without errors and broker reconciliation
+matches. Policy revision 25 and full allocation revision 7 remain unchanged.
+Served strategy prices/NAV reach October 30. Normal strategy refresh is active;
+its compute panel still shows the previous process's failed source-change receipt
+pending a new batch receipt. No fresh strategy-publication claim is made. The
+next ordinary audited calculation will record the Windows-managed resource plan.
+Evidence: `var/maintenance/native-memory-20261031/`, including test XML/summary,
+the above-four-GiB receipt, independent engine receipts and activation/status
+snapshots. Resource/runtime/performance documentation and kanban updated.
