@@ -1,0 +1,33 @@
+{
+  "assessment_sha256": "99ef10a8dda02052eca4042a065a6f36f87882fd542ad0860bc8e9c426dcf107",
+  "cases": 192,
+  "native": [
+    {
+      "case": "pooled_risk-monthly_c5d0",
+      "max_nav_error_usd": 0.0,
+      "output": "var\\research\\class-vol-net-20261103-v1\\native-v1\\pooled_risk-monthly_c5d0",
+      "receipt_sha256": "e2fc9d23da378e0cfec5f581b7d37de9939488373bcd5592f8d37638c25c8b61",
+      "status": "succeeded"
+    },
+    {
+      "case": "pooled_raw-monthly_c5d0",
+      "max_nav_error_usd": 0.0,
+      "output": "var\\research\\class-vol-net-20261103-v1\\native-v1\\pooled_raw-monthly_c5d0",
+      "receipt_sha256": "d2db7abaf2a505240a4d73d03a8f251f1f0b2f117b4433861afadd6678fa5692",
+      "status": "succeeded"
+    },
+    {
+      "case": "class_risk-0.10_c20d1",
+      "max_nav_error_usd": 0.0,
+      "output": "var\\research\\class-vol-net-20261103-v1\\native-v1\\class_risk-0.10_c20d1",
+      "receipt_sha256": "5845df03ad69cbdc4e7d405ada3787be4bb7f3204b9150b29047da4d018cfcca",
+      "status": "succeeded"
+    }
+  ],
+  "reporter_sha256": "1b853fc510857fe17067e7acc25d0531c18a63e821bf6f35a80586eca1bf9812",
+  "selected": "pooled_risk-monthly",
+  "source_sha256": "6880ea615ec9e618dc9f75369761a5e32fc2fcd606eb3326cb2b314f3d2371eb",
+  "status": "research_evidence_reviewable",
+  "target_receipt_sha256": "03f50dc420b899fb4a8af0d3e5d28c8d0230305194b9d4818ae54362d53f71d9",
+  "tests": 68
+}

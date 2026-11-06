@@ -2,6 +2,10 @@
 
 # Class and volatility screen — October 16, 2026
 
+**November 3 update.** The [completed net replay](../research/class-vol-net-20261103-v1/index.html)
+supplies the portfolio evidence previously withheld. The text below describes
+the historical proxy-gate decision.
+
 **All 16 mappings fail the frozen admission gate. No portfolio replay is warranted for this family.**
 Volatility normalization reduces monthly target-change costs below the 44 bp
 ceiling, but its information margins are only **1.91× pooled** and **0.55×

@@ -16,6 +16,8 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     recorder_start_script = Path("scripts/start_market_data_recorder_service.ps1").read_text(encoding="utf-8")
     recorder_stop_script = Path("scripts/stop_market_data_recorder.ps1").read_text(encoding="utf-8")
     watchdog_script = Path("scripts/watch_local_platform.ps1").read_text(encoding="utf-8")
+    postgres_service_script = Path("scripts/postgres_service.ps1").read_text(encoding="utf-8")
+    service_process_script = Path("scripts/service_process.ps1").read_text(encoding="utf-8")
     golden_sync_script = Path("scripts/sync_sqlite_daily_bars_to_clickhouse.py").read_text(encoding="utf-8")
     fx_sync_script = Path("scripts/sync_sqlite_fx_rates_to_clickhouse.py").read_text(encoding="utf-8")
     daily_backfill_script = Path("scripts/backfill_clickhouse_daily_bars.py").read_text(encoding="utf-8")
@@ -126,7 +128,18 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert "Market data recorder service started" in local_start_script
     assert "recorder_service_not_started" in local_start_script
     assert "/platform" in local_start_script
-    assert "pg_isready" in local_start_script
+    assert "probe_postgres_readiness.py" in local_start_script
+    assert "postgres_service_started" in local_start_script
+    assert "postgres_service.ps1" in local_start_script
+    assert "Initialize-PostgresService" in local_start_script
+    assert "Assert-PostgresReady -AllowServiceRestart" in local_start_script
+    assert "Restart-PostgresService" in local_start_script
+    assert "SkipPostgresServiceControl" in local_start_script
+    assert "NoElevation" in local_start_script
+    assert "UAC" in local_start_script
+    assert "Get-ServiceProcessState" in local_start_script
+    assert "service_process.ps1" in local_start_script
+    assert "belongs to another process" in local_start_script
     assert "probe_ib_tws_health.py" in local_start_script
     assert "ib_tws_api.state.json" in local_start_script
     assert "stop_market_data_recorder.ps1" in local_stop_script
@@ -143,6 +156,23 @@ def test_operator_dashboard_scripts_manage_pid_logs_and_health() -> None:
     assert "--intraday-feed" in recorder_start_script
     assert "-WindowStyle Hidden" in recorder_start_script
     assert "market_data_recorder.pid" in recorder_stop_script
+    assert "Get-ServiceProcessState" in recorder_start_script
+    assert "belongs to another process" in recorder_start_script
+    assert "Get-ServiceProcessState" in recorder_stop_script
+    assert "recorder_stop_pid_reused" in recorder_stop_script
+    assert "record_ib_market_data.py" in recorder_stop_script
+    assert "Get-ServiceProcessState" in watchdog_script
+    assert "postgres_repair_requested" in watchdog_script
+    assert "postgres_service.ps1" in watchdog_script
+    assert "NoElevation" in watchdog_script
+    assert "Test-IsElevated" in postgres_service_script
+    assert "-Verb RunAs" in postgres_service_script
+    assert "Invoke-ElevatedPostgresAction" in postgres_service_script
+    assert "Ensure-PostgresServiceStarted" in postgres_service_script
+    assert "Restart-PostgresService" in postgres_service_script
+    assert "Start-Service -Name" in postgres_service_script
+    assert "Get-ServiceProcessState" in service_process_script
+    assert "Matches = $null" in service_process_script
     assert "local_platform_watchdog" in watchdog_script
     assert "nats_repair_requested" in watchdog_script
     assert "clickhouse_repair_requested" in watchdog_script

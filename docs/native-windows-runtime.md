@@ -29,12 +29,82 @@ the selected profile for restart recovery. Docker/WSL are unnecessary for this
 profile. The legacy ClickHouse launchers require explicit backend selection and
 exist for migration/rollback inspection.
 
+Startup treats the configured PostgreSQL Windows service as a managed
+dependency. `scripts/start_local_platform.ps1` starts a stopped service; when the
+current shell is not elevated it asks Windows for administrator permission once
+through the standard UAC prompt rather than failing with access denied. If the
+authenticated read probe fails, startup restarts the service once and re-probes
+before it stays blocked. The service is `postgresql-x64-18` by default; override
+it with `-PostgresServiceName` or `ST_POSTGRES_SERVICE_NAME`. Use
+`-SkipPostgresServiceControl` to leave the service untouched, `-NoElevation` to
+refuse the prompt instead of asking, and `-NoPostgresRestart` to stop after the
+first failed probe. `scripts/watch_local_platform.ps1 -Repair` applies the same
+bounded repair to its required PostgreSQL check. The helper is callable directly:
+`postgres_service.ps1 -Action Ensure|Start|Restart|Status`.
+
 The paper Gateway API is configured at `127.0.0.1:4002`. Log in through IB Gateway;
 the app cannot perform its login/2FA. Restore prior paper approval only after a
 fresh successful reconciliation through the existing guarded API. A storage
 migration grants no order, promotion or live-trading authority.
 
 ## Storage and memory
+
+### PostgreSQL read failures
+
+Startup runs `scripts/probe_postgres_readiness.py` with the configured application
+credentials before database preparation or research retention. It reads the
+retention catalog view and bounded samples from transactional/publication tables
+in a read-only session, with connection, statement, lock and transaction timeouts.
+This is a readiness check, not a complete database integrity scan.
+[`pg_isready`](https://www.postgresql.org/docs/18/app-pg-isready.html) checks
+connection status; a successful TCP check or `SELECT 1` does not establish that
+the application can read its stored relations.
+
+On October 30, catalog `pg_class` (`base/16393/1259`) and native
+`publication_heads` (`base/16393/34803`) returned `Invalid argument` after a
+Windows sleep/resume. Both reads succeeded after the operator restarted the
+PostgreSQL Windows service. The underlying cause is unconfirmed; this observation
+does not prove or rule out persistent storage damage.
+
+For the same error, keep application writers stopped. Startup now performs that
+bounded restart itself: when the authenticated read probe fails it requests
+administrator permission (UAC) if needed, restarts the configured service once,
+and re-probes until `-PostgresRestartTimeoutSeconds` (default 60) expires. If the
+restart is declined or the reads still fail, startup stays blocked with the
+guidance below; it does not delete relation files, reset WAL, disable retention,
+or overwrite the database. The manual equivalent, from Administrator PowerShell:
+
+```powershell
+Restart-Service -Name postgresql-x64-18
+.\.venv\Scripts\python.exe .\scripts\probe_postgres_readiness.py
+```
+
+If the probe passes, retry `start_local_platform.ps1`; its normal backup and
+retention checks still apply. If reads still fail, leave startup blocked and
+inspect PostgreSQL/Windows storage logs and the verified recovery evidence before
+any repair or restore. Do not delete relation files, reset WAL, disable retention
+protection, or overwrite the production database to get past this error.
+
+### Service PID files and recycled process IDs
+
+Windows recycles process IDs. After an unclean stop a PID file can name an
+unrelated program: on 2026-11-06 `var/run/market_data_recorder.pid` held PID 8052,
+which by then was a PostgreSQL backend. Liveness-only checks made startup refuse
+database preparation ("Stop local services first") and made the recorder stop
+script try to stop PostgreSQL itself (access denied).
+
+The launchers now prove process identity before acting. `service_process.ps1`'s
+`Get-ServiceProcessState` checks the process name and, when readable, the command
+line; the recorder start/stop scripts and the watchdog remove a proven-stale PID
+file without touching the other process, and refuse to stop an unverified PID.
+The Python guards (`services/health.py` `_pid_matches_platform_python`) apply the
+same check to `sync_databases.py` prepare/release/guard/worker lifecycle, database
+sync `stop-worker`, and local recovery, so a recycled PID can no longer block a
+handoff or hide a dead service. Unknown identity (unreadable image name) stays
+conservative and is still treated as running. Startup also resumes recorder
+recovery after a normal platform start.
+
+### Locations and limits
 
 | Component | Location or limit |
 | --- | --- |
@@ -72,18 +142,24 @@ versions remain pinned; a query cannot silently substitute a newer source.
 
 ## Research retention
 
-`config/storage-retention.json` sets a 20 GiB soft target and 40 GiB admission
-limit, including a 2 GiB reserve for new work. Measurement counts unique file
-contents across research, model and calculation trees, avoiding hard-link double
-counting. Canonical histories and broker evidence are excluded from eviction.
-Exceeding the limit queues new calculations instead of deleting protected data.
+The October 31 operator decision removed the initial 40 GiB cumulative admission
+quota. `config/storage-retention.json` keeps 20 GiB as a housekeeping trigger,
+not a calculation limit. Admission requires 2 GiB of actual free disk space on
+the artifact drive for new work, regardless of retained research size. Receipts
+record both unique artifact contents and actual free disk. Hard links count once;
+canonical histories and broker evidence are excluded from exploratory cleanup.
 
 A successful calculation queues a maintenance marker. The next stopped startup
-runs `maintain_research_storage.ps1`, retiring unreferenced superseded calculations
-and model caches through the same guarded manifest/receipt path. It preserves the
+runs `maintain_research_storage.ps1`, retiring unreferenced superseded calculations,
+model caches and eligible explicitly closed study output folders through the same
+guarded manifest/receipt path. Crossing the housekeeping threshold also queues
+this maintenance without blocking calculations. It preserves the
 latest two complete calculations, monitored/pending/operational references, current
-model/FX pins and active research. Completed exploratory studies require explicit
-selection, compact findings, a retained recipe and an immutable retirement receipt.
+model/FX pins and active research. New/unclassified studies' protocol, manifest,
+provenance and recipe files protect their dependencies automatically. Completed
+exploratory studies require explicit classification, compact findings, a retained
+recipe and an immutable retirement receipt. Housekeeping runs with writers stopped;
+it does not restart the app or delete concurrently with a calculation.
 
 Deleting an output retires its exact replay; it does not delete the historical
 finding or turn a later rerun into the same evidence. Research tests that require

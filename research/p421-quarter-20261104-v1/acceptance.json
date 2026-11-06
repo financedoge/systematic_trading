@@ -1,0 +1,17 @@
+{
+  "certified_links": 0,
+  "complete_price_windows": 315,
+  "equity_lines": 3629,
+  "funds": 29,
+  "original_filings": 16,
+  "retained_positions": 3687,
+  "retirement": "Retain this compact evidence folder and runners. The var/research/p421-quarter-20261104-v1 download cache is disposable after qualification.",
+  "runners": {
+    "scripts/acquire_p421_quarter.py": "bb68c3aed2cd72c4fbe1635d9523f0a08ced225a61e2fb649a15cdf336087489",
+    "scripts/qualify_p421_quarter.py": "bf4b62afe346123561402f2bdab75bd5df86f30a31baeacaf395e7fd1c1a7a29",
+    "tests/test_p421_quarter.py": "f9b1d374c01b932fe80f3bccd8c60a86fe3f01de7f79bec809490711b5769ba8"
+  },
+  "status": "qualification_complete_replay_blocked",
+  "tests": "Eight targeted tests passed across the pilot and prior coverage checks.",
+  "verification": "Validated NAV component totals, all table percentages, all XML hashes and each accession in its daily feed. Verified report local links."
+}

@@ -1,0 +1,25 @@
+{
+  "artifacts_policy": "Retain compact report, inventory, runner and tests. No bulk intermediate exports were created.",
+  "checked_positions": 329,
+  "complete_portfolio_denominator": true,
+  "manifest_verified_inputs": 1745,
+  "next_pilot_equity_pct": 5.349311777967723,
+  "next_pilot_symbols": [
+    "CSL",
+    "WSO",
+    "MANH",
+    "RPM",
+    "UTHR",
+    "XPO",
+    "FIX",
+    "FLEX",
+    "CASY",
+    "RS"
+  ],
+  "runners": {
+    "scripts/inventory_mdy_price_gaps.py": "7213ef4904d234f7d7b11d4845eb68ebd57e01dcd693beb17f2a5b99fb72a233",
+    "tests/test_mdy_inventory.py": "51fe049d4817e52aa6fda2ef4b44a4ec5f7e6e028ab6cfcf3b2dcb966642efcf"
+  },
+  "scope": "Data coverage inventory; publication statuses preserved.",
+  "tests_passed": 17
+}

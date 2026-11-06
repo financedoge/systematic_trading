@@ -1,5 +1,28 @@
 # Research cost policy and rejection audit — October 17, 2026
 
+**October 31 follow-up:** the fixed cash-relative net retest is
+[complete](../research/cash-relative-net-20261031-v1/results.md). The table below
+preserves what was withheld originally. Class-first/monthly improves its matching
+control later but fails guarded FR25 comparisons; uncertainty includes zero.
+The operator retained cash-relative as research evidence. The six separate
+Alpha101 hypotheses are now [complete](../research/alpha101-net-20261031-v1/results.md):
+222 net cases,52 supported histories, fixed/dynamic timing and six frictions.
+Alpha54/monthly ranks highest in training but no robust matched-control advantage
+across eras is established. This replaces withheld replay with empirical evidence;
+it does not restore the old cost veto. The operator retained Alpha54/the study on
+November1. P4.20 [evidence/decay governance](research-evidence-governance-v1.md) is
+now complete and preserves the prohibition on cost/IC profitability vetoes.
+
+**November 2–3 follow-up:** expanded FR25 now has a
+[completed full-supported-pool net replay](../research/expanded-fr25-net-20261102-v1/index.html):
+144 cases, fixed/dynamic timing and matched controls. Monthly is training-selected;
+expanded later return is higher but original14 has better Sharpe/drawdown in both
+eras. No guarded superiority established. The historical withheld verdict below
+is preserved. The [class/volatility net replay](../research/class-vol-net-20261103-v1/index.html)
+subsequently completed all 16 formerly withheld cases at six frictions on each
+of two pinned batches. Pooled risk/monthly won training but failed the matched
+return guard later. These results close the last pending replay in this queue.
+
 The operator removed the 44 bp annual-cost ceiling. Incremental return must be
 judged after incremental cost against matched controls. Current diagnostics do
 not use an absolute cost ceiling or an IC-margin proxy to decide portfolio

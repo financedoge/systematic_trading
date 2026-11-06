@@ -1,5 +1,245 @@
 # Execution Kanban
 
+## Local startup repair: PostgreSQL service control and recycled PIDs — 2026-11-06
+
+**Complete.** Startup failed three times with "Stop local services first:
+market_data_recorder PID is running", and the stop script then tried to stop
+`postgres (8052)` (access denied). Root cause was PID reuse, not PostgreSQL
+unavailability: `var/run/market_data_recorder.pid` still held PID 8052 from the
+previous session, which by then belonged to a `postgres.exe` backend. Liveness-only
+checks treated it as a running recorder.
+
+Startup now manages the PostgreSQL Windows service as a dependency:
+`postgres_service.ps1` starts a stopped service, asks Windows for administrator
+permission once through the standard UAC prompt when the shell is not elevated,
+and after a failed authenticated read probe restarts the configured service once
+within a bounded timeout before startup stays blocked. New `service_process.ps1`
+proves process identity from process name and, when readable, the command line;
+recorder start/stop, the watchdog, NAS-sync guards, database-sync worker lifecycle
+and local recovery ignore proven-recycled PIDs, remove their stale PID files and
+refuse to stop unverified processes. Startup also resumes recorder recovery after
+a normal start. The watchdog reports a native PostgreSQL service detail, treats
+Docker/ClickHouse as optional for the parquet backend, and no longer aborts on the
+retired Docker CLI.
+
+Verified end-to-end: `start_local_platform.ps1` completed (exit 0) with the
+PostgreSQL service running and reads ready, database prepare `local_only`
+(optional NAS `operation.lock` still present), IB paper API and operator health
+HTTP 200, dispatcher, recorder and recovery running, and the watchdog reporting
+`postgres_transactional ok (service postgresql-x64-18: Running)`. 71 focused tests
+pass (8 skipped); Ruff, PowerShell parse and documentation-link checks pass. The
+watchdog still correctly reports the genuine pending strategy refresh and stale
+reconciliation state, not a startup defect. No trading, approval, promotion or
+live-authority change. Evidence: `scripts/postgres_service.ps1`,
+`scripts/service_process.ps1`, `var/log/platform_operations.jsonl`
+(`postgres_service_running`, `postgres_ready`),
+`var/run/local_platform_watchdog.state.json`.
+
+## P4.21 ten-holding qualification pilot — 2026-11-06
+
+Evidence checks complete. All ten pass filing anchors, current broker ISIN
+matching, full-window completeness and the December valuation check. Zero new
+histories qualified. IBKR historical data returned error 162 about a trading
+session connected from another IP. Public Nasdaq queries returned no required
+history. Restore historical-data access and run the prepared ten-stock extract
+before resolving prior reviews or publishing. Stop for discussion.
+[Pilot report](../research/p421-ten-qualification-20261106-v1/results.md).
+
+## P4.21 remaining MDY coverage assessment — 2026-11-05
+
+Complete. Of the 329 positions, 295 have full published windows and account
+for 71.84% of MDY equity value. Six have complete comparison candidates
+(0.87%), four have documented later-ticker candidates (0.68%), and 24 lack
+window records in the checked publications (5.12%). Existing reviews remain
+in force. Discuss a ten-holding qualification pilot from the complete group.
+[Weighted inventory](../research/p421-mdy-inventory-20261105-v1/results.md).
+
+## P4.21 MDY constituent price audit — 2026-11-04
+
+Complete. The four original tickers WSM, ILMN, EME and IBKR have all 253
+sessions. PSTG has a complete candidate window under the later P ticker,
+which requires dated identity reconciliation. The diagnosis isolated an
+omitted EMCOR special dividend and Illumina's spin-off encoded as a split.
+Keep the published reviews. Discuss classifying the remaining 320 MDY review
+positions and nine unavailable names before a broader historical purchase.
+[Five-holding report](../research/p421-mdy-audit-20261104-v1/results.md).
+
+## P4.21 December 2024 filings pilot — 2026-11-04
+
+Complete. All 29 funds mapped. Sixteen have December public holdings first
+available for the March 3 decision. Across 3,629 equity lines, 315 have a
+dated candidate ticker and complete audited window. Zero have certified
+price-side identity across the lookback. MDY reports all 401 equity tickers,
+yet complete windows cover 17.92% of equity value. Hold the replay and discuss
+whether to inspect MDY's price audits before expanding the holdings history.
+[Pilot report](../research/p421-quarter-20261104-v1/results.md).
+
+## P4.21 constituent coverage assessment — 2026-11-04
+
+Coverage assessment complete. Verified the November 3 native price catalog,
+265 historical IVV/ITOT snapshot publications and all three direct issuer
+catalogs. For 29 equity funds over 70 monthly dates, 0/2,030 direct fund-months
+have an available issuer snapshot. The IVV role has 70 price-status matches,
+680 in review and 134 unavailable. Under the existing mappings at most 6.36%
+of historical IVV equity value matches admissible price status, before lookback
+and identity checks. Both historical holdings datasets lack original availability
+timestamps. The [report](../research/p421-coverage-20261104-v1/results.md)
+sets out the next one-quarter SEC filing and security-identity pilot. The alpha
+replay remains blocked. Stop for discussion after this coverage item.
+
+## Class and volatility construction net replay — 2026-11-03
+
+Complete. The operator retained the [research guidelines](research-stability-guidelines.md).
+All 16 constructions/timings received six net cost/delay replays on both
+the original 50-history batch and the current 52-history comparison, 192 cases.
+Pooled volatility-adjusted monthly ranked first among two qualifying challengers
+using 2021–2024 only. Later CAGR 2.73%, Sharpe 3.68, drawdown 0.57%, average
+45.03% BIL and 42.01% cash. BIL alone earned 3.94% CAGR. Selected versus
+matched raw guards passed 6/6 IS and 0/6 later. 68 tests and three exact native
+checks passed. [Full report](../research/class-vol-net-20261103-v1/index.html).
+Stop for discussion. The withheld net-replay queue is complete. P4.21 still
+requires adequate point-in-time constituent holdings and membership.
+
+## ETF winner dependence and return stability — 2026-11-03
+
+Complete. The top three ETFs supplied 59.2% of later net gains for original14
+and 52.5% for expanded 6/4. With those weights in cash the books still earned
+10.63% and 18.81% later CAGR. A 30-candidate training-only consistency search
+selected monthly Alpha54. Its IS/later CAGR gap was 6.48 pp and Sharpe gap
+0.890, smaller than either 6/4 book. Uncertainty in those relative gaps spans
+zero. Alpha54 still earned 5.00% IS and 7.24% later CAGR after removing each
+era's top three. 59 tests passed and three native NAV comparisons matched
+exactly. [Report](../research/etf-stability-20261103-v1/index.html).
+Stop for discussion. Class/volatility construction remains queued.
+
+## FR25 proportional breadth and selection width — 2026-11-03
+
+Complete. The proportional 6/15 rule restored 8/48 training fallback months
+versus 1/48 for 6/4. IS Sharpe fell from 0.462 to 0.347 and maximum drawdown
+rose from 18.30% to 21.03%. Both rules passed the gate on all 22 later dates.
+The 2,704-pair training-only search selected 42/33 at 0.876 IS Sharpe. Later
+return was 9.46%, Sharpe 1.271 and drawdown 5.08%, with 36.0% average risky
+ETF exposure. The width-only and breadth-only controls separate the two effects.
+58 tests passed. Six legacy NAV paths and three native accounting cases match
+exactly. The dossier is reviewable. [Report](../research/fr25-breadth-20261103-v1/index.html).
+Stop for discussion before the queued class/volatility study.
+
+## Expanded-pool FR25 net replay — 2026-11-02
+
+**Done November 3 local time — stop for discussion.** Saved Dwork et al.,
+arXiv1506.02629v2, in the supplemental reference library with verified title page,
+29-page count, source and SHA-256. Completed 144 net cases on 52 supported
+histories (BWX/XOP held): original14 FR25, expanded FR25, matched expanded M1,
+simple momentum/unranked controls and cash/buyhold references. Models share the
+2018-08-24 warmup; original monthly policy parity is exact at nine checked cases.
+Monthly wins expanded FR25's 2021–2024 selection; later data remain reused evidence.
+
+Expanded/original14 training Sharpe0.462/0.701, DD18.30%/7.38%; later
+return81.59%/54.93%, Sharpe1.726/2.003, DD15.18%/8.31%. Higher later return does
+not meet the declared risk/return comparison: original14 guards pass0/6 in each
+era; family intervals span zero. Weakest actual net portfolio contributors are
+EWC−5.06pp early and XLK−5.61pp later; dated inspection charts/trades retained.
+63 tests pass; three native LEAN accounting cases match exactly. P4.20 dossier
+is reviewable, advantage not established, with no operational authority.
+Generated fits/paths/native bundles are classified as disposable after the current
+discussion closes; guarded housekeeping classification is queued, no deletion.
+[Full report and evidence](../research/expanded-fr25-net-20261102-v1/index.html).
+Next is class/volatility construction net replay, after discussion; P4.21 remains blocked.
+
+## Pending approval unavailable — 2026-11-02
+
+**Recovered and verified.** Pending proposal `9350e7454cc8` (November 2, seven
+orders) remained visible in the browser after the dashboard stopped. Execution
+record reads failed, correctly disabling approval. PostgreSQL read readiness and
+paper Gateway probes passed; the normal guarded launcher restored dashboard PID
+10524 and dispatcher PID 28588. Fresh reconciliation matched; the browser now
+shows Ready for review and the approval button is enabled. Proposal remains
+pending with no broker records. Paper policy revision 25, account/binding/cap and
+broker guards are unchanged; no approval, reset or order submission performed.
+No source behavior change or new test required. The reason the prior process
+stopped is unconfirmed; separate host-interruption/analytics and recorder health
+warnings remain. Evidence: `var/maintenance/approval-unavailable-20261102/`.
+
+## P4.20 evidence and decay governance — 2026-11-01
+
+**Done — stop for discussion.** Operator retained Alpha54/the six-signal experiment
+as research evidence. Recorded concern about reused evaluation/luck as a hypothesis,
+with the annualized comparison clarified: Alpha54 CAGR7.49%early/13.97%later;
+unequal-length cumulative returns do not establish deterioration. Frozen findings
+remain unchanged. Replaced the obsolete universal half-life/IC gate with versioned
+evidence/decay review, a strict hash-bound dossier and read-only validator. Reused
+evaluation cannot claim untouched/prospective status; no numerical proxy veto or
+automatic authority. Worked Alpha54 review retains evidence and exposes missing
+decay-curve uncertainty before any new monitored recipe.
+
+37 tests pass, one Windows symlink test skipped; changed-file Ruff and docs checks
+pass. Cash-relative/Alpha101 compact reports, protocols/runners and closure records
+retained;13 generated folders (287.80MiB logical) classified and dry-run planned
+for guarded routine retirement. No deletion, monitoring, promotion or broker change.
+[Policy, worked assessment and limits](research-evidence-governance-v1.md).
+Next unblocked research: expanded-pool FR25 net replay, then class/volatility net
+replay. P4.21 stays blocked on constituent/holdings/membership evidence. Do not
+start another item before discussion.
+
+## Artifact retention instead of fixed storage admission — 2026-10-31
+
+**Implemented, cleaned and activated.** Removed the cumulative 40 GiB quota.
+Admission now checks actual artifact-drive free space (2 GiB for new work);
+20 GiB of generated contents only queues housekeeping. Routine stopped-startup
+retention also processes eligible explicitly closed study output folders. New
+studies' compact protocol/lineage metadata protects dependencies without a fixed
+list of active study names; closure still requires findings/recipe retention.
+
+Guarded maintenance retired 40 superseded calculations (18.666 GiB) and 84 model
+revisions (2.127 GiB), with immutable receipts; no additional closed-study output
+was eligible. Generated contents fell 38.201 to 17.409 GiB. Current/rollback and
+operationally pinned evidence, canonical histories and recent research remain.
+The new policy admitted the original 38.2 GiB footprint before any cleanup.
+33 focused tests pass, one Windows symlink test skips; Ruff/diff/docs checks pass.
+
+Normal startup completed at 22:00 Asia/Shanghai. All seven monitored reports
+return HTTP 200; complete allocation/control and membership revision 7 payloads
+are unchanged. Account refresh completed and storage errors cleared; a fresh
+22:01:04 calculation receipt admits work by actual free disk and progresses to
+USD replay, with served prices/NAV still through October 30. No new
+completed-publication claim. Existing optional NAS-lock and IB client 131 circuit
+issues remain separate. Evidence: `var/maintenance/artifact-policy-20261031/` and
+the referenced startup retirement manifests/receipts.
+
+## Six standalone Alpha101 net retests — 2026-10-31
+
+**Done — retained as research evidence November 1.** Operator retained cash-relative as research
+evidence. Completed the next item: 24/26/46/49/53/54, all 52 supported published
+histories (51 risky plus BIL; BWX/XOP held), 222 net cases, monthly and three dynamic
+thresholds, six cost/delay cases. Monthly wins each training-only timing choice;
+Alpha54/monthly has the highest training Sharpe. Later return26.90%/Sharpe1.569/
+DD7.54%, versus momentum63.82%/1.211/16.70% and FR25 55.26%/2.013/8.31%.
+Selected policy passes momentum guards6/6early,0/6later; unranked0/6,1/6;
+FR25 0/6each. No robust matched-control advantage across eras. Family-adjusted
+intervals include zero. Weakest actual net contributors EWYearly−3.12pp and
+XLClater−1.70pp, with dated inspections and trade ledgers. 55 tests pass, one
+optional historical-artifact test skipped; three native LEAN checks match $0.00.
+[Illustrated report](../research/alpha101-net-20261031-v1/index.html).
+No promotion, monitoring or execution change. Operator retained Alpha54/the study
+and authorized P4.20, now completed above; withheld full-pool net studies remain open.
+
+## Research-plan reconciliation and cash-relative net retest — 2026-10-31
+
+**Done — retained as research evidence by operator October 31.** Reconciled completed,
+withheld and blocked plan items in the [October 31 review](research-plan-review-2026-10-31.md).
+Closed the fixed 16-arm cash-relative net retest: 126 cases, exact original
+published-pool reconstruction, 5,698 reproduced adoptions, 35 focused tests and
+three native LEAN accounting checks with $0.00 NAV difference. Class/monthly
+selected on2021–2024; later return56.36%/Sharpe1.474/DD12.36%, removal-only
+36.46%/1.176/12.01%, frozen FR25 55.80%/2.072/8.31%. Control guards3/6early,
+6/6later; FR25guards0/6each. Family-adjusted intervals include zero. Weakest
+actual net contributors EWHearly−2.46pp/XLElater−1.98pp; both dated inspections
+and all FIFO outcomes ready. Current seven monitored USD reports are descriptive
+context, with different input/model histories disclosed. [Results](../research/cash-relative-net-20261031-v1/results.md).
+No parameter rescue, promotion, monitoring, allocation, broker or app-calculation
+change. Existing runtime/resource work preserved. The operator subsequently
+authorized the six Alpha101 signals, completed above; governance remains pending.
+
 Current work and unresolved acceptance gates, consolidated 2026-10-12. Update at the
 start and end of each implementation session. Completed rows and historical sessions
 are preserved byte-for-byte in the [history archive](archive/README.md).
@@ -60,6 +300,28 @@ Evidence: `var/maintenance/calculation-cpu-20261030-final/`,
 `var/maintenance/calculation-cpu-account-inventory.json`,
 `var/maintenance/calculation-cpu-activation/`;
 [measurements and limits](calculation-performance.md).
+
+## PostgreSQL read failure at startup — 2026-10-30
+
+**Startup recovered and readiness guard repaired.** The operator restarted
+`postgresql-x64-18` after this session's service-control access was denied.
+Previously failing reads of `pg_class` and `native_analytics.publication_heads`
+now pass. Sleep/resume preceded the incident; the underlying cause remains
+unconfirmed. Startup now requires bounded, authenticated, read-only catalog and
+application-table probes before database preparation and retention. Twelve
+focused tests, Ruff, PowerShell gate checks and documentation links pass.
+
+Normal startup completed October 30 at 00:16 Asia/Shanghai. The local SQL dump
+and dependency checkpoint completed; NAS upload timed out and remains optional.
+Guarded retention retired 11 superseded calculations and 30 model caches
+(5.793 GiB of unique contents), preserving its protection checks and receipts.
+Dashboard, strategy catalog and BroadTrend report return HTTP 200; eight monitored
+strategies, allocation revision 7, membership revision 6 and calculation head
+remain unchanged. NATS, dispatcher, recorder and recovery report running.
+IB Gateway is not listening on paper port 4002; login/reconnection, fresh broker
+reconciliation and normal data/calculation catch-up remain required for trading.
+This is readiness/recovery evidence, not a full database integrity certification.
+Evidence: `var/maintenance/postgres-readiness-20261030/`.
 
 ## BroadTrend strategy registration, monitoring and FR25 70/30 — 2026-10-29
 
@@ -1183,16 +1445,18 @@ source, monitoring, capital, broker or live setting changed.
 
 ## Remove the annual research cost ceiling — 2026-10-17
 
-**Done — policy and audit; retest In Progress:** The operator removed the 44 bp annual-cost rejection rule.
+**Done — policy/audit and October 31 net retest:** The operator removed the 44 bp annual-cost rejection rule.
 Evaluate incremental returns after incremental trading costs, with net Sharpe,
 return/drawdown guards, cost/delay sensitivity and chronological validation.
 The executable diagnostic and historical-reproduction entry points are separated;
 162 focused tests and Ruff pass. Seven cost-only withheld cases are identified
 ([audit](research-cost-policy-review-2026-10-17.md)). Guarded restart and fresh matched
 reconciliation passed; the prior paper policy/cap was restored. Existing raw-input
-coverage issues remain independent of this change. Next: replay the fixed 16-arm
-cash-relative family against SOTA and monitored strategies and report Sharpe/Calmar
-before another item. Frozen evidence and promotion controls remain separate.
+coverage issues remain independent of this change. The fixed 16-arm net replay is
+now [complete](../research/cash-relative-net-20261031-v1/results.md), with Sharpe/Calmar,
+FR25 controls and current monitored context. The operator retained that evidence;
+the six Alpha101 follow-ups are now complete above. Stop for their discussion.
+Frozen evidence and promotion controls remain separate.
 
 ## Historical cash-relative screen — superseded interpretation, 2026-10-17
 
@@ -1344,6 +1608,15 @@ See [session evidence and acceptance](execution-readiness-2026-10-13.md).
 
 ## Current priorities
 
+**November 1 checkpoint:** cash-relative and Alpha54/six-signal studies retained as
+research evidence; P4.20 evidence/decay governance is complete. Stop for its
+discussion. Expanded-FR25 then class/volatility net replays are the next unblocked
+research items; P4.21 remains blocked.
+BroadTrend implementation/publication and width/blend tests are complete. Native
+cutover and resource changes supersede the old Docker worker proposal; whole-refresh
+latency measurement remains. See the [reconciled plan](research-plan-review-2026-10-31.md).
+The following October 17 paragraph and allocation receipt are historical context.
+
 **2026-10-17 research session — Review:** P4.16d stage 1 accepted: 299
 symbol/regime records (298 provisional fund references), proposed taxonomy and
 complete gap matrix, 38-addition first wave alongside the original 14, frozen
@@ -1411,12 +1684,12 @@ After finishing work:
 | P4.4 | Review | LEAN smoke backtest | One current SOTA or simplified strategy runs through LEAN path with reproducible artifacts. | Native smoke and long-history parity passed in [validation evidence](lean-validation-2026-09-26.md); do not treat historical data as certified for promotion. |
 | P4.5 | Review | Backtest artifact hashes | Reports, inputs, configs, and outputs are hashed and linked to strategy versions. | Frozen bundle and output hashes plus registry exist; acceptance now concerns coverage of the broader promotion contract. |
 | P4.6 | Pending | Overfit/stability gate | Promotion requires split, benchmark, turnover, fee, stress, and parameter stability checks. | Extend current SOTA workflow. |
-| P4.7 | Review | LEAN runtime/dependency setup | Requires installing/configuring LEAN runtime or choosing equivalent deployment path. | Pinned local container runtime is installed and used. Prior setup blocker is superseded; P6.15 resource review remains open. |
+| P4.7 | Done for native Windows runtime | LEAN runtime/dependency setup | Pinned native runtime and independently validated accounting path. | October 18 cutover accepted; Docker/WSL retired. Broader promotion and data evidence remain separate; see [native runtime](native-windows-runtime.md). |
 | P4.22 | Done; monthly retained | Target-change threshold rebalance study | Latest theoretical versus last adopted target; independent of account holdings; causal selection, guards, cost/delay stress and native parity. | [Results](../research/target-change-rebalance-20261015-v1/results.md). 132 scenarios, six native checks. Explicit monthly macro fallback; F3 legacy-basis sensitivity. |
 | P4.23 | Done; 6/monthly retained | Joint selection-width X and target-change threshold n | Frozen 6-by-8 grid; 588 full-size scenarios, six native checks and 98 independent adoption checks. Wider selections reduce turnover but do not qualify under FR25 selection guards/stability. | [Results](../research/selection-width-timing-20261015-v1/results.md). F3 is legacy-basis sensitivity; expanded-pool validation later. No monitoring or trading changes. |
-| P4.16d | Review: expanded FR25 and subsequent class/volatility screen rejected | Substantial tradable ETF expansion, granular classes and volatility-aware ranking *(operator reaffirmed 2026-10-11)* | Versioned candidate inventory, dated taxonomy and data/contract gap matrix; staged audited admission; scalable app and paper-execution contracts; then controlled full-pool comparisons. Design capacity for hundreds of candidates, with duplicate-exposure controls and risk-normalized class ranking. | [299-record inventory](etf-universe-inventory-2026-10-13.md), 38-addition recorder wave and [50-fund FR25 diagnostic](etf-expansion-findings-2026-10-14.md) completed. The separate [October 16 construction screen](class-volatility-screen-findings.md) rejects all 16 raw/risk-normalized, pooled/class and monthly/dynamic mappings. No expanded candidate qualifies for replay. Review the cash/bill concentration and incomparable-payoff issue before a new hypothesis; historical membership reconstruction remains open. Published pinned inputs only; admission never mandates allocation. **P4.16c remains parked.** [Plan](signal-decay-and-alpha-plan.md). |
-| P4.20 | Pending | Decay-based promotion gate | Require any new signal to demonstrate a minimum estimated half-life and sub-period IC stability before it can enter a monitored recipe. | Registered October 10; depends on P4.13. Structural protection against the survivor-selection problem described in the plan's Appendix A. Governance only. |
-| P4.21 | Pending | Look-through constituent alpha | Compute the structurally cross-sectional alphas on the constituent cross-section (680 IVV constituent series plus issuer holdings and sector data) and aggregate holdings-weighted to ETF scores. | Registered October 10 and deferred. The only honest route to the 76 structurally cross-sectional alphas, which need breadth that 14 ETFs cannot supply. Carries three disclosed caveats: index-membership history is a survivorship trap, issuer holdings snapshots are prospective-only from October 2026, and the constituent series are the `review`-status population from P3.8. Blocked on the constituent-coverage assessment; do not start before P4.16 answers whether the cross-sectional premise holds. |
+| P4.16d | Partial; cash-relative retained as research evidence | Substantial tradable ETF expansion, granular classes and volatility-aware ranking | Versioned inventory/taxonomy, audited admission, app/execution contracts and controlled full-pool comparisons; historical membership and duplicate exposure checks. | [Inventory](etf-universe-inventory-2026-10-13.md) and first wave delivered. Historical expanded-FR25/class screens withheld net replays under retired proxy rules; no net verdict established for those arms. [Cash-relative net retest](../research/cash-relative-net-20261031-v1/results.md) now complete: useful matched-control improvement, no guarded FR25 replacement. Historical membership/mandates and broader tradability remain open. P4.16c parked. |
+| P4.20 | Done; discussion checkpoint | Versioned evidence and decay review | Hash-bound dossier, actual sample reuse, explicit decay/stability states, net controls/frictions/chronology; no universal half-life/IC/cost veto or automatic authority. | [Policy and worked Alpha54 assessment](research-evidence-governance-v1.md). 37 tests pass, one Windows skip. Existing app/operator/broker controls remain separate. |
+| P4.21 | Coverage assessment and one-quarter pilot complete. Alpha replay blocked. | Look-through constituent alpha | Compute structurally cross-sectional alphas on a dated constituent universe and aggregate with each fund’s available holdings. | [Historical assessment](../research/p421-coverage-20261104-v1/results.md) and [December pilot](../research/p421-quarter-20261104-v1/results.md). Qualified prices and dated identities remain insufficient. |
 
 ## P5: Portfolio Blotter And Execution Controls
 
@@ -1437,7 +1710,7 @@ After finishing work:
 
 | ID | Status | Work item | Acceptance criteria | Notes / dependencies |
 | --- | --- | --- | --- | --- |
-| P6.15 | Pending | Research worker deployment and resource budgets | Benchmark real host/container memory, CPU, startup/data-copy costs and whole-batch latency; compare host-native LEAN, right-sized containers and multicore scheduling. | Operator requested October 11. Fixed 4 GiB/run plus 2 GiB headroom caps LEAN at three jobs on 15.39 GiB Docker, despite 31.55 GiB host RAM. Preserve parity, resource headroom and operator/ClickHouse latency. [Plan](calculation-performance.md#p615--worker-deployment-and-resource-budget-review). |
+| P6.15 | Implementation complete; whole-refresh measurement open | Native research worker scheduling and resource measurement | Preserve isolated workers, independent parity and atomic publication; measure end-to-end refresh in addition to components. | October18 native cutover, October30 multicore scheduling and October31 Windows-managed memory implemented. 4.28x fitting-stage and 3.44x isolation-inclusive component speedups measured; not whole-refresh claims. No new Docker/WSL dependencies. [Measurements](calculation-performance.md). |
 | P6.1 | Pending | Metrics contract | Define service, data, queue, strategy, portfolio, execution, and reconciliation metrics. | Prometheus/OpenTelemetry compatible. |
 | P6.2 | Pending | Local metrics endpoint | API/service exposes metrics for scraping or dashboard display. | Start with FastAPI endpoint if needed. |
 | P6.3 | Pending | Grafana dashboard plan | Dashboard panels defined for data freshness, queue lag, broker state, PnL, exposure, and alerts. | Implementation depends on metrics path. |
@@ -1479,9 +1752,11 @@ are the cross-cutting platform work that runs alongside it.
 
 **Research, one item at a time with a review between items.** The second review and the
 fixed P4.18 experiment and the scoped P4.19 retrospective comparison are complete. Next
-complete the **P4.16d cash-relative net retest** with the signal fixed
-([scope and audit](research-cost-policy-review-2026-10-17.md)); compare Sharpe and
-Calmar against SOTA and monitored strategies, then stop for the operator report.
+review the **completed P4.20 evidence/decay governance**
+([policy and worked review](research-evidence-governance-v1.md)). Cash-relative and
+Alpha54/six-signal studies are retained as research evidence by operator decision.
+Stop for discussion, then expanded-pool FR25 net replay followed by class/volatility
+net replay. P4.21 remains blocked.
 Register horizon, peer-group, incremental payoff and actual fill-based exit
 contracts before any new budget/TP/SL grid. See the current priorities at the top of the plan.
 

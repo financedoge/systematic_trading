@@ -10,7 +10,7 @@ import sys
 import time
 import urllib.request
 
-from systematic_trading.services.health import _pid_is_running, write_service_state_file
+from systematic_trading.services.health import _pid_is_running, _pid_matches_platform_python, write_service_state_file
 from systematic_trading.runtime_io import atomic_json, exclusive_lock
 
 SERVICES = ("nats", "clickhouse", "operator", "recorder", "backup")
@@ -18,10 +18,20 @@ PIDS = {"operator": "operator_dashboard.pid", "recorder": "market_data_recorder.
 
 
 def process_present(path):
+    """True when a live PID file points at this platform's Python service.
+
+    Windows recycles process IDs: after a crash the PID file can belong to an
+    unrelated program (for example PostgreSQL). Such a PID must not make
+    recovery believe the service is still running. None (unreadable image) stays
+    conservative and counts as present.
+    """
     try:
-        return _pid_is_running(int(path.read_text().strip()))
+        pid = int(path.read_text().strip())
     except (OSError, ValueError):
         return False
+    if not _pid_is_running(pid):
+        return False
+    return _pid_matches_platform_python(pid) is not False
 
 
 class LocalRecovery:

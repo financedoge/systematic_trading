@@ -1,0 +1,1212 @@
+{
+  "expanded": {
+    "description": "Frozen full supported-pool FR25 research comparison; original overlays, finite admission and timing protocol; no authority.",
+    "key": "expanded_fr25_net_v1",
+    "name": "Expanded FR25 research",
+    "overlays": [
+      {
+        "kind": "financial_rank_selection",
+        "parameters": {
+          "blend": "R25",
+          "financialWeight": "0.25",
+          "forecast": "total_return",
+          "group": "financial",
+          "minimumLabels": 36,
+          "momentumWeight": "0.75",
+          "prospectiveStart": "2026-10-10",
+          "ridgeAlpha": "1",
+          "version": "fr25-financial-selection-v1",
+          "xgbWeight": "0"
+        }
+      },
+      {
+        "kind": "rolling_model",
+        "parameters": {
+          "maxActiveWeight": "0.06",
+          "spec": "{\"embargo\": \"label_end_strictly_before_fit_close\", \"family\": \"xgboost\", \"parameters\": {\"base_score\": 0, \"colsample_bytree\": 0.75, \"learning_rate\": 0.03, \"max_depth\": 3, \"min_child_weight\": 25, \"n_estimators\": 100, \"n_jobs\": 1, \"objective\": \"reg:squarederror\", \"random_state\": 20260927, \"reg_alpha\": 0, \"reg_lambda\": 10, \"subsample\": 0.8, \"tree_method\": \"hist\"}, \"refit\": \"monthly\", \"seed\": 20260927, \"target\": \"next_month_adjusted_usd_return_minus_cross_section_mean\", \"version\": \"rolling-xgboost-1y-v1\", \"window_years\": 1}",
+          "tilt": "0.16"
+        }
+      },
+      {
+        "kind": "relative_momentum",
+        "parameters": {
+          "calmTilt": "0.12",
+          "drawdownLookbackBars": "252",
+          "drawdownTrigger": "-0.08",
+          "fastVolatilityBars": "21",
+          "longLookbackBars": "60",
+          "maxActiveWeight": "0.05",
+          "mediumLookbackBars": "20",
+          "riskTilt": "0.12",
+          "slowVolatilityBars": "252",
+          "volatilityRatioTrigger": "1.35"
+        }
+      },
+      {
+        "kind": "adaptive_trend",
+        "parameters": {
+          "defensiveScale": "0.35",
+          "fastVolatilityBars": "21",
+          "longLookbackBars": "252",
+          "longThreshold": "-0.05",
+          "mediumLookbackBars": "126",
+          "mediumThreshold": "-0.03",
+          "neutralScale": "0.80",
+          "reallocateResidual": "true",
+          "reboundLookbackBars": "21",
+          "reboundScale": "1.00",
+          "shortLookbackBars": "63",
+          "shortThreshold": "0",
+          "slowVolatilityBars": "252",
+          "volumeLookbackBars": "21",
+          "weakScale": "0.50"
+        }
+      },
+      {
+        "kind": "audited_etf_activity",
+        "parameters": {
+          "basis": "raw_dollar_adjusted_direction_v1",
+          "spec": "{\"version\":\"activity-concentration-v1\",\"measure\":\"relative_dollar_activity\",\"derivative\":2,\"normalization_bars\":63,\"smoothing_span\":10,\"difference_lag\":20,\"noise_bars\":126,\"threshold\":0.5,\"directional_confirmation\":true,\"hurst_min\":null,\"action\":\"tilt\",\"relative_tilt\":0.15,\"active_cap\":0.03}"
+        }
+      },
+      {
+        "kind": "usd_ridge",
+        "parameters": {
+          "version": "usd-ridge-u1-v1"
+        }
+      },
+      {
+        "kind": "final_weight_cap",
+        "parameters": {
+          "cap": "0.45"
+        }
+      }
+    ],
+    "promotedOn": null,
+    "scheduler": "static_monthly",
+    "sleeveName": "research-fr25-14-v1",
+    "state": "research",
+    "universeKey": "frozen_supported_pool",
+    "universeMembers": [
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "AGG",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "AGG"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "BIL",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "BIL"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "CORN",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "CORN"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "CPER",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "CPER"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "DBA",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "DBA"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "DBB",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "DBB"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "DBC",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "DBC"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EEM",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EEM"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EFA",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EFA"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EMB",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EMB"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EWA",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EWA"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EWC",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EWC"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EWG",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EWG"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EWH",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EWH"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EWJ",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EWJ"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EWT",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EWT"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EWU",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EWU"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EWY",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EWY"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "GLD",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "GLD"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "HYG",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "HYG"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "IAT",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "IAT"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "IBB",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "IBB"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "IBND",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "IBND"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "IEF",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "IEF"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "IGOV",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "IGOV"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "INDA",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "INDA"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "ITA",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "ITA"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "IWM",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "IWM"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "LEMB",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "LEMB"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "LQD",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "LQD"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "MBB",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "MBB"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "MCHI",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "MCHI"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "MDY",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "MDY"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "PPLT",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "PPLT"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "SHY",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "SHY"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "SLV",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "SLV"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "SOXX",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "SOXX"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "SPY",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "SPY"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "TIP",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "TIP"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "TLT",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "TLT"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "USO",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "USO"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "VGK",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "VGK"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "WEAT",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "WEAT"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLB",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLB"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLC",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLC"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLE",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLE"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLI",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLI"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLK",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLK"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLP",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLP"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLU",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLU"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLV",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLV"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLY",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLY"
+      }
+    ]
+  },
+  "m1": {
+    "description": "Expanded FR25 with only the selector replaced by M1; same final cap and downstream sizing; no authority.",
+    "key": "expanded_m1_capped_net_v1",
+    "name": "Expanded M1 matched control",
+    "overlays": [
+      {
+        "kind": "asset_pool_filter",
+        "parameters": {
+          "fallbackPolicy": "defensive_cash",
+          "longMomentumBars": "126",
+          "mediumMomentumBars": "63",
+          "minLongMomentum": "0",
+          "minSelected": "4",
+          "reallocateSelected": "true",
+          "requirePositiveLongMomentum": "true",
+          "shortMomentumBars": "21",
+          "slowVolumeBars": "126",
+          "topN": "6",
+          "trendWeight": "0.75",
+          "volumeBars": "21",
+          "volumeWeight": "0.25"
+        }
+      },
+      {
+        "kind": "rolling_model",
+        "parameters": {
+          "maxActiveWeight": "0.06",
+          "spec": "{\"embargo\": \"label_end_strictly_before_fit_close\", \"family\": \"xgboost\", \"parameters\": {\"base_score\": 0, \"colsample_bytree\": 0.75, \"learning_rate\": 0.03, \"max_depth\": 3, \"min_child_weight\": 25, \"n_estimators\": 100, \"n_jobs\": 1, \"objective\": \"reg:squarederror\", \"random_state\": 20260927, \"reg_alpha\": 0, \"reg_lambda\": 10, \"subsample\": 0.8, \"tree_method\": \"hist\"}, \"refit\": \"monthly\", \"seed\": 20260927, \"target\": \"next_month_adjusted_usd_return_minus_cross_section_mean\", \"version\": \"rolling-xgboost-1y-v1\", \"window_years\": 1}",
+          "tilt": "0.16"
+        }
+      },
+      {
+        "kind": "relative_momentum",
+        "parameters": {
+          "calmTilt": "0.12",
+          "drawdownLookbackBars": "252",
+          "drawdownTrigger": "-0.08",
+          "fastVolatilityBars": "21",
+          "longLookbackBars": "60",
+          "maxActiveWeight": "0.05",
+          "mediumLookbackBars": "20",
+          "riskTilt": "0.12",
+          "slowVolatilityBars": "252",
+          "volatilityRatioTrigger": "1.35"
+        }
+      },
+      {
+        "kind": "adaptive_trend",
+        "parameters": {
+          "defensiveScale": "0.35",
+          "fastVolatilityBars": "21",
+          "longLookbackBars": "252",
+          "longThreshold": "-0.05",
+          "mediumLookbackBars": "126",
+          "mediumThreshold": "-0.03",
+          "neutralScale": "0.80",
+          "reallocateResidual": "true",
+          "reboundLookbackBars": "21",
+          "reboundScale": "1.00",
+          "shortLookbackBars": "63",
+          "shortThreshold": "0",
+          "slowVolatilityBars": "252",
+          "volumeLookbackBars": "21",
+          "weakScale": "0.50"
+        }
+      },
+      {
+        "kind": "audited_etf_activity",
+        "parameters": {
+          "basis": "raw_dollar_adjusted_direction_v1",
+          "spec": "{\"version\":\"activity-concentration-v1\",\"measure\":\"relative_dollar_activity\",\"derivative\":2,\"normalization_bars\":63,\"smoothing_span\":10,\"difference_lag\":20,\"noise_bars\":126,\"threshold\":0.5,\"directional_confirmation\":true,\"hurst_min\":null,\"action\":\"tilt\",\"relative_tilt\":0.15,\"active_cap\":0.03}"
+        }
+      },
+      {
+        "kind": "usd_ridge",
+        "parameters": {
+          "version": "usd-ridge-u1-v1"
+        }
+      },
+      {
+        "kind": "final_weight_cap",
+        "parameters": {
+          "cap": "0.45"
+        }
+      }
+    ],
+    "promotedOn": null,
+    "scheduler": "static_monthly",
+    "sleeveName": "research-fr25-14-v1",
+    "state": "research",
+    "universeKey": "frozen_supported_pool",
+    "universeMembers": [
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "AGG",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "AGG"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "BIL",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "BIL"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "CORN",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "CORN"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "CPER",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "CPER"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "DBA",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "DBA"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "DBB",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "DBB"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "DBC",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "DBC"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EEM",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EEM"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EFA",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EFA"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EMB",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EMB"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EWA",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EWA"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EWC",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EWC"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EWG",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EWG"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EWH",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EWH"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EWJ",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EWJ"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EWT",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EWT"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EWU",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EWU"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "EWY",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "EWY"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "GLD",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "GLD"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "HYG",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "HYG"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "IAT",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "IAT"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "IBB",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "IBB"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "IBND",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "IBND"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "IEF",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "IEF"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "IGOV",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "IGOV"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "INDA",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "INDA"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "ITA",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "ITA"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "IWM",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "IWM"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "LEMB",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "LEMB"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "LQD",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "LQD"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "MBB",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "MBB"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "MCHI",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "MCHI"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "MDY",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "MDY"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "PPLT",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "PPLT"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "SHY",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "SHY"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "SLV",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "SLV"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "SOXX",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "SOXX"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "SPY",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "SPY"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "TIP",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "TIP"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "TLT",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "TLT"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "USO",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "USO"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "VGK",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "VGK"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "WEAT",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "WEAT"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLB",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLB"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLC",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLC"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLE",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLE"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLI",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLI"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLK",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLK"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLP",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLP"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLU",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLU"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLV",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLV"
+      },
+      {
+        "asset_class": "etf",
+        "country": "US",
+        "exchange": "NYSE",
+        "name": "XLY",
+        "quote_currency": "USD",
+        "sector": "research",
+        "symbol": "XLY"
+      }
+    ]
+  },
+  "original": {
+    "description": "Full 14-ETF candidate pool; blend 75% M1 score rank and 25% financial-ridge total-forecast rank before the positive 126-session gate and top-six selection. M1 includes 75% momentum and 25% volume. Missing ridge abstains to M1 selection. Preserve downstream XGBoost sizing, relative/adaptive trend, audited raw activity and USD ridge; final 45% cap leaves excess in cash. Monitoring only.",
+    "key": "research_fr25_14_v1",
+    "name": "FR25 \u00b7 75% M1 / 25% financial ridge",
+    "overlays": [
+      {
+        "kind": "financial_rank_selection",
+        "parameters": {
+          "blend": "R25",
+          "financialWeight": "0.25",
+          "forecast": "total_return",
+          "group": "financial",
+          "minimumLabels": 36,
+          "momentumWeight": "0.75",
+          "prospectiveStart": "2026-10-10",
+          "ridgeAlpha": "1",
+          "version": "fr25-financial-selection-v1",
+          "xgbWeight": "0"
+        }
+      },
+      {
+        "kind": "rolling_model",
+        "parameters": {
+          "maxActiveWeight": "0.06",
+          "spec": "{\"embargo\": \"label_end_strictly_before_fit_close\", \"family\": \"xgboost\", \"parameters\": {\"base_score\": 0, \"colsample_bytree\": 0.75, \"learning_rate\": 0.03, \"max_depth\": 3, \"min_child_weight\": 25, \"n_estimators\": 100, \"n_jobs\": 1, \"objective\": \"reg:squarederror\", \"random_state\": 20260927, \"reg_alpha\": 0, \"reg_lambda\": 10, \"subsample\": 0.8, \"tree_method\": \"hist\"}, \"refit\": \"monthly\", \"seed\": 20260927, \"target\": \"next_month_adjusted_usd_return_minus_cross_section_mean\", \"version\": \"rolling-xgboost-1y-v1\", \"window_years\": 1}",
+          "tilt": "0.16"
+        }
+      },
+      {
+        "kind": "relative_momentum",
+        "parameters": {
+          "calmTilt": "0.12",
+          "drawdownLookbackBars": "252",
+          "drawdownTrigger": "-0.08",
+          "fastVolatilityBars": "21",
+          "longLookbackBars": "60",
+          "maxActiveWeight": "0.05",
+          "mediumLookbackBars": "20",
+          "riskTilt": "0.12",
+          "slowVolatilityBars": "252",
+          "volatilityRatioTrigger": "1.35"
+        }
+      },
+      {
+        "kind": "adaptive_trend",
+        "parameters": {
+          "defensiveScale": "0.35",
+          "fastVolatilityBars": "21",
+          "longLookbackBars": "252",
+          "longThreshold": "-0.05",
+          "mediumLookbackBars": "126",
+          "mediumThreshold": "-0.03",
+          "neutralScale": "0.80",
+          "reallocateResidual": "true",
+          "reboundLookbackBars": "21",
+          "reboundScale": "1.00",
+          "shortLookbackBars": "63",
+          "shortThreshold": "0",
+          "slowVolatilityBars": "252",
+          "volumeLookbackBars": "21",
+          "weakScale": "0.50"
+        }
+      },
+      {
+        "kind": "audited_etf_activity",
+        "parameters": {
+          "basis": "raw_dollar_adjusted_direction_v1",
+          "spec": "{\"version\":\"activity-concentration-v1\",\"measure\":\"relative_dollar_activity\",\"derivative\":2,\"normalization_bars\":63,\"smoothing_span\":10,\"difference_lag\":20,\"noise_bars\":126,\"threshold\":0.5,\"directional_confirmation\":true,\"hurst_min\":null,\"action\":\"tilt\",\"relative_tilt\":0.15,\"active_cap\":0.03}"
+        }
+      },
+      {
+        "kind": "usd_ridge",
+        "parameters": {
+          "version": "usd-ridge-u1-v1"
+        }
+      },
+      {
+        "kind": "final_weight_cap",
+        "parameters": {
+          "cap": "0.45"
+        }
+      }
+    ],
+    "promotedOn": null,
+    "scheduler": "static_monthly",
+    "sleeveName": "research-fr25-14-v1",
+    "state": "tracked",
+    "universeKey": "multi_asset_14"
+  }
+}

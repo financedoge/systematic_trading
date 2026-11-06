@@ -1,0 +1,36 @@
+{
+  "accepted_new_york": "2025-02-27 12:07:37",
+  "accession": "0001752724-25-043691",
+  "as_of": "2024-12-31",
+  "cik": 936958,
+  "dissemination": {
+    "bytes": 741026,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:39:58.761009+00:00",
+    "sha256": "4508c00aa2a5027f1cf61d552281bb51276123deda4462ab250cb0004d65f718",
+    "url": "https://www.sec.gov/Archives/edgar/daily-index/2025/QTR1/master.20250227.idx"
+  },
+  "dissemination_row": "936958|SPDR S&P MIDCAP 400 ETF TRUST|NPORT-P|20250227|edgar/data/936958/0001752724-25-043691.txt",
+  "filed": "2025-02-27",
+  "filing": "NPORT-P",
+  "index": {
+    "bytes": 7659,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:41:15.904048+00:00",
+    "sha256": "b7812ef637ebc4c9c7a945f6cb492a67d47f10084ced08ff78d3f5633923618b",
+    "url": "https://www.sec.gov/Archives/edgar/data/936958/000175272425043691/0001752724-25-043691-index.htm"
+  },
+  "nav": "24396265964.85",
+  "series": null,
+  "symbol": "MDY",
+  "xml": {
+    "bytes": 387411,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:41:14.125123+00:00",
+    "sha256": "23fa7acb81135bbe4a4167bde69fe7ceea98ffeb5527722831bdae7a37295fe4",
+    "url": "https://www.sec.gov/Archives/edgar/data/936958/000175272425043691/primary_doc.xml"
+  }
+}

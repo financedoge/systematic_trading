@@ -1,0 +1,90 @@
+{
+  "cik": 110621,
+  "filings": [
+    {
+      "accession": "0000950170-24-001796",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "November 30, 2023"
+        ],
+        "DocumentType": [
+          "10-Q"
+        ],
+        "EntityCentralIndexKey": [
+          "0000110621"
+        ],
+        "EntityRegistrantName": [
+          "RPM International Inc."
+        ],
+        "Security12bTitle": [
+          "Common Stock, par value $0.01"
+        ],
+        "SecurityExchangeName": [
+          "New York Stock Exchange"
+        ],
+        "TradingSymbol": [
+          "RPM"
+        ]
+      },
+      "filing_date": "2024-01-04",
+      "listing_tables": [
+        "Title of each class Trading Symbol(s) Name of each exchange on which registered Common Stock, par value $0.01 RPM New York Stock Exchange"
+      ],
+      "report_date": "2023-11-30",
+      "source": {
+        "bytes": 3113899,
+        "retrieved_at": "2026-11-05T16:12:51.817831+00:00",
+        "sha256": "1d2cc399eb64f63bc2877032f001b5752335809fdab4a46ac40db9ab8d61ed5a",
+        "url": "https://www.sec.gov/Archives/edgar/data/110621/000095017024001796/rpm-20231130.htm"
+      }
+    },
+    {
+      "accession": "0000950170-25-002727",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "November 30, 2024"
+        ],
+        "DocumentType": [
+          "10-Q"
+        ],
+        "EntityCentralIndexKey": [
+          "0000110621"
+        ],
+        "EntityRegistrantName": [
+          "RPM International Inc."
+        ],
+        "Security12bTitle": [
+          "Common Stock, par value $0.01"
+        ],
+        "SecurityExchangeName": [
+          "New York Stock Exchange"
+        ],
+        "TradingSymbol": [
+          "RPM"
+        ]
+      },
+      "filing_date": "2025-01-07",
+      "listing_tables": [
+        "Title of each class Trading Symbol(s) Name of each exchange on which registered Common Stock, par value $0.01 RPM New York Stock Exchange"
+      ],
+      "report_date": "2024-11-30",
+      "source": {
+        "bytes": 3855445,
+        "retrieved_at": "2026-11-05T16:12:54.828258+00:00",
+        "sha256": "ce158e4288b0fccaf38e7db6d5ca373d0dde63e266175b0524bb66a90277a734",
+        "url": "https://www.sec.gov/Archives/edgar/data/110621/000095017025002727/rpm-20241130.htm"
+      }
+    }
+  ],
+  "requested_cutoffs": {
+    "2024-02-27": "0000950170-24-001796",
+    "2025-02-27": "0000950170-25-002727"
+  },
+  "submissions": {
+    "bytes": 158012,
+    "retrieved_at": "2026-11-05T16:06:55.149505+00:00",
+    "sha256": "7b54b4c933c052e96cd9cd5316314052ecf135d7ad6e4fadc185d2df9f1afd08",
+    "url": "https://data.sec.gov/submissions/CIK0000110621.json"
+  },
+  "symbol": "RPM"
+}

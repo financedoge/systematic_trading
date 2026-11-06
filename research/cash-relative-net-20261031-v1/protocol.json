@@ -1,0 +1,252 @@
+{
+  "arms": [
+    "pooled_remove_bill_risk",
+    "pooled_cash_relative_risk",
+    "class_remove_bill_risk",
+    "class_cash_relative_risk"
+  ],
+  "artifacts": {
+    "var/research/cash-relative-net-20261031-v1/inputs.npz": "d1dea318a9895ff1685007d8a9fdae4dfe4a8bc719e381e2b92fc8504a09a677",
+    "var/research/cash-relative-net-20261031-v1/monitored.json.gz": "406d28f770a3e8de6801a2832b3ce80e0ff0601e2d33a8259575d85dcd125cff",
+    "var/research/cash-relative-net-20261031-v1/recipe.json": "604bf0caa1e9bdde43c4391daaf1d9482447c8c08c6ef06a7246323f8edfb074",
+    "var/research/cash-relative-net-20261031-v1/schedules.npz": "aea9d1db127de849401e42076eebece428d29ea527fddee47c0eef649fd8fe5b"
+  },
+  "candidates": 52,
+  "code": {
+    "scripts/research_cash_relative_retest.py": "5f8d46caa2bdd6958a14d25acf1d83b19b7187be61dcacba288805096db859a4",
+    "scripts/run_class_volatility_screen.py": "86bcfe9da4a319c10b23a42d7829d4ec9a8bbca373f84b5d5a4c152c399b639b",
+    "scripts/run_range_breakout.py": "02b7948694ba6f1efeb9b15eac4a736bce66fc773192f5190ea65cdc6c26d446",
+    "src/systematic_trading/backtest/__init__.py": "3312a34d54806b81f98df277be1e5e1dc9c189e4b563dd9d3018d0310af30fea",
+    "src/systematic_trading/backtest/accounting.py": "20bce9758fd544896cd927d691cb30e7f9f647969879f59ebd36a69719bf190e",
+    "src/systematic_trading/backtest/comparison.py": "831411ed01ddfd4dd0f3bf67ffadcc719e205e16051ef173a2795d5e9433d925",
+    "src/systematic_trading/backtest/engine.py": "64a8d0ec5201c7e0070fda65fe7da06d9b6f9030d6423f8a5c5df7da0648392f",
+    "src/systematic_trading/backtest/reporting.py": "e698958f68ef5ce84a912eb5c045c5d0d0f93e8965f4d6876a764a2d7fd62bbd",
+    "src/systematic_trading/backtest/risk.py": "ac757ba09c1949f9f9a6ef2c422acecd61dfa58ca27d3058637ab3a43f2c475e",
+    "src/systematic_trading/backtest/stability.py": "4abfb768348f2e7dfb40fa9110a6b4f8101837a82a73420b3392811cd74f6f3f",
+    "src/systematic_trading/backtest/stock_replacement.py": "4a89a1ec5f170761ece0521c2a99bb52f85d3d2cbcb9d403c958a176d8b427de",
+    "src/systematic_trading/backtest/stored.py": "28bdf3c0b5134f7b32b6621fa2458ad5d5a9d338717b71425ed7c014196cb26b",
+    "src/systematic_trading/research/target_change_rebalance.py": "9e60d834b046e8743e28774200027aaba849b24dd300212a232f2850ec0fb9a3"
+  },
+  "exclusions": {
+    "BWX": "Issuer listing date is 2007-10-02 but the provider firstTradeDate and first observation are 2007-10-11.",
+    "CPER": "Unsupported audited observation: ('CPER', '2018-08-23')"
+  },
+  "execution": "Shared app whole adjusted-unit USD engine; USD1m; size frozen target weights at the close immediately before execution; next-open fills plus0/1session delay. Delay retains the target and resizes at execution-prior-close,not original fixed quantities. 5/10/20bp on actual traded notional. All unfilled budgets remain zero-interest cash. No terminal liquidation. Logical adoption independent of fills.",
+  "frictions": [
+    [
+      5,
+      0
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      10,
+      0
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      20,
+      0
+    ],
+    [
+      20,
+      1
+    ]
+  ],
+  "inherited": {
+    "all_ineligible": "all cash",
+    "cap": "each security capped at 0.45 after sizing; excess stays cash",
+    "class": "within each primary class choose up to two eligible members; class score is their mean declared score; select top three classes, with deterministic alphabetical class ties; each class has gross budget 0.98/3 times selected_count/2; divide it by inverse volatility",
+    "downstream": "Inherited price-only construction; only registered score/gate and BIL role change",
+    "duplicate_rule": "inherit frozen parent admission: highest prior-63-session median raw dollar volume per duplicate group, then permanent candidate ID",
+    "overlap_rule": "broad parent/child fund conflicts listed below cannot be co-selected. Pooled selection greedily skips conflicts by score; class selection greedily skips conflicting members against already chosen classes, recomputes each remaining class's available top two and score, and chooses the next class. Within-class selection also skips conflicts. No look-through independence is claimed.",
+    "pooled": "top six eligible members by the declared score; inverse-volatility weights; gross budget 0.98 times selected_count/6",
+    "primary_class_rule": "one class per fund; each class gets at most one class-selection vote",
+    "unfilled_slots": "cash, including missing class slots; do not redistribute unused budgets"
+  },
+  "input_files": {
+    "audits/AGG.json": "9bfd36c74e87afb16b7a782f985787fb908a12d4dda9a5a83504b42987f18a00",
+    "audits/BIL.json": "e308c1705f238d75f03334ec5b6aea8b4a1412e0eff786ca3063ba4117d1fa34",
+    "audits/CORN.json": "3e3413ef80b03f7c46f80c5d334fafd5240787b79203a09dd0a88a99464ec0aa",
+    "audits/CPER.json": "8e5e21bc503ac4e7e03301553636fd4a7078fbbfd0c7a6e009eceb101577a368",
+    "audits/DBA.json": "f725fb328b0c559325ebac188e62994b737373442c145920add9743648c442a7",
+    "audits/DBB.json": "fc7d843618ccf5c238cbf5a337f771e18effd590d4df81ba64ad85609a70acea",
+    "audits/DBC.json": "e3c59ae6dd6a7584ef938eb92002bd83f501f34e9e4d1da41acca93d6923f559",
+    "audits/EEM.json": "c12d6d53dc7c569ba80998da669af78ca7cf3f6c8083a44984257d0a752b6779",
+    "audits/EFA.json": "22785636e8f5ac429f9da05c962c4cdb0c67663aeb92695efae89bae78678172",
+    "audits/EMB.json": "9c37f191b118e050bee915d32d82e04dde2f62ebf01761e98bbb497135d31145",
+    "audits/EWA.json": "39cbae5f28dab9006fb297489ff4fdf48882e986949b62eccb44e46642a62fba",
+    "audits/EWC.json": "f34fda55809d7f9c5a0dd7d2bdb128139266ee60efb76f60e235e578907e3bfb",
+    "audits/EWG.json": "112ff350261fa1c0eb6e8feac9c2d5cbe295fdffd7211ed0539ea0eb58eca6f7",
+    "audits/EWH.json": "25a596e4c3e2ac76f5a12846882a310987a852f19ef75c9bf9d4b42103f231ea",
+    "audits/EWJ.json": "cdf479a49a9170d660418d27e6b0e9d539a3a38b90d63489b81794b378dcc403",
+    "audits/EWT.json": "c358ebf696df9d146aa7cc0e925eb2a135d1d491b020596eeb70e6042e8ac616",
+    "audits/EWU.json": "16a42c080911565846373634ff11b56f53c3a055aedb03e9d110c5f8a6e10c18",
+    "audits/EWY.json": "ce87d7dcaf2c526b1e82340817c6d60d28adf5d618754d1cc93c86deb7793022",
+    "audits/GLD.json": "46c26802498dffede98a303bbcd9bafc251a8311b509d547e4fbed1a96e37574",
+    "audits/HYG.json": "40e46c457c52bacab24e5994b90c9813f310c6f0c96b1b8c03f6085078c9eeae",
+    "audits/IAT.json": "9fe5a87bdd838c9cde8626e993e266d505da3144b23673ca93c02ade88865115",
+    "audits/IBB.json": "fd4e232cf100008fccbda75c2d4710fafe1e961d62dc2a14d55fc7ef40bd1c60",
+    "audits/IBND.json": "13f85983ab4c1f66ac68fbdd909fd99829c3eb5930ab0df8b717aa13e402f2d7",
+    "audits/IEF.json": "4e24a7eeb60164176f162be8994893bfd61786093216888d1540a2b5068140dd",
+    "audits/IGOV.json": "37fea148ef990e7200f5a10836862c3035dc9baba5a1d8c44ac6e26bd663adff",
+    "audits/INDA.json": "2811375674b1625cea1f9acaabba869e300a1340f166326fded8d9b393833f9d",
+    "audits/ITA.json": "6672fc6c7ce40b696838a393ee4daa11586f951ba276e3a80c5983750cad0195",
+    "audits/IWM.json": "b227419d59f5e2c5b8a8c4252bc79c7ef6feceefaeffa747538898e64a6a8263",
+    "audits/LEMB.json": "14c3ef8ec3089030de84105f1c8bdc74f457a40e347e9da16d59eb1855c72c92",
+    "audits/LQD.json": "9d8d84530770c3449503d4cb24a703cc3a487a8a210607db8ec0321e0cbafde2",
+    "audits/MBB.json": "bd9ab97be5a9bcdd0aae2a48e8735429b6330527d4981c99fa7e60dbbe2c75b2",
+    "audits/MCHI.json": "9e3714865215e2fdcefbfdb42f5338389e150c3aa6ff166954df2edeff667e8d",
+    "audits/MDY.json": "bae59ad71e72a20f1e3bb658658f50d00c2d326cce247da317d2020b3589f98a",
+    "audits/PPLT.json": "9d1af8f8596d64478eb5063a46d562835c0cc80045a5a3fddabca83e1d374d31",
+    "audits/SHY.json": "dcde10bf7085d09a191bfe60729f3dd2a06b52a49389367126457fb4cc862a1a",
+    "audits/SLV.json": "3634fc3ce29fd3df61c86bc67d5481f5c87c438bfed375204cf184673720a4e0",
+    "audits/SOXX.json": "58546c573436270ad4f20e1df234f817459da8ce2f95cd5eeb3bf51ddb3e4612",
+    "audits/SPY.json": "b78507e291d683ac9e3f90701707d41452e9dc7e91bb5b5aeb0469733d826413",
+    "audits/TIP.json": "9101c476983e0a05610c1da9fda7f8b32a6a53d0aa3a7ff5c4d12198f7f5ee05",
+    "audits/TLT.json": "aff33c1cd5993ec473f69e8d2152f3cef96831da70b5babf2af15da0ec726259",
+    "audits/URTH.json": "ba6a314c97383ca4c457bfa799d15cfd81d962f73a59bfb8da53f5acce1f288e",
+    "audits/VGK.json": "e3e0f5e12cb83eb0d9c7b7934b91601c8a6b9cf213b3b8f1dd76ae874d4217f4",
+    "audits/WEAT.json": "74ed478b4d064c1001469086aed5f897928107edd1c204cf1b6427f763cede93",
+    "audits/XLB.json": "f2876da77767072d7906ca6c3d91e516edc94e1a7143bdcb575340be67177d85",
+    "audits/XLC.json": "0c0d01b4d0c9be18956feb1c5466126a513635054bcc16213b36ae728ab63509",
+    "audits/XLE.json": "d4f5410517e57a53ec764718b061f225d363e866a5911916fc7974620bdfe2b9",
+    "audits/XLI.json": "8a030ca37d666d17932e297605f0f5e1d6bf27b8c92bae41247076ee62898838",
+    "audits/XLK.json": "6824e2d5cfbb2db5f376f2aa855ca965de6177c07067a60321465b9a46d17416",
+    "audits/XLP.json": "05d0b3b63689c67d789d82db27a20262be70803c77c9d0a653e0615666c382b0",
+    "audits/XLU.json": "88230ad971c2dee3cbd1350b1ac2abe418f8e1fb217e9c7c3df05b8d49791c41",
+    "audits/XLV.json": "edb4534dcc5ff33c80385fd499eaaacff3895949ba115909aa200075182e93b7",
+    "audits/XLY.json": "00ec9b4c17568504e1ef0906e5129d858c935479ac18e7d14080e2be2c375ae8",
+    "bars/AGG.jsonl.gz": "e5aa0054292a16f94fffa15f2010ec8754f292e6c028e9ac56ddf94cec8bbb62",
+    "bars/BIL.jsonl.gz": "e27e0177d7f6a138f46e4f38775f28b1fe397fc8ac7cd97159652c750be22b18",
+    "bars/CORN.jsonl.gz": "311f23cda96d70dcc043f54f50091847f163e12da319ddaea5c29ce27dd9cfd0",
+    "bars/CPER.jsonl.gz": "acee3f9b2b8f5393df99a0a78b1734800b45a2a0e12947ad2c1bdcd55356f509",
+    "bars/DBA.jsonl.gz": "157aa132c483c1fdd3df3efe517d9692ef091594533564cce715e21a3ac00ee1",
+    "bars/DBB.jsonl.gz": "cb2ebcfc1140c7df19bc4fdda4934993a73dee1c2ac6269c4a73e3f700d283a1",
+    "bars/DBC.jsonl.gz": "c71e1cbb687fdac75900aae24e87064977c96366d2db9732ec854a2c9a63c62d",
+    "bars/EEM.jsonl.gz": "6c326e7886025460210a982e5641e70ada9a8536df802633e3f37dbb61c05152",
+    "bars/EFA.jsonl.gz": "616166ce108becb68647e262cdb8a985a4212d81ad2f35bd186c9b10a246792a",
+    "bars/EMB.jsonl.gz": "75856b08483434297807a89a61be1e8b2134d6f4ac8d17780af4831d807ed2b3",
+    "bars/EWA.jsonl.gz": "047ddae8cc946e35aa60ed98476745bf80c6029205eb680efd0e28b50499af7c",
+    "bars/EWC.jsonl.gz": "c20ce06b2f5876104293ae5882ca433aef1a8f3277f9e6846e0343022d700c75",
+    "bars/EWG.jsonl.gz": "8dbe262c98752b7b8a237b38835b1fa6be5baa8c152e42e505e3bef3f67826be",
+    "bars/EWH.jsonl.gz": "3a731bf35e68db5aa4dab42fdf2c530009f96f96ea9afafd203da934f8149d2a",
+    "bars/EWJ.jsonl.gz": "7248b1323f46ac59b6d9b4c2c803c242cbea6f9dea9ffdf7e44d8e2142cefc46",
+    "bars/EWT.jsonl.gz": "6936c671d6a0f2bf7a3b6e5b14f37348ba52edb422ae73e4a737e86192f7d461",
+    "bars/EWU.jsonl.gz": "2e2f214ee5dfd6ddef004352867d57d8b64b908a5690412a857c0cac308edc1d",
+    "bars/EWY.jsonl.gz": "180c3e38163c06a312bf16336496468d825ef9263b65f0fbfafe4068f433aa33",
+    "bars/GLD.jsonl.gz": "07a4a84f29da7adebca97d2161e9619e39ff6b37daf9d0aa959dcf8175d8cbca",
+    "bars/HYG.jsonl.gz": "5934d46f8914ef9b4c1a9b4b053ec0043b07ddfc918259b5c8283056f93823d0",
+    "bars/IAT.jsonl.gz": "e3ca2593260c2b399e9a2813672fb089c0c715132f020faf492cbc71744f2743",
+    "bars/IBB.jsonl.gz": "046c16b7866692080b325508e0147187762978cbecdb333ea97b99171eff1bec",
+    "bars/IBND.jsonl.gz": "947b5e124eeb0e64ce36f2ed33a5017d9137251772c208b2c3e273ee3c1c18bb",
+    "bars/IEF.jsonl.gz": "ee5d8d07816a615158431163c81de5ced4543aac59a79e006b786c724b133177",
+    "bars/IGOV.jsonl.gz": "524b589a13ea4df79852e77f70e2e7b58c6296cfa9bcd580750b19f05c571724",
+    "bars/INDA.jsonl.gz": "44ad58e68be3b026100892c443a1474c29965d1877ded5b8c8acaacb80b0735b",
+    "bars/ITA.jsonl.gz": "6c3ae2275b3b9656cf92b9f5c3b385f4e115646830f8ca35d154d0e843fc208a",
+    "bars/IWM.jsonl.gz": "e5546735dacc0a2213fd08c8a30619a7604907810dcebc942b6b1f11f97e4ca9",
+    "bars/LEMB.jsonl.gz": "cda395fa9b914f4a6fe87a71ffbea75be5c18c0d987ef85fc567a229730dafd5",
+    "bars/LQD.jsonl.gz": "663a57cb7feaf33ce9b6aec6fb9990ec07816b3ab9891253e7565aae7103f25d",
+    "bars/MBB.jsonl.gz": "35801b2f25f26868032d094df09a2feed490869b3b8f2edd815a1a1168fc2268",
+    "bars/MCHI.jsonl.gz": "6b84df3ac639f0211aa93316ce6039491b983e529ab958b7e31954a4b2b80331",
+    "bars/MDY.jsonl.gz": "4e5a0a7a34a0f6b5b28f71d634c4ebb583ba0a76bebd38f23094c496b2980c55",
+    "bars/PPLT.jsonl.gz": "87a1e748011e587c4633cd22ad390a2b4caa156b0a340516ef9a8bed4e3b823c",
+    "bars/SHY.jsonl.gz": "3faaad3688ae4ce5c52838c23296e67f41a7bdd59ce044e657513c2c0d0ecec8",
+    "bars/SLV.jsonl.gz": "eb6f8090a4167b9418d66e5379f639f2ff9947b3e3615de771fef4899bc59e00",
+    "bars/SOXX.jsonl.gz": "9172450cb00ca7c26898f8b4c95507d404b231924fb0120456693011141bc2b7",
+    "bars/SPY.jsonl.gz": "60678e6429c8a32f3a83fca15068018a6a31fe87f3bb5f39fa7a2028939e888f",
+    "bars/TIP.jsonl.gz": "c43cbf209011957f53169bcbfcb19b3713c7f3ff645a11220623ec6d9b5ed0bf",
+    "bars/TLT.jsonl.gz": "dabfdbefcc462439cda038524451ba8c67ea4c391ef14d7954090ae209e5fd9f",
+    "bars/URTH.jsonl.gz": "cf4f07f380284a229dac52389c4be4e6461fabf9f110650180947f4a542f6003",
+    "bars/VGK.jsonl.gz": "f0ddc088eb37a19d7fcce02cef8f962a98613ddfc4aad8c19685b79caf4dda9a",
+    "bars/WEAT.jsonl.gz": "e3208eca710576141eeefc5d029509e893efc2e9ba246b4df06afa623198a68c",
+    "bars/XLB.jsonl.gz": "7d43808ed9f4b477eb4ccf32cf6531471bfee789357bdea0caaace2ea9307056",
+    "bars/XLC.jsonl.gz": "e9056e209193d5a90a3ab8b3430f116e971f30925fc55fb3429dcfb426be195d",
+    "bars/XLE.jsonl.gz": "2a327af2cc49990b6cf8eeed6da5ab860df00ee0eef547c1bda5c7bc98ba7f3d",
+    "bars/XLI.jsonl.gz": "3263946287e6574721e653b73af3ae331b9652e83cc3b34508635d081bb9840a",
+    "bars/XLK.jsonl.gz": "7bef756a590b32e9556f11f6595181d2ab7c055526d783903de45ea111d00424",
+    "bars/XLP.jsonl.gz": "e3d64c2ceeff45e3681b7a9f5e7f1a9a04c82c312ae3ea1c826cbc471503b231",
+    "bars/XLU.jsonl.gz": "71e79489a01b34b11b2c3f5a96c226c4971f81ea5b4832274f3556ccd3842205",
+    "bars/XLV.jsonl.gz": "1d2074cf11adcbb9f797ac1f0f24490d7b7acdbab436c8bf67453c1c08b4c69e",
+    "bars/XLY.jsonl.gz": "00cb5306e5f59136d2b3994e2b4d1a5b1fc4555b162d3fbc0f6e342173fb7567",
+    "parent.json": "fa0b32ad699850676d2fea768db59ba8222a1d9c5e8b414880c395595b8e8206"
+  },
+  "limitations": [
+    "Current surviving cohort and dated taxonomy applied retrospectively; no historical membership or publication-vintage certification.",
+    "Adjusted synthetic whole units are not broker raw-share execution. No spreads,impact,taxes or cash interest; no FX used.",
+    "Training and later histories have been repeatedly inspected. The reserved prospective window was never activated; no prospective evidence is claimed.",
+    "Frozen FR25 benchmark uses the original study common-window model refit,not the current app full-history fit.",
+    "No absolute cost or IC proxy veto; no promotion,monitoring,funding or broker change."
+  ],
+  "monitored_references": "All currently monitored app-owned USD NAV snapshots at their published5bp/no-extra-delay settings,rebased over exact common dates. Different model warmups/price vintages and inherited positions: descriptive context,not matched causal ablation. Only frozen common-input FR25 and removal-only controls carry matched replay comparisons.",
+  "parent_protocol_sha256": "da8e74c4004501b2ad9b6d81b8fe3b3bd312543af4df90202441ba1104e85b98",
+  "policies": [
+    "monthly",
+    "0.10",
+    "0.40",
+    "0.80"
+  ],
+  "price_pin": {
+    "batch": "0c3238db078c5d28201f8d8ba57e5687a793d80c3b04817d2c2d61c5f1f1b14d",
+    "root": "D:\\projects\\systematic_trading\\var\\governance\\research-2026-10-12-8f374b4464a3",
+    "through": "2026-10-12"
+  },
+  "registered_at": "2026-10-31T10:22:56.571911+00:00",
+  "scope": "Close the previously withheld fixed-family experiment on its original complete supported pinned pool. No newly admitted ETF added to this historical retest; future pool enlargement is separate evidence.",
+  "score": {
+    "cash_relative_candidate": "[r_i(126) - r_BIL(126)] / sigma_i(63); require both raw ETF momentum > 0 and excess momentum > 0; BIL cannot receive a target",
+    "missing_reference": "fail closed; no zero substitution, forward fill, provider lookup or alternate cash proxy",
+    "reference": "BIL adjusted total-return history is a Treasury-bill-fund proxy with its own fees and price risk, not a certified risk-free rate or the interest paid on idle account cash",
+    "remove_bill_control": "r_i(126) / sigma_i(63), retaining the original positive raw-momentum gate; BIL cannot receive a target",
+    "role": "All 50 supported histories remain inputs; 49 may compete for positions and BIL supplies the reference. BWX/CPER holds remain unchanged. Zero target for BIL is a declared role constraint, not missing coverage.",
+    "sigma": "same trailing 63-session annualized sample standard deviation of ETF simple adjusted returns; no floor or alternative windows"
+  },
+  "selection": "Use2021-2024only. Highest5bp/delay0netSharpe among8cash-relative arms beating matching removal-only Sharpe with CAGR loss<=0.5pp and drawdown worsening<=2pp. Deterministic name tie. If none,class/monthly diagnostic fallback,not accepted. No test-period selection.",
+  "supported": 50,
+  "uncertainty": "Eight paired cash-relative-minus-removal contrasts; circular21-session paired blocks,2000draws,seed20261031; Bonferroni95% intervals across8contrasts. Already inspected development evidence,not formal discovery.",
+  "version": "cash-relative-net-retest-v1",
+  "weakest": "Lowest actual net ETF contribution divided by opening portfolio NAV under training-selected policy,5bp/delay0,excluding BIL/cash/URTH; show calibration and later. This explicit portfolio criterion avoids inventing standalone sleeve returns when capital changes. No stop/protection exists in this fixed recipe; show that absence.",
+  "windows": {
+    "2021": [
+      "2021-01-01",
+      "2021-12-31"
+    ],
+    "2022": [
+      "2022-01-01",
+      "2022-12-31"
+    ],
+    "2023": [
+      "2023-01-01",
+      "2023-12-31"
+    ],
+    "2024": [
+      "2024-01-01",
+      "2024-12-31"
+    ],
+    "2025": [
+      "2025-01-01",
+      "2025-12-31"
+    ],
+    "2026": [
+      "2026-01-01",
+      "2026-10-12"
+    ],
+    "calibration": [
+      "2021-01-04",
+      "2024-12-31"
+    ],
+    "full": [
+      "2021-01-04",
+      "2026-10-12"
+    ],
+    "later": [
+      "2025-01-01",
+      "2026-10-12"
+    ]
+  }
+}

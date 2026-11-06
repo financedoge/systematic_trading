@@ -1,0 +1,4 @@
+symbol,entry,exit,quantity,entry_price,exit_price,net_pnl,net_return,status,protection
+EWY,2021-02-01,2021-03-01,1517,81.58,80.54,-1700.6499999999878,-0.013734996818736711,closed,None; selection/adoption exits only
+EWY,2021-09-01,2021-10-01,389,78.51,72.24,-2468.350000000004,-0.08078208750850101,closed,None; selection/adoption exits only
+EWY,2022-06-01,2022-07-01,2507,63.08,52.37,-26994.690000000002,-0.17061422394791376,closed,None; selection/adoption exits only

@@ -1,0 +1,16 @@
+[
+  {
+    "chart": "weakest-calibration-MBB.png",
+    "contribution": -0.0032498599999999937,
+    "era": "calibration",
+    "fills": 22,
+    "symbol": "MBB"
+  },
+  {
+    "chart": "weakest-later-TLT.png",
+    "contribution": -0.0021732788487016353,
+    "era": "later",
+    "fills": 13,
+    "symbol": "TLT"
+  }
+]

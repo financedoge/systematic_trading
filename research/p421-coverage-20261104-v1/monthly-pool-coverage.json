@@ -1,0 +1,366 @@
+{
+  "AGG": {
+    "asset_class": "aggregate_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "BIL": {
+    "asset_class": "bills_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "CORN": {
+    "asset_class": "commodity_agriculture",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "CPER": {
+    "asset_class": "commodity_base_metals",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "DBA": {
+    "asset_class": "commodity_agriculture",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "DBB": {
+    "asset_class": "commodity_base_metals",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "DBC": {
+    "asset_class": "commodity_broad_parent",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "EEM": {
+    "asset_class": "equity_emerging_parent",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "EFA": {
+    "asset_class": "equity_developed_ex_us_parent",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "EMB": {
+    "asset_class": "credit_emerging_usd",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "EWA": {
+    "asset_class": "equity_australia",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "EWC": {
+    "asset_class": "equity_canada",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "EWG": {
+    "asset_class": "equity_europe",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "EWH": {
+    "asset_class": "equity_hong_kong",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "EWJ": {
+    "asset_class": "equity_asia_ex_china",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "EWT": {
+    "asset_class": "equity_asia_ex_china",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "EWU": {
+    "asset_class": "equity_europe",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "EWY": {
+    "asset_class": "equity_asia_ex_china",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "GLD": {
+    "asset_class": "commodity_precious",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "HYG": {
+    "asset_class": "credit_usd_high_yield",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "IAT": {
+    "asset_class": "equity_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "IBB": {
+    "asset_class": "equity_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "IBND": {
+    "asset_class": "credit_ex_us_unhedged",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "IEF": {
+    "asset_class": "sovereign_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "IGOV": {
+    "asset_class": "sovereign_developed_ex_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "INDA": {
+    "asset_class": "equity_asia_ex_china",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "ITA": {
+    "asset_class": "equity_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "IWM": {
+    "asset_class": "equity_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "LEMB": {
+    "asset_class": "credit_emerging_local",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "LQD": {
+    "asset_class": "credit_usd_investment_grade",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "MBB": {
+    "asset_class": "securitized_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "MCHI": {
+    "asset_class": "equity_china",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "MDY": {
+    "asset_class": "equity_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "PPLT": {
+    "asset_class": "commodity_precious",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "SHY": {
+    "asset_class": "sovereign_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "SLV": {
+    "asset_class": "commodity_precious",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "SOXX": {
+    "asset_class": "equity_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "SPY": {
+    "asset_class": "equity_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "TIP": {
+    "asset_class": "inflation_linked_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "TLT": {
+    "asset_class": "sovereign_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "USO": {
+    "asset_class": "commodity_energy",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "VGK": {
+    "asset_class": "equity_europe",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "WEAT": {
+    "asset_class": "commodity_agriculture",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": false,
+    "historical_decisions": 70
+  },
+  "XLB": {
+    "asset_class": "equity_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": true,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "XLC": {
+    "asset_class": "equity_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "XLE": {
+    "asset_class": "equity_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": true,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "XLI": {
+    "asset_class": "equity_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "XLK": {
+    "asset_class": "equity_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "XLP": {
+    "asset_class": "equity_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "XLU": {
+    "asset_class": "equity_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "XLV": {
+    "asset_class": "equity_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  },
+  "XLY": {
+    "asset_class": "equity_us",
+    "available_historical_decisions": 0,
+    "direct_catalog": false,
+    "equity_lookthrough": true,
+    "historical_decisions": 70
+  }
+}

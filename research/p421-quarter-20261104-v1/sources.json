@@ -1,0 +1,11 @@
+{
+  "prior_pins_sha256": "bb8a87614a2d78466782f0d5134b81e1f709f541249138c91f2e81c00b9aaa55",
+  "registry": {
+    "bytes": 7561794,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:39:37.596400+00:00",
+    "sha256": "3fda2bbe552034e76a5a1c7b03017006159d8a01fb0d19b368f9db8eb08326c2",
+    "url": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  }
+}

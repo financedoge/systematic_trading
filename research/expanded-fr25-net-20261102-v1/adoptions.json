@@ -1,0 +1,82 @@
+{
+  "expanded-0.10": {
+    "adoptions": 1019,
+    "threshold_events": 1004
+  },
+  "expanded-0.40": {
+    "adoptions": 717,
+    "threshold_events": 689
+  },
+  "expanded-0.80": {
+    "adoptions": 276,
+    "threshold_events": 226
+  },
+  "expanded-monthly": {
+    "adoptions": 70,
+    "threshold_events": 0
+  },
+  "m1-0.10": {
+    "adoptions": 1009,
+    "threshold_events": 989
+  },
+  "m1-0.40": {
+    "adoptions": 728,
+    "threshold_events": 688
+  },
+  "m1-0.80": {
+    "adoptions": 320,
+    "threshold_events": 262
+  },
+  "m1-monthly": {
+    "adoptions": 70,
+    "threshold_events": 0
+  },
+  "momentum-0.10": {
+    "adoptions": 739,
+    "threshold_events": 708
+  },
+  "momentum-0.40": {
+    "adoptions": 517,
+    "threshold_events": 470
+  },
+  "momentum-0.80": {
+    "adoptions": 163,
+    "threshold_events": 101
+  },
+  "momentum-monthly": {
+    "adoptions": 70,
+    "threshold_events": 0
+  },
+  "original-0.10": {
+    "adoptions": 774,
+    "threshold_events": 747
+  },
+  "original-0.40": {
+    "adoptions": 455,
+    "threshold_events": 408
+  },
+  "original-0.80": {
+    "adoptions": 188,
+    "threshold_events": 127
+  },
+  "original-monthly": {
+    "adoptions": 70,
+    "threshold_events": 0
+  },
+  "unranked-0.10": {
+    "adoptions": 96,
+    "threshold_events": 26
+  },
+  "unranked-0.40": {
+    "adoptions": 70,
+    "threshold_events": 0
+  },
+  "unranked-0.80": {
+    "adoptions": 70,
+    "threshold_events": 0
+  },
+  "unranked-monthly": {
+    "adoptions": 70,
+    "threshold_events": 0
+  }
+}

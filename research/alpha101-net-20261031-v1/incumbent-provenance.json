@@ -1,0 +1,538 @@
+{
+  "artifact_path": "D:\\projects\\systematic_trading\\var\\tracked_strategies\\d5487659817ae5485c883ee7effccf4abea245702e960a5ccc6fce123c2de431\\m1_14",
+  "bundle_sha256": "00d3ccf8778f036fc54af62513241dae52dcbe66d275366e0b7877a2775f8f23",
+  "definition": {
+    "description": "Full 14-ETF candidate pool; blend 75% M1 score rank and 25% financial-ridge total-forecast rank before the positive 126-session gate and top-six selection. M1 includes 75% momentum and 25% volume. Missing ridge abstains to M1 selection. Preserve downstream XGBoost sizing, relative/adaptive trend, audited raw activity and USD ridge; final 45% cap leaves excess in cash. Monitoring only.",
+    "key": "research_fr25_14_v1",
+    "name": "FR25 \u00b7 75% M1 / 25% financial ridge",
+    "overlays": [
+      {
+        "kind": "financial_rank_selection",
+        "parameters": {
+          "blend": "R25",
+          "financialWeight": "0.25",
+          "forecast": "total_return",
+          "group": "financial",
+          "minimumLabels": 36,
+          "momentumWeight": "0.75",
+          "prospectiveStart": "2026-10-10",
+          "ridgeAlpha": "1",
+          "version": "fr25-financial-selection-v1",
+          "xgbWeight": "0"
+        }
+      },
+      {
+        "kind": "rolling_model",
+        "parameters": {
+          "maxActiveWeight": "0.06",
+          "spec": "{\"embargo\": \"label_end_strictly_before_fit_close\", \"family\": \"xgboost\", \"parameters\": {\"base_score\": 0, \"colsample_bytree\": 0.75, \"learning_rate\": 0.03, \"max_depth\": 3, \"min_child_weight\": 25, \"n_estimators\": 100, \"n_jobs\": 1, \"objective\": \"reg:squarederror\", \"random_state\": 20260927, \"reg_alpha\": 0, \"reg_lambda\": 10, \"subsample\": 0.8, \"tree_method\": \"hist\"}, \"refit\": \"monthly\", \"seed\": 20260927, \"target\": \"next_month_adjusted_usd_return_minus_cross_section_mean\", \"version\": \"rolling-xgboost-1y-v1\", \"window_years\": 1}",
+          "tilt": "0.16"
+        }
+      },
+      {
+        "kind": "relative_momentum",
+        "parameters": {
+          "calmTilt": "0.12",
+          "drawdownLookbackBars": "252",
+          "drawdownTrigger": "-0.08",
+          "fastVolatilityBars": "21",
+          "longLookbackBars": "60",
+          "maxActiveWeight": "0.05",
+          "mediumLookbackBars": "20",
+          "riskTilt": "0.12",
+          "slowVolatilityBars": "252",
+          "volatilityRatioTrigger": "1.35"
+        }
+      },
+      {
+        "kind": "adaptive_trend",
+        "parameters": {
+          "defensiveScale": "0.35",
+          "fastVolatilityBars": "21",
+          "longLookbackBars": "252",
+          "longThreshold": "-0.05",
+          "mediumLookbackBars": "126",
+          "mediumThreshold": "-0.03",
+          "neutralScale": "0.80",
+          "reallocateResidual": "true",
+          "reboundLookbackBars": "21",
+          "reboundScale": "1.00",
+          "shortLookbackBars": "63",
+          "shortThreshold": "0",
+          "slowVolatilityBars": "252",
+          "volumeLookbackBars": "21",
+          "weakScale": "0.50"
+        }
+      },
+      {
+        "kind": "audited_etf_activity",
+        "parameters": {
+          "basis": "raw_dollar_adjusted_direction_v1",
+          "spec": "{\"version\":\"activity-concentration-v1\",\"measure\":\"relative_dollar_activity\",\"derivative\":2,\"normalization_bars\":63,\"smoothing_span\":10,\"difference_lag\":20,\"noise_bars\":126,\"threshold\":0.5,\"directional_confirmation\":true,\"hurst_min\":null,\"action\":\"tilt\",\"relative_tilt\":0.15,\"active_cap\":0.03}"
+        }
+      },
+      {
+        "kind": "usd_ridge",
+        "parameters": {
+          "version": "usd-ridge-u1-v1"
+        }
+      },
+      {
+        "kind": "final_weight_cap",
+        "parameters": {
+          "cap": "0.45"
+        }
+      }
+    ],
+    "promotedOn": null,
+    "scheduler": "static_monthly",
+    "sleeveName": "research-fr25-14-v1",
+    "state": "tracked",
+    "universeKey": "multi_asset_14"
+  },
+  "input_provenance": {
+    "accounting_currency": "USD",
+    "batch": "506940353e42ae20535d67fcf885eec6e79831f6d33755ac824a7fe92e4db481",
+    "financial": {
+      "availability": "archive_daily before prospectiveStart; actual first_seen thereafter",
+      "features": [
+        "T10Y3M",
+        "T10Y2Y",
+        "NFCICREDIT",
+        "NFCICREDIT_change",
+        "DRTSCILM",
+        "DRTSCILM_change",
+        "DRTSCIS",
+        "DRTSCIS_change"
+      ],
+      "parameters": {
+        "blend": "R25",
+        "financialWeight": "0.25",
+        "forecast": "total_return",
+        "group": "financial",
+        "minimumLabels": 36,
+        "momentumWeight": "0.75",
+        "prospectiveStart": "2026-10-10",
+        "ridgeAlpha": "1",
+        "version": "fr25-financial-selection-v1",
+        "xgbWeight": "0"
+      },
+      "series": [
+        "T10Y3M",
+        "T10Y2Y",
+        "NFCICREDIT",
+        "DRTSCILM",
+        "DRTSCIS"
+      ],
+      "subset_sha256": "b02e43b932402319e0daf6882908cc1875af647b6a0a0e5d29edf8256005d4d4"
+    },
+    "fx_bridge": {
+      "files": {
+        "var\\market_data\\fx_observations\\USD_CNH_2026-09-24_20260925T132309222150Z.json": "a5ab71593aec0323596cf95dbbdd3419c19ef359a7f90525b66ab5adeb505116",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-09-25_20260925T210128461985Z.json": "ef90cd36b48f411373ab7008c75a0afcf753be5235e5aca981c548143102bd9c",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-09-29_20260930T143526937745Z.json": "1a2e6904366198cd1c18b8c751b047c0127808ee0bc76b8d527db24c309e90b9",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-09-30_20261001T013148288962Z.json": "7e245295fd181589dd06232c178bc349d075d454e7a637f30015cf8ecbf2a361",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-01_20261001T210003419917Z.json": "1d42cb6d53bd83b2eb95cda9e75ddb7aad08335bc8d256fe5966c425a1d4c55f",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-02_20261002T210806903725Z.json": "d26b560ac4d10ee70a2f53a07ddb0c0b6d35b8ba2cb46d502bdb7d4e48cdee10",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-05_20261006T122124459290Z.json": "50f93b2f80ae247ae52f6918c863e19506a6fbab1244a789b5dac10847d3be89",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-06_20261006T210022305133Z.json": "3f2091cac094aab7887434bfd5b292c2e96cc77d5e91f758e5be711a3f8cb0e3",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-07_20261007T210032890193Z.json": "2cb55e41d46fb05301a8b4460cc194b0e7e5489b9a612338c325ec47b5152920",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-08_20261008T210003700666Z.json": "e4991635759e8577c57bef44110e8b5e9801d961bceb21806dd9365536474502",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-09_20261009T210117830080Z.json": "aee392963ebabcb5a0746f24b273e86577b271856091a489fb4fca5bd8ab3ae2",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-12_20261013T124638489402Z.json": "18ab90347a46a4d8d5249a0599170d5c7fa6077cf0dc8ea885140d77f6b17613",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-14_20261015T110444884553Z.json": "64b2c83e1e4624e1f9505d823e814ccaa85ed0fa9f2e1c57eb0442746d973896",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-15_20261015T210151214939Z.json": "b8a6ca09bbc3c5003e2e47523d1ef46ea637acf38d99e9d51f841f91ec180745",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-16_20261016T210125010759Z.json": "1089510ce3655ce346cf552edf2b492176cf5120343423d8a5c88b94a3fad5eb",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-19_20261019T210112708589Z.json": "57845b7de94331cb2585888c6d5c0ae67f2fec4667a557b4172a27d54639e2ee",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-20_20261020T210146496115Z.json": "1a6ecbb96cf665da7e308174bddac3d019298ae5556fa7e3224351e8234e2884",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-21_20261021T210200943808Z.json": "75e6ab925985bc8859724b7c4fa4f38c24df4575502a4fcc444cb16c2900d81c",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-28_20261029T000049990516Z.json": "bd88f26228fcf64a408e3ab8679874df8de516d4da53f57472f20e7805455f28",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-28_20261029T000133546605Z.json": "13ced01515c44a7aea6d3e5e8faf3094ab109bb4b619b1120dab112f21a28e55",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-28_20261029T000538113779Z.json": "cd93aae69951e2304b557c56f10eaa4b6908424b27f93c787220c0aba675de99",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-28_20261029T000938405946Z.json": "40207b7cadf6f05d6a3e5e63d1233f0858b8fbebcb261051f574db5ac2135fe6",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-29_20261030T144021457907Z.json": "51a5dc85e708940c936ccd0b4085e6302a5dd9b243b713bda123160c0dcf8c85",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-29_20261030T152625400015Z.json": "2019eb38e00a92757b4d66a8a46b4a63e567011f8122e169c19e8fe5c8290efe",
+        "var\\market_data\\fx_observations\\USD_CNH_2026-10-30_20261030T210224391355Z.json": "3c9d961d80bf46836af82e8e0d80a2b13989185c265c71f304ea3165c9737a50"
+      },
+      "policy": "Exact observed FX dates only; missing dates omitted, never filled",
+      "source": "governance/fx-usd-cnh",
+      "version": "30103f21ff7b11238881acbf40d10121e0a0dbbc3cc12da34752a4be35c89be0"
+    },
+    "fx_policy": "No FX used in USD backtest",
+    "governed_files": {
+      "audits/XLB.json": "dc6b3da74627261604a75a4a8c57aa38984f86cfe9fb1f1e91d1036094bd840f",
+      "audits/XLE.json": "07389e10ef0b29aa94eada1bd7a251897e4a74dc13e7eba444e4bef941e3581b",
+      "bars/DBC.jsonl.gz": "83dac48642003232fedc8066746e78144a4706178fab1177cf6f2bdab87cb50c",
+      "bars/EWH.jsonl.gz": "c7a5341e78a327e75043f1d5ce6f7e2ff9adb80cee5bbae08a4d3def5c401de5",
+      "bars/EWJ.jsonl.gz": "c730c2f177ab6a60e0f8d4188d6e493c41d6f7484fdb26b499dcc84ff2ec90a0",
+      "bars/EWY.jsonl.gz": "d50350c7b988e6f0d691a526901b1ab415bbda22b0731e53516ca290050e48b1",
+      "bars/GLD.jsonl.gz": "3903d8a5c0ede51530a3bf7d9ddc89c3c2a60233834d1157af1507f2f800172f",
+      "bars/HYG.jsonl.gz": "5e4df83fc1bd0454f04090b413c04be1c9d21e4f025d1e6bcc218cc0fe903cb2",
+      "bars/IEF.jsonl.gz": "32d26010c7a97a257e3c2e540e07a2782de37131e6ea4f86f9f13f4ee9bbb0c5",
+      "bars/LQD.jsonl.gz": "dfbc001de587c93101b6f14af5b9a86278c66b94c11f0f565f06839e58f5c38e",
+      "bars/MCHI.jsonl.gz": "0237757981970a201c23fbf284e9618c068e52192979d4af4b92d7f28dfa9c1d",
+      "bars/SPY.jsonl.gz": "49ba6423371338f94c480b5d4d09640bbff95c773fd4b949ba1fb31b3dd2c3f7",
+      "bars/TLT.jsonl.gz": "228b388b17647ca82d637a3e66d3af3fa3bedb67b3a78ecd014586fadfbd9336",
+      "bars/URTH.jsonl.gz": "5e4d2172ec5507e60d4b88c4053e42b9cd0157431e274bd516d837eea3a586f7",
+      "bars/VGK.jsonl.gz": "fad5a012b97f77ebd077fea0be84bd137198abe18492b120eda7b86b095ccefb",
+      "bars/XLB.jsonl.gz": "ddb92ae5c868812eeacf2487d471d35c3206d9d03547034abd5b156714bac1b1",
+      "bars/XLE.jsonl.gz": "64e686fbe5f8159bcc76cf2d6f0144d4f83121adab1669add9f7c501557312eb",
+      "parent.json": "fa0b32ad699850676d2fea768db59ba8222a1d9c5e8b414880c395595b8e8206"
+    },
+    "historical_availability": "Reconstructed price vintages; historical publication availability uncertified",
+    "parent_benchmark_manifest": {
+      "URTH": "095a34f00d003d0c017098b1dc5ff877448db0035869e23dbe665503f7ae1a63"
+    },
+    "price_basis": "Audited adjusted OHLC returns; audited raw volume; raw close \u00d7 raw volume activity; adjusted direction",
+    "price_through": "2026-10-30",
+    "raw_activity_contract": "raw_dollar_adjusted_direction_v1",
+    "universe": [
+      "DBC",
+      "EWH",
+      "EWJ",
+      "EWY",
+      "GLD",
+      "HYG",
+      "IEF",
+      "LQD",
+      "MCHI",
+      "SPY",
+      "TLT",
+      "VGK",
+      "XLB",
+      "XLE"
+    ],
+    "usd": {
+      "basis": "Same-vintage nominal broad dollar index; Jan 2006 average = 100",
+      "batch": "bfa75fa33e7159989537dcef9f257a16380dd83e2dd58a3f90043e839b31e3c7",
+      "files": {
+        "audit.json": "aa0112dd882938a2069a8ed3606d234621cb79056577e4f069cead499f3a6c05",
+        "history.json": "36a116feb33d00e55425635d16ca7f25703cf90adcb0a1c0fd1dbdf55edd3407",
+        "snapshots.json": "b05eb070752dd6b8b01060f8bd136e97ff2b04e7bd01bfb8533254e4b98de7fe"
+      },
+      "limitations": [
+        "ALFRED vintage dates are daily archive evidence, not independently certified intraday dissemination timestamps.",
+        "An index level history can change across vintages; each feature uses one intact vintage.",
+        "Valid-observation horizons can span missing source observations; calendar span is bounded and reported."
+      ],
+      "root": "D:\\projects\\systematic_trading\\var\\governance\\usd-ee94f825caf8fefc55d9b69d39161a0ea2fee08a0871de2b95a9443dfdaad416"
+    },
+    "usd_replay_receipts": {
+      "URTH": {
+        "artifact_path": "D:\\projects\\systematic_trading\\var\\tracked_strategies\\d5487659817ae5485c883ee7effccf4abea245702e960a5ccc6fce123c2de431\\usd\\native\\URTH\\1",
+        "artifacts": {
+          "artifact_manifest.json": "57e11f3870175646dc70965a0a9537da7f429521ba05f1bab9f7e304e2e49579",
+          "config.json": "8373909f5b575ca6535a08bf5578729290f7ff4ac448688033798b1548e9bfbf",
+          "configuration/config.json": "8373909f5b575ca6535a08bf5578729290f7ff4ac448688033798b1548e9bfbf",
+          "economic.json": "ef84389961ec0b1649f9807c3fd421a7c7e6909a547de3401e745976d25f1eb3",
+          "lean.log": "e67adec16b7e4659a47711764a5e86275169be79d0081e25451976527233ef4c",
+          "native/FrozenPortfolioAlgorithm-log.txt": "9e2c64e04146dfa2908dbd869301ac7c2afc408307695b4b87b74708ada96ad6",
+          "native/FrozenPortfolioAlgorithm-order-events.json": "4f8e87c31f46bffa2cc71bea119a5be987dd1155d01056fcfd8fb12bd054a480",
+          "native/FrozenPortfolioAlgorithm-summary.json": "50f9b045d88f0edb890ce7d5906006e2a8b988403b0fe1ad77b739c9c9c6bed8",
+          "native/FrozenPortfolioAlgorithm.json": "5066a30c410946631e3c5f1830a8c3db66e186642c9332dbd4268b340c1506eb",
+          "native/data-monitor-report-20261031095718891.json": "e4fdbc16d399ed4e3bf1b00ae108dbc84fb1cbe325e864062ea41a0de8e7bace",
+          "native/economic.json": "ef84389961ec0b1649f9807c3fd421a7c7e6909a547de3401e745976d25f1eb3",
+          "native/failed-data-requests-20261031095714920.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "native/isolation.json": "bf468286910a5e0baca28d6f8af28d30dd957579a1c97ae265d03ea9cf1f9a5b",
+          "native/resources.json": "81aa0761e19955698035b9fa35bb0e9cdd0c99e162a5530c7a4ec97ee21eed39",
+          "native/worker.log": "e67adec16b7e4659a47711764a5e86275169be79d0081e25451976527233ef4c",
+          "oracle/isolation.json": "2d573835b570a2ae5857d60e13b1269fbed5492ea55b4302428e54ef05a11fa0",
+          "oracle/reference.json": "d617aaaf67e4542dd952ca978bb747f2ce9437af781aa23277bda10d1fb1103b",
+          "oracle/worker.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "parity.json": "af2220e8e8f5523f7161b27d2195fd11b1379ffe61b6a44626789d7b6b84a55c",
+          "reference.json": "d617aaaf67e4542dd952ca978bb747f2ce9437af781aa23277bda10d1fb1103b",
+          "reference.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "resources.json": "81aa0761e19955698035b9fa35bb0e9cdd0c99e162a5530c7a4ec97ee21eed39"
+        },
+        "bundle": "D:\\projects\\systematic_trading\\var\\tracked_strategies\\d5487659817ae5485c883ee7effccf4abea245702e960a5ccc6fce123c2de431\\usd\\bundles\\URTH",
+        "economic_sha256": "8f2dd26280755257019f7a5f3be749f1e3eaff1d3f87515640720594903e2999",
+        "elapsed_seconds": 11.245012500003213,
+        "engine": {
+          "manifest_sha256": "61559a38721403c92d51aa613d582befb47b3a82a69af6ac368c2fc82736f263",
+          "patches": {
+            "deploy/lean/windows-python-shutdown.patch": "594f7b273556b7d8eee50367f7dcfc26dca3d53f954bf40cf7cd8761f51e7e1d"
+          },
+          "runtime": "windows-native-lean",
+          "source_commit": "f49bb9623a3e8782bf22bbd2cb51f691058cfdc3"
+        },
+        "lean_wall_seconds": 7.932060399994953,
+        "legacy_image_reference": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
+        "manifest_sha256": "095a34f00d003d0c017098b1dc5ff877448db0035869e23dbe665503f7ae1a63",
+        "promotion_eligible": false,
+        "reference_wall_seconds": 3.2017491000005975,
+        "resources": {
+          "cpus": "16",
+          "engines": "sequential",
+          "memory": null,
+          "memory_policy": "windows_managed",
+          "numerical_threads": 1
+        },
+        "run_id": "st-native-lean-56c2e48f794c",
+        "status": "succeeded"
+      },
+      "fr25_cap_control": {
+        "artifact_path": "D:\\projects\\systematic_trading\\var\\tracked_strategies\\d5487659817ae5485c883ee7effccf4abea245702e960a5ccc6fce123c2de431\\m1_14\\native\\fr25_cap_control\\1",
+        "artifacts": {
+          "artifact_manifest.json": "0533a19e262efc6c557c344395dcea8a364910611b35a1e7350b5115dd4c9378",
+          "config.json": "f61e1b4156e2d42d21eeb07c8fceb667ffe1c9ab6502727c53c5d4fdac701ea4",
+          "configuration/config.json": "f61e1b4156e2d42d21eeb07c8fceb667ffe1c9ab6502727c53c5d4fdac701ea4",
+          "economic.json": "d49b889ca95801e82c168ea23818602eda82550b7d67f92df92ddb47c41cc538",
+          "lean.log": "3734605a68a24dd6fef9a43a9f6f6494498da950a3def549681ef61f45a2c159",
+          "native/FrozenPortfolioAlgorithm-log.txt": "955c24cc55fb0ecde28466b239e7d941b940a7922ccb62728ca1c358e79f1a00",
+          "native/FrozenPortfolioAlgorithm-order-events.json": "dfe427f7787ade001e8267b31df6d8651f4023510a822dc3b42950f8e3d22f30",
+          "native/FrozenPortfolioAlgorithm-summary.json": "4cf962921ae7474b0ce11f64aaf52be24882b2d0a17d9d39a583690105ce25f4",
+          "native/FrozenPortfolioAlgorithm.json": "349aae945701aee438e056944fbcf6613ea90d80f3fdc2e8094a61ff6b64b4dd",
+          "native/data-monitor-report-20261031095816105.json": "93df8ee52c747e588da4c71d98ea631bcf42c367e5a89dd0d16b2873eac57ff9",
+          "native/economic.json": "d49b889ca95801e82c168ea23818602eda82550b7d67f92df92ddb47c41cc538",
+          "native/failed-data-requests-20261031095807076.txt": "c9e1296de2b40604a27ba6843933525b11980371562ea0f9ce6c7d612bf1e7e0",
+          "native/isolation.json": "b660bd5027e361c86a31b5c66aa95abcd49408de5b961a633f73cefc03bb9f3b",
+          "native/resources.json": "fc15bd318230d3e8345d629ffd576f1f2a53db4707ca16702af882b974c93f9a",
+          "native/worker.log": "3734605a68a24dd6fef9a43a9f6f6494498da950a3def549681ef61f45a2c159",
+          "oracle/isolation.json": "4e7ad201b77421f4cb672d7afa57eb24b59b3166819b6abb3d7179ddd635a654",
+          "oracle/reference.json": "ac8306b7e28975e90d939d2deed0fbb6a2a68cd5196bd65043e66469b1bbbc90",
+          "oracle/worker.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "parity.json": "e27d9d5bf005a3e442cb2e21e0e1d65f35fa0e1a8acca3b768a75ed60e89478f",
+          "reference.json": "ac8306b7e28975e90d939d2deed0fbb6a2a68cd5196bd65043e66469b1bbbc90",
+          "reference.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "resources.json": "fc15bd318230d3e8345d629ffd576f1f2a53db4707ca16702af882b974c93f9a"
+        },
+        "bundle": "D:\\projects\\systematic_trading\\var\\tracked_strategies\\d5487659817ae5485c883ee7effccf4abea245702e960a5ccc6fce123c2de431\\m1_14\\bundles\\fr25_cap_control",
+        "economic_sha256": "a48f88265fb797c845b53d93a9953d7a469e0e4314acbba8b8f00650d9283db3",
+        "elapsed_seconds": 21.02960680000251,
+        "engine": {
+          "manifest_sha256": "61559a38721403c92d51aa613d582befb47b3a82a69af6ac368c2fc82736f263",
+          "patches": {
+            "deploy/lean/windows-python-shutdown.patch": "594f7b273556b7d8eee50367f7dcfc26dca3d53f954bf40cf7cd8761f51e7e1d"
+          },
+          "runtime": "windows-native-lean",
+          "source_commit": "f49bb9623a3e8782bf22bbd2cb51f691058cfdc3"
+        },
+        "lean_wall_seconds": 16.370082299996284,
+        "legacy_image_reference": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
+        "manifest_sha256": "2bfd7f03acaab4c300a54ad6ff7175b813d1f89c24f05ad0265e72ef9e31edc4",
+        "promotion_eligible": false,
+        "reference_wall_seconds": 3.1758433999930276,
+        "resources": {
+          "cpus": "16",
+          "engines": "sequential",
+          "memory": null,
+          "memory_policy": "windows_managed",
+          "numerical_threads": 1
+        },
+        "run_id": "st-native-lean-0542c982eaf4",
+        "status": "succeeded"
+      },
+      "research_fr25_14_v1": {
+        "artifact_path": "D:\\projects\\systematic_trading\\var\\tracked_strategies\\d5487659817ae5485c883ee7effccf4abea245702e960a5ccc6fce123c2de431\\m1_14\\native\\research_fr25_14_v1\\1",
+        "artifacts": {
+          "artifact_manifest.json": "669c09a0d7c9d0a457e132e70007c4fd36155b388143ad9d77c499d3a9966d39",
+          "config.json": "422617d2ad8667a907266118990ae2df98fef51f6acc09640b82feedfbee612e",
+          "configuration/config.json": "422617d2ad8667a907266118990ae2df98fef51f6acc09640b82feedfbee612e",
+          "economic.json": "054ccb74955580de63f22ece29908cb78aa6e412a3990b41f907fb0d4424db6e",
+          "lean.log": "962e20891e2bc38bfab60646e80a3273e24f8392721f6e61c075659686b0bd38",
+          "native/FrozenPortfolioAlgorithm-log.txt": "e77e5867177050aa19c6e2fc32e9eedbbc4e14a9d04d03c712e58d2d74d95e1c",
+          "native/FrozenPortfolioAlgorithm-order-events.json": "c748b4bf41f979edcf75ae1b467f1e5865705260223cf772509da68e136724c2",
+          "native/FrozenPortfolioAlgorithm-summary.json": "19e8e2e4f21456ec2dbdbecf32ae8020dcc2abf6e30aec02af7cb2f55678d074",
+          "native/FrozenPortfolioAlgorithm.json": "77c845d51330c2c8d05d8e22760d9671aef804dfdc3d8a5687103ef4ec336cf7",
+          "native/data-monitor-report-20261031095855030.json": "35a60eb7a5b531d56a6cf05215ae61071f1ecae7d70fe5715b11e7bdd822751b",
+          "native/economic.json": "054ccb74955580de63f22ece29908cb78aa6e412a3990b41f907fb0d4424db6e",
+          "native/failed-data-requests-20261031095839122.txt": "c9e1296de2b40604a27ba6843933525b11980371562ea0f9ce6c7d612bf1e7e0",
+          "native/isolation.json": "626c51577ece6b82e978c0cb7b18af5cc0d4205ce5c60f56ef579a987347dab0",
+          "native/resources.json": "d98ae78157a6c258124499ae0f1eec98ea418889bbde87188511837105241eff",
+          "native/worker.log": "962e20891e2bc38bfab60646e80a3273e24f8392721f6e61c075659686b0bd38",
+          "oracle/isolation.json": "90f850ba34837b0f2c9b24db6cd98e2621eee35b641d72a883565e6321df4fb2",
+          "oracle/reference.json": "9d96158a352a3db4dc32828432a5c98d96108a99058efe9b7c059d0c820f40c4",
+          "oracle/worker.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "parity.json": "b0354e8e0d70bf5229d52413c234ad512797526f01758be30dacb8c45efe95d8",
+          "reference.json": "9d96158a352a3db4dc32828432a5c98d96108a99058efe9b7c059d0c820f40c4",
+          "reference.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "resources.json": "d98ae78157a6c258124499ae0f1eec98ea418889bbde87188511837105241eff"
+        },
+        "bundle": "D:\\projects\\systematic_trading\\var\\tracked_strategies\\d5487659817ae5485c883ee7effccf4abea245702e960a5ccc6fce123c2de431\\m1_14\\bundles\\research_fr25_14_v1",
+        "economic_sha256": "303476f62820ef5741ea05fd7bec8bc877aabf617bc15a79556e481f06d670a3",
+        "elapsed_seconds": 25.893819999997504,
+        "engine": {
+          "manifest_sha256": "61559a38721403c92d51aa613d582befb47b3a82a69af6ac368c2fc82736f263",
+          "patches": {
+            "deploy/lean/windows-python-shutdown.patch": "594f7b273556b7d8eee50367f7dcfc26dca3d53f954bf40cf7cd8761f51e7e1d"
+          },
+          "runtime": "windows-native-lean",
+          "source_commit": "f49bb9623a3e8782bf22bbd2cb51f691058cfdc3"
+        },
+        "lean_wall_seconds": 22.27383700000064,
+        "legacy_image_reference": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
+        "manifest_sha256": "00d3ccf8778f036fc54af62513241dae52dcbe66d275366e0b7877a2775f8f23",
+        "promotion_eligible": false,
+        "reference_wall_seconds": 3.338264199992409,
+        "resources": {
+          "cpus": "16",
+          "engines": "sequential",
+          "memory": null,
+          "memory_policy": "windows_managed",
+          "numerical_threads": 1
+        },
+        "run_id": "st-native-lean-e6481794bebc",
+        "status": "succeeded"
+      },
+      "research_fr25_alpha_tilt_5_v1": {
+        "artifact_path": "D:\\projects\\systematic_trading\\var\\tracked_strategies\\d5487659817ae5485c883ee7effccf4abea245702e960a5ccc6fce123c2de431\\m1_14\\native\\research_fr25_alpha_tilt_5_v1\\1",
+        "artifacts": {
+          "artifact_manifest.json": "49e4e0dad20ba6b0ae1161e822cc7db92a9dc760ca927e71495d6220703b4ce7",
+          "config.json": "4d5a5dd7f3d64cc0e6bb515d24853dd64058ed4eb4904023b5faf538ec8d6fe2",
+          "configuration/config.json": "4d5a5dd7f3d64cc0e6bb515d24853dd64058ed4eb4904023b5faf538ec8d6fe2",
+          "economic.json": "dd8d50330a1e2a6e3f10fd76aeefcfa43b340574713523f76399f0def90c6fc0",
+          "lean.log": "e6119f452911285af76c50878b1c0ae29782b91be0dafe7f67c1eeee97de2c88",
+          "native/FrozenPortfolioAlgorithm-log.txt": "fae9118cb75f150cb25dc9de0046f147e3eefb60fe70b1c79a0aaac7bc762f93",
+          "native/FrozenPortfolioAlgorithm-order-events.json": "66c7ac02615d95298285f76138ecf99cf924e9a7b54c8b4d49555dabe8f664a6",
+          "native/FrozenPortfolioAlgorithm-summary.json": "ff02610efadae6f269c0eec18c21920616ba542bf1c81215463f8362e76337eb",
+          "native/FrozenPortfolioAlgorithm.json": "4c497e0256f43ad220fda2e70b514c227bd9853c319141aa8505372abe89a5cd",
+          "native/data-monitor-report-20261031095929960.json": "6346f5fdf78d3bec21271a1b54977e73c2f1f022c583cff5500c55043d9b2b5b",
+          "native/economic.json": "dd8d50330a1e2a6e3f10fd76aeefcfa43b340574713523f76399f0def90c6fc0",
+          "native/failed-data-requests-20261031095911934.txt": "c9e1296de2b40604a27ba6843933525b11980371562ea0f9ce6c7d612bf1e7e0",
+          "native/isolation.json": "66243c538457447a71a6c63f4d3b82d352d7800bc25b45128d64733509737896",
+          "native/resources.json": "83a430765bf80be0acc6e8e18315dc3ec61b2d6566d31afc6f70376921fe432a",
+          "native/worker.log": "e6119f452911285af76c50878b1c0ae29782b91be0dafe7f67c1eeee97de2c88",
+          "oracle/isolation.json": "ea2ed0a891bc69b184552c9adfa1fbf6a84c024793c383c4562ea4bb10640472",
+          "oracle/reference.json": "e823726b3c77eeee300880d1353da70e2f31363ca71e0dc8b9323bacfd32a2bd",
+          "oracle/worker.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "parity.json": "cf303a3dccb0172452dc819cdfc28c600ae12f4c22364bb80e0a9bd1ff62ca09",
+          "reference.json": "e823726b3c77eeee300880d1353da70e2f31363ca71e0dc8b9323bacfd32a2bd",
+          "reference.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "resources.json": "83a430765bf80be0acc6e8e18315dc3ec61b2d6566d31afc6f70376921fe432a"
+        },
+        "bundle": "D:\\projects\\systematic_trading\\var\\tracked_strategies\\d5487659817ae5485c883ee7effccf4abea245702e960a5ccc6fce123c2de431\\m1_14\\bundles\\research_fr25_alpha_tilt_5_v1",
+        "economic_sha256": "b3040febd7b76b878a0ee708cb84222b8e9f56e2afed080d36033d1d60578822",
+        "elapsed_seconds": 29.591457900009118,
+        "engine": {
+          "manifest_sha256": "61559a38721403c92d51aa613d582befb47b3a82a69af6ac368c2fc82736f263",
+          "patches": {
+            "deploy/lean/windows-python-shutdown.patch": "594f7b273556b7d8eee50367f7dcfc26dca3d53f954bf40cf7cd8761f51e7e1d"
+          },
+          "runtime": "windows-native-lean",
+          "source_commit": "f49bb9623a3e8782bf22bbd2cb51f691058cfdc3"
+        },
+        "lean_wall_seconds": 25.14627370001108,
+        "legacy_image_reference": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
+        "manifest_sha256": "cf24a5cf69731fbf080dc71c879b9851e6318360c38b6aa6cf3fbe9f1803a091",
+        "promotion_eligible": false,
+        "reference_wall_seconds": 3.8279860000038752,
+        "resources": {
+          "cpus": "16",
+          "engines": "sequential",
+          "memory": null,
+          "memory_policy": "windows_managed",
+          "numerical_threads": 1
+        },
+        "run_id": "st-native-lean-e03177c223ee",
+        "status": "succeeded"
+      },
+      "research_m1_14_v1": {
+        "artifact_path": "D:\\projects\\systematic_trading\\var\\tracked_strategies\\d5487659817ae5485c883ee7effccf4abea245702e960a5ccc6fce123c2de431\\m1_14\\native\\research_m1_14_v1\\1",
+        "artifacts": {
+          "artifact_manifest.json": "90129706aac13c5b2ae45605fcb5c0bfda3f97046d3e7f0c741969a2c3f61ff0",
+          "config.json": "ffdf2cd95b411206f532265878f863bffbfde0801c287ef9050db6f2aa08e64e",
+          "configuration/config.json": "ffdf2cd95b411206f532265878f863bffbfde0801c287ef9050db6f2aa08e64e",
+          "economic.json": "bdd18832291efa4721db6a9308a6d8b7f5995d40ad815453abd10e6b84b94d3f",
+          "lean.log": "94bf816e76632484e94acfb71c62094278af7a30339b10c9ea9d425b8687b42a",
+          "native/FrozenPortfolioAlgorithm-log.txt": "2b4edb7b358d284b1ab02f550b9eca09e42b80a70fb53ac11fd9e0264a8554c9",
+          "native/FrozenPortfolioAlgorithm-order-events.json": "be98d88675a84128e9ae6e9346e2c20386371a61b601d10a0b7762dd58aba548",
+          "native/FrozenPortfolioAlgorithm-summary.json": "68f9719a5f28416a048666760a72ea2967913336186e08de8345127e4ffe4af4",
+          "native/FrozenPortfolioAlgorithm.json": "13ebb799469459e986a45522208bc49c6420f9bdf01f644454188b7ba85b2938",
+          "native/data-monitor-report-20261031100004817.json": "4b43ae1b57940ffffc32219802e7daddfd50667d55da3aa3c74d5a070bb93d9a",
+          "native/economic.json": "bdd18832291efa4721db6a9308a6d8b7f5995d40ad815453abd10e6b84b94d3f",
+          "native/failed-data-requests-20261031095948864.txt": "c9e1296de2b40604a27ba6843933525b11980371562ea0f9ce6c7d612bf1e7e0",
+          "native/isolation.json": "d45ba77c4b1a63cd3896878abded05c86340765f95be26f34a78f8eb0987c75a",
+          "native/resources.json": "0152bf7420324d2c14fecd108f9c2eac9d00a4582f308a084de6f90ce8fdee83",
+          "native/worker.log": "94bf816e76632484e94acfb71c62094278af7a30339b10c9ea9d425b8687b42a",
+          "oracle/isolation.json": "4e2eec41a667847cff413dd4bd9e44ae6082fc8c53f9bbe629fcde78cfd2a8ca",
+          "oracle/reference.json": "6978aab0ed5afb026a771bdd5a0869eb1effc137fa2c1c6935542b6b5aba5913",
+          "oracle/worker.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "parity.json": "0c6e03e3e4ff91e36127a9efe9e412c3a32853194003394af6b7893515ffbda3",
+          "reference.json": "6978aab0ed5afb026a771bdd5a0869eb1effc137fa2c1c6935542b6b5aba5913",
+          "reference.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "resources.json": "0152bf7420324d2c14fecd108f9c2eac9d00a4582f308a084de6f90ce8fdee83"
+        },
+        "bundle": "D:\\projects\\systematic_trading\\var\\tracked_strategies\\d5487659817ae5485c883ee7effccf4abea245702e960a5ccc6fce123c2de431\\m1_14\\bundles\\research_m1_14_v1",
+        "economic_sha256": "83d6df58d8c9dcf4a48dde49a0f259b33bbfcbcb3fc6a38a258081186afbd2b9",
+        "elapsed_seconds": 27.318916399992304,
+        "engine": {
+          "manifest_sha256": "61559a38721403c92d51aa613d582befb47b3a82a69af6ac368c2fc82736f263",
+          "patches": {
+            "deploy/lean/windows-python-shutdown.patch": "594f7b273556b7d8eee50367f7dcfc26dca3d53f954bf40cf7cd8761f51e7e1d"
+          },
+          "runtime": "windows-native-lean",
+          "source_commit": "f49bb9623a3e8782bf22bbd2cb51f691058cfdc3"
+        },
+        "lean_wall_seconds": 23.099462400001357,
+        "legacy_image_reference": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
+        "manifest_sha256": "5f738b87058d4b4de0e4691fa03d93f4a3c77ae2e29360b32f14bfc1837aa770",
+        "promotion_eligible": false,
+        "reference_wall_seconds": 3.358528099997784,
+        "resources": {
+          "cpus": "16",
+          "engines": "sequential",
+          "memory": null,
+          "memory_policy": "windows_managed",
+          "numerical_threads": 1
+        },
+        "run_id": "st-native-lean-c6dc8320e5d4",
+        "status": "succeeded"
+      },
+      "risk_parity": {
+        "artifact_path": "D:\\projects\\systematic_trading\\var\\tracked_strategies\\d5487659817ae5485c883ee7effccf4abea245702e960a5ccc6fce123c2de431\\m1_14\\native\\risk_parity\\1",
+        "artifacts": {
+          "artifact_manifest.json": "de6881bb8d5f114922751e696fc2d553c8854e45b07c8e9496db6327eddf9ee3",
+          "config.json": "4a6020dff725dc95c76d7238cb2654f5b83199eb50f8e44a26551899fdd09240",
+          "configuration/config.json": "4a6020dff725dc95c76d7238cb2654f5b83199eb50f8e44a26551899fdd09240",
+          "economic.json": "f3b00fcff71d8d3fdc05ea4c87358a08904f011c26deaa11357e583b670a556a",
+          "lean.log": "e3cbb0fd4c2daaa24c25ca7c6eb86c7c716ac49a2b62a0f6d5ab2a8a37e18206",
+          "native/FrozenPortfolioAlgorithm-log.txt": "315ff49e6cf14bf564eb590c8c6ae3da135f9a10471005379d203849e4510eaf",
+          "native/FrozenPortfolioAlgorithm-order-events.json": "4f53a13347b325d7ec75141c1176e1e5139a32127b6982d3bf0807d2ad18cf2f",
+          "native/FrozenPortfolioAlgorithm-summary.json": "e35314426e92864bd70e57090b8ac8a5f246eca713a070ad0f9d186c181535b8",
+          "native/FrozenPortfolioAlgorithm.json": "be832620407bcccc1bbd0fa9610aea9965149214aba0217c201d75b6db406223",
+          "native/data-monitor-report-20261031100044083.json": "00af62ded2a503d8d351c30c467658ce63f708c2c164fbfbdd5ad0c309ddbe65",
+          "native/economic.json": "f3b00fcff71d8d3fdc05ea4c87358a08904f011c26deaa11357e583b670a556a",
+          "native/failed-data-requests-20261031100024311.txt": "c9e1296de2b40604a27ba6843933525b11980371562ea0f9ce6c7d612bf1e7e0",
+          "native/isolation.json": "28d4ac5abf4bb13fac99f36525639f97b0f3d6c74b1e111073f0895e35590d55",
+          "native/resources.json": "87d1e191d866a39f05b87497933423c1fae077080803508be3d90f5b64f0d499",
+          "native/worker.log": "e3cbb0fd4c2daaa24c25ca7c6eb86c7c716ac49a2b62a0f6d5ab2a8a37e18206",
+          "oracle/isolation.json": "5c433519c7b60fa03b1f032327a9b1d901b84c304b8768336f19694f4b9c67ed",
+          "oracle/reference.json": "0f474c9d3ebf51451cb27601b4d140d2eca06260b9c1b5a29c9170798d2d0c04",
+          "oracle/worker.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "parity.json": "7159a626de4963ab36551d9774db12e3dbe668a8bac8302d8ea10bb0e96faa02",
+          "reference.json": "0f474c9d3ebf51451cb27601b4d140d2eca06260b9c1b5a29c9170798d2d0c04",
+          "reference.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "resources.json": "87d1e191d866a39f05b87497933423c1fae077080803508be3d90f5b64f0d499"
+        },
+        "bundle": "D:\\projects\\systematic_trading\\var\\tracked_strategies\\d5487659817ae5485c883ee7effccf4abea245702e960a5ccc6fce123c2de431\\m1_14\\bundles\\risk_parity",
+        "economic_sha256": "83a7e5eeb2966e992c224ca01e9b724861ec7a65d84617d1ed183a64aa217891",
+        "elapsed_seconds": 31.660283499993966,
+        "engine": {
+          "manifest_sha256": "61559a38721403c92d51aa613d582befb47b3a82a69af6ac368c2fc82736f263",
+          "patches": {
+            "deploy/lean/windows-python-shutdown.patch": "594f7b273556b7d8eee50367f7dcfc26dca3d53f954bf40cf7cd8761f51e7e1d"
+          },
+          "runtime": "windows-native-lean",
+          "source_commit": "f49bb9623a3e8782bf22bbd2cb51f691058cfdc3"
+        },
+        "lean_wall_seconds": 27.214372099988395,
+        "legacy_image_reference": "quantconnect/lean@sha256:27f27a17149211a6a523430c537663bc12ee8fc5c504e54fc34a76c880e1bc59",
+        "manifest_sha256": "10b9770d89ea8f241c0902b0539e53a109fe3ad00d6155ca83055e252fb2f893",
+        "promotion_eligible": false,
+        "reference_wall_seconds": 3.8828791999985697,
+        "resources": {
+          "cpus": "16",
+          "engines": "sequential",
+          "memory": null,
+          "memory_policy": "windows_managed",
+          "numerical_threads": 1
+        },
+        "run_id": "st-native-lean-c4f2005133e1",
+        "status": "succeeded"
+      }
+    },
+    "valuation_through": "2026-10-30",
+    "workers": 16
+  },
+  "note": "Frozen current app decisions; same study price/cost/whole-unit replay, but incumbent signal inputs/model warmup differ. Not a matched alpha ablation."
+}

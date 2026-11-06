@@ -1,0 +1,26 @@
+{
+  "inspections": [
+    {
+      "era": "IS",
+      "files": [
+        "weakest-calibration-EWY.png",
+        "weakest-calibration-EWY-daily.csv",
+        "weakest-calibration-EWY-trades.csv"
+      ],
+      "net_contribution": -0.03116368999999999,
+      "symbol": "EWY"
+    },
+    {
+      "era": "OOS",
+      "files": [
+        "weakest-later-XLC.png",
+        "weakest-later-XLC-daily.csv",
+        "weakest-later-XLC-trades.csv"
+      ],
+      "net_contribution": -0.017002195998949768,
+      "symbol": "XLC"
+    }
+  ],
+  "parent": "alpha101-net-20261031-v1",
+  "primary_daily_path_sha256": "df1287f39df3b4c377150e32ccf71a66b3028b846f6a089003692654eb16e7b5"
+}

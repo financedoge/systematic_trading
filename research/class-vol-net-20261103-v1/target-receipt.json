@@ -1,0 +1,43 @@
+{
+  "current_adoptions": {
+    "class_raw-0.10": 551,
+    "class_raw-0.40": 352,
+    "class_raw-0.80": 159,
+    "class_raw-monthly": 70,
+    "class_risk-0.10": 590,
+    "class_risk-0.40": 391,
+    "class_risk-0.80": 142,
+    "class_risk-monthly": 70,
+    "pooled_raw-0.10": 740,
+    "pooled_raw-0.40": 505,
+    "pooled_raw-0.80": 187,
+    "pooled_raw-monthly": 70,
+    "pooled_risk-0.10": 342,
+    "pooled_risk-0.40": 191,
+    "pooled_risk-0.80": 121,
+    "pooled_risk-monthly": 70
+  },
+  "historical_adoptions": {
+    "class_raw-0.10": 556,
+    "class_raw-0.40": 355,
+    "class_raw-0.80": 151,
+    "class_raw-monthly": 70,
+    "class_risk-0.10": 569,
+    "class_risk-0.40": 374,
+    "class_risk-0.80": 132,
+    "class_risk-monthly": 70,
+    "pooled_raw-0.10": 724,
+    "pooled_raw-0.40": 502,
+    "pooled_raw-0.80": 190,
+    "pooled_raw-monthly": 70,
+    "pooled_risk-0.10": 343,
+    "pooled_risk-0.40": 191,
+    "pooled_risk-0.80": 118,
+    "pooled_risk-monthly": 70
+  },
+  "original_vectors": 5800,
+  "schedules": {
+    "current": "7c50e38cd19d4510ea96c5024cf1ce3633648613a4530a682c0ab3d22ac14d25",
+    "historical": "0f491d4ea7786c172616f1a3b59679a8de88a0de5cb9ae79baf0c02c8b7a8a51"
+  }
+}

@@ -1,7 +1,9 @@
-"""Storage admission protects retained evidence instead of evicting it."""
+"""Queue artifact housekeeping; admit calculations against actual disk headroom."""
 import json
+import math
 import os
 from pathlib import Path
+import shutil
 import stat
 from datetime import UTC, datetime
 
@@ -30,16 +32,25 @@ def generated_footprint(data_dir):
 
 def admit(settings, *, policy=None):
     policy=policy if policy is not None else json.loads((Path(__file__).resolve().parents[3]/'config/storage-retention.json').read_text())
-    if not 0 < policy['generated_soft_gib'] <= policy['generated_admission_gib'] or policy['new_calculation_reserve_gib']<=0:
-        raise ValueError('Artifact storage limits must be positive and ordered')
+    for key in ('generated_soft_gib','new_calculation_reserve_gib'):
+        value=policy[key]
+        if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value) or value<=0:
+            raise ValueError('Artifact cleanup threshold and free-disk reserve must be positive finite numbers')
     measured=generated_footprint(settings.data_dir)
     used=measured['unique_content_bytes']/1024**3
-    accepted=used+policy['new_calculation_reserve_gib']<=policy['generated_admission_gib']
+    disk=shutil.disk_usage(settings.data_dir)
+    required=math.ceil(policy['new_calculation_reserve_gib']*1024**3)
+    accepted=disk.free>=required
     receipt=dict(**measured,measured_at=datetime.now(UTC).isoformat(),policy=policy,admitted=accepted,over_soft_limit=used>policy['generated_soft_gib'],
+        admission_basis='free_disk_space',disk_free_bytes=disk.free,disk_required_bytes=required,
         basis='Unique file content lengths; canonical histories and broker evidence excluded')
     atomic_json(settings.data_dir/'run/artifact-budget.json',receipt)
+    if receipt['over_soft_limit'] or not accepted:
+        atomic_json(settings.data_dir/'run/research-retention.pending.json',dict(
+            queued_at=receipt['measured_at'],reason='Generated artifacts need guarded housekeeping at the next stopped startup',
+            unique_content_bytes=measured['unique_content_bytes'],disk_free_bytes=disk.free))
     if not accepted:
-        raise ValueError(f'Calculation deferred: generated artifacts use {used:.1f} GiB; '
-            f'{policy["generated_admission_gib"]} GiB admission limit includes '
-            f'{policy["new_calculation_reserve_gib"]} GiB for new work. Protected evidence retained; run guarded retention.')
+        raise ValueError(f'Calculation deferred: artifact drive has {disk.free/1024**3:.1f} GiB free; '
+            f'{policy["new_calculation_reserve_gib"]} GiB of free disk is required for new work. '
+            'Guarded cleanup is queued; protected evidence retained.')
     return receipt

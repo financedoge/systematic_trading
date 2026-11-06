@@ -1,0 +1,162 @@
+{
+  "alpha24-0.10": {
+    "adoptions": 1366,
+    "empty_targets": 0,
+    "threshold_events": 1362
+  },
+  "alpha24-0.40": {
+    "adoptions": 1158,
+    "empty_targets": 0,
+    "threshold_events": 1143
+  },
+  "alpha24-0.80": {
+    "adoptions": 836,
+    "empty_targets": 0,
+    "threshold_events": 808
+  },
+  "alpha24-monthly": {
+    "adoptions": 70,
+    "empty_targets": 0,
+    "threshold_events": 0
+  },
+  "alpha26-0.10": {
+    "adoptions": 1417,
+    "empty_targets": 0,
+    "threshold_events": 1416
+  },
+  "alpha26-0.40": {
+    "adoptions": 1212,
+    "empty_targets": 0,
+    "threshold_events": 1200
+  },
+  "alpha26-0.80": {
+    "adoptions": 904,
+    "empty_targets": 0,
+    "threshold_events": 881
+  },
+  "alpha26-monthly": {
+    "adoptions": 70,
+    "empty_targets": 0,
+    "threshold_events": 0
+  },
+  "alpha46-0.10": {
+    "adoptions": 1324,
+    "empty_targets": 3,
+    "threshold_events": 1317
+  },
+  "alpha46-0.40": {
+    "adoptions": 1094,
+    "empty_targets": 3,
+    "threshold_events": 1077
+  },
+  "alpha46-0.80": {
+    "adoptions": 800,
+    "empty_targets": 3,
+    "threshold_events": 765
+  },
+  "alpha46-monthly": {
+    "adoptions": 70,
+    "empty_targets": 3,
+    "threshold_events": 0
+  },
+  "alpha49-0.10": {
+    "adoptions": 1436,
+    "empty_targets": 0,
+    "threshold_events": 1433
+  },
+  "alpha49-0.40": {
+    "adoptions": 1358,
+    "empty_targets": 0,
+    "threshold_events": 1350
+  },
+  "alpha49-0.80": {
+    "adoptions": 1135,
+    "empty_targets": 0,
+    "threshold_events": 1116
+  },
+  "alpha49-monthly": {
+    "adoptions": 70,
+    "empty_targets": 0,
+    "threshold_events": 0
+  },
+  "alpha53-0.10": {
+    "adoptions": 1463,
+    "empty_targets": 0,
+    "threshold_events": 1462
+  },
+  "alpha53-0.40": {
+    "adoptions": 1461,
+    "empty_targets": 0,
+    "threshold_events": 1459
+  },
+  "alpha53-0.80": {
+    "adoptions": 1437,
+    "empty_targets": 0,
+    "threshold_events": 1435
+  },
+  "alpha53-monthly": {
+    "adoptions": 70,
+    "empty_targets": 0,
+    "threshold_events": 0
+  },
+  "alpha54-0.10": {
+    "adoptions": 1463,
+    "empty_targets": 0,
+    "threshold_events": 1462
+  },
+  "alpha54-0.40": {
+    "adoptions": 1444,
+    "empty_targets": 0,
+    "threshold_events": 1443
+  },
+  "alpha54-0.80": {
+    "adoptions": 1373,
+    "empty_targets": 0,
+    "threshold_events": 1370
+  },
+  "alpha54-monthly": {
+    "adoptions": 70,
+    "empty_targets": 0,
+    "threshold_events": 0
+  },
+  "momentum-0.10": {
+    "adoptions": 739,
+    "empty_targets": 0,
+    "threshold_events": 708
+  },
+  "momentum-0.40": {
+    "adoptions": 517,
+    "empty_targets": 0,
+    "threshold_events": 470
+  },
+  "momentum-0.80": {
+    "adoptions": 163,
+    "empty_targets": 0,
+    "threshold_events": 101
+  },
+  "momentum-monthly": {
+    "adoptions": 70,
+    "empty_targets": 0,
+    "threshold_events": 0
+  },
+  "unranked-0.10": {
+    "adoptions": 96,
+    "empty_targets": 0,
+    "threshold_events": 26
+  },
+  "unranked-0.40": {
+    "adoptions": 70,
+    "empty_targets": 0,
+    "threshold_events": 0
+  },
+  "unranked-0.80": {
+    "adoptions": 70,
+    "empty_targets": 0,
+    "threshold_events": 0
+  },
+  "unranked-monthly": {
+    "adoptions": 70,
+    "empty_targets": 0,
+    "threshold_events": 0
+  }
+}

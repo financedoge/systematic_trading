@@ -1,0 +1,147 @@
+{
+  "assessed_equity_fund_months": 2030,
+  "catalog_sha256": "38d6f88afbc273574bad05b43538b7d29e12601eae719537594a3b9799094e33",
+  "decision": "hold_replay_pending_data",
+  "direct_equity_fund_months": 0,
+  "equity_funds": 29,
+  "gates": {
+    "formula_inputs": "True VWAP, historical cap and point-in-time industry membership remain separate formula-dependent prerequisites.",
+    "holdings": "Historical decision-time coverage is insufficient.",
+    "identity": "Dated permanent identity, listing/delisting and membership revisions remain unresolved.",
+    "precondition": "P4.16 ETF-level studies completed; standalone Alpha54 was temporal, and tilt evidence did not establish incremental superiority. Constituent breadth remains an untested hypothesis.",
+    "prices": "Most IVV-role names remain review or unavailable. Even status-admissible ticker matches still require a dated identifier join plus complete audited raw/adjusted windows."
+  },
+  "issuer": {
+    "XLB": {
+      "captures": 33,
+      "first_seen": "2026-10-08T16:22:06.157480+00:00",
+      "historical_monthly_captures": 0,
+      "holdings_dates": 17,
+      "in_pool": true,
+      "latest": {
+        "as_of": "2026-11-02",
+        "batch": "11d77c5e51a02b383e50f1a036a12034026757ea947fbb2ae69faededc7597b4",
+        "first_seen": "2026-11-04T10:07:54.751914+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.972307",
+        "residual_percent": "0.027693",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10877601334137463,
+        "weights_reconciled": false
+      },
+      "nov2": {
+        "reason": "Issuer holdings weight residual is unresolved",
+        "status": "unavailable"
+      }
+    },
+    "XLE": {
+      "captures": 34,
+      "first_seen": "2026-10-08T16:21:59.873391+00:00",
+      "historical_monthly_captures": 0,
+      "holdings_dates": 17,
+      "in_pool": true,
+      "latest": {
+        "as_of": "2026-11-02",
+        "batch": "b0781e7755f2ed01c4da13301377a63359e946a2029b235f204f09998ff1c51d",
+        "first_seen": "2026-11-04T10:07:50.081170+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.929023",
+        "residual_percent": "0.070977",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.0358877927462322,
+        "weights_reconciled": false
+      },
+      "nov2": {
+        "reason": "Issuer holdings weight residual is unresolved",
+        "status": "unavailable"
+      }
+    },
+    "XOP": {
+      "captures": 33,
+      "first_seen": "2026-10-08T16:22:03.036322+00:00",
+      "historical_monthly_captures": 0,
+      "holdings_dates": 17,
+      "in_pool": false,
+      "latest": {
+        "as_of": "2026-11-02",
+        "batch": "dc740b23ce730dd6817ee13a4c247daec3d760052aeef95fe9bb52fdb3e9c8ef",
+        "first_seen": "2026-11-04T10:07:52.701712+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "100.012553",
+        "residual_percent": "-0.012553",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21101037753807864,
+        "weights_reconciled": false
+      },
+      "nov2": {
+        "reason": "Issuer holdings weight residual is unresolved",
+        "status": "unavailable"
+      }
+    }
+  },
+  "legacy": {
+    "ITOT": {
+      "end": "2026-08-31",
+      "historical_availability_rows": 0,
+      "max_status_match_names": 0.3202132021320213,
+      "max_status_match_value": 0.09540526915039589,
+      "meets_reference": 0,
+      "rows": 299575,
+      "snapshots": 95,
+      "start": "2018-10-31"
+    },
+    "IVV": {
+      "end": "2026-08-31",
+      "historical_availability_rows": 0,
+      "max_status_match_names": 0.1111111111111111,
+      "max_status_match_value": 0.06364748029937034,
+      "meets_reference": 0,
+      "rows": 85050,
+      "snapshots": 170,
+      "start": "2012-01-31"
+    }
+  },
+  "monthly_decisions": 70,
+  "pin_sha256": "bb8a87614a2d78466782f0d5134b81e1f709f541249138c91f2e81c00b9aaa55",
+  "price_catalog_entries": 5356,
+  "price_cohorts": {
+    "ivv-constituents-2012-2026-v1": {
+      "complete_listing_certifications": 0,
+      "dated_availability": 0,
+      "series": 884,
+      "status": {
+        "audited_with_limitations": 70,
+        "review": 680,
+        "unavailable": 134
+      }
+    },
+    "underlying-sector-hhi-20260926-v1": {
+      "complete_listing_certifications": 0,
+      "dated_availability": 0,
+      "series": 5157,
+      "status": {
+        "audited_with_limitations": 1006,
+        "review": 3460,
+        "unavailable": 691
+      }
+    }
+  },
+  "proof": "Availability-only upper bound for direct recorded fund snapshots; missing histories stay unavailable. IVV/ITOT are outside the supported ETF cohort.",
+  "runner_sha256": "16436f121aacf297cb14209686430305001459a819635fff88895b75bf2e8fee",
+  "supported_funds": 52
+}

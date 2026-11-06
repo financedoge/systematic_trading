@@ -1,0 +1,38 @@
+[
+  {
+    "arm": "winner",
+    "conditional_95": [
+      -0.31840027958385436,
+      1.1523172028015498
+    ],
+    "control": "legacy",
+    "era": "calibration"
+  },
+  {
+    "arm": "scaled",
+    "conditional_95": [
+      -0.3793729344187492,
+      0.14287435346406452
+    ],
+    "control": "legacy",
+    "era": "calibration"
+  },
+  {
+    "arm": "winner",
+    "conditional_95": [
+      -2.119830275446447,
+      1.2298610096740148
+    ],
+    "control": "legacy",
+    "era": "later"
+  },
+  {
+    "arm": "scaled",
+    "conditional_95": [
+      -0.00025844092064771786,
+      0.00022131874197355852
+    ],
+    "control": "legacy",
+    "era": "later"
+  }
+]

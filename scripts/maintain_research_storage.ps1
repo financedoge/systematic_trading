@@ -31,7 +31,7 @@ foreach ($PidName in @('operator_dashboard','event_outbox_dispatcher','market_da
     }
 }
 $Python = Join-Path $RepoRoot '.venv\Scripts\python.exe'
-foreach ($Scope in @('tracked','models')) {
+foreach ($Scope in @('tracked','models','closed_studies')) {
     $Manifest = Join-Path $RepoRoot ('var\maintenance\startup-' + $Scope + '-' + [Guid]::NewGuid().ToString('N') + '.json')
     & $Python (Join-Path $PSScriptRoot 'retire_research_artifacts.py') plan --scope $Scope --manifest $Manifest
     if ($LASTEXITCODE -ne 0) { throw 'Could not establish safe retention protection set.' }

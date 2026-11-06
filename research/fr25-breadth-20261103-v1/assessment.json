@@ -1,0 +1,46 @@
+{
+  "authority": {
+    "allocation": false,
+    "execution": false,
+    "monitoring": false,
+    "promotion": false
+  },
+  "candidate_id": "expanded-monthly-M42-N33",
+  "dossier_fingerprint": "9d49ff03bbaa2103b29823f3393b95bd7e73e2c8802346974e5b3b928d1dc672",
+  "evidence_gaps": [
+    "Fresh prospective performance has not been collected for this expanded recipe.",
+    "Historical security-master membership and first publication availability remain uncertified.",
+    "No measured spreads/impact or paper evidence for expanded allocation; bootstrap does not account for all prior searches.",
+    "Selection uncertainty across all 2704 trials is uncorrected. Conditional bootstrap intervals do not adjust the search."
+  ],
+  "integrity_and_claim_issues": [],
+  "net_verdict": "not_established",
+  "policy_sha256": "6335fdb51082f56eabea53b75be5c30b42fdcc4edf972a18dcb819614a9dac58",
+  "policy_version": "research-evidence-v1",
+  "purpose": "retain_research",
+  "requested_stage": "ready_for_human_review",
+  "schema_version": 1,
+  "status": "research_evidence_reviewable",
+  "study_id": "fr25-breadth-20261103-v1",
+  "validator_sha256": "7a69022bead50b35a7f8590f9de96e1864180836063f1c4a0a65dd0c770619bf",
+  "verified_artifacts": [
+    "research/fr25-breadth-20261103-v1/protocol.json",
+    "research/fr25-breadth-20261103-v1/recipes.json",
+    "research/expanded-fr25-net-20261102-v1/definitions.json",
+    "research/expanded-fr25-net-20261102-v1/input-verification.json",
+    "research/fr25-breadth-20261103-v1/selection.json",
+    "research/fr25-breadth-20261103-v1/training-grid.json.gz",
+    "research/fr25-breadth-20261103-v1/results.json",
+    "research/expanded-fr25-net-20261102-v1/results.json",
+    "research/fr25-breadth-20261103-v1/results.md",
+    "research/fr25-breadth-20261103-v1/uncertainty.json",
+    "research/expanded-fr25-net-20261102-v1/signal-diagnostics.json",
+    "research/fr25-breadth-20261103-v1/native-validation.json",
+    "research/fr25-breadth-20261103-v1/weakest-calibration-MBB.png",
+    "research/fr25-breadth-20261103-v1/weakest-later-TLT.png"
+  ],
+  "warnings": [
+    "Chronological separation is not a claim of untouched or prospective validation",
+    "Checklist verifies supplied file integrity and declarations; reviewer must assess scientific adequacy and provenance"
+  ]
+}

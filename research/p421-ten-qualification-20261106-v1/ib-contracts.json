@@ -1,0 +1,421 @@
+{
+  "account_permission": "unverified",
+  "completed_at": "2026-11-05T16:08:45.411681+00:00",
+  "environment": "paper",
+  "funds": {
+    "CASY": {
+      "account_permission": "unverified",
+      "details": {
+        "contract": {
+          "conId": 267265,
+          "currency": "USD",
+          "exchange": "SMART",
+          "localSymbol": "CASY",
+          "primaryExchange": "NASDAQ",
+          "secType": "STK",
+          "symbol": "CASY",
+          "tradingClass": "NMS"
+        },
+        "liquidHours": "20261105:0930-20261105:1600;20261106:0930-20261106:1600;20261107:CLOSED;20261108:CLOSED;20261109:0930-20261109:1600;20261110:0930-20261110:1600",
+        "longName": "CASEY'S GENERAL STORES INC",
+        "marketName": "NMS",
+        "marketRuleIds": "4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563",
+        "minSize": "0.0001",
+        "minTick": "0.01",
+        "orderTypes": "ACTIVETIM,AD,ADDONT,ADJUST,ALERT,ALGO,ALLOC,AON,AVGCOST,BASKET,BENCHPX,CASHQTY,COND,CONDORDER,DARKONLY,DARKPOLL,DAY,DEACT,DEACTDIS,DEACTEOD,DIS,DUR,GAT,GTC,GTD,GTT,HID,IBKRATS,ICE,IMB,IOC,LIT,LMT,LOC,MIDPX,MIT,MKT,MOC,MTL,NGCOMB,NODARK,NONALGO,OCA,OPG,OPGREROUT,PEGBENCH,PEGMID,POSTATS,POSTONLY,PREOPGRTH,PRICECHK,REL,REL2MID,RELPCTOFS,RPI,RTH,SCALE,SCALEODD,SCALERST,SIZECHK,SMARTSTG,SNAPMID,SNAPMKT,SNAPREL,STP,STPLMT,SWEEP,TRAIL,TRAILLIT,TRAILLMT,TRAILMIT,WHATIF",
+        "secIdList": [
+          {
+            "tag": "ISIN",
+            "value": "US1475281036"
+          }
+        ],
+        "sizeIncrement": "0.0001",
+        "stockType": "COMMON",
+        "suggestedSizeIncrement": "40",
+        "timeZoneId": "US/Eastern",
+        "tradingHours": "20261105:0400-20261105:2000;20261106:0400-20261106:2000;20261107:CLOSED;20261108:CLOSED;20261109:0400-20261109:2000;20261110:0400-20261110:2000",
+        "validExchanges": "SMART,AMEX,NYSE,CBOE,PHLX,ISE,CHX,ARCA,NASDAQ,DRCTEDGE,BEX,BATS,EDGEA,BYX,IEX,EDGX,FOXRIVER,PEARL,NYSENAT,LTSE,MEMX,IBEOS,OVERNIGHT,TPLUS0,PSX,T24X,TXSE"
+      },
+      "limitation": "Contract discovery is not product permission, an order preview or an execution test.",
+      "lookup": {
+        "secId": "US1475281036",
+        "secIdType": "ISIN"
+      },
+      "settlement_eligibility": "unverified",
+      "status": "identity_verified"
+    },
+    "CSL": {
+      "account_permission": "unverified",
+      "details": {
+        "contract": {
+          "conId": 6120,
+          "currency": "USD",
+          "exchange": "SMART",
+          "localSymbol": "CSL",
+          "primaryExchange": "NYSE",
+          "secType": "STK",
+          "symbol": "CSL",
+          "tradingClass": "CSL"
+        },
+        "liquidHours": "20261105:0930-20261105:1600;20261106:0930-20261106:1600;20261107:CLOSED;20261108:CLOSED;20261109:0930-20261109:1600;20261110:0930-20261110:1600",
+        "longName": "CARLISLE COS INC",
+        "marketName": "CSL",
+        "marketRuleIds": "4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563",
+        "minSize": "0.0001",
+        "minTick": "0.01",
+        "orderTypes": "ACTIVETIM,AD,ADDONT,ADJUST,ALERT,ALGO,ALLOC,AON,AVGCOST,BASKET,BENCHPX,CASHQTY,COND,CONDORDER,DARKONLY,DARKPOLL,DAY,DEACT,DEACTDIS,DEACTEOD,DIS,DUR,GAT,GTC,GTD,GTT,HID,IBKRATS,ICE,IMB,IOC,LIT,LMT,LOC,MIDPX,MIT,MKT,MOC,MTL,NGCOMB,NODARK,NONALGO,OCA,OPG,OPGREROUT,PEGBENCH,PEGMID,POSTATS,POSTONLY,PREOPGRTH,PRICECHK,REL,REL2MID,RELPCTOFS,RPI,RTH,RTHIGNOPG,SCALE,SCALEODD,SCALERST,SIZECHK,SMARTSTG,SNAPMID,SNAPMKT,SNAPREL,STP,STPLMT,SWEEP,TRAIL,TRAILLIT,TRAILLMT,TRAILMIT,WHATIF",
+        "secIdList": [
+          {
+            "tag": "ISIN",
+            "value": "US1423391002"
+          }
+        ],
+        "sizeIncrement": "0.0001",
+        "stockType": "COMMON",
+        "suggestedSizeIncrement": "40",
+        "timeZoneId": "US/Eastern",
+        "tradingHours": "20261105:0400-20261105:2000;20261106:0400-20261106:2000;20261107:CLOSED;20261108:CLOSED;20261109:0400-20261109:2000;20261110:0400-20261110:2000",
+        "validExchanges": "SMART,AMEX,NYSE,CBOE,PHLX,ISE,CHX,ARCA,NASDAQ,DRCTEDGE,BEX,BATS,EDGEA,BYX,IEX,EDGX,FOXRIVER,PEARL,NYSENAT,LTSE,MEMX,IBEOS,OVERNIGHT,TPLUS0,PSX,T24X,TXSE"
+      },
+      "limitation": "Contract discovery is not product permission, an order preview or an execution test.",
+      "lookup": {
+        "secId": "US1423391002",
+        "secIdType": "ISIN"
+      },
+      "settlement_eligibility": "unverified",
+      "status": "identity_verified"
+    },
+    "FIX": {
+      "account_permission": "unverified",
+      "details": {
+        "contract": {
+          "conId": 6607708,
+          "currency": "USD",
+          "exchange": "SMART",
+          "localSymbol": "FIX",
+          "primaryExchange": "NYSE",
+          "secType": "STK",
+          "symbol": "FIX",
+          "tradingClass": "FIX"
+        },
+        "liquidHours": "20261105:0930-20261105:1600;20261106:0930-20261106:1600;20261107:CLOSED;20261108:CLOSED;20261109:0930-20261109:1600;20261110:0930-20261110:1600",
+        "longName": "COMFORT SYSTEMS USA INC",
+        "marketName": "FIX",
+        "marketRuleIds": "229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229",
+        "minSize": "0.0001",
+        "minTick": "0.01",
+        "orderTypes": "ACTIVETIM,AD,ADDONT,ADJUST,ALERT,ALGO,ALLOC,AON,AVGCOST,BASKET,BENCHPX,CASHQTY,COND,CONDORDER,DARKONLY,DARKPOLL,DAY,DEACT,DEACTDIS,DEACTEOD,DIS,DUR,GAT,GTC,GTD,GTT,HID,IBKRATS,ICE,IMB,IOC,LIT,LMT,LOC,MIDPX,MIT,MKT,MOC,MTL,NGCOMB,NODARK,NONALGO,OCA,OPG,OPGREROUT,PEGBENCH,PEGMID,POSTATS,POSTONLY,PREOPGRTH,PRICECHK,REL,REL2MID,RELPCTOFS,RPI,RTH,RTHIGNOPG,SCALE,SCALEODD,SCALERST,SIZECHK,SMARTSTG,SNAPMID,SNAPMKT,SNAPREL,STP,STPLMT,SWEEP,TRAIL,TRAILLIT,TRAILLMT,TRAILMIT,WHATIF",
+        "secIdList": [
+          {
+            "tag": "ISIN",
+            "value": "US1999081045"
+          }
+        ],
+        "sizeIncrement": "0.0001",
+        "stockType": "COMMON",
+        "suggestedSizeIncrement": "10",
+        "timeZoneId": "US/Eastern",
+        "tradingHours": "20261105:0400-20261105:2000;20261106:0400-20261106:2000;20261107:CLOSED;20261108:CLOSED;20261109:0400-20261109:2000;20261110:0400-20261110:2000",
+        "validExchanges": "SMART,AMEX,NYSE,CBOE,PHLX,ISE,CHX,ARCA,NASDAQ,DRCTEDGE,BEX,BATS,EDGEA,BYX,IEX,EDGX,FOXRIVER,PEARL,NYSENAT,LTSE,MEMX,IBEOS,OVERNIGHT,TPLUS0,PSX,T24X,TXSE"
+      },
+      "limitation": "Contract discovery is not product permission, an order preview or an execution test.",
+      "lookup": {
+        "secId": "US1999081045",
+        "secIdType": "ISIN"
+      },
+      "settlement_eligibility": "unverified",
+      "status": "identity_verified"
+    },
+    "FLEX": {
+      "account_permission": "unverified",
+      "details": {
+        "contract": {
+          "conId": 4596077,
+          "currency": "USD",
+          "exchange": "SMART",
+          "localSymbol": "FLEX",
+          "primaryExchange": "NASDAQ",
+          "secType": "STK",
+          "symbol": "FLEX",
+          "tradingClass": "NMS"
+        },
+        "liquidHours": "20261105:0930-20261105:1600;20261106:0930-20261106:1600;20261107:CLOSED;20261108:CLOSED;20261109:0930-20261109:1600;20261110:0930-20261110:1600",
+        "longName": "FLEX LTD",
+        "marketName": "NMS",
+        "marketRuleIds": "26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26",
+        "minSize": "0.0001",
+        "minTick": "0.01",
+        "orderTypes": "ACTIVETIM,AD,ADDONT,ADJUST,ALERT,ALGO,ALLOC,AON,AVGCOST,BASKET,BENCHPX,CASHQTY,COND,CONDORDER,DARKONLY,DARKPOLL,DAY,DEACT,DEACTDIS,DEACTEOD,DIS,DUR,GAT,GTC,GTD,GTT,HID,IBKRATS,ICE,IMB,IOC,LIT,LMT,LOC,MIDPX,MIT,MKT,MOC,MTL,NGCOMB,NODARK,NONALGO,OCA,OPG,OPGREROUT,PEGBENCH,PEGMID,POSTATS,POSTONLY,PREOPGRTH,PRICECHK,REL,REL2MID,RELPCTOFS,RPI,RTH,SCALE,SCALEODD,SCALERST,SIZECHK,SMARTSTG,SNAPMID,SNAPMKT,SNAPREL,STP,STPLMT,SWEEP,TRAIL,TRAILLIT,TRAILLMT,TRAILMIT,WHATIF",
+        "secIdList": [
+          {
+            "tag": "ISIN",
+            "value": "SG9999000020"
+          }
+        ],
+        "sizeIncrement": "0.0001",
+        "stockType": "COMMON",
+        "suggestedSizeIncrement": "100",
+        "timeZoneId": "US/Eastern",
+        "tradingHours": "20261105:0400-20261105:2000;20261106:0400-20261106:2000;20261107:CLOSED;20261108:CLOSED;20261109:0400-20261109:2000;20261110:0400-20261110:2000",
+        "validExchanges": "SMART,AMEX,NYSE,CBOE,PHLX,ISE,CHX,ARCA,NASDAQ,DRCTEDGE,BEX,BATS,EDGEA,BYX,IEX,EDGX,FOXRIVER,PEARL,NYSENAT,LTSE,MEMX,IBEOS,OVERNIGHT,TPLUS0,PSX,T24X,TXSE"
+      },
+      "limitation": "Contract discovery is not product permission, an order preview or an execution test.",
+      "lookup": {
+        "secId": "SG9999000020",
+        "secIdType": "ISIN"
+      },
+      "settlement_eligibility": "unverified",
+      "status": "identity_verified"
+    },
+    "MANH": {
+      "account_permission": "unverified",
+      "details": {
+        "contract": {
+          "conId": 4814485,
+          "currency": "USD",
+          "exchange": "SMART",
+          "localSymbol": "MANH",
+          "primaryExchange": "NASDAQ",
+          "secType": "STK",
+          "symbol": "MANH",
+          "tradingClass": "NMS"
+        },
+        "liquidHours": "20261105:0930-20261105:1600;20261106:0930-20261106:1600;20261107:CLOSED;20261108:CLOSED;20261109:0930-20261109:1600;20261110:0930-20261110:1600",
+        "longName": "MANHATTAN ASSOCIATES INC",
+        "marketName": "NMS",
+        "marketRuleIds": "26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26",
+        "minSize": "0.0001",
+        "minTick": "0.01",
+        "orderTypes": "ACTIVETIM,AD,ADDONT,ADJUST,ALERT,ALGO,ALLOC,AON,AVGCOST,BASKET,BENCHPX,CASHQTY,COND,CONDORDER,DARKONLY,DARKPOLL,DAY,DEACT,DEACTDIS,DEACTEOD,DIS,DUR,GAT,GTC,GTD,GTT,HID,IBKRATS,ICE,IMB,IOC,LIT,LMT,LOC,MIDPX,MIT,MKT,MOC,MTL,NGCOMB,NODARK,NONALGO,OCA,OPG,OPGREROUT,PEGBENCH,PEGMID,POSTATS,POSTONLY,PREOPGRTH,PRICECHK,REL,REL2MID,RELPCTOFS,RPI,RTH,SCALE,SCALEODD,SCALERST,SIZECHK,SMARTSTG,SNAPMID,SNAPMKT,SNAPREL,STP,STPLMT,SWEEP,TRAIL,TRAILLIT,TRAILLMT,TRAILMIT,WHATIF",
+        "secIdList": [
+          {
+            "tag": "ISIN",
+            "value": "US5627501092"
+          }
+        ],
+        "sizeIncrement": "0.0001",
+        "stockType": "COMMON",
+        "suggestedSizeIncrement": "100",
+        "timeZoneId": "US/Eastern",
+        "tradingHours": "20261105:0400-20261105:2000;20261106:0400-20261106:2000;20261107:CLOSED;20261108:CLOSED;20261109:0400-20261109:2000;20261110:0400-20261110:2000",
+        "validExchanges": "SMART,AMEX,NYSE,CBOE,PHLX,ISE,CHX,ARCA,NASDAQ,DRCTEDGE,BEX,BATS,EDGEA,BYX,IEX,EDGX,FOXRIVER,PEARL,NYSENAT,LTSE,MEMX,IBEOS,OVERNIGHT,TPLUS0,PSX,T24X,TXSE"
+      },
+      "limitation": "Contract discovery is not product permission, an order preview or an execution test.",
+      "lookup": {
+        "secId": "US5627501092",
+        "secIdType": "ISIN"
+      },
+      "settlement_eligibility": "unverified",
+      "status": "identity_verified"
+    },
+    "RPM": {
+      "account_permission": "unverified",
+      "details": {
+        "contract": {
+          "conId": 273962,
+          "currency": "USD",
+          "exchange": "SMART",
+          "localSymbol": "RPM",
+          "primaryExchange": "NYSE",
+          "secType": "STK",
+          "symbol": "RPM",
+          "tradingClass": "RPM"
+        },
+        "liquidHours": "20261105:0930-20261105:1600;20261106:0930-20261106:1600;20261107:CLOSED;20261108:CLOSED;20261109:0930-20261109:1600;20261110:0930-20261110:1600",
+        "longName": "RPM INTERNATIONAL INC",
+        "marketName": "RPM",
+        "marketRuleIds": "26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26",
+        "minSize": "0.0001",
+        "minTick": "0.01",
+        "orderTypes": "ACTIVETIM,AD,ADDONT,ADJUST,ALERT,ALGO,ALLOC,AON,AVGCOST,BASKET,BENCHPX,CASHQTY,COND,CONDORDER,DARKONLY,DARKPOLL,DAY,DEACT,DEACTDIS,DEACTEOD,DIS,DUR,GAT,GTC,GTD,GTT,HID,IBKRATS,ICE,IMB,IOC,LIT,LMT,LOC,MIDPX,MIT,MKT,MOC,MTL,NGCOMB,NODARK,NONALGO,OCA,OPG,OPGREROUT,PEGBENCH,PEGMID,POSTATS,POSTONLY,PREOPGRTH,PRICECHK,REL,REL2MID,RELPCTOFS,RPI,RTH,RTHIGNOPG,SCALE,SCALEODD,SCALERST,SIZECHK,SMARTSTG,SNAPMID,SNAPMKT,SNAPREL,STP,STPLMT,SWEEP,TRAIL,TRAILLIT,TRAILLMT,TRAILMIT,WHATIF",
+        "secIdList": [
+          {
+            "tag": "ISIN",
+            "value": "US7496851038"
+          }
+        ],
+        "sizeIncrement": "0.0001",
+        "stockType": "COMMON",
+        "suggestedSizeIncrement": "100",
+        "timeZoneId": "US/Eastern",
+        "tradingHours": "20261105:0400-20261105:2000;20261106:0400-20261106:2000;20261107:CLOSED;20261108:CLOSED;20261109:0400-20261109:2000;20261110:0400-20261110:2000",
+        "validExchanges": "SMART,AMEX,NYSE,CBOE,PHLX,ISE,CHX,ARCA,NASDAQ,DRCTEDGE,BEX,BATS,EDGEA,BYX,IEX,EDGX,FOXRIVER,PEARL,NYSENAT,LTSE,MEMX,IBEOS,OVERNIGHT,TPLUS0,PSX,T24X,TXSE"
+      },
+      "limitation": "Contract discovery is not product permission, an order preview or an execution test.",
+      "lookup": {
+        "secId": "US7496851038",
+        "secIdType": "ISIN"
+      },
+      "settlement_eligibility": "unverified",
+      "status": "identity_verified"
+    },
+    "RS": {
+      "account_permission": "unverified",
+      "details": {
+        "contract": {
+          "conId": 11735,
+          "currency": "USD",
+          "exchange": "SMART",
+          "localSymbol": "RS",
+          "primaryExchange": "NYSE",
+          "secType": "STK",
+          "symbol": "RS",
+          "tradingClass": "RS"
+        },
+        "liquidHours": "20261105:0930-20261105:1600;20261106:0930-20261106:1600;20261107:CLOSED;20261108:CLOSED;20261109:0930-20261109:1600;20261110:0930-20261110:1600",
+        "longName": "RELIANCE INC",
+        "marketName": "RS",
+        "marketRuleIds": "4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563",
+        "minSize": "0.0001",
+        "minTick": "0.01",
+        "orderTypes": "ACTIVETIM,AD,ADDONT,ADJUST,ALERT,ALGO,ALLOC,AON,AVGCOST,BASKET,BENCHPX,CASHQTY,COND,CONDORDER,DARKONLY,DARKPOLL,DAY,DEACT,DEACTDIS,DEACTEOD,DIS,DUR,GAT,GTC,GTD,GTT,HID,IBKRATS,ICE,IMB,IOC,LIT,LMT,LOC,MIDPX,MIT,MKT,MOC,MTL,NGCOMB,NODARK,NONALGO,OCA,OPG,OPGREROUT,PEGBENCH,PEGMID,POSTATS,POSTONLY,PREOPGRTH,PRICECHK,REL,REL2MID,RELPCTOFS,RPI,RTH,RTHIGNOPG,SCALE,SCALEODD,SCALERST,SIZECHK,SMARTSTG,SNAPMID,SNAPMKT,SNAPREL,STP,STPLMT,SWEEP,TRAIL,TRAILLIT,TRAILLMT,TRAILMIT,WHATIF",
+        "secIdList": [
+          {
+            "tag": "ISIN",
+            "value": "US7595091023"
+          }
+        ],
+        "sizeIncrement": "0.0001",
+        "stockType": "COMMON",
+        "suggestedSizeIncrement": "40",
+        "timeZoneId": "US/Eastern",
+        "tradingHours": "20261105:0400-20261105:2000;20261106:0400-20261106:2000;20261107:CLOSED;20261108:CLOSED;20261109:0400-20261109:2000;20261110:0400-20261110:2000",
+        "validExchanges": "SMART,AMEX,NYSE,CBOE,PHLX,ISE,CHX,ARCA,NASDAQ,DRCTEDGE,BEX,BATS,EDGEA,BYX,IEX,EDGX,FOXRIVER,PEARL,NYSENAT,LTSE,MEMX,IBEOS,OVERNIGHT,TPLUS0,PSX,T24X,TXSE"
+      },
+      "limitation": "Contract discovery is not product permission, an order preview or an execution test.",
+      "lookup": {
+        "secId": "US7595091023",
+        "secIdType": "ISIN"
+      },
+      "settlement_eligibility": "unverified",
+      "status": "identity_verified"
+    },
+    "UTHR": {
+      "account_permission": "unverified",
+      "details": {
+        "contract": {
+          "conId": 6746357,
+          "currency": "USD",
+          "exchange": "SMART",
+          "localSymbol": "UTHR",
+          "primaryExchange": "NASDAQ",
+          "secType": "STK",
+          "symbol": "UTHR",
+          "tradingClass": "NMS"
+        },
+        "liquidHours": "20261105:0930-20261105:1600;20261106:0930-20261106:1600;20261107:CLOSED;20261108:CLOSED;20261109:0930-20261109:1600;20261110:0930-20261110:1600",
+        "longName": "UNITED THERAPEUTICS CORP",
+        "marketName": "NMS",
+        "marketRuleIds": "4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563",
+        "minSize": "0.0001",
+        "minTick": "0.01",
+        "orderTypes": "ACTIVETIM,AD,ADDONT,ADJUST,ALERT,ALGO,ALLOC,AON,AVGCOST,BASKET,BENCHPX,CASHQTY,COND,CONDORDER,DARKONLY,DARKPOLL,DAY,DEACT,DEACTDIS,DEACTEOD,DIS,DUR,GAT,GTC,GTD,GTT,HID,IBKRATS,ICE,IMB,IOC,LIT,LMT,LOC,MIDPX,MIT,MKT,MOC,MTL,NGCOMB,NODARK,NONALGO,OCA,OPG,OPGREROUT,PEGBENCH,PEGMID,POSTATS,POSTONLY,PREOPGRTH,PRICECHK,REL,REL2MID,RELPCTOFS,RPI,RTH,SCALE,SCALEODD,SCALERST,SIZECHK,SMARTSTG,SNAPMID,SNAPMKT,SNAPREL,STP,STPLMT,SWEEP,TRAIL,TRAILLIT,TRAILLMT,TRAILMIT,WHATIF",
+        "secIdList": [
+          {
+            "tag": "ISIN",
+            "value": "US91307C1027"
+          }
+        ],
+        "sizeIncrement": "0.0001",
+        "stockType": "COMMON",
+        "suggestedSizeIncrement": "40",
+        "timeZoneId": "US/Eastern",
+        "tradingHours": "20261105:0400-20261105:2000;20261106:0400-20261106:2000;20261107:CLOSED;20261108:CLOSED;20261109:0400-20261109:2000;20261110:0400-20261110:2000",
+        "validExchanges": "SMART,AMEX,NYSE,CBOE,PHLX,ISE,CHX,ARCA,NASDAQ,DRCTEDGE,BEX,BATS,EDGEA,BYX,IEX,EDGX,FOXRIVER,PEARL,NYSENAT,LTSE,MEMX,IBEOS,OVERNIGHT,TPLUS0,PSX,T24X,TXSE"
+      },
+      "limitation": "Contract discovery is not product permission, an order preview or an execution test.",
+      "lookup": {
+        "secId": "US91307C1027",
+        "secIdType": "ISIN"
+      },
+      "settlement_eligibility": "unverified",
+      "status": "identity_verified"
+    },
+    "WSO": {
+      "account_permission": "unverified",
+      "details": {
+        "contract": {
+          "conId": 13904,
+          "currency": "USD",
+          "exchange": "SMART",
+          "localSymbol": "WSO",
+          "primaryExchange": "NYSE",
+          "secType": "STK",
+          "symbol": "WSO",
+          "tradingClass": "WSO"
+        },
+        "liquidHours": "20261105:0930-20261105:1600;20261106:0930-20261106:1600;20261107:CLOSED;20261108:CLOSED;20261109:0930-20261109:1600;20261110:0930-20261110:1600",
+        "longName": "WATSCO INC",
+        "marketName": "WSO",
+        "marketRuleIds": "4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563,4563",
+        "minSize": "0.0001",
+        "minTick": "0.01",
+        "orderTypes": "ACTIVETIM,AD,ADDONT,ADJUST,ALERT,ALGO,ALLOC,AON,AVGCOST,BASKET,BENCHPX,CASHQTY,COND,CONDORDER,DARKONLY,DARKPOLL,DAY,DEACT,DEACTDIS,DEACTEOD,DIS,DUR,GAT,GTC,GTD,GTT,HID,IBKRATS,ICE,IMB,IOC,LIT,LMT,LOC,MIDPX,MIT,MKT,MOC,MTL,NGCOMB,NODARK,NONALGO,OCA,OPG,OPGREROUT,PEGBENCH,PEGMID,POSTATS,POSTONLY,PREOPGRTH,PRICECHK,REL,REL2MID,RELPCTOFS,RPI,RTH,RTHIGNOPG,SCALE,SCALEODD,SCALERST,SIZECHK,SMARTSTG,SNAPMID,SNAPMKT,SNAPREL,STP,STPLMT,SWEEP,TRAIL,TRAILLIT,TRAILLMT,TRAILMIT,WHATIF",
+        "secIdList": [
+          {
+            "tag": "ISIN",
+            "value": "US9426222009"
+          }
+        ],
+        "sizeIncrement": "0.0001",
+        "stockType": "COMMON",
+        "suggestedSizeIncrement": "40",
+        "timeZoneId": "US/Eastern",
+        "tradingHours": "20261105:0400-20261105:2000;20261106:0400-20261106:2000;20261107:CLOSED;20261108:CLOSED;20261109:0400-20261109:2000;20261110:0400-20261110:2000",
+        "validExchanges": "SMART,AMEX,NYSE,CBOE,PHLX,ISE,CHX,ARCA,NASDAQ,DRCTEDGE,BEX,BATS,EDGEA,BYX,IEX,EDGX,FOXRIVER,PEARL,NYSENAT,LTSE,MEMX,IBEOS,OVERNIGHT,TPLUS0,PSX,T24X,TXSE"
+      },
+      "limitation": "Contract discovery is not product permission, an order preview or an execution test.",
+      "lookup": {
+        "secId": "US9426222009",
+        "secIdType": "ISIN"
+      },
+      "settlement_eligibility": "unverified",
+      "status": "identity_verified"
+    },
+    "XPO": {
+      "account_permission": "unverified",
+      "details": {
+        "contract": {
+          "conId": 93957038,
+          "currency": "USD",
+          "exchange": "SMART",
+          "localSymbol": "XPO",
+          "primaryExchange": "NYSE",
+          "secType": "STK",
+          "symbol": "XPO",
+          "tradingClass": "XPO"
+        },
+        "liquidHours": "20261105:0930-20261105:1600;20261106:0930-20261106:1600;20261107:CLOSED;20261108:CLOSED;20261109:0930-20261109:1600;20261110:0930-20261110:1600",
+        "longName": "XPO INC",
+        "marketName": "XPO",
+        "marketRuleIds": "26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26",
+        "minSize": "0.0001",
+        "minTick": "0.01",
+        "orderTypes": "ACTIVETIM,AD,ADDONT,ADJUST,ALERT,ALGO,ALLOC,AON,AVGCOST,BASKET,BENCHPX,CASHQTY,COND,CONDORDER,DARKONLY,DARKPOLL,DAY,DEACT,DEACTDIS,DEACTEOD,DIS,DUR,GAT,GTC,GTD,GTT,HID,IBKRATS,ICE,IMB,IOC,LIT,LMT,LOC,MIDPX,MIT,MKT,MOC,MTL,NGCOMB,NODARK,NONALGO,OCA,OPG,OPGREROUT,PEGBENCH,PEGMID,POSTATS,POSTONLY,PREOPGRTH,PRICECHK,REL,REL2MID,RELPCTOFS,RPI,RTH,RTHIGNOPG,SCALE,SCALEODD,SCALERST,SIZECHK,SMARTSTG,SNAPMID,SNAPMKT,SNAPREL,STP,STPLMT,SWEEP,TRAIL,TRAILLIT,TRAILLMT,TRAILMIT,WHATIF",
+        "secIdList": [
+          {
+            "tag": "ISIN",
+            "value": "US9837931008"
+          }
+        ],
+        "sizeIncrement": "0.0001",
+        "stockType": "COMMON",
+        "suggestedSizeIncrement": "100",
+        "timeZoneId": "US/Eastern",
+        "tradingHours": "20261105:0400-20261105:2000;20261106:0400-20261106:2000;20261107:CLOSED;20261108:CLOSED;20261109:0400-20261109:2000;20261110:0400-20261110:2000",
+        "validExchanges": "SMART,AMEX,NYSE,CBOE,PHLX,ISE,CHX,ARCA,NASDAQ,DRCTEDGE,BEX,BATS,EDGEA,BYX,IEX,EDGX,FOXRIVER,PEARL,NYSENAT,LTSE,MEMX,IBEOS,OVERNIGHT,TPLUS0,PSX,T24X,TXSE"
+      },
+      "limitation": "Contract discovery is not product permission, an order preview or an execution test.",
+      "lookup": {
+        "secId": "US9837931008",
+        "secIdType": "ISIN"
+      },
+      "settlement_eligibility": "unverified",
+      "status": "identity_verified"
+    }
+  },
+  "order_calls": 0,
+  "owner": "read_only_research",
+  "started_at": "2026-11-05T16:08:43.157854+00:00",
+  "status": "identity_verified"
+}

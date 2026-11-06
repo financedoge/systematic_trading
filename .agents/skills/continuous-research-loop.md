@@ -26,6 +26,12 @@ Tracked candidates must be implemented as full executable strategy definitions a
 6. Check turnover, liquidity, concentration, drawdown, fee sensitivity, and parameter stability.
    The 44 bp annual-cost ceiling was retired by the operator on 2026-10-17. Extra trading cost is acceptable when incremental return exceeds incremental cost against a matched control. Replay the declared candidates and controls without an absolute-cost filter; judge net Sharpe with return/drawdown guards, cost/delay stress and chronological stability. IC/breakeven margins remain diagnostics, not portfolio-return evidence. Use `turnover_gate.screen` for current diagnostics; `legacy_screen` and the old frozen runners are historical reproduction only.
 7. Record artifacts and decide whether the candidate is rejected, retained for observation, or sent to promotion review.
+   Attach the P4.20 evidence dossier/assessment for new signal or changed-recipe
+   reviews (`docs/research-evidence-governance-v1.md`). Declare actual prior use of
+   each period; selecting or tuning on evaluation results makes those data
+   development evidence for the new choice. Null half-life must state whether
+   it is unidentifiable, insufficient or censored, never silently infinite.
+   Completing a negative study and retaining research evidence grants no authority.
 8. Update `docs/research-state.md` and `log.md` when the research state changes.
    Before each handoff, identify the weakest risky ETF under the training-selected
    policy using the declared primary net cumulative return (and each evaluation
@@ -41,6 +47,10 @@ Tracked candidates must be implemented as full executable strategy definitions a
    evidence. Follow `docs/storage-retention-and-windows-native-plan.md`.
 
 ## Outputs
+
+Apply the [portfolio stability guidance](../../docs/research-stability-guidelines.md)
+when assessing a recipe and its incumbent. Include the training selection seal,
+annualized regime comparison, winner-withholding stress and actual risk exposure.
 
 - Candidate report.
 - Benchmark comparison.

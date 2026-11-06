@@ -1,0 +1,27 @@
+{
+  "decision": "2025-03-03",
+  "prior_manifest_sha256": "a9841280aba473fcf9bd9eb974462b7a75418f7db9c71e0b404a6d5ae24da1be",
+  "registry": {
+    "bytes": 796507,
+    "retrieved_at": "2026-11-05T16:06:35.678994+00:00",
+    "sha256": "76b4b2abb9f7dd0e9cff38e2f20336952bb41806057b2dd1033e244f3e1faec2",
+    "url": "https://www.sec.gov/files/company_tickers.json"
+  },
+  "scope": "Qualification and reconciliation only. Source checks cannot replace full-window independent price/volume verification or dated security continuity.",
+  "symbols": [
+    "CSL",
+    "WSO",
+    "MANH",
+    "RPM",
+    "UTHR",
+    "XPO",
+    "FIX",
+    "FLEX",
+    "CASY",
+    "RS"
+  ],
+  "window": [
+    "2024-02-27",
+    "2025-02-28"
+  ]
+}

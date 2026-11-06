@@ -1,65 +1,65 @@
 {
-  "account_snapshot_path": "var\\live\\account_snapshots\\ib_paper_account_snapshot_20261020_230653.json",
+  "account_snapshot_path": "var\\live\\account_snapshots\\ib_paper_account_snapshot_20261106_222629.json",
   "broker_cash": [
     {
-      "amount": "16851.87",
+      "amount": "11338.40",
       "currency": "HKD"
     }
   ],
   "broker_positions": [
     {
-      "average_cost": "32.80471635",
+      "average_cost": "32.8062815",
       "currency": "USD",
-      "quantity": 471,
+      "quantity": 481,
       "symbol": "DBC"
     },
     {
-      "average_cost": "97.5788074",
+      "average_cost": "97.58272755",
       "currency": "USD",
-      "quantity": 230,
+      "quantity": 156,
       "symbol": "EWJ"
     },
     {
-      "average_cost": "188.2095025",
+      "average_cost": "769.83121515",
       "currency": "USD",
-      "quantity": 40,
-      "symbol": "EWY"
-    },
-    {
-      "average_cost": "769.75087175",
-      "currency": "USD",
-      "quantity": 46,
+      "quantity": 33,
       "symbol": "SPY"
     },
     {
-      "average_cost": "86.1104885",
+      "average_cost": "86.11079795",
       "currency": "USD",
-      "quantity": 278,
+      "quantity": 195,
       "symbol": "VGK"
     },
     {
-      "average_cost": "67.86500305",
+      "average_cost": "53.48144895",
       "currency": "USD",
-      "quantity": 327,
+      "quantity": 574,
+      "symbol": "XLB"
+    },
+    {
+      "average_cost": "67.865142",
+      "currency": "USD",
+      "quantity": 324,
       "symbol": "XLE"
     }
   ],
-  "checked_at": "2026-10-20T15:06:51.926056Z",
+  "checked_at": "2026-11-06T14:26:26.107290Z",
   "environment": "paper",
   "execution_issues": [],
   "execution_sync_pending": [],
   "has_breaks": false,
-  "ib_fill_count": 42,
+  "ib_fill_count": 37,
   "ib_position_count": 6,
-  "local_filled_order_count": 33,
-  "local_order_count": 48,
-  "local_order_history_count": 286,
+  "local_filled_order_count": 40,
+  "local_order_count": 58,
+  "local_order_history_count": 296,
   "managed_accounts": [
     "DU8959779"
   ],
   "pnl_reset_baseline_id": null,
   "position_differences": [],
-  "report_path": "var\\reconciliation\\ib_paper_reconciliation_20261020_150651_926056.json",
+  "report_path": "var\\reconciliation\\ib_paper_reconciliation_20261106_142626_107290.json",
   "requires_operator_confirmation": false,
   "reset_applied": false,
   "status": "matched",

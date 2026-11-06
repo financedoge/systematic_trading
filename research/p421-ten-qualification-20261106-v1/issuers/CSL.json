@@ -1,0 +1,92 @@
+{
+  "cik": 790051,
+  "filings": [
+    {
+      "accession": "0000790051-24-000058",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "December\u00a031 , 2023"
+        ],
+        "DocumentType": [
+          "10-K"
+        ],
+        "EntityCentralIndexKey": [
+          "0000790051"
+        ],
+        "EntityRegistrantName": [
+          "CARLISLE COMPANIES INCORPORATED"
+        ],
+        "Security12bTitle": [
+          "Common stock, $1 par value",
+          "Preferred Stock Purchase Rights, $1 par value"
+        ],
+        "SecurityExchangeName": [
+          "New York Stock Exchange"
+        ],
+        "TradingSymbol": [
+          "CSL"
+        ]
+      },
+      "filing_date": "2024-02-16",
+      "listing_tables": [
+        "Title of each class Trading Symbol(s) Name of each exchange on which registered Common stock, $1 par value CSL New York Stock Exchange Preferred Stock Purchase Rights, $1 par value n/a New York Stock Exchange"
+      ],
+      "report_date": "2023-12-31",
+      "source": {
+        "bytes": 2967374,
+        "retrieved_at": "2026-11-05T16:06:37.402408+00:00",
+        "sha256": "3014574e27ea3e7d77975cd1872fbf342a13535e36a679490e2babae959240f7",
+        "url": "https://www.sec.gov/Archives/edgar/data/790051/000079005124000058/csl-20231231.htm"
+      }
+    },
+    {
+      "accession": "0000790051-25-000077",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "December\u00a031 , 2024"
+        ],
+        "DocumentType": [
+          "10-K"
+        ],
+        "EntityCentralIndexKey": [
+          "0000790051"
+        ],
+        "EntityRegistrantName": [
+          "CARLISLE COMPANIES INCORPORATED"
+        ],
+        "Security12bTitle": [
+          "Common stock, $1 par value",
+          "Preferred Stock Purchase Rights, $1 par value"
+        ],
+        "SecurityExchangeName": [
+          "New York Stock Exchange"
+        ],
+        "TradingSymbol": [
+          "CSL"
+        ]
+      },
+      "filing_date": "2025-02-14",
+      "listing_tables": [
+        "Title of each class Trading Symbol(s) Name of each exchange on which registered Common stock, $1 par value CSL New York Stock Exchange Preferred Stock Purchase Rights, $1 par value n/a New York Stock Exchange"
+      ],
+      "report_date": "2024-12-31",
+      "source": {
+        "bytes": 2681477,
+        "retrieved_at": "2026-11-05T16:06:40.736700+00:00",
+        "sha256": "7bd9036f9ff0d42a99c8d8e08d55392f5d1a8752ce40b6723e96b2e9594bc012",
+        "url": "https://www.sec.gov/Archives/edgar/data/790051/000079005125000077/csl-20241231.htm"
+      }
+    }
+  ],
+  "requested_cutoffs": {
+    "2024-02-27": "0000790051-24-000058",
+    "2025-02-27": "0000790051-25-000077"
+  },
+  "submissions": {
+    "bytes": 162320,
+    "retrieved_at": "2026-11-05T16:06:36.450419+00:00",
+    "sha256": "7e3772af607dfe6ba227955a0fda58ecf71d7abd18f035e629bbd8fefb7ae0e5",
+    "url": "https://data.sec.gov/submissions/CIK0000790051.json"
+  },
+  "symbol": "CSL"
+}

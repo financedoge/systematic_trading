@@ -1,0 +1,90 @@
+{
+  "cik": 866374,
+  "filings": [
+    {
+      "accession": "0000866374-24-000012",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "December\u00a031, 2023"
+        ],
+        "DocumentType": [
+          "10-Q"
+        ],
+        "EntityCentralIndexKey": [
+          "0000866374"
+        ],
+        "EntityRegistrantName": [
+          "FLEX LTD."
+        ],
+        "Security12bTitle": [
+          "Ordinary Shares, No Par Value"
+        ],
+        "SecurityExchangeName": [
+          "The Nasdaq Stock Market LLC"
+        ],
+        "TradingSymbol": [
+          "FLEX"
+        ]
+      },
+      "filing_date": "2024-02-02",
+      "listing_tables": [
+        "Title of each class Trading Symbol(s) Name of each exchange on which registered Ordinary Shares, No Par Value FLEX The Nasdaq Stock Market LLC"
+      ],
+      "report_date": "2023-12-31",
+      "source": {
+        "bytes": 1561487,
+        "retrieved_at": "2026-11-05T16:13:03.439806+00:00",
+        "sha256": "7f99b709c9b8841e54459b91b5de32e897f878633c917d8884acf288a24622ba",
+        "url": "https://www.sec.gov/Archives/edgar/data/866374/000086637424000012/flex-20231231.htm"
+      }
+    },
+    {
+      "accession": "0000866374-25-000008",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "December\u00a031, 2024"
+        ],
+        "DocumentType": [
+          "10-Q"
+        ],
+        "EntityCentralIndexKey": [
+          "0000866374"
+        ],
+        "EntityRegistrantName": [
+          "FLEX LTD."
+        ],
+        "Security12bTitle": [
+          "Ordinary Shares, No Par Value"
+        ],
+        "SecurityExchangeName": [
+          "The Nasdaq Stock Market LLC"
+        ],
+        "TradingSymbol": [
+          "FLEX"
+        ]
+      },
+      "filing_date": "2025-01-31",
+      "listing_tables": [
+        "Title of each class Trading Symbol(s) Name of each exchange on which registered Ordinary Shares, No Par Value FLEX The Nasdaq Stock Market LLC"
+      ],
+      "report_date": "2024-12-31",
+      "source": {
+        "bytes": 1538179,
+        "retrieved_at": "2026-11-05T16:13:07.804634+00:00",
+        "sha256": "f6d75531e96b0a74f620924d97f8115520811da15cd6dd905ff64b90eab1d022",
+        "url": "https://www.sec.gov/Archives/edgar/data/866374/000086637425000008/flex-20241231.htm"
+      }
+    }
+  ],
+  "requested_cutoffs": {
+    "2024-02-27": "0000866374-24-000012",
+    "2025-02-27": "0000866374-25-000008"
+  },
+  "submissions": {
+    "bytes": 160773,
+    "retrieved_at": "2026-11-05T16:07:25.997436+00:00",
+    "sha256": "ef7385cb22ec4e511b7d797fbb6e478e5621860613611ad596403b5990aa249d",
+    "url": "https://data.sec.gov/submissions/CIK0000866374.json"
+  },
+  "symbol": "FLEX"
+}

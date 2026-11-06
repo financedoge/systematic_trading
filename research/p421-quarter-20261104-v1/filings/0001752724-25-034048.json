@@ -1,0 +1,36 @@
+{
+  "accepted_new_york": "2025-02-24 09:55:08",
+  "accession": "0001752724-25-034048",
+  "as_of": "2024-12-31",
+  "cik": 1100663,
+  "dissemination": {
+    "bytes": 477297,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:41:04.101522+00:00",
+    "sha256": "a06a9b1e85e81e713ca6ae5c8659e1911fd5be42ce4cff66a835085ffbe5e091",
+    "url": "https://www.sec.gov/Archives/edgar/daily-index/2025/QTR1/master.20250224.idx"
+  },
+  "dissemination_row": "1100663|iSHARES TRUST|NPORT-P|20250224|edgar/data/1100663/0001752724-25-034048.txt",
+  "filed": "2025-02-24",
+  "filing": "NPORT-P",
+  "index": {
+    "bytes": 9069,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:41:04.764343+00:00",
+    "sha256": "2b8359b6dd699ec5d9bc91d158aea84348d5c60c4e72ce83244599d093f6e53c",
+    "url": "https://www.sec.gov/Archives/edgar/data/1100663/000175272425034048/0001752724-25-034048-index.htm"
+  },
+  "nav": "767257453.88",
+  "series": "S000009422",
+  "symbol": "IAT",
+  "xml": {
+    "bytes": 41072,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:41:01.864757+00:00",
+    "sha256": "52f145f2b1f9198e75854c6881cfda4966d9293480aca762c61967f3dfc9ea2a",
+    "url": "https://www.sec.gov/Archives/edgar/data/1100663/000175272425034048/primary_doc.xml"
+  }
+}

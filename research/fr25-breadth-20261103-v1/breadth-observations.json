@@ -1,0 +1,8786 @@
+[
+  {
+    "admitted": 45,
+    "known_through": "2020-12-31",
+    "qualified": 42,
+    "session": "2021-01-04"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-04",
+    "qualified": 42,
+    "session": "2021-01-05"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-05",
+    "qualified": 42,
+    "session": "2021-01-06"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-06",
+    "qualified": 42,
+    "session": "2021-01-07"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-07",
+    "qualified": 41,
+    "session": "2021-01-08"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-08",
+    "qualified": 41,
+    "session": "2021-01-11"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-11",
+    "qualified": 41,
+    "session": "2021-01-12"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-12",
+    "qualified": 41,
+    "session": "2021-01-13"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-13",
+    "qualified": 41,
+    "session": "2021-01-14"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-14",
+    "qualified": 41,
+    "session": "2021-01-15"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-15",
+    "qualified": 41,
+    "session": "2021-01-19"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-19",
+    "qualified": 41,
+    "session": "2021-01-20"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-20",
+    "qualified": 41,
+    "session": "2021-01-21"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-21",
+    "qualified": 39,
+    "session": "2021-01-22"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-22",
+    "qualified": 39,
+    "session": "2021-01-25"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-25",
+    "qualified": 39,
+    "session": "2021-01-26"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-26",
+    "qualified": 40,
+    "session": "2021-01-27"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-27",
+    "qualified": 40,
+    "session": "2021-01-28"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-28",
+    "qualified": 39,
+    "session": "2021-01-29"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-01-29",
+    "qualified": 39,
+    "session": "2021-02-01"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-01",
+    "qualified": 39,
+    "session": "2021-02-02"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-02",
+    "qualified": 38,
+    "session": "2021-02-03"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-03",
+    "qualified": 38,
+    "session": "2021-02-04"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-04",
+    "qualified": 38,
+    "session": "2021-02-05"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-05",
+    "qualified": 38,
+    "session": "2021-02-08"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-08",
+    "qualified": 38,
+    "session": "2021-02-09"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-09",
+    "qualified": 38,
+    "session": "2021-02-10"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-10",
+    "qualified": 39,
+    "session": "2021-02-11"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-11",
+    "qualified": 39,
+    "session": "2021-02-12"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-12",
+    "qualified": 39,
+    "session": "2021-02-16"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-16",
+    "qualified": 40,
+    "session": "2021-02-17"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-17",
+    "qualified": 39,
+    "session": "2021-02-18"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-18",
+    "qualified": 38,
+    "session": "2021-02-19"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-19",
+    "qualified": 38,
+    "session": "2021-02-22"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-22",
+    "qualified": 38,
+    "session": "2021-02-23"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-23",
+    "qualified": 37,
+    "session": "2021-02-24"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-24",
+    "qualified": 37,
+    "session": "2021-02-25"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-25",
+    "qualified": 35,
+    "session": "2021-02-26"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-02-26",
+    "qualified": 35,
+    "session": "2021-03-01"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-03-01",
+    "qualified": 36,
+    "session": "2021-03-02"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-03-02",
+    "qualified": 35,
+    "session": "2021-03-03"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-03-03",
+    "qualified": 33,
+    "session": "2021-03-04"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-03-04",
+    "qualified": 32,
+    "session": "2021-03-05"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-03-05",
+    "qualified": 32,
+    "session": "2021-03-08"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-03-08",
+    "qualified": 33,
+    "session": "2021-03-09"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-03-09",
+    "qualified": 33,
+    "session": "2021-03-10"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-03-10",
+    "qualified": 34,
+    "session": "2021-03-11"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-03-11",
+    "qualified": 35,
+    "session": "2021-03-12"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-03-12",
+    "qualified": 33,
+    "session": "2021-03-15"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-03-15",
+    "qualified": 34,
+    "session": "2021-03-16"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-03-16",
+    "qualified": 35,
+    "session": "2021-03-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-03-17",
+    "qualified": 34,
+    "session": "2021-03-18"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-03-18",
+    "qualified": 34,
+    "session": "2021-03-19"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-03-19",
+    "qualified": 34,
+    "session": "2021-03-22"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-03-22",
+    "qualified": 34,
+    "session": "2021-03-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-03-23",
+    "qualified": 37,
+    "session": "2021-03-24"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-03-24",
+    "qualified": 37,
+    "session": "2021-03-25"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-03-25",
+    "qualified": 37,
+    "session": "2021-03-26"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-03-26",
+    "qualified": 38,
+    "session": "2021-03-29"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-03-29",
+    "qualified": 37,
+    "session": "2021-03-30"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-03-30",
+    "qualified": 36,
+    "session": "2021-03-31"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-03-31",
+    "qualified": 36,
+    "session": "2021-04-01"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-04-01",
+    "qualified": 37,
+    "session": "2021-04-05"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-04-05",
+    "qualified": 36,
+    "session": "2021-04-06"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-04-06",
+    "qualified": 36,
+    "session": "2021-04-07"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-04-07",
+    "qualified": 37,
+    "session": "2021-04-08"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-04-08",
+    "qualified": 38,
+    "session": "2021-04-09"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-04-09",
+    "qualified": 37,
+    "session": "2021-04-12"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-04-12",
+    "qualified": 35,
+    "session": "2021-04-13"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-04-13",
+    "qualified": 38,
+    "session": "2021-04-14"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-04-14",
+    "qualified": 36,
+    "session": "2021-04-15"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-04-15",
+    "qualified": 39,
+    "session": "2021-04-16"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-04-16",
+    "qualified": 41,
+    "session": "2021-04-19"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-04-19",
+    "qualified": 38,
+    "session": "2021-04-20"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-04-20",
+    "qualified": 39,
+    "session": "2021-04-21"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-04-21",
+    "qualified": 39,
+    "session": "2021-04-22"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-04-22",
+    "qualified": 39,
+    "session": "2021-04-23"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-04-23",
+    "qualified": 39,
+    "session": "2021-04-26"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-04-26",
+    "qualified": 40,
+    "session": "2021-04-27"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-04-27",
+    "qualified": 39,
+    "session": "2021-04-28"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-04-28",
+    "qualified": 41,
+    "session": "2021-04-29"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-04-29",
+    "qualified": 41,
+    "session": "2021-04-30"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-04-30",
+    "qualified": 41,
+    "session": "2021-05-03"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-05-03",
+    "qualified": 41,
+    "session": "2021-05-04"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-05-04",
+    "qualified": 41,
+    "session": "2021-05-05"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2021-05-05",
+    "qualified": 42,
+    "session": "2021-05-06"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2021-05-06",
+    "qualified": 42,
+    "session": "2021-05-07"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2021-05-07",
+    "qualified": 41,
+    "session": "2021-05-10"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2021-05-10",
+    "qualified": 41,
+    "session": "2021-05-11"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2021-05-11",
+    "qualified": 41,
+    "session": "2021-05-12"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2021-05-12",
+    "qualified": 40,
+    "session": "2021-05-13"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2021-05-13",
+    "qualified": 40,
+    "session": "2021-05-14"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2021-05-14",
+    "qualified": 40,
+    "session": "2021-05-17"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2021-05-17",
+    "qualified": 40,
+    "session": "2021-05-18"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2021-05-18",
+    "qualified": 41,
+    "session": "2021-05-19"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2021-05-19",
+    "qualified": 39,
+    "session": "2021-05-20"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2021-05-20",
+    "qualified": 41,
+    "session": "2021-05-21"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2021-05-21",
+    "qualified": 42,
+    "session": "2021-05-24"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2021-05-24",
+    "qualified": 41,
+    "session": "2021-05-25"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-05-25",
+    "qualified": 41,
+    "session": "2021-05-26"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-05-26",
+    "qualified": 42,
+    "session": "2021-05-27"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-05-27",
+    "qualified": 41,
+    "session": "2021-05-28"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-05-28",
+    "qualified": 41,
+    "session": "2021-06-01"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-01",
+    "qualified": 41,
+    "session": "2021-06-02"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-02",
+    "qualified": 42,
+    "session": "2021-06-03"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2021-06-03",
+    "qualified": 42,
+    "session": "2021-06-04"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-04",
+    "qualified": 41,
+    "session": "2021-06-07"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-07",
+    "qualified": 41,
+    "session": "2021-06-08"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-08",
+    "qualified": 41,
+    "session": "2021-06-09"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-09",
+    "qualified": 42,
+    "session": "2021-06-10"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-10",
+    "qualified": 42,
+    "session": "2021-06-11"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-11",
+    "qualified": 42,
+    "session": "2021-06-14"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-14",
+    "qualified": 41,
+    "session": "2021-06-15"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-15",
+    "qualified": 40,
+    "session": "2021-06-16"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-16",
+    "qualified": 39,
+    "session": "2021-06-17"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-17",
+    "qualified": 39,
+    "session": "2021-06-18"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-18",
+    "qualified": 39,
+    "session": "2021-06-21"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-21",
+    "qualified": 38,
+    "session": "2021-06-22"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-22",
+    "qualified": 37,
+    "session": "2021-06-23"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-23",
+    "qualified": 38,
+    "session": "2021-06-24"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-24",
+    "qualified": 39,
+    "session": "2021-06-25"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-06-25",
+    "qualified": 39,
+    "session": "2021-06-28"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-28",
+    "qualified": 39,
+    "session": "2021-06-29"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-06-29",
+    "qualified": 38,
+    "session": "2021-06-30"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-06-30",
+    "qualified": 38,
+    "session": "2021-07-01"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-07-01",
+    "qualified": 38,
+    "session": "2021-07-02"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-02",
+    "qualified": 37,
+    "session": "2021-07-06"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-06",
+    "qualified": 37,
+    "session": "2021-07-07"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-07",
+    "qualified": 36,
+    "session": "2021-07-08"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-08",
+    "qualified": 36,
+    "session": "2021-07-09"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-09",
+    "qualified": 36,
+    "session": "2021-07-12"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-12",
+    "qualified": 36,
+    "session": "2021-07-13"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-13",
+    "qualified": 38,
+    "session": "2021-07-14"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-14",
+    "qualified": 38,
+    "session": "2021-07-15"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-15",
+    "qualified": 37,
+    "session": "2021-07-16"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-16",
+    "qualified": 35,
+    "session": "2021-07-19"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-19",
+    "qualified": 38,
+    "session": "2021-07-20"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-20",
+    "qualified": 35,
+    "session": "2021-07-21"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-21",
+    "qualified": 35,
+    "session": "2021-07-22"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-22",
+    "qualified": 36,
+    "session": "2021-07-23"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-23",
+    "qualified": 36,
+    "session": "2021-07-26"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-26",
+    "qualified": 34,
+    "session": "2021-07-27"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-27",
+    "qualified": 33,
+    "session": "2021-07-28"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-07-28",
+    "qualified": 37,
+    "session": "2021-07-29"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2021-07-29",
+    "qualified": 36,
+    "session": "2021-07-30"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-07-30",
+    "qualified": 38,
+    "session": "2021-08-02"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-08-02",
+    "qualified": 38,
+    "session": "2021-08-03"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-08-03",
+    "qualified": 40,
+    "session": "2021-08-04"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-08-04",
+    "qualified": 39,
+    "session": "2021-08-05"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-08-05",
+    "qualified": 39,
+    "session": "2021-08-06"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-08-06",
+    "qualified": 36,
+    "session": "2021-08-09"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-08-09",
+    "qualified": 32,
+    "session": "2021-08-10"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-08-10",
+    "qualified": 32,
+    "session": "2021-08-11"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-08-11",
+    "qualified": 31,
+    "session": "2021-08-12"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-08-12",
+    "qualified": 30,
+    "session": "2021-08-13"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-08-13",
+    "qualified": 33,
+    "session": "2021-08-16"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-08-16",
+    "qualified": 34,
+    "session": "2021-08-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-08-17",
+    "qualified": 35,
+    "session": "2021-08-18"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-08-18",
+    "qualified": 35,
+    "session": "2021-08-19"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-08-19",
+    "qualified": 32,
+    "session": "2021-08-20"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-08-20",
+    "qualified": 32,
+    "session": "2021-08-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-08-23",
+    "qualified": 33,
+    "session": "2021-08-24"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-08-24",
+    "qualified": 32,
+    "session": "2021-08-25"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-08-25",
+    "qualified": 38,
+    "session": "2021-08-26"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-08-26",
+    "qualified": 37,
+    "session": "2021-08-27"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-08-27",
+    "qualified": 38,
+    "session": "2021-08-30"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-08-30",
+    "qualified": 37,
+    "session": "2021-08-31"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-08-31",
+    "qualified": 37,
+    "session": "2021-09-01"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-09-01",
+    "qualified": 40,
+    "session": "2021-09-02"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-09-02",
+    "qualified": 38,
+    "session": "2021-09-03"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-09-03",
+    "qualified": 40,
+    "session": "2021-09-07"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-07",
+    "qualified": 38,
+    "session": "2021-09-08"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-08",
+    "qualified": 35,
+    "session": "2021-09-09"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-09",
+    "qualified": 36,
+    "session": "2021-09-10"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-10",
+    "qualified": 34,
+    "session": "2021-09-13"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-13",
+    "qualified": 35,
+    "session": "2021-09-14"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-14",
+    "qualified": 34,
+    "session": "2021-09-15"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-15",
+    "qualified": 35,
+    "session": "2021-09-16"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-16",
+    "qualified": 35,
+    "session": "2021-09-17"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-17",
+    "qualified": 36,
+    "session": "2021-09-20"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-20",
+    "qualified": 35,
+    "session": "2021-09-21"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-21",
+    "qualified": 38,
+    "session": "2021-09-22"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-22",
+    "qualified": 37,
+    "session": "2021-09-23"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-23",
+    "qualified": 37,
+    "session": "2021-09-24"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-24",
+    "qualified": 37,
+    "session": "2021-09-27"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-27",
+    "qualified": 37,
+    "session": "2021-09-28"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-28",
+    "qualified": 37,
+    "session": "2021-09-29"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-29",
+    "qualified": 37,
+    "session": "2021-09-30"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-09-30",
+    "qualified": 33,
+    "session": "2021-10-01"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-01",
+    "qualified": 33,
+    "session": "2021-10-04"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-04",
+    "qualified": 31,
+    "session": "2021-10-05"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-05",
+    "qualified": 34,
+    "session": "2021-10-06"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-06",
+    "qualified": 32,
+    "session": "2021-10-07"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-07",
+    "qualified": 35,
+    "session": "2021-10-08"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-08",
+    "qualified": 34,
+    "session": "2021-10-11"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-11",
+    "qualified": 33,
+    "session": "2021-10-12"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-12",
+    "qualified": 30,
+    "session": "2021-10-13"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-13",
+    "qualified": 28,
+    "session": "2021-10-14"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-14",
+    "qualified": 33,
+    "session": "2021-10-15"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-15",
+    "qualified": 32,
+    "session": "2021-10-18"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-18",
+    "qualified": 32,
+    "session": "2021-10-19"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-19",
+    "qualified": 31,
+    "session": "2021-10-20"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-20",
+    "qualified": 32,
+    "session": "2021-10-21"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-21",
+    "qualified": 31,
+    "session": "2021-10-22"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-22",
+    "qualified": 34,
+    "session": "2021-10-25"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-25",
+    "qualified": 34,
+    "session": "2021-10-26"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-26",
+    "qualified": 34,
+    "session": "2021-10-27"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-27",
+    "qualified": 31,
+    "session": "2021-10-28"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-28",
+    "qualified": 34,
+    "session": "2021-10-29"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2021-10-29",
+    "qualified": 32,
+    "session": "2021-11-01"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-11-01",
+    "qualified": 35,
+    "session": "2021-11-02"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-11-02",
+    "qualified": 34,
+    "session": "2021-11-03"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2021-11-03",
+    "qualified": 34,
+    "session": "2021-11-04"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-04",
+    "qualified": 31,
+    "session": "2021-11-05"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-05",
+    "qualified": 34,
+    "session": "2021-11-08"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-08",
+    "qualified": 34,
+    "session": "2021-11-09"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-09",
+    "qualified": 37,
+    "session": "2021-11-10"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-10",
+    "qualified": 35,
+    "session": "2021-11-11"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-11",
+    "qualified": 34,
+    "session": "2021-11-12"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-12",
+    "qualified": 33,
+    "session": "2021-11-15"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-15",
+    "qualified": 34,
+    "session": "2021-11-16"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-16",
+    "qualified": 34,
+    "session": "2021-11-17"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-17",
+    "qualified": 32,
+    "session": "2021-11-18"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-18",
+    "qualified": 33,
+    "session": "2021-11-19"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-19",
+    "qualified": 31,
+    "session": "2021-11-22"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-22",
+    "qualified": 29,
+    "session": "2021-11-23"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-23",
+    "qualified": 29,
+    "session": "2021-11-24"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-24",
+    "qualified": 26,
+    "session": "2021-11-26"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-26",
+    "qualified": 22,
+    "session": "2021-11-29"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-29",
+    "qualified": 23,
+    "session": "2021-11-30"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-11-30",
+    "qualified": 20,
+    "session": "2021-12-01"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-12-01",
+    "qualified": 16,
+    "session": "2021-12-02"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-12-02",
+    "qualified": 21,
+    "session": "2021-12-03"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-12-03",
+    "qualified": 20,
+    "session": "2021-12-06"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-12-06",
+    "qualified": 22,
+    "session": "2021-12-07"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-12-07",
+    "qualified": 25,
+    "session": "2021-12-08"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-12-08",
+    "qualified": 23,
+    "session": "2021-12-09"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-12-09",
+    "qualified": 23,
+    "session": "2021-12-10"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-12-10",
+    "qualified": 24,
+    "session": "2021-12-13"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-12-13",
+    "qualified": 23,
+    "session": "2021-12-14"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-12-14",
+    "qualified": 23,
+    "session": "2021-12-15"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-12-15",
+    "qualified": 27,
+    "session": "2021-12-16"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-12-16",
+    "qualified": 30,
+    "session": "2021-12-17"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-12-17",
+    "qualified": 26,
+    "session": "2021-12-20"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-12-20",
+    "qualified": 23,
+    "session": "2021-12-21"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-12-21",
+    "qualified": 28,
+    "session": "2021-12-22"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2021-12-22",
+    "qualified": 28,
+    "session": "2021-12-23"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-12-23",
+    "qualified": 28,
+    "session": "2021-12-27"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-12-27",
+    "qualified": 30,
+    "session": "2021-12-28"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-12-28",
+    "qualified": 30,
+    "session": "2021-12-29"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-12-29",
+    "qualified": 27,
+    "session": "2021-12-30"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-12-30",
+    "qualified": 30,
+    "session": "2021-12-31"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2021-12-31",
+    "qualified": 26,
+    "session": "2022-01-03"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-03",
+    "qualified": 26,
+    "session": "2022-01-04"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-04",
+    "qualified": 27,
+    "session": "2022-01-05"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-01-05",
+    "qualified": 25,
+    "session": "2022-01-06"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-01-06",
+    "qualified": 22,
+    "session": "2022-01-07"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-07",
+    "qualified": 22,
+    "session": "2022-01-10"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-10",
+    "qualified": 22,
+    "session": "2022-01-11"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-11",
+    "qualified": 25,
+    "session": "2022-01-12"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-12",
+    "qualified": 26,
+    "session": "2022-01-13"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-13",
+    "qualified": 28,
+    "session": "2022-01-14"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-14",
+    "qualified": 29,
+    "session": "2022-01-18"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-18",
+    "qualified": 22,
+    "session": "2022-01-19"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-19",
+    "qualified": 22,
+    "session": "2022-01-20"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-20",
+    "qualified": 21,
+    "session": "2022-01-21"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-21",
+    "qualified": 16,
+    "session": "2022-01-24"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-24",
+    "qualified": 16,
+    "session": "2022-01-25"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-25",
+    "qualified": 14,
+    "session": "2022-01-26"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-26",
+    "qualified": 15,
+    "session": "2022-01-27"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-27",
+    "qualified": 11,
+    "session": "2022-01-28"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-28",
+    "qualified": 14,
+    "session": "2022-01-31"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-01-31",
+    "qualified": 16,
+    "session": "2022-02-01"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-02-01",
+    "qualified": 16,
+    "session": "2022-02-02"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-02-02",
+    "qualified": 19,
+    "session": "2022-02-03"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-02-03",
+    "qualified": 17,
+    "session": "2022-02-04"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-02-04",
+    "qualified": 18,
+    "session": "2022-02-07"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-02-07",
+    "qualified": 17,
+    "session": "2022-02-08"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-02-08",
+    "qualified": 18,
+    "session": "2022-02-09"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-02-09",
+    "qualified": 19,
+    "session": "2022-02-10"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-02-10",
+    "qualified": 17,
+    "session": "2022-02-11"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-02-11",
+    "qualified": 13,
+    "session": "2022-02-14"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-02-14",
+    "qualified": 13,
+    "session": "2022-02-15"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-02-15",
+    "qualified": 19,
+    "session": "2022-02-16"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-02-16",
+    "qualified": 22,
+    "session": "2022-02-17"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-02-17",
+    "qualified": 22,
+    "session": "2022-02-18"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-02-18",
+    "qualified": 18,
+    "session": "2022-02-22"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-02-22",
+    "qualified": 15,
+    "session": "2022-02-23"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-02-23",
+    "qualified": 14,
+    "session": "2022-02-24"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-02-24",
+    "qualified": 14,
+    "session": "2022-02-25"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-02-25",
+    "qualified": 18,
+    "session": "2022-02-28"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-02-28",
+    "qualified": 17,
+    "session": "2022-03-01"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-01",
+    "qualified": 15,
+    "session": "2022-03-02"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-02",
+    "qualified": 17,
+    "session": "2022-03-03"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-03",
+    "qualified": 16,
+    "session": "2022-03-04"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-04",
+    "qualified": 14,
+    "session": "2022-03-07"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-07",
+    "qualified": 14,
+    "session": "2022-03-08"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-08",
+    "qualified": 14,
+    "session": "2022-03-09"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-09",
+    "qualified": 15,
+    "session": "2022-03-10"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-10",
+    "qualified": 14,
+    "session": "2022-03-11"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-11",
+    "qualified": 14,
+    "session": "2022-03-14"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-14",
+    "qualified": 14,
+    "session": "2022-03-15"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-15",
+    "qualified": 16,
+    "session": "2022-03-16"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-16",
+    "qualified": 17,
+    "session": "2022-03-17"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-17",
+    "qualified": 20,
+    "session": "2022-03-18"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-18",
+    "qualified": 23,
+    "session": "2022-03-21"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-21",
+    "qualified": 24,
+    "session": "2022-03-22"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-22",
+    "qualified": 24,
+    "session": "2022-03-23"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-03-23",
+    "qualified": 25,
+    "session": "2022-03-24"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-03-24",
+    "qualified": 24,
+    "session": "2022-03-25"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-03-25",
+    "qualified": 23,
+    "session": "2022-03-28"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-03-28",
+    "qualified": 24,
+    "session": "2022-03-29"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-03-29",
+    "qualified": 25,
+    "session": "2022-03-30"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-03-30",
+    "qualified": 24,
+    "session": "2022-03-31"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-03-31",
+    "qualified": 24,
+    "session": "2022-04-01"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2022-04-01",
+    "qualified": 25,
+    "session": "2022-04-04"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2022-04-04",
+    "qualified": 27,
+    "session": "2022-04-05"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2022-04-05",
+    "qualified": 24,
+    "session": "2022-04-06"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2022-04-06",
+    "qualified": 22,
+    "session": "2022-04-07"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2022-04-07",
+    "qualified": 19,
+    "session": "2022-04-08"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2022-04-08",
+    "qualified": 20,
+    "session": "2022-04-11"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2022-04-11",
+    "qualified": 18,
+    "session": "2022-04-12"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2022-04-12",
+    "qualified": 19,
+    "session": "2022-04-13"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2022-04-13",
+    "qualified": 20,
+    "session": "2022-04-14"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-04-14",
+    "qualified": 17,
+    "session": "2022-04-18"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-04-18",
+    "qualified": 17,
+    "session": "2022-04-19"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-04-19",
+    "qualified": 18,
+    "session": "2022-04-20"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-04-20",
+    "qualified": 18,
+    "session": "2022-04-21"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-04-21",
+    "qualified": 18,
+    "session": "2022-04-22"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-04-22",
+    "qualified": 15,
+    "session": "2022-04-25"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-04-25",
+    "qualified": 13,
+    "session": "2022-04-26"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-04-26",
+    "qualified": 11,
+    "session": "2022-04-27"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-04-27",
+    "qualified": 13,
+    "session": "2022-04-28"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-04-28",
+    "qualified": 14,
+    "session": "2022-04-29"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-04-29",
+    "qualified": 11,
+    "session": "2022-05-02"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-05-02",
+    "qualified": 12,
+    "session": "2022-05-03"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-05-03",
+    "qualified": 11,
+    "session": "2022-05-04"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-05-04",
+    "qualified": 15,
+    "session": "2022-05-05"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-05-05",
+    "qualified": 11,
+    "session": "2022-05-06"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-06",
+    "qualified": 11,
+    "session": "2022-05-09"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-09",
+    "qualified": 11,
+    "session": "2022-05-10"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-10",
+    "qualified": 11,
+    "session": "2022-05-11"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-11",
+    "qualified": 11,
+    "session": "2022-05-12"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-12",
+    "qualified": 10,
+    "session": "2022-05-13"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-13",
+    "qualified": 10,
+    "session": "2022-05-16"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-16",
+    "qualified": 10,
+    "session": "2022-05-17"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-17",
+    "qualified": 10,
+    "session": "2022-05-18"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-18",
+    "qualified": 9,
+    "session": "2022-05-19"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-19",
+    "qualified": 9,
+    "session": "2022-05-20"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-20",
+    "qualified": 9,
+    "session": "2022-05-23"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-23",
+    "qualified": 12,
+    "session": "2022-05-24"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-24",
+    "qualified": 12,
+    "session": "2022-05-25"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-25",
+    "qualified": 12,
+    "session": "2022-05-26"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-26",
+    "qualified": 13,
+    "session": "2022-05-27"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-27",
+    "qualified": 16,
+    "session": "2022-05-31"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-05-31",
+    "qualified": 17,
+    "session": "2022-06-01"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-01",
+    "qualified": 18,
+    "session": "2022-06-02"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-02",
+    "qualified": 19,
+    "session": "2022-06-03"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-03",
+    "qualified": 18,
+    "session": "2022-06-06"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-06",
+    "qualified": 18,
+    "session": "2022-06-07"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-07",
+    "qualified": 18,
+    "session": "2022-06-08"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-08",
+    "qualified": 15,
+    "session": "2022-06-09"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-09",
+    "qualified": 13,
+    "session": "2022-06-10"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-10",
+    "qualified": 11,
+    "session": "2022-06-13"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-13",
+    "qualified": 9,
+    "session": "2022-06-14"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-14",
+    "qualified": 9,
+    "session": "2022-06-15"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-15",
+    "qualified": 10,
+    "session": "2022-06-16"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-16",
+    "qualified": 10,
+    "session": "2022-06-17"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-17",
+    "qualified": 8,
+    "session": "2022-06-21"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-21",
+    "qualified": 9,
+    "session": "2022-06-22"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-22",
+    "qualified": 8,
+    "session": "2022-06-23"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-23",
+    "qualified": 8,
+    "session": "2022-06-24"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-24",
+    "qualified": 9,
+    "session": "2022-06-27"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-27",
+    "qualified": 9,
+    "session": "2022-06-28"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-28",
+    "qualified": 9,
+    "session": "2022-06-29"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-29",
+    "qualified": 8,
+    "session": "2022-06-30"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-06-30",
+    "qualified": 8,
+    "session": "2022-07-01"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-01",
+    "qualified": 8,
+    "session": "2022-07-05"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-05",
+    "qualified": 6,
+    "session": "2022-07-06"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-06",
+    "qualified": 7,
+    "session": "2022-07-07"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-07",
+    "qualified": 8,
+    "session": "2022-07-08"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-08",
+    "qualified": 8,
+    "session": "2022-07-11"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-11",
+    "qualified": 8,
+    "session": "2022-07-12"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-12",
+    "qualified": 7,
+    "session": "2022-07-13"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-13",
+    "qualified": 8,
+    "session": "2022-07-14"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-14",
+    "qualified": 7,
+    "session": "2022-07-15"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-15",
+    "qualified": 7,
+    "session": "2022-07-18"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-18",
+    "qualified": 7,
+    "session": "2022-07-19"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-19",
+    "qualified": 8,
+    "session": "2022-07-20"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-20",
+    "qualified": 7,
+    "session": "2022-07-21"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-21",
+    "qualified": 7,
+    "session": "2022-07-22"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-22",
+    "qualified": 7,
+    "session": "2022-07-25"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-25",
+    "qualified": 8,
+    "session": "2022-07-26"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-26",
+    "qualified": 8,
+    "session": "2022-07-27"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-27",
+    "qualified": 8,
+    "session": "2022-07-28"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-28",
+    "qualified": 11,
+    "session": "2022-07-29"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-07-29",
+    "qualified": 14,
+    "session": "2022-08-01"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-08-01",
+    "qualified": 11,
+    "session": "2022-08-02"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-08-02",
+    "qualified": 10,
+    "session": "2022-08-03"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-08-03",
+    "qualified": 11,
+    "session": "2022-08-04"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-08-04",
+    "qualified": 8,
+    "session": "2022-08-05"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-08-05",
+    "qualified": 10,
+    "session": "2022-08-08"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-08-08",
+    "qualified": 11,
+    "session": "2022-08-09"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-08-09",
+    "qualified": 9,
+    "session": "2022-08-10"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-08-10",
+    "qualified": 11,
+    "session": "2022-08-11"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-08-11",
+    "qualified": 7,
+    "session": "2022-08-12"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-08-12",
+    "qualified": 12,
+    "session": "2022-08-15"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-08-15",
+    "qualified": 14,
+    "session": "2022-08-16"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-08-16",
+    "qualified": 16,
+    "session": "2022-08-17"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-08-17",
+    "qualified": 12,
+    "session": "2022-08-18"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2022-08-18",
+    "qualified": 10,
+    "session": "2022-08-19"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-08-19",
+    "qualified": 12,
+    "session": "2022-08-22"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-08-22",
+    "qualified": 11,
+    "session": "2022-08-23"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-08-23",
+    "qualified": 12,
+    "session": "2022-08-24"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-08-24",
+    "qualified": 13,
+    "session": "2022-08-25"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-08-25",
+    "qualified": 14,
+    "session": "2022-08-26"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-08-26",
+    "qualified": 8,
+    "session": "2022-08-29"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-08-29",
+    "qualified": 7,
+    "session": "2022-08-30"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-08-30",
+    "qualified": 7,
+    "session": "2022-08-31"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-08-31",
+    "qualified": 5,
+    "session": "2022-09-01"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-09-01",
+    "qualified": 5,
+    "session": "2022-09-02"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-09-02",
+    "qualified": 5,
+    "session": "2022-09-06"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-09-06",
+    "qualified": 5,
+    "session": "2022-09-07"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-09-07",
+    "qualified": 8,
+    "session": "2022-09-08"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-09-08",
+    "qualified": 8,
+    "session": "2022-09-09"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-09-09",
+    "qualified": 8,
+    "session": "2022-09-12"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-09-12",
+    "qualified": 10,
+    "session": "2022-09-13"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-09-13",
+    "qualified": 9,
+    "session": "2022-09-14"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-09-14",
+    "qualified": 9,
+    "session": "2022-09-15"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-09-15",
+    "qualified": 6,
+    "session": "2022-09-16"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-09-16",
+    "qualified": 4,
+    "session": "2022-09-19"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-09-19",
+    "qualified": 4,
+    "session": "2022-09-20"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-09-20",
+    "qualified": 4,
+    "session": "2022-09-21"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-09-21",
+    "qualified": 4,
+    "session": "2022-09-22"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-09-22",
+    "qualified": 4,
+    "session": "2022-09-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-09-23",
+    "qualified": 3,
+    "session": "2022-09-26"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-09-26",
+    "qualified": 1,
+    "session": "2022-09-27"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-09-27",
+    "qualified": 1,
+    "session": "2022-09-28"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-09-28",
+    "qualified": 2,
+    "session": "2022-09-29"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-09-29",
+    "qualified": 2,
+    "session": "2022-09-30"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-09-30",
+    "qualified": 1,
+    "session": "2022-10-03"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-03",
+    "qualified": 3,
+    "session": "2022-10-04"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-04",
+    "qualified": 2,
+    "session": "2022-10-05"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-05",
+    "qualified": 2,
+    "session": "2022-10-06"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-06",
+    "qualified": 2,
+    "session": "2022-10-07"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-07",
+    "qualified": 3,
+    "session": "2022-10-10"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-10",
+    "qualified": 2,
+    "session": "2022-10-11"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-11",
+    "qualified": 2,
+    "session": "2022-10-12"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-12",
+    "qualified": 2,
+    "session": "2022-10-13"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-13",
+    "qualified": 2,
+    "session": "2022-10-14"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-14",
+    "qualified": 2,
+    "session": "2022-10-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-17",
+    "qualified": 2,
+    "session": "2022-10-18"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-18",
+    "qualified": 2,
+    "session": "2022-10-19"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-19",
+    "qualified": 2,
+    "session": "2022-10-20"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-20",
+    "qualified": 2,
+    "session": "2022-10-21"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-21",
+    "qualified": 3,
+    "session": "2022-10-24"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-24",
+    "qualified": 3,
+    "session": "2022-10-25"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-25",
+    "qualified": 3,
+    "session": "2022-10-26"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-10-26",
+    "qualified": 5,
+    "session": "2022-10-27"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-10-27",
+    "qualified": 4,
+    "session": "2022-10-28"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-10-28",
+    "qualified": 7,
+    "session": "2022-10-31"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-10-31",
+    "qualified": 5,
+    "session": "2022-11-01"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-01",
+    "qualified": 5,
+    "session": "2022-11-02"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-02",
+    "qualified": 4,
+    "session": "2022-11-03"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-03",
+    "qualified": 5,
+    "session": "2022-11-04"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-04",
+    "qualified": 7,
+    "session": "2022-11-07"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-07",
+    "qualified": 10,
+    "session": "2022-11-08"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-08",
+    "qualified": 11,
+    "session": "2022-11-09"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-09",
+    "qualified": 9,
+    "session": "2022-11-10"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-10",
+    "qualified": 19,
+    "session": "2022-11-11"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-11",
+    "qualified": 14,
+    "session": "2022-11-14"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-14",
+    "qualified": 12,
+    "session": "2022-11-15"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-15",
+    "qualified": 10,
+    "session": "2022-11-16"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2022-11-16",
+    "qualified": 17,
+    "session": "2022-11-17"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-17",
+    "qualified": 13,
+    "session": "2022-11-18"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-18",
+    "qualified": 15,
+    "session": "2022-11-21"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-21",
+    "qualified": 12,
+    "session": "2022-11-22"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-22",
+    "qualified": 14,
+    "session": "2022-11-23"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-23",
+    "qualified": 14,
+    "session": "2022-11-25"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-25",
+    "qualified": 12,
+    "session": "2022-11-28"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-28",
+    "qualified": 9,
+    "session": "2022-11-29"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-11-29",
+    "qualified": 10,
+    "session": "2022-11-30"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-11-30",
+    "qualified": 13,
+    "session": "2022-12-01"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-01",
+    "qualified": 11,
+    "session": "2022-12-02"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-02",
+    "qualified": 11,
+    "session": "2022-12-05"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-05",
+    "qualified": 9,
+    "session": "2022-12-06"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-06",
+    "qualified": 7,
+    "session": "2022-12-07"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-07",
+    "qualified": 8,
+    "session": "2022-12-08"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-08",
+    "qualified": 17,
+    "session": "2022-12-09"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-09",
+    "qualified": 24,
+    "session": "2022-12-12"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-12",
+    "qualified": 30,
+    "session": "2022-12-13"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-13",
+    "qualified": 33,
+    "session": "2022-12-14"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-14",
+    "qualified": 30,
+    "session": "2022-12-15"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-15",
+    "qualified": 30,
+    "session": "2022-12-16"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-16",
+    "qualified": 29,
+    "session": "2022-12-19"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-19",
+    "qualified": 26,
+    "session": "2022-12-20"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-20",
+    "qualified": 25,
+    "session": "2022-12-21"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-21",
+    "qualified": 27,
+    "session": "2022-12-22"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-22",
+    "qualified": 22,
+    "session": "2022-12-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-23",
+    "qualified": 23,
+    "session": "2022-12-27"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-27",
+    "qualified": 23,
+    "session": "2022-12-28"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2022-12-28",
+    "qualified": 22,
+    "session": "2022-12-29"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-12-29",
+    "qualified": 25,
+    "session": "2022-12-30"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2022-12-30",
+    "qualified": 25,
+    "session": "2023-01-03"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-01-03",
+    "qualified": 26,
+    "session": "2023-01-04"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-01-04",
+    "qualified": 31,
+    "session": "2023-01-05"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-01-05",
+    "qualified": 23,
+    "session": "2023-01-06"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-01-06",
+    "qualified": 31,
+    "session": "2023-01-09"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-01-09",
+    "qualified": 34,
+    "session": "2023-01-10"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-01-10",
+    "qualified": 32,
+    "session": "2023-01-11"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-01-11",
+    "qualified": 33,
+    "session": "2023-01-12"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-01-12",
+    "qualified": 37,
+    "session": "2023-01-13"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-01-13",
+    "qualified": 33,
+    "session": "2023-01-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-01-17",
+    "qualified": 34,
+    "session": "2023-01-18"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-01-18",
+    "qualified": 34,
+    "session": "2023-01-19"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-01-19",
+    "qualified": 32,
+    "session": "2023-01-20"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-01-20",
+    "qualified": 31,
+    "session": "2023-01-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-01-23",
+    "qualified": 34,
+    "session": "2023-01-24"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-01-24",
+    "qualified": 33,
+    "session": "2023-01-25"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-01-25",
+    "qualified": 33,
+    "session": "2023-01-26"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-01-26",
+    "qualified": 31,
+    "session": "2023-01-27"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-01-27",
+    "qualified": 29,
+    "session": "2023-01-30"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-01-30",
+    "qualified": 25,
+    "session": "2023-01-31"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-01-31",
+    "qualified": 28,
+    "session": "2023-02-01"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-01",
+    "qualified": 32,
+    "session": "2023-02-02"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-02",
+    "qualified": 31,
+    "session": "2023-02-03"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-03",
+    "qualified": 31,
+    "session": "2023-02-06"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-06",
+    "qualified": 30,
+    "session": "2023-02-07"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-07",
+    "qualified": 30,
+    "session": "2023-02-08"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-08",
+    "qualified": 31,
+    "session": "2023-02-09"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-09",
+    "qualified": 21,
+    "session": "2023-02-10"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-10",
+    "qualified": 23,
+    "session": "2023-02-13"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-13",
+    "qualified": 23,
+    "session": "2023-02-14"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-14",
+    "qualified": 22,
+    "session": "2023-02-15"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-15",
+    "qualified": 19,
+    "session": "2023-02-16"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-16",
+    "qualified": 21,
+    "session": "2023-02-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-17",
+    "qualified": 23,
+    "session": "2023-02-21"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-21",
+    "qualified": 20,
+    "session": "2023-02-22"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-22",
+    "qualified": 24,
+    "session": "2023-02-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-23",
+    "qualified": 27,
+    "session": "2023-02-24"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-24",
+    "qualified": 21,
+    "session": "2023-02-27"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-27",
+    "qualified": 16,
+    "session": "2023-02-28"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-02-28",
+    "qualified": 23,
+    "session": "2023-03-01"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-03-01",
+    "qualified": 25,
+    "session": "2023-03-02"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-03-02",
+    "qualified": 29,
+    "session": "2023-03-03"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-03-03",
+    "qualified": 31,
+    "session": "2023-03-06"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-03-06",
+    "qualified": 32,
+    "session": "2023-03-07"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-03-07",
+    "qualified": 31,
+    "session": "2023-03-08"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-03-08",
+    "qualified": 32,
+    "session": "2023-03-09"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-03-09",
+    "qualified": 25,
+    "session": "2023-03-10"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-03-10",
+    "qualified": 23,
+    "session": "2023-03-13"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-03-13",
+    "qualified": 25,
+    "session": "2023-03-14"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-03-14",
+    "qualified": 24,
+    "session": "2023-03-15"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-03-15",
+    "qualified": 30,
+    "session": "2023-03-16"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-03-16",
+    "qualified": 33,
+    "session": "2023-03-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-03-17",
+    "qualified": 33,
+    "session": "2023-03-20"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-03-20",
+    "qualified": 36,
+    "session": "2023-03-21"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-03-21",
+    "qualified": 35,
+    "session": "2023-03-22"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-03-22",
+    "qualified": 37,
+    "session": "2023-03-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-03-23",
+    "qualified": 37,
+    "session": "2023-03-24"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-03-24",
+    "qualified": 39,
+    "session": "2023-03-27"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-03-27",
+    "qualified": 39,
+    "session": "2023-03-28"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-03-28",
+    "qualified": 42,
+    "session": "2023-03-29"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-03-29",
+    "qualified": 40,
+    "session": "2023-03-30"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-03-30",
+    "qualified": 40,
+    "session": "2023-03-31"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-03-31",
+    "qualified": 42,
+    "session": "2023-04-03"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-03",
+    "qualified": 44,
+    "session": "2023-04-04"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-04",
+    "qualified": 43,
+    "session": "2023-04-05"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-05",
+    "qualified": 40,
+    "session": "2023-04-06"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-06",
+    "qualified": 41,
+    "session": "2023-04-10"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-10",
+    "qualified": 42,
+    "session": "2023-04-11"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-11",
+    "qualified": 42,
+    "session": "2023-04-12"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-12",
+    "qualified": 42,
+    "session": "2023-04-13"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-13",
+    "qualified": 43,
+    "session": "2023-04-14"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-14",
+    "qualified": 43,
+    "session": "2023-04-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-17",
+    "qualified": 42,
+    "session": "2023-04-18"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-18",
+    "qualified": 43,
+    "session": "2023-04-19"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-19",
+    "qualified": 42,
+    "session": "2023-04-20"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-20",
+    "qualified": 42,
+    "session": "2023-04-21"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-21",
+    "qualified": 42,
+    "session": "2023-04-24"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-24",
+    "qualified": 42,
+    "session": "2023-04-25"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-25",
+    "qualified": 41,
+    "session": "2023-04-26"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-26",
+    "qualified": 40,
+    "session": "2023-04-27"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-27",
+    "qualified": 40,
+    "session": "2023-04-28"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-04-28",
+    "qualified": 40,
+    "session": "2023-05-01"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-01",
+    "qualified": 40,
+    "session": "2023-05-02"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-02",
+    "qualified": 40,
+    "session": "2023-05-03"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-03",
+    "qualified": 40,
+    "session": "2023-05-04"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-04",
+    "qualified": 39,
+    "session": "2023-05-05"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-05",
+    "qualified": 40,
+    "session": "2023-05-08"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-08",
+    "qualified": 40,
+    "session": "2023-05-09"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-09",
+    "qualified": 40,
+    "session": "2023-05-10"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-10",
+    "qualified": 40,
+    "session": "2023-05-11"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-11",
+    "qualified": 40,
+    "session": "2023-05-12"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-12",
+    "qualified": 40,
+    "session": "2023-05-15"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-15",
+    "qualified": 36,
+    "session": "2023-05-16"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-16",
+    "qualified": 33,
+    "session": "2023-05-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-17",
+    "qualified": 36,
+    "session": "2023-05-18"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-18",
+    "qualified": 35,
+    "session": "2023-05-19"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-19",
+    "qualified": 34,
+    "session": "2023-05-22"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-22",
+    "qualified": 35,
+    "session": "2023-05-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-23",
+    "qualified": 34,
+    "session": "2023-05-24"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-24",
+    "qualified": 31,
+    "session": "2023-05-25"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-25",
+    "qualified": 29,
+    "session": "2023-05-26"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-26",
+    "qualified": 28,
+    "session": "2023-05-30"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-30",
+    "qualified": 29,
+    "session": "2023-05-31"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-05-31",
+    "qualified": 29,
+    "session": "2023-06-01"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-01",
+    "qualified": 30,
+    "session": "2023-06-02"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-02",
+    "qualified": 28,
+    "session": "2023-06-05"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-05",
+    "qualified": 24,
+    "session": "2023-06-06"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-06",
+    "qualified": 22,
+    "session": "2023-06-07"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-07",
+    "qualified": 29,
+    "session": "2023-06-08"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-08",
+    "qualified": 32,
+    "session": "2023-06-09"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-09",
+    "qualified": 27,
+    "session": "2023-06-12"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-12",
+    "qualified": 28,
+    "session": "2023-06-13"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-13",
+    "qualified": 30,
+    "session": "2023-06-14"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-14",
+    "qualified": 32,
+    "session": "2023-06-15"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-15",
+    "qualified": 31,
+    "session": "2023-06-16"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-16",
+    "qualified": 30,
+    "session": "2023-06-20"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-20",
+    "qualified": 30,
+    "session": "2023-06-21"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-21",
+    "qualified": 33,
+    "session": "2023-06-22"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-22",
+    "qualified": 33,
+    "session": "2023-06-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-23",
+    "qualified": 35,
+    "session": "2023-06-26"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-26",
+    "qualified": 34,
+    "session": "2023-06-27"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-27",
+    "qualified": 35,
+    "session": "2023-06-28"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-28",
+    "qualified": 34,
+    "session": "2023-06-29"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-29",
+    "qualified": 34,
+    "session": "2023-06-30"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-06-30",
+    "qualified": 35,
+    "session": "2023-07-03"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-07-03",
+    "qualified": 35,
+    "session": "2023-07-05"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-07-05",
+    "qualified": 35,
+    "session": "2023-07-06"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-07-06",
+    "qualified": 31,
+    "session": "2023-07-07"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-07-07",
+    "qualified": 29,
+    "session": "2023-07-10"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-07-10",
+    "qualified": 32,
+    "session": "2023-07-11"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-07-11",
+    "qualified": 28,
+    "session": "2023-07-12"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-07-12",
+    "qualified": 31,
+    "session": "2023-07-13"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-07-13",
+    "qualified": 35,
+    "session": "2023-07-14"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-07-14",
+    "qualified": 31,
+    "session": "2023-07-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-07-17",
+    "qualified": 28,
+    "session": "2023-07-18"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-07-18",
+    "qualified": 29,
+    "session": "2023-07-19"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-07-19",
+    "qualified": 30,
+    "session": "2023-07-20"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-07-20",
+    "qualified": 28,
+    "session": "2023-07-21"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-07-21",
+    "qualified": 29,
+    "session": "2023-07-24"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-07-24",
+    "qualified": 30,
+    "session": "2023-07-25"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-07-25",
+    "qualified": 31,
+    "session": "2023-07-26"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-07-26",
+    "qualified": 29,
+    "session": "2023-07-27"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-07-27",
+    "qualified": 27,
+    "session": "2023-07-28"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-07-28",
+    "qualified": 29,
+    "session": "2023-07-31"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-07-31",
+    "qualified": 29,
+    "session": "2023-08-01"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-08-01",
+    "qualified": 31,
+    "session": "2023-08-02"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-08-02",
+    "qualified": 27,
+    "session": "2023-08-03"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-08-03",
+    "qualified": 24,
+    "session": "2023-08-04"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-08-04",
+    "qualified": 24,
+    "session": "2023-08-07"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-08-07",
+    "qualified": 29,
+    "session": "2023-08-08"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-08-08",
+    "qualified": 32,
+    "session": "2023-08-09"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-08-09",
+    "qualified": 29,
+    "session": "2023-08-10"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-08-10",
+    "qualified": 30,
+    "session": "2023-08-11"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-08-11",
+    "qualified": 31,
+    "session": "2023-08-14"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-08-14",
+    "qualified": 29,
+    "session": "2023-08-15"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-08-15",
+    "qualified": 21,
+    "session": "2023-08-16"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-08-16",
+    "qualified": 21,
+    "session": "2023-08-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-08-17",
+    "qualified": 23,
+    "session": "2023-08-18"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-08-18",
+    "qualified": 24,
+    "session": "2023-08-21"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-08-21",
+    "qualified": 25,
+    "session": "2023-08-22"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-08-22",
+    "qualified": 27,
+    "session": "2023-08-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-08-23",
+    "qualified": 32,
+    "session": "2023-08-24"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-08-24",
+    "qualified": 26,
+    "session": "2023-08-25"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2023-08-25",
+    "qualified": 33,
+    "session": "2023-08-28"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-08-28",
+    "qualified": 34,
+    "session": "2023-08-29"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-08-29",
+    "qualified": 39,
+    "session": "2023-08-30"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-08-30",
+    "qualified": 40,
+    "session": "2023-08-31"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-08-31",
+    "qualified": 38,
+    "session": "2023-09-01"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-01",
+    "qualified": 33,
+    "session": "2023-09-05"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-05",
+    "qualified": 28,
+    "session": "2023-09-06"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-06",
+    "qualified": 35,
+    "session": "2023-09-07"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-07",
+    "qualified": 35,
+    "session": "2023-09-08"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-08",
+    "qualified": 35,
+    "session": "2023-09-11"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-11",
+    "qualified": 34,
+    "session": "2023-09-12"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-12",
+    "qualified": 33,
+    "session": "2023-09-13"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-13",
+    "qualified": 33,
+    "session": "2023-09-14"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-14",
+    "qualified": 32,
+    "session": "2023-09-15"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-15",
+    "qualified": 31,
+    "session": "2023-09-18"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-18",
+    "qualified": 33,
+    "session": "2023-09-19"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-19",
+    "qualified": 30,
+    "session": "2023-09-20"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-20",
+    "qualified": 30,
+    "session": "2023-09-21"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-21",
+    "qualified": 27,
+    "session": "2023-09-22"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-22",
+    "qualified": 30,
+    "session": "2023-09-25"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-25",
+    "qualified": 27,
+    "session": "2023-09-26"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-26",
+    "qualified": 21,
+    "session": "2023-09-27"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-27",
+    "qualified": 21,
+    "session": "2023-09-28"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-28",
+    "qualified": 22,
+    "session": "2023-09-29"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-09-29",
+    "qualified": 18,
+    "session": "2023-10-02"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-02",
+    "qualified": 14,
+    "session": "2023-10-03"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-03",
+    "qualified": 12,
+    "session": "2023-10-04"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-04",
+    "qualified": 11,
+    "session": "2023-10-05"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-05",
+    "qualified": 14,
+    "session": "2023-10-06"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-06",
+    "qualified": 16,
+    "session": "2023-10-09"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-09",
+    "qualified": 17,
+    "session": "2023-10-10"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-10",
+    "qualified": 18,
+    "session": "2023-10-11"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-11",
+    "qualified": 17,
+    "session": "2023-10-12"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-12",
+    "qualified": 13,
+    "session": "2023-10-13"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-13",
+    "qualified": 15,
+    "session": "2023-10-16"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-16",
+    "qualified": 15,
+    "session": "2023-10-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-17",
+    "qualified": 16,
+    "session": "2023-10-18"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-18",
+    "qualified": 15,
+    "session": "2023-10-19"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-19",
+    "qualified": 14,
+    "session": "2023-10-20"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-20",
+    "qualified": 13,
+    "session": "2023-10-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-23",
+    "qualified": 13,
+    "session": "2023-10-24"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-24",
+    "qualified": 14,
+    "session": "2023-10-25"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-25",
+    "qualified": 14,
+    "session": "2023-10-26"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-26",
+    "qualified": 12,
+    "session": "2023-10-27"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-27",
+    "qualified": 12,
+    "session": "2023-10-30"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2023-10-30",
+    "qualified": 14,
+    "session": "2023-10-31"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-10-31",
+    "qualified": 13,
+    "session": "2023-11-01"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-01",
+    "qualified": 16,
+    "session": "2023-11-02"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-02",
+    "qualified": 19,
+    "session": "2023-11-03"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-03",
+    "qualified": 21,
+    "session": "2023-11-06"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-06",
+    "qualified": 20,
+    "session": "2023-11-07"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-07",
+    "qualified": 21,
+    "session": "2023-11-08"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-08",
+    "qualified": 19,
+    "session": "2023-11-09"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-09",
+    "qualified": 17,
+    "session": "2023-11-10"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-10",
+    "qualified": 22,
+    "session": "2023-11-13"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-13",
+    "qualified": 19,
+    "session": "2023-11-14"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-14",
+    "qualified": 24,
+    "session": "2023-11-15"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-15",
+    "qualified": 24,
+    "session": "2023-11-16"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-16",
+    "qualified": 26,
+    "session": "2023-11-17"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-17",
+    "qualified": 27,
+    "session": "2023-11-20"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-20",
+    "qualified": 27,
+    "session": "2023-11-21"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-21",
+    "qualified": 32,
+    "session": "2023-11-22"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-22",
+    "qualified": 34,
+    "session": "2023-11-24"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-24",
+    "qualified": 35,
+    "session": "2023-11-27"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-27",
+    "qualified": 33,
+    "session": "2023-11-28"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-28",
+    "qualified": 35,
+    "session": "2023-11-29"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-29",
+    "qualified": 34,
+    "session": "2023-11-30"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-11-30",
+    "qualified": 33,
+    "session": "2023-12-01"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-01",
+    "qualified": 34,
+    "session": "2023-12-04"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-04",
+    "qualified": 33,
+    "session": "2023-12-05"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-05",
+    "qualified": 32,
+    "session": "2023-12-06"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-06",
+    "qualified": 34,
+    "session": "2023-12-07"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-07",
+    "qualified": 32,
+    "session": "2023-12-08"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-08",
+    "qualified": 32,
+    "session": "2023-12-11"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-11",
+    "qualified": 32,
+    "session": "2023-12-12"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-12",
+    "qualified": 31,
+    "session": "2023-12-13"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-13",
+    "qualified": 37,
+    "session": "2023-12-14"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-14",
+    "qualified": 37,
+    "session": "2023-12-15"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-15",
+    "qualified": 33,
+    "session": "2023-12-18"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-18",
+    "qualified": 37,
+    "session": "2023-12-19"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-19",
+    "qualified": 38,
+    "session": "2023-12-20"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-20",
+    "qualified": 37,
+    "session": "2023-12-21"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-21",
+    "qualified": 40,
+    "session": "2023-12-22"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-22",
+    "qualified": 40,
+    "session": "2023-12-26"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-26",
+    "qualified": 40,
+    "session": "2023-12-27"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-27",
+    "qualified": 40,
+    "session": "2023-12-28"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-28",
+    "qualified": 41,
+    "session": "2023-12-29"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2023-12-29",
+    "qualified": 40,
+    "session": "2024-01-02"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-02",
+    "qualified": 40,
+    "session": "2024-01-03"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-03",
+    "qualified": 39,
+    "session": "2024-01-04"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-04",
+    "qualified": 40,
+    "session": "2024-01-05"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-05",
+    "qualified": 41,
+    "session": "2024-01-08"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-08",
+    "qualified": 40,
+    "session": "2024-01-09"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-09",
+    "qualified": 37,
+    "session": "2024-01-10"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-10",
+    "qualified": 33,
+    "session": "2024-01-11"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-11",
+    "qualified": 32,
+    "session": "2024-01-12"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-12",
+    "qualified": 33,
+    "session": "2024-01-16"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-16",
+    "qualified": 31,
+    "session": "2024-01-17"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-17",
+    "qualified": 22,
+    "session": "2024-01-18"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-18",
+    "qualified": 26,
+    "session": "2024-01-19"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-19",
+    "qualified": 29,
+    "session": "2024-01-22"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-22",
+    "qualified": 30,
+    "session": "2024-01-23"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-23",
+    "qualified": 29,
+    "session": "2024-01-24"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-24",
+    "qualified": 31,
+    "session": "2024-01-25"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-25",
+    "qualified": 31,
+    "session": "2024-01-26"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-26",
+    "qualified": 34,
+    "session": "2024-01-29"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-29",
+    "qualified": 32,
+    "session": "2024-01-30"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-30",
+    "qualified": 32,
+    "session": "2024-01-31"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-01-31",
+    "qualified": 31,
+    "session": "2024-02-01"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-01",
+    "qualified": 34,
+    "session": "2024-02-02"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-02",
+    "qualified": 34,
+    "session": "2024-02-05"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-05",
+    "qualified": 32,
+    "session": "2024-02-06"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-06",
+    "qualified": 33,
+    "session": "2024-02-07"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-07",
+    "qualified": 36,
+    "session": "2024-02-08"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-08",
+    "qualified": 36,
+    "session": "2024-02-09"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-09",
+    "qualified": 36,
+    "session": "2024-02-12"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-12",
+    "qualified": 36,
+    "session": "2024-02-13"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-13",
+    "qualified": 35,
+    "session": "2024-02-14"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-14",
+    "qualified": 37,
+    "session": "2024-02-15"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-15",
+    "qualified": 41,
+    "session": "2024-02-16"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-16",
+    "qualified": 40,
+    "session": "2024-02-20"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-20",
+    "qualified": 38,
+    "session": "2024-02-21"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-21",
+    "qualified": 39,
+    "session": "2024-02-22"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-22",
+    "qualified": 39,
+    "session": "2024-02-23"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-23",
+    "qualified": 39,
+    "session": "2024-02-26"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-26",
+    "qualified": 39,
+    "session": "2024-02-27"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-27",
+    "qualified": 37,
+    "session": "2024-02-28"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-28",
+    "qualified": 38,
+    "session": "2024-02-29"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-02-29",
+    "qualified": 37,
+    "session": "2024-03-01"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-01",
+    "qualified": 38,
+    "session": "2024-03-04"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-04",
+    "qualified": 37,
+    "session": "2024-03-05"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-05",
+    "qualified": 38,
+    "session": "2024-03-06"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-06",
+    "qualified": 39,
+    "session": "2024-03-07"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-07",
+    "qualified": 40,
+    "session": "2024-03-08"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-08",
+    "qualified": 39,
+    "session": "2024-03-11"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-11",
+    "qualified": 40,
+    "session": "2024-03-12"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-12",
+    "qualified": 40,
+    "session": "2024-03-13"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-13",
+    "qualified": 40,
+    "session": "2024-03-14"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-14",
+    "qualified": 41,
+    "session": "2024-03-15"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-15",
+    "qualified": 39,
+    "session": "2024-03-18"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-18",
+    "qualified": 39,
+    "session": "2024-03-19"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-19",
+    "qualified": 40,
+    "session": "2024-03-20"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-20",
+    "qualified": 40,
+    "session": "2024-03-21"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-21",
+    "qualified": 40,
+    "session": "2024-03-22"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-22",
+    "qualified": 40,
+    "session": "2024-03-25"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-25",
+    "qualified": 40,
+    "session": "2024-03-26"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-26",
+    "qualified": 40,
+    "session": "2024-03-27"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-27",
+    "qualified": 40,
+    "session": "2024-03-28"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-03-28",
+    "qualified": 41,
+    "session": "2024-04-01"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-01",
+    "qualified": 40,
+    "session": "2024-04-02"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-02",
+    "qualified": 41,
+    "session": "2024-04-03"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-03",
+    "qualified": 42,
+    "session": "2024-04-04"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-04",
+    "qualified": 43,
+    "session": "2024-04-05"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-05",
+    "qualified": 43,
+    "session": "2024-04-08"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-08",
+    "qualified": 43,
+    "session": "2024-04-09"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-09",
+    "qualified": 43,
+    "session": "2024-04-10"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-10",
+    "qualified": 43,
+    "session": "2024-04-11"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-11",
+    "qualified": 43,
+    "session": "2024-04-12"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-12",
+    "qualified": 43,
+    "session": "2024-04-15"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-15",
+    "qualified": 43,
+    "session": "2024-04-16"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-16",
+    "qualified": 43,
+    "session": "2024-04-17"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-17",
+    "qualified": 42,
+    "session": "2024-04-18"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-18",
+    "qualified": 41,
+    "session": "2024-04-19"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-19",
+    "qualified": 41,
+    "session": "2024-04-22"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-22",
+    "qualified": 41,
+    "session": "2024-04-23"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-23",
+    "qualified": 42,
+    "session": "2024-04-24"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-24",
+    "qualified": 43,
+    "session": "2024-04-25"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-25",
+    "qualified": 44,
+    "session": "2024-04-26"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-26",
+    "qualified": 43,
+    "session": "2024-04-29"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-29",
+    "qualified": 44,
+    "session": "2024-04-30"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-04-30",
+    "qualified": 43,
+    "session": "2024-05-01"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-01",
+    "qualified": 42,
+    "session": "2024-05-02"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-02",
+    "qualified": 44,
+    "session": "2024-05-03"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-03",
+    "qualified": 44,
+    "session": "2024-05-06"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-06",
+    "qualified": 43,
+    "session": "2024-05-07"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-07",
+    "qualified": 43,
+    "session": "2024-05-08"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-08",
+    "qualified": 43,
+    "session": "2024-05-09"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-09",
+    "qualified": 45,
+    "session": "2024-05-10"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-10",
+    "qualified": 45,
+    "session": "2024-05-13"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-13",
+    "qualified": 45,
+    "session": "2024-05-14"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-14",
+    "qualified": 45,
+    "session": "2024-05-15"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-15",
+    "qualified": 45,
+    "session": "2024-05-16"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-16",
+    "qualified": 45,
+    "session": "2024-05-17"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-17",
+    "qualified": 45,
+    "session": "2024-05-20"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-20",
+    "qualified": 45,
+    "session": "2024-05-21"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-21",
+    "qualified": 45,
+    "session": "2024-05-22"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-22",
+    "qualified": 45,
+    "session": "2024-05-23"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-23",
+    "qualified": 44,
+    "session": "2024-05-24"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-24",
+    "qualified": 44,
+    "session": "2024-05-28"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-28",
+    "qualified": 44,
+    "session": "2024-05-29"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-05-29",
+    "qualified": 43,
+    "session": "2024-05-30"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-05-30",
+    "qualified": 45,
+    "session": "2024-05-31"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-05-31",
+    "qualified": 45,
+    "session": "2024-06-03"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-03",
+    "qualified": 46,
+    "session": "2024-06-04"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-04",
+    "qualified": 46,
+    "session": "2024-06-05"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-05",
+    "qualified": 46,
+    "session": "2024-06-06"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-06",
+    "qualified": 46,
+    "session": "2024-06-07"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-07",
+    "qualified": 44,
+    "session": "2024-06-10"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-10",
+    "qualified": 44,
+    "session": "2024-06-11"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-11",
+    "qualified": 45,
+    "session": "2024-06-12"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-12",
+    "qualified": 46,
+    "session": "2024-06-13"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-13",
+    "qualified": 46,
+    "session": "2024-06-14"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-14",
+    "qualified": 43,
+    "session": "2024-06-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-17",
+    "qualified": 41,
+    "session": "2024-06-18"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-18",
+    "qualified": 42,
+    "session": "2024-06-20"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-20",
+    "qualified": 42,
+    "session": "2024-06-21"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-21",
+    "qualified": 42,
+    "session": "2024-06-24"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-24",
+    "qualified": 42,
+    "session": "2024-06-25"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-25",
+    "qualified": 41,
+    "session": "2024-06-26"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-26",
+    "qualified": 39,
+    "session": "2024-06-27"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-27",
+    "qualified": 39,
+    "session": "2024-06-28"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-06-28",
+    "qualified": 37,
+    "session": "2024-07-01"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-01",
+    "qualified": 37,
+    "session": "2024-07-02"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-02",
+    "qualified": 40,
+    "session": "2024-07-03"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-03",
+    "qualified": 40,
+    "session": "2024-07-05"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-05",
+    "qualified": 43,
+    "session": "2024-07-08"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-08",
+    "qualified": 44,
+    "session": "2024-07-09"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-09",
+    "qualified": 44,
+    "session": "2024-07-10"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-10",
+    "qualified": 44,
+    "session": "2024-07-11"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-11",
+    "qualified": 44,
+    "session": "2024-07-12"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-12",
+    "qualified": 44,
+    "session": "2024-07-15"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-15",
+    "qualified": 44,
+    "session": "2024-07-16"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-16",
+    "qualified": 44,
+    "session": "2024-07-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-17",
+    "qualified": 45,
+    "session": "2024-07-18"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-18",
+    "qualified": 46,
+    "session": "2024-07-19"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-19",
+    "qualified": 46,
+    "session": "2024-07-22"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-22",
+    "qualified": 46,
+    "session": "2024-07-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-23",
+    "qualified": 45,
+    "session": "2024-07-24"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-24",
+    "qualified": 44,
+    "session": "2024-07-25"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-25",
+    "qualified": 45,
+    "session": "2024-07-26"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-26",
+    "qualified": 44,
+    "session": "2024-07-29"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-29",
+    "qualified": 44,
+    "session": "2024-07-30"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-30",
+    "qualified": 44,
+    "session": "2024-07-31"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-07-31",
+    "qualified": 45,
+    "session": "2024-08-01"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-08-01",
+    "qualified": 44,
+    "session": "2024-08-02"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-08-02",
+    "qualified": 43,
+    "session": "2024-08-05"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-08-05",
+    "qualified": 41,
+    "session": "2024-08-06"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-08-06",
+    "qualified": 40,
+    "session": "2024-08-07"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-08-07",
+    "qualified": 40,
+    "session": "2024-08-08"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-08-08",
+    "qualified": 41,
+    "session": "2024-08-09"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-08-09",
+    "qualified": 42,
+    "session": "2024-08-12"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-08-12",
+    "qualified": 42,
+    "session": "2024-08-13"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-08-13",
+    "qualified": 43,
+    "session": "2024-08-14"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2024-08-14",
+    "qualified": 45,
+    "session": "2024-08-15"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-08-15",
+    "qualified": 44,
+    "session": "2024-08-16"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-08-16",
+    "qualified": 44,
+    "session": "2024-08-19"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-08-19",
+    "qualified": 44,
+    "session": "2024-08-20"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-08-20",
+    "qualified": 44,
+    "session": "2024-08-21"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-08-21",
+    "qualified": 42,
+    "session": "2024-08-22"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-08-22",
+    "qualified": 41,
+    "session": "2024-08-23"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-08-23",
+    "qualified": 44,
+    "session": "2024-08-26"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-08-26",
+    "qualified": 44,
+    "session": "2024-08-27"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-08-27",
+    "qualified": 44,
+    "session": "2024-08-28"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-08-28",
+    "qualified": 44,
+    "session": "2024-08-29"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-08-29",
+    "qualified": 45,
+    "session": "2024-08-30"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-08-30",
+    "qualified": 44,
+    "session": "2024-09-03"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-03",
+    "qualified": 40,
+    "session": "2024-09-04"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-04",
+    "qualified": 41,
+    "session": "2024-09-05"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-05",
+    "qualified": 40,
+    "session": "2024-09-06"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-06",
+    "qualified": 37,
+    "session": "2024-09-09"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-09",
+    "qualified": 39,
+    "session": "2024-09-10"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-10",
+    "qualified": 39,
+    "session": "2024-09-11"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-11",
+    "qualified": 39,
+    "session": "2024-09-12"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-12",
+    "qualified": 39,
+    "session": "2024-09-13"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-13",
+    "qualified": 40,
+    "session": "2024-09-16"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-16",
+    "qualified": 41,
+    "session": "2024-09-17"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-17",
+    "qualified": 40,
+    "session": "2024-09-18"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-18",
+    "qualified": 40,
+    "session": "2024-09-19"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-19",
+    "qualified": 41,
+    "session": "2024-09-20"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-20",
+    "qualified": 39,
+    "session": "2024-09-23"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-23",
+    "qualified": 40,
+    "session": "2024-09-24"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-24",
+    "qualified": 41,
+    "session": "2024-09-25"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-25",
+    "qualified": 41,
+    "session": "2024-09-26"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-26",
+    "qualified": 41,
+    "session": "2024-09-27"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-27",
+    "qualified": 41,
+    "session": "2024-09-30"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-09-30",
+    "qualified": 41,
+    "session": "2024-10-01"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-01",
+    "qualified": 41,
+    "session": "2024-10-02"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-02",
+    "qualified": 41,
+    "session": "2024-10-03"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-03",
+    "qualified": 41,
+    "session": "2024-10-04"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-04",
+    "qualified": 41,
+    "session": "2024-10-07"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-07",
+    "qualified": 41,
+    "session": "2024-10-08"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-08",
+    "qualified": 40,
+    "session": "2024-10-09"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-09",
+    "qualified": 41,
+    "session": "2024-10-10"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-10",
+    "qualified": 40,
+    "session": "2024-10-11"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-11",
+    "qualified": 42,
+    "session": "2024-10-14"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-14",
+    "qualified": 42,
+    "session": "2024-10-15"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-15",
+    "qualified": 42,
+    "session": "2024-10-16"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-16",
+    "qualified": 42,
+    "session": "2024-10-17"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-17",
+    "qualified": 41,
+    "session": "2024-10-18"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-18",
+    "qualified": 41,
+    "session": "2024-10-21"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-21",
+    "qualified": 40,
+    "session": "2024-10-22"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-22",
+    "qualified": 40,
+    "session": "2024-10-23"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-23",
+    "qualified": 39,
+    "session": "2024-10-24"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-24",
+    "qualified": 40,
+    "session": "2024-10-25"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-25",
+    "qualified": 40,
+    "session": "2024-10-28"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-28",
+    "qualified": 40,
+    "session": "2024-10-29"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-29",
+    "qualified": 41,
+    "session": "2024-10-30"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-30",
+    "qualified": 41,
+    "session": "2024-10-31"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-10-31",
+    "qualified": 41,
+    "session": "2024-11-01"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-01",
+    "qualified": 40,
+    "session": "2024-11-04"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-04",
+    "qualified": 39,
+    "session": "2024-11-05"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-05",
+    "qualified": 41,
+    "session": "2024-11-06"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-06",
+    "qualified": 41,
+    "session": "2024-11-07"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-07",
+    "qualified": 42,
+    "session": "2024-11-08"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-08",
+    "qualified": 39,
+    "session": "2024-11-11"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-11",
+    "qualified": 39,
+    "session": "2024-11-12"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-12",
+    "qualified": 36,
+    "session": "2024-11-13"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-13",
+    "qualified": 33,
+    "session": "2024-11-14"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-14",
+    "qualified": 33,
+    "session": "2024-11-15"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-15",
+    "qualified": 29,
+    "session": "2024-11-18"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-18",
+    "qualified": 31,
+    "session": "2024-11-19"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-19",
+    "qualified": 31,
+    "session": "2024-11-20"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-20",
+    "qualified": 33,
+    "session": "2024-11-21"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-21",
+    "qualified": 36,
+    "session": "2024-11-22"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-22",
+    "qualified": 35,
+    "session": "2024-11-25"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-25",
+    "qualified": 36,
+    "session": "2024-11-26"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-26",
+    "qualified": 37,
+    "session": "2024-11-27"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-27",
+    "qualified": 37,
+    "session": "2024-11-29"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-11-29",
+    "qualified": 38,
+    "session": "2024-12-02"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-02",
+    "qualified": 37,
+    "session": "2024-12-03"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-03",
+    "qualified": 39,
+    "session": "2024-12-04"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-04",
+    "qualified": 38,
+    "session": "2024-12-05"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-05",
+    "qualified": 37,
+    "session": "2024-12-06"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-06",
+    "qualified": 38,
+    "session": "2024-12-09"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-09",
+    "qualified": 38,
+    "session": "2024-12-10"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-10",
+    "qualified": 38,
+    "session": "2024-12-11"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-11",
+    "qualified": 37,
+    "session": "2024-12-12"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-12",
+    "qualified": 37,
+    "session": "2024-12-13"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-13",
+    "qualified": 37,
+    "session": "2024-12-16"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-16",
+    "qualified": 36,
+    "session": "2024-12-17"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-17",
+    "qualified": 33,
+    "session": "2024-12-18"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-18",
+    "qualified": 27,
+    "session": "2024-12-19"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-19",
+    "qualified": 27,
+    "session": "2024-12-20"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-20",
+    "qualified": 29,
+    "session": "2024-12-23"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-23",
+    "qualified": 28,
+    "session": "2024-12-24"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-24",
+    "qualified": 31,
+    "session": "2024-12-26"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-26",
+    "qualified": 31,
+    "session": "2024-12-27"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-27",
+    "qualified": 31,
+    "session": "2024-12-30"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-30",
+    "qualified": 28,
+    "session": "2024-12-31"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2024-12-31",
+    "qualified": 26,
+    "session": "2025-01-02"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-02",
+    "qualified": 26,
+    "session": "2025-01-03"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-03",
+    "qualified": 25,
+    "session": "2025-01-06"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-06",
+    "qualified": 26,
+    "session": "2025-01-07"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-07",
+    "qualified": 26,
+    "session": "2025-01-08"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-08",
+    "qualified": 25,
+    "session": "2025-01-10"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-10",
+    "qualified": 20,
+    "session": "2025-01-13"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-13",
+    "qualified": 22,
+    "session": "2025-01-14"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-14",
+    "qualified": 23,
+    "session": "2025-01-15"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-15",
+    "qualified": 24,
+    "session": "2025-01-16"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-16",
+    "qualified": 27,
+    "session": "2025-01-17"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-17",
+    "qualified": 28,
+    "session": "2025-01-21"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-21",
+    "qualified": 34,
+    "session": "2025-01-22"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-22",
+    "qualified": 32,
+    "session": "2025-01-23"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-23",
+    "qualified": 33,
+    "session": "2025-01-24"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-24",
+    "qualified": 38,
+    "session": "2025-01-27"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-27",
+    "qualified": 38,
+    "session": "2025-01-28"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-28",
+    "qualified": 36,
+    "session": "2025-01-29"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-29",
+    "qualified": 35,
+    "session": "2025-01-30"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-30",
+    "qualified": 36,
+    "session": "2025-01-31"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-01-31",
+    "qualified": 32,
+    "session": "2025-02-03"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-03",
+    "qualified": 33,
+    "session": "2025-02-04"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-04",
+    "qualified": 35,
+    "session": "2025-02-05"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-05",
+    "qualified": 39,
+    "session": "2025-02-06"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-06",
+    "qualified": 39,
+    "session": "2025-02-07"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-07",
+    "qualified": 38,
+    "session": "2025-02-10"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-10",
+    "qualified": 38,
+    "session": "2025-02-11"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-11",
+    "qualified": 36,
+    "session": "2025-02-12"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-12",
+    "qualified": 34,
+    "session": "2025-02-13"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-13",
+    "qualified": 35,
+    "session": "2025-02-14"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-14",
+    "qualified": 35,
+    "session": "2025-02-18"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-18",
+    "qualified": 34,
+    "session": "2025-02-19"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-19",
+    "qualified": 36,
+    "session": "2025-02-20"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-20",
+    "qualified": 34,
+    "session": "2025-02-21"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-21",
+    "qualified": 33,
+    "session": "2025-02-24"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-24",
+    "qualified": 31,
+    "session": "2025-02-25"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-25",
+    "qualified": 36,
+    "session": "2025-02-26"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-26",
+    "qualified": 32,
+    "session": "2025-02-27"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-27",
+    "qualified": 28,
+    "session": "2025-02-28"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-02-28",
+    "qualified": 30,
+    "session": "2025-03-03"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-03",
+    "qualified": 30,
+    "session": "2025-03-04"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-04",
+    "qualified": 30,
+    "session": "2025-03-05"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-05",
+    "qualified": 30,
+    "session": "2025-03-06"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-06",
+    "qualified": 29,
+    "session": "2025-03-07"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-07",
+    "qualified": 32,
+    "session": "2025-03-10"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-10",
+    "qualified": 28,
+    "session": "2025-03-11"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-11",
+    "qualified": 29,
+    "session": "2025-03-12"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-12",
+    "qualified": 29,
+    "session": "2025-03-13"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-13",
+    "qualified": 28,
+    "session": "2025-03-14"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-14",
+    "qualified": 27,
+    "session": "2025-03-17"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-17",
+    "qualified": 28,
+    "session": "2025-03-18"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-18",
+    "qualified": 27,
+    "session": "2025-03-19"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-19",
+    "qualified": 27,
+    "session": "2025-03-20"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-20",
+    "qualified": 28,
+    "session": "2025-03-21"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-21",
+    "qualified": 28,
+    "session": "2025-03-24"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-24",
+    "qualified": 24,
+    "session": "2025-03-25"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-25",
+    "qualified": 26,
+    "session": "2025-03-26"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-26",
+    "qualified": 25,
+    "session": "2025-03-27"
+  },
+  {
+    "admitted": 45,
+    "known_through": "2025-03-27",
+    "qualified": 21,
+    "session": "2025-03-28"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-03-28",
+    "qualified": 19,
+    "session": "2025-03-31"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-03-31",
+    "qualified": 18,
+    "session": "2025-04-01"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-01",
+    "qualified": 17,
+    "session": "2025-04-02"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-02",
+    "qualified": 20,
+    "session": "2025-04-03"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-03",
+    "qualified": 17,
+    "session": "2025-04-04"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-04",
+    "qualified": 9,
+    "session": "2025-04-07"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-07",
+    "qualified": 6,
+    "session": "2025-04-08"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-08",
+    "qualified": 7,
+    "session": "2025-04-09"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-09",
+    "qualified": 12,
+    "session": "2025-04-10"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-10",
+    "qualified": 7,
+    "session": "2025-04-11"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-11",
+    "qualified": 7,
+    "session": "2025-04-14"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-14",
+    "qualified": 17,
+    "session": "2025-04-15"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-15",
+    "qualified": 15,
+    "session": "2025-04-16"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-16",
+    "qualified": 12,
+    "session": "2025-04-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-17",
+    "qualified": 16,
+    "session": "2025-04-21"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-21",
+    "qualified": 11,
+    "session": "2025-04-22"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-22",
+    "qualified": 17,
+    "session": "2025-04-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-23",
+    "qualified": 18,
+    "session": "2025-04-24"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-24",
+    "qualified": 21,
+    "session": "2025-04-25"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-25",
+    "qualified": 21,
+    "session": "2025-04-28"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-28",
+    "qualified": 21,
+    "session": "2025-04-29"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-29",
+    "qualified": 21,
+    "session": "2025-04-30"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-04-30",
+    "qualified": 21,
+    "session": "2025-05-01"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-05-01",
+    "qualified": 22,
+    "session": "2025-05-02"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-05-02",
+    "qualified": 28,
+    "session": "2025-05-05"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-05-05",
+    "qualified": 27,
+    "session": "2025-05-06"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-05-06",
+    "qualified": 29,
+    "session": "2025-05-07"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-05-07",
+    "qualified": 26,
+    "session": "2025-05-08"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-05-08",
+    "qualified": 27,
+    "session": "2025-05-09"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2025-05-09",
+    "qualified": 28,
+    "session": "2025-05-12"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2025-05-12",
+    "qualified": 30,
+    "session": "2025-05-13"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2025-05-13",
+    "qualified": 28,
+    "session": "2025-05-14"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2025-05-14",
+    "qualified": 30,
+    "session": "2025-05-15"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-05-15",
+    "qualified": 32,
+    "session": "2025-05-16"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-05-16",
+    "qualified": 35,
+    "session": "2025-05-19"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-05-19",
+    "qualified": 35,
+    "session": "2025-05-20"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-05-20",
+    "qualified": 35,
+    "session": "2025-05-21"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-05-21",
+    "qualified": 34,
+    "session": "2025-05-22"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-05-22",
+    "qualified": 33,
+    "session": "2025-05-23"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-05-23",
+    "qualified": 32,
+    "session": "2025-05-27"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-05-27",
+    "qualified": 36,
+    "session": "2025-05-28"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-05-28",
+    "qualified": 32,
+    "session": "2025-05-29"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-05-29",
+    "qualified": 32,
+    "session": "2025-05-30"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-05-30",
+    "qualified": 31,
+    "session": "2025-06-02"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-06-02",
+    "qualified": 34,
+    "session": "2025-06-03"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-06-03",
+    "qualified": 36,
+    "session": "2025-06-04"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-06-04",
+    "qualified": 34,
+    "session": "2025-06-05"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-06-05",
+    "qualified": 32,
+    "session": "2025-06-06"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-06-06",
+    "qualified": 34,
+    "session": "2025-06-09"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-06-09",
+    "qualified": 35,
+    "session": "2025-06-10"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-06-10",
+    "qualified": 36,
+    "session": "2025-06-11"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-06-11",
+    "qualified": 36,
+    "session": "2025-06-12"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-06-12",
+    "qualified": 37,
+    "session": "2025-06-13"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-06-13",
+    "qualified": 34,
+    "session": "2025-06-16"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-06-16",
+    "qualified": 36,
+    "session": "2025-06-17"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-06-17",
+    "qualified": 36,
+    "session": "2025-06-18"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-06-18",
+    "qualified": 35,
+    "session": "2025-06-20"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-06-20",
+    "qualified": 33,
+    "session": "2025-06-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-06-23",
+    "qualified": 37,
+    "session": "2025-06-24"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-06-24",
+    "qualified": 38,
+    "session": "2025-06-25"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-06-25",
+    "qualified": 39,
+    "session": "2025-06-26"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-06-26",
+    "qualified": 39,
+    "session": "2025-06-27"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-06-27",
+    "qualified": 39,
+    "session": "2025-06-30"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-06-30",
+    "qualified": 38,
+    "session": "2025-07-01"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-01",
+    "qualified": 40,
+    "session": "2025-07-02"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-02",
+    "qualified": 42,
+    "session": "2025-07-03"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-03",
+    "qualified": 42,
+    "session": "2025-07-07"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-07",
+    "qualified": 41,
+    "session": "2025-07-08"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-08",
+    "qualified": 42,
+    "session": "2025-07-09"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-09",
+    "qualified": 41,
+    "session": "2025-07-10"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-10",
+    "qualified": 41,
+    "session": "2025-07-11"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-11",
+    "qualified": 42,
+    "session": "2025-07-14"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-14",
+    "qualified": 42,
+    "session": "2025-07-15"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-15",
+    "qualified": 40,
+    "session": "2025-07-16"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-16",
+    "qualified": 39,
+    "session": "2025-07-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-17",
+    "qualified": 41,
+    "session": "2025-07-18"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-18",
+    "qualified": 36,
+    "session": "2025-07-21"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-21",
+    "qualified": 37,
+    "session": "2025-07-22"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-22",
+    "qualified": 38,
+    "session": "2025-07-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-23",
+    "qualified": 36,
+    "session": "2025-07-24"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-24",
+    "qualified": 38,
+    "session": "2025-07-25"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-07-25",
+    "qualified": 36,
+    "session": "2025-07-28"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-07-28",
+    "qualified": 38,
+    "session": "2025-07-29"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-07-29",
+    "qualified": 40,
+    "session": "2025-07-30"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-07-30",
+    "qualified": 39,
+    "session": "2025-07-31"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-07-31",
+    "qualified": 38,
+    "session": "2025-08-01"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-01",
+    "qualified": 37,
+    "session": "2025-08-04"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-04",
+    "qualified": 37,
+    "session": "2025-08-05"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-05",
+    "qualified": 37,
+    "session": "2025-08-06"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-06",
+    "qualified": 35,
+    "session": "2025-08-07"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-07",
+    "qualified": 34,
+    "session": "2025-08-08"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-08",
+    "qualified": 34,
+    "session": "2025-08-11"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-11",
+    "qualified": 36,
+    "session": "2025-08-12"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-12",
+    "qualified": 37,
+    "session": "2025-08-13"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-13",
+    "qualified": 40,
+    "session": "2025-08-14"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-14",
+    "qualified": 41,
+    "session": "2025-08-15"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-15",
+    "qualified": 38,
+    "session": "2025-08-18"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-18",
+    "qualified": 39,
+    "session": "2025-08-19"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-19",
+    "qualified": 38,
+    "session": "2025-08-20"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-20",
+    "qualified": 38,
+    "session": "2025-08-21"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-21",
+    "qualified": 38,
+    "session": "2025-08-22"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-22",
+    "qualified": 41,
+    "session": "2025-08-25"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-25",
+    "qualified": 39,
+    "session": "2025-08-26"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-26",
+    "qualified": 41,
+    "session": "2025-08-27"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-27",
+    "qualified": 42,
+    "session": "2025-08-28"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-28",
+    "qualified": 42,
+    "session": "2025-08-29"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-08-29",
+    "qualified": 42,
+    "session": "2025-09-02"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-02",
+    "qualified": 43,
+    "session": "2025-09-03"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-03",
+    "qualified": 43,
+    "session": "2025-09-04"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-04",
+    "qualified": 43,
+    "session": "2025-09-05"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-05",
+    "qualified": 44,
+    "session": "2025-09-08"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-08",
+    "qualified": 44,
+    "session": "2025-09-09"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-09",
+    "qualified": 44,
+    "session": "2025-09-10"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-10",
+    "qualified": 44,
+    "session": "2025-09-11"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-11",
+    "qualified": 45,
+    "session": "2025-09-12"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-12",
+    "qualified": 45,
+    "session": "2025-09-15"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-15",
+    "qualified": 44,
+    "session": "2025-09-16"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-16",
+    "qualified": 45,
+    "session": "2025-09-17"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-17",
+    "qualified": 45,
+    "session": "2025-09-18"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-18",
+    "qualified": 44,
+    "session": "2025-09-19"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-19",
+    "qualified": 42,
+    "session": "2025-09-22"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-22",
+    "qualified": 43,
+    "session": "2025-09-23"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-23",
+    "qualified": 44,
+    "session": "2025-09-24"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-09-24",
+    "qualified": 43,
+    "session": "2025-09-25"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-09-25",
+    "qualified": 42,
+    "session": "2025-09-26"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-09-26",
+    "qualified": 43,
+    "session": "2025-09-29"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-29",
+    "qualified": 42,
+    "session": "2025-09-30"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-09-30",
+    "qualified": 42,
+    "session": "2025-10-01"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-10-01",
+    "qualified": 40,
+    "session": "2025-10-02"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-10-02",
+    "qualified": 41,
+    "session": "2025-10-03"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-10-03",
+    "qualified": 43,
+    "session": "2025-10-06"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-10-06",
+    "qualified": 46,
+    "session": "2025-10-07"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-10-07",
+    "qualified": 47,
+    "session": "2025-10-08"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-10-08",
+    "qualified": 47,
+    "session": "2025-10-09"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-10-09",
+    "qualified": 46,
+    "session": "2025-10-10"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-10-10",
+    "qualified": 46,
+    "session": "2025-10-13"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-10-13",
+    "qualified": 46,
+    "session": "2025-10-14"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-10-14",
+    "qualified": 46,
+    "session": "2025-10-15"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-10-15",
+    "qualified": 46,
+    "session": "2025-10-16"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-10-16",
+    "qualified": 46,
+    "session": "2025-10-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-10-17",
+    "qualified": 44,
+    "session": "2025-10-20"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-10-20",
+    "qualified": 44,
+    "session": "2025-10-21"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-10-21",
+    "qualified": 44,
+    "session": "2025-10-22"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-10-22",
+    "qualified": 45,
+    "session": "2025-10-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-10-23",
+    "qualified": 45,
+    "session": "2025-10-24"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-10-24",
+    "qualified": 45,
+    "session": "2025-10-27"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-10-27",
+    "qualified": 45,
+    "session": "2025-10-28"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-10-28",
+    "qualified": 45,
+    "session": "2025-10-29"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-10-29",
+    "qualified": 45,
+    "session": "2025-10-30"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-10-30",
+    "qualified": 45,
+    "session": "2025-10-31"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-10-31",
+    "qualified": 45,
+    "session": "2025-11-03"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-03",
+    "qualified": 44,
+    "session": "2025-11-04"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-04",
+    "qualified": 45,
+    "session": "2025-11-05"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-05",
+    "qualified": 45,
+    "session": "2025-11-06"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-06",
+    "qualified": 45,
+    "session": "2025-11-07"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-07",
+    "qualified": 45,
+    "session": "2025-11-10"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-10",
+    "qualified": 44,
+    "session": "2025-11-11"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-11",
+    "qualified": 45,
+    "session": "2025-11-12"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-12",
+    "qualified": 45,
+    "session": "2025-11-13"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-13",
+    "qualified": 44,
+    "session": "2025-11-14"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-14",
+    "qualified": 44,
+    "session": "2025-11-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-17",
+    "qualified": 42,
+    "session": "2025-11-18"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-18",
+    "qualified": 43,
+    "session": "2025-11-19"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-19",
+    "qualified": 44,
+    "session": "2025-11-20"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-20",
+    "qualified": 42,
+    "session": "2025-11-21"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-21",
+    "qualified": 43,
+    "session": "2025-11-24"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-24",
+    "qualified": 42,
+    "session": "2025-11-25"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-25",
+    "qualified": 43,
+    "session": "2025-11-26"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-26",
+    "qualified": 44,
+    "session": "2025-11-28"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-11-28",
+    "qualified": 44,
+    "session": "2025-12-01"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-01",
+    "qualified": 41,
+    "session": "2025-12-02"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-02",
+    "qualified": 43,
+    "session": "2025-12-03"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-03",
+    "qualified": 43,
+    "session": "2025-12-04"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-04",
+    "qualified": 43,
+    "session": "2025-12-05"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-05",
+    "qualified": 43,
+    "session": "2025-12-08"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-08",
+    "qualified": 40,
+    "session": "2025-12-09"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-09",
+    "qualified": 41,
+    "session": "2025-12-10"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-10",
+    "qualified": 42,
+    "session": "2025-12-11"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-11",
+    "qualified": 42,
+    "session": "2025-12-12"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-12",
+    "qualified": 42,
+    "session": "2025-12-15"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2025-12-15",
+    "qualified": 42,
+    "session": "2025-12-16"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-16",
+    "qualified": 42,
+    "session": "2025-12-17"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-17",
+    "qualified": 42,
+    "session": "2025-12-18"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-18",
+    "qualified": 41,
+    "session": "2025-12-19"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-19",
+    "qualified": 42,
+    "session": "2025-12-22"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-22",
+    "qualified": 42,
+    "session": "2025-12-23"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-23",
+    "qualified": 42,
+    "session": "2025-12-24"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-24",
+    "qualified": 42,
+    "session": "2025-12-26"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-26",
+    "qualified": 42,
+    "session": "2025-12-29"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-29",
+    "qualified": 42,
+    "session": "2025-12-30"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-30",
+    "qualified": 42,
+    "session": "2025-12-31"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2025-12-31",
+    "qualified": 42,
+    "session": "2026-01-02"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2026-01-02",
+    "qualified": 42,
+    "session": "2026-01-05"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2026-01-05",
+    "qualified": 42,
+    "session": "2026-01-06"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2026-01-06",
+    "qualified": 42,
+    "session": "2026-01-07"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2026-01-07",
+    "qualified": 41,
+    "session": "2026-01-08"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2026-01-08",
+    "qualified": 42,
+    "session": "2026-01-09"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2026-01-09",
+    "qualified": 42,
+    "session": "2026-01-12"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2026-01-12",
+    "qualified": 44,
+    "session": "2026-01-13"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2026-01-13",
+    "qualified": 44,
+    "session": "2026-01-14"
+  },
+  {
+    "admitted": 46,
+    "known_through": "2026-01-14",
+    "qualified": 44,
+    "session": "2026-01-15"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2026-01-15",
+    "qualified": 45,
+    "session": "2026-01-16"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2026-01-16",
+    "qualified": 44,
+    "session": "2026-01-20"
+  },
+  {
+    "admitted": 47,
+    "known_through": "2026-01-20",
+    "qualified": 44,
+    "session": "2026-01-21"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-01-21",
+    "qualified": 45,
+    "session": "2026-01-22"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-01-22",
+    "qualified": 43,
+    "session": "2026-01-23"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-01-23",
+    "qualified": 46,
+    "session": "2026-01-26"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-01-26",
+    "qualified": 46,
+    "session": "2026-01-27"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-01-27",
+    "qualified": 46,
+    "session": "2026-01-28"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-01-28",
+    "qualified": 46,
+    "session": "2026-01-29"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-01-29",
+    "qualified": 46,
+    "session": "2026-01-30"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-01-30",
+    "qualified": 46,
+    "session": "2026-02-02"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-02",
+    "qualified": 47,
+    "session": "2026-02-03"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-03",
+    "qualified": 48,
+    "session": "2026-02-04"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-04",
+    "qualified": 48,
+    "session": "2026-02-05"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-05",
+    "qualified": 48,
+    "session": "2026-02-06"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-06",
+    "qualified": 48,
+    "session": "2026-02-09"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-09",
+    "qualified": 48,
+    "session": "2026-02-10"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-10",
+    "qualified": 48,
+    "session": "2026-02-11"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-11",
+    "qualified": 47,
+    "session": "2026-02-12"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-12",
+    "qualified": 47,
+    "session": "2026-02-13"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-13",
+    "qualified": 48,
+    "session": "2026-02-17"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-17",
+    "qualified": 47,
+    "session": "2026-02-18"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-18",
+    "qualified": 46,
+    "session": "2026-02-19"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-19",
+    "qualified": 46,
+    "session": "2026-02-20"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-20",
+    "qualified": 46,
+    "session": "2026-02-23"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-23",
+    "qualified": 46,
+    "session": "2026-02-24"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-24",
+    "qualified": 45,
+    "session": "2026-02-25"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-02-25",
+    "qualified": 45,
+    "session": "2026-02-26"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-02-26",
+    "qualified": 47,
+    "session": "2026-02-27"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-02-27",
+    "qualified": 46,
+    "session": "2026-03-02"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-03-02",
+    "qualified": 45,
+    "session": "2026-03-03"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-03-03",
+    "qualified": 44,
+    "session": "2026-03-04"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-03-04",
+    "qualified": 46,
+    "session": "2026-03-05"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-03-05",
+    "qualified": 47,
+    "session": "2026-03-06"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-03-06",
+    "qualified": 45,
+    "session": "2026-03-09"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-03-09",
+    "qualified": 44,
+    "session": "2026-03-10"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-03-10",
+    "qualified": 44,
+    "session": "2026-03-11"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-03-11",
+    "qualified": 43,
+    "session": "2026-03-12"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-03-12",
+    "qualified": 41,
+    "session": "2026-03-13"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-03-13",
+    "qualified": 40,
+    "session": "2026-03-16"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-03-16",
+    "qualified": 39,
+    "session": "2026-03-17"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-03-17",
+    "qualified": 40,
+    "session": "2026-03-18"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-03-18",
+    "qualified": 41,
+    "session": "2026-03-19"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-03-19",
+    "qualified": 40,
+    "session": "2026-03-20"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-03-20",
+    "qualified": 35,
+    "session": "2026-03-23"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-03-23",
+    "qualified": 37,
+    "session": "2026-03-24"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-03-24",
+    "qualified": 39,
+    "session": "2026-03-25"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-03-25",
+    "qualified": 39,
+    "session": "2026-03-26"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-03-26",
+    "qualified": 38,
+    "session": "2026-03-27"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-03-27",
+    "qualified": 39,
+    "session": "2026-03-30"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-03-30",
+    "qualified": 38,
+    "session": "2026-03-31"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-03-31",
+    "qualified": 40,
+    "session": "2026-04-01"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-01",
+    "qualified": 41,
+    "session": "2026-04-02"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-02",
+    "qualified": 41,
+    "session": "2026-04-06"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-06",
+    "qualified": 40,
+    "session": "2026-04-07"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-07",
+    "qualified": 41,
+    "session": "2026-04-08"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-08",
+    "qualified": 43,
+    "session": "2026-04-09"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-09",
+    "qualified": 43,
+    "session": "2026-04-10"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-10",
+    "qualified": 43,
+    "session": "2026-04-13"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-13",
+    "qualified": 45,
+    "session": "2026-04-14"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-14",
+    "qualified": 47,
+    "session": "2026-04-15"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-15",
+    "qualified": 47,
+    "session": "2026-04-16"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-16",
+    "qualified": 46,
+    "session": "2026-04-17"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-17",
+    "qualified": 47,
+    "session": "2026-04-20"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-20",
+    "qualified": 46,
+    "session": "2026-04-21"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-21",
+    "qualified": 43,
+    "session": "2026-04-22"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-22",
+    "qualified": 43,
+    "session": "2026-04-23"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-23",
+    "qualified": 43,
+    "session": "2026-04-24"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-24",
+    "qualified": 43,
+    "session": "2026-04-27"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-27",
+    "qualified": 42,
+    "session": "2026-04-28"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-28",
+    "qualified": 41,
+    "session": "2026-04-29"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-29",
+    "qualified": 38,
+    "session": "2026-04-30"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-04-30",
+    "qualified": 42,
+    "session": "2026-05-01"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-05-01",
+    "qualified": 42,
+    "session": "2026-05-04"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-05-04",
+    "qualified": 43,
+    "session": "2026-05-05"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-05-05",
+    "qualified": 44,
+    "session": "2026-05-06"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-05-06",
+    "qualified": 46,
+    "session": "2026-05-07"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-05-07",
+    "qualified": 46,
+    "session": "2026-05-08"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-05-08",
+    "qualified": 46,
+    "session": "2026-05-11"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-05-11",
+    "qualified": 45,
+    "session": "2026-05-12"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-05-12",
+    "qualified": 46,
+    "session": "2026-05-13"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-05-13",
+    "qualified": 45,
+    "session": "2026-05-14"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-05-14",
+    "qualified": 42,
+    "session": "2026-05-15"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-05-15",
+    "qualified": 39,
+    "session": "2026-05-18"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-05-18",
+    "qualified": 42,
+    "session": "2026-05-19"
+  },
+  {
+    "admitted": 51,
+    "known_through": "2026-05-19",
+    "qualified": 42,
+    "session": "2026-05-20"
+  },
+  {
+    "admitted": 51,
+    "known_through": "2026-05-20",
+    "qualified": 45,
+    "session": "2026-05-21"
+  },
+  {
+    "admitted": 51,
+    "known_through": "2026-05-21",
+    "qualified": 46,
+    "session": "2026-05-22"
+  },
+  {
+    "admitted": 51,
+    "known_through": "2026-05-22",
+    "qualified": 46,
+    "session": "2026-05-26"
+  },
+  {
+    "admitted": 51,
+    "known_through": "2026-05-26",
+    "qualified": 46,
+    "session": "2026-05-27"
+  },
+  {
+    "admitted": 51,
+    "known_through": "2026-05-27",
+    "qualified": 46,
+    "session": "2026-05-28"
+  },
+  {
+    "admitted": 51,
+    "known_through": "2026-05-28",
+    "qualified": 46,
+    "session": "2026-05-29"
+  },
+  {
+    "admitted": 51,
+    "known_through": "2026-05-29",
+    "qualified": 46,
+    "session": "2026-06-01"
+  },
+  {
+    "admitted": 51,
+    "known_through": "2026-06-01",
+    "qualified": 42,
+    "session": "2026-06-02"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-02",
+    "qualified": 39,
+    "session": "2026-06-03"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-03",
+    "qualified": 41,
+    "session": "2026-06-04"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-04",
+    "qualified": 42,
+    "session": "2026-06-05"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-05",
+    "qualified": 38,
+    "session": "2026-06-08"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-08",
+    "qualified": 39,
+    "session": "2026-06-09"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-09",
+    "qualified": 41,
+    "session": "2026-06-10"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-10",
+    "qualified": 39,
+    "session": "2026-06-11"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-11",
+    "qualified": 43,
+    "session": "2026-06-12"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-12",
+    "qualified": 41,
+    "session": "2026-06-15"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-15",
+    "qualified": 42,
+    "session": "2026-06-16"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-16",
+    "qualified": 45,
+    "session": "2026-06-17"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-17",
+    "qualified": 40,
+    "session": "2026-06-18"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-18",
+    "qualified": 40,
+    "session": "2026-06-22"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-22",
+    "qualified": 39,
+    "session": "2026-06-23"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-23",
+    "qualified": 38,
+    "session": "2026-06-24"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-24",
+    "qualified": 39,
+    "session": "2026-06-25"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-25",
+    "qualified": 39,
+    "session": "2026-06-26"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-26",
+    "qualified": 39,
+    "session": "2026-06-29"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-29",
+    "qualified": 39,
+    "session": "2026-06-30"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-06-30",
+    "qualified": 38,
+    "session": "2026-07-01"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-01",
+    "qualified": 37,
+    "session": "2026-07-02"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-02",
+    "qualified": 38,
+    "session": "2026-07-06"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-06",
+    "qualified": 40,
+    "session": "2026-07-07"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-07",
+    "qualified": 38,
+    "session": "2026-07-08"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-08",
+    "qualified": 35,
+    "session": "2026-07-09"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-09",
+    "qualified": 36,
+    "session": "2026-07-10"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-10",
+    "qualified": 35,
+    "session": "2026-07-13"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-13",
+    "qualified": 35,
+    "session": "2026-07-14"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-14",
+    "qualified": 34,
+    "session": "2026-07-15"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-15",
+    "qualified": 36,
+    "session": "2026-07-16"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-16",
+    "qualified": 36,
+    "session": "2026-07-17"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-17",
+    "qualified": 33,
+    "session": "2026-07-20"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-20",
+    "qualified": 34,
+    "session": "2026-07-21"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-21",
+    "qualified": 35,
+    "session": "2026-07-22"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-22",
+    "qualified": 35,
+    "session": "2026-07-23"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-23",
+    "qualified": 35,
+    "session": "2026-07-24"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-24",
+    "qualified": 36,
+    "session": "2026-07-27"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-27",
+    "qualified": 36,
+    "session": "2026-07-28"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-28",
+    "qualified": 36,
+    "session": "2026-07-29"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-29",
+    "qualified": 35,
+    "session": "2026-07-30"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-30",
+    "qualified": 36,
+    "session": "2026-07-31"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-07-31",
+    "qualified": 35,
+    "session": "2026-08-03"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-03",
+    "qualified": 36,
+    "session": "2026-08-04"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-04",
+    "qualified": 38,
+    "session": "2026-08-05"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-05",
+    "qualified": 37,
+    "session": "2026-08-06"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-06",
+    "qualified": 35,
+    "session": "2026-08-07"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-07",
+    "qualified": 36,
+    "session": "2026-08-10"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-10",
+    "qualified": 35,
+    "session": "2026-08-11"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-11",
+    "qualified": 35,
+    "session": "2026-08-12"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-12",
+    "qualified": 35,
+    "session": "2026-08-13"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-13",
+    "qualified": 35,
+    "session": "2026-08-14"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-14",
+    "qualified": 34,
+    "session": "2026-08-17"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-17",
+    "qualified": 32,
+    "session": "2026-08-18"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-18",
+    "qualified": 32,
+    "session": "2026-08-19"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-19",
+    "qualified": 33,
+    "session": "2026-08-20"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-20",
+    "qualified": 32,
+    "session": "2026-08-21"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-21",
+    "qualified": 32,
+    "session": "2026-08-24"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-24",
+    "qualified": 32,
+    "session": "2026-08-25"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-25",
+    "qualified": 34,
+    "session": "2026-08-26"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-26",
+    "qualified": 33,
+    "session": "2026-08-27"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-27",
+    "qualified": 31,
+    "session": "2026-08-28"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-28",
+    "qualified": 32,
+    "session": "2026-08-31"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-08-31",
+    "qualified": 30,
+    "session": "2026-09-01"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-09-01",
+    "qualified": 32,
+    "session": "2026-09-02"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-09-02",
+    "qualified": 30,
+    "session": "2026-09-03"
+  },
+  {
+    "admitted": 50,
+    "known_through": "2026-09-03",
+    "qualified": 35,
+    "session": "2026-09-04"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-04",
+    "qualified": 33,
+    "session": "2026-09-08"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-08",
+    "qualified": 32,
+    "session": "2026-09-09"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-09",
+    "qualified": 31,
+    "session": "2026-09-10"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-10",
+    "qualified": 31,
+    "session": "2026-09-11"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-11",
+    "qualified": 35,
+    "session": "2026-09-14"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-14",
+    "qualified": 36,
+    "session": "2026-09-15"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-15",
+    "qualified": 31,
+    "session": "2026-09-16"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-16",
+    "qualified": 31,
+    "session": "2026-09-17"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-17",
+    "qualified": 35,
+    "session": "2026-09-18"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-18",
+    "qualified": 34,
+    "session": "2026-09-21"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-21",
+    "qualified": 36,
+    "session": "2026-09-22"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-22",
+    "qualified": 36,
+    "session": "2026-09-23"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-23",
+    "qualified": 36,
+    "session": "2026-09-24"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-24",
+    "qualified": 35,
+    "session": "2026-09-25"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-25",
+    "qualified": 36,
+    "session": "2026-09-28"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-28",
+    "qualified": 36,
+    "session": "2026-09-29"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-29",
+    "qualified": 36,
+    "session": "2026-09-30"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-09-30",
+    "qualified": 31,
+    "session": "2026-10-01"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-10-01",
+    "qualified": 28,
+    "session": "2026-10-02"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-10-02",
+    "qualified": 29,
+    "session": "2026-10-05"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-10-05",
+    "qualified": 30,
+    "session": "2026-10-06"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-10-06",
+    "qualified": 32,
+    "session": "2026-10-07"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-10-07",
+    "qualified": 26,
+    "session": "2026-10-08"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-10-08",
+    "qualified": 24,
+    "session": "2026-10-09"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-10-09",
+    "qualified": 27,
+    "session": "2026-10-12"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-10-12",
+    "qualified": 24,
+    "session": "2026-10-13"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-10-13",
+    "qualified": 23,
+    "session": "2026-10-14"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-10-14",
+    "qualified": 23,
+    "session": "2026-10-15"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-10-15",
+    "qualified": 27,
+    "session": "2026-10-16"
+  },
+  {
+    "admitted": 49,
+    "known_through": "2026-10-16",
+    "qualified": 20,
+    "session": "2026-10-19"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-10-19",
+    "qualified": 21,
+    "session": "2026-10-20"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-10-20",
+    "qualified": 27,
+    "session": "2026-10-21"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-10-21",
+    "qualified": 27,
+    "session": "2026-10-22"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-10-22",
+    "qualified": 25,
+    "session": "2026-10-23"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-10-23",
+    "qualified": 22,
+    "session": "2026-10-26"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-10-26",
+    "qualified": 24,
+    "session": "2026-10-27"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-10-27",
+    "qualified": 25,
+    "session": "2026-10-28"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-10-28",
+    "qualified": 26,
+    "session": "2026-10-29"
+  },
+  {
+    "admitted": 48,
+    "known_through": "2026-10-29",
+    "qualified": 25,
+    "session": "2026-10-30"
+  }
+]

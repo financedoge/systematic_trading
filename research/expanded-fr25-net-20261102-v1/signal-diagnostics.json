@@ -1,0 +1,182 @@
+[
+  {
+    "annual": {
+      "2021": 0.03928539095335094,
+      "2022": 0.013151509247074433,
+      "2023": -0.022484182164972444,
+      "2024": -0.007271930812837018
+    },
+    "block_95": [
+      -0.009949248449452096,
+      0.02116923789338627
+    ],
+    "caveat": "Return-horizon rank IC does not identify an exponential signal half-life; overlapping labels, reused history and changing cross-section. 21-session blocks may understate dependence for63-session labels. No net-profitability veto.",
+    "dates": 1003,
+    "half_life_sessions": null,
+    "horizon": 1,
+    "mean_ic": 0.0057446850416827035,
+    "status": "unidentifiable",
+    "window": "calibration"
+  },
+  {
+    "annual": {
+      "2021": 0.029810669550647092,
+      "2022": -0.017327277913611484,
+      "2023": -0.051932293852092117,
+      "2024": -0.03308531538999138
+    },
+    "block_95": [
+      -0.04552321167399592,
+      0.010332342911507529
+    ],
+    "caveat": "Return-horizon rank IC does not identify an exponential signal half-life; overlapping labels, reused history and changing cross-section. 21-session blocks may understate dependence for63-session labels. No net-profitability veto.",
+    "dates": 999,
+    "half_life_sessions": null,
+    "horizon": 5,
+    "mean_ic": -0.01797689597448881,
+    "status": "unidentifiable",
+    "window": "calibration"
+  },
+  {
+    "annual": {
+      "2021": 0.0268520386901788,
+      "2022": -0.03189635373676145,
+      "2023": -0.04656112980233057,
+      "2024": -0.032662562821072244
+    },
+    "block_95": [
+      -0.06126306619408359,
+      0.01899595452696859
+    ],
+    "caveat": "Return-horizon rank IC does not identify an exponential signal half-life; overlapping labels, reused history and changing cross-section. 21-session blocks may understate dependence for63-session labels. No net-profitability veto.",
+    "dates": 994,
+    "half_life_sessions": null,
+    "horizon": 10,
+    "mean_ic": -0.020876490068876374,
+    "status": "unidentifiable",
+    "window": "calibration"
+  },
+  {
+    "annual": {
+      "2021": 0.02654696221599234,
+      "2022": -0.04196903010930484,
+      "2023": -0.00987108338282561,
+      "2024": -0.04239272562505006
+    },
+    "block_95": [
+      -0.07087197073112445,
+      0.03547248766419685
+    ],
+    "caveat": "Return-horizon rank IC does not identify an exponential signal half-life; overlapping labels, reused history and changing cross-section. 21-session blocks may understate dependence for63-session labels. No net-profitability veto.",
+    "dates": 983,
+    "half_life_sessions": null,
+    "horizon": 21,
+    "mean_ic": -0.016340274484713493,
+    "status": "unidentifiable",
+    "window": "calibration"
+  },
+  {
+    "annual": {
+      "2021": 0.15047834729582488,
+      "2022": -0.0615374504271365,
+      "2023": 0.07184531953360228,
+      "2024": -0.0980628750367141
+    },
+    "block_95": [
+      -0.044395909717828044,
+      0.08914262213627022
+    ],
+    "caveat": "Return-horizon rank IC does not identify an exponential signal half-life; overlapping labels, reused history and changing cross-section. 21-session blocks may understate dependence for63-session labels. No net-profitability veto.",
+    "dates": 941,
+    "half_life_sessions": null,
+    "horizon": 63,
+    "mean_ic": 0.023379546055084927,
+    "status": "unidentifiable",
+    "window": "calibration"
+  },
+  {
+    "annual": {
+      "2025": 0.0166525499896678,
+      "2026": 0.048520297477417276
+    },
+    "block_95": [
+      0.006959677216654644,
+      0.054794227365419126
+    ],
+    "caveat": "Return-horizon rank IC does not identify an exponential signal half-life; overlapping labels, reused history and changing cross-section. 21-session blocks may understate dependence for63-session labels. No net-profitability veto.",
+    "dates": 457,
+    "half_life_sessions": null,
+    "horizon": 1,
+    "mean_ic": 0.03108717521934863,
+    "status": "unidentifiable",
+    "window": "later"
+  },
+  {
+    "annual": {
+      "2025": 0.034965400437375796,
+      "2026": 0.04699607197978445
+    },
+    "block_95": [
+      -0.0108213558385602,
+      0.08851404330807006
+    ],
+    "caveat": "Return-horizon rank IC does not identify an exponential signal half-life; overlapping labels, reused history and changing cross-section. 21-session blocks may understate dependence for63-session labels. No net-profitability veto.",
+    "dates": 453,
+    "half_life_sessions": null,
+    "horizon": 5,
+    "mean_ic": 0.04035662852370904,
+    "status": "unidentifiable",
+    "window": "later"
+  },
+  {
+    "annual": {
+      "2025": 0.053261636595978934,
+      "2026": 0.030719047469499258
+    },
+    "block_95": [
+      -0.022187333907439304,
+      0.10677459287758667
+    ],
+    "caveat": "Return-horizon rank IC does not identify an exponential signal half-life; overlapping labels, reused history and changing cross-section. 21-session blocks may understate dependence for63-session labels. No net-profitability veto.",
+    "dates": 448,
+    "half_life_sessions": null,
+    "horizon": 10,
+    "mean_ic": 0.04329861729454372,
+    "status": "unidentifiable",
+    "window": "later"
+  },
+  {
+    "annual": {
+      "2025": 0.08389131635659805,
+      "2026": 0.018128037499300344
+    },
+    "block_95": [
+      -0.02050844148612616,
+      0.1278222462097338
+    ],
+    "caveat": "Return-horizon rank IC does not identify an exponential signal half-life; overlapping labels, reused history and changing cross-section. 21-session blocks may understate dependence for63-session labels. No net-profitability veto.",
+    "dates": 437,
+    "half_life_sessions": null,
+    "horizon": 21,
+    "mean_ic": 0.05575005057555762,
+    "status": "unidentifiable",
+    "window": "later"
+  },
+  {
+    "annual": {
+      "2025": 0.15302257608962191,
+      "2026": 0.10625097280285827
+    },
+    "block_95": [
+      0.04337059160928057,
+      0.21592092475004473
+    ],
+    "caveat": "Return-horizon rank IC does not identify an exponential signal half-life; overlapping labels, reused history and changing cross-section. 21-session blocks may understate dependence for63-session labels. No net-profitability veto.",
+    "dates": 395,
+    "half_life_sessions": null,
+    "horizon": 63,
+    "mean_ic": 0.13585325336410106,
+    "status": "unidentifiable",
+    "window": "later"
+  }
+]

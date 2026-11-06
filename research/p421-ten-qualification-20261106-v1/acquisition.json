@@ -1,0 +1,51 @@
+{
+  "failures": [],
+  "nasdaq": [
+    {
+      "end": "2025-02-28",
+      "receipt": {
+        "bytes": 179,
+        "retrieved_at": "2026-11-05T16:07:54.615668+00:00",
+        "sha256": "2b0c47ae16cd2c525cc2b37ff4e14d15753ac1317d4d08d1d794ab316ce60780",
+        "url": "https://api.nasdaq.com/api/quote/CSL/historical?assetclass=stocks&fromdate=2024-02-27&todate=2025-02-28&limit=300"
+      },
+      "start": "2024-02-27",
+      "symbol": "CSL",
+      "total_records": 0
+    },
+    {
+      "end": "2025-02-28",
+      "receipt": {
+        "bytes": 180,
+        "retrieved_at": "2026-11-05T16:07:58.406305+00:00",
+        "sha256": "54b0b8dfe00546acfe6a839c6ff8ba3c2df8651c6a13958bd703042acd243067",
+        "url": "https://api.nasdaq.com/api/quote/MANH/historical?assetclass=stocks&fromdate=2024-02-27&todate=2025-02-28&limit=300"
+      },
+      "start": "2024-02-27",
+      "symbol": "MANH",
+      "total_records": 0
+    },
+    {
+      "end": "2026-11-04",
+      "receipt": {
+        "bytes": 593,
+        "retrieved_at": "2026-11-05T16:08:00.558502+00:00",
+        "sha256": "2bc14ea4067ea0985bf8a2bc59c2a218935fe7332fa510a0fdd1b518a882fa45",
+        "url": "https://api.nasdaq.com/api/quote/CSL/historical?assetclass=stocks&fromdate=2026-11-02&todate=2026-11-04&limit=300"
+      },
+      "start": "2026-11-02",
+      "symbol": "CSL",
+      "total_records": 3
+    }
+  ],
+  "stooq": {
+    "browser_verification_page": true,
+    "returned_csv": false,
+    "source": {
+      "bytes": 796,
+      "retrieved_at": "2026-11-05T16:17:05.437426+00:00",
+      "sha256": "ae54d930581a8554454e52f553199762b02b38a26f8a5a40d65714a355130aed",
+      "url": "https://stooq.com/q/d/l/?s=csl.us&i=d&d1=20240227&d2=20250228"
+    }
+  }
+}

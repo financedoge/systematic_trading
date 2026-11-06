@@ -23,6 +23,11 @@ param(
     [string]$TransactionalStoreBackend = "postgres",
     [ValidateSet("sqlite", "clickhouse", "parquet")]
     [string]$MarketDataStoreBackend = "parquet",
+    [string]$PostgresServiceName = "",
+    [switch]$SkipPostgresServiceControl,
+    [switch]$NoElevation,
+    [switch]$NoPostgresRestart,
+    [int]$PostgresRestartTimeoutSeconds = 60,
     [string]$OperationLogPath = "var\log\platform_operations.jsonl"
 )
 
@@ -33,6 +38,24 @@ $Python = Join-Path $RepoRoot ".venv\Scripts\python.exe"
 $RunDir = Join-Path $RepoRoot "var\run"
 $LogDir = Join-Path $RepoRoot "var\log"
 $ResolvedOperationLogPath = if ([System.IO.Path]::IsPathRooted($OperationLogPath)) { $OperationLogPath } else { Join-Path $RepoRoot $OperationLogPath }
+$ResolvedPostgresServiceName = if ($PostgresServiceName) {
+    $PostgresServiceName
+} elseif ($env:ST_POSTGRES_SERVICE_NAME) {
+    [string]$env:ST_POSTGRES_SERVICE_NAME
+} else {
+    "postgresql-x64-18"
+}
+
+$PostgresServiceLibrary = Join-Path $ScriptDir "postgres_service.ps1"
+$ServiceProcessLibrary = Join-Path $ScriptDir "service_process.ps1"
+if (-not (Test-Path $PostgresServiceLibrary)) {
+    throw "PostgreSQL service helper not found at $PostgresServiceLibrary"
+}
+if (-not (Test-Path $ServiceProcessLibrary)) {
+    throw "Process identity helper not found at $ServiceProcessLibrary"
+}
+. $PostgresServiceLibrary
+. $ServiceProcessLibrary
 
 if (-not (Test-Path $Python)) {
     throw "Python virtualenv not found at $Python"
@@ -90,38 +113,75 @@ function Wait-HttpHealth {
     throw "$Name health did not respond before timeout: $Url"
 }
 
-function Test-TcpPort {
-    param(
-        [string]$Name,
-        [string]$Address,
-        [int]$TcpPort,
-        [int]$TimeoutMilliseconds = 1500
-    )
-
-    $client = [System.Net.Sockets.TcpClient]::new()
-    try {
-        $connect = $client.BeginConnect($Address, $TcpPort, $null, $null)
-        if (-not $connect.AsyncWaitHandle.WaitOne($TimeoutMilliseconds, $false)) {
-            throw "$Name TCP check timed out at $Address`:$TcpPort"
-        }
-        $client.EndConnect($connect)
-        Write-Output "$Name TCP OK: $Address`:$TcpPort"
-    } finally {
-        $client.Close()
+function Initialize-PostgresService {
+    if ($SkipPostgresServiceControl) {
+        Write-Output "PostgreSQL Windows service control skipped by request."
+        Write-OperationLog -Event "postgres_service_control_skipped" -Message "PostgreSQL Windows service start check skipped by request." -Details @{ service_name = $ResolvedPostgresServiceName }
+        return
     }
+
+    $allowElevation = -not $NoElevation
+    $service = Get-PostgresService -ServiceName $ResolvedPostgresServiceName
+    if (-not $service.Found) {
+        Write-Output "PostgreSQL Windows service '$ResolvedPostgresServiceName' was not found; continuing with the configured PostgreSQL server."
+        Write-OperationLog -Event "postgres_service_not_found" -Level "warning" -Message "Configured PostgreSQL Windows service was not found; assuming an externally managed server." -Details @{ service_name = $ResolvedPostgresServiceName }
+        return
+    }
+    if ($service.Status -eq "Running") {
+        Write-Output "PostgreSQL Windows service '$ResolvedPostgresServiceName' is running."
+        Write-OperationLog -Event "postgres_service_running" -Message "Configured PostgreSQL Windows service is running." -Details @{ service_name = $ResolvedPostgresServiceName }
+        return
+    }
+
+    Write-Output "PostgreSQL Windows service '$ResolvedPostgresServiceName' is $($service.Status); starting it."
+    if ($allowElevation -and -not (Test-IsElevated)) {
+        Write-Output "Windows requires administrator permission to control the service. Approve the UAC prompt, or rerun from an Administrator PowerShell."
+    }
+    Write-OperationLog -Event "postgres_service_start_requested" -Message "Configured PostgreSQL Windows service is not running; start requested." -Details @{ service_name = $ResolvedPostgresServiceName; status = $service.Status; elevation = $allowElevation }
+    $result = Ensure-PostgresServiceStarted -ServiceName $ResolvedPostgresServiceName -AllowElevation:$allowElevation
+    if (-not $result.Ok) {
+        Write-OperationLog -Event "postgres_service_start_failed" -Level "error" -Message $result.Error -Details @{ service_name = $ResolvedPostgresServiceName; elevation = [bool]$result.Elevated }
+        throw "PostgreSQL service '$ResolvedPostgresServiceName' did not start: $($result.Error) From an Administrator PowerShell run: Start-Service -Name $ResolvedPostgresServiceName ; then retry start_local_platform.ps1. See docs/native-windows-runtime.md."
+    }
+    Write-Output "PostgreSQL Windows service started."
+    Write-OperationLog -Event "postgres_service_started" -Message "Configured PostgreSQL Windows service started." -Details @{ service_name = $ResolvedPostgresServiceName; elevation = [bool]$result.Elevated }
 }
 
 function Assert-PostgresReady {
-    $pgReady = Get-Command pg_isready -ErrorAction SilentlyContinue
-    if ($pgReady) {
-        & $pgReady.Source -h 127.0.0.1 -p 5432
-        if ($LASTEXITCODE -ne 0) {
-            throw "pg_isready failed with exit code $LASTEXITCODE"
-        }
-        Write-Output "Postgres readiness OK via pg_isready."
+    param([switch]$AllowServiceRestart)
+
+    & $Python (Join-Path $ScriptDir 'probe_postgres_readiness.py')
+    if ($LASTEXITCODE -eq 0) {
         return
     }
-    Test-TcpPort -Name "Postgres" -Address "127.0.0.1" -TcpPort 5432
+    if (-not $AllowServiceRestart) {
+        throw "PostgreSQL read readiness failed. Startup stopped before backup preparation and research retention; inspect the SQL error above and docs/native-windows-runtime.md."
+    }
+
+    Write-Output "PostgreSQL read readiness failed; restarting the configured Windows service once, as the runtime guide directs."
+    if (-not $NoElevation -and -not (Test-IsElevated)) {
+        Write-Output "Windows requires administrator permission to restart the service. Approve the UAC prompt, or rerun from an Administrator PowerShell."
+    }
+    Write-OperationLog -Event "postgres_restart_requested" -Level "warning" -Message "PostgreSQL read readiness failed; one service restart requested before startup continues." -Details @{ service_name = $ResolvedPostgresServiceName; elevation = (-not [bool]$NoElevation) }
+    $restart = Restart-PostgresService -ServiceName $ResolvedPostgresServiceName -AllowElevation:(-not $NoElevation)
+    if (-not $restart.Ok) {
+        Write-OperationLog -Event "postgres_restart_failed" -Level "error" -Message $restart.Error -Details @{ service_name = $ResolvedPostgresServiceName; elevation = [bool]$restart.Elevated }
+        throw "PostgreSQL read readiness failed and the service restart was not performed: $($restart.Error) From an Administrator PowerShell run: Restart-Service -Name $ResolvedPostgresServiceName ; .\.venv\Scripts\python.exe .\scripts\probe_postgres_readiness.py ; then retry. See docs/native-windows-runtime.md."
+    }
+
+    $deadline = (Get-Date).AddSeconds($PostgresRestartTimeoutSeconds)
+    do {
+        Start-Sleep -Seconds 2
+        & $Python (Join-Path $ScriptDir 'probe_postgres_readiness.py')
+        if ($LASTEXITCODE -eq 0) {
+            Write-Output "PostgreSQL read readiness recovered after the service restart."
+            Write-OperationLog -Event "postgres_readiness_recovered" -Message "PostgreSQL reads passed after one configured service restart." -Details @{ service_name = $ResolvedPostgresServiceName; elevation = [bool]$restart.Elevated }
+            return
+        }
+    } while ((Get-Date) -lt $deadline)
+
+    Write-OperationLog -Event "postgres_readiness_unrecovered" -Level "error" -Message "PostgreSQL reads still failed after the service restart." -Details @{ service_name = $ResolvedPostgresServiceName }
+    throw "PostgreSQL reads still failed after restarting '$ResolvedPostgresServiceName'. Startup remains blocked; keep writers stopped and inspect PostgreSQL/Windows storage logs and the verified recovery evidence before any repair. Do not delete relation files, reset WAL, disable retention protection, or overwrite the production database to get past this error. See docs/native-windows-runtime.md."
 }
 
 function Update-IbTwsHealthState {
@@ -143,13 +203,19 @@ function Start-RecorderService {
     $outLog = Join-Path $LogDir "market_data_recorder.out.log"
     $errLog = Join-Path $LogDir "market_data_recorder.err.log"
     if (Test-Path $pidPath) {
-        $existingPid = (Get-Content -LiteralPath $pidPath -Raw).Trim()
-        if ($existingPid) {
-            $existing = Get-Process -Id ([int]$existingPid) -ErrorAction SilentlyContinue
-            if ($existing) {
+        $existingPidText = (Get-Content -LiteralPath $pidPath -Raw).Trim()
+        $existingPid = 0
+        if ($existingPidText -and [int]::TryParse($existingPidText, [ref]$existingPid)) {
+            # A recycled PID can point at any process, including PostgreSQL.
+            # Only treat the recorder as running when the process identity matches.
+            $existingState = Get-ServiceProcessState -ProcessId $existingPid -ExpectedScript "run_market_data_recorder_service.py"
+            if ($existingState.Exists -and $existingState.Matches -ne $false) {
                 Write-Output "Market data recorder already appears to be running."
-                Write-Output "Recorder PID: $existingPid"
+                Write-Output "Recorder PID: $existingPidText"
                 return
+            }
+            if ($existingState.Exists) {
+                Write-Output "Market data recorder PID $existingPidText belongs to another process ($($existingState.ProcessName)); removing the stale PID file."
             }
         }
         Remove-Item -LiteralPath $pidPath -Force
@@ -208,6 +274,11 @@ function Start-RecorderService {
             client_id = $RecorderClientId
             state_path = $statePath
         }
+
+    # The guarded recorder launcher resumes recovery in its finally block; mirror
+    # that here so a recorder failure after a normal platform start is repaired.
+    & $Python (Join-Path $ScriptDir "local_recovery.py") resume recorder
+    if ($LASTEXITCODE -ne 0) { throw "Could not resume market data recorder recovery after startup." }
 }
 
 Push-Location $RepoRoot
@@ -232,7 +303,18 @@ try {
             recorder_symbols = $RecorderSymbols
             recorder_market_data_mode = $RecorderMarketDataMode
             recorder_intraday_feed = $RecorderIntradayFeed
+            postgres_service_name = $ResolvedPostgresServiceName
+            postgres_service_control = -not [bool]$SkipPostgresServiceControl
+            postgres_restart_on_read_failure = -not [bool]$NoPostgresRestart
         }
+
+    # PostgreSQL is an external Windows service. Start it (or ask Windows for
+    # administrator permission once) before any NATS/backup side effects, then
+    # require authenticated reads; a failed read triggers one guided restart.
+    Initialize-PostgresService
+    Assert-PostgresReady -AllowServiceRestart:(-not $NoPostgresRestart)
+    Write-OperationLog -Event "postgres_ready" -Message "Configured PostgreSQL catalog and application reads passed." -Details @{ probe = "probe_postgres_readiness.py"; service_name = $ResolvedPostgresServiceName }
+
     if (-not $SkipNats) {
         Write-OperationLog -Event "nats_start_requested" -Message "NATS JetStream startup requested." -Details @{ nats_url = $NatsUrl }
         & (Join-Path $ScriptDir "start_nats_jetstream.ps1")
@@ -246,9 +328,6 @@ try {
         Write-Output "NATS startup skipped; dispatcher will use existing NATS at $NatsUrl."
         Write-OperationLog -Event "nats_start_skipped" -Message "NATS startup skipped; dispatcher will use existing NATS." -Details @{ nats_url = $NatsUrl }
     }
-
-    Assert-PostgresReady
-    Write-OperationLog -Event "postgres_ready" -Message "Postgres readiness check passed." -Details @{ host = "127.0.0.1"; port = 5432 }
 
     & $Python ".\scripts\sync_databases.py" prepare
     if ($LASTEXITCODE -ne 0) { throw "Local database preparation failed; inspect local restore state and backup logs." }

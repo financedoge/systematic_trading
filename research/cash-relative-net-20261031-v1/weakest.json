@@ -1,0 +1,16 @@
+[
+  {
+    "mean_held_weight": 0.0071800876988699905,
+    "net_contribution": -0.024633150000000034,
+    "net_pnl": -24633.150000000034,
+    "symbol": "EWH",
+    "window": "calibration"
+  },
+  {
+    "mean_held_weight": 0.04332669467290226,
+    "net_contribution": -0.019770234233028497,
+    "net_pnl": -24769.100000000028,
+    "symbol": "XLE",
+    "window": "later"
+  }
+]

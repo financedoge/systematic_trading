@@ -1,0 +1,122 @@
+[
+  {
+    "entry": "2024-08-01",
+    "entry_price": 86.52,
+    "exit": "2025-01-02",
+    "exit_price": 81.23,
+    "net_pnl": -349.3035649641925,
+    "net_return": -0.06208060563095384,
+    "protection": "Monthly breadth decision and final target cap. Open lots marked at study end.",
+    "quantity": 65,
+    "status": "closed",
+    "symbol": "TLT"
+  },
+  {
+    "entry": "2024-10-01",
+    "entry_price": 90.43,
+    "exit": "2025-01-02",
+    "exit_price": 81.23,
+    "net_pnl": -297.14979381443305,
+    "net_return": -0.10263497080157676,
+    "protection": "Monthly breadth decision and final target cap. Open lots marked at study end.",
+    "quantity": 32,
+    "status": "closed",
+    "symbol": "TLT"
+  },
+  {
+    "entry": "2025-07-01",
+    "entry_price": 83.29,
+    "exit": "2025-09-02",
+    "exit_price": 81.55,
+    "net_pnl": -205.9369230769241,
+    "net_return": -0.021869841286438676,
+    "protection": "Monthly breadth decision and final target cap. Open lots marked at study end.",
+    "quantity": 113,
+    "status": "closed",
+    "symbol": "TLT"
+  },
+  {
+    "entry": "2025-08-01",
+    "entry_price": 83.07,
+    "exit": "2025-09-02",
+    "exit_price": 81.55,
+    "net_pnl": -48.073076923076805,
+    "net_return": -0.019280516944302568,
+    "protection": "Monthly breadth decision and final target cap. Open lots marked at study end.",
+    "quantity": 30,
+    "status": "closed",
+    "symbol": "TLT"
+  },
+  {
+    "entry": "2025-10-01",
+    "entry_price": 85.48,
+    "exit": "2025-12-01",
+    "exit_price": 85.52,
+    "net_pnl": -2.4160897435901654,
+    "net_return": -0.0005330347248980444,
+    "protection": "Monthly breadth decision and final target cap. Open lots marked at study end.",
+    "quantity": 53,
+    "status": "closed",
+    "symbol": "TLT"
+  },
+  {
+    "entry": "2025-10-01",
+    "entry_price": 85.48,
+    "exit": "2026-01-02",
+    "exit_price": 84.45,
+    "net_pnl": -26.75615384615387,
+    "net_return": -0.013035591816543067,
+    "protection": "Monthly breadth decision and final target cap. Open lots marked at study end.",
+    "quantity": 24,
+    "status": "closed",
+    "symbol": "TLT"
+  },
+  {
+    "entry": "2025-10-01",
+    "entry_price": 85.48,
+    "exit": "2026-02-02",
+    "exit_price": 84.41,
+    "net_pnl": -91.2413170163176,
+    "net_return": -0.013504632315790023,
+    "protection": "Monthly breadth decision and final target cap. Open lots marked at study end.",
+    "quantity": 79,
+    "status": "closed",
+    "symbol": "TLT"
+  },
+  {
+    "entry": "2025-11-03",
+    "entry_price": 85.96,
+    "exit": "2026-02-02",
+    "exit_price": 84.41,
+    "net_pnl": -86.66643939393924,
+    "net_return": -0.019013470214722442,
+    "protection": "Monthly breadth decision and final target cap. Open lots marked at study end.",
+    "quantity": 53,
+    "status": "closed",
+    "symbol": "TLT"
+  },
+  {
+    "entry": "2026-03-02",
+    "entry_price": 87.57,
+    "exit": "2026-04-01",
+    "exit_price": 84.3,
+    "net_pnl": -1449.7699999999984,
+    "net_return": -0.0383038883821992,
+    "protection": "Monthly breadth decision and final target cap. Open lots marked at study end.",
+    "quantity": 432,
+    "status": "closed",
+    "symbol": "TLT"
+  },
+  {
+    "entry": "2026-07-01",
+    "entry_price": 84.47,
+    "exit": "2026-08-03",
+    "exit_price": 81.6,
+    "net_pnl": -593.5600000000009,
+    "net_return": -0.03494209676128047,
+    "protection": "Monthly breadth decision and final target cap. Open lots marked at study end.",
+    "quantity": 201,
+    "status": "closed",
+    "symbol": "TLT"
+  }
+]

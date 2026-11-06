@@ -1,0 +1,234 @@
+{
+  "EEM": {
+    "cik": 930667,
+    "file": "811-09102",
+    "name": "iShares MSCI Emerging Markets ETF",
+    "series": "S000004266",
+    "share_class": "C000011970",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "EFA": {
+    "cik": 1100663,
+    "file": "811-09729",
+    "name": "iShares MSCI EAFE ETF",
+    "series": "S000004351",
+    "share_class": "C000012081",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "EWA": {
+    "cik": 930667,
+    "file": "811-09102",
+    "name": "iShares MSCI Australia ETF",
+    "series": "S000004246",
+    "share_class": "C000011950",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "EWC": {
+    "cik": 930667,
+    "file": "811-09102",
+    "name": "iShares MSCI Canada ETF",
+    "series": "S000004265",
+    "share_class": "C000011969",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "EWG": {
+    "cik": 930667,
+    "file": "811-09102",
+    "name": "iShares MSCI Germany ETF",
+    "series": "S000004269",
+    "share_class": "C000011973",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "EWH": {
+    "cik": 930667,
+    "file": "811-09102",
+    "name": "iShares MSCI Hong Kong ETF",
+    "series": "S000004247",
+    "share_class": "C000011951",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "EWJ": {
+    "cik": 930667,
+    "file": "811-09102",
+    "name": "iShares MSCI Japan ETF",
+    "series": "S000004249",
+    "share_class": "C000011953",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "EWT": {
+    "cik": 930667,
+    "file": "811-09102",
+    "name": "iShares MSCI Taiwan ETF",
+    "series": "S000004261",
+    "share_class": "C000011965",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "EWU": {
+    "cik": 1100663,
+    "file": "811-09729",
+    "name": "iShares MSCI United Kingdom ETF",
+    "series": "S000046586",
+    "share_class": "C000145378",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "EWY": {
+    "cik": 930667,
+    "file": "811-09102",
+    "name": "iShares MSCI South Korea ETF",
+    "series": "S000004258",
+    "share_class": "C000011962",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "IAT": {
+    "cik": 1100663,
+    "file": "811-09729",
+    "name": "iShares U.S. Regional Banks ETF",
+    "series": "S000009422",
+    "share_class": "C000025776",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "IBB": {
+    "cik": 1100663,
+    "file": "811-09729",
+    "name": "iShares Biotechnology ETF",
+    "series": "S000004350",
+    "share_class": "C000012080",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "INDA": {
+    "cik": 1100663,
+    "file": "811-09729",
+    "name": "iShares MSCI India ETF",
+    "series": "S000034702",
+    "share_class": "C000106878",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "ITA": {
+    "cik": 1100663,
+    "file": "811-09729",
+    "name": "iShares U.S. Aerospace & Defense ETF",
+    "series": "S000009423",
+    "share_class": "C000025777",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "IWM": {
+    "cik": 1100663,
+    "file": "811-09729",
+    "name": "iShares Russell 2000 ETF",
+    "series": "S000004344",
+    "share_class": "C000012074",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "MCHI": {
+    "cik": 1100663,
+    "file": "811-09729",
+    "name": "iShares MSCI China ETF",
+    "series": "S000031717",
+    "share_class": "C000098688",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "MDY": {
+    "cik": 936958,
+    "file": "811-08972",
+    "name": "SPDR S&P MIDCAP 400 ETF TRUST",
+    "series": null,
+    "share_class": null,
+    "source": "https://www.sec.gov/Archives/edgar/data/936958/000119312524017907/d657320d497.htm"
+  },
+  "SOXX": {
+    "cik": 1100663,
+    "file": "811-09729",
+    "name": "iShares Semiconductor ETF",
+    "series": "S000004354",
+    "share_class": "C000012084",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "SPY": {
+    "cik": 884394,
+    "file": "811-06125",
+    "name": "SPDR S&P 500 ETF TRUST",
+    "series": null,
+    "share_class": null,
+    "source": "https://www.sec.gov/Archives/edgar/data/884394/000119312524017688/d315180d497.htm"
+  },
+  "VGK": {
+    "cik": 857489,
+    "file": "811-05972",
+    "name": "Vanguard European Stock Index Fund",
+    "series": "S000005787",
+    "share_class": "C000015906",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "XLB": {
+    "cik": 1064641,
+    "file": "811-08837",
+    "name": "The Materials Select Sector SPDR Fund",
+    "series": "S000006414",
+    "share_class": "C000017600",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "XLC": {
+    "cik": 1064641,
+    "file": "811-08837",
+    "name": "The Communication Services Select Sector SPDR Fund",
+    "series": "S000062095",
+    "share_class": "C000201048",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "XLE": {
+    "cik": 1064641,
+    "file": "811-08837",
+    "name": "The Energy Select Sector SPDR Fund",
+    "series": "S000006410",
+    "share_class": "C000017596",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "XLI": {
+    "cik": 1064641,
+    "file": "811-08837",
+    "name": "The Industrial Select Sector SPDR Fund",
+    "series": "S000006413",
+    "share_class": "C000017599",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "XLK": {
+    "cik": 1064641,
+    "file": "811-08837",
+    "name": "The Technology Select Sector SPDR Fund",
+    "series": "S000006415",
+    "share_class": "C000017601",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "XLP": {
+    "cik": 1064641,
+    "file": "811-08837",
+    "name": "The Consumer Staples Select Sector SPDR Fund",
+    "series": "S000006409",
+    "share_class": "C000017595",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "XLU": {
+    "cik": 1064641,
+    "file": "811-08837",
+    "name": "The Utilities Select Sector SPDR Fund",
+    "series": "S000006416",
+    "share_class": "C000017602",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "XLV": {
+    "cik": 1064641,
+    "file": "811-08837",
+    "name": "The Health Care Select Sector SPDR Fund",
+    "series": "S000006412",
+    "share_class": "C000017598",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  },
+  "XLY": {
+    "cik": 1064641,
+    "file": "811-08837",
+    "name": "The Consumer Discretionary Select Sector SPDR Fund",
+    "series": "S000006408",
+    "share_class": "C000017594",
+    "source": "https://www.sec.gov/files/investment/data/other/investment-company-series-and-class-information/investment-company-series-class-2024.csv"
+  }
+}

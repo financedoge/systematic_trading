@@ -1,0 +1,171 @@
+{
+  "artifacts": [
+    {
+      "path": "research/fr25-breadth-20261103-v1/protocol.json",
+      "roles": [
+        "protocol",
+        "strategy_recipe"
+      ],
+      "sha256": "3820df3f4e6e785285debfa378d7169a34bb0d423249cffcdf1d411f7f92ff54"
+    },
+    {
+      "path": "research/fr25-breadth-20261103-v1/recipes.json",
+      "roles": [
+        "strategy_recipe"
+      ],
+      "sha256": "96b9575b49e567ee9c0e45e41887d0f800e6fc1f5bc3f9a000b85a289ce382f8"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/definitions.json",
+      "roles": [
+        "strategy_recipe"
+      ],
+      "sha256": "257074cd3dcb04c29f3efeb8a61aada5219483708151a14ebc8767d8fe0d4e98"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/input-verification.json",
+      "roles": [
+        "published_input_verification"
+      ],
+      "sha256": "0f4d014901ccc5bbad5088b17d08ed2b812c705f46de037f007cdd4c32bacaf3"
+    },
+    {
+      "path": "research/fr25-breadth-20261103-v1/selection.json",
+      "roles": [
+        "selection"
+      ],
+      "sha256": "222fcb7d0e0cda55fca0e1150dbed72d251a3e1f35087c33130a027a686d0f72"
+    },
+    {
+      "path": "research/fr25-breadth-20261103-v1/training-grid.json.gz",
+      "roles": [
+        "selection"
+      ],
+      "sha256": "a74d53dcb1e4ef83d8c91b691ce18d1a6906292b0e2bc80c948552b116ac8b03"
+    },
+    {
+      "path": "research/fr25-breadth-20261103-v1/results.json",
+      "roles": [
+        "net_results",
+        "chronology",
+        "cost_delay"
+      ],
+      "sha256": "930b45eb26c4ef74613048e71c6788f3e0e45dadd61ef2d61964df5906559360"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/results.json",
+      "roles": [
+        "matched_controls"
+      ],
+      "sha256": "a09ffa67101f1ed883262be5b6e94cf03075e55232f99cebde6462dce0e55a45"
+    },
+    {
+      "path": "research/fr25-breadth-20261103-v1/results.md",
+      "roles": [
+        "matched_controls",
+        "weakest_inspections"
+      ],
+      "sha256": "0db9afad2b4c64d529ab16786d2481d5f36b4ab987da4807ae1ba864269e9427"
+    },
+    {
+      "path": "research/fr25-breadth-20261103-v1/uncertainty.json",
+      "roles": [
+        "uncertainty"
+      ],
+      "sha256": "f72178dccac0a4a7f8e549a4b326090dbb0d2bb6fc2b7221e56893cc5c565a2b"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/signal-diagnostics.json",
+      "roles": [
+        "decay_stability"
+      ],
+      "sha256": "5313b1fa9e71eeee5feacd0e97a83d0238e360641d4ebb80a46f7fc34908859c"
+    },
+    {
+      "path": "research/fr25-breadth-20261103-v1/native-validation.json",
+      "roles": [
+        "independent_validation"
+      ],
+      "sha256": "01984b6a7bf36911e46961e0409602e30ac3f42c27ffe1b2b60ee74ee399b102"
+    },
+    {
+      "path": "research/fr25-breadth-20261103-v1/weakest-calibration-MBB.png",
+      "roles": [
+        "weakest_inspections"
+      ],
+      "sha256": "e994c50a03f1a2f408a4ab1343e9716162e3bec9f959b8df0ce8c3acf4edac3e"
+    },
+    {
+      "path": "research/fr25-breadth-20261103-v1/weakest-later-TLT.png",
+      "roles": [
+        "weakest_inspections"
+      ],
+      "sha256": "93fd8d1643f2c0321ea772ef186c7a2ff35a401a4ef219d72c360e9cea5c5b2e"
+    }
+  ],
+  "candidate_id": "expanded-monthly-M42-N33",
+  "coverage_gaps": [
+    "Fresh prospective performance has not been collected for this expanded recipe.",
+    "Historical security-master membership and first publication availability remain uncertified.",
+    "No measured spreads/impact or paper evidence for expanded allocation; bootstrap does not account for all prior searches.",
+    "Selection uncertainty across all 2704 trials is uncorrected. Conditional bootstrap intervals do not adjust the search."
+  ],
+  "decay": [
+    {
+      "cadence_and_delay_interpretation": "Upstream ranking model and history are shared with the parent. New width/breadth rules are checked with monthly and 0.40 dynamic timing, annual stability and six cost/delay scenarios.",
+      "half_life_sessions": null,
+      "horizons": [
+        1,
+        5,
+        10,
+        21,
+        63
+      ],
+      "method_uncertainty_and_caveats": "Return-horizon rank-IC curve with1000 circular21-session block draws does not identify an exponential signal half-life. Overlapping labels, regime dependence and prior sample reuse remain;63-session dependence can exceed the block length.",
+      "signal": "Expanded FR25 combined selection rank",
+      "status": "unidentifiable"
+    }
+  ],
+  "fixed_and_dynamic_evaluated": true,
+  "inputs": {
+    "activity_basis": "audited_raw",
+    "full_supported_pool": true,
+    "historical_availability": "reconstructed_or_unknown",
+    "historical_membership": "retrospective_or_unknown",
+    "limitations_and_missing_policy": "52 supported histories from54 candidates; BWX/XOP unresolved identity holds. Audited adjusted prices/raw activity with explicit missing exclusions. Original-vintage financial/USD series remain limited by historical capture availability; monthly carry preserves source dates.",
+    "price_basis": "dividend_split_adjusted",
+    "publication_batch": "e22f27a465e95f86cd40f7f9d24b63533a4a397eb0c02c8f40a696b0350d7731"
+  },
+  "net_verdict": "not_established",
+  "operator_disposition": "Operator requested this comparison. Results ready for discussion.",
+  "policy_sha256": "6335fdb51082f56eabea53b75be5c30b42fdcc4edf972a18dcb819614a9dac58",
+  "policy_version": "research-evidence-v1",
+  "preregistered_net_rule": "Monthly, 5 bp, next open, every integer M,N from 1 to 52 inclusive, N expressed equivalently as X=N/52. Maximize 2021-2024 annualized net Sharpe. Round Sharpe to 12 decimals for ties, then prefer N closest to scaled 15, M closest to incumbent 6, smaller M then smaller N. Identical IS weight paths may share one exact app replay. Report tie count, near-optima, yearly prefix winners, return and drawdown guards. No return floor or cost veto.",
+  "prospective_plan_or_gap": "Both eras were inspected previously. Fresh validation needs a prior freeze and later captured observations.",
+  "purpose": "retain_research",
+  "sample": {
+    "claim": "retrospective_development",
+    "label_boundary_and_overlap": "Search engine values only 2021\u20132024. Training ranks use causal frozen model and prior-close data. Parameters sealed before OOS target replay. Continuous positions cross the window boundary.",
+    "observations_captured_after_freeze": false,
+    "prior_search_and_multiplicity": "All 2704 monthly M,N pairs competed on IS net Sharpe. Prefix winners and distinct paths are disclosed. Intervals condition on selection. Prior universe and recipe searches add unknown multiplicity.",
+    "recipe_frozen_at": "2026-11-03T14:05:16.621152+00:00",
+    "selection_basis": "training_only",
+    "trial_count": 2704,
+    "windows": [
+      {
+        "end": "2024-12-31",
+        "prior_use": "previously_inspected",
+        "role": "calibration",
+        "start": "2021-01-04"
+      },
+      {
+        "end": "2026-10-30",
+        "prior_use": "previously_inspected",
+        "role": "evaluation",
+        "start": "2025-01-02"
+      }
+    ]
+  },
+  "schema_version": 1,
+  "study_id": "fr25-breadth-20261103-v1"
+}

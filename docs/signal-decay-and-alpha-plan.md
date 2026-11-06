@@ -1,5 +1,64 @@
 # Signal decay, alpha overlays and portfolio robustness — research plan
 
+## Current checkpoint — November 6, 2026
+
+P4.21's [data coverage assessment](../research/p421-coverage-20261104-v1/results.md)
+and [December 2024 qualification pilot](../research/p421-quarter-20261104-v1/results.md)
+are complete. Sixteen of 29 equity ETFs have public month-end holdings, first
+eligible for March 3. Even MDY, with all 401 equity tickers disclosed, has
+complete price windows on just 17.92% of equity value. Historical replay
+remains blocked. The [five-holding MDY price audit](../research/p421-mdy-audit-20261104-v1/results.md)
+is complete. All five have candidate observations, one under a later ticker.
+The [remaining 329-holding inventory](../research/p421-mdy-inventory-20261105-v1/results.md)
+is complete. Full windows already exist for 71.84% of MDY equity value in
+that group. The remaining uncovered records account for 5.12% after candidate
+identity and ticker links are separated. The subsequent
+[ten-holding evidence pilot](../research/p421-ten-qualification-20261106-v1/results.md)
+verified identities and internal consistency, with zero new qualifications.
+Restore independent historical-data access, then reconcile the prepared
+ten-stock extract. IBKR's other-IP session error is the immediate access issue.
+
+The [reconciled completion review](research-plan-review-2026-10-31.md) separates
+completed experiments, withheld net replays and remaining data/platform work.
+The fixed cash-relative net retest requested below is **complete**, with
+126 cases, 35 focused tests and three independent native LEAN accounting checks.
+Class-first/monthly was selected on 2021–2024; it improves the matching control
+later but does not beat FR25's guarded risk/return comparison. Both weakest-ETF
+inspections are ready. [Report](../research/cash-relative-net-20261031-v1/results.md).
+The operator **retained cash-relative as research evidence** and authorized the
+six cost-excluded Alpha101 signals. That separate study is now **complete**:
+222 cases on52 supported histories,55 passing tests/one optional skip and three
+native accounting checks. All six training-selected policies are monthly;
+Alpha54/monthly leads training but establishes no robust guarded advantage across
+eras. [Illustrated report](../research/alpha101-net-20261031-v1/index.html).
+The operator retained Alpha54/the six-signal study as research evidence onNovember1.
+P4.20 [evidence/decay governance](research-evidence-governance-v1.md) is now complete.
+Operator continued November2. Expanded-pool FR25 net replay is now **complete**:
+144 cases,52 supported histories,63 passing tests,nine exact monthly policy checks
+and three exact native accounting checks. Monthly wins training; expanded later
+return81.59% exceeds original14's54.93%, but Sharpe1.726<2.003 and
+DD15.18%>8.31%. Training comparison also fails original14 guards; no net
+superiority established. EWC/XLK weakest inspections and P4.20 dossier are ready.
+[Illustrated report](../research/expanded-fr25-net-20261102-v1/index.html).
+The operator used this discussion to request a percentage fallback and a joint
+expanded-pool M,N search. That follow-up is complete. Requiring 15 of 52 with
+six slots matched the original training fallback frequency but lowered IS Sharpe.
+The training-only 42/33 winner returned 9.46% in the later period with Sharpe
+1.271 and maximum drawdown 5.08%. [Breadth report](../research/fr25-breadth-20261103-v1/index.html).
+The operator then requested a check for concentrated winners and stable
+annualized returns. The [completed comparison](../research/etf-stability-20261103-v1/index.html)
+selected monthly Alpha54 using training data. Its CAGR and Sharpe gaps were
+smaller than both 6/4 books, with wide conditional uncertainty. The top-three
+withholding experiment leaves both 6/4 books profitable in the later period.
+The operator retained the [methodological guidance](research-stability-guidelines.md)
+and continued. The [class/volatility net replay](../research/class-vol-net-20261103-v1/index.html)
+is complete with 192 cases across the original and current pools. The selected
+monthly pooled volatility-normalized book earned 2.73% later CAGR versus 3.94%
+for BIL. Its return guard failed in every later friction case.
+**Stop for discussion.** This completes the planned withheld net replays.
+P4.21 remains blocked on historical holdings and membership evidence.
+The original screens below remain historical evidence, not current cost-policy gates.
+
 ## Cost policy and retest requested October 17, 2026
 
 The 44 bp annual-cost ceiling is retired by operator instruction. Replay declared
@@ -9,11 +68,12 @@ guards, cost/delay stress and chronological stability. Historical gate outcomes
 remain reproducible but cannot exclude a new comparison.
 [Audit and reopened hypotheses](research-cost-policy-review-2026-10-17.md).
 
-First retest the fixed cash-relative family against matched removal-only controls,
+Completed October 31: retest the fixed cash-relative family against matched removal-only controls,
 current SOTA FR25 and monitored recipes, including monthly and the existing three
-dynamic thresholds. Deliver its report and stop for review before the next
-planned item. The six cost-only Alpha101 exclusions are a later separate study
-on the full supported pool. No strategy promotion or allocation follows.
+dynamic thresholds. The operator retained it as research evidence. Subsequently,
+the six cost-only Alpha101 exclusions completed their separate full-supported-pool
+net study. Those checkpoints were resolved; the current discussion is the completed
+expanded FR25 replay above. No strategy promotion or allocation follows.
 
 ## Target-change rebalance study requested October 15, 2026
 
@@ -251,14 +311,26 @@ are the prerequisites to execute first; do not run the expanded-pool comparison 
 published. This registration does not itself admit instruments, authorize direct provider downloads
 as research inputs, or change monitoring, allocation or the 45% cap.
 
-### P4.20 — Decay-based promotion gate *(governance)*
+### P4.20 — Evidence and decay review *(governance; complete November 1)*
 
-Require any new signal to demonstrate a minimum estimated half-life and sub-period
-IC stability before it can enter a monitored recipe. Depends on P4.13. This is the
-structural protection against the Alpha101 selection problem described in
-Appendix A.
+The original proposal was a minimum half-life/sub-period IC gate. The operator's
+later cost-policy and net-performance decisions supersede that universal proxy.
+[Version1](research-evidence-governance-v1.md) requires a hash-bound, versioned
+evidence dossier: actual period reuse, training selection, decay/stability and
+uncertainty or explicit unidentifiable/insufficient status, matched net outcomes,
+fixed/dynamic timing, cost/delay and chronological checks. No universal lifetime,
+positive IC or annual-cost floor/ceiling substitutes for net evidence. Unsupported
+untouched/prospective claims fail the review; choosing by a later period makes it
+development data for that choice. File completeness is not scientific certification.
 
-### P4.21 — Look-through constituent alpha *(deferred, larger)*
+Executable read-only review and regression tests pass. Worked Alpha54 assessment
+retains research evidence while exposing the decay-uncertainty gap before any
+new monitored recipe. App calculation, promotion and broker authority remain
+separate. No existing strategy is automatically removed or promoted. The P4.13
+diagnostics and their explicit forecast/overlay coverage gaps remain historical
+evidence, not a complete certificate for all monitored signals. Stop for discussion.
+
+### P4.21 — Look-through constituent alpha *(coverage assessed, replay data-blocked)*
 
 **Question.** Can the structurally cross-sectional alphas be used honestly by
 computing them on the constituent cross-section and aggregating holdings-weighted
@@ -274,8 +346,16 @@ flagged in the roadmap; issuer holdings snapshots are prospective-only from
 October 2026; and the constituent series are the `review`-status population from
 `P3.8`, so this work carries that disclosure.
 
-**Blocked on** the constituent-coverage assessment. Do not start before P4.16
-answers whether the cross-sectional premise holds at all.
+**November 4 checkpoint.** The [constituent coverage assessment](../research/p421-coverage-20261104-v1/results.md)
+is complete. The 680 figure is the review-status subset of 884 IVV-tagged
+symbols. Direct point-in-time issuer holdings cover 0/2,030 equity fund-months
+in the declared historical comparison. Legacy IVV/ITOT availability is unknown
+and admissible price-status coverage is insufficient. Earlier P4.16 ETF-level
+results supply context but do not establish a constituent-level edge. The
+replay remains blocked on qualified holdings, dated identity/membership and
+adequate price/lookback coverage. The subsequent December filing and identity
+pilot found zero certified matches across the full price window. Stop for
+discussion at the [pilot report](../research/p421-quarter-20261104-v1/results.md).
 
 ### Platform item — intraday activation and stops *(not research)*
 
@@ -370,7 +450,7 @@ extraction enforce the same SHA-256 after its move from scratch storage.
 | Market capitalisation, industry classification | Not held | 19 alphas; `indneutralize` |
 | Published audited intraday bars | Not held; raw sampled quotes are `research_approved: false` | Intraday activation and stops |
 | Intraday execution stack | Does not exist (`P5.1`–`P5.4` Pending) | Intraday activation and stops |
-| Constituent coverage assessment | Pending | P4.21 |
+| Constituent coverage assessment | Complete Nov 4; insufficient historical holdings, identity and price coverage | P4.21 replay blocked |
 | Security master for identity certification | Blocked (same access gap as `P3.7`/CRSP) | `P3.8`; long-window alphas needing certified identity |
 | Qualified USD/CNH history and FX inputs | Unresolved input class | Any CNH-denominated claim beyond the current disclosures |
 

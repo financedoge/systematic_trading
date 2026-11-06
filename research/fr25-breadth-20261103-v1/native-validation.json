@@ -1,0 +1,27 @@
+{
+  "cases": [
+    {
+      "case": "winner_c5d0",
+      "max_nav_error_usd": 0.0,
+      "output": "var\\research\\fr25-breadth-20261103-v1\\native-v1\\winner_c5d0",
+      "receipt_sha256": "2959021ea8db42912c8e3d407f8fd0e4531004fa3a31e16b4abdef04aa705f61",
+      "status": "succeeded"
+    },
+    {
+      "case": "scaled_c5d0",
+      "max_nav_error_usd": 0.0,
+      "output": "var\\research\\fr25-breadth-20261103-v1\\native-v1\\scaled_c5d0",
+      "receipt_sha256": "97152a455c1dd1743bad2253b7152e97b9f5d36b391b113211bbe50dc2c3c66a",
+      "status": "succeeded"
+    },
+    {
+      "case": "winner_event_c20d1",
+      "max_nav_error_usd": 0.0,
+      "output": "var\\research\\fr25-breadth-20261103-v1\\native-v1\\winner_event_c20d1",
+      "receipt_sha256": "a7d5e5be0f09904ed679d3aaf4357f58c4a253576f7a393893a10602f1308c43",
+      "status": "succeeded"
+    }
+  ],
+  "scope": "Independent native LEAN orders/fills/cash/NAV validation on frozen targets, not independent policy inference.",
+  "validator_sha256": "e9724044a2df891d1af2b284160cdaeaa7472d73997b38603725af0a8a0855f8"
+}

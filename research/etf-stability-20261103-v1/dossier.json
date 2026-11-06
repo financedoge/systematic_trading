@@ -1,0 +1,162 @@
+{
+  "artifacts": [
+    {
+      "path": "research/etf-stability-20261103-v1/protocol.json",
+      "roles": [
+        "protocol",
+        "strategy_recipe"
+      ],
+      "sha256": "7bb365b314b8031bab72d3d2457d35c810ac06456fc5bd1147cc52380156ef69"
+    },
+    {
+      "path": "research/alpha101-net-20261031-v1/protocol.json",
+      "roles": [
+        "strategy_recipe"
+      ],
+      "sha256": "cf4e161ddf4c7b70d75a18803b610161d03fd5076769c93f160f2e5d0bdf6382"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/input-verification.json",
+      "roles": [
+        "published_input_verification"
+      ],
+      "sha256": "0f4d014901ccc5bbad5088b17d08ed2b812c705f46de037f007cdd4c32bacaf3"
+    },
+    {
+      "path": "research/etf-stability-20261103-v1/selection.json",
+      "roles": [
+        "selection"
+      ],
+      "sha256": "0fda70a2ea1e36d550346a342e1b06b0ca6f127c01bfe14214ba1112bef74af4"
+    },
+    {
+      "path": "research/etf-stability-20261103-v1/training.json",
+      "roles": [
+        "selection"
+      ],
+      "sha256": "22817dcea2f8c43731fc254de365d785a3f2af3623416b89785263b915a21ef4"
+    },
+    {
+      "path": "research/etf-stability-20261103-v1/results.json",
+      "roles": [
+        "net_results",
+        "matched_controls",
+        "cost_delay",
+        "chronology"
+      ],
+      "sha256": "ffa54285d3660073e6a471e993b8fd531fc0d7c289fd10c07d295a2353f4535b"
+    },
+    {
+      "path": "research/etf-stability-20261103-v1/withholding.json",
+      "roles": [
+        "matched_controls"
+      ],
+      "sha256": "6d18192a590e3454accfbd42ee1e52d7703534ea80d5031517f5c5cb0da4aa28"
+    },
+    {
+      "path": "research/etf-stability-20261103-v1/uncertainty.json",
+      "roles": [
+        "uncertainty"
+      ],
+      "sha256": "15cc7d9d005987bc48cd0f31a70d15708e756c7d78385a910d6004bff0882941"
+    },
+    {
+      "path": "research/alpha101-net-20261031-v1/signal-diagnostics.json",
+      "roles": [
+        "decay_stability"
+      ],
+      "sha256": "52de9eb9d4c25ac67bfe3b720aba358805fc5fffdc6b8a63ecad396ca547cb6c"
+    },
+    {
+      "path": "research/etf-stability-20261103-v1/weakest-inspections.json",
+      "roles": [
+        "weakest_inspections"
+      ],
+      "sha256": "991b31308fb3a0727362737c05e3753c03d062bb74f04c538ca6133575767e5f"
+    },
+    {
+      "path": "research/etf-stability-20261103-v1/native-validation.json",
+      "roles": [
+        "independent_validation"
+      ],
+      "sha256": "1047c19c86b36057861d914f76724a5600e109be04a15704c438593f8f12f2eb"
+    },
+    {
+      "path": "research/alpha101-net-20261031-v1/weakest-calibration-EWY.png",
+      "roles": [
+        "weakest_inspections"
+      ],
+      "sha256": "79c0e38524bb0898232e1ce34671f8494fde5663810fc2402943ae39c0f97c53"
+    },
+    {
+      "path": "research/alpha101-net-20261031-v1/weakest-later-XLC.png",
+      "roles": [
+        "weakest_inspections"
+      ],
+      "sha256": "03af1c8d1c7b8e9d0aeb20c3df3821fbca297149f2eb4bbcd1eb70ae1120bcc1"
+    }
+  ],
+  "candidate_id": "F0A4U0_monthly",
+  "coverage_gaps": [
+    "Reused evaluation and historically selected sleeves. Prospective transfer remains untested.",
+    "Named ETF removals do not identify AI causality or a no-AI market path. Exposure can overlap across securities.",
+    "Intervals are conditional on selected recipe. Return guards and stability checks answer separate questions."
+  ],
+  "decay": [
+    {
+      "cadence_and_delay_interpretation": "Replayed monthly and target-change adoption with 5/10/20 bp and zero/one extra session. Annual, two-half, cross-era gap and winner-exclusion behavior are reported.",
+      "half_life_sessions": null,
+      "horizons": [
+        1,
+        5,
+        10,
+        21
+      ],
+      "method_uncertainty_and_caveats": "Identical selection signal and primary daily path as retained Alpha54. Parent horizon-dependent rank-IC evidence does not establish an exponential half-life.",
+      "signal": "Selected monthly Alpha54",
+      "status": "unidentifiable"
+    }
+  ],
+  "fixed_and_dynamic_evaluated": true,
+  "inputs": {
+    "activity_basis": "audited_raw",
+    "full_supported_pool": true,
+    "historical_availability": "reconstructed_or_unknown",
+    "historical_membership": "retrospective_or_unknown",
+    "limitations_and_missing_policy": "Two frozen full-pool parents have identical audited price/volume arrays and pin, with BWX/XOP held on identity. Incomplete vintage or membership availability remains disclosed.",
+    "price_basis": "dividend_split_adjusted",
+    "publication_batch": "e22f27a465e95f86cd40f7f9d24b63533a4a397eb0c02c8f40a696b0350d7731"
+  },
+  "net_verdict": "not_established",
+  "operator_disposition": "Operator requested this robustness comparison. Results ready for discussion.",
+  "policy_sha256": "6335fdb51082f56eabea53b75be5c30b42fdcc4edf972a18dcb819614a9dac58",
+  "policy_version": "research-evidence-v1",
+  "preregistered_net_rule": "Choose using IS only. Among eligible candidates maximize the WORST midrank of four criteria: higher weaker-half Sharpe, higher weaker-half CAGR, smaller absolute half-Sharpe gap, smaller absolute half-CAGR gap. Rank among the full 30-arm grid. Tie by mean of these four ranks, weaker-half Sharpe, lower turnover, then lexical ID. No later gap enters selection. Positive net CAGR in each IS half, whole-IS CAGR at least the greater of BIL CAGR and expanded 6/4 CAGR minus 0.5pp, IS drawdown at most 2pp worse than expanded 6/4, positive IS CAGR with its three biggest IS risky contributors set to cash, positive IS CAGR at 20bp and one extra session. If none qualifies, identify the score leader as diagnostic only and preserve the failed search.",
+  "prospective_plan_or_gap": "A genuinely subsequent, pre-frozen evaluation is outstanding. Parent performances and both eras have previously been inspected.",
+  "purpose": "retain_research",
+  "sample": {
+    "claim": "retrospective_development",
+    "label_boundary_and_overlap": "The selection engine and stress inputs end December 31, 2024. Winner weights and timing sealed before the later replay. Bootstrap resamples 21-session daily blocks.",
+    "observations_captured_after_freeze": false,
+    "prior_search_and_multiplicity": "Fifteen allocation combinations and two timings, built from previously inspected sleeves. Older FR25, Alpha101 and construction searches materially expand total multiplicity.",
+    "recipe_frozen_at": "2026-11-03T14:55:22.185453+00:00",
+    "selection_basis": "training_only",
+    "trial_count": 30,
+    "windows": [
+      {
+        "end": "2024-12-31",
+        "prior_use": "previously_inspected",
+        "role": "calibration",
+        "start": "2021-01-04"
+      },
+      {
+        "end": "2026-10-30",
+        "prior_use": "previously_inspected",
+        "role": "evaluation",
+        "start": "2025-01-02"
+      }
+    ]
+  },
+  "schema_version": 1,
+  "study_id": "etf-stability-20261103-v1"
+}

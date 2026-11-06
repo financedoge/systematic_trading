@@ -1,0 +1,90 @@
+{
+  "cik": 861884,
+  "filings": [
+    {
+      "accession": "0001558370-23-017398",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "September 30, 2023"
+        ],
+        "DocumentType": [
+          "10-Q"
+        ],
+        "EntityCentralIndexKey": [
+          "0000861884"
+        ],
+        "EntityRegistrantName": [
+          "RELIANCE STEEL & ALUMINUM CO"
+        ],
+        "Security12bTitle": [
+          "Common Stock, $0.001 par value"
+        ],
+        "SecurityExchangeName": [
+          "New York Stock Exchange"
+        ],
+        "TradingSymbol": [
+          "RS"
+        ]
+      },
+      "filing_date": "2023-11-02",
+      "listing_tables": [
+        "Title\u00a0of\u00a0each\u00a0class Trading Symbol(s) Name\u00a0of\u00a0each\u00a0exchange\u00a0on\u00a0which\u00a0registered Common Stock, $0.001 par value \u200b RS \u200b New York Stock Exchange"
+      ],
+      "report_date": "2023-09-30",
+      "source": {
+        "bytes": 1463875,
+        "retrieved_at": "2026-11-05T16:13:20.118541+00:00",
+        "sha256": "12e9338c4a5be5d7180ddc81fd8f9a84065306623df904a319a295c0a188f990",
+        "url": "https://www.sec.gov/Archives/edgar/data/861884/000155837023017398/rs-20230930x10q.htm"
+      }
+    },
+    {
+      "accession": "0001558370-25-001806",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "December 31, 2024"
+        ],
+        "DocumentType": [
+          "10-K"
+        ],
+        "EntityCentralIndexKey": [
+          "0000861884"
+        ],
+        "EntityRegistrantName": [
+          "RELIANCE, INC."
+        ],
+        "Security12bTitle": [
+          "Common Stock, $0.001 par value"
+        ],
+        "SecurityExchangeName": [
+          "New York Stock Exchange"
+        ],
+        "TradingSymbol": [
+          "RS"
+        ]
+      },
+      "filing_date": "2025-02-27",
+      "listing_tables": [
+        "Title\u00a0of\u00a0each\u00a0class Trading Symbol(s) Name\u00a0of\u00a0each\u00a0exchange\u00a0on\u00a0which\u00a0registered Common Stock, $0.001 par value \u200b RS \u200b New York Stock Exchange"
+      ],
+      "report_date": "2024-12-31",
+      "source": {
+        "bytes": 3221538,
+        "retrieved_at": "2026-11-05T16:07:50.103273+00:00",
+        "sha256": "4d5fcfd45d9f82c20eab2abbc136c3e6fe95d167c90d6231a05c915512b2a03e",
+        "url": "https://www.sec.gov/Archives/edgar/data/861884/000155837025001806/rs-20241231x10k.htm"
+      }
+    }
+  ],
+  "requested_cutoffs": {
+    "2024-02-27": "0001558370-23-017398",
+    "2025-02-27": "0001558370-25-001806"
+  },
+  "submissions": {
+    "bytes": 166574,
+    "retrieved_at": "2026-11-05T16:07:47.562188+00:00",
+    "sha256": "6a3f332ef1e804629422257b44da8668e0c1e29b685163c22ed7bd8456624bc0",
+    "url": "https://data.sec.gov/submissions/CIK0000861884.json"
+  },
+  "symbol": "RS"
+}

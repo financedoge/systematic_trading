@@ -1,0 +1,90 @@
+{
+  "cik": 1035983,
+  "filings": [
+    {
+      "accession": "0001558370-24-001529",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "December 31 , 2023"
+        ],
+        "DocumentType": [
+          "10-K"
+        ],
+        "EntityCentralIndexKey": [
+          "0001035983"
+        ],
+        "EntityRegistrantName": [
+          "Comfort Systems USA,\u00a0Inc."
+        ],
+        "Security12bTitle": [
+          "Common Stock, $.01 par value"
+        ],
+        "SecurityExchangeName": [
+          "New York Stock Exchange"
+        ],
+        "TradingSymbol": [
+          "FIX"
+        ]
+      },
+      "filing_date": "2024-02-22",
+      "listing_tables": [
+        "\u200b \u200b \u200b \u200b \u200b Title of Each Class Trading Symbol(s) Name of Each Exchange on which Registered Common Stock, $.01 par value FIX New York Stock Exchange"
+      ],
+      "report_date": "2023-12-31",
+      "source": {
+        "bytes": 2870866,
+        "retrieved_at": "2026-11-05T16:07:22.193121+00:00",
+        "sha256": "2b3ca786e29858f78ae84bb913458af24517b3af638e3ddd8c865c0d35bdbe37",
+        "url": "https://www.sec.gov/Archives/edgar/data/1035983/000155837024001529/fix-20231231x10k.htm"
+      }
+    },
+    {
+      "accession": "0001558370-25-001222",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "December 31 , 2024"
+        ],
+        "DocumentType": [
+          "10-K"
+        ],
+        "EntityCentralIndexKey": [
+          "0001035983"
+        ],
+        "EntityRegistrantName": [
+          "Comfort Systems USA,\u00a0Inc."
+        ],
+        "Security12bTitle": [
+          "Common Stock, $.01 par value"
+        ],
+        "SecurityExchangeName": [
+          "New York Stock Exchange"
+        ],
+        "TradingSymbol": [
+          "FIX"
+        ]
+      },
+      "filing_date": "2025-02-20",
+      "listing_tables": [
+        "\u200b \u200b \u200b \u200b \u200b Title of Each Class Trading Symbol(s) Name of Each Exchange on which Registered Common Stock, $.01 par value FIX New York Stock Exchange"
+      ],
+      "report_date": "2024-12-31",
+      "source": {
+        "bytes": 3124139,
+        "retrieved_at": "2026-11-05T16:07:23.864568+00:00",
+        "sha256": "afe9e64ccbc46df7e414d0d25eac149672f7c1efc7c0048643bad6d00e05367c",
+        "url": "https://www.sec.gov/Archives/edgar/data/1035983/000155837025001222/fix-20241231x10k.htm"
+      }
+    }
+  ],
+  "requested_cutoffs": {
+    "2024-02-27": "0001558370-24-001529",
+    "2025-02-27": "0001558370-25-001222"
+  },
+  "submissions": {
+    "bytes": 158327,
+    "retrieved_at": "2026-11-05T16:07:21.206967+00:00",
+    "sha256": "6ad07d7077d36e053de0f03ac0cd35ae51f6c4c7ddf86cc5d2d1cbb39c4b636a",
+    "url": "https://data.sec.gov/submissions/CIK0001035983.json"
+  },
+  "symbol": "FIX"
+}

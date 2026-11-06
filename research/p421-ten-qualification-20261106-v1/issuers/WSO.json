@@ -1,0 +1,94 @@
+{
+  "cik": 105016,
+  "filings": [
+    {
+      "accession": "0001193125-24-044609",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "December 31 , 2023"
+        ],
+        "DocumentType": [
+          "10-K"
+        ],
+        "EntityCentralIndexKey": [
+          "0000105016"
+        ],
+        "EntityRegistrantName": [
+          "WATSCO, INC."
+        ],
+        "Security12bTitle": [
+          "Common stock, $0.50 par value",
+          "Class B common stock, $0.50 par value"
+        ],
+        "SecurityExchangeName": [
+          "New York Stock Exchange"
+        ],
+        "TradingSymbol": [
+          "WSO",
+          "WSOB"
+        ]
+      },
+      "filing_date": "2024-02-23",
+      "listing_tables": [
+        "Title of each class Trading Symbol(s) Name of each exchange on which registered Common stock, $0.50 par value WSO New York Stock Exchange Class B common stock, $0.50 par value WSOB New York Stock Exchange"
+      ],
+      "report_date": "2023-12-31",
+      "source": {
+        "bytes": 535357,
+        "retrieved_at": "2026-11-05T16:06:44.218481+00:00",
+        "sha256": "431b00fe58b2ea6562b88f10e1d7f704896169fb91eae00d015b7892db349114",
+        "url": "https://www.sec.gov/Archives/edgar/data/105016/000119312524044609/d104765d10k.htm"
+      }
+    },
+    {
+      "accession": "0001193125-24-249900",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "September 30, 2024"
+        ],
+        "DocumentType": [
+          "10-Q"
+        ],
+        "EntityCentralIndexKey": [
+          "0000105016"
+        ],
+        "EntityRegistrantName": [
+          "WATSCO, INC."
+        ],
+        "Security12bTitle": [
+          "Common stock, $0.50 par value",
+          "Class B common stock, $0.50 par value"
+        ],
+        "SecurityExchangeName": [
+          "New York Stock Exchange"
+        ],
+        "TradingSymbol": [
+          "WSO",
+          "WSOB"
+        ]
+      },
+      "filing_date": "2024-11-01",
+      "listing_tables": [
+        "Title of each class Trading Symbol(s) Name of each exchange on which registered Common stock, $0.50 par value WSO New York Stock Exchange Class B common stock, $0.50 par value WSOB New York Stock Exchange"
+      ],
+      "report_date": "2024-09-30",
+      "source": {
+        "bytes": 1424526,
+        "retrieved_at": "2026-11-05T16:12:43.325585+00:00",
+        "sha256": "7cb0299ceb2ca7d91b546c732a8f2b36aaa69cd8336de973deaacc15cd30769f",
+        "url": "https://www.sec.gov/Archives/edgar/data/105016/000119312524249900/d888515d10q.htm"
+      }
+    }
+  ],
+  "requested_cutoffs": {
+    "2024-02-27": "0001193125-24-044609",
+    "2025-02-27": "0001193125-24-249900"
+  },
+  "submissions": {
+    "bytes": 161431,
+    "retrieved_at": "2026-11-05T16:06:42.985253+00:00",
+    "sha256": "38662cc6327571e3789b33c4aae6c7a39e92b29c7dc45ec7969a1b11a307aa38",
+    "url": "https://data.sec.gov/submissions/CIK0000105016.json"
+  },
+  "symbol": "WSO"
+}

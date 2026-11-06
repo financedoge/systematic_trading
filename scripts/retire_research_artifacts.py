@@ -19,7 +19,7 @@ from systematic_trading.research.strategy_lifecycle import membership
 from systematic_trading.runtime_io import atomic_json, exclusive_lock
 from systematic_trading.storage.artifact_retention import (
     REVISION, canonical, fingerprint, inventory, record_retirement, validate_manifest,
-    CLOSED_STUDIES,DISPOSABLE_STUDY_FOLDERS,
+    CLOSED_STUDIES,DISPOSABLE_STUDY_FOLDERS,active_research_metadata,
 )
 from systematic_trading.storage.postgres import PostgresStore
 
@@ -74,14 +74,17 @@ def protection(settings):
     if compute.get('revision'):
         revisions.add(compute['revision'])
     # Active studies may carry code/input paths in their frozen protocols.
-    for study in ('cash-relative-momentum-20261017-v1', 'class-volatility-screen-20261016-v1', 'etf-expansion-20261014-v1'):
-        for p in (ROOT / 'research' / study).glob('*.json'):
-            revisions.update(PATH_REVISION.findall(p.read_text(encoding='utf8')))
+    research_evidence={}
+    for path in active_research_metadata(ROOT/'research'):
+        content=path.read_text(encoding='utf8')
+        research_evidence[str(path.resolve())]=fingerprint(content)
+        revisions.update(PATH_REVISION.findall(content))
     guard = dict(membership_revision=member['revision'], monitored=member['monitored'],
                  control_revision=control['revision'], sota=control['sota_key'],
                  active=control['active'], pending=control.get('pending'),
                  publications=[r['version'] for r in publications[:2]],
                  compute_revision=compute.get('revision'), operational_pins=sorted(operational),
+                 active_research_metadata=research_evidence,
                  protected_revisions=sorted(revisions))
     return guard, publications
 
@@ -123,14 +126,11 @@ def closed_protection(settings):
     for revision in guard['protected_revisions']:
         publication=analytics.publication('tracked-strategies/calculations',revision)
         if publication:references.append(canonical(publication))
-    for name in ('cash-relative-momentum-20261017-v1','class-volatility-screen-20261016-v1','etf-expansion-20261014-v1'):
-        protected.append(str(root/name))
-        for path in (ROOT/'research'/name).glob('*.json'):
-            evidence[str(path.resolve())]=fingerprint(path.read_text(encoding='utf8'))
-            references.append(path.read_text(encoding='utf8'))
-            for study in CLOSED_STUDIES:
-                if study in path.read_text(encoding='utf8'):
-                    protected.append(str(root/study))
+    for path in active_research_metadata(ROOT/'research'):
+        protected.append(str(root/path.parent.name))
+        content=path.read_text(encoding='utf8')
+        evidence[str(path.resolve())]=fingerprint(content)
+        references.append(content)
     for study in CLOSED_STUDIES:
         if any(study in value for value in references):protected.append(str(root/study))
     # Execution and portfolio JSON references pin a whole selected study. Old
@@ -209,10 +209,8 @@ def ancillary_protection(settings,scope):
     analytics=AnalyticsStore.from_settings(settings)
     root=(settings.data_dir/('governance' if scope=='governance' else 'tracked_models')).resolve()
     texts=[];evidence={}
-    for folder in [ROOT/'config',*[ROOT/'research'/name for name in
-            ('cash-relative-momentum-20261017-v1','class-volatility-screen-20261016-v1','etf-expansion-20261014-v1')]]:
-        for path in folder.glob('*.json'):
-            text=path.read_text(encoding='utf8');texts.append(text);evidence[str(path)]=fingerprint(text)
+    for path in [*(ROOT/'config').glob('*.json'),*active_research_metadata(ROOT/'research')]:
+        text=path.read_text(encoding='utf8');texts.append(text);evidence[str(path)]=fingerprint(text)
     for p in publications[:2]:
         texts.append(canonical(analytics.publication('tracked-strategies/calculations',p['version'])))
         texts.extend(r['payload'] for r in analytics.pinned_rows('documents','tracked-strategies/calculations',p['version'])

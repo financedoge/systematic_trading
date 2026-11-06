@@ -1,0 +1,68 @@
+{
+  "bill_cagr": 0.02833228434229329,
+  "eligible_candidates": 8,
+  "grid_sha256": "22817dcea2f8c43731fc254de365d785a3f2af3623416b89785263b915a21ef4",
+  "id": "F0A4U0_monthly",
+  "max_price_date": "2024-12-31",
+  "protocol_sha256": "7bb365b314b8031bab72d3d2457d35c810ac06456fc5bd1147cc52380156ef69",
+  "qualified": true,
+  "ranking": [
+    30.0,
+    30.0,
+    25.0,
+    25.0
+  ],
+  "return_floor": 0.055701836525425936,
+  "sealed_at": "2026-11-03T14:55:50.136983+00:00",
+  "selected_metrics": {
+    "IS": {
+      "annual_turnover": 19.917696144326733,
+      "cagr": 0.07486704781843723,
+      "calmar": 0.3874013407351057,
+      "cumulative": 0.33366184,
+      "end": "2024-12-31",
+      "fees_usd": 45066.36,
+      "max_drawdown": 0.19325448816561852,
+      "mean_exposure": 0.9475816886120965,
+      "sessions": 1005,
+      "sharpe": 0.6793494964542395,
+      "start": "2021-01-04",
+      "volatility": 0.11623147367719709
+    },
+    "first": {
+      "annual_turnover": 19.323416609174085,
+      "cagr": 0.05335118942836403,
+      "calmar": 0.2760670136811634,
+      "cumulative": 0.1093198999999998,
+      "end": "2022-12-30",
+      "fees_usd": 20718.870000000003,
+      "max_drawdown": 0.19325448816561852,
+      "mean_exposure": 0.9280273853682728,
+      "sessions": 503,
+      "sharpe": 0.4545128852991525,
+      "start": "2021-01-04",
+      "volatility": 0.1341456551182904
+    },
+    "second": {
+      "annual_turnover": 20.51315950325458,
+      "cagr": 0.0968665716160495,
+      "calmar": 1.0346272066707332,
+      "cumulative": 0.2022337650302679,
+      "end": "2024-12-31",
+      "fees_usd": 24347.489999999998,
+      "max_drawdown": 0.09362461279918477,
+      "mean_exposure": 0.9671749446512263,
+      "sessions": 502,
+      "sharpe": 1.020090637699684,
+      "start": "2023-01-03",
+      "volatility": 0.09507831192847664
+    }
+  },
+  "spec": [
+    0,
+    4,
+    0,
+    "monthly"
+  ],
+  "trials": 30
+}

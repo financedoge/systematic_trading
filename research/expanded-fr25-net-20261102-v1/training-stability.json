@@ -1,0 +1,250 @@
+[
+  {
+    "metrics": {
+      "0.10": {
+        "annual_turnover": null,
+        "cagr": 0.05364894999999992,
+        "calmar": 0.5541363508652767,
+        "cumulative": 0.05364894999999992,
+        "end": "2021-12-31",
+        "fees_usd": null,
+        "max_drawdown": 0.09681543164643103,
+        "mean_exposure": null,
+        "sessions": 252,
+        "sharpe": 0.43019887702009857,
+        "start": "2021-01-04",
+        "volatility": 0.1464085697457784
+      },
+      "0.40": {
+        "annual_turnover": null,
+        "cagr": 0.023888249999999944,
+        "calmar": 0.23576060574543373,
+        "cumulative": 0.023888249999999944,
+        "end": "2021-12-31",
+        "fees_usd": null,
+        "max_drawdown": 0.10132417977324704,
+        "mean_exposure": null,
+        "sessions": 252,
+        "sharpe": 0.23378530542431514,
+        "start": "2021-01-04",
+        "volatility": 0.14761449428774395
+      },
+      "0.80": {
+        "annual_turnover": null,
+        "cagr": 0.043575300000000095,
+        "calmar": 0.4205515572701627,
+        "cumulative": 0.043575300000000095,
+        "end": "2021-12-31",
+        "fees_usd": null,
+        "max_drawdown": 0.10361464426110134,
+        "mean_exposure": null,
+        "sessions": 252,
+        "sharpe": 0.3555675090451698,
+        "start": "2021-01-04",
+        "volatility": 0.15282666657276692
+      },
+      "monthly": {
+        "annual_turnover": null,
+        "cagr": 0.09965972999999995,
+        "calmar": 0.9902687858936161,
+        "cumulative": 0.09965972999999995,
+        "end": "2021-12-31",
+        "fees_usd": null,
+        "max_drawdown": 0.1006390703409552,
+        "mean_exposure": null,
+        "sessions": 252,
+        "sharpe": 0.649705858267899,
+        "start": "2021-01-04",
+        "volatility": 0.16794642326820494
+      }
+    },
+    "policy": "monthly",
+    "training_end": "2021-12-31"
+  },
+  {
+    "metrics": {
+      "0.10": {
+        "annual_turnover": null,
+        "cagr": 0.06120998197259686,
+        "calmar": 0.5503264776981905,
+        "cumulative": 0.12590115999999996,
+        "end": "2022-12-30",
+        "fees_usd": null,
+        "max_drawdown": 0.11122485370614055,
+        "mean_exposure": null,
+        "sessions": 503,
+        "sharpe": 0.459099748934751,
+        "start": "2021-01-04",
+        "volatility": 0.15604742834824759
+      },
+      "0.40": {
+        "annual_turnover": null,
+        "cagr": 0.044001460297132367,
+        "calmar": 0.37494970731535465,
+        "cumulative": 0.08975281999999996,
+        "end": "2022-12-30",
+        "fees_usd": null,
+        "max_drawdown": 0.11735296611426493,
+        "mean_exposure": null,
+        "sessions": 503,
+        "sharpe": 0.35503818654663366,
+        "start": "2021-01-04",
+        "volatility": 0.155467382862661
+      },
+      "0.80": {
+        "annual_turnover": null,
+        "cagr": 0.05451154566838823,
+        "calmar": 0.4373429044321439,
+        "cumulative": 0.11176040999999981,
+        "end": "2022-12-30",
+        "fees_usd": null,
+        "max_drawdown": 0.12464257477588958,
+        "mean_exposure": null,
+        "sessions": 503,
+        "sharpe": 0.41535524543228475,
+        "start": "2021-01-04",
+        "volatility": 0.1579417868177104
+      },
+      "monthly": {
+        "annual_turnover": null,
+        "cagr": 0.0027634524178621334,
+        "calmar": 0.015448074733655243,
+        "cumulative": 0.005523530000000054,
+        "end": "2022-12-30",
+        "fees_usd": null,
+        "max_drawdown": 0.1788865257002974,
+        "mean_exposure": null,
+        "sessions": 503,
+        "sharpe": 0.10133863666999568,
+        "start": "2021-01-04",
+        "volatility": 0.16948316080203968
+      }
+    },
+    "policy": "0.10",
+    "training_end": "2022-12-31"
+  },
+  {
+    "metrics": {
+      "0.10": {
+        "annual_turnover": null,
+        "cagr": 0.039546410041245705,
+        "calmar": 0.284630112814654,
+        "cumulative": 0.1228742599999999,
+        "end": "2023-12-29",
+        "fees_usd": null,
+        "max_drawdown": 0.13893965627943805,
+        "mean_exposure": null,
+        "sessions": 753,
+        "sharpe": 0.3377197326977632,
+        "start": "2021-01-04",
+        "volatility": 0.14691781248711686
+      },
+      "0.40": {
+        "annual_turnover": null,
+        "cagr": 0.03710849530855187,
+        "calmar": 0.26612053889596554,
+        "cumulative": 0.11502393999999994,
+        "end": "2023-12-29",
+        "fees_usd": null,
+        "max_drawdown": 0.13944243260028377,
+        "mean_exposure": null,
+        "sessions": 753,
+        "sharpe": 0.32206036968508184,
+        "start": "2021-01-04",
+        "volatility": 0.1466361950918979
+      },
+      "0.80": {
+        "annual_turnover": null,
+        "cagr": 0.042974970035428495,
+        "calmar": 0.3200472813527846,
+        "cumulative": 0.13397664999999992,
+        "end": "2023-12-29",
+        "fees_usd": null,
+        "max_drawdown": 0.1342769413749766,
+        "mean_exposure": null,
+        "sessions": 753,
+        "sharpe": 0.357315198625757,
+        "start": "2021-01-04",
+        "volatility": 0.1488790859957454
+      },
+      "monthly": {
+        "annual_turnover": null,
+        "cagr": 0.03506909043515538,
+        "calmar": 0.1916280748518982,
+        "cumulative": 0.10848498000000006,
+        "end": "2023-12-29",
+        "fees_usd": null,
+        "max_drawdown": 0.18300601549255713,
+        "mean_exposure": null,
+        "sessions": 753,
+        "sharpe": 0.29630030452654127,
+        "start": "2021-01-04",
+        "volatility": 0.15930357381503124
+      }
+    },
+    "policy": "0.80",
+    "training_end": "2023-12-31"
+  },
+  {
+    "metrics": {
+      "0.10": {
+        "annual_turnover": null,
+        "cagr": 0.03789302969192798,
+        "calmar": 0.2727301240454835,
+        "cumulative": 0.1598934299999999,
+        "end": "2024-12-31",
+        "fees_usd": null,
+        "max_drawdown": 0.13893965627943805,
+        "mean_exposure": null,
+        "sessions": 1005,
+        "sharpe": 0.33233856386623106,
+        "start": "2021-01-04",
+        "volatility": 0.14262507623333132
+      },
+      "0.40": {
+        "annual_turnover": null,
+        "cagr": 0.03818663342906392,
+        "calmar": 0.27385231824323614,
+        "cumulative": 0.16120254000000012,
+        "end": "2024-12-31",
+        "fees_usd": null,
+        "max_drawdown": 0.13944243260028377,
+        "mean_exposure": null,
+        "sessions": 1005,
+        "sharpe": 0.33502081560557473,
+        "start": "2021-01-04",
+        "volatility": 0.14209912098849584
+      },
+      "0.80": {
+        "annual_turnover": null,
+        "cagr": 0.055413345863241315,
+        "calmar": 0.41267953600831697,
+        "cumulative": 0.23997088,
+        "end": "2024-12-31",
+        "fees_usd": null,
+        "max_drawdown": 0.1342769413749766,
+        "mean_exposure": null,
+        "sessions": 1005,
+        "sharpe": 0.448692484000327,
+        "start": "2021-01-04",
+        "volatility": 0.14310101364858846
+      },
+      "monthly": {
+        "annual_turnover": null,
+        "cagr": 0.060701836525425934,
+        "calmar": 0.3316931214640575,
+        "cumulative": 0.2649361399999999,
+        "end": "2024-12-31",
+        "fees_usd": null,
+        "max_drawdown": 0.18300601549255713,
+        "mean_exposure": null,
+        "sessions": 1005,
+        "sharpe": 0.46203448246975093,
+        "start": "2021-01-04",
+        "volatility": 0.15295721197028816
+      }
+    },
+    "policy": "monthly",
+    "training_end": "2024-12-31"
+  }
+]

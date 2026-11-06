@@ -1,0 +1,11 @@
+{
+  "gate": "coverage_assessed_replay_blocked",
+  "historical_rows": 384625,
+  "issuer_captures_verified": 100,
+  "price_batch": "ebffbedaaf8ae35bd5654887f83459156abff13d12537b2bd614e593c64ee77d",
+  "published_historical_snapshots": 265,
+  "scope": "Coverage assessment only",
+  "signal_runs": 0,
+  "tests": 23,
+  "tests_sha256": "23019e1a7a057d73f7916430d50fb9211055fdf0d1f69beb1063f663c1efc55b"
+}

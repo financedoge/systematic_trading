@@ -1,0 +1,17 @@
+{
+  "version": "research-evidence-v1",
+  "effective_date": "2026-11-01",
+  "scope": "Evidence review for new signals and changed recipes; existing frozen verdicts and operational authorizations are not rewritten.",
+  "required_research_roles": ["protocol", "strategy_recipe", "published_input_verification", "selection", "net_results", "matched_controls", "cost_delay", "chronology", "uncertainty", "decay_stability", "weakest_inspections", "independent_validation"],
+  "required_monitoring_roles": ["app_strategy_definition", "app_calculation_validation"],
+  "required_promotion_roles": ["paper_evidence", "risk_and_capital_limits", "rollback_plan", "operator_approval"],
+  "universal_minimum_half_life": null,
+  "annual_cost_ceiling_bp": null,
+  "ic_profitability_veto": false,
+  "selection_rule": "Freeze candidates, horizons, mapping, training selection, fixed/dynamic timing and net comparison rules before results. Evaluation may falsify the fixed claim; choosing or tuning by evaluation makes it development data for the new decision.",
+  "decay_rule": "Require an explicit, evidence-linked decay/stability assessment and uncertainty or an honest unidentifiable/not-applicable status. A null estimate is not infinity or healthy. Justify cadence with matched net portfolio and delay evidence; no universal minimum lifetime or IC threshold.",
+  "net_rule": "Predeclare study-specific net Sharpe and return/drawdown guards, actual traded costs, fixed and dynamic controls, chronological stability, cash, buy-and-hold and simple matched controls. Treat FR25 as an empirical incumbent with asset/period dependence.",
+  "data_rule": "Pinned published audited inputs and verified hashes; explicit price/activity basis, missing-data behavior, historical publication and membership limits. Audited revised histories do not become point-in-time certified.",
+  "authority_rule": "Assessment is an evidence checklist, not scientific certification or permission. Monitoring, promotion, allocation and execution still require their existing independent application/operator controls.",
+  "retention_rule": "Closed exploratory studies retain compact findings, protocol/runner and closure/retirement receipts. Classify generated bulk outputs for guarded maintenance; active, funded, pending, promotion, canonical and broker evidence remain protected."
+}

@@ -13,6 +13,12 @@ Collected the identifiable references directly cited by the three supplied repor
 
 ## Reading scope
 
+November 2 addition: Dwork et al., *Generalization in Adaptive Data Analysis and
+Holdout Reuse*, pinned arXiv v2, is saved in the
+[supplemental library](supplemental/README.md) with source/version/hash metadata
+and a verified title page. This adds one paper to the 48-document collection
+described above; the original manifest and firsthand reading claims are unchanged.
+
 The three supplied reports were read through. Each acquired reference received an initial firsthand pass using the original document, concentrating on the question, methods, evidence and limitations. The notes list PDF pages inspected; this does not claim a cover-to-cover review of all proofs, appendices or replication code. No empirical results were reproduced. Scanned M02 and M05 required OCR; their title/author pages were visually checked. F05 includes third-party annotations, which are not treated as author evidence.
 
 ## Academic papers

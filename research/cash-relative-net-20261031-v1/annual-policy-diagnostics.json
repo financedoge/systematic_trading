@@ -1,0 +1,82 @@
+[
+  {
+    "selection": {
+      "eligible": [
+        "pooled_cash_relative_risk-0.10"
+      ],
+      "fallback": false,
+      "reason": "Highest training net Sharpe among candidates passing matched removal-only return/drawdown guards; otherwise predeclared class/monthly diagnostic fallback, not acceptance.",
+      "selected": "pooled_cash_relative_risk-0.10",
+      "window": "2021"
+    },
+    "year": "2021"
+  },
+  {
+    "selection": {
+      "eligible": [],
+      "fallback": true,
+      "reason": "Highest training net Sharpe among candidates passing matched removal-only return/drawdown guards; otherwise predeclared class/monthly diagnostic fallback, not acceptance.",
+      "selected": "class_cash_relative_risk-monthly",
+      "window": "2022"
+    },
+    "year": "2022"
+  },
+  {
+    "selection": {
+      "eligible": [
+        "class_cash_relative_risk-0.10",
+        "class_cash_relative_risk-0.40",
+        "pooled_cash_relative_risk-0.10",
+        "pooled_cash_relative_risk-0.40",
+        "pooled_cash_relative_risk-0.80"
+      ],
+      "fallback": false,
+      "reason": "Highest training net Sharpe among candidates passing matched removal-only return/drawdown guards; otherwise predeclared class/monthly diagnostic fallback, not acceptance.",
+      "selected": "class_cash_relative_risk-0.10",
+      "window": "2023"
+    },
+    "year": "2023"
+  },
+  {
+    "selection": {
+      "eligible": [],
+      "fallback": true,
+      "reason": "Highest training net Sharpe among candidates passing matched removal-only return/drawdown guards; otherwise predeclared class/monthly diagnostic fallback, not acceptance.",
+      "selected": "class_cash_relative_risk-monthly",
+      "window": "2024"
+    },
+    "year": "2024"
+  },
+  {
+    "selection": {
+      "eligible": [
+        "class_cash_relative_risk-0.80",
+        "class_cash_relative_risk-monthly"
+      ],
+      "fallback": false,
+      "reason": "Highest training net Sharpe among candidates passing matched removal-only return/drawdown guards; otherwise predeclared class/monthly diagnostic fallback, not acceptance.",
+      "selected": "class_cash_relative_risk-0.80",
+      "window": "2025"
+    },
+    "year": "2025"
+  },
+  {
+    "selection": {
+      "eligible": [
+        "class_cash_relative_risk-0.10",
+        "class_cash_relative_risk-0.40",
+        "class_cash_relative_risk-0.80",
+        "class_cash_relative_risk-monthly",
+        "pooled_cash_relative_risk-0.10",
+        "pooled_cash_relative_risk-0.40",
+        "pooled_cash_relative_risk-0.80",
+        "pooled_cash_relative_risk-monthly"
+      ],
+      "fallback": false,
+      "reason": "Highest training net Sharpe among candidates passing matched removal-only return/drawdown guards; otherwise predeclared class/monthly diagnostic fallback, not acceptance.",
+      "selected": "class_cash_relative_risk-0.10",
+      "window": "2026"
+    },
+    "year": "2026"
+  }
+]

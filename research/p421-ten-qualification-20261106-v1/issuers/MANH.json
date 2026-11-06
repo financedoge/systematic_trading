@@ -1,0 +1,86 @@
+{
+  "cik": 1056696,
+  "filings": [
+    {
+      "accession": "0000950170-24-011411",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "December 31 , 2023"
+        ],
+        "DocumentType": [
+          "10-K"
+        ],
+        "EntityCentralIndexKey": [
+          "0001056696"
+        ],
+        "EntityRegistrantName": [
+          "Manhattan Associates, Inc."
+        ],
+        "Security12bTitle": [
+          "Common Stock, $.01 par value per share"
+        ],
+        "SecurityExchangeName": [
+          "The Nasdaq Stock Market LLC"
+        ],
+        "TradingSymbol": [
+          "MANH"
+        ]
+      },
+      "filing_date": "2024-02-06",
+      "listing_tables": [],
+      "report_date": "2023-12-31",
+      "source": {
+        "bytes": 2561990,
+        "retrieved_at": "2026-11-05T16:06:48.754984+00:00",
+        "sha256": "46ae9d47de25e9ee1903ac94b067bc677d7b2471677f9f0c8932aa0f9ca14aef",
+        "url": "https://www.sec.gov/Archives/edgar/data/1056696/000095017024011411/manh-20231231.htm"
+      }
+    },
+    {
+      "accession": "0000950170-25-016295",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "December 31 , 2024"
+        ],
+        "DocumentType": [
+          "10-K"
+        ],
+        "EntityCentralIndexKey": [
+          "0001056696"
+        ],
+        "EntityRegistrantName": [
+          "Manhattan Associates, Inc."
+        ],
+        "Security12bTitle": [
+          "Common Stock, $.01 par value per share"
+        ],
+        "SecurityExchangeName": [
+          "The Nasdaq Stock Market LLC"
+        ],
+        "TradingSymbol": [
+          "MANH"
+        ]
+      },
+      "filing_date": "2025-02-07",
+      "listing_tables": [],
+      "report_date": "2024-12-31",
+      "source": {
+        "bytes": 3186065,
+        "retrieved_at": "2026-11-05T16:06:52.403664+00:00",
+        "sha256": "c4487d6a34927de6fc3e94043d041b013e12cdd3b8cefead96600d18a36b4487",
+        "url": "https://www.sec.gov/Archives/edgar/data/1056696/000095017025016295/manh-20241231.htm"
+      }
+    }
+  ],
+  "requested_cutoffs": {
+    "2024-02-27": "0000950170-24-011411",
+    "2025-02-27": "0000950170-25-016295"
+  },
+  "submissions": {
+    "bytes": 157623,
+    "retrieved_at": "2026-11-05T16:06:45.694210+00:00",
+    "sha256": "7174c1b61848e9efdb8112978ebd8f3a89eb59438b8c0e977314858bcefc81ff",
+    "url": "https://data.sec.gov/submissions/CIK0001056696.json"
+  },
+  "symbol": "MANH"
+}

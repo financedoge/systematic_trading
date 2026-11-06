@@ -12,14 +12,34 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from systematic_trading.config import AppSettings
+from systematic_trading.services.health import _pid_is_running, _pid_matches_platform_python
 from systematic_trading.storage.nas_sync import LocalDatabases, NasSync, SyncConflict, read_json, write_json
 from systematic_trading.storage.optional_sync import OptionalNasSync
 from systematic_trading.runtime_io import exclusive_lock
 
 
 def process_exists(pid: int):
-    from systematic_trading.services.health import _pid_is_running
     return _pid_is_running(pid)
+
+
+def process_is_platform_python(pid: int):
+    """False only when the PID is proven to belong to another program.
+
+    Windows recycles PIDs, so a stale PID file can point at PostgreSQL or any
+    other process. None (unreadable image name) must stay conservative.
+    """
+    return _pid_matches_platform_python(pid)
+
+
+def recorded_process_running(path: Path) -> bool:
+    """True when a PID file names a live process that may be our Python service."""
+    try:
+        pid = int(path.read_text().strip())
+    except (OSError, ValueError):
+        return False
+    if not process_exists(pid):
+        return False
+    return process_is_platform_python(pid) is not False
 
 
 def assert_services_stopped():
@@ -27,7 +47,16 @@ def assert_services_stopped():
         path = ROOT / "var/run" / (name + ".pid")
         if path.exists():
             value = path.read_text().strip()
-            if value and process_exists(int(value)):
+            if value:
+                pid = int(value)
+                if not process_exists(pid):
+                    continue
+                if process_is_platform_python(pid) is False:
+                    print(
+                        f"Ignoring stale {name} PID file: PID {pid} belongs to another program.",
+                        file=sys.stderr,
+                    )
+                    continue
                 raise SyncConflict(f"Stop local services first: {name} PID is running")
 
 
@@ -68,21 +97,21 @@ def main():
         else:
             with sync.lock():
                 sync.require_owner()
-                if sync.state["phase"] != "active" or not pid_path.exists() or not process_exists(int(pid_path.read_text())):
+                if sync.state["phase"] != "active" or not recorded_process_running(pid_path):
                     raise SyncConflict("Use start_local_platform.ps1 to prepare NAS sync and start its backup worker")
     elif args.action == "stop-worker":
         stop_path.touch()
         from system_backup import stop_worker
         stop_worker(ROOT)
         deadline = time.monotonic() + 330
-        while pid_path.exists() and process_exists(int(pid_path.read_text())):
+        while recorded_process_running(pid_path):
             if time.monotonic() > deadline:
                 raise SyncConflict("Backup worker has not stopped; NAS ownership retained")
             time.sleep(0.5)
     elif args.action == "worker":
         # Acquire the crash-released OS lock before replacing a stale PID.
         # Respect a live legacy worker that predates this lock contract.
-        if pid_path.exists() and process_exists(int(pid_path.read_text())):
+        if recorded_process_running(pid_path):
             raise SyncConflict("Backup worker is already running")
         worker_lock = exclusive_lock(run / "database_sync.worker.lock")
         worker_lock.__enter__()
@@ -115,7 +144,7 @@ def main():
     else:
         if args.action in ("prepare", "release"):
             assert_services_stopped()
-            if pid_path.exists() and process_exists(int(pid_path.read_text())):
+            if recorded_process_running(pid_path):
                 raise SyncConflict("Stop database sync worker before handoff")
             pid_path.unlink(missing_ok=True)
             if args.action == "prepare":

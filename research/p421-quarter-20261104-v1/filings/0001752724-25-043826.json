@@ -1,0 +1,36 @@
+{
+  "accepted_new_york": "2025-02-27 12:20:27",
+  "accession": "0001752724-25-043826",
+  "as_of": "2024-12-31",
+  "cik": 884394,
+  "dissemination": {
+    "bytes": 741026,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:39:58.761009+00:00",
+    "sha256": "4508c00aa2a5027f1cf61d552281bb51276123deda4462ab250cb0004d65f718",
+    "url": "https://www.sec.gov/Archives/edgar/daily-index/2025/QTR1/master.20250227.idx"
+  },
+  "dissemination_row": "884394|SPDR S&P 500 ETF TRUST|NPORT-P|20250227|edgar/data/884394/0001752724-25-043826.txt",
+  "filed": "2025-02-27",
+  "filing": "NPORT-P",
+  "index": {
+    "bytes": 7976,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:40:58.463640+00:00",
+    "sha256": "fe232348872270dbe51760beaf795056159293ce3235b8af421d6a4a87cd1a3a",
+    "url": "https://www.sec.gov/Archives/edgar/data/884394/000175272425043826/0001752724-25-043826-index.htm"
+  },
+  "nav": "623795251613.9",
+  "series": null,
+  "symbol": "SPY",
+  "xml": {
+    "bytes": 452837,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:40:56.910154+00:00",
+    "sha256": "fc1b288ad60ea2fa9344fa5b7b45ac5e6f8637835852ee93ba2cecd1178e4155",
+    "url": "https://www.sec.gov/Archives/edgar/data/884394/000175272425043826/primary_doc.xml"
+  }
+}

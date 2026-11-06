@@ -1,0 +1,86 @@
+{
+  "cik": 1166003,
+  "filings": [
+    {
+      "accession": "0001166003-24-000022",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "December\u00a031 , 2023"
+        ],
+        "DocumentType": [
+          "10-K"
+        ],
+        "EntityCentralIndexKey": [
+          "0001166003"
+        ],
+        "EntityRegistrantName": [
+          "XPO, Inc."
+        ],
+        "Security12bTitle": [
+          "Common stock, par value $0.001 per share"
+        ],
+        "SecurityExchangeName": [
+          "New York Stock Exchange"
+        ],
+        "TradingSymbol": [
+          "XPO"
+        ]
+      },
+      "filing_date": "2024-02-08",
+      "listing_tables": [],
+      "report_date": "2023-12-31",
+      "source": {
+        "bytes": 2816900,
+        "retrieved_at": "2026-11-05T16:07:17.036717+00:00",
+        "sha256": "c225a07a783ebafe455a0c49ff768bd76108b6f455681d8108cd61c275958c5c",
+        "url": "https://www.sec.gov/Archives/edgar/data/1166003/000116600324000022/xpo-20231231.htm"
+      }
+    },
+    {
+      "accession": "0001166003-25-000017",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "December\u00a031 , 2024"
+        ],
+        "DocumentType": [
+          "10-K"
+        ],
+        "EntityCentralIndexKey": [
+          "0001166003"
+        ],
+        "EntityRegistrantName": [
+          "XPO, Inc."
+        ],
+        "Security12bTitle": [
+          "Common stock, par value $0.001 per share"
+        ],
+        "SecurityExchangeName": [
+          "New York Stock Exchange"
+        ],
+        "TradingSymbol": [
+          "XPO"
+        ]
+      },
+      "filing_date": "2025-02-07",
+      "listing_tables": [],
+      "report_date": "2024-12-31",
+      "source": {
+        "bytes": 2503170,
+        "retrieved_at": "2026-11-05T16:07:18.837723+00:00",
+        "sha256": "73544d2fbe6924735aaa9b3f2abd7c09cb2512afa9414000ce5f47f2f727b1fa",
+        "url": "https://www.sec.gov/Archives/edgar/data/1166003/000116600325000017/xpo-20241231.htm"
+      }
+    }
+  ],
+  "requested_cutoffs": {
+    "2024-02-27": "0001166003-24-000022",
+    "2025-02-27": "0001166003-25-000017"
+  },
+  "submissions": {
+    "bytes": 167563,
+    "retrieved_at": "2026-11-05T16:07:13.451863+00:00",
+    "sha256": "2506b7d65b5d4e5ed2937b6ed6eeac07be79e752a7a83c13d76092a03c6af92d",
+    "url": "https://data.sec.gov/submissions/CIK0001166003.json"
+  },
+  "symbol": "XPO"
+}

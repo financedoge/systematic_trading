@@ -1,0 +1,1141 @@
+{
+  "construction_sha256": "663f233086cc41464a3729b0dc6379911b6e9bde2145bfcc9504028de98611ac",
+  "funds": {
+    "AGG": "aggregate_us",
+    "BIL": "bills_us",
+    "CORN": "commodity_agriculture",
+    "CPER": "commodity_base_metals",
+    "DBA": "commodity_agriculture",
+    "DBB": "commodity_base_metals",
+    "DBC": "commodity_broad_parent",
+    "EEM": "equity_emerging_parent",
+    "EFA": "equity_developed_ex_us_parent",
+    "EMB": "credit_emerging_usd",
+    "EWA": "equity_australia",
+    "EWC": "equity_canada",
+    "EWG": "equity_europe",
+    "EWH": "equity_hong_kong",
+    "EWJ": "equity_asia_ex_china",
+    "EWT": "equity_asia_ex_china",
+    "EWU": "equity_europe",
+    "EWY": "equity_asia_ex_china",
+    "GLD": "commodity_precious",
+    "HYG": "credit_usd_high_yield",
+    "IAT": "equity_us",
+    "IBB": "equity_us",
+    "IBND": "credit_ex_us_unhedged",
+    "IEF": "sovereign_us",
+    "IGOV": "sovereign_developed_ex_us",
+    "INDA": "equity_asia_ex_china",
+    "ITA": "equity_us",
+    "IWM": "equity_us",
+    "LEMB": "credit_emerging_local",
+    "LQD": "credit_usd_investment_grade",
+    "MBB": "securitized_us",
+    "MCHI": "equity_china",
+    "MDY": "equity_us",
+    "PPLT": "commodity_precious",
+    "SHY": "sovereign_us",
+    "SLV": "commodity_precious",
+    "SOXX": "equity_us",
+    "SPY": "equity_us",
+    "TIP": "inflation_linked_us",
+    "TLT": "sovereign_us",
+    "USO": "commodity_energy",
+    "VGK": "equity_europe",
+    "WEAT": "commodity_agriculture",
+    "XLB": "equity_us",
+    "XLC": "equity_us",
+    "XLE": "equity_us",
+    "XLI": "equity_us",
+    "XLK": "equity_us",
+    "XLP": "equity_us",
+    "XLU": "equity_us",
+    "XLV": "equity_us",
+    "XLY": "equity_us"
+  },
+  "issuers": {
+    "XLB": {
+      "batch": "bf7074bdcb3967280ee62194fa5837d5907e93f10ed13f1382c6efa5c6efabf3",
+      "root": "D:\\projects\\systematic_trading\\var\\governance\\issuer-etfs\\XLB\\catalogs\\10469856f13e45c4ace1b5564e255c98"
+    },
+    "XLE": {
+      "batch": "70c8d158c5787cdca54abe1a3cdc4b02adbb37ef4872d79652a97f3333e93908",
+      "root": "D:\\projects\\systematic_trading\\var\\governance\\issuer-etfs\\XLE\\catalogs\\c6bba6647b4e4ae4932c0024ede0c645"
+    },
+    "XOP": {
+      "batch": "1c37a595ea82dc582ea5781a1ad6ff39fcedbdd6515e24de231fd9a2c4b77f27",
+      "root": "D:\\projects\\systematic_trading\\var\\governance\\issuer-etfs\\XOP\\catalogs\\981f73f45e8d452083fa977d0beacf96"
+    }
+  },
+  "legacy": [
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2012-01-31",
+      "version": "09581a44b4863df2fe40aa6ddadfa8d9c811f438e99dca2cd00e12b0001d38d1"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2012-02-29",
+      "version": "c516d147b2b3ba4429cff3d478f1f11d7b95b9e8f801c3472995fcaec28729e5"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2012-03-30",
+      "version": "26c78811c9a3126eaaace32308d5db61a8903f921c1d91ef62aff6ce7c347d12"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2012-04-30",
+      "version": "e96ffd8b73a38128a528cd9d7916318d033d960ee309b68038598e8f98416fbe"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2012-05-31",
+      "version": "7701750a3ff46f014882deac6c1f869aeb278004e1238be1ebec8a44f2e930c3"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2012-06-29",
+      "version": "43fb1acb4ac6c26bd445381d3d9b4793dcd391d927d6c5050098539731af46f4"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2012-07-31",
+      "version": "722ba8b06e775b9a7cf8d4d66880ddc666f761915b5f29bce46b8dce08b20a1f"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2012-08-31",
+      "version": "d9f5d9839769a8baf31795c5b9c22af983d15e8ca26d4215be9d7d6d6088a160"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2012-09-28",
+      "version": "79d1ae85f27891b90c2f7b37f8cadad5187df6a7791a7d2628df4695d79139e7"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2012-10-31",
+      "version": "ebc2e8de1f6d4568751a67c62bf2c55d7e63f878ca7e8a55bbfae20123331ff4"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2012-11-30",
+      "version": "0f266945787374d0877ff6a41a57e4fb9509f40f340be9158cbe67f99b7be495"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2012-12-31",
+      "version": "fa29073eb3363c197c898728d59a848fc8bc82ef3c7e543d10df95fe2deff95e"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2013-01-31",
+      "version": "2196253eb4cadf28b7f889627ffd399dfff0a89a4aec6ca5af5078ad77f92a1f"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2013-02-28",
+      "version": "df2e8400c31e8b548065fab19f8f8eae9cf6982ec25083d43225a3a46e3386f7"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2013-03-28",
+      "version": "670201694ae286476e594d24841b3a5ffc0eab03bef40423b1c93eac4ba78353"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2013-04-30",
+      "version": "ba80eccae5647ea1be2ede85b0ed536dfe838f597fe59b2803fc0e463bcbb58a"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2013-05-31",
+      "version": "595423949e69d609c918527373564c1dfcec2f175504167bcce474e51318d9ee"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2013-06-28",
+      "version": "b2b78e3d93904a4e95c5e37f229c0b9a077c191b24ca355e4989c24ae241d396"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2013-07-31",
+      "version": "a33a119d6fcf502f2b42e47bc69592d0763fcab5ea0cc97586f9237097c79457"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2013-08-30",
+      "version": "332e9fe3606f5410a4bb5ce3b31d0f8ba4175bc5350750e3ccbaaf1c62348fb4"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2013-09-30",
+      "version": "a4287f409ebda71b442cc22001db3f6b61f72820084c924a7b4482ed8f3f7e50"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2013-10-31",
+      "version": "0b4ebde7f3df7189d01c7f6762f03db3d87483cd7d4a2bd7602693c1fbb8faac"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2013-11-29",
+      "version": "e8eabd70725f1c7bd6a942a94ad66ddb6a6ce71a84f9c55f9ece8c030458ac68"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2013-12-31",
+      "version": "f95fb0910093d5a5a164605967ae41a9f4117f4ccb2d46b883648e305eec2063"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2014-01-31",
+      "version": "fb728611a6464562215130ee393fbc5d651fc2e7727a553adb0ddc428228d075"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2014-02-28",
+      "version": "bca075aef31efb9c9c8f72f8f2ed5fdd6f1b75e7e49c73cfa84d62e3a40a9221"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2014-03-31",
+      "version": "23d3779769307e52e5f2365e9c4d21f7b6703788dd12fba4a918847b87a6960f"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2014-04-30",
+      "version": "372b21b48fe84b41f5ffd523e9870298b5a04fc1ee8760468c1a20a8e70df36c"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2014-05-30",
+      "version": "efb981ab2125ccf12d026901acb32c34febeca88b7e1674a5b7c1083fba36c55"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2014-06-30",
+      "version": "e83aa94952877e08356262991408543ce86312aa6e2ee7fca7b2fa26b07cd3bc"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2014-07-31",
+      "version": "57f162d1083fac7cc632f740ebecd5be9c28c8546cb931308ecc032513099c70"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2014-08-29",
+      "version": "d71af54593a38829dc3cb82b19ebc3c826e29ba0db55a9ae1cb0b3ad5898cc29"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2014-09-30",
+      "version": "e66af08daa80c804849ddf33641515d16be8a738be117da439067bbc95aa6f41"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2014-10-31",
+      "version": "f34e0abf0690da560a4355f7e85b60c2a2a51d29ae2937c1b37c617a5c0449e1"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2014-11-28",
+      "version": "32ae8511d42b7dbaa9c5e6410b50c8772bc40a468afd62fca2e7c619ce1f2d1d"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2014-12-31",
+      "version": "692ae2b6b64dfa1c1513649d497423f8c8e096324ca4ee031f98ec19e6bc0b12"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2015-01-30",
+      "version": "53d862b7fd4bd506edd2f58ba68c32e8ecc0ec5b4ea796c8ed811073dd9fe16b"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2015-02-27",
+      "version": "448c949144f0e2f436bdcf8da1de788f16df7d7bf46b9def4d6b64667f806bba"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2015-03-31",
+      "version": "bff0786dd2b19dc8fdb0c24ce95fb3d36309313c63caa0503cee74b232eb93f5"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2015-04-30",
+      "version": "35b3c5369acfb6ebfb9571723d44870006c3e96b8cc3aeb0e46a0bb7d4f8792a"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2015-05-29",
+      "version": "b39bc7711c628fa1316306af9ad2590595e51d52724b534ffd1a5a43028b9226"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2015-06-30",
+      "version": "3407e0357e2354e9c9c4aa39dde28b7253c2e374a6a4d2ecdaa455afa157b5c9"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2015-07-31",
+      "version": "eb6be37c52418963d0c7ff81c0304e460f6eda33bfe8868bda3adc44e225a1b5"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2015-08-31",
+      "version": "98d8db56460047da7b7f864eab129982432619453d76193723ad4619feb48d0d"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2015-09-30",
+      "version": "fb66acce5b88e5d8f0235501b4f5e1bc09a8669f3894bc2448dcb0a3c630f59c"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2015-10-30",
+      "version": "298343e2f70355efe383f7c7ffb68db1418e610f855bb9be997377a7073ce455"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2015-11-30",
+      "version": "a8f980a0c15b49e4f864edbffabae1900755281305d0114bb6b5700b439a2808"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2015-12-31",
+      "version": "3273726a85ff352e873b7c295e3052abb1146e9c74b84967353b73643f60393a"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2016-01-29",
+      "version": "3c3e890665a6d04ecf22ef593128bf79fad6abe16d8c31a2d97a99937f7c4c6b"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2016-02-29",
+      "version": "5f8b0b4296c175cb0677369bf467635c08fab725acd1f6444fe4b299795e3571"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2016-03-31",
+      "version": "e5e5cc0bb61831062b58901654a0b1e949a91f4bb84d92f2239bcd11cd08b001"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2016-04-29",
+      "version": "8986b8767fd9628e6264cbe5a911f2ad72d7bc037d7b62f12549c6f78b36ee14"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2016-05-31",
+      "version": "e61ecade0e90278490d055ed35ee17b6131d084bba88e54c5fefc24fca3adc16"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2016-06-30",
+      "version": "2e65cfd21b3afbdef0a40c4a2bbd0043e806feca37d699199c941182cf949f18"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2016-07-29",
+      "version": "8fb6798d1f902b9e288ea280e93b10ce1d2a70c8ccde4a505f6a9c6a697ca733"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2016-08-31",
+      "version": "cab4cdc0bff58036c9529bb6c99b0372391e4e62e47bd5d0788a20acdb0e7573"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2016-09-30",
+      "version": "7e9530cc5de7c9a7dca32ee843e5671edd9ca13e21a337dcac1c03cd6999874a"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2016-10-31",
+      "version": "21746b143761b6efb95a17fe071efab9bd436c24747e2dae321245359612d442"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2016-11-30",
+      "version": "95466b5b3fee8450e059d9c5c34104497489a5d6edafc1ee5a94a7c504fd3354"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2016-12-30",
+      "version": "c982886342145f5eb0c4aebae56edb07e78a4d1e794ad6231c599fb00b1d7f03"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2017-07-31",
+      "version": "d6aad65fb83cf3b946c0ce73d553d7a9d7797bd7265fc43adf1fdfe8031b079d"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2017-08-31",
+      "version": "9c3f6eca974b3808d654da83775c421de62a77524b90abdca3b15ad79009cf30"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2017-09-29",
+      "version": "f507a803d1e13ee9f8179469d0220c1d45421cde0fa1593b927103437a734131"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2017-10-31",
+      "version": "e809399ef51eb0fbfe9958baee1ad61a176b6eb77504383a62b4c8efa7b2e05c"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2017-11-30",
+      "version": "755dcf9ea78ab1d2bc65a0a3bb25769f39b3901efa7f871d843adebd5ee9c4ff"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2017-12-29",
+      "version": "3efbeae9ff3750b44081bbb7506b61a75e27c3cebfd4609d63e6a2bce52a9b64"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2018-01-31",
+      "version": "bc6c7a2d799a721f04a75b65f99a17f68ff7b36682a8aa050a21b60c12032ab9"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2018-02-28",
+      "version": "765f25f2bd471a85c91dd6884a75442e0ecb11a3eb41ad93a5f9ec4e120c5fee"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2018-03-29",
+      "version": "c109e32f95aecb2c23234915b191d6049aac2ca0123dfa80f1e41110114ff65e"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2018-04-30",
+      "version": "6156c6973a0997314716a05cf1f7ad02ce14007cb4293df2ffafde42bfd42da3"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2018-05-31",
+      "version": "0de413dcec9a81d643824f5b2ca4239aae4775f857231b2ac79642c926c50837"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2018-06-29",
+      "version": "a473f75f0bcdb4ea228296e86308ac8dc5f4ce05e0f9f2c393a99f221f04cb17"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2018-07-31",
+      "version": "83dbc8a527d90b0f1b9147f30d675d0a34bdda484d3a9ca8a24d5719812555c0"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2018-08-31",
+      "version": "1a08a4cc36ecfe5ef5f2023f99a2b7ec2fc7f366e731e7610c04ae3d3d917672"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2018-09-28",
+      "version": "230764050bff1e4b3e76b4a6c1eeab17e9f5da53d159a4f019171ff1eb124048"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2018-10-31",
+      "version": "1e3cc35b85b405779763322dcc1997d154287f9e047e99d66f1fa2b8e622f763"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2018-11-30",
+      "version": "7529e43b7a3ffb621b9a83e8a34a622f766b4aec30565e039517f6a5e552aedc"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2018-12-31",
+      "version": "9dedab9f2b8ffd52159e64bdb4da906cd87c970cfdb2564ea5ead6851c27f6d8"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2019-01-31",
+      "version": "b58020ffd0b6afd4fed6081ef0f38570607782fd6a658ef907e81f8f8796e56b"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2019-02-28",
+      "version": "4be569e970adf89ca38818416e50098c14d3c18e2b883e69c68ba09bc8d709a8"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2019-03-29",
+      "version": "06d796322cac9f7c09ad4fe69c108e14f12fece57048de77828d55dfc79962e8"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2019-04-30",
+      "version": "cd0613b52150203b58d5cc08640cef80b273269c98375fda3bc3276883f9064e"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2019-05-31",
+      "version": "e5cae0dd80d8e716de02efcdecab336cd3265dc962b01dc8d7c628c05f52a861"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2019-06-28",
+      "version": "b6e50d106ed8fa6128be7b444ea1c48a08cf79c90ff9a60efc76fca2c5680ecb"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2019-07-31",
+      "version": "44e71a52a875fe17239e491c22a5e5f0e21c147fe3cf130e1034e2cf6f8dba2b"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2019-08-30",
+      "version": "6e625f14d7d20bb15221a94d2b6760423fe1adb82383af90513b032610028be2"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2019-09-30",
+      "version": "b9a0c228ea4be8055ec4e0b10cafb5a39afb6845bc90d90b441c0d7b2ca5d749"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2019-10-31",
+      "version": "9ddf7bcf2c4107a1937cb80c2a5c0ec00d5c204ca3c9a2498f72aa78755b690a"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2019-11-29",
+      "version": "5697b75c2d6b1626cf6a233cd1cb5f7921b92f34f9b12940d30c8cb2476db451"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2019-12-31",
+      "version": "1935f19d5a1f22796cd431f3f0fd82e1a619752a4b9bed99d86d430968e93b0d"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2020-01-31",
+      "version": "66dfd240c2b6342ec371533b05c360ad01959dfb50a3b61c4f2b7ca8714e111e"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2020-02-28",
+      "version": "96fc4cf1f64ae8a0d3cbaa98e8b4cc71e921689a0b0be691213401f30d2bb066"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2020-03-31",
+      "version": "49f989149c2daec0cdf9c13d77a0a48c2a0bbfb58518ce35e4cf1ebf2d1031d7"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2020-04-30",
+      "version": "ba3f726a418edf4e223db11429384329c07c10498afb63a0ae6409cb3eb1ab19"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2020-05-29",
+      "version": "3e96f999a58b03c7774aed510c2641b7889bcf0e3a479cc1d8c44aade19fc3f0"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2020-06-30",
+      "version": "ba8f81f3e82962cfc102ac6918c9fdc44d4002ef8303d4b898bb87f2a0263d91"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2020-07-31",
+      "version": "130721447d319a99edcf251b7d48a01644d58e3b87813556bcf89c040f8d2955"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2020-08-31",
+      "version": "c4a9bd7328c75e0eeda821d2e1b853e083da413403787b67e7fd79cde00c58fb"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2020-09-30",
+      "version": "85d77db5a029ba37106b4013766f31dc4f8e446de2fc00a26dbc94dc2f225d88"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2020-10-30",
+      "version": "cbf5b4b0893614b1098764937cff2b97521664c38df133c641bdc754dbdd13d1"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2020-11-30",
+      "version": "64a5908b4e45f55d8d3dc8594e8bc644ace787c61b62021f9aeb4aa63bace199"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2020-12-31",
+      "version": "fa5ff2e99388cde4eb64d60a6434f6a1ce248df5093d5101021c907162657f65"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2021-01-29",
+      "version": "c0fc5591f1769f5adde74310c89b0dad46098b781fb61e563ae65bf861830028"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2021-02-26",
+      "version": "1982ddfb8aa96dc99265ce9bdd8d4f1ed35c3e78ea7fd66f512c067d874306b5"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2021-03-31",
+      "version": "82f72754e3bcd109e2c1d848bcc8749b19116296dbbc16a337e0adb4b7c10c9c"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2021-04-30",
+      "version": "606a50d3e4c87518ed3d1a64d80fd4f5c104f824ed343f8e09723b9e2f735ee1"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2021-05-28",
+      "version": "00df110353a1cdb2a59201e24b113755d8a2ce50536dcda4ca7231173292eabd"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2021-06-30",
+      "version": "fe5609ac10f84dddcbbaa119699ee58798ec8c25f6b0320cee0f03e402b8b16c"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2021-07-30",
+      "version": "73313a2954174b8ac848ba8181b7082e9833930cd18b56ab6bef3de41c93bb44"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2021-08-31",
+      "version": "a4ad3bad4960daa8f8a3a225550d3c8fb7b022ace7ae666f11edbd90372dbdd9"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2021-09-30",
+      "version": "1f9209c2c2678dde17e47b32edfd14031af82b8778dfa06d9c8cde2dd231e668"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2021-10-29",
+      "version": "d76e4e02b04486cc3cb2be0c97b15b642d99e8f27af2f141a22434d4256d5592"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2021-11-30",
+      "version": "bff110eade9d27dd1052f4d07c3550a7b87f7d4dd0cb6e7039b6b98b5fdd6134"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2021-12-31",
+      "version": "111366aa234dc3cb3f55ef223f2f94a3cc4cc071c554c54e8faf4ab954d986f0"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2022-01-31",
+      "version": "8db548a09a4af8493452f3d17ee15958df649c9e2c03d5d0b2806c7ece2bde8d"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2022-02-28",
+      "version": "d5b4eee5b683661820f5b557f9430a5bd81243d39669510dbec4d64843bba962"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2022-03-31",
+      "version": "c4ee0879edf942d65444013e638aa4f1d978b986ab3120cf2474ed5642884562"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2022-04-29",
+      "version": "ed8f575b0cf3283e5c2d80fd26202713558926bea7adc02d4ea930f05b817ece"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2022-05-31",
+      "version": "52177a241cc2bb8bd68f3d84e3433ff9130c901ab0e5c2e9a6a14c03e5a24f74"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2022-06-30",
+      "version": "98c1ba3f0d2ba0960f2ad693833232788840eea72c5e91a20aee846ff22c9fe2"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2022-07-29",
+      "version": "13a57d4c5dad5cb02d56d1cd28dfe672122f295594b3b4073f4fa1846f20769a"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2022-08-31",
+      "version": "b6939752151c2d6b5ab81fa75e68d9c8f1e40ec7d47ac97d4a98352cee6ea010"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2022-09-30",
+      "version": "149e8fe4739fd35f3d3569644c99d9916329f97f797a92079c76f6c6d330d182"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2022-10-31",
+      "version": "1479505c95e64ba15f01e5bbc2237b5cc1afc8979439edcd7b12b39eee526b0b"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2022-11-30",
+      "version": "806a6097b8eb49e7a94f9eedbb6df3f48c09306457041ab2f269613fdcac128f"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2022-12-30",
+      "version": "b472831ed6c1a523f55b5c217278b6127c18c64e4fface7ade4845e7f003f899"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2023-01-31",
+      "version": "4f37a95dd1abf444d4e931099530c77eb5fe8f95609e53e05d195a8906a697e4"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2023-02-28",
+      "version": "041dac57ed861cab45a5d588ba002e16aa4572f892158fd2b7d9181e6bc42ad2"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2023-03-31",
+      "version": "8a8f280f8fa408c4745de0c69af13e8f5dbeb59dec6e165e92ef6b6c614bd85d"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2023-04-28",
+      "version": "6acf20969a8262a37db9581e0ea45b781a09dc2667ef242222c844838909f245"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2023-05-31",
+      "version": "d574c3868ff062f36c7a521fd04c65ec1e74f95e110d84006f8cf0356cd72023"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2023-06-30",
+      "version": "6bc34910fb8653923d90aeb657964052ff9dc0c7bdfc8268c14138e6a4d50955"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2023-07-31",
+      "version": "737b5c9a8444a68e0404d0fb5586e69cc0cd2e7e19135a7a3638885892a1439e"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2023-08-31",
+      "version": "c7d485ceafc423af2d71923f3b72659f282ebf7842332cf71f521115afd445ae"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2023-09-29",
+      "version": "e86f1df84c3bb361af192e71dbbf1a793d20f90d75587bf9cfcf6bdc3834c5df"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2023-10-31",
+      "version": "08ec94a18859da9f5320918444725cf80402bc9733143743bdab443eac3fdb86"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2023-11-30",
+      "version": "edfde2bf7444a39f8df6a3258a9284b96605f5ee7b2b30d83db58c18239d9809"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2023-12-29",
+      "version": "9bea18f025ef65c10d8ce790b2cbadd9533f41e589b125accc5c2fb0cdbce0df"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2024-01-31",
+      "version": "87fc661aff1813b5d637182a279bf150c18d0a9cd458c32c65ae78c43e1e2205"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2024-02-29",
+      "version": "bd567bed28f4392749dde17162016b099caefd3ff860228e856704ad7a0622de"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2024-03-28",
+      "version": "4b9b1071a1a043c19bcf623d78e8f7c3e24d329a8ed5dec99f9dd82b04ae686b"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2024-04-30",
+      "version": "9a3e98651a574159394e64fb5fd9b246b846631ecc4b93e4bdadae00f126d01a"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2024-05-31",
+      "version": "35d8048df32dd9beb54c24f27927994e4d423e14b141698c6a16d4c86ee7bff8"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2024-06-28",
+      "version": "a51ca1a034d9b9732681a2b6fc61e29bcc52fe2fd54a2cf55dbe4ad49d14bec2"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2024-07-31",
+      "version": "a236c4f0ddbe6f6263e194efae11e2b20976ad6f6467a3269bb60cc0a141ab0a"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2024-08-30",
+      "version": "81cce4184af9e30538f0533d6c64434e7e852dd4815620c1171e0bf1f796e8a1"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2024-09-30",
+      "version": "9296d6bd58dc8b5a222644953071841bd2d80ea4ebadaf5a849d02d1b81ccd56"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2024-10-31",
+      "version": "74200945d574c1cfcf00fed9629c9707468f96993774658420a1cecea3228d0f"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2024-11-29",
+      "version": "8e800862b50cc8932928a382eff6fc83240e19f33e0cdeed6d12215413b30ee2"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2024-12-31",
+      "version": "5eb9f0d5d137897c5e97744b142a98fa34fb0ab04f475f43efb285452c486f0b"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2025-01-31",
+      "version": "5dbf9807c91853efcfbef62924c5fd0d95dfa4f81a4916d711ca522f7ae3aee6"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2025-02-28",
+      "version": "2ccbc63a98341869b11b131704ac9c7c7644f9d4a1fa3f6019b93701b3ff58bb"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2025-03-31",
+      "version": "e38dfe789d5e886d1efe67ab043bb83e049d99741298a2412754ea214a302134"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2025-04-30",
+      "version": "f299f60a23044025ff207ef79b8958e6cd314bc921306c3157f36609f569b9f2"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2025-05-30",
+      "version": "df0ee21eb1a3f986efd3a6142744ed7f1b8b2d49f0ea1159ecc06f943131af5d"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2025-06-30",
+      "version": "ac8e622c71bb4eb72262bf9995a0fe5ef6f9d1511f0c22c1232e3495b6c8b613"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2025-07-31",
+      "version": "fe088183e6b5cf7c51b8e877ab40b1e347d97cfd8eb6d582926d0e677fa6cb0d"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2025-08-29",
+      "version": "bee576940ca78523666521ad81be459698004fd2693e2c060f19b62b7e016c03"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2025-09-30",
+      "version": "f1c91ff02c7b7c79288075459ae92bf31480100520620ea134e227fe93e25c4f"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2025-10-31",
+      "version": "804a2ed85a96bb56ae3d22e5ebff1603e11c323dcb89f9f1ec8fc48cc44d09d5"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2025-11-28",
+      "version": "9959f63037f924194158ea297a84a5fc86e3c9bda427de86aef5923cc8f7713a"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2025-12-31",
+      "version": "2c2c5a6f98871928e5a9791a55b9253a36e5dd1096e2a83638ef7560b16fa942"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2026-01-30",
+      "version": "6c3b1f9a964523a1b4500ae563eae3f7810f82feb13d8b54aa0a972deb26382c"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2026-02-27",
+      "version": "c75688ea1fa570b3c5b76c34b38ebc09fc08df6c246065d98bad30f41e3d2357"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2026-03-31",
+      "version": "fd2acd4259e77a706d78893df477cbace194914c35979a3b770284018065468e"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2026-04-30",
+      "version": "ca8e3e85911ddfa191929e826f0c9a1a22be3963807379bfe79c7b1d53c769c5"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2026-05-29",
+      "version": "f8888c13f140820ba303f3047b2807c8607ac43934de6e4b3aa1149fff50d199"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2026-06-30",
+      "version": "5bcbec7348f1d9866d563134fda0bcd9a71e4e86314a9425d0d5816b5af5883b"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2026-07-31",
+      "version": "8c4e7a8fa4c703964c692ffd64982b1acc1a79b10f09b1cbd4cbfb6dd13c17a5"
+    },
+    {
+      "source_id": "sector-research/ivv-constituents-2012-2026-v1/holdings/2026-08-31",
+      "version": "7495a96fb0fa655f9f3a6f2465d0478af9efeefc433ab062d5084efa03c1bca8"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2018-10-31",
+      "version": "2bde9c01914d940fa16eccd83d2ed2a1bc18bf925bf33448290074b8d15bc945"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2018-11-30",
+      "version": "a28dc99a014dbba89ff644906d82b770bb06faae9565bb68e49dadb392d679a3"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2018-12-31",
+      "version": "8841c82f98cc050bdd23a359d4205dd3895c4fc56d026be38e4a4e8c87c27946"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2019-01-31",
+      "version": "1eedf733aaea6c86ce4fbc92f84fe54116072372f74f8d7a0df4ee99a490d1f0"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2019-02-28",
+      "version": "2beced98db04a90c518a9f044e7cb34d6fbd4b6fb711594fed94dd0900d798b3"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2019-03-29",
+      "version": "2d800e38c8459118453a36ca43f180e0e87ed3adb5b013750b5b206cccfa1cd9"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2019-04-30",
+      "version": "6ccdab544a06443a2c7bf974c0a5a54c7b5f79a6cc25e96dfd353cc16f197bdb"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2019-05-31",
+      "version": "fc587fbb716c756de56aaaf50e466fb24a58208c9208afcab608c6f2115e422e"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2019-06-28",
+      "version": "6fd5eb442970b691a9cc3400a90a720626c12b2b3449c953e14366b92ae102bd"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2019-07-31",
+      "version": "b8c1e05b31909b56c790990d0245aa1911da39f3b2e23ece3aba3ed974156d31"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2019-08-30",
+      "version": "8f4c1c5498d2cc71943823250df686b1a6b6f6b198864b6fe0433f485a12c67a"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2019-09-30",
+      "version": "6fe657101944b0a965d98beec60ce133f997f8dd1e1a013c19a4de3189b4927a"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2019-10-31",
+      "version": "1c6e3cbf7abaf7116f076ac2db46d0076ccffb30d7fb0e7f3a1239ed9ced3e9f"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2019-11-29",
+      "version": "61d886e2dff7d24e5f44bbeb466b17ffb7229ee88cdcbd80159182a5b0ea2b5c"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2019-12-31",
+      "version": "673fda0e00ac329a37cf2503822680e8bb290f7a6ee3641e0bdebfa24ec79586"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2020-01-31",
+      "version": "912ae49445ae81934840f2f4fc1e2c1311e285cecc142e4bcc154f5a2a924da7"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2020-02-28",
+      "version": "6ac129df687f25602435616673cc137fcfd24d226a32d21022ef4a6d0ef3494a"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2020-03-31",
+      "version": "bb5e30a91d5a3f205997cef5c393e4171b705ee15e6703af653966d6a3219d75"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2020-04-30",
+      "version": "2634c82d45a386b762fa272f7d96b24fb13a02a85b59383bfc40a412f4c82bc4"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2020-05-29",
+      "version": "15dd3c8d9f5788b9b5630ae9085f5ae7d5f1274ff59dec7facc7e4591f6345f0"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2020-06-30",
+      "version": "1a7bbec45d3a6d66053261dc6b38436c7ba4cfdc5a7358fd7be5c238f3011ba8"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2020-07-31",
+      "version": "b1b5d16b7107e5cd5cb6f33067625a30995a16e4869f18d49d9d3115997e9b5b"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2020-08-31",
+      "version": "7d56b7578eac672b41495113916b12049581643be827f94bccb2894a33e9f206"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2020-09-30",
+      "version": "d99d00329270e3cd475bde970c36896e1d79ff0960bae4e7527be0ee74b62892"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2020-10-30",
+      "version": "441fd7d4bf96bf1b702083b0bf02df1727d64a2ffa38410bec83a578ada6ea40"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2020-11-30",
+      "version": "6fd3290f30c7d52c4ddc86e7c5b543d8dbac6b9fb00b3b37f1f518fae2f17ec4"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2020-12-31",
+      "version": "f3a3238ad0727112c45ee767e5166161b38e7cea773336e300f03bf3fd838510"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2021-01-29",
+      "version": "5916264fd92b45d280064be21fd48f8194d15a3762c72c67a9210fb9698f5713"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2021-02-26",
+      "version": "eafc310a72c75a29c37235b5febbf830da0e62c234b62f9620a22839a6ecdc74"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2021-03-31",
+      "version": "1a99cf1f9d91661593461bc5bf0e0f8618537f450dd0d7cd5beb9f76a41d4fc6"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2021-04-30",
+      "version": "2b6ad5d1f94aa1b842ff8d8c85c03605925a7e4f9ffd1d5a2a9c14abfeb5cd4d"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2021-05-28",
+      "version": "f28d87d65fea2583ac8437d8e18cb3a86187a040e3838e9fc98295ac879d9b23"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2021-06-30",
+      "version": "160549ae80c048ceed1f9764332c0016d803748f557ce255440c63615089b46b"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2021-07-30",
+      "version": "4468e1bb95830ec6b1507c5ddb8801d0c801afdb63f887832e480af08d39752e"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2021-08-31",
+      "version": "d73bbaa533a4400e8fd0d3acd96adb022c1e389ba7a2d9c15e27de5c572d8689"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2021-09-30",
+      "version": "8dd4511b08cec16c7a1ccaf7360923b1db25f29e953ee7a248accc268429cc20"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2021-10-29",
+      "version": "0cd28a72544af9ff82fb1e4d39e95c69ef66ce5013f0c806a1fe2fb49b4610fd"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2021-11-30",
+      "version": "cd3f2aa1988c9743dfd1526166b02d97b44430fcac1bd3b96b6a6f00342edea6"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2021-12-31",
+      "version": "5a07e6425cfd6ee274ca1b26e63bee0381b88aee7d836235978054933858de95"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2022-01-31",
+      "version": "6e4a1d3eb7b8807aad84e56810b50d26268b170ecfaea8efb3bf9f79eec94384"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2022-02-28",
+      "version": "2f0608d189500e2b0dae226de17256215745c1734d8481f27d95624cd87a35b7"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2022-03-31",
+      "version": "80b56f77d022dea960bf2f32a817997251767eb22b7e30b69d3c91a347fb702d"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2022-04-29",
+      "version": "d1d645ce861b4740c2cdfb9e48fed00b8b80fbb96f1c1ad8f3348e11c4e08918"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2022-05-31",
+      "version": "4a76dceef967d299f892557652f903794cf5ea49d16fe3322e74cc27eee79c12"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2022-06-30",
+      "version": "5b1cfb5f809c8b8313bda36038d20e46b6201bac8cd4a30127a86bbce48cfbbf"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2022-07-29",
+      "version": "967514722705f72ffaa23bfb007fdb23bb579ee9c73335ac7833792c2a44060c"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2022-08-31",
+      "version": "25664116f98863b5d4d04b2a79e3f13a020507aa6abcf2a92b67321cc7b8da2e"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2022-09-30",
+      "version": "b750b6ac536bb991d944cdd34c5ef0511cbcc6343c49c52c679105232463e57b"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2022-10-31",
+      "version": "e1606152cc3ed433d8e6571f097351ff3da93b13fa11944d09088fb076753b57"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2022-11-30",
+      "version": "d25625219ea2c24912d46241c8457268a6337baf1734db2d5b2fa4d8d47733af"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2022-12-30",
+      "version": "d37239a557cc4abdf3eb187ce816432eba1d845cdc08aab9e9699eecc3026fd6"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2023-01-31",
+      "version": "7b58e8129ce6906fe62819bd77623470c6770ffa2d2a27a88c04e05c555ea8e6"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2023-02-28",
+      "version": "5268c328b16cbd7830eaa580f20c916653bca236b9ae8e783dc85649ec079c73"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2023-03-31",
+      "version": "c071137155606791c6b283e88b3f7e66fb79e3b4a13ee7cd5c5760277cf4c45f"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2023-04-28",
+      "version": "c65db57868edf277aa658d1ae8973027b084f524cc14e348edd354c738b08d15"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2023-05-31",
+      "version": "867692ee047584820f5bca3019ea9ffe86d5159d547c8d2c1611293ab74a2a00"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2023-06-30",
+      "version": "7de1d5882fef30e89bdf55eef56c55e9b3f43e75d1b42275e790e6431608c193"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2023-07-31",
+      "version": "4450d4a11e1364e094532f5a797343945989dcf74e1b2d228c2b9743ee81ef3a"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2023-08-31",
+      "version": "357c2c64fdc6f8219df741b99a552af10885b70062f397ea306ed732433e6402"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2023-09-29",
+      "version": "d47fa208e4cd98f514c4be9373d04647969afd6c68331d941e702a05cb5e53d5"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2023-10-31",
+      "version": "2ab3b8e14d5d15eba610248e5f230da3689703c079c6c9fb4e34866611771b3c"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2023-11-30",
+      "version": "41432dc0aea1854579a1827cf767afbb1afd75085994c8564ec5257b35e888d4"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2023-12-29",
+      "version": "85ed17053d242c1f390c7d65f6be6bcc8503e84d597126dc4018e9d65b71e6cf"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2024-01-31",
+      "version": "9774e85c319daa3bc41172924ef1663299065e3eccd78095768b71811e142943"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2024-02-29",
+      "version": "991f52f8236097fbfb66c5288af83be409ad47ab069579573f436642b5c4808e"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2024-03-28",
+      "version": "95d3605a3afa98371750513bff777b40efa194c4bb4a1973261fe558da5adf23"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2024-04-30",
+      "version": "32e1ab51552e41e888443443592389140ac543b0d199d7878ecde046049910f0"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2024-05-31",
+      "version": "588a928978e8d68a27bb04a145d506f92e5032c34eabfe8efda6aca0ff4203d9"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2024-06-28",
+      "version": "80d1bb9313b35e5620b25400c6b1b8e439ef3ff41387807b6d0b6dfb75d7f62b"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2024-07-31",
+      "version": "c6e675d2839c3656a28116b1ea2e7b1d8e5b3db47c881ea30faa69a71977e80a"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2024-08-30",
+      "version": "17bca9d71e9e697c46aba3af60c8bcac3504812ca8314657df6d34de1e9715b8"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2024-09-30",
+      "version": "47d4b2586e49e143e606a4f0f67563a56f2e5c83883010c81661de8618e5fa98"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2024-10-31",
+      "version": "12bf0a504d3e955fa23f8aa17a69725ddf46b4d3180639997811077ff75f2e8d"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2024-11-29",
+      "version": "59bc89ced4545c9193318d030dbc608288fc6e9a57808b8f1f3757ab09dc6126"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2024-12-31",
+      "version": "8d160fb838a1686657a308934558d89c8e0e5106aa8b8f792b58b5ea3991d188"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2025-01-31",
+      "version": "8f6654f9aeb8b152ae6dcbcc1fcf1f83fc486a5c7d15d420ce53563a18c964c0"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2025-02-28",
+      "version": "60356e327789fa84e71fe99195d8a7c70f39efe820de5d51f4605953a884268a"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2025-03-31",
+      "version": "09f15b515bdfc63149eaf60ee5de41ba1983bd5afff0bb03db998b778d301735"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2025-04-30",
+      "version": "875b7f26151c2722120e3a1eff4602e6a9d6f1f3ff78d4131ed2c8526b5d9c3b"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2025-05-30",
+      "version": "9032e6c9665998f840a403f7311d4a1f0444e48e41387fe25391ea73fdf1b5f5"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2025-06-30",
+      "version": "aa8fbef53ddda77bc6d4096da78fd8f4ef7368bcad3bdad2028bd5cf4f288780"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2025-07-31",
+      "version": "e49d5045725fca8121fe971272f19175d3dd919de3ca4a4de8703ffbc124e8a5"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2025-08-29",
+      "version": "6ba5042236f1f4d97e770466a814b372b9b241184f2715de35b574b1aabd0652"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2025-09-30",
+      "version": "bf9afb085b0288b7f7cd6eb407a132459f741fb6e136fafebe26cc3bb598014b"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2025-10-31",
+      "version": "714d57a48556f39eabc8d1d3cf565aa4808a1c23978c3d4208172c5dfd0145a7"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2025-11-28",
+      "version": "e1fb9ce2b20049906e9e6fa31a27f4f95a8c615972eb4d6a0311c1e6b71439df"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2025-12-31",
+      "version": "f9e40b7ebbbbbdf619cd7016aa7127f43a3e80881ad0649797b335cd0b324811"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2026-01-30",
+      "version": "be63d06a1ae4990cf0bc29281dcc46cbf27c8fb4a85cd9d29b1ff971903459d6"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2026-02-27",
+      "version": "15e3b207131fd6b388f9cdf40f910b5a52484dd33c330d3c6afcce24b42f09d0"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2026-03-31",
+      "version": "5b3a072f04659fee598ab8efcdac9db01cb18350317b641b591721954615f8fb"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2026-04-30",
+      "version": "df22bf52753ed3cdbfc46fd93f37ed599e2e8ae696e4b74bd2061b4079b0dee6"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2026-05-29",
+      "version": "c110040cdc2bc64d933e1a4c3b9e030077fca7e097a4e5a85f81fcf8546873e4"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2026-06-30",
+      "version": "412b0bdb16f659bf786227f9a55a9c211e29748e3ad2c2898823386c127a11e8"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2026-07-31",
+      "version": "c2251cf4a528b4fe866ab5a924795b24c88455e384831ff23d871522da386b67"
+    },
+    {
+      "source_id": "sector-research/underlying-sector-hhi-20260926-v1/holdings/2026-08-31",
+      "version": "94c5154a420505369b9dbc8263ea49974c7a8c32b68f125632d772e92ca48985"
+    }
+  ],
+  "pinned_at": "2026-11-04T14:13:28.828142+00:00",
+  "pool_protocol_sha256": "63f478da3d993611a4468433a75cadac7ab80cbd1e45eefb6a2059556d379aae",
+  "price": {
+    "batch": "ebffbedaaf8ae35bd5654887f83459156abff13d12537b2bd614e593c64ee77d",
+    "root": "D:\\projects\\systematic_trading\\var\\governance\\listed-2026-11-03-51dad8709493"
+  },
+  "scope": "Coverage assessment for the prior 52-fund cohort. Historical monthly decisions January 2021\u2013October 2026 plus a separate November 2 operational example. Use the preceding New York market close for information availability.",
+  "screening": "Compare to the legacy diagnostic reference of 95% holding value and 70% names. Ticker-only published price-status matches are optimistic coverage screens, not verified identities, complete lookbacks, or a license to compute signals. Unknown historical availability remains unknown. Scope bonds, commodities and bills separately from equity look-through."
+}

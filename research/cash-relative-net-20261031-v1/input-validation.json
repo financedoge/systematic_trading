@@ -1,0 +1,24 @@
+{
+  "adoption_comparison": "Exact states,targets,anchors,reasons and decisions; Decimal summed-distance rounding tolerance1e-24",
+  "frozen_adoptions": {
+    "class_cash_relative_risk-0.10": 640,
+    "class_cash_relative_risk-0.40": 387,
+    "class_cash_relative_risk-0.80": 169,
+    "class_cash_relative_risk-monthly": 70,
+    "class_remove_bill_risk-0.10": 640,
+    "class_remove_bill_risk-0.40": 395,
+    "class_remove_bill_risk-0.80": 182,
+    "class_remove_bill_risk-monthly": 70,
+    "pooled_cash_relative_risk-0.10": 836,
+    "pooled_cash_relative_risk-0.40": 513,
+    "pooled_cash_relative_risk-0.80": 231,
+    "pooled_cash_relative_risk-monthly": 70,
+    "pooled_remove_bill_risk-0.10": 788,
+    "pooled_remove_bill_risk-0.40": 433,
+    "pooled_remove_bill_risk-0.80": 204,
+    "pooled_remove_bill_risk-monthly": 70
+  },
+  "parent_inputs": "46cfca8aba0ea62e30da2c9fb62988e5d7f8cb9836421e62638584c5f32ba69b",
+  "parent_results": "88e8f618d16f9bc26ad4da70e5e64fae51f9e1b6a50f92216ee78a8787609895",
+  "reconstructed_pool_exact": true
+}

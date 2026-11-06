@@ -1,0 +1,18 @@
+{
+  "bill_cagr": 0.02833228434229329,
+  "checks": {
+    "cost_delay": true,
+    "dd": true,
+    "positive_halves": true,
+    "return_floor": true,
+    "sharpe": true,
+    "winner_stress": true
+  },
+  "cutoff": "2024-12-31",
+  "eligible": 2,
+  "protocol_sha256": "96706b22fef9e086833dfa1b709a02751b4ad8f03c09c43bc36c7b81fac5bd0a",
+  "qualified": true,
+  "sealed_at": "2026-11-03T15:15:11.091990+00:00",
+  "selected": "pooled_risk-monthly",
+  "training_sha256": "006d57528ac9aaceae4afe6e09e4984249149fcdae15eb5bc26e9609a1998cda"
+}

@@ -1,0 +1,19 @@
+{
+  "complete_current_price_windows": 10,
+  "filings": 20,
+  "matching_broker_isins": 10,
+  "older_raw_volume_missing": [
+    "WSO",
+    "XPO"
+  ],
+  "qualification_count": 0,
+  "retained": "Compact extracts, filing hashes, broker contract receipts, request and runners. Preserve private broker receipts. SEC HTML cache eligible for routine retirement.",
+  "scope": "Qualification evidence only. No operational publication.",
+  "script_hashes": {
+    "scripts/acquire_ten_qualification.py": "72510fdc854c9d065880166bb912513cfafac7ae588338a6d7f3c8df8adb6659",
+    "scripts/qualify_ten_mdy_histories.py": "5ce0a9e1ca88c4a5dc1d368f9a02f458f7f4bb988842a663413a09061d6d2839",
+    "tests/test_ten_mdy_qualification.py": "f958a57f8b4a8d92065254b4f1dc1a15d83e618cb023e225dcd5a38ca582610c"
+  },
+  "source_status": "Independent daily data unavailable; earlier source reviews and continuous dated identity proof unresolved.",
+  "tests_passed": 19
+}

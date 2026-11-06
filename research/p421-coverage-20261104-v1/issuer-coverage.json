@@ -1,0 +1,2475 @@
+{
+  "XLB": {
+    "captures": [
+      {
+        "as_of": "2026-10-07",
+        "batch": "1d89c7cccd00f5d2905ebc7529068afb43e132d3b90f6f770437da866d1f9c58",
+        "first_seen": "2026-10-08T16:22:06.157480+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.915674",
+        "residual_percent": "0.084326",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10453193234568134,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-08",
+        "batch": "1230a9c2e6518f89dc1cd83eeee85d9aeed89c1eb592a03c5e60c5f747f41f35",
+        "first_seen": "2026-10-09T10:24:18.362929+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.941691",
+        "residual_percent": "0.058309",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10466619801722007,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-08",
+        "batch": "9997249bb17eff51f4cf4bd4bb19b9de6bf2a14c83b2f460ff8d5f13a89fd98f",
+        "first_seen": "2026-10-10T10:27:14.402309+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.941691",
+        "residual_percent": "0.058309",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10466619801722007,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-08",
+        "batch": "65d974328e23d2c0ee360c907c81a9665a3476bfaab51125c58afd1006e83dd5",
+        "first_seen": "2026-10-11T04:30:53.330532+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.941691",
+        "residual_percent": "0.058309",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10466619801722007,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-08",
+        "batch": "c58906d9e1ac8fa7d864e5e634a87e822329db0a50931e2ceab8bbb89ac6e32d",
+        "first_seen": "2026-10-12T04:35:38.239652+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.941691",
+        "residual_percent": "0.058309",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10466619801722007,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-09",
+        "batch": "6ce0c6c24dc1e0be60a0c6d76495d0146fa10a4e864995cfbafbe2d89c6be2d8",
+        "first_seen": "2026-10-12T10:37:13.647289+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.943021",
+        "residual_percent": "0.056979",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10405274704113897,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-12",
+        "batch": "38f43d97c7586e8586f803c6ed14ab9a399b5bb68ab58d96cda95a82250ac039",
+        "first_seen": "2026-10-13T12:48:38.628945+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.943393",
+        "residual_percent": "0.056607",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10386577303220369,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-14",
+        "batch": "af1a54f9693892c4f9c269e7bef5bcf48ee7599781aa186874710a0264803aef",
+        "first_seen": "2026-10-15T11:24:49.803263+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.957787",
+        "residual_percent": "0.042213",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10265233217852261,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-14",
+        "batch": "752c7e38d6a4c4b88917252d8f0ec1ecda041fefc6c7604d204251b070f0d78f",
+        "first_seen": "2026-10-16T05:35:38.194743+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.957787",
+        "residual_percent": "0.042213",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10265233217852261,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-15",
+        "batch": "b32d7701170f622cabf1fc48d993b6984086921d90f18501d367aa1a37105c7a",
+        "first_seen": "2026-10-16T11:35:44.729717+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.958468",
+        "residual_percent": "0.041532",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.103803815339749,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-15",
+        "batch": "c44e4d24bb8023c795bc6a4dad7702b6a9c8ff89bb8dc9a29f25b6ca2cf17839",
+        "first_seen": "2026-10-17T06:15:33.751435+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.958468",
+        "residual_percent": "0.041532",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.103803815339749,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-15",
+        "batch": "4dd65a0880ef0439b9f61a57ed44507006e78fc91e2152b82202059567e5dec2",
+        "first_seen": "2026-10-18T06:12:05.439741+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.958468",
+        "residual_percent": "0.041532",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.103803815339749,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-15",
+        "batch": "4c6a2712d3d7359fb9d072c633f56069d665f06fe96f6d8ba04411842858c0ef",
+        "first_seen": "2026-10-19T06:24:19.337344+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.958468",
+        "residual_percent": "0.041532",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.103803815339749,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-16",
+        "batch": "673d5011fec67ee9f8899724b36eb8ef1e753a4135b82afb59cdcd8068cad6bf",
+        "first_seen": "2026-10-19T12:24:41.814496+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.955313",
+        "residual_percent": "0.044687",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10393856216823003,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-16",
+        "batch": "dd7a26d309a282c1de86aa649d8af17579973d0d09168fba95c2c2de98fa208c",
+        "first_seen": "2026-10-20T06:31:35.645210+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.955313",
+        "residual_percent": "0.044687",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10393856216823003,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-19",
+        "batch": "32ddb5df070ba4c1209f8c562b6e29c835674e33af6d7c14c9c53db70d294f9b",
+        "first_seen": "2026-10-20T12:32:47.204118+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.954816",
+        "residual_percent": "0.045184",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10365473316803235,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-19",
+        "batch": "f905eab23db799a217e3f6e99c541a0557e35a64b0491e6db97ac6b4cf225126",
+        "first_seen": "2026-10-21T06:43:28.919122+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.954816",
+        "residual_percent": "0.045184",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10365473316803235,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-20",
+        "batch": "bc9aa73a4a8d9475c9d4e00e215a3b63b80a36b2340f232e1f8a33bb516fef4e",
+        "first_seen": "2026-10-21T12:43:51.895990+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.955079",
+        "residual_percent": "0.044921",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10460947162074677,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-22",
+        "batch": "854c89453c93f970433908afd1b9846669372ec5b77cabcdd7e3931eeecce23b",
+        "first_seen": "2026-10-23T12:50:33.402930+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.956201",
+        "residual_percent": "0.043799",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.1058576145766084,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-22",
+        "batch": "204ddbe50199d492dfcaccf23b3ca8affdfd1de1cd5f7de7427e1270598d8aa1",
+        "first_seen": "2026-10-24T09:05:09.828576+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.956201",
+        "residual_percent": "0.043799",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.1058576145766084,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-22",
+        "batch": "25bd8a78907da5131d82f733b8d433b3b461c686983363312540e8e112f5d313",
+        "first_seen": "2026-10-25T06:41:46.475060+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.956201",
+        "residual_percent": "0.043799",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.1058576145766084,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-22",
+        "batch": "2aa9b18ccdbf9482b5aa8fa07791dcece9aed1394bd4ae5c610cae0d5cb0d43d",
+        "first_seen": "2026-10-26T07:54:03.082773+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.956201",
+        "residual_percent": "0.043799",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.1058576145766084,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-23",
+        "batch": "f828b12c9d34d9e786b5a2ef1d86176c601e505f64b0ea0417e7239fa07c87d8",
+        "first_seen": "2026-10-26T13:56:58.353440+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.956359",
+        "residual_percent": "0.043641",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10502469382663289,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-26",
+        "batch": "3852f65f7c22c9d182a9255ad53082a3f0397abf780e39495e6ad9a575a32337",
+        "first_seen": "2026-10-27T15:04:40.007491+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.956834",
+        "residual_percent": "0.043166",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.1052858576933319,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-27",
+        "batch": "e03a33b094e5c21c6720c889576e929dd8a349e3ec8623c6009ab9ee6804bf6f",
+        "first_seen": "2026-10-28T13:10:14.630533+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.957787",
+        "residual_percent": "0.042213",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10472502757589063,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-28",
+        "batch": "82c5c860b09d971a9815984a9f2f7df9917493a9ae2d0ad54d0f26b4224bb55b",
+        "first_seen": "2026-10-29T11:26:35.152948+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.958001",
+        "residual_percent": "0.041999",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.102919875318435,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-28",
+        "batch": "ddcb32dff32f04d496702aca4f046692770a36e54af9ac0169a24b922e96f13a",
+        "first_seen": "2026-10-30T06:23:14.580746+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.958001",
+        "residual_percent": "0.041999",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.102919875318435,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-29",
+        "batch": "6154aaa4935e0c0c06cb346498346b5e56fd71b7883ff1f2b416f94b01e95198",
+        "first_seen": "2026-10-30T12:47:05.313249+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.959249",
+        "residual_percent": "0.040751",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.1059413521604189,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-29",
+        "batch": "1df9026b9fc49d5bba8af1b9c58f7513fe47823c3fc3fb05ce16a7c8f42a6e72",
+        "first_seen": "2026-10-31T07:05:36.347172+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.959249",
+        "residual_percent": "0.040751",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.1059413521604189,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-30",
+        "batch": "e3e955b1ad9f60ef34324493d69bfbf3796fc100de3ca2b05da4643c79312515",
+        "first_seen": "2026-11-02T14:25:17.029652+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.971062",
+        "residual_percent": "0.028938",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10677984995297939,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-30",
+        "batch": "1cff2193bdfe9694c655e6feb66cfc9efc6f9ab1c4ab8772b3d720014b4228eb",
+        "first_seen": "2026-11-03T08:49:22.472760+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.971062",
+        "residual_percent": "0.028938",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10677984995297939,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-11-02",
+        "batch": "7876e71017cabfd7e73ce6aba0baf4eb6c06ce34d063e5143af130ae668844c5",
+        "first_seen": "2026-11-03T15:16:45.048768+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.972307",
+        "residual_percent": "0.027693",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10877601334137463,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-11-02",
+        "batch": "11d77c5e51a02b383e50f1a036a12034026757ea947fbb2ae69faededc7597b4",
+        "first_seen": "2026-11-04T10:07:54.751914+00:00",
+        "has_identifier": 27,
+        "has_sector": 0,
+        "lines": 27,
+        "name_fraction": 0.1111111111111111,
+        "reported_weight_sum": "99.972307",
+        "residual_percent": "0.027693",
+        "rows": 27,
+        "status_matched_lines": 3,
+        "unresolved_values": 0,
+        "value_fraction": 0.10877601334137463,
+        "weights_reconciled": false
+      }
+    ],
+    "decisions": {
+      "2021-01-04": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-02-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-03-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-04-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-05-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-06-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-07-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-08-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-09-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-10-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-11-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-12-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-01-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-02-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-03-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-04-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-05-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-06-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-07-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-08-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-09-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-10-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-11-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-12-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-01-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-02-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-03-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-04-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-05-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-06-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-07-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-08-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-09-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-10-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-11-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-12-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-01-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-02-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-03-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-04-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-05-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-06-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-07-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-08-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-09-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-10-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-11-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-12-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-01-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-02-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-03-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-04-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-05-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-06-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-07-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-08-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-09-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-10-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-11-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-12-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-01-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-02-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-03-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-04-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-05-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-06-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-07-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-08-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-09-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-10-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-11-02": {
+        "reason": "Issuer holdings weight residual is unresolved",
+        "status": "unavailable"
+      }
+    },
+    "in_frozen_pool": true
+  },
+  "XLE": {
+    "captures": [
+      {
+        "as_of": "2026-10-07",
+        "batch": "9cef0d5e2b23969cd20b490a409c2eb7d6d239eaf373caee7df7a711f1a8bc06",
+        "first_seen": "2026-10-08T16:21:59.873391+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "100.000861",
+        "residual_percent": "-0.000861",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03905439789880421,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-08",
+        "batch": "6db877ccb29c8526cd07e1ae00a7f483e7eab2414dc822c0471512f51d78ce60",
+        "first_seen": "2026-10-09T10:24:12.150103+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "100.001051",
+        "residual_percent": "-0.001051",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03849665540015175,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-08",
+        "batch": "713b775f1f2cf19d9bf14ff6d642889cbe13a1f9eda5abf30c18c79592b020ab",
+        "first_seen": "2026-10-09T16:24:21.402775+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "100.001051",
+        "residual_percent": "-0.001051",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03849665540015175,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-08",
+        "batch": "128f289e73899b674bcc424decb51d8107511590efd0b9049b8445e49b8c50d3",
+        "first_seen": "2026-10-10T10:27:08.042569+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "100.001051",
+        "residual_percent": "-0.001051",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03849665540015175,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-08",
+        "batch": "e534aa04e7e916b006b5a656344f57be4e2fff2a6ea0616d10b3c33db5fd02db",
+        "first_seen": "2026-10-11T04:30:46.799586+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "100.001051",
+        "residual_percent": "-0.001051",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03849665540015175,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-08",
+        "batch": "23b723be78b28c2fbe699ffbfbcf1779684d00d776162f200d11a0e9142c41a7",
+        "first_seen": "2026-10-12T04:35:32.734107+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "100.001051",
+        "residual_percent": "-0.001051",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03849665540015175,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-09",
+        "batch": "096381125db0d9f1bbfa319df9fb69008d7e6fec60a86b7f22744ccd4c8cc15b",
+        "first_seen": "2026-10-12T10:37:08.413215+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "100.001597",
+        "residual_percent": "-0.001597",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03869623202117462,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-12",
+        "batch": "f51757f4cf1a241bceed688fbf1c9199dac3f19da4a45a304e38c4349ec518a0",
+        "first_seen": "2026-10-13T12:48:32.777439+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "100.001756",
+        "residual_percent": "-0.001756",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03795610349082271,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-14",
+        "batch": "cd10d09635058162db58d33e4523491dc79747c7337041260daa6f59c9846e9b",
+        "first_seen": "2026-10-15T11:24:43.219992+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "100.008091",
+        "residual_percent": "-0.008091",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03693494159387564,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-14",
+        "batch": "3093eeaa1f526f43ea074974064d2fe303037429d07700333f2f6f009229d353",
+        "first_seen": "2026-10-16T05:35:33.178630+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "100.008091",
+        "residual_percent": "-0.008091",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03693494159387564,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-15",
+        "batch": "272d3d92a5b254e5b72971bc650710af17fa9e0c21297cddb4e2e309aa3cda11",
+        "first_seen": "2026-10-16T11:35:39.615784+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.982096",
+        "residual_percent": "0.017904",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.037019207918985816,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-15",
+        "batch": "d57cc179b4efd059c04592c418cca63b34d2a442915379aed2f911571c02a3cb",
+        "first_seen": "2026-10-17T06:15:29.398969+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.982096",
+        "residual_percent": "0.017904",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.037019207918985816,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-15",
+        "batch": "7fdd892d1012cb07a009f76466914fa745444311f848fafc66438e3118d593d1",
+        "first_seen": "2026-10-18T06:11:59.465250+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.982096",
+        "residual_percent": "0.017904",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.037019207918985816,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-15",
+        "batch": "03da100649f405235310ed9e987d2ac94c34dc5089662be9973c32f02e49168f",
+        "first_seen": "2026-10-19T06:24:14.748556+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.982096",
+        "residual_percent": "0.017904",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.037019207918985816,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-16",
+        "batch": "67f2371c1f304cb0dd77192bfb4e53185f4bed79c715f31c206f67062a7b1490",
+        "first_seen": "2026-10-19T12:24:32.706369+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.980008",
+        "residual_percent": "0.019992",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03700577236425007,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-16",
+        "batch": "3bb9d67fcd41b2a82b90ba84cbd02a96f5112401a3573fe3bd039a50416f9f3b",
+        "first_seen": "2026-10-20T06:31:30.727619+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.980008",
+        "residual_percent": "0.019992",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03700577236425007,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-19",
+        "batch": "23db563790e49ce5f81736ba1f95fcccc5cac420b1e87d221b09b2ababf88ef1",
+        "first_seen": "2026-10-20T12:32:42.810693+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.979706",
+        "residual_percent": "0.020294",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03726371229777371,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-19",
+        "batch": "8c99990687755fb5fdd9212b4e62dec0b09086e299d1e86625d8b1ae442d2890",
+        "first_seen": "2026-10-21T06:43:20.601122+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.979706",
+        "residual_percent": "0.020294",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03726371229777371,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-20",
+        "batch": "7fa691e58e57304dad2d1eb3cf056c7730f5b795046ea658774204429d7a67be",
+        "first_seen": "2026-10-21T12:43:43.001369+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.980022",
+        "residual_percent": "0.019978",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03708508885905226,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-22",
+        "batch": "5a4955c48236095ca1bb3c05d1804afddd41487d062ac6cb384ddcd11317e26b",
+        "first_seen": "2026-10-23T12:50:26.044159+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.975859",
+        "residual_percent": "0.024141",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03633232818322055,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-22",
+        "batch": "49af8453413f671c39fc7662f332cf0c40adf2ebf2523f1e50523004161d5371",
+        "first_seen": "2026-10-24T09:13:35.003324+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.975859",
+        "residual_percent": "0.024141",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03633232818322055,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-22",
+        "batch": "9ffd4b2e2af031115ac72b63d222c1652b138ef0bcef369dae6ca7407e13e96b",
+        "first_seen": "2026-10-25T06:41:42.126930+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.975859",
+        "residual_percent": "0.024141",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03633232818322055,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-22",
+        "batch": "546648a55a440adddaf4eaa771135fc0adf1d1e584efe894db9cafc8ecfc8152",
+        "first_seen": "2026-10-26T07:53:55.079342+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.975859",
+        "residual_percent": "0.024141",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03633232818322055,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-23",
+        "batch": "2cb578741d719d3ca654df1c535770786892ae0cd6f7d5dffc60593b5be4ce50",
+        "first_seen": "2026-10-26T13:56:50.874865+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.977079",
+        "residual_percent": "0.022921",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03650826806012206,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-26",
+        "batch": "eb9f28749379837b20bee15463fdcbe02f3f04a1a3c54159403e3a4956e3fba8",
+        "first_seen": "2026-10-27T15:04:31.987703+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.977414",
+        "residual_percent": "0.022586",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.036499313735000184,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-27",
+        "batch": "0d159aa0c75682a4f10b2b0036ccae3a14f62dd7d4f87207923e90cd1e1f3c73",
+        "first_seen": "2026-10-28T13:09:42.181298+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.976996",
+        "residual_percent": "0.023004",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.038741388816506815,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-28",
+        "batch": "540e3c202e10b9f7aa6979411aa5461162aee40f0f26d5211b4f020646316db8",
+        "first_seen": "2026-10-29T11:33:50.565814+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.977243",
+        "residual_percent": "0.022757",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.036218332205860085,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-28",
+        "batch": "d36b93c32ec6f89e0aff66f146dc748c65061121837f1a20ae6db4cb36ea91db",
+        "first_seen": "2026-10-30T06:23:05.587628+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.977243",
+        "residual_percent": "0.022757",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.036218332205860085,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-29",
+        "batch": "72ae300efc117438b6e881ac4362a3495c8750204d4dccfc394da6bc101b247b",
+        "first_seen": "2026-10-30T12:46:55.297098+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.990173",
+        "residual_percent": "0.009827",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03586961490705692,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-29",
+        "batch": "7afd187a1df39365de1b5321b908be2e69dc0835b2b35c521a89c98a901a8413",
+        "first_seen": "2026-10-31T07:05:31.226461+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.990173",
+        "residual_percent": "0.009827",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03586961490705692,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-30",
+        "batch": "c735d85b82de9592176b1d15780c42fea73761260f48b652b0157366bd556444",
+        "first_seen": "2026-11-02T14:25:07.385701+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.931669",
+        "residual_percent": "0.068331",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03556243481103302,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-30",
+        "batch": "ca4b7848ff8b38ae41d0dfe81b631589d20129e02583862dd9a8acbc979ac1e6",
+        "first_seen": "2026-11-03T08:49:13.845858+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.931669",
+        "residual_percent": "0.068331",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.03556243481103302,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-11-02",
+        "batch": "fe6aef331d9502293b71daba98c24c13bd5d5ffb5e1b095f7811b66bb2908942",
+        "first_seen": "2026-11-03T15:16:34.295361+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.929023",
+        "residual_percent": "0.070977",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.0358877927462322,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-11-02",
+        "batch": "b0781e7755f2ed01c4da13301377a63359e946a2029b235f204f09998ff1c51d",
+        "first_seen": "2026-11-04T10:07:50.081170+00:00",
+        "has_identifier": 24,
+        "has_sector": 0,
+        "lines": 24,
+        "name_fraction": 0.08333333333333333,
+        "reported_weight_sum": "99.929023",
+        "residual_percent": "0.070977",
+        "rows": 24,
+        "status_matched_lines": 2,
+        "unresolved_values": 0,
+        "value_fraction": 0.0358877927462322,
+        "weights_reconciled": false
+      }
+    ],
+    "decisions": {
+      "2021-01-04": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-02-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-03-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-04-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-05-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-06-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-07-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-08-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-09-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-10-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-11-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-12-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-01-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-02-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-03-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-04-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-05-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-06-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-07-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-08-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-09-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-10-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-11-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-12-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-01-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-02-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-03-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-04-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-05-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-06-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-07-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-08-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-09-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-10-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-11-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-12-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-01-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-02-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-03-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-04-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-05-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-06-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-07-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-08-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-09-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-10-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-11-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-12-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-01-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-02-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-03-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-04-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-05-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-06-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-07-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-08-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-09-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-10-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-11-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-12-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-01-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-02-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-03-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-04-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-05-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-06-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-07-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-08-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-09-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-10-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-11-02": {
+        "reason": "Issuer holdings weight residual is unresolved",
+        "status": "unavailable"
+      }
+    },
+    "in_frozen_pool": true
+  },
+  "XOP": {
+    "captures": [
+      {
+        "as_of": "2026-10-07",
+        "batch": "e9229ece81b7422e29817c41f6dccc4e5d5d4b0b6e357d2a63e5f952e0fcd1c4",
+        "first_seen": "2026-10-08T16:22:03.036322+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.977651",
+        "residual_percent": "0.022349",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21476293039104097,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-08",
+        "batch": "50dafbaaa93d3face8da78a8d57bd9ae45bcfff63fab655744eecb5692221240",
+        "first_seen": "2026-10-09T10:24:15.154541+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.979558",
+        "residual_percent": "0.020442",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.2130082331430191,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-08",
+        "batch": "f73b3f72e7c94750138e6e00cca113d10af56ce608f027e384c3cd387c76cf05",
+        "first_seen": "2026-10-09T16:24:24.934210+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.979558",
+        "residual_percent": "0.020442",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.2130082331430191,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-08",
+        "batch": "669938e3c6eafb25957428ad883b450690461b8997752d4068df5e853a226584",
+        "first_seen": "2026-10-10T04:25:53.446004+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.979558",
+        "residual_percent": "0.020442",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.2130082331430191,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-08",
+        "batch": "868dec9f446a81f2576bd0b5bd6612e3b110c461595fe3beddbb0fe1f6d4d9b1",
+        "first_seen": "2026-10-11T04:30:50.136426+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.979558",
+        "residual_percent": "0.020442",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.2130082331430191,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-08",
+        "batch": "74fe8365bd6783ec44a7b7b1b65550b6279b5871e0a42beaae6857bf31bcaf5c",
+        "first_seen": "2026-10-12T04:35:35.461275+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.979558",
+        "residual_percent": "0.020442",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.2130082331430191,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-09",
+        "batch": "e16e02855c4a7212c2d39371ed25f601ea1130729d76abeddb41c7e2f8093469",
+        "first_seen": "2026-10-12T10:37:11.031797+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.999499",
+        "residual_percent": "0.000501",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21368575056561034,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-12",
+        "batch": "1005f21653c611b22e87ff4ba103017634f66379e8187fab68a34cdd340cad93",
+        "first_seen": "2026-10-13T12:48:35.804689+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.984983",
+        "residual_percent": "0.015017",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21340360570042163,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-14",
+        "batch": "8407592cfb2fcd92edfcaa5322b0d79098bf0a3ebe2ce4e237e77f1e6722aead",
+        "first_seen": "2026-10-15T11:24:46.075628+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.996849",
+        "residual_percent": "0.003151",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21187116606044257,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-14",
+        "batch": "0b635b8ac908969f4af7d756dbe54677a86deff510340b3dadf8c4ab630babc1",
+        "first_seen": "2026-10-16T05:35:35.694550+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.996849",
+        "residual_percent": "0.003151",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21187116606044257,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-15",
+        "batch": "cfd9324c6cce1e00480ecb28b04a49d1d739b20042122042f76f1dae759c35d0",
+        "first_seen": "2026-10-16T11:35:42.107123+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.988027",
+        "residual_percent": "0.011973",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21238048831586606,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-15",
+        "batch": "4f9ed9279f7a14c49310067bc5c2d948d07567716bbbce1948bbbb5b240de1a3",
+        "first_seen": "2026-10-17T06:15:31.680881+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.988027",
+        "residual_percent": "0.011973",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21238048831586606,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-15",
+        "batch": "ab68c32ecba00b2b291532cb4daca75477420876e2360f199a6c2c5beaa05a0f",
+        "first_seen": "2026-10-18T06:12:02.405265+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.988027",
+        "residual_percent": "0.011973",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21238048831586606,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-15",
+        "batch": "276dcdc8d9fa96a5929f090a377d7b4d99e3baf2914538ee59a445d076bc1779",
+        "first_seen": "2026-10-19T06:24:16.459950+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.988027",
+        "residual_percent": "0.011973",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21238048831586606,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-16",
+        "batch": "f32c022896e730a64637dd21761802f06670e733b6c15dd35b0188f2e461f60a",
+        "first_seen": "2026-10-19T12:24:37.377481+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.964317",
+        "residual_percent": "0.035683",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21462115385363384,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-16",
+        "batch": "06a0cf64a22c211f478ddfacd47aa2a587d3473b9cc33902b949610fb059f03a",
+        "first_seen": "2026-10-20T06:31:33.289587+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.964317",
+        "residual_percent": "0.035683",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21462115385363384,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-19",
+        "batch": "f3fcf46bd16868ebbb6537badf2da17ef46e5147d27173814bb8907fe408e7d0",
+        "first_seen": "2026-10-20T12:32:44.753469+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.964850",
+        "residual_percent": "0.035150",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21514702417899892,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-19",
+        "batch": "a498e3f5086d977f514d65451b94d9b08edd2d0e91a9bd7001b0f3f989e0d244",
+        "first_seen": "2026-10-21T06:43:24.468352+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.964850",
+        "residual_percent": "0.035150",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21514702417899892,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-20",
+        "batch": "60f1cb18c8dec952b1fdbdf9328f8b82352d38243fb7deebf9fd44067463cc18",
+        "first_seen": "2026-10-21T12:43:47.310680+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.965359",
+        "residual_percent": "0.034641",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.2139535956650743,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-22",
+        "batch": "c9928c96915b6d9fb9970b2227ff9eb0967f99b27c43d99ecbcb085c6992f79a",
+        "first_seen": "2026-10-23T12:50:31.907940+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.954150",
+        "residual_percent": "0.045850",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21433573293355004,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-22",
+        "batch": "be2213f52eb91ecdff8fa6a24cc637c02e3824674775edf7618669abe3bb96d7",
+        "first_seen": "2026-10-24T09:05:07.725110+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.954150",
+        "residual_percent": "0.045850",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21433573293355004,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-22",
+        "batch": "883ec5fc87ff65ce44403e6b6f53d103ae7bdaa610f9af29b86a45dc10f13c96",
+        "first_seen": "2026-10-25T06:41:44.502705+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.954150",
+        "residual_percent": "0.045850",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21433573293355004,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-22",
+        "batch": "7c418e74463a8d516856af60db63cbbede2b0568e676332e90f1273a036ee14f",
+        "first_seen": "2026-10-26T07:53:59.699886+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.954150",
+        "residual_percent": "0.045850",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21433573293355004,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-23",
+        "batch": "458f58222846f74ed77ed063a71b814a008361d293da579959a619a0031f4b05",
+        "first_seen": "2026-10-26T13:56:54.608312+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.958939",
+        "residual_percent": "0.041061",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21539884491971248,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-26",
+        "batch": "9f3ca23408345ab291bb1be21f12b665340aa86acc6c770863637e48359fc172",
+        "first_seen": "2026-10-27T15:04:37.423794+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.960314",
+        "residual_percent": "0.039686",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21321144509410006,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-27",
+        "batch": "2c21acb48d29488e159ffd006ff957c7e2e78f7aa3ae7bee12d2429357bdb17b",
+        "first_seen": "2026-10-28T13:10:00.623860+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.957103",
+        "residual_percent": "0.042897",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21402626133151473,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-28",
+        "batch": "f203d9717d6ab2d5f99de86823da9a8c3763cb3c44777d9f3445f55da1e9ad25",
+        "first_seen": "2026-10-29T11:26:30.885534+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.958259",
+        "residual_percent": "0.041741",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21295002747096667,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-28",
+        "batch": "9c325f9ef4d49cfc9442c26d7f260b0f4c9e2d2cb524c298b273810f7b4f0d31",
+        "first_seen": "2026-10-30T06:23:09.732901+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "99.958259",
+        "residual_percent": "0.041741",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21295002747096667,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-29",
+        "batch": "5683b2b5ab124bde636c2c468ac3ea45baf2efd2df921a8fd6e93480ca47ef1d",
+        "first_seen": "2026-10-30T12:47:00.789854+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "100.008237",
+        "residual_percent": "-0.008237",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.2126811814510839,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-30",
+        "batch": "cc74b24da28edc9d3e56369badef0258ec93d8fce4071438f18a6a47052d8877",
+        "first_seen": "2026-11-02T14:25:12.961941+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "100.009732",
+        "residual_percent": "-0.009732",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21233382567208559,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-10-30",
+        "batch": "afb05c2c21c163eb9df46d60a54d90df4132b8cfd32e84e215f6da123e616b02",
+        "first_seen": "2026-11-03T08:49:19.057292+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "100.009732",
+        "residual_percent": "-0.009732",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21233382567208559,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-11-02",
+        "batch": "23e8b82014cf492a5fe1e443ea030d2068141aadbb34866113b6b44c357e9e0f",
+        "first_seen": "2026-11-03T15:16:37.919683+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "100.012553",
+        "residual_percent": "-0.012553",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21101037753807864,
+        "weights_reconciled": false
+      },
+      {
+        "as_of": "2026-11-02",
+        "batch": "dc740b23ce730dd6817ee13a4c247daec3d760052aeef95fe9bb52fdb3e9c8ef",
+        "first_seen": "2026-11-04T10:07:52.701712+00:00",
+        "has_identifier": 54,
+        "has_sector": 0,
+        "lines": 54,
+        "name_fraction": 0.25925925925925924,
+        "reported_weight_sum": "100.012553",
+        "residual_percent": "-0.012553",
+        "rows": 54,
+        "status_matched_lines": 14,
+        "unresolved_values": 0,
+        "value_fraction": 0.21101037753807864,
+        "weights_reconciled": false
+      }
+    ],
+    "decisions": {
+      "2021-01-04": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-02-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-03-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-04-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-05-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-06-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-07-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-08-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-09-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-10-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-11-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2021-12-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-01-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-02-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-03-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-04-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-05-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-06-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-07-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-08-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-09-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-10-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-11-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2022-12-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-01-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-02-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-03-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-04-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-05-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-06-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-07-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-08-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-09-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-10-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-11-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2023-12-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-01-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-02-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-03-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-04-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-05-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-06-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-07-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-08-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-09-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-10-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-11-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2024-12-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-01-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-02-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-03-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-04-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-05-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-06-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-07-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-08-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-09-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-10-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-11-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2025-12-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-01-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-02-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-03-02": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-04-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-05-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-06-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-07-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-08-03": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-09-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-10-01": {
+        "reason": "No issuer capture was available at decision time",
+        "status": "unavailable"
+      },
+      "2026-11-02": {
+        "reason": "Issuer holdings weight residual is unresolved",
+        "status": "unavailable"
+      }
+    },
+    "in_frozen_pool": false
+  }
+}

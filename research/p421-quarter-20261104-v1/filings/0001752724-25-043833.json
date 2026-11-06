@@ -1,0 +1,36 @@
+{
+  "accepted_new_york": "2025-02-27 12:20:41",
+  "accession": "0001752724-25-043833",
+  "as_of": "2024-12-31",
+  "cik": 1064641,
+  "dissemination": {
+    "bytes": 741026,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:39:58.761009+00:00",
+    "sha256": "4508c00aa2a5027f1cf61d552281bb51276123deda4462ab250cb0004d65f718",
+    "url": "https://www.sec.gov/Archives/edgar/daily-index/2025/QTR1/master.20250227.idx"
+  },
+  "dissemination_row": "1064641|SELECT SECTOR SPDR TRUST|NPORT-P|20250227|edgar/data/1064641/0001752724-25-043833.txt",
+  "filed": "2025-02-27",
+  "filing": "NPORT-P",
+  "index": {
+    "bytes": 9340,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:41:19.998048+00:00",
+    "sha256": "f7bf46f91f2bc724272c5ae3578b25438e0840882584d74b1000291237addabd",
+    "url": "https://www.sec.gov/Archives/edgar/data/1064641/000175272425043833/0001752724-25-043833-index.htm"
+  },
+  "nav": "33510223944.47",
+  "series": "S000006410",
+  "symbol": "XLE",
+  "xml": {
+    "bytes": 31307,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:41:17.966117+00:00",
+    "sha256": "908f4744d87c56b9638a5ba56eb6d1bbac5f8f5689e89811717669fdbb4317cc",
+    "url": "https://www.sec.gov/Archives/edgar/data/1064641/000175272425043833/primary_doc.xml"
+  }
+}

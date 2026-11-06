@@ -1,0 +1,94 @@
+{
+  "cases": "Selected pair, 6/15 proportional, 6/4 legacy, admitted-denominator 4/14, separate width/breadth ablations. Monthly primary plus monthly-anchored L1>0.40 dynamic control for selected and 6/15. All selected/control scenarios at 5/10/20 bp and 0/1 extra session. Include parent original14, M1, simple momentum, cash/BIL/URTH/risky-pool buyhold benchmarks.",
+  "code_sha256": "fa24183ccd7d5b0ebe73fa593388ff52a2a8bcee7460bd5b599c1526df993741",
+  "denominator": "Primary U is the frozen supported cohort (14 or 52). Exact X=4/14 gives N=4 or 15. Sensitivity uses contemporaneously admitted count before momentum. Effective N may exceed M.",
+  "evaluation": "Seal selection and training grid hashes before computing later targets for that choice. Carry continuous cash/positions into January 2025. Report Jan 2025-Oct 2026 chronological OOS, previously inspected development data. No later rerank.",
+  "formula": "Q is the count of admitted ETFs with positive 126-session momentum BEFORE selection. Fall back when Q < ceil(X * U). Otherwise select up to M ranked qualifiers. Preserve all downstream FR25 sizing, final cap and the original IEF/TLT/GLD defensive branch. Equality passes. BIL counts identically to the expanded parent. URTH is a benchmark.",
+  "free_disk_bytes": 706384744448,
+  "frictions": [
+    [
+      5,
+      0
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      10,
+      0
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      20,
+      0
+    ],
+    [
+      20,
+      1
+    ]
+  ],
+  "frozen_at": "2026-11-03T14:05:16.621152+00:00",
+  "hypothesis": "Scaling the four-qualifier threshold by pool size restores defensive behavior and improves net portfolio outcomes. This follows inspection of both historical eras.",
+  "limitations": [
+    "Reconstructed audited revised price history and current candidate cohort; historical publication/membership availability uncertified. Both eras previously inspected; retrospective development evidence, not untouched OOS.",
+    "Archived financial/USD vintages have original-vintage semantics but historical first dissemination not fully certified. Financial daily forecasts are carried monthly; USD carry retains source date. Missing financial models abstain to M1. No online acquisition.",
+    "Raw volume supports liquidity/activity; adjusted prices/whole adjusted units are synthetic. Zero cash interest, no FX, taxes, measured spreads or impact. Liquidity participation is diagnostic.",
+    "One earlier expansion screen plus many prior strategy searches;16 declared contrasts do not account for the entire historical search. New prospective evidence would require a frozen future trial.",
+    "No monitoring, promotion, allocation or broker authority; finite research only."
+  ],
+  "next": "Stop for discussion after this item. Finite research only.",
+  "parent": "research/expanded-fr25-net-20261102-v1",
+  "parent_protocol_sha256": "63f478da3d993611a4468433a75cadac7ab80cbd1e45eefb6a2059556d379aae",
+  "parent_work": "var/research/expanded-fr25-net-20261102-v1",
+  "price_pin": {
+    "batch": "e22f27a465e95f86cd40f7f9d24b63533a4a397eb0c02c8f40a696b0350d7731",
+    "root": "D:\\projects\\systematic_trading\\var\\governance\\listed-2026-10-30-c7a54746525b"
+  },
+  "selection": "Monthly, 5 bp, next open, every integer M,N from 1 to 52 inclusive, N expressed equivalently as X=N/52. Maximize 2021-2024 annualized net Sharpe. Round Sharpe to 12 decimals for ties, then prefer N closest to scaled 15, M closest to incumbent 6, smaller M then smaller N. Identical IS weight paths may share one exact app replay. Report tie count, near-optima, yearly prefix winners, return and drawdown guards. No return floor or cost veto.",
+  "study": "fr25-breadth-20261103-v1",
+  "supported": 52,
+  "uncertainty": "Paired circular 21-session block bootstrap 4000 draws for selected-minus-legacy and proportional-minus-legacy by era, conditional on selection. These intervals do not correct the 2704-trial search. Display IS surface and chronological prefix selection stability.",
+  "weakest": "Lowest net dollar contribution / beginning portfolio NAV among risky ETFs, excluding BIL/URTH, 5 bp next-open selected monthly book in each era. Inspect prices, raw volume, eligibility, fallback, targets, holdings, fills and FIFO outcomes.",
+  "windows": {
+    "2021": [
+      "2021-01-01",
+      "2021-12-31"
+    ],
+    "2022": [
+      "2022-01-01",
+      "2022-12-31"
+    ],
+    "2023": [
+      "2023-01-01",
+      "2023-12-31"
+    ],
+    "2024": [
+      "2024-01-01",
+      "2024-12-31"
+    ],
+    "2025": [
+      "2025-01-01",
+      "2025-12-31"
+    ],
+    "2026": [
+      "2026-01-01",
+      "2026-10-30"
+    ],
+    "calibration": [
+      "2021-01-04",
+      "2024-12-31"
+    ],
+    "full": [
+      "2021-01-04",
+      "2026-10-30"
+    ],
+    "later": [
+      "2025-01-01",
+      "2026-10-30"
+    ]
+  }
+}

@@ -3,6 +3,9 @@ param(
     [string]$HostName = "127.0.0.1",
     [int]$Port = 8000,
     [string]$NatsUrl = "nats://127.0.0.1:4222",
+    [string]$PostgresServiceName = "",
+    [int]$PostgresPort = 5432,
+    [switch]$NoElevation,
     [string]$OperationLogPath = "var\log\platform_operations.jsonl",
     [string]$StatePath = "var\run\local_platform_watchdog.state.json"
 )
@@ -14,6 +17,24 @@ $Python = Join-Path $RepoRoot ".venv\Scripts\python.exe"
 $RunDir = Join-Path $RepoRoot "var\run"
 $ResolvedOperationLogPath = if ([System.IO.Path]::IsPathRooted($OperationLogPath)) { $OperationLogPath } else { Join-Path $RepoRoot $OperationLogPath }
 $ResolvedStatePath = if ([System.IO.Path]::IsPathRooted($StatePath)) { $StatePath } else { Join-Path $RepoRoot $StatePath }
+$ResolvedPostgresServiceName = if ($PostgresServiceName) {
+    $PostgresServiceName
+} elseif ($env:ST_POSTGRES_SERVICE_NAME) {
+    [string]$env:ST_POSTGRES_SERVICE_NAME
+} else {
+    "postgresql-x64-18"
+}
+
+$PostgresServiceLibrary = Join-Path $ScriptDir "postgres_service.ps1"
+$ServiceProcessLibrary = Join-Path $ScriptDir "service_process.ps1"
+if (-not (Test-Path $PostgresServiceLibrary)) {
+    throw "PostgreSQL service helper not found at $PostgresServiceLibrary"
+}
+if (-not (Test-Path $ServiceProcessLibrary)) {
+    throw "Process identity helper not found at $ServiceProcessLibrary"
+}
+. $PostgresServiceLibrary
+. $ServiceProcessLibrary
 
 New-Item -ItemType Directory -Force -Path $RunDir | Out-Null
 New-Item -ItemType Directory -Force -Path (Split-Path -Parent $ResolvedOperationLogPath) | Out-Null
@@ -122,11 +143,17 @@ function Get-ContainerStatus {
     param([string]$Name)
 
     if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
-        return "docker unavailable"
+        return "docker unavailable (native runtime)"
     }
-    $status = docker ps -a --filter "name=^/$Name$" --format "{{.Status}}" 2>$null
-    if ($LASTEXITCODE -ne 0) {
-        return "docker ps failed"
+    try {
+        $status = docker ps -a --filter "name=^/$Name$" --format "{{.Status}}" 2>$null
+        if ($LASTEXITCODE -ne 0) {
+            return "docker ps failed (native runtime)"
+        }
+    } catch {
+        # Docker is retired for this runtime; a missing CLI/daemon must not abort
+        # the whole watchdog before the native checks run.
+        return "docker unavailable (native runtime)"
     }
     if (-not $status) {
         return "missing"
@@ -147,10 +174,15 @@ function Test-RecorderState {
     }
 
     $pidAlive = $false
+    $pidReused = $false
     if (Test-Path $recorderPidPath) {
         $pidText = (Get-Content -Raw -LiteralPath $recorderPidPath).Trim()
-        if ($pidText) {
-            $pidAlive = $null -ne (Get-Process -Id ([int]$pidText) -ErrorAction SilentlyContinue)
+        $recorderPid = 0
+        if ($pidText -and [int]::TryParse($pidText, [ref]$recorderPid)) {
+            # Windows recycles PIDs: a live PID is not proof the recorder runs.
+            $pidState = Get-ServiceProcessState -ProcessId $recorderPid -ExpectedScript "run_market_data_recorder_service.py"
+            $pidReused = $pidState.Exists -and ($pidState.Matches -eq $false)
+            $pidAlive = $pidState.Exists -and -not $pidReused
         }
     }
 
@@ -167,6 +199,9 @@ function Test-RecorderState {
     }
     if ($state.running -and $pidAlive) {
         return New-Check -ServiceId "market_data_recorder" -Required $false -Status "degraded" -Message "Recorder process is running with last_error: $lastError" -Details @{ records_written = $recordsWritten }
+    }
+    if ($state.running -and $pidReused) {
+        return New-Check -ServiceId "market_data_recorder" -Required $false -Status "degraded" -Message "Recorder state says running but its PID belongs to another process (stale PID file)." -Details @{ records_written = $recordsWritten; pid_reused = $true }
     }
     return New-Check -ServiceId "market_data_recorder" -Required $false -Status "degraded" -Message "Recorder state exists but the PID is not alive." -Details @{ records_written = $recordsWritten }
 }
@@ -225,31 +260,85 @@ try {
         -Repaired $natsRepaired `
         -Details @{ container_status = Get-ContainerStatus -Name "systematic-trading-nats" }
 
-    $postgres = Test-TcpEndpoint -Address "127.0.0.1" -TcpPort 5432
+    $postgresService = Get-PostgresService -ServiceName $ResolvedPostgresServiceName
+    $postgres = Test-TcpEndpoint -Address "127.0.0.1" -TcpPort $PostgresPort
+    $postgresRepaired = $false
+    $postgresRepairError = $null
+    if (-not $postgres.ok -and $Repair) {
+        Write-OperationLog -Event "postgres_repair_requested" -Level "warning" -Message "PostgreSQL TCP check failed; attempting one guarded service repair." -Details @{ error = $postgres.message; service_name = $ResolvedPostgresServiceName }
+        $repairResult = $null
+        if ($postgresService.Found -and $postgresService.Status -ne "Running") {
+            $repairResult = Ensure-PostgresServiceStarted -ServiceName $ResolvedPostgresServiceName -AllowElevation:(-not $NoElevation)
+        } elseif ($postgresService.Found) {
+            $repairResult = Restart-PostgresService -ServiceName $ResolvedPostgresServiceName -AllowElevation:(-not $NoElevation)
+        } else {
+            $postgresRepairError = "PostgreSQL Windows service '$ResolvedPostgresServiceName' was not found; check the configured server manually."
+        }
+        if ($repairResult -and -not $repairResult.Ok) {
+            $postgresRepairError = $repairResult.Error
+        }
+        $postgresRepaired = $true
+        Start-Sleep -Seconds 2
+        $postgres = Test-TcpEndpoint -Address "127.0.0.1" -TcpPort $PostgresPort
+        $postgresService = Get-PostgresService -ServiceName $ResolvedPostgresServiceName
+    }
+    $postgresDetails = @{
+        host = "127.0.0.1"
+        port = $PostgresPort
+        service_name = $ResolvedPostgresServiceName
+        service_found = $postgresService.Found
+        service_status = $postgresService.Status
+    }
+    if ($postgresRepairError) { $postgresDetails["repair_error"] = $postgresRepairError }
+    $postgresMessage = if ($postgres.ok) {
+        "$($postgres.message) (service ${ResolvedPostgresServiceName}: $($postgresService.Status))"
+    } elseif ($postgresRepairError) {
+        "$($postgres.message) Repair: $postgresRepairError"
+    } else {
+        $postgres.message
+    }
     $checks += New-Check `
         -ServiceId "postgres_transactional" `
         -Required $true `
         -Status $(if ($postgres.ok) { "ok" } else { "error" }) `
-        -Message $postgres.message
+        -Message $postgresMessage `
+        -Repaired $postgresRepaired `
+        -Details $postgresDetails
 
     $checks += Test-IbTwsState
 
+    $marketDataBackend = if ($env:ST_MARKET_DATA_STORE_BACKEND) { [string]$env:ST_MARKET_DATA_STORE_BACKEND } else { "parquet" }
+    $clickhouseRequired = $marketDataBackend -eq "clickhouse"
     $clickhouseHealth = Test-HttpEndpoint -Url "http://127.0.0.1:8123/ping"
     $clickhouseRepaired = $false
-    if (-not $clickhouseHealth.ok -and $Repair) {
+    if (-not $clickhouseHealth.ok -and $Repair -and $clickhouseRequired) {
         Write-OperationLog -Event "clickhouse_repair_requested" -Level "warning" -Message "ClickHouse health check failed; attempting Docker Compose repair." -Details @{ error = $clickhouseHealth.message }
         & (Join-Path $ScriptDir "start_clickhouse.ps1")
         $clickhouseRepaired = $true
         Start-Sleep -Seconds 2
         $clickhouseHealth = Test-HttpEndpoint -Url "http://127.0.0.1:8123/ping"
     }
+    $clickhouseStatus = if ($clickhouseHealth.ok) {
+        "ok"
+    } elseif ($clickhouseRequired) {
+        "error"
+    } else {
+        "disabled"
+    }
+    $clickhouseMessage = if ($clickhouseHealth.ok) {
+        $clickhouseHealth.message
+    } elseif ($clickhouseRequired) {
+        $clickhouseHealth.message
+    } else {
+        "ClickHouse is not required for the configured $marketDataBackend backend; legacy launcher not started."
+    }
     $checks += New-Check `
         -ServiceId "clickhouse_columnar" `
-        -Required $true `
-        -Status $(if ($clickhouseHealth.ok) { "ok" } else { "error" }) `
-        -Message $clickhouseHealth.message `
+        -Required $clickhouseRequired `
+        -Status $clickhouseStatus `
+        -Message $clickhouseMessage `
         -Repaired $clickhouseRepaired `
-        -Details @{ container_status = Get-ContainerStatus -Name "systematic-trading-clickhouse" }
+        -Details @{ container_status = Get-ContainerStatus -Name "systematic-trading-clickhouse"; backend = $marketDataBackend }
 
     $operatorHealth = Test-HttpEndpoint -Url "http://$HostName`:$Port/health"
     $operatorRepaired = $false

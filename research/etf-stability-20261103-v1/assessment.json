@@ -1,0 +1,44 @@
+{
+  "authority": {
+    "allocation": false,
+    "execution": false,
+    "monitoring": false,
+    "promotion": false
+  },
+  "candidate_id": "F0A4U0_monthly",
+  "dossier_fingerprint": "0e50f141264d006a15d59fcaa9e2c2ba1d5624cc3daa0601e2df97698ab74264",
+  "evidence_gaps": [
+    "Intervals are conditional on selected recipe. Return guards and stability checks answer separate questions.",
+    "Named ETF removals do not identify AI causality or a no-AI market path. Exposure can overlap across securities.",
+    "Reused evaluation and historically selected sleeves. Prospective transfer remains untested."
+  ],
+  "integrity_and_claim_issues": [],
+  "net_verdict": "not_established",
+  "policy_sha256": "6335fdb51082f56eabea53b75be5c30b42fdcc4edf972a18dcb819614a9dac58",
+  "policy_version": "research-evidence-v1",
+  "purpose": "retain_research",
+  "requested_stage": "ready_for_human_review",
+  "schema_version": 1,
+  "status": "research_evidence_reviewable",
+  "study_id": "etf-stability-20261103-v1",
+  "validator_sha256": "7a69022bead50b35a7f8590f9de96e1864180836063f1c4a0a65dd0c770619bf",
+  "verified_artifacts": [
+    "research/etf-stability-20261103-v1/protocol.json",
+    "research/alpha101-net-20261031-v1/protocol.json",
+    "research/expanded-fr25-net-20261102-v1/input-verification.json",
+    "research/etf-stability-20261103-v1/selection.json",
+    "research/etf-stability-20261103-v1/training.json",
+    "research/etf-stability-20261103-v1/results.json",
+    "research/etf-stability-20261103-v1/withholding.json",
+    "research/etf-stability-20261103-v1/uncertainty.json",
+    "research/alpha101-net-20261031-v1/signal-diagnostics.json",
+    "research/etf-stability-20261103-v1/weakest-inspections.json",
+    "research/etf-stability-20261103-v1/native-validation.json",
+    "research/alpha101-net-20261031-v1/weakest-calibration-EWY.png",
+    "research/alpha101-net-20261031-v1/weakest-later-XLC.png"
+  ],
+  "warnings": [
+    "Chronological separation is not a claim of untouched or prospective validation",
+    "Checklist verifies supplied file integrity and declarations; reviewer must assess scientific adequacy and provenance"
+  ]
+}

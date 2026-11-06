@@ -1,0 +1,482 @@
+[
+  {
+    "alpha": "24",
+    "dates": 1003,
+    "horizon": 1,
+    "mean_eligible": 45.41592039800995,
+    "mean_ic": 0.028840843353345698,
+    "mean_tied_fraction": 0.025651304564081764,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "24",
+    "dates": 999,
+    "horizon": 5,
+    "mean_eligible": 45.41592039800995,
+    "mean_ic": 0.040684507367481915,
+    "mean_tied_fraction": 0.025651304564081764,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "24",
+    "dates": 994,
+    "horizon": 10,
+    "mean_eligible": 45.41592039800995,
+    "mean_ic": 0.05058772673428159,
+    "mean_tied_fraction": 0.025651304564081764,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "24",
+    "dates": 983,
+    "horizon": 21,
+    "mean_eligible": 45.41592039800995,
+    "mean_ic": 0.06164234776925082,
+    "mean_tied_fraction": 0.025651304564081764,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "24",
+    "dates": 457,
+    "horizon": 1,
+    "mean_eligible": 46.549019607843135,
+    "mean_ic": 0.010177530761269824,
+    "mean_tied_fraction": 0.01205798628185653,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "24",
+    "dates": 453,
+    "horizon": 5,
+    "mean_eligible": 46.549019607843135,
+    "mean_ic": 0.021230514640817412,
+    "mean_tied_fraction": 0.01205798628185653,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "24",
+    "dates": 448,
+    "horizon": 10,
+    "mean_eligible": 46.549019607843135,
+    "mean_ic": 0.01893001593192274,
+    "mean_tied_fraction": 0.01205798628185653,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "24",
+    "dates": 437,
+    "horizon": 21,
+    "mean_eligible": 46.549019607843135,
+    "mean_ic": 0.033202206416663924,
+    "mean_tied_fraction": 0.01205798628185653,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "26",
+    "dates": 1003,
+    "horizon": 1,
+    "mean_eligible": 41.818905472636814,
+    "mean_ic": 0.017274419160990095,
+    "mean_tied_fraction": 0.05644685438175815,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "26",
+    "dates": 999,
+    "horizon": 5,
+    "mean_eligible": 41.818905472636814,
+    "mean_ic": 0.0202115754859113,
+    "mean_tied_fraction": 0.05644685438175815,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "26",
+    "dates": 994,
+    "horizon": 10,
+    "mean_eligible": 41.818905472636814,
+    "mean_ic": 0.02607496235722922,
+    "mean_tied_fraction": 0.05644685438175815,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "26",
+    "dates": 983,
+    "horizon": 21,
+    "mean_eligible": 41.818905472636814,
+    "mean_ic": 0.033209957810033094,
+    "mean_tied_fraction": 0.05644685438175815,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "26",
+    "dates": 457,
+    "horizon": 1,
+    "mean_eligible": 43.12636165577342,
+    "mean_ic": 0.005596418366906603,
+    "mean_tied_fraction": 0.05208865598058771,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "26",
+    "dates": 453,
+    "horizon": 5,
+    "mean_eligible": 43.12636165577342,
+    "mean_ic": -0.004392608301963382,
+    "mean_tied_fraction": 0.05208865598058771,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "26",
+    "dates": 448,
+    "horizon": 10,
+    "mean_eligible": 43.12636165577342,
+    "mean_ic": 0.010306894063350355,
+    "mean_tied_fraction": 0.05208865598058771,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "26",
+    "dates": 437,
+    "horizon": 21,
+    "mean_eligible": 43.12636165577342,
+    "mean_ic": 0.00793880490596845,
+    "mean_tied_fraction": 0.05208865598058771,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "46",
+    "dates": 1000,
+    "horizon": 1,
+    "mean_eligible": 45.41592039800995,
+    "mean_ic": 0.016181972898839332,
+    "mean_tied_fraction": 0.6331475165106073,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "46",
+    "dates": 996,
+    "horizon": 5,
+    "mean_eligible": 45.41592039800995,
+    "mean_ic": 0.02498229013939654,
+    "mean_tied_fraction": 0.6331475165106073,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "46",
+    "dates": 991,
+    "horizon": 10,
+    "mean_eligible": 45.41592039800995,
+    "mean_ic": 0.02188476493349218,
+    "mean_tied_fraction": 0.6331475165106073,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "46",
+    "dates": 980,
+    "horizon": 21,
+    "mean_eligible": 45.41592039800995,
+    "mean_ic": 0.003437469707299868,
+    "mean_tied_fraction": 0.6331475165106073,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "46",
+    "dates": 457,
+    "horizon": 1,
+    "mean_eligible": 46.549019607843135,
+    "mean_ic": 0.009660467944763248,
+    "mean_tied_fraction": 0.6494030630283179,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "46",
+    "dates": 453,
+    "horizon": 5,
+    "mean_eligible": 46.549019607843135,
+    "mean_ic": 0.005109262273099035,
+    "mean_tied_fraction": 0.6494030630283179,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "46",
+    "dates": 448,
+    "horizon": 10,
+    "mean_eligible": 46.549019607843135,
+    "mean_ic": 0.0008095145843225182,
+    "mean_tied_fraction": 0.6494030630283179,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "46",
+    "dates": 437,
+    "horizon": 21,
+    "mean_eligible": 46.549019607843135,
+    "mean_ic": 0.004365169304759404,
+    "mean_tied_fraction": 0.6494030630283179,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "49",
+    "dates": 1003,
+    "horizon": 1,
+    "mean_eligible": 45.41592039800995,
+    "mean_ic": 0.031572181522356454,
+    "mean_tied_fraction": 0.30071297208485587,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "49",
+    "dates": 999,
+    "horizon": 5,
+    "mean_eligible": 45.41592039800995,
+    "mean_ic": 0.031183577696104265,
+    "mean_tied_fraction": 0.30071297208485587,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "49",
+    "dates": 994,
+    "horizon": 10,
+    "mean_eligible": 45.41592039800995,
+    "mean_ic": 0.02777487302148351,
+    "mean_tied_fraction": 0.30071297208485587,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "49",
+    "dates": 983,
+    "horizon": 21,
+    "mean_eligible": 45.41592039800995,
+    "mean_ic": 0.01049268740032991,
+    "mean_tied_fraction": 0.30071297208485587,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "49",
+    "dates": 457,
+    "horizon": 1,
+    "mean_eligible": 46.549019607843135,
+    "mean_ic": 0.025983332622675843,
+    "mean_tied_fraction": 0.3026275732854868,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "49",
+    "dates": 453,
+    "horizon": 5,
+    "mean_eligible": 46.549019607843135,
+    "mean_ic": 0.015935656681950225,
+    "mean_tied_fraction": 0.3026275732854868,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "49",
+    "dates": 448,
+    "horizon": 10,
+    "mean_eligible": 46.549019607843135,
+    "mean_ic": 0.021429118461504196,
+    "mean_tied_fraction": 0.3026275732854868,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "49",
+    "dates": 437,
+    "horizon": 21,
+    "mean_eligible": 46.549019607843135,
+    "mean_ic": 0.030239549516968913,
+    "mean_tied_fraction": 0.3026275732854868,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "53",
+    "dates": 1003,
+    "horizon": 1,
+    "mean_eligible": 43.58805970149254,
+    "mean_ic": 0.010675379895722132,
+    "mean_tied_fraction": 0.0003963631180522543,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "53",
+    "dates": 999,
+    "horizon": 5,
+    "mean_eligible": 43.58805970149254,
+    "mean_ic": 0.012511075094878496,
+    "mean_tied_fraction": 0.0003963631180522543,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "53",
+    "dates": 994,
+    "horizon": 10,
+    "mean_eligible": 43.58805970149254,
+    "mean_ic": 0.010064210782338278,
+    "mean_tied_fraction": 0.0003963631180522543,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "53",
+    "dates": 983,
+    "horizon": 21,
+    "mean_eligible": 43.58805970149254,
+    "mean_ic": 0.007107231503414781,
+    "mean_tied_fraction": 0.0003963631180522543,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "53",
+    "dates": 457,
+    "horizon": 1,
+    "mean_eligible": 44.80610021786492,
+    "mean_ic": 0.02059321918279618,
+    "mean_tied_fraction": 0.0003854020903194407,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "53",
+    "dates": 453,
+    "horizon": 5,
+    "mean_eligible": 44.80610021786492,
+    "mean_ic": 0.0008524479207395391,
+    "mean_tied_fraction": 0.0003854020903194407,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "53",
+    "dates": 448,
+    "horizon": 10,
+    "mean_eligible": 44.80610021786492,
+    "mean_ic": 0.012645127965288702,
+    "mean_tied_fraction": 0.0003854020903194407,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "53",
+    "dates": 437,
+    "horizon": 21,
+    "mean_eligible": 44.80610021786492,
+    "mean_ic": 0.017522975752953387,
+    "mean_tied_fraction": 0.0003854020903194407,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "54",
+    "dates": 1003,
+    "horizon": 1,
+    "mean_eligible": 45.41592039800995,
+    "mean_ic": -0.00025196781579994585,
+    "mean_tied_fraction": 0.010880253068875504,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "54",
+    "dates": 999,
+    "horizon": 5,
+    "mean_eligible": 45.41592039800995,
+    "mean_ic": 0.011573561265249657,
+    "mean_tied_fraction": 0.010880253068875504,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "54",
+    "dates": 994,
+    "horizon": 10,
+    "mean_eligible": 45.41592039800995,
+    "mean_ic": 0.006816875614026492,
+    "mean_tied_fraction": 0.010880253068875504,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "54",
+    "dates": 983,
+    "horizon": 21,
+    "mean_eligible": 45.41592039800995,
+    "mean_ic": 0.00892172903903893,
+    "mean_tied_fraction": 0.010880253068875504,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "calibration"
+  },
+  {
+    "alpha": "54",
+    "dates": 457,
+    "horizon": 1,
+    "mean_eligible": 46.549019607843135,
+    "mean_ic": 0.021001090957285515,
+    "mean_tied_fraction": 0.00925201996938277,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "54",
+    "dates": 453,
+    "horizon": 5,
+    "mean_eligible": 46.549019607843135,
+    "mean_ic": 0.00524034490827744,
+    "mean_tied_fraction": 0.00925201996938277,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "54",
+    "dates": 448,
+    "horizon": 10,
+    "mean_eligible": 46.549019607843135,
+    "mean_ic": 0.007366012257786343,
+    "mean_tied_fraction": 0.00925201996938277,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  },
+  {
+    "alpha": "54",
+    "dates": 437,
+    "horizon": 21,
+    "mean_eligible": 46.549019607843135,
+    "mean_ic": 0.004960462273157909,
+    "mean_tied_fraction": 0.00925201996938277,
+    "note": "Next-open to future-open gross labels, overlapping daily diagnostics, not a net-performance gate.",
+    "window": "later"
+  }
+]

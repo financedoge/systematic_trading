@@ -1,0 +1,32 @@
+{
+  "closed_on": "2026-11-01",
+  "compact_working_prerequisites": {
+    "var/research/cash-relative-net-20261031-v1/protocol.json": "fccdfe34fdf4ffb944751b001afc3f62132f903e4dfb67cf23fc224cfc672712",
+    "var/research/cash-relative-net-20261031-v1/summary.json": "c02f570c25201c740a3ecea6ddbcd252ca4d1ded9ce3b82ba41ab371cc003f92"
+  },
+  "conditions": "Normal stopped-startup maintenance must recheck active/promotion/operational dependencies, path containment and current guards, then emit per-target retirement receipts. Classification is not a deletion receipt.",
+  "deletion_performed": false,
+  "disposition": "Retain compact research evidence; no monitoring, funding or promotion.",
+  "generated_folders_classified_for_guarded_retirement": [
+    "var/research/cash-relative-net-20261031-v1/detail",
+    "var/research/cash-relative-net-20261031-v1/native",
+    "var/research/cash-relative-net-20261031-v1/native-bundles",
+    "var/research/cash-relative-net-20261031-v1/native-bundles-v2",
+    "var/research/cash-relative-net-20261031-v1/native-contract",
+    "var/research/cash-relative-net-20261031-v1/native-contract-v2",
+    "var/research/cash-relative-net-20261031-v1/native-v2",
+    "var/research/cash-relative-net-20261031-v1/paths"
+  ],
+  "operator_decision_date": "2026-10-31",
+  "original_report_manifest_sha256": "63339f55b54b9d6ce3601d2a1cf6fb414f024235b1ed39e07af7d51c90ba39da",
+  "reproduction": "Historical report remains unchanged. Intentionally retired outputs need not remain exactly reproducible; a new audited batch rerun is new evidence.",
+  "retained": {
+    "research/cash-relative-net-20261031-v1/acceptance.json": "f52f89911eef8f79fa109eb5976d1b1ae1795ca758a13021e77492827f72ad70",
+    "research/cash-relative-net-20261031-v1/native-validation.json": "fb89b557b463a8e2bce96e434ff48bd0a5bfe29a641d39f81e4a46cde3d52200",
+    "research/cash-relative-net-20261031-v1/protocol.json": "fccdfe34fdf4ffb944751b001afc3f62132f903e4dfb67cf23fc224cfc672712",
+    "research/cash-relative-net-20261031-v1/results.md": "e78463cf931ecd6c137a47642a3c61ba12908039f239b7747c316d91e2a83ee2",
+    "research/cash-relative-net-20261031-v1/review-summary.json": "c02f570c25201c740a3ecea6ddbcd252ca4d1ded9ce3b82ba41ab371cc003f92"
+  },
+  "schema_version": 1,
+  "study_id": "cash-relative-net-20261031-v1"
+}

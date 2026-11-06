@@ -1,0 +1,44 @@
+[
+  {
+    "legacy_return": 0.03597494137905066,
+    "month": "2022-05",
+    "qualifiers": 11,
+    "scaled_return": -0.007507033606900859
+  },
+  {
+    "legacy_return": 0.006724354402089627,
+    "month": "2022-07",
+    "qualifiers": 8,
+    "scaled_return": 0.006442567886407957
+  },
+  {
+    "legacy_return": -0.009296720057672014,
+    "month": "2022-08",
+    "qualifiers": 14,
+    "scaled_return": 0.0
+  },
+  {
+    "legacy_return": -0.010078952744629999,
+    "month": "2022-09",
+    "qualifiers": 5,
+    "scaled_return": 0.0
+  },
+  {
+    "legacy_return": 0.002889286785431322,
+    "month": "2022-11",
+    "qualifiers": 5,
+    "scaled_return": 0.0
+  },
+  {
+    "legacy_return": -0.007300460461618696,
+    "month": "2022-12",
+    "qualifiers": 13,
+    "scaled_return": 0.0
+  },
+  {
+    "legacy_return": 0.05317957531264561,
+    "month": "2023-11",
+    "qualifiers": 13,
+    "scaled_return": 0.005541730554563973
+  }
+]

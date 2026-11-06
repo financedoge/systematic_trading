@@ -26,6 +26,14 @@ disposable merely to recreate the same storage burden elsewhere.
 
 ## Current protection set
 
+November1 research closure: the operator retained cash-relative and Alpha54/the
+six-signal retest as compact research evidence. Their completed generated workspaces
+are now classified for routine guarded retirement; they are no longer unconditionally
+active research. Reports, inspection charts, protocols/runners, compact validation
+and [dated closure records](research-evidence-governance-v1.md#closure-and-storage)
+remain. This supersedes the dated cash-relative-active protection below. Current
+operational dependencies still override the closed-study classification.
+
 The live API snapshot has 29 catalog rows: 22 archived entries representing 21
 strategy IDs, and seven monitored strategies. Control revision 7 has FR25 as SOTA
 and at 100% paper allocation, with no pending allocation. Older F3 allocation notes
@@ -55,6 +63,15 @@ guaranteed reclaimed capacity. The small legacy `var/backtests` tree totals only
 
 ## Retention policy
 
+October 31 amendment: the initial 40 GiB cumulative generated-artifact admission
+quota below is retired. The 20 GiB threshold requests cleanup, without blocking
+research or strategy calculations. Admission uses actual artifact-drive free
+space (2 GiB reserved for new work). Routine stopped-startup maintenance now also
+processes explicitly closed studies, keeping findings/recipes and retirement
+receipts. New studies' compact protocol/lineage metadata protects referenced
+dependencies until their disposition; no age-only deletion or new backup of
+intentionally disposable outputs is required.
+
 | Artifact class | Retain | Retire |
 | --- | --- | --- |
 | Monitored calculation | Latest complete revision, preceding complete rollback revision, active attempt, exact model/data dependencies | Older unused preparations, bundles, source copies and full run output after compact receipts are retained |
@@ -78,7 +95,7 @@ an ordinary refresh, or claim that an exact historical rerun remains available.
 Unsupported legacy strategies retain a recipe/source note without promising a
 working one-click restore.
 
-The initial generated-artifact budget is 20 GiB soft / 40 GiB admission limit,
+The initial, now superseded generated-artifact budget was 20 GiB soft / 40 GiB admission limit,
 excluding canonical histories, operational evidence and backup recovery points.
 Protected dependencies take precedence: exceeding the limit queues new heavy work
 and reports the protected footprint instead of deleting required evidence. These

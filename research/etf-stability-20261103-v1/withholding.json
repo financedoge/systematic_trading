@@ -1,0 +1,578 @@
+{
+  "expanded": {
+    "IS": {
+      "direct_tech": {
+        "annual_turnover": 13.033763232657103,
+        "cagr": 0.0388318817242026,
+        "calmar": 0.21083476003381266,
+        "cumulative": 0.16408343999999997,
+        "end": "2024-12-31",
+        "fees_usd": 27729.879999999997,
+        "max_drawdown": 0.18418159186831873,
+        "mean_exposure": 0.8317266273557156,
+        "removed": [
+          "SOXX",
+          "XLK"
+        ],
+        "sessions": 1005,
+        "sharpe": 0.34701963663700003,
+        "start": "2021-01-04",
+        "volatility": 0.13690246807248868
+      },
+      "tech_and_regional": {
+        "annual_turnover": 12.066934375022523,
+        "cagr": 0.024932630352970886,
+        "calmar": 0.13940415463536282,
+        "cumulative": 0.10319923999999991,
+        "end": "2024-12-31",
+        "fees_usd": 24759.85,
+        "max_drawdown": 0.1788514152837608,
+        "mean_exposure": 0.7779415623838025,
+        "removed": [
+          "SOXX",
+          "XLK",
+          "EWY",
+          "EWT"
+        ],
+        "sessions": 1005,
+        "sharpe": 0.2545317555675613,
+        "start": "2021-01-04",
+        "volatility": 0.1302016643902547
+      },
+      "top_one": {
+        "annual_turnover": 13.228157402410474,
+        "cagr": 0.04511658279978503,
+        "calmar": 0.2465206367289202,
+        "cumulative": 0.1924242599999999,
+        "end": "2024-12-31",
+        "fees_usd": 28141.09,
+        "max_drawdown": 0.18301341177126795,
+        "mean_exposure": 0.892317629410252,
+        "removed": [
+          "EWT"
+        ],
+        "sessions": 1005,
+        "sharpe": 0.37259767969060703,
+        "start": "2021-01-04",
+        "volatility": 0.14789025448950294
+      },
+      "top_three": {
+        "annual_turnover": 12.151313008798775,
+        "cagr": 0.019308445946654373,
+        "calmar": 0.10179562851071128,
+        "cumulative": 0.07925387000000006,
+        "end": "2024-12-31",
+        "fees_usd": 25124.68,
+        "max_drawdown": 0.18967853756728537,
+        "mean_exposure": 0.7745978708566962,
+        "removed": [
+          "EWT",
+          "XLC",
+          "XLK"
+        ],
+        "sessions": 1005,
+        "sharpe": 0.20893642544234473,
+        "start": "2021-01-04",
+        "volatility": 0.13592178093487622
+      },
+      "training_top_three": {
+        "annual_turnover": 12.151313008798775,
+        "cagr": 0.019308445946654373,
+        "calmar": 0.10179562851071128,
+        "cumulative": 0.07925387000000006,
+        "end": "2024-12-31",
+        "fees_usd": 25124.68,
+        "max_drawdown": 0.18967853756728537,
+        "mean_exposure": 0.7745978708566962,
+        "removed": [
+          "EWT",
+          "XLC",
+          "XLK"
+        ],
+        "sessions": 1005,
+        "sharpe": 0.20893642544234473,
+        "start": "2021-01-04",
+        "volatility": 0.13592178093487622
+      }
+    },
+    "OOS": {
+      "direct_tech": {
+        "annual_turnover": 12.271746362468333,
+        "cagr": 0.3247675139560169,
+        "calmar": 2.1411625149625606,
+        "cumulative": 0.6690474524747128,
+        "end": "2026-10-30",
+        "fees_usd": 16781.22,
+        "max_drawdown": 0.1516781242369618,
+        "mean_exposure": 0.8463688122321227,
+        "removed": [
+          "SOXX",
+          "XLK"
+        ],
+        "sessions": 459,
+        "sharpe": 1.7162993216282478,
+        "start": "2025-01-02",
+        "volatility": 0.17275795765858262
+      },
+      "tech_and_regional": {
+        "annual_turnover": 10.846449253753294,
+        "cagr": 0.2566251031111655,
+        "calmar": 1.6920094967829964,
+        "cumulative": 0.5159893601812127,
+        "end": "2026-10-30",
+        "fees_usd": 13474.89,
+        "max_drawdown": 0.15166883140968457,
+        "mean_exposure": 0.7248241734779752,
+        "removed": [
+          "SOXX",
+          "XLK",
+          "EWY",
+          "EWT"
+        ],
+        "sessions": 459,
+        "sharpe": 1.535661613392035,
+        "start": "2025-01-02",
+        "volatility": 0.15696947688791904
+      },
+      "top_one": {
+        "annual_turnover": 13.300371398905016,
+        "cagr": 0.30104931325156015,
+        "calmar": 1.983457202327488,
+        "cumulative": 0.6150200412539226,
+        "end": "2026-10-30",
+        "fees_usd": 18923.07,
+        "max_drawdown": 0.1517800902879547,
+        "mean_exposure": 0.9186891042423511,
+        "removed": [
+          "SOXX"
+        ],
+        "sessions": 459,
+        "sharpe": 1.5172074944191956,
+        "start": "2025-01-02",
+        "volatility": 0.18495253824030783
+      },
+      "top_three": {
+        "annual_turnover": 12.652940350394866,
+        "cagr": 0.18810114414367396,
+        "calmar": 1.4516166961497226,
+        "cumulative": 0.3688004746326954,
+        "end": "2026-10-30",
+        "fees_usd": 16161.57,
+        "max_drawdown": 0.12958044960670034,
+        "mean_exposure": 0.857919756385373,
+        "removed": [
+          "SOXX",
+          "USO",
+          "SLV"
+        ],
+        "sessions": 459,
+        "sharpe": 1.1585662154621725,
+        "start": "2025-01-02",
+        "volatility": 0.15989679803860332
+      },
+      "training_top_three": {
+        "annual_turnover": 11.428718840186944,
+        "cagr": 0.39629294515358016,
+        "calmar": 2.8742756674165,
+        "cumulative": 0.8368107774308928,
+        "end": "2026-10-30",
+        "fees_usd": 15264.28,
+        "max_drawdown": 0.13787576106427613,
+        "mean_exposure": 0.8030270937326814,
+        "removed": [
+          "EWT",
+          "XLC",
+          "XLK"
+        ],
+        "sessions": 459,
+        "sharpe": 2.024057791818756,
+        "start": "2025-01-02",
+        "volatility": 0.17247352805787317
+      }
+    }
+  },
+  "original": {
+    "IS": {
+      "direct_tech": {
+        "annual_turnover": 8.438091834942808,
+        "cagr": 0.06709546384709775,
+        "calmar": 0.9095381554096713,
+        "cumulative": 0.29561910000000013,
+        "end": "2024-12-31",
+        "fees_usd": 19885.0,
+        "max_drawdown": 0.07376871816540431,
+        "mean_exposure": 0.8165099544912137,
+        "removed": [
+          "SOXX",
+          "XLK"
+        ],
+        "sessions": 1005,
+        "sharpe": 0.7005716950579977,
+        "start": "2021-01-04",
+        "volatility": 0.09982633376033506
+      },
+      "tech_and_regional": {
+        "annual_turnover": 8.066267793899486,
+        "cagr": 0.07057978020841404,
+        "calmar": 1.035626453167716,
+        "cumulative": 0.31257322,
+        "end": "2024-12-31",
+        "fees_usd": 19183.16,
+        "max_drawdown": 0.0681517742160106,
+        "mean_exposure": 0.7868880271038354,
+        "removed": [
+          "SOXX",
+          "XLK",
+          "EWY",
+          "EWT"
+        ],
+        "sessions": 1005,
+        "sharpe": 0.7750017479382857,
+        "start": "2021-01-04",
+        "volatility": 0.09367723128469008
+      },
+      "top_one": {
+        "annual_turnover": 7.842746644410996,
+        "cagr": 0.04298058811482419,
+        "calmar": 0.40112440776670044,
+        "cumulative": 0.18273466999999988,
+        "end": "2024-12-31",
+        "fees_usd": 17079.09,
+        "max_drawdown": 0.10715026880095091,
+        "mean_exposure": 0.7436096050051373,
+        "removed": [
+          "DBC"
+        ],
+        "sessions": 1005,
+        "sharpe": 0.5141674088994367,
+        "start": "2021-01-04",
+        "volatility": 0.0896750241386289
+      },
+      "top_three": {
+        "annual_turnover": 6.6254452126239896,
+        "cagr": 0.0059658708443623976,
+        "calmar": 0.04964740454903077,
+        "cumulative": 0.024005370000000026,
+        "end": "2024-12-31",
+        "fees_usd": 13174.05,
+        "max_drawdown": 0.12016480818187836,
+        "mean_exposure": 0.5607030368924174,
+        "removed": [
+          "DBC",
+          "SPY",
+          "XLE"
+        ],
+        "sessions": 1005,
+        "sharpe": 0.12098340995241447,
+        "start": "2021-01-04",
+        "volatility": 0.06864070198881593
+      },
+      "training_top_three": {
+        "annual_turnover": 6.6254452126239896,
+        "cagr": 0.0059658708443623976,
+        "calmar": 0.04964740454903077,
+        "cumulative": 0.024005370000000026,
+        "end": "2024-12-31",
+        "fees_usd": 13174.05,
+        "max_drawdown": 0.12016480818187836,
+        "mean_exposure": 0.5607030368924174,
+        "removed": [
+          "DBC",
+          "SPY",
+          "XLE"
+        ],
+        "sessions": 1005,
+        "sharpe": 0.12098340995241447,
+        "start": "2021-01-04",
+        "volatility": 0.06864070198881593
+      }
+    },
+    "OOS": {
+      "direct_tech": {
+        "annual_turnover": 7.490861317503437,
+        "cagr": 0.271708117693938,
+        "calmar": 3.270504134219508,
+        "cumulative": 0.5492955452725263,
+        "end": "2026-10-30",
+        "fees_usd": 10976.720000000001,
+        "max_drawdown": 0.08307835934253605,
+        "mean_exposure": 0.9791021294183585,
+        "removed": [
+          "SOXX",
+          "XLK"
+        ],
+        "sessions": 459,
+        "sharpe": 2.0026789246183405,
+        "start": "2025-01-02",
+        "volatility": 0.12390522503118008
+      },
+      "tech_and_regional": {
+        "annual_turnover": 7.294329720805537,
+        "cagr": 0.19313576564738266,
+        "calmar": 2.3245447251896376,
+        "cumulative": 0.3793837649681744,
+        "end": "2026-10-30",
+        "fees_usd": 10150.34,
+        "max_drawdown": 0.08308541606211794,
+        "mean_exposure": 0.9055007593840495,
+        "removed": [
+          "SOXX",
+          "XLK",
+          "EWY",
+          "EWT"
+        ],
+        "sessions": 459,
+        "sharpe": 1.7898957557474469,
+        "start": "2025-01-02",
+        "volatility": 0.10156704741073821
+      },
+      "top_one": {
+        "annual_turnover": 7.294329720805537,
+        "cagr": 0.19313576564738266,
+        "calmar": 2.3245447251896376,
+        "cumulative": 0.3793837649681744,
+        "end": "2026-10-30",
+        "fees_usd": 10150.34,
+        "max_drawdown": 0.08308541606211794,
+        "mean_exposure": 0.9055007593840495,
+        "removed": [
+          "EWY"
+        ],
+        "sessions": 459,
+        "sharpe": 1.7898957557474469,
+        "start": "2025-01-02",
+        "volatility": 0.10156704741073821
+      },
+      "top_three": {
+        "annual_turnover": 6.195813842061164,
+        "cagr": 0.10627236248719996,
+        "calmar": 1.7595051863734688,
+        "cumulative": 0.20196442610515253,
+        "end": "2026-10-30",
+        "fees_usd": 7641.07,
+        "max_drawdown": 0.060399004964707625,
+        "mean_exposure": 0.7321502606571192,
+        "removed": [
+          "EWY",
+          "GLD",
+          "XLE"
+        ],
+        "sessions": 459,
+        "sharpe": 1.2857065466629047,
+        "start": "2025-01-02",
+        "volatility": 0.08112400675998617
+      },
+      "training_top_three": {
+        "annual_turnover": 4.938909214908092,
+        "cagr": 0.20117819421224703,
+        "calmar": 2.2083138547827645,
+        "cumulative": 0.39636599757284485,
+        "end": "2026-10-30",
+        "fees_usd": 5580.09,
+        "max_drawdown": 0.09110036319182413,
+        "mean_exposure": 0.6803326370091608,
+        "removed": [
+          "DBC",
+          "SPY",
+          "XLE"
+        ],
+        "sessions": 459,
+        "sharpe": 1.8137813187340586,
+        "start": "2025-01-02",
+        "volatility": 0.1040807646694906
+      }
+    }
+  },
+  "selected": {
+    "IS": {
+      "direct_tech": {
+        "annual_turnover": 19.474393890660785,
+        "cagr": 0.07076296243737401,
+        "calmar": 0.3804946405609158,
+        "cumulative": 0.3134691299999999,
+        "end": "2024-12-31",
+        "fees_usd": 43736.47,
+        "max_drawdown": 0.18597623959448417,
+        "mean_exposure": 0.9281744610924132,
+        "removed": [
+          "SOXX",
+          "XLK"
+        ],
+        "sessions": 1005,
+        "sharpe": 0.6583337673493262,
+        "start": "2021-01-04",
+        "volatility": 0.11368529622448
+      },
+      "tech_and_regional": {
+        "annual_turnover": 18.90248531861133,
+        "cagr": 0.07266685612186063,
+        "calmar": 0.4319551554401406,
+        "cumulative": 0.3228078700000001,
+        "end": "2024-12-31",
+        "fees_usd": 42764.47,
+        "max_drawdown": 0.16822777829290347,
+        "mean_exposure": 0.9052288677139785,
+        "removed": [
+          "SOXX",
+          "XLK",
+          "EWY",
+          "EWT"
+        ],
+        "sessions": 1005,
+        "sharpe": 0.699285731480702,
+        "start": "2021-01-04",
+        "volatility": 0.10878568282113231
+      },
+      "top_one": {
+        "annual_turnover": 19.383109797804423,
+        "cagr": 0.06339008873786178,
+        "calmar": 0.32801353976077735,
+        "cumulative": 0.27776992999999983,
+        "end": "2024-12-31",
+        "fees_usd": 43141.369999999995,
+        "max_drawdown": 0.19325448816561852,
+        "mean_exposure": 0.9129509962601425,
+        "removed": [
+          "EMB"
+        ],
+        "sessions": 1005,
+        "sharpe": 0.5977853251639372,
+        "start": "2021-01-04",
+        "volatility": 0.11363497332482751
+      },
+      "top_three": {
+        "annual_turnover": 18.54139405154588,
+        "cagr": 0.050010258527136475,
+        "calmar": 0.2626521165433917,
+        "cumulative": 0.21484777999999993,
+        "end": "2024-12-31",
+        "fees_usd": 40784.66,
+        "max_drawdown": 0.19040493252173918,
+        "mean_exposure": 0.8709032928941272,
+        "removed": [
+          "EMB",
+          "EWU",
+          "USO"
+        ],
+        "sessions": 1005,
+        "sharpe": 0.503512289143265,
+        "start": "2021-01-04",
+        "volatility": 0.10866442891025822
+      },
+      "training_top_three": {
+        "annual_turnover": 18.54139405154588,
+        "cagr": 0.050010258527136475,
+        "calmar": 0.2626521165433917,
+        "cumulative": 0.21484777999999993,
+        "end": "2024-12-31",
+        "fees_usd": 40784.66,
+        "max_drawdown": 0.19040493252173918,
+        "mean_exposure": 0.8709032928941272,
+        "removed": [
+          "EMB",
+          "EWU",
+          "USO"
+        ],
+        "sessions": 1005,
+        "sharpe": 0.503512289143265,
+        "start": "2021-01-04",
+        "volatility": 0.10866442891025822
+      }
+    },
+    "OOS": {
+      "direct_tech": {
+        "annual_turnover": 19.912585717603218,
+        "cagr": 0.14406749042312694,
+        "calmar": 1.936333594426894,
+        "cumulative": 0.2778076862758092,
+        "end": "2026-10-30",
+        "fees_usd": 27667.46,
+        "max_drawdown": 0.07440220571381828,
+        "mean_exposure": 0.9593404406571668,
+        "removed": [
+          "SOXX",
+          "XLK"
+        ],
+        "sessions": 459,
+        "sharpe": 1.6567682691795471,
+        "start": "2025-01-02",
+        "volatility": 0.08334965951524866
+      },
+      "tech_and_regional": {
+        "annual_turnover": 19.55634274904976,
+        "cagr": 0.12752721080672957,
+        "calmar": 1.7750000276780233,
+        "cumulative": 0.2443589181246706,
+        "end": "2026-10-30",
+        "fees_usd": 27086.62,
+        "max_drawdown": 0.07184631482713555,
+        "mean_exposure": 0.9407446984134341,
+        "removed": [
+          "SOXX",
+          "XLK",
+          "EWY",
+          "EWT"
+        ],
+        "sessions": 459,
+        "sharpe": 1.5362654401460782,
+        "start": "2025-01-02",
+        "volatility": 0.08023775518396035
+      },
+      "top_one": {
+        "annual_turnover": 19.938311396000994,
+        "cagr": 0.10585739474043088,
+        "calmar": 1.4036400399580908,
+        "cumulative": 0.20114333920273997,
+        "end": "2026-10-30",
+        "fees_usd": 26805.6,
+        "max_drawdown": 0.07541634017763665,
+        "mean_exposure": 0.9589452929613572,
+        "removed": [
+          "PPLT"
+        ],
+        "sessions": 459,
+        "sharpe": 1.2792386608982291,
+        "start": "2025-01-02",
+        "volatility": 0.0812468248025993
+      },
+      "top_three": {
+        "annual_turnover": 18.93917527747911,
+        "cagr": 0.07241743916904508,
+        "calmar": 0.9602343063177162,
+        "cumulative": 0.1358098119430089,
+        "end": "2026-10-30",
+        "fees_usd": 24815.3,
+        "max_drawdown": 0.07541642565005802,
+        "mean_exposure": 0.913159906326537,
+        "removed": [
+          "PPLT",
+          "IBB",
+          "XLB"
+        ],
+        "sessions": 459,
+        "sharpe": 0.9742218749490132,
+        "start": "2025-01-02",
+        "volatility": 0.07462991028586895
+      },
+      "training_top_three": {
+        "annual_turnover": 19.017591691760398,
+        "cagr": 0.13241909330739077,
+        "calmar": 1.81139872385098,
+        "cumulative": 0.2542099060344829,
+        "end": "2026-10-30",
+        "fees_usd": 23986.33,
+        "max_drawdown": 0.07310322766810373,
+        "mean_exposure": 0.9138248117492805,
+        "removed": [
+          "EMB",
+          "EWU",
+          "USO"
+        ],
+        "sessions": 459,
+        "sharpe": 1.525577730477486,
+        "start": "2025-01-02",
+        "volatility": 0.08383243818360302
+      }
+    }
+  }
+}

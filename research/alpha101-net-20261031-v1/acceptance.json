@@ -1,0 +1,30 @@
+{
+  "allocation_changed": false,
+  "cases": 222,
+  "diff_check_passed": true,
+  "docs_passed": true,
+  "images_visually_inspected": [
+    "comparison.png",
+    "weakest-calibration-EWY.png",
+    "weakest-later-XLC.png"
+  ],
+  "max_native_nav_error_usd": 0,
+  "monitoring_changed": false,
+  "native_checks": 3,
+  "next_item_started": false,
+  "operator_disposition": "Cash-relative retained as research evidence; Alpha101 study awaiting discussion.",
+  "promotion": false,
+  "protocol_sha256": "cf4e161ddf4c7b70d75a18803b610161d03fd5076769c93f160f2e5d0bdf6382",
+  "publication_reverified": true,
+  "report_links_verified": true,
+  "reporter_sha256": "6e798b405a21e89ce6813ffd9812cc327de716868ca6fc00e0d0a2e3dd307d2e",
+  "ruff_passed": true,
+  "signal_and_result_hashes_verified": true,
+  "skip_reason": "Optional frozen historical alpha screen artifact unavailable; current formulas and new replay tests pass.",
+  "source_and_input_hashes_verified": true,
+  "status": "complete_for_discussion",
+  "tests_passed": 55,
+  "tests_sha256": "5112adc26fd7c0251c1a0594d955240234615b0fbe465785e8c802283e9387e7",
+  "tests_skipped": 1,
+  "validator_sha256": "feb8148c8af8b97df9d6562798228d033ce2e19df9ebf82ea4547f6b621d8a14"
+}

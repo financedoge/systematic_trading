@@ -1,9 +1,267 @@
 # Research State
 
-Current conclusions and review queue, updated October 29, 2026. Detailed historical
+Current conclusions and review queue, updated November 6, 2026. Detailed historical
 entries are preserved in the [verified history archive](archive/README.md).
 The [research plan](signal-decay-and-alpha-plan.md) controls sequencing; the
 [execution Kanban](execution-kanban.md) tracks open implementation work.
+
+## P4.21 constituent coverage — November 6, 2026
+
+The ten-stock qualification pilot has completed its evidence checks. Twenty
+SEC filings corroborate the ten listing identities, and all ten filed ISINs
+resolve to matching current paper-broker contracts. Full published windows
+and December valuation checks pass. Zero histories qualified for publication.
+Eight older publications supply comparable raw volume. WSO and XPO withheld
+that field in the older batch and especially need independent verification.
+Independent daily history remains missing. IBKR rejected the historical
+request with an other-IP trading-session error, while public Nasdaq returned
+no rows for the required dates. The prepared 2,530-session observation request
+is the next action once access is available. Prior source reviews and dated
+security-continuity qualification remain open.
+[Qualification report](../research/p421-ten-qualification-20261106-v1/results.md).
+
+The remaining MDY inventory is complete. Among 329 holdings, 295 have complete
+253-session raw/adjusted windows (71.84% of equity value), six have full
+comparison candidates excluded by identity matching (0.87%), four have
+documented later-ticker candidates (0.68%), and 24 have no window records
+located in the pinned publications (5.12%). Completeness does not qualify
+the existing review histories. The ten-holding evidence checks above followed
+this inventory and cover 5.35% of the fund's equity value.
+[Inventory and all 329 dispositions](../research/p421-mdy-inventory-20261105-v1/index.html).
+
+The [five-holding MDY price audit](../research/p421-mdy-audit-20261104-v1/results.md)
+found complete windows under four 2024 tickers and one candidate later ticker.
+EMCOR's archived adjustment misses a special dividend. Illumina's spin-off
+and the PSTG/P transition need explicit event and identity records. The five
+represent 3.57% of MDY equity value. All prior reviews remain in force.
+The subsequent weighted inventory above sizes the remaining gaps.
+
+The December 2024 pilot is complete. All 29 actual fund identities were mapped.
+Sixteen filings became public February 24 or 27, 2025. Thirteen funds have a
+different public reporting month. Among the 16, complete audited price windows
+cover 0%–17.92% of equity value under dated candidate-symbol links. No match
+has certified security continuity across the window. Historical replay is on hold.
+[December pilot](../research/p421-quarter-20261104-v1/results.md).
+
+Following the class/volatility discussion, completed the coverage prerequisite.
+The 52-fund study includes 29 equity ETFs. The pinned direct issuer catalogs
+support zero of 2,030 historical equity fund-months at the prior-close cutoff.
+IVV and ITOT separately have 170 and 95 legacy dated snapshots. None of the
+384,625 published holding rows carries historical availability. The highest
+equity value coverage using current admissible price status and existing symbol
+mappings is 6.36% for IVV and 9.54% for ITOT, before identity/lookback checks.
+The 680 IVV constituent records in review are part of a cohort of 884 symbols.
+
+An SEC filing example verifies that issuer as-of and public filing dates can
+differ substantially. That finding led to the December pilot above.
+[Initial coverage assessment](../research/p421-coverage-20261104-v1/results.md).
+
+## Class and volatility construction net replay — November 3, 2026
+
+Completed the 16 portfolios withheld by the October 16 proxy gate on their
+original 50-ETF batch and repeated the study on 52 supported histories, with
+six frictions on each batch. Four constructions isolate pooled versus
+class-first selection and raw versus volatility-normalized 126-session scores.
+All use inverse-volatility sizing, allow BIL, cap names at 45%, leave excess
+in cash and evaluate monthly plus three dynamic timings.
+
+Two of 12 challengers qualified against same-timing pooled raw in training.
+Monthly pooled risk scored highest on weaker-half Sharpe. On the current batch,
+IS CAGR 6.16%, Sharpe 0.790, maximum DD 7.08%. Later CAGR 2.73%, Sharpe 3.684,
+maximum DD 0.57%. The later book averaged 12.96% risky ETFs, 45.03% BIL and
+42.01% cash. BIL alone earned 3.94% CAGR. The selected rule passed 6/6 matched
+guards in training and 0/6 later. Moving the three biggest risky winners to
+cash left 3.38% training and 2.02% later CAGR. Later class-first raw earned
+40.69% CAGR after 3.15% IS, while class-first risk earned −0.05% later.
+These are previously inspected periods. No late winner switch.
+
+The original pinned 50-ETF replay also produced a bill-heavy pooled-risk
+monthly book. Original IS/later CAGR 5.34%/2.85%. Its own target and date
+lineage is separate from the current pool, which includes CPER and USO.
+The selected current book's weakest risky contributors were XLB (−1.907 pp)
+and LEMB (−0.118 pp). Charts, state/fill/lot details, matched comparisons,
+conditional uncertainty, horizons, native receipts and dossier are in the
+[illustrated report](../research/class-vol-net-20261103-v1/index.html).
+68 tests and three exact native accounting checks passed. Stop for discussion.
+The planned withheld net comparisons are complete. P4.21 awaits historical
+constituent coverage and point-in-time holdings/membership evidence.
+
+## Winner concentration and stability — November 3, 2026
+
+Operator subsequently retained the methodological lessons in the
+[research guidelines](research-stability-guidelines.md) and continued to the
+class/volatility construction comparison.
+
+The operator hypothesized that the later 6/4 returns depend on exceptional
+AI-era winners. Moving the three largest risky contributors in each era to
+cash, while keeping other target weights and decision dates, leaves original14
+with 0.60% IS / 10.63% later CAGR and expanded 6/4 with 1.93% / 18.81%.
+Later leaders were EWY, GLD and XLE for original14, and SOXX, USO and SLV for
+expanded. Excluding SOXX and XLK leaves expanded later CAGR at 32.48%, versus
+38.75% observed. The fund-level experiment identifies substantial concentration
+and leaves AI causation and recurrence unresolved.
+
+A training-only rule compared 15 allocations to FR25, Alpha54 and unranked
+inverse volatility, each with monthly or 0.40 event adoption. Eight passed
+the IS growth, drawdown, friction and top-three-withheld conditions. Monthly
+Alpha54 led the consistency ranking across the 2021–2022 and 2023–2024 halves.
+Its CAGR moved from 7.49% IS to 13.97% later, and Sharpe from 0.679 to 1.569.
+After removing each era's top three winners it earned 5.00% and 7.24% CAGR.
+The relative gap intervals include zero, both eras were previously inspected,
+and the later return/drawdown guard fails against both 6/4 references.
+The complete daily path hash matches the previously retained Alpha54 evidence,
+including EWY and XLC weakest-ETF inspections. 59 tests passed and three native
+cases matched to zero NAV difference. [Full report](../research/etf-stability-20261103-v1/index.html).
+Stop for discussion.
+
+## Expanded FR25 percentage fallback and IS width search — November 3, 2026
+
+The operator requested a pool-size-adjusted breadth rule and a training-only
+search for selection width M and defensive threshold N. The primary comparison
+keeps monthly timing and six slots. Four of 14 gives 28.57%, requiring 15 of 52
+supported ETFs. The sensitivity denominator counts only ETFs admitted before
+the momentum gate. Qualifiers are counted before the top-M selection.
+
+In 2021–2024, 6/15 restored the original14 fallback frequency of 8/48 months,
+with six dates in common. Expanded 6/4 triggered once. Expanded 6/15 earned
+17.16% with Sharpe 0.347 and drawdown 21.03%, versus 26.49%, 0.462 and 18.30%
+for 6/4. Both rules adopted identical targets on all 22 later monthly dates.
+Both earned about 81.6% with Sharpe 1.726 and drawdown 15.18%.
+
+All 2,704 integer pairs were scored on 2021–2024 net Sharpe, representing 1,351
+distinct IS paths. The sealed winner was 42/33 with IS return 13.45%, Sharpe
+0.876 and drawdown 3.26%. Its lower CAGR missed the primary return guard.
+Later return was 9.46%, Sharpe 1.271 and drawdown 5.08%. Later average weights
+were 36.0% risky ETFs, 26.1% BIL and 37.9% cash. Holding the gate at 33 and
+using six slots instead gave 73.71% later with Sharpe 1.778 and drawdown 11.50%.
+The IS width cap bound in four normal months. IS prefix choices ranged from
+12 to 42 slots, all at N=33. The later window is reused development evidence.
+
+Weakest contributions were MBB (−0.325 pp IS) and TLT (−0.217 pp later).
+The [report and IS surface](../research/fr25-breadth-20261103-v1/index.html)
+include the grid, fallback dates, cost/delay and dynamic comparisons, exposure,
+cash, trades, chronology and conditional uncertainty. Stop for this discussion.
+
+## Expanded-pool FR25 net replay — November 2–3, 2026
+
+Completed the next authorized numerical item: 144 cost/delay cases, 52 supported
+histories, original14/expanded FR25 and matched capped M1, plus simple controls.
+Both FR25 universes are refitted on the same 2018-08-24 warmup. Financial forecasts
+first become ready October 1, 2021; prior decisions use the declared M1 fallback.
+BWX/XOP remain held. Dwork et al.'s pinned v2 PDF is saved in the
+[reference library](../research/references/supplemental/README.md).
+
+Expanded FR25 selects monthly using 2021–2024 only. At5bp/next-open:
+
+| Recipe | Early return / Sharpe / DD | Later return / Sharpe / DD |
+| --- | --- | --- |
+| Expanded FR25 | 26.49% / 0.462 / 18.30% | 81.59% / 1.726 / 15.18% |
+| Matched original14 FR25 | 29.56% / 0.701 / 7.38% | 54.93% / 2.003 / 8.31% |
+| Expanded M1, same downstream layers | 18.17% / 0.359 / 17.86% | 65.71% / 1.406 / 13.37% |
+
+Early CAGR6.07%/6.71%/4.28%; later38.75%/27.17%/31.96%, respectively.
+Original14 guards pass0/6 in both eras. M1 guards pass6/6 early,2/6 later;
+momentum6/6 both; unranked4/6 early,0/6 later. All selected family-adjusted
+Sharpe-difference intervals span zero. No risk-adjusted superiority established;
+the high later return does not rescue the earlier selection or create fresh OOS.
+Training-prefix winners vary monthly/0.10/0.80/monthly, exposing timing instability.
+
+Expanded later contributions concentrate in SOXX18.42pp, USO12.65pp, SLV11.78pp
+and EWY10.77pp; original14's later gains are led by EWY14.75pp and GLD10.04pp.
+These are empirical asset/era dependencies, not proof of luck or structural truth.
+Weakest selected-book contributions: EWC−5.06pp early, XLK−5.61pp later.
+Charts include raw/adjusted prices, volume, states, fills, protection and FIFO outcomes.
+Largest order is6.61% of prior median dollar volume;77 exceed the0.5% diagnostic,
+so fixed-bp replay does not establish executable capacity or measured impact.
+
+63 tests, nine shared-policy parity cases and three exact native LEAN accounting
+checks pass. Independent book reconciliation differs by less than1e-9 USD.
+P4.20 dossier is reviewable with net advantage not established and explicit
+sample-reuse/data/prospective gaps. No monitoring, promotion, allocation or broker
+change. Compact evidence retained; generated outputs classified for retirement
+after this discussion closes, with housekeeping allowlisting queued.
+[Illustrated report](../research/expanded-fr25-net-20261102-v1/index.html).
+**Stop for discussion.** Class/volatility net replay is next. P4.21 remains blocked.
+
+## Alpha54 disposition and P4.20 governance — November 1, 2026
+
+Operator retained Alpha54/the six-signal experiment as research evidence and moved
+on. Concern that FR25 and126-session momentum may owe later gains to luck is a
+hypothesis, not an established result. Choosing the highest later winner would
+reuse evaluation for selection; no such winner switch occurred. Alpha54 cumulative
+33.37%early versus26.90%later spans unequal lengths: CAGR7.49% versus13.97% and
+Sharpe0.679 versus1.569. Lower cumulative later return does not show degradation.
+Existing guarded net verdict remains unchanged; no promotion or monitoring.
+
+P4.20 is complete as a versioned governance workflow: exact policy/dossier/artifact
+hashes, honest sample-use/selection declarations, explicit decay/stability states,
+full net/control/friction/chronology evidence, independent validation and weakest
+inspections. No universal half-life/IC/annual-cost veto. Checklist completeness,
+scientific verdict and operational authority are separate; the validator grants
+none. Existing app lifecycle/broker interlocks remain in force; this is not a new
+runtime interlock. Worked Alpha54 review is retainable evidence with unidentifiable
+half-life and a dedicated decay-uncertainty gap before any new recipe proposal.
+
+37 tests pass, one Windows symlink test skipped.13 generated folders from the two
+closed studies are classified for guarded routine retirement, with compact reports,
+recipes, charts and closure receipts retained. No deletion performed. Historical
+artifact manifests/results remain unchanged. [Governance policy and evidence](research-evidence-governance-v1.md).
+**Stop for discussion.** Next unblocked work: expanded-pool FR25 net replay, then
+class/volatility construction net replay. P4.21 stays data-blocked; prospective
+tracking of Alpha54/cash-relative has not been authorized or started.
+
+## Six standalone Alpha101 net retests — October 31, 2026
+
+Cash-relative was retained as research evidence by operator decision. The next
+item is now complete: 24/26/46/49/53/54 across the full 52 supported histories
+(51 risky plus BIL), 222 net cases without cost/IC veto. BWX/XOP holds remain.
+Each formula selects monthly on2021–2024; Alpha54/monthly ranks highest overall.
+Later January2,2025–October30,2026 return26.90%, CAGR13.97%, Sharpe1.569,
+DD7.54%; matched momentum63.82%/31.13%/1.211/16.70%; FR25
+55.26%/27.32%/2.013/8.31%. FR25 is a saved app incumbent repriced on common
+study quotes; signal-input vintages/warmup differ, so it is not a pure ablation.
+
+Alpha54 passes momentum guards6/6calibration,0/6later; unranked0/6,1/6;
+FR25 0/6both. The training unranked DD guard misses narrowly:19.33% versus17.26%
+exceeds the allowed2pp worsening. Later momentum gives much higher return.
+No six-signal training-selected policy establishes a guarded FR25 replacement;
+no robust matched-control advantage is established across eras. Family-adjusted
+uncertainty includes zero. Monthly wins here, not universally. Related formulas,
+ticker ties, absolute-price units and current-cohort/vintage limits are disclosed.
+
+Weakest actual net contribution/opening NAV: EWY−3.12ppcalibration and
+XLC−1.70pplater; complete price/raw-volume, theoretical/adopted/held states,
+fills, no-protection and FIFO outcomes provided. 55 tests pass, one optional
+historical-artifact test skipped; three independent native accounting checks
+match to the cent. No strategy, funding, broker or recurring calculator change.
+[Illustrated report](../research/alpha101-net-20261031-v1/index.html) ·
+[Detailed results](../research/alpha101-net-20261031-v1/results.md).
+Operator accepted retention as research evidence on November1 and authorized
+P4.20, now completed above. P4.21 stays blocked; expanded-FR25/class screens still
+need separate net verdicts.
+
+## Cash-relative net retest and plan checkpoint — October 31, 2026
+
+The previously withheld fixed 16-arm experiment is complete: 126 net portfolio
+cases across 5/10/20 bp and zero/one extra-session delay. Original published
+50-history pool reconstructed exactly; all 5,698 adopted decisions reproduce.
+No cost/IC proxy veto. Training-selected class/monthly later return/Sharpe/DD:
+56.36%/1.474/12.36%, versus removal-only 36.46%/1.176/12.01% and frozen common-input
+FR25 55.80%/2.072/8.31%. Matched-control guards pass 3/6 calibration and 6/6 later;
+FR25 guards 0/6 in each. Improvement concentrates in 2024–2026; family-adjusted
+intervals include zero. Dynamic0.10 improves later but loses in training; no retuning.
+
+Weakest actual net contribution/opening portfolio NAV: EWH −2.46pp calibration,
+XLE −1.98pp later, excluding cash/BIL. Dated price/raw-volume, fill, adopted/held
+weight, no-protection and trade-outcome charts ready. Seven current app-owned USD
+monitoring reports included as context with different vintage/model caveats.
+35 focused tests and three native accounting cases pass (NAV difference $0.00).
+No promotion, monitoring, funding, broker or source-calculation change.
+[Full report](../research/cash-relative-net-20261031-v1/results.md) ·
+[Plan completion review](research-plan-review-2026-10-31.md).
+Operator subsequently retained cash-relative as research evidence and authorized
+the six Alpha101 signals, now completed above. P4.20 pending, P4.21 blocked.
+Original expanded-FR25/class screens still lack their own net verdicts.
 
 ## BroadTrend full-pool strategy and FR25 70/30 — October 29, 2026
 
@@ -621,21 +879,23 @@ separate timing hypothesis; it does not reopen or rescue the expanded-FR25 rejec
    URTH reconciled. [Full findings and attribution](etf-expansion-findings-2026-10-14.md).
    The October 16 and 17 screens withheld all mappings under old proxy rules.
    The operator removed the absolute-cost ceiling and requested retests before
-   the next planned item. First: full net replays of the fixed cash-relative family
-   and matched controls, including dynamic policies, against current SOTA FR25 and
-   monitored strategies; report Sharpe and Calmar. Six standalone Alpha101 signals
+   the next planned item. **Cash-relative net replays completed October 31:** the fixed family
+   and matched controls, including dynamic policies, were compared with frozen FR25
+   and current monitored context; Sharpe and Calmar reported. Stop for discussion.
+   Six standalone Alpha101 signals
    (24/26/46/49/53/54) were also excluded solely by cost and are queued separately.
    See the [audit](research-cost-policy-review-2026-10-17.md). The reserved prospective
    design remains inactive; current-cohort evidence is not historical membership.
    BWX and XOP retain listing holds; CPER is excluded from this study for an
    unsupported raw-volume observation. HYXU/EUHY remain separate quarantined
    regimes. [Inventory](etf-universe-inventory-2026-10-13.md).
-2. P6.15: measure host/container working sets, copies and scheduling before scaling
-   concurrency. Static web rendering improvements do not resolve this worker review.
+2. P6.15: native cutover, CPU scheduling and Windows-managed memory are implemented.
+   Whole-refresh latency measurement remains; do not restart the retired Docker design.
 3. The minimum 14-ETF paper execution contract and conditional 5% FR25 / 95% F3
    preview passed. Raw-share sizing, component union, financial/activity model
-   binding and conId routing now share verified contracts. Existing funding stays
-   F3 100%; a preview is not activation. [Execution evidence](execution-readiness-2026-10-13.md).
+   binding and conId routing now share verified contracts. Its F3 100% allocation
+   was historical; later acceptance records FR25 100%, revision7. A preview is not
+   activation; consult transactional state. [Execution evidence](execution-readiness-2026-10-13.md).
    Remaining P8 work covers general registry migration and additional markets.
 4. Register the next alpha's horizon, peer group, incremental payoff, untouched
    validation period and actual fill-based exit contract before another budget/exit grid.

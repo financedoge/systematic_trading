@@ -1,0 +1,308 @@
+{
+  "member_sha256": {
+    "FUND_REPORTED_INFO.tsv": "11f827dac45c9be209af3db159c075609740bfba885492441e8a0809a18f82f0",
+    "REGISTRANT.tsv": "eb78d93714029620530c7bc52186e849a478b30d628347d788a29a45e41c7ff5",
+    "SUBMISSION.tsv": "3bfefb2a75d0c39bb7e95d1e36f9d7b2268b288dbd853a805c0f2d38a2a6be69"
+  },
+  "quarter": "2025q1",
+  "records": [
+    {
+      "accession": "0001752724-25-043797",
+      "as_of": "2024-12-31",
+      "cik": 1100663,
+      "filed": "2025-02-27",
+      "filing": "NPORT-P",
+      "nav": "6463446947.35",
+      "series": "S000004350",
+      "symbol": "IBB"
+    },
+    {
+      "accession": "0001752724-25-043828",
+      "as_of": "2024-12-31",
+      "cik": 1064641,
+      "filed": "2025-02-27",
+      "filing": "NPORT-P",
+      "nav": "20667850473.53",
+      "series": "S000006413",
+      "symbol": "XLI"
+    },
+    {
+      "accession": "0001752724-25-043825",
+      "as_of": "2024-12-31",
+      "cik": 1064641,
+      "filed": "2025-02-27",
+      "filing": "NPORT-P",
+      "nav": "20078169469.58",
+      "series": "S000062095",
+      "symbol": "XLC"
+    },
+    {
+      "accession": "0001752724-25-043851",
+      "as_of": "2024-12-31",
+      "cik": 1100663,
+      "filed": "2025-02-27",
+      "filing": "NPORT-P",
+      "nav": "72184495582.5",
+      "series": "S000004344",
+      "symbol": "IWM"
+    },
+    {
+      "accession": "0001752724-25-043816",
+      "as_of": "2024-12-31",
+      "cik": 1064641,
+      "filed": "2025-02-27",
+      "filing": "NPORT-P",
+      "nav": "5482097164.98",
+      "series": "S000006414",
+      "symbol": "XLB"
+    },
+    {
+      "accession": "0001752724-25-043826",
+      "as_of": "2024-12-31",
+      "cik": 884394,
+      "filed": "2025-02-27",
+      "filing": "NPORT-P",
+      "nav": "623795251613.9",
+      "series": null,
+      "symbol": "SPY"
+    },
+    {
+      "accession": "0001752724-25-043848",
+      "as_of": "2024-12-31",
+      "cik": 1100663,
+      "filed": "2025-02-27",
+      "filing": "NPORT-P",
+      "nav": "13801763998.34",
+      "series": "S000004354",
+      "symbol": "SOXX"
+    },
+    {
+      "accession": "0001752724-25-012545",
+      "as_of": "2024-11-30",
+      "cik": 930667,
+      "filed": "2025-01-24",
+      "filing": "NPORT-P",
+      "nav": "861666163.83",
+      "series": "S000004269",
+      "symbol": "EWG"
+    },
+    {
+      "accession": "0001752724-25-012565",
+      "as_of": "2024-11-30",
+      "cik": 930667,
+      "filed": "2025-01-24",
+      "filing": "NPORT-P",
+      "nav": "5454510157.9",
+      "series": "S000004261",
+      "symbol": "EWT"
+    },
+    {
+      "accession": "0001752724-25-034048",
+      "as_of": "2024-12-31",
+      "cik": 1100663,
+      "filed": "2025-02-24",
+      "filing": "NPORT-P",
+      "nav": "767257453.88",
+      "series": "S000009422",
+      "symbol": "IAT"
+    },
+    {
+      "accession": "0001752724-25-034054",
+      "as_of": "2024-12-31",
+      "cik": 1100663,
+      "filed": "2025-02-24",
+      "filing": "NPORT-P",
+      "nav": "6181517321.43",
+      "series": "S000009423",
+      "symbol": "ITA"
+    },
+    {
+      "accession": "0001752724-25-012558",
+      "as_of": "2024-11-30",
+      "cik": 930667,
+      "filed": "2025-01-24",
+      "filing": "NPORT-P",
+      "nav": "1499592789.17",
+      "series": "S000004246",
+      "symbol": "EWA"
+    },
+    {
+      "accession": "0001752724-25-043824",
+      "as_of": "2024-12-31",
+      "cik": 1064641,
+      "filed": "2025-02-27",
+      "filing": "NPORT-P",
+      "nav": "16153248592.79",
+      "series": "S000006409",
+      "symbol": "XLP"
+    },
+    {
+      "accession": "0001752724-25-012563",
+      "as_of": "2024-11-30",
+      "cik": 930667,
+      "filed": "2025-01-24",
+      "filing": "NPORT-P",
+      "nav": "14124511739.3",
+      "series": "S000004249",
+      "symbol": "EWJ"
+    },
+    {
+      "accession": "0001752724-25-012547",
+      "as_of": "2024-11-30",
+      "cik": 930667,
+      "filed": "2025-01-24",
+      "filing": "NPORT-P",
+      "nav": "3000653453.09",
+      "series": "S000004265",
+      "symbol": "EWC"
+    },
+    {
+      "accession": "0001752724-25-043813",
+      "as_of": "2024-12-31",
+      "cik": 1064641,
+      "filed": "2025-02-27",
+      "filing": "NPORT-P",
+      "nav": "72766104753.35",
+      "series": "S000006415",
+      "symbol": "XLK"
+    },
+    {
+      "accession": "0001752724-25-012491",
+      "as_of": "2024-11-30",
+      "cik": 930667,
+      "filed": "2025-01-24",
+      "filing": "NPORT-P",
+      "nav": "647270165.37",
+      "series": "S000004247",
+      "symbol": "EWH"
+    },
+    {
+      "accession": "0001752724-25-043691",
+      "as_of": "2024-12-31",
+      "cik": 936958,
+      "filed": "2025-02-27",
+      "filing": "NPORT-P",
+      "nav": "24396265964.85",
+      "series": null,
+      "symbol": "MDY"
+    },
+    {
+      "accession": "0001752724-25-012473",
+      "as_of": "2024-11-30",
+      "cik": 1100663,
+      "filed": "2025-01-24",
+      "filing": "NPORT-P",
+      "nav": "3123727213.71",
+      "series": "S000046586",
+      "symbol": "EWU"
+    },
+    {
+      "accession": "0001752724-25-012516",
+      "as_of": "2024-11-30",
+      "cik": 1100663,
+      "filed": "2025-01-24",
+      "filing": "NPORT-P",
+      "nav": "10394101765.61",
+      "series": "S000034702",
+      "symbol": "INDA"
+    },
+    {
+      "accession": "0001752724-25-012526",
+      "as_of": "2024-11-30",
+      "cik": 930667,
+      "filed": "2025-01-24",
+      "filing": "NPORT-P",
+      "nav": "17468591746.71",
+      "series": "S000004266",
+      "symbol": "EEM"
+    },
+    {
+      "accession": "0001752724-25-012496",
+      "as_of": "2024-11-30",
+      "cik": 930667,
+      "filed": "2025-01-24",
+      "filing": "NPORT-P",
+      "nav": "3914721493.24",
+      "series": "S000004258",
+      "symbol": "EWY"
+    },
+    {
+      "accession": "0001752724-25-012550",
+      "as_of": "2024-11-30",
+      "cik": 1100663,
+      "filed": "2025-01-24",
+      "filing": "NPORT-P",
+      "nav": "5488612828.57",
+      "series": "S000031717",
+      "symbol": "MCHI"
+    },
+    {
+      "accession": "0001752724-25-043833",
+      "as_of": "2024-12-31",
+      "cik": 1064641,
+      "filed": "2025-02-27",
+      "filing": "NPORT-P",
+      "nav": "33510223944.47",
+      "series": "S000006410",
+      "symbol": "XLE"
+    },
+    {
+      "accession": "0001752724-25-043841",
+      "as_of": "2024-12-31",
+      "cik": 1064641,
+      "filed": "2025-02-27",
+      "filing": "NPORT-P",
+      "nav": "23012246842.47",
+      "series": "S000006408",
+      "symbol": "XLY"
+    },
+    {
+      "accession": "0001752724-25-076353",
+      "as_of": "2025-01-31",
+      "cik": 857489,
+      "filed": "2025-03-31",
+      "filing": "NPORT-P",
+      "nav": "23241025433.98",
+      "series": "S000005787",
+      "symbol": "VGK"
+    },
+    {
+      "accession": "0001752724-25-043804",
+      "as_of": "2024-12-31",
+      "cik": 1064641,
+      "filed": "2025-02-27",
+      "filing": "NPORT-P",
+      "nav": "16394082704.29",
+      "series": "S000006416",
+      "symbol": "XLU"
+    },
+    {
+      "accession": "0001752724-25-043814",
+      "as_of": "2024-12-31",
+      "cik": 1064641,
+      "filed": "2025-02-27",
+      "filing": "NPORT-P",
+      "nav": "36395661858.82",
+      "series": "S000006412",
+      "symbol": "XLV"
+    },
+    {
+      "accession": "0001752724-25-070896",
+      "as_of": "2025-01-31",
+      "cik": 1100663,
+      "filed": "2025-03-27",
+      "filing": "NPORT-P",
+      "nav": "55709388919.79",
+      "series": "S000004351",
+      "symbol": "EFA"
+    }
+  ],
+  "source": {
+    "bytes": 2300001,
+    "content_range": "bytes 0-2300000/462120659",
+    "prefix": 2300001,
+    "retrieved_at": "2026-11-04T14:39:53.233434+00:00",
+    "sha256": "7141500aaf2785d45d8ffc8e3439fe729e7dfeb1fe5c461ce82bb133b67671aa",
+    "url": "https://www.sec.gov/files/dera/data/form-n-port-data-sets/2025q1_nport.zip"
+  }
+}

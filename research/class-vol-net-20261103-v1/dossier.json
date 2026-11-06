@@ -1,0 +1,162 @@
+{
+  "artifacts": [
+    {
+      "path": "research/class-vol-net-20261103-v1/protocol.json",
+      "roles": [
+        "protocol"
+      ],
+      "sha256": "96706b22fef9e086833dfa1b709a02751b4ad8f03c09c43bc36c7b81fac5bd0a"
+    },
+    {
+      "path": "research/class-vol-net-20261103-v1/construction.json",
+      "roles": [
+        "strategy_recipe"
+      ],
+      "sha256": "663f233086cc41464a3729b0dc6379911b6e9bde2145bfcc9504028de98611ac"
+    },
+    {
+      "path": "research/class-vol-net-20261103-v1/inputs.json",
+      "roles": [
+        "published_input_verification"
+      ],
+      "sha256": "ed6e243253870182a72326b4054ca6fe28a072386a07751dd69bf996cb85f139"
+    },
+    {
+      "path": "research/class-vol-net-20261103-v1/selection.json",
+      "roles": [
+        "selection"
+      ],
+      "sha256": "6eb6821456548debde182f05591f27da68d0d9309a62d6ef97a5f38a9797fb98"
+    },
+    {
+      "path": "research/class-vol-net-20261103-v1/current-results.json",
+      "roles": [
+        "net_results",
+        "cost_delay",
+        "chronology"
+      ],
+      "sha256": "9c9e49ea3534d047aee4e81b39cd8ff48bbfec1d40d89c219e43a86a91c8da8a"
+    },
+    {
+      "path": "research/class-vol-net-20261103-v1/historical-results.json",
+      "roles": [
+        "net_results"
+      ],
+      "sha256": "0aa3ecd329e6f38aefe870b45ac351ca4d73f3fa11f219ce3e9002672f5db6ca"
+    },
+    {
+      "path": "research/class-vol-net-20261103-v1/paired-effects.json",
+      "roles": [
+        "matched_controls"
+      ],
+      "sha256": "253a61389baacb06a5d416cef93609cda7b0f0a202ae9688760c6bd05c1c69a3"
+    },
+    {
+      "path": "research/class-vol-net-20261103-v1/results.md",
+      "roles": [
+        "matched_controls",
+        "weakest_inspections"
+      ],
+      "sha256": "2bc6bfa3d6add3cb53bbdde30f712c833ec2e5b19ca3493a832299deca71259f"
+    },
+    {
+      "path": "research/class-vol-net-20261103-v1/uncertainty.json",
+      "roles": [
+        "uncertainty"
+      ],
+      "sha256": "a520c798d5badb964c3d3d94eb7c2a04a96ebbed51ecea48d7a0d7d2e951d369"
+    },
+    {
+      "path": "research/class-vol-net-20261103-v1/weight-ic.json",
+      "roles": [
+        "decay_stability"
+      ],
+      "sha256": "ea7db65add0779d45dbb03bd1d2ea202980654257cc4ad712f54e82cd13ae7a0"
+    },
+    {
+      "path": "research/class-vol-net-20261103-v1/native-validation.json",
+      "roles": [
+        "independent_validation"
+      ],
+      "sha256": "1f774d9bc9643395651627cddb8e82eb00422279c4655170cdc829b1e999bf07"
+    },
+    {
+      "path": "research/class-vol-net-20261103-v1/weakest-calibration-XLB.png",
+      "roles": [
+        "weakest_inspections"
+      ],
+      "sha256": "9724b30a288d040008e59040800ca97c5906ec2695409133ed6d80da69845a24"
+    },
+    {
+      "path": "research/class-vol-net-20261103-v1/weakest-later-LEMB.png",
+      "roles": [
+        "weakest_inspections"
+      ],
+      "sha256": "6d3872b9b2ee8fea890f58c17cb7418fe141ae1ed58ea884e019aecde018f5c2"
+    }
+  ],
+  "candidate_id": "pooled_risk-monthly",
+  "coverage_gaps": [
+    "Both eras previously inspected. No fresh prospective validation.",
+    "Membership availability, spreads and impact remain unresolved.",
+    "Conditional intervals and 12-contrast adjustment omit lifetime multiplicity."
+  ],
+  "decay": [
+    {
+      "cadence_and_delay_interpretation": "Monthly and three target-change policies compared at six frictions, alongside chronological net results.",
+      "half_life_sessions": null,
+      "horizons": [
+        1,
+        5,
+        10,
+        21,
+        63
+      ],
+      "method_uncertainty_and_caveats": "Cross-sectional target-weight IC at overlapping open-to-open horizons does not determine an exponential half-life. No fitted decay interval.",
+      "signal": "Daily class/volatility portfolio target mapping",
+      "status": "unidentifiable"
+    }
+  ],
+  "fixed_and_dynamic_evaluated": true,
+  "inputs": {
+    "activity_basis": "audited_raw",
+    "full_supported_pool": true,
+    "historical_availability": "reconstructed_or_unknown",
+    "historical_membership": "retrospective_or_unknown",
+    "limitations_and_missing_policy": "52 supported histories from54 candidates; BWX/XOP unresolved identity holds. Audited adjusted prices/raw activity with explicit missing exclusions. Original-vintage financial/USD series remain limited by historical capture availability; monthly carry preserves source dates.",
+    "price_basis": "dividend_split_adjusted",
+    "publication_batch": "e22f27a465e95f86cd40f7f9d24b63533a4a397eb0c02c8f40a696b0350d7731"
+  },
+  "net_verdict": "not_established",
+  "operator_disposition": "Numerical item complete, awaiting discussion.",
+  "policy_sha256": "6335fdb51082f56eabea53b75be5c30b42fdcc4edf972a18dcb819614a9dac58",
+  "policy_version": "research-evidence-v1",
+  "preregistered_net_rule": "Training ends 2024-12-31. Among the 12 challengers (all except pooled_raw), require higher full IS net Sharpe than pooled_raw at identical timing, CAGR >= max(BIL CAGR, matched control CAGR minus 0.5pp), DD <= matched control DD + 2pp, both two-year IS halves profitable, positive full IS CAGR after placing its own three largest training winners in cash, positive 20bp/delay1 IS CAGR. Rank eligible challengers by higher weaker-half net Sharpe, then weaker-half CAGR, then full IS Sharpe, then lower turnover and lexical ID. If none qualifies, retain top-ranked challenger for diagnostics, label failure. Seal before later portfolio evaluation. No OOS rescue.",
+  "prospective_plan_or_gap": "Previously inspected chronological evaluation. Fresh evidence requires subsequent audited observations and a prior recipe freeze.",
+  "purpose": "retain_research",
+  "sample": {
+    "claim": "retrospective_development",
+    "label_boundary_and_overlap": "IS-only portfolio engine stops on 2024-12-31. Rank-IC forward labels end in the reported era. Net return intervals use paired 21-session blocks.",
+    "observations_captured_after_freeze": false,
+    "prior_search_and_multiplicity": "Four rules x four timings. Twelve challenger/control contrasts. Earlier exploratory searches are additional multiplicity.",
+    "recipe_frozen_at": "2026-11-03T15:15:01.360471+00:00",
+    "selection_basis": "training_only",
+    "trial_count": 16,
+    "windows": [
+      {
+        "end": "2024-12-31",
+        "prior_use": "previously_inspected",
+        "role": "calibration",
+        "start": "2021-01-04"
+      },
+      {
+        "end": "2026-10-30",
+        "prior_use": "previously_inspected",
+        "role": "evaluation",
+        "start": "2025-01-02"
+      }
+    ]
+  },
+  "schema_version": 1,
+  "study_id": "class-vol-net-20261103-v1"
+}

@@ -19,6 +19,13 @@ Run whenever a strategy is proposed for promotion from research to paper, paper 
 
 1. Confirm the current promotion state and requested target state.
 2. Verify strategy, data, feature, and universe versions are fixed and reproducible.
+   For a new signal or changed recipe, attach the versioned P4.20 dossier and
+   `scripts/review_research_evidence.py` assessment described in
+   `docs/research-evidence-governance-v1.md`. Check actual evidence quality, not
+   only checklist completeness. Reused evaluation periods are development data
+   for any selection they inform. Half-life/IC/cost diagnostics cannot replace
+   realized net comparisons; no universal lifetime or annual-cost veto applies.
+   The assessment grants no monitoring, promotion, allocation or execution authority.
 3. Verify point-in-time data and no known lookahead or survivorship issue.
 4. Review benchmark, out-of-sample, stress-period, turnover, drawdown, and fee sensitivity results.
 5. Verify risk limits, capital caps, liquidity limits, and kill-switch conditions.

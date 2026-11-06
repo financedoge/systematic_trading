@@ -1,0 +1,50 @@
+{
+  "checks": [
+    {
+      "arm": "original",
+      "day": "2021-01-04",
+      "status": "exact"
+    },
+    {
+      "arm": "original",
+      "day": "2024-02-01",
+      "status": "exact"
+    },
+    {
+      "arm": "original",
+      "day": "2026-10-01",
+      "status": "exact"
+    },
+    {
+      "arm": "expanded",
+      "day": "2021-01-04",
+      "status": "exact"
+    },
+    {
+      "arm": "expanded",
+      "day": "2024-02-01",
+      "status": "exact"
+    },
+    {
+      "arm": "expanded",
+      "day": "2026-10-01",
+      "status": "exact"
+    },
+    {
+      "arm": "m1",
+      "day": "2021-01-04",
+      "status": "exact"
+    },
+    {
+      "arm": "m1",
+      "day": "2024-02-01",
+      "status": "exact"
+    },
+    {
+      "arm": "m1",
+      "day": "2026-10-01",
+      "status": "exact"
+    }
+  ],
+  "scope": "Finite cached500-bar daily worker versus full-history shared LEAN policy inference at three monthly boundaries for all three main recipes."
+}

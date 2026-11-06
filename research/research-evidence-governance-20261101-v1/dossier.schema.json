@@ -1,0 +1,376 @@
+{
+  "$defs": {
+    "Artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "roles": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Roles",
+          "type": "array"
+        },
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "roles"
+      ],
+      "title": "Artifact",
+      "type": "object"
+    },
+    "Decay": {
+      "additionalProperties": false,
+      "properties": {
+        "cadence_and_delay_interpretation": {
+          "minLength": 1,
+          "title": "Cadence And Delay Interpretation",
+          "type": "string"
+        },
+        "half_life_sessions": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Half Life Sessions"
+        },
+        "horizons": {
+          "items": {
+            "exclusiveMinimum": 0,
+            "type": "integer"
+          },
+          "minItems": 1,
+          "title": "Horizons",
+          "type": "array"
+        },
+        "method_uncertainty_and_caveats": {
+          "minLength": 1,
+          "title": "Method Uncertainty And Caveats",
+          "type": "string"
+        },
+        "signal": {
+          "minLength": 1,
+          "title": "Signal",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "estimated",
+            "right_censored",
+            "unidentifiable",
+            "insufficient",
+            "not_applicable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "signal",
+        "status",
+        "horizons",
+        "method_uncertainty_and_caveats",
+        "cadence_and_delay_interpretation"
+      ],
+      "title": "Decay",
+      "type": "object"
+    },
+    "Inputs": {
+      "additionalProperties": false,
+      "properties": {
+        "activity_basis": {
+          "enum": [
+            "audited_raw",
+            "not_used"
+          ],
+          "title": "Activity Basis",
+          "type": "string"
+        },
+        "full_supported_pool": {
+          "title": "Full Supported Pool",
+          "type": "boolean"
+        },
+        "historical_availability": {
+          "enum": [
+            "certified_point_in_time",
+            "reconstructed_or_unknown"
+          ],
+          "title": "Historical Availability",
+          "type": "string"
+        },
+        "historical_membership": {
+          "enum": [
+            "certified_point_in_time",
+            "retrospective_or_unknown"
+          ],
+          "title": "Historical Membership",
+          "type": "string"
+        },
+        "limitations_and_missing_policy": {
+          "minLength": 1,
+          "title": "Limitations And Missing Policy",
+          "type": "string"
+        },
+        "price_basis": {
+          "const": "dividend_split_adjusted",
+          "title": "Price Basis",
+          "type": "string"
+        },
+        "publication_batch": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Publication Batch",
+          "type": "string"
+        }
+      },
+      "required": [
+        "publication_batch",
+        "price_basis",
+        "activity_basis",
+        "historical_availability",
+        "historical_membership",
+        "full_supported_pool",
+        "limitations_and_missing_policy"
+      ],
+      "title": "Inputs",
+      "type": "object"
+    },
+    "SampleUse": {
+      "additionalProperties": false,
+      "properties": {
+        "claim": {
+          "enum": [
+            "retrospective_development",
+            "untouched_holdout",
+            "prospective"
+          ],
+          "title": "Claim",
+          "type": "string"
+        },
+        "label_boundary_and_overlap": {
+          "minLength": 1,
+          "title": "Label Boundary And Overlap",
+          "type": "string"
+        },
+        "observations_captured_after_freeze": {
+          "title": "Observations Captured After Freeze",
+          "type": "boolean"
+        },
+        "prior_search_and_multiplicity": {
+          "minLength": 1,
+          "title": "Prior Search And Multiplicity",
+          "type": "string"
+        },
+        "recipe_frozen_at": {
+          "format": "date-time",
+          "title": "Recipe Frozen At",
+          "type": "string"
+        },
+        "selection_basis": {
+          "enum": [
+            "training_only",
+            "evaluation_informed"
+          ],
+          "title": "Selection Basis",
+          "type": "string"
+        },
+        "trial_count": {
+          "minimum": 1,
+          "title": "Trial Count",
+          "type": "integer"
+        },
+        "windows": {
+          "items": {
+            "$ref": "#/$defs/Window"
+          },
+          "minItems": 2,
+          "title": "Windows",
+          "type": "array"
+        }
+      },
+      "required": [
+        "windows",
+        "selection_basis",
+        "claim",
+        "recipe_frozen_at",
+        "observations_captured_after_freeze",
+        "trial_count",
+        "prior_search_and_multiplicity",
+        "label_boundary_and_overlap"
+      ],
+      "title": "SampleUse",
+      "type": "object"
+    },
+    "Window": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "prior_use": {
+          "enum": [
+            "uninspected",
+            "previously_inspected",
+            "unknown"
+          ],
+          "title": "Prior Use",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "calibration",
+            "evaluation"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "role",
+        "start",
+        "end",
+        "prior_use"
+      ],
+      "title": "Window",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "artifacts": {
+      "items": {
+        "$ref": "#/$defs/Artifact"
+      },
+      "minItems": 1,
+      "title": "Artifacts",
+      "type": "array"
+    },
+    "candidate_id": {
+      "minLength": 1,
+      "title": "Candidate Id",
+      "type": "string"
+    },
+    "coverage_gaps": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Coverage Gaps",
+      "type": "array"
+    },
+    "decay": {
+      "items": {
+        "$ref": "#/$defs/Decay"
+      },
+      "minItems": 1,
+      "title": "Decay",
+      "type": "array"
+    },
+    "fixed_and_dynamic_evaluated": {
+      "title": "Fixed And Dynamic Evaluated",
+      "type": "boolean"
+    },
+    "inputs": {
+      "$ref": "#/$defs/Inputs"
+    },
+    "net_verdict": {
+      "enum": [
+        "guarded_advantage",
+        "not_established",
+        "adverse",
+        "inconclusive"
+      ],
+      "title": "Net Verdict",
+      "type": "string"
+    },
+    "operator_disposition": {
+      "minLength": 1,
+      "title": "Operator Disposition",
+      "type": "string"
+    },
+    "policy_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Policy Sha256",
+      "type": "string"
+    },
+    "policy_version": {
+      "const": "research-evidence-v1",
+      "title": "Policy Version",
+      "type": "string"
+    },
+    "preregistered_net_rule": {
+      "minLength": 1,
+      "title": "Preregistered Net Rule",
+      "type": "string"
+    },
+    "prospective_plan_or_gap": {
+      "minLength": 1,
+      "title": "Prospective Plan Or Gap",
+      "type": "string"
+    },
+    "purpose": {
+      "enum": [
+        "retain_research",
+        "new_monitored_recipe",
+        "promotion_review"
+      ],
+      "title": "Purpose",
+      "type": "string"
+    },
+    "sample": {
+      "$ref": "#/$defs/SampleUse"
+    },
+    "schema_version": {
+      "const": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "study_id": {
+      "minLength": 1,
+      "title": "Study Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "policy_version",
+    "policy_sha256",
+    "study_id",
+    "candidate_id",
+    "purpose",
+    "sample",
+    "inputs",
+    "fixed_and_dynamic_evaluated",
+    "preregistered_net_rule",
+    "net_verdict",
+    "decay",
+    "coverage_gaps",
+    "prospective_plan_or_gap",
+    "operator_disposition",
+    "artifacts"
+  ],
+  "title": "Evidence",
+  "type": "object"
+}

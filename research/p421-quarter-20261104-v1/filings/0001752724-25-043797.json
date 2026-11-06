@@ -1,0 +1,36 @@
+{
+  "accepted_new_york": "2025-02-27 12:18:21",
+  "accession": "0001752724-25-043797",
+  "as_of": "2024-12-31",
+  "cik": 1100663,
+  "dissemination": {
+    "bytes": 741026,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:39:58.761009+00:00",
+    "sha256": "4508c00aa2a5027f1cf61d552281bb51276123deda4462ab250cb0004d65f718",
+    "url": "https://www.sec.gov/Archives/edgar/daily-index/2025/QTR1/master.20250227.idx"
+  },
+  "dissemination_row": "1100663|iSHARES TRUST|NPORT-P|20250227|edgar/data/1100663/0001752724-25-043797.txt",
+  "filed": "2025-02-27",
+  "filing": "NPORT-P",
+  "index": {
+    "bytes": 9066,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:40:40.213872+00:00",
+    "sha256": "e700b6f0a2e14a297822bf71e3996444273a22fd31d25705a28cbd8e9dd753cf",
+    "url": "https://www.sec.gov/Archives/edgar/data/1100663/000175272425043797/0001752724-25-043797-index.htm"
+  },
+  "nav": "6463446947.35",
+  "series": "S000004350",
+  "symbol": "IBB",
+  "xml": {
+    "bytes": 286504,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:39:55.707330+00:00",
+    "sha256": "89700491297697c34b5ea360aad1dc82c094ef40015ec207dd099509195240da",
+    "url": "https://www.sec.gov/Archives/edgar/data/1100663/000175272425043797/primary_doc.xml"
+  }
+}

@@ -1,5 +1,20 @@
 # Supplemental research references
 
+## A01 — Generalization in Adaptive Data Analysis and Holdout Reuse
+
+Cynthia Dwork, Vitaly Feldman, Moritz Hardt, Toniann Pitassi, Omer Reingold and
+Aaron Roth. arXiv:1506.02629v2, submitted September 25, 2015; PDF title page dated
+September 28. Downloaded November 2, 2026. 29 pages; title/authors/version and
+rendered first page verified. This download is not a claim of a full proof review.
+
+[Local PDF](dwork_et_al_2015_generalization_in_adaptive_data_analysis_and_holdout_reuse_v2.pdf)
+· [Pinned source](https://arxiv.org/abs/1506.02629v2)
+· [Provenance and SHA-256](dwork_et_al_2015_generalization_in_adaptive_data_analysis_and_holdout_reuse_v2.json)
+
+The paper addresses adaptive reuse of a testing set. It supports explicitly
+recording reuse in our evidence policy. We are not implementing its reusable
+holdout algorithm or claiming its formal guarantees for dependent market returns.
+
 Two BIS papers added October 1, 2026 support the USD research question; the dynamic-trading paper added October 15 supports the rebalance-policy study. These supplement the original 45-document collection. They are literature, not approved market-data inputs. [Provenance and SHA-256 hashes](manifest.json) · [USD plan](../../momentum-research-plan-2026-10-01.md)
 
 ## T01 — Dynamic Trading with Predictable Returns and Transaction Costs

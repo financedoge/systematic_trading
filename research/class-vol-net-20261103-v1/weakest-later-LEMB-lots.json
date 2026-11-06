@@ -1,0 +1,26 @@
+[
+  {
+    "entry": "2026-02-02",
+    "entry_price": 42.3,
+    "exit": "2026-03-02",
+    "exit_price": 42.43,
+    "net_pnl": 3.5929785478548903,
+    "net_return": 0.0020706816712364436,
+    "protection": "Positive momentum gate, target cap and residual cash. Next-open adoption exits.",
+    "quantity": 41,
+    "status": "closed",
+    "symbol": "LEMB"
+  },
+  {
+    "entry": "2026-02-02",
+    "entry_price": 42.3,
+    "exit": "2026-04-01",
+    "exit_price": 41.06,
+    "net_pnl": -1500.8429785478486,
+    "net_return": -0.030284536730128393,
+    "protection": "Positive momentum gate, target cap and residual cash. Next-open adoption exits.",
+    "quantity": 1171,
+    "status": "closed",
+    "symbol": "LEMB"
+  }
+]

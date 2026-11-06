@@ -1,0 +1,123 @@
+{
+  "adoption": "Monthly first session plus strict L1 theoretical vs last adopted, including cash, at 0.10/0.40/0.80. Shared USD1m whole adjusted units. Execution next open or one session later. Net costs 5/10/20bp per actual traded notional.",
+  "arms": [
+    "pooled_raw",
+    "pooled_risk",
+    "class_raw",
+    "class_risk"
+  ],
+  "code_sha256": "6880ea615ec9e618dc9f75369761a5e32fc2fcd606eb3326cb2b314f3d2371eb",
+  "construction_sha256": "663f233086cc41464a3729b0dc6379911b6e9bde2145bfcc9504028de98611ac",
+  "evaluation": "Report all 16 x 6 cases on each batch. Separate paired changes from class choice and volatility division at matched timing/frictions. Later window already inspected. Quantify IS/OOS CAGR and Sharpe gaps, actual risky/BIL/cash exposure, fees, turnover and guarded comparisons. Cash/BIL/URTH/equal risky pool, simple momentum/unranked, FR25 original/expanded and Alpha54 references.",
+  "free_disk_bytes": 705575833600,
+  "frictions": [
+    [
+      5,
+      0
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      10,
+      0
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      20,
+      0
+    ],
+    [
+      20,
+      1
+    ]
+  ],
+  "frozen_at": "2026-11-03T15:15:01.360471+00:00",
+  "halves": {
+    "first": [
+      "2021-01-04",
+      "2022-12-30"
+    ],
+    "second": [
+      "2023-01-03",
+      "2024-12-31"
+    ]
+  },
+  "historical_pin": {
+    "batch": "0c3238db078c5d28201f8d8ba57e5687a793d80c3b04817d2c2d61c5f1f1b14d",
+    "root": "D:\\projects\\systematic_trading\\var\\governance\\research-2026-10-12-8f374b4464a3",
+    "through": "2026-10-12"
+  },
+  "limitations": [
+    "Reconstructed audited revised price history and current candidate cohort; historical publication/membership availability uncertified. Both eras previously inspected; retrospective development evidence, not untouched OOS.",
+    "Archived financial/USD vintages have original-vintage semantics but historical first dissemination not fully certified. Financial daily forecasts are carried monthly; USD carry retains source date. Missing financial models abstain to M1. No online acquisition.",
+    "Raw volume supports liquidity/activity; adjusted prices/whole adjusted units are synthetic. Zero cash interest, no FX, taxes, measured spreads or impact. Liquidity participation is diagnostic.",
+    "One earlier expansion screen plus many prior strategy searches;16 declared contrasts do not account for the entire historical search. New prospective evidence would require a frozen future trial.",
+    "No monitoring, promotion, allocation or broker authority; finite research only."
+  ],
+  "old_runner_sha256": "adc516e2e45fca963b90984f5308496feb52f953a4f9ce05bf02b8e18e452da5",
+  "parent_paths": [
+    "var\\research\\expanded-fr25-net-20261102-v1",
+    "var\\research\\cash-relative-net-20261031-v1",
+    "var\\research\\class-volatility-screen-20261016-v1"
+  ],
+  "policies": [
+    "monthly",
+    "0.10",
+    "0.40",
+    "0.80"
+  ],
+  "price_pin": {
+    "batch": "e22f27a465e95f86cd40f7f9d24b63533a4a397eb0c02c8f40a696b0350d7731",
+    "root": "D:\\projects\\systematic_trading\\var\\governance\\listed-2026-10-30-c7a54746525b"
+  },
+  "retrospective": "Retired proxy gate originally withheld all 16 books. Replay original 50-fund schedules through Oct12 and separately test all 16 on the 52-fund Oct30 batch. BWX/XOP held. Common primary universe and dates match recent studies. CPER uses existing metals class, USO gets an energy-futures class and an explicit DBC conflict.",
+  "rule": "Frozen positive 126-session raw momentum filter. Rank by raw momentum or divided by annualized 63-session volatility. Pooled six slots or best three granular classes with two slots each. Inverse-vol weighting, 98% max gross, 45% name cap, unfilled slots/excess stay cash, BIL remains eligible. Enforce historical overlap edges and prior-close liquidity/duplicate admission.",
+  "select": "Training ends 2024-12-31. Among the 12 challengers (all except pooled_raw), require higher full IS net Sharpe than pooled_raw at identical timing, CAGR >= max(BIL CAGR, matched control CAGR minus 0.5pp), DD <= matched control DD + 2pp, both two-year IS halves profitable, positive full IS CAGR after placing its own three largest training winners in cash, positive 20bp/delay1 IS CAGR. Rank eligible challengers by higher weaker-half net Sharpe, then weaker-half CAGR, then full IS Sharpe, then lower turnover and lexical ID. If none qualifies, retain top-ranked challenger for diagnostics, label failure. Seal before later portfolio evaluation. No OOS rescue.",
+  "stress": "Top one and three risky ETFs by net P&L / era-opening NAV. Withhold their weights into zero-interest cash, leaving other weights and dates intact. Carry training leaders into evaluation separately. Same-protocol incumbent results may be reused only with verified hashes.",
+  "uncertainty": "Paired circular 21-session blocks, 4000 draws seed 20261103. Conditional 95% intervals for Sharpe and CAGR differences vs matched pooled_raw, plus Bonferroni intervals across the 12 challenger-versus-pooled contrasts. Descriptive weight/forward-open-return rank IC at 1/5/10/21/63 within each era. No lifetime threshold or IC veto.",
+  "version": "class-vol-net-20261103-v1",
+  "weakest": "Lowest risky net contribution / era-opening NAV, primary 5bp/next-open IS-selected timing, excluding BIL/URTH/cash. Inspect both eras with dated price/volume, targets, held weights, fills, protection and FIFO lots.",
+  "windows": {
+    "2021": [
+      "2021-01-01",
+      "2021-12-31"
+    ],
+    "2022": [
+      "2022-01-01",
+      "2022-12-31"
+    ],
+    "2023": [
+      "2023-01-01",
+      "2023-12-31"
+    ],
+    "2024": [
+      "2024-01-01",
+      "2024-12-31"
+    ],
+    "2025": [
+      "2025-01-01",
+      "2025-12-31"
+    ],
+    "2026": [
+      "2026-01-01",
+      "2026-10-30"
+    ],
+    "calibration": [
+      "2021-01-04",
+      "2024-12-31"
+    ],
+    "full": [
+      "2021-01-04",
+      "2026-10-30"
+    ],
+    "later": [
+      "2025-01-01",
+      "2026-10-30"
+    ]
+  }
+}

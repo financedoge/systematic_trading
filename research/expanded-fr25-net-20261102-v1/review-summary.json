@@ -1,0 +1,286 @@
+{
+  "book_error_usd": 9.313225746154785e-10,
+  "cases": 144,
+  "guard_counts": {
+    "calibration": {
+      "BIL_buyhold": 0,
+      "URTH_buyhold": 0,
+      "cash": 0,
+      "m1-monthly": 6,
+      "momentum-monthly": 6,
+      "original-monthly": 0,
+      "pool_buyhold": 0,
+      "unranked-monthly": 4
+    },
+    "later": {
+      "BIL_buyhold": 0,
+      "URTH_buyhold": 6,
+      "cash": 0,
+      "m1-monthly": 2,
+      "momentum-monthly": 6,
+      "original-monthly": 0,
+      "pool_buyhold": 0,
+      "unranked-monthly": 0
+    }
+  },
+  "per_model": {
+    "expanded": "monthly",
+    "m1": "monthly",
+    "momentum": "0.80",
+    "original": "monthly",
+    "unranked": "0.40"
+  },
+  "reporter_sha256": "046afc67eaaddaf098e2f87de8cda6550b21e21283da5d500c05a944e7ad1daf",
+  "selected": "expanded-monthly",
+  "selected_intervals": [
+    {
+      "arm": "expanded-monthly",
+      "columns": [
+        "Sharpe",
+        "CAGR"
+      ],
+      "control": "original-monthly",
+      "family_95": [
+        [
+          -1.1546455071734187,
+          -0.13196275902852114
+        ],
+        [
+          0.6722186995105714,
+          0.13381523239647752
+        ]
+      ],
+      "ordinary_95": [
+        [
+          -0.8718124087825997,
+          -0.09393544393040736
+        ],
+        [
+          0.35752980206267093,
+          0.08474242615804448
+        ]
+      ],
+      "window": "calibration"
+    },
+    {
+      "arm": "expanded-monthly",
+      "columns": [
+        "Sharpe",
+        "CAGR"
+      ],
+      "control": "m1-monthly",
+      "family_95": [
+        [
+          -0.24763918235429463,
+          -0.03681227018435076
+        ],
+        [
+          0.49360373652269945,
+          0.0779421916387741
+        ]
+      ],
+      "ordinary_95": [
+        [
+          -0.12673247010427693,
+          -0.01826488496816041
+        ],
+        [
+          0.35618103610501584,
+          0.058211799263298954
+        ]
+      ],
+      "window": "calibration"
+    },
+    {
+      "arm": "expanded-monthly",
+      "columns": [
+        "Sharpe",
+        "CAGR"
+      ],
+      "control": "momentum-monthly",
+      "family_95": [
+        [
+          -0.3736278841363468,
+          -0.06578638797969237
+        ],
+        [
+          1.0345812205432892,
+          0.16359193083088508
+        ]
+      ],
+      "ordinary_95": [
+        [
+          -0.17938879853123646,
+          -0.03232062951758875
+        ],
+        [
+          0.7795117519369915,
+          0.12204206520166919
+        ]
+      ],
+      "window": "calibration"
+    },
+    {
+      "arm": "expanded-monthly",
+      "columns": [
+        "Sharpe",
+        "CAGR"
+      ],
+      "control": "unranked-monthly",
+      "family_95": [
+        [
+          -1.0105725969573247,
+          -0.09924659310961635
+        ],
+        [
+          1.271792180238191,
+          0.19398073271521757
+        ]
+      ],
+      "ordinary_95": [
+        [
+          -0.6377920444259468,
+          -0.0573302279731386
+        ],
+        [
+          0.927847180528787,
+          0.14021732241545054
+        ]
+      ],
+      "window": "calibration"
+    },
+    {
+      "arm": "expanded-monthly",
+      "columns": [
+        "Sharpe",
+        "CAGR"
+      ],
+      "control": "original-monthly",
+      "family_95": [
+        [
+          -1.6693630206820027,
+          -0.19367259663275713
+        ],
+        [
+          1.3839227616471033,
+          0.6026174704442002
+        ]
+      ],
+      "ordinary_95": [
+        [
+          -1.2754779471379365,
+          -0.10799755630390545
+        ],
+        [
+          0.8166026254298694,
+          0.40768079251045575
+        ]
+      ],
+      "window": "later"
+    },
+    {
+      "arm": "expanded-monthly",
+      "columns": [
+        "Sharpe",
+        "CAGR"
+      ],
+      "control": "m1-monthly",
+      "family_95": [
+        [
+          -0.5088580289633202,
+          -0.1782075323263357
+        ],
+        [
+          1.3025408486018009,
+          0.3083447799871192
+        ]
+      ],
+      "ordinary_95": [
+        [
+          -0.22427088599615574,
+          -0.0839935184937413
+        ],
+        [
+          0.9559236239266603,
+          0.2286620452635022
+        ]
+      ],
+      "window": "later"
+    },
+    {
+      "arm": "expanded-monthly",
+      "columns": [
+        "Sharpe",
+        "CAGR"
+      ],
+      "control": "momentum-monthly",
+      "family_95": [
+        [
+          -0.5733174215605648,
+          -0.28927858546750435
+        ],
+        [
+          1.9067825012625268,
+          0.41584199546816275
+        ]
+      ],
+      "ordinary_95": [
+        [
+          -0.24871151884828857,
+          -0.1600620002370453
+        ],
+        [
+          1.4102216548130693,
+          0.2960795785900613
+        ]
+      ],
+      "window": "later"
+    },
+    {
+      "arm": "expanded-monthly",
+      "columns": [
+        "Sharpe",
+        "CAGR"
+      ],
+      "control": "unranked-monthly",
+      "family_95": [
+        [
+          -1.5996301427109456,
+          -0.05486010753192817
+        ],
+        [
+          1.9880140893511433,
+          0.8589675678786506
+        ]
+      ],
+      "ordinary_95": [
+        [
+          -1.033060038427812,
+          0.0322738048088042
+        ],
+        [
+          1.3546845943345616,
+          0.6339204642759602
+        ]
+      ],
+      "window": "later"
+    }
+  ],
+  "verdict": "Expanded FR25 does not establish robust net superiority over the matched controls across both eras. Retain the completed numerical study as research evidence; no recipe is promoted.",
+  "weakest": [
+    {
+      "mean_held_weight": 0.02692556744595739,
+      "net_contribution": -0.05056019000000005,
+      "net_pnl": -50560.19000000005,
+      "symbol": "EWC",
+      "window": "calibration"
+    },
+    {
+      "mean_held_weight": 0.07134309711389637,
+      "net_contribution": -0.05607079895748733,
+      "net_pnl": -70925.98000000004,
+      "symbol": "XLK",
+      "window": "later"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "research/expanded-fr25-net-20261102-v1/adoptions.json": "612447529df3f7ae7279c0d4fa60a1ac5135995aaf382570aeb9342a8ef6b145",
+  "var/research/expanded-fr25-net-20261102-v1/schedules.npz": "7eed15eadac80f047c6429bb432b203f22c289c1eaedf2a93398bcbe41b19858",
+  "var/research/expanded-fr25-net-20261102-v1/signals.npz": "14ed50f00a722e51fe45dc5475aa30c59a2b7974c7b832c7736049efa58ec36c",
+  "var/research/expanded-fr25-net-20261102-v1/targets/expanded.json.gz": "5f37c8affc2c42a6a2f218f31b89bb4b58a1fe31fa5d9f2d7829575a1b23e7dc",
+  "var/research/expanded-fr25-net-20261102-v1/targets/m1.json.gz": "46d68c26c7530f14e727350757c3d842556c2b483d6a2adb4d221120b09e36a2",
+  "var/research/expanded-fr25-net-20261102-v1/targets/original.json.gz": "f3d3078dac491ad852d6f9625511db7f7c37d201825b38f2560bd29f8dc70748"
+}

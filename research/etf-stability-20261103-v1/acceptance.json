@@ -1,0 +1,32 @@
+{
+  "assessment_sha256": "64bf6914e180f5e2445e54a7ca3b6ed43b83859670f7dd3c5f9a189017aac9a0",
+  "native": [
+    {
+      "case": "selected_c5d0",
+      "max_nav_error_usd": 0.0,
+      "output": "var\\research\\etf-stability-20261103-v1\\native-v1\\selected_c5d0",
+      "receipt_sha256": "0336d02cd8049fc4caa8490adeee380022f897aecdb0f48fedede032affded20",
+      "status": "succeeded"
+    },
+    {
+      "case": "expanded_c5d0",
+      "max_nav_error_usd": 0.0,
+      "output": "var\\research\\etf-stability-20261103-v1\\native-v1\\expanded_c5d0",
+      "receipt_sha256": "123cccb8c00b7dfd8948e55d6dcdce6ee631d3ceddbd3646854b3611f4f1803f",
+      "status": "succeeded"
+    },
+    {
+      "case": "alternate_c20d1",
+      "max_nav_error_usd": 0.0,
+      "output": "var\\research\\etf-stability-20261103-v1\\native-v1\\alternate_c20d1",
+      "receipt_sha256": "da4811a1767062ad0927f1993e2ac009b7c2948155210a273cdbea3be6c950fe",
+      "status": "succeeded"
+    }
+  ],
+  "reporter_sha256": "f8faa050c641d4276edceb8cce19d5584938df5e1acea4b7adccf8f2a5b2c948",
+  "research_runner_sha256": "4959a3a4ae4e3c37da4c45adf0baceeb841a9f00c784c3cefd78b6aa435040c8",
+  "selected_path_sha256": "df1287f39df3b4c377150e32ccf71a66b3028b846f6a089003692654eb16e7b5",
+  "status": "research_evidence_reviewable",
+  "tests": 59,
+  "training_hash": "22817dcea2f8c43731fc254de365d785a3f2af3623416b89785263b915a21ef4"
+}

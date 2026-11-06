@@ -1,0 +1,14 @@
+{
+  "eligible_vs_controls": false,
+  "per_alpha": {
+    "24": "alpha24-monthly",
+    "26": "alpha26-monthly",
+    "46": "alpha46-monthly",
+    "49": "alpha49-monthly",
+    "53": "alpha53-monthly",
+    "54": "alpha54-monthly"
+  },
+  "rule": "Highest training 5bp/delay0 net Sharpe; deterministic arm-name tie. Selection is diagnostic, not acceptance. No later-period selection.",
+  "selected": "alpha54-monthly",
+  "window": "calibration"
+}

@@ -1,0 +1,80 @@
+{
+  "basis": "Record split-only versus dividend/split price basis, action units, volume units, corrections and source vintage.",
+  "end": "2025-02-28",
+  "fields": [
+    "open",
+    "high",
+    "low",
+    "close",
+    "share_volume",
+    "adjusted_close",
+    "corporate_actions"
+  ],
+  "identities": [
+    {
+      "broker_conid": 6120,
+      "isin": "US1423391002",
+      "symbol": "CSL"
+    },
+    {
+      "broker_conid": 13904,
+      "isin": "US9426222009",
+      "symbol": "WSO"
+    },
+    {
+      "broker_conid": 4814485,
+      "isin": "US5627501092",
+      "symbol": "MANH"
+    },
+    {
+      "broker_conid": 273962,
+      "isin": "US7496851038",
+      "symbol": "RPM"
+    },
+    {
+      "broker_conid": 6746357,
+      "isin": "US91307C1027",
+      "symbol": "UTHR"
+    },
+    {
+      "broker_conid": 93957038,
+      "isin": "US9837931008",
+      "symbol": "XPO"
+    },
+    {
+      "broker_conid": 6607708,
+      "isin": "US1999081045",
+      "symbol": "FIX"
+    },
+    {
+      "broker_conid": 4596077,
+      "isin": "SG9999000020",
+      "symbol": "FLEX"
+    },
+    {
+      "broker_conid": 267265,
+      "isin": "US1475281036",
+      "symbol": "CASY"
+    },
+    {
+      "broker_conid": 11735,
+      "isin": "US7595091023",
+      "symbol": "RS"
+    }
+  ],
+  "required_sessions": 253,
+  "session": "Record regular-hours versus full-session coverage explicitly.",
+  "start": "2024-02-27",
+  "symbols": [
+    "CSL",
+    "WSO",
+    "MANH",
+    "RPM",
+    "UTHR",
+    "XPO",
+    "FIX",
+    "FLEX",
+    "CASY",
+    "RS"
+  ]
+}

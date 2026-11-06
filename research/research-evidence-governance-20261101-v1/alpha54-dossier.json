@@ -1,0 +1,146 @@
+{
+  "artifacts": [
+    {
+      "path": "research/alpha101-net-20261031-v1/protocol.json",
+      "roles": [
+        "protocol",
+        "strategy_recipe",
+        "published_input_verification"
+      ],
+      "sha256": "cf4e161ddf4c7b70d75a18803b610161d03fd5076769c93f160f2e5d0bdf6382"
+    },
+    {
+      "path": "research/alpha101-net-20261031-v1/acceptance.json",
+      "roles": [
+        "independent_validation"
+      ],
+      "sha256": "7323d940e9510dd4c7e03d9cf10cd7e37ad31d8c06ebbe370bffd15c6023501e"
+    },
+    {
+      "path": "research/alpha101-net-20261031-v1/selection.json",
+      "roles": [
+        "selection"
+      ],
+      "sha256": "b9eb61a7245af7830ab405507fdc3105f174e4bf4e8ccbca67f3f8dfc9fa58db"
+    },
+    {
+      "path": "research/alpha101-net-20261031-v1/results.json",
+      "roles": [
+        "net_results",
+        "cost_delay",
+        "chronology"
+      ],
+      "sha256": "cc08d0b969819eb7250ed861477248c51e68fe68e1a7acbc12abc780a631da9c"
+    },
+    {
+      "path": "research/alpha101-net-20261031-v1/comparisons.json",
+      "roles": [
+        "matched_controls"
+      ],
+      "sha256": "731019e83c0a802dd0d0cb078187480ca335b5ea0e72e035de2e6e6c0e82c331"
+    },
+    {
+      "path": "research/alpha101-net-20261031-v1/uncertainty.json",
+      "roles": [
+        "uncertainty"
+      ],
+      "sha256": "11c54d349df305051aa1aa77a346589e5300b95e407df2f9de19aeb67ec77015"
+    },
+    {
+      "path": "research/alpha101-net-20261031-v1/signal-diagnostics.json",
+      "roles": [
+        "decay_stability"
+      ],
+      "sha256": "52de9eb9d4c25ac67bfe3b720aba358805fc5fffdc6b8a63ecad396ca547cb6c"
+    },
+    {
+      "path": "research/alpha101-net-20261031-v1/results.md",
+      "roles": [
+        "weakest_inspections"
+      ],
+      "sha256": "70377d221d6a09754630f0ad95884e68a66262f8f6a3fa319ffa32199e614497"
+    },
+    {
+      "path": "research/alpha101-net-20261031-v1/weakest-calibration-EWY.png",
+      "roles": [
+        "weakest_inspections"
+      ],
+      "sha256": "79c0e38524bb0898232e1ce34671f8494fde5663810fc2402943ae39c0f97c53"
+    },
+    {
+      "path": "research/alpha101-net-20261031-v1/weakest-later-XLC.png",
+      "roles": [
+        "weakest_inspections"
+      ],
+      "sha256": "03af1c8d1c7b8e9d0aeb20c3df3821fbca297149f2eb4bbcd1eb70ae1120bcc1"
+    },
+    {
+      "path": "research/alpha101-net-20261031-v1/native-validation.json",
+      "roles": [
+        "independent_validation"
+      ],
+      "sha256": "ef53aa416b4daa4eded9e98a5437efe388bf6e5f0065f919af320a30a4e4a931"
+    }
+  ],
+  "candidate_id": "alpha54-monthly",
+  "coverage_gaps": [
+    "A dedicated decay-curve uncertainty and annual incremental-stability assessment would be needed before proposing a new monitored recipe. Existing IC means and portfolio uncertainty do not supply that assessment."
+  ],
+  "decay": [
+    {
+      "cadence_and_delay_interpretation": "Monthly beat all three dynamic options in training. Net actual-cost and one-session-delay outcomes are preserved. No horizon or timing changed in response to later observations; monthly is specific to this study.",
+      "half_life_sessions": null,
+      "horizons": [
+        1,
+        5,
+        10,
+        21
+      ],
+      "method_uncertainty_and_caveats": "Existing mean IC curves are non-monotone and regime dependent. Training 1/5/10/21-session IC=-0.000252/0.011574/0.006817/0.008922; later=0.021001/0.005240/0.007366/0.004960. No validated exponential model or half-life confidence interval; the horizons have different endpoint-supported samples. Mean curves alone cannot establish a universal lifetime.",
+      "signal": "Alpha54 standalone ranking",
+      "status": "unidentifiable"
+    }
+  ],
+  "fixed_and_dynamic_evaluated": true,
+  "inputs": {
+    "activity_basis": "audited_raw",
+    "full_supported_pool": true,
+    "historical_availability": "reconstructed_or_unknown",
+    "historical_membership": "retrospective_or_unknown",
+    "limitations_and_missing_policy": "52 supported histories,51 risky+BIL; BWX/XOP holds. Audited reconstructed prices/raw activity; publication and historical cohort availability uncertified. No missing-data filling or source substitution.",
+    "price_basis": "dividend_split_adjusted",
+    "publication_batch": "e22f27a465e95f86cd40f7f9d24b63533a4a397eb0c02c8f40a696b0350d7731"
+  },
+  "net_verdict": "not_established",
+  "operator_disposition": "2026-11-01: retain Alpha54/the six-signal study as research evidence and move on. Concern that FR25/momentum later gains may be lucky is a hypothesis, not a verified conclusion. No promotion/monitoring authority.",
+  "policy_sha256": "6335fdb51082f56eabea53b75be5c30b42fdcc4edf972a18dcb819614a9dac58",
+  "policy_version": "research-evidence-v1",
+  "preregistered_net_rule": "2021-2024 only: highest primary5bp/delay0 net Sharpe per alpha and globally, arm-name tie. Compare selected against matching momentum and unranked controls with strict higher Sharpe, CAGR loss<=0.5pp, DD worsening<=2pp. No cost/IC veto. No later rescue. Annual training stability reported; fixed selected policy carried into2025-2026.",
+  "prospective_plan_or_gap": "No prospective run authorized or started. Any new recipe must freeze selection before genuinely new audited/captured observations; historical replays remain development evidence.",
+  "purpose": "retain_research",
+  "sample": {
+    "claim": "retrospective_development",
+    "label_boundary_and_overlap": "Forward labels stop within each era. Published 1/5/10/21-session daily gross IC uses overlapping labels; net-return uncertainty uses paired circular21-session blocks,4000 draws, not independent daily tests.",
+    "observations_captured_after_freeze": false,
+    "prior_search_and_multiplicity": "Six formulas, four timings, predeclared study guards; 24 family-adjusted contrasts. Earlier related research and repeated data inspection mean total lifetime search count is unknown. No OOS winner chosen.",
+    "recipe_frozen_at": "2026-10-31T13:07:58.954585+00:00",
+    "selection_basis": "training_only",
+    "trial_count": 24,
+    "windows": [
+      {
+        "end": "2024-12-31",
+        "prior_use": "previously_inspected",
+        "role": "calibration",
+        "start": "2021-01-04"
+      },
+      {
+        "end": "2026-10-30",
+        "prior_use": "previously_inspected",
+        "role": "evaluation",
+        "start": "2025-01-02"
+      }
+    ]
+  },
+  "schema_version": 1,
+  "study_id": "alpha101-net-20261031-v1"
+}

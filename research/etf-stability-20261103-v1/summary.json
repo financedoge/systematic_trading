@@ -1,0 +1,58 @@
+{
+  "gaps": {
+    "expanded": {
+      "cagr": 0.3268235529727259,
+      "sharpe": 1.2639077018815856
+    },
+    "original": {
+      "cagr": 0.20461265384684024,
+      "sharpe": 1.3021072295603429
+    },
+    "selected": {
+      "cagr": 0.0648413993281971,
+      "sharpe": 0.8897868039771177
+    }
+  },
+  "guard_counts": {
+    "expanded": {
+      "IS": 6,
+      "OOS": 0
+    },
+    "momentum-monthly": {
+      "IS": 6,
+      "OOS": 0
+    },
+    "original": {
+      "IS": 0,
+      "OOS": 0
+    },
+    "unranked": {
+      "IS": 0,
+      "OOS": 1
+    }
+  },
+  "selected": "F0A4U0_monthly",
+  "stability_checks_pass": true,
+  "weakest": [
+    {
+      "era": "IS",
+      "files": [
+        "weakest-calibration-EWY.png",
+        "weakest-calibration-EWY-daily.csv",
+        "weakest-calibration-EWY-trades.csv"
+      ],
+      "net_contribution": -0.03116368999999999,
+      "symbol": "EWY"
+    },
+    {
+      "era": "OOS",
+      "files": [
+        "weakest-later-XLC.png",
+        "weakest-later-XLC-daily.csv",
+        "weakest-later-XLC-trades.csv"
+      ],
+      "net_contribution": -0.017002195998949768,
+      "symbol": "XLC"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "code_sha256": "4959a3a4ae4e3c37da4c45adf0baceeb841a9f00c784c3cefd78b6aa435040c8",
+  "concentration": "Rank risky ETF contributions net of fees / era-opening NAV, exclude cash/BIL/URTH. Report top three, their pp, share of positive contribution and of net gain if positive. Conditional withholding: remove targets for those ETFs on all dates, preserve the original adoption dates and remaining weights, put freed weight into zero-interest cash, replay NAV and costs. Separate first and top-three stress for each era, locked training leaders carried into OOS, direct SOXX/XLK and broader SOXX/XLK/EWY/EWT sensitivities. A regional or sector ETF exclusion is not causal identification of AI exposure. Ex-post era winners are stress diagnostics only.",
+  "cost_delay": [
+    [
+      5,
+      0
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      10,
+      0
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      20,
+      0
+    ],
+    [
+      20,
+      1
+    ]
+  ],
+  "eligibility": "Positive net CAGR in each IS half, whole-IS CAGR at least the greater of BIL CAGR and expanded 6/4 CAGR minus 0.5pp, IS drawdown at most 2pp worse than expanded 6/4, positive IS CAGR with its three biggest IS risky contributors set to cash, positive IS CAGR at 20bp and one extra session. If none qualifies, identify the score leader as diagnostic only and preserve the failed search.",
+  "evaluation": "Before new later combination results, seal weights, timing, training-only metrics and grid fingerprint. Compare abs(IS-OOS) gaps for 252-session CAGR and zero-rate net Sharpe against both original and expanded 6/4. A smaller gap on BOTH metrics vs BOTH books, positive net CAGR after removing each era top three in both eras, and training eligibility are the stability checks. Separately report matched return/drawdown guards across six frictions. No fallback promotion or re-selection.",
+  "family": "Daily theoretical targets of three full-supported-pool sleeves: FR25 6/4, standalone Alpha54, unranked inverse 63-session volatility. Every convex 25-point allocation in the three sleeves. Net combined targets in one USD 1m whole-unit portfolio. Monthly anchors and monthly plus L1>0.40 relative to last adopted target including cash.",
+  "free_disk_bytes": 681976299520,
+  "frozen_at": "2026-11-03T14:55:22.185453+00:00",
+  "halves": {
+    "first": [
+      "2021-01-04",
+      "2022-12-30"
+    ],
+    "second": [
+      "2023-01-03",
+      "2024-12-31"
+    ]
+  },
+  "limits": [
+    "Reconstructed audited revised price history and current candidate cohort; historical publication/membership availability uncertified. Both eras previously inspected; retrospective development evidence, not untouched OOS.",
+    "Archived financial/USD vintages have original-vintage semantics but historical first dissemination not fully certified. Financial daily forecasts are carried monthly; USD carry retains source date. Missing financial models abstain to M1. No online acquisition.",
+    "Raw volume supports liquidity/activity; adjusted prices/whole adjusted units are synthetic. Zero cash interest, no FX, taxes, measured spreads or impact. Liquidity participation is diagnostic.",
+    "One earlier expansion screen plus many prior strategy searches;16 declared contrasts do not account for the entire historical search. New prospective evidence would require a frozen future trial.",
+    "No monitoring, promotion, allocation or broker authority; finite research only.",
+    "Both eras and parent strategies were previously inspected. Concentration may occur in repeated themes across ETFs and common shocks. Deleting names does not rerank the universe or simulate a world without AI."
+  ],
+  "objective": "Choose using IS only. Among eligible candidates maximize the WORST midrank of four criteria: higher weaker-half Sharpe, higher weaker-half CAGR, smaller absolute half-Sharpe gap, smaller absolute half-CAGR gap. Rank among the full 30-arm grid. Tie by mean of these four ranks, weaker-half Sharpe, lower turnover, then lexical ID. No later gap enters selection.",
+  "parent_hashes": {
+    "research/alpha101-net-20261031-v1/artifact-manifest.json": "5a7714f1f161677967e267acd36182fa9574818d92b84e54634b4f0eb58fe5ba",
+    "research/alpha101-net-20261031-v1/protocol.json": "cf4e161ddf4c7b70d75a18803b610161d03fd5076769c93f160f2e5d0bdf6382",
+    "research/alpha101-net-20261031-v1/signal-manifest.json": "f393a55f94bd3917a35e6166dc3d542abc1f3ba44a57d021462f8e6a61b9704c",
+    "research/expanded-fr25-net-20261102-v1/artifact-manifest.json": "c981216173a3e3782c11bb41a4c763c5c52f81bded049c0ee6659a2fe4a512cf",
+    "research/expanded-fr25-net-20261102-v1/protocol.json": "63f478da3d993611a4468433a75cadac7ab80cbd1e45eefb6a2059556d379aae",
+    "research/expanded-fr25-net-20261102-v1/signal-manifest.json": "4cc2d52d389181ad854c48a8892becde0d9cf08d5373623fc80684bdbe0870cd"
+  },
+  "parents": [
+    "var\\research\\expanded-fr25-net-20261102-v1",
+    "var\\research\\alpha101-net-20261031-v1"
+  ],
+  "price_pin": {
+    "batch": "e22f27a465e95f86cd40f7f9d24b63533a4a397eb0c02c8f40a696b0350d7731",
+    "root": "D:\\projects\\systematic_trading\\var\\governance\\listed-2026-10-30-c7a54746525b"
+  },
+  "trial_count": 30,
+  "uncertainty": "Paired cross-strategy circular 21-session blocks within each era, independent era draws, 4000 iterations, seed 20261103. Conditional intervals for signed later-minus-IS CAGR/Sharpe gaps; no lifetime search correction. Inspect calendar years and named split halves.",
+  "version": "etf-stability-20261103-v1",
+  "weakest": "Lowest net contribution / era-opening NAV, selected 5bp/next-open book, risky ETFs excluding BIL/URTH, chart each era with price, raw volume, weights, fills, allocation protection and FIFO outcomes.",
+  "windows": {
+    "IS": [
+      "2021-01-04",
+      "2024-12-31"
+    ],
+    "OOS": [
+      "2025-01-02",
+      "2026-10-30"
+    ]
+  }
+}

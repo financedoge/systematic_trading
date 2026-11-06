@@ -1,0 +1,14 @@
+[
+  {
+    "contribution": -0.019065930000000005,
+    "era": "calibration",
+    "stem": "weakest-calibration-XLB",
+    "symbol": "XLB"
+  },
+  {
+    "contribution": -0.0011794780632520345,
+    "era": "later",
+    "stem": "weakest-later-LEMB",
+    "symbol": "LEMB"
+  }
+]

@@ -1,5 +1,16 @@
 # Application calculation resources
 
+## October 31 artifact storage policy
+
+The fixed 40 GiB generated-artifact admission quota is removed. Retained research
+size cannot block a calculation when its drive has the configured 2 GiB free for
+new work. The 20 GiB housekeeping trigger queues guarded retention; it is not a
+cap. Stopped-startup maintenance retires eligible superseded calculations/model
+caches and explicitly completed studies' bulky outputs, retaining compact
+findings, protocols, recipes and retirement records. Active strategy/research
+dependencies, canonical audited histories and trading evidence stay protected.
+See [retention behavior](native-windows-runtime.md#research-retention).
+
 ## October 31 native memory policy
 
 The operator removed the default 4 GiB native process/Job quota and the 10 GiB

@@ -1,0 +1,36 @@
+{
+  "accepted_new_york": "2025-02-27 12:21:45",
+  "accession": "0001752724-25-043848",
+  "as_of": "2024-12-31",
+  "cik": 1100663,
+  "dissemination": {
+    "bytes": 741026,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:39:58.761009+00:00",
+    "sha256": "4508c00aa2a5027f1cf61d552281bb51276123deda4462ab250cb0004d65f718",
+    "url": "https://www.sec.gov/Archives/edgar/daily-index/2025/QTR1/master.20250227.idx"
+  },
+  "dissemination_row": "1100663|iSHARES TRUST|NPORT-P|20250227|edgar/data/1100663/0001752724-25-043848.txt",
+  "filed": "2025-02-27",
+  "filing": "NPORT-P",
+  "index": {
+    "bytes": 9057,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:41:00.803454+00:00",
+    "sha256": "ecae29e56ccbc45124915992480cdc364c1b65824628310c162f6b31941d3b94",
+    "url": "https://www.sec.gov/Archives/edgar/data/1100663/000175272425043848/0001752724-25-043848-index.htm"
+  },
+  "nav": "13801763998.34",
+  "series": "S000004354",
+  "symbol": "SOXX",
+  "xml": {
+    "bytes": 55886,
+    "content_range": null,
+    "prefix": null,
+    "retrieved_at": "2026-11-04T14:40:59.374594+00:00",
+    "sha256": "886fe6167027b8778e8df912264cfe393cf23be414b32a1dc2a71d42419721e5",
+    "url": "https://www.sec.gov/Archives/edgar/data/1100663/000175272425043848/primary_doc.xml"
+  }
+}

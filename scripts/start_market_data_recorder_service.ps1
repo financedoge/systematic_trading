@@ -26,6 +26,11 @@ $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $RepoRoot = Resolve-Path (Join-Path $ScriptDir "..")
 $Python = Join-Path $RepoRoot ".venv\Scripts\python.exe"
+$ServiceProcessLibrary = Join-Path $ScriptDir "service_process.ps1"
+if (-not (Test-Path $ServiceProcessLibrary)) {
+    throw "Process identity helper not found at $ServiceProcessLibrary"
+}
+. $ServiceProcessLibrary
 if (-not $Recovery) {
     & $Python (Join-Path $ScriptDir "local_recovery.py") pause recorder
     if ($LASTEXITCODE -ne 0) { throw "Could not pause recorder recovery for startup." }
@@ -73,13 +78,18 @@ $statePath = Join-Path $RunDir "market_data_recorder.state.json"
 $outLog = Join-Path $LogDir "market_data_recorder.out.log"
 $errLog = Join-Path $LogDir "market_data_recorder.err.log"
 if (Test-Path $pidPath) {
-    $existingPid = (Get-Content -LiteralPath $pidPath -Raw).Trim()
-    if ($existingPid) {
-        $existing = Get-Process -Id ([int]$existingPid) -ErrorAction SilentlyContinue
-        if ($existing) {
+    $existingPidText = (Get-Content -LiteralPath $pidPath -Raw).Trim()
+    $existingPid = 0
+    if ($existingPidText -and [int]::TryParse($existingPidText, [ref]$existingPid)) {
+        # Windows recycles PIDs: only a matching Python recorder process counts.
+        $existingState = Get-ServiceProcessState -ProcessId $existingPid -ExpectedScript "run_market_data_recorder_service.py"
+        if ($existingState.Exists -and $existingState.Matches -ne $false) {
             Write-Output "Market data recorder service already appears to be running."
-            Write-Output "Recorder PID: $existingPid"
+            Write-Output "Recorder PID: $existingPidText"
             return
+        }
+        if ($existingState.Exists) {
+            Write-Output "Market data recorder PID $existingPidText belongs to another process ($($existingState.ProcessName)); removing the stale PID file."
         }
     }
     Remove-Item -LiteralPath $pidPath -Force

@@ -11,6 +11,11 @@ $PidPath = Join-Path $RepoRoot "var\run\market_data_recorder.pid"
 $ChildPidPath = Join-Path $RepoRoot "var\run\market_data_recorder.child.pid"
 $StatePath = Join-Path $RepoRoot "var\run\market_data_recorder.state.json"
 $OperationLogPath = Join-Path $RepoRoot "var\log\platform_operations.jsonl"
+$ServiceProcessLibrary = Join-Path $ScriptDir "service_process.ps1"
+if (-not (Test-Path $ServiceProcessLibrary)) {
+    throw "Process identity helper not found at $ServiceProcessLibrary"
+}
+. $ServiceProcessLibrary
 
 function Write-JsonNoBom {
     param(
@@ -78,11 +83,21 @@ function Stop-RecorderChild {
         return
     }
     $childPidText = (Get-Content -LiteralPath $ChildPidPath -Raw).Trim()
-    if ($childPidText) {
-        $childProcess = Get-Process -Id ([int]$childPidText) -ErrorAction SilentlyContinue
-        if ($childProcess -and $childProcess.ProcessName -like "python*") {
-            Stop-Process -Id $childProcess.Id -Force -ErrorAction Stop
-            $childProcess.WaitForExit(5000) | Out-Null
+    $childPid = 0
+    if ($childPidText -and [int]::TryParse($childPidText, [ref]$childPid)) {
+        # The capture child is a distinct Python script; a recycled PID that now
+        # belongs to another program (or another Python entry point) is not ours.
+        $childState = Get-ServiceProcessState -ProcessId $childPid -ExpectedScript "record_ib_market_data.py"
+        if ($childState.Exists -and $childState.Matches -eq $true) {
+            Stop-Process -Id $childPid -Force -ErrorAction Stop
+            Start-Sleep -Milliseconds 200
+        } elseif ($childState.Exists -and $null -eq $childState.Matches) {
+            Add-OperationLog `
+                -Event "recorder_child_unverified" `
+                -Level "warning" `
+                -Message "Capture child PID could not be verified; leaving the process and PID file untouched." `
+                -Details @{ pid = $childPidText }
+            return
         }
     }
     Remove-Item -LiteralPath $ChildPidPath -Force -ErrorAction SilentlyContinue
@@ -110,8 +125,14 @@ if (-not $pidText) {
     exit 0
 }
 
-$process = Get-Process -Id ([int]$pidText) -ErrorAction SilentlyContinue
-if (-not $process) {
+$processId = 0
+$processState = if ([int]::TryParse($pidText, [ref]$processId)) {
+    Get-ServiceProcessState -ProcessId $processId -ExpectedScript "run_market_data_recorder_service.py"
+} else {
+    [pscustomobject]@{ Exists = $false; Matches = $false; ProcessName = $null; CommandLine = $null }
+}
+
+if (-not $processState.Exists) {
     Stop-RecorderChild
     Remove-Item -LiteralPath $PidPath -Force
     Write-StoppedState -Message "Market data recorder is stopped; stale PID file was removed." -PidText $pidText
@@ -120,6 +141,24 @@ if (-not $process) {
     exit 0
 }
 
+if ($processState.Matches -eq $false) {
+    Stop-RecorderChild
+    Remove-Item -LiteralPath $PidPath -Force
+    Write-StoppedState -Message "Market data recorder is stopped; the PID file pointed at another process and was removed." -PidText $pidText
+    Add-OperationLog `
+        -Event "recorder_stop_pid_reused" `
+        -Level "warning" `
+        -Message "Recorder PID file pointed at another process (recycled PID); removed it without stopping that process." `
+        -Details @{ pid = $pidText; process_name = $processState.ProcessName }
+    Write-Output "Market data recorder PID $pidText belongs to another process ($($processState.ProcessName)); removed stale PID file without stopping it."
+    exit 0
+}
+
+if ($null -eq $processState.Matches) {
+    throw "Refusing to stop PID ${pidText}: its command line could not be verified as the market data recorder. Inspect the process manually before stopping it."
+}
+
+$process = Get-Process -Id $processId -ErrorAction Stop
 try {
     Stop-Process -Id $process.Id -Force:$Force -ErrorAction Stop
 } catch {

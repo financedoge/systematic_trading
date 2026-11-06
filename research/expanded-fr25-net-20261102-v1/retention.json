@@ -1,0 +1,41 @@
+{
+  "action": "Add the explicit closed-study classification and model-cache folder to guarded housekeeping after discussion closure; recheck current dependencies/path containment and emit actual retirement receipts. Do not permanently pin duplicated fits or native bundles. No full backup required.",
+  "deletion_performed": false,
+  "disposable_generated_folders": [
+    {
+      "bytes": 1167536,
+      "path": "var/research/expanded-fr25-net-20261102-v1/detail"
+    },
+    {
+      "bytes": 77048488,
+      "path": "var/research/expanded-fr25-net-20261102-v1/model-cache"
+    },
+    {
+      "bytes": 75810629,
+      "path": "var/research/expanded-fr25-net-20261102-v1/models"
+    },
+    {
+      "bytes": 55222084,
+      "path": "var/research/expanded-fr25-net-20261102-v1/native-bundles-v1"
+    },
+    {
+      "bytes": 4457376,
+      "path": "var/research/expanded-fr25-net-20261102-v1/native-contract-v1"
+    },
+    {
+      "bytes": 40256388,
+      "path": "var/research/expanded-fr25-net-20261102-v1/native-v1"
+    },
+    {
+      "bytes": 5882121,
+      "path": "var/research/expanded-fr25-net-20261102-v1/paths"
+    },
+    {
+      "bytes": 32844604,
+      "path": "var/research/expanded-fr25-net-20261102-v1/targets"
+    }
+  ],
+  "remaining_compact_working_inputs": "inputs.npz, pool.json.gz and published input copies can also retire after discussion closure; canonical publications are protected.",
+  "retained": "Compact report, protocol/definitions, input receipts/hashes, results/diagnostics, weakest charts/trade tables, independent receipts, dossier and scripts.",
+  "status": "Completed numerical item, retained for current operator discussion; queue routine retirement after disposition."
+}

@@ -1,0 +1,90 @@
+{
+  "cases": 126,
+  "guard_counts": {
+    "calibration": {
+      "FR25_frozen": 0,
+      "class_remove_bill_risk-monthly": 3
+    },
+    "later": {
+      "FR25_frozen": 0,
+      "class_remove_bill_risk-monthly": 6
+    }
+  },
+  "maximum_book_error_usd": 1.1641532182693481e-09,
+  "reporter_sha256": "59e47cd7b03722ade12ed52e7f2813a89d8da1fbeb2d6e8d2a53759a005dec87",
+  "selected": "class_cash_relative_risk-monthly",
+  "selected_intervals": [
+    {
+      "arm": "class_cash_relative_risk-monthly",
+      "columns": [
+        "Sharpe",
+        "CAGR"
+      ],
+      "difference_95": [
+        [
+          -0.21091312315763072,
+          -0.01893728454467062
+        ],
+        [
+          0.25803846380129464,
+          0.033369658215070847
+        ]
+      ],
+      "family_95": [
+        [
+          -0.30585356055382573,
+          -0.0295981922352093
+        ],
+        [
+          0.3284692885486035,
+          0.042408356559922034
+        ]
+      ],
+      "window": "calibration"
+    },
+    {
+      "arm": "class_cash_relative_risk-monthly",
+      "columns": [
+        "Sharpe",
+        "CAGR"
+      ],
+      "difference_95": [
+        [
+          -0.0864388492807268,
+          0.007605147901710985
+        ],
+        [
+          0.711625407230375,
+          0.19456950737963444
+        ]
+      ],
+      "family_95": [
+        [
+          -0.19393174462885762,
+          -0.01645481311474983
+        ],
+        [
+          0.8542184499485861,
+          0.24261361673295267
+        ]
+      ],
+      "window": "later"
+    }
+  ],
+  "weakest": [
+    {
+      "mean_held_weight": 0.0071800876988699905,
+      "net_contribution": -0.024633150000000034,
+      "net_pnl": -24633.150000000034,
+      "symbol": "EWH",
+      "window": "calibration"
+    },
+    {
+      "mean_held_weight": 0.04332669467290226,
+      "net_contribution": -0.019770234233028497,
+      "net_pnl": -24769.100000000028,
+      "symbol": "XLE",
+      "window": "later"
+    }
+  ]
+}

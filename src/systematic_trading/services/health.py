@@ -4,6 +4,7 @@ import ctypes
 import json
 import os
 import socket
+import sys
 import urllib.error
 import urllib.request
 from datetime import UTC, datetime
@@ -552,6 +553,96 @@ def _windows_pid_is_running(pid: int) -> bool:
         return exit_code.value == 259  # STILL_ACTIVE; an open handle can outlive exit.
     finally:
         kernel.CloseHandle(handle)
+
+
+def _pid_executable_name(pid: int) -> str | None:
+    """Return the image name currently owned by ``pid``, or None when unreadable.
+
+    Windows recycles process IDs. A PID file written before a crash can therefore
+    point at an unrelated program (for example a PostgreSQL backend), so a live
+    PID alone is not proof that the expected service still runs. The Toolhelp
+    snapshot lists image names without opening the process, which also works for
+    service-account processes whose command line is not readable.
+    """
+    if pid <= 0:
+        return None
+    if os.name == "nt":
+        return _windows_image_name(pid)
+    try:
+        return os.path.basename(os.readlink(f"/proc/{pid}/exe"))
+    except OSError:
+        return None
+
+
+def _windows_image_name(pid: int) -> str | None:
+    from ctypes import wintypes
+
+    class ProcessEntry32W(ctypes.Structure):
+        _fields_ = [
+            ("dwSize", wintypes.DWORD),
+            ("cntUsage", wintypes.DWORD),
+            ("th32ProcessID", wintypes.DWORD),
+            ("th32DefaultHeapID", ctypes.c_size_t),
+            ("th32ModuleID", wintypes.DWORD),
+            ("cntThreads", wintypes.DWORD),
+            ("th32ParentProcessID", wintypes.DWORD),
+            ("pcPriClassBase", ctypes.c_long),
+            ("dwFlags", wintypes.DWORD),
+            ("szExeFile", wintypes.WCHAR * 260),
+        ]
+
+    snapshot_processes = 0x00000002
+    invalid_handle = ctypes.c_void_p(-1).value
+    kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+    kernel.CreateToolhelp32Snapshot.restype = ctypes.c_void_p
+    kernel.CreateToolhelp32Snapshot.argtypes = [wintypes.DWORD, wintypes.DWORD]
+    kernel.Process32FirstW.argtypes = [ctypes.c_void_p, ctypes.POINTER(ProcessEntry32W)]
+    kernel.Process32NextW.argtypes = [ctypes.c_void_p, ctypes.POINTER(ProcessEntry32W)]
+    kernel.CloseHandle.argtypes = [ctypes.c_void_p]
+    snapshot = kernel.CreateToolhelp32Snapshot(snapshot_processes, 0)
+    if not snapshot or snapshot == invalid_handle:
+        return None
+    try:
+        entry = ProcessEntry32W()
+        entry.dwSize = ctypes.sizeof(ProcessEntry32W)
+        if not kernel.Process32FirstW(snapshot, ctypes.byref(entry)):
+            return None
+        while True:
+            if entry.th32ProcessID == pid:
+                return str(entry.szExeFile)
+            if not kernel.Process32NextW(snapshot, ctypes.byref(entry)):
+                return None
+    finally:
+        kernel.CloseHandle(snapshot)
+
+
+def _normalized_image_name(value: str) -> str:
+    return os.path.basename(str(value).strip()).lower().removesuffix(".exe")
+
+
+def _pid_matches_executable(pid: int, expected: set[str] | tuple[str, ...] | list[str]) -> bool | None:
+    """Compare the PID image with expected names; None when it cannot be read."""
+    name = _pid_executable_name(pid)
+    if name is None:
+        return None
+    known = {_normalized_image_name(item) for item in expected}
+    return _normalized_image_name(name) in known
+
+
+def _platform_python_executables() -> set[str]:
+    names = {"python.exe", "pythonw.exe"}
+    if sys.executable:
+        names.add(os.path.basename(sys.executable))
+    return names
+
+
+def _pid_matches_platform_python(pid: int) -> bool | None:
+    """True when PID is this platform's Python, False when it is another program.
+
+    None means the image name could not be read; callers must stay conservative
+    and treat the service as potentially running.
+    """
+    return _pid_matches_executable(pid, _platform_python_executables())
 
 
 def _parse_datetime(value: Any) -> datetime | None:

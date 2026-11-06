@@ -1,0 +1,174 @@
+{
+  "XLK_later": {
+    "expanded_portfolio_contribution": -0.05607079895748733,
+    "standalone_buyhold_return": 0.5462467959925212
+  },
+  "description": "Post-hoc discussion diagnostic on the two fixed monthly books, 5 bp, next-open, using previously inspected dates. Reported holdings correlations use trailing adjusted-close daily returns, exclude BIL and cash, weight each ETF pair by its product of portfolio weights, and average on identical dates where both books hold at least two risky ETFs. Single-name volatility is the weighted mean within risky holdings on those dates. Universe correlation is the unweighted all-pairs average for static supported risky pools. Drawdown contributions sum daily net P&L over the actual path, scaled by peak NAV.",
+  "later_drawdown_cluster": {
+    "max_combined_weight": 0.4968246458412952,
+    "net_contribution_fraction_of_peak_nav": -0.06946266357313569,
+    "sessions": 35,
+    "sessions_all_three_held_at_close": 6,
+    "symbols": [
+      "DBC",
+      "XLE",
+      "USO"
+    ]
+  },
+  "limitations": "Descriptive follow-up after observing results. The two full strategies use pool-relative ranks, separately fitted model schedules and an absolute four-name eligibility rule. Finite-pool pair averages do not identify causal effects of candidate representation, correlation, positions or model fitting. Prior selection and reuse of both eras leave cohort-specific overfitting unresolved.",
+  "periods": {
+    "early": {
+      "calendar_sessions": 1005,
+      "expanded": {
+        "252": {
+          "held_asset_vol": 0.2155277239721089,
+          "held_pair_corr": 0.5489354125014703,
+          "universe_pair_corr": 0.3635386820768034
+        },
+        "63": {
+          "held_asset_vol": 0.1876738286022279,
+          "held_pair_corr": 0.50420633341171,
+          "universe_pair_corr": 0.33135175946186834
+        },
+        "drawdown": {
+          "net_change": -0.18300601549255713,
+          "other_book_same_dates": -0.006854223874669496,
+          "peak_close": "2022-03-08",
+          "trough": "2023-03-15",
+          "worst": {
+            "DBA": -0.018779559080157198,
+            "EWC": -0.021748438511235844,
+            "MDY": -0.021308941890207912,
+            "PPLT": -0.025463561414106106,
+            "USO": -0.019276675539262246
+          }
+        },
+        "mean_risky_name_count": 5.7711442786069655,
+        "mean_risky_weight": 0.9035428425911819,
+        "monthly_dates": 48,
+        "monthly_fallback": 1,
+        "realized_net_vol": 0.15295721197028816,
+        "realized_variance_components": {
+          "cross_name_covariances": 0.016146275175132157,
+          "single_name_variances": 0.0072496335185915015,
+          "total": 0.02339590869372366
+        },
+        "under_5pct_risk_days": 27
+      },
+      "matched_sessions": 834,
+      "original": {
+        "252": {
+          "held_asset_vol": 0.171677468617325,
+          "held_pair_corr": 0.4767367565395048,
+          "universe_pair_corr": 0.34620607398914865
+        },
+        "63": {
+          "held_asset_vol": 0.15150841538101506,
+          "held_pair_corr": 0.4074500962160217,
+          "universe_pair_corr": 0.3214771741247504
+        },
+        "drawdown": {
+          "net_change": -0.07376871816540431,
+          "other_book_same_dates": -0.08880533173328697,
+          "peak_close": "2021-06-02",
+          "trough": "2021-07-19",
+          "worst": {
+            "DBC": -0.009497565664709632,
+            "GLD": -0.01662256806402234,
+            "VGK": -0.008271514721187397,
+            "XLB": -0.01446467513358222,
+            "XLE": -0.013175251180994049
+          }
+        },
+        "mean_risky_name_count": 4.859701492537313,
+        "mean_risky_weight": 0.8165099544912137,
+        "monthly_dates": 48,
+        "monthly_fallback": 8,
+        "realized_net_vol": 0.09982633376033506,
+        "realized_variance_components": {
+          "cross_name_covariances": 0.006117697584095564,
+          "single_name_variances": 0.0038475993279342455,
+          "total": 0.00996529691202981
+        },
+        "under_5pct_risk_days": 127
+      }
+    },
+    "later": {
+      "calendar_sessions": 459,
+      "expanded": {
+        "252": {
+          "held_asset_vol": 0.23508281973744335,
+          "held_pair_corr": 0.4177711081066883,
+          "universe_pair_corr": 0.33311224222027913
+        },
+        "63": {
+          "held_asset_vol": 0.249534989373137,
+          "held_pair_corr": 0.3729121949150196,
+          "universe_pair_corr": 0.31825943887111163
+        },
+        "drawdown": {
+          "net_change": -0.1517783651323218,
+          "other_book_same_dates": -0.06772968776530586,
+          "peak_close": "2025-02-18",
+          "trough": "2025-04-08",
+          "worst": {
+            "DBC": -0.024738539550666322,
+            "EWU": -0.01878713706476338,
+            "USO": -0.022192962226960426,
+            "XLC": -0.01560372781024489,
+            "XLE": -0.022531161795508944
+          }
+        },
+        "mean_risky_name_count": 6.0,
+        "mean_risky_weight": 0.9818029014038525,
+        "monthly_dates": 22,
+        "monthly_fallback": 0,
+        "realized_net_vol": 0.2018051311148878,
+        "realized_variance_components": {
+          "cross_name_covariances": 0.02584116447214822,
+          "single_name_variances": 0.014884146472148831,
+          "total": 0.04072531094429705
+        },
+        "under_5pct_risk_days": 0
+      },
+      "matched_sessions": 459,
+      "original": {
+        "252": {
+          "held_asset_vol": 0.18225684514478857,
+          "held_pair_corr": 0.37300624284415995,
+          "universe_pair_corr": 0.3401700084767474
+        },
+        "63": {
+          "held_asset_vol": 0.18144168761310428,
+          "held_pair_corr": 0.3362414828944403,
+          "universe_pair_corr": 0.3174366658870776
+        },
+        "drawdown": {
+          "net_change": -0.08307835934253605,
+          "other_book_same_dates": -0.1287039830912996,
+          "peak_close": "2025-03-19",
+          "trough": "2025-04-08",
+          "worst": {
+            "DBC": -0.015872489612525673,
+            "HYG": -0.018540816548763574,
+            "MCHI": -0.016265422384672417,
+            "VGK": -0.006359637423947461,
+            "XLE": -0.017533075984433974
+          }
+        },
+        "mean_risky_name_count": 5.954248366013072,
+        "mean_risky_weight": 0.9791021294183587,
+        "monthly_dates": 22,
+        "monthly_fallback": 0,
+        "realized_net_vol": 0.12390522503118008,
+        "realized_variance_components": {
+          "cross_name_covariances": 0.008758439709099512,
+          "single_name_variances": 0.006594065080927865,
+          "total": 0.015352504790027376
+        },
+        "under_5pct_risk_days": 0
+      }
+    }
+  },
+  "study_protocol_sha256": "63f478da3d993611a4468433a75cadac7ab80cbd1e45eefb6a2059556d379aae"
+}

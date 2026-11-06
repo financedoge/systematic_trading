@@ -1,0 +1,90 @@
+{
+  "cik": 726958,
+  "filings": [
+    {
+      "accession": "0000726958-23-000097",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "October\u00a031, 2023"
+        ],
+        "DocumentType": [
+          "10-Q"
+        ],
+        "EntityCentralIndexKey": [
+          "0000726958"
+        ],
+        "EntityRegistrantName": [
+          "CASEY\u2019S GENERAL STORES, INC."
+        ],
+        "Security12bTitle": [
+          "Common Stock, no par value per share"
+        ],
+        "SecurityExchangeName": [
+          "The NASDAQ Global Select Market"
+        ],
+        "TradingSymbol": [
+          "CASY"
+        ]
+      },
+      "filing_date": "2023-12-11",
+      "listing_tables": [
+        "Title of each class Trading Symbol(s) Name of each exchange on which registered Common Stock, no par value per share CASY The NASDAQ Global Select Market"
+      ],
+      "report_date": "2023-10-31",
+      "source": {
+        "bytes": 621843,
+        "retrieved_at": "2026-11-05T16:13:11.499640+00:00",
+        "sha256": "ca6c18cb84bc45b912b2aa0c839ca78b0c4e14a1e18e34c086121c0b70ec25e5",
+        "url": "https://www.sec.gov/Archives/edgar/data/726958/000072695823000097/casy-20231031.htm"
+      }
+    },
+    {
+      "accession": "0000726958-24-000091",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "October\u00a031, 2024"
+        ],
+        "DocumentType": [
+          "10-Q"
+        ],
+        "EntityCentralIndexKey": [
+          "0000726958"
+        ],
+        "EntityRegistrantName": [
+          "CASEY\u2019S GENERAL STORES, INC."
+        ],
+        "Security12bTitle": [
+          "Common Stock, no par value per share"
+        ],
+        "SecurityExchangeName": [
+          "The NASDAQ Global Select Market"
+        ],
+        "TradingSymbol": [
+          "CASY"
+        ]
+      },
+      "filing_date": "2024-12-09",
+      "listing_tables": [
+        "Title of each class Trading Symbol(s) Name of each exchange on which registered Common Stock, no par value per share CASY The NASDAQ Global Select Market"
+      ],
+      "report_date": "2024-10-31",
+      "source": {
+        "bytes": 592851,
+        "retrieved_at": "2026-11-05T16:13:16.660152+00:00",
+        "sha256": "aec73dc98532e884b8a1afbe39c339657d4f82c1eae36e97fa6143a9dafa776c",
+        "url": "https://www.sec.gov/Archives/edgar/data/726958/000072695824000091/casy-20241031.htm"
+      }
+    }
+  ],
+  "requested_cutoffs": {
+    "2024-02-27": "0000726958-23-000097",
+    "2025-02-27": "0000726958-24-000091"
+  },
+  "submissions": {
+    "bytes": 164512,
+    "retrieved_at": "2026-11-05T16:07:35.906152+00:00",
+    "sha256": "8c3113c5b8a082eec489e24be8c3b675728924112428132fe89f50526f1a6a92",
+    "url": "https://data.sec.gov/submissions/CIK0000726958.json"
+  },
+  "symbol": "CASY"
+}

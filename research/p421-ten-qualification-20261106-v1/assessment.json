@@ -1,0 +1,1115 @@
+{
+  "broker_history_error": {
+    "error": "-1:2107:HMDS data farm connection is inactive but should be available upon demand.apachmds; 92001:162:Historical Market Data Service error message:Trading TWS session is connected from a different IP address",
+    "error_type": "RuntimeError",
+    "symbol": "CSL"
+  },
+  "equity_pct": 5.349311777967723,
+  "new_publications": 0,
+  "parent_used": {
+    "audits/CASY.json": "972c931bf31bba380ee24a51ce546fd793511d2ed04ba058e8a363852ede568e",
+    "audits/CSL.json": "acae9949fed19744bb3e654992ed7ee8339bc314d742e531e72569cd331edecc",
+    "audits/FIX.json": "021835aa17ef9632ee3fa5fdc9a5acfefb372edb582f7209f8a8575225621846",
+    "audits/FLEX.json": "d76ea36135dbac9436f0bef5c1aeb92081af7c5c3f85ca8034d758e292331f65",
+    "audits/MANH.json": "06c40dcfbe215e711ee8d020221a56bc8d547073a317c9ba9b0e81f0c22fb06a",
+    "audits/RPM.json": "cb1d952ef90e51ffd875ee3e0dbd680fa87e1b75bbd54c27e1c5ebee9c6f0e89",
+    "audits/RS.json": "e540f3fa754b7d6efe885ab7a8560eb445c6ff608acadd2b49a63194908e5c5f",
+    "audits/UTHR.json": "fa5f7f338e40a9d498a199cc63afc1ac4111b79df7ff327d95a32e8c9abcb04c",
+    "audits/WSO.json": "955a21984b876878b7b0d71030fa029922ee7f89d4196b13f4b3eb93005c495b",
+    "audits/XPO.json": "e9ed0460bfa2730101b32fd1a2124b7dde2b08c66b8207bd4fc07efe3214fafa",
+    "bars/CASY.jsonl.gz": "817c5f1e3e994908342e9830cad529e8d1a2e1e9e2452644de07b0d342eb8ca2",
+    "bars/CSL.jsonl.gz": "f6fdb80098207d0d2bf555a99354d2a2ee5ff2ea02d57480305bc1e7b0a52d26",
+    "bars/FIX.jsonl.gz": "ce66a409dcb1b6288682c10d5f295635c0ea504e2f9d16f29871ae3811394608",
+    "bars/FLEX.jsonl.gz": "63284ae4b9613dfaa547315d141aabfa2de5f9a6f7f1e751aef1237b87a6e660",
+    "bars/MANH.jsonl.gz": "32504c86727062af63713465ac6bd493ee867fc97cb7325f856e49775d44e7a8",
+    "bars/RPM.jsonl.gz": "bae4f8730108be404dd6a17d5fd2441f9257ebb11c7a07db58168323cbcf1c82",
+    "bars/RS.jsonl.gz": "53d937513cfbe81808699421016e3006ae76a1b6c7cbb267791e7c0a272797fd",
+    "bars/UTHR.jsonl.gz": "f385843b30e559a6589153551467f967365004ef373b288b4c0a93f479e89783",
+    "bars/WSO.jsonl.gz": "f283306b61c4c50cf8996e66c82b5a1af9ad3a050c90da29f3cbd23ba67bc627",
+    "bars/XPO.jsonl.gz": "4ff487faed1ea31f6b9a70319b5375bc56b8c5b445609f68dc2de8acc8af7b0e"
+  },
+  "prior_inventory_sha256": "e2350a7dde40ac13bdab1b62140b797be20f3d917db51775591483b4cf664c2d",
+  "qualified_count": 0,
+  "required_sessions": 253,
+  "results": [
+    {
+      "actions": [
+        {
+          "amount": 0.85,
+          "date": "2024-05-17",
+          "kind": "dividends"
+        },
+        {
+          "amount": 1.0,
+          "date": "2024-08-20",
+          "kind": "dividends"
+        },
+        {
+          "amount": 1.0,
+          "date": "2024-11-15",
+          "kind": "dividends"
+        },
+        {
+          "amount": 1.0,
+          "date": "2025-02-18",
+          "kind": "dividends"
+        }
+      ],
+      "broker_conid": 6120,
+      "cross_vintage": {
+        "adjusted_close_median_ratio": 1.0,
+        "first": "2024-02-27",
+        "last": "2025-02-28",
+        "max_adjacent_adjusted_log_return_difference_bp": 0.0032202945229178577,
+        "raw_close": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_high": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_low": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_open": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_volume": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "sessions": 253
+      },
+      "cusip": "142339100",
+      "eligible_for_publication": false,
+      "equity_pct": 0.5726028826300842,
+      "filed_value_per_share": 368.84,
+      "gates": {
+        "complete_supported_window": true,
+        "current_isin_match": true,
+        "dated_security_continuity": false,
+        "filing_valuation_match": true,
+        "historical_identity_anchors": true,
+        "independent_daily_price_volume": false,
+        "resolved_prior_source_review": false
+      },
+      "internal_action_failures": [],
+      "isin": "US1423391002",
+      "issuer_filing_dates": [
+        "2024-02-16",
+        "2025-02-14"
+      ],
+      "prior_price_pairs": [
+        {
+          "count": 8125,
+          "first": "1973-03-14",
+          "intersects_window": false,
+          "last": "2020-04-01",
+          "other_source": "governance-source/governed-prices-20260926-v1/yahoo2020/CSL"
+        },
+        {
+          "count": 1438,
+          "first": "2005-02-25",
+          "intersects_window": false,
+          "last": "2010-11-09",
+          "other_source": "governance-source/governed-prices-20260926-v1/stooq2017/CSL"
+        }
+      ],
+      "published_status": "review",
+      "reconstructed_raw_close": 368.8399963378906,
+      "source_review": "Unresolved outside-window source differences retained. They do not establish an error inside this window.",
+      "symbol": "CSL",
+      "volume_pairs": [
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/CSL",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/CSL",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.08587994281226785
+        },
+        {
+          "anchor": "governance-source/governed-prices-20260926-v1/yahoo2020/CSL",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/CSL",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.08587994281226785
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "amount": 2.7,
+          "date": "2024-04-12",
+          "kind": "dividends"
+        },
+        {
+          "amount": 2.7,
+          "date": "2024-07-16",
+          "kind": "dividends"
+        },
+        {
+          "amount": 2.7,
+          "date": "2024-10-16",
+          "kind": "dividends"
+        },
+        {
+          "amount": 2.7,
+          "date": "2025-01-17",
+          "kind": "dividends"
+        }
+      ],
+      "broker_conid": 13904,
+      "cross_vintage": {
+        "adjusted_close_median_ratio": 0.9889816501185601,
+        "first": "2024-02-27",
+        "last": "2025-02-28",
+        "max_adjacent_adjusted_log_return_difference_bp": 0.003842364423335687,
+        "raw_close": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_high": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_low": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_open": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_volume": {
+          "comparable": 0,
+          "identical": 0
+        },
+        "sessions": 253
+      },
+      "cusip": "942622200",
+      "eligible_for_publication": false,
+      "equity_pct": 0.5668903153202504,
+      "filed_value_per_share": 473.89,
+      "gates": {
+        "complete_supported_window": true,
+        "current_isin_match": true,
+        "dated_security_continuity": false,
+        "filing_valuation_match": true,
+        "historical_identity_anchors": true,
+        "independent_daily_price_volume": false,
+        "resolved_prior_source_review": false
+      },
+      "internal_action_failures": [],
+      "isin": "US9426222009",
+      "issuer_filing_dates": [
+        "2024-02-23",
+        "2024-11-01"
+      ],
+      "prior_price_pairs": [
+        {
+          "count": 8968,
+          "first": "1984-06-07",
+          "intersects_window": false,
+          "last": "2020-04-01",
+          "other_source": "governance-source/governed-prices-20260926-v1/yahoo2020/WSO"
+        },
+        {
+          "count": 1481,
+          "first": "2005-02-25",
+          "intersects_window": false,
+          "last": "2011-01-11",
+          "other_source": "governance-source/governed-prices-20260926-v1/stooq2017/WSO"
+        }
+      ],
+      "published_status": "review",
+      "reconstructed_raw_close": 473.8900146484375,
+      "source_review": "Unresolved outside-window source differences retained. They do not establish an error inside this window.",
+      "symbol": "WSO",
+      "volume_pairs": [
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/WSO",
+          "candidate": "governance-source/governed-prices-20260926-v1/yahoo2020/WSO",
+          "first": "1984-06-07",
+          "interval_intersects_window": false,
+          "last": "2020-04-01",
+          "p99_error": 2.54
+        },
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/WSO",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/WSO",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.2456182569707599
+        },
+        {
+          "anchor": "governance-source/governed-prices-20260926-v1/yahoo2020/WSO",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/WSO",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.2456182569707599
+        }
+      ]
+    },
+    {
+      "actions": [],
+      "broker_conid": 4814485,
+      "cross_vintage": {
+        "adjusted_close_median_ratio": 1.0,
+        "first": "2024-02-27",
+        "last": "2025-02-28",
+        "max_adjacent_adjusted_log_return_difference_bp": 0.0,
+        "raw_close": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_high": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_low": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_open": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_volume": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "sessions": 253
+      },
+      "cusip": "562750109",
+      "eligible_for_publication": false,
+      "equity_pct": 0.5668665503418071,
+      "filed_value_per_share": 270.24,
+      "gates": {
+        "complete_supported_window": true,
+        "current_isin_match": true,
+        "dated_security_continuity": false,
+        "filing_valuation_match": true,
+        "historical_identity_anchors": true,
+        "independent_daily_price_volume": false,
+        "resolved_prior_source_review": false
+      },
+      "internal_action_failures": [],
+      "isin": "US5627501092",
+      "issuer_filing_dates": [
+        "2024-02-06",
+        "2025-02-07"
+      ],
+      "prior_price_pairs": [],
+      "published_status": "review",
+      "reconstructed_raw_close": 270.239990234375,
+      "source_review": "Unresolved outside-window source differences retained. They do not establish an error inside this window.",
+      "symbol": "MANH",
+      "volume_pairs": [
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/MANH",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/MANH",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.29600972042220164
+        },
+        {
+          "anchor": "governance-source/governed-prices-20260926-v1/yahoo2020/MANH",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/MANH",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.29600972042220164
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "amount": 0.46,
+          "date": "2024-04-18",
+          "kind": "dividends"
+        },
+        {
+          "amount": 0.46,
+          "date": "2024-07-17",
+          "kind": "dividends"
+        },
+        {
+          "amount": 0.51,
+          "date": "2024-10-18",
+          "kind": "dividends"
+        },
+        {
+          "amount": 0.51,
+          "date": "2025-01-17",
+          "kind": "dividends"
+        }
+      ],
+      "broker_conid": 273962,
+      "cross_vintage": {
+        "adjusted_close_median_ratio": 0.994270210136151,
+        "first": "2024-02-27",
+        "last": "2025-02-28",
+        "max_adjacent_adjusted_log_return_difference_bp": 0.0031414229951804568,
+        "raw_close": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_high": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_low": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_open": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_volume": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "sessions": 253
+      },
+      "cusip": "749685103",
+      "eligible_for_publication": false,
+      "equity_pct": 0.5439640033238261,
+      "filed_value_per_share": 123.06,
+      "gates": {
+        "complete_supported_window": true,
+        "current_isin_match": true,
+        "dated_security_continuity": false,
+        "filing_valuation_match": true,
+        "historical_identity_anchors": true,
+        "independent_daily_price_volume": false,
+        "resolved_prior_source_review": false
+      },
+      "internal_action_failures": [],
+      "isin": "US7496851038",
+      "issuer_filing_dates": [
+        "2024-01-04",
+        "2025-01-07"
+      ],
+      "prior_price_pairs": [
+        {
+          "count": 1786,
+          "first": "1981-08-10",
+          "intersects_window": false,
+          "last": "1997-04-15",
+          "other_source": "governance-source/governed-prices-20260926-v1/yahoo2020/RPM"
+        },
+        {
+          "count": 2719,
+          "first": "2005-02-25",
+          "intersects_window": false,
+          "last": "2017-11-10",
+          "other_source": "governance-source/governed-prices-20260926-v1/stooq2017/RPM"
+        }
+      ],
+      "published_status": "review",
+      "reconstructed_raw_close": 123.05999755859375,
+      "source_review": "Unresolved outside-window source differences retained. They do not establish an error inside this window.",
+      "symbol": "RPM",
+      "volume_pairs": [
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/RPM",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/RPM",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.17053603067418788
+        },
+        {
+          "anchor": "governance-source/governed-prices-20260926-v1/yahoo2020/RPM",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/RPM",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.17053603067418788
+        }
+      ]
+    },
+    {
+      "actions": [],
+      "broker_conid": 6746357,
+      "cross_vintage": {
+        "adjusted_close_median_ratio": 1.0,
+        "first": "2024-02-27",
+        "last": "2025-02-28",
+        "max_adjacent_adjusted_log_return_difference_bp": 0.0,
+        "raw_close": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_high": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_low": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_open": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_volume": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "sessions": 253
+      },
+      "cusip": "91307C102",
+      "eligible_for_publication": false,
+      "equity_pct": 0.5410269291724485,
+      "filed_value_per_share": 352.84,
+      "gates": {
+        "complete_supported_window": true,
+        "current_isin_match": true,
+        "dated_security_continuity": false,
+        "filing_valuation_match": true,
+        "historical_identity_anchors": true,
+        "independent_daily_price_volume": false,
+        "resolved_prior_source_review": false
+      },
+      "internal_action_failures": [],
+      "isin": "US91307C1027",
+      "issuer_filing_dates": [
+        "2024-02-21",
+        "2025-02-26"
+      ],
+      "prior_price_pairs": [],
+      "published_status": "review",
+      "reconstructed_raw_close": 352.8399963378906,
+      "source_review": "Unresolved outside-window source differences retained. They do not establish an error inside this window.",
+      "symbol": "UTHR",
+      "volume_pairs": [
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/UTHR",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/UTHR",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.4297549593484846
+        },
+        {
+          "anchor": "governance-source/governed-prices-20260926-v1/yahoo2020/UTHR",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/UTHR",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.4297549593484846
+        }
+      ]
+    },
+    {
+      "actions": [],
+      "broker_conid": 93957038,
+      "cross_vintage": {
+        "adjusted_close_median_ratio": 1.0,
+        "first": "2024-02-27",
+        "last": "2025-02-28",
+        "max_adjacent_adjusted_log_return_difference_bp": 0.0,
+        "raw_close": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_high": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_low": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_open": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_volume": {
+          "comparable": 0,
+          "identical": 0
+        },
+        "sessions": 253
+      },
+      "cusip": "983793100",
+      "eligible_for_publication": false,
+      "equity_pct": 0.5243200771554727,
+      "filed_value_per_share": 131.15,
+      "gates": {
+        "complete_supported_window": true,
+        "current_isin_match": true,
+        "dated_security_continuity": false,
+        "filing_valuation_match": true,
+        "historical_identity_anchors": true,
+        "independent_daily_price_volume": false,
+        "resolved_prior_source_review": false
+      },
+      "internal_action_failures": [],
+      "isin": "US9837931008",
+      "issuer_filing_dates": [
+        "2024-02-08",
+        "2025-02-07"
+      ],
+      "prior_price_pairs": [
+        {
+          "count": 3,
+          "first": "2007-08-07",
+          "intersects_window": false,
+          "last": "2010-02-18",
+          "other_source": "governance-source/governed-prices-20260926-v1/stooq2017/XPO"
+        }
+      ],
+      "published_status": "review",
+      "reconstructed_raw_close": 131.14999389648438,
+      "source_review": "Unresolved outside-window source differences retained. They do not establish an error inside this window.",
+      "symbol": "XPO",
+      "volume_pairs": [
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/XPO",
+          "candidate": "governance-source/governed-prices-20260926-v1/yahoo2020/XPO",
+          "first": "2003-10-07",
+          "interval_intersects_window": false,
+          "last": "2020-04-01",
+          "p99_error": 0.11976741185834766
+        },
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/XPO",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/XPO",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.05865921088962934
+        },
+        {
+          "anchor": "governance-source/governed-prices-20260926-v1/yahoo2020/XPO",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/XPO",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.11108558237430832
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "amount": 0.25,
+          "date": "2024-03-07",
+          "kind": "dividends"
+        },
+        {
+          "amount": 0.3,
+          "date": "2024-05-10",
+          "kind": "dividends"
+        },
+        {
+          "amount": 0.3,
+          "date": "2024-08-12",
+          "kind": "dividends"
+        },
+        {
+          "amount": 0.35,
+          "date": "2024-11-14",
+          "kind": "dividends"
+        }
+      ],
+      "broker_conid": 6607708,
+      "cross_vintage": {
+        "adjusted_close_median_ratio": 1.0,
+        "first": "2024-02-27",
+        "last": "2025-02-28",
+        "max_adjacent_adjusted_log_return_difference_bp": 0.005969724096742132,
+        "raw_close": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_high": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_low": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_open": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_volume": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "sessions": 253
+      },
+      "cusip": "199908104",
+      "eligible_for_publication": false,
+      "equity_pct": 0.5167492233830924,
+      "filed_value_per_share": 424.06,
+      "gates": {
+        "complete_supported_window": true,
+        "current_isin_match": true,
+        "dated_security_continuity": false,
+        "filing_valuation_match": true,
+        "historical_identity_anchors": true,
+        "independent_daily_price_volume": false,
+        "resolved_prior_source_review": false
+      },
+      "internal_action_failures": [],
+      "isin": "US1999081045",
+      "issuer_filing_dates": [
+        "2024-02-22",
+        "2025-02-20"
+      ],
+      "prior_price_pairs": [
+        {
+          "count": 1386,
+          "first": "2005-02-25",
+          "intersects_window": false,
+          "last": "2010-08-26",
+          "other_source": "governance-source/governed-prices-20260926-v1/stooq2017/FIX"
+        }
+      ],
+      "published_status": "review",
+      "reconstructed_raw_close": 424.05999755859375,
+      "source_review": "Unresolved outside-window source differences retained. They do not establish an error inside this window.",
+      "symbol": "FIX",
+      "volume_pairs": [
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/FIX",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/FIX",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.09604961097265763
+        },
+        {
+          "anchor": "sector-research/ivv-constituents-2012-2026-v1/bars/FIX",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/FIX",
+          "first": "2011-01-03",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.10125348143993433
+        },
+        {
+          "anchor": "sector-research/ivv-public-archive-subset-20260926-v1/bars/yahoo2020/FIX",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/FIX",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.09604961097265763
+        }
+      ]
+    },
+    {
+      "actions": [],
+      "broker_conid": 4596077,
+      "cross_vintage": {
+        "adjusted_close_median_ratio": 1.0,
+        "first": "2024-02-27",
+        "last": "2025-02-28",
+        "max_adjacent_adjusted_log_return_difference_bp": 0.0,
+        "raw_close": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_high": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_low": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_open": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_volume": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "sessions": 253
+      },
+      "cusip": "000000000",
+      "eligible_for_publication": false,
+      "equity_pct": 0.5113004472186362,
+      "filed_value_per_share": 38.39,
+      "gates": {
+        "complete_supported_window": true,
+        "current_isin_match": true,
+        "dated_security_continuity": false,
+        "filing_valuation_match": true,
+        "historical_identity_anchors": true,
+        "independent_daily_price_volume": false,
+        "resolved_prior_source_review": false
+      },
+      "internal_action_failures": [],
+      "isin": "SG9999000020",
+      "issuer_filing_dates": [
+        "2024-02-02",
+        "2025-01-31"
+      ],
+      "prior_price_pairs": [
+        {
+          "count": 4,
+          "first": "2003-05-02",
+          "intersects_window": false,
+          "last": "2012-04-05",
+          "other_source": "governance-source/governed-prices-20260926-v1/stooq2017/FLEX"
+        }
+      ],
+      "published_status": "review",
+      "reconstructed_raw_close": 38.38999938964844,
+      "source_review": "Unresolved outside-window source differences retained. They do not establish an error inside this window.",
+      "symbol": "FLEX",
+      "volume_pairs": [
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/FLEX",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/FLEX",
+          "first": "1994-03-18",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.07333972315979813
+        },
+        {
+          "anchor": "sector-research/ivv-constituents-2012-2026-v1/bars/FLEX",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/FLEX",
+          "first": "2011-01-03",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.16269061339275173
+        },
+        {
+          "anchor": "sector-research/ivv-public-archive-subset-20260926-v1/bars/yahoo2020/FLEX",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/FLEX",
+          "first": "1994-03-18",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.07333987258079352
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "amount": 0.43,
+          "date": "2024-04-30",
+          "kind": "dividends"
+        },
+        {
+          "amount": 0.5,
+          "date": "2024-08-01",
+          "kind": "dividends"
+        },
+        {
+          "amount": 0.5,
+          "date": "2024-11-01",
+          "kind": "dividends"
+        },
+        {
+          "amount": 0.5,
+          "date": "2025-02-03",
+          "kind": "dividends"
+        }
+      ],
+      "broker_conid": 267265,
+      "cross_vintage": {
+        "adjusted_close_median_ratio": 0.9990409094939524,
+        "first": "2024-02-27",
+        "last": "2025-02-28",
+        "max_adjacent_adjusted_log_return_difference_bp": 0.0044495375534536925,
+        "raw_close": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_high": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_low": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_open": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_volume": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "sessions": 253
+      },
+      "cusip": "147528103",
+      "eligible_for_publication": false,
+      "equity_pct": 0.5050997171933548,
+      "filed_value_per_share": 396.23,
+      "gates": {
+        "complete_supported_window": true,
+        "current_isin_match": true,
+        "dated_security_continuity": false,
+        "filing_valuation_match": true,
+        "historical_identity_anchors": true,
+        "independent_daily_price_volume": false,
+        "resolved_prior_source_review": false
+      },
+      "internal_action_failures": [],
+      "isin": "US1475281036",
+      "issuer_filing_dates": [
+        "2023-12-11",
+        "2024-12-09"
+      ],
+      "prior_price_pairs": [
+        {
+          "count": 3228,
+          "first": "1983-10-20",
+          "intersects_window": false,
+          "last": "1996-07-26",
+          "other_source": "sector-research/ivv-public-archive-subset-20260926-v1/bars/yahoo2020/CASY"
+        },
+        {
+          "count": 1429,
+          "first": "2005-02-25",
+          "intersects_window": false,
+          "last": "2010-10-27",
+          "other_source": "governance-source/governed-prices-20260926-v1/stooq2017/CASY"
+        }
+      ],
+      "published_status": "review",
+      "reconstructed_raw_close": 396.2300109863281,
+      "source_review": "Unresolved outside-window source differences retained. They do not establish an error inside this window.",
+      "symbol": "CASY",
+      "volume_pairs": [
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/CASY",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/CASY",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.4216926156006262
+        },
+        {
+          "anchor": "sector-research/ivv-constituents-2012-2026-v1/bars/CASY",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/CASY",
+          "first": "2011-01-03",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.40642180672883743
+        },
+        {
+          "anchor": "sector-research/ivv-public-archive-subset-20260926-v1/bars/yahoo2020/CASY",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/CASY",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.4216926156006262
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "amount": 1.1,
+          "date": "2024-03-07",
+          "kind": "dividends"
+        },
+        {
+          "amount": 1.1,
+          "date": "2024-05-23",
+          "kind": "dividends"
+        },
+        {
+          "amount": 1.1,
+          "date": "2024-08-16",
+          "kind": "dividends"
+        },
+        {
+          "amount": 1.1,
+          "date": "2024-11-22",
+          "kind": "dividends"
+        }
+      ],
+      "broker_conid": 11735,
+      "cross_vintage": {
+        "adjusted_close_median_ratio": 1.0,
+        "first": "2024-02-27",
+        "last": "2025-02-28",
+        "max_adjacent_adjusted_log_return_difference_bp": 0.005739994406106509,
+        "raw_close": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_high": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_low": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_open": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_volume": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "sessions": 253
+      },
+      "cusip": "759509102",
+      "eligible_for_publication": false,
+      "equity_pct": 0.5004916322287513,
+      "filed_value_per_share": 269.26,
+      "gates": {
+        "complete_supported_window": true,
+        "current_isin_match": true,
+        "dated_security_continuity": false,
+        "filing_valuation_match": true,
+        "historical_identity_anchors": true,
+        "independent_daily_price_volume": false,
+        "resolved_prior_source_review": false
+      },
+      "internal_action_failures": [],
+      "isin": "US7595091023",
+      "issuer_filing_dates": [
+        "2023-11-02",
+        "2025-02-27"
+      ],
+      "prior_price_pairs": [
+        {
+          "count": 2745,
+          "first": "1994-09-16",
+          "intersects_window": false,
+          "last": "2005-08-09",
+          "other_source": "governance-source/governed-prices-20260926-v1/yahoo2020/RS"
+        },
+        {
+          "count": 1756,
+          "first": "2005-02-25",
+          "intersects_window": false,
+          "last": "2013-02-26",
+          "other_source": "governance-source/governed-prices-20260926-v1/stooq2017/RS"
+        }
+      ],
+      "published_status": "review",
+      "reconstructed_raw_close": 269.260009765625,
+      "source_review": "Unresolved outside-window source differences retained. They do not establish an error inside this window.",
+      "symbol": "RS",
+      "volume_pairs": [
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/RS",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/RS",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.22070275299371067
+        },
+        {
+          "anchor": "governance-source/governed-prices-20260926-v1/yahoo2020/RS",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/RS",
+          "first": "2005-02-25",
+          "interval_intersects_window": false,
+          "last": "2017-11-10",
+          "p99_error": 0.22070275299371067
+        }
+      ]
+    }
+  ],
+  "runner_sha256": "5ce0a9e1ca88c4a5dc1d368f9a02f458f7f4bb988842a663413a09061d6d2839",
+  "selected_symbols": [
+    "CSL",
+    "WSO",
+    "MANH",
+    "RPM",
+    "UTHR",
+    "XPO",
+    "FIX",
+    "FLEX",
+    "CASY",
+    "RS"
+  ],
+  "source_probe_results": [
+    {
+      "end": "2025-02-28",
+      "receipt": {
+        "bytes": 179,
+        "retrieved_at": "2026-11-05T16:07:54.615668+00:00",
+        "sha256": "2b0c47ae16cd2c525cc2b37ff4e14d15753ac1317d4d08d1d794ab316ce60780",
+        "url": "https://api.nasdaq.com/api/quote/CSL/historical?assetclass=stocks&fromdate=2024-02-27&todate=2025-02-28&limit=300"
+      },
+      "start": "2024-02-27",
+      "symbol": "CSL",
+      "total_records": 0
+    },
+    {
+      "end": "2025-02-28",
+      "receipt": {
+        "bytes": 180,
+        "retrieved_at": "2026-11-05T16:07:58.406305+00:00",
+        "sha256": "54b0b8dfe00546acfe6a839c6ff8ba3c2df8651c6a13958bd703042acd243067",
+        "url": "https://api.nasdaq.com/api/quote/MANH/historical?assetclass=stocks&fromdate=2024-02-27&todate=2025-02-28&limit=300"
+      },
+      "start": "2024-02-27",
+      "symbol": "MANH",
+      "total_records": 0
+    },
+    {
+      "end": "2026-11-04",
+      "receipt": {
+        "bytes": 593,
+        "retrieved_at": "2026-11-05T16:08:00.558502+00:00",
+        "sha256": "2bc14ea4067ea0985bf8a2bc59c2a218935fe7332fa510a0fdd1b518a882fa45",
+        "url": "https://api.nasdaq.com/api/quote/CSL/historical?assetclass=stocks&fromdate=2026-11-02&todate=2026-11-04&limit=300"
+      },
+      "start": "2026-11-02",
+      "symbol": "CSL",
+      "total_records": 3
+    }
+  ],
+  "used": {
+    "actions/CASY.jsonl.gz": "334d72a068d7fdf6386fb3ee8a50350794fdfbae111c1d6534339cdb58f67ce9",
+    "actions/CSL.jsonl.gz": "2809ecaeb53b189dd1b0200b261c3306d0af88a2b60d15d2c7c7c0e271d60612",
+    "actions/FIX.jsonl.gz": "2fa5756cbae0646c6d48dfef7503d97cbda54b4b5187248ac706b6a0a7e8dfdf",
+    "actions/FLEX.jsonl.gz": "8b95ee5f898cf58ef8f6df8ae87cdc70e5cd121ef0af43f3546aca65eeb95bed",
+    "actions/MANH.jsonl.gz": "0e2157a74950f5001f04f054d01340e57ec9112d779f142ce40fd7ebc9916052",
+    "actions/RPM.jsonl.gz": "d8b4d7a1080fcf391c11d473b1d2a25a95eb602273f7fabe5244a77dc290b7ea",
+    "actions/RS.jsonl.gz": "758e150fb3c6f7e230ae0e2222c5820c6571f09f25673d131801d97e511dc884",
+    "actions/UTHR.jsonl.gz": "1da292ffd02d51c7ab2fdd6f170d5e7ca767c698cff51ffcd95ab48b6b4916f8",
+    "actions/WSO.jsonl.gz": "7aa7c6cdbc6c7fda3fbfab0ad9a8d86af5fa3df636ae57229d5107ecc95e7a56",
+    "actions/XPO.jsonl.gz": "0251feaca9e59ead3801c20bb97d0e98a97bc9fe8630bd087b05b4f44279c820",
+    "audits/CASY.json": "cd874baa16938032b645244ceabee2edc8eb0b8866d7557d6b3cf1a65a83c650",
+    "audits/CSL.json": "956322a56057c53ea219b7a66ee75f74b0c69bd98c6d0e0998b3d4d117bf01a0",
+    "audits/FIX.json": "440ac57fdfaed926abac30123e79b6736c5ab2fa733e99a7e4deccef4080f4eb",
+    "audits/FLEX.json": "c7ff20fd402e934f1054e434583dffe42fe2c20c047674d6b029154071a50bde",
+    "audits/MANH.json": "1c673c61ba2043919ed5cdbeeac2e9f7a10054cca3956e7bec10ca8d4c0b5021",
+    "audits/RPM.json": "2fa51cd56b37fff3e085f1b9fade8441153f7a4cff3511389c5fd2ef6fb86fbf",
+    "audits/RS.json": "6601ad05a2e2719814145c4d119d2148c94040aae021ec1b9802b96974b8016f",
+    "audits/UTHR.json": "a1a0476d3eed95ef398efa918e53df5f6a872046b834b2072f728f7ed349fb02",
+    "audits/WSO.json": "143b3ff155bfca1337c15cfac5f7749bd6e8debb19fa759c136000ca46332787",
+    "audits/XPO.json": "2ba6a2658f84f99b0871e2b82f4601b8dcd8cacefad2f6f9ba6f35b77d0bcf84",
+    "bars/CASY.jsonl.gz": "41e67718b0b2043164e897738b396e8de6d2a0b86ca7718135e642824e722ee8",
+    "bars/CSL.jsonl.gz": "c3fa36207e3e283302aef5f68330c0636a4f05c3eaeb0799195b8b7104f576dd",
+    "bars/FIX.jsonl.gz": "a1ffd0939893b5fe61b3993e9d939c67d013a786e60957925d193d09eb1af8d5",
+    "bars/FLEX.jsonl.gz": "468099ff5bcd8620dd4053ea78d0a404fa9077ae7c23cea495c61ae04e311662",
+    "bars/MANH.jsonl.gz": "4cee56d1b64beb6e30c63f4a8c881a799a139cb2804c54118a953156663d048e",
+    "bars/RPM.jsonl.gz": "e0d4811c0c975c51e25de910f1ecc348405ee7eb37c5264caaead72d8ec44305",
+    "bars/RS.jsonl.gz": "53e1757fded007ee5785f17c4dde27a144e6865d02b1f988ca310c95d03d4f3d",
+    "bars/UTHR.jsonl.gz": "9c87cc7a97fa45639957f0beff43121667bf52ba86b8c15a88f5f266a4fa5d6e",
+    "bars/WSO.jsonl.gz": "09ffe85fe803d0113db733a0d3b20fd6c3b2100596c9b8ad6555a39294ddb1ee",
+    "bars/XPO.jsonl.gz": "b8e55c3b73981937dfbc1514d5312fffa61c1c930743d0844d704a3d9a4f8318",
+    "parent.json": "fa0b32ad699850676d2fea768db59ba8222a1d9c5e8b414880c395595b8e8206"
+  }
+}

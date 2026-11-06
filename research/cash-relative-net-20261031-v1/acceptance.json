@@ -1,0 +1,19 @@
+{
+  "app_or_broker_mutation": false,
+  "artifact_manifest_sha256": "63339f55b54b9d6ce3601d2a1cf6fb414f024235b1ed39e07af7d51c90ba39da",
+  "cases": 126,
+  "html_local_links": 13,
+  "maximum_native_nav_error_usd": 0,
+  "native_cases": 3,
+  "next_item_started": false,
+  "protocol_sha256": "fccdfe34fdf4ffb944751b001afc3f62132f903e4dfb67cf23fc224cfc672712",
+  "status": "complete_waiting_for_operator_discussion",
+  "test_receipt_sha256": "b3fdeacbeda0644bf3b2eeded2f3cacd0947bf7068ab5653da161b2b2543712a",
+  "tests": 35,
+  "verified_adoptions": 5698,
+  "visual_qa": [
+    "comparison.png",
+    "weakest-calibration-EWH.png",
+    "weakest-later-XLE.png"
+  ]
+}

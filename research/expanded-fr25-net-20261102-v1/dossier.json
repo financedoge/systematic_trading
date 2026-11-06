@@ -1,0 +1,168 @@
+{
+  "artifacts": [
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/protocol.json",
+      "roles": [
+        "protocol"
+      ],
+      "sha256": "63f478da3d993611a4468433a75cadac7ab80cbd1e45eefb6a2059556d379aae"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/definitions.json",
+      "roles": [
+        "strategy_recipe"
+      ],
+      "sha256": "257074cd3dcb04c29f3efeb8a61aada5219483708151a14ebc8767d8fe0d4e98"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/input-verification.json",
+      "roles": [
+        "published_input_verification"
+      ],
+      "sha256": "0f4d014901ccc5bbad5088b17d08ed2b812c705f46de037f007cdd4c32bacaf3"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/selection.json",
+      "roles": [
+        "selection"
+      ],
+      "sha256": "a09f151ffaca0ded882e43d22a902711b64c5546ea24c9e097526b22276e16e2"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/results.json",
+      "roles": [
+        "net_results",
+        "cost_delay",
+        "chronology"
+      ],
+      "sha256": "a09ffa67101f1ed883262be5b6e94cf03075e55232f99cebde6462dce0e55a45"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/comparisons.json",
+      "roles": [
+        "matched_controls"
+      ],
+      "sha256": "98fc60ed842a79dc73b069cb4639a6e5ce63015680b868d42a055b840b1e6e26"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/uncertainty.json",
+      "roles": [
+        "uncertainty"
+      ],
+      "sha256": "0bb2930cf6c2274ff8f7808657df002c8777aa2fdd79d2e22041eeaaba6b88ab"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/signal-diagnostics.json",
+      "roles": [
+        "decay_stability"
+      ],
+      "sha256": "5313b1fa9e71eeee5feacd0e97a83d0238e360641d4ebb80a46f7fc34908859c"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/training-stability.json",
+      "roles": [
+        "decay_stability"
+      ],
+      "sha256": "b6ea82f346de7e00bd5f8352f8d15f9446d6ebe06e49b45b3ca5fef1126dad20"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/native-validation.json",
+      "roles": [
+        "independent_validation"
+      ],
+      "sha256": "92c8d4f6184e2c8991c96c063b3aaf13601bdd256de1f2c40085474805bb4fbe"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/monthly-target-parity.json",
+      "roles": [
+        "independent_validation"
+      ],
+      "sha256": "d2f1a8e0aa7407dca035bee78e8697b4bebb20b9fb0530648e5320721173a031"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/results.md",
+      "roles": [
+        "weakest_inspections"
+      ],
+      "sha256": "4e39605a51e1c00d2a23baff53faaacaea96690a766e81dfb4bbde43193aa048"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/weakest-calibration-EWC.png",
+      "roles": [
+        "weakest_inspections"
+      ],
+      "sha256": "9f05ee42220189e78d4624aafdeeb1cf2e68a8f453efacd31339d8fb88b574ca"
+    },
+    {
+      "path": "research/expanded-fr25-net-20261102-v1/weakest-later-XLK.png",
+      "roles": [
+        "weakest_inspections"
+      ],
+      "sha256": "d6c55eeeb09f1fa74a57e1e78e6205b325902fabfa99468d3a6e6611f60b78e8"
+    }
+  ],
+  "candidate_id": "expanded-monthly",
+  "coverage_gaps": [
+    "Fresh prospective performance has not been collected for this expanded recipe.",
+    "Historical security-master membership and first publication availability remain uncertified.",
+    "No measured spreads/impact or paper evidence for expanded allocation; bootstrap does not account for all prior searches."
+  ],
+  "decay": [
+    {
+      "cadence_and_delay_interpretation": "Evaluate monthly and0.10/0.40/0.80 target-change policies on realized net portfolios, with5/10/20bp and0/1 extra delay. Missing half-life is not a profitability veto.",
+      "half_life_sessions": null,
+      "horizons": [
+        1,
+        5,
+        10,
+        21,
+        63
+      ],
+      "method_uncertainty_and_caveats": "Return-horizon rank-IC curve with1000 circular21-session block draws does not identify an exponential signal half-life. Overlapping labels, regime dependence and prior sample reuse remain;63-session dependence can exceed the block length.",
+      "signal": "Expanded FR25 combined selection rank",
+      "status": "unidentifiable"
+    }
+  ],
+  "fixed_and_dynamic_evaluated": true,
+  "inputs": {
+    "activity_basis": "audited_raw",
+    "full_supported_pool": true,
+    "historical_availability": "reconstructed_or_unknown",
+    "historical_membership": "retrospective_or_unknown",
+    "limitations_and_missing_policy": "52 supported histories from54 candidates; BWX/XOP unresolved identity holds. Audited adjusted prices/raw activity with explicit missing exclusions. Original-vintage financial/USD series remain limited by historical capture availability; monthly carry preserves source dates.",
+    "price_basis": "dividend_split_adjusted",
+    "publication_batch": "e22f27a465e95f86cd40f7f9d24b63533a4a397eb0c02c8f40a696b0350d7731"
+  },
+  "net_verdict": "not_established",
+  "operator_disposition": "November2: operator authorized this next item after retaining prior Alpha54 research. Numerical item completed and paused for discussion; no claim that the operator has accepted the new conclusions or authorized tracking.",
+  "policy_sha256": "6335fdb51082f56eabea53b75be5c30b42fdcc4edf972a18dcb819614a9dac58",
+  "policy_version": "research-evidence-v1",
+  "preregistered_net_rule": "Expanded FR25 highest calibration2021-2024 primary5bp/delay0 net Sharpe, alphabetical policy tie. Carry fixed into later2025-2026; compare same-policy original14, M1, simple momentum and unranked. Strict Sharpe improvement, CAGR sacrifice<=0.5pp and DD worsening<=2pp; no later rescue or cost/IC veto. Report independently training-selected controls as diagnostics.",
+  "prospective_plan_or_gap": "Not authorized or started. Any future trial must freeze the recipe before new audited/captured observations; this report remains retrospective development evidence.",
+  "purpose": "retain_research",
+  "sample": {
+    "claim": "retrospective_development",
+    "label_boundary_and_overlap": "Causal model label cutoffs enforced by shared application code. Forward IC endpoints confined to each era;1/5/10/21/63 daily labels overlap. Paired21-session block intervals are approximate and may understate longer-label dependence.",
+    "observations_captured_after_freeze": false,
+    "prior_search_and_multiplicity": "Five recipe families x four timing policies, plus four buyhold/cash references; six friction settings each. Sixteen expanded-policy/control contrasts have approximate family intervals. Earlier screens and repeated strategy searches mean total lifetime search count is unknown.",
+    "recipe_frozen_at": "2026-11-02T15:52:02.398536+00:00",
+    "selection_basis": "training_only",
+    "trial_count": 20,
+    "windows": [
+      {
+        "end": "2024-12-31",
+        "prior_use": "previously_inspected",
+        "role": "calibration",
+        "start": "2021-01-04"
+      },
+      {
+        "end": "2026-10-30",
+        "prior_use": "previously_inspected",
+        "role": "evaluation",
+        "start": "2025-01-02"
+      }
+    ]
+  },
+  "schema_version": 1,
+  "study_id": "expanded-fr25-net-20261102-v1"
+}

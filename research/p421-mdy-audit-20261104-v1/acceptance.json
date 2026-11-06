@@ -1,0 +1,11 @@
+{
+  "all_five_filing_valuation_checks_within_half_cent": true,
+  "deterministic_rerun": true,
+  "retention": "Compact evidence and runner retained; no large data extracts created.",
+  "runners": {
+    "scripts/diagnose_mdy_price_audits.py": "ee95d4a35a991c3b5a67fbbd00fa8b5636e69a58e89f9478bcf20753fdb0671d",
+    "tests/test_mdy_price_audits.py": "75128d695c2231c1392719c67873fcf81385ff3cb2a3b13ceed2bf571f500f32"
+  },
+  "scope": "Read-only research data diagnosis; prior pilot and publication statuses preserved.",
+  "tests_passed": 10
+}

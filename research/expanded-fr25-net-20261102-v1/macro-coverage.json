@@ -1,0 +1,14 @@
+{
+  "calibration": {
+    "days": 1005,
+    "financial_carried": 957,
+    "financial_ready": 817,
+    "usd_carried": 182
+  },
+  "later": {
+    "days": 459,
+    "financial_carried": 437,
+    "financial_ready": 459,
+    "usd_carried": 418
+  }
+}

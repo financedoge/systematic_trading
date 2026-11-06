@@ -1,0 +1,45 @@
+{
+  "authority": {
+    "allocation": false,
+    "execution": false,
+    "monitoring": false,
+    "promotion": false
+  },
+  "candidate_id": "expanded-monthly",
+  "dossier_fingerprint": "cdbc796b38d0798e09adc051ac3c3bb3e94a841a0a3e3e1772b96930b0c5ed3b",
+  "evidence_gaps": [
+    "Fresh prospective performance has not been collected for this expanded recipe.",
+    "Historical security-master membership and first publication availability remain uncertified.",
+    "No measured spreads/impact or paper evidence for expanded allocation; bootstrap does not account for all prior searches."
+  ],
+  "integrity_and_claim_issues": [],
+  "net_verdict": "not_established",
+  "policy_sha256": "6335fdb51082f56eabea53b75be5c30b42fdcc4edf972a18dcb819614a9dac58",
+  "policy_version": "research-evidence-v1",
+  "purpose": "retain_research",
+  "requested_stage": "ready_for_human_review",
+  "schema_version": 1,
+  "status": "research_evidence_reviewable",
+  "study_id": "expanded-fr25-net-20261102-v1",
+  "validator_sha256": "7a69022bead50b35a7f8590f9de96e1864180836063f1c4a0a65dd0c770619bf",
+  "verified_artifacts": [
+    "research/expanded-fr25-net-20261102-v1/protocol.json",
+    "research/expanded-fr25-net-20261102-v1/definitions.json",
+    "research/expanded-fr25-net-20261102-v1/input-verification.json",
+    "research/expanded-fr25-net-20261102-v1/selection.json",
+    "research/expanded-fr25-net-20261102-v1/results.json",
+    "research/expanded-fr25-net-20261102-v1/comparisons.json",
+    "research/expanded-fr25-net-20261102-v1/uncertainty.json",
+    "research/expanded-fr25-net-20261102-v1/signal-diagnostics.json",
+    "research/expanded-fr25-net-20261102-v1/training-stability.json",
+    "research/expanded-fr25-net-20261102-v1/native-validation.json",
+    "research/expanded-fr25-net-20261102-v1/monthly-target-parity.json",
+    "research/expanded-fr25-net-20261102-v1/results.md",
+    "research/expanded-fr25-net-20261102-v1/weakest-calibration-EWC.png",
+    "research/expanded-fr25-net-20261102-v1/weakest-later-XLK.png"
+  ],
+  "warnings": [
+    "Chronological separation is not a claim of untouched or prospective validation",
+    "Checklist verifies supplied file integrity and declarations; reviewer must assess scientific adequacy and provenance"
+  ]
+}

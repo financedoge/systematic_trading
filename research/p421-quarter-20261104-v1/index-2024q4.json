@@ -1,0 +1,17 @@
+{
+  "member_sha256": {
+    "FUND_REPORTED_INFO.tsv": "1ed470b2ad51e8982473b4145d26bb63fbb36b54d72eff464a35b0f5d39b966d",
+    "REGISTRANT.tsv": "84ccf62772ab5664dd54bd9302ebc43facb8c06eb45339cd38cb7402c66c8ca1",
+    "SUBMISSION.tsv": "64abf2845d58fa7040377a82046b0872c064b9446b1455cca5e521336da41c9e"
+  },
+  "quarter": "2024q4",
+  "records": [],
+  "source": {
+    "bytes": 2300001,
+    "content_range": "bytes 0-2300000/406008057",
+    "prefix": 2300001,
+    "retrieved_at": "2026-11-04T14:40:38.745433+00:00",
+    "sha256": "e017391dce99a0cd848c2071010a5828ed99a6d8f8aba15267adb32398e618ba",
+    "url": "https://www.sec.gov/files/dera/data/form-n-port-data-sets/2024q4_nport.zip"
+  }
+}

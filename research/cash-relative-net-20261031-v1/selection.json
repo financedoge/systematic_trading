@@ -1,0 +1,12 @@
+{
+  "eligible": [
+    "class_cash_relative_risk-0.10",
+    "class_cash_relative_risk-monthly",
+    "pooled_cash_relative_risk-0.80",
+    "pooled_cash_relative_risk-monthly"
+  ],
+  "fallback": false,
+  "reason": "Highest training net Sharpe among candidates passing matched removal-only return/drawdown guards; otherwise predeclared class/monthly diagnostic fallback, not acceptance.",
+  "selected": "class_cash_relative_risk-monthly",
+  "window": "calibration"
+}

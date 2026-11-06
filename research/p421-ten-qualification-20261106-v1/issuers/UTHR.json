@@ -1,0 +1,90 @@
+{
+  "cik": 1082554,
+  "filings": [
+    {
+      "accession": "0001082554-24-000005",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "December\u00a031 , 2023"
+        ],
+        "DocumentType": [
+          "10-K"
+        ],
+        "EntityCentralIndexKey": [
+          "0001082554"
+        ],
+        "EntityRegistrantName": [
+          "United Therapeutics Corporation"
+        ],
+        "Security12bTitle": [
+          "Common Stock, par value $.01 per share"
+        ],
+        "SecurityExchangeName": [
+          "Nasdaq Global Select Market"
+        ],
+        "TradingSymbol": [
+          "UTHR"
+        ]
+      },
+      "filing_date": "2024-02-21",
+      "listing_tables": [
+        "Title of each class Trading Symbol(s) Name of each exchange on which registered Common Stock, par value $.01 per share UTHR Nasdaq Global Select Market"
+      ],
+      "report_date": "2023-12-31",
+      "source": {
+        "bytes": 2988400,
+        "retrieved_at": "2026-11-05T16:07:09.775801+00:00",
+        "sha256": "dfef9d70b25283f3562497ba128753516a2bb86dd0ec3f2b1afbcee4b656e39a",
+        "url": "https://www.sec.gov/Archives/edgar/data/1082554/000108255424000005/uthr-20231231.htm"
+      }
+    },
+    {
+      "accession": "0001082554-25-000005",
+      "fields": {
+        "DocumentPeriodEndDate": [
+          "December\u00a031 , 2024"
+        ],
+        "DocumentType": [
+          "10-K"
+        ],
+        "EntityCentralIndexKey": [
+          "0001082554"
+        ],
+        "EntityRegistrantName": [
+          "United Therapeutics Corporation"
+        ],
+        "Security12bTitle": [
+          "Common Stock, par value $.01 per share"
+        ],
+        "SecurityExchangeName": [
+          "Nasdaq Global Select Market"
+        ],
+        "TradingSymbol": [
+          "UTHR"
+        ]
+      },
+      "filing_date": "2025-02-26",
+      "listing_tables": [
+        "Title of each class Trading Symbol(s) Name of each exchange on which registered Common Stock, par value $.01 per share UTHR Nasdaq Global Select Market"
+      ],
+      "report_date": "2024-12-31",
+      "source": {
+        "bytes": 3010304,
+        "retrieved_at": "2026-11-05T16:07:12.066226+00:00",
+        "sha256": "7b84e32b8637b33f7c523a586165ba7d99ed2e8682deaf2d5e97d4e7f64d6ce0",
+        "url": "https://www.sec.gov/Archives/edgar/data/1082554/000108255425000005/uthr-20241231.htm"
+      }
+    }
+  ],
+  "requested_cutoffs": {
+    "2024-02-27": "0001082554-24-000005",
+    "2025-02-27": "0001082554-25-000005"
+  },
+  "submissions": {
+    "bytes": 160561,
+    "retrieved_at": "2026-11-05T16:07:06.334734+00:00",
+    "sha256": "2d6bfa462f9c363eb1f9bab1d2696e3dfce6ab14f8e8e5ebbae4437d788ed7ce",
+    "url": "https://data.sec.gov/submissions/CIK0001082554.json"
+  },
+  "symbol": "UTHR"
+}

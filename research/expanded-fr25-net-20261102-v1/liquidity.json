@@ -1,0 +1,391 @@
+{
+  "above_half_percent": [
+    {
+      "date": "2021-01-04",
+      "fraction": 0.008638655346944612,
+      "symbol": "PPLT"
+    },
+    {
+      "date": "2021-02-01",
+      "fraction": 0.007202395313411541,
+      "symbol": "PPLT"
+    },
+    {
+      "date": "2021-03-01",
+      "fraction": 0.01864391095191177,
+      "symbol": "DBA"
+    },
+    {
+      "date": "2021-03-01",
+      "fraction": 0.008245962193591229,
+      "symbol": "DBC"
+    },
+    {
+      "date": "2021-03-01",
+      "fraction": 0.005515727113558822,
+      "symbol": "PPLT"
+    },
+    {
+      "date": "2021-04-01",
+      "fraction": 0.014951544278492518,
+      "symbol": "DBA"
+    },
+    {
+      "date": "2021-04-01",
+      "fraction": 0.006203453383058629,
+      "symbol": "DBC"
+    },
+    {
+      "date": "2021-04-01",
+      "fraction": 0.011784283423826815,
+      "symbol": "IAT"
+    },
+    {
+      "date": "2021-05-03",
+      "fraction": 0.029225121320197785,
+      "symbol": "CPER"
+    },
+    {
+      "date": "2021-05-03",
+      "fraction": 0.040648829305253854,
+      "symbol": "DBB"
+    },
+    {
+      "date": "2021-05-03",
+      "fraction": 0.005473842370956978,
+      "symbol": "DBC"
+    },
+    {
+      "date": "2021-06-01",
+      "fraction": 0.016515538288867496,
+      "symbol": "CORN"
+    },
+    {
+      "date": "2021-06-01",
+      "fraction": 0.025588454969527875,
+      "symbol": "CPER"
+    },
+    {
+      "date": "2021-07-01",
+      "fraction": 0.031787994463886325,
+      "symbol": "DBB"
+    },
+    {
+      "date": "2021-07-01",
+      "fraction": 0.01632873168740024,
+      "symbol": "IAT"
+    },
+    {
+      "date": "2021-08-02",
+      "fraction": 0.016153299857407245,
+      "symbol": "CORN"
+    },
+    {
+      "date": "2021-08-02",
+      "fraction": 0.02851470119119105,
+      "symbol": "DBB"
+    },
+    {
+      "date": "2021-09-01",
+      "fraction": 0.043776904500394606,
+      "symbol": "DBB"
+    },
+    {
+      "date": "2022-03-01",
+      "fraction": 0.02988687543783004,
+      "symbol": "DBB"
+    },
+    {
+      "date": "2022-03-01",
+      "fraction": 0.006174587375701232,
+      "symbol": "ITA"
+    },
+    {
+      "date": "2022-03-01",
+      "fraction": 0.014877159291922527,
+      "symbol": "PPLT"
+    },
+    {
+      "date": "2022-04-01",
+      "fraction": 0.029419321034514993,
+      "symbol": "CORN"
+    },
+    {
+      "date": "2022-04-01",
+      "fraction": 0.010345963052846739,
+      "symbol": "DBB"
+    },
+    {
+      "date": "2022-04-01",
+      "fraction": 0.011564288195144566,
+      "symbol": "PPLT"
+    },
+    {
+      "date": "2022-05-02",
+      "fraction": 0.010941213809918192,
+      "symbol": "DBB"
+    },
+    {
+      "date": "2022-06-01",
+      "fraction": 0.01785114659685864,
+      "symbol": "CORN"
+    },
+    {
+      "date": "2022-07-01",
+      "fraction": 0.005487137217852051,
+      "symbol": "DBA"
+    },
+    {
+      "date": "2022-08-01",
+      "fraction": 0.0051194527939354886,
+      "symbol": "ITA"
+    },
+    {
+      "date": "2022-09-01",
+      "fraction": 0.006443041354483053,
+      "symbol": "ITA"
+    },
+    {
+      "date": "2022-12-01",
+      "fraction": 0.025441654840895545,
+      "symbol": "PPLT"
+    },
+    {
+      "date": "2023-02-01",
+      "fraction": 0.015706957238909285,
+      "symbol": "PPLT"
+    },
+    {
+      "date": "2023-05-01",
+      "fraction": 0.005093195648726908,
+      "symbol": "EWU"
+    },
+    {
+      "date": "2023-10-02",
+      "fraction": 0.014603399465414082,
+      "symbol": "DBC"
+    },
+    {
+      "date": "2023-11-01",
+      "fraction": 0.04893771441023952,
+      "symbol": "DBA"
+    },
+    {
+      "date": "2023-11-01",
+      "fraction": 0.011697430933821853,
+      "symbol": "DBC"
+    },
+    {
+      "date": "2023-12-01",
+      "fraction": 0.0475638919768691,
+      "symbol": "DBA"
+    },
+    {
+      "date": "2024-04-01",
+      "fraction": 0.023014324818399115,
+      "symbol": "DBA"
+    },
+    {
+      "date": "2024-05-01",
+      "fraction": 0.017493676189153328,
+      "symbol": "DBA"
+    },
+    {
+      "date": "2024-06-03",
+      "fraction": 0.010755679520703207,
+      "symbol": "DBA"
+    },
+    {
+      "date": "2024-06-03",
+      "fraction": 0.005436241482103463,
+      "symbol": "EWU"
+    },
+    {
+      "date": "2024-07-01",
+      "fraction": 0.009785355907425585,
+      "symbol": "DBA"
+    },
+    {
+      "date": "2024-08-01",
+      "fraction": 0.02209506777754058,
+      "symbol": "IAT"
+    },
+    {
+      "date": "2024-08-01",
+      "fraction": 0.005554561244730321,
+      "symbol": "ITA"
+    },
+    {
+      "date": "2024-10-01",
+      "fraction": 0.005475541953962174,
+      "symbol": "EWA"
+    },
+    {
+      "date": "2024-10-01",
+      "fraction": 0.012787349206266178,
+      "symbol": "EWG"
+    },
+    {
+      "date": "2024-10-01",
+      "fraction": 0.009057912602190538,
+      "symbol": "IAT"
+    },
+    {
+      "date": "2024-11-01",
+      "fraction": 0.03886830398270947,
+      "symbol": "DBA"
+    },
+    {
+      "date": "2024-11-01",
+      "fraction": 0.005371774537385448,
+      "symbol": "EWA"
+    },
+    {
+      "date": "2024-11-01",
+      "fraction": 0.013749557138247904,
+      "symbol": "EWG"
+    },
+    {
+      "date": "2024-11-01",
+      "fraction": 0.017636199040478744,
+      "symbol": "IAT"
+    },
+    {
+      "date": "2024-12-02",
+      "fraction": 0.03356656128908,
+      "symbol": "DBA"
+    },
+    {
+      "date": "2024-12-02",
+      "fraction": 0.01644470513279474,
+      "symbol": "IAT"
+    },
+    {
+      "date": "2025-01-02",
+      "fraction": 0.02710086341065402,
+      "symbol": "DBA"
+    },
+    {
+      "date": "2025-03-03",
+      "fraction": 0.021487007786112167,
+      "symbol": "DBA"
+    },
+    {
+      "date": "2025-03-03",
+      "fraction": 0.007204630074767388,
+      "symbol": "EWG"
+    },
+    {
+      "date": "2025-03-03",
+      "fraction": 0.007272079067259153,
+      "symbol": "EWU"
+    },
+    {
+      "date": "2025-04-01",
+      "fraction": 0.012861822812163482,
+      "symbol": "DBC"
+    },
+    {
+      "date": "2025-05-01",
+      "fraction": 0.01034461190511897,
+      "symbol": "DBC"
+    },
+    {
+      "date": "2025-08-01",
+      "fraction": 0.005005773738274031,
+      "symbol": "EWH"
+    },
+    {
+      "date": "2025-12-01",
+      "fraction": 0.005105279198435256,
+      "symbol": "EWC"
+    },
+    {
+      "date": "2026-01-02",
+      "fraction": 0.020314819794147985,
+      "symbol": "CPER"
+    },
+    {
+      "date": "2026-03-02",
+      "fraction": 0.007589908548363723,
+      "symbol": "CPER"
+    },
+    {
+      "date": "2026-04-01",
+      "fraction": 0.027992945406281788,
+      "symbol": "DBC"
+    },
+    {
+      "date": "2026-05-01",
+      "fraction": 0.0061373102597710285,
+      "symbol": "DBC"
+    },
+    {
+      "date": "2026-06-01",
+      "fraction": 0.005647822239560436,
+      "symbol": "EWC"
+    },
+    {
+      "date": "2026-07-01",
+      "fraction": 0.01377788226758613,
+      "symbol": "DBC"
+    },
+    {
+      "date": "2026-08-03",
+      "fraction": 0.01706472634193555,
+      "symbol": "DBC"
+    },
+    {
+      "date": "2026-08-03",
+      "fraction": 0.048375240191374805,
+      "symbol": "IAT"
+    },
+    {
+      "date": "2026-09-01",
+      "fraction": 0.06614492448220054,
+      "symbol": "CORN"
+    },
+    {
+      "date": "2026-09-01",
+      "fraction": 0.026950814705281885,
+      "symbol": "DBA"
+    },
+    {
+      "date": "2026-09-01",
+      "fraction": 0.0054792153982003,
+      "symbol": "DBC"
+    },
+    {
+      "date": "2026-09-01",
+      "fraction": 0.04193167537116085,
+      "symbol": "IAT"
+    },
+    {
+      "date": "2026-09-01",
+      "fraction": 0.02665953594976409,
+      "symbol": "WEAT"
+    },
+    {
+      "date": "2026-10-01",
+      "fraction": 0.06089749401477079,
+      "symbol": "CORN"
+    },
+    {
+      "date": "2026-10-01",
+      "fraction": 0.024948304566912473,
+      "symbol": "CPER"
+    },
+    {
+      "date": "2026-10-01",
+      "fraction": 0.021810651300513094,
+      "symbol": "DBA"
+    },
+    {
+      "date": "2026-10-01",
+      "fraction": 0.021538938353181304,
+      "symbol": "WEAT"
+    }
+  ],
+  "basis": "Actual adjusted-unit notional / prior63-session median audited raw-dollar volume; diagnostic only, not measured market impact.",
+  "max_fraction": 0.06614492448220054
+}

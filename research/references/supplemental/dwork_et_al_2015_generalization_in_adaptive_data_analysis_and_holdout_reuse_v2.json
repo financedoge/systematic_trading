@@ -1,0 +1,21 @@
+{
+  "title": "Generalization in Adaptive Data Analysis and Holdout Reuse",
+  "authors": [
+    "Cynthia Dwork",
+    "Vitaly Feldman",
+    "Moritz Hardt",
+    "Toniann Pitassi",
+    "Omer Reingold",
+    "Aaron Roth"
+  ],
+  "arxiv": "1506.02629v2",
+  "version_date": "2015-09-25",
+  "source_url": "https://arxiv.org/pdf/1506.02629v2",
+  "downloaded_at": "2026-11-02T15:48:32.166465+00:00",
+  "sha256": "dcfbb9aa401c62949123be2d74787c4f9cca48597f18860760ef1580ddb4bc71",
+  "bytes": 705052,
+  "file": "dwork_et_al_2015_generalization_in_adaptive_data_analysis_and_holdout_reuse_v2.pdf",
+  "pages": 29,
+  "title_page_date": "2015-09-28",
+  "identity_check": "Title, all six authors and arXiv v2 marker verified; first page rendered and visually inspected."
+}

@@ -1,0 +1,44 @@
+{
+  "authority": {
+    "allocation": false,
+    "execution": false,
+    "monitoring": false,
+    "promotion": false
+  },
+  "candidate_id": "pooled_risk-monthly",
+  "dossier_fingerprint": "0783df7c8f0ac30e350ea0190b026f920e5bdd4d527046c5a29b4647a09452c2",
+  "evidence_gaps": [
+    "Both eras previously inspected. No fresh prospective validation.",
+    "Conditional intervals and 12-contrast adjustment omit lifetime multiplicity.",
+    "Membership availability, spreads and impact remain unresolved."
+  ],
+  "integrity_and_claim_issues": [],
+  "net_verdict": "not_established",
+  "policy_sha256": "6335fdb51082f56eabea53b75be5c30b42fdcc4edf972a18dcb819614a9dac58",
+  "policy_version": "research-evidence-v1",
+  "purpose": "retain_research",
+  "requested_stage": "ready_for_human_review",
+  "schema_version": 1,
+  "status": "research_evidence_reviewable",
+  "study_id": "class-vol-net-20261103-v1",
+  "validator_sha256": "7a69022bead50b35a7f8590f9de96e1864180836063f1c4a0a65dd0c770619bf",
+  "verified_artifacts": [
+    "research/class-vol-net-20261103-v1/protocol.json",
+    "research/class-vol-net-20261103-v1/construction.json",
+    "research/class-vol-net-20261103-v1/inputs.json",
+    "research/class-vol-net-20261103-v1/selection.json",
+    "research/class-vol-net-20261103-v1/current-results.json",
+    "research/class-vol-net-20261103-v1/historical-results.json",
+    "research/class-vol-net-20261103-v1/paired-effects.json",
+    "research/class-vol-net-20261103-v1/results.md",
+    "research/class-vol-net-20261103-v1/uncertainty.json",
+    "research/class-vol-net-20261103-v1/weight-ic.json",
+    "research/class-vol-net-20261103-v1/native-validation.json",
+    "research/class-vol-net-20261103-v1/weakest-calibration-XLB.png",
+    "research/class-vol-net-20261103-v1/weakest-later-LEMB.png"
+  ],
+  "warnings": [
+    "Chronological separation is not a claim of untouched or prospective validation",
+    "Checklist verifies supplied file integrity and declarations; reviewer must assess scientific adequacy and provenance"
+  ]
+}

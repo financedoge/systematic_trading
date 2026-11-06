@@ -1,0 +1,12 @@
+{
+  "var/research/expanded-fr25-net-20261102-v1/models/expanded/complete.json": "fcaedf75901c8cd9a0d2772455cfadcc778ccfce646b405326a0457d1604b487",
+  "var/research/expanded-fr25-net-20261102-v1/models/expanded/financial.json": "5d53a7208e253ca1ca780089ed542057d5fa047be141ac63668dca8092e5635d",
+  "var/research/expanded-fr25-net-20261102-v1/models/expanded/receipt.json": "68cdef4e36d9e35302840b556566d9f5eeee8faf5756a9963e814a0e1680ada8",
+  "var/research/expanded-fr25-net-20261102-v1/models/expanded/rolling.json": "8bafd343fe3be067bfdab47fb9c40472cbb2b5b2270607f9065f5d87d254683d",
+  "var/research/expanded-fr25-net-20261102-v1/models/expanded/usd.json": "c588a653db69055aee53738f32e38cb519094ddf675a2780c42376b6e068a7e8",
+  "var/research/expanded-fr25-net-20261102-v1/models/original/complete.json": "7ebcf429c6ff63dc14d7ec51565f65c7b2b5652b9a7824bdb3a0f9dc7233f21c",
+  "var/research/expanded-fr25-net-20261102-v1/models/original/financial.json": "0073369502d9e21e645bd0dd00fc2553443a8ecfd42c61e3936f07cf95acffad",
+  "var/research/expanded-fr25-net-20261102-v1/models/original/receipt.json": "79f86cb3311e450c5304ea1135de1fa4aa351720d8a8b0ae37b462f6ae66e829",
+  "var/research/expanded-fr25-net-20261102-v1/models/original/rolling.json": "112de751f270924eded53d916d3c38960bb6dd083b1339fb39c2adba67c37d25",
+  "var/research/expanded-fr25-net-20261102-v1/models/original/usd.json": "7245cee15e56c47f9a51595c9e0b839752fc632520fc75cd06b24847a300d1f0"
+}

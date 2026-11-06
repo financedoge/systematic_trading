@@ -1,0 +1,86 @@
+{
+  "calibration": {
+    "best": [
+      {
+        "mean_held_weight": 0.07304654663358276,
+        "net_contribution": 0.09955632,
+        "net_pnl": 99556.32,
+        "symbol": "DBC"
+      },
+      {
+        "mean_held_weight": 0.12867744656114144,
+        "net_contribution": 0.09665138000000001,
+        "net_pnl": 96651.38,
+        "symbol": "SPY"
+      },
+      {
+        "mean_held_weight": 0.058188768891616574,
+        "net_contribution": 0.07424247999999997,
+        "net_pnl": 74242.47999999997,
+        "symbol": "XLE"
+      }
+    ],
+    "worst": [
+      {
+        "mean_held_weight": 0.02295311163828207,
+        "net_contribution": -0.027148739999999956,
+        "net_pnl": -27148.739999999954,
+        "symbol": "TLT"
+      },
+      {
+        "mean_held_weight": 0.016675378536634786,
+        "net_contribution": -0.024110120000000016,
+        "net_pnl": -24110.120000000017,
+        "symbol": "MCHI"
+      },
+      {
+        "mean_held_weight": 0.045175795671374586,
+        "net_contribution": -0.02163443999999996,
+        "net_pnl": -21634.43999999996,
+        "symbol": "LQD"
+      }
+    ]
+  },
+  "later": {
+    "best": [
+      {
+        "mean_held_weight": 0.0762293092543978,
+        "net_contribution": 0.14777235732262847,
+        "net_pnl": 192967.89,
+        "symbol": "EWY"
+      },
+      {
+        "mean_held_weight": 0.10101223231066435,
+        "net_contribution": 0.10472066128182918,
+        "net_pnl": 136749.02000000005,
+        "symbol": "GLD"
+      },
+      {
+        "mean_held_weight": 0.0789801827038429,
+        "net_contribution": 0.07749183067692567,
+        "net_pnl": 101192.36999999992,
+        "symbol": "XLE"
+      }
+    ],
+    "worst": [
+      {
+        "mean_held_weight": 0.013958767785818402,
+        "net_contribution": -0.00554390941992267,
+        "net_pnl": -7239.490000000042,
+        "symbol": "IEF"
+      },
+      {
+        "mean_held_weight": 0.0,
+        "net_contribution": 0.0,
+        "net_pnl": 0.0,
+        "symbol": "AGG"
+      },
+      {
+        "mean_held_weight": 0.0,
+        "net_contribution": 0.0,
+        "net_pnl": 0.0,
+        "symbol": "BIL"
+      }
+    ]
+  }
+}

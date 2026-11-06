@@ -1,0 +1,326 @@
+{
+  "expanded-monthly-calibration": {
+    "best": [
+      {
+        "mean_held_weight": 0.039770608738937924,
+        "net_contribution": 0.06520104999999998,
+        "net_pnl": 65201.04999999999,
+        "symbol": "EWT"
+      },
+      {
+        "mean_held_weight": 0.05821191818275686,
+        "net_contribution": 0.06058677,
+        "net_pnl": 60586.77,
+        "symbol": "XLC"
+      },
+      {
+        "mean_held_weight": 0.06016020354791967,
+        "net_contribution": 0.052361379999999985,
+        "net_pnl": 52361.37999999998,
+        "symbol": "XLK"
+      },
+      {
+        "mean_held_weight": 0.05092907568650529,
+        "net_contribution": 0.04076597000000005,
+        "net_pnl": 40765.970000000045,
+        "symbol": "DBC"
+      },
+      {
+        "mean_held_weight": 0.04018570629528107,
+        "net_contribution": 0.040320119999999994,
+        "net_pnl": 40320.119999999995,
+        "symbol": "SOXX"
+      }
+    ],
+    "worst": [
+      {
+        "mean_held_weight": 0.02692556744595739,
+        "net_contribution": -0.05056019000000005,
+        "net_pnl": -50560.19000000005,
+        "symbol": "EWC"
+      },
+      {
+        "mean_held_weight": 0.028083120914463473,
+        "net_contribution": -0.04003975000000007,
+        "net_pnl": -40039.750000000065,
+        "symbol": "XLU"
+      },
+      {
+        "mean_held_weight": 0.015437907261011293,
+        "net_contribution": -0.03715103000000003,
+        "net_pnl": -37151.03000000003,
+        "symbol": "XLB"
+      }
+    ]
+  },
+  "expanded-monthly-later": {
+    "best": [
+      {
+        "mean_held_weight": 0.06540679219261929,
+        "net_contribution": 0.18416493341711307,
+        "net_pnl": 232956.88,
+        "symbol": "SOXX"
+      },
+      {
+        "mean_held_weight": 0.02979798884697023,
+        "net_contribution": 0.1264891206286509,
+        "net_pnl": 160000.66000000003,
+        "symbol": "USO"
+      },
+      {
+        "mean_held_weight": 0.03437175677388858,
+        "net_contribution": 0.11783050960975787,
+        "net_pnl": 149048.07,
+        "symbol": "SLV"
+      },
+      {
+        "mean_held_weight": 0.05345591753446726,
+        "net_contribution": 0.10771733504270026,
+        "net_pnl": 136255.55,
+        "symbol": "EWY"
+      },
+      {
+        "mean_held_weight": 0.053395718708096854,
+        "net_contribution": 0.08535350250962076,
+        "net_pnl": 107966.72999999998,
+        "symbol": "GLD"
+      }
+    ],
+    "worst": [
+      {
+        "mean_held_weight": 0.07134309711389637,
+        "net_contribution": -0.05607079895748733,
+        "net_pnl": -70925.98000000004,
+        "symbol": "XLK"
+      },
+      {
+        "mean_held_weight": 0.005694157613785801,
+        "net_contribution": -0.02685270736276064,
+        "net_pnl": -33966.96000000002,
+        "symbol": "WEAT"
+      },
+      {
+        "mean_held_weight": 0.026528054889241943,
+        "net_contribution": -0.02417981353588333,
+        "net_pnl": -30585.920000000006,
+        "symbol": "DBA"
+      }
+    ]
+  },
+  "m1-monthly-calibration": {
+    "best": [
+      {
+        "mean_held_weight": 0.03418105952942737,
+        "net_contribution": 0.06461954,
+        "net_pnl": 64619.54000000001,
+        "symbol": "EWT"
+      },
+      {
+        "mean_held_weight": 0.03771286019008528,
+        "net_contribution": 0.04639067999999998,
+        "net_pnl": 46390.679999999986,
+        "symbol": "SOXX"
+      },
+      {
+        "mean_held_weight": 0.05012116026014883,
+        "net_contribution": 0.04317871000000006,
+        "net_pnl": 43178.71000000006,
+        "symbol": "XLC"
+      },
+      {
+        "mean_held_weight": 0.03655342003985688,
+        "net_contribution": 0.036292309999999973,
+        "net_pnl": 36292.309999999976,
+        "symbol": "INDA"
+      },
+      {
+        "mean_held_weight": 0.025016125632173567,
+        "net_contribution": 0.03336849999999999,
+        "net_pnl": 33368.499999999985,
+        "symbol": "IAT"
+      }
+    ],
+    "worst": [
+      {
+        "mean_held_weight": 0.02392808618335453,
+        "net_contribution": -0.03896719000000002,
+        "net_pnl": -38967.19000000002,
+        "symbol": "XLV"
+      },
+      {
+        "mean_held_weight": 0.014879450121634365,
+        "net_contribution": -0.03411228000000003,
+        "net_pnl": -34112.28000000003,
+        "symbol": "XLB"
+      },
+      {
+        "mean_held_weight": 0.01778703431076223,
+        "net_contribution": -0.025245590000000033,
+        "net_pnl": -25245.590000000033,
+        "symbol": "EWC"
+      }
+    ]
+  },
+  "m1-monthly-later": {
+    "best": [
+      {
+        "mean_held_weight": 0.05223169440536247,
+        "net_contribution": 0.14019638035812573,
+        "net_pnl": 165673.44,
+        "symbol": "SOXX"
+      },
+      {
+        "mean_held_weight": 0.07674156944348698,
+        "net_contribution": 0.1151734919781486,
+        "net_pnl": 136103.28999999998,
+        "symbol": "GLD"
+      },
+      {
+        "mean_held_weight": 0.03783250408332672,
+        "net_contribution": 0.11392958909723162,
+        "net_pnl": 134633.33999999997,
+        "symbol": "SLV"
+      },
+      {
+        "mean_held_weight": 0.03373381620207396,
+        "net_contribution": 0.0977685324160566,
+        "net_pnl": 115535.43,
+        "symbol": "PPLT"
+      },
+      {
+        "mean_held_weight": 0.052823676995636795,
+        "net_contribution": 0.0882231486031566,
+        "net_pnl": 104255.42000000001,
+        "symbol": "EWY"
+      }
+    ],
+    "worst": [
+      {
+        "mean_held_weight": 0.053786008667281594,
+        "net_contribution": -0.04176787155113341,
+        "net_pnl": -49358.10000000002,
+        "symbol": "XLK"
+      },
+      {
+        "mean_held_weight": 0.010083951433293626,
+        "net_contribution": -0.03400255638352944,
+        "net_pnl": -40181.64000000002,
+        "symbol": "DBB"
+      },
+      {
+        "mean_held_weight": 0.017427208637006728,
+        "net_contribution": -0.032287477527855046,
+        "net_pnl": -38154.889999999956,
+        "symbol": "XLI"
+      }
+    ]
+  },
+  "original-monthly-calibration": {
+    "best": [
+      {
+        "mean_held_weight": 0.07387939486605448,
+        "net_contribution": 0.09733178,
+        "net_pnl": 97331.78000000001,
+        "symbol": "DBC"
+      },
+      {
+        "mean_held_weight": 0.12555593511931126,
+        "net_contribution": 0.09224367000000004,
+        "net_pnl": 92243.67000000004,
+        "symbol": "SPY"
+      },
+      {
+        "mean_held_weight": 0.058495111394571996,
+        "net_contribution": 0.07310447999999996,
+        "net_pnl": 73104.47999999995,
+        "symbol": "XLE"
+      },
+      {
+        "mean_held_weight": 0.06423761014081818,
+        "net_contribution": 0.056243,
+        "net_pnl": 56243.0,
+        "symbol": "EWJ"
+      },
+      {
+        "mean_held_weight": 0.09336527488404532,
+        "net_contribution": 0.036522559999999905,
+        "net_pnl": 36522.5599999999,
+        "symbol": "HYG"
+      }
+    ],
+    "worst": [
+      {
+        "mean_held_weight": 0.022952843783982144,
+        "net_contribution": -0.02693800999999995,
+        "net_pnl": -26938.00999999995,
+        "symbol": "TLT"
+      },
+      {
+        "mean_held_weight": 0.016561009620574885,
+        "net_contribution": -0.02394045000000001,
+        "net_pnl": -23940.450000000008,
+        "symbol": "MCHI"
+      },
+      {
+        "mean_held_weight": 0.050122193380241126,
+        "net_contribution": -0.020709619999999977,
+        "net_pnl": -20709.619999999977,
+        "symbol": "LQD"
+      }
+    ]
+  },
+  "original-monthly-later": {
+    "best": [
+      {
+        "mean_held_weight": 0.07578615049251951,
+        "net_contribution": 0.1475251792752978,
+        "net_pnl": 191136.44,
+        "symbol": "EWY"
+      },
+      {
+        "mean_held_weight": 0.0966737038832737,
+        "net_contribution": 0.10040725704028294,
+        "net_pnl": 130089.56000000006,
+        "symbol": "GLD"
+      },
+      {
+        "mean_held_weight": 0.07898295626078924,
+        "net_contribution": 0.07730267329340847,
+        "net_pnl": 100154.81999999992,
+        "symbol": "XLE"
+      },
+      {
+        "mean_held_weight": 0.08837516235622105,
+        "net_contribution": 0.049964700273405965,
+        "net_pnl": 64735.219999999994,
+        "symbol": "EWH"
+      },
+      {
+        "mean_held_weight": 0.14428393360921365,
+        "net_contribution": 0.04024193530336195,
+        "net_pnl": 52138.220000000045,
+        "symbol": "SPY"
+      }
+    ],
+    "worst": [
+      {
+        "mean_held_weight": 0.013958361669680466,
+        "net_contribution": -0.005543766682661625,
+        "net_pnl": -7182.610000000041,
+        "symbol": "IEF"
+      },
+      {
+        "mean_held_weight": 0.0,
+        "net_contribution": 0.0,
+        "net_pnl": 0.0,
+        "symbol": "AGG"
+      },
+      {
+        "mean_held_weight": 0.0,
+        "net_contribution": 0.0,
+        "net_pnl": 0.0,
+        "symbol": "BIL"
+      }
+    ]
+  }
+}

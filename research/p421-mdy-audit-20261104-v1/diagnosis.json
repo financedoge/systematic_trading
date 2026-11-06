@@ -1,0 +1,708 @@
+{
+  "baseline_complete_pct": 17.92247301625599,
+  "cases": {
+    "EME": {
+      "anchor_factor_failures": [],
+      "complete": true,
+      "cross_vintage": {
+        "adjusted_close_median_ratio": 0.9994633162543538,
+        "first": "2024-02-27",
+        "last": "2025-02-28",
+        "max_adjacent_adjusted_log_return_difference_bp": 0.004357147717311879,
+        "raw_close": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_high": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_low": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_open": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_volume": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "sessions": 253
+      },
+      "cusip": "29084Q100",
+      "earlier_problem_pairs": [
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/EME",
+          "candidate": "sector-research/ivv-public-archive-subset-20260926-v1/bars/yahoo2020/EME",
+          "families": [
+            "yahoo",
+            "yahoo2020"
+          ],
+          "first": "1995-01-10",
+          "first_conflict": "2012-12-14",
+          "last": "2020-04-01",
+          "last_conflict": "2020-04-01",
+          "price_conflict_count": 1836,
+          "volume_p99_scale_error": 0.0
+        },
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/EME",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/EME",
+          "families": [
+            "yahoo",
+            "stooq2017"
+          ],
+          "first": "2005-02-25",
+          "first_conflict": "2012-12-14",
+          "last": "2017-11-10",
+          "last_conflict": "2017-11-10",
+          "price_conflict_count": 1237,
+          "volume_p99_scale_error": 0.058995187010121075
+        },
+        {
+          "anchor": "sector-research/ivv-constituents-2012-2026-v1/bars/EME",
+          "candidate": "sector-research/ivv-public-archive-subset-20260926-v1/bars/yahoo2020/EME",
+          "families": [
+            "yahoo",
+            "yahoo2020"
+          ],
+          "first": "2011-01-03",
+          "first_conflict": "2011-01-03",
+          "last": "2020-04-01",
+          "last_conflict": "2012-12-13",
+          "price_conflict_count": 491,
+          "volume_p99_scale_error": 0.0
+        },
+        {
+          "anchor": "sector-research/ivv-constituents-2012-2026-v1/bars/EME",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/EME",
+          "families": [
+            "yahoo",
+            "stooq2017"
+          ],
+          "first": "2011-01-03",
+          "first_conflict": "2011-01-03",
+          "last": "2017-11-10",
+          "last_conflict": "2012-12-13",
+          "price_conflict_count": 490,
+          "volume_p99_scale_error": 0.05439961533533112
+        },
+        {
+          "anchor": "sector-research/ivv-public-archive-subset-20260926-v1/bars/yahoo2020/EME",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/EME",
+          "families": [
+            "yahoo2020",
+            "stooq2017"
+          ],
+          "first": "2005-02-25",
+          "first_conflict": null,
+          "last": "2017-11-10",
+          "last_conflict": null,
+          "price_conflict_count": 0,
+          "volume_p99_scale_error": 0.058995187010121075
+        }
+      ],
+      "equity_value_pct": 0.7171419156211891,
+      "filing_value_per_share": 453.9,
+      "first": "1995-01-10",
+      "full_listing_history_certified": false,
+      "historical_available_at": null,
+      "identity_status": "provider_identity_not_security_master_certified",
+      "last": "2026-11-03",
+      "pre_listing_original": 0,
+      "price_conflict_dates": 1836,
+      "prior_link": {
+        "batch": "69755461f6f8088675229e9aff0f7ee8cbc2cf5a8083e126e58252e7f22dd5e3",
+        "conflict_dates": 1836,
+        "status": "review",
+        "volume_conflict_pairs": 3
+      },
+      "raw_at_filing_date": 453.8999938964844,
+      "reported_split_actions": [],
+      "sessions": 253,
+      "source_window_counts": {
+        "governance-source/governance-yahoo-20260926-v1/bars/EME": 253,
+        "sector-research/ivv-constituents-2012-2026-v1/bars/EME": 253,
+        "sector-research/underlying-sector-hhi-20260926-v1/bars/EME": 253
+      },
+      "status": "review",
+      "unresolved_historical_names": [],
+      "volume_conflict_pairs": 3,
+      "window_factors": {
+        "1": 253
+      },
+      "window_price_conflict_dates": [],
+      "window_source_families": [
+        "yahoo"
+      ]
+    },
+    "IBKR": {
+      "anchor_factor_failures": [],
+      "complete": true,
+      "cross_vintage": {
+        "adjusted_close_median_ratio": 1.0,
+        "first": "2024-02-27",
+        "last": "2025-02-28",
+        "max_adjacent_adjusted_log_return_difference_bp": 0.0037835146925204923,
+        "raw_close": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_high": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_low": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_open": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_volume": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "sessions": 253
+      },
+      "cusip": "45841N107",
+      "earlier_problem_pairs": [
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/IBKR",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/IBKR",
+          "families": [
+            "yahoo",
+            "stooq2017"
+          ],
+          "first": "2007-05-04",
+          "first_conflict": "2010-08-23",
+          "last": "2017-11-10",
+          "last_conflict": "2010-12-06",
+          "price_conflict_count": 74,
+          "volume_p99_scale_error": 0.32037301790636474
+        },
+        {
+          "anchor": "sector-research/ivv-constituents-2012-2026-v1/bars/IBKR",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/IBKR",
+          "families": [
+            "yahoo",
+            "stooq2017"
+          ],
+          "first": "2011-01-03",
+          "first_conflict": null,
+          "last": "2017-11-10",
+          "last_conflict": null,
+          "price_conflict_count": 0,
+          "volume_p99_scale_error": 0.3120613963592671
+        },
+        {
+          "anchor": "sector-research/ivv-public-archive-subset-20260926-v1/bars/yahoo2020/IBKR",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/IBKR",
+          "families": [
+            "yahoo2020",
+            "stooq2017"
+          ],
+          "first": "2007-05-04",
+          "first_conflict": "2010-08-23",
+          "last": "2017-11-10",
+          "last_conflict": "2010-12-06",
+          "price_conflict_count": 74,
+          "volume_p99_scale_error": 0.32039718804188433
+        }
+      ],
+      "equity_value_pct": 0.6606557807377628,
+      "filing_value_per_share": 176.67,
+      "first": "2007-05-04",
+      "full_listing_history_certified": false,
+      "historical_available_at": null,
+      "identity_status": "provider_identity_not_security_master_certified",
+      "last": "2026-11-02",
+      "pre_listing_original": 1,
+      "price_conflict_dates": 74,
+      "prior_link": {
+        "batch": "69755461f6f8088675229e9aff0f7ee8cbc2cf5a8083e126e58252e7f22dd5e3",
+        "conflict_dates": 74,
+        "status": "review",
+        "volume_conflict_pairs": 3
+      },
+      "raw_at_filing_date": 176.6699981689453,
+      "reported_split_actions": [
+        {
+          "date": "2025-06-18",
+          "factor": 4.0,
+          "reported_kind": "splits"
+        }
+      ],
+      "sessions": 253,
+      "source_window_counts": {
+        "governance-source/governance-yahoo-20260926-v1/bars/IBKR": 253,
+        "sector-research/ivv-constituents-2012-2026-v1/bars/IBKR": 253,
+        "sector-research/underlying-sector-hhi-20260926-v1/bars/IBKR": 253
+      },
+      "status": "review",
+      "unresolved_historical_names": [],
+      "volume_conflict_pairs": 3,
+      "window_factors": {
+        "4.0": 253
+      },
+      "window_price_conflict_dates": [],
+      "window_source_families": [
+        "yahoo"
+      ]
+    },
+    "ILMN": {
+      "anchor_factor_failures": [],
+      "complete": true,
+      "cross_vintage": {
+        "adjusted_close_median_ratio": 1.0,
+        "first": "2024-02-27",
+        "last": "2025-02-28",
+        "max_adjacent_adjusted_log_return_difference_bp": 0.0,
+        "raw_close": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_high": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_low": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_open": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_volume": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "sessions": 253
+      },
+      "cusip": "452327109",
+      "earlier_problem_pairs": [
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/ILMN",
+          "candidate": "sector-research/ivv-public-archive-subset-20260926-v1/bars/stooq2017/ILMN",
+          "families": [
+            "yahoo",
+            "stooq2017"
+          ],
+          "first": "2005-02-25",
+          "first_conflict": null,
+          "last": "2017-11-10",
+          "last_conflict": null,
+          "price_conflict_count": 0,
+          "volume_p99_scale_error": 0.4263322192410004
+        },
+        {
+          "anchor": "sector-research/ivv-constituents-2012-2026-v1/bars/ILMN",
+          "candidate": "sector-research/ivv-public-archive-subset-20260926-v1/bars/stooq2017/ILMN",
+          "families": [
+            "yahoo",
+            "stooq2017"
+          ],
+          "first": "2011-01-03",
+          "first_conflict": null,
+          "last": "2017-11-10",
+          "last_conflict": null,
+          "price_conflict_count": 0,
+          "volume_p99_scale_error": 0.5464552108971422
+        },
+        {
+          "anchor": "sector-research/ivv-public-archive-subset-20260926-v1/bars/yahoo2020/ILMN",
+          "candidate": "sector-research/ivv-public-archive-subset-20260926-v1/bars/stooq2017/ILMN",
+          "families": [
+            "yahoo2020",
+            "stooq2017"
+          ],
+          "first": "2005-02-25",
+          "first_conflict": null,
+          "last": "2017-11-10",
+          "last_conflict": null,
+          "price_conflict_count": 0,
+          "volume_p99_scale_error": 0.42633196043357446
+        }
+      ],
+      "equity_value_pct": 0.727906067653726,
+      "filing_value_per_share": 133.63,
+      "first": "2000-07-28",
+      "full_listing_history_certified": false,
+      "historical_available_at": null,
+      "identity_status": "provider_identity_not_security_master_certified",
+      "last": "2026-11-02",
+      "pre_listing_original": 0,
+      "price_conflict_dates": 0,
+      "prior_link": {
+        "batch": "69755461f6f8088675229e9aff0f7ee8cbc2cf5a8083e126e58252e7f22dd5e3",
+        "conflict_dates": 0,
+        "status": "review",
+        "volume_conflict_pairs": 3
+      },
+      "raw_at_filing_date": 133.6300048828125,
+      "reported_split_actions": [
+        {
+          "date": "2024-06-25",
+          "factor": 1.028,
+          "reported_kind": "splits"
+        }
+      ],
+      "sessions": 253,
+      "source_window_counts": {
+        "governance-source/governance-yahoo-20260926-v1/bars/ILMN": 253,
+        "sector-research/ivv-constituents-2012-2026-v1/bars/ILMN": 253,
+        "sector-research/underlying-sector-hhi-20260926-v1/bars/ILMN": 253
+      },
+      "status": "review",
+      "unresolved_historical_names": [],
+      "volume_conflict_pairs": 3,
+      "window_factors": {
+        "1": 171,
+        "1.028": 82
+      },
+      "window_price_conflict_dates": [],
+      "window_source_families": [
+        "yahoo"
+      ]
+    },
+    "PSTG": {
+      "anchor_factor_failures": [],
+      "complete": false,
+      "cross_vintage": {
+        "sessions": 0
+      },
+      "cusip": "74624M102",
+      "earlier_problem_pairs": [],
+      "equity_value_pct": 0.6568062311111713,
+      "filing_value_per_share": 61.43,
+      "first": "2015-10-06",
+      "full_listing_history_certified": false,
+      "historical_available_at": null,
+      "identity_status": "provider_identity_not_security_master_certified",
+      "last": "2020-04-01",
+      "pre_listing_original": 0,
+      "price_conflict_dates": 0,
+      "prior_link": null,
+      "raw_at_filing_date": null,
+      "reported_split_actions": [],
+      "sessions": 0,
+      "source_window_counts": {},
+      "status": "review",
+      "unresolved_historical_names": [
+        "EVERPURE INC CLASS A"
+      ],
+      "volume_conflict_pairs": 0,
+      "window_factors": {},
+      "window_price_conflict_dates": [],
+      "window_source_families": []
+    },
+    "WSM": {
+      "anchor_factor_failures": [],
+      "complete": true,
+      "cross_vintage": {
+        "adjusted_close_median_ratio": 0.9969844909533825,
+        "first": "2024-02-27",
+        "last": "2025-02-28",
+        "max_adjacent_adjusted_log_return_difference_bp": 0.00468537258001972,
+        "raw_close": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_high": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_low": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_open": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "raw_volume": {
+          "comparable": 253,
+          "identical": 253
+        },
+        "sessions": 253
+      },
+      "cusip": "969904101",
+      "earlier_problem_pairs": [
+        {
+          "anchor": "governance-source/governance-yahoo-20260926-v1/bars/WSM",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/WSM",
+          "families": [
+            "yahoo",
+            "stooq2017"
+          ],
+          "first": "2005-02-25",
+          "first_conflict": "2005-02-25",
+          "last": "2017-11-10",
+          "last_conflict": "2010-10-22",
+          "price_conflict_count": 1426,
+          "volume_p99_scale_error": 0.15037247522159936
+        },
+        {
+          "anchor": "sector-research/ivv-constituents-2012-2026-v1/bars/WSM",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/WSM",
+          "families": [
+            "yahoo",
+            "stooq2017"
+          ],
+          "first": "2011-01-03",
+          "first_conflict": null,
+          "last": "2017-11-10",
+          "last_conflict": null,
+          "price_conflict_count": 0,
+          "volume_p99_scale_error": 0.09018746307312471
+        },
+        {
+          "anchor": "sector-research/ivv-public-archive-subset-20260926-v1/bars/yahoo2020/WSM",
+          "candidate": "governance-source/governed-prices-20260926-v1/stooq2017/WSM",
+          "families": [
+            "yahoo2020",
+            "stooq2017"
+          ],
+          "first": "2005-02-25",
+          "first_conflict": "2005-02-25",
+          "last": "2017-11-10",
+          "last_conflict": "2010-10-22",
+          "price_conflict_count": 1426,
+          "volume_p99_scale_error": 0.15037247522159936
+        }
+      ],
+      "equity_value_pct": 0.8035324402471055,
+      "filing_value_per_share": 185.18,
+      "first": "1983-07-07",
+      "full_listing_history_certified": false,
+      "historical_available_at": null,
+      "identity_status": "provider_identity_not_security_master_certified",
+      "last": "2026-11-02",
+      "pre_listing_original": 0,
+      "price_conflict_dates": 1426,
+      "prior_link": {
+        "batch": "69755461f6f8088675229e9aff0f7ee8cbc2cf5a8083e126e58252e7f22dd5e3",
+        "conflict_dates": 1426,
+        "status": "review",
+        "volume_conflict_pairs": 3
+      },
+      "raw_at_filing_date": 185.17999267578125,
+      "reported_split_actions": [
+        {
+          "date": "2024-07-09",
+          "factor": 2.0,
+          "reported_kind": "splits"
+        }
+      ],
+      "sessions": 253,
+      "source_window_counts": {
+        "governance-source/governance-yahoo-20260926-v1/bars/WSM": 253,
+        "sector-research/ivv-constituents-2012-2026-v1/bars/WSM": 253,
+        "sector-research/underlying-sector-hhi-20260926-v1/bars/WSM": 253
+      },
+      "status": "review",
+      "unresolved_historical_names": [],
+      "volume_conflict_pairs": 3,
+      "window_factors": {
+        "1": 162,
+        "2.0": 91
+      },
+      "window_price_conflict_dates": [],
+      "window_source_families": [
+        "yahoo"
+      ]
+    }
+  },
+  "dates": [
+    "2024-02-27",
+    "2025-02-28"
+  ],
+  "decision": "2025-03-03",
+  "emcor_2012_distribution": {
+    "dates": [
+      "2012-12-13",
+      "2012-12-14"
+    ],
+    "implied_cash_per_share": {
+      "governance-source/governance-yahoo-20260926-v1/bars/EME": 0.30997589593033176,
+      "sector-research/ivv-constituents-2012-2026-v1/bars/EME": 0.3099963240120963,
+      "sector-research/ivv-public-archive-subset-20260926-v1/bars/yahoo2020/EME": 0.06000549002335759
+    },
+    "published_dividends": [
+      0.31
+    ]
+  },
+  "equity_denominator_usd": "24275553263.29000000",
+  "governed_batch": "ebffbedaaf8ae35bd5654887f83459156abff13d12537b2bd614e593c64ee77d",
+  "holdings_as_of": "2024-12-31",
+  "illumina_older_comparison": {
+    "first": "2019-01-02",
+    "last": "2020-04-01",
+    "raw_close": {
+      "max_relative_error": 1.0568062047688898e-07,
+      "median_ratio": 0.9999999995711564
+    },
+    "raw_volume": {
+      "max_relative_error": 0.00036269712977343715,
+      "median_ratio": 1.0
+    },
+    "sessions": 315,
+    "source_volume": {
+      "max_relative_error": 0.028372852649407143,
+      "median_ratio": 1.028
+    }
+  },
+  "later_symbol_probe": {
+    "anchor_factor_failures": [],
+    "complete": true,
+    "cross_vintage": {
+      "adjusted_close_median_ratio": 1.0,
+      "first": "2024-02-27",
+      "last": "2025-02-28",
+      "max_adjacent_adjusted_log_return_difference_bp": 0.0,
+      "raw_close": {
+        "comparable": 253,
+        "identical": 253
+      },
+      "raw_high": {
+        "comparable": 253,
+        "identical": 253
+      },
+      "raw_low": {
+        "comparable": 253,
+        "identical": 253
+      },
+      "raw_open": {
+        "comparable": 253,
+        "identical": 253
+      },
+      "raw_volume": {
+        "comparable": 253,
+        "identical": 253
+      },
+      "sessions": 253
+    },
+    "earlier_problem_pairs": [],
+    "first": "2015-10-06",
+    "full_listing_history_certified": false,
+    "historical_available_at": null,
+    "identity_status": "provider_identity_not_security_master_certified",
+    "last": "2026-09-25",
+    "pre_listing_original": 1082,
+    "price_conflict_dates": 0,
+    "prior_link": null,
+    "raw_at_filing_date": 61.43000030517578,
+    "reported_split_actions": [],
+    "sessions": 253,
+    "source_window_counts": {
+      "governance-source/governance-yahoo-20260926-v1/bars/P": 253,
+      "sector-research/underlying-sector-hhi-20260926-v1/bars/P": 253
+    },
+    "status": "review",
+    "unresolved_historical_names": [
+      "PANDORA MEDIA INC"
+    ],
+    "volume_conflict_pairs": 0,
+    "window_factors": {
+      "1": 253
+    },
+    "window_price_conflict_dates": [],
+    "window_source_families": [
+      "yahoo"
+    ]
+  },
+  "pilot_inputs": {
+    "filings/0001752724-25-043691.json": "b833067ecb3c270c7dd318a46f54c8d0b6975c6979d2e48a2fc68c61065c4773",
+    "filings/0001752724-25-043691.xml.gz": "23e4907233427f7e016dbc15b5aca4189a5f9693fe32fb71ca748f7f6a6b161f",
+    "positions.jsonl.gz": "12882d38e1659aebaff4680c0b165a793d97b6b9d35cf4eeb1f177dcde98e9ee",
+    "qualification.json": "13f67400e0aa5c203c27742a73692593ef1444c5dcd96f7e32462f209a4e6b52",
+    "sources.json": "956c57b648d45da69fa8dec15209f4b1cc436f21930adbf5cfe018645662a6e7"
+  },
+  "pilot_manifest_sha256": "c9e50839fc84fac01194d40a71dce0a96f96513dd29c00269bf8201d1e7bdd0e",
+  "pins_sha256": "bb8a87614a2d78466782f0d5134b81e1f709f541249138c91f2e81c00b9aaa55",
+  "prior_batch": "69755461f6f8088675229e9aff0f7ee8cbc2cf5a8083e126e58252e7f22dd5e3",
+  "prior_used": {
+    "actions/P.jsonl.gz": "471bca732c742e1b5e345b262c55c05c700029e1bd52440c7c5a9aefc5d3d518",
+    "actions/PSTG.jsonl.gz": "471bca732c742e1b5e345b262c55c05c700029e1bd52440c7c5a9aefc5d3d518",
+    "audits/EME.json": "23b9583e87d936b1f5001e872aadc6bde749c70a9f0219f36b65da432346f147",
+    "audits/IBKR.json": "2b6fe51c6e4e302367c7878201f719aedeb0e3fe78775393abb164987ef3c84d",
+    "audits/ILMN.json": "7feba9ea1f2bf012a06b2b14ff6ee5279f0ae0589abfdd645df3376684530ff5",
+    "audits/P.json": "efced2d4e3397e0aa8384d6e7da70bbe229e2cbba24c1db50cb609054dfe91c6",
+    "audits/PSTG.json": "7bb586ae61861edb860a902fe3f11e79262e3a93b294596afbd34f73f78f8dc8",
+    "audits/WSM.json": "f5a1c193a1521bd320a8c253170348b5df5d6c0bfdcb9aa08d62d8bfb9c52b35",
+    "bars/EME.jsonl.gz": "22a076401da31f6953022c4d8dfda2c1f5c57f80cdfe222ab042674efa9a516b",
+    "bars/IBKR.jsonl.gz": "aefdec261c839d19b8ece0f27821df6e2af0d2cdf6165941e64d92be8a6c3f6f",
+    "bars/ILMN.jsonl.gz": "73c41eeb1e2e52d1627e1a191229dd5950f5b1b275bc59963951d242d47dbd45",
+    "bars/P.jsonl.gz": "f7fcd5d8d9a753d1da6dfd13c7ec61efa1bd3449998d7c2fdf27f99cf9923c55",
+    "bars/PSTG.jsonl.gz": "a99792313f892c05d2ef0b142be243456ef27d22976d62a30f44a4d593001772",
+    "bars/WSM.jsonl.gz": "65a4cbcc80c85039f95dbd9d9bb552cf844bb3d8e875353eaa0797633129cb5a",
+    "comparisons/EME.jsonl.gz": "ba90436015f717eea394d8c7f4598817df3befc405e9a3480ad055caee9fe3c0",
+    "comparisons/IBKR.jsonl.gz": "c9f799ce776f728c8261de94bf3f6e2caf0d2efbb8a25a3799f05be6e696a929",
+    "comparisons/ILMN.jsonl.gz": "30d1971b414348144bec083d783e3a0806cec9b7ead7b8887f242d3d52e7fb30",
+    "comparisons/P.jsonl.gz": "cb5ef287b01d667aa4f5b1e41f26cf4843c66b218046c655b48b3e6daef2dc73",
+    "comparisons/PSTG.jsonl.gz": "3adcaa88a6e86f3a930caae551ca994236353c628705a5c5107579abf13f28c4",
+    "comparisons/WSM.jsonl.gz": "c516efc584570086b491225ee0bd4fffe955a470c02a51a8946e02fd5b1733b5"
+  },
+  "pstg_p_older_overlap": {
+    "adjusted_close_median_ratio": 1.0,
+    "first": "2015-10-06",
+    "last": "2020-04-01",
+    "max_adjacent_adjusted_log_return_difference_bp": 0.0,
+    "raw_close": {
+      "comparable": 0,
+      "identical": 0
+    },
+    "raw_high": {
+      "comparable": 0,
+      "identical": 0
+    },
+    "raw_low": {
+      "comparable": 0,
+      "identical": 0
+    },
+    "raw_open": {
+      "comparable": 0,
+      "identical": 0
+    },
+    "raw_volume": {
+      "comparable": 0,
+      "identical": 0
+    },
+    "sessions": 1130
+  },
+  "ranking": [
+    "WSM",
+    "ILMN",
+    "EME",
+    "IBKR",
+    "PSTG"
+  ],
+  "selected_equity_pct": 3.5660424353709548,
+  "sessions": 253,
+  "used": {
+    "actions/EME.jsonl.gz": "bf8e49ff8050127a3a676714af04dec7c2f755f9023fff48cd031ef450200f63",
+    "actions/IBKR.jsonl.gz": "030e097710946ae82806a15809b20d950d3e882ef8189e1f198c65d67ea43dda",
+    "actions/ILMN.jsonl.gz": "cdf1ed0b25a73e6087f7266f64c935ca596f67e9cc9d59c278639ace194cb750",
+    "actions/WSM.jsonl.gz": "40301d72c54858938a350591bbc40b3d04a5ddb70de0f0bdd1e6015919a79713",
+    "audits/EME.json": "53b67a3a682010d1a95ae3d239b5449e117fc729fbf2d53b3a1e1eb5be699dde",
+    "audits/IBKR.json": "426f23053f62d967667e6fd3cd80dd17c6921f7c7d4b3b26050cb881eb03cab3",
+    "audits/ILMN.json": "fa1b465488d7045cbb3881cba2224dcae39245ea150f0729761b996b48e51a95",
+    "audits/WSM.json": "714031483bec7da25e479c4798afd8ec5c14b5b6f97a60eb5635ec70c3ce92f5",
+    "bars/EME.jsonl.gz": "9527e343a25fee7c22475cf25816f93036476a5cecb4353b6124af1250d7fe55",
+    "bars/IBKR.jsonl.gz": "3af3af6b1dbaffa177e5d174d863534768b23cd7f94b8c08312263f53da80df0",
+    "bars/ILMN.jsonl.gz": "f4786480a58ac3a8157e2ecc174611e5ba749b8d35e595b25e4574194734b83b",
+    "bars/WSM.jsonl.gz": "23be9c0768ac19c265332fd825acd4f76bbca141e22bf707a851fbb0d8ab165e",
+    "catalog.json": "38d6f88afbc273574bad05b43538b7d29e12601eae719537594a3b9799094e33",
+    "parent.json": "fa0b32ad699850676d2fea768db59ba8222a1d9c5e8b414880c395595b8e8206",
+    "parent/actions/P.jsonl.gz": "471bca732c742e1b5e345b262c55c05c700029e1bd52440c7c5a9aefc5d3d518",
+    "parent/actions/PSTG.jsonl.gz": "471bca732c742e1b5e345b262c55c05c700029e1bd52440c7c5a9aefc5d3d518",
+    "parent/audits/P.json": "efced2d4e3397e0aa8384d6e7da70bbe229e2cbba24c1db50cb609054dfe91c6",
+    "parent/audits/PSTG.json": "7bb586ae61861edb860a902fe3f11e79262e3a93b294596afbd34f73f78f8dc8",
+    "parent/bars/P.jsonl.gz": "f7fcd5d8d9a753d1da6dfd13c7ec61efa1bd3449998d7c2fdf27f99cf9923c55",
+    "parent/bars/PSTG.jsonl.gz": "a99792313f892c05d2ef0b142be243456ef27d22976d62a30f44a4d593001772"
+  }
+}

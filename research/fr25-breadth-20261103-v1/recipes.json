@@ -1,0 +1,34 @@
+{
+  "base_definition": "../expanded-fr25-net-20261102-v1/definitions.json#expanded",
+  "compare": "qualifying_count < minimum_count",
+  "decision_clock": "Prior completed close for next open",
+  "fallback": "Original FR25 defensive_cash and downstream sizing stack",
+  "minimum_count": "ceil(numerator * denominator_pool_count / denominator)",
+  "policies": {
+    "admitted": {
+      "denominator": 14,
+      "denominator_pool": "admitted_before_momentum",
+      "max_selected": 6,
+      "numerator": 4
+    },
+    "legacy": {
+      "max_selected": 6,
+      "minimum_count": 4
+    },
+    "scaled": {
+      "denominator": 14,
+      "denominator_pool": "supported",
+      "max_selected": 6,
+      "numerator": 4
+    },
+    "winner": {
+      "denominator": 52,
+      "denominator_pool": "supported",
+      "max_selected": 42,
+      "numerator": 33,
+      "selected_on": "monthly IS, 2021-2024",
+      "selection_sha256": "222fcb7d0e0cda55fca0e1150dbed72d251a3e1f35087c33130a027a686d0f72"
+    }
+  },
+  "qualifying_count": "Admitted candidates with strictly positive 126-session momentum, counted before top M"
+}

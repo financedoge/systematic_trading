@@ -1,0 +1,18 @@
+{
+  "guards": {
+    "m1": true,
+    "momentum": true,
+    "original": false,
+    "unranked": true
+  },
+  "per_model": {
+    "expanded": "monthly",
+    "m1": "monthly",
+    "momentum": "0.80",
+    "original": "monthly",
+    "unranked": "0.40"
+  },
+  "rule": "Highest expanded FR25 calibration5bp/delay0 Sharpe, policy-name tie; later data never select policy.",
+  "selected": "expanded-monthly",
+  "window": "calibration"
+}

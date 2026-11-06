@@ -1,0 +1,16 @@
+[
+  {
+    "mean_held_weight": 0.02692556744595739,
+    "net_contribution": -0.05056019000000005,
+    "net_pnl": -50560.19000000005,
+    "symbol": "EWC",
+    "window": "calibration"
+  },
+  {
+    "mean_held_weight": 0.07134309711389637,
+    "net_contribution": -0.05607079895748733,
+    "net_pnl": -70925.98000000004,
+    "symbol": "XLK",
+    "window": "later"
+  }
+]

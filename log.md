@@ -1,5 +1,85 @@
 # Project Log
 
+## 2026-11-06 — Ten-stock qualification reached the data-access gate
+
+Completed the evidence checks for CSL, WSO, MANH, RPM, UTHR, XPO, FIX, FLEX,
+CASY and RS. Twenty SEC periodic filings corroborate listing identities.
+All ten filed ISINs passed the existing paper-only broker contract verifier.
+Each published 253-session window and December valuation check passed.
+Raw OHLC agrees across captures for ten names and raw volume for eight.
+The older WSO and XPO publications withheld raw volume.
+No new publication qualified. IBKR historical data failed with error 162
+reporting a trading session at another IP, while public Nasdaq returned no
+required-window records. Asked the operator about releasing the other session.
+Prepared a ten-instrument historical extract request. Independent daily
+comparison, dated identity continuity and earlier source reviews remain open.
+Nineteen focused tests passed. Stopped for discussion.
+[Report](research/p421-ten-qualification-20261106-v1/results.md).
+
+## 2026-11-05 — Classified remaining MDY historical coverage
+
+Completed the authorized inventory of 320 review positions and nine unavailable
+positions using the frozen December filing and November 3 price batch. There
+are 295 complete published windows (71.84% of MDY equity value), six complete
+comparison candidates excluded by identity matching (0.87%), four documented
+later-ticker candidates (0.68%), and 24 gaps in the checked publications (5.12%).
+Retained the published reviews. The missing-history queue needs security-aware
+archive/alias checks before acquisition. Next discussion is a ten-holding
+qualification pilot from the complete group, worth 5.35% of equity value.
+Seventeen focused tests passed. Stopped at the requested discussion checkpoint.
+[Inventory](research/p421-mdy-inventory-20261105-v1/results.md).
+
+## 2026-11-04 — Diagnosed the five largest MDY price reviews
+
+WSM, ILMN, EME and IBKR have 253 complete sessions in the pilot and inherited
+earlier conflicts. EMCOR's two December 2012 dividends reconcile to the later
+adjustment. Illumina's 2024 GRAIL distribution is encoded as a vendor split
+factor. Pure Storage's PSTG record stops in 2020, but the later P history
+has the full window, a matching filing valuation and a documented CUSIP
+transition. Separate Pandora's earlier use of P. Retained all existing price
+reviews. Propose a weighted inventory of the remaining 320 review positions
+and nine unavailable names before a broader backfill. Stopped for discussion.
+[Diagnosis](research/p421-mdy-audit-20261104-v1/results.md).
+
+## 2026-11-04 — December 2024 constituent filing pilot
+
+Completed the operator-authorized P4.21 pilot and stopped for discussion.
+Mapped all 29 equity funds, captured 16 original December portfolios, verified
+their daily public dissemination records, and found zero amendments in the
+releases through 2026 Q3. January and February monthly decisions had no
+December filings available. March 3 had 16. All 3,687 positions and fund
+balance sheets were retained. Of 3,629 common-equity lines, 315 had a dated
+candidate symbol and a complete 253-session audited price/volume window.
+None had a certified price-side security identity across that window. MDY
+disclosed all 401 tickers and only 17.92% of equity value had complete windows.
+Historical replay remains blocked. The discussion point is whether to inspect
+MDY's largest review-status prices before extending the holdings history.
+[Report](research/p421-quarter-20261104-v1/results.md).
+
+## 2026-11-02 — Restore the unavailable approval workflow
+
+Operator reported a grey approval button for pending proposal `9350e7454cc8`,
+seven orders scheduled for November 2. The existing browser retained the earlier
+proposal but displayed Execution records unavailable / Failed to fetch. Port8000
+had no listener and the old dashboard/dispatcher evidence ended November1.
+The reason the previous processes stopped is unconfirmed.
+
+PostgreSQL application-relation read readiness passed. The normal guarded
+dashboard launcher verified the paper Gateway API and started dashboard PID10524
+and dispatcher PID28588 at21:51 Asia/Shanghai. Broker reconciliation subsequently
+matched with no position or execution breaks. Verified the existing browser at
+21:57: proposal selected, Ready for review, approval enabled, reconciliation
+Matched. Proposal remains pending with zero broker records; no decision, reset,
+order submission, policy change or guard bypass was performed.
+
+Preserved prior logs/policy/reconciliation and captured after-recovery API evidence
+under `var/maintenance/approval-unavailable-20261102/`. No application source
+behavior changed, so validation used database/broker probes, API reads and actual
+browser readiness rather than new tests. Separate host-interruption, analytics
+progress and stopped/stale recorder warnings remain outside this button repair;
+do not describe the whole platform as healthy. Investigate the stopped-process
+cause if it recurs. Existing unrelated working-tree changes preserved.
+
 ## 2026-10-29 — Backtest N15, then operator-requested N20/N30
 
 Completed fixed N15, then the operator-requested N20/N30 extension with unchanged
@@ -3551,6 +3631,46 @@ The initial no-isolation wheel attempt lacked the local build backend; the
 normal isolated build succeeded without changing the application environment.
 Build verification: var/maintenance/broadtrend-git-delivery/verification.json.
 
+## 2026-10-30 — PostgreSQL startup read failure recovered
+
+Operator reported startup accepting PostgreSQL TCP connections but failing backup
+reads of `native_analytics.publication_heads` (base/16393/34803), then retention
+catalog reads of `pg_class` (base/16393/1259), both with `Invalid argument`.
+Reproduced the catalog failure in a fresh read-only connection while simple server
+queries still succeeded. Windows records sleep/resume immediately before the
+incident. The underlying filesystem/server cause is unconfirmed. This session
+could not control the Windows service; the operator restarted it from Administrator
+PowerShell. PostgreSQL logged recovery after interrupted shutdown. Both relation
+reads recovered, with the original tracked calculation head intact.
+
+Replaced the launcher's port-only readiness gate with configured application-role
+catalog and bounded table reads in a read-only session. Connection, statement,
+lock and transaction timeouts bound the probe; failures stop before backup
+preparation/retention and name the database read problem directly. No automatic
+database repair, schema initialization, privilege elevation or protection bypass.
+Added the recovery runbook. Twelve focused tests pass, including both Windows
+PowerShell/pwsh failure gates, catalog/table errors and credential redaction;
+Ruff, diff checks and 128-document/741-link validation pass.
+
+Normal platform startup completed at 00:16 Asia/Shanghai. Local PostgreSQL dump
+and dependency checkpoint 6f01d5a501954c8c8234ce9ca65400fd completed; NAS connection
+timed out, so startup used the existing optional local-only policy. Unchanged
+retention safeguards retired 11 calculation directories (5.037 GiB) and 30 model
+caches (0.756 GiB), with immutable receipts. Dashboard, catalog and BroadTrend
+report return HTTP 200; eight monitored strategies remain visible. Allocation
+revision 7 and membership revision 6 payload hashes match the pre-start values;
+calculation head e9d5aef488bc7c62e355112f1c5075a4439a0367f5f0c52d072d3719b87f0f6d
+is unchanged. NATS, operator, dispatcher, recorder and recovery report running.
+
+Remaining operational issues: Gateway has no listener on paper port 4002; broker
+sync/reconciliation cannot complete until it reconnects. NAS remains unreachable,
+and normal application data/strategy catch-up still shows freshness warnings.
+No broker, funding, approval or live-enablement changes were made. Successful
+queries and dump do not establish full database integrity. Preserve this incident
+and investigate storage/server logs if the error recurs; never delete relation
+files or reset WAL to bypass it. Evidence and before/after hashes:
+`var/maintenance/postgres-readiness-20261030/`.
+
 ## 2026-10-30 — Calculation CPU parallelism and account inventory
 
 Operator requests using available resources to accelerate strategy/account work.
@@ -3636,3 +3756,443 @@ next ordinary audited calculation will record the Windows-managed resource plan.
 Evidence: `var/maintenance/native-memory-20261031/`, including test XML/summary,
 the above-four-GiB receipt, independent engine receipts and activation/status
 snapshots. Resource/runtime/performance documentation and kanban updated.
+
+## 2026-10-31 — Reconcile research plan; complete cash-relative net retest
+
+Operator asks to finish the research plan one item at a time and stop after each
+item for discussion. Reconciled completed studies, historical screens that
+withheld portfolio replay, later trend/BroadTrend work and open prerequisites in
+docs/research-plan-review-2026-10-31.md. Native cutover and October30–31 resource
+implementation supersede Docker-era pending text; whole-refresh measurement
+remains separate. Read-only app snapshot reports seven monitored strategies and
+price/NAV freshness through October30. No app controls were mutated.
+
+Completed the next explicitly queued item: fixed cash-relative/removal-only
+16-arm net retest, with original monthly/0.10/0.40/0.80 schedules. Original
+October12 published 50-history pool reconstructs exactly, all52 candidates
+accounted for, BWX/CPER holds retained. All5,698 adopted decisions reproduce;
+only Decimal distance sum roundoff up to1e-24 is tolerated, with exact targets,
+anchors, states and decisions. Frozen October31 protocol precedes all126 cases.
+Shared USD whole adjusted-unit accounting charges actual traded costs at5/10/20bp
+and zero/one extra-session delay; no old cost or IC veto. No online prices used.
+
+Class-first/monthly selected on2021–2024. Later2025-01-02..2026-10-12 netreturn
+56.36%,Sharpe1.474,DD12.36%,Calmar2.330; matched removal-only36.46%/1.176/12.01%/
+1.603; frozen common-input FR25 55.80%/2.072/8.31%/3.436. Control guards3/6early,
+6/6later,FR25guards0/6each. Benefit concentrates in2024–2026; family-adjusted
+intervals include zero. Dynamic0.10 improves later but underperforms in training;
+do not select it retrospectively. Current monitored USD results are separate
+same-date context, with different input/model histories explicitly disclosed.
+
+Weakest actual net contribution/opening portfolio NAV: EWH−2.46ppcalibration,
+XLE−1.98pplater. Dated adjusted/raw prices, raw volume, states, real simulated
+fills, adopted/held weights, no-protection disclosure and all FIFO trade outcomes
+are prepared. Reporting initially used unrounded close marks; correcting it to
+the shared engine's cent rounding reconciles every book to below$0.01 without
+changing replay results. A new test verifies rounding and partial-lot fees.
+
+35 focused tests pass; three independent native LEAN accounting cases match NAV
+exactly. Repaired a validation-parent manifest path/hash mismatch and reran native
+checks under native-v2; original attempts remain local evidence, not acceptance.
+Source/input/result hashes, Ruff, document links and visual chart inspection pass.
+Research report/evidence: research/cash-relative-net-20261031-v1/; compact working
+arrays and native receipts: var/research/cash-relative-net-20261031-v1/.
+No source-calculation, monitoring, promotion, funding, broker or live change.
+Existing runtime/readiness edits preserved. Stop for discussion here; next queued
+item is the six cost-excluded Alpha101 signals on the full supported pool.
+## 2026-10-31 — Cash-relative disposition and next research item
+
+Operator: retain cash-relative as research evidence and continue the next step.
+Preserve the frozen report and acceptance artifacts. Start the six standalone
+Alpha101 cost-excluded signals (24/26/46/49/53/54), full supported audited pool,
+predeclared controls and timing, no absolute cost veto. Stop after this item for
+discussion; P4.20 and later items are not started. No promotion, monitoring,
+allocation or broker authority granted.
+
+## 2026-10-31 — Six standalone Alpha101 net retests complete
+
+Closed the next authorized item after retaining cash-relative as research evidence.
+Pinned latest published batch e22f27a465e95f86cd40f7f9d24b63533a4a397eb0c02c8f40a696b0350d7731;
+54 configured/admitted candidates,52 supported histories (51 risky plus BIL),
+BWX/XOP identity holds. Common support starts2018-08-24, matching the existing
+admitted CPER support origin; no unsupported observations filled or source fetched.
+Adjusted OHLC and audited raw activity; historical membership/vintage limits remain.
+Frozen protocol precedes signals and all222 net cases;6alphas ×4timings plus
+matching momentum/unranked controls and FR25/cash/buy-hold,6cost-delay settings.
+
+Monthly wins all six training-only policy selections. Alpha54/monthly globally
+selected: calibration net33.37%,Sharpe0.679,DD19.33%; later2025-01-02..2026-10-30
+net26.90%,CAGR13.97%,Sharpe1.569,DD7.54%. Matching momentum later63.82%/31.13%/
+1.211/16.70%; current saved FR25 decisions repriced on study quotes55.26%/27.32%/
+2.013/8.31%. Incumbent signal inputs/model warmup differ and are explicitly pinned.
+Guards: momentum6/6early,0/6later; unranked0/6,1/6; FR25 0/6both. Training
+unranked DD guard misses narrowly by0.07pp; later momentum return is much higher.
+No robust matched-control advantage across eras; family-adjusted intervals include
+zero. No after-the-fact signal, horizon, parameter or policy rescue. FR25 asset and
+period dependence shown; no universal-gold-standard claim.
+
+Weakest actual net contribution/opening NAV: EWY−3.116369ppcalibration and
+XLC−1.700220pplater. All dated adjusted/raw-price, volume, theoretical/adopted/held
+states, fills, no-protection and FIFO outcome artifacts prepared and charts inspected.
+Full portfolio attribution and independent cash/share/FIFO books reconcile.
+55 focused tests pass, one optional frozen historical-screen test skipped. Three
+native Windows LEAN checks (selected, matched momentum, dynamic26/20bp/delay1)
+match NAV exactly. Source/input/result hashes, Ruff and documentation checks pass.
+Finite scripts and compact reports only; no app-owned recurring strategy change,
+promotion, monitoring, allocation, broker or live authority. Other working-tree
+runtime/readiness edits preserved. Evidence: research/alpha101-net-20261031-v1/;
+working arrays/native receipts: var/research/alpha101-net-20261031-v1/.
+Stop for operator discussion. Proposed retain-as-research-evidence disposition;
+P4.20 governance and other research items not started.
+
+## 2026-10-31 — Retire cumulative artifact quota and run guarded housekeeping
+
+Operator rejects the fixed 40 GiB generated-artifact admission limit, reaffirming
+compact findings/runner recipes and disposable reproducible bulk outputs. The
+initial engineering budget was not a measured disk requirement: 38.201 GiB of
+generated contents plus a 2 GiB allowance blocked calculations with about 604 GiB
+of real drive space available. Replaced cumulative admission with the actual free
+space check on the artifact drive, retaining a 2 GiB allowance for new work.
+The 20 GiB threshold now only queues housekeeping; protected footprint does not
+block research by itself. No deletion occurs inside the admission check.
+
+Normal stopped-startup maintenance now includes explicitly closed studies as well
+as superseded calculations/models. Retained protocols/findings and append-only
+retirement receipts remain prerequisites. New/unclassified study protocol,
+manifest, provenance and recipe files automatically protect referenced inputs;
+retirement guard fingerprints include those files. This replaces the stale
+three-study protection list. Recent cash-relative and Alpha101 research remains
+protected. AGENTS.md records the operator decision and requires classifying
+disposable outputs when closing future research, rather than permanently pinning
+every completed experiment. Canonical audited histories, current/rollback,
+promotion, approval, allocation and broker/reconciliation evidence are preserved.
+
+33 focused tests passed; one Windows symlink-creation test skipped. Checks cover
+500 GiB of research with adequate disk, actual low-disk rejection without deletion,
+housekeeping requests, invalid policy values, new-study input pins, stale guard
+rejection and existing retirement/dependency/tracked-runtime regressions. Changed
+Python Ruff, diff and documentation checks pass. A real admission check accepted
+the original 41,018,408,844-byte footprint before cleanup under the new policy.
+
+Stopped writers and backup workers through the normal platform lifecycle; its
+SQL/dependency checkpoints completed. Guarded startup maintenance verified every
+target and recorded retirement of 40 calculations (20,042,167,097 unique content
+bytes) and 84 model revisions (2,283,618,932 bytes), 20.793 GiB combined. No further
+closed-study outputs were eligible. Generated contents fell to 18,692,622,815 bytes
+(17.409 GiB). Deletion outcomes and immutable retirement receipts were independently
+checked. Existing path/reparse, backup, lock, control and publication checks remain.
+No full duplicate backup of intentionally disposable research outputs was required.
+
+Normal application startup completed at 22:00 Asia/Shanghai; all seven monitored
+reports and health return HTTP 200. Full control/allocation revision 7 and membership
+revision 7 match before maintenance. Account lane completed at 22:00:23 without
+storage errors. Requested a normal app-owned strategy refresh; its new 22:01:04
+receipt records `admission_basis: free_disk_space`, `admitted: true`, schema 2 and
+no cumulative quota, then progresses to USD replay without errors. Served prices/NAV
+remain October 30 while work proceeds. This is not a new completed-publication
+claim. Existing NAS operation.lock defers optional upload, and the pre-existing IB
+client 131 timeout/circuit cooldown remains visible; neither protection was bypassed.
+Evidence: `var/maintenance/artifact-policy-20261031/`, including original/new
+admission receipts, test XML, before/after controls, cleanup verification and
+activation, plus the referenced startup manifests and per-target retirement records.
+
+## 2026-11-01 — Retain Alpha54; complete P4.20 evidence/decay governance
+
+Operator retained Alpha54/the six-signal experiment as research evidence and
+asked to move on. Recorded the concern that FR25/126-session momentum later gains
+might be lucky, and that selecting the best later strategy reuses the evaluation
+period. These are a hypothesis and a methodological constraint, not proof of luck
+or a revised winner. Clarified unequal interval lengths: Alpha54 cumulative33.37%
+early/26.90%later corresponds to CAGR7.49%/13.97%,Sharpe0.679/1.569. Lower later
+cumulative return therefore does not establish performance degradation. Original
+frozen net verdict and report/manifests are unchanged; no monitoring or promotion.
+
+Completed P4.20 as versioned evidence governance. The old universal minimum
+half-life/sub-period IC proposal conflicted with the operator's later policy;
+replaced it with explicit decay/stability assessment and net portfolio evidence,
+without a lifetime, IC/breakeven or annual-cost profitability veto. Exact policy,
+dossier and artifact hashes, strict schema, chronological boundaries, declared
+prior use, trial/label-overlap accounting, fixed/dynamic and full-pool requirements
+are checked by a read-only CLI. Unknown/previously used evaluation cannot be
+called untouched/prospective. Null lifetime requires an explicit status; no silent
+infinity or healthy label. Policy/algorithm source references and primary-method
+papers are linked in docs/research-evidence-governance-v1.md.
+
+Separate inspectable evidence, net verdict and app/operator authority. Passing
+this checklist does not certify scientific adequacy or grant monitoring,
+promotion, funding or broker authority. Project playbooks require the assessment
+for new signal/recipe reviews. Existing runtime lifecycle and execution controls
+are unchanged; this is a governance workflow, not a new runtime interlock.
+Worked Alpha54 dossier: retrospective/training-selected, net advantage not
+established, lifetime unidentifiable from non-monotone means, dedicated curve
+uncertainty/incremental annual-stability gap before any new monitored recipe.
+No new numerical study or prospective calculation was started.
+
+37 focused tests passed; one Windows symlink-creation test skipped. They cover
+artifact corruption/missing roles/path escape, policy/dossier hashes, impossible
+sample claims, chronology, malformed/null estimates, no cost/IC/lifetime veto,
+no authority even for a complete promotion checklist, and retained operational
+protections on closed studies. Alpha54 assessment v2 additionally binds the full
+canonical dossier; the initial draft is retained, not the accepted assessment.
+Ruff, documentation links and diff checks passed.
+
+Cash-relative and Alpha101 now have dated closure records and compact working
+protocol/summary prerequisites.13 generated folders are allowlisted for guarded
+routine retirement (287.80MiB logical in the dry-run snapshot). Existing read-only
+planner and verification passed against current dependency/control protections.
+No deletion or app restart was performed; maintenance must revalidate at stopped
+startup and emit its own retirement outcomes. Canonical, active, promotion and
+broker/approval evidence remains protected. Full duplicate backups are not required
+for these intentionally disposable outputs. Unrelated storage/runtime edits preserved.
+
+Evidence: research/research-evidence-governance-20261101-v1/;
+validation and retirement dry run: var/maintenance/research-evidence-20261101/.
+Stop for discussion at P4.20. Next unblocked research is expanded-pool FR25 net
+replay, followed by class/volatility construction net replay; P4.21 remains blocked.
+
+## 2026-11-03 — Expanded FR25 net replay complete; Dwork paper retained
+
+Session began November2 and crossed local midnight. Operator requested Dwork et al.
+in the reference folder and authorized the next item after P4.20. Downloaded
+Generalization in Adaptive Data Analysis and Holdout Reuse, arXiv1506.02629v2,
+29 pages, SHA256 dcfbb9aa401c62949123be2d74787c4f9cca48597f18860760ef1580ddb4bc71.
+Source version September25,2015; title page September28. PDF title/authors/version
+and rendered first page verified. Supplemental README and separate provenance
+record retained; no claim of a full proof review or formal reusable-holdout implementation.
+
+Froze expanded-fr25-net-20261102-v1 before outcomes, including audited publication
+hashes, full52 supported histories from54 candidates, BWX/XOP holds, common
+2018-08-24 warmup and unchanged FR25 model parameters. Original14 and expanded
+models are refitted separately on that common history; financial readiness starts
+October1,2021 in both, with M1 fallback earlier. Daily target calculation composes
+existing app services; no recurring agent calculations or operational publication.
+Expanded M1 changes only the financial selector, retaining sizing and final cap.
+Four timing policies, six cost/delay settings, simple momentum/unranked and
+cash/BIL/URTH/pool buyhold controls yield144 cases. No cost or IC exclusion.
+
+Monthly wins expanded FR25 training2021–2024. Expanded/original14/matched M1
+training return26.49/29.56/18.17%, Sharpe0.462/0.701/0.359,
+DD18.30/7.38/17.86%; later2025–Oct30,2026 return81.59/54.93/65.71%,
+Sharpe1.726/2.003/1.406, DD15.18/8.31/13.37%. Original14 guards pass0/6
+each era; M1 6/6 early and2/6 later. Family-adjusted intervals all span zero.
+Later return does not rescue the earlier result. Both eras remain reused
+retrospective evidence; no winner selected on later results, no proof of luck.
+
+Weakest risky net contribution/opening NAV: EWC−5.056pp early, XLK−5.607pp later.
+Dated adjusted/raw price and raw-volume charts, eligibility/fallback/held states,
+fills, allocation protections and complete FIFO outcomes prepared. Expanded later
+gains concentrate in SOXX/USO/SLV/EWY; original14 in EWY/GLD. All attribution is
+retained. Fixed-bp results do not establish capacity:77 selected-book orders exceed
+0.5% of prior median raw-dollar volume, maximum6.614%. No measured impact model.
+
+63 focused tests passed; nine monthly finite-worker versus full-history shared
+policy cases exact. Three independent Windows-native LEAN accounting cases
+(selected, original14, dynamic20bp/delay1 stress) have zero NAV difference.
+Independent share/cash and FIFO books reconcile within1e-9 USD. P4.20 dossier
+is research_evidence_reviewable, net advantage not_established; all authority false.
+Report/diagnostics/protocol/runner and acceptance retained. Generated model caches,
+paths, targets and native bundles classified as disposable after the current
+discussion; guarded housekeeping allowlisting is queued then. No deletion or full
+backup, broker/order/control change, monitoring or promotion performed.
+
+Evidence: research/expanded-fr25-net-20261102-v1/; tests and report-generation log:
+var/maintenance/expanded-fr25-net-20261102/. Stop after this completed item for
+operator discussion. Next is class/volatility construction net replay; P4.21 remains
+blocked. Operator observations must become future hypotheses, not retrospective tuning.
+
+## 2026-11-03 — FR25 discussion on cohort fit and correlated selections
+
+The operator raised two hypotheses for the expanded portfolio's lower Sharpe:
+the recipe may depend on the original 14 ETFs, and related candidates may occupy
+several selection slots. Examined the existing monthly 5 bp books and pinned
+adjusted price histories. Both hypotheses remain open for prospective testing.
+
+In 2021–2024 the four-qualifier defensive rule fired at 8 of 48 original monthly
+decisions and 1 of 48 expanded decisions. Average risky exposure rose from 81.7%
+to 90.4%. In the later period both held about 98% risky exposure. On matched
+dates, 63-session average risky-pool pair correlations were 0.317 original and
+0.318 expanded. Held-pair correlations were 0.336 and 0.373, and weighted mean
+individual ETF volatilities were 18.1% and 25.0% annualized. From February 18 to
+April 8, 2025, expanded FR25 lost 15.18% and original14 lost 6.77% on the same
+dates. DBC, XLE and USO accounted for 6.95 points of expanded drawdown. This is
+retrospective accounting and does not separate the effects of pool-relative
+ranks, model refits and allocation rules. The next research item awaits discussion.
+[Diagnostic methods and figures](research/expanded-fr25-cohort-discussion-20261103.json).
+
+## 2026-11-03 — Proportional FR25 fallback and IS-only width/breadth search
+
+The operator asked to scale defensive breadth with pool size and optimize M
+(maximum selected ETFs) and N (minimum qualifiers) on IS. The finite study
+uses the same audited price batch, constituents, parent model fits and FR25
+overlays. Qualifiers are counted before top-M selection. The supported-pool
+fraction 4/14 implies ceil(52 × 4/14) = 15. A second rule uses the day's
+admitted count before momentum. Membership/availability limitations carry forward.
+
+On monthly decisions the 6/15 rule matched original14's 8/48 training defensive
+months, six of them on the same dates. Fixed 6/4 triggered once. Raising N to
+15 reduced IS return from 26.49% to 17.16% and Sharpe from 0.462 to 0.347 while
+increasing drawdown from 18.30% to 21.03%. In May 2022 and November 2023 it
+missed more upside than it saved in several other months. In the later period
+6/4 and 6/15 made identical decisions on all 22 monthly dates and both returned
+about 81.6% at Sharpe 1.726 and drawdown 15.18%.
+
+All 2,704 M,N pairs competed on 2021–2024 monthly 5 bp net Sharpe. The 1,351
+distinct training paths were scored on a price calendar ending December 31,
+2024. The grid and winning parameters were sealed before the later replay.
+42/33 won at 0.876 Sharpe, 13.45% cumulative return, 3.22% CAGR and 3.26% DD.
+It missed the primary return guard against legacy. All four expanding training
+prefixes chose N=33, with widths 14, 14, 12 and 42. Only four training dates
+had more than 42 qualifiers when the gate passed. Width 43 at N=33 scored 0.874.
+
+The locked pair returned 9.46% later with 5.09% CAGR, Sharpe 1.271 and DD 5.08%.
+It spent 8/22 later months defensive and averaged 36.0% risky ETFs, 26.1% BIL,
+37.9% cash. Holding N=33 and reducing width to six yielded 73.71% later at
+1.778 Sharpe and 11.50% DD. This is a predeclared ablation. The later window
+is previously inspected historical evidence. Conditional bootstrap intervals
+span zero. Exact M,N superiority and prospective transfer remain unestablished.
+
+48 follow-up scenarios cover both ablations, an admitted-denominator check,
+monthly/dynamic timing and six frictions. The weakest net contributions were
+MBB (−0.325 pp IS) and TLT (−0.217 pp later). Inspection charts, dated states,
+fills and FIFO outcomes are retained. 58 tests passed. All 48 IS legacy monthly
+targets match, all six full legacy NAV paths match, and three native LEAN cases
+have zero NAV difference. P4.20 assessment is reviewable with all authority
+false. Disposition awaits discussion. The retained report lists scratch outputs
+for guarded retirement after closure and shares its parent inputs.
+[Study, training surface and evidence](research/fr25-breadth-20261103-v1/index.html).
+Class/volatility construction remains queued.
+
+## 2026-11-03 — ETF winner dependence and stability discussion
+
+Operator raised the hypothesis that 6/4 returns since the AI boom may be
+exceptional and asked for strategies with closer IS and later Sharpe and return.
+Froze a full-pool target combination experiment using the identical audited
+price/volume arrays and frozen FR25, standalone Alpha54 and unranked inverse
+volatility targets. Thirty choices span 15 allocations and two adoption rules.
+Ranking uses weaker-half CAGR and Sharpe plus both half-to-half gaps inside
+2021–2024. The IS return floor was 5.57%, with drawdown, high friction and
+winner-removal checks. Eight qualified. Monthly standalone Alpha54 was sealed
+before the later combination replay. Its earlier results were already known.
+
+Original and expanded 6/4 later top-three net gain shares were 59.2% and 52.5%.
+Replacing their champion positions with cash gave 10.63% and 18.81% later CAGR.
+Narrow SOXX/XLK and broader regional ETF exclusions are sensitivity tests.
+They do not reconstruct a market without AI. The future frequency of the
+observed regime remains an open question. Alpha54's IS/later CAGR of
+7.49%/13.97% and Sharpe of 0.679/1.569 gave smaller gaps than either 6/4
+reference. Its top-three cash replays gave 5.00%/7.24% CAGR and 0.504/0.974
+Sharpe. Relative gap uncertainty spans zero and later guarded superiority
+was not established. The prior 42/33 book had smaller gaps but fell below
+the declared IS return floor. A fresh forward comparison remains outstanding.
+
+Primary selected path matched the entire archived Alpha54 NAV/fee/turnover/
+exposure/contribution file by SHA-256. Verified its weakest EWY and XLC charts,
+daily state and trades against the retained manifest. Both 6/4 primary NAV paths
+matched the parent. 59 focused tests passed and three native LEAN validations
+matched exactly. Evidence review is ready for discussion. Compact recipes and
+results remain retained, with generated replay/native outputs classified for
+guarded retirement after discussion. No operational authority was granted.
+[Report and receipts](research/etf-stability-20261103-v1/index.html).
+
+## 2026-11-03 — Research guidelines retained and class/volatility replay completed
+
+Operator closed the winner-dependence discussion and asked to retain its lessons
+and move on. Added portfolio stability guidance to project memory and the
+continuous research playbook. Freeze selection, compare CAGR/Sharpe by era,
+declare study-specific return floors, inspect cash/BIL and actual holdings risk,
+replay top-one/top-three winner withholding and distinguish ETF dependence from
+a causal theme claim. No permanent 5.57% threshold or universal strategy winner.
+
+Completed the remaining cost-policy replay. Verified both published batches
+and the archived screen receipts. Evaluated 5,800 original daily vectors and
+4,485 adopted decisions using their original 50-fund quotes through October 12.
+Separately evaluated all four constructions and four timings on the 52 supported
+histories through October 30. CPER remains in base metals, USO has a commodity
+energy class with DBC overlap, and BWX/XOP identity holds remain. Both branches
+ran six cost/delay cases, 192 net outcomes total. The training-only seal chose
+pooled_risk-monthly from two qualifying challengers. No later re-ranking.
+
+Current IS CAGR 6.16%, Sharpe 0.790, DD 7.08%. Later CAGR 2.73%, Sharpe 3.684,
+DD 0.57%. Later average risky/BIL/cash exposure 12.96/45.03/42.01%.
+BIL buyhold later CAGR was 3.94%. Matched pooled-raw Sharpe/return/DD guards
+passed 6/6 training and 0/6 later. Top-three risky winner removal left 3.38%
+IS and 2.02% later CAGR. Original-batch selected-recipe IS/later CAGR 5.34/2.85%.
+The recipe produced defensive exposure but did not establish superior growth.
+Weakest selected-book contributions XLB −1.907pp IS and LEMB −0.118pp later.
+Both dated charts, states and fills were inspected. 68 focused tests passed.
+Three native LEAN accounting cases had zero NAV difference. Evidence dossier
+is reviewable, advantage not established, and all authority remains false.
+Retain compact findings, recipes and receipts, with generated schedules/paths/
+native bundles classified for guarded retirement following discussion.
+[Guidelines](docs/research-stability-guidelines.md) ·
+[Study](research/class-vol-net-20261103-v1/index.html).
+Stop here. The withheld net-replay queue is complete. P4.21 remains data-blocked.
+
+## 2026-11-04 — P4.21 coverage assessed; historical replay remains blocked
+
+The operator finished the class/volatility discussion and asked to continue.
+Pinned the committed native price catalog through November 3, both historical
+holdings source families, all three issuer catalogs and the existing full-pool
+taxonomy. Verified all 265 native historical snapshot publications, their
+row counts, raw-source identities and hashed archived exclusions. The 170 IVV
+and 95 ITOT snapshots contain 384,625 published rows with null historical
+availability. The former 45/60-day assumptions remain separate from actual
+availability. The IVV-tagged price catalog has 70 audited-with-limitations,
+680 review and 134 unavailable symbols. The ITOT-role counts are 1,006, 3,460
+and 691. These overlapping cohorts must not be added.
+
+Before enforcing permanent identity or lookbacks, maximum matched equity value
+under the existing mappings is 6.36% IVV and 9.54% ITOT, with excluded names
+and market value retained. Neither dataset meets the legacy diagnostic reference
+of 95% value and 70% names. IVV and ITOT are proxies outside the frozen pool.
+The native issuer reader checked the actual prior-close information boundary
+over 70 decisions and all 29 equity ETFs: zero qualified direct fund-months.
+XLE/XLB first captures followed the last historical monthly decision; XOP is
+held on identity. A separate November 2 check fails the existing holdings-weight
+reconciliation gate for all three. No guard was changed.
+
+Verified a public XLE N-PORT filing for December 31, 2024 accepted February 27,
+2025. The rendered filing supplies a series/class identity, holdings identifiers
+and derivatives. Direct raw retrieval returned HTTP 403; no SEC file was admitted
+or used in a strategy. The next bounded item is a one-quarter actual-fund filings,
+amendments/dissemination and effective-dated security-identity pilot before any
+multiyear backfill. The coverage prerequisite is complete, while the historical
+alpha replay has no admissible population yet. No strategy returns or operational
+state changes. 23 focused tests passed. [Assessment and evidence](research/p421-coverage-20261104-v1/results.md).
+Stop after this item for discussion.
+## 2026-11-06 — Local startup restored; PostgreSQL service control and PID-reuse guards
+
+Startup failed repeatedly with `Stop local services first: market_data_recorder
+PID is running`, and the stop script then tried to stop `postgres (8052)`
+(access denied). Diagnosis: PostgreSQL was healthy. `var/run/market_data_recorder.pid`
+still held PID 8052 from the previous session, but the recorder had exited and
+Windows had reused that PID for a PostgreSQL backend. Liveness-only checks made
+`sync_databases.py prepare` refuse and made the recorder stop script act on the
+foreign process.
+
+Added `scripts/postgres_service.ps1`: startup now starts a stopped configured
+PostgreSQL Windows service, requests administrator permission once through the
+standard UAC prompt when the shell is not elevated, and restarts the service once
+when the authenticated read probe fails, re-probing within a bounded timeout
+before it stays blocked. `-SkipPostgresServiceControl`, `-NoElevation`,
+`-NoPostgresRestart` and `-PostgresServiceName` (or `ST_POSTGRES_SERVICE_NAME`)
+bound the behavior; the watchdog's required PostgreSQL check uses the same helper.
+
+Added `scripts/service_process.ps1` and `_pid_matches_platform_python` in
+`services/health.py`: recorder start/stop, watchdog, `sync_databases.py`
+prepare/release/guard/worker/stop-worker and local recovery verify that a live PID
+is really the expected Python service. A proven-recycled PID is ignored and its
+stale PID file removed without stopping the other process; unverifiable identity
+stays conservative. The recorder stop script also verifies the capture child and
+refuses to stop an unverified PID. Startup now resumes recorder recovery after a
+normal start, and the watchdog no longer aborts on the retired Docker CLI and
+treats Docker/ClickHouse as optional for the parquet backend.
+
+Verified end-to-end: normal `start_local_platform.ps1` completed (exit 0) with
+PostgreSQL service running and reads ready, database prepare `local_only`
+(optional NAS operation.lock still present), IB paper API and operator health
+HTTP 200, dispatcher/recorder/recovery running, and watchdog reporting
+`postgres_transactional ok (service postgresql-x64-18: Running)`. 71 focused tests
+pass (8 skipped); Ruff, PowerShell parse and documentation checks pass. The
+watchdog still correctly reports the genuine pending strategy refresh and stale
+reconciliation state. No trading, approval, promotion or live-authority change.

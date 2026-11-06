@@ -1,0 +1,149 @@
+[
+  {
+    "batch": "506940353e42ae20535d67fcf885eec6e79831f6d33755ac824a7fe92e4db481",
+    "metrics": {
+      "annual_turnover": null,
+      "cagr": 0.08976561740700273,
+      "calmar": 1.9975999422907424,
+      "cumulative": 0.163926394134273,
+      "end": "2026-10-12",
+      "fees_usd": null,
+      "max_drawdown": 0.04493673408103138,
+      "mean_exposure": null,
+      "sessions": 445,
+      "sharpe": 1.5801455193469383,
+      "start": "2025-01-02",
+      "volatility": 0.05538079701623898
+    },
+    "name": "BroadTrend \u00b7 Full-Pool ETF Trend",
+    "scope": "All currently monitored app-owned USD NAV snapshots at their published5bp/no-extra-delay settings,rebased over exact common dates. Different model warmups/price vintages and inherited positions: descriptive context,not matched causal ablation. Only frozen common-input FR25 and removal-only controls carry matched replay comparisons.",
+    "serving_version": "6fedce31902c21ae137a3e4a178c7d9d6a79bf37f56fc9b75469a29672698e8e",
+    "strategy_id": "broadtrend_full_pool_v1"
+  },
+  {
+    "batch": "5688bb093a7481231f05b8ba4d84e3e26e016231ffeb42576b4e7aca12cf99bd",
+    "metrics": {
+      "annual_turnover": null,
+      "cagr": 0.2546612771976633,
+      "calmar": 3.3330223839826214,
+      "cumulative": 0.49274380667961193,
+      "end": "2026-10-12",
+      "fees_usd": null,
+      "max_drawdown": 0.07640551063247558,
+      "mean_exposure": null,
+      "sessions": 445,
+      "sharpe": 2.0143997804482767,
+      "start": "2025-01-02",
+      "volatility": 0.116009847294806
+    },
+    "name": "FR25 80/20 + conditional short life-cycle sleeve",
+    "scope": "All currently monitored app-owned USD NAV snapshots at their published5bp/no-extra-delay settings,rebased over exact common dates. Different model warmups/price vintages and inherited positions: descriptive context,not matched causal ablation. Only frozen common-input FR25 and removal-only controls carry matched replay comparisons.",
+    "serving_version": "6fedce31902c21ae137a3e4a178c7d9d6a79bf37f56fc9b75469a29672698e8e",
+    "strategy_id": "fr25_lifecycle_conditional_v1"
+  },
+  {
+    "batch": "506940353e42ae20535d67fcf885eec6e79831f6d33755ac824a7fe92e4db481",
+    "metrics": {
+      "annual_turnover": null,
+      "cagr": 0.28114693753862263,
+      "calmar": 3.3243137497804267,
+      "cumulative": 0.548838264960934,
+      "end": "2026-10-12",
+      "fees_usd": null,
+      "max_drawdown": 0.08457292503067515,
+      "mean_exposure": null,
+      "sessions": 445,
+      "sharpe": 2.037016261581272,
+      "start": "2025-01-02",
+      "volatility": 0.1255524525602046
+    },
+    "name": "Leading + payroll/inflation context \u00b7 linear model",
+    "scope": "All currently monitored app-owned USD NAV snapshots at their published5bp/no-extra-delay settings,rebased over exact common dates. Different model warmups/price vintages and inherited positions: descriptive context,not matched causal ablation. Only frozen common-input FR25 and removal-only controls carry matched replay comparisons.",
+    "serving_version": "6fedce31902c21ae137a3e4a178c7d9d6a79bf37f56fc9b75469a29672698e8e",
+    "strategy_id": "research_economic_context_ridge_v1"
+  },
+  {
+    "batch": "506940353e42ae20535d67fcf885eec6e79831f6d33755ac824a7fe92e4db481",
+    "metrics": {
+      "annual_turnover": null,
+      "cagr": 0.2812048478576299,
+      "calmar": 3.211963565167362,
+      "cumulative": 0.5489618967265748,
+      "end": "2026-10-12",
+      "fees_usd": null,
+      "max_drawdown": 0.08754920227215512,
+      "mean_exposure": null,
+      "sessions": 445,
+      "sharpe": 2.0235124264734865,
+      "start": "2025-01-02",
+      "volatility": 0.1264699711349416
+    },
+    "name": "Qualifying defensive ETFs + cash",
+    "scope": "All currently monitored app-owned USD NAV snapshots at their published5bp/no-extra-delay settings,rebased over exact common dates. Different model warmups/price vintages and inherited positions: descriptive context,not matched causal ablation. Only frozen common-input FR25 and removal-only controls carry matched replay comparisons.",
+    "serving_version": "6fedce31902c21ae137a3e4a178c7d9d6a79bf37f56fc9b75469a29672698e8e",
+    "strategy_id": "research_fallback_f3_v1"
+  },
+  {
+    "batch": "506940353e42ae20535d67fcf885eec6e79831f6d33755ac824a7fe92e4db481",
+    "metrics": {
+      "annual_turnover": null,
+      "cagr": 0.2870199185034048,
+      "calmar": 3.454814047551073,
+      "cumulative": 0.5613981778889399,
+      "end": "2026-10-12",
+      "fees_usd": null,
+      "max_drawdown": 0.08307825386632817,
+      "mean_exposure": null,
+      "sessions": 445,
+      "sharpe": 2.083169747641329,
+      "start": "2025-01-02",
+      "volatility": 0.1249295138527457
+    },
+    "name": "FR25 \u00b7 75% M1 / 25% financial ridge",
+    "scope": "All currently monitored app-owned USD NAV snapshots at their published5bp/no-extra-delay settings,rebased over exact common dates. Different model warmups/price vintages and inherited positions: descriptive context,not matched causal ablation. Only frozen common-input FR25 and removal-only controls carry matched replay comparisons.",
+    "serving_version": "6fedce31902c21ae137a3e4a178c7d9d6a79bf37f56fc9b75469a29672698e8e",
+    "strategy_id": "research_fr25_14_v1"
+  },
+  {
+    "batch": "506940353e42ae20535d67fcf885eec6e79831f6d33755ac824a7fe92e4db481",
+    "metrics": {
+      "annual_turnover": null,
+      "cagr": 0.289336804399019,
+      "calmar": 3.5086722856483075,
+      "cumulative": 0.5663651503946254,
+      "end": "2026-10-12",
+      "fees_usd": null,
+      "max_drawdown": 0.0824633310960694,
+      "mean_exposure": null,
+      "sessions": 445,
+      "sharpe": 2.0927861873461935,
+      "start": "2025-01-02",
+      "volatility": 0.12523360074601889
+    },
+    "name": "FR25 + 5% Alpha101 family tilt",
+    "scope": "All currently monitored app-owned USD NAV snapshots at their published5bp/no-extra-delay settings,rebased over exact common dates. Different model warmups/price vintages and inherited positions: descriptive context,not matched causal ablation. Only frozen common-input FR25 and removal-only controls carry matched replay comparisons.",
+    "serving_version": "6fedce31902c21ae137a3e4a178c7d9d6a79bf37f56fc9b75469a29672698e8e",
+    "strategy_id": "research_fr25_alpha_tilt_5_v1"
+  },
+  {
+    "batch": "506940353e42ae20535d67fcf885eec6e79831f6d33755ac824a7fe92e4db481",
+    "metrics": {
+      "annual_turnover": null,
+      "cagr": 0.25789443179363825,
+      "calmar": 3.1042386293783797,
+      "cumulative": 0.4995432441938965,
+      "end": "2026-10-12",
+      "fees_usd": null,
+      "max_drawdown": 0.08307815944075192,
+      "mean_exposure": null,
+      "sessions": 445,
+      "sharpe": 1.9083224357333948,
+      "start": "2025-01-02",
+      "volatility": 0.12433139154566723
+    },
+    "name": "M1/14 \u00b7 faster momentum, 14 candidates",
+    "scope": "All currently monitored app-owned USD NAV snapshots at their published5bp/no-extra-delay settings,rebased over exact common dates. Different model warmups/price vintages and inherited positions: descriptive context,not matched causal ablation. Only frozen common-input FR25 and removal-only controls carry matched replay comparisons.",
+    "serving_version": "6fedce31902c21ae137a3e4a178c7d9d6a79bf37f56fc9b75469a29672698e8e",
+    "strategy_id": "research_m1_14_v1"
+  }
+]

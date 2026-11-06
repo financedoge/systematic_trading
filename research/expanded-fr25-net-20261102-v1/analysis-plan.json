@@ -1,0 +1,9 @@
+{
+  "files": {
+    "scripts/report_expanded_fr25_net.py": "046afc67eaaddaf098e2f87de8cda6550b21e21283da5d500c05a944e7ad1daf",
+    "scripts/validate_expanded_fr25_net.py": "0cfc55a5be7ed98e40ab73540612c230514d92ae0ce09064c7b3bb4853fc73ce"
+  },
+  "frozen_at": "2026-11-02T15:59:16.255123+00:00",
+  "note": "Reporter and uncertainty recipe frozen before net outcomes; protocol remains authoritative.",
+  "results_exist": false
+}

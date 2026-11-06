@@ -4,7 +4,7 @@ import os
 import pytest
 
 from systematic_trading.storage.artifact_retention import (
-    fingerprint, inventory, record_retirement, retirement_for_path, validate_manifest,
+    fingerprint, inventory, record_retirement, retirement_for_path, validate_manifest, active_research_metadata,
 )
 
 
@@ -125,3 +125,36 @@ def test_model_scope_cannot_delete_shared_fit_cache(tmp_path):
     plan['manifest_sha256']=fingerprint(plan)
     with pytest.raises(ValueError,match='revision'):
         validate_manifest(plan,{},root)
+
+
+def test_new_study_metadata_is_protected_without_hardcoded_study_names(tmp_path):
+    active=tmp_path/'new-research';active.mkdir()
+    closed=tmp_path/'selection-width-timing-20261015-v1';closed.mkdir()
+    names=('protocol.json','input-manifest.json','incumbent-provenance.json','recipe.json')
+    for name in (*names,'results.json'):
+        (active/name).write_text('{}')
+        (closed/name).write_text('{}')
+    assert active_research_metadata(tmp_path)==sorted(active/name for name in names)
+
+
+def test_new_protocol_dependency_is_pinned_and_changes_invalidate_retirement(tmp_path,monkeypatch):
+    from scripts import retire_research_artifacts as cli
+    from types import SimpleNamespace
+    from contextlib import nullcontext
+    study=tmp_path/'research'/'new-study';study.mkdir(parents=True)
+    protocol=study/'protocol.json'
+    protocol.write_text(json.dumps({'input':'var/tracked_strategies/'+'c'*64+'/bundle'}))
+    analytics=SimpleNamespace(publications=lambda source:[dict(version='a'*64,published_at='1'),dict(version='b'*64,published_at='0')],
+        pinned_rows=lambda *args:[])
+    store=SimpleNamespace(_connect=lambda:nullcontext(SimpleNamespace(execute=lambda *args:SimpleNamespace(fetchall=lambda:[]))))
+    monkeypatch.setattr(cli,'ROOT',tmp_path)
+    monkeypatch.setattr(cli.PostgresStore,'from_settings',lambda settings:store)
+    monkeypatch.setattr(cli.AnalyticsStore,'from_settings',lambda settings:analytics)
+    monkeypatch.setattr(cli,'membership',lambda *args:dict(revision=1,monitored=[]))
+    monkeypatch.setattr(cli,'control_state',lambda store:dict(revision=1,sota_key='sota',active={},pending=None))
+    settings=SimpleNamespace(data_dir=tmp_path/'var')
+    guard,_=cli.protection(settings)
+    assert 'c'*64 in guard['protected_revisions']
+    protocol.write_text(json.dumps({'input':'var/tracked_strategies/'+'d'*64+'/bundle'}))
+    changed,_=cli.protection(settings)
+    assert changed!=guard and 'd'*64 in changed['protected_revisions']

@@ -1,0 +1,1154 @@
+{
+  "class_raw vs pooled_raw/0.10/10/0/calibration": {
+    "cagr": 0.05334150256798853,
+    "dd": -0.09084278604608931,
+    "passes": true,
+    "sharpe": 0.3824930778223862
+  },
+  "class_raw vs pooled_raw/0.10/10/0/later": {
+    "cagr": -0.005646110181659836,
+    "dd": 0.04631070240849677,
+    "passes": false,
+    "sharpe": -0.05890901043675201
+  },
+  "class_raw vs pooled_raw/0.10/10/1/calibration": {
+    "cagr": 0.05123536895013192,
+    "dd": -0.13430108733784207,
+    "passes": true,
+    "sharpe": 0.36460897292156896
+  },
+  "class_raw vs pooled_raw/0.10/10/1/later": {
+    "cagr": 0.048531424453110095,
+    "dd": -0.011487148721269436,
+    "passes": true,
+    "sharpe": 0.1459174752410124
+  },
+  "class_raw vs pooled_raw/0.10/20/0/calibration": {
+    "cagr": 0.07215479562432148,
+    "dd": -0.14993327407601476,
+    "passes": true,
+    "sharpe": 0.5273881217783497
+  },
+  "class_raw vs pooled_raw/0.10/20/0/later": {
+    "cagr": 0.017936569395589963,
+    "dd": 0.04242486262524492,
+    "passes": false,
+    "sharpe": 0.032239352981844105
+  },
+  "class_raw vs pooled_raw/0.10/20/1/calibration": {
+    "cagr": 0.06991908631955546,
+    "dd": -0.17627199290863504,
+    "passes": true,
+    "sharpe": 0.5040919327054849
+  },
+  "class_raw vs pooled_raw/0.10/20/1/later": {
+    "cagr": 0.07041985469297263,
+    "dd": -0.02463081221146146,
+    "passes": true,
+    "sharpe": 0.2359963787491064
+  },
+  "class_raw vs pooled_raw/0.10/5/0/calibration": {
+    "cagr": 0.04307630395655482,
+    "dd": -0.0417660603264739,
+    "passes": true,
+    "sharpe": 0.3104545779659328
+  },
+  "class_raw vs pooled_raw/0.10/5/0/later": {
+    "cagr": -0.018019456953361823,
+    "dd": 0.04591394687277339,
+    "passes": false,
+    "sharpe": -0.10443573556167207
+  },
+  "class_raw vs pooled_raw/0.10/5/1/calibration": {
+    "cagr": 0.04102714779661598,
+    "dd": -0.10615158467300279,
+    "passes": true,
+    "sharpe": 0.2945763666992831
+  },
+  "class_raw vs pooled_raw/0.10/5/1/later": {
+    "cagr": 0.03696125734413114,
+    "dd": -0.004781297728992384,
+    "passes": true,
+    "sharpe": 0.10055133187766341
+  },
+  "class_raw vs pooled_raw/0.40/10/0/calibration": {
+    "cagr": 0.030041710343129413,
+    "dd": -0.06661695656470601,
+    "passes": true,
+    "sharpe": 0.2143556949355175
+  },
+  "class_raw vs pooled_raw/0.40/10/0/later": {
+    "cagr": -0.009802581608224337,
+    "dd": 0.04292940896156683,
+    "passes": false,
+    "sharpe": -0.0640688238645819
+  },
+  "class_raw vs pooled_raw/0.40/10/1/calibration": {
+    "cagr": 0.04542304530539376,
+    "dd": -0.13095772453587906,
+    "passes": true,
+    "sharpe": 0.32183295826006675
+  },
+  "class_raw vs pooled_raw/0.40/10/1/later": {
+    "cagr": 0.07822434654850974,
+    "dd": -0.013325636378899275,
+    "passes": true,
+    "sharpe": 0.26845148754994974
+  },
+  "class_raw vs pooled_raw/0.40/20/0/calibration": {
+    "cagr": 0.04892426244782422,
+    "dd": -0.10523364904810684,
+    "passes": true,
+    "sharpe": 0.34486128004564254
+  },
+  "class_raw vs pooled_raw/0.40/20/0/later": {
+    "cagr": 0.009547710495607209,
+    "dd": 0.03901005412435421,
+    "passes": false,
+    "sharpe": 0.008242575112126227
+  },
+  "class_raw vs pooled_raw/0.40/20/1/calibration": {
+    "cagr": 0.06341681517369158,
+    "dd": -0.1692642842041645,
+    "passes": true,
+    "sharpe": 0.446514399986594
+  },
+  "class_raw vs pooled_raw/0.40/20/1/later": {
+    "cagr": 0.09477580069954805,
+    "dd": -0.02348259474893566,
+    "passes": true,
+    "sharpe": 0.33803625788813263
+  },
+  "class_raw vs pooled_raw/0.40/5/0/calibration": {
+    "cagr": 0.01992146627211877,
+    "dd": -0.03338762403534934,
+    "passes": true,
+    "sharpe": 0.14921751791090176
+  },
+  "class_raw vs pooled_raw/0.40/5/0/later": {
+    "cagr": -0.019928522044083463,
+    "dd": 0.042572737913373127,
+    "passes": false,
+    "sharpe": -0.10011797883187912
+  },
+  "class_raw vs pooled_raw/0.40/5/1/calibration": {
+    "cagr": 0.035764503864771036,
+    "dd": -0.09225657908395057,
+    "passes": true,
+    "sharpe": 0.25905519676969413
+  },
+  "class_raw vs pooled_raw/0.40/5/1/later": {
+    "cagr": 0.06958745278039968,
+    "dd": -0.008221851103829003,
+    "passes": true,
+    "sharpe": 0.2337459417276997
+  },
+  "class_raw vs pooled_raw/0.80/10/0/calibration": {
+    "cagr": 0.037029088250248865,
+    "dd": -0.08415539723260135,
+    "passes": true,
+    "sharpe": 0.26187262487547897
+  },
+  "class_raw vs pooled_raw/0.80/10/0/later": {
+    "cagr": -0.0048768473896305675,
+    "dd": 0.0315921218880586,
+    "passes": false,
+    "sharpe": -0.0977549355154288
+  },
+  "class_raw vs pooled_raw/0.80/10/1/calibration": {
+    "cagr": 0.05543403142095682,
+    "dd": -0.12438583202000586,
+    "passes": true,
+    "sharpe": 0.3910026331032512
+  },
+  "class_raw vs pooled_raw/0.80/10/1/later": {
+    "cagr": 0.035148432475544666,
+    "dd": -0.004363321111688467,
+    "passes": true,
+    "sharpe": 0.0754088466411309
+  },
+  "class_raw vs pooled_raw/0.80/20/0/calibration": {
+    "cagr": 0.044796308685329356,
+    "dd": -0.11850130782895174,
+    "passes": true,
+    "sharpe": 0.3122366505824968
+  },
+  "class_raw vs pooled_raw/0.80/20/0/later": {
+    "cagr": 0.0033274472616697803,
+    "dd": 0.03132571655079419,
+    "passes": false,
+    "sharpe": -0.06680684026706185
+  },
+  "class_raw vs pooled_raw/0.80/20/1/calibration": {
+    "cagr": 0.06271431970674424,
+    "dd": -0.17160738775091733,
+    "passes": true,
+    "sharpe": 0.43682097924769914
+  },
+  "class_raw vs pooled_raw/0.80/20/1/later": {
+    "cagr": 0.04274981246109455,
+    "dd": -0.011616963765188837,
+    "passes": true,
+    "sharpe": 0.10483432607847742
+  },
+  "class_raw vs pooled_raw/0.80/5/0/calibration": {
+    "cagr": 0.03299627866480703,
+    "dd": -0.06522046416396121,
+    "passes": true,
+    "sharpe": 0.2363944677577951
+  },
+  "class_raw vs pooled_raw/0.80/5/0/later": {
+    "cagr": -0.008959456921625142,
+    "dd": 0.031815878525479735,
+    "passes": false,
+    "sharpe": -0.11239581322152437
+  },
+  "class_raw vs pooled_raw/0.80/5/1/calibration": {
+    "cagr": 0.05163394198432203,
+    "dd": -0.09958112923136975,
+    "passes": true,
+    "sharpe": 0.3674650876789848
+  },
+  "class_raw vs pooled_raw/0.80/5/1/later": {
+    "cagr": 0.03133754557142754,
+    "dd": -0.0007119071456599402,
+    "passes": true,
+    "sharpe": 0.061031623592789463
+  },
+  "class_raw vs pooled_raw/monthly/10/0/calibration": {
+    "cagr": 0.032592863755274926,
+    "dd": -0.06971561345526045,
+    "passes": true,
+    "sharpe": 0.22959569345581932
+  },
+  "class_raw vs pooled_raw/monthly/10/0/later": {
+    "cagr": 0.030659727877130116,
+    "dd": -0.008293774865363868,
+    "passes": true,
+    "sharpe": 0.14174471636053432
+  },
+  "class_raw vs pooled_raw/monthly/10/1/calibration": {
+    "cagr": 0.0339980235117725,
+    "dd": -0.12098088045368594,
+    "passes": true,
+    "sharpe": 0.23853366463441253
+  },
+  "class_raw vs pooled_raw/monthly/10/1/later": {
+    "cagr": 0.04822956829809777,
+    "dd": -0.013525696075993632,
+    "passes": true,
+    "sharpe": 0.1973129383701857
+  },
+  "class_raw vs pooled_raw/monthly/20/0/calibration": {
+    "cagr": 0.03445926050672743,
+    "dd": -0.07999962088995338,
+    "passes": true,
+    "sharpe": 0.24237746095277332
+  },
+  "class_raw vs pooled_raw/monthly/20/0/later": {
+    "cagr": 0.03313915835386538,
+    "dd": -0.008419155422394464,
+    "passes": true,
+    "sharpe": 0.14970338239391956
+  },
+  "class_raw vs pooled_raw/monthly/20/1/calibration": {
+    "cagr": 0.03580398717760247,
+    "dd": -0.1254519543935303,
+    "passes": true,
+    "sharpe": 0.25034982240857073
+  },
+  "class_raw vs pooled_raw/monthly/20/1/later": {
+    "cagr": 0.05064345585973218,
+    "dd": -0.013587561363603284,
+    "passes": true,
+    "sharpe": 0.20521799256169793
+  },
+  "class_raw vs pooled_raw/monthly/5/0/calibration": {
+    "cagr": 0.03165817073213828,
+    "dd": -0.06431419421577278,
+    "passes": true,
+    "sharpe": 0.22322530546543362
+  },
+  "class_raw vs pooled_raw/monthly/5/0/later": {
+    "cagr": 0.029426416748701723,
+    "dd": -0.008063918779082857,
+    "passes": true,
+    "sharpe": 0.1378012236020012
+  },
+  "class_raw vs pooled_raw/monthly/5/1/calibration": {
+    "cagr": 0.03311829510389941,
+    "dd": -0.11822048334796287,
+    "passes": true,
+    "sharpe": 0.2328177831244268
+  },
+  "class_raw vs pooled_raw/monthly/5/1/later": {
+    "cagr": 0.04716831056623616,
+    "dd": -0.013454514987686239,
+    "passes": true,
+    "sharpe": 0.19384525758426707
+  },
+  "class_risk vs class_raw/0.10/10/0/calibration": {
+    "cagr": -0.042336692767791284,
+    "dd": 0.010259158531470747,
+    "passes": false,
+    "sharpe": -0.42783850262676504
+  },
+  "class_risk vs class_raw/0.10/10/0/later": {
+    "cagr": -0.2707140337213165,
+    "dd": -0.047888422529356434,
+    "passes": false,
+    "sharpe": -0.7933431599415772
+  },
+  "class_risk vs class_raw/0.10/10/1/calibration": {
+    "cagr": -0.011330896950086933,
+    "dd": -0.030018750862116028,
+    "passes": false,
+    "sharpe": -0.1376856945439191
+  },
+  "class_risk vs class_raw/0.10/10/1/later": {
+    "cagr": -0.31826833930186016,
+    "dd": -0.06863947006195803,
+    "passes": false,
+    "sharpe": -1.077387521002528
+  },
+  "class_risk vs class_raw/0.10/20/0/calibration": {
+    "cagr": -0.042883365871220214,
+    "dd": 0.06988269406695924,
+    "passes": false,
+    "sharpe": -0.5975721036586428
+  },
+  "class_risk vs class_raw/0.10/20/0/later": {
+    "cagr": -0.28172599832852185,
+    "dd": -0.026480767540235428,
+    "passes": false,
+    "sharpe": -1.0218584415022243
+  },
+  "class_risk vs class_raw/0.10/20/1/calibration": {
+    "cagr": -0.013063423885025127,
+    "dd": 0.01268651484598149,
+    "passes": false,
+    "sharpe": -0.3100124642385172
+  },
+  "class_risk vs class_raw/0.10/20/1/later": {
+    "cagr": -0.3283743010789706,
+    "dd": -0.043301131192089226,
+    "passes": false,
+    "sharpe": -1.3032408045962245
+  },
+  "class_risk vs class_raw/0.10/5/0/calibration": {
+    "cagr": -0.04202408925423118,
+    "dd": -0.04064395551729327,
+    "passes": false,
+    "sharpe": -0.34248137707690973
+  },
+  "class_risk vs class_raw/0.10/5/0/later": {
+    "cagr": -0.26474650193778926,
+    "dd": -0.058773649267421346,
+    "passes": false,
+    "sharpe": -0.6789296920519844
+  },
+  "class_risk vs class_raw/0.10/5/1/calibration": {
+    "cagr": -0.010396790046125037,
+    "dd": -0.03845609599981481,
+    "passes": false,
+    "sharpe": -0.05102159442503851
+  },
+  "class_risk vs class_raw/0.10/5/1/later": {
+    "cagr": -0.3129142718290081,
+    "dd": -0.07001597269320148,
+    "passes": false,
+    "sharpe": -0.9649721910064147
+  },
+  "class_risk vs class_raw/0.40/10/0/calibration": {
+    "cagr": -0.02943128449754051,
+    "dd": -0.009399895400591385,
+    "passes": false,
+    "sharpe": -0.27549102945456616
+  },
+  "class_risk vs class_raw/0.40/10/0/later": {
+    "cagr": -0.28400462550796113,
+    "dd": -0.07398501049567907,
+    "passes": false,
+    "sharpe": -0.8610438238828435
+  },
+  "class_risk vs class_raw/0.40/10/1/calibration": {
+    "cagr": -0.005052522756540112,
+    "dd": -0.018120524689652195,
+    "passes": false,
+    "sharpe": -0.028860384270537665
+  },
+  "class_risk vs class_raw/0.40/10/1/later": {
+    "cagr": -0.36499517824659633,
+    "dd": -0.05083489948192221,
+    "passes": false,
+    "sharpe": -1.3554462748012397
+  },
+  "class_risk vs class_raw/0.40/20/0/calibration": {
+    "cagr": -0.03038578544000925,
+    "dd": 0.03379252311520353,
+    "passes": false,
+    "sharpe": -0.40426885906552734
+  },
+  "class_risk vs class_raw/0.40/20/0/later": {
+    "cagr": -0.29224203987183506,
+    "dd": -0.054990393472930665,
+    "passes": false,
+    "sharpe": -1.038172005205649
+  },
+  "class_risk vs class_raw/0.40/20/1/calibration": {
+    "cagr": -0.006671033366981716,
+    "dd": -0.011500044390344133,
+    "passes": false,
+    "sharpe": -0.15973064120112446
+  },
+  "class_risk vs class_raw/0.40/20/1/later": {
+    "cagr": -0.37100468972290823,
+    "dd": -0.021498591213267693,
+    "passes": false,
+    "sharpe": -1.528464926360898
+  },
+  "class_risk vs class_raw/0.40/5/0/calibration": {
+    "cagr": -0.02891793420305433,
+    "dd": -0.02556276206039776,
+    "passes": false,
+    "sharpe": -0.21051892684859125
+  },
+  "class_risk vs class_raw/0.40/5/0/later": {
+    "cagr": -0.27967356069939475,
+    "dd": -0.0802012783170799,
+    "passes": false,
+    "sharpe": -0.7729963979854868
+  },
+  "class_risk vs class_raw/0.40/5/1/calibration": {
+    "cagr": -0.004165718941436802,
+    "dd": -0.03370484165662624,
+    "passes": true,
+    "sharpe": 0.037277878129464315
+  },
+  "class_risk vs class_raw/0.40/5/1/later": {
+    "cagr": -0.36167263425754315,
+    "dd": -0.057525606406739094,
+    "passes": false,
+    "sharpe": -1.2686874278243778
+  },
+  "class_risk vs class_raw/0.80/10/0/calibration": {
+    "cagr": -0.014884337256242164,
+    "dd": 0.014179730842122429,
+    "passes": false,
+    "sharpe": -0.08369483308010628
+  },
+  "class_risk vs class_raw/0.80/10/0/later": {
+    "cagr": -0.40157322407077745,
+    "dd": -0.02279946836931912,
+    "passes": false,
+    "sharpe": -1.561330251641153
+  },
+  "class_risk vs class_raw/0.80/10/1/calibration": {
+    "cagr": -0.014612424644280031,
+    "dd": 0.012835427754386397,
+    "passes": false,
+    "sharpe": -0.06710480436091376
+  },
+  "class_risk vs class_raw/0.80/10/1/later": {
+    "cagr": -0.359213593945773,
+    "dd": -0.0463324506552103,
+    "passes": false,
+    "sharpe": -1.297978351154248
+  },
+  "class_risk vs class_raw/0.80/20/0/calibration": {
+    "cagr": -0.00980323076986922,
+    "dd": 0.012330764738345379,
+    "passes": false,
+    "sharpe": -0.10498596467287516
+  },
+  "class_risk vs class_raw/0.80/20/0/later": {
+    "cagr": -0.4039043413334713,
+    "dd": -0.009240962172522016,
+    "passes": false,
+    "sharpe": -1.6442604655245157
+  },
+  "class_risk vs class_raw/0.80/20/1/calibration": {
+    "cagr": -0.009513687584018049,
+    "dd": 0.0381459313539072,
+    "passes": false,
+    "sharpe": -0.08839174074250038
+  },
+  "class_risk vs class_raw/0.80/20/1/later": {
+    "cagr": -0.36217399416829577,
+    "dd": -0.032648755387478356,
+    "passes": false,
+    "sharpe": -1.3836807085991576
+  },
+  "class_risk vs class_raw/0.80/5/0/calibration": {
+    "cagr": -0.01747483646141612,
+    "dd": 0.011104632133734027,
+    "passes": false,
+    "sharpe": -0.07238189216726942
+  },
+  "class_risk vs class_raw/0.80/5/0/later": {
+    "cagr": -0.4004543135597378,
+    "dd": -0.029724899019968665,
+    "passes": false,
+    "sharpe": -1.520492235290007
+  },
+  "class_risk vs class_raw/0.80/5/1/calibration": {
+    "cagr": -0.01722464800797674,
+    "dd": -9.820270655191976e-05,
+    "passes": false,
+    "sharpe": -0.05624094559306353
+  },
+  "class_risk vs class_raw/0.80/5/1/later": {
+    "cagr": -0.3578111375887265,
+    "dd": -0.05328144440404503,
+    "passes": false,
+    "sharpe": -1.2557086481009196
+  },
+  "class_risk vs class_raw/monthly/10/0/calibration": {
+    "cagr": -0.016945639755434172,
+    "dd": 0.0034852034228699535,
+    "passes": false,
+    "sharpe": -0.10993551026169471
+  },
+  "class_risk vs class_raw/monthly/10/0/later": {
+    "cagr": -0.4071408617438803,
+    "dd": 0.012531057512569888,
+    "passes": false,
+    "sharpe": -1.6123102406384349
+  },
+  "class_risk vs class_raw/monthly/10/1/calibration": {
+    "cagr": 0.0007970602442519681,
+    "dd": 0.010075743587366848,
+    "passes": true,
+    "sharpe": 0.011487400271353948
+  },
+  "class_risk vs class_raw/monthly/10/1/later": {
+    "cagr": -0.3731849054756424,
+    "dd": 0.011181496104319288,
+    "passes": false,
+    "sharpe": -1.4747621232727366
+  },
+  "class_risk vs class_raw/monthly/20/0/calibration": {
+    "cagr": -0.01586489052098128,
+    "dd": 0.0027437166837605,
+    "passes": false,
+    "sharpe": -0.13074023798502932
+  },
+  "class_risk vs class_raw/monthly/20/0/later": {
+    "cagr": -0.4068088718818994,
+    "dd": 0.015823184451893235,
+    "passes": false,
+    "sharpe": -1.643873096916535
+  },
+  "class_risk vs class_raw/monthly/20/1/calibration": {
+    "cagr": 0.0017247629077282722,
+    "dd": 0.0057791013606574015,
+    "passes": false,
+    "sharpe": -0.008350955253556822
+  },
+  "class_risk vs class_raw/monthly/20/1/later": {
+    "cagr": -0.3730284469249241,
+    "dd": 0.014312955441934005,
+    "passes": false,
+    "sharpe": -1.5065612208207118
+  },
+  "class_risk vs class_raw/monthly/5/0/calibration": {
+    "cagr": -0.01748853870149869,
+    "dd": 0.003727410757941585,
+    "passes": false,
+    "sharpe": -0.09941073118004448
+  },
+  "class_risk vs class_raw/monthly/5/0/later": {
+    "cagr": -0.4074151057171792,
+    "dd": 0.010815213907624743,
+    "passes": false,
+    "sharpe": -1.5972387541541915
+  },
+  "class_risk vs class_raw/monthly/5/1/calibration": {
+    "cagr": 0.00030638717505881985,
+    "dd": 0.012090114587246847,
+    "passes": true,
+    "sharpe": 0.021339101260046872
+  },
+  "class_risk vs class_raw/monthly/5/1/later": {
+    "cagr": -0.37335246422598023,
+    "dd": 0.009573013998352087,
+    "passes": false,
+    "sharpe": -1.4591840420590063
+  },
+  "class_risk vs pooled_risk/0.10/10/0/calibration": {
+    "cagr": -0.021823413634397215,
+    "dd": 0.023461296263276643,
+    "passes": false,
+    "sharpe": -0.2169264159901441
+  },
+  "class_risk vs pooled_risk/0.10/10/0/later": {
+    "cagr": 0.06843884230676411,
+    "dd": 0.11336183514142761,
+    "passes": false,
+    "sharpe": -2.724851749600673
+  },
+  "class_risk vs pooled_risk/0.10/10/1/calibration": {
+    "cagr": -0.002447932627502536,
+    "dd": -0.019553351348181924,
+    "passes": false,
+    "sharpe": -0.0020845674040534043
+  },
+  "class_risk vs pooled_risk/0.10/10/1/later": {
+    "cagr": 0.041927028993931525,
+    "dd": 0.066538464968114,
+    "passes": false,
+    "sharpe": -2.8522809086046
+  },
+  "class_risk vs pooled_risk/0.10/20/0/calibration": {
+    "cagr": -0.038043508963539696,
+    "dd": 0.09007142072457108,
+    "passes": false,
+    "sharpe": -0.3406845876014864
+  },
+  "class_risk vs pooled_risk/0.10/20/0/later": {
+    "cagr": 0.024237085968684458,
+    "dd": 0.1361485814375638,
+    "passes": false,
+    "sharpe": -2.593626198182136
+  },
+  "class_risk vs pooled_risk/0.10/20/1/calibration": {
+    "cagr": -0.019436829202931882,
+    "dd": 0.028706595619030884,
+    "passes": false,
+    "sharpe": -0.12963848363073593
+  },
+  "class_risk vs pooled_risk/0.10/20/1/later": {
+    "cagr": -0.0015352859144839304,
+    "dd": 0.09102129688831129,
+    "passes": false,
+    "sharpe": -2.723398096437632
+  },
+  "class_risk vs pooled_risk/0.10/5/0/calibration": {
+    "cagr": -0.013236143050895377,
+    "dd": -0.009856294843406554,
+    "passes": false,
+    "sharpe": -0.1556099030616344
+  },
+  "class_risk vs pooled_risk/0.10/5/0/later": {
+    "cagr": 0.09121674271503122,
+    "dd": 0.1015017787326098,
+    "passes": false,
+    "sharpe": -2.802222531516955
+  },
+  "class_risk vs pooled_risk/0.10/5/1/calibration": {
+    "cagr": 0.006550528447178294,
+    "dd": -0.023766075509791817,
+    "passes": true,
+    "sharpe": 0.0611888406058515
+  },
+  "class_risk vs pooled_risk/0.10/5/1/later": {
+    "cagr": 0.06439493926336337,
+    "dd": 0.06559923397955247,
+    "passes": false,
+    "sharpe": -2.9040853870567136
+  },
+  "class_risk vs pooled_risk/0.40/10/0/calibration": {
+    "cagr": -0.02260005283810551,
+    "dd": 0.0216969700319376,
+    "passes": false,
+    "sharpe": -0.2587501273018044
+  },
+  "class_risk vs pooled_risk/0.40/10/0/later": {
+    "cagr": 0.06751839251149083,
+    "dd": 0.085938462021521,
+    "passes": false,
+    "sharpe": -2.8522637666494366
+  },
+  "class_risk vs pooled_risk/0.40/10/1/calibration": {
+    "cagr": -0.002333733397912763,
+    "dd": -0.015838351519258054,
+    "passes": false,
+    "sharpe": -0.04175685082617531
+  },
+  "class_risk vs pooled_risk/0.40/10/1/later": {
+    "cagr": 0.015415841616785997,
+    "dd": 0.08362920606787727,
+    "passes": false,
+    "sharpe": -3.022773746063001
+  },
+  "class_risk vs pooled_risk/0.40/20/0/calibration": {
+    "cagr": -0.034358727638040265,
+    "dd": 0.06964113495253987,
+    "passes": false,
+    "sharpe": -0.3402972758258694
+  },
+  "class_risk vs pooled_risk/0.40/20/0/later": {
+    "cagr": 0.028660024483003088,
+    "dd": 0.10722482089743446,
+    "passes": false,
+    "sharpe": -3.0325929382749304
+  },
+  "class_risk vs pooled_risk/0.40/20/1/calibration": {
+    "cagr": -0.014689163448985076,
+    "dd": -0.009589918063895309,
+    "passes": false,
+    "sharpe": -0.12713749624708612
+  },
+  "class_risk vs pooled_risk/0.40/20/1/later": {
+    "cagr": -0.021740304581793435,
+    "dd": 0.11306199422934093,
+    "passes": false,
+    "sharpe": -3.1748840456528127
+  },
+  "class_risk vs pooled_risk/0.40/5/0/calibration": {
+    "cagr": -0.016443449067470528,
+    "dd": 0.022882287635665022,
+    "passes": false,
+    "sharpe": -0.21816210103125816
+  },
+  "class_risk vs pooled_risk/0.40/5/0/later": {
+    "cagr": 0.08740789469748478,
+    "dd": 0.07858845179705154,
+    "passes": false,
+    "sharpe": -2.768969197015261
+  },
+  "class_risk vs pooled_risk/0.40/5/1/calibration": {
+    "cagr": 0.0041438441468015785,
+    "dd": -0.012944332505812173,
+    "passes": true,
+    "sharpe": 0.0006061987378005451
+  },
+  "class_risk vs pooled_risk/0.40/5/1/later": {
+    "cagr": 0.034538791695314375,
+    "dd": 0.07687381685022121,
+    "passes": false,
+    "sharpe": -2.946656970923806
+  },
+  "class_risk vs pooled_risk/0.80/10/0/calibration": {
+    "cagr": 0.00602158856224011,
+    "dd": -0.002338687635279113,
+    "passes": true,
+    "sharpe": 0.05512377598457652
+  },
+  "class_risk vs pooled_risk/0.80/10/0/later": {
+    "cagr": -0.01912887662323559,
+    "dd": 0.12253656039691085,
+    "passes": false,
+    "sharpe": -3.4888734807683983
+  },
+  "class_risk vs pooled_risk/0.80/10/1/calibration": {
+    "cagr": -0.005614271444946528,
+    "dd": 0.027832349396147094,
+    "passes": false,
+    "sharpe": -0.10356669031274879
+  },
+  "class_risk vs pooled_risk/0.80/10/1/later": {
+    "cagr": 0.007042385600582124,
+    "dd": 0.10147012156932389,
+    "passes": false,
+    "sharpe": -3.07259329703709
+  },
+  "class_risk vs pooled_risk/0.80/20/0/calibration": {
+    "cagr": 0.004675195348603056,
+    "dd": -0.017100615542840925,
+    "passes": true,
+    "sharpe": 0.07335030569897263
+  },
+  "class_risk vs pooled_risk/0.80/20/0/later": {
+    "cagr": -0.03375656443309194,
+    "dd": 0.13646651269587928,
+    "passes": false,
+    "sharpe": -3.5003393230570805
+  },
+  "class_risk vs pooled_risk/0.80/20/1/calibration": {
+    "cagr": -0.006840204953432183,
+    "dd": 0.017291604126802418,
+    "passes": false,
+    "sharpe": -0.08088994989830063
+  },
+  "class_risk vs pooled_risk/0.80/20/1/later": {
+    "cagr": -0.007883475802151318,
+    "dd": 0.11563133467229014,
+    "passes": false,
+    "sharpe": -3.0670251354284845
+  },
+  "class_risk vs pooled_risk/0.80/5/0/calibration": {
+    "cagr": 0.006738052566977792,
+    "dd": 0.012647627971747455,
+    "passes": true,
+    "sharpe": 0.04597862195047231
+  },
+  "class_risk vs pooled_risk/0.80/5/0/later": {
+    "cagr": -0.011808663162661714,
+    "dd": 0.11555822259754134,
+    "passes": false,
+    "sharpe": -3.4893590969973913
+  },
+  "class_risk vs pooled_risk/0.80/5/1/calibration": {
+    "cagr": -0.004987109807597756,
+    "dd": 0.03341286763140694,
+    "passes": false,
+    "sharpe": -0.11524054176415743
+  },
+  "class_risk vs pooled_risk/0.80/5/1/later": {
+    "cagr": 0.01460027867846625,
+    "dd": 0.09426189181419187,
+    "passes": false,
+    "sharpe": -3.0668584912113217
+  },
+  "class_risk vs pooled_risk/monthly/10/0/calibration": {
+    "cagr": -0.049149632823880296,
+    "dd": 0.11485930157183932,
+    "passes": false,
+    "sharpe": -0.608690165100724
+  },
+  "class_risk vs pooled_risk/monthly/10/0/later": {
+    "cagr": -0.031052726018675036,
+    "dd": 0.1578740944649707,
+    "passes": false,
+    "sharpe": -3.5890465228189807
+  },
+  "class_risk vs pooled_risk/monthly/10/1/calibration": {
+    "cagr": -0.03986154118189433,
+    "dd": 0.08248213071547916,
+    "passes": false,
+    "sharpe": -0.5002213834381378
+  },
+  "class_risk vs pooled_risk/monthly/10/1/later": {
+    "cagr": -0.025384497272959106,
+    "dd": 0.15897398288216968,
+    "passes": false,
+    "sharpe": -3.332070033180501
+  },
+  "class_risk vs pooled_risk/monthly/20/0/calibration": {
+    "cagr": -0.05223391001186206,
+    "dd": 0.12155146468424993,
+    "passes": false,
+    "sharpe": -0.6341776685383086
+  },
+  "class_risk vs pooled_risk/monthly/20/0/later": {
+    "cagr": -0.037623997455479063,
+    "dd": 0.16154062662666568,
+    "passes": false,
+    "sharpe": -3.5190361225243607
+  },
+  "class_risk vs pooled_risk/monthly/20/1/calibration": {
+    "cagr": -0.04295408484761065,
+    "dd": 0.08525506879737832,
+    "passes": false,
+    "sharpe": -0.5236602119567362
+  },
+  "class_risk vs pooled_risk/monthly/20/1/later": {
+    "cagr": -0.031965407744410035,
+    "dd": 0.1626110046094632,
+    "passes": false,
+    "sharpe": -3.264888479807789
+  },
+  "class_risk vs pooled_risk/monthly/5/0/calibration": {
+    "cagr": -0.047604219003471115,
+    "dd": 0.1114919713824748,
+    "passes": false,
+    "sharpe": -0.595755907886923
+  },
+  "class_risk vs pooled_risk/monthly/5/0/later": {
+    "cagr": -0.027872553278920464,
+    "dd": 0.1560865827161887,
+    "passes": false,
+    "sharpe": -3.6222784078586194
+  },
+  "class_risk vs pooled_risk/monthly/5/1/calibration": {
+    "cagr": -0.0382930733586051,
+    "dd": 0.08132401996021121,
+    "passes": false,
+    "sharpe": -0.48814201677472774
+  },
+  "class_risk vs pooled_risk/monthly/5/1/later": {
+    "cagr": -0.022041371286150246,
+    "dd": 0.1571309005985735,
+    "passes": false,
+    "sharpe": -3.3625509642723417
+  },
+  "pooled_risk vs pooled_raw/0.10/10/0/calibration": {
+    "cagr": 0.03282822343459446,
+    "dd": -0.1040449237778952,
+    "passes": true,
+    "sharpe": 0.17158099118576525
+  },
+  "pooled_risk vs pooled_raw/0.10/10/0/later": {
+    "cagr": -0.3447989862097405,
+    "dd": -0.11493955526228727,
+    "passes": false,
+    "sharpe": 1.8725995792223435
+  },
+  "pooled_risk vs pooled_raw/0.10/10/1/calibration": {
+    "cagr": 0.042352404627547524,
+    "dd": -0.14476648685177618,
+    "passes": true,
+    "sharpe": 0.22900784578170327
+  },
+  "pooled_risk vs pooled_raw/0.10/10/1/later": {
+    "cagr": -0.3116639438426816,
+    "dd": -0.14666508375134146,
+    "passes": false,
+    "sharpe": 1.9208108628430842
+  },
+  "pooled_risk vs pooled_raw/0.10/20/0/calibration": {
+    "cagr": 0.06731493871664096,
+    "dd": -0.1701220007336266,
+    "passes": true,
+    "sharpe": 0.27050060572119333
+  },
+  "pooled_risk vs pooled_raw/0.10/20/0/later": {
+    "cagr": -0.28802651490161635,
+    "dd": -0.12020448635255432,
+    "passes": false,
+    "sharpe": 1.6040071096617559
+  },
+  "pooled_risk vs pooled_raw/0.10/20/1/calibration": {
+    "cagr": 0.07629249163746221,
+    "dd": -0.19229207368168444,
+    "passes": true,
+    "sharpe": 0.3237179520977037
+  },
+  "pooled_risk vs pooled_raw/0.10/20/1/later": {
+    "cagr": -0.25641916047151403,
+    "dd": -0.15895324029186197,
+    "passes": false,
+    "sharpe": 1.6561536705905138
+  },
+  "pooled_risk vs pooled_raw/0.10/5/0/calibration": {
+    "cagr": 0.014288357753219016,
+    "dd": -0.07255372100036062,
+    "passes": true,
+    "sharpe": 0.12358310395065747
+  },
+  "pooled_risk vs pooled_raw/0.10/5/0/later": {
+    "cagr": -0.3739827016061823,
+    "dd": -0.11436148112725775,
+    "passes": false,
+    "sharpe": 2.018857103903298
+  },
+  "pooled_risk vs pooled_raw/0.10/5/1/calibration": {
+    "cagr": 0.02407982930331265,
+    "dd": -0.12084160516302578,
+    "passes": true,
+    "sharpe": 0.1823659316683931
+  },
+  "pooled_risk vs pooled_raw/0.10/5/1/later": {
+    "cagr": -0.34034795374824034,
+    "dd": -0.14039650440174634,
+    "passes": false,
+    "sharpe": 2.0396645279279624
+  },
+  "pooled_risk vs pooled_raw/0.40/10/0/calibration": {
+    "cagr": 0.023210478683694413,
+    "dd": -0.097713821997235,
+    "passes": true,
+    "sharpe": 0.1976147927827558
+  },
+  "pooled_risk vs pooled_raw/0.40/10/0/later": {
+    "cagr": -0.3613255996276763,
+    "dd": -0.11699406355563324,
+    "passes": false,
+    "sharpe": 1.9271511189020112
+  },
+  "pooled_risk vs pooled_raw/0.40/10/1/calibration": {
+    "cagr": 0.04270425594676641,
+    "dd": -0.1332398977062732,
+    "passes": true,
+    "sharpe": 0.3347294248157044
+  },
+  "pooled_risk vs pooled_raw/0.40/10/1/later": {
+    "cagr": -0.3021866733148726,
+    "dd": -0.14778974192869876,
+    "passes": false,
+    "sharpe": 1.9357789588117114
+  },
+  "pooled_risk vs pooled_raw/0.40/20/0/calibration": {
+    "cagr": 0.052897204645855234,
+    "dd": -0.14108226088544318,
+    "passes": true,
+    "sharpe": 0.2808896968059846
+  },
+  "pooled_risk vs pooled_raw/0.40/20/0/later": {
+    "cagr": -0.31135435385923094,
+    "dd": -0.12320516024601091,
+    "passes": false,
+    "sharpe": 2.0026635081814077
+  },
+  "pooled_risk vs pooled_raw/0.40/20/1/calibration": {
+    "cagr": 0.07143494525569494,
+    "dd": -0.17117441053061333,
+    "passes": true,
+    "sharpe": 0.41392125503255567
+  },
+  "pooled_risk vs pooled_raw/0.40/20/1/later": {
+    "cagr": -0.25448858444156675,
+    "dd": -0.15804318019154429,
+    "passes": false,
+    "sharpe": 1.9844553771800475
+  },
+  "pooled_risk vs pooled_raw/0.40/5/0/calibration": {
+    "cagr": 0.007446981136534969,
+    "dd": -0.08183267373141212,
+    "passes": true,
+    "sharpe": 0.15686069209356868
+  },
+  "pooled_risk vs pooled_raw/0.40/5/0/later": {
+    "cagr": -0.387009977440963,
+    "dd": -0.11621699220075832,
+    "passes": false,
+    "sharpe": 1.8958548201978949
+  },
+  "pooled_risk vs pooled_raw/0.40/5/1/calibration": {
+    "cagr": 0.027454940776532655,
+    "dd": -0.11301708823476464,
+    "passes": true,
+    "sharpe": 0.2957268761613579
+  },
+  "pooled_risk vs pooled_raw/0.40/5/1/later": {
+    "cagr": -0.32662397317245784,
+    "dd": -0.1426212743607893,
+    "passes": false,
+    "sharpe": 1.9117154848271283
+  },
+  "pooled_risk vs pooled_raw/0.80/10/0/calibration": {
+    "cagr": 0.01612316243176659,
+    "dd": -0.0676369787551998,
+    "passes": true,
+    "sharpe": 0.12305401581079618
+  },
+  "pooled_risk vs pooled_raw/0.80/10/0/later": {
+    "cagr": -0.3873211948371724,
+    "dd": -0.11374390687817137,
+    "passes": false,
+    "sharpe": 1.8297882936118166
+  },
+  "pooled_risk vs pooled_raw/0.80/10/1/calibration": {
+    "cagr": 0.04643587822162332,
+    "dd": -0.13938275366176656,
+    "passes": true,
+    "sharpe": 0.4274645190550862
+  },
+  "pooled_risk vs pooled_raw/0.80/10/1/later": {
+    "cagr": -0.33110754707081047,
+    "dd": -0.15216589333622266,
+    "passes": false,
+    "sharpe": 1.8500237925239729
+  },
+  "pooled_risk vs pooled_raw/0.80/20/0/calibration": {
+    "cagr": 0.03031788256685708,
+    "dd": -0.08906992754776544,
+    "passes": true,
+    "sharpe": 0.13390038021064898
+  },
+  "pooled_risk vs pooled_raw/0.80/20/0/later": {
+    "cagr": -0.3668203296387096,
+    "dd": -0.11438175831760711,
+    "passes": false,
+    "sharpe": 1.789272017265503
+  },
+  "pooled_risk vs pooled_raw/0.80/20/1/calibration": {
+    "cagr": 0.06004083707615837,
+    "dd": -0.15075306052381254,
+    "passes": true,
+    "sharpe": 0.4293191884034994
+  },
+  "pooled_risk vs pooled_raw/0.80/20/1/later": {
+    "cagr": -0.3115407059050499,
+    "dd": -0.15989705382495734,
+    "passes": false,
+    "sharpe": 1.7881787529078041
+  },
+  "pooled_risk vs pooled_raw/0.80/5/0/calibration": {
+    "cagr": 0.00878338963641312,
+    "dd": -0.06676346000197464,
+    "passes": true,
+    "sharpe": 0.11803395364005338
+  },
+  "pooled_risk vs pooled_raw/0.80/5/0/later": {
+    "cagr": -0.39760510731870125,
+    "dd": -0.11346724309203027,
+    "passes": false,
+    "sharpe": 1.85647104848586
+  },
+  "pooled_risk vs pooled_raw/0.80/5/1/calibration": {
+    "cagr": 0.039396403783943046,
+    "dd": -0.1330921995693286,
+    "passes": true,
+    "sharpe": 0.4264646838500787
+  },
+  "pooled_risk vs pooled_raw/0.80/5/1/later": {
+    "cagr": -0.3410738706957652,
+    "dd": -0.14825524336389684,
+    "passes": false,
+    "sharpe": 1.8721814667031915
+  },
+  "pooled_risk vs pooled_raw/monthly/10/0/calibration": {
+    "cagr": 0.06479685682372105,
+    "dd": -0.18108971160422982,
+    "passes": true,
+    "sharpe": 0.7283503482948486
+  },
+  "pooled_risk vs pooled_raw/monthly/10/0/later": {
+    "cagr": -0.34542840784807516,
+    "dd": -0.15363681181776467,
+    "passes": false,
+    "sharpe": 2.11848099854108
+  },
+  "pooled_risk vs pooled_raw/monthly/10/1/calibration": {
+    "cagr": 0.0746566249379188,
+    "dd": -0.19338726758179825,
+    "passes": true,
+    "sharpe": 0.7502424483439043
+  },
+  "pooled_risk vs pooled_raw/monthly/10/1/later": {
+    "cagr": -0.29957083990458555,
+    "dd": -0.16131818285384403,
+    "passes": false,
+    "sharpe": 2.05462084827795
+  },
+  "pooled_risk vs pooled_raw/monthly/20/0/calibration": {
+    "cagr": 0.07082827999760821,
+    "dd": -0.19880736889044281,
+    "passes": true,
+    "sharpe": 0.7458148915060526
+  },
+  "pooled_risk vs pooled_raw/monthly/20/0/later": {
+    "cagr": -0.33604571607255496,
+    "dd": -0.1541365975971669,
+    "passes": false,
+    "sharpe": 2.024866408001745
+  },
+  "pooled_risk vs pooled_raw/monthly/20/1/calibration": {
+    "cagr": 0.0804828349329414,
+    "dd": -0.20492792183025121,
+    "passes": true,
+    "sharpe": 0.7656590791117501
+  },
+  "pooled_risk vs pooled_raw/monthly/20/1/later": {
+    "cagr": -0.2904195833207819,
+    "dd": -0.16188561053113248,
+    "passes": false,
+    "sharpe": 1.9635452515487755
+  },
+  "pooled_risk vs pooled_raw/monthly/5/0/calibration": {
+    "cagr": 0.061773851034110705,
+    "dd": -0.172078754840306,
+    "passes": true,
+    "sharpe": 0.7195704821723121
+  },
+  "pooled_risk vs pooled_raw/monthly/5/0/later": {
+    "cagr": -0.350116135689557,
+    "dd": -0.1533352875876468,
+    "passes": false,
+    "sharpe": 2.1628408773064294
+  },
+  "pooled_risk vs pooled_raw/monthly/5/1/calibration": {
+    "cagr": 0.07171775563756333,
+    "dd": -0.18745438872092723,
+    "passes": true,
+    "sharpe": 0.7422989011592014
+  },
+  "pooled_risk vs pooled_raw/monthly/5/1/later": {
+    "cagr": -0.3041427823735938,
+    "dd": -0.16101240158790764,
+    "passes": false,
+    "sharpe": 2.0972121797976024
+  }
+}

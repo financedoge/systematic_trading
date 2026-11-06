@@ -1,0 +1,40 @@
+{
+  "authority": {
+    "allocation": false,
+    "execution": false,
+    "monitoring": false,
+    "promotion": false
+  },
+  "candidate_id": "alpha54-monthly",
+  "dossier_fingerprint": "86a91fecba080a585d1bfc211ad13aaceb4c3ed1410c52a180e2d4f503d22b06",
+  "evidence_gaps": [
+    "A dedicated decay-curve uncertainty and annual incremental-stability assessment would be needed before proposing a new monitored recipe. Existing IC means and portfolio uncertainty do not supply that assessment."
+  ],
+  "integrity_and_claim_issues": [],
+  "net_verdict": "not_established",
+  "policy_sha256": "6335fdb51082f56eabea53b75be5c30b42fdcc4edf972a18dcb819614a9dac58",
+  "policy_version": "research-evidence-v1",
+  "purpose": "retain_research",
+  "requested_stage": "ready_for_human_review",
+  "schema_version": 1,
+  "status": "research_evidence_reviewable",
+  "study_id": "alpha101-net-20261031-v1",
+  "validator_sha256": "7a69022bead50b35a7f8590f9de96e1864180836063f1c4a0a65dd0c770619bf",
+  "verified_artifacts": [
+    "research/alpha101-net-20261031-v1/protocol.json",
+    "research/alpha101-net-20261031-v1/acceptance.json",
+    "research/alpha101-net-20261031-v1/selection.json",
+    "research/alpha101-net-20261031-v1/results.json",
+    "research/alpha101-net-20261031-v1/comparisons.json",
+    "research/alpha101-net-20261031-v1/uncertainty.json",
+    "research/alpha101-net-20261031-v1/signal-diagnostics.json",
+    "research/alpha101-net-20261031-v1/results.md",
+    "research/alpha101-net-20261031-v1/weakest-calibration-EWY.png",
+    "research/alpha101-net-20261031-v1/weakest-later-XLC.png",
+    "research/alpha101-net-20261031-v1/native-validation.json"
+  ],
+  "warnings": [
+    "Chronological separation is not a claim of untouched or prospective validation",
+    "Checklist verifies supplied file integrity and declarations; reviewer must assess scientific adequacy and provenance"
+  ]
+}

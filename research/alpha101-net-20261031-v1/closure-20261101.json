@@ -1,0 +1,29 @@
+{
+  "closed_on": "2026-11-01",
+  "compact_working_prerequisites": {
+    "var/research/alpha101-net-20261031-v1/protocol.json": "cf4e161ddf4c7b70d75a18803b610161d03fd5076769c93f160f2e5d0bdf6382",
+    "var/research/alpha101-net-20261031-v1/summary.json": "0bbd0e088e4db2438245bb48de64c54e37c339a62fa2c9f84d7c5e424b6dbf2b"
+  },
+  "conditions": "Normal stopped-startup maintenance must recheck active/promotion/operational dependencies, path containment and current guards, then emit per-target retirement receipts. Classification is not a deletion receipt.",
+  "deletion_performed": false,
+  "disposition": "Retain compact research evidence; no monitoring, funding or promotion.",
+  "generated_folders_classified_for_guarded_retirement": [
+    "var/research/alpha101-net-20261031-v1/detail",
+    "var/research/alpha101-net-20261031-v1/native-bundles-v1",
+    "var/research/alpha101-net-20261031-v1/native-contract-v1",
+    "var/research/alpha101-net-20261031-v1/native-v1",
+    "var/research/alpha101-net-20261031-v1/paths"
+  ],
+  "operator_decision_date": "2026-11-01",
+  "original_report_manifest_sha256": "5a7714f1f161677967e267acd36182fa9574818d92b84e54634b4f0eb58fe5ba",
+  "reproduction": "Historical report remains unchanged. Intentionally retired outputs need not remain exactly reproducible; a new audited batch rerun is new evidence.",
+  "retained": {
+    "research/alpha101-net-20261031-v1/acceptance.json": "7323d940e9510dd4c7e03d9cf10cd7e37ad31d8c06ebbe370bffd15c6023501e",
+    "research/alpha101-net-20261031-v1/native-validation.json": "ef53aa416b4daa4eded9e98a5437efe388bf6e5f0065f919af320a30a4e4a931",
+    "research/alpha101-net-20261031-v1/protocol.json": "cf4e161ddf4c7b70d75a18803b610161d03fd5076769c93f160f2e5d0bdf6382",
+    "research/alpha101-net-20261031-v1/results.md": "70377d221d6a09754630f0ad95884e68a66262f8f6a3fa319ffa32199e614497",
+    "research/alpha101-net-20261031-v1/review-summary.json": "0bbd0e088e4db2438245bb48de64c54e37c339a62fa2c9f84d7c5e424b6dbf2b"
+  },
+  "schema_version": 1,
+  "study_id": "alpha101-net-20261031-v1"
+}

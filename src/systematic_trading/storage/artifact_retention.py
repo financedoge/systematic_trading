@@ -17,6 +17,9 @@ from systematic_trading.runtime_io import atomic_json
 
 REVISION = re.compile(r"^[a-f0-9]{64}$")
 CLOSED_STUDIES = {
+    # Operator closed these as research evidence on Oct31/Nov1; compact findings,
+    # recipes and dated closure records are retained outside generated outputs.
+    'cash-relative-net-20261031-v1','alpha101-net-20261031-v1',
     'selection-width-timing-20261015-v1','target-change-rebalance-20261015-v1',
     *{f'alpha101-tilt-{kind}-20261011-v{version}' for kind in ('daily','exit','surface','replay') for version in (1,2)},
     'selection-blend-20261010-v1','fr25-placebo-20261010-v1',
@@ -29,7 +32,20 @@ CLOSED_STUDIES = {
 }
 DISPOSABLE_STUDY_FOLDERS = {'bundles','python','native','runs','workers','source','analysis_sources','size_diagnostic','run-02',
     'controls','decisions','events','monthly','targets','parents','parent','reproduction','usd_preparation_attempts',
-    'economic','original_economics','fits','models','training','completion_source','followup'}
+    'economic','original_economics','fits','models','training','completion_source','followup',
+    'paths','detail','native-contract','native-bundles','native-contract-v1','native-bundles-v1','native-v1',
+    'native-contract-v2','native-bundles-v2','native-v2'}
+
+
+def active_research_metadata(research_root):
+    """Unknown/new studies remain protected until explicitly classified for retirement.
+
+    Read compact protocol/lineage files, not full result grids. A historical
+    registry reference alone does not pin an explicitly closed study forever.
+    """
+    patterns=('protocol*.json','*manifest*.json','*provenance*.json','*pins*.json','recipe.json')
+    return sorted({p for pattern in patterns for p in Path(research_root).glob('*/'+pattern)
+                   if p.parent.name not in CLOSED_STUDIES and p.is_file()})
 
 
 def canonical(value):

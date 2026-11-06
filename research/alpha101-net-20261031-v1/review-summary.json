@@ -1,0 +1,111 @@
+{
+  "book_error_usd": 1.3969838619232178e-09,
+  "cases": 222,
+  "guard_counts": {
+    "calibration": {
+      "BIL_buyhold": 0,
+      "FR25": 0,
+      "URTH_buyhold": 0,
+      "cash": 0,
+      "momentum-monthly": 6,
+      "pool_buyhold": 3,
+      "unranked-monthly": 0
+    },
+    "later": {
+      "BIL_buyhold": 0,
+      "FR25": 0,
+      "URTH_buyhold": 0,
+      "cash": 0,
+      "momentum-monthly": 0,
+      "pool_buyhold": 0,
+      "unranked-monthly": 1
+    }
+  },
+  "per_alpha": {
+    "24": "alpha24-monthly",
+    "26": "alpha26-monthly",
+    "46": "alpha46-monthly",
+    "49": "alpha49-monthly",
+    "53": "alpha53-monthly",
+    "54": "alpha54-monthly"
+  },
+  "reporter_sha256": "6e798b405a21e89ce6813ffd9812cc327de716868ca6fc00e0d0a2e3dd307d2e",
+  "selected": "alpha54-monthly",
+  "selected_intervals": [
+    {
+      "arm": "alpha54-monthly",
+      "columns": [
+        "Sharpe",
+        "CAGR"
+      ],
+      "control": "momentum-monthly",
+      "family_95": [
+        [
+          -0.6228516270898565,
+          -0.10896169860043672
+        ],
+        [
+          1.6363886381753576,
+          0.21666293181767873
+        ]
+      ],
+      "ordinary_95": [
+        [
+          -0.2586822474145561,
+          -0.05440282676414395
+        ],
+        [
+          1.226533806620322,
+          0.16276635211680507
+        ]
+      ],
+      "window": "calibration"
+    },
+    {
+      "arm": "alpha54-monthly",
+      "columns": [
+        "Sharpe",
+        "CAGR"
+      ],
+      "control": "momentum-monthly",
+      "family_95": [
+        [
+          -2.139525284362803,
+          -0.8702194827531332
+        ],
+        [
+          2.703631570392923,
+          0.32424045187509287
+        ]
+      ],
+      "ordinary_95": [
+        [
+          -1.272570386774488,
+          -0.6327215061981972
+        ],
+        [
+          1.89288156062764,
+          0.16300220789685074
+        ]
+      ],
+      "window": "later"
+    }
+  ],
+  "verdict": "The training-selected candidate does not robustly improve both matched simple controls across the two eras. Retain the completed experiment as evidence; no standalone candidate is established for promotion.",
+  "weakest": [
+    {
+      "mean_held_weight": 0.005730591530881872,
+      "net_contribution": -0.031163689999999994,
+      "net_pnl": -31163.689999999995,
+      "symbol": "EWY",
+      "window": "calibration"
+    },
+    {
+      "mean_held_weight": 0.008585091267920423,
+      "net_contribution": -0.017002195998949764,
+      "net_pnl": -22675.179999999982,
+      "symbol": "XLC",
+      "window": "later"
+    }
+  ]
+}

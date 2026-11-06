@@ -1,0 +1,1850 @@
+{
+  "FR25_frozen-calibration": [
+    {
+      "mean_held_weight": 0.022952807885341476,
+      "net_contribution": -0.02691985999999995,
+      "net_pnl": -26919.85999999995,
+      "symbol": "TLT"
+    },
+    {
+      "mean_held_weight": 0.016676081428692067,
+      "net_contribution": -0.02397029000000002,
+      "net_pnl": -23970.29000000002,
+      "symbol": "MCHI"
+    },
+    {
+      "mean_held_weight": 0.045177122172351585,
+      "net_contribution": -0.021449559999999968,
+      "net_pnl": -21449.55999999997,
+      "symbol": "LQD"
+    },
+    {
+      "mean_held_weight": 0.029370075147578358,
+      "net_contribution": -0.014849700000000023,
+      "net_pnl": -14849.700000000023,
+      "symbol": "EWY"
+    },
+    {
+      "mean_held_weight": 0.08149504863325907,
+      "net_contribution": -0.008671460000000021,
+      "net_pnl": -8671.460000000021,
+      "symbol": "GLD"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "AGG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "BIL"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "CORN"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EEM"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EFA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EMB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWU"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IAT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IBND"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IGOV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "INDA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "ITA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IWM"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "LEMB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MDY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "PPLT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SHY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SLV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SOXX"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "TIP"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "URTH"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "WEAT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLI"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLK"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLP"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLU"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLY"
+    },
+    {
+      "mean_held_weight": 0.02157569485138568,
+      "net_contribution": 0.0025000199999999986,
+      "net_pnl": 2500.0199999999986,
+      "symbol": "EWH"
+    },
+    {
+      "mean_held_weight": 0.01173881651568648,
+      "net_contribution": 0.003250429999999972,
+      "net_pnl": 3250.429999999972,
+      "symbol": "IEF"
+    },
+    {
+      "mean_held_weight": 0.08315434717917644,
+      "net_contribution": 0.009388699999999937,
+      "net_pnl": 9388.699999999937,
+      "symbol": "XLB"
+    },
+    {
+      "mean_held_weight": 0.08263265950842058,
+      "net_contribution": 0.02095870999999995,
+      "net_pnl": 20958.70999999995,
+      "symbol": "VGK"
+    },
+    {
+      "mean_held_weight": 0.1015557162377946,
+      "net_contribution": 0.03307783999999998,
+      "net_pnl": 33077.83999999998,
+      "symbol": "HYG"
+    },
+    {
+      "mean_held_weight": 0.06418725377851868,
+      "net_contribution": 0.05600264,
+      "net_pnl": 56002.64,
+      "symbol": "EWJ"
+    },
+    {
+      "mean_held_weight": 0.05822453086749514,
+      "net_contribution": 0.07396971999999996,
+      "net_pnl": 73969.71999999996,
+      "symbol": "XLE"
+    },
+    {
+      "mean_held_weight": 0.12465462310704999,
+      "net_contribution": 0.09229952000000001,
+      "net_pnl": 92299.52,
+      "symbol": "SPY"
+    },
+    {
+      "mean_held_weight": 0.07314107302653618,
+      "net_contribution": 0.09932967999999999,
+      "net_pnl": 99329.68,
+      "symbol": "DBC"
+    }
+  ],
+  "FR25_frozen-later": [
+    {
+      "mean_held_weight": 0.014398971204103756,
+      "net_contribution": -0.0055443347967817766,
+      "net_pnl": -7179.450000000041,
+      "symbol": "IEF"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "AGG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "BIL"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "CORN"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EEM"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EFA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EMB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWU"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IAT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IBND"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IGOV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "INDA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "ITA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IWM"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "LEMB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MDY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "PPLT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SHY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SLV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SOXX"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "TIP"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "URTH"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "WEAT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLI"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLK"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLP"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLU"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0003068846784771932,
+      "net_pnl": 397.3899999999977,
+      "symbol": "TLT"
+    },
+    {
+      "mean_held_weight": 0.015825583594547877,
+      "net_contribution": 0.004137626213843829,
+      "net_pnl": 5357.880000000019,
+      "symbol": "LQD"
+    },
+    {
+      "mean_held_weight": 0.05353347721719514,
+      "net_contribution": 0.005429323510222896,
+      "net_pnl": 7030.5199999999595,
+      "symbol": "XLB"
+    },
+    {
+      "mean_held_weight": 0.08467871565705266,
+      "net_contribution": 0.009688934433828626,
+      "net_pnl": 12546.360000000057,
+      "symbol": "VGK"
+    },
+    {
+      "mean_held_weight": 0.11847478994306011,
+      "net_contribution": 0.015727710419975463,
+      "net_pnl": 20366.070000000007,
+      "symbol": "HYG"
+    },
+    {
+      "mean_held_weight": 0.03389389832283031,
+      "net_contribution": 0.026489578991273723,
+      "net_pnl": 34301.79000000001,
+      "symbol": "MCHI"
+    },
+    {
+      "mean_held_weight": 0.07496022932498168,
+      "net_contribution": 0.036907355848666,
+      "net_pnl": 47791.93999999996,
+      "symbol": "DBC"
+    },
+    {
+      "mean_held_weight": 0.0995952522889272,
+      "net_contribution": 0.042552693305549984,
+      "net_pnl": 55102.17999999995,
+      "symbol": "EWJ"
+    },
+    {
+      "mean_held_weight": 0.09115418349101383,
+      "net_contribution": 0.04996429923942811,
+      "net_pnl": 64699.59,
+      "symbol": "EWH"
+    },
+    {
+      "mean_held_weight": 0.13963047013535726,
+      "net_contribution": 0.05353524021732403,
+      "net_pnl": 69323.66000000005,
+      "symbol": "SPY"
+    },
+    {
+      "mean_held_weight": 0.07653926355082336,
+      "net_contribution": 0.06298462250524144,
+      "net_pnl": 81559.81999999999,
+      "symbol": "XLE"
+    },
+    {
+      "mean_held_weight": 0.0997156043548443,
+      "net_contribution": 0.1003772683732886,
+      "net_pnl": 129980.17000000004,
+      "symbol": "GLD"
+    },
+    {
+      "mean_held_weight": 0.07670131530781847,
+      "net_contribution": 0.1554676437449371,
+      "net_pnl": 201317.6,
+      "symbol": "EWY"
+    }
+  ],
+  "class_cash_relative_risk-monthly-calibration": [
+    {
+      "mean_held_weight": 0.0071800876988699905,
+      "net_contribution": -0.024633150000000034,
+      "net_pnl": -24633.150000000034,
+      "symbol": "EWH"
+    },
+    {
+      "mean_held_weight": 0.006435544758234821,
+      "net_contribution": -0.024005600000000005,
+      "net_pnl": -24005.600000000006,
+      "symbol": "DBB"
+    },
+    {
+      "mean_held_weight": 0.03371480423632084,
+      "net_contribution": -0.02310415,
+      "net_pnl": -23104.15,
+      "symbol": "XLU"
+    },
+    {
+      "mean_held_weight": 0.03217954532498238,
+      "net_contribution": -0.02247198000000003,
+      "net_pnl": -22471.98000000003,
+      "symbol": "EWU"
+    },
+    {
+      "mean_held_weight": 0.024728515772754412,
+      "net_contribution": -0.01795792000000003,
+      "net_pnl": -17957.92000000003,
+      "symbol": "XLP"
+    },
+    {
+      "mean_held_weight": 0.007399677075299216,
+      "net_contribution": -0.014578599999999994,
+      "net_pnl": -14578.599999999993,
+      "symbol": "XLB"
+    },
+    {
+      "mean_held_weight": 0.01073347542265886,
+      "net_contribution": -0.009887350000000001,
+      "net_pnl": -9887.350000000002,
+      "symbol": "IBB"
+    },
+    {
+      "mean_held_weight": 0.03169601140049236,
+      "net_contribution": -0.008698140000000054,
+      "net_pnl": -8698.140000000054,
+      "symbol": "GLD"
+    },
+    {
+      "mean_held_weight": 0.003415367018238561,
+      "net_contribution": -0.005253520000000004,
+      "net_pnl": -5253.520000000004,
+      "symbol": "EMB"
+    },
+    {
+      "mean_held_weight": 0.001966370442654672,
+      "net_contribution": -0.0027440100000000003,
+      "net_pnl": -2744.01,
+      "symbol": "TLT"
+    },
+    {
+      "mean_held_weight": 0.005141501079885546,
+      "net_contribution": -0.0021575700000000214,
+      "net_pnl": -2157.5700000000215,
+      "symbol": "IEF"
+    },
+    {
+      "mean_held_weight": 0.010750307786217798,
+      "net_contribution": -0.0016558700000000371,
+      "net_pnl": -1655.8700000000372,
+      "symbol": "PPLT"
+    },
+    {
+      "mean_held_weight": 0.016996842200977032,
+      "net_contribution": -0.0010768000000000101,
+      "net_pnl": -1076.8000000000102,
+      "symbol": "TIP"
+    },
+    {
+      "mean_held_weight": 0.007408853393511361,
+      "net_contribution": -0.0010669799999999973,
+      "net_pnl": -1066.9799999999973,
+      "symbol": "XLV"
+    },
+    {
+      "mean_held_weight": 0.01745318482958718,
+      "net_contribution": -0.0008129000000000206,
+      "net_pnl": -812.9000000000206,
+      "symbol": "EWG"
+    },
+    {
+      "mean_held_weight": 0.038561889775914036,
+      "net_contribution": -0.00017420999999998504,
+      "net_pnl": -174.20999999998503,
+      "symbol": "DBC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "AGG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "BIL"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EEM"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IBND"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IGOV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "LEMB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "LQD"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MCHI"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SHY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "URTH"
+    },
+    {
+      "mean_held_weight": 0.015303383233937057,
+      "net_contribution": 0.0029221500000000088,
+      "net_pnl": 2922.1500000000087,
+      "symbol": "ITA"
+    },
+    {
+      "mean_held_weight": 0.0071662370037243565,
+      "net_contribution": 0.004024749999999995,
+      "net_pnl": 4024.749999999995,
+      "symbol": "EFA"
+    },
+    {
+      "mean_held_weight": 0.011397092970082305,
+      "net_contribution": 0.004959180000000022,
+      "net_pnl": 4959.180000000022,
+      "symbol": "SOXX"
+    },
+    {
+      "mean_held_weight": 0.024933532675226924,
+      "net_contribution": 0.005117780000000048,
+      "net_pnl": 5117.780000000048,
+      "symbol": "SLV"
+    },
+    {
+      "mean_held_weight": 0.013401718693407135,
+      "net_contribution": 0.005275099999999985,
+      "net_pnl": 5275.099999999985,
+      "symbol": "EWY"
+    },
+    {
+      "mean_held_weight": 0.002161217091641502,
+      "net_contribution": 0.005713939999999999,
+      "net_pnl": 5713.939999999999,
+      "symbol": "WEAT"
+    },
+    {
+      "mean_held_weight": 0.020650306486740017,
+      "net_contribution": 0.005746200000000001,
+      "net_pnl": 5746.200000000001,
+      "symbol": "EWC"
+    },
+    {
+      "mean_held_weight": 0.010073998390164042,
+      "net_contribution": 0.005963210000000002,
+      "net_pnl": 5963.210000000002,
+      "symbol": "XLY"
+    },
+    {
+      "mean_held_weight": 0.02350641770117108,
+      "net_contribution": 0.006566600000000017,
+      "net_pnl": 6566.600000000017,
+      "symbol": "HYG"
+    },
+    {
+      "mean_held_weight": 0.011763884178781457,
+      "net_contribution": 0.006844609999999982,
+      "net_pnl": 6844.6099999999815,
+      "symbol": "IAT"
+    },
+    {
+      "mean_held_weight": 0.026943182695116547,
+      "net_contribution": 0.007267169999999997,
+      "net_pnl": 7267.169999999997,
+      "symbol": "DBA"
+    },
+    {
+      "mean_held_weight": 0.00326738187104142,
+      "net_contribution": 0.008209779999999984,
+      "net_pnl": 8209.779999999984,
+      "symbol": "VGK"
+    },
+    {
+      "mean_held_weight": 0.02092960430823159,
+      "net_contribution": 0.008454650000000003,
+      "net_pnl": 8454.650000000003,
+      "symbol": "XLI"
+    },
+    {
+      "mean_held_weight": 0.011603495101978676,
+      "net_contribution": 0.009029340000000018,
+      "net_pnl": 9029.340000000018,
+      "symbol": "CORN"
+    },
+    {
+      "mean_held_weight": 0.024554855025803447,
+      "net_contribution": 0.009237599999999953,
+      "net_pnl": 9237.599999999953,
+      "symbol": "EWJ"
+    },
+    {
+      "mean_held_weight": 0.007137850917699373,
+      "net_contribution": 0.015513159999999991,
+      "net_pnl": 15513.15999999999,
+      "symbol": "EWA"
+    },
+    {
+      "mean_held_weight": 0.012374358137689586,
+      "net_contribution": 0.01563135999999998,
+      "net_pnl": 15631.359999999979,
+      "symbol": "SPY"
+    },
+    {
+      "mean_held_weight": 0.04043582774327462,
+      "net_contribution": 0.01750675000000003,
+      "net_pnl": 17506.75000000003,
+      "symbol": "XLE"
+    },
+    {
+      "mean_held_weight": 0.010433454544758735,
+      "net_contribution": 0.022510810000000017,
+      "net_pnl": 22510.810000000016,
+      "symbol": "IWM"
+    },
+    {
+      "mean_held_weight": 0.015874957114692206,
+      "net_contribution": 0.033939860000000016,
+      "net_pnl": 33939.860000000015,
+      "symbol": "MDY"
+    },
+    {
+      "mean_held_weight": 0.05019473483883267,
+      "net_contribution": 0.039968409999999954,
+      "net_pnl": 39968.40999999995,
+      "symbol": "INDA"
+    },
+    {
+      "mean_held_weight": 0.03707613082763466,
+      "net_contribution": 0.04163904000000001,
+      "net_pnl": 41639.04000000001,
+      "symbol": "XLC"
+    },
+    {
+      "mean_held_weight": 0.04087983138790095,
+      "net_contribution": 0.06391642999999997,
+      "net_pnl": 63916.429999999964,
+      "symbol": "XLK"
+    },
+    {
+      "mean_held_weight": 0.047778461062102984,
+      "net_contribution": 0.06716894999999998,
+      "net_pnl": 67168.94999999998,
+      "symbol": "EWT"
+    }
+  ],
+  "class_cash_relative_risk-monthly-later": [
+    {
+      "mean_held_weight": 0.04332669467290226,
+      "net_contribution": -0.019770234233028497,
+      "net_pnl": -24769.100000000028,
+      "symbol": "XLE"
+    },
+    {
+      "mean_held_weight": 0.017878977350889655,
+      "net_contribution": -0.017119218476992038,
+      "net_pnl": -21447.78,
+      "symbol": "XLY"
+    },
+    {
+      "mean_held_weight": 0.036315183810401934,
+      "net_contribution": -0.009695078113541075,
+      "net_pnl": -12146.45999999996,
+      "symbol": "IBB"
+    },
+    {
+      "mean_held_weight": 0.012247854250788072,
+      "net_contribution": -0.008956768325813283,
+      "net_pnl": -11221.469999999987,
+      "symbol": "IWM"
+    },
+    {
+      "mean_held_weight": 0.01517341052717324,
+      "net_contribution": -0.006915547174722069,
+      "net_pnl": -8664.129999999968,
+      "symbol": "LEMB"
+    },
+    {
+      "mean_held_weight": 0.007896512628691036,
+      "net_contribution": -0.004117362737228295,
+      "net_pnl": -5158.430000000015,
+      "symbol": "IGOV"
+    },
+    {
+      "mean_held_weight": 0.00799678096047252,
+      "net_contribution": -0.003563432846542726,
+      "net_pnl": -4464.43999999999,
+      "symbol": "XLU"
+    },
+    {
+      "mean_held_weight": 0.0029144966568485004,
+      "net_contribution": -0.0009483991067775702,
+      "net_pnl": -1188.199999999994,
+      "symbol": "EFA"
+    },
+    {
+      "mean_held_weight": 0.029772695870337127,
+      "net_contribution": -0.00020593079409915365,
+      "net_pnl": -258.0,
+      "symbol": "DBA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "AGG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "BIL"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "CORN"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EEM"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IAT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IBND"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IEF"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "INDA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "LQD"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MDY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SHY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SPY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "TIP"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "TLT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "URTH"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "VGK"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "WEAT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLI"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLP"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLV"
+    },
+    {
+      "mean_held_weight": 0.033571210290203546,
+      "net_contribution": 0.0006892216333204478,
+      "net_pnl": 863.489999999987,
+      "symbol": "XLC"
+    },
+    {
+      "mean_held_weight": 0.021754727244229183,
+      "net_contribution": 0.0014716788327599909,
+      "net_pnl": 1843.7899999999959,
+      "symbol": "EMB"
+    },
+    {
+      "mean_held_weight": 0.0073373661594641724,
+      "net_contribution": 0.001736714957491077,
+      "net_pnl": 2175.8399999999774,
+      "symbol": "HYG"
+    },
+    {
+      "mean_held_weight": 0.008062808945960589,
+      "net_contribution": 0.0019697919000681813,
+      "net_pnl": 2467.849999999973,
+      "symbol": "MCHI"
+    },
+    {
+      "mean_held_weight": 0.016061457242939774,
+      "net_contribution": 0.00814101898132774,
+      "net_pnl": 10199.460000000015,
+      "symbol": "EWC"
+    },
+    {
+      "mean_held_weight": 0.009742793527063011,
+      "net_contribution": 0.013566624933487556,
+      "net_pnl": 16996.920000000013,
+      "symbol": "EWJ"
+    },
+    {
+      "mean_held_weight": 0.03446073195454813,
+      "net_contribution": 0.016443813363229167,
+      "net_pnl": 20601.600000000006,
+      "symbol": "EWU"
+    },
+    {
+      "mean_held_weight": 0.022785579295329712,
+      "net_contribution": 0.019927324308945744,
+      "net_pnl": 24965.910000000003,
+      "symbol": "EWH"
+    },
+    {
+      "mean_held_weight": 0.036936522945913396,
+      "net_contribution": 0.02066715862309499,
+      "net_pnl": 25892.810000000005,
+      "symbol": "ITA"
+    },
+    {
+      "mean_held_weight": 0.046235348311180285,
+      "net_contribution": 0.02970483061282258,
+      "net_pnl": 37215.63999999999,
+      "symbol": "DBC"
+    },
+    {
+      "mean_held_weight": 0.03240320516531869,
+      "net_contribution": 0.032723400909071096,
+      "net_pnl": 40997.44999999998,
+      "symbol": "XLK"
+    },
+    {
+      "mean_held_weight": 0.06533261273248421,
+      "net_contribution": 0.0342013295019776,
+      "net_pnl": 42849.06999999999,
+      "symbol": "GLD"
+    },
+    {
+      "mean_held_weight": 0.04211091010143481,
+      "net_contribution": 0.03533860226692449,
+      "net_pnl": 44273.9,
+      "symbol": "EWG"
+    },
+    {
+      "mean_held_weight": 0.024744292137193744,
+      "net_contribution": 0.038679693710349926,
+      "net_pnl": 48459.779999999984,
+      "symbol": "SOXX"
+    },
+    {
+      "mean_held_weight": 0.028271816427888688,
+      "net_contribution": 0.05461295035867396,
+      "net_pnl": 68421.72999999998,
+      "symbol": "SLV"
+    },
+    {
+      "mean_held_weight": 0.05973324545428613,
+      "net_contribution": 0.0860317956507544,
+      "net_pnl": 107784.77,
+      "symbol": "EWY"
+    },
+    {
+      "mean_held_weight": 0.024514845907692685,
+      "net_contribution": 0.09609783653896806,
+      "net_pnl": 120395.98999999999,
+      "symbol": "PPLT"
+    },
+    {
+      "mean_held_weight": 0.09230343938296816,
+      "net_contribution": 0.14287860025295326,
+      "net_pnl": 179005.18000000002,
+      "symbol": "EWT"
+    }
+  ],
+  "class_remove_bill_risk-monthly-calibration": [
+    {
+      "mean_held_weight": 0.006435544758234821,
+      "net_contribution": -0.024005600000000005,
+      "net_pnl": -24005.600000000006,
+      "symbol": "DBB"
+    },
+    {
+      "mean_held_weight": 0.032236429819449394,
+      "net_contribution": -0.022451480000000017,
+      "net_pnl": -22451.480000000018,
+      "symbol": "EWU"
+    },
+    {
+      "mean_held_weight": 0.0034559200108973185,
+      "net_contribution": -0.015946699999999998,
+      "net_pnl": -15946.699999999999,
+      "symbol": "EWH"
+    },
+    {
+      "mean_held_weight": 0.007399097104600938,
+      "net_contribution": -0.014589729999999992,
+      "net_pnl": -14589.729999999992,
+      "symbol": "XLB"
+    },
+    {
+      "mean_held_weight": 0.013148645677699931,
+      "net_contribution": -0.013354320000000018,
+      "net_pnl": -13354.320000000018,
+      "symbol": "GLD"
+    },
+    {
+      "mean_held_weight": 0.03806121019474986,
+      "net_contribution": -0.012905220000000009,
+      "net_pnl": -12905.220000000008,
+      "symbol": "XLU"
+    },
+    {
+      "mean_held_weight": 0.028770488405810195,
+      "net_contribution": -0.01284626000000002,
+      "net_pnl": -12846.26000000002,
+      "symbol": "XLP"
+    },
+    {
+      "mean_held_weight": 0.011287231164326278,
+      "net_contribution": -0.01277425000000003,
+      "net_pnl": -12774.250000000031,
+      "symbol": "XLV"
+    },
+    {
+      "mean_held_weight": 0.010733096125274923,
+      "net_contribution": -0.009956380000000006,
+      "net_pnl": -9956.380000000006,
+      "symbol": "IBB"
+    },
+    {
+      "mean_held_weight": 0.01375732334296878,
+      "net_contribution": -0.007163810000000028,
+      "net_pnl": -7163.810000000029,
+      "symbol": "IEF"
+    },
+    {
+      "mean_held_weight": 0.003553420521827829,
+      "net_contribution": -0.006144280000000003,
+      "net_pnl": -6144.2800000000025,
+      "symbol": "EFA"
+    },
+    {
+      "mean_held_weight": 0.003415367018238561,
+      "net_contribution": -0.005253520000000004,
+      "net_pnl": -5253.520000000004,
+      "symbol": "EMB"
+    },
+    {
+      "mean_held_weight": 0.001966370442654672,
+      "net_contribution": -0.0027440100000000003,
+      "net_pnl": -2744.01,
+      "symbol": "TLT"
+    },
+    {
+      "mean_held_weight": 0.010750399405937357,
+      "net_contribution": -0.0016665600000000322,
+      "net_pnl": -1666.5600000000322,
+      "symbol": "PPLT"
+    },
+    {
+      "mean_held_weight": 0.016996842200977032,
+      "net_contribution": -0.0010768000000000101,
+      "net_pnl": -1076.8000000000102,
+      "symbol": "TIP"
+    },
+    {
+      "mean_held_weight": 0.017497383664880545,
+      "net_contribution": -0.0007892300000000241,
+      "net_pnl": -789.2300000000241,
+      "symbol": "EWG"
+    },
+    {
+      "mean_held_weight": 0.03854647471151513,
+      "net_contribution": -0.00022278999999998723,
+      "net_pnl": -222.78999999998723,
+      "symbol": "DBC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "AGG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "BIL"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EEM"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IBND"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IGOV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "LEMB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "LQD"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MCHI"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "URTH"
+    },
+    {
+      "mean_held_weight": 0.015290084333635691,
+      "net_contribution": 0.0028074400000000096,
+      "net_pnl": 2807.4400000000096,
+      "symbol": "ITA"
+    },
+    {
+      "mean_held_weight": 0.013401503866288078,
+      "net_contribution": 0.005300779999999987,
+      "net_pnl": 5300.779999999987,
+      "symbol": "EWY"
+    },
+    {
+      "mean_held_weight": 0.002161217091641502,
+      "net_contribution": 0.005713939999999999,
+      "net_pnl": 5713.939999999999,
+      "symbol": "WEAT"
+    },
+    {
+      "mean_held_weight": 0.03862266462003198,
+      "net_contribution": 0.005913809999999978,
+      "net_pnl": 5913.809999999978,
+      "symbol": "SHY"
+    },
+    {
+      "mean_held_weight": 0.01005469009252118,
+      "net_contribution": 0.005943850000000005,
+      "net_pnl": 5943.850000000005,
+      "symbol": "XLY"
+    },
+    {
+      "mean_held_weight": 0.024370194949140958,
+      "net_contribution": 0.007580039999999954,
+      "net_pnl": 7580.039999999954,
+      "symbol": "EWJ"
+    },
+    {
+      "mean_held_weight": 0.00967947282161246,
+      "net_contribution": 0.008144689999999993,
+      "net_pnl": 8144.689999999992,
+      "symbol": "IAT"
+    },
+    {
+      "mean_held_weight": 0.0076674252356159584,
+      "net_contribution": 0.008377570000000004,
+      "net_pnl": 8377.570000000005,
+      "symbol": "SOXX"
+    },
+    {
+      "mean_held_weight": 0.011603552311270676,
+      "net_contribution": 0.009060530000000021,
+      "net_pnl": 9060.53000000002,
+      "symbol": "CORN"
+    },
+    {
+      "mean_held_weight": 0.040830875256863755,
+      "net_contribution": 0.010961210000000032,
+      "net_pnl": 10961.210000000032,
+      "symbol": "HYG"
+    },
+    {
+      "mean_held_weight": 0.035484267690726067,
+      "net_contribution": 0.011349199999999943,
+      "net_pnl": 11349.199999999943,
+      "symbol": "INDA"
+    },
+    {
+      "mean_held_weight": 0.017150052994436723,
+      "net_contribution": 0.012764459999999993,
+      "net_pnl": 12764.459999999994,
+      "symbol": "XLI"
+    },
+    {
+      "mean_held_weight": 0.016929326481591022,
+      "net_contribution": 0.012879120000000008,
+      "net_pnl": 12879.120000000008,
+      "symbol": "SLV"
+    },
+    {
+      "mean_held_weight": 0.02007957021924294,
+      "net_contribution": 0.013197629999999981,
+      "net_pnl": 13197.629999999981,
+      "symbol": "DBA"
+    },
+    {
+      "mean_held_weight": 0.03934473174406368,
+      "net_contribution": 0.013446400000000035,
+      "net_pnl": 13446.400000000036,
+      "symbol": "XLE"
+    },
+    {
+      "mean_held_weight": 0.007136127987114608,
+      "net_contribution": 0.015620619999999991,
+      "net_pnl": 15620.619999999992,
+      "symbol": "EWA"
+    },
+    {
+      "mean_held_weight": 0.012429757565825515,
+      "net_contribution": 0.01566509999999998,
+      "net_pnl": 15665.09999999998,
+      "symbol": "SPY"
+    },
+    {
+      "mean_held_weight": 0.017351931573616385,
+      "net_contribution": 0.01751071000000001,
+      "net_pnl": 17510.71000000001,
+      "symbol": "EWC"
+    },
+    {
+      "mean_held_weight": 0.006954233602813168,
+      "net_contribution": 0.020695019999999974,
+      "net_pnl": 20695.019999999975,
+      "symbol": "VGK"
+    },
+    {
+      "mean_held_weight": 0.015503087632833236,
+      "net_contribution": 0.022372340000000008,
+      "net_pnl": 22372.340000000007,
+      "symbol": "MDY"
+    },
+    {
+      "mean_held_weight": 0.010433454544758735,
+      "net_contribution": 0.022510810000000017,
+      "net_pnl": 22510.810000000016,
+      "symbol": "IWM"
+    },
+    {
+      "mean_held_weight": 0.036968936806509936,
+      "net_contribution": 0.04162678000000001,
+      "net_pnl": 41626.780000000006,
+      "symbol": "XLC"
+    },
+    {
+      "mean_held_weight": 0.038822996397890136,
+      "net_contribution": 0.04697232999999999,
+      "net_pnl": 46972.329999999994,
+      "symbol": "EWT"
+    },
+    {
+      "mean_held_weight": 0.03609271781075851,
+      "net_contribution": 0.05359678999999998,
+      "net_pnl": 53596.78999999998,
+      "symbol": "XLK"
+    }
+  ],
+  "class_remove_bill_risk-monthly-later": [
+    {
+      "mean_held_weight": 0.03798798947281076,
+      "net_contribution": -0.035121180571337604,
+      "net_pnl": -43062.78999999999,
+      "symbol": "XLE"
+    },
+    {
+      "mean_held_weight": 0.011824662379780405,
+      "net_contribution": -0.018577052594589374,
+      "net_pnl": -22777.70000000002,
+      "symbol": "XLY"
+    },
+    {
+      "mean_held_weight": 0.028730137290523417,
+      "net_contribution": -0.010804870253221383,
+      "net_pnl": -13248.06999999996,
+      "symbol": "IBB"
+    },
+    {
+      "mean_held_weight": 0.012247209874674652,
+      "net_contribution": -0.008103348886103923,
+      "net_pnl": -9935.679999999986,
+      "symbol": "IWM"
+    },
+    {
+      "mean_held_weight": 0.024986965636555974,
+      "net_contribution": -0.006864318681048114,
+      "net_pnl": -8416.48000000001,
+      "symbol": "XLC"
+    },
+    {
+      "mean_held_weight": 0.014994355865750583,
+      "net_contribution": -0.005995529492242348,
+      "net_pnl": -7351.239999999971,
+      "symbol": "LEMB"
+    },
+    {
+      "mean_held_weight": 0.03013458499698167,
+      "net_contribution": -0.0039552238690328265,
+      "net_pnl": -4849.580000000019,
+      "symbol": "EMB"
+    },
+    {
+      "mean_held_weight": 0.00792598640118258,
+      "net_contribution": -0.0038747178977709337,
+      "net_pnl": -4750.8700000000135,
+      "symbol": "IGOV"
+    },
+    {
+      "mean_held_weight": 0.007980254943834884,
+      "net_contribution": -0.0033589120375250555,
+      "net_pnl": -4118.429999999989,
+      "symbol": "XLU"
+    },
+    {
+      "mean_held_weight": 0.009610113271655889,
+      "net_contribution": -0.0020039551912458026,
+      "net_pnl": -2457.0899999999974,
+      "symbol": "MDY"
+    },
+    {
+      "mean_held_weight": 0.022174361975976747,
+      "net_contribution": -0.0014162558919690875,
+      "net_pnl": -1736.4999999999927,
+      "symbol": "DBA"
+    },
+    {
+      "mean_held_weight": 0.0029146123842831028,
+      "net_contribution": -0.0008277410119886823,
+      "net_pnl": -1014.9099999999959,
+      "symbol": "EFA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "AGG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "BIL"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "CORN"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IAT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IBND"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "INDA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "LQD"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SPY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "TIP"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "TLT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "URTH"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "VGK"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "WEAT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLI"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLP"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLV"
+    },
+    {
+      "mean_held_weight": 0.0073705644407077425,
+      "net_contribution": 0.0017317388197729822,
+      "net_pnl": 2123.3199999999774,
+      "symbol": "HYG"
+    },
+    {
+      "mean_held_weight": 0.008128751922971052,
+      "net_contribution": 0.0019346797662738015,
+      "net_pnl": 2372.1499999999796,
+      "symbol": "MCHI"
+    },
+    {
+      "mean_held_weight": 0.01711429844248134,
+      "net_contribution": 0.001994070353117001,
+      "net_pnl": 2444.9699999999984,
+      "symbol": "IEF"
+    },
+    {
+      "mean_held_weight": 0.012672768380183528,
+      "net_contribution": 0.003179182517851452,
+      "net_pnl": 3898.0600000000013,
+      "symbol": "EWG"
+    },
+    {
+      "mean_held_weight": 0.01703946925376469,
+      "net_contribution": 0.005707327738977116,
+      "net_pnl": 6997.870000000002,
+      "symbol": "EWU"
+    },
+    {
+      "mean_held_weight": 0.008521185609847501,
+      "net_contribution": 0.006601196034421502,
+      "net_pnl": 8093.859999999981,
+      "symbol": "EEM"
+    },
+    {
+      "mean_held_weight": 0.09331852416028981,
+      "net_contribution": 0.006933333120194923,
+      "net_pnl": 8501.100000000017,
+      "symbol": "SHY"
+    },
+    {
+      "mean_held_weight": 0.016176452248345897,
+      "net_contribution": 0.007352802587720143,
+      "net_pnl": 9015.420000000016,
+      "symbol": "EWC"
+    },
+    {
+      "mean_held_weight": 0.030411207043058174,
+      "net_contribution": 0.007801412753788434,
+      "net_pnl": 9565.470000000008,
+      "symbol": "ITA"
+    },
+    {
+      "mean_held_weight": 0.015400192485872162,
+      "net_contribution": 0.00880005054642968,
+      "net_pnl": 10789.919999999984,
+      "symbol": "EWH"
+    },
+    {
+      "mean_held_weight": 0.02000128432726398,
+      "net_contribution": 0.021103289356868376,
+      "net_pnl": 25875.170000000006,
+      "symbol": "EWJ"
+    },
+    {
+      "mean_held_weight": 0.04615701157385958,
+      "net_contribution": 0.023428795396353574,
+      "net_pnl": 28726.519999999986,
+      "symbol": "EWY"
+    },
+    {
+      "mean_held_weight": 0.04642030055197871,
+      "net_contribution": 0.026711825805206712,
+      "net_pnl": 32751.90999999999,
+      "symbol": "DBC"
+    },
+    {
+      "mean_held_weight": 0.032573230822321095,
+      "net_contribution": 0.030245802240780235,
+      "net_pnl": 37084.989999999976,
+      "symbol": "XLK"
+    },
+    {
+      "mean_held_weight": 0.04381307823983438,
+      "net_contribution": 0.030938890878588626,
+      "net_pnl": 37934.79999999999,
+      "symbol": "GLD"
+    },
+    {
+      "mean_held_weight": 0.02063240928904034,
+      "net_contribution": 0.03296368415681388,
+      "net_pnl": 40417.439999999995,
+      "symbol": "SOXX"
+    },
+    {
+      "mean_held_weight": 0.020759295261459462,
+      "net_contribution": 0.05694114515996525,
+      "net_pnl": 69816.68999999997,
+      "symbol": "SLV"
+    },
+    {
+      "mean_held_weight": 0.02459104451930154,
+      "net_contribution": 0.08920367458581122,
+      "net_pnl": 109374.43,
+      "symbol": "PPLT"
+    },
+    {
+      "mean_held_weight": 0.07774442671267866,
+      "net_contribution": 0.1019482241150201,
+      "net_pnl": 125000.77999999998,
+      "symbol": "EWT"
+    }
+  ]
+}
