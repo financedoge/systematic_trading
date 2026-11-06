@@ -1,0 +1,30 @@
+{
+  "completed_at": "2026-11-06T15:48:15.023534+00:00",
+  "conId": 267265,
+  "end_callback": {
+    "end": "20261106 10:48:13 US/Eastern",
+    "start": "20231106 10:48:13 US/Eastern"
+  },
+  "messages": [
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93018
+    }
+  ],
+  "request": {
+    "barSizeSetting": "1 day",
+    "durationStr": "3 Y",
+    "endDateTime": "",
+    "formatDate": 1,
+    "keepUpToDate": false,
+    "useRTH": 1,
+    "whatToShow": "ADJUSTED_LAST"
+  },
+  "row_count": 752,
+  "source_path": "D:\\projects\\systematic_trading\\var\\research\\p421-ibkr-reconcile-20261106-v1\\CASY-ADJUSTED_LAST.json.gz",
+  "source_sha256": "c23d4100fb6b352bb7d1983f508242198a6e5f197317604a5abe0e9fcade9276",
+  "started_at": "2026-11-06T15:48:11.404331+00:00",
+  "status": "complete",
+  "symbol": "CASY"
+}

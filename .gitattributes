@@ -1,0 +1,6 @@
+# Preserve byte-level research receipt and runner hashes across checkouts.
+research/p421-ibkr-reconcile-20261106-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/acquire_mdy_ibkr_history.py -text
+scripts/reconcile_mdy_ibkr_history.py -text
+scripts/report_mdy_ibkr_reconciliation.py -text
+tests/test_mdy_ibkr_reconciliation.py -text

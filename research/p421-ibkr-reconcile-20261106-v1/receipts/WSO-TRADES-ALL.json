@@ -1,0 +1,30 @@
+{
+  "completed_at": "2026-11-06T15:49:19.891604+00:00",
+  "conId": 13904,
+  "end_callback": {
+    "end": "20250228 19:00:00 US/Eastern",
+    "start": "20230228 19:00:00 US/Eastern"
+  },
+  "messages": [
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93002
+    }
+  ],
+  "request": {
+    "barSizeSetting": "1 day",
+    "durationStr": "2 Y",
+    "endDateTime": "20250301 00:00:00 UTC",
+    "formatDate": 1,
+    "keepUpToDate": false,
+    "useRTH": 0,
+    "whatToShow": "TRADES"
+  },
+  "row_count": 501,
+  "source_path": "D:\\projects\\systematic_trading\\var\\research\\p421-ibkr-reconcile-20261106-v1\\WSO-TRADES-ALL.json.gz",
+  "source_sha256": "ff3b1200715f85667a723c88690f8424b6a67a553acbe474d7c61e4e2dd50644",
+  "started_at": "2026-11-06T15:49:17.326943+00:00",
+  "status": "complete",
+  "symbol": "WSO"
+}

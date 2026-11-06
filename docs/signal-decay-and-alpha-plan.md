@@ -15,8 +15,13 @@ that group. The remaining uncovered records account for 5.12% after candidate
 identity and ticker links are separated. The subsequent
 [ten-holding evidence pilot](../research/p421-ten-qualification-20261106-v1/results.md)
 verified identities and internal consistency, with zero new qualifications.
-Restore independent historical-data access, then reconcile the prepared
-ten-stock extract. IBKR's other-IP session error is the immediate access issue.
+The subsequent [IBKR comparison](../research/p421-ibkr-reconcile-20261106-v1/results.md)
+restored access and completed all ten windows. 2,529 of 2,530 closes agree
+within half a cent; one MANH close differs by one cent. Volume and opening-price
+semantics remain unresolved; three all-hours controls explain part of the
+volume gap. Zero new publications. Next item: settle the volume/session
+contract and field-specific qualification, retaining the closing-price evidence
+and earlier identity/action reviews. Stop for discussion at this checkpoint.
 
 The [reconciled completion review](research-plan-review-2026-10-31.md) separates
 completed experiments, withheld net replays and remaining data/platform work.

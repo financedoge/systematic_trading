@@ -1,0 +1,159 @@
+{
+  "client_id": 29383,
+  "completed_at": "2026-11-06T15:48:25.635512+00:00",
+  "environment": "paper",
+  "messages": [
+    {
+      "code": 2104,
+      "message": "Market data farm connection is OK:hfarm",
+      "request": -1
+    },
+    {
+      "code": 2107,
+      "message": "HMDS data farm connection is inactive but should be available upon demand.apachmds",
+      "request": -1
+    },
+    {
+      "code": 2107,
+      "message": "HMDS data farm connection is inactive but should be available upon demand.cashhmds",
+      "request": -1
+    },
+    {
+      "code": 2106,
+      "message": "HMDS data farm connection is OK:ushmds",
+      "request": -1
+    },
+    {
+      "code": 2158,
+      "message": "Sec-def data farm connection is OK:secdefhk",
+      "request": -1
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93001
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93002
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93003
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93004
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93005
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93006
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93007
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93008
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93009
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93010
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93011
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93012
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93013
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93014
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93015
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93016
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93017
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93018
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93019
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93020
+    }
+  ],
+  "order_calls": 0,
+  "paper_accounts_verified": true,
+  "port": 4002,
+  "receipts": [
+    "CSL-TRADES",
+    "CSL-ADJUSTED_LAST",
+    "WSO-TRADES",
+    "WSO-ADJUSTED_LAST",
+    "MANH-TRADES",
+    "MANH-ADJUSTED_LAST",
+    "RPM-TRADES",
+    "RPM-ADJUSTED_LAST",
+    "UTHR-TRADES",
+    "UTHR-ADJUSTED_LAST",
+    "XPO-TRADES",
+    "XPO-ADJUSTED_LAST",
+    "FIX-TRADES",
+    "FIX-ADJUSTED_LAST",
+    "FLEX-TRADES",
+    "FLEX-ADJUSTED_LAST",
+    "CASY-TRADES",
+    "CASY-ADJUSTED_LAST",
+    "RS-TRADES",
+    "RS-ADJUSTED_LAST"
+  ],
+  "server_version": 223,
+  "started_at": "2026-11-06T15:46:39.390541+00:00"
+}

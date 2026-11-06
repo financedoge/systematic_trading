@@ -1,0 +1,30 @@
+{
+  "completed_at": "2026-11-06T15:48:18.886536+00:00",
+  "conId": 11735,
+  "end_callback": {
+    "end": "20250228 19:00:00 US/Eastern",
+    "start": "20230228 19:00:00 US/Eastern"
+  },
+  "messages": [
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93019
+    }
+  ],
+  "request": {
+    "barSizeSetting": "1 day",
+    "durationStr": "2 Y",
+    "endDateTime": "20250301 00:00:00 UTC",
+    "formatDate": 1,
+    "keepUpToDate": false,
+    "useRTH": 1,
+    "whatToShow": "TRADES"
+  },
+  "row_count": 501,
+  "source_path": "D:\\projects\\systematic_trading\\var\\research\\p421-ibkr-reconcile-20261106-v1\\RS-TRADES.json.gz",
+  "source_sha256": "657ccd1111bcd0a16905ff6795ac3183d16104f81cee3c7ea34d441f6152426b",
+  "started_at": "2026-11-06T15:48:17.038846+00:00",
+  "status": "complete",
+  "symbol": "RS"
+}

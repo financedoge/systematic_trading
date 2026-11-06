@@ -1,0 +1,14 @@
+{
+  "purpose": "Diagnose session coverage without changing qualification thresholds.",
+  "symbols": [
+    "CSL",
+    "WSO",
+    "XPO"
+  ],
+  "useRTH": 0,
+  "whatToShow": "TRADES",
+  "window": [
+    "2024-02-27",
+    "2025-02-28"
+  ]
+}

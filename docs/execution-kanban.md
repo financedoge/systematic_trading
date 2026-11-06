@@ -1,5 +1,22 @@
 # Execution Kanban
 
+## P4.21 independent broker history reconciliation — 2026-11-06
+
+Complete. Restored access returned 20 complete primary series (ten stocks,
+253 matched sessions each) and three all-hours controls. 2,529 of 2,530 closes
+agree within half a cent; MANH differs by one cent on June 24, 2024. Maximum
+adjusted daily-return difference is 0.414 bp. Broker regular-hours volume is
+31.5%–68.7% of published volume at the per-stock median; all-hours controls
+reduce but do not resolve the gap. Preserve volume and opening-price definition
+reviews, historical continuity and earlier source dispositions. Zero new
+publications. Twenty-six focused tests pass. Stop for discussion; next item is
+field-specific volume/session qualification, with closing-price evidence retained.
+[Reconciliation report](../research/p421-ibkr-reconcile-20261106-v1/index.html).
+
+Checkpoint packaging verified: retain compact evidence, runners and tests in
+Git with byte-preserving attributes for hashed files. Rendered reports and raw
+broker/private receipts retain their existing local-storage policy.
+
 ## Local startup repair: PostgreSQL service control and recycled PIDs — 2026-11-06
 
 **Complete.** Startup failed three times with "Stop local services first:

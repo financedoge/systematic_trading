@@ -1,0 +1,388 @@
+{
+  "batch": "ebffbedaaf8ae35bd5654887f83459156abff13d12537b2bd614e593c64ee77d",
+  "completed_series": 20,
+  "limitation": "Broker source was captured in November 2026. Source agreement cannot establish historical publication availability. No global source review was cleared.",
+  "new_publications": 0,
+  "protocol_sha256": "702109ce24cd29e3293e4c9deb2db374b7bc4776438a9eec5f23e652d837118d",
+  "qualified_count": 0,
+  "receipt_hashes": {
+    "CASY-ADJUSTED_LAST": "8c5b1b1f5beb67b83bda9e23774a3654f336d806e25ac7b7c1d01131fa68de45",
+    "CASY-TRADES": "846438bf726780af055fee2e47f70f71187d0cf83fa4484719170ffdcd9ac051",
+    "CSL-ADJUSTED_LAST": "8901b2cc03baa7e77788f862aa1af8b5964284f92f33afc5ca8deb1cfa13592a",
+    "CSL-TRADES": "e20205858f81feddfe9fa77186c5a210f2e219b6916a18f1dbbf89959d6e7d2a",
+    "FIX-ADJUSTED_LAST": "a55fe7f5ed3b3b5e3cddbefa7aa641b3dd6225f3515861318d0f37ff2737dd8e",
+    "FIX-TRADES": "41327da2a622db411d1a0e9dacc1433d89626152138274f2386e94209a3f2b28",
+    "FLEX-ADJUSTED_LAST": "d063d0518e2441ae56cf7be660ea8523c6e2fff39c016754dd5673a4f7d4f447",
+    "FLEX-TRADES": "81a4816f538e8364a2979dc313bc30d1d18348f1742522b9f0e449151b7719c5",
+    "MANH-ADJUSTED_LAST": "bdc6a3f728f1889c77e37363992176c8649dd9dc34e10eb4a10bf924c3c5f9e8",
+    "MANH-TRADES": "e791829c5ee951837f51b16a0bdfd68e213f13753b2dc263a1866ce9fe8f86f9",
+    "RPM-ADJUSTED_LAST": "989a6d0a60f642da3c078d728b92446e835d6a548fdf31827f3448cbf7aa89f6",
+    "RPM-TRADES": "c1ac42edfd3592e63e47684d469323061621145aac123c8d65a4852768dc25c4",
+    "RS-ADJUSTED_LAST": "bf0ca10ffcd21c9cfd856ebd8da880dd5ce643d3abdcbecab8517d39016416ff",
+    "RS-TRADES": "55abbaadd4c48a4a31c19de338cb415b187dd7ea89920adf339fbd3e6095050b",
+    "UTHR-ADJUSTED_LAST": "f8b65ad05bcc5d787a78458891cf92798e66449ae8ebf4c9f9ee3b3cfbe6ff3b",
+    "UTHR-TRADES": "1780b6dc36d5dfcebf9f0aaf5887d1c851cbdbb9ce9ed985e2c210f7f4cacf34",
+    "WSO-ADJUSTED_LAST": "d31e6469c80621343484b28c6d0177fa54d78bf07ee25591bca3e54a967110af",
+    "WSO-TRADES": "3b417867ed657b3b0dea8675a31b87f82bb8f644b8618b21fe903232fa558464",
+    "XPO-ADJUSTED_LAST": "0b20a20538b3bdcadbf7a79d35d98b13c0e0f35aad92824ccb9d62fca13247c1",
+    "XPO-TRADES": "ac1b00a0ce2fea18d03f9d612bddd9abdfd0a393283def2fc8e336659c0ddbd6"
+  },
+  "results": [
+    {
+      "adjusted_close_ratio_range": [
+        0.9999997741488784,
+        1.000000312532381
+      ],
+      "close_within_half_cent": 253,
+      "identical_volume_between_broker_types": true,
+      "max_abs_price_difference_usd": {
+        "close": 1.464843751364242e-05,
+        "high": 0.010014648437504547,
+        "low": 0.010012207031252274,
+        "open": 1.464843751364242e-05
+      },
+      "max_adjusted_return_difference_bp": 0.004060107415514158,
+      "median_adjusted_return_difference_bp": 0.0009756706972853177,
+      "published_status": "review",
+      "qualified_for_publication": false,
+      "raw_close_ratio_range": [
+        0.9999999586365931,
+        1.0000000437123278
+      ],
+      "sessions": 253,
+      "symbol": "CSL",
+      "unresolved": [
+        "Volume units/filtering and raw-activity comparability",
+        "Dated security/corporate-action continuity",
+        "Earlier source-review disposition"
+      ],
+      "volume_exact_matches": 0,
+      "volume_ratio_max": 0.6503827751196172,
+      "volume_ratio_median": 0.36915976821192054,
+      "volume_ratio_min": 0.118557497700092
+    },
+    {
+      "adjusted_close_ratio_range": [
+        0.9999996965509697,
+        1.0000002739507674
+      ],
+      "close_within_half_cent": 253,
+      "identical_volume_between_broker_types": true,
+      "max_abs_price_difference_usd": {
+        "close": 2.929687502728484e-05,
+        "high": 0.010014648437504547,
+        "low": 0.010019531250009095,
+        "open": 2.929687502728484e-05
+      },
+      "max_adjusted_return_difference_bp": 0.004220722860243109,
+      "median_adjusted_return_difference_bp": 0.000912764055043566,
+      "published_status": "review",
+      "qualified_for_publication": false,
+      "raw_close_ratio_range": [
+        0.9999999484917305,
+        1.0000000566156042
+      ],
+      "sessions": 253,
+      "symbol": "WSO",
+      "unresolved": [
+        "Volume units/filtering and raw-activity comparability",
+        "Dated security/corporate-action continuity",
+        "Earlier source-review disposition"
+      ],
+      "volume_exact_matches": 0,
+      "volume_ratio_max": 0.6515278586682197,
+      "volume_ratio_median": 0.3153387259858443,
+      "volume_ratio_min": 0.10394920963980306
+    },
+    {
+      "adjusted_close_ratio_range": [
+        0.9999586063950807,
+        1.0000000556213484
+      ],
+      "close_within_half_cent": 252,
+      "identical_volume_between_broker_types": true,
+      "max_abs_price_difference_usd": {
+        "close": 0.009995727539063637,
+        "high": 0.17999267578125,
+        "low": 0.010007324218747726,
+        "open": 0.9699981689453239
+      },
+      "max_adjusted_return_difference_bp": 0.41399552587946875,
+      "median_adjusted_return_difference_bp": 0.0002275848696737387,
+      "published_status": "review",
+      "qualified_for_publication": false,
+      "raw_close_ratio_range": [
+        0.9999586063950807,
+        1.0000000556213484
+      ],
+      "sessions": 253,
+      "symbol": "MANH",
+      "unresolved": [
+        "Volume units/filtering and raw-activity comparability",
+        "Dated security/corporate-action continuity",
+        "Earlier source-review disposition"
+      ],
+      "volume_exact_matches": 0,
+      "volume_ratio_max": 0.7423958203134765,
+      "volume_ratio_median": 0.3764309591154538,
+      "volume_ratio_min": 0.14956517725258495
+    },
+    {
+      "adjusted_close_ratio_range": [
+        0.9999995047662418,
+        1.0000006575990115
+      ],
+      "close_within_half_cent": 253,
+      "identical_volume_between_broker_types": true,
+      "max_abs_price_difference_usd": {
+        "close": 7.32421875682121e-06,
+        "high": 0.010001220703131253,
+        "low": 0.010006713867198869,
+        "open": 0.3200003051757818
+      },
+      "max_adjusted_return_difference_bp": 0.008636198034692177,
+      "median_adjusted_return_difference_bp": 0.002848806068172019,
+      "published_status": "review",
+      "qualified_for_publication": false,
+      "raw_close_ratio_range": [
+        0.9999999559630927,
+        1.0000000553063442
+      ],
+      "sessions": 253,
+      "symbol": "RPM",
+      "unresolved": [
+        "Volume units/filtering and raw-activity comparability",
+        "Dated security/corporate-action continuity",
+        "Earlier source-review disposition"
+      ],
+      "volume_exact_matches": 0,
+      "volume_ratio_max": 0.6329628087704691,
+      "volume_ratio_median": 0.4366338406445837,
+      "volume_ratio_min": 0.15453116488989183
+    },
+    {
+      "adjusted_close_ratio_range": [
+        0.9999999511132133,
+        1.0000000519706176
+      ],
+      "close_within_half_cent": 253,
+      "identical_volume_between_broker_types": true,
+      "max_abs_price_difference_usd": {
+        "close": 1.464843751364242e-05,
+        "high": 0.010010986328097715,
+        "low": 0.11000244140626592,
+        "open": 1.0499890136718477
+      },
+      "max_adjusted_return_difference_bp": 0.0008738410929229334,
+      "median_adjusted_return_difference_bp": 0.00024166152956571832,
+      "published_status": "review",
+      "qualified_for_publication": false,
+      "raw_close_ratio_range": [
+        0.9999999511132133,
+        1.0000000519706176
+      ],
+      "sessions": 253,
+      "symbol": "UTHR",
+      "unresolved": [
+        "Volume units/filtering and raw-activity comparability",
+        "Dated security/corporate-action continuity",
+        "Earlier source-review disposition"
+      ],
+      "volume_exact_matches": 0,
+      "volume_ratio_max": 0.5736507029374786,
+      "volume_ratio_median": 0.35513147817207047,
+      "volume_ratio_min": 0.12155200459286193
+    },
+    {
+      "adjusted_close_ratio_range": [
+        0.9999999504365359,
+        1.0000000533913045
+      ],
+      "close_within_half_cent": 253,
+      "identical_volume_between_broker_types": true,
+      "max_abs_price_difference_usd": {
+        "close": 7.32421875682121e-06,
+        "high": 0.39000335693359034,
+        "low": 0.6600015258789114,
+        "open": 0.18999999999999773
+      },
+      "max_adjusted_return_difference_bp": 0.0010295476830964045,
+      "median_adjusted_return_difference_bp": 0.00021631085060300204,
+      "published_status": "review",
+      "qualified_for_publication": false,
+      "raw_close_ratio_range": [
+        0.9999999504365359,
+        1.0000000533913045
+      ],
+      "sessions": 253,
+      "symbol": "XPO",
+      "unresolved": [
+        "Volume units/filtering and raw-activity comparability",
+        "Dated security/corporate-action continuity",
+        "Earlier source-review disposition"
+      ],
+      "volume_exact_matches": 0,
+      "volume_ratio_max": 0.7514052810562113,
+      "volume_ratio_median": 0.5455643015521064,
+      "volume_ratio_min": 0.17034657007423307
+    },
+    {
+      "adjusted_close_ratio_range": [
+        0.9999997980822081,
+        1.000000497869449
+      ],
+      "close_within_half_cent": 253,
+      "identical_volume_between_broker_types": true,
+      "max_abs_price_difference_usd": {
+        "close": 2.929687502728484e-05,
+        "high": 0.010013427734349989,
+        "low": 0.010024414062513642,
+        "open": 2.000013427734359
+      },
+      "max_adjusted_return_difference_bp": 0.005343007917525677,
+      "median_adjusted_return_difference_bp": 0.00111164602713959,
+      "published_status": "review",
+      "qualified_for_publication": false,
+      "raw_close_ratio_range": [
+        0.9999999498581612,
+        1.0000000553585968
+      ],
+      "sessions": 253,
+      "symbol": "FIX",
+      "unresolved": [
+        "Volume units/filtering and raw-activity comparability",
+        "Dated security/corporate-action continuity",
+        "Earlier source-review disposition"
+      ],
+      "volume_exact_matches": 0,
+      "volume_ratio_max": 0.5918138062064597,
+      "volume_ratio_median": 0.3799049517093362,
+      "volume_ratio_min": 0.07920672485279918
+    },
+    {
+      "adjusted_close_ratio_range": [
+        0.999999943363607,
+        1.0000000560469786
+      ],
+      "close_within_half_cent": 253,
+      "identical_volume_between_broker_types": true,
+      "max_abs_price_difference_usd": {
+        "close": 1.8310546892053026e-06,
+        "high": 0.04999847412109659,
+        "low": 0.030000000000001137,
+        "open": 0.7200004577636747
+      },
+      "max_adjusted_return_difference_bp": 0.000933545290292357,
+      "median_adjusted_return_difference_bp": 0.00027448918202190725,
+      "published_status": "review",
+      "qualified_for_publication": false,
+      "raw_close_ratio_range": [
+        0.999999943363607,
+        1.0000000560469786
+      ],
+      "sessions": 253,
+      "symbol": "FLEX",
+      "unresolved": [
+        "Volume units/filtering and raw-activity comparability",
+        "Dated security/corporate-action continuity",
+        "Earlier source-review disposition"
+      ],
+      "volume_exact_matches": 0,
+      "volume_ratio_max": 0.8654760271362146,
+      "volume_ratio_median": 0.6870037909558624,
+      "volume_ratio_min": 0.12833690604351025
+    },
+    {
+      "adjusted_close_ratio_range": [
+        0.9999996982473578,
+        1.0000004751263594
+      ],
+      "close_within_half_cent": 253,
+      "identical_volume_between_broker_types": true,
+      "max_abs_price_difference_usd": {
+        "close": 1.464843751364242e-05,
+        "high": 0.010013427734349989,
+        "low": 0.2400012207031068,
+        "open": 0.9100048828124727
+      },
+      "max_adjusted_return_difference_bp": 0.006768207658908176,
+      "median_adjusted_return_difference_bp": 0.0010264664598034004,
+      "published_status": "review",
+      "qualified_for_publication": false,
+      "raw_close_ratio_range": [
+        0.9999999535913165,
+        1.0000000460483423
+      ],
+      "sessions": 253,
+      "symbol": "CASY",
+      "unresolved": [
+        "Volume units/filtering and raw-activity comparability",
+        "Dated security/corporate-action continuity",
+        "Earlier source-review disposition"
+      ],
+      "volume_exact_matches": 0,
+      "volume_ratio_max": 0.5042313139260425,
+      "volume_ratio_median": 0.34312517821499855,
+      "volume_ratio_min": 0.16733230926779313
+    },
+    {
+      "adjusted_close_ratio_range": [
+        0.9999995273587386,
+        1.0000002613285004
+      ],
+      "close_within_half_cent": 253,
+      "identical_volume_between_broker_types": true,
+      "max_abs_price_difference_usd": {
+        "close": 1.464843751364242e-05,
+        "high": 0.010013427734349989,
+        "low": 0.4600048828124841,
+        "open": 1.464843751364242e-05
+      },
+      "max_adjusted_return_difference_bp": 0.004908905260284785,
+      "median_adjusted_return_difference_bp": 0.0015217272201118077,
+      "published_status": "review",
+      "qualified_for_publication": false,
+      "raw_close_ratio_range": [
+        0.9999999477102993,
+        1.0000000549433192
+      ],
+      "sessions": 253,
+      "symbol": "RS",
+      "unresolved": [
+        "Volume units/filtering and raw-activity comparability",
+        "Dated security/corporate-action continuity",
+        "Earlier source-review disposition"
+      ],
+      "volume_exact_matches": 0,
+      "volume_ratio_max": 0.6050137741046832,
+      "volume_ratio_median": 0.3632801913112794,
+      "volume_ratio_min": 0.09911603747333271
+    }
+  ],
+  "runner_sha256": "dd70cc4d730801161d1250c578532be40bd2e40860a4eed68dc08d56c64b6bab",
+  "session_control_sha256": "5de82dbbd31d855fd0e3dc31fa776c597fba2d445b79951096203bea2aeea9ee",
+  "stock_sessions": 2530,
+  "used": {
+    "audits/CASY.json": "cd874baa16938032b645244ceabee2edc8eb0b8866d7557d6b3cf1a65a83c650",
+    "audits/CSL.json": "956322a56057c53ea219b7a66ee75f74b0c69bd98c6d0e0998b3d4d117bf01a0",
+    "audits/FIX.json": "440ac57fdfaed926abac30123e79b6736c5ab2fa733e99a7e4deccef4080f4eb",
+    "audits/FLEX.json": "c7ff20fd402e934f1054e434583dffe42fe2c20c047674d6b029154071a50bde",
+    "audits/MANH.json": "1c673c61ba2043919ed5cdbeeac2e9f7a10054cca3956e7bec10ca8d4c0b5021",
+    "audits/RPM.json": "2fa51cd56b37fff3e085f1b9fade8441153f7a4cff3511389c5fd2ef6fb86fbf",
+    "audits/RS.json": "6601ad05a2e2719814145c4d119d2148c94040aae021ec1b9802b96974b8016f",
+    "audits/UTHR.json": "a1a0476d3eed95ef398efa918e53df5f6a872046b834b2072f728f7ed349fb02",
+    "audits/WSO.json": "143b3ff155bfca1337c15cfac5f7749bd6e8debb19fa759c136000ca46332787",
+    "audits/XPO.json": "2ba6a2658f84f99b0871e2b82f4601b8dcd8cacefad2f6f9ba6f35b77d0bcf84",
+    "bars/CASY.jsonl.gz": "41e67718b0b2043164e897738b396e8de6d2a0b86ca7718135e642824e722ee8",
+    "bars/CSL.jsonl.gz": "c3fa36207e3e283302aef5f68330c0636a4f05c3eaeb0799195b8b7104f576dd",
+    "bars/FIX.jsonl.gz": "a1ffd0939893b5fe61b3993e9d939c67d013a786e60957925d193d09eb1af8d5",
+    "bars/FLEX.jsonl.gz": "468099ff5bcd8620dd4053ea78d0a404fa9077ae7c23cea495c61ae04e311662",
+    "bars/MANH.jsonl.gz": "4cee56d1b64beb6e30c63f4a8c881a799a139cb2804c54118a953156663d048e",
+    "bars/RPM.jsonl.gz": "e0d4811c0c975c51e25de910f1ecc348405ee7eb37c5264caaead72d8ec44305",
+    "bars/RS.jsonl.gz": "53e1757fded007ee5785f17c4dde27a144e6865d02b1f988ca310c95d03d4f3d",
+    "bars/UTHR.jsonl.gz": "9c87cc7a97fa45639957f0beff43121667bf52ba86b8c15a88f5f266a4fa5d6e",
+    "bars/WSO.jsonl.gz": "09ffe85fe803d0113db733a0d3b20fd6c3b2100596c9b8ad6555a39294ddb1ee",
+    "bars/XPO.jsonl.gz": "b8e55c3b73981937dfbc1514d5312fffa61c1c930743d0844d704a3d9a4f8318",
+    "parent.json": "fa0b32ad699850676d2fea768db59ba8222a1d9c5e8b414880c395595b8e8206"
+  }
+}

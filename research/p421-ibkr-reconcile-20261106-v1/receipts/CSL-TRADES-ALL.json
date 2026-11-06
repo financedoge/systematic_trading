@@ -1,0 +1,30 @@
+{
+  "completed_at": "2026-11-06T15:49:15.319773+00:00",
+  "conId": 6120,
+  "end_callback": {
+    "end": "20250228 19:00:00 US/Eastern",
+    "start": "20230228 19:00:00 US/Eastern"
+  },
+  "messages": [
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93001
+    }
+  ],
+  "request": {
+    "barSizeSetting": "1 day",
+    "durationStr": "2 Y",
+    "endDateTime": "20250301 00:00:00 UTC",
+    "formatDate": 1,
+    "keepUpToDate": false,
+    "useRTH": 0,
+    "whatToShow": "TRADES"
+  },
+  "row_count": 501,
+  "source_path": "D:\\projects\\systematic_trading\\var\\research\\p421-ibkr-reconcile-20261106-v1\\CSL-TRADES-ALL.json.gz",
+  "source_sha256": "1f320f25f5e9b73cef4b11edfc634f4741d1260ca746374ac21a384ee5e7ac82",
+  "started_at": "2026-11-06T15:49:13.540230+00:00",
+  "status": "complete",
+  "symbol": "CSL"
+}

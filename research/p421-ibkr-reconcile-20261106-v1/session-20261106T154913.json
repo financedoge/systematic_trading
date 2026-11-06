@@ -1,0 +1,57 @@
+{
+  "client_id": 29383,
+  "completed_at": "2026-11-06T15:49:26.579236+00:00",
+  "environment": "paper",
+  "messages": [
+    {
+      "code": 2104,
+      "message": "Market data farm connection is OK:hfarm",
+      "request": -1
+    },
+    {
+      "code": 2107,
+      "message": "HMDS data farm connection is inactive but should be available upon demand.apachmds",
+      "request": -1
+    },
+    {
+      "code": 2107,
+      "message": "HMDS data farm connection is inactive but should be available upon demand.cashhmds",
+      "request": -1
+    },
+    {
+      "code": 2106,
+      "message": "HMDS data farm connection is OK:ushmds",
+      "request": -1
+    },
+    {
+      "code": 2158,
+      "message": "Sec-def data farm connection is OK:secdefhk",
+      "request": -1
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93001
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93002
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93003
+    }
+  ],
+  "order_calls": 0,
+  "paper_accounts_verified": true,
+  "port": 4002,
+  "receipts": [
+    "CSL-TRADES-ALL",
+    "WSO-TRADES-ALL",
+    "XPO-TRADES-ALL"
+  ],
+  "server_version": 223,
+  "started_at": "2026-11-06T15:49:13.534796+00:00"
+}

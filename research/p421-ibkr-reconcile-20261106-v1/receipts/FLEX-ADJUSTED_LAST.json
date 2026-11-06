@@ -1,0 +1,30 @@
+{
+  "completed_at": "2026-11-06T15:48:05.193835+00:00",
+  "conId": 4596077,
+  "end_callback": {
+    "end": "20261106 10:48:03 US/Eastern",
+    "start": "20231106 10:48:03 US/Eastern"
+  },
+  "messages": [
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93016
+    }
+  ],
+  "request": {
+    "barSizeSetting": "1 day",
+    "durationStr": "3 Y",
+    "endDateTime": "",
+    "formatDate": 1,
+    "keepUpToDate": false,
+    "useRTH": 1,
+    "whatToShow": "ADJUSTED_LAST"
+  },
+  "row_count": 752,
+  "source_path": "D:\\projects\\systematic_trading\\var\\research\\p421-ibkr-reconcile-20261106-v1\\FLEX-ADJUSTED_LAST.json.gz",
+  "source_sha256": "df20e2e025df633201cf8b94f889be97ee20de6228281729303f6555dc7526cb",
+  "started_at": "2026-11-06T15:48:01.867018+00:00",
+  "status": "complete",
+  "symbol": "FLEX"
+}

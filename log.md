@@ -1,5 +1,32 @@
 # Project Log
 
+## 2026-11-06 — Independent IBKR histories captured and reconciled
+
+After the operator restored the session, captured ten TRADES and ten
+ADJUSTED_LAST histories through a dedicated paper client, with 253 matched
+sessions each. Retained three additional all-hours TRADES controls for CSL,
+WSO and XPO. 2,529 of 2,530 closing prices agree within half a cent; the sole
+exception is MANH on June 24, 2024 (241.47 versus 241.48). Maximum adjusted
+daily log-return difference is 0.414 bp. Regular-hours broker-volume median
+ratios range from 31.5% to 68.7%; all-hours controls narrow but do not resolve
+the gap. Opening-price differences reach $2.00 (FIX, July 25, 2024).
+
+Source definitions and filtering need explicit field-specific dispositions.
+Kept all prior action/identity reviews. No publication or research replay;
+closing-price agreement cannot establish historical availability. The initial
+collector stopped prematurely on advisory 2188; the attempt is archived and
+the collector now waits for completion while retaining the warning. All 23
+successful requests reached completion. Twenty-six focused tests pass; hashes,
+session coverage and report values were verified. No orders or operational
+configuration changes. Preserve broker source/receipt evidence while this
+qualification is active. Stop after this item for operator discussion.
+[Report](research/p421-ibkr-reconcile-20261106-v1/index.html).
+
+Operator requested a commit/push checkpoint. Packaged this completed comparison,
+its compact evidence, runners and tests; byte-preserving Git attributes protect
+the evidence hashes. Rendered reports and raw/private broker receipts follow
+the existing local-storage policy. Separate daily-refresh repair remains active.
+
 ## 2026-11-06 — Ten-stock qualification reached the data-access gate
 
 Completed the evidence checks for CSL, WSO, MANH, RPM, UTHR, XPO, FIX, FLEX,

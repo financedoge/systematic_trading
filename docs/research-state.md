@@ -7,18 +7,25 @@ The [research plan](signal-decay-and-alpha-plan.md) controls sequencing; the
 
 ## P4.21 constituent coverage — November 6, 2026
 
-The ten-stock qualification pilot has completed its evidence checks. Twenty
-SEC filings corroborate the ten listing identities, and all ten filed ISINs
-resolve to matching current paper-broker contracts. Full published windows
-and December valuation checks pass. Zero histories qualified for publication.
-Eight older publications supply comparable raw volume. WSO and XPO withheld
-that field in the older batch and especially need independent verification.
-Independent daily history remains missing. IBKR rejected the historical
-request with an other-IP trading-session error, while public Nasdaq returned
-no rows for the required dates. The prepared 2,530-session observation request
-is the next action once access is available. Prior source reviews and dated
-security-continuity qualification remain open.
-[Qualification report](../research/p421-ten-qualification-20261106-v1/results.md).
+IBKR access is restored and the ten-stock independent comparison is complete.
+Twenty complete primary series cover all 2,530 stock-days. 2,529 closes agree
+within half a cent; MANH on June 24, 2024 differs by one cent. The largest
+adjusted daily log-return difference is 0.414 bp; all other names stay below
+0.009 bp. This corroborates the closing-price fields in this window.
+Regular-hours broker volume is consistently lower (per-stock median ratios
+31.5%–68.7%). All-hours controls on CSL, WSO and XPO explain part of the gap,
+but none of their 759 volume observations matches the published volume.
+Opening-price differences reach $2.00. No source substitution or catalog
+publication occurred. Next discussion concerns volume units/trade/session
+coverage and field-specific qualification; dated continuity and earlier source
+reviews remain open. [Independent comparison](../research/p421-ibkr-reconcile-20261106-v1/results.md).
+
+The preceding ten-stock pilot retained 20 SEC identity filings and ten matching
+current broker ISINs. Full published windows and December valuations passed.
+Only eight older publications supplied raw volume; WSO and XPO withheld it.
+The initial other-IP access failure is retained as historical evidence and has
+been superseded by the successful capture above.
+[Earlier qualification report](../research/p421-ten-qualification-20261106-v1/results.md).
 
 The remaining MDY inventory is complete. Among 329 holdings, 295 have complete
 253-session raw/adjusted windows (71.84% of equity value), six have full

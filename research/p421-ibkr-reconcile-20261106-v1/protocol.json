@@ -1,0 +1,30 @@
+{
+  "basis": {
+    "ADJUSTED_LAST": "Dividend/split-adjusted prices at current capture vintage.",
+    "TRADES": "Split-adjusted trade prices, not guaranteed historical raw prices."
+  },
+  "comparisons": "Exact session coverage, OHLC differences and ratios, adjacent adjusted returns, volume ratios. No new automatic qualification threshold.",
+  "documentation": [
+    "https://www.interactivebrokers.com/docs/tws-api/doc/md/historical-bars",
+    "https://www.interactivebrokers.com/docs/tws-api/doc/md/market-data-limitations"
+  ],
+  "prior_manifest_sha256": "1a7d223f068276cbcc064a7de321984b4b6708d0ce5740a62db45c60c105e406",
+  "scope": "Independent source reconciliation only; no publication or strategy inputs.",
+  "symbols": [
+    "CSL",
+    "WSO",
+    "MANH",
+    "RPM",
+    "UTHR",
+    "XPO",
+    "FIX",
+    "FLEX",
+    "CASY",
+    "RS"
+  ],
+  "volume": "Keep broker units unchanged; verify shares/lots and trade/session scope before treating as raw volume.",
+  "window": [
+    "2024-02-27",
+    "2025-02-28"
+  ]
+}

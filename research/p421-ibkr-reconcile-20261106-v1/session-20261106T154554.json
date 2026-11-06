@@ -1,0 +1,56 @@
+{
+  "client_id": 29383,
+  "completed_at": "2026-11-06T15:46:02.730789+00:00",
+  "environment": "paper",
+  "error": "Historical request incomplete; inspect saved receipt",
+  "messages": [
+    {
+      "code": 2104,
+      "message": "Market data farm connection is OK:hfarm",
+      "request": -1
+    },
+    {
+      "code": 2107,
+      "message": "HMDS data farm connection is inactive but should be available upon demand.apachmds",
+      "request": -1
+    },
+    {
+      "code": 2107,
+      "message": "HMDS data farm connection is inactive but should be available upon demand.cashhmds",
+      "request": -1
+    },
+    {
+      "code": 2107,
+      "message": "HMDS data farm connection is inactive but should be available upon demand.ushmds",
+      "request": -1
+    },
+    {
+      "code": 2157,
+      "message": "Sec-def data farm connection is broken:secdefhk",
+      "request": -1
+    },
+    {
+      "code": 2106,
+      "message": "HMDS data farm connection is OK:ushmds",
+      "request": -1
+    },
+    {
+      "code": 2158,
+      "message": "Sec-def data farm connection is OK:secdefhk",
+      "request": -1
+    },
+    {
+      "code": 2188,
+      "message": "Up-to-the-second historical data requires additional subscription for the API.",
+      "request": 93001
+    }
+  ],
+  "order_calls": 0,
+  "paper_accounts_verified": true,
+  "port": 4002,
+  "receipts": [
+    "CSL-TRADES"
+  ],
+  "server_version": 223,
+  "started_at": "2026-11-06T15:45:54.307415+00:00"
+}

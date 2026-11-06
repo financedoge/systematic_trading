@@ -1,0 +1,4555 @@
+[
+  {
+    "adjusted_close_ratio": 1.0,
+    "broker_trade_close": 226.75,
+    "broker_volume_as_returned": 115463.0,
+    "close_ratio": 1.0,
+    "date": "2024-02-27",
+    "price_difference_usd": {
+      "close": 0.0,
+      "high": 7.32421875682121e-06,
+      "low": -0.010002441406243179,
+      "open": -3.662109378410605e-06
+    },
+    "published_close": 226.75,
+    "published_volume": 333600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3461121103117506
+  },
+  {
+    "adjusted_close_ratio": 1.000000005370922,
+    "adjusted_log_return_difference_bp": 5.3709220378464484e-05,
+    "broker_trade_close": 227.28,
+    "broker_volume_as_returned": 111849.0,
+    "close_ratio": 1.000000005370922,
+    "date": "2024-02-28",
+    "price_difference_usd": {
+      "close": 1.2207031261368684e-06,
+      "high": -6.103515488575795e-07,
+      "low": 4.272460927268185e-06,
+      "open": 3.0517578011313162e-06
+    },
+    "published_close": 227.27999877929688,
+    "published_volume": 326200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3428847332924586
+  },
+  {
+    "adjusted_close_ratio": 1.0000000027049794,
+    "adjusted_log_return_difference_bp": -2.665942453773662e-05,
+    "broker_trade_close": 225.64,
+    "broker_volume_as_returned": 142710.0,
+    "close_ratio": 1.0000000027049794,
+    "date": "2024-02-29",
+    "price_difference_usd": {
+      "close": 6.103515488575795e-07,
+      "high": 3.662109378410605e-06,
+      "low": -4.272460927268185e-06,
+      "open": -0.47999633789061136
+    },
+    "published_close": 225.63999938964844,
+    "published_volume": 766100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.18628116433885916
+  },
+  {
+    "adjusted_close_ratio": 1.0000000078951996,
+    "adjusted_log_return_difference_bp": 5.190220132150758e-05,
+    "broker_trade_close": 231.92,
+    "broker_volume_as_returned": 229467.0,
+    "close_ratio": 1.0000000078951996,
+    "date": "2024-03-01",
+    "price_difference_usd": {
+      "close": 1.8310546749944479e-06,
+      "high": -2.4414062522737368e-06,
+      "low": 0.0,
+      "open": 3.662109378410605e-06
+    },
+    "published_close": 231.9199981689453,
+    "published_volume": 792300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.28962135554714125
+  },
+  {
+    "adjusted_close_ratio": 0.9999999759851188,
+    "adjusted_log_return_difference_bp": -0.0003191008101331716,
+    "broker_trade_close": 228.74,
+    "broker_volume_as_returned": 147260.0,
+    "close_ratio": 0.9999999759851188,
+    "date": "2024-03-04",
+    "price_difference_usd": {
+      "close": -5.493164053405053e-06,
+      "high": -4.8828125045474735e-06,
+      "low": -7.32421875682121e-06,
+      "open": 3.662109378410605e-06
+    },
+    "published_close": 228.74000549316406,
+    "published_volume": 437400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.33667123914037494
+  },
+  {
+    "adjusted_close_ratio": 1.000000010623586,
+    "adjusted_log_return_difference_bp": 0.0003463846725941522,
+    "broker_trade_close": 229.81,
+    "broker_volume_as_returned": 119451.0,
+    "close_ratio": 1.000000010623586,
+    "date": "2024-03-05",
+    "price_difference_usd": {
+      "close": 2.4414062522737368e-06,
+      "high": -7.32421875682121e-06,
+      "low": 5.493164053405053e-06,
+      "open": -3.0517578011313162e-06
+    },
+    "published_close": 229.80999755859375,
+    "published_volume": 287300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4157709711103376
+  },
+  {
+    "adjusted_close_ratio": 0.9999999948487018,
+    "adjusted_log_return_difference_bp": -0.00015774884003227907,
+    "broker_trade_close": 236.97,
+    "broker_volume_as_returned": 308713.0,
+    "close_ratio": 0.9999999948487018,
+    "date": "2024-03-06",
+    "price_difference_usd": {
+      "close": -1.2207031261368684e-06,
+      "high": -6.103515630684342e-06,
+      "low": 0.0,
+      "open": 0.0
+    },
+    "published_close": 236.97000122070312,
+    "published_volume": 675100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.45728484668937935
+  },
+  {
+    "adjusted_close_ratio": 0.999999972020891,
+    "adjusted_log_return_difference_bp": -0.00022827811408526744,
+    "broker_trade_close": 239.96,
+    "broker_volume_as_returned": 303781.0,
+    "close_ratio": 0.999999972020891,
+    "date": "2024-03-07",
+    "price_difference_usd": {
+      "close": -6.713867179541921e-06,
+      "high": -5.493164053405053e-06,
+      "low": -5.493164053405053e-06,
+      "open": -0.30999633789062386
+    },
+    "published_close": 239.9600067138672,
+    "published_volume": 574600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.5286825617821093
+  },
+  {
+    "adjusted_close_ratio": 0.9999999874439096,
+    "adjusted_log_return_difference_bp": 0.00015423018759688767,
+    "broker_trade_close": 243.05,
+    "broker_volume_as_returned": 256791.0,
+    "close_ratio": 0.9999999874439096,
+    "date": "2024-03-08",
+    "price_difference_usd": {
+      "close": -3.0517578011313162e-06,
+      "high": 0.0,
+      "low": -2.4414062522737368e-06,
+      "open": -6.103515488575795e-07
+    },
+    "published_close": 243.0500030517578,
+    "published_volume": 508400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.5050963808025177
+  },
+  {
+    "adjusted_close_ratio": 1.0000000220158076,
+    "adjusted_log_return_difference_bp": 0.0003457189792083204,
+    "broker_trade_close": 249.51,
+    "broker_volume_as_returned": 191125.0,
+    "close_ratio": 1.0000000220158076,
+    "date": "2024-03-11",
+    "price_difference_usd": {
+      "close": 5.493164053405053e-06,
+      "high": 4.272460927268185e-06,
+      "low": -0.010006713867198869,
+      "open": -6.713867179541921e-06
+    },
+    "published_close": 249.50999450683594,
+    "published_volume": 470200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4064759676733305
+  },
+  {
+    "adjusted_close_ratio": 1.000000019778882,
+    "adjusted_log_return_difference_bp": -2.2369256776760826e-05,
+    "broker_trade_close": 246.87,
+    "broker_volume_as_returned": 137323.0,
+    "close_ratio": 1.000000019778882,
+    "date": "2024-03-12",
+    "price_difference_usd": {
+      "close": 4.8828125045474735e-06,
+      "high": -6.103515488575795e-07,
+      "low": 1.2207031261368684e-06,
+      "open": -5.493164053405053e-06
+    },
+    "published_close": 246.8699951171875,
+    "published_volume": 374500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3666835781041389
+  },
+  {
+    "adjusted_close_ratio": 0.9999999822917858,
+    "adjusted_log_return_difference_bp": -0.0003748709615988832,
+    "broker_trade_close": 241.27,
+    "broker_volume_as_returned": 214786.0,
+    "close_ratio": 0.9999999822917858,
+    "date": "2024-03-13",
+    "price_difference_usd": {
+      "close": -4.272460927268185e-06,
+      "high": -3.0517578011313162e-06,
+      "low": -0.009996337890612494,
+      "open": -1.2207031261368684e-06
+    },
+    "published_close": 241.27000427246094,
+    "published_volume": 489100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.43914536904518503
+  },
+  {
+    "adjusted_close_ratio": 0.9999999974366824,
+    "adjusted_log_return_difference_bp": 0.00015144896838362176,
+    "broker_trade_close": 238.11,
+    "broker_volume_as_returned": 117691.0,
+    "close_ratio": 0.9999999974366824,
+    "date": "2024-03-14",
+    "price_difference_usd": {
+      "close": -6.103515488575795e-07,
+      "high": -6.713867179541921e-06,
+      "low": -4.272460927268185e-06,
+      "open": -6.103515488575795e-07
+    },
+    "published_close": 238.11000061035156,
+    "published_volume": 360300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3266472384124341
+  },
+  {
+    "adjusted_close_ratio": 1.0000000051772973,
+    "adjusted_log_return_difference_bp": 7.740614727316797e-05,
+    "broker_trade_close": 235.78,
+    "broker_volume_as_returned": 168730.0,
+    "close_ratio": 1.0000000051772973,
+    "date": "2024-03-15",
+    "price_difference_usd": {
+      "close": 1.2207031261368684e-06,
+      "high": -6.103515630684342e-06,
+      "low": -0.010001831054694321,
+      "open": -4.8828125045474735e-06
+    },
+    "published_close": 235.77999877929688,
+    "published_volume": 898700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.18774897073550684
+  },
+  {
+    "adjusted_close_ratio": 0.9999999947826511,
+    "adjusted_log_return_difference_bp": -0.00010394646067501956,
+    "broker_trade_close": 233.97,
+    "broker_volume_as_returned": 195125.0,
+    "close_ratio": 0.9999999947826511,
+    "date": "2024-03-18",
+    "price_difference_usd": {
+      "close": -1.2207031261368684e-06,
+      "high": 0.0,
+      "low": -0.010003051757820458,
+      "open": -3.662109378410605e-06
+    },
+    "published_close": 233.97000122070312,
+    "published_volume": 447700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.43583873129327677
+  },
+  {
+    "adjusted_close_ratio": 1.0000000254950534,
+    "adjusted_log_return_difference_bp": 0.0003071240189250757,
+    "broker_trade_close": 239.4,
+    "broker_volume_as_returned": 166651.0,
+    "close_ratio": 1.0000000254950534,
+    "date": "2024-03-19",
+    "price_difference_usd": {
+      "close": 6.103515630684342e-06,
+      "high": 6.103515630684342e-06,
+      "low": -7.32421875682121e-06,
+      "open": 0.0
+    },
+    "published_close": 239.39999389648438,
+    "published_volume": 550600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.30267163094805666
+  },
+  {
+    "adjusted_close_ratio": 1.0000000180478223,
+    "adjusted_log_return_difference_bp": -7.447230776502778e-05,
+    "broker_trade_close": 236.73,
+    "broker_volume_as_returned": 198867.0,
+    "close_ratio": 1.0000000180478223,
+    "date": "2024-03-20",
+    "price_difference_usd": {
+      "close": 4.272460927268185e-06,
+      "high": 2.4414062522737368e-06,
+      "low": -1.2207031261368684e-06,
+      "open": 1.2207031261368684e-06
+    },
+    "published_close": 236.72999572753906,
+    "published_volume": 441600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4503328804347826
+  },
+  {
+    "adjusted_close_ratio": 1.000000030913008,
+    "adjusted_log_return_difference_bp": 0.0001286518522681905,
+    "broker_trade_close": 236.93,
+    "broker_volume_as_returned": 97617.0,
+    "close_ratio": 1.000000030913008,
+    "date": "2024-03-21",
+    "price_difference_usd": {
+      "close": 7.32421875682121e-06,
+      "high": -6.103515630684342e-06,
+      "low": -0.009993286132811363,
+      "open": 2.4414062522737368e-06
+    },
+    "published_close": 236.92999267578125,
+    "published_volume": 301000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.32430897009966775
+  },
+  {
+    "adjusted_close_ratio": 1.0000000256558041,
+    "adjusted_log_return_difference_bp": -5.2572038137729815e-05,
+    "broker_trade_close": 237.9,
+    "broker_volume_as_returned": 108785.0,
+    "close_ratio": 1.0000000256558041,
+    "date": "2024-03-22",
+    "price_difference_usd": {
+      "close": 6.103515630684342e-06,
+      "high": -2.4414062522737368e-06,
+      "low": -4.272460927268185e-06,
+      "open": -7.32421875682121e-06
+    },
+    "published_close": 237.89999389648438,
+    "published_volume": 304600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.35714051214707815
+  },
+  {
+    "adjusted_close_ratio": 1.0000000224890042,
+    "adjusted_log_return_difference_bp": -3.16679967318767e-05,
+    "broker_trade_close": 244.26,
+    "broker_volume_as_returned": 368973.0,
+    "close_ratio": 1.0000000224890042,
+    "date": "2024-03-25",
+    "price_difference_usd": {
+      "close": 5.493164053405053e-06,
+      "high": -2.4414062522737368e-06,
+      "low": 3.662109378410605e-06,
+      "open": -6.103515488575795e-07
+    },
+    "published_close": 244.25999450683594,
+    "published_volume": 739700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4988143842098148
+  },
+  {
+    "adjusted_close_ratio": 0.9999999975375149,
+    "adjusted_log_return_difference_bp": -0.0002495148908321365,
+    "broker_trade_close": 247.86,
+    "broker_volume_as_returned": 219010.0,
+    "close_ratio": 0.9999999975375149,
+    "date": "2024-03-26",
+    "price_difference_usd": {
+      "close": -6.103515488575795e-07,
+      "high": 6.103515488575795e-07,
+      "low": 1.8310546749944479e-06,
+      "open": 0.11000183105468864
+    },
+    "published_close": 247.86000061035156,
+    "published_volume": 576900.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3796325186340787
+  },
+  {
+    "adjusted_close_ratio": 0.9999999824373706,
+    "adjusted_log_return_difference_bp": -0.00015100144457741438,
+    "broker_trade_close": 243.27,
+    "broker_volume_as_returned": 303779.0,
+    "close_ratio": 0.9999999824373706,
+    "date": "2024-03-27",
+    "price_difference_usd": {
+      "close": -4.272460927268185e-06,
+      "high": 7.32421875682121e-06,
+      "low": -7.32421875682121e-06,
+      "open": 5.493164053405053e-06
+    },
+    "published_close": 243.27000427246094,
+    "published_volume": 648200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4686501079913607
+  },
+  {
+    "adjusted_close_ratio": 0.9999999946861261,
+    "adjusted_log_return_difference_bp": 0.00012248755620891671,
+    "broker_trade_close": 229.72,
+    "broker_volume_as_returned": 461666.0,
+    "close_ratio": 0.9999999946861261,
+    "date": "2024-03-28",
+    "price_difference_usd": {
+      "close": -1.2207031261368684e-06,
+      "high": -7.32421875682121e-06,
+      "low": 6.103515488575795e-07,
+      "open": -7.32421875682121e-06
+    },
+    "published_close": 229.72000122070312,
+    "published_volume": 1114700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4141616578451601
+  },
+  {
+    "adjusted_close_ratio": 1.0000000240653824,
+    "adjusted_log_return_difference_bp": 0.0002937925609562686,
+    "broker_trade_close": 228.26,
+    "broker_volume_as_returned": 378859.0,
+    "close_ratio": 1.0000000240653824,
+    "date": "2024-04-01",
+    "price_difference_usd": {
+      "close": 5.493164053405053e-06,
+      "high": -4.272460927268185e-06,
+      "low": 1.2207031261368684e-06,
+      "open": 1.2207031261368684e-06
+    },
+    "published_close": 228.25999450683594,
+    "published_volume": 783600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.48348519652884125
+  },
+  {
+    "adjusted_close_ratio": 0.9999999919894362,
+    "adjusted_log_return_difference_bp": -0.0003207594604271065,
+    "broker_trade_close": 228.58,
+    "broker_volume_as_returned": 223495.0,
+    "close_ratio": 0.9999999919894362,
+    "date": "2024-04-02",
+    "price_difference_usd": {
+      "close": -1.8310546749944479e-06,
+      "high": -4.272460927268185e-06,
+      "low": 4.8828125045474735e-06,
+      "open": -0.5199938964843795
+    },
+    "published_close": 228.5800018310547,
+    "published_volume": 548400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4075401167031364
+  },
+  {
+    "adjusted_close_ratio": 1.0000000131996447,
+    "adjusted_log_return_difference_bp": 0.00021210208448960155,
+    "broker_trade_close": 231.2,
+    "broker_volume_as_returned": 167819.0,
+    "close_ratio": 1.0000000131996447,
+    "date": "2024-04-03",
+    "price_difference_usd": {
+      "close": 3.0517578011313162e-06,
+      "high": 6.713867179541921e-06,
+      "low": -0.009999999999990905,
+      "open": -6.103515488575795e-07
+    },
+    "published_close": 231.1999969482422,
+    "published_volume": 397100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4226114328884412
+  },
+  {
+    "adjusted_close_ratio": 1.0000000313094473,
+    "adjusted_log_return_difference_bp": 0.00018109802310539713,
+    "broker_trade_close": 233.93,
+    "broker_volume_as_returned": 233461.0,
+    "close_ratio": 1.0000000313094473,
+    "date": "2024-04-04",
+    "price_difference_usd": {
+      "close": 7.32421875682121e-06,
+      "high": -7.32421875682121e-06,
+      "low": -1.2207031261368684e-06,
+      "open": -4.272460927268185e-06
+    },
+    "published_close": 233.92999267578125,
+    "published_volume": 521700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4475004792026069
+  },
+  {
+    "adjusted_close_ratio": 1.0000000104530153,
+    "adjusted_log_return_difference_bp": -0.00020856431405275738,
+    "broker_trade_close": 233.56,
+    "broker_volume_as_returned": 189477.0,
+    "close_ratio": 1.0000000104530153,
+    "date": "2024-04-05",
+    "price_difference_usd": {
+      "close": 2.4414062522737368e-06,
+      "high": 7.32421875682121e-06,
+      "low": -3.662109378410605e-06,
+      "open": 6.103515630684342e-06
+    },
+    "published_close": 233.55999755859375,
+    "published_volume": 451700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4194753154748727
+  },
+  {
+    "adjusted_close_ratio": 0.9999999716666653,
+    "adjusted_log_return_difference_bp": -0.0003878635055840074,
+    "broker_trade_close": 236.96,
+    "broker_volume_as_returned": 172077.0,
+    "close_ratio": 0.9999999716666653,
+    "date": "2024-04-08",
+    "price_difference_usd": {
+      "close": -6.713867179541921e-06,
+      "high": 2.4414062522737368e-06,
+      "low": 6.713867179541921e-06,
+      "open": 6.713867179541921e-06
+    },
+    "published_close": 236.9600067138672,
+    "published_volume": 464200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3706958207669108
+  },
+  {
+    "adjusted_close_ratio": 1.000000028323774,
+    "adjusted_log_return_difference_bp": 0.0005665710865325772,
+    "broker_trade_close": 237.04,
+    "broker_volume_as_returned": 178129.0,
+    "close_ratio": 1.000000028323774,
+    "date": "2024-04-09",
+    "price_difference_usd": {
+      "close": 6.713867179541921e-06,
+      "high": 6.713867179541921e-06,
+      "low": 0.0,
+      "open": -1.8310546749944479e-06
+    },
+    "published_close": 237.0399932861328,
+    "published_volume": 399200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.44621492985971944
+  },
+  {
+    "adjusted_close_ratio": 1.0000000282344395,
+    "adjusted_log_return_difference_bp": -8.933432465996205e-07,
+    "broker_trade_close": 237.79,
+    "broker_volume_as_returned": 193164.0,
+    "close_ratio": 1.0000000282344395,
+    "date": "2024-04-10",
+    "price_difference_usd": {
+      "close": 6.713867179541921e-06,
+      "high": -3.662109378410605e-06,
+      "low": 1.8310546749944479e-06,
+      "open": 1.8310546749944479e-06
+    },
+    "published_close": 237.7899932861328,
+    "published_volume": 419000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.46101193317422434
+  },
+  {
+    "adjusted_close_ratio": 0.9999999768455407,
+    "adjusted_log_return_difference_bp": -0.0005138889863209178,
+    "broker_trade_close": 237.24,
+    "broker_volume_as_returned": 239132.0,
+    "close_ratio": 0.9999999768455407,
+    "date": "2024-04-11",
+    "price_difference_usd": {
+      "close": -5.493164053405053e-06,
+      "high": 4.8828125045474735e-06,
+      "low": -6.103515488575795e-07,
+      "open": 5.493164053405053e-06
+    },
+    "published_close": 237.24000549316406,
+    "published_volume": 624000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.38322435897435897
+  },
+  {
+    "adjusted_close_ratio": 1.0000000157449136,
+    "adjusted_log_return_difference_bp": 0.00038899373031725526,
+    "broker_trade_close": 232.59,
+    "broker_volume_as_returned": 155399.0,
+    "close_ratio": 1.0000000157449136,
+    "date": "2024-04-12",
+    "price_difference_usd": {
+      "close": 3.662109378410605e-06,
+      "high": 6.103515630684342e-06,
+      "low": 6.103515630684342e-06,
+      "open": 4.272460927268185e-06
+    },
+    "published_close": 232.58999633789062,
+    "published_volume": 423600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.36685316336166196
+  },
+  {
+    "adjusted_close_ratio": 0.9999999922109296,
+    "adjusted_log_return_difference_bp": -0.00023533983765228195,
+    "broker_trade_close": 235.08,
+    "broker_volume_as_returned": 138363.0,
+    "close_ratio": 0.9999999922109296,
+    "date": "2024-04-15",
+    "price_difference_usd": {
+      "close": -1.8310546749944479e-06,
+      "high": 7.32421875682121e-06,
+      "low": 6.713867179541921e-06,
+      "open": -6.713867179541921e-06
+    },
+    "published_close": 235.0800018310547,
+    "published_volume": 328000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.42183841463414634
+  },
+  {
+    "adjusted_close_ratio": 1.0000000052666456,
+    "adjusted_log_return_difference_bp": 0.00013055716058599232,
+    "broker_trade_close": 231.78,
+    "broker_volume_as_returned": 157686.0,
+    "close_ratio": 1.0000000052666456,
+    "date": "2024-04-16",
+    "price_difference_usd": {
+      "close": 1.2207031261368684e-06,
+      "high": -6.103515488575795e-07,
+      "low": 6.103515488575795e-07,
+      "open": -6.103515488575795e-07
+    },
+    "published_close": 231.77999877929688,
+    "published_volume": 498300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3164479229379892
+  },
+  {
+    "adjusted_close_ratio": 1.0000000103752764,
+    "adjusted_log_return_difference_bp": 5.1086306122882785e-05,
+    "broker_trade_close": 235.31,
+    "broker_volume_as_returned": 146859.0,
+    "close_ratio": 1.0000000103752764,
+    "date": "2024-04-17",
+    "price_difference_usd": {
+      "close": 2.4414062522737368e-06,
+      "high": 6.103515488575795e-07,
+      "low": 3.662109378410605e-06,
+      "open": -0.020002441406262506
+    },
+    "published_close": 235.30999755859375,
+    "published_volume": 372400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.39435821697099893
+  },
+  {
+    "adjusted_close_ratio": 1.000000030913008,
+    "adjusted_log_return_difference_bp": 0.00020537731224012923,
+    "broker_trade_close": 236.93,
+    "broker_volume_as_returned": 196431.0,
+    "close_ratio": 1.000000030913008,
+    "date": "2024-04-18",
+    "price_difference_usd": {
+      "close": 7.32421875682121e-06,
+      "high": -5.493164053405053e-06,
+      "low": 2.4414062522737368e-06,
+      "open": 1.8310546749944479e-06
+    },
+    "published_close": 236.92999267578125,
+    "published_volume": 476300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.412410245643502
+  },
+  {
+    "adjusted_close_ratio": 1.0000000307830832,
+    "adjusted_log_return_difference_bp": -1.2992481916718202e-06,
+    "broker_trade_close": 237.93,
+    "broker_volume_as_returned": 162820.0,
+    "close_ratio": 1.0000000307830832,
+    "date": "2024-04-19",
+    "price_difference_usd": {
+      "close": 7.32421875682121e-06,
+      "high": 3.662109378410605e-06,
+      "low": -6.103515488575795e-07,
+      "open": -1.2207031261368684e-06
+    },
+    "published_close": 237.92999267578125,
+    "published_volume": 616000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.26431818181818184
+  },
+  {
+    "adjusted_close_ratio": 1.0000000104306856,
+    "adjusted_log_return_difference_bp": -0.000203523970801478,
+    "broker_trade_close": 234.06,
+    "broker_volume_as_returned": 175756.0,
+    "close_ratio": 1.0000000104306856,
+    "date": "2024-04-22",
+    "price_difference_usd": {
+      "close": 2.4414062522737368e-06,
+      "high": -3.0517578011313162e-06,
+      "low": -4.272460927268185e-06,
+      "open": 3.0517578011313162e-06
+    },
+    "published_close": 234.05999755859375,
+    "published_volume": 552500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.318110407239819
+  },
+  {
+    "adjusted_close_ratio": 0.999999994793777,
+    "adjusted_log_return_difference_bp": -0.00015636908755681245,
+    "broker_trade_close": 234.47,
+    "broker_volume_as_returned": 172958.0,
+    "close_ratio": 0.999999994793777,
+    "date": "2024-04-23",
+    "price_difference_usd": {
+      "close": -1.2207031261368684e-06,
+      "high": 0.0,
+      "low": -3.662109378410605e-06,
+      "open": 4.272460927268185e-06
+    },
+    "published_close": 234.47000122070312,
+    "published_volume": 521400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.33171845032604524
+  },
+  {
+    "adjusted_close_ratio": 1.0,
+    "adjusted_log_return_difference_bp": 5.20622318866959e-05,
+    "broker_trade_close": 237.0,
+    "broker_volume_as_returned": 215983.0,
+    "close_ratio": 1.0,
+    "date": "2024-04-24",
+    "price_difference_usd": {
+      "close": 0.0,
+      "high": 0.0,
+      "low": -0.009998779296864768,
+      "open": -6.103515488575795e-07
+    },
+    "published_close": 237.0,
+    "published_volume": 671000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3218822652757079
+  },
+  {
+    "adjusted_close_ratio": 1.0000000129339175,
+    "adjusted_log_return_difference_bp": 0.00012933917468288536,
+    "broker_trade_close": 235.95,
+    "broker_volume_as_returned": 157930.0,
+    "close_ratio": 1.0000000129339175,
+    "date": "2024-04-25",
+    "price_difference_usd": {
+      "close": 3.0517578011313162e-06,
+      "high": -2.4414062522737368e-06,
+      "low": -1.8310546749944479e-06,
+      "open": -1.8310546749944479e-06
+    },
+    "published_close": 235.9499969482422,
+    "published_volume": 391800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4030883103624298
+  },
+  {
+    "adjusted_close_ratio": 0.9999999738998697,
+    "adjusted_log_return_difference_bp": -0.0003903404816561762,
+    "broker_trade_close": 233.85,
+    "broker_volume_as_returned": 131891.0,
+    "close_ratio": 0.9999999738998697,
+    "date": "2024-04-26",
+    "price_difference_usd": {
+      "close": -6.103515630684342e-06,
+      "high": 1.2207031261368684e-06,
+      "low": 6.103515488575795e-07,
+      "open": 3.662109378410605e-06
+    },
+    "published_close": 233.85000610351562,
+    "published_volume": 369700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3567514200703273
+  },
+  {
+    "adjusted_close_ratio": 1.0000000230553352,
+    "adjusted_log_return_difference_bp": 0.000491554657290616,
+    "broker_trade_close": 238.26,
+    "broker_volume_as_returned": 153132.0,
+    "close_ratio": 1.0000000230553352,
+    "date": "2024-04-29",
+    "price_difference_usd": {
+      "close": 5.493164053405053e-06,
+      "high": 7.32421875682121e-06,
+      "low": 5.493164053405053e-06,
+      "open": 5.493164053405053e-06
+    },
+    "published_close": 238.25999450683594,
+    "published_volume": 496600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.30836085380587996
+  },
+  {
+    "adjusted_close_ratio": 0.9999999921859998,
+    "adjusted_log_return_difference_bp": -0.00030869335147093446,
+    "broker_trade_close": 234.33,
+    "broker_volume_as_returned": 263649.0,
+    "close_ratio": 0.9999999921859998,
+    "date": "2024-04-30",
+    "price_difference_usd": {
+      "close": -1.8310546749944479e-06,
+      "high": 5.493164053405053e-06,
+      "low": 2.4414062522737368e-06,
+      "open": 1.2207031261368684e-06
+    },
+    "published_close": 234.3300018310547,
+    "published_volume": 619500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.42558353510895885
+  },
+  {
+    "adjusted_close_ratio": 1.0000000023922222,
+    "adjusted_log_return_difference_bp": 0.00010206222311737179,
+    "broker_trade_close": 255.14,
+    "broker_volume_as_returned": 668759.0,
+    "close_ratio": 1.0000000023922222,
+    "date": "2024-05-01",
+    "price_difference_usd": {
+      "close": 6.103515488575795e-07,
+      "high": -1.0986328106810106e-05,
+      "low": 6.103515630684342e-06,
+      "open": 0.0
+    },
+    "published_close": 255.13999938964844,
+    "published_volume": 1410600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4740954203884872
+  },
+  {
+    "adjusted_close_ratio": 0.9999999810839019,
+    "adjusted_log_return_difference_bp": -0.00021308320391141833,
+    "broker_trade_close": 258.13,
+    "broker_volume_as_returned": 336635.0,
+    "close_ratio": 0.9999999810839019,
+    "date": "2024-05-02",
+    "price_difference_usd": {
+      "close": -4.8828125045474735e-06,
+      "high": 3.6621093499888957e-06,
+      "low": 7.32421875682121e-06,
+      "open": -6.103515630684342e-06
+    },
+    "published_close": 258.1300048828125,
+    "published_volume": 717200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4693739542665923
+  },
+  {
+    "adjusted_close_ratio": 1.0000000232603496,
+    "adjusted_log_return_difference_bp": 0.00042176447695441155,
+    "broker_trade_close": 262.4,
+    "broker_volume_as_returned": 279090.0,
+    "close_ratio": 1.0000000232603496,
+    "date": "2024-05-03",
+    "price_difference_usd": {
+      "close": 6.1035156022626325e-06,
+      "high": -9.765625009094947e-06,
+      "low": 7.32421875682121e-06,
+      "open": 1.3427734359083843e-05
+    },
+    "published_close": 262.3999938964844,
+    "published_volume": 779500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.35803720333547145
+  },
+  {
+    "adjusted_close_ratio": 0.9999999625134366,
+    "adjusted_log_return_difference_bp": -0.0006074691357143419,
+    "broker_trade_close": 260.51,
+    "broker_volume_as_returned": 212679.0,
+    "close_ratio": 0.9999999625134366,
+    "date": "2024-05-06",
+    "price_difference_usd": {
+      "close": -9.765625009094947e-06,
+      "high": -6.1035156022626325e-06,
+      "low": 1.3427734359083843e-05,
+      "open": -0.17000488281252046
+    },
+    "published_close": 260.510009765625,
+    "published_volume": 587200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.362191757493188
+  },
+  {
+    "adjusted_close_ratio": 0.999999995414683,
+    "adjusted_log_return_difference_bp": 0.0003290124708787978,
+    "broker_trade_close": 266.22,
+    "broker_volume_as_returned": 242472.0,
+    "close_ratio": 0.999999995414683,
+    "date": "2024-05-07",
+    "price_difference_usd": {
+      "close": -1.220703097715159e-06,
+      "high": 6.1035156022626325e-06,
+      "low": 7.32421875682121e-06,
+      "open": -3.6621093499888957e-06
+    },
+    "published_close": 266.2200012207031,
+    "published_volume": 686600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3531488494028546
+  },
+  {
+    "adjusted_close_ratio": 1.000000014026234,
+    "adjusted_log_return_difference_bp": 0.00018611550783170783,
+    "broker_trade_close": 261.09,
+    "broker_volume_as_returned": 238818.0,
+    "close_ratio": 1.000000014026234,
+    "date": "2024-05-08",
+    "price_difference_usd": {
+      "close": 3.6621093499888957e-06,
+      "high": 8.54492185453637e-06,
+      "low": -3.6621093499888957e-06,
+      "open": -4.8828125045474735e-06
+    },
+    "published_close": 261.0899963378906,
+    "published_volume": 581200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4109050240880936
+  },
+  {
+    "adjusted_close_ratio": 1.0000000458824725,
+    "adjusted_log_return_difference_bp": 0.0003185623773799273,
+    "broker_trade_close": 266.05,
+    "broker_volume_as_returned": 201577.0,
+    "close_ratio": 1.0000000458824725,
+    "date": "2024-05-09",
+    "price_difference_usd": {
+      "close": 1.2207031261368684e-05,
+      "high": -4.8828125045474735e-06,
+      "low": -3.6621093499888957e-06,
+      "open": 4.8828125045474735e-06
+    },
+    "published_close": 266.04998779296875,
+    "published_volume": 474300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4249989458148851
+  },
+  {
+    "adjusted_close_ratio": 1.0000000415723638,
+    "adjusted_log_return_difference_bp": -4.3101086545302425e-05,
+    "broker_trade_close": 264.27,
+    "broker_volume_as_returned": 139105.0,
+    "close_ratio": 1.0000000415723638,
+    "date": "2024-05-10",
+    "price_difference_usd": {
+      "close": 1.0986328106810106e-05,
+      "high": 2.4414062522737368e-06,
+      "low": 7.32421875682121e-06,
+      "open": 0.0
+    },
+    "published_close": 264.2699890136719,
+    "published_volume": 391700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.35513147817207047
+  },
+  {
+    "adjusted_close_ratio": 1.0000000138537846,
+    "adjusted_log_return_difference_bp": -0.0002771857861619785,
+    "broker_trade_close": 264.34,
+    "broker_volume_as_returned": 157908.0,
+    "close_ratio": 1.0000000138537846,
+    "date": "2024-05-13",
+    "price_difference_usd": {
+      "close": 3.6621093499888957e-06,
+      "high": -6.1035156022626325e-06,
+      "low": 2.4414062522737368e-06,
+      "open": 7.32421875682121e-06
+    },
+    "published_close": 264.3399963378906,
+    "published_volume": 349600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4516819221967963
+  },
+  {
+    "adjusted_close_ratio": 1.0000000045248094,
+    "adjusted_log_return_difference_bp": -9.328975134059725e-05,
+    "broker_trade_close": 269.78,
+    "broker_volume_as_returned": 184857.0,
+    "close_ratio": 1.0000000045248094,
+    "date": "2024-05-14",
+    "price_difference_usd": {
+      "close": 1.220703097715159e-06,
+      "high": 1.3427734359083843e-05,
+      "low": -6.1035156022626325e-06,
+      "open": -6.1035156022626325e-06
+    },
+    "published_close": 269.7799987792969,
+    "published_volume": 524600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.35237704918032786
+  },
+  {
+    "adjusted_close_ratio": 0.9999999910469536,
+    "adjusted_log_return_difference_bp": -0.0001347785598751483,
+    "broker_trade_close": 272.69,
+    "broker_volume_as_returned": 143486.0,
+    "close_ratio": 0.9999999910469536,
+    "date": "2024-05-15",
+    "price_difference_usd": {
+      "close": -2.4414062522737368e-06,
+      "high": 0.0,
+      "low": 7.32421875682121e-06,
+      "open": -0.39998535156252046
+    },
+    "published_close": 272.69000244140625,
+    "published_volume": 370400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.38738120950323973
+  },
+  {
+    "adjusted_close_ratio": 0.9999999955157479,
+    "adjusted_log_return_difference_bp": 4.4687944475516744e-05,
+    "broker_trade_close": 272.22,
+    "broker_volume_as_returned": 180622.0,
+    "close_ratio": 0.9999999955157479,
+    "date": "2024-05-16",
+    "price_difference_usd": {
+      "close": -1.220703097715159e-06,
+      "high": -6.1035156022626325e-06,
+      "low": -0.009985351562477263,
+      "open": 8.54492185453637e-06
+    },
+    "published_close": 272.2200012207031,
+    "published_volume": 463900.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3893554645397715
+  },
+  {
+    "adjusted_close_ratio": 0.9999999643928219,
+    "adjusted_log_return_difference_bp": -0.0003112292676268197,
+    "broker_trade_close": 274.26,
+    "broker_volume_as_returned": 85592.0,
+    "close_ratio": 0.9999999643928219,
+    "date": "2024-05-17",
+    "price_difference_usd": {
+      "close": -9.765625009094947e-06,
+      "high": 9.765625009094947e-06,
+      "low": -9.765625009094947e-06,
+      "open": 1.220703097715159e-06
+    },
+    "published_close": 274.260009765625,
+    "published_volume": 329300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.25992104464014576
+  },
+  {
+    "adjusted_close_ratio": 0.9999999511132133,
+    "adjusted_log_return_difference_bp": -0.0001327960933317912,
+    "broker_trade_close": 274.67,
+    "broker_volume_as_returned": 126749.0,
+    "close_ratio": 0.9999999511132133,
+    "date": "2024-05-20",
+    "price_difference_usd": {
+      "close": -1.3427734359083843e-05,
+      "high": -1.3427734359083843e-05,
+      "low": -8.54492185453637e-06,
+      "open": -9.765625009094947e-06
+    },
+    "published_close": 274.6700134277344,
+    "published_volume": 333300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3802850285028503
+  },
+  {
+    "adjusted_close_ratio": 0.9999999911282887,
+    "adjusted_log_return_difference_bp": 0.0004001507656649361,
+    "broker_trade_close": 275.19,
+    "broker_volume_as_returned": 148759.0,
+    "close_ratio": 0.9999999911282887,
+    "date": "2024-05-21",
+    "price_difference_usd": {
+      "close": -2.4414062522737368e-06,
+      "high": -1.0986328106810106e-05,
+      "low": 0.0,
+      "open": 0.0
+    },
+    "published_close": 275.19000244140625,
+    "published_volume": 377100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.39448156987536465
+  },
+  {
+    "adjusted_close_ratio": 0.9999999911684047,
+    "adjusted_log_return_difference_bp": 4.0115989523303863e-07,
+    "broker_trade_close": 276.44,
+    "broker_volume_as_returned": 225137.0,
+    "close_ratio": 0.9999999911684047,
+    "date": "2024-05-22",
+    "price_difference_usd": {
+      "close": -2.4414062522737368e-06,
+      "high": 2.4414062522737368e-06,
+      "low": 1.0986328106810106e-05,
+      "open": 1.2207031261368684e-05
+    },
+    "published_close": 276.44000244140625,
+    "published_volume": 495200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4546385298869144
+  },
+  {
+    "adjusted_close_ratio": 1.0,
+    "adjusted_log_return_difference_bp": 8.831595326824456e-05,
+    "broker_trade_close": 276.5,
+    "broker_volume_as_returned": 143874.0,
+    "close_ratio": 1.0,
+    "date": "2024-05-23",
+    "price_difference_usd": {
+      "close": 0.0,
+      "high": -1.3427734359083843e-05,
+      "low": 3.6621093499888957e-06,
+      "open": 2.4414062522737368e-06
+    },
+    "published_close": 276.5,
+    "published_volume": 389600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3692864476386037
+  },
+  {
+    "adjusted_close_ratio": 0.9999999821063749,
+    "adjusted_log_return_difference_bp": -0.0001789362517184978,
+    "broker_trade_close": 272.88,
+    "broker_volume_as_returned": 125981.0,
+    "close_ratio": 0.9999999821063749,
+    "date": "2024-05-24",
+    "price_difference_usd": {
+      "close": -4.8828125045474735e-06,
+      "high": 1.0986328106810106e-05,
+      "low": 1.0986328106810106e-05,
+      "open": 1.0986328106810106e-05
+    },
+    "published_close": 272.8800048828125,
+    "published_volume": 408200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.30862567368936794
+  },
+  {
+    "adjusted_close_ratio": 1.0000000226770045,
+    "adjusted_log_return_difference_bp": 0.00040570629470521036,
+    "broker_trade_close": 269.15,
+    "broker_volume_as_returned": 167692.0,
+    "close_ratio": 1.0000000226770045,
+    "date": "2024-05-28",
+    "price_difference_usd": {
+      "close": 6.1035156022626325e-06,
+      "high": 0.0,
+      "low": 1.220703097715159e-06,
+      "open": 0.0900061035156341
+    },
+    "published_close": 269.1499938964844,
+    "published_volume": 507800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.330232374950768
+  },
+  {
+    "adjusted_close_ratio": 0.9999999954403739,
+    "adjusted_log_return_difference_bp": -0.0002723663027667106,
+    "broker_trade_close": 267.72,
+    "broker_volume_as_returned": 183067.0,
+    "close_ratio": 0.9999999954403739,
+    "date": "2024-05-29",
+    "price_difference_usd": {
+      "close": -1.220703097715159e-06,
+      "high": 4.8828125045474735e-06,
+      "low": 1.3427734359083843e-05,
+      "open": -1.3427734359083843e-05
+    },
+    "published_close": 267.7200012207031,
+    "published_volume": 605000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3025900826446281
+  },
+  {
+    "adjusted_close_ratio": 0.9999999548640018,
+    "adjusted_log_return_difference_bp": -0.0004057637309658191,
+    "broker_trade_close": 270.45,
+    "broker_volume_as_returned": 185882.0,
+    "close_ratio": 0.9999999548640018,
+    "date": "2024-05-30",
+    "price_difference_usd": {
+      "close": -1.2207031261368684e-05,
+      "high": -4.8828125045474735e-06,
+      "low": 1.0986328106810106e-05,
+      "open": -1.464843751364242e-05
+    },
+    "published_close": 270.45001220703125,
+    "published_volume": 562700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.33033943486760264
+  },
+  {
+    "adjusted_close_ratio": 0.9999999822527081,
+    "adjusted_log_return_difference_bp": 0.0002738870710783381,
+    "broker_trade_close": 275.13,
+    "broker_volume_as_returned": 238941.0,
+    "close_ratio": 0.9999999822527081,
+    "date": "2024-05-31",
+    "price_difference_usd": {
+      "close": -4.8828125045474735e-06,
+      "high": 1.220703097715159e-06,
+      "low": 6.1035156022626325e-06,
+      "open": -2.4414062522737368e-06
+    },
+    "published_close": 275.1300048828125,
+    "published_volume": 1143100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.20902895634677632
+  },
+  {
+    "adjusted_close_ratio": 0.9999999646506021,
+    "adjusted_log_return_difference_bp": -0.0001760210663944578,
+    "broker_trade_close": 276.26,
+    "broker_volume_as_returned": 237799.0,
+    "close_ratio": 0.9999999646506021,
+    "date": "2024-06-03",
+    "price_difference_usd": {
+      "close": -9.765625009094947e-06,
+      "high": 0.0,
+      "low": -0.010004882812495453,
+      "open": 1.0986328106810106e-05
+    },
+    "published_close": 276.260009765625,
+    "published_volume": 613300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3877368335235611
+  },
+  {
+    "adjusted_close_ratio": 0.9999999910633397,
+    "adjusted_log_return_difference_bp": 0.00026412738159814486,
+    "broker_trade_close": 273.19,
+    "broker_volume_as_returned": 188657.0,
+    "close_ratio": 0.9999999910633397,
+    "date": "2024-06-04",
+    "price_difference_usd": {
+      "close": -2.4414062522737368e-06,
+      "high": -1.464843751364242e-05,
+      "low": 2.4414062522737368e-06,
+      "open": -4.8828125045474735e-06
+    },
+    "published_close": 273.19000244140625,
+    "published_volume": 499400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3777673207849419
+  },
+  {
+    "adjusted_close_ratio": 0.99999996029947,
+    "adjusted_log_return_difference_bp": -0.00030763870522212966,
+    "broker_trade_close": 276.73,
+    "broker_volume_as_returned": 167532.0,
+    "close_ratio": 0.99999996029947,
+    "date": "2024-06-05",
+    "price_difference_usd": {
+      "close": -1.0986328106810106e-05,
+      "high": -1.0986328106810106e-05,
+      "low": 6.1035156022626325e-06,
+      "open": 1.2207031261368684e-05
+    },
+    "published_close": 276.7300109863281,
+    "published_volume": 410400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.40821637426900587
+  },
+  {
+    "adjusted_close_ratio": 1.0000000220821843,
+    "adjusted_log_return_difference_bp": 0.0006178271489006536,
+    "broker_trade_close": 276.4,
+    "broker_volume_as_returned": 199750.0,
+    "close_ratio": 1.0000000220821843,
+    "date": "2024-06-06",
+    "price_difference_usd": {
+      "close": 6.1035156022626325e-06,
+      "high": 0.0,
+      "low": -2.4414062522737368e-06,
+      "open": -3.6621093499888957e-06
+    },
+    "published_close": 276.3999938964844,
+    "published_volume": 456800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.43728108581436076
+  },
+  {
+    "adjusted_close_ratio": 1.0,
+    "adjusted_log_return_difference_bp": -0.00022082184064804722,
+    "broker_trade_close": 275.0,
+    "broker_volume_as_returned": 228883.0,
+    "close_ratio": 1.0,
+    "date": "2024-06-07",
+    "price_difference_usd": {
+      "close": 0.0,
+      "high": 1.2207031261368684e-05,
+      "low": -1.0986328106810106e-05,
+      "open": 3.6621093499888957e-06
+    },
+    "published_close": 275.0,
+    "published_volume": 505300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.45296457549970315
+  },
+  {
+    "adjusted_close_ratio": 1.0,
+    "adjusted_log_return_difference_bp": 0.0,
+    "broker_trade_close": 275.25,
+    "broker_volume_as_returned": 127034.0,
+    "close_ratio": 1.0,
+    "date": "2024-06-10",
+    "price_difference_usd": {
+      "close": 0.0,
+      "high": 0.0,
+      "low": 3.6621093499888957e-06,
+      "open": -8.54492185453637e-06
+    },
+    "published_close": 275.25,
+    "published_volume": 1045100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.12155200459286193
+  },
+  {
+    "adjusted_close_ratio": 0.9999999645865076,
+    "adjusted_log_return_difference_bp": -0.00035413493184579745,
+    "broker_trade_close": 275.76,
+    "broker_volume_as_returned": 203133.0,
+    "close_ratio": 0.9999999645865076,
+    "date": "2024-06-11",
+    "price_difference_usd": {
+      "close": -9.765625009094947e-06,
+      "high": 3.6621093499888957e-06,
+      "low": 6.1035156022626325e-06,
+      "open": 1.0986328106810106e-05
+    },
+    "published_close": 275.760009765625,
+    "published_volume": 599800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.33866788929643216
+  },
+  {
+    "adjusted_close_ratio": 1.0000000519706176,
+    "adjusted_log_return_difference_bp": 0.0008738410929229334,
+    "broker_trade_close": 281.86,
+    "broker_volume_as_returned": 201587.0,
+    "close_ratio": 1.0000000519706176,
+    "date": "2024-06-12",
+    "price_difference_usd": {
+      "close": 1.464843751364242e-05,
+      "high": -1.2207031261368684e-05,
+      "low": 0.0,
+      "open": 1.220703097715159e-06
+    },
+    "published_close": 281.8599853515625,
+    "published_volume": 506300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3981572190400948
+  },
+  {
+    "adjusted_close_ratio": 1.0000000127337856,
+    "adjusted_log_return_difference_bp": -0.0003923683081913376,
+    "broker_trade_close": 287.59,
+    "broker_volume_as_returned": 163850.0,
+    "close_ratio": 1.0000000127337856,
+    "date": "2024-06-13",
+    "price_difference_usd": {
+      "close": 3.6621093499888957e-06,
+      "high": -6.1035156022626325e-06,
+      "low": 2.4414062522737368e-06,
+      "open": -8.54492185453637e-06
+    },
+    "published_close": 287.5899963378906,
+    "published_volume": 484200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.33839322593969434
+  },
+  {
+    "adjusted_close_ratio": 1.0000000084753393,
+    "adjusted_log_return_difference_bp": -4.2584461202536256e-05,
+    "broker_trade_close": 288.06,
+    "broker_volume_as_returned": 139665.0,
+    "close_ratio": 1.0000000084753393,
+    "date": "2024-06-14",
+    "price_difference_usd": {
+      "close": 2.4414062522737368e-06,
+      "high": 1.3427734359083843e-05,
+      "low": -1.220703097715159e-06,
+      "open": 1.3427734359083843e-05
+    },
+    "published_close": 288.05999755859375,
+    "published_volume": 406600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.34349483521888835
+  },
+  {
+    "adjusted_close_ratio": 1.0000000082185627,
+    "adjusted_log_return_difference_bp": -2.5677647855215646e-06,
+    "broker_trade_close": 297.06,
+    "broker_volume_as_returned": 286995.0,
+    "close_ratio": 1.0000000082185627,
+    "date": "2024-06-17",
+    "price_difference_usd": {
+      "close": 2.4414062522737368e-06,
+      "high": -1.2207031261368684e-05,
+      "low": 1.0986328106810106e-05,
+      "open": -1.3427734359083843e-05
+    },
+    "published_close": 297.05999755859375,
+    "published_volume": 749000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3831708945260347
+  },
+  {
+    "adjusted_close_ratio": 0.9999999720790693,
+    "adjusted_log_return_difference_bp": -0.0003613949388012183,
+    "broker_trade_close": 306.04,
+    "broker_volume_as_returned": 349077.0,
+    "close_ratio": 0.9999999720790693,
+    "date": "2024-06-18",
+    "price_difference_usd": {
+      "close": -8.54492185453637e-06,
+      "high": 1.220703097715159e-06,
+      "low": 1.2207031261368684e-05,
+      "open": 1.0986328106810106e-05
+    },
+    "published_close": 306.0400085449219,
+    "published_volume": 856700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4074670246293918
+  },
+  {
+    "adjusted_close_ratio": 0.9999999644432399,
+    "adjusted_log_return_difference_bp": -7.635829664745519e-05,
+    "broker_trade_close": 308.98,
+    "broker_volume_as_returned": 304928.0,
+    "close_ratio": 0.9999999644432399,
+    "date": "2024-06-20",
+    "price_difference_usd": {
+      "close": -1.0986328106810106e-05,
+      "high": 1.2207031261368684e-05,
+      "low": 8.54492185453637e-06,
+      "open": 0.010010986328097715
+    },
+    "published_close": 308.9800109863281,
+    "published_volume": 707100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4312374487342667
+  },
+  {
+    "adjusted_close_ratio": 0.9999999729625313,
+    "adjusted_log_return_difference_bp": 8.519291549990982e-05,
+    "broker_trade_close": 316.04,
+    "broker_volume_as_returned": 364002.0,
+    "close_ratio": 0.9999999729625313,
+    "date": "2024-06-21",
+    "price_difference_usd": {
+      "close": -8.54492185453637e-06,
+      "high": 8.54492185453637e-06,
+      "low": 1.3427734359083843e-05,
+      "open": -7.32421875682121e-06
+    },
+    "published_close": 316.0400085449219,
+    "published_volume": 1800900.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.20212227219723472
+  },
+  {
+    "adjusted_close_ratio": 0.9999999923452492,
+    "adjusted_log_return_difference_bp": 0.00019382718263738496,
+    "broker_trade_close": 318.94,
+    "broker_volume_as_returned": 214180.0,
+    "close_ratio": 0.9999999923452492,
+    "date": "2024-06-24",
+    "price_difference_usd": {
+      "close": -2.4414062522737368e-06,
+      "high": 8.54492185453637e-06,
+      "low": -0.010002441406243179,
+      "open": -0.2700085449218932
+    },
+    "published_close": 318.94000244140625,
+    "published_volume": 771700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.27754308669171956
+  },
+  {
+    "adjusted_close_ratio": 0.9999999732167703,
+    "adjusted_log_return_difference_bp": -0.00019128479192319706,
+    "broker_trade_close": 319.04,
+    "broker_volume_as_returned": 195199.0,
+    "close_ratio": 0.9999999732167703,
+    "date": "2024-06-25",
+    "price_difference_usd": {
+      "close": -8.54492185453637e-06,
+      "high": 1.2207031261368684e-05,
+      "low": -1.3427734359083843e-05,
+      "open": 3.6621093499888957e-06
+    },
+    "published_close": 319.0400085449219,
+    "published_volume": 523500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.37287297039159506
+  },
+  {
+    "adjusted_close_ratio": 0.999999961727447,
+    "adjusted_log_return_difference_bp": -0.0001148932355911304,
+    "broker_trade_close": 318.95,
+    "broker_volume_as_returned": 169770.0,
+    "close_ratio": 0.999999961727447,
+    "date": "2024-06-26",
+    "price_difference_usd": {
+      "close": -1.2207031261368684e-05,
+      "high": -7.32421875682121e-06,
+      "low": -9.765625009094947e-06,
+      "open": 1.220703097715159e-06
+    },
+    "published_close": 318.95001220703125,
+    "published_volume": 727500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.23336082474226805
+  },
+  {
+    "adjusted_close_ratio": 1.0000000231098947,
+    "adjusted_log_return_difference_bp": 0.0006138244815385996,
+    "broker_trade_close": 316.93,
+    "broker_volume_as_returned": 195452.0,
+    "close_ratio": 1.0000000231098947,
+    "date": "2024-06-27",
+    "price_difference_usd": {
+      "close": 7.32421875682121e-06,
+      "high": 4.8828125045474735e-06,
+      "low": -8.54492185453637e-06,
+      "open": -2.4414062522737368e-06
+    },
+    "published_close": 316.92999267578125,
+    "published_volume": 480600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.40668331252600914
+  },
+  {
+    "adjusted_close_ratio": 1.0000000383206145,
+    "adjusted_log_return_difference_bp": 0.00015210719313436816,
+    "broker_trade_close": 318.55,
+    "broker_volume_as_returned": 163455.0,
+    "close_ratio": 1.0000000383206145,
+    "date": "2024-06-28",
+    "price_difference_usd": {
+      "close": 1.2207031261368684e-05,
+      "high": -1.2207031261368684e-05,
+      "low": -0.010006103515650011,
+      "open": 1.464843751364242e-05
+    },
+    "published_close": 318.54998779296875,
+    "published_volume": 783600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2085949464012251
+  },
+  {
+    "adjusted_close_ratio": 0.9999999693877161,
+    "adjusted_log_return_difference_bp": -0.0006893289795873933,
+    "broker_trade_close": 319.01,
+    "broker_volume_as_returned": 146432.0,
+    "close_ratio": 0.9999999693877161,
+    "date": "2024-07-01",
+    "price_difference_usd": {
+      "close": -9.765625009094947e-06,
+      "high": 0.0,
+      "low": -1.2207031261368684e-05,
+      "open": 1.0986328106810106e-05
+    },
+    "published_close": 319.010009765625,
+    "published_volume": 443500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.33017361894024805
+  },
+  {
+    "adjusted_close_ratio": 1.0000000385019137,
+    "adjusted_log_return_difference_bp": 0.0006911419737735958,
+    "broker_trade_close": 317.05,
+    "broker_volume_as_returned": 144721.0,
+    "close_ratio": 1.0000000385019137,
+    "date": "2024-07-02",
+    "price_difference_usd": {
+      "close": 1.2207031261368684e-05,
+      "high": -7.32421875682121e-06,
+      "low": 4.8828125045474735e-06,
+      "open": 0.0
+    },
+    "published_close": 317.04998779296875,
+    "published_volume": 391300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.36984666496294405
+  },
+  {
+    "adjusted_close_ratio": 0.9999999725279012,
+    "adjusted_log_return_difference_bp": -0.000659740121318475,
+    "broker_trade_close": 311.04,
+    "broker_volume_as_returned": 79506.0,
+    "close_ratio": 0.9999999725279012,
+    "date": "2024-07-03",
+    "price_difference_usd": {
+      "close": -8.54492185453637e-06,
+      "high": 0.009999999999990905,
+      "low": -8.54492185453637e-06,
+      "open": 0.009999999999990905
+    },
+    "published_close": 311.0400085449219,
+    "published_volume": 281300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2826377532883043
+  },
+  {
+    "adjusted_close_ratio": 1.0000000077613374,
+    "adjusted_log_return_difference_bp": 0.000352334366474083,
+    "broker_trade_close": 314.56,
+    "broker_volume_as_returned": 82043.0,
+    "close_ratio": 1.0000000077613374,
+    "date": "2024-07-05",
+    "price_difference_usd": {
+      "close": 2.4414062522737368e-06,
+      "high": -6.1035156022626325e-06,
+      "low": -1.2207031261368684e-05,
+      "open": 6.1035156022626325e-06
+    },
+    "published_close": 314.55999755859375,
+    "published_volume": 460600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.17812201476335215
+  },
+  {
+    "adjusted_close_ratio": 0.9999999537743797,
+    "adjusted_log_return_difference_bp": -0.0005398695864834713,
+    "broker_trade_close": 316.89,
+    "broker_volume_as_returned": 111630.0,
+    "close_ratio": 0.9999999537743797,
+    "date": "2024-07-08",
+    "price_difference_usd": {
+      "close": -1.464843751364242e-05,
+      "high": -2.4414062522737368e-06,
+      "low": -1.0986328106810106e-05,
+      "open": 2.4414062522737368e-06
+    },
+    "published_close": 316.8900146484375,
+    "published_volume": 351700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.31740119419960194
+  },
+  {
+    "adjusted_close_ratio": 1.0000000189168317,
+    "adjusted_log_return_difference_bp": 0.0006514245280697661,
+    "broker_trade_close": 322.65,
+    "broker_volume_as_returned": 155115.0,
+    "close_ratio": 1.0000000189168317,
+    "date": "2024-07-09",
+    "price_difference_usd": {
+      "close": 6.1035156022626325e-06,
+      "high": 8.54492185453637e-06,
+      "low": -4.8828125045474735e-06,
+      "open": -1.2207031261368684e-05
+    },
+    "published_close": 322.6499938964844,
+    "published_volume": 651800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.23797944154648665
+  },
+  {
+    "adjusted_close_ratio": 1.0,
+    "adjusted_log_return_difference_bp": -0.00018916831431153858,
+    "broker_trade_close": 329.25,
+    "broker_volume_as_returned": 176478.0,
+    "close_ratio": 1.0,
+    "date": "2024-07-10",
+    "price_difference_usd": {
+      "close": 0.0,
+      "high": 7.32421875682121e-06,
+      "low": 6.1035156022626325e-06,
+      "open": 6.1035156022626325e-06
+    },
+    "published_close": 329.25,
+    "published_volume": 438600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.40236662106703147
+  },
+  {
+    "adjusted_close_ratio": 0.9999999849240075,
+    "adjusted_log_return_difference_bp": -0.0001507599260014425,
+    "broker_trade_close": 323.88,
+    "broker_volume_as_returned": 186786.0,
+    "close_ratio": 0.9999999849240075,
+    "date": "2024-07-11",
+    "price_difference_usd": {
+      "close": -4.8828125045474735e-06,
+      "high": 0.0,
+      "low": 6.1035156022626325e-06,
+      "open": -0.8799926757812386
+    },
+    "published_close": 323.8800048828125,
+    "published_volume": 596500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3131366303436714
+  },
+  {
+    "adjusted_close_ratio": 0.9999999848067321,
+    "adjusted_log_return_difference_bp": -1.1727548532985965e-06,
+    "broker_trade_close": 321.38,
+    "broker_volume_as_returned": 166719.0,
+    "close_ratio": 0.9999999848067321,
+    "date": "2024-07-12",
+    "price_difference_usd": {
+      "close": -4.8828125045474735e-06,
+      "high": 0.0,
+      "low": 7.32421875682121e-06,
+      "open": 6.1035156022626325e-06
+    },
+    "published_close": 321.3800048828125,
+    "published_volume": 510000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3269
+  },
+  {
+    "adjusted_close_ratio": 0.9999999701594307,
+    "adjusted_log_return_difference_bp": -0.00014647301756903763,
+    "broker_trade_close": 327.26,
+    "broker_volume_as_returned": 159114.0,
+    "close_ratio": 0.9999999701594307,
+    "date": "2024-07-15",
+    "price_difference_usd": {
+      "close": -9.765625009094947e-06,
+      "high": -3.6621093499888957e-06,
+      "low": 4.8828125045474735e-06,
+      "open": 4.8828125045474735e-06
+    },
+    "published_close": 327.260009765625,
+    "published_volume": 405100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3927770920760306
+  },
+  {
+    "adjusted_close_ratio": 0.9999999925609975,
+    "adjusted_log_return_difference_bp": 0.00022401567223179902,
+    "broker_trade_close": 328.19,
+    "broker_volume_as_returned": 158665.0,
+    "close_ratio": 0.9999999925609975,
+    "date": "2024-07-16",
+    "price_difference_usd": {
+      "close": -2.4414062522737368e-06,
+      "high": 7.32421875682121e-06,
+      "low": 1.220703097715159e-06,
+      "open": -1.464843751364242e-05
+    },
+    "published_close": 328.19000244140625,
+    "published_volume": 367100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.43221193135385455
+  },
+  {
+    "adjusted_close_ratio": 0.9999999926339421,
+    "adjusted_log_return_difference_bp": 7.294449592964991e-07,
+    "broker_trade_close": 331.44,
+    "broker_volume_as_returned": 267170.0,
+    "close_ratio": 0.9999999926339421,
+    "date": "2024-07-17",
+    "price_difference_usd": {
+      "close": -2.4414062522737368e-06,
+      "high": 2.4414062522737368e-06,
+      "low": -8.54492185453637e-06,
+      "open": 4.8828125045474735e-06
+    },
+    "published_close": 331.44000244140625,
+    "published_volume": 635200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.42060768261964737
+  },
+  {
+    "adjusted_close_ratio": 0.9999999591452405,
+    "adjusted_log_return_difference_bp": -0.0003348870242225743,
+    "broker_trade_close": 328.67,
+    "broker_volume_as_returned": 138555.0,
+    "close_ratio": 0.9999999591452405,
+    "date": "2024-07-18",
+    "price_difference_usd": {
+      "close": -1.3427734359083843e-05,
+      "high": 1.464843751364242e-05,
+      "low": -7.32421875682121e-06,
+      "open": -0.4900134277343682
+    },
+    "published_close": 328.6700134277344,
+    "published_volume": 510000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2716764705882353
+  },
+  {
+    "adjusted_close_ratio": 0.9999999888743794,
+    "adjusted_log_return_difference_bp": 0.0002972913957393665,
+    "broker_trade_close": 329.16,
+    "broker_volume_as_returned": 87203.0,
+    "close_ratio": 0.9999999888743794,
+    "date": "2024-07-19",
+    "price_difference_usd": {
+      "close": -3.6621093499888957e-06,
+      "high": -1.0986328106810106e-05,
+      "low": 9.765625009094947e-06,
+      "open": -3.6621093499888957e-06
+    },
+    "published_close": 329.1600036621094,
+    "published_volume": 300300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2903862803862804
+  },
+  {
+    "adjusted_close_ratio": 0.9999999853205891,
+    "adjusted_log_return_difference_bp": -3.553790171861859e-05,
+    "broker_trade_close": 332.63,
+    "broker_volume_as_returned": 100691.0,
+    "close_ratio": 0.9999999853205891,
+    "date": "2024-07-22",
+    "price_difference_usd": {
+      "close": -4.8828125045474735e-06,
+      "high": -7.32421875682121e-06,
+      "low": -8.54492185453637e-06,
+      "open": 4.8828125045474735e-06
+    },
+    "published_close": 332.6300048828125,
+    "published_volume": 327200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.30773533007334963
+  },
+  {
+    "adjusted_close_ratio": 1.000000029000491,
+    "adjusted_log_return_difference_bp": 0.00043679901405926924,
+    "broker_trade_close": 336.74,
+    "broker_volume_as_returned": 127962.0,
+    "close_ratio": 1.000000029000491,
+    "date": "2024-07-23",
+    "price_difference_usd": {
+      "close": 9.765625009094947e-06,
+      "high": 4.8828125045474735e-06,
+      "low": -0.00999877929689319,
+      "open": -2.4414062522737368e-06
+    },
+    "published_close": 336.739990234375,
+    "published_volume": 353300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.362190772714407
+  },
+  {
+    "adjusted_close_ratio": 1.0000000110440888,
+    "adjusted_log_return_difference_bp": -0.0001795640178388347,
+    "broker_trade_close": 331.59,
+    "broker_volume_as_returned": 170922.0,
+    "close_ratio": 1.0000000110440888,
+    "date": "2024-07-24",
+    "price_difference_usd": {
+      "close": 3.6621093499888957e-06,
+      "high": -3.6621093499888957e-06,
+      "low": -1.2207031261368684e-05,
+      "open": 3.6621093499888957e-06
+    },
+    "published_close": 331.5899963378906,
+    "published_volume": 404000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.42307425742574256
+  },
+  {
+    "adjusted_close_ratio": 1.0000000145161951,
+    "adjusted_log_return_difference_bp": 3.472106350696502e-05,
+    "broker_trade_close": 336.37,
+    "broker_volume_as_returned": 159227.0,
+    "close_ratio": 1.0000000145161951,
+    "date": "2024-07-25",
+    "price_difference_usd": {
+      "close": 4.8828125045474735e-06,
+      "high": -1.0986328106810106e-05,
+      "low": 6.1035156022626325e-06,
+      "open": -1.0986328106810106e-05
+    },
+    "published_close": 336.3699951171875,
+    "published_volume": 584400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.27246235455167694
+  },
+  {
+    "adjusted_close_ratio": 0.9999999963908016,
+    "adjusted_log_return_difference_bp": -0.0001812539350033726,
+    "broker_trade_close": 338.22,
+    "broker_volume_as_returned": 104234.0,
+    "close_ratio": 0.9999999963908016,
+    "date": "2024-07-26",
+    "price_difference_usd": {
+      "close": -1.220703097715159e-06,
+      "high": -2.4414062522737368e-06,
+      "low": -7.32421875682121e-06,
+      "open": 6.1035156022626325e-06
+    },
+    "published_close": 338.2200012207031,
+    "published_volume": 290300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3590561488115742
+  },
+  {
+    "adjusted_close_ratio": 1.0000000327685998,
+    "adjusted_log_return_difference_bp": 0.00036377797690834157,
+    "broker_trade_close": 335.27,
+    "broker_volume_as_returned": 137562.0,
+    "close_ratio": 1.0000000327685998,
+    "date": "2024-07-29",
+    "price_difference_usd": {
+      "close": 1.0986328106810106e-05,
+      "high": -4.8828125045474735e-06,
+      "low": 6.1035156022626325e-06,
+      "open": 0.0
+    },
+    "published_close": 335.2699890136719,
+    "published_volume": 317800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4328571428571429
+  },
+  {
+    "adjusted_close_ratio": 0.999999974684714,
+    "adjusted_log_return_difference_bp": -0.0005808388548345783,
+    "broker_trade_close": 337.54,
+    "broker_volume_as_returned": 220035.0,
+    "close_ratio": 0.999999974684714,
+    "date": "2024-07-30",
+    "price_difference_usd": {
+      "close": -8.54492185453637e-06,
+      "high": -1.464843751364242e-05,
+      "low": -1.0986328106810106e-05,
+      "open": 1.220703097715159e-06
+    },
+    "published_close": 337.5400085449219,
+    "published_volume": 506900.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.43407970013809427
+  },
+  {
+    "adjusted_close_ratio": 0.9999999727252015,
+    "adjusted_log_return_difference_bp": -1.9595125244631362e-05,
+    "broker_trade_close": 313.29,
+    "broker_volume_as_returned": 492900.0,
+    "close_ratio": 0.9999999727252015,
+    "date": "2024-07-31",
+    "price_difference_usd": {
+      "close": -8.54492185453637e-06,
+      "high": 9.765625009094947e-06,
+      "low": 0.0,
+      "open": 1.0986328106810106e-05
+    },
+    "published_close": 313.2900085449219,
+    "published_volume": 939000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.5249201277955271
+  },
+  {
+    "adjusted_close_ratio": 0.9999999739317196,
+    "adjusted_log_return_difference_bp": 1.2065182672382768e-05,
+    "broker_trade_close": 327.79,
+    "broker_volume_as_returned": 295866.0,
+    "close_ratio": 0.9999999739317196,
+    "date": "2024-08-01",
+    "price_difference_usd": {
+      "close": -8.54492185453637e-06,
+      "high": -1.0986328106810106e-05,
+      "low": 0.0,
+      "open": -8.54492185453637e-06
+    },
+    "published_close": 327.7900085449219,
+    "published_volume": 666500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4439099774943736
+  },
+  {
+    "adjusted_close_ratio": 1.0000000223517422,
+    "adjusted_log_return_difference_bp": 0.0004842002276504633,
+    "broker_trade_close": 327.68,
+    "broker_volume_as_returned": 169330.0,
+    "close_ratio": 1.0000000223517422,
+    "date": "2024-08-02",
+    "price_difference_usd": {
+      "close": 7.32421875682121e-06,
+      "high": -1.464843751364242e-05,
+      "low": 1.0986328106810106e-05,
+      "open": -3.6621093499888957e-06
+    },
+    "published_close": 327.67999267578125,
+    "published_volume": 702200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.24114212475078325
+  },
+  {
+    "adjusted_close_ratio": 0.9999999962522931,
+    "adjusted_log_return_difference_bp": -0.0002609944889982868,
+    "broker_trade_close": 325.72,
+    "broker_volume_as_returned": 242001.0,
+    "close_ratio": 0.9999999962522931,
+    "date": "2024-08-05",
+    "price_difference_usd": {
+      "close": -1.220703097715159e-06,
+      "high": 3.6621093499888957e-06,
+      "low": -1.3427734359083843e-05,
+      "open": -2.4414062522737368e-06
+    },
+    "published_close": 325.7200012207031,
+    "published_volume": 540000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.44815
+  },
+  {
+    "adjusted_close_ratio": 1.000000026540322,
+    "adjusted_log_return_difference_bp": 0.0003028802861293478,
+    "broker_trade_close": 321.96,
+    "broker_volume_as_returned": 116110.0,
+    "close_ratio": 1.000000026540322,
+    "date": "2024-08-06",
+    "price_difference_usd": {
+      "close": 8.54492185453637e-06,
+      "high": 6.1035156022626325e-06,
+      "low": 8.54492185453637e-06,
+      "open": 0.0
+    },
+    "published_close": 321.9599914550781,
+    "published_volume": 331700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3500452215857703
+  },
+  {
+    "adjusted_close_ratio": 0.9999999659053231,
+    "adjusted_log_return_difference_bp": -0.0006063499917669055,
+    "broker_trade_close": 322.23,
+    "broker_volume_as_returned": 111530.0,
+    "close_ratio": 0.9999999659053231,
+    "date": "2024-08-07",
+    "price_difference_usd": {
+      "close": -1.0986328106810106e-05,
+      "high": -6.1035156022626325e-06,
+      "low": -0.010012207031252274,
+      "open": -9.765625009094947e-06
+    },
+    "published_close": 322.2300109863281,
+    "published_volume": 343200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3249708624708625
+  },
+  {
+    "adjusted_close_ratio": 0.9999999741876461,
+    "adjusted_log_return_difference_bp": 8.282323271657788e-05,
+    "broker_trade_close": 331.04,
+    "broker_volume_as_returned": 119898.0,
+    "close_ratio": 0.9999999741876461,
+    "date": "2024-08-08",
+    "price_difference_usd": {
+      "close": -8.54492185453637e-06,
+      "high": -1.2207031261368684e-05,
+      "low": -0.010002441406243179,
+      "open": -1.464843751364242e-05
+    },
+    "published_close": 331.0400085449219,
+    "published_volume": 333900.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3590835579514825
+  },
+  {
+    "adjusted_close_ratio": 0.999999970430495,
+    "adjusted_log_return_difference_bp": -3.757151193460595e-05,
+    "broker_trade_close": 330.26,
+    "broker_volume_as_returned": 74015.0,
+    "close_ratio": 0.999999970430495,
+    "date": "2024-08-09",
+    "price_difference_usd": {
+      "close": -9.765625009094947e-06,
+      "high": 1.0986328106810106e-05,
+      "low": -8.54492185453637e-06,
+      "open": 6.1035156022626325e-06
+    },
+    "published_close": 330.260009765625,
+    "published_volume": 303800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.24363067807768268
+  },
+  {
+    "adjusted_close_ratio": 1.0000000036572085,
+    "adjusted_log_return_difference_bp": 0.0003322671405896205,
+    "broker_trade_close": 333.78,
+    "broker_volume_as_returned": 164495.0,
+    "close_ratio": 1.0000000036572085,
+    "date": "2024-08-12",
+    "price_difference_usd": {
+      "close": 1.220703097715159e-06,
+      "high": -4.8828125045474735e-06,
+      "low": -1.0986328106810106e-05,
+      "open": 0.23999267578125227
+    },
+    "published_close": 333.7799987792969,
+    "published_volume": 425700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.38641061780596664
+  },
+  {
+    "adjusted_close_ratio": 1.000000011317128,
+    "adjusted_log_return_difference_bp": 7.659919157299022e-05,
+    "broker_trade_close": 323.59,
+    "broker_volume_as_returned": 306252.0,
+    "close_ratio": 1.000000011317128,
+    "date": "2024-08-13",
+    "price_difference_usd": {
+      "close": 3.6621093499888957e-06,
+      "high": 9.765625009094947e-06,
+      "low": 1.2207031261368684e-05,
+      "open": -1.2207031261368684e-05
+    },
+    "published_close": 323.5899963378906,
+    "published_volume": 622900.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4916551613421095
+  },
+  {
+    "adjusted_close_ratio": 1.0000000150764583,
+    "adjusted_log_return_difference_bp": 3.7593304426462165e-05,
+    "broker_trade_close": 323.87,
+    "broker_volume_as_returned": 160124.0,
+    "close_ratio": 1.0000000150764583,
+    "date": "2024-08-14",
+    "price_difference_usd": {
+      "close": 4.8828125045474735e-06,
+      "high": 7.32421875682121e-06,
+      "low": 1.0986328106810106e-05,
+      "open": -7.32421875682121e-06
+    },
+    "published_close": 323.8699951171875,
+    "published_volume": 418300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.38279703562036815
+  },
+  {
+    "adjusted_close_ratio": 1.0000000415616408,
+    "adjusted_log_return_difference_bp": 0.00026485181730488,
+    "broker_trade_close": 323.08,
+    "broker_volume_as_returned": 149863.0,
+    "close_ratio": 1.0000000415616408,
+    "date": "2024-08-15",
+    "price_difference_usd": {
+      "close": 1.3427734359083843e-05,
+      "high": 1.0986328106810106e-05,
+      "low": -1.2207031261368684e-05,
+      "open": -2.4414062522737368e-06
+    },
+    "published_close": 323.0799865722656,
+    "published_volume": 369500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.40558322056833557
+  },
+  {
+    "adjusted_close_ratio": 1.0000000304234564,
+    "adjusted_log_return_difference_bp": -0.00011138183928123546,
+    "broker_trade_close": 320.99,
+    "broker_volume_as_returned": 128913.0,
+    "close_ratio": 1.0000000304234564,
+    "date": "2024-08-16",
+    "price_difference_usd": {
+      "close": 9.765625009094947e-06,
+      "high": -1.0986328106810106e-05,
+      "low": -7.32421875682121e-06,
+      "open": -1.0986328106810106e-05
+    },
+    "published_close": 320.989990234375,
+    "published_volume": 878900.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.14667538969166002
+  },
+  {
+    "adjusted_close_ratio": 1.000000038521243,
+    "adjusted_log_return_difference_bp": 8.097786052818634e-05,
+    "broker_trade_close": 348.58,
+    "broker_volume_as_returned": 531326.0,
+    "close_ratio": 1.000000038521243,
+    "date": "2024-08-19",
+    "price_difference_usd": {
+      "close": 1.3427734359083843e-05,
+      "high": -3.6621093499888957e-06,
+      "low": 8.54492185453637e-06,
+      "open": 1.0986328106810106e-05
+    },
+    "published_close": 348.5799865722656,
+    "published_volume": 1018600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.5216237973689377
+  },
+  {
+    "adjusted_close_ratio": 0.9999999859236265,
+    "adjusted_log_return_difference_bp": -0.0005259761581572625,
+    "broker_trade_close": 346.88,
+    "broker_volume_as_returned": 293726.0,
+    "close_ratio": 0.9999999859236265,
+    "date": "2024-08-20",
+    "price_difference_usd": {
+      "close": -4.8828125045474735e-06,
+      "high": -4.8828125045474735e-06,
+      "low": -1.0986328106810106e-05,
+      "open": 0.0
+    },
+    "published_close": 346.8800048828125,
+    "published_volume": 660800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4445006053268765
+  },
+  {
+    "adjusted_close_ratio": 1.0000000416610395,
+    "adjusted_log_return_difference_bp": 0.0005573741234006502,
+    "broker_trade_close": 351.61,
+    "broker_volume_as_returned": 175935.0,
+    "close_ratio": 1.0000000416610395,
+    "date": "2024-08-21",
+    "price_difference_usd": {
+      "close": 1.464843751364242e-05,
+      "high": 0.0,
+      "low": 7.32421875682121e-06,
+      "open": 7.32421875682121e-06
+    },
+    "published_close": 351.6099853515625,
+    "published_volume": 669700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.262707182320442
+  },
+  {
+    "adjusted_close_ratio": 1.0000000140767797,
+    "adjusted_log_return_difference_bp": -0.00027584259086957386,
+    "broker_trade_close": 346.87,
+    "broker_volume_as_returned": 160815.0,
+    "close_ratio": 1.0000000140767797,
+    "date": "2024-08-22",
+    "price_difference_usd": {
+      "close": 4.8828125045474735e-06,
+      "high": -1.0986328106810106e-05,
+      "low": 3.6621093499888957e-06,
+      "open": 1.464843751364242e-05
+    },
+    "published_close": 346.8699951171875,
+    "published_volume": 568700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.28277650782486374
+  },
+  {
+    "adjusted_close_ratio": 1.0000000035074652,
+    "adjusted_log_return_difference_bp": -0.00010569314385071998,
+    "broker_trade_close": 348.03,
+    "broker_volume_as_returned": 60725.0,
+    "close_ratio": 1.0000000035074652,
+    "date": "2024-08-23",
+    "price_difference_usd": {
+      "close": 1.220703097715159e-06,
+      "high": -1.220703097715159e-06,
+      "low": -0.010003662109397737,
+      "open": -8.54492185453637e-06
+    },
+    "published_close": 348.0299987792969,
+    "published_volume": 198000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3066919191919192
+  },
+  {
+    "adjusted_close_ratio": 0.9999999612665248,
+    "adjusted_log_return_difference_bp": -0.0004224094109391008,
+    "broker_trade_close": 346.67,
+    "broker_volume_as_returned": 90930.0,
+    "close_ratio": 0.9999999612665248,
+    "date": "2024-08-26",
+    "price_difference_usd": {
+      "close": -1.3427734359083843e-05,
+      "high": -1.464843751364242e-05,
+      "low": 6.1035156022626325e-06,
+      "open": -1.2207031261368684e-05
+    },
+    "published_close": 346.6700134277344,
+    "published_volume": 254900.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3567281286779129
+  },
+  {
+    "adjusted_close_ratio": 0.9999999685412829,
+    "adjusted_log_return_difference_bp": 7.274758406783377e-05,
+    "broker_trade_close": 349.23,
+    "broker_volume_as_returned": 131883.0,
+    "close_ratio": 0.9999999685412829,
+    "date": "2024-08-27",
+    "price_difference_usd": {
+      "close": -1.0986328106810106e-05,
+      "high": -9.765625009094947e-06,
+      "low": -4.8828125045474735e-06,
+      "open": -1.220703097715159e-06
+    },
+    "published_close": 349.2300109863281,
+    "published_volume": 409200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3222947214076246
+  },
+  {
+    "adjusted_close_ratio": 1.0000000101770492,
+    "adjusted_log_return_difference_bp": 0.00041635766702408095,
+    "broker_trade_close": 359.84,
+    "broker_volume_as_returned": 177663.0,
+    "close_ratio": 1.0000000101770492,
+    "date": "2024-08-28",
+    "price_difference_usd": {
+      "close": 3.6621093499888957e-06,
+      "high": -1.0986328106810106e-05,
+      "low": -1.464843751364242e-05,
+      "open": 0.0
+    },
+    "published_close": 359.8399963378906,
+    "published_volume": 455500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.39003951701427003
+  },
+  {
+    "adjusted_close_ratio": 0.999999996611229,
+    "adjusted_log_return_difference_bp": -0.00013565820182687496,
+    "broker_trade_close": 360.22,
+    "broker_volume_as_returned": 96904.0,
+    "close_ratio": 0.999999996611229,
+    "date": "2024-08-29",
+    "price_difference_usd": {
+      "close": -1.220703097715159e-06,
+      "high": -1.0986328106810106e-05,
+      "low": -1.2207031261368684e-05,
+      "open": 3.6621093499888957e-06
+    },
+    "published_close": 360.2200012207031,
+    "published_volume": 304300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.31844889911271773
+  },
+  {
+    "adjusted_close_ratio": 1.0000000335773116,
+    "adjusted_log_return_difference_bp": 0.0003696608210507213,
+    "broker_trade_close": 363.55,
+    "broker_volume_as_returned": 97881.0,
+    "close_ratio": 1.0000000335773116,
+    "date": "2024-08-30",
+    "price_difference_usd": {
+      "close": 1.2207031261368684e-05,
+      "high": -1.2207031261368684e-05,
+      "low": -8.54492185453637e-06,
+      "open": -1.220703097715159e-06
+    },
+    "published_close": 363.54998779296875,
+    "published_volume": 464800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.21058734939759036
+  },
+  {
+    "adjusted_close_ratio": 1.0000000173198516,
+    "adjusted_log_return_difference_bp": -0.0001625745965280756,
+    "broker_trade_close": 352.4,
+    "broker_volume_as_returned": 179598.0,
+    "close_ratio": 1.0000000173198516,
+    "date": "2024-09-03",
+    "price_difference_usd": {
+      "close": 6.1035156022626325e-06,
+      "high": 1.3427734359083843e-05,
+      "low": 2.4414062522737368e-06,
+      "open": 4.8828125045474735e-06
+    },
+    "published_close": 352.3999938964844,
+    "published_volume": 509100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.352775486152033
+  },
+  {
+    "adjusted_close_ratio": 1.0000000138178469,
+    "adjusted_log_return_difference_bp": -3.5020046242235925e-05,
+    "broker_trade_close": 353.37,
+    "broker_volume_as_returned": 155367.0,
+    "close_ratio": 1.0000000138178469,
+    "date": "2024-09-04",
+    "price_difference_usd": {
+      "close": 4.8828125045474735e-06,
+      "high": -1.2207031261368684e-05,
+      "low": -7.32421875682121e-06,
+      "open": 6.1035156022626325e-06
+    },
+    "published_close": 353.3699951171875,
+    "published_volume": 399100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.389293410172889
+  },
+  {
+    "adjusted_close_ratio": 0.9999999720990123,
+    "adjusted_log_return_difference_bp": -0.0004171883506709495,
+    "broker_trade_close": 350.01,
+    "broker_volume_as_returned": 100063.0,
+    "close_ratio": 0.9999999720990123,
+    "date": "2024-09-05",
+    "price_difference_usd": {
+      "close": -9.765625009094947e-06,
+      "high": -9.765625009094947e-06,
+      "low": 4.8828125045474735e-06,
+      "open": -8.54492185453637e-06
+    },
+    "published_close": 350.010009765625,
+    "published_volume": 351800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.28443149516770894
+  },
+  {
+    "adjusted_close_ratio": 0.9999999858727181,
+    "adjusted_log_return_difference_bp": 0.00013773706205102987,
+    "broker_trade_close": 345.63,
+    "broker_volume_as_returned": 90887.0,
+    "close_ratio": 0.9999999858727181,
+    "date": "2024-09-06",
+    "price_difference_usd": {
+      "close": -4.8828125045474735e-06,
+      "high": -1.464843751364242e-05,
+      "low": 1.3427734359083843e-05,
+      "open": -9.765625009094947e-06
+    },
+    "published_close": 345.6300048828125,
+    "published_volume": 275800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3295395213923133
+  },
+  {
+    "adjusted_close_ratio": 1.0000000245043792,
+    "adjusted_log_return_difference_bp": 0.00038631661003832307,
+    "broker_trade_close": 348.71,
+    "broker_volume_as_returned": 130520.0,
+    "close_ratio": 1.0000000245043792,
+    "date": "2024-09-09",
+    "price_difference_usd": {
+      "close": 8.54492185453637e-06,
+      "high": -6.1035156022626325e-06,
+      "low": 1.0986328106810106e-05,
+      "open": -3.6621093499888957e-06
+    },
+    "published_close": 348.7099914550781,
+    "published_volume": 352300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.37047970479704795
+  },
+  {
+    "adjusted_close_ratio": 1.0000000249515917,
+    "adjusted_log_return_difference_bp": 4.4721237824063564e-06,
+    "broker_trade_close": 342.46,
+    "broker_volume_as_returned": 156382.0,
+    "close_ratio": 1.0000000249515917,
+    "date": "2024-09-10",
+    "price_difference_usd": {
+      "close": 8.54492185453637e-06,
+      "high": -6.1035156022626325e-06,
+      "low": 8.54492185453637e-06,
+      "open": -6.1035156022626325e-06
+    },
+    "published_close": 342.4599914550781,
+    "published_volume": 358100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4366992460206646
+  },
+  {
+    "adjusted_close_ratio": 0.9999999929477852,
+    "adjusted_log_return_difference_bp": -0.0003200380618677279,
+    "broker_trade_close": 346.19,
+    "broker_volume_as_returned": 166656.0,
+    "close_ratio": 0.9999999929477852,
+    "date": "2024-09-11",
+    "price_difference_usd": {
+      "close": -2.4414062522737368e-06,
+      "high": 8.54492185453637e-06,
+      "low": 0.0,
+      "open": 0.0
+    },
+    "published_close": 346.19000244140625,
+    "published_volume": 417600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3990804597701149
+  },
+  {
+    "adjusted_close_ratio": 1.000000042943444,
+    "adjusted_log_return_difference_bp": 0.0004999565779081894,
+    "broker_trade_close": 341.11,
+    "broker_volume_as_returned": 126830.0,
+    "close_ratio": 1.000000042943444,
+    "date": "2024-09-12",
+    "price_difference_usd": {
+      "close": 1.464843751364242e-05,
+      "high": 1.0986328106810106e-05,
+      "low": 6.1035156022626325e-06,
+      "open": 1.0986328106810106e-05
+    },
+    "published_close": 341.1099853515625,
+    "published_volume": 384800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3295997920997921
+  },
+  {
+    "adjusted_close_ratio": 1.0000000143984802,
+    "adjusted_log_return_difference_bp": -0.00028544962963651666,
+    "broker_trade_close": 339.12,
+    "broker_volume_as_returned": 145016.0,
+    "close_ratio": 1.0000000143984802,
+    "date": "2024-09-13",
+    "price_difference_usd": {
+      "close": 4.8828125045474735e-06,
+      "high": 0.009991455078136369,
+      "low": 1.0986328106810106e-05,
+      "open": -2.4414062522737368e-06
+    },
+    "published_close": 339.1199951171875,
+    "published_volume": 455700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3182269036646917
+  },
+  {
+    "adjusted_close_ratio": 0.9999999681537256,
+    "adjusted_log_return_difference_bp": -0.0004624475503228753,
+    "broker_trade_close": 344.98,
+    "broker_volume_as_returned": 154907.0,
+    "close_ratio": 0.9999999681537256,
+    "date": "2024-09-16",
+    "price_difference_usd": {
+      "close": -1.0986328106810106e-05,
+      "high": -1.220703097715159e-06,
+      "low": -0.010003662109397737,
+      "open": 0.08000488281248863
+    },
+    "published_close": 344.9800109863281,
+    "published_volume": 393800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.39336465210766886
+  },
+  {
+    "adjusted_close_ratio": 1.0000000318425843,
+    "adjusted_log_return_difference_bp": 0.0006368885877723314,
+    "broker_trade_close": 345.02,
+    "broker_volume_as_returned": 166009.0,
+    "close_ratio": 1.0000000318425843,
+    "date": "2024-09-17",
+    "price_difference_usd": {
+      "close": 1.0986328106810106e-05,
+      "high": -4.8828125045474735e-06,
+      "low": -1.3427734359083843e-05,
+      "open": -1.3427734359083843e-05
+    },
+    "published_close": 345.0199890136719,
+    "published_volume": 427200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.38859784644194756
+  },
+  {
+    "adjusted_close_ratio": 1.0000000106894813,
+    "adjusted_log_return_difference_bp": -0.00021153102669653479,
+    "broker_trade_close": 342.59,
+    "broker_volume_as_returned": 90367.0,
+    "close_ratio": 1.0000000106894813,
+    "date": "2024-09-18",
+    "price_difference_usd": {
+      "close": 3.6621093499888957e-06,
+      "high": 0.009992675781234084,
+      "low": 1.220703097715159e-06,
+      "open": -7.32421875682121e-06
+    },
+    "published_close": 342.5899963378906,
+    "published_volume": 288100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3136653939604304
+  },
+  {
+    "adjusted_close_ratio": 1.0000000382197218,
+    "adjusted_log_return_difference_bp": 0.00027530239945366963,
+    "broker_trade_close": 351.33,
+    "broker_volume_as_returned": 169669.0,
+    "close_ratio": 1.0000000382197218,
+    "date": "2024-09-19",
+    "price_difference_usd": {
+      "close": 1.3427734359083843e-05,
+      "high": -8.54492185453637e-06,
+      "low": -1.220703097715159e-06,
+      "open": 8.54492185453637e-06
+    },
+    "published_close": 351.3299865722656,
+    "published_volume": 454400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.37339128521126763
+  },
+  {
+    "adjusted_close_ratio": 1.0,
+    "adjusted_log_return_difference_bp": -0.00038219721016502506,
+    "broker_trade_close": 353.0,
+    "broker_volume_as_returned": 167822.0,
+    "close_ratio": 1.0,
+    "date": "2024-09-20",
+    "price_difference_usd": {
+      "close": 0.0,
+      "high": -1.2207031261368684e-05,
+      "low": 1.464843751364242e-05,
+      "open": 1.464843751364242e-05
+    },
+    "published_close": 353.0,
+    "published_volume": 900800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.18630328596802842
+  },
+  {
+    "adjusted_close_ratio": 1.000000010298685,
+    "adjusted_log_return_difference_bp": 0.00010298684924824053,
+    "broker_trade_close": 355.59,
+    "broker_volume_as_returned": 164076.0,
+    "close_ratio": 1.000000010298685,
+    "date": "2024-09-23",
+    "price_difference_usd": {
+      "close": 3.6621093499888957e-06,
+      "high": 0.0,
+      "low": 0.0,
+      "open": -8.54492185453637e-06
+    },
+    "published_close": 355.5899963378906,
+    "published_volume": 410000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.40018536585365855
+  },
+  {
+    "adjusted_close_ratio": 1.0000000136440959,
+    "adjusted_log_return_difference_bp": 3.345410871068155e-05,
+    "broker_trade_close": 357.87,
+    "broker_volume_as_returned": 151366.0,
+    "close_ratio": 1.0000000136440959,
+    "date": "2024-09-24",
+    "price_difference_usd": {
+      "close": 4.8828125045474735e-06,
+      "high": 0.010006103515650011,
+      "low": 0.0,
+      "open": 3.6621093499888957e-06
+    },
+    "published_close": 357.8699951171875,
+    "published_volume": 681500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.22210711665443875
+  },
+  {
+    "adjusted_close_ratio": 0.9999999728362918,
+    "adjusted_log_return_difference_bp": -0.0004080780424166319,
+    "broker_trade_close": 359.51,
+    "broker_volume_as_returned": 150675.0,
+    "close_ratio": 0.9999999728362918,
+    "date": "2024-09-25",
+    "price_difference_usd": {
+      "close": -9.765625009094947e-06,
+      "high": -4.8828125045474735e-06,
+      "low": -4.8828125045474735e-06,
+      "open": 6.1035156022626325e-06
+    },
+    "published_close": 359.510009765625,
+    "published_volume": 430800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.34975626740947074
+  },
+  {
+    "adjusted_close_ratio": 0.9999999965875459,
+    "adjusted_log_return_difference_bp": 0.00023751254428494573,
+    "broker_trade_close": 357.72,
+    "broker_volume_as_returned": 75898.0,
+    "close_ratio": 0.9999999965875459,
+    "date": "2024-09-26",
+    "price_difference_usd": {
+      "close": -1.220703097715159e-06,
+      "high": 1.0986328106810106e-05,
+      "low": -8.54492185453637e-06,
+      "open": -6.1035156022626325e-06
+    },
+    "published_close": 357.7200012207031,
+    "published_volume": 269700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2814163885799036
+  },
+  {
+    "adjusted_close_ratio": 1.0000000034047447,
+    "adjusted_log_return_difference_bp": 6.817198907813071e-05,
+    "broker_trade_close": 358.53,
+    "broker_volume_as_returned": 83411.0,
+    "close_ratio": 1.0000000034047447,
+    "date": "2024-09-27",
+    "price_difference_usd": {
+      "close": 1.220703097715159e-06,
+      "high": -8.54492185453637e-06,
+      "low": 1.2207031261368684e-05,
+      "open": -7.32421875682121e-06
+    },
+    "published_close": 358.5299987792969,
+    "published_volume": 254700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.32748723989006673
+  },
+  {
+    "adjusted_close_ratio": 0.9999999829677257,
+    "adjusted_log_return_difference_bp": -0.00020437019037484148,
+    "broker_trade_close": 358.35,
+    "broker_volume_as_returned": 99759.0,
+    "close_ratio": 0.9999999829677257,
+    "date": "2024-09-30",
+    "price_difference_usd": {
+      "close": -6.1035156022626325e-06,
+      "high": -4.8828125045474735e-06,
+      "low": 7.32421875682121e-06,
+      "open": 4.8828125045474735e-06
+    },
+    "published_close": 358.3500061035156,
+    "published_volume": 271700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.367165991902834
+  },
+  {
+    "adjusted_close_ratio": 1.0000000375254587,
+    "adjusted_log_return_difference_bp": 0.0005455773239410565,
+    "broker_trade_close": 357.83,
+    "broker_volume_as_returned": 50333.0,
+    "close_ratio": 1.0000000375254587,
+    "date": "2024-10-01",
+    "price_difference_usd": {
+      "close": 1.3427734359083843e-05,
+      "high": 3.6621093499888957e-06,
+      "low": -0.009999999999990905,
+      "open": 3.6621093499888957e-06
+    },
+    "published_close": 357.8299865722656,
+    "published_volume": 202400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.24868083003952568
+  },
+  {
+    "adjusted_close_ratio": 0.9999999965367178,
+    "adjusted_log_return_difference_bp": -0.00040988740202321794,
+    "broker_trade_close": 352.47,
+    "broker_volume_as_returned": 90597.0,
+    "close_ratio": 0.9999999965367178,
+    "date": "2024-10-02",
+    "price_difference_usd": {
+      "close": -1.220703097715159e-06,
+      "high": -8.54492185453637e-06,
+      "low": -1.0986328106810106e-05,
+      "open": -8.54492185453637e-06
+    },
+    "published_close": 352.4700012207031,
+    "published_volume": 258400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3506075851393189
+  },
+  {
+    "adjusted_close_ratio": 0.9999999790778455,
+    "adjusted_log_return_difference_bp": -0.00017458872324412067,
+    "broker_trade_close": 350.07,
+    "broker_volume_as_returned": 75485.0,
+    "close_ratio": 0.9999999790778455,
+    "date": "2024-10-03",
+    "price_difference_usd": {
+      "close": -7.32421875682121e-06,
+      "high": 2.4414062522737368e-06,
+      "low": -0.010004882812495453,
+      "open": -6.1035156022626325e-06
+    },
+    "published_close": 350.07000732421875,
+    "published_volume": 229100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3294849410737669
+  },
+  {
+    "adjusted_close_ratio": 1.0000000205776949,
+    "adjusted_log_return_difference_bp": 0.0004149984918558336,
+    "broker_trade_close": 355.93,
+    "broker_volume_as_returned": 40101.0,
+    "close_ratio": 1.0000000205776949,
+    "date": "2024-10-04",
+    "price_difference_usd": {
+      "close": 7.32421875682121e-06,
+      "high": -1.2207031261368684e-05,
+      "low": -7.32421875682121e-06,
+      "open": -7.32421875682121e-06
+    },
+    "published_close": 355.92999267578125,
+    "published_volume": 153700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.26090435914118415
+  },
+  {
+    "adjusted_close_ratio": 0.9999999825539074,
+    "adjusted_log_return_difference_bp": -0.00038023787372193363,
+    "broker_trade_close": 349.85,
+    "broker_volume_as_returned": 143433.0,
+    "close_ratio": 0.9999999825539074,
+    "date": "2024-10-07",
+    "price_difference_usd": {
+      "close": -6.1035156022626325e-06,
+      "high": -1.220703097715159e-06,
+      "low": 2.4414062522737368e-06,
+      "open": -8.54492185453637e-06
+    },
+    "published_close": 349.8500061035156,
+    "published_volume": 361700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3965523914846558
+  },
+  {
+    "adjusted_close_ratio": 0.9999999759832439,
+    "adjusted_log_return_difference_bp": -6.570663613897354e-05,
+    "broker_trade_close": 355.79,
+    "broker_volume_as_returned": 73084.0,
+    "close_ratio": 0.9999999759832439,
+    "date": "2024-10-08",
+    "price_difference_usd": {
+      "close": -8.54492185453637e-06,
+      "high": 7.32421875682121e-06,
+      "low": 1.3427734359083843e-05,
+      "open": 0.0
+    },
+    "published_close": 355.7900085449219,
+    "published_volume": 226300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.32295183384887316
+  },
+  {
+    "adjusted_close_ratio": 1.0000000068423145,
+    "adjusted_log_return_difference_bp": 0.00030859071049361975,
+    "broker_trade_close": 356.81,
+    "broker_volume_as_returned": 71175.0,
+    "close_ratio": 1.0000000068423145,
+    "date": "2024-10-09",
+    "price_difference_usd": {
+      "close": 2.4414062522737368e-06,
+      "high": 9.765625009094947e-06,
+      "low": -0.010009765625,
+      "open": -8.54492185453637e-06
+    },
+    "published_close": 356.80999755859375,
+    "published_volume": 207500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3430120481927711
+  },
+  {
+    "adjusted_close_ratio": 1.0000000378961276,
+    "adjusted_log_return_difference_bp": 0.0003105381215454811,
+    "broker_trade_close": 354.33,
+    "broker_volume_as_returned": 57548.0,
+    "close_ratio": 1.0000000378961276,
+    "date": "2024-10-10",
+    "price_difference_usd": {
+      "close": 1.3427734359083843e-05,
+      "high": 8.54492185453637e-06,
+      "low": 6.1035156022626325e-06,
+      "open": -1.3427734359083843e-05
+    },
+    "published_close": 354.3299865722656,
+    "published_volume": 193000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2981761658031088
+  },
+  {
+    "adjusted_close_ratio": 0.999999996592309,
+    "adjusted_log_return_difference_bp": -0.0004130381775838132,
+    "broker_trade_close": 358.22,
+    "broker_volume_as_returned": 53076.0,
+    "close_ratio": 0.999999996592309,
+    "date": "2024-10-11",
+    "price_difference_usd": {
+      "close": -1.220703097715159e-06,
+      "high": -7.32421875682121e-06,
+      "low": 0.0,
+      "open": 4.8828125045474735e-06
+    },
+    "published_close": 358.2200012207031,
+    "published_volume": 160300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3311041796631316
+  },
+  {
+    "adjusted_close_ratio": 0.9999999829081055,
+    "adjusted_log_return_difference_bp": -0.0001368420352466232,
+    "broker_trade_close": 357.1,
+    "broker_volume_as_returned": 59883.0,
+    "close_ratio": 0.9999999829081055,
+    "date": "2024-10-14",
+    "price_difference_usd": {
+      "close": -6.1035156022626325e-06,
+      "high": -9.765625009094947e-06,
+      "low": -1.2207031261368684e-05,
+      "open": -4.8828125045474735e-06
+    },
+    "published_close": 357.1000061035156,
+    "published_volume": 156300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.38312859884836853
+  },
+  {
+    "adjusted_close_ratio": 0.9999999796306183,
+    "adjusted_log_return_difference_bp": -3.277487429891035e-05,
+    "broker_trade_close": 359.57,
+    "broker_volume_as_returned": 127492.0,
+    "close_ratio": 0.9999999796306183,
+    "date": "2024-10-15",
+    "price_difference_usd": {
+      "close": -7.32421875682121e-06,
+      "high": -1.0986328106810106e-05,
+      "low": -1.464843751364242e-05,
+      "open": 1.220703097715159e-06
+    },
+    "published_close": 359.57000732421875,
+    "published_volume": 329400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.38704310868245295
+  },
+  {
+    "adjusted_close_ratio": 1.0000000230968809,
+    "adjusted_log_return_difference_bp": 0.0004346626248860619,
+    "broker_trade_close": 369.96,
+    "broker_volume_as_returned": 238114.0,
+    "close_ratio": 1.0000000230968809,
+    "date": "2024-10-16",
+    "price_difference_usd": {
+      "close": 8.54492185453637e-06,
+      "high": -1.0986328106810106e-05,
+      "low": 3.6621093499888957e-06,
+      "open": 3.6621093499888957e-06
+    },
+    "published_close": 369.9599914550781,
+    "published_volume": 603200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.39475132625994697
+  },
+  {
+    "adjusted_close_ratio": 1.000000006548661,
+    "adjusted_log_return_difference_bp": -0.0001654821977278148,
+    "broker_trade_close": 372.81,
+    "broker_volume_as_returned": 100141.0,
+    "close_ratio": 1.000000006548661,
+    "date": "2024-10-17",
+    "price_difference_usd": {
+      "close": 2.4414062522737368e-06,
+      "high": 1.220703097715159e-06,
+      "low": 6.1035156022626325e-06,
+      "open": 0.0
+    },
+    "published_close": 372.80999755859375,
+    "published_volume": 318500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.314414442700157
+  },
+  {
+    "adjusted_close_ratio": 1.00000001987954,
+    "adjusted_log_return_difference_bp": 0.00013330878871273266,
+    "broker_trade_close": 368.43,
+    "broker_volume_as_returned": 80224.0,
+    "close_ratio": 1.00000001987954,
+    "date": "2024-10-18",
+    "price_difference_usd": {
+      "close": 7.32421875682121e-06,
+      "high": 4.8828125045474735e-06,
+      "low": 0.0,
+      "open": 4.8828125045474735e-06
+    },
+    "published_close": 368.42999267578125,
+    "published_volume": 243100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3300041135335253
+  },
+  {
+    "adjusted_close_ratio": 0.9999999835307191,
+    "adjusted_log_return_difference_bp": -0.0003634882067993922,
+    "broker_trade_close": 370.6,
+    "broker_volume_as_returned": 125368.0,
+    "close_ratio": 0.9999999835307191,
+    "date": "2024-10-21",
+    "price_difference_usd": {
+      "close": -6.1035156022626325e-06,
+      "high": -1.220703097715159e-06,
+      "low": -7.32421875682121e-06,
+      "open": 9.765625009094947e-06
+    },
+    "published_close": 370.6000061035156,
+    "published_volume": 312500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4011776
+  },
+  {
+    "adjusted_close_ratio": 0.9999999736249534,
+    "adjusted_log_return_difference_bp": -9.905765953376403e-05,
+    "broker_trade_close": 370.26,
+    "broker_volume_as_returned": 53413.0,
+    "close_ratio": 0.9999999736249534,
+    "date": "2024-10-22",
+    "price_difference_usd": {
+      "close": -9.765625009094947e-06,
+      "high": -1.464843751364242e-05,
+      "low": 9.765625009094947e-06,
+      "open": 8.54492185453637e-06
+    },
+    "published_close": 370.260009765625,
+    "published_volume": 181000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2950994475138122
+  },
+  {
+    "adjusted_close_ratio": 1.0000000380842216,
+    "adjusted_log_return_difference_bp": 0.0006445926795800583,
+    "broker_trade_close": 352.58,
+    "broker_volume_as_returned": 273121.0,
+    "close_ratio": 1.0000000380842216,
+    "date": "2024-10-23",
+    "price_difference_usd": {
+      "close": 1.3427734359083843e-05,
+      "high": -9.765625009094947e-06,
+      "low": 1.0986328106810106e-05,
+      "open": 9.765625009094947e-06
+    },
+    "published_close": 352.5799865722656,
+    "published_volume": 636500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4290981932443048
+  },
+  {
+    "adjusted_close_ratio": 0.9999999930283382,
+    "adjusted_log_return_difference_bp": -0.00045055882728732566,
+    "broker_trade_close": 350.19,
+    "broker_volume_as_returned": 91187.0,
+    "close_ratio": 0.9999999930283382,
+    "date": "2024-10-24",
+    "price_difference_usd": {
+      "close": -2.4414062522737368e-06,
+      "high": 1.220703097715159e-06,
+      "low": -2.4414062522737368e-06,
+      "open": -2.4414062522737368e-06
+    },
+    "published_close": 350.19000244140625,
+    "published_volume": 255300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3571758715236976
+  },
+  {
+    "adjusted_close_ratio": 1.00000001750614,
+    "adjusted_log_return_difference_bp": 0.00024477801638042584,
+    "broker_trade_close": 348.65,
+    "broker_volume_as_returned": 121176.0,
+    "close_ratio": 1.00000001750614,
+    "date": "2024-10-25",
+    "price_difference_usd": {
+      "close": 6.1035156022626325e-06,
+      "high": -4.8828125045474735e-06,
+      "low": -3.6621093499888957e-06,
+      "open": 6.1035156022626325e-06
+    },
+    "published_close": 348.6499938964844,
+    "published_volume": 302200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.40097948378557247
+  },
+  {
+    "adjusted_close_ratio": 1.0000000244343086,
+    "adjusted_log_return_difference_bp": 6.928168403991936e-05,
+    "broker_trade_close": 349.71,
+    "broker_volume_as_returned": 85614.0,
+    "close_ratio": 1.0000000244343086,
+    "date": "2024-10-28",
+    "price_difference_usd": {
+      "close": 8.54492185453637e-06,
+      "high": -4.8828125045474735e-06,
+      "low": 0.0,
+      "open": 0.0
+    },
+    "published_close": 349.7099914550781,
+    "published_volume": 307000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2788729641693811
+  },
+  {
+    "adjusted_close_ratio": 1.0000000346004299,
+    "adjusted_log_return_difference_bp": 0.00010166121165375297,
+    "broker_trade_close": 352.8,
+    "broker_volume_as_returned": 101696.0,
+    "close_ratio": 1.0000000346004299,
+    "date": "2024-10-29",
+    "price_difference_usd": {
+      "close": 1.2207031261368684e-05,
+      "high": 1.2207031261368684e-05,
+      "low": -9.765625009094947e-06,
+      "open": 1.0499890136718477
+    },
+    "published_close": 352.79998779296875,
+    "published_volume": 305000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3334295081967213
+  },
+  {
+    "adjusted_close_ratio": 1.0000000168885326,
+    "adjusted_log_return_difference_bp": -0.00017711896727057308,
+    "broker_trade_close": 361.4,
+    "broker_volume_as_returned": 240652.0,
+    "close_ratio": 1.0000000168885326,
+    "date": "2024-10-30",
+    "price_difference_usd": {
+      "close": 6.1035156022626325e-06,
+      "high": 1.220703097715159e-06,
+      "low": -7.32421875682121e-06,
+      "open": -3.6621093499888957e-06
+    },
+    "published_close": 361.3999938964844,
+    "published_volume": 558200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4311214618416338
+  },
+  {
+    "adjusted_close_ratio": 0.9999999967358262,
+    "adjusted_log_return_difference_bp": -0.000201527064688789,
+    "broker_trade_close": 373.97,
+    "broker_volume_as_returned": 123355.0,
+    "close_ratio": 0.9999999967358262,
+    "date": "2024-10-31",
+    "price_difference_usd": {
+      "close": -1.220703097715159e-06,
+      "high": 7.32421875682121e-06,
+      "low": -0.009991455078136369,
+      "open": -8.54492185453637e-06
+    },
+    "published_close": 373.9700012207031,
+    "published_volume": 585400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.21071916638196106
+  },
+  {
+    "adjusted_close_ratio": 1.0000000293736389,
+    "adjusted_log_return_difference_bp": 0.00032637812467868664,
+    "broker_trade_close": 374.02,
+    "broker_volume_as_returned": 223060.0,
+    "close_ratio": 1.0000000293736389,
+    "date": "2024-11-01",
+    "price_difference_usd": {
+      "close": 1.0986328106810106e-05,
+      "high": 7.32421875682121e-06,
+      "low": -4.8828125045474735e-06,
+      "open": 1.220703097715159e-06
+    },
+    "published_close": 374.0199890136719,
+    "published_volume": 426900.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.5225111267275708
+  },
+  {
+    "adjusted_close_ratio": 1.0000000323965808,
+    "adjusted_log_return_difference_bp": 3.022941801392176e-05,
+    "broker_trade_close": 376.8,
+    "broker_volume_as_returned": 113114.0,
+    "close_ratio": 1.0000000323965808,
+    "date": "2024-11-04",
+    "price_difference_usd": {
+      "close": 1.2207031261368684e-05,
+      "high": -9.765625009094947e-06,
+      "low": -7.32421875682121e-06,
+      "open": -1.0986328106810106e-05
+    },
+    "published_close": 376.79998779296875,
+    "published_volume": 328500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.34433485540334857
+  },
+  {
+    "adjusted_close_ratio": 1.0000000287021669,
+    "adjusted_log_return_difference_bp": -3.6944138408212535e-05,
+    "broker_trade_close": 382.77,
+    "broker_volume_as_returned": 105776.0,
+    "close_ratio": 1.0000000287021669,
+    "date": "2024-11-05",
+    "price_difference_usd": {
+      "close": 1.0986328106810106e-05,
+      "high": -1.2207031261368684e-05,
+      "low": 1.220703097715159e-06,
+      "open": 1.220703097715159e-06
+    },
+    "published_close": 382.7699890136719,
+    "published_volume": 277800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3807631389488841
+  },
+  {
+    "adjusted_close_ratio": 1.0000000245682288,
+    "adjusted_log_return_difference_bp": -4.133938059924791e-05,
+    "broker_trade_close": 397.49,
+    "broker_volume_as_returned": 196716.0,
+    "close_ratio": 1.0000000245682288,
+    "date": "2024-11-06",
+    "price_difference_usd": {
+      "close": 9.765625009094947e-06,
+      "high": -1.0986328106810106e-05,
+      "low": -0.009993896484388642,
+      "open": -0.5899902343750227
+    },
+    "published_close": 397.489990234375,
+    "published_volume": 467000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.42123340471092074
+  },
+  {
+    "adjusted_close_ratio": 0.9999999818063476,
+    "adjusted_log_return_difference_bp": -0.00042761880965011545,
+    "broker_trade_close": 402.57,
+    "broker_volume_as_returned": 153348.0,
+    "close_ratio": 0.9999999818063476,
+    "date": "2024-11-07",
+    "price_difference_usd": {
+      "close": -7.32421875682121e-06,
+      "high": -1.0986328106810106e-05,
+      "low": 7.32421875682121e-06,
+      "open": 0.0
+    },
+    "published_close": 402.57000732421875,
+    "published_volume": 372700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4114515696270459
+  },
+  {
+    "adjusted_close_ratio": 1.0,
+    "adjusted_log_return_difference_bp": 0.00018193652501219404,
+    "broker_trade_close": 410.0,
+    "broker_volume_as_returned": 212693.0,
+    "close_ratio": 1.0,
+    "date": "2024-11-08",
+    "price_difference_usd": {
+      "close": 0.0,
+      "high": -7.32421875682121e-06,
+      "low": -6.1035156022626325e-06,
+      "open": -6.1035156022626325e-06
+    },
+    "published_close": 410.0,
+    "published_volume": 498700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4264948867054341
+  },
+  {
+    "adjusted_close_ratio": 0.9999999939031909,
+    "adjusted_log_return_difference_bp": -6.096809168631978e-05,
+    "broker_trade_close": 400.44,
+    "broker_volume_as_returned": 214910.0,
+    "close_ratio": 0.9999999939031909,
+    "date": "2024-11-11",
+    "price_difference_usd": {
+      "close": -2.4414062522737368e-06,
+      "high": 1.0986328106810106e-05,
+      "low": -6.1035156022626325e-06,
+      "open": -1.0986328106810106e-05
+    },
+    "published_close": 400.44000244140625,
+    "published_volume": 445700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4821853264527709
+  },
+  {
+    "adjusted_close_ratio": 1.0000000121805388,
+    "adjusted_log_return_difference_bp": 0.00018277347765480179,
+    "broker_trade_close": 400.87,
+    "broker_volume_as_returned": 161557.0,
+    "close_ratio": 1.0000000121805388,
+    "date": "2024-11-12",
+    "price_difference_usd": {
+      "close": 4.8828125045474735e-06,
+      "high": -1.3427734359083843e-05,
+      "low": 1.0986328106810106e-05,
+      "open": -1.464843751364242e-05
+    },
+    "published_close": 400.8699951171875,
+    "published_volume": 356900.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4526674138414122
+  },
+  {
+    "adjusted_close_ratio": 0.9999999695167164,
+    "adjusted_log_return_difference_bp": -0.00042663822668286,
+    "broker_trade_close": 400.45,
+    "broker_volume_as_returned": 133391.0,
+    "close_ratio": 0.9999999695167164,
+    "date": "2024-11-13",
+    "price_difference_usd": {
+      "close": -1.2207031261368684e-05,
+      "high": 1.220703097715159e-06,
+      "low": -1.220703097715159e-06,
+      "open": 1.0986328106810106e-05
+    },
+    "published_close": 400.45001220703125,
+    "published_volume": 310600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4294623309723117
+  },
+  {
+    "adjusted_close_ratio": 1.000000028442096,
+    "adjusted_log_return_difference_bp": 0.000589253796590139,
+    "broker_trade_close": 386.27,
+    "broker_volume_as_returned": 89540.0,
+    "close_ratio": 1.000000028442096,
+    "date": "2024-11-14",
+    "price_difference_usd": {
+      "close": 1.0986328106810106e-05,
+      "high": 1.220703097715159e-06,
+      "low": -1.220703097715159e-06,
+      "open": -0.4400122070312591
+    },
+    "published_close": 386.2699890136719,
+    "published_volume": 252700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.35433320142461416
+  },
+  {
+    "adjusted_close_ratio": 1.0,
+    "adjusted_log_return_difference_bp": -0.0002844209547742116,
+    "broker_trade_close": 363.25,
+    "broker_volume_as_returned": 266058.0,
+    "close_ratio": 1.0,
+    "date": "2024-11-15",
+    "price_difference_usd": {
+      "close": 0.0,
+      "high": -2.4414062522737368e-06,
+      "low": 1.464843751364242e-05,
+      "open": -2.4414062522737368e-06
+    },
+    "published_close": 363.25,
+    "published_volume": 620000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4291258064516129
+  },
+  {
+    "adjusted_close_ratio": 1.0000000237880962,
+    "adjusted_log_return_difference_bp": 0.00023788095918422791,
+    "broker_trade_close": 359.21,
+    "broker_volume_as_returned": 150605.0,
+    "close_ratio": 1.0000000237880962,
+    "date": "2024-11-18",
+    "price_difference_usd": {
+      "close": 8.54492185453637e-06,
+      "high": 0.0,
+      "low": -8.54492185453637e-06,
+      "open": 0.0
+    },
+    "published_close": 359.2099914550781,
+    "published_volume": 367400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4099210669569951
+  },
+  {
+    "adjusted_close_ratio": 1.0000000236891742,
+    "adjusted_log_return_difference_bp": -9.892190365456965e-07,
+    "broker_trade_close": 360.71,
+    "broker_volume_as_returned": 95264.0,
+    "close_ratio": 1.0000000236891742,
+    "date": "2024-11-19",
+    "price_difference_usd": {
+      "close": 8.54492185453637e-06,
+      "high": 1.464843751364242e-05,
+      "low": 6.1035156022626325e-06,
+      "open": 8.54492185453637e-06
+    },
+    "published_close": 360.7099914550781,
+    "published_volume": 300800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.31670212765957445
+  },
+  {
+    "adjusted_close_ratio": 1.000000036855968,
+    "adjusted_log_return_difference_bp": 0.00013166793450675174,
+    "broker_trade_close": 364.33,
+    "broker_volume_as_returned": 56430.0,
+    "close_ratio": 1.000000036855968,
+    "date": "2024-11-20",
+    "price_difference_usd": {
+      "close": 1.3427734359083843e-05,
+      "high": -1.3427734359083843e-05,
+      "low": 6.1035156022626325e-06,
+      "open": -1.3427734359083843e-05
+    },
+    "published_close": 364.3299865722656,
+    "published_volume": 199300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2831409934771701
+  },
+  {
+    "adjusted_close_ratio": 1.0000000398748858,
+    "adjusted_log_return_difference_bp": 3.0189177963046987e-05,
+    "broker_trade_close": 367.36,
+    "broker_volume_as_returned": 71993.0,
+    "close_ratio": 1.0000000398748858,
+    "date": "2024-11-21",
+    "price_difference_usd": {
+      "close": 1.464843751364242e-05,
+      "high": 3.6621093499888957e-06,
+      "low": 1.3427734359083843e-05,
+      "open": -0.5500122070312727
+    },
+    "published_close": 367.3599853515625,
+    "published_volume": 202000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3564009900990099
+  },
+  {
+    "adjusted_close_ratio": 0.9999999607164661,
+    "adjusted_log_return_difference_bp": -0.0007915841976693927,
+    "broker_trade_close": 372.89,
+    "broker_volume_as_returned": 64203.0,
+    "close_ratio": 0.9999999607164661,
+    "date": "2024-11-22",
+    "price_difference_usd": {
+      "close": -1.464843751364242e-05,
+      "high": 1.0986328106810106e-05,
+      "low": 6.1035156022626325e-06,
+      "open": -2.4414062522737368e-06
+    },
+    "published_close": 372.8900146484375,
+    "published_volume": 257200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.24962286158631417
+  },
+  {
+    "adjusted_close_ratio": 0.9999999900664316,
+    "adjusted_log_return_difference_bp": 0.00029349966174443964,
+    "broker_trade_close": 368.66,
+    "broker_volume_as_returned": 136386.0,
+    "close_ratio": 0.9999999900664316,
+    "date": "2024-11-25",
+    "price_difference_usd": {
+      "close": -3.6621093499888957e-06,
+      "high": -1.0986328106810106e-05,
+      "low": 7.32421875682121e-06,
+      "open": -7.32421875682121e-06
+    },
+    "published_close": 368.6600036621094,
+    "published_volume": 515100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.26477577169481653
+  },
+  {
+    "adjusted_close_ratio": 1.0,
+    "adjusted_log_return_difference_bp": 9.933568398401427e-05,
+    "broker_trade_close": 377.0,
+    "broker_volume_as_returned": 82400.0,
+    "close_ratio": 1.0,
+    "date": "2024-11-26",
+    "price_difference_usd": {
+      "close": 0.0,
+      "high": -2.4414062522737368e-06,
+      "low": -0.010002441406243179,
+      "open": -1.0986328106810106e-05
+    },
+    "published_close": 377.0,
+    "published_volume": 265100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3108261033572237
+  },
+  {
+    "adjusted_close_ratio": 0.9999999870869478,
+    "adjusted_log_return_difference_bp": -0.00012913052233835126,
+    "broker_trade_close": 378.13,
+    "broker_volume_as_returned": 144766.0,
+    "close_ratio": 0.9999999870869478,
+    "date": "2024-11-27",
+    "price_difference_usd": {
+      "close": -4.8828125045474735e-06,
+      "high": -9.765625009094947e-06,
+      "low": 4.8828125045474735e-06,
+      "open": 0.0
+    },
+    "published_close": 378.1300048828125,
+    "published_volume": 323200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.44791460396039606
+  },
+  {
+    "adjusted_close_ratio": 1.0000000263586744,
+    "adjusted_log_return_difference_bp": 0.0003927172634657361,
+    "broker_trade_close": 370.49,
+    "broker_volume_as_returned": 62853.0,
+    "close_ratio": 1.0000000263586744,
+    "date": "2024-11-29",
+    "price_difference_usd": {
+      "close": 9.765625009094947e-06,
+      "high": 2.4414062522737368e-06,
+      "low": 1.0986328106810106e-05,
+      "open": 8.54492185453637e-06
+    },
+    "published_close": 370.489990234375,
+    "published_volume": 211300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2974585896829153
+  },
+  {
+    "adjusted_close_ratio": 1.000000013192512,
+    "adjusted_log_return_difference_bp": -0.00013166162118449093,
+    "broker_trade_close": 370.12,
+    "broker_volume_as_returned": 98701.0,
+    "close_ratio": 1.000000013192512,
+    "date": "2024-12-02",
+    "price_difference_usd": {
+      "close": 4.8828125045474735e-06,
+      "high": -1.0986328106810106e-05,
+      "low": -8.54492185453637e-06,
+      "open": 8.54492185453637e-06
+    },
+    "published_close": 370.1199951171875,
+    "published_volume": 315300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3130383761496987
+  },
+  {
+    "adjusted_close_ratio": 0.9999999768298444,
+    "adjusted_log_return_difference_bp": -0.00036362667855081854,
+    "broker_trade_close": 368.79,
+    "broker_volume_as_returned": 80354.0,
+    "close_ratio": 0.9999999768298444,
+    "date": "2024-12-03",
+    "price_difference_usd": {
+      "close": -8.54492185453637e-06,
+      "high": 1.464843751364242e-05,
+      "low": -9.765625009094947e-06,
+      "open": 3.6621093499888957e-06
+    },
+    "published_close": 368.7900085449219,
+    "published_volume": 235100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.34178647384091876
+  },
+  {
+    "adjusted_close_ratio": 1.0000000163021252,
+    "adjusted_log_return_difference_bp": 0.00039472280949012784,
+    "broker_trade_close": 374.4,
+    "broker_volume_as_returned": 48568.0,
+    "close_ratio": 1.0000000163021252,
+    "date": "2024-12-04",
+    "price_difference_usd": {
+      "close": 6.1035156022626325e-06,
+      "high": -1.3427734359083843e-05,
+      "low": -2.4414062522737368e-06,
+      "open": -1.0986328106810106e-05
+    },
+    "published_close": 374.3999938964844,
+    "published_volume": 151200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.32121693121693123
+  },
+  {
+    "adjusted_close_ratio": 1.0000000130427453,
+    "adjusted_log_return_difference_bp": -3.259379915596626e-05,
+    "broker_trade_close": 374.37,
+    "broker_volume_as_returned": 67188.0,
+    "close_ratio": 1.0000000130427453,
+    "date": "2024-12-05",
+    "price_difference_usd": {
+      "close": 4.8828125045474735e-06,
+      "high": 0.0,
+      "low": -7.32421875682121e-06,
+      "open": -1.3427734359083843e-05
+    },
+    "published_close": 374.3699951171875,
+    "published_volume": 241700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2779809681423252
+  },
+  {
+    "adjusted_close_ratio": 0.9999999636764306,
+    "adjusted_log_return_difference_bp": -0.0004936631528389135,
+    "broker_trade_close": 369.67,
+    "broker_volume_as_returned": 52130.0,
+    "close_ratio": 0.9999999636764306,
+    "date": "2024-12-06",
+    "price_difference_usd": {
+      "close": -1.3427734359083843e-05,
+      "high": 1.0986328106810106e-05,
+      "low": -4.8828125045474735e-06,
+      "open": 1.3427734359083843e-05
+    },
+    "published_close": 369.6700134277344,
+    "published_volume": 199300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2615654791771199
+  },
+  {
+    "adjusted_close_ratio": 1.0,
+    "adjusted_log_return_difference_bp": 0.00036323570060635413,
+    "broker_trade_close": 367.0,
+    "broker_volume_as_returned": 52008.0,
+    "close_ratio": 1.0,
+    "date": "2024-12-09",
+    "price_difference_usd": {
+      "close": 0.0,
+      "high": 7.32421875682121e-06,
+      "low": -2.4414062522737368e-06,
+      "open": -2.4414062522737368e-06
+    },
+    "published_close": 367.0,
+    "published_volume": 246500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.21098580121703853
+  },
+  {
+    "adjusted_close_ratio": 1.000000026958992,
+    "adjusted_log_return_difference_bp": 0.00026958991618947215,
+    "broker_trade_close": 362.24,
+    "broker_volume_as_returned": 77255.0,
+    "close_ratio": 1.000000026958992,
+    "date": "2024-12-10",
+    "price_difference_usd": {
+      "close": 9.765625009094947e-06,
+      "high": 1.0986328106810106e-05,
+      "low": 1.2207031261368684e-05,
+      "open": 1.0986328106810106e-05
+    },
+    "published_close": 362.239990234375,
+    "published_volume": 262200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2946414950419527
+  },
+  {
+    "adjusted_close_ratio": 0.9999999898881453,
+    "adjusted_log_return_difference_bp": -0.0003707084650055449,
+    "broker_trade_close": 362.16,
+    "broker_volume_as_returned": 72488.0,
+    "close_ratio": 0.9999999898881453,
+    "date": "2024-12-11",
+    "price_difference_usd": {
+      "close": -3.6621093499888957e-06,
+      "high": -7.32421875682121e-06,
+      "low": 3.6621093499888957e-06,
+      "open": -9.765625009094947e-06
+    },
+    "published_close": 362.1600036621094,
+    "published_volume": 212800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3406390977443609
+  },
+  {
+    "adjusted_close_ratio": 1.0000000405089409,
+    "adjusted_log_return_difference_bp": 0.0005062079484405291,
+    "broker_trade_close": 361.61,
+    "broker_volume_as_returned": 70801.0,
+    "close_ratio": 1.0000000405089409,
+    "date": "2024-12-12",
+    "price_difference_usd": {
+      "close": 1.464843751364242e-05,
+      "high": -3.6621093499888957e-06,
+      "low": 8.54492185453637e-06,
+      "open": 0.0
+    },
+    "published_close": 361.6099853515625,
+    "published_volume": 244800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.28921977124183007
+  },
+  {
+    "adjusted_close_ratio": 1.000000006747758,
+    "adjusted_log_return_difference_bp": -0.00033761182083378964,
+    "broker_trade_close": 361.81,
+    "broker_volume_as_returned": 118659.0,
+    "close_ratio": 1.000000006747758,
+    "date": "2024-12-13",
+    "price_difference_usd": {
+      "close": 2.4414062522737368e-06,
+      "high": -2.4414062522737368e-06,
+      "low": -7.32421875682121e-06,
+      "open": 6.1035156022626325e-06
+    },
+    "published_close": 361.80999755859375,
+    "published_volume": 293200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4047032742155525
+  },
+  {
+    "adjusted_close_ratio": 1.0000000360157038,
+    "adjusted_log_return_difference_bp": 0.0002926794529997667,
+    "broker_trade_close": 372.83,
+    "broker_volume_as_returned": 102768.0,
+    "close_ratio": 1.0000000360157038,
+    "date": "2024-12-16",
+    "price_difference_usd": {
+      "close": 1.3427734359083843e-05,
+      "high": -1.3427734359083843e-05,
+      "low": 0.0,
+      "open": -6.1035156022626325e-06
+    },
+    "published_close": 372.8299865722656,
+    "published_volume": 336000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3058571428571429
+  },
+  {
+    "adjusted_close_ratio": 0.9999999935700012,
+    "adjusted_log_return_difference_bp": -0.0004244570191852537,
+    "broker_trade_close": 379.69,
+    "broker_volume_as_returned": 122720.0,
+    "close_ratio": 0.9999999935700012,
+    "date": "2024-12-17",
+    "price_difference_usd": {
+      "close": -2.4414062522737368e-06,
+      "high": 0.0,
+      "low": -0.11000244140626592,
+      "open": -0.11000244140626592
+    },
+    "published_close": 379.69000244140625,
+    "published_volume": 347000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3536599423631124
+  },
+  {
+    "adjusted_close_ratio": 1.0000000341407682,
+    "adjusted_log_return_difference_bp": 0.00040570766336733843,
+    "broker_trade_close": 357.55,
+    "broker_volume_as_returned": 197993.0,
+    "close_ratio": 1.0000000341407682,
+    "date": "2024-12-18",
+    "price_difference_usd": {
+      "close": 1.2207031261368684e-05,
+      "high": 0.0,
+      "low": 2.4414062522737368e-06,
+      "open": 3.6621093499888957e-06
+    },
+    "published_close": 357.54998779296875,
+    "published_volume": 538000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3680167286245353
+  },
+  {
+    "adjusted_close_ratio": 0.9999999898319932,
+    "adjusted_log_return_difference_bp": -0.0004430877446545689,
+    "broker_trade_close": 360.16,
+    "broker_volume_as_returned": 82285.0,
+    "close_ratio": 0.9999999898319932,
+    "date": "2024-12-19",
+    "price_difference_usd": {
+      "close": -3.6621093499888957e-06,
+      "high": 1.464843751364242e-05,
+      "low": -6.1035156022626325e-06,
+      "open": 1.2207031261368684e-05
+    },
+    "published_close": 360.1600036621094,
+    "published_volume": 335200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.24548031026252984
+  },
+  {
+    "adjusted_close_ratio": 1.0000000373428302,
+    "adjusted_log_return_difference_bp": 0.0004751083627126812,
+    "broker_trade_close": 359.58,
+    "broker_volume_as_returned": 127440.0,
+    "close_ratio": 1.0000000373428302,
+    "date": "2024-12-20",
+    "price_difference_usd": {
+      "close": 1.3427734359083843e-05,
+      "high": 6.1035156022626325e-06,
+      "low": -0.00999023437498181,
+      "open": 0.0
+    },
+    "published_close": 359.5799865722656,
+    "published_volume": 1009200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.1262782401902497
+  },
+  {
+    "adjusted_close_ratio": 1.0000000167840388,
+    "adjusted_log_return_difference_bp": -0.000205587909456878,
+    "broker_trade_close": 363.65,
+    "broker_volume_as_returned": 54364.0,
+    "close_ratio": 1.0000000167840388,
+    "date": "2024-12-23",
+    "price_difference_usd": {
+      "close": 6.1035156022626325e-06,
+      "high": -1.2207031261368684e-05,
+      "low": 0.0,
+      "open": 3.6621093499888957e-06
+    },
+    "published_close": 363.6499938964844,
+    "published_volume": 238000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2284201680672269
+  },
+  {
+    "adjusted_close_ratio": 1.000000013530669,
+    "adjusted_log_return_difference_bp": -3.253369652671256e-05,
+    "broker_trade_close": 360.87,
+    "broker_volume_as_returned": 33276.0,
+    "close_ratio": 1.000000013530669,
+    "date": "2024-12-24",
+    "price_difference_usd": {
+      "close": 4.8828125045474735e-06,
+      "high": -1.0986328106810106e-05,
+      "low": 4.8828125045474735e-06,
+      "open": 8.54492185453637e-06
+    },
+    "published_close": 360.8699951171875,
+    "published_volume": 138400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2404335260115607
+  },
+  {
+    "adjusted_close_ratio": 0.9999999832367056,
+    "adjusted_log_return_difference_bp": -0.00030293963525218626,
+    "broker_trade_close": 364.1,
+    "broker_volume_as_returned": 30301.0,
+    "close_ratio": 0.9999999832367056,
+    "date": "2024-12-26",
+    "price_difference_usd": {
+      "close": -6.1035156022626325e-06,
+      "high": 1.0986328106810106e-05,
+      "low": -1.2207031261368684e-05,
+      "open": -1.2207031261368684e-05
+    },
+    "published_close": 364.1000061035156,
+    "published_volume": 220800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.13723278985507245
+  },
+  {
+    "adjusted_close_ratio": 1.0000000237385323,
+    "adjusted_log_return_difference_bp": 0.00040501826543623554,
+    "broker_trade_close": 359.96,
+    "broker_volume_as_returned": 30000.0,
+    "close_ratio": 1.0000000237385323,
+    "date": "2024-12-27",
+    "price_difference_usd": {
+      "close": 8.54492185453637e-06,
+      "high": -6.1035156022626325e-06,
+      "low": 2.4414062522737368e-06,
+      "open": -0.7700012207031364
+    },
+    "published_close": 359.9599914550781,
+    "published_volume": 133600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2245508982035928
+  },
+  {
+    "adjusted_close_ratio": 0.999999959041391,
+    "adjusted_log_return_difference_bp": -0.0006469714180449421,
+    "broker_trade_close": 357.64,
+    "broker_volume_as_returned": 98038.0,
+    "close_ratio": 0.999999959041391,
+    "date": "2024-12-30",
+    "price_difference_usd": {
+      "close": -1.464843751364242e-05,
+      "high": 0.009997558593738631,
+      "low": 2.4414062522737368e-06,
+      "open": 0.0
+    },
+    "published_close": 357.6400146484375,
+    "published_volume": 268400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3652682563338301
+  },
+  {
+    "adjusted_close_ratio": 1.000000010378952,
+    "adjusted_log_return_difference_bp": 0.0005133756159764191,
+    "broker_trade_close": 352.84,
+    "broker_volume_as_returned": 83107.0,
+    "close_ratio": 1.000000010378952,
+    "date": "2024-12-31",
+    "price_difference_usd": {
+      "close": 3.6621093499888957e-06,
+      "high": 1.2207031261368684e-05,
+      "low": 9.765625009094947e-06,
+      "open": 3.6621093499888957e-06
+    },
+    "published_close": 352.8399963378906,
+    "published_volume": 266900.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3113787935556388
+  },
+  {
+    "adjusted_close_ratio": 0.999999996611229,
+    "adjusted_log_return_difference_bp": -0.0001376772266331594,
+    "broker_trade_close": 360.22,
+    "broker_volume_as_returned": 83718.0,
+    "close_ratio": 0.999999996611229,
+    "date": "2025-01-02",
+    "price_difference_usd": {
+      "close": -1.220703097715159e-06,
+      "high": -1.220703097715159e-06,
+      "low": 7.32421875682121e-06,
+      "open": 1.3427734359083843e-05
+    },
+    "published_close": 360.2200012207031,
+    "published_volume": 287500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.29119304347826086
+  },
+  {
+    "adjusted_close_ratio": 1.000000037683425,
+    "adjusted_log_return_difference_bp": 0.0004107219533401596,
+    "broker_trade_close": 356.33,
+    "broker_volume_as_returned": 68827.0,
+    "close_ratio": 1.000000037683425,
+    "date": "2025-01-03",
+    "price_difference_usd": {
+      "close": 1.3427734359083843e-05,
+      "high": -2.4414062522737368e-06,
+      "low": -0.009995117187486358,
+      "open": -1.3427734359083843e-05
+    },
+    "published_close": 356.3299865722656,
+    "published_volume": 235100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.29275627392598896
+  },
+  {
+    "adjusted_close_ratio": 0.9999999587820791,
+    "adjusted_log_return_difference_bp": -0.0007890134614283242,
+    "broker_trade_close": 355.39,
+    "broker_volume_as_returned": 97399.0,
+    "close_ratio": 0.9999999587820791,
+    "date": "2025-01-06",
+    "price_difference_usd": {
+      "close": -1.464843751364242e-05,
+      "high": -1.3427734359083843e-05,
+      "low": 1.2207031261368684e-05,
+      "open": -1.2207031261368684e-05
+    },
+    "published_close": 355.3900146484375,
+    "published_volume": 268100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3632935471838866
+  },
+  {
+    "adjusted_close_ratio": 1.0000000370594069,
+    "adjusted_log_return_difference_bp": 0.0007827732788345809,
+    "broker_trade_close": 362.33,
+    "broker_volume_as_returned": 43329.0,
+    "close_ratio": 1.0000000370594069,
+    "date": "2025-01-07",
+    "price_difference_usd": {
+      "close": 1.3427734359083843e-05,
+      "high": -1.0986328106810106e-05,
+      "low": -0.009997558593738631,
+      "open": -2.4414062522737368e-06
+    },
+    "published_close": 362.3299865722656,
+    "published_volume": 190700.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.22721027792343995
+  },
+  {
+    "adjusted_close_ratio": 1.0000000399564608,
+    "adjusted_log_return_difference_bp": 2.8970539613093482e-05,
+    "broker_trade_close": 366.61,
+    "broker_volume_as_returned": 66985.0,
+    "close_ratio": 1.0000000399564608,
+    "date": "2025-01-08",
+    "price_difference_usd": {
+      "close": 1.464843751364242e-05,
+      "high": -3.6621093499888957e-06,
+      "low": 0.0,
+      "open": 9.765625009094947e-06
+    },
+    "published_close": 366.6099853515625,
+    "published_volume": 252800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2649723101265823
+  },
+  {
+    "adjusted_close_ratio": 0.999999996655333,
+    "adjusted_log_return_difference_bp": -0.0004330112698697902,
+    "broker_trade_close": 364.97,
+    "broker_volume_as_returned": 104962.0,
+    "close_ratio": 0.999999996655333,
+    "date": "2025-01-10",
+    "price_difference_usd": {
+      "close": -1.220703097715159e-06,
+      "high": 1.3427734359083843e-05,
+      "low": -0.009987792968729536,
+      "open": -2.4414062522737368e-06
+    },
+    "published_close": 364.9700012207031,
+    "published_volume": 264900.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.39623254058135143
+  },
+  {
+    "adjusted_close_ratio": 0.9999999865442779,
+    "adjusted_log_return_difference_bp": -0.00010111055308119343,
+    "broker_trade_close": 362.88,
+    "broker_volume_as_returned": 65645.0,
+    "close_ratio": 0.9999999865442779,
+    "date": "2025-01-13",
+    "price_difference_usd": {
+      "close": -4.8828125045474735e-06,
+      "high": 1.464843751364242e-05,
+      "low": -0.009997558593738631,
+      "open": -1.464843751364242e-05
+    },
+    "published_close": 362.8800048828125,
+    "published_volume": 277000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.236985559566787
+  },
+  {
+    "adjusted_close_ratio": 0.999999966528569,
+    "adjusted_log_return_difference_bp": -0.0002001570915694667,
+    "broker_trade_close": 364.7,
+    "broker_volume_as_returned": 86300.0,
+    "close_ratio": 0.999999966528569,
+    "date": "2025-01-14",
+    "price_difference_usd": {
+      "close": -1.2207031261368684e-05,
+      "high": -1.0986328106810106e-05,
+      "low": 1.2207031261368684e-05,
+      "open": -1.220703097715159e-06
+    },
+    "published_close": 364.70001220703125,
+    "published_volume": 295000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2925423728813559
+  },
+  {
+    "adjusted_close_ratio": 0.9999999594944229,
+    "adjusted_log_return_difference_bp": -7.03414649444456e-05,
+    "broker_trade_close": 361.64,
+    "broker_volume_as_returned": 92068.0,
+    "close_ratio": 0.9999999594944229,
+    "date": "2025-01-15",
+    "price_difference_usd": {
+      "close": -1.464843751364242e-05,
+      "high": -1.0986328106810106e-05,
+      "low": 1.464843751364242e-05,
+      "open": 1.0986328106810106e-05
+    },
+    "published_close": 361.6400146484375,
+    "published_volume": 303100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.303754536456615
+  },
+  {
+    "adjusted_close_ratio": 0.9999999600195504,
+    "adjusted_log_return_difference_bp": 5.251275247974974e-06,
+    "broker_trade_close": 366.39,
+    "broker_volume_as_returned": 63622.0,
+    "close_ratio": 0.9999999600195504,
+    "date": "2025-01-16",
+    "price_difference_usd": {
+      "close": -1.464843751364242e-05,
+      "high": 8.54492185453637e-06,
+      "low": 9.765625009094947e-06,
+      "open": 9.765625009094947e-06
+    },
+    "published_close": 366.3900146484375,
+    "published_volume": 255000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.24949803921568628
+  },
+  {
+    "adjusted_close_ratio": 1.000000020405703,
+    "adjusted_log_return_difference_bp": 0.0006038615293565974,
+    "broker_trade_close": 358.93,
+    "broker_volume_as_returned": 81975.0,
+    "close_ratio": 1.000000020405703,
+    "date": "2025-01-17",
+    "price_difference_usd": {
+      "close": 7.32421875682121e-06,
+      "high": 3.6621093499888957e-06,
+      "low": 0.0,
+      "open": 3.6621093499888957e-06
+    },
+    "published_close": 358.92999267578125,
+    "published_volume": 248300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3301449859041482
+  },
+  {
+    "adjusted_close_ratio": 0.9999999966826015,
+    "adjusted_log_return_difference_bp": -0.00023723101063438667,
+    "broker_trade_close": 367.97,
+    "broker_volume_as_returned": 255769.0,
+    "close_ratio": 0.9999999966826015,
+    "date": "2025-01-21",
+    "price_difference_usd": {
+      "close": -1.220703097715159e-06,
+      "high": -6.1035156022626325e-06,
+      "low": 8.54492185453637e-06,
+      "open": -0.2400000000000091
+    },
+    "published_close": 367.9700012207031,
+    "published_volume": 655400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.39024870308208726
+  },
+  {
+    "adjusted_close_ratio": 1.0000000032878236,
+    "adjusted_log_return_difference_bp": 6.605221810479511e-05,
+    "broker_trade_close": 371.28,
+    "broker_volume_as_returned": 102134.0,
+    "close_ratio": 1.0000000032878236,
+    "date": "2025-01-22",
+    "price_difference_usd": {
+      "close": 1.220703097715159e-06,
+      "high": -4.8828125045474735e-06,
+      "low": -1.2207031261368684e-05,
+      "open": 4.8828125045474735e-06
+    },
+    "published_close": 371.2799987792969,
+    "published_volume": 318200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3209742300439975
+  },
+  {
+    "adjusted_close_ratio": 0.9999999606108341,
+    "adjusted_log_return_difference_bp": -0.00042676990366988243,
+    "broker_trade_close": 371.89,
+    "broker_volume_as_returned": 79328.0,
+    "close_ratio": 0.9999999606108341,
+    "date": "2025-01-23",
+    "price_difference_usd": {
+      "close": -1.464843751364242e-05,
+      "high": 6.1035156022626325e-06,
+      "low": 1.0986328106810106e-05,
+      "open": 1.2207031261368684e-05
+    },
+    "published_close": 371.8900146484375,
+    "published_volume": 243300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.32605014385532266
+  },
+  {
+    "adjusted_close_ratio": 1.0000000362099475,
+    "adjusted_log_return_difference_bp": 0.0007559911362284982,
+    "broker_trade_close": 370.83,
+    "broker_volume_as_returned": 49899.0,
+    "close_ratio": 1.0000000362099475,
+    "date": "2025-01-24",
+    "price_difference_usd": {
+      "close": 1.3427734359083843e-05,
+      "high": 1.464843751364242e-05,
+      "low": -0.010004882812495453,
+      "open": -1.0986328106810106e-05
+    },
+    "published_close": 370.8299865722656,
+    "published_volume": 198600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2512537764350453
+  },
+  {
+    "adjusted_close_ratio": 1.0000000066062513,
+    "adjusted_log_return_difference_bp": -0.0002960369552187231,
+    "broker_trade_close": 369.56,
+    "broker_volume_as_returned": 53689.0,
+    "close_ratio": 1.0000000066062513,
+    "date": "2025-01-27",
+    "price_difference_usd": {
+      "close": 2.4414062522737368e-06,
+      "high": -6.1035156022626325e-06,
+      "low": 1.0986328106810106e-05,
+      "open": -7.32421875682121e-06
+    },
+    "published_close": 369.55999755859375,
+    "published_volume": 246100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.21815928484355954
+  },
+  {
+    "adjusted_close_ratio": 0.9999999835418215,
+    "adjusted_log_return_difference_bp": -0.0002306442991152971,
+    "broker_trade_close": 370.85,
+    "broker_volume_as_returned": 113325.0,
+    "close_ratio": 0.9999999835418215,
+    "date": "2025-01-28",
+    "price_difference_usd": {
+      "close": -6.1035156022626325e-06,
+      "high": 1.464843751364242e-05,
+      "low": 1.0986328106810106e-05,
+      "open": 9.765625009094947e-06
+    },
+    "published_close": 370.8500061035156,
+    "published_volume": 320200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.35391942535915055
+  },
+  {
+    "adjusted_close_ratio": 1.0,
+    "adjusted_log_return_difference_bp": 0.0001645817868968502,
+    "broker_trade_close": 372.75,
+    "broker_volume_as_returned": 54787.0,
+    "close_ratio": 1.0,
+    "date": "2025-01-29",
+    "price_difference_usd": {
+      "close": 0.0,
+      "high": 1.0986328106810106e-05,
+      "low": -1.2207031261368684e-05,
+      "open": 0.0
+    },
+    "published_close": 372.75,
+    "published_volume": 169600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.32303655660377356
+  },
+  {
+    "adjusted_close_ratio": 1.0000000346495364,
+    "adjusted_log_return_difference_bp": 0.0003464953575449403,
+    "broker_trade_close": 352.3,
+    "broker_volume_as_returned": 205848.0,
+    "close_ratio": 1.0000000346495364,
+    "date": "2025-01-30",
+    "price_difference_usd": {
+      "close": 1.2207031261368684e-05,
+      "high": 6.1035156022626325e-06,
+      "low": -0.010007324218747726,
+      "open": 0.0
+    },
+    "published_close": 352.29998779296875,
+    "published_volume": 500900.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.410956278698343
+  },
+  {
+    "adjusted_close_ratio": 0.9999999617628674,
+    "adjusted_log_return_difference_bp": -0.0007288666913898498,
+    "broker_trade_close": 351.17,
+    "broker_volume_as_returned": 120874.0,
+    "close_ratio": 0.9999999617628674,
+    "date": "2025-01-31",
+    "price_difference_usd": {
+      "close": -1.3427734359083843e-05,
+      "high": 2.4414062522737368e-06,
+      "low": 1.0986328106810106e-05,
+      "open": 7.32421875682121e-06
+    },
+    "published_close": 351.1700134277344,
+    "published_volume": 414600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.29154365653642067
+  },
+  {
+    "adjusted_close_ratio": 1.0000000378694085,
+    "adjusted_log_return_difference_bp": 0.0007610654124447225,
+    "broker_trade_close": 354.58,
+    "broker_volume_as_returned": 137745.0,
+    "close_ratio": 1.0000000378694085,
+    "date": "2025-02-03",
+    "price_difference_usd": {
+      "close": 1.3427734359083843e-05,
+      "high": -4.8828125045474735e-06,
+      "low": 1.464843751364242e-05,
+      "open": -1.3427734359083843e-05
+    },
+    "published_close": 354.5799865722656,
+    "published_volume": 369000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.37329268292682927
+  },
+  {
+    "adjusted_close_ratio": 1.0000000207232518,
+    "adjusted_log_return_difference_bp": -0.00017146156175863042,
+    "broker_trade_close": 353.43,
+    "broker_volume_as_returned": 118437.0,
+    "close_ratio": 1.0000000207232518,
+    "date": "2025-02-04",
+    "price_difference_usd": {
+      "close": 7.32421875682121e-06,
+      "high": 1.220703097715159e-06,
+      "low": 1.0986328106810106e-05,
+      "open": -6.1035156022626325e-06
+    },
+    "published_close": 353.42999267578125,
+    "published_volume": 312100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3794841396988145
+  },
+  {
+    "adjusted_close_ratio": 1.0000000206793689,
+    "adjusted_log_return_difference_bp": -4.3883033491731727e-07,
+    "broker_trade_close": 354.18,
+    "broker_volume_as_returned": 98700.0,
+    "close_ratio": 1.0000000206793689,
+    "date": "2025-02-05",
+    "price_difference_usd": {
+      "close": 7.32421875682121e-06,
+      "high": 4.8828125045474735e-06,
+      "low": 8.54492185453637e-06,
+      "open": 8.54492185453637e-06
+    },
+    "published_close": 354.17999267578125,
+    "published_volume": 386200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.25556706369756604
+  },
+  {
+    "adjusted_close_ratio": 1.0,
+    "adjusted_log_return_difference_bp": -0.00020679368772490853,
+    "broker_trade_close": 353.75,
+    "broker_volume_as_returned": 60681.0,
+    "close_ratio": 1.0,
+    "date": "2025-02-06",
+    "price_difference_usd": {
+      "close": 0.0,
+      "high": -7.32421875682121e-06,
+      "low": -8.54492185453637e-06,
+      "open": -0.7799926757812727
+    },
+    "published_close": 353.75,
+    "published_volume": 466400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.13010506003430533
+  },
+  {
+    "adjusted_close_ratio": 1.0000000245748528,
+    "adjusted_log_return_difference_bp": 0.00024574852493242094,
+    "broker_trade_close": 347.71,
+    "broker_volume_as_returned": 106312.0,
+    "close_ratio": 1.0000000245748528,
+    "date": "2025-02-07",
+    "price_difference_usd": {
+      "close": 8.54492185453637e-06,
+      "high": 0.0,
+      "low": -1.464843751364242e-05,
+      "open": -9.765625009094947e-06
+    },
+    "published_close": 347.7099914550781,
+    "published_volume": 291400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3648318462594372
+  },
+  {
+    "adjusted_close_ratio": 0.9999999576193818,
+    "adjusted_log_return_difference_bp": -0.0006695547156987391,
+    "broker_trade_close": 345.64,
+    "broker_volume_as_returned": 154013.0,
+    "close_ratio": 0.9999999576193818,
+    "date": "2025-02-10",
+    "price_difference_usd": {
+      "close": -1.464843751364242e-05,
+      "high": 9.765625009094947e-06,
+      "low": -1.220703097715159e-06,
+      "open": 9.765625009094947e-06
+    },
+    "published_close": 345.6400146484375,
+    "published_volume": 347800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4428205865439908
+  },
+  {
+    "adjusted_close_ratio": 1.0000000069100967,
+    "adjusted_log_return_difference_bp": 0.0004929071583878453,
+    "broker_trade_close": 353.31,
+    "broker_volume_as_returned": 264511.0,
+    "close_ratio": 1.0000000069100967,
+    "date": "2025-02-11",
+    "price_difference_usd": {
+      "close": 2.4414062522737368e-06,
+      "high": 0.0,
+      "low": 9.765625009094947e-06,
+      "open": 0.17001220703127728
+    },
+    "published_close": 353.30999755859375,
+    "published_volume": 508300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.520383631713555
+  },
+  {
+    "adjusted_close_ratio": 1.0000000263409,
+    "adjusted_log_return_difference_bp": 0.00019430803008257946,
+    "broker_trade_close": 370.74,
+    "broker_volume_as_returned": 236521.0,
+    "close_ratio": 1.0000000263409,
+    "date": "2025-02-12",
+    "price_difference_usd": {
+      "close": 9.765625009094947e-06,
+      "high": -1.464843751364242e-05,
+      "low": 9.765625009094947e-06,
+      "open": 1.464843751364242e-05
+    },
+    "published_close": 370.739990234375,
+    "published_volume": 626600.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3774672837535908
+  },
+  {
+    "adjusted_close_ratio": 0.9999999934094422,
+    "adjusted_log_return_difference_bp": -0.0003293145744303911,
+    "broker_trade_close": 370.44,
+    "broker_volume_as_returned": 100616.0,
+    "close_ratio": 0.9999999934094422,
+    "date": "2025-02-13",
+    "price_difference_usd": {
+      "close": -2.4414062522737368e-06,
+      "high": -2.4414062522737368e-06,
+      "low": 0.0,
+      "open": 0.0
+    },
+    "published_close": 370.44000244140625,
+    "published_volume": 302100.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.33305527970870574
+  },
+  {
+    "adjusted_close_ratio": 1.0000000362343755,
+    "adjusted_log_return_difference_bp": 0.0004282493256768747,
+    "broker_trade_close": 370.58,
+    "broker_volume_as_returned": 57953.0,
+    "close_ratio": 1.0000000362343755,
+    "date": "2025-02-14",
+    "price_difference_usd": {
+      "close": 1.3427734359083843e-05,
+      "high": 7.32421875682121e-06,
+      "low": 4.8828125045474735e-06,
+      "open": -0.5499926757812545
+    },
+    "published_close": 370.5799865722656,
+    "published_volume": 209300.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.2768896321070234
+  },
+  {
+    "adjusted_close_ratio": 1.0000000360157038,
+    "adjusted_log_return_difference_bp": -2.1867145247322917e-06,
+    "broker_trade_close": 372.83,
+    "broker_volume_as_returned": 177970.0,
+    "close_ratio": 1.0000000360157038,
+    "date": "2025-02-18",
+    "price_difference_usd": {
+      "close": 1.3427734359083843e-05,
+      "high": -6.1035156022626325e-06,
+      "low": 0.0,
+      "open": 0.0
+    },
+    "published_close": 372.8299865722656,
+    "published_volume": 431900.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4120629775410975
+  },
+  {
+    "adjusted_close_ratio": 1.0000000032057963,
+    "adjusted_log_return_difference_bp": -0.000328099067879728,
+    "broker_trade_close": 380.78,
+    "broker_volume_as_returned": 164359.0,
+    "close_ratio": 1.0000000032057963,
+    "date": "2025-02-19",
+    "price_difference_usd": {
+      "close": 1.220703097715159e-06,
+      "high": -9.765625009094947e-06,
+      "low": -2.4414062522737368e-06,
+      "open": 6.1035156022626325e-06
+    },
+    "published_close": 380.7799987792969,
+    "published_volume": 564800.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.291003895184136
+  },
+  {
+    "adjusted_close_ratio": 1.0000000398748858,
+    "adjusted_log_return_difference_bp": 0.0003666908896665655,
+    "broker_trade_close": 367.36,
+    "broker_volume_as_returned": 285452.0,
+    "close_ratio": 1.0000000398748858,
+    "date": "2025-02-20",
+    "price_difference_usd": {
+      "close": 1.464843751364242e-05,
+      "high": 0.010010986328097715,
+      "low": 0.0,
+      "open": -8.54492185453637e-06
+    },
+    "published_close": 367.3599853515625,
+    "published_volume": 633000.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4509510268562401
+  },
+  {
+    "adjusted_close_ratio": 0.999999983097437,
+    "adjusted_log_return_difference_bp": -0.0005677744827417563,
+    "broker_trade_close": 361.1,
+    "broker_volume_as_returned": 187334.0,
+    "close_ratio": 0.999999983097437,
+    "date": "2025-02-21",
+    "price_difference_usd": {
+      "close": -6.1035156022626325e-06,
+      "high": 0.0,
+      "low": -6.1035156022626325e-06,
+      "open": 0.5499938964843523
+    },
+    "published_close": 361.1000061035156,
+    "published_volume": 407200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4600540275049116
+  },
+  {
+    "adjusted_close_ratio": 1.0000000238545046,
+    "adjusted_log_return_difference_bp": 0.0004075706734260609,
+    "broker_trade_close": 358.21,
+    "broker_volume_as_returned": 501887.0,
+    "close_ratio": 1.0000000238545046,
+    "date": "2025-02-24",
+    "price_difference_usd": {
+      "close": 8.54492185453637e-06,
+      "high": -1.220703097715159e-06,
+      "low": -1.3427734359083843e-05,
+      "open": -6.1035156022626325e-06
+    },
+    "published_close": 358.2099914550781,
+    "published_volume": 874900.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.5736507029374786
+  },
+  {
+    "adjusted_close_ratio": 1.0,
+    "adjusted_log_return_difference_bp": -0.0002385450427510108,
+    "broker_trade_close": 357.5,
+    "broker_volume_as_returned": 293296.0,
+    "close_ratio": 1.0,
+    "date": "2025-02-25",
+    "price_difference_usd": {
+      "close": 0.0,
+      "high": -1.0986328106810106e-05,
+      "low": 1.3427734359083843e-05,
+      "open": -1.3427734359083843e-05
+    },
+    "published_close": 357.5,
+    "published_volume": 591200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.49610284167794316
+  },
+  {
+    "adjusted_close_ratio": 0.9999999540642954,
+    "adjusted_log_return_difference_bp": -0.00045935705600408383,
+    "broker_trade_close": 318.89,
+    "broker_volume_as_returned": 680151.0,
+    "close_ratio": 0.9999999540642954,
+    "date": "2025-02-26",
+    "price_difference_usd": {
+      "close": -1.464843751364242e-05,
+      "high": 2.4414062522737368e-06,
+      "low": -4.8828125045474735e-06,
+      "open": 1.220703097715159e-06
+    },
+    "published_close": 318.8900146484375,
+    "published_volume": 1699400.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.4002300812051312
+  },
+  {
+    "adjusted_close_ratio": 1.0000000150881052,
+    "adjusted_log_return_difference_bp": 0.0006102381080487496,
+    "broker_trade_close": 323.62,
+    "broker_volume_as_returned": 409889.0,
+    "close_ratio": 1.0000000150881052,
+    "date": "2025-02-27",
+    "price_difference_usd": {
+      "close": 4.8828125045474735e-06,
+      "high": 9.765625009094947e-06,
+      "low": -7.32421875682121e-06,
+      "open": 1.2207031261368684e-05
+    },
+    "published_close": 323.6199951171875,
+    "published_volume": 997200.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.41103991175290816
+  },
+  {
+    "adjusted_close_ratio": 1.0000000381410146,
+    "adjusted_log_return_difference_bp": 0.00023052908878704037,
+    "broker_trade_close": 320.05,
+    "broker_volume_as_returned": 216053.0,
+    "close_ratio": 1.0000000381410146,
+    "date": "2025-02-28",
+    "price_difference_usd": {
+      "close": 1.2207031261368684e-05,
+      "high": 2.4414062522737368e-06,
+      "low": -3.6621093499888957e-06,
+      "open": 2.4414062522737368e-06
+    },
+    "published_close": 320.04998779296875,
+    "published_volume": 657500.0,
+    "trade_adjusted_volume_equal": true,
+    "volume_ratio": 0.3285977186311787
+  }
+]

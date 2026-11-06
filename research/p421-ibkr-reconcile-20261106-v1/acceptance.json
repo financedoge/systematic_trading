@@ -1,0 +1,18 @@
+{
+  "closes_within_half_cent": 2529,
+  "complete_control_series": 3,
+  "complete_primary_series": 20,
+  "focused_tests_passed": 26,
+  "matched_stock_days": 2530,
+  "new_publications": 0,
+  "point_in_time_certification": false,
+  "qualified_histories": 0,
+  "retention": "Protect compact findings, broker receipts and compressed source observations while qualification is active. Private broker evidence remains protected.",
+  "scripts": {
+    "scripts/acquire_mdy_ibkr_history.py": "485d211a86eefc3e79b68d02a6146347a236f5e070c6af64cbd8e0946ba444cf",
+    "scripts/reconcile_mdy_ibkr_history.py": "dd70cc4d730801161d1250c578532be40bd2e40860a4eed68dc08d56c64b6bab",
+    "scripts/report_mdy_ibkr_reconciliation.py": "72b975f503f4c975690e1da4859fa4c138a3524c72c9ac937acbf020df87570f",
+    "tests/test_mdy_ibkr_reconciliation.py": "b1f556fd4a9d4e705fd1b86409ea0b6c42e75d73c683daac9442bbdab26de32e"
+  },
+  "source_hashes_verified": true
+}

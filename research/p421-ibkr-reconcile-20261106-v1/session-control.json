@@ -1,0 +1,44 @@
+[
+  {
+    "all_hours_close_max_difference": 17.970001220703125,
+    "all_hours_volume_exact": 0,
+    "all_hours_volume_ratio_max": 0.7593795754026355,
+    "all_hours_volume_ratio_median": 0.5396665055582407,
+    "all_hours_volume_ratio_min": 0.37528342245989305,
+    "receipt_hashes": {
+      "all_hours": "aeabaec6a578f183c716bb9a1b02d8072552361ed8afc311435ba34724a4c626",
+      "regular": "e20205858f81feddfe9fa77186c5a210f2e219b6916a18f1dbbf89959d6e7d2a"
+    },
+    "sessions": 253,
+    "symbol": "CSL",
+    "volume_equal": 0
+  },
+  {
+    "all_hours_close_max_difference": 3.9199987792968614,
+    "all_hours_volume_exact": 0,
+    "all_hours_volume_ratio_max": 0.8166131284916202,
+    "all_hours_volume_ratio_median": 0.4976011773362767,
+    "all_hours_volume_ratio_min": 0.18740347240217672,
+    "receipt_hashes": {
+      "all_hours": "68426dbcdbe37f76658179c056825d8d62c380d37ed5cd5bce7719ee246135f3",
+      "regular": "3b417867ed657b3b0dea8675a31b87f82bb8f644b8618b21fe903232fa558464"
+    },
+    "sessions": 253,
+    "symbol": "WSO",
+    "volume_equal": 0
+  },
+  {
+    "all_hours_close_max_difference": 7.660003662109375,
+    "all_hours_volume_exact": 0,
+    "all_hours_volume_ratio_max": 0.8623814510097233,
+    "all_hours_volume_ratio_median": 0.6874894613583138,
+    "all_hours_volume_ratio_min": 0.4082423195913375,
+    "receipt_hashes": {
+      "all_hours": "c4227fb2c44a4aac3d0424c7759b513cb25a47f8da7b3dd9d72fd46cdb69e591",
+      "regular": "ac1b00a0ce2fea18d03f9d612bddd9abdfd0a393283def2fc8e336659c0ddbd6"
+    },
+    "sessions": 253,
+    "symbol": "XPO",
+    "volume_equal": 0
+  }
+]
