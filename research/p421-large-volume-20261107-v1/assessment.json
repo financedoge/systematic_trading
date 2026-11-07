@@ -1,0 +1,331 @@
+{
+  "status": "comparison_complete",
+  "protocol_sha256": "2cf73c9f70f7a5f116176392c1fa469455da0031622f15b2715b98b94c071007",
+  "baseline": {
+    "batch": "35d1efe82c7d7fbd77edd043fe2f33b34d7b9dec74190c0609374195aa2cb1b9",
+    "documents": 5,
+    "main_catalog_after": "873b2aa57c91f336f6398b2c0bfb7f60e20cf852f273f311b532362560ab8cd5",
+    "main_catalog_before": "873b2aa57c91f336f6398b2c0bfb7f60e20cf852f273f311b532362560ab8cd5",
+    "main_catalog_written": false,
+    "published_at": "2026-11-07T13:02:56.639999+00:00",
+    "root": "D:\\projects\\systematic_trading\\var\\governance\\pilots\\p421-sip-volume-20261107-v1",
+    "rows": 2530,
+    "source_id": "governance/pilots/p421-sip-volume-v1",
+    "storage": "postgres-parquet-duckdb",
+    "strategy_eligible_rows": 0,
+    "verification": "Every payload and document SHA256 read back from pinned native publication; historical available_at remains null."
+  },
+  "cases": [
+    {
+      "date": "2024-04-29",
+      "symbol": "RPM",
+      "tape": "A",
+      "records": 9172,
+      "eligible_records": 9160,
+      "eligible_volume": 405083,
+      "all_record_sizes": 621114,
+      "source_update_states": {
+        "no_update_flag": 9172
+      },
+      "retained_sip_daily": 405083,
+      "retained_published_volume": 364400.0,
+      "trades_minus_sip_daily": 0,
+      "trades_minus_published": 40683.0,
+      "clock_bins": {
+        "before_0930": 1,
+        "0930_to_before_1600": 286257,
+        "1600_minute": 59613,
+        "1601_onward": 59212
+      },
+      "independent_ibkr": {
+        "rows": 9160,
+        "volume": 405083,
+        "delta_vs_alpaca_eligible": 0,
+        "condition_size_multisets_exact": true,
+        "alpaca_unmatched_condition_size_occurrences": 0,
+        "ibkr_unmatched_condition_size_occurrences": 0,
+        "clock_bins_exact": true,
+        "clock_bins": {
+          "before_0930": 1,
+          "0930_to_before_1600": 286257,
+          "1600_minute": 59613,
+          "1601_onward": 59212
+        },
+        "unflagged_clock_bins": {
+          "before_0930": 0,
+          "0930_to_before_1600": 160400,
+          "1600_minute": 56594,
+          "1601_onward": 1301
+        },
+        "unflagged_rth_minus_retained_bar": 0.0,
+        "limitation": "Regular sale is normalized across feed encodings; matching condition/size multisets does not establish unique trade identity",
+        "delta_vs_sip_daily": 0,
+        "delta_vs_published": 40683.0,
+        "price_size_condition_multisets_exact": true,
+        "alpaca_only_occurrences": 0,
+        "ibkr_only_occurrences": 0,
+        "alpaca_only_shares": 0,
+        "ibkr_only_shares": 0,
+        "forward_pages": 11,
+        "tail_rows": 1003,
+        "spill_rows": 0,
+        "backward_tail_multiset_exact": true
+      }
+    },
+    {
+      "date": "2024-06-25",
+      "symbol": "UTHR",
+      "tape": "C",
+      "records": 14994,
+      "eligible_records": 14990,
+      "eligible_volume": 562256,
+      "all_record_sizes": 686643,
+      "source_update_states": {
+        "no_update_flag": 14994
+      },
+      "retained_sip_daily": 562256,
+      "retained_published_volume": 523500.0,
+      "trades_minus_sip_daily": 0,
+      "trades_minus_published": 38756.0,
+      "clock_bins": {
+        "before_0930": 86,
+        "0930_to_before_1600": 377590,
+        "1600_minute": 124108,
+        "1601_onward": 60472
+      },
+      "independent_ibkr": {
+        "rows": 14990,
+        "volume": 562256,
+        "delta_vs_alpaca_eligible": 0,
+        "condition_size_multisets_exact": true,
+        "alpaca_unmatched_condition_size_occurrences": 0,
+        "ibkr_unmatched_condition_size_occurrences": 0,
+        "clock_bins_exact": true,
+        "clock_bins": {
+          "before_0930": 86,
+          "0930_to_before_1600": 377590,
+          "1600_minute": 124108,
+          "1601_onward": 60472
+        },
+        "unflagged_clock_bins": {
+          "before_0930": 0,
+          "0930_to_before_1600": 195199,
+          "1600_minute": 122698,
+          "1601_onward": 38714
+        },
+        "unflagged_rth_minus_retained_bar": 0.0,
+        "limitation": "Regular sale is normalized across feed encodings; matching condition/size multisets does not establish unique trade identity",
+        "delta_vs_sip_daily": 0,
+        "delta_vs_published": 38756.0,
+        "price_size_condition_multisets_exact": false,
+        "alpaca_only_occurrences": 2,
+        "ibkr_only_occurrences": 2,
+        "alpaca_only_shares": 5,
+        "ibkr_only_shares": 5,
+        "forward_pages": 16,
+        "tail_rows": 1011,
+        "spill_rows": 0,
+        "backward_tail_multiset_exact": true
+      }
+    },
+    {
+      "date": "2024-06-21",
+      "symbol": "UTHR",
+      "tape": "C",
+      "records": 21415,
+      "eligible_records": 21411,
+      "eligible_volume": 1851871,
+      "all_record_sizes": 2819462,
+      "source_update_states": {
+        "no_update_flag": 21415
+      },
+      "retained_sip_daily": 1851871,
+      "retained_published_volume": 1800900.0,
+      "trades_minus_sip_daily": 0,
+      "trades_minus_published": 50971.0,
+      "clock_bins": {
+        "before_0930": 4,
+        "0930_to_before_1600": 645546,
+        "1600_minute": 996494,
+        "1601_onward": 209827
+      },
+      "independent_ibkr": {
+        "rows": 21411,
+        "volume": 1851871,
+        "delta_vs_alpaca_eligible": 0,
+        "condition_size_multisets_exact": true,
+        "alpaca_unmatched_condition_size_occurrences": 0,
+        "ibkr_unmatched_condition_size_occurrences": 0,
+        "clock_bins_exact": true,
+        "clock_bins": {
+          "before_0930": 4,
+          "0930_to_before_1600": 645546,
+          "1600_minute": 996494,
+          "1601_onward": 209827
+        },
+        "unflagged_clock_bins": {
+          "before_0930": 0,
+          "0930_to_before_1600": 364002,
+          "1600_minute": 977568,
+          "1601_onward": 78475
+        },
+        "unflagged_rth_minus_retained_bar": 0.0,
+        "limitation": "Regular sale is normalized across feed encodings; matching condition/size multisets does not establish unique trade identity",
+        "delta_vs_sip_daily": 0,
+        "delta_vs_published": 50971.0,
+        "price_size_condition_multisets_exact": true,
+        "alpaca_only_occurrences": 0,
+        "ibkr_only_occurrences": 0,
+        "alpaca_only_shares": 0,
+        "ibkr_only_shares": 0,
+        "forward_pages": 23,
+        "tail_rows": 1000,
+        "spill_rows": 0,
+        "backward_tail_multiset_exact": true
+      }
+    },
+    {
+      "date": "2025-02-07",
+      "symbol": "FIX",
+      "tape": "A",
+      "records": 16040,
+      "eligible_records": 16028,
+      "eligible_volume": 401164,
+      "all_record_sizes": 537751,
+      "source_update_states": {
+        "no_update_flag": 16040
+      },
+      "retained_sip_daily": 401164,
+      "retained_published_volume": 407500.0,
+      "trades_minus_sip_daily": 0,
+      "trades_minus_published": -6336.0,
+      "clock_bins": {
+        "before_0930": 9879,
+        "0930_to_before_1600": 351751,
+        "1600_minute": 38531,
+        "1601_onward": 1003
+      },
+      "independent_ibkr": {
+        "rows": 16219,
+        "volume": 407523,
+        "delta_vs_alpaca_eligible": 6359,
+        "condition_size_multisets_exact": false,
+        "alpaca_unmatched_condition_size_occurrences": 0,
+        "ibkr_unmatched_condition_size_occurrences": 191,
+        "clock_bins_exact": false,
+        "clock_bins": {
+          "before_0930": 9879,
+          "0930_to_before_1600": 358106,
+          "1600_minute": 38535,
+          "1601_onward": 1003
+        },
+        "unflagged_clock_bins": {
+          "before_0930": 1300,
+          "0930_to_before_1600": 142633,
+          "1600_minute": 33172,
+          "1601_onward": 586
+        },
+        "unflagged_rth_minus_retained_bar": 0.0,
+        "limitation": "Regular sale is normalized across feed encodings; matching condition/size multisets does not establish unique trade identity",
+        "delta_vs_sip_daily": 6359,
+        "delta_vs_published": 23.0,
+        "price_size_condition_multisets_exact": false,
+        "alpaca_only_occurrences": 22,
+        "ibkr_only_occurrences": 213,
+        "alpaca_only_shares": 121,
+        "ibkr_only_shares": 6480,
+        "forward_pages": 18,
+        "tail_rows": 1005,
+        "spill_rows": 0,
+        "backward_tail_multiset_exact": true
+      }
+    },
+    {
+      "date": "2025-02-04",
+      "symbol": "FIX",
+      "tape": "A",
+      "records": 10956,
+      "eligible_records": 10944,
+      "eligible_volume": 285817,
+      "all_record_sizes": 414312,
+      "source_update_states": {
+        "no_update_flag": 10956
+      },
+      "retained_sip_daily": 285817,
+      "retained_published_volume": 288900.0,
+      "trades_minus_sip_daily": 0,
+      "trades_minus_published": -3083.0,
+      "clock_bins": {
+        "before_0930": 367,
+        "0930_to_before_1600": 248453,
+        "1600_minute": 36586,
+        "1601_onward": 411
+      },
+      "independent_ibkr": {
+        "rows": 11059,
+        "volume": 288935,
+        "delta_vs_alpaca_eligible": 3118,
+        "condition_size_multisets_exact": false,
+        "alpaca_unmatched_condition_size_occurrences": 0,
+        "ibkr_unmatched_condition_size_occurrences": 115,
+        "clock_bins_exact": false,
+        "clock_bins": {
+          "before_0930": 367,
+          "0930_to_before_1600": 251571,
+          "1600_minute": 36586,
+          "1601_onward": 411
+        },
+        "unflagged_clock_bins": {
+          "before_0930": 100,
+          "0930_to_before_1600": 118685,
+          "1600_minute": 32623,
+          "1601_onward": 0
+        },
+        "unflagged_rth_minus_retained_bar": 0.0,
+        "limitation": "Regular sale is normalized across feed encodings; matching condition/size multisets does not establish unique trade identity",
+        "delta_vs_sip_daily": 3118,
+        "delta_vs_published": 35.0,
+        "price_size_condition_multisets_exact": false,
+        "alpaca_only_occurrences": 88,
+        "ibkr_only_occurrences": 203,
+        "alpaca_only_shares": 217,
+        "ibkr_only_shares": 3335,
+        "forward_pages": 13,
+        "tail_rows": 1001,
+        "spill_rows": 0,
+        "backward_tail_multiset_exact": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\alpaca\\volume-exceptions-20261107T140725342562Z",
+      "manifest_sha256": "57da0ad808f687cdfd2b50c363635b1ca325dcb24d0987276c244f667ab05e5f",
+      "requests": 10,
+      "payloads": 10
+    },
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\ibkr\\volume-exceptions-20261107T140725484904Z",
+      "manifest_sha256": "1567fca03ef09a4bde39bdbd8e5e647c78a89286f9a233ed7b3ece81a8264076",
+      "requests": 86,
+      "payloads": 86
+    }
+  ],
+  "summary": {
+    "cases": 5,
+    "trade_records": 72577,
+    "exact_alpaca_daily": 5,
+    "independent_ibkr_cases": 5
+  },
+  "details": {
+    "path": "D:\\systematic_trading_data\\source-archives\\alpaca\\volume-exceptions-20261107T140725342562Z\\large-residuals-complete.json",
+    "sha256": "44807dd9a2b1fe4fd3905be2ad8c8b18a7b7e1d409c5dfff5839260f773c399d"
+  },
+  "limitations": [
+    "Case selection is diagnostic, not random validation.",
+    "No retrospective publication/correction availability inferred.",
+    "Condition/price/size multisets do not identify unique cross-provider trades.",
+    "No source replacement, strategy replay or promotion."
+  ],
+  "runner_sha256": "de4f6711cb0ada69af7854b67646fc11b57c05f654886c4576638a6c39d3129c"
+}

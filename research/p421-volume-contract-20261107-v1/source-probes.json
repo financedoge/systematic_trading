@@ -1,0 +1,112 @@
+[
+  {
+    "captured_at": "2026-11-07T07:52:11.108069+00:00",
+    "end": "2025-02-28",
+    "response_bytes": 179,
+    "rows": [],
+    "source_path": "D:\\projects\\systematic_trading\\var\\research\\p421-volume-contract-20261107-v1\\CSL-2025-02-24.json.gz",
+    "source_sha256": "c26abe2efcd2c23e3a014e874030789d13bc2f3be5b55eb61d184e01bdef6f48",
+    "start": "2025-02-24",
+    "status": {
+      "bCodeMessage": null,
+      "developerMessage": null,
+      "rCode": 200
+    },
+    "symbol": "CSL",
+    "total_records": 0,
+    "url": "https://api.nasdaq.com/api/quote/CSL/historical?assetclass=stocks&fromdate=2025-02-24&todate=2025-02-28&limit=50"
+  },
+  {
+    "captured_at": "2026-11-07T07:52:12.976014+00:00",
+    "end": "2025-02-28",
+    "response_bytes": 179,
+    "rows": [],
+    "source_path": "D:\\projects\\systematic_trading\\var\\research\\p421-volume-contract-20261107-v1\\WSO-2025-02-24.json.gz",
+    "source_sha256": "870ee340d4dc79f2f030d624f04bedd1138ea15301e6b78093a187ed3cf459e0",
+    "start": "2025-02-24",
+    "status": {
+      "bCodeMessage": null,
+      "developerMessage": null,
+      "rCode": 200
+    },
+    "symbol": "WSO",
+    "total_records": 0,
+    "url": "https://api.nasdaq.com/api/quote/WSO/historical?assetclass=stocks&fromdate=2025-02-24&todate=2025-02-28&limit=50"
+  },
+  {
+    "captured_at": "2026-11-07T07:52:20.632731+00:00",
+    "end": "2025-02-28",
+    "response_bytes": 179,
+    "rows": [],
+    "source_path": "D:\\projects\\systematic_trading\\var\\research\\p421-volume-contract-20261107-v1\\XPO-2025-02-24.json.gz",
+    "source_sha256": "a682e8450f9171f11cd506af1e7b9674103e61109f5960ffa63a41502f8fa45c",
+    "start": "2025-02-24",
+    "status": {
+      "bCodeMessage": null,
+      "developerMessage": null,
+      "rCode": 200
+    },
+    "symbol": "XPO",
+    "total_records": 0,
+    "url": "https://api.nasdaq.com/api/quote/XPO/historical?assetclass=stocks&fromdate=2025-02-24&todate=2025-02-28&limit=50"
+  },
+  {
+    "captured_at": "2026-11-07T07:52:29.865352+00:00",
+    "end": "2025-02-28",
+    "response_bytes": 180,
+    "rows": [],
+    "source_path": "D:\\projects\\systematic_trading\\var\\research\\p421-volume-contract-20261107-v1\\MANH-2025-02-24.json.gz",
+    "source_sha256": "bbe656d56d92832e9082df5d67ce32b619f3e200acaaa92caac347f5064f27c1",
+    "start": "2025-02-24",
+    "status": {
+      "bCodeMessage": null,
+      "developerMessage": null,
+      "rCode": 200
+    },
+    "symbol": "MANH",
+    "total_records": 0,
+    "url": "https://api.nasdaq.com/api/quote/MANH/historical?assetclass=stocks&fromdate=2025-02-24&todate=2025-02-28&limit=50"
+  },
+  {
+    "captured_at": "2026-11-07T07:52:33.484016+00:00",
+    "end": "2026-11-04",
+    "response_bytes": 593,
+    "rows": [
+      {
+        "close": "$398.82",
+        "date": "11/04/2026",
+        "high": "$409.60",
+        "low": "$392.23",
+        "open": "$400.00",
+        "volume": "583,855"
+      },
+      {
+        "close": "$387.31",
+        "date": "11/03/2026",
+        "high": "$393.72",
+        "low": "$384.94",
+        "open": "$392.38",
+        "volume": "425,779"
+      },
+      {
+        "close": "$392.38",
+        "date": "11/02/2026",
+        "high": "$394.78",
+        "low": "$373.19",
+        "open": "$373.19",
+        "volume": "348,963"
+      }
+    ],
+    "source_path": "D:\\projects\\systematic_trading\\var\\research\\p421-volume-contract-20261107-v1\\CSL-2026-11-02.json.gz",
+    "source_sha256": "f12da677a5f215897d7b52673bff1c5d5b79de325c6198b547917f02966b0cd2",
+    "start": "2026-11-02",
+    "status": {
+      "bCodeMessage": null,
+      "developerMessage": null,
+      "rCode": 200
+    },
+    "symbol": "CSL",
+    "total_records": 3,
+    "url": "https://api.nasdaq.com/api/quote/CSL/historical?assetclass=stocks&fromdate=2026-11-02&todate=2026-11-04&limit=50"
+  }
+]

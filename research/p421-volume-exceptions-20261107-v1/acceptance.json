@@ -1,0 +1,50 @@
+{
+  "date": "2026-11-07",
+  "status": "fourteen_exception_comparison_complete_qualification_open",
+  "checks": {
+    "14_daily_bars_reconstructed": true,
+    "all_present_minutes_match": true,
+    "daily_equals_present_plus_absent": true,
+    "absent_minutes_lack_price_eligible_trade": true,
+    "three_independent_daily_controls_exact": true,
+    "all_backward_boundaries_exact": true,
+    "published_residuals_preserved": true
+  },
+  "focused_tests_passed": 17,
+  "ruff": "passed",
+  "public_secret_scan": "passed",
+  "new_payloads_verified": 92,
+  "prior_payloads_verified": 18,
+  "protocol_sha256": "718ea068461ceaf23312a0c6938eaf9a36d784f75d7ccb745c2380df46f57ae3",
+  "assessment_sha256": "c435b2c2a93009233fc339926b6ce80ddb31f806700b130f33532cfec0a801ae",
+  "runner_hashes": {
+    "scripts\\capture_volume_exception_trades.py": "c8001daf9305b1c3a3aa81aa1aaf364631e170cbafe02ec63c2ecfba5986b92b",
+    "scripts\\capture_volume_exception_ibkr.py": "9a26e6947949f0389d96d1e125b47aadefe01f407d829544edae126750b052ea",
+    "scripts\\reconcile_volume_exceptions.py": "b53dced8b612984ff8cec733735f8a6260a4000167b71070d4efd36580cb4c3b"
+  },
+  "source_receipts": [
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\alpaca\\volume-exceptions-20261107T121936468778Z",
+      "manifest_sha256": "7feed4ee9873b55a60f4d4b97e9158d074edef2c6d4f76cf8808399bafb0dbc8",
+      "requests": 38,
+      "payloads": 37
+    },
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\ibkr\\volume-exceptions-20261107T122036989991Z",
+      "manifest_sha256": "6832a82f9222e75473bff758cae995ca7565522abc15af621c84a5efc67f4c77",
+      "requests": 55,
+      "payloads": 55
+    }
+  ],
+  "independent_controls": 3,
+  "cases_without_new_independent_ticks": 11,
+  "clock_bucket_equivalence_claimed": false,
+  "qualification_tolerance_changed": false,
+  "retention": "Raw responses and inspection details remain locally retained outside Git as active data-qualification evidence; compact findings/protocol/recipes retained in repository",
+  "publications": 0,
+  "strategy_replays": 0,
+  "orders": 0,
+  "next_item_proposed": "Versioned audited SIP-volume pilot for frozen ten-stock history, preserving prior series and specifying full-day, corporate-action and availability contracts",
+  "stop_for_operator_discussion": true,
+  "whitespace": "passed"
+}

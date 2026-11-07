@@ -1,0 +1,17 @@
+{
+  "captured_at": "2026-11-07T07:52:11.108069+00:00",
+  "end": "2025-02-28",
+  "response_bytes": 179,
+  "rows": [],
+  "source_path": "D:\\projects\\systematic_trading\\var\\research\\p421-volume-contract-20261107-v1\\CSL-2025-02-24.json.gz",
+  "source_sha256": "c26abe2efcd2c23e3a014e874030789d13bc2f3be5b55eb61d184e01bdef6f48",
+  "start": "2025-02-24",
+  "status": {
+    "bCodeMessage": null,
+    "developerMessage": null,
+    "rCode": 200
+  },
+  "symbol": "CSL",
+  "total_records": 0,
+  "url": "https://api.nasdaq.com/api/quote/CSL/historical?assetclass=stocks&fromdate=2025-02-24&todate=2025-02-28&limit=50"
+}

@@ -1,0 +1,207 @@
+{
+  "status": "source_comparison_complete_with_identity_exclusion",
+  "protocol_sha256": "9b3a51653ef6e2099116d07ce473871dfef3b26bf90f38c1ba0e798caec01544",
+  "source_archive": "D:\\systematic_trading_data\\source-archives\\wrds\\pilot-20261107T141349139724Z",
+  "source_manifest_sha256": "f3693dd033fcb38cae04b64874faa2a344e8d7882c37cc4932a7cc73500aa887",
+  "raw_daily_rows": 2783,
+  "candidate_permnos": 11,
+  "matched_symbols": [
+    "CASY",
+    "CSL",
+    "FIX",
+    "MANH",
+    "RPM",
+    "RS",
+    "UTHR",
+    "WSO",
+    "XPO"
+  ],
+  "matched_sessions": 2277,
+  "exclusions": [
+    {
+      "symbol": "FLEX",
+      "rows": 253,
+      "reasons": [
+        "non_US_ISIN_requires_retained_CUSIP_bridge"
+      ]
+    }
+  ],
+  "unused_candidate_permnos": [
+    46068,
+    80329
+  ],
+  "summary": {
+    "rows": 2277,
+    "exact_volume_vs_sip": 1479,
+    "exact_volume_vs_published": 14,
+    "median_abs_volume_vs_sip_percent": 0.0,
+    "max_abs_volume_vs_sip_percent": 38.95248387807774,
+    "close_vs_published_within_half_cent": 2277,
+    "max_abs_close_vs_published": 0.00499572753906,
+    "price_flags": {
+      "TR": 2277
+    },
+    "return_missing_flags": {
+      "NA": 2277
+    }
+  },
+  "by_symbol": {
+    "CASY": {
+      "rows": 253,
+      "exact_volume_vs_sip": 0,
+      "exact_volume_vs_published": 0,
+      "median_abs_volume_vs_sip_percent": 1.374717698173248,
+      "max_abs_volume_vs_sip_percent": 4.851881987764819,
+      "close_vs_published_within_half_cent": 253,
+      "max_abs_close_vs_published": 1.46484375e-05,
+      "price_flags": {
+        "TR": 253
+      },
+      "return_missing_flags": {
+        "NA": 253
+      }
+    },
+    "CSL": {
+      "rows": 253,
+      "exact_volume_vs_sip": 247,
+      "exact_volume_vs_published": 2,
+      "median_abs_volume_vs_sip_percent": 0.0,
+      "max_abs_volume_vs_sip_percent": 0.46940282836474756,
+      "close_vs_published_within_half_cent": 253,
+      "max_abs_close_vs_published": 1.46484375e-05,
+      "price_flags": {
+        "TR": 253
+      },
+      "return_missing_flags": {
+        "NA": 253
+      }
+    },
+    "FIX": {
+      "rows": 253,
+      "exact_volume_vs_sip": 245,
+      "exact_volume_vs_published": 2,
+      "median_abs_volume_vs_sip_percent": 0.0,
+      "max_abs_volume_vs_sip_percent": 1.5851372506007517,
+      "close_vs_published_within_half_cent": 253,
+      "max_abs_close_vs_published": 2.9296875e-05,
+      "price_flags": {
+        "TR": 253
+      },
+      "return_missing_flags": {
+        "NA": 253
+      }
+    },
+    "MANH": {
+      "rows": 253,
+      "exact_volume_vs_sip": 0,
+      "exact_volume_vs_published": 0,
+      "median_abs_volume_vs_sip_percent": 1.3682010967845313,
+      "max_abs_volume_vs_sip_percent": 3.6834142486169132,
+      "close_vs_published_within_half_cent": 253,
+      "max_abs_close_vs_published": 0.00499572753906,
+      "price_flags": {
+        "TR": 253
+      },
+      "return_missing_flags": {
+        "NA": 253
+      }
+    },
+    "RPM": {
+      "rows": 253,
+      "exact_volume_vs_sip": 247,
+      "exact_volume_vs_published": 0,
+      "median_abs_volume_vs_sip_percent": 0.0,
+      "max_abs_volume_vs_sip_percent": 0.6499432905649678,
+      "close_vs_published_within_half_cent": 253,
+      "max_abs_close_vs_published": 7.32421875e-06,
+      "price_flags": {
+        "TR": 253
+      },
+      "return_missing_flags": {
+        "NA": 253
+      }
+    },
+    "RS": {
+      "rows": 253,
+      "exact_volume_vs_sip": 247,
+      "exact_volume_vs_published": 1,
+      "median_abs_volume_vs_sip_percent": 0.0,
+      "max_abs_volume_vs_sip_percent": 0.851885117207051,
+      "close_vs_published_within_half_cent": 253,
+      "max_abs_close_vs_published": 1.46484375e-05,
+      "price_flags": {
+        "TR": 253
+      },
+      "return_missing_flags": {
+        "NA": 253
+      }
+    },
+    "UTHR": {
+      "rows": 253,
+      "exact_volume_vs_sip": 0,
+      "exact_volume_vs_published": 0,
+      "median_abs_volume_vs_sip_percent": 1.255751689601162,
+      "max_abs_volume_vs_sip_percent": 38.95248387807774,
+      "close_vs_published_within_half_cent": 253,
+      "max_abs_close_vs_published": 1.46484375e-05,
+      "price_flags": {
+        "TR": 253
+      },
+      "return_missing_flags": {
+        "NA": 253
+      }
+    },
+    "WSO": {
+      "rows": 253,
+      "exact_volume_vs_sip": 247,
+      "exact_volume_vs_published": 4,
+      "median_abs_volume_vs_sip_percent": 0.0,
+      "max_abs_volume_vs_sip_percent": 0.6559566091241982,
+      "close_vs_published_within_half_cent": 253,
+      "max_abs_close_vs_published": 2.9296875e-05,
+      "price_flags": {
+        "TR": 253
+      },
+      "return_missing_flags": {
+        "NA": 253
+      }
+    },
+    "XPO": {
+      "rows": 253,
+      "exact_volume_vs_sip": 246,
+      "exact_volume_vs_published": 5,
+      "median_abs_volume_vs_sip_percent": 0.0,
+      "max_abs_volume_vs_sip_percent": 0.3284750859746021,
+      "close_vs_published_within_half_cent": 253,
+      "max_abs_close_vs_published": 7.32421875e-06,
+      "price_flags": {
+        "TR": 253
+      },
+      "return_missing_flags": {
+        "NA": 253
+      }
+    }
+  },
+  "nonzero_distribution_or_price_factor_rows": 24,
+  "cash_distribution_comparison": {
+    "crsp_events": 24,
+    "published_events": 24,
+    "exact_date_amount_set_match": true,
+    "crsp_only": 0,
+    "published_only": 0
+  },
+  "details": {
+    "path": "D:\\systematic_trading_data\\source-archives\\wrds\\pilot-20261107T141349139724Z\\dated-identity-comparison.json",
+    "sha256": "603f0235d9713a402596d5c0e0753c80a469cf6a806e5a16cc66c5d25ccbbc67"
+  },
+  "findings": [
+    "WSO Class A selected by dated CUSIP9 and trading symbol; WSO/WSOB Class B retained separately, never substituted.",
+    "Foreign FLEX ISIN has no retained same-record CUSIP bridge; its 253 rows remain unjoined.",
+    "Legacy name history stops at 2024-12-31; CIZ dated intervals cover the requested 2025 dates.",
+    "CRSP daily volume is independent evidence, not a trade-condition reconstruction.",
+    "Current extract and effective identity dates do not certify historical availability of this vendor vintage."
+  ],
+  "catalog_publications": 0,
+  "strategy_replays": 0,
+  "runner_sha256": "5da152a01b7b6da6654f271209c01d56cae56f45cb33da680490842a3fc8791f"
+}

@@ -1,0 +1,29 @@
+{
+  "item": "P4.21 WRDS connection and entitlement check",
+  "source_request": "research/p421-volume-contract-20261107-v1/source-request.json",
+  "source_request_sha256": "8380ef95bd63b9300a6bc0401a48bd5e5892dad0c3b20143d93809ed7f35d457",
+  "scope": [
+    "Save the user-authorized local password file without logging credentials",
+    "Verify TLS and a read-only database connection",
+    "Inspect actual CRSP/TAQ access before any sample acquisition"
+  ],
+  "not_in_this_item": [
+    "Admit source rows to the audited catalog",
+    "Run a strategy backtest",
+    "Purchase data or modify subscriptions"
+  ],
+  "next_data_request": "Ten frozen identities, February 24-28 2025 (50 stock-days), plus three previously declared price diagnostics",
+  "source_roles": {
+    "CRSP": "Daily prices, volumes, dated identifiers and corporate actions; actual fields and volume semantics must be verified",
+    "NYSE_TAQ": "Consolidated trades and condition/session evidence if the account has the required entitlement"
+  },
+  "raw_archive_root": "D:\\systematic_trading_data\\source-archives\\wrds",
+  "source_copies_retained": true,
+  "historical_availability_proven_by_capture": false,
+  "sources": [
+    "https://wrds-www.wharton.upenn.edu/pages/support/programming-wrds/programming-python/python-from-your-computer/",
+    "https://www.postgresql.org/docs/current/libpq-pgpass.html",
+    "https://wrds-www.wharton.upenn.edu/pages/about/log-in-to-wrds-using-two-factor-authentication/",
+    "https://github.com/wharton/wrds/blob/main/wrds/sql.py"
+  ]
+}

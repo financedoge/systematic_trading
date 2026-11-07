@@ -1,0 +1,158 @@
+{
+  "volume": {
+    "activity-raw-v1": {
+      "name": "Audited raw price and volume",
+      "contract": {
+        "kind": "time_series",
+        "provider": "systematic_trading.research.m1_monitoring:load_inputs",
+        "inputs": {},
+        "basis": "audited raw prices and raw volume",
+        "cadence": "daily",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": null
+      },
+      "sha256": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8",
+      "source": "governance/catalog",
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "activity-lag20-v1": {
+      "name": "Lagged activity features",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.flow_concentration:concentration_features",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+        },
+        "basis": "adjusted prices and published volume; legacy activity contract",
+        "cadence": "daily",
+        "parameters": {
+          "lag": 20
+        },
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "evidence_gap"
+      },
+      "sha256": "22d7a7a12268b83ba5998e311855bf47fa12d082c599f8d9630f2cbdceef9e43",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "m1-selection-v1": {
+      "name": "M1 momentum and volume selection",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.signal_decay_job:signal_values",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+          "activity-raw-v1": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8"
+        },
+        "basis": "adjusted",
+        "cadence": "daily",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "m1_rank_ic"
+      },
+      "sha256": "6d69d9d053b30906da639e2913717043bd1aab3627136a7cbe223d2d53250f2f",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    }
+  },
+  "raw": {
+    "activity-raw-v1": {
+      "name": "Audited raw price and volume",
+      "contract": {
+        "kind": "time_series",
+        "provider": "systematic_trading.research.m1_monitoring:load_inputs",
+        "inputs": {},
+        "basis": "audited raw prices and raw volume",
+        "cadence": "daily",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": null
+      },
+      "sha256": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8",
+      "source": "governance/catalog",
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "activity-audited-lag20-v1": {
+      "name": "Audited raw-dollar activity \u00b7 lag 20",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.candidate_pool:AuditedActivity",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+          "activity-raw-v1": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8"
+        },
+        "basis": "raw dollar activity; adjusted return direction",
+        "cadence": "daily",
+        "parameters": {
+          "lag": 20
+        },
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "evidence_gap"
+      },
+      "sha256": "e90e9fe4ef9919a8e642256d146c1e22f73736b31462c813b58fcfe74b3ae495",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "m1-selection-v1": {
+      "name": "M1 momentum and volume selection",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.signal_decay_job:signal_values",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+          "activity-raw-v1": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8"
+        },
+        "basis": "adjusted",
+        "cadence": "daily",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "m1_rank_ic"
+      },
+      "sha256": "6d69d9d053b30906da639e2913717043bd1aab3627136a7cbe223d2d53250f2f",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "alpha101-tilt-v1": {
+      "name": "Alpha101 activity tilt",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.alpha101_tilt_overlay:Alpha101FamilyTiltOverlay",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+          "activity-raw-v1": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8"
+        },
+        "basis": "adjusted",
+        "cadence": "daily",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "evidence_gap"
+      },
+      "sha256": "d2f9e4e5e29a24f8de06008beb3089770138c5f0875f1dcceb6e868290b69541",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    }
+  },
+  "constituent": {}
+}

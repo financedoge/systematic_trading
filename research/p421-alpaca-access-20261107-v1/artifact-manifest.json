@@ -1,0 +1,12 @@
+{
+  "acceptance.json": "4d997ed33a36c6427cf0aec53d16c6777bd98dfb149487523396b77e390c6222",
+  "assessment.json": "9ee649c7631acf2d010a3c900fa68c07ef24c8f151046d7d94f1ad10ff8b0cc9",
+  "comparison-preflight.json": "8ee5f8143e41441620b0665e356e6274b0368649df076f18e5e22f90830d0c5f",
+  "ibkr-access-assessment.json": "8e1b4097fbd5ae950dd376b9458252e7045134df567223aef434b7271baa8a4d",
+  "ibkr-recheck-protocol.json": "1820f00ab3f22d3745241439e027aff979a562356fdce9bbba244c51e613f28c",
+  "ibkr-recheck.md": "ba5b4bd999eb9f3e8d08d127ebb077265c7414e9f9829d58603c08e93f674ce8",
+  "protocol.json": "0a4b76acd422dd376f7d00165ca98b7113620423e2d05f0f4c654dbae1a8cd1a",
+  "results.md": "370e7cca9f46972de2c0b7d35fc34bccbce5ad8b0bf9ccf231da1707b4e394d8",
+  "source-inputs.json": "d80dfe073bac43c8ca3cff55fe44b0fe1b0513076a601172ebcdba34c66543d9",
+  "transport-recovery.json": "9b0707a4f77f2cf33a7e0e2aaf7297b1305296a179e35db13512787d025055a6"
+}

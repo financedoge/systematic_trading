@@ -1,0 +1,20 @@
+{
+  "affected_shared_services_modified": [],
+  "asset_registry_sha256": "d6b842ccd78766d47766173063fd27cf511e510b42de7820a4fae6442afb9b7f",
+  "decision": "Reuse GovernedInputs, existing calendar/audit tools and verified HTTP acquisition for governance inspection. No new signal/composite/production data adapter.",
+  "existing_asset": "activity-raw-v1 has raw-basis semantics; consolidated session/trade coverage is not certified by that label.",
+  "future": "A full-universe constituent consolidated-activity asset would require a new pinned version, reuse_reviews and monitoring demand before a composite consumes it. Do not modify the existing asset definition or fingerprint.",
+  "inspected_versions": {
+    "activity-audited-lag20-v1": "e90e9fe4ef9919a8e642256d146c1e22f73736b31462c813b58fcfe74b3ae495",
+    "activity-lag20-v1": "22d7a7a12268b83ba5998e311855bf47fa12d082c599f8d9630f2cbdceef9e43",
+    "activity-raw-v1": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8",
+    "alpha101-tilt-v1": "d2f9e4e5e29a24f8de06008beb3089770138c5f0875f1dcceb6e868290b69541",
+    "m1-selection-v1": "6d69d9d053b30906da639e2913717043bd1aab3627136a7cbe223d2d53250f2f"
+  },
+  "new_assets_registered": [],
+  "searches": [
+    "volume",
+    "raw",
+    "constituent"
+  ]
+}

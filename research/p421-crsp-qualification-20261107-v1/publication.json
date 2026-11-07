@@ -1,0 +1,20 @@
+{
+  "source_id": "governance/pilots/p421-crsp-daily-v1",
+  "version": "b7fd82745c01aba59eb50aad4c5172b128294d639dc1ed3b392cbf99fde3ae38",
+  "observations": 2277,
+  "documents": 2,
+  "verified_at": "2026-11-07T14:26:44.501985+00:00",
+  "source_files": {
+    "D:\\systematic_trading_data\\source-archives\\wrds\\pilot-20261107T141349139724Z\\dated-identity-comparison.json": "603f0235d9713a402596d5c0e0753c80a469cf6a806e5a16cc66c5d25ccbbc67",
+    "D:\\projects\\systematic_trading\\research\\p421-crsp-qualification-20261107-v1\\protocol.json": "9b3a51653ef6e2099116d07ce473871dfef3b26bf90f38c1ba0e798caec01544",
+    "D:\\projects\\systematic_trading\\research\\p421-crsp-qualification-20261107-v1\\assessment.json": "2aa3f84a81bf8c348e6e5b53c7eef6b20da304bb00f7fbbd6e1256a8bc8ca176",
+    "D:\\projects\\systematic_trading\\scripts\\publish_p421_data_checks.py": "2fd1a91eeb31f08822b0e7d1733bff3eb7672a995db2bd1e24aa2890befc36ee"
+  },
+  "native_storage": "postgres-parquet-duckdb",
+  "exact_payload_readback": true,
+  "all_historical_available_at_null": true,
+  "main_catalog_before": "2ecce5e8bca07c28c3f918d7ce20d36b8d54b9377c12ce6a35d80df66f118628",
+  "main_catalog_after": "2ecce5e8bca07c28c3f918d7ce20d36b8d54b9377c12ce6a35d80df66f118628",
+  "active_catalog_written": false,
+  "registered_asset_migrations": 0
+}

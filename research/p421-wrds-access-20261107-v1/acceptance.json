@@ -1,0 +1,70 @@
+{
+  "status": "complete",
+  "completed_at": "2026-11-07T09:12:06.115290+00:00",
+  "passfile_saved": true,
+  "passfile_reconnect_verified": true,
+  "tls": "verify-full",
+  "read_only": true,
+  "credential_content_retained_in_research": false,
+  "archive_root": "D:\\systematic_trading_data\\source-archives\\wrds\\access-20261107T091155271163Z",
+  "manifest_sha256": "5b529709630f1179f8416828c0bc7abbadf32dd01bcf3b3e0190d3db90756ef9",
+  "verified_tables": [
+    {
+      "schema": "crsp_a_stock",
+      "relation": "dsf_v2",
+      "read_succeeded": true,
+      "column_count": 50
+    },
+    {
+      "schema": "crsp_a_stock",
+      "relation": "dsenames",
+      "read_succeeded": true,
+      "column_count": 21
+    },
+    {
+      "schema": "crsp_a_stock",
+      "relation": "stksecurityinfohist",
+      "read_succeeded": true,
+      "column_count": 36
+    },
+    {
+      "schema": "taqmsec",
+      "relation": "ctm_20250224",
+      "read_succeeded": false,
+      "error_type": "InsufficientPrivilege",
+      "sqlstate": "42501"
+    },
+    {
+      "schema": "taqmsec",
+      "relation": "mastm_20250224",
+      "read_succeeded": false,
+      "error_type": "InsufficientPrivilege",
+      "sqlstate": "42501"
+    }
+  ],
+  "taq_2024_2025_schema_usage": [
+    {
+      "schema": "taqm_2024",
+      "usage": false
+    },
+    {
+      "schema": "taqm_2025",
+      "usage": false
+    }
+  ],
+  "archived_query_receipts": 11,
+  "archived_payloads": 9,
+  "archive_payload_hashes_verified": true,
+  "market_observation_rows_downloaded": 0,
+  "qualified_histories": 0,
+  "catalog_publications": 0,
+  "tests": {
+    "focused_passed": 14,
+    "ruff": "passed"
+  },
+  "limitations": [
+    "CRSP field/session definitions and requested date coverage require the bounded sample",
+    "TAQ 2024/2025 raw-schema usage is absent and both February 24 2025 trade/master view reads are denied (42501)",
+    "Current retrieval does not certify historical availability"
+  ]
+}

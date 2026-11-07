@@ -1,0 +1,57 @@
+{
+  "status": "bounded_data_check_complete",
+  "verified_at": "2026-11-07T14:42:39.569668+00:00",
+  "protocol_sha256": "2cf73c9f70f7a5f116176392c1fa469455da0031622f15b2715b98b94c071007",
+  "verified_source_archives": [
+    {
+      "path": "D:\\systematic_trading_data\\source-archives\\alpaca\\volume-exceptions-20261107T140725342562Z",
+      "manifest_sha256": "57da0ad808f687cdfd2b50c363635b1ca325dcb24d0987276c244f667ab05e5f",
+      "payloads": 10,
+      "original_recipe_files": 12
+    },
+    {
+      "path": "D:\\systematic_trading_data\\source-archives\\ibkr\\volume-exceptions-20261107T140725484904Z",
+      "manifest_sha256": "1567fca03ef09a4bde39bdbd8e5e647c78a89286f9a233ed7b3ece81a8264076",
+      "payloads": 86,
+      "original_recipe_files": 12
+    }
+  ],
+  "dependency_contracts_unchanged": true,
+  "active_catalog_written": false,
+  "registered_inputs_migrated": 0,
+  "strategy_replays": 0,
+  "historical_strategy_eligible_rows": 0,
+  "tests": {
+    "command": ".venv/Scripts/python.exe -m pytest tests/test_large_volume_sources.py tests/test_volume_exception_sources.py tests/test_volume_exception_reconciliation.py tests/test_crsp_pilot.py tests/test_p421_audit_publication.py tests/test_fix_minute_gaps.py -q",
+    "passed": 41
+  },
+  "ruff": "pass",
+  "git_diff_check": "pass",
+  "retention": "Protect active qualification archives and licensed local extracts; compact findings and recipes retained.",
+  "weakest_etf_chart": "Not applicable: data qualification only, no strategy or portfolio calculation.",
+  "native_publication": {
+    "source_id": "governance/pilots/p421-large-volume-v1",
+    "version": "4d88ae23af1ec3460c7368d43e1d0eb8dd79ea2769a3d3e937f3e3816197b4b3",
+    "observations": 5,
+    "documents": 2,
+    "exact_payload_readback": true,
+    "historical_available_at_null": true,
+    "catalog_before": "2ecce5e8bca07c28c3f918d7ce20d36b8d54b9377c12ce6a35d80df66f118628",
+    "catalog_after": "2ecce5e8bca07c28c3f918d7ce20d36b8d54b9377c12ce6a35d80df66f118628"
+  },
+  "code": {
+    "scripts/capture_large_volume_sources.py": "6c2b1fea43bf032336b4ff5e4df52e90d684bce091135b5d196406f481c78902",
+    "scripts/reconcile_large_volume_sources.py": "de4f6711cb0ada69af7854b67646fc11b57c05f654886c4576638a6c39d3129c",
+    "tests/test_large_volume_sources.py": "7076962c9238d15e42ea9f65f031dbb5941b6a618fb8d072326bd1e8f2c94657",
+    "tests/test_volume_exception_sources.py": "fa41a898a479ee2289f01733d71834a19d4337aa805744e19251ce9288f2871a",
+    "tests/test_volume_exception_reconciliation.py": "18c09a7f90e498809304f27f7b80e1e3e387d0adf9afb870ae1095d3e9cd7b4f",
+    "tests/test_crsp_pilot.py": "ae2e64bb52430d955f7a3ce9eb4c671d535cc826e253539f722e099a1286b124",
+    "tests/test_p421_audit_publication.py": "f0ae939b788e8535e726de42c8fb4e62c97b89312ea0e97e17d5ee6eb4b3f43f",
+    "tests/test_fix_minute_gaps.py": "74542544a48e6641ae72e4f6f5726283b1d502dc331e3f4af2fb9d4b60691bbc",
+    "scripts/publish_p421_data_checks.py": "2fd1a91eeb31f08822b0e7d1733bff3eb7672a995db2bd1e24aa2890befc36ee"
+  },
+  "secret_scan": {
+    "files": 16,
+    "known_auth_values_found": 0
+  }
+}

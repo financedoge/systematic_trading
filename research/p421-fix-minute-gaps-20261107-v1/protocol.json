@@ -1,0 +1,149 @@
+{
+  "cases": [
+    {
+      "date": "2025-02-07",
+      "end": "2025-02-07T15:53:59.999999999Z",
+      "start": "2025-02-07T15:53:00Z",
+      "symbol": "FIX",
+      "tape": "A"
+    },
+    {
+      "date": "2025-02-04",
+      "end": "2025-02-04T17:16:59.999999999Z",
+      "start": "2025-02-04T17:16:00Z",
+      "symbol": "FIX",
+      "tape": "A"
+    },
+    {
+      "date": "2025-02-04",
+      "end": "2025-02-04T19:59:59.999999999Z",
+      "start": "2025-02-04T19:59:00Z",
+      "symbol": "FIX",
+      "tape": "A"
+    }
+  ],
+  "comparison": "Compare complete record multisets to the original full-day capture restricted to the same minute; retain differences and source timestamps. No fitted clock alignment.",
+  "created_at": "2026-11-07T14:32:56.730395+00:00",
+  "prior_assessment": "research/p421-large-volume-20261107-v1/assessment.json",
+  "prior_assessment_sha256": "01ce76eec37c3cd4dfa0a02cb8f333765d50e13b2f35eb2bd84e9ab8a0e761b7",
+  "reason": "The 6359-share February 7 difference occurs in 15:53 UTC; February 4 differences are 1317 shares at 17:16 and 1801 shares at 19:59. Other minute differences on February 7 offset to zero and are retained as clock-boundary diagnostics.",
+  "retries": 3,
+  "rules": {
+    "A_known": [
+      " ",
+      "B",
+      "C",
+      "E",
+      "F",
+      "H",
+      "I",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "T",
+      "U",
+      "V",
+      "X",
+      "Z",
+      "4",
+      "5",
+      "6",
+      "7",
+      "9"
+    ],
+    "C_known": [
+      "@",
+      "A",
+      "B",
+      "C",
+      "D",
+      "F",
+      "G",
+      "H",
+      "I",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z",
+      "4",
+      "5",
+      "6",
+      "7",
+      "9"
+    ],
+    "combination": "Most restrictive rule; unknown tape/condition/update state fails closed. Nasdaq B is bunched trade (price eligible), W is average-price (price ineligible).",
+    "invalid_update_states": [
+      "canceled",
+      "incorrect"
+    ],
+    "minute_price_excluded_A": [
+      "B",
+      "C",
+      "H",
+      "I",
+      "M",
+      "N",
+      "P",
+      "Q",
+      "R",
+      "U",
+      "V",
+      "Z",
+      "4",
+      "7",
+      "9"
+    ],
+    "minute_price_excluded_C": [
+      "C",
+      "G",
+      "H",
+      "I",
+      "M",
+      "N",
+      "P",
+      "Q",
+      "R",
+      "U",
+      "V",
+      "W",
+      "Z",
+      "4",
+      "7",
+      "9"
+    ],
+    "valid_update_states": [
+      "missing",
+      "corrected"
+    ],
+    "volume_excluded": [
+      "M",
+      "Q",
+      "9"
+    ],
+    "zero_size_markers": [
+      "M",
+      "Q",
+      "9"
+    ]
+  },
+  "scope": "Direct minute queries to distinguish full-day pagination from persistent source gaps; no data repair.",
+  "source_helper_sha256": "c8001daf9305b1c3a3aa81aa1aaf364631e170cbafe02ec63c2ecfba5986b92b",
+  "source_queries": "Exact frozen UTC minutes; SIP, USD, asof=-, ascending, limit 10000. Require terminal next_page_token=null; no silent range expansion.",
+  "version": "p421-fix-minute-gaps-20261107-v1"
+}

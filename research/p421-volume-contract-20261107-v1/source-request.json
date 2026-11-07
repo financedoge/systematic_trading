@@ -1,0 +1,107 @@
+{
+  "additional_diagnostic_rows": [
+    {
+      "date": "2024-06-24",
+      "symbol": "MANH"
+    },
+    {
+      "date": "2024-07-25",
+      "symbol": "FIX"
+    },
+    {
+      "date": "2024-10-29",
+      "symbol": "UTHR"
+    }
+  ],
+  "cost": "No purchase or subscription authorized or executed. Seek existing entitlement or a bounded evaluation extract.",
+  "expanded_window": "2024-02-27 through 2025-02-28",
+  "fields": [
+    "consolidated_unadjusted_share_volume_full_session",
+    "consolidated_unadjusted_share_volume_regular_session",
+    "regular_session_raw_close",
+    "official_open_if_available"
+  ],
+  "identities": [
+    {
+      "broker_conid": 6120,
+      "isin": "US1423391002",
+      "symbol": "CSL"
+    },
+    {
+      "broker_conid": 13904,
+      "isin": "US9426222009",
+      "symbol": "WSO"
+    },
+    {
+      "broker_conid": 4814485,
+      "isin": "US5627501092",
+      "symbol": "MANH"
+    },
+    {
+      "broker_conid": 273962,
+      "isin": "US7496851038",
+      "symbol": "RPM"
+    },
+    {
+      "broker_conid": 6746357,
+      "isin": "US91307C1027",
+      "symbol": "UTHR"
+    },
+    {
+      "broker_conid": 93957038,
+      "isin": "US9837931008",
+      "symbol": "XPO"
+    },
+    {
+      "broker_conid": 6607708,
+      "isin": "US1999081045",
+      "symbol": "FIX"
+    },
+    {
+      "broker_conid": 4596077,
+      "isin": "SG9999000020",
+      "symbol": "FLEX"
+    },
+    {
+      "broker_conid": 267265,
+      "isin": "US1475281036",
+      "symbol": "CASY"
+    },
+    {
+      "broker_conid": 11735,
+      "isin": "US7595091023",
+      "symbol": "RS"
+    }
+  ],
+  "initial_dates": [
+    "2025-02-24",
+    "2025-02-25",
+    "2025-02-26",
+    "2025-02-27",
+    "2025-02-28"
+  ],
+  "initial_stock_days": 50,
+  "metadata": [
+    "permanent_security_id",
+    "source",
+    "source_version",
+    "raw_hash",
+    "price_basis",
+    "volume_unit",
+    "split_basis",
+    "volume_session_start",
+    "volume_session_end",
+    "calendar_version",
+    "volume_trade_eligibility",
+    "venue_and_TRF_scope",
+    "odd_lot_rule",
+    "auction_rule",
+    "correction_rule",
+    "published_at",
+    "first_captured_at"
+  ],
+  "next_gate": "Check contract identity, units, condition/session coverage, daily corrections and complete requested rows. A price match alone does not qualify volume.",
+  "price_volume_basis": "Keep the two volume series separate; no inferred transformations.",
+  "purpose": "Qualify a small matching consolidated sample before a wider acquisition.",
+  "status": "Prepared; source access not established."
+}

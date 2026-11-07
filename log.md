@@ -1,5 +1,100 @@
 # Project Log
 
+## 2026-11-07 — Research checkpoint prepared for authorized commit/push
+
+Operator requested commit and push before further research. Reviewed all pending
+P4.21 recipes, compact evidence, tests and WRDS retention guidance. The 153 new
+files total approximately 0.71 MB; 140 focused tests, Ruff and all 88 artifact
+hashes pass. Credential scanning found no matches. Added exact-byte Git attributes
+for the pinned research artifacts and recipes so checkout newline conversion
+cannot invalidate their evidence hashes. Licensed raw rows, credentials and the
+generated paper-reconciliation snapshot remain local. After push, continue dated
+identifier and holdings-completeness qualification under the existing stopping
+rule: discuss investment decisions or new strategy findings.
+
+## 2026-11-07 — WRDS holdings access and 29-fund coverage retained
+
+Continued pipework under the operator's revised cadence. Reused the existing
+read-only TLS/passfile helper and prior 29-equity-fund cohort. Actual reads pass
+for CRSP holdings, dated fund names, fund headers, summary and portfolio mappings.
+Retained eight access/metadata responses, then froze a separate bounded coverage
+extract. Five further responses retain 238 dated fund-name rows, 29 portfolio
+mappings, 2,518 report/receipt coverage groups and 402 December 2024 MDY holdings.
+Every WRDS payload, SQL, parameter set, type description and hash stays locally
+archived outside Git. No credential or source-data copy was sent elsewhere.
+
+Coverage spans 2,012 distinct portfolio/report dates, December 2020–September
+2026, for all 29 fund candidates. Eighteen report-grid snapshots are absent.
+Multiple receipt dates within some snapshots require whole-portfolio availability
+review; rank ties are not treated as duplicate records. Current vintage and
+vendor receipt dates do not prove historical dissemination.
+
+Compared the predeclared MDY December 31 snapshot with the retained SEC filing.
+All 382 unique CUSIP/US-ISIN matches agree exactly on shares and market value.
+Eighteen foreign identifier bridges remain unresolved, including FLEX. VNOM's
+filed CUSIP is absent from the CRSP snapshot; the same-ticker candidate has a
+different CUSIP and remains unmatched. CRSP additionally includes a cash row.
+No ticker-only repair or weight normalization. The CRSP receipt date is February
+8, 2025; the SEC filing was accepted February 27. Kept both without asserting
+that the current vendor vintage was historically available on the earlier date.
+
+Fifteen focused holdings tests and Ruff pass, in addition to the 41 earlier
+source-reconciliation tests. No active input publication or strategy replay.
+Retain compact findings and active source archives. Next pipework is the dated
+identifier gaps, completeness across receipt groups and source dissemination/
+revision semantics, alongside the remaining price/activity qualification gates.
+[Access report](research/p421-wrds-holdings-access-20261107-v1/results.md) ·
+[Coverage report](research/p421-wrds-holdings-coverage-20261107-v1/results.md).
+
+## 2026-11-07 — Broker/CRSP controls complete; persistent source differences retained
+
+Operator instructed autonomous continuation of pipework, with discussion for
+investment decisions and new strategy discoveries. After the operator opened
+the paper Gateway, completed all five frozen IBKR full-day controls and the
+separately declared UTHR early-close control. Retained initial access failures,
+all raw responses, terminal pages, executed recipes and backward-tail evidence.
+No orders, subscriptions, broker-policy or promotion changes.
+
+Five large residuals: Alpaca eligible trades reproduce all five daily bars.
+IBKR agrees for RPM April 29 and UTHR June 21/25. FIX differs by 6,359 shares on
+February 7 and 3,118 on February 4. CRSP agrees with IBKR on both FIX daily totals.
+Three direct minute queries reproduce the original Alpaca records exactly:
+February 7 at 10:53 New York; February 4 at 12:16 and 14:59. This rules out the
+full-day pagination route as the explanation for these observed gaps, without
+establishing an upstream correction/capture cause. Other offsetting minute
+differences and tiny FINRA price differences are preserved unchanged.
+
+WRDS extract retained locally: 2,783 daily rows for eleven candidate securities.
+Nine dated identifier matches yield 2,277 stock-days; WSO Class B's 253 rows are
+separate. FLEX's 253 rows remain unjoined pending a retained CUSIP/ISIN bridge;
+the public SEC download failed with 403. All matched closes meet the existing
+half-cent diagnostic and all 24 cash-distribution dates/amounts agree. Current
+capture and effective intervals do not prove historical vendor availability.
+
+The largest CRSP/SIP outlier, UTHR July 3, has exact Alpaca/IBKR agreement on
+7,635 trades, 281,294 shares and all actual 13:00-close clock buckets. CRSP differs.
+No source is selected as a universal winner; no tolerance widening or splicing.
+Licensed rows and exact comparisons remain outside Git in the local WRDS archive.
+
+Published isolated native evidence: five large-case observations, 2,277 CRSP
+comparison observations and one early-close observation, plus two documents per
+publication. Exact payload hashes read back; historical available_at stays null.
+No active catalog admission or registered input migration. 41 focused tests and
+Ruff pass. The minute audit adds source-manifest pin verification; original
+capture code remains archived. Compact reports, acceptance and artifact hashes
+close the four checks; active qualification archives remain protected.
+
+P4.21 constituent-alpha replay remains data-blocked. Next work is the retained
+identifier bridge, historical holdings/membership and source-definition evidence,
+with historical availability and qualified lookback coverage still required.
+No strategy result or weakest-ETF trade chart exists for these data-only checks.
+Preserved unrelated health fixes and the pre-existing paper-reconciliation file.
+
+[Five cases](research/p421-large-volume-20261107-v1/results.md) ·
+[CRSP](research/p421-crsp-qualification-20261107-v1/results.md) ·
+[Early close](research/p421-crsp-early-close-20261107-v1/results.md) ·
+[Minute gaps](research/p421-fix-minute-gaps-20261107-v1/results.md).
+
 ## 2026-11-07 — System health repair and calculation invalidation review
 
 Operator requested diagnosis/repair of degraded System services, then questioned
@@ -42,6 +137,333 @@ current conservative replay remains application-owned and running without a new
 worker exception; finished publication and cleared trading readiness are still
 pending. Daily coverage is 2,728/3,133 and reconciliation is matched. The overall
 System status remains degraded; no all-clear or completed replay is claimed.
+
+## 2026-11-07 — Ten-stock SIP pilot retained; larger volume exceptions found
+
+Operator authorized the versioned pilot. Froze protocol
+97fb0548e0d656275c9e1aaf329ef671f6942747be9136f61e26ef959f5d6635
+before acquisition; reused the asset/dependency registries, existing hash reader
+and native publication service without changing tracked contracts. Retained
+2,480 newly captured daily bars plus 50 previously acquired rows, preserving each
+source's capture timestamp. Two transport failures precede one successful response;
+all receipts remain local, credentials stayed in the ignored local environment.
+
+All 2,530 stock-days are present. Median absolute volume difference is 0.006888%,
+but the largest is RPM April 29, 2024 at +11.1644%; UTHR June 25 is +7.4032%.
+Five days differ by over 1%, a descriptive finding rather than an admission rule.
+Kept exact residuals; no fitted scale, rounding repair, tolerance widening or
+source substitution. All closes are within half a cent of prior IBKR RTH bars.
+FLEX October 18 narrowly exceeds the existing half-cent published-close diagnostic
+at −$0.005001525878906; retained rather than widening the threshold. No split
+multipliers differ from one; retained 24 dividend records without certifying the
+ledger's independent completeness or historical availability.
+
+Published 2,530 audit observations and five documents under
+`governance/pilots/p421-sip-volume-v1`, batch
+`35d1efe82c7d7fbd77edd043fe2f33b34d7b9dec74190c0609374195aa2cb1b9`.
+Every payload/document hash passed native-store readback. This is isolated
+field-audit evidence, not admission to `governance/catalog`; the active catalog
+head remained unchanged across publication. All historical available_at fields
+remain null. No registered input/consumer migration or strategy backtest.
+
+32 focused tests, Ruff and dependency checks pass. Saved compact report, protocol,
+reuse review, exact hashes, acceptance and source lineage. Keep active qualification
+archives; no new trade-by-trade full-year download or bulky output. No broker,
+subscription, order, execution-policy or promotion changes. Left the pre-existing
+paper-reconciliation file untouched.
+
+Stop for discussion. Propose freezing the five largest percentage volume residuals
+for eligible-trade reconstruction and independent IBKR full-day tick controls:
+RPM 2024-04-29, UTHR 2024-06-25 and 2024-06-21, FIX 2025-02-07 and 2025-02-04.
+This prospective diagnostic does not retroactively qualify the pilot. P4.21 still
+needs dated security/holdings and availability checks before constituent-alpha work.
+[Pilot report](research/p421-sip-volume-pilot-20261107-v1/results.md).
+
+## 2026-11-07 — Fourteen volume exceptions compared; SIP pilot recommended
+
+Operator continued after the CSL full-day discussion. Froze the original 14
+nearest-100 exceptions and three independent IBKR controls before downloading:
+FIX February 25 (largest absolute residual), CSL February 26 (largest relative),
+and MANH February 27 (largest Nasdaq relative). This is diagnostic case selection,
+not random validation. Retained every response locally; existing providers,
+strategies, broker guards and published histories remain unchanged.
+
+All 307,092 Alpaca records reconstruct the 14 daily bars exactly under documented
+NYSE/Nasdaq condition rules. All 4,289 returned minute volumes match; 1,916 absent
+minutes lack a price-eligible trade and contain 550,359 shares. No update flags
+appear, which does not establish historical correction or availability semantics.
+All three IBKR controls match full-day volume and condition-size multisets and
+pass independent backward boundary checks. Their 46,214 in-day ticks remain
+archived with 3,056 separate boundary-check ticks. Filtered regular-session tick
+sums reproduce the retained IBKR regular-day bars. CSL/FIX have 2,538/100 shares
+on opposite sides of 16:00 between provider clocks; daily agreement does not make
+session-clock definitions interchangeable.
+
+The 14 published residuals remain 52–184 shares, maximum 0.049799%, with no exact
+or nearest-100 match. Did not fit a multiplier, switch to truncation or widen a
+tolerance. The provider/capture-vintage cause is unresolved; no database repair
+or automatic field qualification follows from this sample alone.
+
+Alpaca completed 37 pages after one bounded resumed run; completed pages were
+verified and reused. IBKR completed 55 requests including one interrupted request,
+three terminal empty responses and three backward controls, with one reconnect.
+Ninety-two new payload hashes, 18 prior payloads and pinned publication inputs
+verify. Dependency preflight, 17 focused tests, Ruff and whitespace checks pass.
+Credentials stayed in the ignored local environment and fixed-origin HTTPS auth
+used stdin. No subscriptions, orders, publications or strategy replays.
+
+Stop for discussion. Recommend moving to a versioned, audited SIP-volume pilot
+for the frozen ten-stock history, preserving the previous series and residuals.
+Declare corporate-action basis, full-day activity and decision-time availability
+before admission; regular-session data requires a separate clock contract.
+[Comparison report](research/p421-volume-exceptions-20261107-v1/results.md).
+
+## 2026-11-07 — Full-day CSL activity reconciled; filtering and absent bars explain the gaps
+
+Operator authorized one full-day follow-up, then discussion. Frozen CSL February
+24, 2025, New York day; reused pinned bars/publication inputs and existing paper
+and Alpaca access. Retained all raw responses locally outside Git. No new
+publication, strategy replay, subscription or trading change.
+
+Alpaca returned 14,681 records. Excluding 12 official price-reference records
+leaves 14,669 eligible trades and exactly 413,821 shares, matching both IBKR's
+14,669 historical ticks and Alpaca's daily bar. The published 413,800 is 21 shares
+lower; compatible rounding for this day is not a new tolerance or a solution for
+the 14 rounding exceptions in the original 50-stock-day comparison.
+
+IBKR bars exclude 162,920 odd-lot, 6,501 average-price and 21,086 extended-hours
+prior-reference-price shares, leaving exactly 223,314. All 931 IBKR minute bars
+match unflagged ticks. Full-day evidence refines the earlier 33-minute inference:
+71 flagged records are not odd lots. Alpaca's 242 present minutes match exactly;
+205 absent minutes have no price-eligible trade but contain 36,439 eligible shares,
+fully explaining the minute-to-daily gap. Never infer zero activity from an absent
+OHLC bar or use filtered broker bar volume as full-tape activity.
+
+Condition-size multisets and all clock bins agree across sources. Primary exact
+second/price/size comparison retains 164 unmatched occurrences per side. Separate
+exploratory diagnostics identify 153 one-second timestamp shifts and 11 $0.0001
+price offsets; these do not become a qualification tolerance or alter source
+values. No Alpaca update flags appeared; historical correction timing remains
+uncertified. A one-day match does not qualify the universe or availability.
+
+IBKR page three timed out amid farm disconnect/reconnect messages. One resumed
+connection preserved completed pages and continued at the verified next whole
+second. The terminal empty response and independent 1,001-tick backward sample
+validate the ending boundary. Alpaca's saved complete response initially failed
+a too-strict positive-size check on zero-volume official price markers; corrected
+the validator and revalidated without downloading again. Preserved old runner,
+failed manifests and both amendments. Twenty-two new and 18 prior payloads and
+pinned input hashes verify; 23 focused tests, Ruff and whitespace checks pass.
+
+Stop for discussion. Recommend the same activity reconciliation on the original
+14 stock-days that failed nearest-100 rounding before field-specific publication
+qualification. Do not overwrite the database with IBKR's filtered bar volume.
+[Full-day evidence](research/p421-csl-trades-20261107-v1/results.md).
+
+## 2026-11-07 — Alpaca sample captured; IBKR history recovered; volume filtering diagnosed
+
+Used the Alpaca pair already stored in the ignored `.env`, without copying or
+logging values. Retained a complete raw-SIP sample of 50 daily and 13,878 minute
+bars for the frozen ten stocks across February 24–28, 2025. Every close agrees
+with the pinned publication within half a cent; daily-volume differences have
+median 0.006373% and maximum 0.049799%. None is exact, and nearest-100 rounding
+leaves 14 exceptions. No post-result qualification tolerance was introduced.
+
+Operator confirms no other IBKR live session. Bounded retries returned 1,004 CSL
+historical ticks, five regular and five all-hours daily bars, and 931 minute bars.
+The earlier session/IP messages did not recur; recovery cause remains unknown.
+MANH/SPY frozen quotes returned 10089 additional API permission responses; actual
+billing subscriptions were not inspected or changed. Warning 2188 did not prevent
+older historical requests from completing.
+
+In 33 complete minutes, total IBKR tick volume is 24,441 shares; excluding the
+11,523 shares flagged as odd lots leaves exactly its minute-bar volume, 12,918.
+All 23 Alpaca common-minute totals match all IBKR ticks. Its ten absent minutes
+contain only flagged odd-lot ticks, totaling 2,303 shares. Treat this as a strong
+local aggregation/eligibility diagnostic, not a full-day or universe-wide causal
+claim. Daily reconstruction, corrections and historical availability remain open.
+
+Saved all source responses locally outside Git. Eighteen payload hashes across
+ten attempts, executed runner copies and pinned comparison inputs verify. Added
+a replayable assessment runner; 35 focused tests, Ruff and whitespace checks pass.
+Final Alpaca capture used the existing local proxy with verified HTTPS/IPv4;
+each page succeeded on its first transport attempt. Earlier timeouts and exact
+requests remain retained, with no network-setting or feed substitution.
+
+Updated the plan, research state and Kanban. No registered strategy, shared asset,
+publication or broker order changed. Stop after this item for discussion; proposed
+next item is a predeclared full-day CSL February 24 trade-level reconciliation
+before any broader historical-data expansion.
+[Report](research/p421-alpaca-access-20261107-v1/results.md).
+
+## 2026-11-07 — Alpaca dashboard ready; IBKR subscriptions/coverage rechecked
+
+Operator completed Alpaca signup and reports Paper Trading ready. Browser
+inspection timed out twice, so opened the existing masked local credential setup
+window. Keys remain unentered as of this checkpoint; no Alpaca observations yet.
+
+Operator asked to double-check paid IBKR access alongside Alpaca. Existing paper
+Gateway port 4002 and server time verify, with paper managed accounts. A dedicated
+read-only client requested three non-regulatory frozen quote snapshots; none
+returned ticks, and MANH explicitly returned 10197 (competing live session).
+A five-session CSL daily-history retry timed out after 40 seconds without an
+explicit entitlement error; stopped remaining bar requests. A separate, declared
+1,000-tick historical Time & Sales request for CSL February 24, 2025 explicitly
+returned 10187 with the specific message "Trading TWS session is connected from
+a different IP address", with zero observations. This actual message narrows the
+generic permission-code label to session/IP conflict evidence; it does not prove
+a missing paid data package.
+
+Five compressed callback/result payloads and both executed runners remain under
+the local IBKR source archive; hashes/counts verify. Two focused tests and Ruff
+pass. These results do not establish absence of a paid subscription: billing
+packages were not inspected, and username/API/paper sharing plus competing
+sessions need clarification. Earlier 23 successful IBKR series remain evidence.
+Current official documentation separately confirms historical trade filtering and
+a three-year historical Time & Sales window; paid access does not automatically
+establish the required volume contract. No subscriptions, live sessions, trading
+settings or publications changed. Await local Alpaca credentials and operator
+session clarification, then finish the bounded comparison and discuss.
+[IBKR source-access findings](research/p421-alpaca-access-20261107-v1/ibkr-recheck.md).
+
+## 2026-11-07 — Alpaca sample prepared; free account setup pending
+
+Operator authorized the recommended source qualification and confirmed no Alpaca
+account. No project or standard environment credentials found. Opened the actual
+free Trading API signup for personal entry/email verification/MFA and asked the
+operator to select Paper Trading afterward. Authentication remains with the user.
+
+Prepared bounded historical raw-SIP daily/minute acquisition and source comparison
+runners. Preserve literal historical tickers; refuse redirects, implicit feed
+fallback, missing stock-days, duplicate bars and pagination loops. Credentials
+use masked local entry and the existing new-file ACL helper, with no secret argv
+or archived headers. Exact responses, token-free queries, capture times, executed
+runner and hashes will be retained under the local Alpaca source archive. Existing
+50-stock-day published/IBKR comparison inputs all pass pinned hash checks. Minute
+clock bins retain 16:00 separately; no inferred volume scale or session certainty.
+
+Asset reuse/dependency checks pass; no shared service or registered input changed.
+Thirty focused tests and Ruff pass. Approximately 632 GB disk headroom available.
+No Alpaca credential, market observation, new publication or strategy calculation
+yet. The item is prepared but incomplete, awaiting account/key setup before the
+access probe and frozen sample. Stop after that result for discussion.
+[Preparation and protocol](research/p421-alpaca-access-20261107-v1/results.md).
+
+## 2026-11-07 — Online alternatives to the unavailable TAQ entitlement
+
+Completed the operator-requested primary-source search. Alpaca's historical FAQ
+explicitly allows SIP queries ending at least 15 minutes ago without a paid
+subscription; its plan table provides history since 2016. Recommend that bounded
+first pilot with explicit `feed=sip`, subject to actual access and correction/
+identity checks. Massive Developer currently lists $79/month for individual
+access to ten years of trades, including condition/correction and TRF metadata.
+AlgoSeek's daily product exposes full-day, market-hours and FINRA volume; request
+the exact small-extract terms if needed rather than buying its advertised
+$1,500/month full TAQ product. Databento remains secondary pending historical
+venue/TRF coverage checks. Vendor documentation is not data qualification.
+
+Retained the [sourced shortlist](research/p421-source-alternatives-20261107-v1/results.md)
+and reused the frozen ten-stock/five-day request. No credentials read, new account,
+purchase, vendor contact, market-data extraction, source substitution, shared
+service change or publication. Documentation-only item; stop for source discussion
+before a bounded acquisition. CRSP remains a separate daily comparison control.
+
+## 2026-11-07 — Tushare assessed as a possible TAQ alternative
+
+The operator suggested existing Tushare access. Read current official U.S.
+daily/adjusted/catalog and permission documentation, reviewed the existing optional
+adapter and searched registered assets. Reused the configured token reader and
+verified HTTP helper; preserved the existing audited raw-volume asset and every
+registered contract. Dependency preflight passed. No runtime/provider changes.
+
+The first `us_daily` request failed at transport; `us_daily_adj` explicitly denied
+permission. One bounded native Windows HTTPS POST retry passed the token via stdin
+and returned all five requested CSL dates, February 24–28, 2025. The next WSO
+request explicitly hit a one-call-per-minute limit. Stop on that response; do not
+label rate limiting as missing observations or blanket denial. Ten-stock coverage
+and independent price/volume agreement have not been checked.
+
+Three compressed API responses (five market rows plus two errors), the failed
+transport receipt, exact token-free requests, timestamps, checksums and executed
+runners remain under `D:\systematic_trading_data\source-archives\tushare`.
+No token was retained in output. Ten focused tests and Ruff pass; response/runner
+hashes and row counts verify. Current U.S. endpoint docs expose daily OHLC, volume,
+amount and VWAP, but do not certify consolidated venues, trade-condition rules,
+corrections or full/regular-session volume. Do not assume A-share lot units or
+historical availability. Tushare is a limited daily cross-check candidate, not an
+established TAQ replacement. No catalog publication, qualified history or strategy
+replay. Stop for discussion; the bounded CRSP comparison is still next.
+[Assessment](research/p421-tushare-access-20261107-v1/results.md).
+
+## 2026-11-07 — WRDS setup and source-archive retention
+
+The operator supplied school WRDS access, requested the Python setup guide be read
+and authorized saving the local password file. Read the authenticated guide and
+checked standard Windows/home locations without displaying credentials: no file
+was present. Prepared `scripts/setup_wrds_access.py` with masked local entry,
+new-file-only writes, user/SYSTEM file ACLs, verified TLS, read-only/time-bounded
+queries and reconnect validation. Uses the existing psycopg driver; an isolated
+WRDS-package install was stopped at its older pandas dependency, leaving runtime
+dependencies unchanged. Fourteen focused tests and Ruff pass.
+
+The first direct login failed without saving a password; subsequent direct TCP
+probes timed out. An explicit tunnel through the existing loopback HTTP proxy
+successfully verified the WRDS certificate and reached the database's password
+request. No global routing or TLS setting changed. A new local prompt is waiting;
+actual login and CRSP/TAQ table access are not yet verified. No market rows were
+downloaded, no existing catalog status relaxed and no strategy ran.
+
+The operator additionally directed that every WRDS extract be kept locally to
+build the research collection. Added this durable rule to AGENTS and the storage
+policy, prepared `D:\systematic_trading_data\source-archives\wrds`, and froze the
+existing 50-stock-day request by hash. Retain source rows, exact query/parameters,
+capture time, source version, identifiers, row counts and checksums; deduplicate
+identical payloads while preserving receipts. Protect the sole retained WRDS copy
+from exploratory-output cleanup, keep credentials/licensed rows outside Git, and
+require audit/publication before strategy use. Setup record:
+[WRDS access](research/p421-wrds-access-20261107-v1/results.md).
+
+Acceptance at 17:12 Asia/Shanghai: the operator reported approving phone
+authentication. The initial database login succeeded and saved the password file;
+two reconnect failures preceded successful saved-file read-only connections.
+Windows ACL inspection confirms inheritance is disabled and only the user/SYSTEM
+have access. Actual reads pass for `crsp_a_stock.dsf_v2`, `dsenames` and
+`stksecurityinfohist`. Do not infer TAQ access from visible view grants: both
+`taqmsec.ctm_20250224` and `mastm_20250224` explicitly refuse reads (42501), and
+raw 2024/2025 schema usage is false. No permission workarounds were attempted.
+Retained nine query payloads, two denied-query receipts and the executed runners
+under `D:\systematic_trading_data\source-archives\wrds\access-20261107T091155271163Z`;
+all payload hashes/counts and the runner hash pass. Latest local connection status
+is updated; failed attempts remain. Stop after this completed access item. Next:
+the bounded CRSP sample comparison and field/session definitions, with separate
+TAQ source access still needed. No market observation rows or new publication.
+
+## 2026-11-07 — Volume definition, scaling and availability review
+
+Continued the next P4.21 item after the operator's platform fixes. Searched the
+asset pool for volume/raw/constituent inputs and retained inspected version pins
+and reuse decisions; dependency contract preflight passed. Reused the existing
+governed reader and verified HTTP transport for governance evidence only.
+No registered strategy, asset, shared service or executable fingerprint changed.
+
+All 2,530 current rows have split multiplier one and raw volume equals source
+volume. Fixed 0.01/1/100 scalings fail; fitted per-name constants still leave
+43.6%–77.7% 99th-percentile relative discrepancies. All 759 existing all-hours
+control volumes exceed regular hours yet remain below the publication. Documented
+price/volume sale-condition differences support separating their qualification;
+they do not certify either provider's exact coverage. Four historical Nasdaq
+probes returned zero rows; the recent control returned three.
+
+Prepared a reviewable consolidated-activity field contract and 50-stock-day
+source request. Preserve the prior-close cutoff: full-session volume including
+after-hours trading must be from an earlier actually available session, with
+the complete activity stencil shifted together. Current captures do not establish
+historical publication availability. Thirty-two focused tests pass. Kept compact
+diagnostics, sources, asset reuse review, protocol, request and runner; classify
+public-probe/rendered outputs as disposable after closure while earlier broker
+evidence stays protected. No new publication or strategy replay. Stop for
+discussion; matching-source access and earlier qualification reviews remain open.
+[Report](research/p421-volume-contract-20261107-v1/results.md).
 
 ## 2026-11-07 — Economic and EIA transport incident
 

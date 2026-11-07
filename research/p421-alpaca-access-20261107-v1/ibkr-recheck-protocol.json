@@ -1,0 +1,40 @@
+{
+  "created_at": "2026-11-07",
+  "operator_request": "Double-check paid IBKR Gateway data access alongside the Alpaca API",
+  "scope": "Read-only entitlement/coverage evidence; no subscription changes or orders",
+  "gateway": "Existing verified paper session, dedicated client 29408",
+  "snapshot_symbols": ["CSL", "MANH", "SPY"],
+  "snapshot_contract": {
+    "requested_market_data_type": 2,
+    "reason": "U.S. market closed on Saturday; request frozen real-time quotes",
+    "regulatory_snapshot": false,
+    "wait_seconds_per_symbol": 13,
+    "interpretation": "Returned data type, ticks and denial codes establish tested API behavior only; they do not enumerate billing subscriptions"
+  },
+  "historical_requests": [
+    {"symbol": "CSL", "bar_size": "1 day", "duration": "1 W", "end": "20250301 05:00:00 UTC", "useRTH": 1},
+    {"symbol": "CSL", "bar_size": "1 day", "duration": "1 W", "end": "20250301 05:00:00 UTC", "useRTH": 0},
+    {"symbol": "CSL", "bar_size": "1 min", "duration": "1 D", "end": "20250225 05:00:00 UTC", "useRTH": 0}
+  ],
+  "history_rules": "Bounded waits and stop after incomplete history. Retain warning 2188 separately; old history returned to completion does not fail just because up-to-the-second access requires another entitlement.",
+  "distinct_tick_endpoint_followup": {
+    "reason": "Operator asked to double-check available IBKR alternatives; current documentation offers historical Time & Sales for three years",
+    "symbol": "CSL",
+    "start": "20250224 14:30:00 UTC",
+    "numberOfTicks": 1000,
+    "whatToShow": "TRADES",
+    "useRth": false,
+    "wait_seconds": 40,
+    "max_requests": 1,
+    "scope": "Access/field probe only, not a complete-day volume reconstruction; IB may finish the last second with slightly more than 1000 ticks"
+  },
+  "reuse": "Existing paper profile, IB callback compatibility, pinned MDY contract/identity receipts and prior published comparison; no shared provider or strategy changes",
+  "volume": "Preserve as-returned units and price basis. Compare the same date and clock bins; historical data may filter trade types even with paid subscriptions.",
+  "archive_root": "D:/systematic_trading_data/source-archives/ibkr",
+  "documentation": [
+    "https://www.interactivebrokers.com/docs/tws-api/doc/md/market-data-limitations",
+    "https://www.interactivebrokers.com/docs/general/market-data-subscriptions/introduction",
+    "https://www.interactivebrokers.com/docs/third-party-integrations/general-third-party-frequently-asked-questions",
+    "https://www.interactivebrokers.com/docs/tws-api/doc/md/historical-ticks"
+  ]
+}

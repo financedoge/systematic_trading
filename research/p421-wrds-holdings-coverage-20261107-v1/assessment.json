@@ -1,0 +1,319 @@
+{
+  "status": "bounded_coverage_and_snapshot_check_complete",
+  "protocol_sha256": "977bbefbda0d3c02ae6974cb6045e6de290f25aa3d785d3713ed706efcebc21f",
+  "audit_plan_sha256": "52d472efa511a9b366f3a0d5bd0841f9065ac21febe2608f6fdebc57b8fe46f7",
+  "source_archive": "D:\\systematic_trading_data\\source-archives\\wrds\\holdings-coverage-20261107T144818212103Z",
+  "source_manifest_sha256": "1569fe24f09296d9d87dc1cddafc08a39dd1be8ccaf03165f8fa1fd7070b4fd9",
+  "requested_funds": 29,
+  "discovered_funds": 29,
+  "fund_name_rows": 238,
+  "portfolio_mapping_rows": 29,
+  "coverage_rows": 2518,
+  "distinct_portfolio_report_dates": 2012,
+  "first_report": "2020-12-31",
+  "last_report": "2026-09-30",
+  "receipt_lag_days": {
+    "min": 5,
+    "median": 8.0,
+    "max": 69
+  },
+  "missing_receipt_dates": 0,
+  "receipt_before_report": 0,
+  "groups_with_tied_ranks": 1103,
+  "rank_note": "Ties in rank are not proof of duplicate holding records.",
+  "by_fund": {
+    "EEM": {
+      "candidate_rows": 127,
+      "dated_mapping_rows": 127,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "EFA": {
+      "candidate_rows": 112,
+      "dated_mapping_rows": 112,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "EWA": {
+      "candidate_rows": 77,
+      "dated_mapping_rows": 77,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "EWC": {
+      "candidate_rows": 82,
+      "dated_mapping_rows": 82,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "EWG": {
+      "candidate_rows": 77,
+      "dated_mapping_rows": 77,
+      "excluded_mapping_rows": 0,
+      "report_dates": 69,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "EWH": {
+      "candidate_rows": 73,
+      "dated_mapping_rows": 73,
+      "excluded_mapping_rows": 0,
+      "report_dates": 69,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "EWJ": {
+      "candidate_rows": 76,
+      "dated_mapping_rows": 76,
+      "excluded_mapping_rows": 0,
+      "report_dates": 69,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "EWT": {
+      "candidate_rows": 73,
+      "dated_mapping_rows": 73,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "EWU": {
+      "candidate_rows": 84,
+      "dated_mapping_rows": 84,
+      "excluded_mapping_rows": 0,
+      "report_dates": 69,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "EWY": {
+      "candidate_rows": 79,
+      "dated_mapping_rows": 79,
+      "excluded_mapping_rows": 0,
+      "report_dates": 69,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "IAT": {
+      "candidate_rows": 77,
+      "dated_mapping_rows": 77,
+      "excluded_mapping_rows": 0,
+      "report_dates": 69,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "IBB": {
+      "candidate_rows": 90,
+      "dated_mapping_rows": 90,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "INDA": {
+      "candidate_rows": 84,
+      "dated_mapping_rows": 84,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "ITA": {
+      "candidate_rows": 75,
+      "dated_mapping_rows": 75,
+      "excluded_mapping_rows": 0,
+      "report_dates": 69,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "IWM": {
+      "candidate_rows": 134,
+      "dated_mapping_rows": 134,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "MCHI": {
+      "candidate_rows": 107,
+      "dated_mapping_rows": 107,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "MDY": {
+      "candidate_rows": 97,
+      "dated_mapping_rows": 97,
+      "excluded_mapping_rows": 0,
+      "report_dates": 67,
+      "first_report": "2020-12-31",
+      "last_report": "2026-08-31",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "SOXX": {
+      "candidate_rows": 74,
+      "dated_mapping_rows": 74,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "SPY": {
+      "candidate_rows": 104,
+      "dated_mapping_rows": 104,
+      "excluded_mapping_rows": 0,
+      "report_dates": 68,
+      "first_report": "2020-12-31",
+      "last_report": "2026-08-31",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "VGK": {
+      "candidate_rows": 128,
+      "dated_mapping_rows": 128,
+      "excluded_mapping_rows": 0,
+      "report_dates": 66,
+      "first_report": "2020-12-31",
+      "last_report": "2026-08-31",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "XLB": {
+      "candidate_rows": 74,
+      "dated_mapping_rows": 74,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "XLC": {
+      "candidate_rows": 76,
+      "dated_mapping_rows": 76,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "XLE": {
+      "candidate_rows": 78,
+      "dated_mapping_rows": 78,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "XLI": {
+      "candidate_rows": 80,
+      "dated_mapping_rows": 80,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "XLK": {
+      "candidate_rows": 78,
+      "dated_mapping_rows": 78,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "XLP": {
+      "candidate_rows": 74,
+      "dated_mapping_rows": 74,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "XLU": {
+      "candidate_rows": 73,
+      "dated_mapping_rows": 73,
+      "excluded_mapping_rows": 0,
+      "report_dates": 69,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "XLV": {
+      "candidate_rows": 80,
+      "dated_mapping_rows": 80,
+      "excluded_mapping_rows": 0,
+      "report_dates": 69,
+      "first_report": "2020-12-31",
+      "last_report": "2026-08-31",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    },
+    "XLY": {
+      "candidate_rows": 75,
+      "dated_mapping_rows": 75,
+      "excluded_mapping_rows": 0,
+      "report_dates": 70,
+      "first_report": "2020-12-31",
+      "last_report": "2026-09-30",
+      "identity_status": "dated_vendor_candidate_only_not_independent_fund_certification"
+    }
+  },
+  "mdy": {
+    "report_date": "2024-12-31",
+    "crsp_rows": 402,
+    "sec_rows": 401,
+    "identifier_matched_pairs": 382,
+    "exact_share_pairs": 382,
+    "exact_value_pairs": 382,
+    "max_absolute_value_difference": "0E-8",
+    "sec_without_identifier_bridge": 18,
+    "crsp_unmatched_rows": 20,
+    "crsp_receipt_dates": [
+      "2025-02-08"
+    ],
+    "sec_filed_date": "2025-02-27",
+    "sec_accepted_new_york": "2025-02-27 12:07:37",
+    "weights_normalized": false
+  },
+  "details": {
+    "path": "D:\\systematic_trading_data\\source-archives\\wrds\\holdings-coverage-20261107T144818212103Z\\coverage-and-snapshot-comparison.json",
+    "sha256": "cbd24bd85d79544d46fb8006cf0fd3bdae1235269552669e942b966d0263e5ed"
+  },
+  "active_catalog_publications": 0,
+  "strategy_eligible_snapshots": 0,
+  "strategy_replays": 0,
+  "historical_available_at": null,
+  "limitations": [
+    "Fund tickers discover dated vendor candidates, not independently certified identities.",
+    "Effective date is vendor receipt, not proven end-user dissemination or unmodified vintage availability.",
+    "One snapshot comparison does not qualify the full history; tied ranks require record-level inspection.",
+    "No renormalization, silent bridge for non-US ISINs, source splice, or portfolio calculation."
+  ],
+  "runner_sha256": "e61cddf9abc9bd66ba7d821fd08337b7cec01f12219354bf17c2b5850478a0e9"
+}

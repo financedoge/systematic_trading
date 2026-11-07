@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "exit_code": 0,
+    "response_sha256": "c727cb44390db5a290b901e8f9d6b46f9c64a8b75b659a7fbeace310dedbc9ba",
+    "registry_sha256": "38ce50167a735bbe8123529031f1e3c2fc1f7eea2b05cd1c7b523a03842fadc4"
+  },
+  "volume_assets": {
+    "exit_code": 0,
+    "response_sha256": "e2ae39431ccfc14da97b5601fde4671edcafc93ebadc872bc8d9060fdb028b69",
+    "assets": {
+      "activity-raw-v1": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8",
+      "activity-lag20-v1": "22d7a7a12268b83ba5998e311855bf47fa12d082c599f8d9630f2cbdceef9e43",
+      "m1-selection-v1": "6d69d9d053b30906da639e2913717043bd1aab3627136a7cbe223d2d53250f2f"
+    }
+  },
+  "alpaca_assets": {
+    "exit_code": 0,
+    "response_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "assets": {}
+  }
+}

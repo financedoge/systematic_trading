@@ -1,0 +1,128 @@
+{
+  "status": "direct_minute_comparison_complete",
+  "protocol_sha256": "fa0aee0422e1f9b838189b8fcca7363e9321b52bb9c74d08f55918f5f90591cc",
+  "cases": [
+    {
+      "date": "2025-02-07",
+      "end": "2025-02-07T15:53:59.999999999Z",
+      "start": "2025-02-07T15:53:00Z",
+      "symbol": "FIX",
+      "tape": "A",
+      "full_day_records": 227,
+      "direct_minute_records": 227,
+      "exact_record_multiset_match": true,
+      "alpaca_eligible_volume": 7896,
+      "ibkr_volume": 14255,
+      "ibkr_minus_alpaca": 6359
+    },
+    {
+      "date": "2025-02-04",
+      "end": "2025-02-04T17:16:59.999999999Z",
+      "start": "2025-02-04T17:16:00Z",
+      "symbol": "FIX",
+      "tape": "A",
+      "full_day_records": 27,
+      "direct_minute_records": 27,
+      "exact_record_multiset_match": true,
+      "alpaca_eligible_volume": 843,
+      "ibkr_volume": 2160,
+      "ibkr_minus_alpaca": 1317
+    },
+    {
+      "date": "2025-02-04",
+      "end": "2025-02-04T19:59:59.999999999Z",
+      "start": "2025-02-04T19:59:00Z",
+      "symbol": "FIX",
+      "tape": "A",
+      "full_day_records": 199,
+      "direct_minute_records": 199,
+      "exact_record_multiset_match": true,
+      "alpaca_eligible_volume": 4946,
+      "ibkr_volume": 6747,
+      "ibkr_minus_alpaca": 1801
+    }
+  ],
+  "minute_differences": {
+    "2025-02-07": [
+      {
+        "utc": "2025-02-07T15:53:00+00:00",
+        "alpaca_shares": 7896,
+        "ibkr_shares": 14255,
+        "difference": 6359,
+        "alpaca_trades": 227,
+        "ibkr_trades": 418
+      },
+      {
+        "utc": "2025-02-07T15:55:00+00:00",
+        "alpaca_shares": 4469,
+        "ibkr_shares": 4406,
+        "difference": -63,
+        "alpaca_trades": 114,
+        "ibkr_trades": 112
+      },
+      {
+        "utc": "2025-02-07T15:56:00+00:00",
+        "alpaca_shares": 2401,
+        "ibkr_shares": 2464,
+        "difference": 63,
+        "alpaca_trades": 74,
+        "ibkr_trades": 76
+      },
+      {
+        "utc": "2025-02-07T19:29:00+00:00",
+        "alpaca_shares": 184,
+        "ibkr_shares": 174,
+        "difference": -10,
+        "alpaca_trades": 17,
+        "ibkr_trades": 14
+      },
+      {
+        "utc": "2025-02-07T19:30:00+00:00",
+        "alpaca_shares": 5776,
+        "ibkr_shares": 5786,
+        "difference": 10,
+        "alpaca_trades": 158,
+        "ibkr_trades": 161
+      },
+      {
+        "utc": "2025-02-07T20:59:00+00:00",
+        "alpaca_shares": 15898,
+        "ibkr_shares": 15894,
+        "difference": -4,
+        "alpaca_trades": 485,
+        "ibkr_trades": 484
+      },
+      {
+        "utc": "2025-02-07T21:00:00+00:00",
+        "alpaca_shares": 38531,
+        "ibkr_shares": 38535,
+        "difference": 4,
+        "alpaca_trades": 29,
+        "ibkr_trades": 30
+      }
+    ],
+    "2025-02-04": [
+      {
+        "utc": "2025-02-04T17:16:00+00:00",
+        "alpaca_shares": 843,
+        "ibkr_shares": 2160,
+        "difference": 1317,
+        "alpaca_trades": 27,
+        "ibkr_trades": 67
+      },
+      {
+        "utc": "2025-02-04T19:59:00+00:00",
+        "alpaca_shares": 4946,
+        "ibkr_shares": 6747,
+        "difference": 1801,
+        "alpaca_trades": 199,
+        "ibkr_trades": 274
+      }
+    ]
+  },
+  "source_archive": "D:\\systematic_trading_data\\source-archives\\alpaca\\fix-minute-gaps-20261107T143353367752Z",
+  "source_manifest_sha256": "8bc02e986873cc12d71bee7607f1445dbda1169b23d4658cf2ea995bcbd53553",
+  "source_snapshot_changed": false,
+  "conclusion": "Direct queries test pagination only; they cannot determine which upstream corrections or vendor capture rules caused missing records.",
+  "runner_sha256": "fd6eb15a58fe3364b8ca810d6e5853cb2ad1f60799592308147b83f30d60dbbf"
+}

@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-07",
+  "credentials": "Operator configured ST_ALPACA_MARKET_API_KEY and ST_ALPACA_MARKET_API_SECRET in the ignored .env; reuse in memory without copying or exposing values",
+  "failure": "Intermittent curl 28 connection timeouts; no HTTP response on failed requests",
+  "observed_success": "Unauthenticated IPv4 direct and existing localhost:7892 proxy controls both returned 401; authenticated IPv4 CSL probe returned HTTP 200 daily and minute data",
+  "remaining_failure": "The full sample daily request returned all 50 rows, then the first minute page timed out. A separate retry timed out on its daily request.",
+  "bounded_recovery": "Repeat frozen sample via existing localhost:7892 proxy, with IPv4 and unchanged TLS verification, origin, parameters, pagination and byte bounds",
+  "retry_amendment": "Allow at most three transient transport attempts per page, recording all attempt timestamps and curl codes. HTTP denials, TLS certificate failures and schema failures are not retried. Source selection and page/row scope are unchanged.",
+  "root_cause": "Unresolved; IPv4 success alone does not prove an IPv6 cause",
+  "global_network_changes": false,
+  "credential_echo_or_logging": false,
+  "final_result": {
+    "archive": "D:/systematic_trading_data/source-archives/alpaca/sample-20261107T105628852021Z",
+    "status": "complete",
+    "daily_rows": 50,
+    "minute_rows": 13878,
+    "transport": "existing localhost:7892 HTTP proxy, IPv4, verified HTTPS",
+    "attempts_per_successful_page": [
+      1,
+      1,
+      1
+    ],
+    "interpretation": "No evidence that retries caused recovery; root cause remains unresolved"
+  }
+}

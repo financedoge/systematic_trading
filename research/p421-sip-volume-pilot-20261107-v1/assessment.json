@@ -1,0 +1,318 @@
+{
+  "protocol_sha256": "97fb0548e0d656275c9e1aaf329ef671f6942747be9136f61e26ef959f5d6635",
+  "status": "field_audit_complete_with_unresolved_reviews",
+  "new_archive": "D:\\systematic_trading_data\\source-archives\\alpaca\\sip-pilot-20261107T130127809457Z",
+  "new_manifest_sha256": "27462caa27fe88eb757d12093fe7965c2ceacafeefc7ffb2d20fb008554ac73e",
+  "new_rows": 2480,
+  "reused_rows": 50,
+  "total": {
+    "rows": 2530,
+    "exact_volume_matches": 21,
+    "max_abs_volume_delta_shares": 50971.0,
+    "median_abs_volume_delta_percent": 0.006888447404983574,
+    "max_abs_volume_delta_percent": 11.16437980241493,
+    "close_within_half_cent": 2529,
+    "close_vs_ibkr_within_half_cent": 2530,
+    "max_abs_close_delta_usd": 0.005001525878906,
+    "nonunit_split_rows": 0,
+    "zero_activity_rows": 0
+  },
+  "by_symbol": {
+    "CSL": {
+      "rows": 253,
+      "exact_volume_matches": 2,
+      "max_abs_volume_delta_shares": 4185.0,
+      "median_abs_volume_delta_percent": 0.008733624454148471,
+      "max_abs_volume_delta_percent": 0.46774774774774774,
+      "close_within_half_cent": 253,
+      "close_vs_ibkr_within_half_cent": 253,
+      "max_abs_close_delta_usd": 1.46484375e-05,
+      "nonunit_split_rows": 0,
+      "zero_activity_rows": 0,
+      "prior_status": "review",
+      "action_count": 4,
+      "action_kinds": [
+        "dividends"
+      ]
+    },
+    "WSO": {
+      "rows": 253,
+      "exact_volume_matches": 4,
+      "max_abs_volume_delta_shares": 1080.0,
+      "median_abs_volume_delta_percent": 0.010459795162344738,
+      "max_abs_volume_delta_percent": 0.6440071556350626,
+      "close_within_half_cent": 253,
+      "close_vs_ibkr_within_half_cent": 253,
+      "max_abs_close_delta_usd": 2.9296875e-05,
+      "nonunit_split_rows": 0,
+      "zero_activity_rows": 0,
+      "prior_status": "review",
+      "action_count": 4,
+      "action_kinds": [
+        "dividends"
+      ]
+    },
+    "MANH": {
+      "rows": 253,
+      "exact_volume_matches": 2,
+      "max_abs_volume_delta_shares": 5282.0,
+      "median_abs_volume_delta_percent": 0.007957559681697613,
+      "max_abs_volume_delta_percent": 0.4137585991244528,
+      "close_within_half_cent": 253,
+      "close_vs_ibkr_within_half_cent": 253,
+      "max_abs_close_delta_usd": 0.00499572753906,
+      "nonunit_split_rows": 0,
+      "zero_activity_rows": 0,
+      "prior_status": "review",
+      "action_count": 0,
+      "action_kinds": []
+    },
+    "RPM": {
+      "rows": 253,
+      "exact_volume_matches": 0,
+      "max_abs_volume_delta_shares": 40683.0,
+      "median_abs_volume_delta_percent": 0.0052178450300026085,
+      "max_abs_volume_delta_percent": 11.16437980241493,
+      "close_within_half_cent": 253,
+      "close_vs_ibkr_within_half_cent": 253,
+      "max_abs_close_delta_usd": 7.32421875e-06,
+      "nonunit_split_rows": 0,
+      "zero_activity_rows": 0,
+      "prior_status": "review",
+      "action_count": 4,
+      "action_kinds": [
+        "dividends"
+      ]
+    },
+    "UTHR": {
+      "rows": 253,
+      "exact_volume_matches": 2,
+      "max_abs_volume_delta_shares": 50971.0,
+      "median_abs_volume_delta_percent": 0.007314974182444062,
+      "max_abs_volume_delta_percent": 7.403247373447947,
+      "close_within_half_cent": 253,
+      "close_vs_ibkr_within_half_cent": 253,
+      "max_abs_close_delta_usd": 1.46484375e-05,
+      "nonunit_split_rows": 0,
+      "zero_activity_rows": 0,
+      "prior_status": "review",
+      "action_count": 0,
+      "action_kinds": []
+    },
+    "XPO": {
+      "rows": 253,
+      "exact_volume_matches": 5,
+      "max_abs_volume_delta_shares": 6342.0,
+      "median_abs_volume_delta_percent": 0.002465849935418216,
+      "max_abs_volume_delta_percent": 0.7074177356385946,
+      "close_within_half_cent": 253,
+      "close_vs_ibkr_within_half_cent": 253,
+      "max_abs_close_delta_usd": 7.32421875e-06,
+      "nonunit_split_rows": 0,
+      "zero_activity_rows": 0,
+      "prior_status": "review",
+      "action_count": 0,
+      "action_kinds": []
+    },
+    "FIX": {
+      "rows": 253,
+      "exact_volume_matches": 2,
+      "max_abs_volume_delta_shares": 11405.0,
+      "median_abs_volume_delta_percent": 0.010759115361625823,
+      "max_abs_volume_delta_percent": 1.5548466257668712,
+      "close_within_half_cent": 253,
+      "close_vs_ibkr_within_half_cent": 253,
+      "max_abs_close_delta_usd": 2.9296875e-05,
+      "nonunit_split_rows": 0,
+      "zero_activity_rows": 0,
+      "prior_status": "review",
+      "action_count": 4,
+      "action_kinds": [
+        "dividends"
+      ]
+    },
+    "FLEX": {
+      "rows": 253,
+      "exact_volume_matches": 2,
+      "max_abs_volume_delta_shares": 22478.0,
+      "median_abs_volume_delta_percent": 0.0011539349180706207,
+      "max_abs_volume_delta_percent": 0.494761401655221,
+      "close_within_half_cent": 252,
+      "close_vs_ibkr_within_half_cent": 253,
+      "max_abs_close_delta_usd": 0.005001525878906,
+      "nonunit_split_rows": 0,
+      "zero_activity_rows": 0,
+      "prior_status": "review",
+      "action_count": 0,
+      "action_kinds": []
+    },
+    "CASY": {
+      "rows": 253,
+      "exact_volume_matches": 1,
+      "max_abs_volume_delta_shares": 3882.0,
+      "median_abs_volume_delta_percent": 0.01200141193081539,
+      "max_abs_volume_delta_percent": 0.6028886473054822,
+      "close_within_half_cent": 253,
+      "close_vs_ibkr_within_half_cent": 253,
+      "max_abs_close_delta_usd": 1.46484375e-05,
+      "nonunit_split_rows": 0,
+      "zero_activity_rows": 0,
+      "prior_status": "review",
+      "action_count": 4,
+      "action_kinds": [
+        "dividends"
+      ]
+    },
+    "RS": {
+      "rows": 253,
+      "exact_volume_matches": 1,
+      "max_abs_volume_delta_shares": 5904.0,
+      "median_abs_volume_delta_percent": 0.009514747859181731,
+      "max_abs_volume_delta_percent": 0.8477226376614548,
+      "close_within_half_cent": 253,
+      "close_vs_ibkr_within_half_cent": 253,
+      "max_abs_close_delta_usd": 1.46484375e-05,
+      "nonunit_split_rows": 0,
+      "zero_activity_rows": 0,
+      "prior_status": "review",
+      "action_count": 4,
+      "action_kinds": [
+        "dividends"
+      ]
+    }
+  },
+  "published_inputs": {
+    "parent.json": "fa0b32ad699850676d2fea768db59ba8222a1d9c5e8b414880c395595b8e8206",
+    "bars/CSL.jsonl.gz": "c3fa36207e3e283302aef5f68330c0636a4f05c3eaeb0799195b8b7104f576dd",
+    "audits/CSL.json": "956322a56057c53ea219b7a66ee75f74b0c69bd98c6d0e0998b3d4d117bf01a0",
+    "actions/CSL.jsonl.gz": "2809ecaeb53b189dd1b0200b261c3306d0af88a2b60d15d2c7c7c0e271d60612",
+    "bars/WSO.jsonl.gz": "09ffe85fe803d0113db733a0d3b20fd6c3b2100596c9b8ad6555a39294ddb1ee",
+    "audits/WSO.json": "143b3ff155bfca1337c15cfac5f7749bd6e8debb19fa759c136000ca46332787",
+    "actions/WSO.jsonl.gz": "7aa7c6cdbc6c7fda3fbfab0ad9a8d86af5fa3df636ae57229d5107ecc95e7a56",
+    "bars/MANH.jsonl.gz": "4cee56d1b64beb6e30c63f4a8c881a799a139cb2804c54118a953156663d048e",
+    "audits/MANH.json": "1c673c61ba2043919ed5cdbeeac2e9f7a10054cca3956e7bec10ca8d4c0b5021",
+    "actions/MANH.jsonl.gz": "0e2157a74950f5001f04f054d01340e57ec9112d779f142ce40fd7ebc9916052",
+    "bars/RPM.jsonl.gz": "e0d4811c0c975c51e25de910f1ecc348405ee7eb37c5264caaead72d8ec44305",
+    "audits/RPM.json": "2fa51cd56b37fff3e085f1b9fade8441153f7a4cff3511389c5fd2ef6fb86fbf",
+    "actions/RPM.jsonl.gz": "d8b4d7a1080fcf391c11d473b1d2a25a95eb602273f7fabe5244a77dc290b7ea",
+    "bars/UTHR.jsonl.gz": "9c87cc7a97fa45639957f0beff43121667bf52ba86b8c15a88f5f266a4fa5d6e",
+    "audits/UTHR.json": "a1a0476d3eed95ef398efa918e53df5f6a872046b834b2072f728f7ed349fb02",
+    "actions/UTHR.jsonl.gz": "1da292ffd02d51c7ab2fdd6f170d5e7ca767c698cff51ffcd95ab48b6b4916f8",
+    "bars/XPO.jsonl.gz": "b8e55c3b73981937dfbc1514d5312fffa61c1c930743d0844d704a3d9a4f8318",
+    "audits/XPO.json": "2ba6a2658f84f99b0871e2b82f4601b8dcd8cacefad2f6f9ba6f35b77d0bcf84",
+    "actions/XPO.jsonl.gz": "0251feaca9e59ead3801c20bb97d0e98a97bc9fe8630bd087b05b4f44279c820",
+    "bars/FIX.jsonl.gz": "a1ffd0939893b5fe61b3993e9d939c67d013a786e60957925d193d09eb1af8d5",
+    "audits/FIX.json": "440ac57fdfaed926abac30123e79b6736c5ab2fa733e99a7e4deccef4080f4eb",
+    "actions/FIX.jsonl.gz": "2fa5756cbae0646c6d48dfef7503d97cbda54b4b5187248ac706b6a0a7e8dfdf",
+    "bars/FLEX.jsonl.gz": "468099ff5bcd8620dd4053ea78d0a404fa9077ae7c23cea495c61ae04e311662",
+    "audits/FLEX.json": "c7ff20fd402e934f1054e434583dffe42fe2c20c047674d6b029154071a50bde",
+    "actions/FLEX.jsonl.gz": "8b95ee5f898cf58ef8f6df8ae87cdc70e5cd121ef0af43f3546aca65eeb95bed",
+    "bars/CASY.jsonl.gz": "41e67718b0b2043164e897738b396e8de6d2a0b86ca7718135e642824e722ee8",
+    "audits/CASY.json": "cd874baa16938032b645244ceabee2edc8eb0b8866d7557d6b3cf1a65a83c650",
+    "actions/CASY.jsonl.gz": "334d72a068d7fdf6386fb3ee8a50350794fdfbae111c1d6534339cdb58f67ce9",
+    "bars/RS.jsonl.gz": "53e1757fded007ee5785f17c4dde27a144e6865d02b1f988ca310c95d03d4f3d",
+    "audits/RS.json": "6601ad05a2e2719814145c4d119d2148c94040aae021ec1b9802b96974b8016f",
+    "actions/RS.jsonl.gz": "758e150fb3c6f7e230ae0e2222c5820c6571f09f25673d131801d97e511dc884"
+  },
+  "historical_strategy_eligible_rows": 0,
+  "close_exceptions": [
+    {
+      "symbol": "FLEX",
+      "activity_date": "2024-10-18",
+      "source_daily_close": 34.895,
+      "paired_published_raw_close": 34.900001525878906,
+      "ibkr_rth_close": 34.9,
+      "close_delta_usd": -0.005001525878906,
+      "close_delta_vs_ibkr_usd": -0.005
+    }
+  ],
+  "largest_volume_residuals": [
+    {
+      "symbol": "RPM",
+      "activity_date": "2024-04-29",
+      "sip_raw_volume": 405083,
+      "published_raw_volume": 364400.0,
+      "volume_delta_shares": 40683.0,
+      "volume_delta_percent": 11.16437980241493
+    },
+    {
+      "symbol": "UTHR",
+      "activity_date": "2024-06-25",
+      "sip_raw_volume": 562256,
+      "published_raw_volume": 523500.0,
+      "volume_delta_shares": 38756.0,
+      "volume_delta_percent": 7.403247373447947
+    },
+    {
+      "symbol": "UTHR",
+      "activity_date": "2024-06-21",
+      "sip_raw_volume": 1851871,
+      "published_raw_volume": 1800900.0,
+      "volume_delta_shares": 50971.0,
+      "volume_delta_percent": 2.8303070686878784
+    },
+    {
+      "symbol": "FIX",
+      "activity_date": "2025-02-07",
+      "sip_raw_volume": 401164,
+      "published_raw_volume": 407500.0,
+      "volume_delta_shares": -6336.0,
+      "volume_delta_percent": -1.5548466257668712
+    },
+    {
+      "symbol": "FIX",
+      "activity_date": "2025-02-04",
+      "sip_raw_volume": 285817,
+      "published_raw_volume": 288900.0,
+      "volume_delta_shares": -3083.0,
+      "volume_delta_percent": -1.0671512634129456
+    },
+    {
+      "symbol": "FIX",
+      "activity_date": "2024-06-10",
+      "sip_raw_volume": 226382,
+      "published_raw_volume": 224200.0,
+      "volume_delta_shares": 2182.0,
+      "volume_delta_percent": 0.9732381801962533
+    },
+    {
+      "symbol": "RS",
+      "activity_date": "2025-02-07",
+      "sip_raw_volume": 291706,
+      "published_raw_volume": 294200.0,
+      "volume_delta_shares": -2494.0,
+      "volume_delta_percent": -0.8477226376614548
+    },
+    {
+      "symbol": "XPO",
+      "activity_date": "2024-06-25",
+      "sip_raw_volume": 902842,
+      "published_raw_volume": 896500.0,
+      "volume_delta_shares": 6342.0,
+      "volume_delta_percent": 0.7074177356385946
+    },
+    {
+      "symbol": "RS",
+      "activity_date": "2024-06-28",
+      "sip_raw_volume": 834296,
+      "published_raw_volume": 840200.0,
+      "volume_delta_shares": -5904.0,
+      "volume_delta_percent": -0.7026898357533921
+    },
+    {
+      "symbol": "WSO",
+      "activity_date": "2025-02-07",
+      "sip_raw_volume": 166620,
+      "published_raw_volume": 167700.0,
+      "volume_delta_shares": -1080.0,
+      "volume_delta_percent": -0.6440071556350626
+    }
+  ],
+  "limitations": [
+    "Historical dated identity and availability remain uncertified for every row.",
+    "Prior series/action reviews retained; this pilot does not certify completeness of action ledgers.",
+    "Full-year daily bars have not been independently reconstructed trade by trade.",
+    "Existing close half-cent diagnostic is not a qualification or promotion tolerance.",
+    "No current history, registered input, strategy consumer or execution contract changes."
+  ]
+}

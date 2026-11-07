@@ -63,6 +63,14 @@ guaranteed reclaimed capacity. The small legacy `var/backtests` tree totals only
 
 ## Retention policy
 
+November 7 WRDS amendment: retain a local copy of every WRDS extract to build the
+research data collection. Keep the exact query and parameters, capture timestamp,
+dataset/table version, identifiers, row counts and checksums alongside the source
+rows. A byte-identical capture may reuse the canonical payload while retaining its
+own acquisition receipt. The sole retained WRDS source copy is not disposable
+exploratory output. Keep licensed source rows outside Git; ingest through audit and
+publication before any strategy use. Capture time never proves historical availability.
+
 October 31 amendment: the initial 40 GiB cumulative generated-artifact admission
 quota below is retired. The 20 GiB threshold requests cleanup, without blocking
 research or strategy calculations. Admission uses actual artifact-drive free

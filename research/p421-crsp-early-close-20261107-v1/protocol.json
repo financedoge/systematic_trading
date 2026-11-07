@@ -1,0 +1,230 @@
+{
+  "acceptance": "Preserve exact discrepancies; no fitted multiplier, after-result tolerance or source replacement. A matching daily total is evidence only for the inspected case.",
+  "availability": "Unknown historical dissemination/correction availability remains unknown; retain actual capture timestamps.",
+  "baseline": {
+    "batch": "35d1efe82c7d7fbd77edd043fe2f33b34d7b9dec74190c0609374195aa2cb1b9",
+    "documents": 5,
+    "main_catalog_after": "873b2aa57c91f336f6398b2c0bfb7f60e20cf852f273f311b532362560ab8cd5",
+    "main_catalog_before": "873b2aa57c91f336f6398b2c0bfb7f60e20cf852f273f311b532362560ab8cd5",
+    "main_catalog_written": false,
+    "published_at": "2026-11-07T13:02:56.639999+00:00",
+    "root": "D:\\projects\\systematic_trading\\var\\governance\\pilots\\p421-sip-volume-20261107-v1",
+    "rows": 2530,
+    "source_id": "governance/pilots/p421-sip-volume-v1",
+    "storage": "postgres-parquet-duckdb",
+    "strategy_eligible_rows": 0,
+    "verification": "Every payload and document SHA256 read back from pinned native publication; historical available_at remains null."
+  },
+  "bounds": {
+    "alpaca_pages_per_case": 30,
+    "ibkr_backward_control_each_case": true,
+    "ibkr_forward_pages_per_case": 100,
+    "ibkr_paper_only": true,
+    "ibkr_spacing_seconds": 11
+  },
+  "cases": [
+    {
+      "date": "2024-07-03",
+      "symbol": "UTHR",
+      "tape": "C"
+    }
+  ],
+  "checks": [
+    "Exact eligible-trade vs retained SIP daily and published volume",
+    "IBKR full-day volume, condition-size multisets, exact price-size-condition multisets and unmatched records",
+    "Explicit canceled/incorrect/corrected states and price-reference markers",
+    "Forward pagination/end-of-day plus independent backward tail multiset",
+    "Source clock bins retained separately; no forced timestamp alignment"
+  ],
+  "clock_contract": "Use published exchange calendar for early close. Whole-day volume remains New York midnight to next midnight; do not call 09:30-16:00 a regular session on this date.",
+  "created_at": "2026-11-07T14:24:22.877122+00:00",
+  "crsp_comparison": {
+    "assessment_sha256": "2aa3f84a81bf8c348e6e5b53c7eef6b20da304bb00f7fbbd6e1256a8bc8ca176",
+    "details_path": "D:/systematic_trading_data/source-archives/wrds/pilot-20261107T141349139724Z/dated-identity-comparison.json",
+    "details_sha256": "603f0235d9713a402596d5c0e0753c80a469cf6a806e5a16cc66c5d25ccbbc67"
+  },
+  "documentation": [
+    "https://docs.alpaca.markets/us/docs/market-data-faq",
+    "https://docs.alpaca.markets/us/reference/stocktradesingle-1",
+    "https://www.interactivebrokers.com/docs/tws-api/doc/md/historical-ticks"
+  ],
+  "ibkr_tick_controls": [
+    {
+      "date": "2024-07-03",
+      "symbol": "UTHR",
+      "tape": "C"
+    }
+  ],
+  "minute_bars": "No new minute bars required for this full-day volume question.",
+  "pinned_helpers": {
+    "acquire_mdy_ibkr_history.py": "485d211a86eefc3e79b68d02a6146347a236f5e070c6af64cbd8e0946ba444cf",
+    "assess_alpaca_ibkr_sources.py": "509110f2d16aeb1f968b6ecfb4cfa5e28fecefcbc16cf13f36965521baf476e0",
+    "capture_csl_trade_sources.py": "1fab0f06e1a05490c3f7b3eb4bbfb75757abec70ec2d7ca8bbef3dd745a8f2e8",
+    "capture_large_volume_sources.py": "6c2b1fea43bf032336b4ff5e4df52e90d684bce091135b5d196406f481c78902",
+    "capture_volume_exception_ibkr.py": "9a26e6947949f0389d96d1e125b47aadefe01f407d829544edae126750b052ea",
+    "capture_volume_exception_trades.py": "c8001daf9305b1c3a3aa81aa1aaf364631e170cbafe02ec63c2ecfba5986b92b",
+    "compare_alpaca_sip_source.py": "32c234797efa6f9bb17cdd2a7838d8798b394a06853c37df1d28535cc0512af7",
+    "probe_alpaca_sip_source.py": "92069c03adb6c434249084ba60b7bb96bd069d0da611b660e0dd9bfb06b63537",
+    "probe_ibkr_source_access.py": "2b250d5e427a207ba8ee55dd9d147479041b762f0f3ef76a894e9db10313c662",
+    "reconcile_csl_trades.py": "f535d3880b7edc813c199d4592b31d7b557f15e201b0d6a4b610e0f007d8fb54",
+    "reconcile_volume_exceptions.py": "b53dced8b612984ff8cec733735f8a6260a4000167b71070d4efd36580cb4c3b"
+  },
+  "prior_pilot_manifest_sha256": "be45f993be68c1dddf5539d1d4a7e135c4ce9bcfa22380afa8bf7475e2d30837",
+  "prior_rules_sha256": "718ea068461ceaf23312a0c6938eaf9a36d784f75d7ccb745c2380df46f57ae3",
+  "regular_session_close_local": "13:00",
+  "retained_daily_values": "Pinned prior SIP publication and local WRDS comparison; licensed rows stay outside Git.",
+  "retention": "Retain all source responses locally with query/capture/code hashes; compact findings in Git.",
+  "reuse_decision": "New frozen scope adapter reuses unchanged capture/reconciliation helpers; no existing recipe, service or registered asset is modified.",
+  "reuse_reviews": [
+    {
+      "decision": "No registered Alpaca input; standalone bounded source probe, not a new strategy provider",
+      "found": [],
+      "search": "alpaca"
+    },
+    {
+      "asset": "activity-raw-v1",
+      "decision": "Preserve; candidate source does not replace audited raw activity",
+      "sha256": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8"
+    },
+    {
+      "asset": "activity-lag20-v1",
+      "decision": "Inspected and preserved; legacy adjusted-activity semantics are not reused for qualification",
+      "sha256": "22d7a7a12268b83ba5998e311855bf47fa12d082c599f8d9630f2cbdceef9e43"
+    },
+    {
+      "asset": "m1-selection-v1",
+      "decision": "Inspected consumer; no change",
+      "sha256": "6d69d9d053b30906da639e2913717043bd1aab3627136a7cbe223d2d53250f2f"
+    },
+    {
+      "component": "GovernedInputs",
+      "decision": "Reuse pinned manifest and input-hash verification for the published comparison side"
+    },
+    {
+      "component": "scripts/setup_wrds_access.py:protect_new_file",
+      "decision": "Reuse empty-file ACL restriction for local credential entry"
+    },
+    {
+      "component": "systematic_trading.data.http:read_bytes",
+      "decision": "Reviewed. Its native fallback places headers on argv and follows redirects; use bounded fixed-origin curl config via stdin for this authenticated probe without modifying the shared transport"
+    }
+  ],
+  "rules": {
+    "A_known": [
+      " ",
+      "B",
+      "C",
+      "E",
+      "F",
+      "H",
+      "I",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "T",
+      "U",
+      "V",
+      "X",
+      "Z",
+      "4",
+      "5",
+      "6",
+      "7",
+      "9"
+    ],
+    "C_known": [
+      "@",
+      "A",
+      "B",
+      "C",
+      "D",
+      "F",
+      "G",
+      "H",
+      "I",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z",
+      "4",
+      "5",
+      "6",
+      "7",
+      "9"
+    ],
+    "combination": "Most restrictive rule; unknown tape/condition/update state fails closed. Nasdaq B is bunched trade (price eligible), W is average-price (price ineligible).",
+    "invalid_update_states": [
+      "canceled",
+      "incorrect"
+    ],
+    "minute_price_excluded_A": [
+      "B",
+      "C",
+      "H",
+      "I",
+      "M",
+      "N",
+      "P",
+      "Q",
+      "R",
+      "U",
+      "V",
+      "Z",
+      "4",
+      "7",
+      "9"
+    ],
+    "minute_price_excluded_C": [
+      "C",
+      "G",
+      "H",
+      "I",
+      "M",
+      "N",
+      "P",
+      "Q",
+      "R",
+      "U",
+      "V",
+      "W",
+      "Z",
+      "4",
+      "7",
+      "9"
+    ],
+    "valid_update_states": [
+      "missing",
+      "corrected"
+    ],
+    "volume_excluded": [
+      "M",
+      "Q",
+      "9"
+    ],
+    "zero_size_markers": [
+      "M",
+      "Q",
+      "9"
+    ]
+  },
+  "scope": "Single largest absolute CRSP/SIP discrepancy; independent full-day and actual early-close clock inspection.",
+  "selection": "Maximum absolute CRSP vs SIP volume percentage difference among the 2277 identifier-qualified rows. Diagnostic selection made before these trade downloads.",
+  "stop_policy": "Operator permits continuing data pipework; discuss investment decisions and new strategy discoveries.",
+  "version": "p421-crsp-early-close-20261107-v1"
+}

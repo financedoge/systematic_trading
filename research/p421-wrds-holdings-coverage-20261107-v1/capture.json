@@ -1,0 +1,7 @@
+{
+  "archive": "D:\\systematic_trading_data\\source-archives\\wrds\\holdings-coverage-20261107T144818212103Z",
+  "manifest_sha256": "1569fe24f09296d9d87dc1cddafc08a39dd1be8ccaf03165f8fa1fd7070b4fd9",
+  "protocol_sha256": "977bbefbda0d3c02ae6974cb6045e6de290f25aa3d785d3713ed706efcebc21f",
+  "query_count": 5,
+  "strategy_input_use": false
+}

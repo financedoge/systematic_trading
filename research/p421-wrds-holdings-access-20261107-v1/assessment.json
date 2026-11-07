@@ -1,0 +1,306 @@
+{
+  "status": "access_inspection_complete",
+  "protocol_sha256": "2c61993ed70fdf21529e00d4d7dcc1de76eefbe37b84ea0e5316ec439c264701",
+  "archive": "D:\\systematic_trading_data\\source-archives\\wrds\\holdings-access-20261107T144503716650Z",
+  "manifest_sha256": "b24238b51c81e3a530c181e5c78280b5866080621ea4f0d1d901625d03e5ae83",
+  "tables": [
+    {
+      "name": "contact_info",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "crsp_cik_map",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "crsp_portno_map",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "daily_nav",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "daily_nav_ret",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "daily_returns",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "dividends",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "front_load",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "front_load_det",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "front_load_grp",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "fund_fees",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "fund_flows",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "fund_hdr",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "fund_hdr_hist",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "fund_names",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "fund_style",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "fund_summary",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "fund_summary2",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "holdings",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "holdings_co_info",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "mfdbname",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "monthly_nav",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "monthly_returns",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "monthly_tna",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "monthly_tna_ret_nav",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "portnomap",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "rear_load",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "rear_load_det",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    },
+    {
+      "name": "rear_load_grp",
+      "kind": "r",
+      "schema_usage": true,
+      "table_select": true
+    }
+  ],
+  "read_checks": [
+    {
+      "table": "crsp_portno_map",
+      "read_succeeded": true,
+      "has_rows": true
+    },
+    {
+      "table": "fund_hdr",
+      "read_succeeded": true,
+      "has_rows": true
+    },
+    {
+      "table": "fund_names",
+      "read_succeeded": true,
+      "has_rows": true
+    },
+    {
+      "table": "fund_summary",
+      "read_succeeded": true,
+      "has_rows": true
+    },
+    {
+      "table": "holdings",
+      "read_succeeded": true,
+      "has_rows": true
+    }
+  ],
+  "holdings_columns": [
+    {
+      "relation": "holdings",
+      "name": "crsp_portno",
+      "type": "double precision",
+      "description": "Portfolio Identifier"
+    },
+    {
+      "relation": "holdings",
+      "name": "report_dt",
+      "type": "date",
+      "description": "Period End Date, as Reported"
+    },
+    {
+      "relation": "holdings",
+      "name": "security_rank",
+      "type": "double precision",
+      "description": "Rank of Percentage of Total Net Assets in Portfolio"
+    },
+    {
+      "relation": "holdings",
+      "name": "eff_dt",
+      "type": "date",
+      "description": "Date that CRSP obtained the information from source"
+    },
+    {
+      "relation": "holdings",
+      "name": "percent_tna",
+      "type": "double precision",
+      "description": "Security's Percentage of the Total Net Assets"
+    },
+    {
+      "relation": "holdings",
+      "name": "nbr_shares",
+      "type": "double precision",
+      "description": "Number of the Security's Shares"
+    },
+    {
+      "relation": "holdings",
+      "name": "market_val",
+      "type": "double precision",
+      "description": "Market Value of the Security as of the report date shown on the record"
+    },
+    {
+      "relation": "holdings",
+      "name": "crsp_company_key",
+      "type": "double precision",
+      "description": null
+    },
+    {
+      "relation": "holdings",
+      "name": "security_name",
+      "type": "character varying(200)",
+      "description": "Name of the Security Held"
+    },
+    {
+      "relation": "holdings",
+      "name": "cusip",
+      "type": "character varying(10)",
+      "description": "Security CUSIP"
+    },
+    {
+      "relation": "holdings",
+      "name": "permno",
+      "type": "double precision",
+      "description": "CRSP's Permanent Stock Issue Identifier"
+    },
+    {
+      "relation": "holdings",
+      "name": "permco",
+      "type": "double precision",
+      "description": "CRSP's Permanent Company Identifier"
+    },
+    {
+      "relation": "holdings",
+      "name": "ticker",
+      "type": "character varying(6)",
+      "description": "Ticker Symbol Given by the Exchange"
+    },
+    {
+      "relation": "holdings",
+      "name": "coupon",
+      "type": "double precision",
+      "description": "Bond Coupon Rate"
+    },
+    {
+      "relation": "holdings",
+      "name": "maturity_dt",
+      "type": "date",
+      "description": "Date of bond maturity"
+    }
+  ],
+  "metadata_column_count": 399,
+  "holdings_rows_extracted": 0,
+  "strategy_input_use": false,
+  "historical_available_at": null,
+  "runner_sha256": "8b16c10a9f07a7bd9c1b639e99ea02072bf94a17e86187dbb04f7e5af0fca74c"
+}

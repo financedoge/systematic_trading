@@ -4,3 +4,64 @@ scripts/acquire_mdy_ibkr_history.py -text
 scripts/reconcile_mdy_ibkr_history.py -text
 scripts/report_mdy_ibkr_reconciliation.py -text
 tests/test_mdy_ibkr_reconciliation.py -text
+
+# November 7 P4.21 artifacts and executed recipes retain their exact hashed bytes.
+research/p421-alpaca-access-20261107-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/p421-crsp-early-close-20261107-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/p421-crsp-qualification-20261107-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/p421-csl-trades-20261107-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/p421-fix-minute-gaps-20261107-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/p421-large-volume-20261107-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/p421-sip-volume-pilot-20261107-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/p421-source-alternatives-20261107-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/p421-tushare-access-20261107-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/p421-volume-contract-20261107-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/p421-volume-exceptions-20261107-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/p421-wrds-access-20261107-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/p421-wrds-holdings-access-20261107-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/p421-wrds-holdings-coverage-20261107-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/assess_alpaca_ibkr_sources.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/audit_crsp_pilot.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/audit_wrds_holdings_coverage.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/capture_crsp_pilot.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/capture_csl_trade_sources.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/capture_early_close_sources.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/capture_flex_identifier_bridge.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/capture_large_volume_sources.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/capture_volume_exception_ibkr.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/capture_volume_exception_trades.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/capture_wrds_holdings_coverage.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/compare_alpaca_sip_source.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/inspect_fix_minute_gaps.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/p421_sip_volume_pilot.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/probe_alpaca_sip_source.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/probe_ibkr_source_access.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/probe_tushare_us_source.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/probe_wrds_access.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/probe_wrds_holdings.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/publish_p421_data_checks.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/qualify_mdy_volume_contract.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/reconcile_csl_trades.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/reconcile_early_close_sources.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/reconcile_large_volume_sources.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/reconcile_volume_exceptions.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/report_mdy_volume_contract.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/setup_wrds_access.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+src/systematic_trading/research/sip_volume_pilot.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_alpaca_source_probe.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_crsp_pilot.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_csl_trade_capture.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_csl_trade_reconciliation.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_fix_minute_gaps.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_ibkr_source_access.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_large_volume_sources.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_mdy_volume_contract.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_p421_audit_publication.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_sip_volume_pilot.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_tushare_source_probe.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_volume_exception_reconciliation.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_volume_exception_sources.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_wrds_access_setup.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_wrds_holdings_audit.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_wrds_holdings_coverage.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_wrds_holdings_probe.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

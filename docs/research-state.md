@@ -1,11 +1,224 @@
 # Research State
 
-Current conclusions and review queue, updated November 6, 2026. Detailed historical
+Current conclusions and review queue, updated November 7, 2026. Detailed historical
 entries are preserved in the [verified history archive](archive/README.md).
 The [research plan](signal-decay-and-alpha-plan.md) controls sequencing; the
 [execution Kanban](execution-kanban.md) tracks open implementation work.
 
-## P4.21 constituent coverage — November 6, 2026
+## P4.21 constituent coverage — November 7, 2026
+
+The subsequent WRDS holdings inspection also completed. Actual access passes,
+and all 29 existing equity-fund candidates have dated vendor mappings. Retained
+2,012 distinct portfolio/report dates from December 2020–September 2026, with
+18 absent snapshots in the report grid. For MDY December 2024, 382 positions join
+uniquely by identifier to the retained SEC filing and agree exactly on shares and
+value. Eighteen foreign identifier bridges, a VNOM CUSIP mismatch and a CRSP cash
+row remain explicit. Mixed receipt dates and vendor dissemination/revision
+semantics still prevent qualified historical availability. This is source
+coverage progress, not historical strategy-input admission. Fifteen focused
+holdings tests pass. [Holdings report](../research/p421-wrds-holdings-coverage-20261107-v1/results.md).
+
+The five large-volume checks, independent CRSP comparison, early-close control
+and three direct-minute re-queries are complete. Alpaca/IBKR agree on the three
+RPM/UTHR cases but disagree on two FIX days. The FIX shortfalls persist in direct
+minute queries, while CRSP agrees with IBKR on the daily totals. Conversely,
+Alpaca/IBKR agree exactly on the UTHR July 3 early-close control and CRSP differs.
+This is evidence of unresolved source differences, not a universal replacement
+rule or a strategy finding.
+
+The local WRDS archive contains 2,783 daily rows. Nine securities have dated
+identity matches over 2,277 stock-days; FLEX's 253 rows remain unjoined without a
+retained foreign-ISIN/CUSIP bridge, and 253 WSO Class B rows are kept separate.
+All matched closes meet the existing half-cent diagnostic; all 24 dividend
+dates/amounts agree with the published ledger. Three isolated native audit
+publications pass exact hash readback. No active catalog admission; historical
+available_at remains null. 41 focused tests pass.
+
+P4.21's constituent-alpha replay has not started. Remaining gates include
+field-specific source differences, the FLEX bridge, historical holdings and
+membership, decision-time availability and qualified lookback coverage. Per the
+operator's latest instruction, continue acquisition/reconciliation/database
+pipework autonomously; pause for investment decisions or new strategy findings.
+[Five cases](../research/p421-large-volume-20261107-v1/results.md) ·
+[CRSP](../research/p421-crsp-qualification-20261107-v1/results.md) ·
+[Early close](../research/p421-crsp-early-close-20261107-v1/results.md) ·
+[Minute gaps](../research/p421-fix-minute-gaps-20261107-v1/results.md).
+
+Preceding pilot checkpoint (its proposed five-case follow-up is now complete):
+
+The ten-stock SIP-volume pilot is complete for February 27, 2024–February 28,
+2025: 2,530 stock-days, with 2,480 newly captured daily bars and 50 prior rows
+reused with original hashes/timestamps. All sessions are present; no fill or
+source replacement. The native analytical store contains a separate, versioned
+field-audit publication with every observation/document hash verified. It is not
+admitted to the active history catalog or any strategy input.
+
+Median absolute volume difference versus the pinned history is 0.006888%, but
+five observations differ by more than 1%: RPM April 29 (+11.1644%), UTHR June 25
+(+7.4032%) and June 21 (+2.8303%), FIX February 7 (−1.5548%) and February 4
+(−1.0672%). Only 21 of 2,530 volumes match exactly. These are descriptive
+comparisons, not acceptance tolerances; which source is correct remains open.
+The wider window therefore does not inherit the five-day sample's small residuals.
+
+All closes are within $0.005 of prior IBKR RTH bars; 2,529 are within that
+diagnostic versus published raw closes. FLEX October 18 retains a
+−$0.005001525878906 published residual, without widening the threshold.
+All split multipliers are one; 24 retained dividend records and no split records
+appear in the window. This does not independently certify action completeness.
+Current broker identities match, but historical identity and availability reviews
+remain open. Historical available_at stays null for all 2,530 observations.
+
+32 focused tests, Ruff and dependency preflight pass. Two failed transport receipts
+and the one successful new response remain local. Existing catalog, registered
+assets, consumers and paper/live guards remain unchanged. No strategy replay.
+
+**Stop for discussion.** Proposed next item: freeze the five largest percentage
+volume discrepancies above for Alpaca trade reconstruction and independent IBKR
+full-day tick controls. This is a diagnostic selection after the pilot, not random
+validation or a new qualification threshold. P4.21 remains in data qualification;
+its constituent-alpha backtest has not started. Historical holdings/membership,
+dated identity and decision-time availability are separate remaining gates.
+[Pilot report](../research/p421-sip-volume-pilot-20261107-v1/results.md).
+
+Preceding fourteen-case checkpoint (its proposed next item is now complete):
+
+The 14 preidentified volume-rounding exceptions are now fully compared. Across
+seven stocks, 307,092 Alpaca trade/reference records reproduce all 14 archived
+daily volumes and all 4,289 returned minute volumes exactly. The 1,916 absent
+minutes contain 550,359 eligible shares but no price-eligible trade. Tape-specific
+NYSE/Nasdaq rules and update states were declared before acquisition. No update
+flags appeared; historical correction/publication timing remains uncertified.
+
+Three preselected independent IBKR controls also agree exactly on full-day
+volume and condition-size multisets: CSL February 26 (249,124 shares), FIX February
+25 (889,484), and MANH February 27 (464,873). Backward boundary checks pass. These
+three controls do not independently qualify the other eleven stock-days. Regular-
+hours clock buckets differ by 2,538 shares for CSL and 100 for FIX across the
+16:00 boundary; whole-day totals agree and source clocks remain unchanged.
+
+All 14 published-history residuals remain 52–184 shares, at most 0.049799%, with
+no exact or nearest-100 match. Their cause remains unproven; no truncation rule,
+fitted multiplier or acceptance tolerance was introduced. Existing data was not
+overwritten. Ninety-two new payloads, 18 prior payloads and pinned published inputs
+verify; 17 focused tests, Ruff and whitespace checks pass. Source responses and
+failed-request receipts remain local. No new publication or strategy replay.
+
+**Stop for discussion.** Recommend a versioned, audited SIP-volume pilot for the
+frozen ten-stock history, preserving the old series and its residuals. Declare
+full-day eligibility, corporate-action basis and decision-time availability before
+admission; regular-session inputs need a separate clock contract. This is a
+proposed next item, not automatic qualification or publication.
+[Fourteen-case report](../research/p421-volume-exceptions-20261107-v1/results.md).
+
+Preceding full-day CSL diagnostic:
+
+The full-day CSL trade reconciliation is complete for February 24, 2025. Alpaca
+eligible SIP trades and IBKR historical ticks each contain 14,669 trading records
+and 413,821 shares; Alpaca's daily bar matches exactly. Published daily history is
+413,800, a 21-share residual compatible with nearest-100 rounding on this day.
+
+IBKR's 223,314-share all-hours bar total equals its ticks after excluding vendor-
+flagged activity: 162,920 odd-lot shares, 6,501 average-price shares and 21,086
+extended-hours prior-reference-price shares. Every one of its 931 minute bars
+matches the corresponding unflagged ticks. This refines the earlier short sample:
+71 flagged records are not odd lots. Alpaca's 242 returned minutes all match trade
+volume; 205 omitted minutes have 36,439 shares but no price-eligible trade. Their
+volume explains the entire minute-to-daily gap. Do not fill absent prices or
+replace published activity with filtered IBKR bar volume.
+
+All clock-bin volumes and condition-size multisets match across sources. Exact
+second/price/size comparison retains 164 differences: exploratory diagnostics find
+153 one-second shifts and 11 price differences of $0.0001. Source values remain
+unchanged; these are not a new tolerance or unique trade-identity proof. No update
+flags appear in Alpaca's snapshot, which does not prove historical corrections or
+publication availability were absent.
+
+Twenty-two new payloads, 18 prior payloads, runner hashes, pinned publication
+inputs and an independent 1,001-tick backward boundary check verify. Twenty-three
+focused tests and Ruff pass. An IBKR farm interruption resumed from verified
+completed seconds; Alpaca's initial overly strict zero-size marker check was
+corrected and saved responses revalidated. All failures and raw source responses
+remain local. No publications, strategy replay, subscriptions or orders.
+
+The authorized 14-case follow-up is now complete and reported above.
+Field-specific admission and historical availability remain separate open gates.
+[Full-day report](../research/p421-csl-trades-20261107-v1/results.md).
+
+Preceding 50-stock-day source comparison:
+
+The authorized Alpaca/IBKR source comparison is complete. Credentials were read
+from the operator's ignored `.env`; no secret values were displayed or copied.
+The frozen ten-stock/five-session SIP sample returned 50 daily bars and 13,878
+minute bars. All 50 closes match the pinned published histories within half a
+cent; daily-volume residuals have median 0.006373% and maximum 0.049799%, with no
+exact matches. Nearest-100 rounding is compatible with 36/50 only. This is source
+inspection evidence, not a new volume acceptance threshold or publication.
+
+IBKR older history also works: 1,004 CSL ticks, five regular-hours daily bars,
+five all-hours daily bars and 931 minute bars returned to completion. In the
+33 complete minutes of the tick sample, IBKR minute volume equals tick volume
+excluding its flagged odd lots (12,918 shares versus 24,441 total). Alpaca volumes
+match all 23 common minutes exactly; its ten absent minutes contain only flagged
+odd-lot ticks. This supports an aggregation/eligibility explanation in this
+interval, not full-day certification. Current MANH/SPY frozen quotes explicitly
+require additional API permission (10089); billing packages remain uninspected.
+The earlier session/IP errors did not recur; operator reports no other live
+session and the reason for recovery is unknown.
+
+All 18 payload hashes across ten attempts and pinned comparison inputs verify;
+35 focused tests, Ruff and whitespace checks pass. Raw responses remain locally
+archived outside Git, with replayable inspection runners. No shared provider,
+strategy, order, subscription or publication changed. Volume qualification remains
+open beyond the completed CSL day. The authorized full-day follow-up is now
+reported above; retain the wider audit/publication and availability gates.
+[Completed source comparison](../research/p421-alpaca-access-20261107-v1/results.md).
+
+Earlier source-selection checkpoint (superseded by the completed sample above):
+the online review recommended testing Alpaca historical SIP first:
+official FAQ permits historical queries ending at least 15 minutes ago without a
+paid subscription; actual entitlement was untested at that checkpoint. Massive Developer ($79/month,
+ten years of trades) is the paid fallback. AlgoSeek daily OHLC offers separate
+full-day/market-hours/FINRA volume, with small-extract pricing unresolved. Reuse
+the existing 50-stock-day sample, retain source captures locally and qualify
+before publication. That review itself acquired no source or account. The CRSP
+control remains queued separately.
+[Sourced comparison](../research/p421-source-alternatives-20261107-v1/results.md).
+
+Tushare source assessment is complete. The configured token returned five CSL
+raw-daily rows for February 24–28, 2025; the next call hit an explicit one-request-
+per-minute limit. The adjusted U.S. endpoint denied permission. Keep these source
+rows and responses locally; no new audit or publication. The reviewed U.S. docs
+do not establish consolidated venue coverage, volume-specific eligibility or
+regular/extended-session breakdowns. Tushare may corroborate daily fields but
+is not established as a TAQ substitute. The full ten-stock sample was not fetched.
+Stop for discussion, then continue the frozen CRSP comparison/field-definition
+item. [Tushare assessment](../research/p421-tushare-access-20261107-v1/results.md).
+
+WRDS setup/access checking is complete. The standard Windows password file was
+saved and read-only reconnects passed with verified TLS through the existing local
+proxy. CRSP annual daily prices and two historical-identity tables are readable.
+TAQ 2024/2025 raw schemas lack usage, and the February 24, 2025 trade/master views
+explicitly deny reads (42501). The next bounded item is the frozen 50-stock-day
+CRSP comparison plus field-definition checks; TAQ session decomposition remains
+unavailable. Retain every WRDS extract locally with query, capture, source version
+and hash receipts under `D:\systematic_trading_data\source-archives\wrds`; the sole
+source copy is protected from disposable-study cleanup. No WRDS market data has been
+downloaded or admitted; access metadata/results are archived and hash-verified.
+[WRDS access report](../research/p421-wrds-access-20261107-v1/results.md).
+
+The volume/session definition review is complete. Split reconstruction is not
+the cause of this ten-stock gap: all 2,530 multipliers are one and raw/source
+volume are equal. Fixed unit scaling also fails; per-name median calibration
+still leaves 43.6%–77.7% 99th-percentile discrepancies. Retain the price evidence
+and qualify consolidated volume independently. The proposed activity contract
+uses completed full-tape reporting days, volume-specific trade eligibility and
+the same activity-date raw close. Keep the preceding-close information cutoff:
+same-day after-hours volume is unavailable, so the entire activity stencil must
+end on a genuinely available earlier session. Historical actual availability
+is still uncertified. Four small Nasdaq historical probes yielded no rows;
+the recent control worked. A 50-stock-day documented-source request is ready;
+access is not established. Existing asset definitions and runtime are unchanged.
+[Volume definition report](../research/p421-volume-contract-20261107-v1/results.md).
 
 IBKR access is restored and the ten-stock independent comparison is complete.
 Twenty complete primary series cover all 2,530 stock-days. 2,529 closes agree

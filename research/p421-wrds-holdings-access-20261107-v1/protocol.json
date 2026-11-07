@@ -1,0 +1,50 @@
+{
+  "availability": "report_dt is holdings date; eff_dt is CRSP vendor-receipt date, not automatically end-user dissemination. Current vintage availability remains unproven.",
+  "connection_helper_sha256": "b527ebce76d9b4d6ec275a7f9de3e02e155a09d9bf4f4b2cb8aad366b79630f8",
+  "created_at": "2026-11-07T14:44:24.254992+00:00",
+  "funds": [
+    "EEM",
+    "EFA",
+    "EWA",
+    "EWC",
+    "EWG",
+    "EWH",
+    "EWJ",
+    "EWT",
+    "EWU",
+    "EWY",
+    "IAT",
+    "IBB",
+    "INDA",
+    "ITA",
+    "IWM",
+    "MCHI",
+    "MDY",
+    "SOXX",
+    "SPY",
+    "VGK",
+    "XLB",
+    "XLC",
+    "XLE",
+    "XLI",
+    "XLK",
+    "XLP",
+    "XLU",
+    "XLV",
+    "XLY"
+  ],
+  "limits": {
+    "max_columns": 2000,
+    "max_tables": 100
+  },
+  "prior_pool_file": "research\\p421-coverage-20261104-v1\\pins.json",
+  "prior_pool_sha256": "bb8a87614a2d78466782f0d5134b81e1f709f541249138c91f2e81c00b9aaa55",
+  "reference": "https://www.crsp.org/crsp_pdf/crsp-survivor-bias-free-us-mutual-fund-database-guide-crspsift/",
+  "reuse_review": {
+    "decision": "Reuse the WRDS TLS/passfile helper and original pool; source inspection only, no new asset or consumer.",
+    "holdings_asset_search": {}
+  },
+  "schema": "crsp_q_mutualfunds",
+  "scope": "Read-only metadata and constant-row access checks for crsp_q_mutualfunds; no holdings rows yet.",
+  "version": "p421-wrds-holdings-access-20261107-v1"
+}

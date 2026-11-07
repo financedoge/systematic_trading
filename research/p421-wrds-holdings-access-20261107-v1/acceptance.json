@@ -1,0 +1,34 @@
+{
+  "status": "bounded_source_inspection_complete",
+  "verified_at": "2026-11-07T14:55:13.653553+00:00",
+  "source_archive": "D:\\systematic_trading_data\\source-archives\\wrds\\holdings-access-20261107T144503716650Z",
+  "source_manifest_sha256": "b24238b51c81e3a530c181e5c78280b5866080621ea4f0d1d901625d03e5ae83",
+  "source_payloads_verified": 8,
+  "original_recipe_files_verified": 3,
+  "protocol_sha256": "2c61993ed70fdf21529e00d4d7dcc1de76eefbe37b84ea0e5316ec439c264701",
+  "code": {
+    "scripts/probe_wrds_holdings.py": "8b16c10a9f07a7bd9c1b639e99ea02072bf94a17e86187dbb04f7e5af0fca74c",
+    "scripts/capture_wrds_holdings_coverage.py": "703803322a860a58d272377d417f28514d1f94b6cbaa2468b02c2e7d63e87794",
+    "scripts/audit_wrds_holdings_coverage.py": "e61cddf9abc9bd66ba7d821fd08337b7cec01f12219354bf17c2b5850478a0e9",
+    "tests/test_wrds_holdings_probe.py": "d12a383ccee61c30c600bd768493f7ebab2d30f5a752cc7ccf45132cb1e68059",
+    "tests/test_wrds_holdings_coverage.py": "8355e855bdcedeade85698f34e4283ca227b14bad3533044457f0b95e3f332b3",
+    "tests/test_wrds_holdings_audit.py": "54eb805f12c810cab2676e358057b2bdb88b41c15199b58610d05b3b683c7f24"
+  },
+  "tests": {
+    "command": ".venv/Scripts/python.exe -m pytest tests/test_wrds_holdings_probe.py tests/test_wrds_holdings_coverage.py tests/test_wrds_holdings_audit.py -q",
+    "passed": 15
+  },
+  "ruff": "pass",
+  "git_diff_check": "pass",
+  "secret_scan": {
+    "files": 10,
+    "known_auth_values_found": 0
+  },
+  "dependency_contracts_unchanged": true,
+  "active_catalog_publications": 0,
+  "registered_input_migrations": 0,
+  "strategy_replays": 0,
+  "historical_available_at": null,
+  "retention": "Protect active qualification archives; all licensed rows and exact queries stay local outside Git.",
+  "weakest_etf_chart": "Not applicable: no strategy or portfolio calculation."
+}

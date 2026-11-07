@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "registry_sha256": "38ce50167a735bbe8123529031f1e3c2fc1f7eea2b05cd1c7b523a03842fadc4",
+  "assets": {
+    "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+    "activity-raw-v1": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8",
+    "activity-audited-lag20-v1": "e90e9fe4ef9919a8e642256d146c1e22f73736b31462c813b58fcfe74b3ae495",
+    "activity-lag20-v1": "22d7a7a12268b83ba5998e311855bf47fa12d082c599f8d9630f2cbdceef9e43",
+    "alpha101-tilt-v1": "d2f9e4e5e29a24f8de06008beb3089770138c5f0875f1dcceb6e868290b69541",
+    "broadtrend-models-v1": "013a87357c159580bde0cbba052a2907c210ed2572d44e2f01a2e52df440bfa4",
+    "broadtrend-signals-v1": "35a3723c6f4fcfeb5f026ce427ca6b83bcfe197b80bb2d3bbe5f9bf54a43e137",
+    "conditional-snapshot-v1": "c553f96ae0f0e8b27ec6f9d0932bc6cb15bdff9b2959d2bafb7d902c11043d50",
+    "economic-context-v1": "f755c1c4cfd9f086a2a5a39336d101e8e809110919c0d4e4fa3c5f2e22c8b060",
+    "economic-ridge-v1": "faf9bbf9b8de8f36aeb518ee21504e1dc159cd7ab634907a0212e7b531649402",
+    "technical-features-v1": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218",
+    "fixed-tree-v1": "a8dae08467492dcd7291766d0fdb02a3f74f72edcefc6e62afd3a5a996585a60",
+    "financial-context-v1": "31a2713fa803ffb82bd2da91be568d69b5780c140c36e28bc717e4d37ccd9e82",
+    "fr25-selection-v1": "58bae506608804c64ffc0c06c3a0e23539e8466b37a1cf8c99c4fb9036a7515c",
+    "fx-usdcnh-v1": "cce18bf6b62fff3dfe8ab5a2780242ee88faa90c958b801bcbaef5b58edd948a",
+    "m1-selection-v1": "6d69d9d053b30906da639e2913717043bd1aab3627136a7cbe223d2d53250f2f",
+    "risk-parity-volatility-v1": "b81f75c98a6de9879087fb4c000c17e151b59aa4ac2a0ff5712534db7f0c9918",
+    "rolling-xgboost-12-v1": "a13ca547b2e182cac50bf23a95a42a90f73e37e6beb7d61a51a5e22442d25dc3",
+    "rolling-xgboost-14-v1": "ee238c8d68d8fd6b56c4dd89b8c1901911e85e255159b4387435424c3e432718",
+    "usd-vintages-v1": "1ae826542bbb2ff41995135a6d0a11a61790f59460c8a268ab7286a18777ff84",
+    "usd-ridge-12-v1": "812d254c869e81d081bf3331017dae642d7f23482bde0e2820200ad8aae4d111",
+    "usd-ridge-14-v1": "414f8dab5b9afe0e326c07e1f03eb57c13c1c4d9ee7e8d3275dcbc536904e780"
+  },
+  "asset_registry_sha256": "aa7422b10ed6276361397829d94d66243c29cfb06d1895ff8a4c53b0f26ea816",
+  "roots": [
+    "broadtrend_full_pool_v1",
+    "fr25_lifecycle_conditional_v1",
+    "research_economic_context_ridge_v1",
+    "research_etf_activity_lag20_v1",
+    "research_etf_activity_lag20_v1_usd_v1",
+    "research_fallback_f3_v1",
+    "research_fr25_14_v1",
+    "research_fr25_alpha_tilt_5_v1",
+    "research_m1_14_v1",
+    "research_rolling_xgboost_1y_lag20_v1",
+    "research_rolling_xgboost_1y_lag20_v1_usd_v1",
+    "research_rolling_xgboost_1y_v1",
+    "risk_parity",
+    "sota_price_volume_technical_tree_relative_adaptive_top6",
+    "sota_price_volume_technical_tree_relative_adaptive_top6_usd_v1"
+  ],
+  "definitions": {
+    "broadtrend_full_pool_v1": "7abd4ef711061cb08080213e165792c24f247d524eb5a8a160f33fd8aab434b4",
+    "fr25_lifecycle_conditional_v1": "c021d83d8ba3448b2b049dcc05de7be666094f55b57d59d097b18cddb190d597",
+    "sota_price_volume_technical_tree_relative_adaptive_top6": "6111e421c94d6eb25b834f4da5de1afad28a9d55b50a66dd9ba012289fb55456",
+    "research_etf_activity_lag20_v1": "b3f7d90fadccc761bf8363b572da81bddc955a24774b603687bc8f6d36fe089a",
+    "research_rolling_xgboost_1y_lag20_v1": "0340a70922dfb2a90aa5d712506f02decb05cfa556f1ddf5504f7e63e0495fed",
+    "research_rolling_xgboost_1y_lag20_v1_usd_v1": "372ee88c96618bc6ce60e26ed0bbb3c9881537414c93c3056b2f66aab410d39e",
+    "research_fallback_f3_v1": "77799ea2d0cb1be2814e03471c1f8d55bcbc03576ddb992b91383dd2999f1366",
+    "research_economic_context_ridge_v1": "f300f97f25c64b965b85883a6db6df6404bd2140e8256db014b748a2dfacb4c1",
+    "research_etf_activity_lag20_v1_usd_v1": "29a942f60eb66f57f018b3f6677695397158b3d9c7b5afea4c23e21afa375719",
+    "research_m1_14_v1": "543d789fe3343b8c5a91a5e989c76908c3b11edff1f3b46b4f81f2f9df6a08ea",
+    "research_fr25_14_v1": "f1237ba36fa46e3b9d5ebbcf01f3f8b4f79204b0c41a5e0643055600fa5b69d4",
+    "research_fr25_alpha_tilt_5_v1": "6efa944b3ea666cf4ee1ef40f268479b7f7fb7b17176188fe08c939b66f48210",
+    "research_rolling_xgboost_1y_v1": "411be2dc2d49aef01d7e3e5b6654d4862229c0992ed14f30332ad508ec8f4a2b",
+    "risk_parity": "53b211a59eaf82b8b6d5c102ec0679f8234bca7a6f0883eb574935b1d857b9b2",
+    "sota_price_volume_technical_tree_relative_adaptive_top6_usd_v1": "937f0e889aa0a50797256961c9e4f8d0b38abcbdbf1ad4affb1d99e5f5779368"
+  },
+  "services": {
+    "audited-prices": {
+      "name": "Published audited price histories",
+      "source": "governance/catalog",
+      "provider": "systematic_trading.research.governed_inputs:GovernedInputs",
+      "contract": "audited-continuous-history-v1"
+    },
+    "broadtrend-models": {
+      "name": "Pinned BroadTrend model pack and full-pool inputs",
+      "provider": "systematic_trading.research.broadtrend:load_inputs",
+      "contract": "broadtrend-full-pool-v1"
+    },
+    "conditional-snapshot": {
+      "name": "Pinned conditional strategy panel and controls",
+      "provider": "systematic_trading.research.fr25_lifecycle_conditional:verified_input_provenance",
+      "contract": "frozen-conditional-input-v1"
+    },
+    "economic-vintages": {
+      "name": "Published economic vintages and expanding ridge",
+      "provider": "systematic_trading.research.economic_tracking:economic_inputs",
+      "contract": "economic-original-vintages-v1"
+    },
+    "financial-vintages": {
+      "name": "FR25 financial vintages and rank selection",
+      "provider": "systematic_trading.research.fr25_tracking:economic_inputs",
+      "contract": "fr25-selection-v1"
+    },
+    "observed-fx": {
+      "name": "Observed USD/CNH publication and exact-date conversion",
+      "source": "governance/fx-usd-cnh",
+      "provider": "systematic_trading.research.tracked_inputs:publish_observed_fx",
+      "contract": "observed-midpoint-post-close-v1"
+    },
+    "raw-activity": {
+      "name": "Audited raw price and volume activity",
+      "source": "governance/catalog",
+      "provider": "systematic_trading.research.m1_monitoring:load_inputs",
+      "contract": "raw-dollar-adjusted-direction-v1"
+    },
+    "rolling-models": {
+      "name": "Causal rolling model schedule",
+      "provider": "systematic_trading.research.rolling_tracking:prepare_model_schedule",
+      "contract": "causal-monthly-models-v1"
+    },
+    "usd-reference": {
+      "name": "USD benchmark replay, independent of report membership",
+      "provider": "systematic_trading.research.usd_monitored:calculate",
+      "contract": "matched-usd-benchmark-v1"
+    },
+    "usd-vintages": {
+      "name": "Published broad-dollar vintages",
+      "source": "governance/usd-broad-index",
+      "provider": "systematic_trading.research.usd_data:load_usd",
+      "contract": "original-vintage-usd-v1"
+    }
+  }
+}

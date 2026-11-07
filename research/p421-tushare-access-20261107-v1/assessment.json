@@ -1,0 +1,114 @@
+{
+  "item": "Tushare U.S. volume source assessment",
+  "status": "complete",
+  "requests": [
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\tushare\\us-daily-20261107T091741235461Z",
+      "request": {
+        "api_name": "us_daily",
+        "params": {
+          "ts_code": "CSL",
+          "start_date": "20250224",
+          "end_date": "20250228"
+        },
+        "fields": "ts_code,trade_date,open,high,low,close,vol,amount,vwap"
+      },
+      "started_at": "2026-11-07T09:17:41.236484+00:00",
+      "status": "failed",
+      "error_type": "URLError",
+      "captured_at": "2026-11-07T09:17:51.802024+00:00"
+    },
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\tushare\\us-daily-20261107T091741235461Z",
+      "request": {
+        "api_name": "us_daily_adj",
+        "params": {
+          "ts_code": "CSL",
+          "start_date": "20250224",
+          "end_date": "20250228"
+        },
+        "fields": "ts_code,trade_date,open,high,low,close,vol,amount,vwap,adj_factor,exchange"
+      },
+      "started_at": "2026-11-07T09:17:51.802411+00:00",
+      "path": "us_daily_adj-CSL.json.gz",
+      "sha256": "489e6af837c73ea2b39345988284ed9a07d89c491512ffb364076fc62093c05e",
+      "response_sha256": "b254741bc880a02609d8577e0ec8f3880e4894212ebc0e752e801a48d7062188",
+      "response_bytes": 226,
+      "status": "api_error",
+      "api_code": 40203,
+      "message": "抱歉，您没有接口(us_daily_adj)访问权限，权限的具体详情访问：https://tushare.pro/document/1?doc_id=108。",
+      "row_count": 0,
+      "captured_at": "2026-11-07T09:17:52.918264+00:00"
+    },
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\tushare\\us-daily-20261107T091900589116Z",
+      "request": {
+        "api_name": "us_daily",
+        "params": {
+          "ts_code": "CSL",
+          "start_date": "20250224",
+          "end_date": "20250228"
+        },
+        "fields": "ts_code,trade_date,open,high,low,close,vol,amount,vwap"
+      },
+      "started_at": "2026-11-07T09:19:00.590358+00:00",
+      "path": "us_daily-CSL.json.gz",
+      "sha256": "c7e7049e3682c7371b7e3a986104489397d589e3619510f21223a730663f0338",
+      "response_sha256": "6aef0c4c9056c5f246f582cf64d33640e6efd4cc717f89d2e83035b1bb3553c9",
+      "response_bytes": 578,
+      "status": "ok",
+      "api_code": 0,
+      "row_count": 5,
+      "fields": [
+        "ts_code",
+        "trade_date",
+        "open",
+        "high",
+        "low",
+        "close",
+        "vol",
+        "amount",
+        "vwap"
+      ],
+      "complete_five_sessions": true,
+      "missing_dates": [],
+      "captured_at": "2026-11-07T09:19:07.822730+00:00"
+    },
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\tushare\\us-daily-20261107T091900589116Z",
+      "request": {
+        "api_name": "us_daily",
+        "params": {
+          "ts_code": "WSO",
+          "start_date": "20250224",
+          "end_date": "20250228"
+        },
+        "fields": "ts_code,trade_date,open,high,low,close,vol,amount,vwap"
+      },
+      "started_at": "2026-11-07T09:19:07.823277+00:00",
+      "path": "us_daily-WSO.json.gz",
+      "sha256": "23f513b850c54a68958bad81c4f981715ed95504216da1765fbc396af9008335",
+      "response_sha256": "6c5f2cadab382af39d02bcd821c2b42b8e72e508bdc6b334a77cf53f7aed98ea",
+      "response_bytes": 226,
+      "status": "api_error",
+      "api_code": 40203,
+      "message": "抱歉，您访问接口(us_daily)频率超限(1次/分钟)，具体频次详情：https://tushare.pro/document/1?doc_id=108。",
+      "row_count": 0,
+      "captured_at": "2026-11-07T09:19:08.169183+00:00"
+    }
+  ],
+  "market_observation_rows_retained": 5,
+  "raw_endpoint": "Five CSL daily rows returned; next request rate-limited at one call per minute",
+  "adjusted_endpoint": "Access denied by endpoint",
+  "taq_equivalence": "Not established: no documented U.S. trade-level consolidated venue/condition/session feed found in reviewed catalog",
+  "qualified_histories": 0,
+  "catalog_publications": 0,
+  "strategy_replays": 0,
+  "input_price_adjustment_applied": false,
+  "volume_scaling_applied": false,
+  "tests_passed": 10,
+  "ruff": "passed",
+  "raw_payload_hashes_verified": true,
+  "executed_runner_hashes_verified": true,
+  "retention": "Original source/error responses and exact token-free requests retained locally; no market rows in Git"
+}

@@ -1,0 +1,60 @@
+{
+  "created_at": "2026-11-07",
+  "scope": "Alpaca historical SIP access and source reconciliation only; no strategy replay or publication",
+  "status": "Prepared; user completing free account setup",
+  "source_request": "research/p421-volume-contract-20261107-v1/source-request.json",
+  "source_request_sha256": "8380ef95bd63b9300a6bc0401a48bd5e5892dad0c3b20143d93809ed7f35d457",
+  "stages": [
+    "One-symbol one-day access/shape probe: CSL on 2025-02-24, daily then minute bars",
+    "After successful probe, the frozen ten symbols on 2025-02-24 through 2025-02-28, daily then minute bars",
+    "Hash-verified comparison to pinned published histories and prior IBKR receipts; discuss before any expansion"
+  ],
+  "request_contract": {
+    "endpoint": "https://data.alpaca.markets/v2/stocks/bars",
+    "feed": "sip",
+    "adjustment": "raw",
+    "asof": "-",
+    "currency": "USD",
+    "reason_for_asof": "Keep literal historical tickers; no automatic retrospective name stitching",
+    "timeframes": ["1Day", "1Min"],
+    "session_timezone": "America/New_York",
+    "max_pages_per_timeframe_per_stage": 10,
+    "max_rows_per_page": 10000,
+    "max_response_bytes_per_page": 3000000,
+    "stop_on": ["HTTP error", "invalid response", "repeated token", "duplicate bar", "missing requested stock-day", "page bound reached"]
+  },
+  "comparison_contract": {
+    "daily": "As-returned raw OHLC and vendor daily volume",
+    "minute_bins": ["before 09:30", "09:30 inclusive to 16:00 exclusive", "16:00 minute separately", "16:01 onward"],
+    "limitation": "Clock bins are diagnostics, not a certified session-volume contract; late reports, auction conditions and cancellation/correction rules remain relevant",
+    "missing": "Preserve absence; never fill missing bars or infer a volume multiplier",
+    "price_batch": "ebffbedaaf8ae35bd5654887f83459156abff13d12537b2bd614e593c64ee77d",
+    "historical_availability": "Retrospective November 2026 captures do not establish historical publication availability"
+  },
+  "reuse_reviews": [
+    {"search": "alpaca", "found": [], "decision": "No registered Alpaca input; standalone bounded source probe, not a new strategy provider"},
+    {"asset": "activity-raw-v1", "sha256": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8", "decision": "Preserve; candidate source does not replace audited raw activity"},
+    {"asset": "activity-lag20-v1", "sha256": "22d7a7a12268b83ba5998e311855bf47fa12d082c599f8d9630f2cbdceef9e43", "decision": "Inspected and preserved; legacy adjusted-activity semantics are not reused for qualification"},
+    {"asset": "m1-selection-v1", "sha256": "6d69d9d053b30906da639e2913717043bd1aab3627136a7cbe223d2d53250f2f", "decision": "Inspected consumer; no change"},
+    {"component": "GovernedInputs", "decision": "Reuse pinned manifest and input-hash verification for the published comparison side"},
+    {"component": "scripts/setup_wrds_access.py:protect_new_file", "decision": "Reuse empty-file ACL restriction for local credential entry"},
+    {"component": "systematic_trading.data.http:read_bytes", "decision": "Reviewed. Its native fallback places headers on argv and follows redirects; use bounded fixed-origin curl config via stdin for this authenticated probe without modifying the shared transport"}
+  ],
+  "dependency_preflight": {
+    "result": "passed",
+    "registry_sha256": "38ce50167a735bbe8123529031f1e3c2fc1f7eea2b05cd1c7b523a03842fadc4",
+    "asset_registry_sha256": "aa7422b10ed6276361397829d94d66243c29cfb06d1895ff8a4c53b0f26ea816"
+  },
+  "retention": {
+    "source_archive": "D:/systematic_trading_data/source-archives/alpaca",
+    "keep": ["exact compressed responses", "token-free parameters", "capture timestamps", "row counts", "response and archive hashes", "executed runner", "source version if supplied"],
+    "credentials": "Masked local entry; restricted file outside version control; never include credentials in response artifacts or process arguments"
+  },
+  "documentation": [
+    "https://docs.alpaca.markets/us/docs/market-data-faq",
+    "https://docs.alpaca.markets/us/docs/about-market-data-api",
+    "https://docs.alpaca.markets/us/reference/stockbars",
+    "https://docs.alpaca.markets/us/docs/paper-trading",
+    "https://alpaca.markets/learn/register-on-alpaca"
+  ]
+}

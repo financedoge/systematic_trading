@@ -1,0 +1,17 @@
+{
+  "control_stock_days": 759,
+  "new_assets": 0,
+  "new_publications": 0,
+  "protected_evidence": "Earlier broker and canonical audited histories remain protected.",
+  "retirement": "Public probe cache and rendered reports/chart are disposable after closure; retain compact diagnostics, contracts, request, hashes and runners.",
+  "runner_hashes": {
+    "scripts/qualify_mdy_volume_contract.py": "28301e8131620eacd5351e4f94ceea7d0fcb2b23c38a5e55ee3ac3c6d5ba7bd3",
+    "scripts/report_mdy_volume_contract.py": "14c35483817340d8bb22d7880465f3fea2c8653068fec6f48e800a8c456bb2f2",
+    "tests/test_mdy_volume_contract.py": "bcb86f45ba7615fc587bc3b360977bbf7c062b57d86e7cdb50b5d119cb702ff5"
+  },
+  "shared_services_changed": [],
+  "source_probes": 5,
+  "status": "Definition review complete; source qualification and historical availability unresolved.",
+  "stock_days": 2530,
+  "tests_passed": 32
+}

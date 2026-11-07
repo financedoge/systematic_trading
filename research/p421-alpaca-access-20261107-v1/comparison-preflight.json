@@ -1,0 +1,20 @@
+{
+  "status": "verified",
+  "stock_days": 50,
+  "price_batch": "ebffbedaaf8ae35bd5654887f83459156abff13d12537b2bd614e593c64ee77d",
+  "published_input_hashes": {
+    "parent.json": "fa0b32ad699850676d2fea768db59ba8222a1d9c5e8b414880c395595b8e8206",
+    "bars/CSL.jsonl.gz": "c3fa36207e3e283302aef5f68330c0636a4f05c3eaeb0799195b8b7104f576dd",
+    "bars/WSO.jsonl.gz": "09ffe85fe803d0113db733a0d3b20fd6c3b2100596c9b8ad6555a39294ddb1ee",
+    "bars/MANH.jsonl.gz": "4cee56d1b64beb6e30c63f4a8c881a799a139cb2804c54118a953156663d048e",
+    "bars/RPM.jsonl.gz": "e0d4811c0c975c51e25de910f1ecc348405ee7eb37c5264caaead72d8ec44305",
+    "bars/UTHR.jsonl.gz": "9c87cc7a97fa45639957f0beff43121667bf52ba86b8c15a88f5f266a4fa5d6e",
+    "bars/XPO.jsonl.gz": "b8e55c3b73981937dfbc1514d5312fffa61c1c930743d0844d704a3d9a4f8318",
+    "bars/FIX.jsonl.gz": "a1ffd0939893b5fe61b3993e9d939c67d013a786e60957925d193d09eb1af8d5",
+    "bars/FLEX.jsonl.gz": "468099ff5bcd8620dd4053ea78d0a404fa9077ae7c23cea495c61ae04e311662",
+    "bars/CASY.jsonl.gz": "41e67718b0b2043164e897738b396e8de6d2a0b86ca7718135e642824e722ee8",
+    "bars/RS.jsonl.gz": "53e1757fded007ee5785f17c4dde27a144e6865d02b1f988ca310c95d03d4f3d"
+  },
+  "broker_manifest_sha256": "b2dda47ed4a6904f07be2773e92ca4d7986b867386cacb58b4c7778aa3d1ce94",
+  "source_data_acquired": false
+}

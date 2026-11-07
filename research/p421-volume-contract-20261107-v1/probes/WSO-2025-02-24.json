@@ -1,0 +1,17 @@
+{
+  "captured_at": "2026-11-07T07:52:12.976014+00:00",
+  "end": "2025-02-28",
+  "response_bytes": 179,
+  "rows": [],
+  "source_path": "D:\\projects\\systematic_trading\\var\\research\\p421-volume-contract-20261107-v1\\WSO-2025-02-24.json.gz",
+  "source_sha256": "870ee340d4dc79f2f030d624f04bedd1138ea15301e6b78093a187ed3cf459e0",
+  "start": "2025-02-24",
+  "status": {
+    "bCodeMessage": null,
+    "developerMessage": null,
+    "rCode": 200
+  },
+  "symbol": "WSO",
+  "total_records": 0,
+  "url": "https://api.nasdaq.com/api/quote/WSO/historical?assetclass=stocks&fromdate=2025-02-24&todate=2025-02-28&limit=50"
+}

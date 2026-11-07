@@ -1,0 +1,113 @@
+{
+  "availability": "Current WRDS extract does not establish historical release/availability; source_release unknown unless supplied.",
+  "baseline_publication": {
+    "batch": "35d1efe82c7d7fbd77edd043fe2f33b34d7b9dec74190c0609374195aa2cb1b9",
+    "documents": 5,
+    "main_catalog_after": "873b2aa57c91f336f6398b2c0bfb7f60e20cf852f273f311b532362560ab8cd5",
+    "main_catalog_before": "873b2aa57c91f336f6398b2c0bfb7f60e20cf852f273f311b532362560ab8cd5",
+    "main_catalog_written": false,
+    "published_at": "2026-11-07T13:02:56.639999+00:00",
+    "root": "D:\\projects\\systematic_trading\\var\\governance\\pilots\\p421-sip-volume-20261107-v1",
+    "rows": 2530,
+    "source_id": "governance/pilots/p421-sip-volume-v1",
+    "storage": "postgres-parquet-duckdb",
+    "strategy_eligible_rows": 0,
+    "verification": "Every payload and document SHA256 read back from pinned native publication; historical available_at remains null."
+  },
+  "connection_helper_sha256": "b527ebce76d9b4d6ec275a7f9de3e02e155a09d9bf4f4b2cb8aad366b79630f8",
+  "created_at": "2026-11-07T14:12:31.498136+00:00",
+  "daily": "Capture requested interval for every bounded candidate PERMNO; retain original price/return/volume and flags, not normalized or adjusted by this probe.",
+  "identities": [
+    {
+      "broker_conid": 6120,
+      "isin": "US1423391002",
+      "symbol": "CSL"
+    },
+    {
+      "broker_conid": 13904,
+      "isin": "US9426222009",
+      "symbol": "WSO"
+    },
+    {
+      "broker_conid": 4814485,
+      "isin": "US5627501092",
+      "symbol": "MANH"
+    },
+    {
+      "broker_conid": 273962,
+      "isin": "US7496851038",
+      "symbol": "RPM"
+    },
+    {
+      "broker_conid": 6746357,
+      "isin": "US91307C1027",
+      "symbol": "UTHR"
+    },
+    {
+      "broker_conid": 93957038,
+      "isin": "US9837931008",
+      "symbol": "XPO"
+    },
+    {
+      "broker_conid": 6607708,
+      "isin": "US1999081045",
+      "symbol": "FIX"
+    },
+    {
+      "broker_conid": 4596077,
+      "isin": "SG9999000020",
+      "symbol": "FLEX"
+    },
+    {
+      "broker_conid": 267265,
+      "isin": "US1475281036",
+      "symbol": "CASY"
+    },
+    {
+      "broker_conid": 11735,
+      "isin": "US7595091023",
+      "symbol": "RS"
+    }
+  ],
+  "identity": "Discover candidate PERMNOs by literal ticker on overlapping dated intervals, then retain all overlapping intervals for those candidates. Require unique dated identity and identifier corroboration before any join is admitted; current headers are not historical mappings. No silent ticker substitution.",
+  "limits": {
+    "identity_rows_per_query": 200,
+    "max_candidate_permnos": 20,
+    "max_daily_rows": 5100
+  },
+  "prior_access_manifest": {
+    "path": "D:/systematic_trading_data/source-archives/wrds/access-20261107T091155271163Z/manifest.json",
+    "sha256": "5b529709630f1179f8416828c0bc7abbadf32dd01bcf3b3e0190d3db90756ef9"
+  },
+  "references": [
+    "https://www.crsp.org/wp-content/uploads/guides/CRSP_US_Stock_%26_Indexes_Database_Guide_Flat_File_Format_2.0.pdf",
+    "https://www.crsp.org/wp-content/uploads/guides/CRSP_Cross_Reference_Guide_1.0_to_2.0.pdf"
+  ],
+  "retention": "All exact query results, SQL parameters, types, hashes, failures and runner copies retained locally under D:/systematic_trading_data/source-archives/wrds. No licensed raw rows or credentials in Git.",
+  "schema": "crsp_a_stock",
+  "scope": "Bounded independent daily/dated-identity source inspection for the existing ten-stock pilot. No strategy inputs.",
+  "source": "WRDS crsp_a_stock subscription already tested",
+  "stop_policy": "Continue data pipework; discuss investment decisions and new strategy discoveries.",
+  "symbols": [
+    "CSL",
+    "WSO",
+    "MANH",
+    "RPM",
+    "UTHR",
+    "XPO",
+    "FIX",
+    "FLEX",
+    "CASY",
+    "RS"
+  ],
+  "tables": [
+    "dsf_v2",
+    "dsenames",
+    "stksecurityinfohist"
+  ],
+  "version": "p421-crsp-qualification-20261107-v1",
+  "window": [
+    "2024-02-27",
+    "2025-02-28"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "availability": {
+    "cutoff": "Keep the frozen preceding US market-close information cutoff; early closes use the actual exchange calendar.",
+    "example": "For March 3, 2025 with February 28 16:00 New York cutoff, February 28 full-session volume is ineligible. February 27 can qualify only if publication/capture evidence supports that cutoff.",
+    "historical": "A current download cannot satisfy actual historical capture. A separately declared retrospective availability assumption is not audited point-in-time availability.",
+    "lag": "Choose the latest fully available paired price/volume activity session. At a same-day close, full-day after-hours volume is unavailable; usually the previous session or earlier is required. Shift the entire activity stencil and matching return direction together.",
+    "rule": "session_end <= published_at <= first_captured_at <= information_cutoff; all timestamps timezone aware."
+  },
+  "control": "A separately versioned consolidated regular-session volume asset, with auction boundary rules, may be compared under the same information cutoff. Do not substitute IBKR filtered volume for either consolidated field.",
+  "failure": "Preserve missing/unknown fields. No inferred x100, fitted multipliers, source splicing, interpolation or relaxation of existing review statuses.",
+  "primary": {
+    "eligibility": "Use volume-update sale-condition rules independently of OHLC-update rules. Include auctions/odd lots/off-exchange prints when eligible; apply documented cancellation/correction rules as known by the cutoff.",
+    "price": "Same activity-date audited raw regular-session close; observed/certified close definition required. Dividend/split-adjusted price is a separate return input.",
+    "proxy": "raw_regular_close * consolidated_share_volume is a marked activity proxy, not executed dollar turnover or net capital flow.",
+    "session": "Completed full tape reporting day, including eligible pre/post-market trades under that date's operating calendar. Store actual start/end and America/New_York timezone.",
+    "volume": "Unadjusted shares, preserved precision, consolidated CTA/UTP volume-eligible trades across participating venues and eligible off-exchange reporting facilities."
+  },
+  "required_metadata": [
+    "permanent_security_id",
+    "source",
+    "source_version",
+    "raw_hash",
+    "price_basis",
+    "volume_unit",
+    "split_basis",
+    "volume_session_start",
+    "volume_session_end",
+    "calendar_version",
+    "volume_trade_eligibility",
+    "venue_and_TRF_scope",
+    "odd_lot_rule",
+    "auction_rule",
+    "correction_rule",
+    "published_at",
+    "first_captured_at"
+  ],
+  "scope": "Full supported equity-ETF constituent universe when qualified; frozen ten-name sample for source qualification only.",
+  "status": "reviewable_definition_not_registered_or_published",
+  "version": "constituent-activity-definition-proposal-v1"
+}

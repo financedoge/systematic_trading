@@ -1,0 +1,6 @@
+{
+  "recorded_at": "2026-11-07T12:22:44.084579+00:00",
+  "reason": "Alpaca connection timed out before HTTP on FIX February 27 after the first four cases completed; IBKR also required one historical-farm reconnect. Completed responses remain intact.",
+  "amendment": "Permit at most two resumed Alpaca runs after a transport-only stop, each bounded to three transport attempts on the outstanding page. Resume only after verifying saved successful pages. No repeat of completed pages, no retry of HTTP denials, TLS certificate failures or unsupported schema.",
+  "result_scope": "Unchanged 14 cases and three IBKR controls; no source substitution or qualification tolerance change"
+}

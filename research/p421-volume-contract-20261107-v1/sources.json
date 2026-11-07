@@ -1,0 +1,34 @@
+{
+  "reviewed_on": "2026-11-07",
+  "sources": [
+    {
+      "finding": "The closing summary includes pre- and post-market volume; price-update and volume eligibility differ.",
+      "id": "utp",
+      "limitation": "Historical definition reference; does not certify a specific provider capture or all later rule revisions.",
+      "section": "Consolidated Volume, page 6-5",
+      "title": "UTDF specification 14.4, November 2015",
+      "url": "https://www.utpplan.com/DOC/utdfspecification.pdf"
+    },
+    {
+      "finding": "Historical feeds filter some trade types and may change across capture vintages.",
+      "id": "ibkr",
+      "limitation": "Retrieved in the November 6 comparison; November 7 refresh returned HTTP 503. Does not quantify omitted volume.",
+      "title": "IBKR market-data limitations",
+      "url": "https://www.interactivebrokers.com/docs/tws-api/doc/md/market-data-limitations"
+    },
+    {
+      "finding": "Price and volume fields have separate condition eligibility; reference-condition mappings must be checked.",
+      "id": "massive",
+      "limitation": "Documentation candidate only; no account access, entitlement or captured history verified.",
+      "title": "Massive aggregate condition rules",
+      "url": "https://massive.com/knowledge-base/article/how-does-massive-create-the-open-high-low-close-volume-aggregate-bars"
+    },
+    {
+      "finding": "Daily TAQ covers consolidated US equities trade/quote records, including CTA and UTP participants.",
+      "id": "nyse",
+      "limitation": "Documentation candidate only; historical access requires a licensed source. No bulk download or purchase made.",
+      "title": "NYSE historical data \u2014 Daily TAQ",
+      "url": "https://www.nyse.com/market-data/historical/"
+    }
+  ]
+}

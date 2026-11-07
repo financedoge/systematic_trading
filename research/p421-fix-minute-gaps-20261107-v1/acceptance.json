@@ -1,0 +1,41 @@
+{
+  "status": "bounded_data_check_complete",
+  "verified_at": "2026-11-07T14:42:39.569668+00:00",
+  "protocol_sha256": "fa0aee0422e1f9b838189b8fcca7363e9321b52bb9c74d08f55918f5f90591cc",
+  "verified_source_archives": [
+    {
+      "path": "D:\\systematic_trading_data\\source-archives\\alpaca\\fix-minute-gaps-20261107T143353367752Z",
+      "manifest_sha256": "8bc02e986873cc12d71bee7607f1445dbda1169b23d4658cf2ea995bcbd53553",
+      "payloads": 3,
+      "original_recipe_files": 5
+    }
+  ],
+  "dependency_contracts_unchanged": true,
+  "active_catalog_written": false,
+  "registered_inputs_migrated": 0,
+  "strategy_replays": 0,
+  "historical_strategy_eligible_rows": 0,
+  "tests": {
+    "command": ".venv/Scripts/python.exe -m pytest tests/test_large_volume_sources.py tests/test_volume_exception_sources.py tests/test_volume_exception_reconciliation.py tests/test_crsp_pilot.py tests/test_p421_audit_publication.py tests/test_fix_minute_gaps.py -q",
+    "passed": 41
+  },
+  "ruff": "pass",
+  "git_diff_check": "pass",
+  "retention": "Protect active qualification archives and licensed local extracts; compact findings and recipes retained.",
+  "weakest_etf_chart": "Not applicable: data qualification only, no strategy or portfolio calculation.",
+  "code": {
+    "scripts/inspect_fix_minute_gaps.py": "fd6eb15a58fe3364b8ca810d6e5853cb2ad1f60799592308147b83f30d60dbbf",
+    "tests/test_large_volume_sources.py": "7076962c9238d15e42ea9f65f031dbb5941b6a618fb8d072326bd1e8f2c94657",
+    "tests/test_volume_exception_sources.py": "fa41a898a479ee2289f01733d71834a19d4337aa805744e19251ce9288f2871a",
+    "tests/test_volume_exception_reconciliation.py": "18c09a7f90e498809304f27f7b80e1e3e387d0adf9afb870ae1095d3e9cd7b4f",
+    "tests/test_crsp_pilot.py": "ae2e64bb52430d955f7a3ce9eb4c671d535cc826e253539f722e099a1286b124",
+    "tests/test_p421_audit_publication.py": "f0ae939b788e8535e726de42c8fb4e62c97b89312ea0e97e17d5ee6eb4b3f43f",
+    "tests/test_fix_minute_gaps.py": "74542544a48e6641ae72e4f6f5726283b1d502dc331e3f4af2fb9d4b60691bbc",
+    "scripts/publish_p421_data_checks.py": "2fd1a91eeb31f08822b0e7d1733bff3eb7672a995db2bd1e24aa2890befc36ee"
+  },
+  "secret_scan": {
+    "files": 12,
+    "known_auth_values_found": 0
+  },
+  "recipe_note": "Original capture code remains archived; the later audit adds explicit original-source-manifest pin checks."
+}

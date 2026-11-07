@@ -1,0 +1,10 @@
+{
+  "recorded_at": "2026-11-07T11:51:33.791565+00:00",
+  "type": "Exploratory source-difference diagnostics after frozen primary comparison",
+  "trigger": "Primary exact second/price/size comparison left 164 occurrences and 9,978 shares per source unmatched despite equal total counts, volumes and condition-size multisets.",
+  "patterns_to_report": [
+    "Same price and size with IB timestamp one second later",
+    "Same second and size with IB price 0.0001 USD higher"
+  ],
+  "restriction": "Retain original exact-match residuals. Patterns do not become an acceptance tolerance, causal claim, trade-ID equivalence or adjustment of either source."
+}

@@ -1,0 +1,9 @@
+{
+  "library": "exchange_calendars",
+  "version": "4.13.2",
+  "calendar": "XNYS",
+  "session": "2024-07-03",
+  "open_utc": "2024-07-03T13:30:00+00:00",
+  "close_utc": "2024-07-03T17:00:00+00:00",
+  "close_new_york": "2024-07-03T13:00:00-04:00"
+}

@@ -1,0 +1,14 @@
+{
+  "source_id": "governance/pilots/p421-sip-volume-v1",
+  "batch": "35d1efe82c7d7fbd77edd043fe2f33b34d7b9dec74190c0609374195aa2cb1b9",
+  "root": "D:\\projects\\systematic_trading\\var\\governance\\pilots\\p421-sip-volume-20261107-v1",
+  "rows": 2530,
+  "documents": 5,
+  "published_at": "2026-11-07T13:02:56.639999+00:00",
+  "storage": "postgres-parquet-duckdb",
+  "verification": "Every payload and document SHA256 read back from pinned native publication; historical available_at remains null.",
+  "main_catalog_before": "873b2aa57c91f336f6398b2c0bfb7f60e20cf852f273f311b532362560ab8cd5",
+  "main_catalog_after": "873b2aa57c91f336f6398b2c0bfb7f60e20cf852f273f311b532362560ab8cd5",
+  "main_catalog_written": false,
+  "strategy_eligible_rows": 0
+}

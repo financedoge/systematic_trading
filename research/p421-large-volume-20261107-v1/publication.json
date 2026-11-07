@@ -1,0 +1,21 @@
+{
+  "source_id": "governance/pilots/p421-large-volume-v1",
+  "version": "4d88ae23af1ec3460c7368d43e1d0eb8dd79ea2769a3d3e937f3e3816197b4b3",
+  "observations": 5,
+  "documents": 2,
+  "verified_at": "2026-11-07T14:36:50.846726+00:00",
+  "source_files": {
+    "D:\\systematic_trading_data\\source-archives\\alpaca\\volume-exceptions-20261107T140725342562Z\\manifest.json": "57da0ad808f687cdfd2b50c363635b1ca325dcb24d0987276c244f667ab05e5f",
+    "D:\\systematic_trading_data\\source-archives\\ibkr\\volume-exceptions-20261107T140725484904Z\\manifest.json": "1567fca03ef09a4bde39bdbd8e5e647c78a89286f9a233ed7b3ece81a8264076",
+    "D:\\projects\\systematic_trading\\research\\p421-large-volume-20261107-v1\\protocol.json": "2cf73c9f70f7a5f116176392c1fa469455da0031622f15b2715b98b94c071007",
+    "D:\\projects\\systematic_trading\\research\\p421-large-volume-20261107-v1\\assessment.json": "01ce76eec37c3cd4dfa0a02cb8f333765d50e13b2f35eb2bd84e9ab8a0e761b7",
+    "D:\\projects\\systematic_trading\\scripts\\publish_p421_data_checks.py": "2fd1a91eeb31f08822b0e7d1733bff3eb7672a995db2bd1e24aa2890befc36ee"
+  },
+  "native_storage": "postgres-parquet-duckdb",
+  "exact_payload_readback": true,
+  "all_historical_available_at_null": true,
+  "main_catalog_before": "2ecce5e8bca07c28c3f918d7ce20d36b8d54b9377c12ce6a35d80df66f118628",
+  "main_catalog_after": "2ecce5e8bca07c28c3f918d7ce20d36b8d54b9377c12ce6a35d80df66f118628",
+  "active_catalog_written": false,
+  "registered_asset_migrations": 0
+}

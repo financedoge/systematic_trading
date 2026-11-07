@@ -1,0 +1,75 @@
+{
+  "status": "comparison_complete",
+  "protocol_sha256": "9f35d4d771173213b3fbbfd5170e6dcc81d451ce70c679b1cdf63c1dd1dd01f7",
+  "cases": [
+    {
+      "date": "2024-07-03",
+      "symbol": "UTHR",
+      "tape": "C",
+      "records": 7640,
+      "eligible_records": 7635,
+      "alpaca_volume": 281294,
+      "retained_sip_daily": 281294,
+      "published_volume": 281300.0,
+      "trades_minus_sip_daily": 0,
+      "ibkr_volume": 281294,
+      "ibkr_minus_alpaca": 0,
+      "crsp_daily_equals_alpaca": false,
+      "source_update_states": {
+        "no_update_flag": 7640
+      },
+      "price_size_condition_multisets_exact": true,
+      "alpaca_only_occurrences": 0,
+      "ibkr_only_occurrences": 0,
+      "alpaca_clock_bins": {
+        "before_open": 21,
+        "regular_before_close": 187797,
+        "closing_minute": 63913,
+        "after_closing_minute": 29563
+      },
+      "ibkr_clock_bins": {
+        "before_open": 21,
+        "regular_before_close": 187797,
+        "closing_minute": 63913,
+        "after_closing_minute": 29563
+      },
+      "actual_session": {
+        "library": "exchange_calendars",
+        "version": "4.13.2",
+        "calendar": "XNYS",
+        "session": "2024-07-03",
+        "open_utc": "2024-07-03T13:30:00+00:00",
+        "close_utc": "2024-07-03T17:00:00+00:00",
+        "close_new_york": "2024-07-03T13:00:00-04:00"
+      },
+      "forward_pages": 9,
+      "tail_rows": 1001,
+      "spill_rows": 0,
+      "backward_tail_multiset_exact": true
+    }
+  ],
+  "sources": [
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\alpaca\\volume-exceptions-20261107T142446564321Z",
+      "manifest_sha256": "c98e43a0442ba52a3ea0e2f3c3f1b8c3107f2ac5dcf07f56e137a03c6d933410",
+      "requests": 1,
+      "payloads": 1
+    },
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\ibkr\\volume-exceptions-20261107T142938807525Z",
+      "manifest_sha256": "2ffd6df66ff91c6edd3e071017188bfe4c46cb111ececd399f941ad270f9c7a1",
+      "requests": 10,
+      "payloads": 10
+    }
+  ],
+  "licensed_detail": {
+    "path": "D:\\systematic_trading_data\\source-archives\\wrds\\pilot-20261107T141349139724Z\\early-close-control.json",
+    "sha256": "187322585f09b82cbf16171cc88abeb30b1181678f88b9cdf5fc608175cbea16"
+  },
+  "limitations": [
+    "One diagnosed outlier does not validate all CRSP or SIP histories.",
+    "No same-day availability or historical correction timing inferred.",
+    "No forced source-clock matching or changed acceptance threshold."
+  ],
+  "runner_sha256": "5004f22b2d55ac2f2731ec39ffb26f76b8733014397637f1a22df5495596878f"
+}

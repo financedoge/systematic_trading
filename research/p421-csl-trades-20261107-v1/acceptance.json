@@ -1,0 +1,56 @@
+{
+  "date": "2026-11-07",
+  "status": "one_day_reconciliation_complete_wider_qualification_open",
+  "protocol_sha256": "118c05be95b7dd12b0027adc891062f718c8b3bb3882e144fb4290edcac5a3bc",
+  "assessment_sha256": "32d8b200aad3566c802e76fac4420fa2805e85a1202114a9e4ecc9a7f1d278b9",
+  "checks": {
+    "focused_tests_passed": 23,
+    "ruff": "passed",
+    "whitespace": "passed",
+    "public_secret_scan": "passed",
+    "new_payloads_verified": 22,
+    "prior_payloads_verified": 18,
+    "published_comparison_replayed": true,
+    "whole_day_trade_volume_exact": true,
+    "all_returned_bar_volumes_reproduced": true,
+    "backward_tail_multiset_exact": true
+  },
+  "runner_hashes": {
+    "scripts/capture_csl_trade_sources.py": "1fab0f06e1a05490c3f7b3eb4bbfb75757abec70ec2d7ca8bbef3dd745a8f2e8",
+    "scripts/reconcile_csl_trades.py": "f535d3880b7edc813c199d4592b31d7b557f15e201b0d6a4b610e0f007d8fb54"
+  },
+  "source_receipts": [
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\alpaca\\csl-trades-20261107T114452061078Z",
+      "manifest_sha256": "4daffd0be969b306b691b5db6e7e15f8c0e40c0b990bf3fa430a9d87cc2010a9",
+      "original_status": "incomplete",
+      "revalidation": "passed",
+      "trade_pages": 2,
+      "rows": 14681,
+      "payloads_verified": 4
+    },
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\ibkr\\csl-trades-20261107T114452242849Z",
+      "manifest_sha256": "3a5d4fe6bc49fc82a30db73136c1aa0ff23149dd713fa27dfcb90f05e16f7284",
+      "status": "incomplete",
+      "payloads_verified": 3
+    },
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\ibkr\\csl-trades-20261107T114711070054Z",
+      "manifest_sha256": "f9b06d59a168ea1070053bf36a7f367864fa245801cf784c6c0d4093e3b5dee6",
+      "status": "captured_pending_qualification",
+      "payloads_verified": 15
+    }
+  ],
+  "correction_of_initial_validation": "Three zero-size official price-reference markers accepted as zero activity, original failure retained",
+  "acquisition_recovery": "One resumed paper connection after historical-farm interruption; completed pages not refetched",
+  "primary_exact_trade_comparison_unmatched_per_source": 164,
+  "post_capture_diagnostics_are_not_acceptance_tolerances": true,
+  "catalog_publications": 0,
+  "strategy_replays": 0,
+  "broker_orders": 0,
+  "subscription_changes": 0,
+  "retention": "Source responses remain locally retained as active qualification evidence, outside Git; compact findings and recipe remain in repository",
+  "next_discussion": "Original 14 stock-days unexplained by nearest-100 rounding, before field-specific qualification",
+  "stop_for_operator_discussion": true
+}

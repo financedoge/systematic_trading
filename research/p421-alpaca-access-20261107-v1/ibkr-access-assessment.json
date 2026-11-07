@@ -1,0 +1,77 @@
+{
+  "status": "initial_attempts_superseded_by_successful_retries",
+  "runs": [
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\ibkr\\access-20261107T102930550598Z",
+      "manifest_sha256": "b8102a34a33476bfd98cfb763218f4cf7ff61a04f6766c78a67349ad080f0790",
+      "paper_accounts_verified": true,
+      "server_version": 223,
+      "payloads": [
+        {
+          "path": "CSL-frozen-snapshot.json.gz",
+          "sha256": "2dda53e15a888b2b508b6ad593d2ab3858b86524519af597cc8062edd7eb9620",
+          "rows": 0,
+          "messages": []
+        },
+        {
+          "path": "MANH-frozen-snapshot.json.gz",
+          "sha256": "9272a06ce30e7c42d497a3f9358c13380d9a5ed8bee37e27576c52892f147390",
+          "rows": 0,
+          "messages": [
+            {
+              "code": 10197,
+              "message": "No market data during competing live session",
+              "request": 96002
+            }
+          ]
+        },
+        {
+          "path": "SPY-frozen-snapshot.json.gz",
+          "sha256": "c9eaf1306a738bd72b442f506db40089fae1ebf20cf0aa4b8e453e4adeb1085e",
+          "rows": 0,
+          "messages": []
+        },
+        {
+          "path": "CSL-history-97001.json.gz",
+          "sha256": "97af473d9c8ad78fc80862d1f67dc2f4ac65115577f7f2261b2dfb8899b3e1eb",
+          "rows": 0,
+          "messages": []
+        }
+      ]
+    },
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\ibkr\\access-20261107T103308412517Z",
+      "manifest_sha256": "49a30b62d99a9c0ffa8bec95e7aeecfbfe8540d3399e59c51bfe26e186ae5c8e",
+      "paper_accounts_verified": true,
+      "server_version": 223,
+      "payloads": [
+        {
+          "path": "CSL-historical-ticks.json.gz",
+          "sha256": "b62146b560e9598e7359c15e79bf0f3ba7bc14630f7dcf368c3ff6272172682c",
+          "rows": 0,
+          "messages": [
+            {
+              "code": 10187,
+              "message": "Failed to request historical ticks:Trading TWS session is connected from a different IP address",
+              "request": 98001
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "new_market_rows": 0,
+  "subscriptions_billing_not_inspected": true,
+  "conclusions": [
+    "Prior 23 successful IBKR historical series are retained, with 2530 primary matched stock-days.",
+    "Current paper Gateway server-time/managed-account verification passed.",
+    "No quote observations returned; MANH explicitly reported competing live session (10197).",
+    "CSL daily-history retry timed out without completion or an explicit entitlement error.",
+    "Separate CSL historical Time & Sales request returned 10187 with the specific message: Trading TWS session is connected from a different IP address. This supports a session/IP conflict, not a finding that a paid package is missing.",
+    "These responses do not prove that the operator has no paid subscription; username/API/paper sharing and competition remain to resolve."
+  ],
+  "alpaca_status": "Paper dashboard ready per operator; local key-entry prompt pending",
+  "catalog_publications": 0,
+  "checkpoint_note": "Initial two attempts only; preserved observations are historical. Final assessment.json and ibkr-recheck.md record successful older history and current quote API denials. Operator reports no other live session; original blockage cause unknown.",
+  "final_assessment": "assessment.json"
+}

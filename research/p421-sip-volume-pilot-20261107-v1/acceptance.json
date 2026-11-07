@@ -1,0 +1,45 @@
+{
+  "audit_manifest_sha256": "35d1efe82c7d7fbd77edd043fe2f33b34d7b9dec74190c0609374195aa2cb1b9",
+  "audited_artifact_count": 7,
+  "capture_executed_code": {
+    "p421_sip_volume_pilot.py": "3a090fda9616f01733677dec84817c57f49455ff388aa4ace5ecfe7ced478446",
+    "probe_alpaca_sip_source.py": "92069c03adb6c434249084ba60b7bb96bd069d0da611b660e0dd9bfb06b63537"
+  },
+  "code": {
+    "scripts/compare_alpaca_sip_source.py": "32c234797efa6f9bb17cdd2a7838d8798b394a06853c37df1d28535cc0512af7",
+    "scripts/p421_sip_volume_pilot.py": "b8ea129b2f7e93772d59b4c089f954b1155ffdec75286ee63a83ccaf4ef5b193",
+    "scripts/probe_alpaca_sip_source.py": "92069c03adb6c434249084ba60b7bb96bd069d0da611b660e0dd9bfb06b63537",
+    "src/systematic_trading/market_data/native_analytics.py": "8c19d774bfcbeecf67220e7e3bf0aad55f2e1ad1957bd88e0446bcdcd63beca4",
+    "src/systematic_trading/research/governed_inputs.py": "a0a13aa993fa793c4a22b0aae2b4fe779a117440234b6ba1339d241e4266f11f",
+    "src/systematic_trading/research/sip_volume_pilot.py": "ed7a56b3f37ca07b1ffb0d30a3ae3a53cec57019d04426f3aebafc465547df1d",
+    "tests/test_sip_volume_pilot.py": "25b004371bce41edee97841ec260d6c097fb648dc9f33c4b83e6b61d387ef235"
+  },
+  "dependency_contracts_unchanged": true,
+  "failed_transport_receipts": 2,
+  "git_diff_check": "pass",
+  "historical_strategy_eligible_rows": 0,
+  "main_catalog_unchanged": true,
+  "native_publication": {
+    "batch": "35d1efe82c7d7fbd77edd043fe2f33b34d7b9dec74190c0609374195aa2cb1b9",
+    "documents": 5,
+    "exact_hash_readback": true,
+    "historical_available_at_null_rows": 2530,
+    "observations": 2530,
+    "source_id": "governance/pilots/p421-sip-volume-v1"
+  },
+  "new_manifest_sha256": "27462caa27fe88eb757d12093fe7965c2ceacafeefc7ffb2d20fb008554ac73e",
+  "new_payload_count": 1,
+  "recipe_note": "Capture retains its exact executed script; the later audit version adds an explicit broker ISIN cross-check before writing the frozen audit batch. No acquisition query or protocol changed.",
+  "registered_inputs_migrated": 0,
+  "retention": "Preserve active qualification source archives, audited pilot publication and compact findings. No bulky trade redownloads.",
+  "ruff": "pass",
+  "secret_scan": {
+    "files": 10,
+    "secrets_found": 0
+  },
+  "tests": {
+    "command": ".venv/Scripts/python.exe -m pytest tests/test_sip_volume_pilot.py tests/test_alpaca_source_probe.py",
+    "passed": 32
+  },
+  "verified_at": "2026-11-07T13:05:51.887760+00:00"
+}

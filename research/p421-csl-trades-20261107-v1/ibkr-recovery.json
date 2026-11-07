@@ -1,0 +1,8 @@
+{
+  "recorded_at": "2026-11-07T11:47:08.918482+00:00",
+  "observation": "IBKR reported historical farm 2105 disconnect and 2106 recovery during the third forward request; that request timed out without completion.",
+  "recovery": "At most two resumed connections, retaining verified completed pages and exact whole-second cursor; do not repeat completed pages or expand the one-day study. Keep failed request and farm messages.",
+  "max_completed_forward_pages": 50,
+  "minimum_request_spacing_seconds": 11,
+  "max_resumed_connections": 2
+}

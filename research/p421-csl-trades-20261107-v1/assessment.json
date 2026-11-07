@@ -1,0 +1,296 @@
+{
+  "status": "one_day_source_reconciliation_complete",
+  "symbol": "CSL",
+  "date": "2025-02-24",
+  "runner_sha256": "f535d3880b7edc813c199d4592b31d7b557f15e201b0d6a4b610e0f007d8fb54",
+  "protocol_sha256": "118c05be95b7dd12b0027adc891062f718c8b3bb3882e144fb4290edcac5a3bc",
+  "sources": [
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\alpaca\\csl-trades-20261107T114452061078Z",
+      "manifest_sha256": "4daffd0be969b306b691b5db6e7e15f8c0e40c0b990bf3fa430a9d87cc2010a9",
+      "original_status": "incomplete",
+      "revalidation": "passed",
+      "trade_pages": 2,
+      "rows": 14681,
+      "payloads_verified": 4
+    },
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\ibkr\\csl-trades-20261107T114452242849Z",
+      "manifest_sha256": "3a5d4fe6bc49fc82a30db73136c1aa0ff23149dd713fa27dfcb90f05e16f7284",
+      "status": "incomplete",
+      "payloads_verified": 3
+    },
+    {
+      "archive": "D:\\systematic_trading_data\\source-archives\\ibkr\\csl-trades-20261107T114711070054Z",
+      "manifest_sha256": "f9b06d59a168ea1070053bf36a7f367864fa245801cf784c6c0d4093e3b5dee6",
+      "status": "captured_pending_qualification",
+      "payloads_verified": 15
+    }
+  ],
+  "detail_archive": "D:\\systematic_trading_data\\source-archives\\alpaca\\csl-trades-20261107T114452061078Z\\full-day-reconciliation.json",
+  "detail_sha256": "22651c436abe0c7681141d1c07f1d78400a9142b73d53979b63056bfd859706e",
+  "counts": {
+    "alpaca_records": 14681,
+    "alpaca_valid_records": 14681,
+    "alpaca_volume_eligible_records": 14669,
+    "ibkr_in_day_ticks": 14669,
+    "ibkr_boundary_spill_rows": 0,
+    "ibkr_backward_check_ticks": 1001,
+    "alpaca_returned_minutes": 242,
+    "ibkr_returned_minutes": 931
+  },
+  "coverage": {
+    "alpaca_first": "2025-02-24T09:01:12.126398208Z",
+    "alpaca_last": "2025-02-25T00:06:22.530035968Z",
+    "ibkr_first": "2025-02-24T09:01:12+00:00",
+    "ibkr_last": "2025-02-25T00:06:22+00:00",
+    "backward_tail_multiset_exact": true,
+    "ibkr_forward_boundary": "empty_completed_response"
+  },
+  "volumes": {
+    "published_daily": 413800.0,
+    "alpaca_daily": 413821,
+    "alpaca_all_trade_records": 591656,
+    "alpaca_valid_or_corrected_trade_records": 591656,
+    "alpaca_condition_eligible_trades": 413821,
+    "alpaca_observed_minute_bars": 377382,
+    "alpaca_eligible_volume_in_absent_minutes": 36439,
+    "ibkr_all_ticks": 413821,
+    "ibkr_ticks_without_unreported_flag": 223314,
+    "ibkr_all_hours_minute_bars": 223314,
+    "ibkr_all_hours_daily_bar": 223314,
+    "ibkr_regular_daily_bar": 179315.0
+  },
+  "clock_bins": {
+    "before_0930": {
+      "alpaca_eligible_volume": 689,
+      "ibkr_volume": 689,
+      "ibkr_without_flag_volume": 200
+    },
+    "0930_to_before_1600": {
+      "alpaca_eligible_volume": 347278,
+      "ibkr_volume": 347278,
+      "ibkr_without_flag_volume": 179315
+    },
+    "1600_minute": {
+      "alpaca_eligible_volume": 53904,
+      "ibkr_volume": 53904,
+      "ibkr_without_flag_volume": 43799
+    },
+    "1601_onward": {
+      "alpaca_eligible_volume": 11950,
+      "ibkr_volume": 11950,
+      "ibkr_without_flag_volume": 0
+    }
+  },
+  "alpaca_updates": {
+    "valid/no_update_flag": {
+      "records": 14681,
+      "size": 591656
+    }
+  },
+  "alpaca_conditions": {
+    " |T|I": {
+      "records": 96,
+      "size": 1314,
+      "eligible_volume": 1314
+    },
+    " |F|T|I": {
+      "records": 125,
+      "size": 142,
+      "eligible_volume": 142
+    },
+    " |T": {
+      "records": 2,
+      "size": 200,
+      "eligible_volume": 200
+    },
+    "C|T|I": {
+      "records": 2,
+      "size": 2,
+      "eligible_volume": 2
+    },
+    " |O": {
+      "records": 1,
+      "size": 2476,
+      "eligible_volume": 2476
+    },
+    " |Q": {
+      "records": 3,
+      "size": 2497,
+      "eligible_volume": 0
+    },
+    " |I": {
+      "records": 9822,
+      "size": 108180,
+      "eligible_volume": 108180
+    },
+    " ": {
+      "records": 901,
+      "size": 131967,
+      "eligible_volume": 131967
+    },
+    " |F|I": {
+      "records": 3077,
+      "size": 49755,
+      "eligible_volume": 49755
+    },
+    " |4|I": {
+      "records": 220,
+      "size": 3527,
+      "eligible_volume": 3527
+    },
+    " |F": {
+      "records": 351,
+      "size": 44872,
+      "eligible_volume": 44872
+    },
+    " |4|B": {
+      "records": 53,
+      "size": 6101,
+      "eligible_volume": 6101
+    },
+    " |B": {
+      "records": 4,
+      "size": 400,
+      "eligible_volume": 400
+    },
+    " |M": {
+      "records": 6,
+      "size": 175338,
+      "eligible_volume": 0
+    },
+    " |6": {
+      "records": 1,
+      "size": 43799,
+      "eligible_volume": 43799
+    },
+    " |T|P": {
+      "records": 14,
+      "size": 21086,
+      "eligible_volume": 21086
+    },
+    " |9": {
+      "records": 3,
+      "size": 0,
+      "eligible_volume": 0
+    }
+  },
+  "ibkr_conditions": {
+    "  TI": {
+      "records": 96,
+      "size": 1314,
+      "flagged_size": 1314
+    },
+    " FTI": {
+      "records": 125,
+      "size": 142,
+      "flagged_size": 142
+    },
+    "  T ": {
+      "records": 2,
+      "size": 200,
+      "flagged_size": 0
+    },
+    "C TI": {
+      "records": 2,
+      "size": 2,
+      "flagged_size": 2
+    },
+    " O  ": {
+      "records": 1,
+      "size": 2476,
+      "flagged_size": 0
+    },
+    "   I": {
+      "records": 9822,
+      "size": 108180,
+      "flagged_size": 108180
+    },
+    "    ": {
+      "records": 901,
+      "size": 131967,
+      "flagged_size": 0
+    },
+    " F I": {
+      "records": 3077,
+      "size": 49755,
+      "flagged_size": 49755
+    },
+    " 4 I": {
+      "records": 220,
+      "size": 3527,
+      "flagged_size": 3527
+    },
+    " F  ": {
+      "records": 351,
+      "size": 44872,
+      "flagged_size": 0
+    },
+    " 4 B": {
+      "records": 53,
+      "size": 6101,
+      "flagged_size": 6101
+    },
+    "   B": {
+      "records": 4,
+      "size": 400,
+      "flagged_size": 400
+    },
+    " 6  ": {
+      "records": 1,
+      "size": 43799,
+      "flagged_size": 0
+    },
+    "  TP": {
+      "records": 14,
+      "size": 21086,
+      "flagged_size": 21086
+    }
+  },
+  "minute_checks": {
+    "alpaca_present_bar_volume_mismatches": 0,
+    "ibkr_bar_vs_unflagged_tick_mismatches": 0,
+    "alpaca_absent_minutes_with_eligible_volume": 205,
+    "absent_minutes_without_price_eligible_trade": 205,
+    "ibkr_flag_coincides_with_I_all_day": false
+  },
+  "filter_decomposition": {
+    "odd_lot_shares": 162920,
+    "flagged_non_odd_lot_records": 71,
+    "flagged_non_odd_lot_shares": 27587,
+    "official_price_reference_records": 12,
+    "official_price_reference_sizes_not_activity": 177835,
+    "condition_size_multisets_equal": true
+  },
+  "coarse_trade_match": {
+    "matched_occurrences": 14505,
+    "matched_volume": 403843,
+    "alpaca_unmatched_occurrences": 164,
+    "alpaca_unmatched_volume": 9978,
+    "ibkr_unmatched_occurrences": 164,
+    "ibkr_unmatched_volume": 9978,
+    "limitation": "Same second/price/size with multiplicity, not proof of unique trade identity"
+  },
+  "post_capture_residual_diagnostics": {
+    "ib_one_second_later": {
+      "occurrences": 153,
+      "shares": 9898
+    },
+    "ib_price_0001_higher_same_second": {
+      "occurrences": 11,
+      "shares": 80
+    },
+    "unexplained_alpaca_occurrences": 0,
+    "unexplained_ib_occurrences": 0,
+    "interpretation": "Exploratory residual patterns, not a matching tolerance, unique trade mapping or established cause"
+  },
+  "limitations": [
+    "One diagnostic day only; no universe-wide qualification",
+    "Historical correction snapshots do not establish dissemination availability",
+    "Cross-source same-second matches do not establish unique trade IDs or independent upstream lineage",
+    "Provider clock/condition contracts remain distinct; no tolerance fitted to residuals"
+  ],
+  "catalog_publications": 0,
+  "strategy_replays": 0
+}

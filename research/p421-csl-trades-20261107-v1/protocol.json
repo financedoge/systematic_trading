@@ -1,0 +1,297 @@
+{
+  "created_at": "2026-11-07",
+  "scope": "One-day source inspection and reconciliation only; no strategy research inputs, publication or database expansion",
+  "symbol": "CSL",
+  "date": "2025-02-24",
+  "timezone": "America/New_York",
+  "start_utc": "2025-02-24T05:00:00Z",
+  "end_exclusive_utc": "2025-02-25T05:00:00Z",
+  "hypothesis": "Trade eligibility, odd-lot treatment and missing OHLC minutes explain much of the daily/minute volume gap; diagnose with complete-day trades without assuming equivalence",
+  "alpaca": {
+    "endpoint": "https://data.alpaca.markets/v2/stocks/CSL/trades",
+    "feed": "sip",
+    "asof": "-",
+    "currency": "USD",
+    "sort": "asc",
+    "limit": 10000,
+    "max_pages": 10,
+    "end_inclusive": "2025-02-25T04:59:59.999999999Z",
+    "max_bytes_per_response": 3000000,
+    "transport": "verified HTTPS IPv4 via existing localhost:7892 proxy; auth only on stdin",
+    "max_transport_attempts": 3,
+    "metadata": [
+      "exchanges",
+      "trade condition descriptions"
+    ],
+    "pagination": "Use next_page_token until null, including short pages; reject cycles and exact repeated records, keep distinct identical-looking trades and update states. Preserve timestamp nanoseconds.",
+    "corrections": "Retain all records; summarize valid/missing-u plus corrected separately from canceled and incorrect. Unknown update labels stop acceptance."
+  },
+  "ibkr": {
+    "environment": "paper",
+    "client_id": 29409,
+    "whatToShow": "TRADES",
+    "useRth": false,
+    "ignoreSize": false,
+    "numberOfTicks": 1000,
+    "max_pages": 50,
+    "minimum_request_spacing_seconds": 11,
+    "wait_seconds": 40,
+    "start": "20250224 05:00:00 UTC",
+    "pagination": "Each completed response includes its final whole second. Advance to last returned second + 1. Do not infer exhaustion from fewer than 1000 rows: request again to establish next-session boundary or explicit empty completed response. Preserve any next-day spill solely as boundary evidence, never in the study totals. Stop on incomplete callback/errors/nonprogress.",
+    "cross_boundary_check": "One bounded backward 1000-tick request ending at next New York midnight verifies final in-day second independently of forward paging; extra beyond 50 page bound.",
+    "duplicates": "No trade ID or subsecond clock; never deduplicate identical-looking ticks inside pages. Disjoint seconds prevent cross-page duplication. Halt markers preserved with zero volume."
+  },
+  "comparison": {
+    "bins": [
+      "00:00-09:30",
+      "09:30-16:00",
+      "16:00 minute",
+      "16:01-24:00"
+    ],
+    "cases": [
+      "all returned trade sizes",
+      "valid/corrected Alpaca trades",
+      "Alpaca documented condition-eligible volume",
+      "IBKR all ticks versus ticks excluding unreported",
+      "per-minute volume and absent-bar trade types",
+      "per-second price/size multiset matching, preserving repeated occurrences"
+    ],
+    "price_basis": "Alpaca trade prices as returned; IB historical trade basis retained as returned; no split factor inferred from equality",
+    "bar_inputs": "Reuse exact archived CSL daily/minute bars and pinned publication comparison from prior item",
+    "checks": "Exact share reconciliation, page completion, identities, condition groups, update/cancel counts, session coverage; no tolerance fitted to result",
+    "limitations": [
+      "Snapshot correction states do not establish when changes were historically available",
+      "A completed vendor response is not independent proof of full tape coverage",
+      "IB second resolution and no trade ID limit one-to-one matching",
+      "Clock bins do not prove execution/auction time or historical publication availability"
+    ]
+  },
+  "reuse_reviews": [
+    {
+      "search": "alpaca",
+      "found": [],
+      "decision": "No registered Alpaca input; standalone bounded source probe, not a new strategy provider"
+    },
+    {
+      "asset": "activity-raw-v1",
+      "sha256": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8",
+      "decision": "Preserve; candidate source does not replace audited raw activity"
+    },
+    {
+      "asset": "activity-lag20-v1",
+      "sha256": "22d7a7a12268b83ba5998e311855bf47fa12d082c599f8d9630f2cbdceef9e43",
+      "decision": "Inspected and preserved; legacy adjusted-activity semantics are not reused for qualification"
+    },
+    {
+      "asset": "m1-selection-v1",
+      "sha256": "6d69d9d053b30906da639e2913717043bd1aab3627136a7cbe223d2d53250f2f",
+      "decision": "Inspected consumer; no change"
+    },
+    {
+      "component": "GovernedInputs",
+      "decision": "Reuse pinned manifest and input-hash verification for the published comparison side"
+    },
+    {
+      "component": "scripts/setup_wrds_access.py:protect_new_file",
+      "decision": "Reuse empty-file ACL restriction for local credential entry"
+    },
+    {
+      "component": "systematic_trading.data.http:read_bytes",
+      "decision": "Reviewed. Its native fallback places headers on argv and follows redirects; use bounded fixed-origin curl config via stdin for this authenticated probe without modifying the shared transport"
+    }
+  ],
+  "dependency_preflight": {
+    "result": "passed unchanged contracts",
+    "registry_sha256": "38ce50167a735bbe8123529031f1e3c2fc1f7eea2b05cd1c7b523a03842fadc4"
+  },
+  "existing_input_receipts": {
+    "purpose": "Frozen receipts for replaying source inspection; no new acquisition or publication",
+    "comparison_sha256": "da26353251c34d67d12573a339b631594d2ae72ae1e58798028ca9bf34e119af",
+    "archives": [
+      {
+        "provider": "alpaca",
+        "archive": "D:\\systematic_trading_data\\source-archives\\alpaca\\probe-20261107T104907262642Z",
+        "manifest_sha256": "c592d64f487cd54cd8af2f435d06904bee0d7b93bf72781887d861a5bdbf8735",
+        "runner_sha256": "6c91267a43ae9d8d1e2700ddb7bab45595761afe068f7af4cf9e3fc269c3c028",
+        "status": "incomplete",
+        "payloads": []
+      },
+      {
+        "provider": "alpaca",
+        "archive": "D:\\systematic_trading_data\\source-archives\\alpaca\\probe-20261107T105054313101Z",
+        "manifest_sha256": "9abd35e886d753f2bfa9002c2aaabb02fa25e62b167117235b915c0a2c19a83d",
+        "runner_sha256": "d19089ec97dde23dac3cfd6f5530c915f0c9701abc525d92442b9dea4d070ab0",
+        "status": "captured_pending_qualification",
+        "payloads": [
+          {
+            "path": "1Day-01.json.gz",
+            "sha256": "e6d2df90208b7aca89533c439a72f13df391ae389837b439ad35399c6fc10f3e",
+            "rows": 1
+          },
+          {
+            "path": "1Min-01.json.gz",
+            "sha256": "32c0e480639cd0cc2213be3294284c5c13d128631fa41c41a074de280068817c",
+            "rows": 242
+          }
+        ]
+      },
+      {
+        "provider": "alpaca",
+        "archive": "D:\\systematic_trading_data\\source-archives\\alpaca\\sample-20261107T105110081388Z",
+        "manifest_sha256": "4362be476f4916dff8c6a992e9966f170f5d664b3099da2b044bd7d72c84d94d",
+        "runner_sha256": "d19089ec97dde23dac3cfd6f5530c915f0c9701abc525d92442b9dea4d070ab0",
+        "status": "incomplete",
+        "payloads": [
+          {
+            "path": "1Day-01.json.gz",
+            "sha256": "d16b1fcdb39ec96686e0aaa44a42bf321d01d638852ab384863e876e0be2af46",
+            "rows": 50
+          }
+        ]
+      },
+      {
+        "provider": "alpaca",
+        "archive": "D:\\systematic_trading_data\\source-archives\\alpaca\\sample-20261107T105214456841Z",
+        "manifest_sha256": "455f3a286b9f3a4a216c26559b875ad87fdec1cc3a750117253eb706361b560b",
+        "runner_sha256": "6850009da8c556b545540e7e780d62cf1d80dfa155ad1f10e68af6e04418932a",
+        "status": "incomplete",
+        "payloads": []
+      },
+      {
+        "provider": "alpaca",
+        "archive": "D:\\systematic_trading_data\\source-archives\\alpaca\\sample-20261107T105348033231Z",
+        "manifest_sha256": "ae817a7831f74289a142431cd9a7ed0ae17b901388a161ca33ee5755f6ed830d",
+        "runner_sha256": "c51acc3c2aab4e0757454833d2708b63a684d71d80b60413fa49898e1fa392c4",
+        "status": "incomplete",
+        "payloads": []
+      },
+      {
+        "provider": "alpaca",
+        "archive": "D:\\systematic_trading_data\\source-archives\\alpaca\\sample-20261107T105628852021Z",
+        "manifest_sha256": "4e1c2415f9492f485cd9037b049449853dd1866b556e6196d055e51511f4519e",
+        "runner_sha256": "92069c03adb6c434249084ba60b7bb96bd069d0da611b660e0dd9bfb06b63537",
+        "status": "captured_pending_qualification",
+        "payloads": [
+          {
+            "path": "1Day-01.json.gz",
+            "sha256": "f8b6327529d9c85f4f213bea0cf16706fc8bbc0887adb51aafa13200668aab0f",
+            "rows": 50
+          },
+          {
+            "path": "1Min-01.json.gz",
+            "sha256": "5214171926862d0fe9b3d8c61a84b130a6f2457fe2c7f5c1186f79e3dc76f5d2",
+            "rows": 10000
+          },
+          {
+            "path": "1Min-02.json.gz",
+            "sha256": "50232d0eaab2889281c1bfdbf1ae2d0b937020691833c45da21c32522dd51d0b",
+            "rows": 3878
+          }
+        ]
+      },
+      {
+        "provider": "ibkr",
+        "archive": "D:\\systematic_trading_data\\source-archives\\ibkr\\access-20261107T102930550598Z",
+        "manifest_sha256": "b8102a34a33476bfd98cfb763218f4cf7ff61a04f6766c78a67349ad080f0790",
+        "runner_sha256": "ac567ea8c3bd16b6f34e3f75806e1a8f8bf4e6eefd1f01da1027d7d93a53ba38",
+        "status": "inspection_complete",
+        "payloads": [
+          {
+            "path": "CSL-frozen-snapshot.json.gz",
+            "sha256": "2dda53e15a888b2b508b6ad593d2ab3858b86524519af597cc8062edd7eb9620",
+            "rows": 0
+          },
+          {
+            "path": "MANH-frozen-snapshot.json.gz",
+            "sha256": "9272a06ce30e7c42d497a3f9358c13380d9a5ed8bee37e27576c52892f147390",
+            "rows": 0
+          },
+          {
+            "path": "SPY-frozen-snapshot.json.gz",
+            "sha256": "c9eaf1306a738bd72b442f506db40089fae1ebf20cf0aa4b8e453e4adeb1085e",
+            "rows": 0
+          },
+          {
+            "path": "CSL-history-97001.json.gz",
+            "sha256": "97af473d9c8ad78fc80862d1f67dc2f4ac65115577f7f2261b2dfb8899b3e1eb",
+            "rows": 0
+          }
+        ]
+      },
+      {
+        "provider": "ibkr",
+        "archive": "D:\\systematic_trading_data\\source-archives\\ibkr\\access-20261107T103308412517Z",
+        "manifest_sha256": "49a30b62d99a9c0ffa8bec95e7aeecfbfe8540d3399e59c51bfe26e186ae5c8e",
+        "runner_sha256": "2b250d5e427a207ba8ee55dd9d147479041b762f0f3ef76a894e9db10313c662",
+        "status": "inspection_complete",
+        "payloads": [
+          {
+            "path": "CSL-historical-ticks.json.gz",
+            "sha256": "b62146b560e9598e7359c15e79bf0f3ba7bc14630f7dcf368c3ff6272172682c",
+            "rows": 0
+          }
+        ]
+      },
+      {
+        "provider": "ibkr",
+        "archive": "D:\\systematic_trading_data\\source-archives\\ibkr\\access-20261107T104817113627Z",
+        "manifest_sha256": "20a44736ae0e143c0b872f87ab88bb3ee238c91026d19a278b93e5deb51f2c1a",
+        "runner_sha256": "2b250d5e427a207ba8ee55dd9d147479041b762f0f3ef76a894e9db10313c662",
+        "status": "inspection_complete",
+        "payloads": [
+          {
+            "path": "CSL-historical-ticks.json.gz",
+            "sha256": "7e816d94aaa55c7b7094d349d5f94075bcf115601c88adaf891ce9687fa5a0a5",
+            "rows": 1004
+          }
+        ]
+      },
+      {
+        "provider": "ibkr",
+        "archive": "D:\\systematic_trading_data\\source-archives\\ibkr\\access-20261107T105031824028Z",
+        "manifest_sha256": "a71d3997a13f485eaea325fa7fe3c4b735d4a59b00edccef25d5f5eab74b09ed",
+        "runner_sha256": "2b250d5e427a207ba8ee55dd9d147479041b762f0f3ef76a894e9db10313c662",
+        "status": "inspection_complete",
+        "payloads": [
+          {
+            "path": "CSL-frozen-snapshot.json.gz",
+            "sha256": "c1baaddb56722ffc70fd2e00238b654fa023103d69baa49c0794607f5ef8e80b",
+            "rows": 0
+          },
+          {
+            "path": "MANH-frozen-snapshot.json.gz",
+            "sha256": "ae92389260519062228f6f593a8331b1f61a9efe00b3c0bd52ba81c79135f21c",
+            "rows": 0
+          },
+          {
+            "path": "SPY-frozen-snapshot.json.gz",
+            "sha256": "7aa530f202e90febc6d960be0bf74a83836b87674392354abb0026b6dec335f9",
+            "rows": 0
+          },
+          {
+            "path": "CSL-history-97001.json.gz",
+            "sha256": "a7a3b992ef35ca158d840c880cc8cd4edea642d90ed42fd874a5e5c22288f0f6",
+            "rows": 5
+          },
+          {
+            "path": "CSL-history-97002.json.gz",
+            "sha256": "93f24c26f57c1731d6f6d6a42ab865dd9700e5bfaa14841290e6dea98541e403",
+            "rows": 5
+          },
+          {
+            "path": "CSL-history-97003.json.gz",
+            "sha256": "cebf497a19fe4222f1207629dd75096e9ffd22f07fbb2066c56ea327564b36f6",
+            "rows": 931
+          }
+        ]
+      }
+    ]
+  },
+  "retention": "Raw responses, queries, times, counts, hashes and executed runners in D:/systematic_trading_data/source-archives/{provider}, outside Git; compact findings/protocol in repository",
+  "documentation": [
+    "https://docs.alpaca.markets/us/reference/stocktradesingle-1",
+    "https://docs.alpaca.markets/us/docs/market-data-faq",
+    "https://www.interactivebrokers.com/docs/tws-api/doc/md/historical-ticks"
+  ],
+  "stop_after": "Discuss this single-day result before further samples, publication or strategy work"
+}

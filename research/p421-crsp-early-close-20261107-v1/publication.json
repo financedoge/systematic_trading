@@ -1,0 +1,21 @@
+{
+  "source_id": "governance/pilots/p421-early-close-v1",
+  "version": "0f27d3aab233cd435562fddd85f0ae4f484328eb889b998200a06d62a52734a7",
+  "observations": 1,
+  "documents": 2,
+  "verified_at": "2026-11-07T14:37:01.024079+00:00",
+  "source_files": {
+    "D:\\systematic_trading_data\\source-archives\\alpaca\\volume-exceptions-20261107T142446564321Z\\manifest.json": "c98e43a0442ba52a3ea0e2f3c3f1b8c3107f2ac5dcf07f56e137a03c6d933410",
+    "D:\\systematic_trading_data\\source-archives\\ibkr\\volume-exceptions-20261107T142938807525Z\\manifest.json": "2ffd6df66ff91c6edd3e071017188bfe4c46cb111ececd399f941ad270f9c7a1",
+    "D:\\projects\\systematic_trading\\research\\p421-crsp-early-close-20261107-v1\\protocol.json": "9f35d4d771173213b3fbbfd5170e6dcc81d451ce70c679b1cdf63c1dd1dd01f7",
+    "D:\\projects\\systematic_trading\\research\\p421-crsp-early-close-20261107-v1\\assessment.json": "49b5f9c2e7c41a60e05b7c2138c4f4e5901d53307676bcd3c21de55f4e31b18a",
+    "D:\\projects\\systematic_trading\\scripts\\publish_p421_data_checks.py": "2fd1a91eeb31f08822b0e7d1733bff3eb7672a995db2bd1e24aa2890befc36ee"
+  },
+  "native_storage": "postgres-parquet-duckdb",
+  "exact_payload_readback": true,
+  "all_historical_available_at_null": true,
+  "main_catalog_before": "2ecce5e8bca07c28c3f918d7ce20d36b8d54b9377c12ce6a35d80df66f118628",
+  "main_catalog_after": "2ecce5e8bca07c28c3f918d7ce20d36b8d54b9377c12ce6a35d80df66f118628",
+  "active_catalog_written": false,
+  "registered_asset_migrations": 0
+}

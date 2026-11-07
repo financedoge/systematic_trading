@@ -1,0 +1,42 @@
+{
+  "recorded_at": "2026-11-07T11:49:50.034409+00:00",
+  "source": "https://docs.alpaca.markets/us/docs/market-data-faq",
+  "tape": "A",
+  "volume_excluded_conditions": [
+    "M",
+    "Q",
+    "9"
+  ],
+  "minute_price_excluded_conditions": [
+    "B",
+    "C",
+    "H",
+    "I",
+    "M",
+    "N",
+    "P",
+    "Q",
+    "R",
+    "U",
+    "V",
+    "Z",
+    "4",
+    "7",
+    "9"
+  ],
+  "combination": "Apply most restrictive condition; unsupported tape/condition fails inspection.",
+  "bar_emission": "Vendor documents no bar when any OHLC/volume field is zero; volume-only minutes can be absent.",
+  "updates": {
+    "valid": [
+      "missing u",
+      "corrected"
+    ],
+    "excluded": [
+      "canceled",
+      "incorrect"
+    ],
+    "unknown": "fail"
+  },
+  "limitation": "Rules transcribed from documentation available at current capture; not a proof of historical dissemination or source implementation revision.",
+  "declaration": "Protocol declared documented condition eligibility before acquisition. This receipt records the documented rule implementation, not a result-fitted rule."
+}

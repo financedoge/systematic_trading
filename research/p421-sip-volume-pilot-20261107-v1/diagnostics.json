@@ -1,0 +1,57 @@
+{
+  "abs_volume_difference_percent_counts": {
+    "0.05": 125,
+    "0.1": 69,
+    "0.5": 16,
+    "1": 5
+  },
+  "thresholds_are_descriptive_not_admission_rules": true,
+  "positive_differences": 1475,
+  "negative_differences": 1034,
+  "exact_matches": 21,
+  "next_item_proposal": "Freeze the five largest absolute percentage volume discrepancies for Alpaca trade reconstruction and independent IBKR full-day tick controls; preserve both raw series and update/correction evidence. This selection is diagnostic, not random or a new tolerance.",
+  "proposed_cases": [
+    {
+      "symbol": "RPM",
+      "activity_date": "2024-04-29",
+      "sip_raw_volume": 405083,
+      "published_raw_volume": 364400.0,
+      "volume_delta_shares": 40683.0,
+      "volume_delta_percent": 11.16437980241493
+    },
+    {
+      "symbol": "UTHR",
+      "activity_date": "2024-06-25",
+      "sip_raw_volume": 562256,
+      "published_raw_volume": 523500.0,
+      "volume_delta_shares": 38756.0,
+      "volume_delta_percent": 7.403247373447947
+    },
+    {
+      "symbol": "UTHR",
+      "activity_date": "2024-06-21",
+      "sip_raw_volume": 1851871,
+      "published_raw_volume": 1800900.0,
+      "volume_delta_shares": 50971.0,
+      "volume_delta_percent": 2.8303070686878784
+    },
+    {
+      "symbol": "FIX",
+      "activity_date": "2025-02-07",
+      "sip_raw_volume": 401164,
+      "published_raw_volume": 407500.0,
+      "volume_delta_shares": -6336.0,
+      "volume_delta_percent": -1.5548466257668712
+    },
+    {
+      "symbol": "FIX",
+      "activity_date": "2025-02-04",
+      "sip_raw_volume": 285817,
+      "published_raw_volume": 288900.0,
+      "volume_delta_shares": -3083.0,
+      "volume_delta_percent": -1.0671512634129456
+    }
+  ],
+  "case_selection": "Descending absolute percentage volume difference over all 2530 rows, chosen after this audit for a prospective diagnostic; no changes to the completed pilot.",
+  "historical_availability": "Unknown, remains null in every published observation."
+}

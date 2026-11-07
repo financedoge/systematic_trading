@@ -1,0 +1,13 @@
+{
+  "availability": "Vendor receipt is retained separately from SEC filing/acceptance and current source capture. No automatic available_at or vendor-vintage certification.",
+  "created_at": "2026-11-07T14:50:36.840928+00:00",
+  "input_hashes": {
+    "research/p421-quarter-20261104-v1/artifact-manifest.json": "c9e50839fc84fac01194d40a71dce0a96f96513dd29c00269bf8201d1e7bdd0e",
+    "research/p421-quarter-20261104-v1/filings/0001752724-25-043691.json": "b833067ecb3c270c7dd318a46f54c8d0b6975c6979d2e48a2fc68c61065c4773",
+    "research/p421-quarter-20261104-v1/filings/0001752724-25-043691.xml.gz": "23e4907233427f7e016dbc15b5aca4189a5f9693fe32fb71ca748f7f6a6b161f",
+    "research\\p421-wrds-holdings-coverage-20261107-v1\\capture.json": "c4c9866a9c845d913e7383c52bcae989d1869251533688712c725bb6a23f81a9"
+  },
+  "matching": "Unique dated fund/portfolio intervals. SEC CUSIP9 or embedded US-ISIN CUSIP8 matched to CRSP CUSIP8 at the same report date. No ticker-only match or inferred non-US identifier bridge.",
+  "purpose": "Diagnostic coverage and one snapshot reconciliation; not a strategy test or source-admission threshold.",
+  "values": "Compare unscaled shares and USD market values exactly; retain all residuals. Rank ties are not assumed duplicate records. Do not normalize weights."
+}

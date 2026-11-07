@@ -1,0 +1,10 @@
+{
+  "acceptance.json": "c6311eccecf8c3265cced8f23dc0c54ebc248297e8adb84f7e984b631d5dde4c",
+  "assessment.json": "65a3ae231682c7a24b2a01245d1adbaadc2a64ed7a2603427a5db26c6b1c78a5",
+  "diagnostics.json": "d971a319ab62efa33b6344213878b58c9d438c59bd94a9bc1c1463fecb794d49",
+  "preflight.json": "aa930a8ea39834fe2726e5485b852eeb2dc8c6eeaed0c27ab129aa702a4533ea",
+  "protocol.json": "97fb0548e0d656275c9e1aaf329ef671f6942747be9136f61e26ef959f5d6635",
+  "protocol.sha256": "b984977a7e5fbf52577c895ead3061cd2299356af33af73edf7550eb24cca1b6",
+  "publication.json": "3a0ecf694a41888d2b37eac2d55478f4d1d99430d120b0b49dd0d61272d10b97",
+  "results.md": "da0cc2081e50fb2cf4039757b193eb555ac2d6f8603b8eea435be0a479aa45c4"
+}

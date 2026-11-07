@@ -1,0 +1,105 @@
+{
+  "scope": "Tushare U.S. daily source inspection as a possible consolidated-volume alternative",
+  "mode": "source inspection and reconciliation only; no strategy research inputs or publication",
+  "inherited_request_sha256": "8380ef95bd63b9300a6bc0401a48bd5e5892dad0c3b20143d93809ed7f35d457",
+  "identities": [
+    {
+      "broker_conid": 6120,
+      "isin": "US1423391002",
+      "symbol": "CSL"
+    },
+    {
+      "broker_conid": 13904,
+      "isin": "US9426222009",
+      "symbol": "WSO"
+    },
+    {
+      "broker_conid": 4814485,
+      "isin": "US5627501092",
+      "symbol": "MANH"
+    },
+    {
+      "broker_conid": 273962,
+      "isin": "US7496851038",
+      "symbol": "RPM"
+    },
+    {
+      "broker_conid": 6746357,
+      "isin": "US91307C1027",
+      "symbol": "UTHR"
+    },
+    {
+      "broker_conid": 93957038,
+      "isin": "US9837931008",
+      "symbol": "XPO"
+    },
+    {
+      "broker_conid": 6607708,
+      "isin": "US1999081045",
+      "symbol": "FIX"
+    },
+    {
+      "broker_conid": 4596077,
+      "isin": "SG9999000020",
+      "symbol": "FLEX"
+    },
+    {
+      "broker_conid": 267265,
+      "isin": "US1475281036",
+      "symbol": "CASY"
+    },
+    {
+      "broker_conid": 11735,
+      "isin": "US7595091023",
+      "symbol": "RS"
+    }
+  ],
+  "dates": [
+    "2025-02-24",
+    "2025-02-25",
+    "2025-02-26",
+    "2025-02-27",
+    "2025-02-28"
+  ],
+  "endpoints": [
+    "us_daily",
+    "us_daily_adj"
+  ],
+  "maximum_data_requests": 20,
+  "expected_maximum_observations": 100,
+  "request_rule": "First symbol tests endpoint access; stop that endpoint after permission/error response. Only the declared five sessions and ten frozen symbols.",
+  "price_rule": "Keep original prices/factor untouched; adjusted endpoint documentation says price times factor yields adjusted price",
+  "volume_rule": "Keep source values unchanged; no A-share lot-unit assumption or inferred scaling",
+  "taq_required_capabilities": [
+    "unadjusted consolidated share volume",
+    "full-session and regular-session separation",
+    "eligible sale conditions",
+    "exchange/TRF scope",
+    "corrections/cancellations",
+    "dated identities",
+    "publication/capture timestamps"
+  ],
+  "reuse_reviews": [
+    {
+      "input": "tushare",
+      "asset_search": "assets-tushare.json",
+      "decision": "No registered Tushare asset found; inspect existing optional adapter/token reader, preserve registered assets"
+    },
+    {
+      "input": "volume",
+      "asset_search": "assets-volume.json",
+      "inspected_version": "activity-raw-v1",
+      "sha256": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8",
+      "decision": "Existing audited raw-volume provider remains authoritative; this probe does not replace it"
+    },
+    {
+      "input": "transport",
+      "provider": "systematic_trading.data.http.read_bytes",
+      "decision": "Reuse bounded verified HTTPS reader; native GET fallback is disabled for token-bearing POST"
+    }
+  ],
+  "credentials": "Existing configured token read only in memory; never retained in requests/receipts or logs",
+  "retention": "Local raw source responses and exact token-free request receipts; no licensed rows in Git",
+  "market_strategy_tests": false,
+  "stop_after_item_for_discussion": true
+}

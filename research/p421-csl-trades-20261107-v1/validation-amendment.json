@@ -1,0 +1,8 @@
+{
+  "recorded_at": "2026-11-07T11:46:21.307667+00:00",
+  "type": "Source schema validation correction, not a research threshold change",
+  "observation": "Alpaca second page contains a size-zero corrected consolidated close marker, condition 9; all two trade pages returned HTTP 200 and final next_page_token null. Initial checker incorrectly required positive size for every record.",
+  "change": "Retain zero-size official price markers M/Q/9 as zero activity; reject other unsupported size-zero records. Official schema is uint32; documented M/Q/9 conditions do not update volume.",
+  "recovery": "Revalidate saved responses with the corrected validator; preserve the original failed validation manifest and executed runner. No repeated download or volume substitution.",
+  "documentation": "https://docs.alpaca.markets/us/docs/market-data-faq"
+}

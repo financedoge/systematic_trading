@@ -1,0 +1,20 @@
+{
+  "operator_decision_date": "2026-11-07",
+  "policy": "Retain a local source copy of every WRDS extract to build the reusable research archive",
+  "root": "D:\\systematic_trading_data\\source-archives\\wrds",
+  "required_receipt_fields": [
+    "exact query and parameters",
+    "UTC capture timestamp",
+    "source library/table and release/update version when supplied; unknown otherwise",
+    "security identifiers and date range",
+    "source columns/types/units/session definitions",
+    "row count and payload SHA-256",
+    "retrieval code version/hash",
+    "observed entitlement and availability limitations"
+  ],
+  "payloads": "Lossless compressed source rows; source values and schema preserved",
+  "deduplication": "Reuse a verified identical payload; retain each acquisition receipt",
+  "retirement": "The sole retained WRDS source copy is protected from disposable-study cleanup",
+  "git": "No licensed source rows or credentials in Git",
+  "research_use": "Source inspection and reconciliation first; audited publication required before strategy use"
+}

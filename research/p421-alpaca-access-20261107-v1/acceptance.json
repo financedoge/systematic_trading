@@ -1,0 +1,34 @@
+{
+  "status": "bounded_source_comparison_complete_volume_qualification_open",
+  "date": "2026-11-07",
+  "discussion_checkpoint": true,
+  "checks": {
+    "focused_tests_passed": 35,
+    "test_files": [
+      "tests/test_alpaca_source_probe.py",
+      "tests/test_ibkr_source_access.py",
+      "tests/test_wrds_access_setup.py"
+    ],
+    "ruff": "passed",
+    "git_diff_check": "passed",
+    "assessment_replayed_against_pinned_inputs": true,
+    "archive_attempts_verified": 10,
+    "response_payloads_verified": 18,
+    "public_files_secret_value_check": "passed"
+  },
+  "runners_sha256": {
+    "scripts/probe_alpaca_sip_source.py": "92069c03adb6c434249084ba60b7bb96bd069d0da611b660e0dd9bfb06b63537",
+    "scripts/compare_alpaca_sip_source.py": "32c234797efa6f9bb17cdd2a7838d8798b394a06853c37df1d28535cc0512af7",
+    "scripts/assess_alpaca_ibkr_sources.py": "509110f2d16aeb1f968b6ecfb4cfa5e28fecefcbc16cf13f36965521baf476e0",
+    "scripts/probe_ibkr_source_access.py": "2b250d5e427a207ba8ee55dd9d147479041b762f0f3ef76a894e9db10313c662"
+  },
+  "assessment_sha256": "9ee649c7631acf2d010a3c900fa68c07ef24c8f151046d7d94f1ad10ff8b0cc9",
+  "catalog_publications": 0,
+  "strategy_replays": 0,
+  "broker_orders": 0,
+  "subscription_changes": 0,
+  "scope": "Source inspection only; no new acceptance tolerance, strategy input or shared provider change",
+  "next_item": "Discuss, then predeclare full-day CSL 2025-02-24 trade-level reconciliation and completeness/conditions/corrections audit",
+  "retention": "Compact findings and runners retained in repository; source responses remain locally retained as active qualification evidence outside Git",
+  "initial_checkpoint": "protocol.json and initial IBKR attempt observations are preserved; results.md and assessment.json give the completed checkpoint"
+}
