@@ -1,0 +1,34 @@
+{
+  "status": "bounded_check_complete",
+  "verified_at": "2026-11-07T15:18:03.834355+00:00",
+  "checkpoint_commit": "18061ce",
+  "checkpoint_pushed": true,
+  "protocol_sha256": "98e686cf8a7ddc982c858eb9b0fb7abf1896c01925cd9a506c5f86900880f142",
+  "audit_plan_sha256": "2ffaca48149964d84c018cf529a0d2a9ca20c30712ebd43572e17f50d13ee34d",
+  "source_archive": "D:\\systematic_trading_data\\source-archives\\wrds\\holdings-identity-20261107T151345004149Z",
+  "source_manifest_sha256": "4ea011153e46b2d58a7b4b808bcb3bdda5bcb77c8b295f577b82cc457ccccf12",
+  "wrds_payloads_verified": 4,
+  "public_documents_verified": 4,
+  "code": {
+    "scripts/capture_holdings_identity.py": "1ea31c130baa63e976a333add981e0a938a38a3b21998af4ae4de0836224041f",
+    "scripts/audit_holdings_identity.py": "c218ac0032c4db550f4c3df5a29bb11fa5e830d5e0532d839c6f3316171ba2b9",
+    "tests/test_holdings_identity.py": "ea57fe51ea92929985a35c9fd9134db0ec144f77c662a164166a601dd9e13542"
+  },
+  "tests": {
+    "command": ".venv/Scripts/python.exe -m pytest tests/test_holdings_identity.py tests/test_wrds_holdings_audit.py tests/test_wrds_holdings_coverage.py -q",
+    "passed": 24
+  },
+  "ruff": "pass",
+  "git_diff_check": "pass",
+  "secret_scan": {
+    "files": 10,
+    "matches": 0
+  },
+  "dependency_contracts_unchanged": true,
+  "original_source_values_preserved": true,
+  "active_catalog_publications": 0,
+  "registered_input_migrations": 0,
+  "strategy_replays": 0,
+  "historical_available_at": null,
+  "retention": "Protect active qualification WRDS and public source archives; licensed rows remain local outside Git."
+}

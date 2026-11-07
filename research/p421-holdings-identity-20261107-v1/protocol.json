@@ -1,0 +1,65 @@
+{
+  "candidate_symbols": [
+    "ALTM",
+    "AXTA",
+    "CNH",
+    "CPRI",
+    "ESNT",
+    "FLEX",
+    "FN",
+    "G",
+    "JAZZ",
+    "JHG",
+    "LIVN",
+    "NVT",
+    "PRGO",
+    "RNR",
+    "ROIV",
+    "ST",
+    "VAL",
+    "VNOM",
+    "WFRD"
+  ],
+  "connection_helper_sha256": "b527ebce76d9b4d6ec275a7f9de3e02e155a09d9bf4f4b2cb8aad366b79630f8",
+  "created_at": "2026-11-07T15:12:49.239114+00:00",
+  "identity_window": [
+    "2023-11-01",
+    "2025-01-31"
+  ],
+  "limits": {
+    "holdings_rows": 5000,
+    "identity_rows": 500
+  },
+  "mixed_receipt_case": {
+    "expected_groups": 3,
+    "expected_rows": 1371,
+    "receipt_spread_days": 45,
+    "report_date": "2022-01-31",
+    "selection": "Largest receipt-date spread among prior 2012 portfolio/report dates; symbol then date tie break.",
+    "symbol": "VGK"
+  },
+  "public_capture_helper_sha256": "72510fdc854c9d065880166bb912513cfafac7ae588338a6d7f3c8df8adb6659",
+  "public_sources": {
+    "bermuda-numbering": "https://www.bsx.com/numbering-services",
+    "cayman-numbering": "https://www.csx.ky/isin/isin-cusip.asp",
+    "cgs-identifiers": "https://www.cusip.com/identifiers.html?section=ISIN",
+    "vnom-conversion": "https://nasdaqtrader.com/TraderNews.aspx?id=ECA2023-653"
+  },
+  "reuse_reviews": {
+    "decision": "Reuse WRDS connection, dated mapping reader and public-source capture helper; preserve earlier audits and introduce separate scope. No registered asset change.",
+    "identity_asset_search": {}
+  },
+  "rules": [
+    "Retain raw vendor holding identifiers; dated corroboration must not rewrite old evidence.",
+    "Do not interpret all non-US NSINs as CUSIPs. Only specifically documented numbering jurisdictions may be tested.",
+    "Verify ISIN and CUSIP checksums plus unique dated candidate identity. Missing/ambiguous identifiers remain excluded.",
+    "Compare mixed-receipt row groups exactly; earliest receipt does not certify full snapshot availability.",
+    "All source rows remain local; available_at stays unknown pending independent availability evidence."
+  ],
+  "scope": "Diagnose unmatched MDY identities and the largest mixed-receipt spread. Source qualification only, no strategy results or source admission.",
+  "snapshot_date": "2024-12-31",
+  "source_assessment": "research\\p421-wrds-holdings-coverage-20261107-v1\\assessment.json",
+  "source_assessment_sha256": "26216077f8ef62195ac06f57cbc67284e5410cd68eb46b2695ae7b2dab2543aa",
+  "source_detail_sha256": "cbd24bd85d79544d46fb8006cf0fd3bdae1235269552669e942b966d0263e5ed",
+  "version": "p421-holdings-identity-20261107-v1"
+}

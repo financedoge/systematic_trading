@@ -1,6 +1,114 @@
 # Execution Kanban
 
-## Research checkpoint and continuation — 2026-11-07 (validated for commit/push)
+## Research checkpoint — 2026-11-08 (packaged and verified)
+
+Operator requested commit and push. Package the dated-identity findings, both
+preserved Alpha33 pilots and their compact reports/charts, the decision to set
+Alpha33 aside, and deferred P4.24 direct-stock momentum scope. Include versioned
+runners/tests and hash-preserving attributes. Retain licensed WRDS source rows,
+credentials and bulky replay bundles locally; exclude the generated paper-broker
+reconciliation snapshot. All 35 focused tests pass. The 53 compact artifact hashes,
+registered contracts and exact staged bytes for 72 new files verify. The package
+contains 77 files, with approximately 2.30 MB of new retained evidence/recipes.
+Existing Windows line endings are preserved for pinned runners. Commit/push this
+verified package on the existing master branch.
+
+## Direct-stock constituent momentum — 2026-11-08 (scoping complete; P4.24 deferred)
+
+Operator set Alpha33 aside and proposed overweighting strong-momentum stocks and
+underweighting weak stocks relative to an ETF's disclosed constituent weights.
+Clarified that the intended portfolio holds stocks directly. Operator permits
+deferring this idea until direct-stock research is ready. Recorded P4.24 in the
+[research plan](signal-decay-and-alpha-plan.md#p424--direct-stock-constituent-momentum-tilt-deferred-prerequisites-first):
+ETF-relative stock momentum tilt; actual ETF / untilted stock clone / tilted clone
+comparisons; fixed/dynamic timing, cost/delay and winner-dependence checks.
+
+The broad Alpha33 input is only 64 sessions of raw open/close, not an admitted
+multi-month stock total-return/action history. Longer dated holdings and adjusted
+returns, direct-share corporate actions/delistings and basket cost/replication
+contracts must qualify first. Existing stock representations and backtest services
+can be reused; no blanket claim that stock research needs live-trading readiness.
+All 15 registered strategy contracts pass; no Alpha33 registered asset or strategy
+consumer exists. Set Alpha33 research aside without deleting its evidence or
+stopping shared publications. No new backtest or runtime change in this session.
+[Decision receipt](../research/constituent-momentum-roadmap-20261108-v1/decision-and-reuse.json).
+
+## P4.21 first constituent-alpha backtest — 2026-11-08 (complete; strategy discussion)
+
+Operator explicitly instructed continuation through a new backtest, without
+stopping at plumbing milestones. Prioritize inputs actually consumed by a
+bounded price-only constituent-rank pilot using the retained, publicly dated
+December 2024 SEC filings. Preserve unsupported holdings in coverage denominators;
+no retrospective WRDS receipt-date availability assumption. Freeze protocol,
+audit/publish required fields, run matched net controls and dynamic-rebalance
+sensitivity, validate independently and prepare the weakest-ETF inspection.
+Do not choose rules on pilot returns or claim fresh out-of-sample confirmation.
+Discuss strategy results/choices after the backtest, not routine data checkpoints.
+
+Frozen pilot: original cross-sectional Alpha33 (`rank(open/close - 1)`),
+December 2024 public SEC holdings, March 3–May 30, 2025 evaluation. Compare
+constituent aggregation with ETF-level Alpha33, 126-session momentum and unranked
+controls on identical daily coverage. Monthly primary; daily and strict 0.40
+target-change sensitivities; 5/10/20 bp with next-open/one-extra-session delays.
+No training search, sign tuning, retrospective coverage relaxation or pristine
+OOS claim. Price-only input qualification is separate from unresolved volume
+governance; existing full-history audit verdicts stay unchanged.
+Protocol: `research/p421-alpha33-pilot-20261107-v1/protocol.json`.
+
+Completed the requested new backtesting. The first projection admitted only five
+ETFs, so its top-six policies correctly remained in cash. Preserved that run;
+no coverage gate or portfolio-size relaxation. A separately frozen data-only
+amendment qualified and published one CRSP raw open/close panel keyed by permanent
+security ID. This adds missing histories without splicing providers. The same-day
+open/close ratio is invariant to a common split/dividend adjustment; ETF returns
+still use the pinned adjusted histories. Of 173,702 admitted stock observations,
+144,312 have corroborated overlaps and 29,390 are explicitly single-source audited;
+496 conflicting overlaps and 61 non-trade closes remain excluded. All WRDS
+responses remain local. Original catalog and registered asset versions unchanged.
+
+The amended study supports 14 ETFs and completes 108 non-optimized net cases plus
+one frozen-weight winner-removal diagnostic. March 3–May 30, 2025, primary 5 bp /
+next-open: constituent Alpha33 monthly **−2.37%, Sharpe −0.286, DD 13.93%**;
+ETF Alpha33 **−3.86%, −0.468, 14.58%**; matched momentum **−2.51%, −0.267,
+15.15%**. Covered-pool buy-and-hold returns −2.35%; FR25 reference −0.50%.
+Daily / target-change constituent policies return −3.95% / −4.10%, with much
+higher turnover. All six primary cost/delay cases lose money; one extra execution
+session materially changes the loss. These 63 reused sessions are development
+evidence, not fresh OOS or a stable-Sharpe finding.
+
+MDY is weakest over the full window (−1.38 pp contribution); monthly weakest
+cases are IAT, MDY, XLV. Dated charts, states, fills and FIFO outcomes are prepared.
+ITA contributes +1.96 pp; replacing its frozen weights with cash gives −4.34%.
+Three independent native LEAN cases have zero daily NAV difference. Fifteen new
+focused tests and thirteen identity regressions pass. No promotion or execution
+change. Pause here for strategy discussion, as requested; do not tune this quarter.
+[Report](../research/p421-alpha33-pilot-20261108-v2/index.html).
+
+## MDY dated identifiers and receipt groups — 2026-11-07 (complete; gaps retained)
+
+Following checkpoint push 18061ce, inspect dated CRSP security records for the
+19 unmatched equity candidates in the December 2024 MDY control. Preserve the
+cash row separately. Diagnose the VNOM CUSIP disagreement and seek retained
+foreign-identifier evidence without ticker-only substitution. Assess mixed
+receipt groups across the existing 29-fund coverage extract; no source admission
+or historical-availability assumption follows from this diagnostic.
+
+Corroborated VNOM's 2023 conversion with the Nasdaq notice and dated CRSP CUSIP
+transition, preserving the stale identifier in the original holdings row. Eight
+additional Bermuda/Cayman/BVI ISIN bridges pass documented numbering rules,
+checksums and dated security identity. All nine new share/value pairs match the
+filing exactly: 391 of 401 equity positions now have identity corroboration, with
+ten foreign bridges still open. No source rewrite or strategy-input admission.
+
+The selected VGK January 2022 control has 1,367 rows at the earliest receipt and
+four later-dated rows spanning 45 days, representing approximately 0.25% of NAV.
+Counts and weight sums reconcile exactly. No exact duplicate rows; 38 missing
+CUSIPs remain missing. Twenty-four focused tests and Ruff pass. Next: remaining
+foreign identifiers and independently supported dissemination/revision timing,
+then portfolio completeness and broader price/activity qualification.
+[Report](../research/p421-holdings-identity-20261107-v1/results.md).
+
+## Research checkpoint and continuation — 2026-11-07 (committed and pushed)
 
 Operator requested commit/push before continuing. Package completed P4.21 source
 qualification, retention guidance, recipes and tests; preserve exact receipt
@@ -11,6 +119,7 @@ holdings-completeness checks without changing strategy or execution authority.
 Checkpoint validation: 140 focused tests, Ruff and all 88 artifact hashes pass.
 The 153 new compact files total approximately 0.71 MB. Exact-byte Git attributes
 protect hashed receipts and recipes; credential scanning found no matches.
+Commit 18061ce was pushed successfully to origin/master before research resumed.
 
 ## WRDS holdings coverage — 2026-11-07 (complete; qualification remains open)
 
@@ -2165,7 +2274,8 @@ After finishing work:
 | P4.23 | Done; 6/monthly retained | Joint selection-width X and target-change threshold n | Frozen 6-by-8 grid; 588 full-size scenarios, six native checks and 98 independent adoption checks. Wider selections reduce turnover but do not qualify under FR25 selection guards/stability. | [Results](../research/selection-width-timing-20261015-v1/results.md). F3 is legacy-basis sensitivity; expanded-pool validation later. No monitoring or trading changes. |
 | P4.16d | Partial; cash-relative retained as research evidence | Substantial tradable ETF expansion, granular classes and volatility-aware ranking | Versioned inventory/taxonomy, audited admission, app/execution contracts and controlled full-pool comparisons; historical membership and duplicate exposure checks. | [Inventory](etf-universe-inventory-2026-10-13.md) and first wave delivered. Historical expanded-FR25/class screens withheld net replays under retired proxy rules; no net verdict established for those arms. [Cash-relative net retest](../research/cash-relative-net-20261031-v1/results.md) now complete: useful matched-control improvement, no guarded FR25 replacement. Historical membership/mandates and broader tradability remain open. P4.16c parked. |
 | P4.20 | Done; discussion checkpoint | Versioned evidence and decay review | Hash-bound dossier, actual sample reuse, explicit decay/stability states, net controls/frictions/chronology; no universal half-life/IC/cost veto or automatic authority. | [Policy and worked Alpha54 assessment](research-evidence-governance-v1.md). 37 tests pass, one Windows skip. Existing app/operator/broker controls remain separate. |
-| P4.21 | Coverage assessment and one-quarter pilot complete. Alpha replay blocked. | Look-through constituent alpha | Compute structurally cross-sectional alphas on a dated constituent universe and aggregate with each fund’s available holdings. | [Historical assessment](../research/p421-coverage-20261104-v1/results.md) and [December pilot](../research/p421-quarter-20261104-v1/results.md). Qualified prices and dated identities remain insufficient. |
+| P4.21 | First Alpha33 backtest complete; signal set aside by operator. | Look-through constituent alpha | Compute structurally cross-sectional alphas on a dated constituent universe and aggregate with each fund’s available holdings. | [Nov 8 report](../research/p421-alpha33-pilot-20261108-v2/index.html): 14 qualified ETFs, 108 net cases, native parity and weakest inspections. No edge established in the 63-session pilot; retain evidence, no further Alpha33 tuning. |
+| P4.24 | Deferred; operator-approved later-stage idea | Direct-stock constituent momentum tilt | Hold the stocks, overweight stronger momentum and underweight weaker momentum relative to each ETF's dated constituent weights. Compare against an untilted clone and the ETF, with fixed/dynamic timing and chronological net robustness. | [Scope and prerequisites](signal-decay-and-alpha-plan.md#p424--direct-stock-constituent-momentum-tilt-deferred-prerequisites-first). Qualify longer stock returns, holdings availability, corporate actions/delistings and direct-basket accounting/costs first. This is not ETF ranking. |
 
 ## P5: Portfolio Blotter And Execution Controls
 

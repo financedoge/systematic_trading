@@ -1,0 +1,290 @@
+{
+  "eligibility_changes": [],
+  "full_candidate_count": 52,
+  "funds": {
+    "AGG": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "BIL": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "CORN": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "CPER": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "DBA": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "DBB": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "DBC": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "EEM": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "EFA": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "EMB": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "EWA": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "EWC": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "EWG": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "EWH": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "EWJ": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "EWT": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "EWU": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "EWY": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "GLD": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "HYG": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "IAT": {
+      "eligible_sessions": 64,
+      "initial_value_coverage": 1.0,
+      "minimum_value_coverage": 1.0
+    },
+    "IBB": {
+      "eligible_sessions": 64,
+      "initial_value_coverage": 0.9781907784100901,
+      "minimum_value_coverage": 0.9687295174279899
+    },
+    "IBND": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "IEF": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "IGOV": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "INDA": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "ITA": {
+      "eligible_sessions": 64,
+      "initial_value_coverage": 0.9988876432951322,
+      "minimum_value_coverage": 0.9988876432951322
+    },
+    "IWM": {
+      "eligible_sessions": 64,
+      "initial_value_coverage": 0.9638664795903734,
+      "minimum_value_coverage": 0.9526699048027252
+    },
+    "LEMB": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "LQD": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "MBB": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "MCHI": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "MDY": {
+      "eligible_sessions": 64,
+      "initial_value_coverage": 0.9760531029194259,
+      "minimum_value_coverage": 0.9681864362103797
+    },
+    "PPLT": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "SHY": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "SLV": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "SOXX": {
+      "eligible_sessions": 64,
+      "initial_value_coverage": 0.9636050421826964,
+      "minimum_value_coverage": 0.9636050421826964
+    },
+    "SPY": {
+      "eligible_sessions": 64,
+      "initial_value_coverage": 0.9731588435985377,
+      "minimum_value_coverage": 0.9722855175821813
+    },
+    "TIP": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "TLT": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "USO": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "VGK": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "WEAT": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.0,
+      "minimum_value_coverage": 0.0
+    },
+    "XLB": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.7255012980473163,
+      "minimum_value_coverage": 0.7255012980473163
+    },
+    "XLC": {
+      "eligible_sessions": 64,
+      "initial_value_coverage": 1.0,
+      "minimum_value_coverage": 1.0
+    },
+    "XLE": {
+      "eligible_sessions": 64,
+      "initial_value_coverage": 1.0,
+      "minimum_value_coverage": 1.0
+    },
+    "XLI": {
+      "eligible_sessions": 0,
+      "initial_value_coverage": 0.9273940639348806,
+      "minimum_value_coverage": 0.9273940639348806
+    },
+    "XLK": {
+      "eligible_sessions": 64,
+      "initial_value_coverage": 0.9641806451784268,
+      "minimum_value_coverage": 0.9641806451784268
+    },
+    "XLP": {
+      "eligible_sessions": 64,
+      "initial_value_coverage": 0.9933573779489543,
+      "minimum_value_coverage": 0.9933573779489543
+    },
+    "XLU": {
+      "eligible_sessions": 64,
+      "initial_value_coverage": 1.0,
+      "minimum_value_coverage": 1.0
+    },
+    "XLV": {
+      "eligible_sessions": 64,
+      "initial_value_coverage": 0.9755766255730726,
+      "minimum_value_coverage": 0.9755766255730726
+    },
+    "XLY": {
+      "eligible_sessions": 64,
+      "initial_value_coverage": 0.9716213293841552,
+      "minimum_value_coverage": 0.9716213293841552
+    }
+  },
+  "initial_eligible": [
+    "IAT",
+    "IBB",
+    "ITA",
+    "IWM",
+    "MDY",
+    "SOXX",
+    "SPY",
+    "XLC",
+    "XLE",
+    "XLK",
+    "XLP",
+    "XLU",
+    "XLV",
+    "XLY"
+  ],
+  "maximum_daily_eligible": 14,
+  "minimum_daily_eligible": 14,
+  "older_candidate_file_excluded_outside_supported_pool": [
+    "BWX",
+    "XOP"
+  ],
+  "price_exclusions": {},
+  "supported_price_count": 52
+}

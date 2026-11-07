@@ -1,0 +1,258 @@
+{
+  "daily": [
+    {
+      "adjusted_close": 47.93,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": -2568.289999999994,
+      "date": "2025-03-03",
+      "fills": [
+        {
+          "date": "2025-03-03",
+          "fee": "65.07",
+          "price": "48.87",
+          "quantity": 2663,
+          "symbol": "IAT"
+        }
+      ],
+      "held_weight": 0.1293503555697015,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 96000.0,
+      "theoretical_weight": 0.12972455128907362
+    },
+    {
+      "adjusted_close": 46.12,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": -4820.030000000006,
+      "date": "2025-03-04",
+      "fills": [],
+      "held_weight": 0.12641214106001947,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 762500.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 45.89,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": -612.4899999999917,
+      "date": "2025-03-05",
+      "fills": [],
+      "held_weight": 0.12508347849886814,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 294200.0,
+      "theoretical_weight": 0.11854201373568454
+    },
+    {
+      "adjusted_close": 45.18,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": -1890.7300000000023,
+      "date": "2025-03-06",
+      "fills": [],
+      "held_weight": 0.12447525011551383,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 641200.0,
+      "theoretical_weight": 0.13755014197270307
+    },
+    {
+      "adjusted_close": 45.25,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": 186.41000000000076,
+      "date": "2025-03-07",
+      "fills": [],
+      "held_weight": 0.12387773128136886,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 244300.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 43.45,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": -4793.399999999992,
+      "date": "2025-03-10",
+      "fills": [],
+      "held_weight": 0.12045446905736354,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 653700.0,
+      "theoretical_weight": 0.13114433013143734
+    },
+    {
+      "adjusted_close": 42.92,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": -1411.390000000003,
+      "date": "2025-03-11",
+      "fills": [],
+      "held_weight": 0.120101257239811,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 468300.0,
+      "theoretical_weight": 0.15519768992294147
+    },
+    {
+      "adjusted_close": 43.23,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": 825.5299999999871,
+      "date": "2025-03-12",
+      "fills": [],
+      "held_weight": 0.12143297110166865,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 425300.0,
+      "theoretical_weight": 0.1303278720110555
+    },
+    {
+      "adjusted_close": 42.63,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": -1597.799999999985,
+      "date": "2025-03-13",
+      "fills": [],
+      "held_weight": 0.12078860778290013,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 414400.0,
+      "theoretical_weight": 0.12048668719537771
+    },
+    {
+      "adjusted_close": 43.88,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": 3328.75,
+      "date": "2025-03-14",
+      "fills": [],
+      "held_weight": 0.12232410741643375,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 372500.0,
+      "theoretical_weight": 0.14009397944389235
+    },
+    {
+      "adjusted_close": 44.16,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": 745.6399999999841,
+      "date": "2025-03-17",
+      "fills": [],
+      "held_weight": 0.12173100968090976,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 236100.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 44.11,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": -133.14999999999242,
+      "date": "2025-03-18",
+      "fills": [],
+      "held_weight": 0.1226500504158676,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 133300.0,
+      "theoretical_weight": 0.13314248532482495
+    },
+    {
+      "adjusted_close": 44.62,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": 1358.1299999999947,
+      "date": "2025-03-19",
+      "fills": [],
+      "held_weight": 0.1231827385556521,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 201200.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 44.43,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": -505.96999999999395,
+      "date": "2025-03-20",
+      "fills": [],
+      "held_weight": 0.12330015992524107,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 261100.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 44.56,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": 346.1900000000068,
+      "date": "2025-03-21",
+      "fills": [],
+      "held_weight": 0.12387631234691789,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 241300.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 45.55,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": 2636.3699999999862,
+      "date": "2025-03-24",
+      "fills": [],
+      "held_weight": 0.1248562681990373,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 173200.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 45.57,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": 53.260000000008326,
+      "date": "2025-03-25",
+      "fills": [],
+      "held_weight": 0.12597043437363492,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 722200.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 45.41,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": -426.0800000000098,
+      "date": "2025-03-26",
+      "fills": [],
+      "held_weight": 0.12565483048461318,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 149300.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 44.9,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": -1358.1299999999947,
+      "date": "2025-03-27",
+      "fills": [],
+      "held_weight": 0.12432147647899326,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 110800.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 44.01,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": -2370.0700000000015,
+      "date": "2025-03-28",
+      "fills": [],
+      "held_weight": 0.12310556751437184,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 308600.0,
+      "theoretical_weight": 0.1502716908521666
+    },
+    {
+      "adjusted_close": 44.61,
+      "adopted_weight": 0.129724551289,
+      "contribution_usd": 1597.8000000000038,
+      "date": "2025-03-31",
+      "fills": [],
+      "held_weight": 0.12431663691541313,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 308800.0,
+      "theoretical_weight": 0.0
+    }
+  ],
+  "trade_scope": "FIFO lots overlapping window, open lots marked at final study close; lot P&L is not window contribution.",
+  "trades": [
+    {
+      "entry": "2025-03-03",
+      "entry_price": 48.87,
+      "exit": "2025-04-01",
+      "exit_price": 44.26,
+      "net_pnl": -12400.429999999998,
+      "net_return": -0.09523709681928343,
+      "protection": "None; selection/adoption exits only",
+      "quantity": 2663,
+      "status": "closed",
+      "symbol": "IAT"
+    }
+  ]
+}

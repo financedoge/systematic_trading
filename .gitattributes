@@ -1,4 +1,23 @@
 # Preserve byte-level research receipt and runner hashes across checkouts.
+research/p421-holdings-identity-20261107-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/capture_holdings_identity.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/p421-alpha33-pilot-20261107-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/research_p421_alpha33.py -text
+scripts/capture_p421_alpha33.py -text
+scripts/qualify_p421_alpha33.py -text
+scripts/backtest_p421_alpha33.py -text
+scripts/validate_p421_alpha33.py -text
+scripts/report_p421_alpha33.py -text
+tests/test_p421_alpha33_pilot.py -text
+research/p421-alpha33-pilot-20261108-v2/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/research_p421_alpha33_v2.py -text
+scripts/publish_p421_crsp_prices.py -text
+scripts/backtest_p421_alpha33_v2.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/validate_p421_alpha33_v2.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/report_p421_alpha33_v2.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/constituent-momentum-roadmap-20261108-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/audit_holdings_identity.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/test_holdings_identity.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 research/p421-ibkr-reconcile-20261106-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 scripts/acquire_mdy_ibkr_history.py -text
 scripts/reconcile_mdy_ibkr_history.py -text

@@ -1,0 +1,18 @@
+{
+  "bridge_policy": "Verify both checksums, unique dated CIZ CUSIP/issue/ticker and filed identity; regional NNA rules must be retained. VNOM additionally requires official conversion notice and matching dated old/new CUSIP transition. Preserve original holding identifier.",
+  "created_at": "2026-11-07T15:15:42.857436+00:00",
+  "input_hashes": {
+    "research\\p421-holdings-identity-20261107-v1\\capture.json": "3d71276624b1ebd1a5c5f23ede525ae4245d171207c7526e60976ec2999e9a99",
+    "research\\p421-holdings-identity-20261107-v1\\public-sources.json": "be24d223493f9aa41dcf0a04303af4a5a9261e67bb916ade66b2c00f29550719",
+    "research\\p421-quarter-20261104-v1\\filings\\0001752724-25-043691.json": "b833067ecb3c270c7dd318a46f54c8d0b6975c6979d2e48a2fc68c61065c4773",
+    "research\\p421-quarter-20261104-v1\\filings\\0001752724-25-043691.xml.gz": "23e4907233427f7e016dbc15b5aca4189a5f9693fe32fb71ca748f7f6a6b161f"
+  },
+  "limitations": "Structural mapping and effective security dates are not historical dissemination timestamps. No source admission or revised strategy recipe.",
+  "receipt_policy": "No exact repeated rows or forced consolidation; reconcile group counts and retain exact percentage-sum residuals without a fitted tolerance. Missing identifiers remain missing.",
+  "supported_embedded_cusip_countries": [
+    "US",
+    "BM",
+    "KY",
+    "VG"
+  ]
+}

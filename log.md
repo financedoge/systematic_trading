@@ -1,5 +1,136 @@
 # Project Log
 
+## 2026-11-08 — Package completed research and deferred momentum plan
+
+Operator requested a Git commit and push. This checkpoint packages the completed
+holdings-identity findings, both frozen Alpha33 versions, compact findings and
+inspection charts, versioned runners/tests, and the decision to set Alpha33 aside
+and defer direct-stock momentum as P4.24. Report HTML and PNGs are explicitly
+included despite the general generated-report ignore patterns. Licensed WRDS
+rows, credentials, bulky native/replay inputs and the generated paper-reconciliation
+snapshot are excluded. Thirty-five focused tests and scoped Ruff checks pass;
+research manifests and registered dependency pins are verified before commit.
+
+## 2026-11-08 — Alpha33 set aside; direct-stock momentum added as deferred P4.24
+
+Operator rejected further pursuit of Alpha33 and proposed tilting an ETF's
+underlying stock weights toward stronger cross-sectional momentum. Clarified
+through the user-input question that the intended portfolio holds stocks directly,
+not ETFs ranked by constituent scores. Operator subsequently allowed deferring
+the idea until direct-stock research is ready. Added P4.24 to the research plan
+and Kanban with this exact scope; no new experiment was launched or ETF-ranking
+substitute introduced.
+
+Readiness check: the broad Alpha33 CRSP publication covers 64 raw open/close
+sessions, 173,702 observations and 2,734 securities. It does not qualify a
+multi-month stock total-return panel or prove dividend/split/delisting accounting.
+Other adjusted histories exist but have not been qualified for this new scope.
+Record prerequisites for dated holdings across eras, adjusted/total-return and
+corporate-action data, stable identities, raw-share versus synthetic-unit
+accounting, replication gaps and realistic many-stock costs. The application
+already represents stocks and has reusable accounting; research readiness is
+distinct from later paper/live promotion.
+
+Define the future matched question as momentum tilt versus an untilted clone of
+the same dated stock basket, with the actual ETF as a replication reference.
+Include monthly and dynamic controls, training-only selection if parameters are
+searched, chronological net evaluation, weakest-basket/stock charts and winner
+dependence. Prior months 2–12 is a literature starting candidate, not an approved
+or performance-selected parameter. No new horizon, tilt bound, return floor or
+backtest window was frozen in this planning session.
+
+Ran `scripts/check_strategy_dependencies.py --contracts-only`: all 15 registered
+strategy contracts validate, with no Alpha33 strategy/asset references. Recorded
+asset-pool searches and reuse decisions for adjusted prices, raw activity and M1;
+no registered holdings or corporate-action asset matched. Setting Alpha33 research
+aside changes no runtime definition, publisher, monitoring or allocation. Retained
+its evidence and all WRDS archives; no files deleted or fingerprints regenerated.
+Receipt: `research/constituent-momentum-roadmap-20261108-v1/decision-and-reuse.json`.
+
+## 2026-11-08 — New constituent-alpha backtests completed; pause for strategy discussion
+
+Followed the operator's instruction to continue through plumbing until new
+backtesting. Froze a price-only Alpha33 constituent-rank pilot before performance:
+public December 2024 SEC holdings, March 3–May 30, 2025, unchanged top-six/inverse
+volatility construction; monthly primary plus daily/0.40 target-change controls,
+5/10/20 bp and zero/one extra session delay. The first field-qualified projection
+covered only five ETFs, so its alpha policies stayed in cash. Retained that run,
+its 108 cases and native checks; it is not signal-performance evidence.
+
+WRDS acquisition retained 2,755 holdings-date identity rows, 2,816 signal-window
+identity rows and 174,259 daily records. One large request dropped its TLS
+connection; the retained retry uses bounded 100-security requests. Exact SQL,
+parameters, types, timestamps, original response hashes and failed receipts remain
+under `D:/systematic_trading_data/source-archives/wrds/`. Credentials and licensed
+source rows remain outside Git.
+
+Diagnosed actual missing historical series (including MCD and regional banks),
+not poor alpha returns. Froze a data-only v2 amendment before any non-cash alpha
+result: qualify one CRSP raw open/close panel by permanent identity, trade-close
+flag, positive finite fields, expected sessions and overlapping independent prices.
+Same-session open/close ratios are invariant to common adjustment factors; no
+raw cross-session stock returns are presented as adjusted. ETF portfolio returns
+still use the existing pinned audited adjusted batch. Publish and verify native
+readback before backtesting; never silently splice provider sources. Preserve
+496 conflicting overlaps and 61 non-trade closes as missing. Of 173,702 published
+observations, 144,312 are overlap-corroborated and 29,390 explicitly single-source
+audited. Public filing availability is evidenced; price-vintage dissemination
+remains unknown. Existing catalog, registered assets and dependency pins unchanged.
+
+The same strategy rules now support 14 ETFs. Completed 108 new net cases plus
+one frozen-weight winner-removal diagnostic. Primary constituent monthly: −2.37%
+net, Sharpe −0.286, DD 13.93%; direct ETF Alpha33: −3.86%, −0.468, 14.58%; matched
+momentum: −2.51%, −0.267, 15.15%. Covered-pool buy-and-hold: −2.35%; FR25 reference:
+−0.50%. Constituent daily/dynamic: −3.95%/−4.10%. All six primary friction cases
+lose money; extra delay changes the result materially. No parameter selection,
+fresh OOS claim, promotion, funding or execution authority follows.
+
+MDY is weakest overall (−1.38 pp); March/April/May weakest are IAT/MDY/XLV.
+Charts include adjusted ETF prices, audited raw volume, theoretical/adopted/held
+weights, exact fills, absence of protection and FIFO outcomes. ITA contributes
++1.96 pp; replacing its frozen weights with cash gives −4.34%. Three independent
+native LEAN cases have zero daily NAV difference. Fifteen new tests and thirteen
+identity regressions pass. Retain the compact report/protocol/recipes and local
+WRDS sources; bulky exploratory replay bundles become retirement-eligible after
+operator review, with a retirement record. Stop now for strategy discussion.
+
+Report: `research/p421-alpha33-pilot-20261108-v2/index.html`.
+
+## 2026-11-07 — Checkpoint pushed; dated identifiers and mixed receipts checked
+
+Committed the completed P4.21 work as 18061ce and pushed to origin/master before
+continuing, as requested. Staged bytes matched all 153 new files exactly. The
+generated paper-reconciliation snapshot remained local and untouched.
+
+Froze a new source-inspection protocol for 19 unmatched MDY equity candidates
+and the largest mixed-receipt spread in the previous 29-fund coverage. Retained
+34 CRSP dated security intervals, 31 legacy name intervals and 1,371 VGK holdings
+locally, with exact SQL, parameters, types, timestamps and hashes. Retained four
+primary public documents separately. No credentials or licensed rows entered Git.
+
+The official Nasdaq notice and dated CRSP stock history corroborate VNOM's
+November 13, 2023 CUSIP transition. The December 2024 mutual-fund holding retains
+the old identifier; the SEC filing uses the successor. Preserved both records.
+Eight Bermuda/Cayman/BVI identifiers additionally match through documented
+numbering rules, both checksums and unique dated CUSIPs. All nine newly supported
+share/value pairs match the filing exactly. Total: 391 of 401 MDY equities;
+ten foreign bridges remain unresolved. Earlier audits were not regenerated.
+
+VGK January 31, 2022 has 1,367 holdings dated February 21 receipt, two March 21
+and two April 7. The four later-dated rows represent approximately 0.25% of NAV.
+This 45-day span makes earliest-receipt dating of the full current snapshot
+invalid under the retained metadata. Exact group counts/rank counts/weight sums
+reconcile; no exact repeated rows or repeated nonmissing CUSIPs. Thirty-eight
+CUSIPs remain missing. Labels do not establish late reporting versus revisions,
+actual end-user dissemination or unmodified historical vintage availability.
+
+Twenty-four focused tests and Ruff pass. No registered assets, source values,
+active catalog or execution authority changed. No strategy replay or portfolio
+result, so no weakest-ETF chart applies. Retain active qualification archives.
+Next: ten foreign bridges, dissemination/revision evidence, portfolio completeness
+and broader price/activity coverage.
+[Report](research/p421-holdings-identity-20261107-v1/results.md).
+
 ## 2026-11-07 — Research checkpoint prepared for authorized commit/push
 
 Operator requested commit and push before further research. Reviewed all pending

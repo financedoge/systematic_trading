@@ -1,0 +1,38 @@
+{
+  "protocol_sha256": "98e686cf8a7ddc982c858eb9b0fb7abf1896c01925cd9a506c5f86900880f142",
+  "sources": {
+    "bermuda-numbering": {
+      "status": "captured",
+      "url": "https://www.bsx.com/numbering-services",
+      "sha256": "b8455eec0b42b97f0996be631440799c82905ed3563fd8d3bf262b5d052e7834",
+      "bytes": 33303,
+      "retrieved_at": "2026-11-07T15:13:47.612146+00:00",
+      "path": "D:\\projects\\systematic_trading\\var\\research\\p421-holdings-identity-20261107-v1\\public\\bermuda-numbering.gz"
+    },
+    "cayman-numbering": {
+      "status": "captured",
+      "url": "https://www.csx.ky/isin/isin-cusip.asp",
+      "sha256": "5ca220dfb94fcb6a086244d1ec699b39f66955be2bc49e7bfd5193509b4e7a66",
+      "bytes": 17442,
+      "retrieved_at": "2026-11-07T15:13:46.822756+00:00",
+      "path": "D:\\projects\\systematic_trading\\var\\research\\p421-holdings-identity-20261107-v1\\public\\cayman-numbering.gz"
+    },
+    "cgs-identifiers": {
+      "status": "captured",
+      "url": "https://www.cusip.com/identifiers.html?section=ISIN",
+      "sha256": "9d73adb31d83603629a21214fb0ada020e769ad74d9d693afb04313803d8c126",
+      "bytes": 109796,
+      "retrieved_at": "2026-11-07T15:13:48.057244+00:00",
+      "path": "D:\\projects\\systematic_trading\\var\\research\\p421-holdings-identity-20261107-v1\\public\\cgs-identifiers.gz"
+    },
+    "vnom-conversion": {
+      "status": "captured",
+      "url": "https://nasdaqtrader.com/TraderNews.aspx?id=ECA2023-653",
+      "sha256": "5a2a1d8366e29d38df045c70f2f81686139f3a94187c8fc2525be754b144476f",
+      "bytes": 64118,
+      "retrieved_at": "2026-11-07T15:13:47.209867+00:00",
+      "path": "D:\\projects\\systematic_trading\\var\\research\\p421-holdings-identity-20261107-v1\\public\\vnom-conversion.gz"
+    }
+  },
+  "runner_sha256": "1ea31c130baa63e976a333add981e0a938a38a3b21998af4ae4de0836224041f"
+}

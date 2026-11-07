@@ -1,0 +1,748 @@
+{
+  "daily": [
+    {
+      "adjusted_close": 542.34,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": -4793.279999999999,
+      "date": "2025-03-03",
+      "fills": [
+        {
+          "date": "2025-03-03",
+          "fee": "91.02",
+          "price": "556.72",
+          "quantity": 327,
+          "symbol": "MDY"
+        }
+      ],
+      "held_weight": 0.17972497045402314,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1167100.0,
+      "theoretical_weight": 0.18163071254920307
+    },
+    {
+      "adjusted_close": 533.96,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": -2740.2599999999984,
+      "date": "2025-03-04",
+      "fills": [],
+      "held_weight": 0.17971519526046126,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1670900.0,
+      "theoretical_weight": 0.22093484522111959
+    },
+    {
+      "adjusted_close": 540.55,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": 2154.929999999973,
+      "date": "2025-03-05",
+      "fills": [],
+      "held_weight": 0.18092323744782562,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1784500.0,
+      "theoretical_weight": 0.1677715074182398
+    },
+    {
+      "adjusted_close": 531.99,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": -2799.119999999982,
+      "date": "2025-03-06",
+      "fills": [],
+      "held_weight": 0.17997692857748604,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1441100.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 535.76,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": 1232.789999999994,
+      "date": "2025-03-07",
+      "fills": [],
+      "held_weight": 0.18010324245116416,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 993300.0,
+      "theoretical_weight": 0.209620534000491
+    },
+    {
+      "adjusted_close": 524.41,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": -3711.4500000000075,
+      "date": "2025-03-10",
+      "fills": [],
+      "held_weight": 0.1785174554140912,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1251800.0,
+      "theoretical_weight": 0.17857230515342398
+    },
+    {
+      "adjusted_close": 521.47,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": -961.3799999999807,
+      "date": "2025-03-11",
+      "fills": [],
+      "held_weight": 0.17918174233280043,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1299800.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 521.18,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": -94.83000000002528,
+      "date": "2025-03-12",
+      "fills": [],
+      "held_weight": 0.17976937696304163,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1099700.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 512.97,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": -2684.6699999999746,
+      "date": "2025-03-13",
+      "fills": [],
+      "held_weight": 0.17847574200545216,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 715000.0,
+      "theoretical_weight": 0.1702374090193874
+    },
+    {
+      "adjusted_close": 525.5,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": 4097.309999999991,
+      "date": "2025-03-14",
+      "fills": [],
+      "held_weight": 0.1798849141043084,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 843000.0,
+      "theoretical_weight": 0.19450049758438043
+    },
+    {
+      "adjusted_close": 533.34,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": 2563.6800000000103,
+      "date": "2025-03-17",
+      "fills": [],
+      "held_weight": 0.18053146328538502,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 896400.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 528.93,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": -1442.0700000000268,
+      "date": "2025-03-18",
+      "fills": [],
+      "held_weight": 0.18059489084473132,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 864200.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 535.54,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": 2161.4700000000043,
+      "date": "2025-03-19",
+      "fills": [],
+      "held_weight": 0.1815468799119692,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1189600.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 531.76,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": -1236.059999999991,
+      "date": "2025-03-20",
+      "fills": [],
+      "held_weight": 0.1812089227742476,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 699100.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 528.89,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": -938.4900000000015,
+      "date": "2025-03-21",
+      "fills": [],
+      "held_weight": 0.18054481814215634,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1249600.0,
+      "theoretical_weight": 0.14898486362938498
+    },
+    {
+      "adjusted_close": 541.85,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": 4237.920000000012,
+      "date": "2025-03-24",
+      "fills": [],
+      "held_weight": 0.18238017700820255,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 659800.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 540.26,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": -519.9300000000104,
+      "date": "2025-03-25",
+      "fills": [],
+      "held_weight": 0.183387191193247,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 521000.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 536.88,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": -1105.2599999999984,
+      "date": "2025-03-26",
+      "fills": [],
+      "held_weight": 0.18242380026599042,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 690300.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 532.99,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": -1272.0299999999957,
+      "date": "2025-03-27",
+      "fills": [],
+      "held_weight": 0.18121555160984545,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 849900.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 523.32,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": -3162.0899999999865,
+      "date": "2025-03-28",
+      "fills": [],
+      "held_weight": 0.1797505570539527,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1164000.0,
+      "theoretical_weight": 0.1992896583622533
+    },
+    {
+      "adjusted_close": 524.55,
+      "adopted_weight": 0.181630712549,
+      "contribution_usd": 402.2099999999688,
+      "date": "2025-03-31",
+      "fills": [],
+      "held_weight": 0.17949836917937217,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 880300.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 527.39,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": 830.8900000000101,
+      "date": "2025-04-01",
+      "fills": [
+        {
+          "date": "2025-04-01",
+          "fee": "7.07",
+          "price": "524.03",
+          "quantity": -27,
+          "symbol": "MDY"
+        }
+      ],
+      "held_weight": 0.1659813032815384,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1032300.0,
+      "theoretical_weight": 0.16438930255370318
+    },
+    {
+      "adjusted_close": 535.74,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": 2505.000000000007,
+      "date": "2025-04-02",
+      "fills": [],
+      "held_weight": 0.1671520571516473,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 974100.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 499.99,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": -10725.0,
+      "date": "2025-04-03",
+      "fills": [],
+      "held_weight": 0.1610555058838511,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 2024800.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 475.64,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": -7305.000000000007,
+      "date": "2025-04-04",
+      "fills": [],
+      "held_weight": 0.1618587939580158,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 4779800.0,
+      "theoretical_weight": 0.2046995693092392
+    },
+    {
+      "adjusted_close": 470.58,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": -1518.0000000000007,
+      "date": "2025-04-07",
+      "fills": [],
+      "held_weight": 0.16154810630005917,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 5469800.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 460.38,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": -3059.9999999999964,
+      "date": "2025-04-08",
+      "fills": [],
+      "held_weight": 0.16046157687975857,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 3745400.0,
+      "theoretical_weight": 0.1452415555080203
+    },
+    {
+      "adjusted_close": 503.45,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": 12920.999999999998,
+      "date": "2025-04-09",
+      "fills": [],
+      "held_weight": 0.16484262007333553,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 3547000.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 482.41,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": -6311.999999999989,
+      "date": "2025-04-10",
+      "fills": [],
+      "held_weight": 0.16187217349635002,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 2799000.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 489.14,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": 2018.9999999999884,
+      "date": "2025-04-11",
+      "fills": [],
+      "held_weight": 0.16152264843251912,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 2421500.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 495.33,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": 1856.9999999999993,
+      "date": "2025-04-14",
+      "fills": [],
+      "held_weight": 0.16093486152301306,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1081400.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 494.56,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": -230.99999999999454,
+      "date": "2025-04-15",
+      "fills": [],
+      "held_weight": 0.16115932698253982,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 962600.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 489.05,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": -1652.9999999999973,
+      "date": "2025-04-16",
+      "fills": [],
+      "held_weight": 0.16098973259354685,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1331000.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 493.38,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": 1298.9999999999952,
+      "date": "2025-04-17",
+      "fills": [],
+      "held_weight": 0.16096649760113005,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1011300.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 482.08,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": -3390.0000000000036,
+      "date": "2025-04-21",
+      "fills": [],
+      "held_weight": 0.16000394212611035,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 894700.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 494.2,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": 3636.0000000000014,
+      "date": "2025-04-22",
+      "fills": [],
+      "held_weight": 0.16094771433402558,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 910000.0,
+      "theoretical_weight": 0.1406868317190943
+    },
+    {
+      "adjusted_close": 500.51,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": 1893.0000000000007,
+      "date": "2025-04-23",
+      "fills": [],
+      "held_weight": 0.16139564121809044,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1274700.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 511.19,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": 3204.000000000002,
+      "date": "2025-04-24",
+      "fills": [],
+      "held_weight": 0.16313815702103726,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 734800.0,
+      "theoretical_weight": 0.19475650927630206
+    },
+    {
+      "adjusted_close": 508.85,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": -701.9999999999925,
+      "date": "2025-04-25",
+      "fills": [],
+      "held_weight": 0.16256226801492202,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 646200.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 510.72,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": 561.0000000000014,
+      "date": "2025-04-28",
+      "fills": [],
+      "held_weight": 0.16244840071725142,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 671400.0,
+      "theoretical_weight": 0.12864082471118418
+    },
+    {
+      "adjusted_close": 513.15,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": 728.999999999985,
+      "date": "2025-04-29",
+      "fills": [],
+      "held_weight": 0.16234374658257686,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 764900.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 512.08,
+      "adopted_weight": 0.164389302554,
+      "contribution_usd": -320.9999999999809,
+      "date": "2025-04-30",
+      "fills": [],
+      "held_weight": 0.16167830040601538,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 973300.0,
+      "theoretical_weight": 0.16970876398635057
+    },
+    {
+      "adjusted_close": 514.9,
+      "adopted_weight": 0.0,
+      "contribution_usd": 543.8799999999809,
+      "date": "2025-05-01",
+      "fills": [
+        {
+          "date": "2025-05-01",
+          "fee": "77.12",
+          "price": "514.15",
+          "quantity": -300,
+          "symbol": "MDY"
+        }
+      ],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 890200.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 527.01,
+      "adopted_weight": 0.0,
+      "contribution_usd": 0.0,
+      "date": "2025-05-02",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 917700.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 526.01,
+      "adopted_weight": 0.0,
+      "contribution_usd": -0.0,
+      "date": "2025-05-05",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 790000.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 522.18,
+      "adopted_weight": 0.0,
+      "contribution_usd": -0.0,
+      "date": "2025-05-06",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 512700.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 523.73,
+      "adopted_weight": 0.0,
+      "contribution_usd": 0.0,
+      "date": "2025-05-07",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 758700.0,
+      "theoretical_weight": 0.14015928910902728
+    },
+    {
+      "adjusted_close": 530.21,
+      "adopted_weight": 0.0,
+      "contribution_usd": 0.0,
+      "date": "2025-05-08",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 597100.0,
+      "theoretical_weight": 0.16647464336210313
+    },
+    {
+      "adjusted_close": 529.58,
+      "adopted_weight": 0.0,
+      "contribution_usd": -0.0,
+      "date": "2025-05-09",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 540900.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 548.22,
+      "adopted_weight": 0.0,
+      "contribution_usd": 0.0,
+      "date": "2025-05-12",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1100700.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 549.93,
+      "adopted_weight": 0.0,
+      "contribution_usd": 0.0,
+      "date": "2025-05-13",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 821100.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 548.18,
+      "adopted_weight": 0.0,
+      "contribution_usd": -0.0,
+      "date": "2025-05-14",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 827100.0,
+      "theoretical_weight": 0.12441979424090341
+    },
+    {
+      "adjusted_close": 549.49,
+      "adopted_weight": 0.0,
+      "contribution_usd": 0.0,
+      "date": "2025-05-15",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 827200.0,
+      "theoretical_weight": 0.13508310651321523
+    },
+    {
+      "adjusted_close": 555.47,
+      "adopted_weight": 0.0,
+      "contribution_usd": 0.0,
+      "date": "2025-05-16",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 805900.0,
+      "theoretical_weight": 0.18619803816428912
+    },
+    {
+      "adjusted_close": 553.34,
+      "adopted_weight": 0.0,
+      "contribution_usd": -0.0,
+      "date": "2025-05-19",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 773900.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 551.82,
+      "adopted_weight": 0.0,
+      "contribution_usd": -0.0,
+      "date": "2025-05-20",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 682600.0,
+      "theoretical_weight": 0.1393568783750361
+    },
+    {
+      "adjusted_close": 537.06,
+      "adopted_weight": 0.0,
+      "contribution_usd": -0.0,
+      "date": "2025-05-21",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 768400.0,
+      "theoretical_weight": 0.1719854286223341
+    },
+    {
+      "adjusted_close": 536.43,
+      "adopted_weight": 0.0,
+      "contribution_usd": -0.0,
+      "date": "2025-05-22",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 751700.0,
+      "theoretical_weight": 0.15523820143886746
+    },
+    {
+      "adjusted_close": 535.54,
+      "adopted_weight": 0.0,
+      "contribution_usd": -0.0,
+      "date": "2025-05-23",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 666000.0,
+      "theoretical_weight": 0.141229955635101
+    },
+    {
+      "adjusted_close": 547.38,
+      "adopted_weight": 0.0,
+      "contribution_usd": 0.0,
+      "date": "2025-05-27",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 1429100.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 540.22,
+      "adopted_weight": 0.0,
+      "contribution_usd": -0.0,
+      "date": "2025-05-28",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 576500.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 541.75,
+      "adopted_weight": 0.0,
+      "contribution_usd": 0.0,
+      "date": "2025-05-29",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 488900.0,
+      "theoretical_weight": 0.1586685127144429
+    },
+    {
+      "adjusted_close": 539.54,
+      "adopted_weight": 0.0,
+      "contribution_usd": -0.0,
+      "date": "2025-05-30",
+      "fills": [],
+      "held_weight": 0.0,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 635100.0,
+      "theoretical_weight": 0.18366544996792833
+    }
+  ],
+  "trade_scope": "FIFO lots overlapping window, open lots marked at final study close; lot P&L is not window contribution.",
+  "trades": [
+    {
+      "entry": "2025-03-03",
+      "entry_price": 556.72,
+      "exit": "2025-04-01",
+      "exit_price": 524.03,
+      "net_pnl": -897.2154128440382,
+      "net_return": -0.05965942369094135,
+      "protection": "None; selection/adoption exits only",
+      "quantity": 27,
+      "status": "closed",
+      "symbol": "MDY"
+    },
+    {
+      "entry": "2025-03-03",
+      "entry_price": 556.72,
+      "exit": "2025-05-01",
+      "exit_price": 514.15,
+      "net_pnl": -12931.624587155979,
+      "net_return": -0.07738876676567934,
+      "protection": "None; selection/adoption exits only",
+      "quantity": 300,
+      "status": "closed",
+      "symbol": "MDY"
+    }
+  ]
+}

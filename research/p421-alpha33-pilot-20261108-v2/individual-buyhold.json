@@ -1,0 +1,1458 @@
+[
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0003459912880030558,
+    "symbol": "AGG",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.00213421390674684,
+    "symbol": "AGG",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0016243309612979928,
+    "symbol": "AGG",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.007882375498201921,
+    "symbol": "AGG",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.009625148762300917,
+    "symbol": "BIL",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.002560367388011686,
+    "symbol": "BIL",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0026705242638200843,
+    "symbol": "BIL",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0028891963557173828,
+    "symbol": "BIL",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.04679234912894081,
+    "symbol": "CORN",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.023646099795240128,
+    "symbol": "CORN",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.003247690270460346,
+    "symbol": "CORN",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.040225513456527695,
+    "symbol": "CORN",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.014356295776750683,
+    "symbol": "CPER",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0917458674094942,
+    "symbol": "CPER",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.09728678157764781,
+    "symbol": "CPER",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.015058045702661449,
+    "symbol": "CPER",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.014316118155911495,
+    "symbol": "DBA",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.00063992114586231,
+    "symbol": "DBA",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.010811048638263987,
+    "symbol": "DBA",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0009999096045609779,
+    "symbol": "DBA",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.040667596948629314,
+    "symbol": "DBB",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.001065215348649673,
+    "symbol": "DBB",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.07006204466116428,
+    "symbol": "DBB",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.02686083314986565,
+    "symbol": "DBB",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.05524838272350907,
+    "symbol": "DBC",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.018051434762899943,
+    "symbol": "DBC",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.08826077914325159,
+    "symbol": "DBC",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.014563172026829996,
+    "symbol": "DBC",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.046876475151453434,
+    "symbol": "EEM",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.005019804399906569,
+    "symbol": "EEM",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.002019038891895919,
+    "symbol": "EEM",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.03567612067918913,
+    "symbol": "EEM",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0672792774391382,
+    "symbol": "EFA",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.01780495319775688,
+    "symbol": "EFA",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.035798934382836656,
+    "symbol": "EFA",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.04454704307715196,
+    "symbol": "EFA",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.002025019404010786,
+    "symbol": "EMB",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.006966934086157228,
+    "symbol": "EMB",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.005254707885551713,
+    "symbol": "EMB",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.00817995569232055,
+    "symbol": "EMB",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.06117241104034865,
+    "symbol": "EWA",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.03626954573686547,
+    "symbol": "EWA",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.046590498422332205,
+    "symbol": "EWA",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.044840012348662084,
+    "symbol": "EWA",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0802291822893133,
+    "symbol": "EWC",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.0209222332308322,
+    "symbol": "EWC",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.042732559425745054,
+    "symbol": "EWC",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.06185087162391523,
+    "symbol": "EWC",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.11893902523790145,
+    "symbol": "EWG",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.011430600314683681,
+    "symbol": "EWG",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.06017369581427445,
+    "symbol": "EWG",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.057449790288827796,
+    "symbol": "EWG",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.07927781290212566,
+    "symbol": "EWH",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.0022092731705686264,
+    "symbol": "EWH",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.005042951255390893,
+    "symbol": "EWH",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.07866301478638604,
+    "symbol": "EWH",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.06014547092740474,
+    "symbol": "EWJ",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.01937977084885467,
+    "symbol": "EWJ",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.05254755430118574,
+    "symbol": "EWJ",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.03757653455708887,
+    "symbol": "EWJ",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.02014466989998298,
+    "symbol": "EWT",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.07528701310222063,
+    "symbol": "EWT",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.0026005118766843083,
+    "symbol": "EWT",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.08460379521512773,
+    "symbol": "EWT",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.060325444004379,
+    "symbol": "EWU",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.004749509324857515,
+    "symbol": "EWU",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.016576583438594028,
+    "symbol": "EWU",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.04807051997403189,
+    "symbol": "EWU",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.09287108243966014,
+    "symbol": "EWY",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.025915309399050623,
+    "symbol": "EWY",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.029172065751018605,
+    "symbol": "EWY",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.07713651481550499,
+    "symbol": "EWY",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.1447854286712018,
+    "symbol": "GLD",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0864903937919197,
+    "symbol": "GLD",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.05225677872134904,
+    "symbol": "GLD",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.020302875579414348,
+    "symbol": "GLD",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.00799366945559421,
+    "symbol": "HYG",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.010533595037150345,
+    "symbol": "HYG",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.0015162891228713837,
+    "symbol": "HYG",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.014416011024995345,
+    "symbol": "HYG",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.08487577352908782,
+    "symbol": "IAT",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.08761507524560141,
+    "symbol": "IAT",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.052570680357877264,
+    "symbol": "IAT",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.06800604072666006,
+    "symbol": "IAT",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.1128701838874504,
+    "symbol": "IBB",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.06782849298542193,
+    "symbol": "IBB",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.009653605244677621,
+    "symbol": "IBB",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.03955815623947212,
+    "symbol": "IBB",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.09748828506685747,
+    "symbol": "IBND",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.02701256078901282,
+    "symbol": "IBND",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.06071480686325259,
+    "symbol": "IBND",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0004562885375352099,
+    "symbol": "IBND",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0043811219252947176,
+    "symbol": "IEF",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.00635939393026419,
+    "symbol": "IEF",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.007893145859599437,
+    "symbol": "IEF",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.014155607527016056,
+    "symbol": "IEF",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.07575081625459412,
+    "symbol": "IGOV",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.015471606531706872,
+    "symbol": "IGOV",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.05725580935986119,
+    "symbol": "IGOV",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.006447675690986143,
+    "symbol": "IGOV",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.13042189558211748,
+    "symbol": "INDA",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.07151753260165594,
+    "symbol": "INDA",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.05275712619409889,
+    "symbol": "INDA",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.01179605590756938,
+    "symbol": "INDA",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.1398730827626009,
+    "symbol": "ITA",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.015377090668146298,
+    "symbol": "ITA",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.025579237019792256,
+    "symbol": "ITA",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.1219927805564518,
+    "symbol": "ITA",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.0462976079001407,
+    "symbol": "IWM",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.0722480961163604,
+    "symbol": "IWM",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.021244123120375713,
+    "symbol": "IWM",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.04730215971012708,
+    "symbol": "IWM",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.05103194634954433,
+    "symbol": "LEMB",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.005404903044074594,
+    "symbol": "LEMB",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.03149273668887931,
+    "symbol": "LEMB",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0095545597358202,
+    "symbol": "LEMB",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.003439487846064848,
+    "symbol": "LQD",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.002793681418471028,
+    "symbol": "LQD",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.0055648582324943074,
+    "symbol": "LQD",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.0004069394205609145,
+    "symbol": "LQD",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.0012332870009018615,
+    "symbol": "MBB",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0038889692260795083,
+    "symbol": "MBB",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.000286523335569111,
+    "symbol": "MBB",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.010644219493877838,
+    "symbol": "MBB",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.017976042489454613,
+    "symbol": "MCHI",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.01139914668791997,
+    "symbol": "MCHI",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.0515396047737281,
+    "symbol": "MCHI",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.02016628106507068,
+    "symbol": "MCHI",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.031357993440589205,
+    "symbol": "MDY",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.058260898881940304,
+    "symbol": "MDY",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.023285997839802675,
+    "symbol": "MDY",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.04885392840874836,
+    "symbol": "MDY",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.10163650520139966,
+    "symbol": "PPLT",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.04037753406118205,
+    "symbol": "PPLT",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.026463659754516256,
+    "symbol": "PPLT",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.09391006122888501,
+    "symbol": "PPLT",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.010307474743314948,
+    "symbol": "SHY",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0047222062743361715,
+    "symbol": "SHY",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.007500174551620109,
+    "symbol": "SHY",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.0033937226893354655,
+    "symbol": "SHY",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0389815267535647,
+    "symbol": "SLV",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.07326790920963222,
+    "symbol": "SLV",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.04161946960557217,
+    "symbol": "SLV",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.019551433247979588,
+    "symbol": "SLV",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.030308487325946598,
+    "symbol": "SOXX",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.10965723759630053,
+    "symbol": "SOXX",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.019748641806496048,
+    "symbol": "SOXX",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.10127725092778173,
+    "symbol": "SOXX",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.008910548747794622,
+    "symbol": "SPY",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.05935718943382584,
+    "symbol": "SPY",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.005717176295631399,
+    "symbol": "SPY",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.05126173092665076,
+    "symbol": "SPY",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0010130049233183502,
+    "symbol": "TIP",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0061117269865031965,
+    "symbol": "TIP",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.00022820195160000445,
+    "symbol": "TIP",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.007131567913362669,
+    "symbol": "TIP",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.0497182527590837,
+    "symbol": "TLT",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.004654923199695737,
+    "symbol": "TLT",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.019996907614151738,
+    "symbol": "TLT",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.03386864105173226,
+    "symbol": "TLT",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.10903435984574561,
+    "symbol": "USO",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.026036828278888313,
+    "symbol": "USO",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.18133713268242158,
+    "symbol": "USO",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.05545593871956278,
+    "symbol": "USO",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.07438105605124834,
+    "symbol": "VGK",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.01729692175951092,
+    "symbol": "VGK",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.033814415166826484,
+    "symbol": "VGK",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0459664878049606,
+    "symbol": "VGK",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.06451737336055885,
+    "symbol": "WEAT",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.03354112692364586,
+    "symbol": "WEAT",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.03467066680771724,
+    "symbol": "WEAT",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.0027013428408552143,
+    "symbol": "WEAT",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.03216646599197237,
+    "symbol": "XLB",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.03620185085434591,
+    "symbol": "XLB",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.022293886620798897,
+    "symbol": "XLB",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.040473088929772416,
+    "symbol": "XLB",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.006749247041115014,
+    "symbol": "XLC",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.05523641431596238,
+    "symbol": "XLC",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.00788043455744647,
+    "symbol": "XLC",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0476465238239141,
+    "symbol": "XLC",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.10098711568007179,
+    "symbol": "XLE",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.030451885930480538,
+    "symbol": "XLE",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.13946774467052403,
+    "symbol": "XLE",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.020657129925118145,
+    "symbol": "XLE",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.044246594184726096,
+    "symbol": "XLI",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.04166494843136692,
+    "symbol": "XLI",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0029399211925549285,
+    "symbol": "XLI",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0832344177937352,
+    "symbol": "XLI",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.01989429759939454,
+    "symbol": "XLK",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.08800945635490032,
+    "symbol": "XLK",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.020446775753127033,
+    "symbol": "XLK",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.07566473462340406,
+    "symbol": "XLK",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.006617599315619893,
+    "symbol": "XLP",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.007479905945733667,
+    "symbol": "XLP",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.0008660944747747035,
+    "symbol": "XLP",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.01843536400807899,
+    "symbol": "XLP",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.04195350087818861,
+    "symbol": "XLU",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0029057879061584746,
+    "symbol": "XLU",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.0007686371085640076,
+    "symbol": "XLU",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.031352334161592665,
+    "symbol": "XLU",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.10692108496857455,
+    "symbol": "XLV",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.01689956031348694,
+    "symbol": "XLV",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.034920279612708716,
+    "symbol": "XLV",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.04492685337119262,
+    "symbol": "XLV",
+    "terminal_liquidation": false,
+    "window": "may"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.013528409197690383,
+    "symbol": "XLY",
+    "terminal_liquidation": false,
+    "window": "full"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.0889210748222482,
+    "symbol": "XLY",
+    "terminal_liquidation": false,
+    "window": "march"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": -0.00024640340668702354,
+    "symbol": "XLY",
+    "terminal_liquidation": false,
+    "window": "april"
+  },
+  {
+    "entry_cost_bps": 5,
+    "net_fractional_buyhold_return": 0.07789740587596317,
+    "symbol": "XLY",
+    "terminal_liquidation": false,
+    "window": "may"
+  }
+]

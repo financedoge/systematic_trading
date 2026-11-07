@@ -1,0 +1,27 @@
+{
+  "cases": [
+    {
+      "case": "constituent33-monthly_c5d0",
+      "max_nav_error_usd": 0.0,
+      "output": "var\\research\\p421-alpha33-pilot-20261108-v2\\native-v1\\constituent33-monthly_c5d0",
+      "receipt_sha256": "a3450ddf4d68cba6b055b3c1b95db9a5284a0db9fded38d70f49ed6a24ab60ac",
+      "status": "succeeded"
+    },
+    {
+      "case": "etf33-monthly_c5d0",
+      "max_nav_error_usd": 0.0,
+      "output": "var\\research\\p421-alpha33-pilot-20261108-v2\\native-v1\\etf33-monthly_c5d0",
+      "receipt_sha256": "67387c6db1a52c337c0c3669065b27179190719628a4d8699570d2ad4c78ffa7",
+      "status": "succeeded"
+    },
+    {
+      "case": "constituent33-0.40_c20d1",
+      "max_nav_error_usd": 0.0,
+      "output": "var\\research\\p421-alpha33-pilot-20261108-v2\\native-v1\\constituent33-0.40_c20d1",
+      "receipt_sha256": "71e5fed124663b19c502a3fb3db17fe6bc0058455cd01f03f60e715af5440eb5",
+      "status": "succeeded"
+    }
+  ],
+  "scope": "Independent order/fill/cash/NAV replay from frozen targets; not independent inference or an external alpha replication.",
+  "validator_sha256": "f833641d1409cfde60758d2ab4fa146123baa3e5a9a7a0c38f6226b9179f0d94"
+}

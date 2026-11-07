@@ -1,0 +1,25 @@
+{
+  "interpretation": "Ex-post sensitivity, not causal theme attribution, optimization or an eligible strategy candidate.",
+  "largest_contributor": {
+    "mean_held_weight": 0.0,
+    "net_contribution": 0.0,
+    "net_pnl": 0.0,
+    "symbol": "AGG"
+  },
+  "metrics": {
+    "annual_turnover": 0.0,
+    "cagr": 0.0,
+    "calmar": null,
+    "cumulative": 0.0,
+    "end": "2025-05-30",
+    "fees_usd": 0.0,
+    "max_drawdown": -0.0,
+    "mean_exposure": 0.0,
+    "sessions": 63,
+    "sharpe": 0.0,
+    "start": "2025-03-03",
+    "volatility": 0.0
+  },
+  "replacement": "cash",
+  "unchanged_other_weights": true
+}

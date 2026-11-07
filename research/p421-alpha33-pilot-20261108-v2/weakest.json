@@ -1,0 +1,38 @@
+[
+  {
+    "chart": "weakest-full-MDY.png",
+    "details": "weakest-full-MDY-detail.json",
+    "mean_held_weight": 0.11419394921995377,
+    "net_contribution": -0.013828840000000016,
+    "net_pnl": -13828.840000000017,
+    "symbol": "MDY",
+    "window": "full"
+  },
+  {
+    "chart": "weakest-march-IAT.png",
+    "details": "weakest-march-IAT-detail.json",
+    "mean_held_weight": 0.12367932638163337,
+    "net_contribution": -0.011409449999999993,
+    "net_pnl": -11409.449999999993,
+    "symbol": "IAT",
+    "window": "march"
+  },
+  {
+    "chart": "weakest-april-MDY.png",
+    "details": "weakest-april-MDY-detail.json",
+    "mean_held_weight": 0.16213635117034922,
+    "net_contribution": -0.003936926916960732,
+    "net_pnl": -3762.109999999971,
+    "symbol": "MDY",
+    "window": "april"
+  },
+  {
+    "chart": "weakest-may-XLV.png",
+    "details": "weakest-may-XLV-detail.json",
+    "mean_held_weight": 0.1912347835721912,
+    "net_contribution": -0.00908270139114334,
+    "net_pnl": -8630.229999999989,
+    "symbol": "XLV",
+    "window": "may"
+  }
+]

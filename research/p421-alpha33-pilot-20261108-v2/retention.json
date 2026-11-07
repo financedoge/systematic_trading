@@ -1,0 +1,14 @@
+{
+  "compact_findings": "retain protocol, report, figures, source/publication receipts, tests and versioned runners",
+  "disposable_after_operator_review": [
+    "paths",
+    "native-contract-v1",
+    "native-bundles-v1",
+    "native-v1",
+    "derived arrays"
+  ],
+  "licensed_wrds_archives": "retain locally per explicit operator instruction; excluded from Git",
+  "native_input_publications": "retain as audited research data; historical availability limitations remain",
+  "promotion_inputs": false,
+  "routine_retirement_requires": "compact outcome and artifact-retirement record; no full backup requirement"
+}

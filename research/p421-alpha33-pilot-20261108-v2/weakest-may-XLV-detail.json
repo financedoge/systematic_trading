@@ -1,0 +1,258 @@
+{
+  "daily": [
+    {
+      "adjusted_close": 133.15,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": -3092.229999999979,
+      "date": "2025-05-01",
+      "fills": [
+        {
+          "date": "2025-05-01",
+          "fee": "96.03",
+          "price": "135.26",
+          "quantity": 1420,
+          "symbol": "XLV"
+        }
+      ],
+      "held_weight": 0.19906010001466365,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 10363200.0,
+      "theoretical_weight": 0.20462066538173493
+    },
+    {
+      "adjusted_close": 134.99,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": 2612.8000000000047,
+      "date": "2025-05-02",
+      "fills": [],
+      "held_weight": 0.1993721548099573,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 9777000.0,
+      "theoretical_weight": 0.23144164518522392
+    },
+    {
+      "adjusted_close": 134.61,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": -539.5999999999935,
+      "date": "2025-05-05",
+      "fills": [],
+      "held_weight": 0.1996576974899609,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 5479700.0,
+      "theoretical_weight": 0.21103880985979964
+    },
+    {
+      "adjusted_close": 130.9,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": -5268.200000000012,
+      "date": "2025-05-06",
+      "fills": [],
+      "held_weight": 0.19529940131179607,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 11625900.0,
+      "theoretical_weight": 0.1987642353890886
+    },
+    {
+      "adjusted_close": 131.9,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": 1420.0,
+      "date": "2025-05-07",
+      "fills": [],
+      "held_weight": 0.19619830457295256,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 6417500.0,
+      "theoretical_weight": 0.2123477545152796
+    },
+    {
+      "adjusted_close": 130.71,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": -1689.7999999999968,
+      "date": "2025-05-08",
+      "fills": [],
+      "held_weight": 0.19387741085858778,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 10558100.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 129.29,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": -2016.4000000000226,
+      "date": "2025-05-09",
+      "fills": [],
+      "held_weight": 0.1921992915108816,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 7555200.0,
+      "theoretical_weight": 0.20667893121213826
+    },
+    {
+      "adjusted_close": 132.48,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": 4529.7999999999965,
+      "date": "2025-05-12",
+      "fills": [],
+      "held_weight": 0.1943572551653808,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 15211100.0,
+      "theoretical_weight": 0.23657877682747924
+    },
+    {
+      "adjusted_close": 128.5,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": -5651.599999999986,
+      "date": "2025-05-13",
+      "fills": [],
+      "held_weight": 0.18961342014518148,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 17817000.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 125.48,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": -4288.399999999994,
+      "date": "2025-05-14",
+      "fills": [],
+      "held_weight": 0.1866863799343427,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 19579500.0,
+      "theoretical_weight": 0.1811778434497292
+    },
+    {
+      "adjusted_close": 127.12,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": 2328.8000000000006,
+      "date": "2025-05-15",
+      "fills": [],
+      "held_weight": 0.1863137760210129,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 18792700.0,
+      "theoretical_weight": 0.19310356375334853
+    },
+    {
+      "adjusted_close": 129.69,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": 3649.3999999999905,
+      "date": "2025-05-16",
+      "fills": [],
+      "held_weight": 0.18801045721505813,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 12901800.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 130.93,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": 1760.800000000013,
+      "date": "2025-05-19",
+      "fills": [],
+      "held_weight": 0.18936771158323165,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 11645200.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 131.26,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": 468.5999999999774,
+      "date": "2025-05-20",
+      "fills": [],
+      "held_weight": 0.18966909068447949,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 11644500.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 128.22,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": -4316.799999999988,
+      "date": "2025-05-21",
+      "fills": [],
+      "held_weight": 0.1887251893964522,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 16635900.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 127.21,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": -1434.2000000000073,
+      "date": "2025-05-22",
+      "fills": [],
+      "held_weight": 0.18839020447111224,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 12722600.0,
+      "theoretical_weight": 0.2169151254461988
+    },
+    {
+      "adjusted_close": 127.01,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": -283.99999999998386,
+      "date": "2025-05-23",
+      "fills": [],
+      "held_weight": 0.18744982053461792,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 9127100.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 128.78,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": 2513.399999999994,
+      "date": "2025-05-27",
+      "fills": [],
+      "held_weight": 0.1874764248146671,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 12304000.0,
+      "theoretical_weight": 0.18160101842254592
+    },
+    {
+      "adjusted_close": 128.12,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": -937.1999999999952,
+      "date": "2025-05-28",
+      "fills": [],
+      "held_weight": 0.18797531973066467,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 11087500.0,
+      "theoretical_weight": 0.17753987727152354
+    },
+    {
+      "adjusted_close": 128.98,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": 1221.199999999979,
+      "date": "2025-05-29",
+      "fills": [],
+      "held_weight": 0.18823313222591415,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 10670300.0,
+      "theoretical_weight": 0.0
+    },
+    {
+      "adjusted_close": 129.25,
+      "adopted_weight": 0.204620665382,
+      "contribution_usd": 383.40000000001453,
+      "date": "2025-05-30",
+      "fills": [],
+      "held_weight": 0.18799791252509931,
+      "protection": "None; adopted allocation exits only",
+      "raw_volume": 11651300.0,
+      "theoretical_weight": 0.0
+    }
+  ],
+  "trade_scope": "FIFO lots overlapping window, open lots marked at final study close; lot P&L is not window contribution.",
+  "trades": [
+    {
+      "entry": "2025-05-01",
+      "entry_price": 135.26,
+      "exit": "2025-05-30",
+      "exit_price": 129.25,
+      "net_pnl": -8630.229999999987,
+      "net_return": -0.04491046585274551,
+      "protection": "None; no terminal liquidation or exit fee",
+      "quantity": 1420,
+      "status": "open marked",
+      "symbol": "XLV"
+    }
+  ]
+}

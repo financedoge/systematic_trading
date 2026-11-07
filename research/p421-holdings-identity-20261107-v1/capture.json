@@ -1,0 +1,7 @@
+{
+  "archive": "D:\\systematic_trading_data\\source-archives\\wrds\\holdings-identity-20261107T151345004149Z",
+  "manifest_sha256": "4ea011153e46b2d58a7b4b808bcb3bdda5bcb77c8b295f577b82cc457ccccf12",
+  "protocol_sha256": "98e686cf8a7ddc982c858eb9b0fb7abf1896c01925cd9a506c5f86900880f142",
+  "query_count": 4,
+  "strategy_input_use": false
+}

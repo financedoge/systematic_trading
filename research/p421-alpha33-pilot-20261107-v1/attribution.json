@@ -1,0 +1,1282 @@
+{
+  "april": [
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "AGG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "BIL"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "CORN"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "CPER"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EEM"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EFA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EMB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWH"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWJ"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWU"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "GLD"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "HYG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IAT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IBND"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IEF"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IGOV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "INDA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "ITA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IWM"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "LEMB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "LQD"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MCHI"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MDY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "PPLT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SHY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SLV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SOXX"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SPY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "TIP"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "TLT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "URTH"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "USO"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "VGK"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "WEAT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLE"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLI"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLK"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLP"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLU"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLY"
+    }
+  ],
+  "full": [
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "AGG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "BIL"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "CORN"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "CPER"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EEM"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EFA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EMB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWH"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWJ"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWU"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "GLD"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "HYG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IAT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IBND"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IEF"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IGOV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "INDA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "ITA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IWM"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "LEMB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "LQD"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MCHI"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MDY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "PPLT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SHY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SLV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SOXX"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SPY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "TIP"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "TLT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "URTH"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "USO"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "VGK"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "WEAT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLE"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLI"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLK"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLP"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLU"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLY"
+    }
+  ],
+  "march": [
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "AGG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "BIL"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "CORN"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "CPER"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EEM"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EFA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EMB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWH"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWJ"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWU"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "GLD"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "HYG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IAT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IBND"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IEF"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IGOV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "INDA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "ITA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IWM"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "LEMB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "LQD"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MCHI"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MDY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "PPLT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SHY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SLV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SOXX"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SPY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "TIP"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "TLT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "URTH"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "USO"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "VGK"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "WEAT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLE"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLI"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLK"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLP"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLU"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLY"
+    }
+  ],
+  "may": [
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "AGG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "BIL"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "CORN"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "CPER"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "DBC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EEM"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EFA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EMB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWH"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWJ"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWU"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "EWY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "GLD"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "HYG"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IAT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IBND"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IEF"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IGOV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "INDA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "ITA"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "IWM"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "LEMB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "LQD"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MBB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MCHI"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "MDY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "PPLT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SHY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SLV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SOXX"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "SPY"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "TIP"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "TLT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "URTH"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "USO"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "VGK"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "WEAT"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLB"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLC"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLE"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLI"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLK"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLP"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLU"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLV"
+    },
+    {
+      "mean_held_weight": 0.0,
+      "net_contribution": 0.0,
+      "net_pnl": 0.0,
+      "symbol": "XLY"
+    }
+  ]
+}

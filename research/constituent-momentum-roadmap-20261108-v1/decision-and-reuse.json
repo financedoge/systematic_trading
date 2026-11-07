@@ -1,0 +1,409 @@
+{
+  "dependency_impact": {
+    "files_deleted": [],
+    "protected_registry_valid": true,
+    "registered_alpha33_asset_references": [],
+    "registered_alpha33_strategy_references": [],
+    "runtime_mutation_required": false,
+    "shared_publishers_stopped": []
+  },
+  "new_backtest_run": false,
+  "new_model_or_asset_registered": false,
+  "operator_decisions": {
+    "alpha33": "set_aside_retain_evidence",
+    "etf_ranking_substitution": false,
+    "new_hypothesis": "direct stock basket: overweight strong cross-sectional momentum and underweight weak momentum relative to each ETF constituent baseline",
+    "priority": "defer until direct-stock research prerequisites qualify"
+  },
+  "recorded_at": "2026-11-07T16:35:13.808760+00:00",
+  "references": [
+    {
+      "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/det_10_port_form_pr_12_2.html",
+      "use": "Prior months 2-12 is a conventional starting candidate, not a selected rule or evidence for this ETF-relative long-only tilt"
+    },
+    {
+      "url": "https://www.kentdaniel.net/papers/published/jfe_16.pdf",
+      "use": "Include reversal/rebound stress; findings on long-short momentum do not quantify this proposed long-only tilt"
+    }
+  ],
+  "source_reuse": {
+    "existing_raw_panel": {
+      "basis": "raw open/close; not a multi-month stock total-return series",
+      "publication_sha256": "8f4b2d43c7787cad2ef6bc927141d84600c5c6cefc8a7955c7ea221b14786c05",
+      "securities": 2734,
+      "sessions": 64,
+      "source_id": "governance/research/p421-alpha33-pilot-20261108-v2",
+      "stock_rows": 173702,
+      "version": "5b39b062720d3bb163a6a2e2ec57dd3b193d2f102a19f175ac445d18a796dfb2"
+    },
+    "reuse_reviews": [
+      {
+        "asset": "prices-adjusted-v1",
+        "decision": "Reuse governed reader/publication contract; prove constituent return and action coverage before admission",
+        "sha256": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+      },
+      {
+        "asset": "m1-selection-v1",
+        "decision": "Inspect existing momentum mechanics; ETF selection/fallback portfolio is not the requested stock-relative tilt, so do not reuse it as the new composite",
+        "sha256": "6d69d9d053b30906da639e2913717043bd1aab3627136a7cbe223d2d53250f2f"
+      },
+      {
+        "asset": "activity-raw-v1",
+        "decision": "Reuse qualified liquidity context where supported; existing stock-volume qualification is not blanket admission",
+        "sha256": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8"
+      },
+      {
+        "decision": "No governed registered assets matched; define missing services separately, retain existing source evidence, qualify and publish before any future backtest",
+        "searches": [
+          "holdings",
+          "corporate"
+        ]
+      }
+    ],
+    "searches": {
+      "corporate": {},
+      "holdings": {},
+      "momentum": {
+        "m1-selection-v1": {
+          "contract": {
+            "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+            "basis": "adjusted",
+            "cadence": "daily",
+            "inputs": {
+              "activity-raw-v1": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8",
+              "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+            },
+            "kind": "signal",
+            "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+            "monitor": "m1_rank_ic",
+            "parameters": {},
+            "provider": "systematic_trading.research.signal_decay_job:signal_values"
+          },
+          "limitations": [
+            "Audited histories do not certify historical dissemination availability."
+          ],
+          "name": "M1 momentum and volume selection",
+          "sha256": "6d69d9d053b30906da639e2913717043bd1aab3627136a7cbe223d2d53250f2f",
+          "source": null
+        }
+      },
+      "prices": {
+        "activity-audited-lag20-v1": {
+          "contract": {
+            "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+            "basis": "raw dollar activity; adjusted return direction",
+            "cadence": "daily",
+            "inputs": {
+              "activity-raw-v1": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8",
+              "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+            },
+            "kind": "signal",
+            "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+            "monitor": "evidence_gap",
+            "parameters": {
+              "lag": 20
+            },
+            "provider": "systematic_trading.research.candidate_pool:AuditedActivity"
+          },
+          "limitations": [
+            "Audited histories do not certify historical dissemination availability."
+          ],
+          "name": "Audited raw-dollar activity \u00b7 lag 20",
+          "sha256": "e90e9fe4ef9919a8e642256d146c1e22f73736b31462c813b58fcfe74b3ae495",
+          "source": null
+        },
+        "activity-lag20-v1": {
+          "contract": {
+            "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+            "basis": "adjusted prices and published volume; legacy activity contract",
+            "cadence": "daily",
+            "inputs": {
+              "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+            },
+            "kind": "signal",
+            "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+            "monitor": "evidence_gap",
+            "parameters": {
+              "lag": 20
+            },
+            "provider": "systematic_trading.research.flow_concentration:concentration_features"
+          },
+          "limitations": [
+            "Audited histories do not certify historical dissemination availability."
+          ],
+          "name": "Lagged activity features",
+          "sha256": "22d7a7a12268b83ba5998e311855bf47fa12d082c599f8d9630f2cbdceef9e43",
+          "source": null
+        },
+        "activity-raw-v1": {
+          "contract": {
+            "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+            "basis": "audited raw prices and raw volume",
+            "cadence": "daily",
+            "inputs": {},
+            "kind": "time_series",
+            "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+            "monitor": null,
+            "parameters": {},
+            "provider": "systematic_trading.research.m1_monitoring:load_inputs"
+          },
+          "limitations": [
+            "Audited histories do not certify historical dissemination availability."
+          ],
+          "name": "Audited raw price and volume",
+          "sha256": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8",
+          "source": "governance/catalog"
+        },
+        "alpha101-tilt-v1": {
+          "contract": {
+            "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+            "basis": "adjusted",
+            "cadence": "daily",
+            "inputs": {
+              "activity-raw-v1": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8",
+              "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+            },
+            "kind": "signal",
+            "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+            "monitor": "evidence_gap",
+            "parameters": {},
+            "provider": "systematic_trading.research.alpha101_tilt_overlay:Alpha101FamilyTiltOverlay"
+          },
+          "limitations": [
+            "Audited histories do not certify historical dissemination availability."
+          ],
+          "name": "Alpha101 activity tilt",
+          "sha256": "d2f9e4e5e29a24f8de06008beb3089770138c5f0875f1dcceb6e868290b69541",
+          "source": null
+        },
+        "broadtrend-signals-v1": {
+          "contract": {
+            "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+            "basis": "adjusted",
+            "cadence": "daily",
+            "inputs": {
+              "broadtrend-models-v1": "013a87357c159580bde0cbba052a2907c210ed2572d44e2f01a2e52df440bfa4",
+              "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+            },
+            "kind": "signal",
+            "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+            "monitor": "broadtrend_time_series",
+            "parameters": {
+              "execution": "next open",
+              "prospective_start": "2026-10-30",
+              "universe_size": 51
+            },
+            "provider": "systematic_trading.research.broadtrend:signal_history"
+          },
+          "limitations": [
+            "Frozen 2022 models; inspected historical development. Prospective monitoring starts 2026-10-30.",
+            "HMM scores are not calibrated probabilities; close-tested stops execute next open.",
+            "Fractional adjusted units; signals confer no broker execution authority."
+          ],
+          "name": "BroadTrend daily trend and long/cash states",
+          "sha256": "35a3723c6f4fcfeb5f026ce427ca6b83bcfe197b80bb2d3bbe5f9bf54a43e137",
+          "source": null
+        },
+        "conditional-snapshot-v1": {
+          "contract": {
+            "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+            "basis": "adjusted",
+            "cadence": "historical snapshot; no daily extension",
+            "inputs": {
+              "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+            },
+            "kind": "signal",
+            "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+            "monitor": "evidence_gap",
+            "parameters": {},
+            "provider": "systematic_trading.research.fr25_lifecycle_conditional:verified_input_provenance"
+          },
+          "limitations": [
+            "Audited histories do not certify historical dissemination availability."
+          ],
+          "name": "Conditional FR25 frozen signal snapshot",
+          "sha256": "c553f96ae0f0e8b27ec6f9d0932bc6cb15bdff9b2959d2bafb7d902c11043d50",
+          "source": null
+        },
+        "economic-ridge-v1": {
+          "contract": {
+            "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+            "basis": "adjusted",
+            "cadence": "monthly fit; daily inference",
+            "inputs": {
+              "economic-context-v1": "f755c1c4cfd9f086a2a5a39336d101e8e809110919c0d4e4fa3c5f2e22c8b060",
+              "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+            },
+            "kind": "signal",
+            "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+            "monitor": "evidence_gap",
+            "parameters": {},
+            "provider": "systematic_trading.research.economic_tracking:economic_inputs"
+          },
+          "limitations": [
+            "Audited histories do not certify historical dissemination availability."
+          ],
+          "name": "Economic expanding ridge",
+          "sha256": "faf9bbf9b8de8f36aeb518ee21504e1dc159cd7ab634907a0212e7b531649402",
+          "source": null
+        },
+        "fr25-selection-v1": {
+          "contract": {
+            "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+            "basis": "adjusted",
+            "cadence": "monthly fit; daily inference",
+            "inputs": {
+              "financial-context-v1": "31a2713fa803ffb82bd2da91be568d69b5780c140c36e28bc717e4d37ccd9e82",
+              "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+            },
+            "kind": "signal",
+            "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+            "monitor": "evidence_gap",
+            "parameters": {},
+            "provider": "systematic_trading.research.fr25_tracking:economic_inputs"
+          },
+          "limitations": [
+            "Audited histories do not certify historical dissemination availability."
+          ],
+          "name": "FR25 financial rank forecast",
+          "sha256": "58bae506608804c64ffc0c06c3a0e23539e8466b37a1cf8c99c4fb9036a7515c",
+          "source": null
+        },
+        "m1-selection-v1": {
+          "contract": {
+            "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+            "basis": "adjusted",
+            "cadence": "daily",
+            "inputs": {
+              "activity-raw-v1": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8",
+              "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+            },
+            "kind": "signal",
+            "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+            "monitor": "m1_rank_ic",
+            "parameters": {},
+            "provider": "systematic_trading.research.signal_decay_job:signal_values"
+          },
+          "limitations": [
+            "Audited histories do not certify historical dissemination availability."
+          ],
+          "name": "M1 momentum and volume selection",
+          "sha256": "6d69d9d053b30906da639e2913717043bd1aab3627136a7cbe223d2d53250f2f",
+          "source": null
+        },
+        "prices-adjusted-v1": {
+          "contract": {
+            "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+            "basis": "adjusted",
+            "cadence": "daily",
+            "inputs": {},
+            "kind": "time_series",
+            "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+            "monitor": null,
+            "parameters": {},
+            "provider": "systematic_trading.research.governed_inputs:GovernedInputs"
+          },
+          "limitations": [
+            "Audited histories do not certify historical dissemination availability."
+          ],
+          "name": "Audited adjusted price histories",
+          "sha256": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+          "source": "governance/catalog"
+        },
+        "risk-parity-volatility-v1": {
+          "contract": {
+            "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+            "basis": "adjusted",
+            "cadence": "daily",
+            "inputs": {
+              "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+            },
+            "kind": "signal",
+            "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+            "monitor": "evidence_gap",
+            "parameters": {
+              "lookback_sessions": 63
+            },
+            "provider": "systematic_trading.data.analytics:realized_volatility_from_bars"
+          },
+          "limitations": [
+            "Audited histories do not certify historical dissemination availability."
+          ],
+          "name": "Risk-parity realized volatility",
+          "sha256": "b81f75c98a6de9879087fb4c000c17e151b59aa4ac2a0ff5712534db7f0c9918",
+          "source": null
+        },
+        "technical-features-v1": {
+          "contract": {
+            "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+            "basis": "adjusted",
+            "cadence": "daily",
+            "inputs": {
+              "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+            },
+            "kind": "signal",
+            "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+            "monitor": "evidence_gap",
+            "parameters": {},
+            "provider": "systematic_trading.signals.library:compute_signal_features"
+          },
+          "limitations": [
+            "Audited histories do not certify historical dissemination availability."
+          ],
+          "name": "Price and technical features",
+          "sha256": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218",
+          "source": null
+        },
+        "usd-ridge-12-v1": {
+          "contract": {
+            "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+            "basis": "adjusted",
+            "cadence": "monthly fit; daily inference",
+            "inputs": {
+              "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+              "usd-vintages-v1": "1ae826542bbb2ff41995135a6d0a11a61790f59460c8a268ab7286a18777ff84"
+            },
+            "kind": "signal",
+            "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+            "monitor": "evidence_gap",
+            "parameters": {
+              "universe_size": 12
+            },
+            "provider": "systematic_trading.research.usd_tracking:prepare_usd_schedule"
+          },
+          "limitations": [
+            "Audited histories do not certify historical dissemination availability."
+          ],
+          "name": "USD ridge \u00b7 12 ETFs",
+          "sha256": "812d254c869e81d081bf3331017dae642d7f23482bde0e2820200ad8aae4d111",
+          "source": null
+        },
+        "usd-ridge-14-v1": {
+          "contract": {
+            "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+            "basis": "adjusted",
+            "cadence": "monthly fit; daily inference",
+            "inputs": {
+              "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+              "usd-vintages-v1": "1ae826542bbb2ff41995135a6d0a11a61790f59460c8a268ab7286a18777ff84"
+            },
+            "kind": "signal",
+            "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+            "monitor": "evidence_gap",
+            "parameters": {
+              "universe_size": 14
+            },
+            "provider": "systematic_trading.research.usd_tracking:prepare_usd_schedule"
+          },
+          "limitations": [
+            "Audited histories do not certify historical dissemination availability."
+          ],
+          "name": "USD ridge \u00b7 14 ETFs",
+          "sha256": "414f8dab5b9afe0e326c07e1f03eb57c13c1c4d9ee7e8d3275dcbc536904e780",
+          "source": null
+        }
+      }
+    }
+  },
+  "status": "deferred_research_idea_not_frozen_experiment"
+}

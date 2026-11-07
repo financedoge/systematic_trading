@@ -1,0 +1,25 @@
+{
+  "interpretation": "Ex-post sensitivity, not causal theme attribution, optimization or an eligible strategy candidate.",
+  "largest_contributor": {
+    "mean_held_weight": 0.09608213105775812,
+    "net_contribution": 0.019620220000000008,
+    "net_pnl": 19620.22000000001,
+    "symbol": "ITA"
+  },
+  "metrics": {
+    "annual_turnover": 7.4273866213850965,
+    "cagr": -0.16257550761924067,
+    "calmar": -1.3054340625506375,
+    "cumulative": -0.0433867,
+    "end": "2025-05-30",
+    "fees_usd": 906.04,
+    "max_drawdown": 0.12453751000000002,
+    "mean_exposure": 0.8842533507699718,
+    "sessions": 63,
+    "sharpe": -0.7836950915548336,
+    "start": "2025-03-03",
+    "volatility": 0.20101163321898585
+  },
+  "replacement": "cash",
+  "unchanged_other_weights": true
+}

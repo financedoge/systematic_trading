@@ -1,6 +1,45 @@
 # Signal decay, alpha overlays and portfolio robustness — research plan
 
-## Current checkpoint — November 7, 2026
+## Current checkpoint — November 8, 2026
+
+**Operator decision after review:** set Alpha33 aside and retain its findings.
+The next proposed idea is **direct-stock constituent momentum relative to ETF
+weights**, not using constituents to rank ETFs. The operator explicitly permits
+deferring it until direct-stock research is ready. It is now **P4.24, Deferred**;
+see its scope and prerequisites below. The earlier Alpha33 verdict remains frozen.
+
+**The first constituent-alpha backtest is complete.** A frozen Alpha33 pilot uses
+public December 2024 SEC holdings and separately audited/published CRSP raw
+open/close for March–May 2025. The full 52-candidate pool was screened; 14 ETFs
+meet the unchanged 95% equity-value / 70% name coverage gates. Current-vintage
+prices and a frozen holdings quarter make this retrospective development evidence,
+not pristine OOS or a historical-membership reconstruction.
+
+108 net cases compare constituent Alpha33, direct ETF Alpha33, matched momentum
+and unranked controls across monthly, daily and dynamic schedules, costs and
+execution delays. Primary monthly 5 bp / next-open returns −2.37%, versus −3.86%
+for ETF Alpha33 and −2.51% for momentum; primary Sharpe is −0.286 versus −0.267
+for momentum. Daily/dynamic constituent versions lose −3.95%/−4.10%. No investment
+edge is established. Three native LEAN checks reconcile exactly. Weakest MDY and
+each monthly weakest ETF are charted; winner-dependence evidence is retained.
+
+The initial five-ETF all-cash run stays frozen. The data amendment did not change
+formula, dates, coverage, sizing, policies or costs; it separately qualified
+single-source CRSP rows, explicitly distinguishing uncorroborated observations
+from independent overlaps. Original history/volume audit verdicts remain intact.
+That discussion is now complete: Alpha33 is set aside. Do not retune this short
+sample. [Report](../research/p421-alpha33-pilot-20261108-v2/index.html).
+
+## Earlier source checkpoints — November 7, 2026
+
+Checkpoint 18061ce is committed and pushed. Subsequent identity qualification
+corroborates 391 of MDY's 401 filed equity positions, including VNOM's documented
+CUSIP conversion and eight new jurisdiction-specific ISIN bridges. Ten foreign
+bridges remain. The VGK mixed-receipt control confirms a 45-day span; four later
+positions cannot be dated to the earliest receipt. Twenty-four focused tests
+pass. Continue the remaining identifier and dissemination/revision checks before
+any strategy replay. Earlier bounded source findings remain frozen.
+[New report](../research/p421-holdings-identity-20261107-v1/results.md).
 
 WRDS holdings access and the subsequent coverage check are complete. All 29
 equity-fund candidates have dated vendor mappings, with 2,012 portfolio/report
@@ -527,11 +566,16 @@ separate. No existing strategy is automatically removed or promoted. The P4.13
 diagnostics and their explicit forecast/overlay coverage gaps remain historical
 evidence, not a complete certificate for all monitored signals. Stop for discussion.
 
-### P4.21 — Look-through constituent alpha *(coverage assessed, replay data-blocked)*
+### P4.21 — Look-through constituent alpha *(first pilot complete; broader evidence open)*
 
 **Question.** Can the structurally cross-sectional alphas be used honestly by
 computing them on the constituent cross-section and aggregating holdings-weighted
 to ETF scores?
+
+**November 8 checkpoint.** The bounded Alpha33 pilot is now backtested and
+independently validated; see the current checkpoint above. It does not establish
+an edge. Long chronological holdings vintages and broader input classes remain
+unresolved; the earlier data-blocked verdict below describes the November 4 scope.
 
 **Why.** The 76 structurally cross-sectional alphas need breadth; the application
 already holds 680 IVV constituent series plus issuer holdings and sector data.
@@ -553,6 +597,102 @@ replay remains blocked on qualified holdings, dated identity/membership and
 adequate price/lookback coverage. The subsequent December filing and identity
 pilot found zero certified matches across the full price window. Stop for
 discussion at the [pilot report](../research/p421-quarter-20261104-v1/results.md).
+
+### P4.24 — Direct-stock constituent momentum tilt *(deferred; prerequisites first)*
+
+**Operator intent, November 8.** Hold the underlying stocks directly. Start from
+an ETF's disclosed constituent weights, overweight its stronger-momentum stocks
+and underweight weaker ones. Keep this separate from P4.21's aggregation of stock
+signals into ETF selection. The operator allows a later-stage slot if direct
+stock holdings are not yet supported by adequate research inputs and contracts.
+
+**Readiness finding.** The broad CRSP panel built for Alpha33 provides 64 sessions
+of raw open/close observations, February 28–May 30, 2025. It supports the declared
+same-session ratio; it does not supply a qualified multi-month stock total-return
+panel or certify direct-share corporate-action accounting. Other adjusted stock
+histories exist, but their full constituent coverage/identity and action handling
+have not been qualified for this experiment. Basic stock instruments and shared
+backtest accounting already exist: this is a data/contract qualification gap,
+not a claim that the application cannot represent stocks. Live readiness is a
+separate later gate and must not unnecessarily block research once inputs qualify.
+
+**Research question.** Can a bounded, long-only momentum tilt improve the net
+outcome of an otherwise identical ETF-derived stock basket, without merely adding
+concentration, sector exposure or dependence on a few past winners?
+
+**Proposed first comparison, not yet a frozen protocol.**
+
+- Use only constituents disclosed before each decision. Screen the full supported
+  candidate pool, identify the equity-fund cohorts with sufficient coverage and
+  show exclusions; no hand-picked XLE/XLB experiment or fixed 20-stock universe.
+- Keep the parent basket's investment budget and universe fixed. Rank stock
+  momentum within that ETF's cohort, then apply a modest bounded tilt around its
+  baseline weights. Keep all eligible names for the initial tilt comparison;
+  do not silently import the old six-ETF selection rule or add a cash timing gate.
+- A multi-month return excluding the most recent month is a candidate starting
+  signal. Prior months 2–12 is used in the [French momentum construction](https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/det_10_port_form_pr_12_2.html).
+  This supports a conventional definition, not profitability of this proposed
+  long-only ETF-relative portfolio. Horizon, tilt bound and risk limits remain
+  unselected until a future pre-test protocol; do not optimize them on the
+  already inspected March–May 2025 sample.
+- Main comparison: actual ETF buy-and-hold, an untilted basket of the same dated
+  constituents, and its momentum-tilted counterpart. Match tradable coverage,
+  budget, accounting and adoption schedule between the two stock baskets. Report
+  ETF replication differences separately, including stale disclosed weights,
+  dividends, fees, cash, unsupported holdings and membership changes. An equal-
+  weight diagnostic can isolate inherited weighting effects; FR25 and cash are
+  contextual references, not substitutes for the matched stock-basket control.
+- Include fixed monthly and predeclared target-change rebalancing. Dynamic triggers
+  compare the latest theoretical target with the last adopted target including
+  cash. Compare net Sharpe with return/drawdown guards, gross traded notional,
+  fees, execution delays, concentration, sector exposure and chronological results.
+  Freeze cost schedules appropriate for many stock orders, account size, minimum
+  commissions, spreads/impact and dividend treatment; ETF flat-bp assumptions alone
+  do not establish direct-stock implementation cost.
+- Inspect the weakest parent-ETF basket and weakest held stock in each era, with
+  exact dates, price/volume, states, fills, protection and trade outcomes. Report
+  top-one/top-three winner-withholding sensitivities without reoptimizing remaining
+  weights, and include market-rebound stress. [Momentum crash research](https://www.kentdaniel.net/papers/published/jfe_16.pdf)
+  motivates that stress; its long-short results are not direct estimates for this
+  long-only tilt.
+
+**Prerequisites and re-entry sequence.**
+
+1. Qualify dated membership and publication availability across multiple market
+   eras. Retain amendment/revision history and missing holdings; WRDS vendor
+   receipt dates alone do not prove historical public availability. Establish
+   how reported shares/weights drift between disclosures before treating them as
+   a benchmark. Never backfill a later constituent list into earlier decisions.
+2. Audit and publish sufficiently long adjusted/total-return stock histories,
+   corporate-action records, delistings/mergers, stable identifiers and needed
+   raw execution/liquidity observations. Verify the return convention, avoid
+   counting dividends twice, retain missing observations and all WRDS extracts.
+3. Define and independently validate the stock-basket accounting contract. Separate
+   adjusted-unit research from raw-share holdings, splits, dividend cash flows,
+   cash-in-lieu and delisting proceeds. Do not label a synthetic adjusted-price
+   replay as execution-ready raw-share accounting.
+4. Freeze coverage rules, chronology, sample-reuse disclosure, construction,
+   candidate count, costs and any return floor before calculating outcomes.
+   Select any parameters on training data only and carry them unchanged into
+   chronological evaluation. Three months is not an IS/OOS stability test.
+5. Reuse/pin existing governed price, activity, accounting and native-validation
+   services. Create separately versioned holdings, corporate-action and momentum
+   assets only where missing, with availability/missing-data/monitoring contracts;
+   the new composite must declare `reuse_reviews` and exact input versions.
+
+**Asset/dependency review.** The existing adjusted-price provider and raw-activity
+contracts are reuse candidates, subject to stock coverage. `m1-selection-v1`
+contains ETF momentum/selection semantics and is not this stock-relative composite.
+Asset searches found no registered holdings or corporate-action service. All 15
+registered strategy contracts pass validation; Alpha33 has no registered strategy
+or asset consumer. Setting its research aside requires no runtime archive, shared
+publisher shutdown or fingerprint change. Preserve useful raw-price and identity
+evidence for future research. [Decision and reuse receipt](../research/constituent-momentum-roadmap-20261108-v1/decision-and-reuse.json).
+
+**Status:** idea retained, implementation/backtest deferred by operator preference.
+No new stock allocation, model, backtest, monitoring registration or execution
+authority is created by this plan. Re-enter when the research prerequisites qualify
+and discuss the concrete strategy specification before its first performance test.
 
 ### Platform item — intraday activation and stops *(not research)*
 
@@ -647,8 +787,8 @@ extraction enforce the same SHA-256 after its move from scratch storage.
 | Market capitalisation, industry classification | Not held | 19 alphas; `indneutralize` |
 | Published audited intraday bars | Not held; raw sampled quotes are `research_approved: false` | Intraday activation and stops |
 | Intraday execution stack | Does not exist (`P5.1`–`P5.4` Pending) | Intraday activation and stops |
-| Constituent coverage assessment | Complete Nov 4; insufficient historical holdings, identity and price coverage | P4.21 replay blocked |
-| Security master for identity certification | Blocked (same access gap as `P3.7`/CRSP) | `P3.8`; long-window alphas needing certified identity |
+| Constituent coverage assessment | Nov 8: bounded 14-ETF Alpha33 pilot complete; broader histories unresolved | Long-window/full-pool constituent claims |
+| Security master for identity certification | WRDS/CRSP access verified; dated CIZ joins qualified for the pilot, unresolved foreign bridges retained | Broader `P3.8` certification; unsupported identities/windows |
 | Qualified USD/CNH history and FX inputs | Unresolved input class | Any CNH-denominated claim beyond the current disclosures |
 
 No paid subscription is assumed by this plan. Source acquisition, retention and

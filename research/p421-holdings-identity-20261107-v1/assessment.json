@@ -1,0 +1,200 @@
+{
+  "status": "bounded_identity_and_receipt_check_complete",
+  "protocol_sha256": "98e686cf8a7ddc982c858eb9b0fb7abf1896c01925cd9a506c5f86900880f142",
+  "audit_plan_sha256": "2ffaca48149964d84c018cf529a0d2a9ca20c30712ebd43572e17f50d13ee34d",
+  "source_archive": "D:\\systematic_trading_data\\source-archives\\wrds\\holdings-identity-20261107T151345004149Z",
+  "source_manifest_sha256": "4ea011153e46b2d58a7b4b808bcb3bdda5bcb77c8b295f577b82cc457ccccf12",
+  "public_source_receipt_sha256": "be24d223493f9aa41dcf0a04303af4a5a9261e67bb916ade66b2c00f29550719",
+  "identity_results": [
+    {
+      "symbol": "FLEX",
+      "isin": "SG9999000020",
+      "status": "unresolved_foreign_bridge",
+      "original_holding_identifier_preserved": true
+    },
+    {
+      "symbol": "RNR",
+      "isin": "BMG7496G1033",
+      "status": "identifier_corroborated",
+      "original_holding_identifier_preserved": true,
+      "basis": "documented_NNA_embedding_and_dated_CUSIP",
+      "exact_shares": true,
+      "exact_value": true
+    },
+    {
+      "symbol": "NVT",
+      "isin": "IE00BDVJJQ56",
+      "status": "unresolved_foreign_bridge",
+      "original_holding_identifier_preserved": true
+    },
+    {
+      "symbol": "CNH",
+      "isin": "NL0010545661",
+      "status": "unresolved_foreign_bridge",
+      "original_holding_identifier_preserved": true
+    },
+    {
+      "symbol": "FN",
+      "isin": "KYG3323L1005",
+      "status": "identifier_corroborated",
+      "original_holding_identifier_preserved": true,
+      "basis": "documented_NNA_embedding_and_dated_CUSIP",
+      "exact_shares": true,
+      "exact_value": true
+    },
+    {
+      "symbol": "AXTA",
+      "isin": "BMG0750C1082",
+      "status": "identifier_corroborated",
+      "original_holding_identifier_preserved": true,
+      "basis": "documented_NNA_embedding_and_dated_CUSIP",
+      "exact_shares": true,
+      "exact_value": true
+    },
+    {
+      "symbol": "JAZZ",
+      "isin": "IE00B4Q5ZN47",
+      "status": "unresolved_foreign_bridge",
+      "original_holding_identifier_preserved": true
+    },
+    {
+      "symbol": "G",
+      "isin": "BMG3922B1072",
+      "status": "identifier_corroborated",
+      "original_holding_identifier_preserved": true,
+      "basis": "documented_NNA_embedding_and_dated_CUSIP",
+      "exact_shares": true,
+      "exact_value": true
+    },
+    {
+      "symbol": "ESNT",
+      "isin": "BMG3198U1027",
+      "status": "identifier_corroborated",
+      "original_holding_identifier_preserved": true,
+      "basis": "documented_NNA_embedding_and_dated_CUSIP",
+      "exact_shares": true,
+      "exact_value": true
+    },
+    {
+      "symbol": "ALTM",
+      "isin": "JE00BM9HZ112",
+      "status": "unresolved_foreign_bridge",
+      "original_holding_identifier_preserved": true
+    },
+    {
+      "symbol": "JHG",
+      "isin": "JE00BYPZJM29",
+      "status": "unresolved_foreign_bridge",
+      "original_holding_identifier_preserved": true
+    },
+    {
+      "symbol": "WFRD",
+      "isin": "IE00BLNN3691",
+      "status": "unresolved_foreign_bridge",
+      "original_holding_identifier_preserved": true
+    },
+    {
+      "symbol": "ROIV",
+      "isin": "BMG762791017",
+      "status": "identifier_corroborated",
+      "original_holding_identifier_preserved": true,
+      "basis": "documented_NNA_embedding_and_dated_CUSIP",
+      "exact_shares": true,
+      "exact_value": true
+    },
+    {
+      "symbol": "VNOM",
+      "isin": "US9279591062",
+      "status": "identifier_corroborated",
+      "original_holding_identifier_preserved": true,
+      "basis": "official_conversion_and_dated_permanent_identity",
+      "exact_shares": true,
+      "exact_value": true
+    },
+    {
+      "symbol": "ST",
+      "isin": "GB00BFMBMT84",
+      "status": "unresolved_foreign_bridge",
+      "original_holding_identifier_preserved": true
+    },
+    {
+      "symbol": "PRGO",
+      "isin": "IE00BGH1M568",
+      "status": "unresolved_foreign_bridge",
+      "original_holding_identifier_preserved": true
+    },
+    {
+      "symbol": "VAL",
+      "isin": "BMG9460G1015",
+      "status": "identifier_corroborated",
+      "original_holding_identifier_preserved": true,
+      "basis": "documented_NNA_embedding_and_dated_CUSIP",
+      "exact_shares": true,
+      "exact_value": true
+    },
+    {
+      "symbol": "LIVN",
+      "isin": "GB00BYMT0J19",
+      "status": "unresolved_foreign_bridge",
+      "original_holding_identifier_preserved": true
+    },
+    {
+      "symbol": "CPRI",
+      "isin": "VGG1890L1076",
+      "status": "identifier_corroborated",
+      "original_holding_identifier_preserved": true,
+      "basis": "documented_NNA_embedding_and_dated_CUSIP",
+      "exact_shares": true,
+      "exact_value": true
+    }
+  ],
+  "newly_corroborated": 9,
+  "prior_corroborated": 382,
+  "total_corroborated": 391,
+  "remaining_equity_bridges": 10,
+  "new_pairs_exact_shares_and_value": true,
+  "mixed_receipt": {
+    "symbol": "VGK",
+    "report_date": "2022-01-31",
+    "groups": [
+      {
+        "receipt_date": "2022-02-21",
+        "rows": 1367,
+        "reported_weight_sum": 99.59997037053108,
+        "aggregate_weight_residual": 0.0
+      },
+      {
+        "receipt_date": "2022-03-21",
+        "rows": 2,
+        "reported_weight_sum": 0.01999999582767487,
+        "aggregate_weight_residual": 0.0
+      },
+      {
+        "receipt_date": "2022-04-07",
+        "rows": 2,
+        "reported_weight_sum": 0.22999991476535797,
+        "aggregate_weight_residual": 0.0
+      }
+    ],
+    "exact_duplicate_rows": 0,
+    "repeated_nonmissing_cusips": 0,
+    "missing_cusip_rows": 38,
+    "later_receipt_rows": 4,
+    "later_receipt_weight": 0.24999991059303284,
+    "earliest_receipt_is_not_complete_snapshot": true
+  },
+  "details": {
+    "path": "D:\\systematic_trading_data\\source-archives\\wrds\\holdings-identity-20261107T151345004149Z\\identity-and-receipt-comparison.json",
+    "sha256": "512df77df6b062b8e40c97802fac9ac865c250f58b145218f0f302a43ce3bda9"
+  },
+  "source_values_rewritten": 0,
+  "active_catalog_publications": 0,
+  "strategy_replays": 0,
+  "historical_available_at": null,
+  "limitations": [
+    "Dated identity corroboration does not certify historical vendor dissemination or original-vintage values.",
+    "One mixed-receipt control does not qualify all 461 mixed snapshots.",
+    "Unresolved foreign bridges, portfolio completeness and price/activity coverage remain separate gates."
+  ],
+  "runner_sha256": "c218ac0032c4db550f4c3df5a29bb11fa5e830d5e0532d839c6f3316171ba2b9"
+}

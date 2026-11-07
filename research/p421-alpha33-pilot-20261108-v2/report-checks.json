@@ -1,0 +1,7 @@
+{
+  "attribution_reconciled": true,
+  "inspection_book_max_error": 2.3283064365386963e-10,
+  "report_runner_sha256": "67bcbb58c3dae4f3c75b0186eac2f71a31d83d42996c6ba01e8136837732d9df",
+  "weakest_windows": 4,
+  "winner_diagnostic_is_not_selection": true
+}

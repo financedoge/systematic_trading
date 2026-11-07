@@ -1,0 +1,14 @@
+{
+  "cases": 108,
+  "code_and_input_hashes_verified": true,
+  "completed_at": "2026-11-07T16:10:41.202430+00:00",
+  "dependency_pins_unchanged": true,
+  "focused_tests": 28,
+  "lint": "All changed study scripts/tests pass; F401 ignored only for the v2 context module whose imports are intentional public re-exports.",
+  "native_cases": 3,
+  "native_publication_readback": "exact",
+  "policy": "No optimization, promotion, allocation or broker mutation; stop for operator strategy discussion",
+  "report_links_verified": true,
+  "verdict": "coverage_limited_no_alpha_trades",
+  "visual_inspection": []
+}

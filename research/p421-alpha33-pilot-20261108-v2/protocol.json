@@ -1,0 +1,190 @@
+{
+  "aggregation": "Filed equity-value weighted mean of observed constituent percentile ranks. Keep all positive EC/EP positions in value and position-count coverage denominators; missing data excluded from numerator only. No forward survivor requirement.",
+  "amendment": "Data expansion only. V1 produced no alpha trades: five ETFs passed the unchanged 95% value/70% name gate. Retain it as a coverage-limited run. V2 uses a newly audited, single-provider CRSP raw open/close panel, never a silent source splice. Same formula, holdings quarter, dates, construction, timing, costs and controls; no performance selection.",
+  "chronology": [
+    "2025-03",
+    "2025-04",
+    "2025-05"
+  ],
+  "code_at_freeze": {
+    "scripts/capture_p421_alpha33.py": "66212c493f1997f476a836034d92fff136b95e3e44e06e79348833c0e4df38c4",
+    "scripts/qualify_p421_alpha33.py": "455ea1c0b9ffcbacb2a9acbd414726274c91285fa7c090a23fa8bf4e882dba61",
+    "scripts/research_p421_alpha33_v2.py": "2d2972a5b5b168b29aed29d65217fc9e12e02dca799599fe8bfa7ebd6825a453"
+  },
+  "construction": "Same daily supported and liquid ETF subset for all four models. Existing top-six, 63-return sample inverse-volatility, 98% budget, 45% cap, alphabetical ties, fewer than six valid scores or all ranked scores equal => cash. Unranked holds all eligible with the same inverse-volatility rule. 126-session momentum has no sign gate. No training/fitting or parameter optimization.",
+  "controls": [
+    "initial covered-pool equal-weight buy-and-hold",
+    "full supported risky-pool equal-weight buy-and-hold",
+    "BIL",
+    "URTH",
+    "cash",
+    "frozen empirical FR25 original-14 decisions repriced on this batch"
+  ],
+  "costs_bps": [
+    5,
+    10,
+    20
+  ],
+  "coverage": {
+    "min_equity_names": 0.7,
+    "min_equity_value": 0.95
+  },
+  "delays": [
+    0,
+    1
+  ],
+  "evaluation": [
+    "2025-03-03",
+    "2025-05-30"
+  ],
+  "formula": "rank(open/close - 1); average percentile rank, ascending, ties average; higher is selected",
+  "frozen_at": "2026-11-07T16:06:01.183234+00:00",
+  "full_candidate_pool": {
+    "AGG": "aggregate_us",
+    "BIL": "bills_us",
+    "CORN": "commodity_agriculture",
+    "CPER": "commodity_base_metals",
+    "DBA": "commodity_agriculture",
+    "DBB": "commodity_base_metals",
+    "DBC": "commodity_broad_parent",
+    "EEM": "equity_emerging_parent",
+    "EFA": "equity_developed_ex_us_parent",
+    "EMB": "credit_emerging_usd",
+    "EWA": "equity_australia",
+    "EWC": "equity_canada",
+    "EWG": "equity_europe",
+    "EWH": "equity_hong_kong",
+    "EWJ": "equity_asia_ex_china",
+    "EWT": "equity_asia_ex_china",
+    "EWU": "equity_europe",
+    "EWY": "equity_asia_ex_china",
+    "GLD": "commodity_precious",
+    "HYG": "credit_usd_high_yield",
+    "IAT": "equity_us",
+    "IBB": "equity_us",
+    "IBND": "credit_ex_us_unhedged",
+    "IEF": "sovereign_us",
+    "IGOV": "sovereign_developed_ex_us",
+    "INDA": "equity_asia_ex_china",
+    "ITA": "equity_us",
+    "IWM": "equity_us",
+    "LEMB": "credit_emerging_local",
+    "LQD": "credit_usd_investment_grade",
+    "MBB": "securitized_us",
+    "MCHI": "equity_china",
+    "MDY": "equity_us",
+    "PPLT": "commodity_precious",
+    "SHY": "sovereign_us",
+    "SLV": "commodity_precious",
+    "SOXX": "equity_us",
+    "SPY": "equity_us",
+    "TIP": "inflation_linked_us",
+    "TLT": "sovereign_us",
+    "USO": "commodity_energy",
+    "VGK": "equity_europe",
+    "WEAT": "commodity_agriculture",
+    "XLB": "equity_us",
+    "XLC": "equity_us",
+    "XLE": "equity_us",
+    "XLI": "equity_us",
+    "XLK": "equity_us",
+    "XLP": "equity_us",
+    "XLU": "equity_us",
+    "XLV": "equity_us",
+    "XLY": "equity_us"
+  },
+  "holdings_date": "2024-12-31",
+  "holdings_manifest_sha256": "c9e50839fc84fac01194d40a71dce0a96f96513dd29c00269bf8201d1e7bdd0e",
+  "hypothesis": "Does cross-sectional stock Alpha33 aggregated by publicly disclosed ETF holdings improve a matched ETF-level Alpha33 portfolio?",
+  "id": "p421-alpha33-pilot-20261108-v2",
+  "identity": "Unique filed valid CUSIP9 (or previously declared embedded identifier) to a dated CRSP PERMNO; exactly one CIZ interval and matching daily CUSIP on each observation date. Tickers are labels, not join keys. Duplicates/ambiguity remain missing.",
+  "independent_check": "Every available historical overlap is checked; uncorroborated rows remain explicitly labelled single_source_audited. This is a retrospective data qualification, not original-vintage certification or execution readiness.",
+  "input_basis": "Raw traded stock open/close for the same-session Alpha33 ratio; common split/dividend factors cancel. ETF portfolio returns, sizing, vol and momentum continue to use the existing pinned split/dividend-adjusted histories. No raw stock return series is presented as total return.",
+  "limitations": [
+    "Only one public holdings quarter; portfolios deliberately frozen, not contemporaneous actual holdings after December 2024.",
+    "Full 52-candidate scope screened, but holdings-signal allocation only where public dated holdings and daily coverage qualify; not a full-pool superiority claim.",
+    "Current-vintage revised prices and CRSP identities; original historical dissemination is unknown. Public SEC filing availability is evidenced separately. Reused history is not pristine out of sample.",
+    "Three months cannot establish Sharpe stability or an investment edge. Annualized metrics are descriptive only; inspect monthly results and winner dependence.",
+    "Synthetic whole adjusted units, zero cash interest, no taxes/spread/impact; stated per-notional costs and delay sensitivity only. No stops or protective exits.",
+    "CRSP-only observations without an independent existing overlap are admitted after source/identity/field/session checks and labelled single-source. Historical availability and corporate-action vintage are not certified; no constituent total returns are inferred."
+  ],
+  "limits": {
+    "daily_rows": 200000,
+    "identity_rows": 20000
+  },
+  "models": [
+    "constituent33",
+    "etf33",
+    "momentum126",
+    "unranked"
+  ],
+  "parent_protocol_sha256": "a6bbed80ac338a5cd55b62e9aa9008edad3c53ef5f32e51253f5381e860b8d66",
+  "parent_results_sha256": "401cec466f6db5ecaeca4b2f27127311a6a4be6d523e47436222a3c602436eb7",
+  "policies": [
+    "monthly",
+    "daily",
+    "0.40"
+  ],
+  "price_audit": "Audited single-provider CRSP raw open/close, published before strategy access. Require uniquely dated permanent identity, daily CUSIP match, valid trade-close flag TR, positive finite open/close, no duplicate security/date and expected US sessions. Reconcile overlaps against the pinned continuous history using inherited 0.5% relative price tolerance; quarantine conflicting overlaps. Missing independent overlaps are explicitly single-source observations, not filled values or claimed independent confirmations. Audit original source SQL/types/row hashes and native publication readback. No constituent volume, cross-session stock return or fabricated adjusted levels are consumed.",
+  "price_pin": {
+    "batch": "ebffbedaaf8ae35bd5654887f83459156abff13d12537b2bd614e593c64ee77d",
+    "root": "D:\\projects\\systematic_trading\\var\\governance\\listed-2026-11-03-51dad8709493"
+  },
+  "primary": {
+    "cost_bps": 5,
+    "delay": 0
+  },
+  "primary_policy": "monthly",
+  "prior_field_audit_sha256": "f9b2fb40dcb481227642284639e699f56233932aaa3b214ccc41f36143a71dbb",
+  "prior_field_auditor_sha256": "455ea1c0b9ffcbacb2a9acbd414726274c91285fa7c090a23fa8bf4e882dba61",
+  "public_funds": [
+    "IAT",
+    "IBB",
+    "ITA",
+    "IWM",
+    "MDY",
+    "SOXX",
+    "SPY",
+    "XLB",
+    "XLC",
+    "XLE",
+    "XLI",
+    "XLK",
+    "XLP",
+    "XLU",
+    "XLV",
+    "XLY"
+  ],
+  "rank_universe": "One observation per unique, dated CRSP PERMNO represented in the 16 public portfolios; valid audited open/close that day only. No duplicated stock votes across funds.",
+  "reuse_reviews": [
+    {
+      "asset": "prices-adjusted-v1",
+      "decision": "Reuse governed ETF histories and separately qualify consumed stock fields; no existing asset mutation",
+      "sha256": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+    },
+    {
+      "asset": "activity-raw-v1",
+      "decision": "Reuse ETF liquidity and inspection context only; no constituent volume input",
+      "sha256": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8"
+    },
+    {
+      "decision": "New isolated research-only dated holdings/identity projection; not registered for recurring monitoring or execution",
+      "matches": [],
+      "search": "holdings / identity"
+    },
+    {
+      "asset": "crsp-raw-open-close-research-v1",
+      "decision": "New isolated finite native publication, keyed by permanent security ID. Existing adjusted price and activity services untouched. No runtime registration or promotion."
+    }
+  ],
+  "selection": "None. This is a fixed-policy feasibility/development experiment. No OOS optimization, sign flipping, coverage relaxation, policy rescue or promotion. Monthly remains primary regardless of daily/event returns.",
+  "signal_start": "2025-02-28",
+  "source_capture": {
+    "archive": "D:\\systematic_trading_data\\source-archives\\wrds\\alpha33-20261107T154857395500Z",
+    "manifest_sha256": "370be4b4e68b7494417a1542939559b76d5f29f54790f84e5069aac966a5a0c5",
+    "protocol_sha256": "a6bbed80ac338a5cd55b62e9aa9008edad3c53ef5f32e51253f5381e860b8d66",
+    "runner_sha256": "66212c493f1997f476a836034d92fff136b95e3e44e06e79348833c0e4df38c4"
+  },
+  "timing": "Completed close signal, next-open execution; monthly first session. Target threshold strict L1 >0.40 versus last adopted target including cash plus monthly reset. Daily is fixed-interval control. Extra-delay case executes one more session later. Use prior execution close for whole adjusted-unit sizing.",
+  "weakest": "Lowest net cumulative contribution / opening portfolio NAV among risky ETFs held by the predeclared constituent33/monthly 5bp delay0 policy; report full window and each month. Contribution criterion reflects allocation changes; also show individual buy-and-hold returns. Chart adjusted prices, audited raw volume, theoretical/adopted/held weights, exact fills, no-protection state and FIFO trade outcomes."
+}
