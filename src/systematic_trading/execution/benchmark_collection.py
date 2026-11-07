@@ -96,6 +96,9 @@ class ExecutionBenchmarkCollector:
         report = dict(version=2, scope="All retained paper orders; original/routed TWAP windows and regular sessions",
                       paper_order_count=len(rows), filled_order_count=sum(row["filled_quantity"] > 0 for row in rows),
                       order_status_counts=dict(Counter(row["collection_status"] for row in rows)),
+                      unavailable_reasons=dict(Counter(
+                          row['original'].get('message', 'Unspecified coverage failure')
+                          for row in rows if row['collection_status'] == 'unavailable' and row['original'])),
                       window_status_counts=dict(Counter(windows.values())), unique_window_count=len(windows),
                       session_status_counts=dict(Counter(r["status"] for r in sessions.values())),
                       unique_session_count=len(sessions), reference_audit=references,

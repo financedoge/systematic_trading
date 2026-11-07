@@ -10,6 +10,14 @@ from urllib.parse import urlsplit
 from urllib.request import getproxies, proxy_bypass, urlopen
 
 
+def transient_read_error(exc):
+    """Transport classification shared by immediate and scheduled read retries."""
+    reason = exc.reason if isinstance(exc, URLError) else exc
+    return (exc.code in {408, 429, 502, 503, 504} if isinstance(exc, HTTPError)
+            else isinstance(reason, (ssl.SSLEOFError, TimeoutError, ConnectionError,
+                                     RemoteDisconnected, IncompleteRead)))
+
+
 def read_bytes(request, *, timeout, max_bytes, attempts=3, native_fallback=False):
     """Retry transient open/read failures; never return a partial response.
 
@@ -24,13 +32,7 @@ def read_bytes(request, *, timeout, max_bytes, attempts=3, native_fallback=False
                 raise ValueError("Source exceeds bounded response size")
             return content
         except (OSError, IncompleteRead) as exc:
-            reason = exc.reason if isinstance(exc, URLError) else exc
-            transient = (
-                exc.code in {408, 429, 502, 503, 504} if isinstance(exc, HTTPError)
-                else isinstance(reason, (ssl.SSLEOFError, TimeoutError, ConnectionError,
-                                         RemoteDisconnected, IncompleteRead))
-            )
-            if not transient:
+            if not transient_read_error(exc):
                 raise
             if attempt + 1 == attempts:
                 if native_fallback:

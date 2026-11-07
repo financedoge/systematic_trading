@@ -163,18 +163,14 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
             service_overrides=service_overrides,
             now=checked_at,
         )
-        from systematic_trading.services.health import ServiceHealthState, _overall_status
+        from systematic_trading.services.health import ServiceHealthState, _overall_status, benchmark_health
         collector = getattr(app.state, "benchmark_collector", None)
         if collector is not None:
             state = collector.status()
-            counts = (state.get("coverage") or {}).get("window_status_counts", {})
-            order_counts = (state.get("coverage") or {}).get("order_status_counts", {})
-            status = ("disabled" if not state['enabled'] else "error" if state['last_error'] or not state['running']
-                      else "degraded" if counts.get('unavailable') or order_counts.get('unavailable')
-                      or order_counts.get('execution_review_required') else "ok")
+            status, message = benchmark_health(state)
             result.services.append(ServiceHealthState(service_id="execution_benchmarks", display_name="Post-trade benchmarks",
                 service_type="embedded", implementation_status="active", required=False, checked_at=checked_at,
-                status=status, message=state['last_error'] or "App-owned collection of original and routed paper execution windows.",
+                status=status, message=message,
                 details=state))
         analytics = getattr(app.state, "analytics_service", None)
         result.services = [s for s in result.services if s.service_id not in {"analytics", "alert_delivery"}]

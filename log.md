@@ -1,5 +1,48 @@
 # Project Log
 
+## 2026-11-07 — System health repair and calculation invalidation review
+
+Operator requested diagnosis/repair of degraded System services, then questioned
+full strategy recalculation on historical-source changes. Verified healthy native
+PostgreSQL reads, NATS, publication storage, backup and recovery workers, zero
+pending outbox events, ample disk headroom and recovered paper API connectivity.
+App-owned reconciliation matched again. Restarted the operator through its
+guarded launcher after an on-disk calculation-source change; preserved ongoing
+research, existing publications and all broker/approval/reconciliation gates.
+
+Separated transient Yahoo acquisition failures from audit quarantine: a typed
+transport failure retries after 15 minutes, while certificate/permanent errors
+and identity/return-path failures retain the conservative path. Requeued 82 old
+transient failures with a saved before-state receipt while the operator was
+stopped. Bounded each broad-history acquisition pass to 120 seconds before it
+finishes its current request/audit, publishes accepted peers and yields to
+strategy calculations. The first deployed pass published 23 additional symbols.
+Post-trade health now explains unavailable evidence and counts session gaps;
+historical missing TWAP windows and USO/DBB admission exclusions remain visible.
+HYXU identity/contract trouble and unconfigured email delivery remain open.
+Focused tests and Ruff passed. See [incident review](docs/system-health-2026-11-07.md).
+
+The operator's invalidation concern is confirmed by a hash-verified read-only
+comparison: 441 catalog entries changed while all recorded base, M1/FR25 and
+BroadTrend price/audit artifacts compared to the new catalog stayed identical.
+The sole code difference in the prior FR25 training request is the independent
+`research/sip_volume_pilot.py` module, included by the broad research-package
+hash. The prior model receipt reused all 131 monthly fits; repeated scheduling,
+replay and reports are distinct from refitting. Added a read-only reproducible
+diagnostic, including independently pinned scope disclosure and tamper tests.
+
+Record the required direction: separate capture lineage from consumer content
+identity; verify unchanged-input compatibility first, then support append-only
+continuation and dependency-directed revision replay. Do not introduce arbitrary
+"small change" tolerances or simply remove the common-batch gate. Shared
+compatibility receipts, shadow comparison, native parity and rollback must precede
+enabling reuse. [Detailed review and staged acceptance](docs/calculation-invalidation-review-2026-11-07.md).
+This architecture change is not deployed by the health repair. At handoff the
+current conservative replay remains application-owned and running without a new
+worker exception; finished publication and cleared trading readiness are still
+pending. Daily coverage is 2,728/3,133 and reconciliation is matched. The overall
+System status remains degraded; no all-clear or completed replay is claimed.
+
 ## 2026-11-07 — Economic and EIA transport incident
 
 The operator reported six November 6 ALFRED snapshots failing with connection

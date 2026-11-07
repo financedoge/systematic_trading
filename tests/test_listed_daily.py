@@ -1,5 +1,5 @@
 import json
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 from systematic_trading.lean.contracts import sha256
 from systematic_trading.recorders import listed_daily as module
@@ -85,3 +85,63 @@ def test_listed_refresh_preserves_admission_and_prior_review(governed):
     assert published['research_recorder'] == admission
     assert published['status'] == 'review'
     assert published['previous_audit']['conflict_dates'] == 42
+
+
+def test_transport_failure_retries_without_publishing_or_bypassing_audit(governed):
+    settings, analytics, fetch, written = prepare(governed)
+    now = datetime(2026, 8, 4, 22, tzinfo=UTC)
+    original = analytics.latest('governance/catalog')['version']
+    calls = []
+
+    def unavailable(symbol, at):
+        calls.append(symbol)
+        raise module.ChartAcquisitionError('provider timed out', retryable=True)
+
+    assert not module.refresh_listed_daily(settings, analytics, now=now, fetch=unavailable)
+    assert analytics.latest('governance/catalog')['version'] == original
+    assert not written
+    receipt = module.load_state(settings)['symbols']['URTH']
+    assert receipt['status'] == 'retry_pending'
+    assert receipt['retry_at'] == (now + timedelta(minutes=15)).isoformat()
+    assert not module.refresh_listed_daily(settings, analytics, now=now + timedelta(minutes=14), fetch=unavailable)
+    assert len(calls) == 2
+
+    def changed_identity(symbol, at):
+        raw = json.loads(fetch(symbol, at))
+        raw['chart']['result'][0]['meta']['currency'] = 'CAD'
+        return json.dumps(raw).encode()
+
+    retry = now + timedelta(minutes=15)
+    assert not module.refresh_listed_daily(settings, analytics, now=retry, fetch=changed_identity)
+    receipt = module.load_state(settings)['symbols']['URTH']
+    assert receipt['status'] == 'quarantined'
+    assert receipt['retry_at'] == (retry + timedelta(hours=6)).isoformat()
+    assert analytics.latest('governance/catalog')['version'] == original
+
+
+def test_permanent_acquisition_failure_keeps_long_cooldown(governed):
+    settings, analytics, _, written = prepare(governed)
+    now = datetime(2026, 8, 4, 22, tzinfo=UTC)
+
+    def unavailable(symbol, at):
+        raise module.ChartAcquisitionError('HTTP Error 404', retryable=False)
+
+    assert not module.refresh_listed_daily(settings, analytics, now=now, fetch=unavailable)
+    receipt = module.load_state(settings)['symbols']['URTH']
+    assert receipt['status'] == 'quarantined'
+    assert receipt['retry_at'] == (now + timedelta(hours=6)).isoformat()
+    assert not written
+
+
+def test_acquisition_budget_yields_to_calculations_and_resumes_queue(governed, monkeypatch):
+    settings, analytics, fetch, _ = prepare(governed)
+    now = datetime(2026, 8, 4, 22, tzinfo=UTC)
+    clock = iter([0, 121])
+    monkeypatch.setattr(module, 'monotonic', lambda: next(clock))
+    assert module.refresh_listed_daily(settings, analytics, now=now, fetch=fetch)
+    state = module.load_state(settings)['symbols']
+    assert state['URTH']['status'] == 'published'
+    assert 'X' not in state
+    monkeypatch.setattr(module, 'monotonic', lambda: 0)
+    assert module.refresh_listed_daily(settings, analytics, now=now, fetch=fetch)
+    assert module.load_state(settings)['symbols']['X']['status'] == 'published'

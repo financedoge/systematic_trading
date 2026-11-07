@@ -7,9 +7,11 @@ from datetime import UTC, datetime, timedelta
 import json
 from pathlib import Path
 import re
+from time import monotonic
 from uuid import uuid4
 
 from systematic_trading.daily_quality import completed_session
+from systematic_trading.data.yahoo import ChartAcquisitionError
 from systematic_trading.live.trading_calendar import previous_us_trading_day
 from systematic_trading.market_data.analytics_store import digest
 from systematic_trading.portfolio.context import NY
@@ -47,7 +49,8 @@ def load_state(settings):
     return json.loads(path.read_text(encoding='utf8')) if path.exists() else {}
 
 
-def refresh_listed_daily(settings, analytics, *, now=None, fetch=acquire, batch_size=64):
+def refresh_listed_daily(settings, analytics, *, now=None, fetch=acquire, batch_size=64,
+                         acquisition_budget_seconds=120):
     if not settings.governed_refresh_enabled:
         return False
     now = now or datetime.now(UTC)
@@ -78,14 +81,31 @@ def refresh_listed_daily(settings, analytics, *, now=None, fetch=acquire, batch_
     path = settings.data_dir / 'governance/listed-daily-state.json'
     sessions, _ = governed_sessions('1950-01-01', cutoff)
     accepted, old_rows = {}, {}
-    for row in chosen:
+    acquisition_started = monotonic()
+    for index, row in enumerate(chosen):
+        # This lane must reach tracked calculations even during provider outages.
+        # Finish the in-flight read/audit, publish accepted peers atomically, and
+        # leave unattempted symbols in the normal fair queue for the next pass.
+        if index and monotonic() - acquisition_started >= acquisition_budget_seconds:
+            break
         symbol = row['symbol']
         receipt = dict(status='acquiring', attempted_at=now.isoformat(), cutoff=cutoff,
                        retry_at=(now + timedelta(minutes=5)).isoformat(), evidence_root=str(output))
         saved[symbol] = receipt
         atomic_json(path, state)
         try:
-            raw = fetch(symbol, now)
+            try:
+                raw = fetch(symbol, now)
+            except ChartAcquisitionError as exc:
+                if not exc.retryable:
+                    raise
+                # Network failure is not an identity/price audit rejection. Keep
+                # a bounded cooldown (including rate limits) and retry via the
+                # application queue; the existing publication stays untouched.
+                receipt.update(status='retry_pending', error=str(exc), failure_kind='transport',
+                               retry_at=(now + timedelta(minutes=15)).isoformat())
+                atomic_json(path, state)
+                continue
             evidence = output / 'inspection' / (symbol + '.json')
             evidence.parent.mkdir(parents=True, exist_ok=True)
             evidence.write_bytes(raw)

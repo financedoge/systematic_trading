@@ -1,6 +1,7 @@
 from datetime import UTC, datetime, timedelta
 
 from systematic_trading.config import AppSettings
+from systematic_trading.services.health import benchmark_health
 from systematic_trading.services import (
     ServiceHealthLevel,
     ServiceManifest,
@@ -8,6 +9,27 @@ from systematic_trading.services import (
     build_platform_health,
     write_service_state_file,
 )
+
+
+def test_benchmark_health_explains_missing_evidence_without_hiding_it():
+    state = dict(enabled=True, running=True, last_error=None, coverage=dict(
+        order_status_counts={'ready': 43, 'unavailable': 12},
+        window_status_counts={'ready': 53, 'unavailable': 2},
+        session_status_counts={'ready': 49, 'unavailable': 2},
+        unavailable_reasons={'No explicit TWAP window': 10, 'No execution admission: USO': 1,
+                             'No execution admission: DBB': 1}))
+    status, message = benchmark_health(state)
+    assert status == 'degraded'
+    assert '12 unavailable' in message and '10 orders' in message and 'USO' in message
+    state['coverage']['order_status_counts'] = {'ready': 43}
+    state['coverage']['window_status_counts'] = {'ready': 53}
+    assert benchmark_health(state)[0] == 'degraded'  # Missing sessions still count.
+    state['coverage'] = None
+    assert benchmark_health(state)[0] == 'unknown'
+    state['running'] = False
+    assert benchmark_health(state)[0] == 'error'
+    state['enabled'] = False
+    assert benchmark_health(state)[0] == 'disabled'
 
 
 def test_platform_health_uses_state_file_heartbeat(tmp_path) -> None:

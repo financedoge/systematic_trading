@@ -34,6 +34,32 @@ class ServiceHealthLevel(StrEnum):
     UNKNOWN = "unknown"
 
 
+def benchmark_health(state):
+    """Explain coverage degradation separately from collector process failures."""
+    if not state['enabled']:
+        return 'disabled', 'Post-trade benchmark collection is disabled.'
+    if state.get('last_error') or not state['running']:
+        return 'error', state.get('last_error') or 'Post-trade benchmark collector is stopped.'
+    coverage = state.get('coverage')
+    if coverage is None:
+        return 'unknown', 'Post-trade benchmark collector is waiting for its first coverage check.'
+    orders = coverage.get('order_status_counts', {})
+    windows = coverage.get('window_status_counts', {})
+    sessions = coverage.get('session_status_counts', {})
+    missing = orders.get('unavailable', 0)
+    review = orders.get('execution_review_required', 0)
+    window_missing = windows.get('unavailable', 0)
+    session_missing = sessions.get('unavailable', 0)
+    degraded = missing or review or window_missing or session_missing
+    message = (f"Post-trade coverage: {orders.get('ready', 0)} filled orders ready; "
+               f"{missing} unavailable, {review} require execution review; "
+               f"{window_missing} windows and {session_missing} sessions unavailable.")
+    reasons = coverage.get('unavailable_reasons', {})
+    if reasons:
+        message += ' Reasons: ' + '; '.join(f'{reason} ({count} orders)' for reason, count in sorted(reasons.items()))
+    return ('degraded' if degraded else 'ok'), message
+
+
 class ServiceRuntimeSnapshot(BaseModel):
     running: bool | None = None
     started_at: datetime | None = None

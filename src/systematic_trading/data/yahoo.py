@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from http.client import IncompleteRead
 from datetime import UTC, date, datetime, time, timedelta
 from decimal import Decimal
 from urllib.parse import urlencode
@@ -8,6 +9,13 @@ from urllib.request import Request, urlopen
 
 from systematic_trading.domain.market import PriceBar
 from systematic_trading.daily_quality import completed_session
+from systematic_trading.data.http import transient_read_error
+
+
+class ChartAcquisitionError(OSError):
+    def __init__(self, message, *, retryable):
+        super().__init__(message)
+        self.retryable = retryable
 
 
 def fetch_chart_bytes(symbol: str, query: str) -> bytes:
@@ -18,15 +26,18 @@ def fetch_chart_bytes(symbol: str, query: str) -> bytes:
     """
     from urllib.parse import quote
     errors = []
+    retryable = []
     for host in ("query1", "query2"):
         request = Request(f"https://{host}.finance.yahoo.com/v8/finance/chart/{quote(symbol, safe='')}?{query}",
                           headers={"User-Agent": "Mozilla/5.0"})
         try:
             with urlopen(request, timeout=20) as response:
                 return response.read()
-        except (OSError, ValueError) as exc:
+        except (OSError, ValueError, IncompleteRead) as exc:
             errors.append(f"{host}: {exc}")
-    raise OSError("Yahoo chart acquisition failed: " + "; ".join(errors))
+            retryable.append(transient_read_error(exc))
+    raise ChartAcquisitionError("Yahoo chart acquisition failed: " + "; ".join(errors),
+                                retryable=all(retryable))
 
 
 class YahooChartProvider:

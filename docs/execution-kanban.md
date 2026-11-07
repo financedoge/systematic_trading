@@ -1,5 +1,41 @@
 # Execution Kanban
 
+## System health incident — 2026-11-07 (repairs deployed; catch-up/evidence gaps open)
+
+Investigate the operator-reported degraded System services using the robustness
+review playbook. Capture current health, dependency/worker failures, queue,
+broker reconciliation, backup and disk evidence; repair authorized operational
+faults and verify the served health after recovery. Preserve ongoing research,
+pinned contracts, data-quality exclusions and paper/live execution safeguards.
+
+Scope extended by the operator: inspect calculation invalidation against the
+actual strategy-consumed historical symbols, fields and dates. Distinguish
+append-only observations, revisions to consumed history, unrelated catalog/code
+changes and material model inputs. Preserve provenance and fail-closed trading
+readiness while reviewing unnecessary full recalculation.
+
+Deployed typed transient-acquisition retries, a 120-second acquisition budget
+before strategy work, and explanatory benchmark health. Restarted the guarded
+operator and requeued 82 old transport failures with retained receipts. Native
+infrastructure and paper API are healthy; reconciliation matched. Daily coverage
+advanced from 2,644 to 2,728 of 3,133 candidates. Source-change failure cleared;
+the application's conservative replay is still running and trading's common-batch
+gate remains closed until publication. HYXU, historical benchmark evidence,
+quarantined histories and email configuration remain unresolved.
+[Incident record](system-health-2026-11-07.md).
+
+## Calculation invalidation — 2026-11-07 (review complete; redesign pending)
+
+Verified 441 catalog changes with unchanged recorded base/M1/BroadTrend input
+files. The only source delta in the prior FR25 model request was the independent
+SIP-volume pilot; all 131 prior monthly fits were reused, but schedule/replay work
+still repeated. Added `scripts/audit_calculation_invalidation.py` and four focused
+tests. Independently pinned scopes are disclosed separately. Next: shadow-tested
+exact-input compatibility receipts shared by calculation/publication/trading,
+then append-only continuation and revision-directed replay. Do not remove current
+batch checks or introduce arbitrary numerical tolerances.
+[Design, migration and acceptance](calculation-invalidation-review-2026-11-07.md).
+
 ## Economic and EIA recorder transport recovery — 2026-11-07
 
 **Complete; verified November 7 at 14:23 Asia/Shanghai.** Economic and EIA
