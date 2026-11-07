@@ -197,13 +197,16 @@ def fr25_lifecycle_conditional_definition():
 
 
 def registered_strategy_definition(key: str) -> StrategyDefinition:
-    if key == 'broadtrend_full_pool_v1':
-        from .broadtrend import definition
-        return definition()
+    return next((d for d in registered_strategy_definitions() if d.key == key), None) or _unknown_strategy(key)
+
+
+def registered_strategy_definitions() -> list[StrategyDefinition]:
+    """One inventory for runtime registration and dependency coverage checks."""
+    from .broadtrend import definition
     parents = [legacy_sota_definition(), etf_activity_lag20_definition(), rolling_xgboost_1y_definition()]
-    definitions = [*parents, *(usd_strategy_definition(d) for d in parents), risk_parity_definition(),
-                   rolling_xgboost_1y_definition(activity=False), defensive_cash_definition(), economic_context_definition(), m1_14_definition(), fr25_definition(), alpha101_tilt_definition(), fr25_lifecycle_conditional_definition()]
-    return next((d for d in definitions if d.key == key), None) or _unknown_strategy(key)
+    return [*parents, *(usd_strategy_definition(d) for d in parents), risk_parity_definition(),
+            rolling_xgboost_1y_definition(activity=False), defensive_cash_definition(), economic_context_definition(),
+            m1_14_definition(), fr25_definition(), alpha101_tilt_definition(), fr25_lifecycle_conditional_definition(), definition()]
 
 
 def rolling_xgboost_1y_definition(*, activity=True) -> StrategyDefinition:

@@ -18,6 +18,11 @@ Run whenever a strategy is proposed for promotion from research to paper, paper 
 ## Workflow
 
 1. Confirm the current promotion state and requested target state.
+   Before retirement or archival, run and retain the strategy/asset dependency
+   impact review. Do not remove required inputs or stop shared publishers when
+   their portfolio report is archived. For new tracked composites, verify the
+   asset-pool reuse review, pinned decomposition and automatic signal-monitoring
+   coverage described in `docs/strategy-assets.md`.
 2. Verify strategy, data, feature, and universe versions are fixed and reproducible.
    For a new signal or changed recipe, attach the versioned P4.20 dossier and
    `scripts/review_research_evidence.py` assessment described in

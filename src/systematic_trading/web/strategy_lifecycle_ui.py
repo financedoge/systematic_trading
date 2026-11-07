@@ -49,17 +49,27 @@ function monitoringActions(item){
   }
   return `<button data-monitoring-key="${key}" data-monitoring-action="monitored" ${item.can_restore?'':'disabled'} title="${item.can_restore?'Replay all missed sessions':'This historical artifact needs an executable strategy definition before it can be monitored'}">Restore to monitored</button>`;
 }
-document.addEventListener('click',event=>{
+document.addEventListener('click',async event=>{
   const button=event.target.closest('[data-monitoring-key]');
   if(!button||button.disabled)return;
   const restoring=button.dataset.monitoringAction==='monitored';
   monitoringChange={strategy_key:button.dataset.monitoringKey,lifecycle:button.dataset.monitoringAction,expected_revision:monitoringRevision,event_id:crypto.randomUUID()};
   document.getElementById('monitoring-title').textContent=restoring?'Restore to monitored':'Archive strategy';
-  document.getElementById('monitoring-description').textContent=restoring?'All missed signals, scheduled trades and daily values will be replayed. Allocation becomes available after the complete report is current.':'Stop ongoing calculations and keep the last complete report. You can restore and catch up later.';
+  document.getElementById('monitoring-description').textContent=restoring?'All missed signals, scheduled trades and daily values will be replayed. Required signal assets automatically join monitoring. Allocation becomes available after the complete report is current.':'Checking dependencies before archiving. Required inputs continue for other composites; the report and executable recipe are retained.';
   document.getElementById('monitoring-error').textContent='';
   document.getElementById('monitoring-reason').value=restoring?'Resume monitoring and catch up':'Pause strategy monitoring';
   document.getElementById('monitoring-operator').value=localStorage.getItem('strategy-monitoring-operator')||'';
   document.getElementById('monitoring-dialog').showModal();
+  const current=monitoringChange;const submit=document.getElementById('monitoring-submit');submit.disabled=!restoring;
+  if(!restoring){try{
+    const response=await fetch('/api/v1/strategies/dependencies?'+new URLSearchParams({key:current.strategy_key,action:'archive'}),{cache:'no-store'});
+    const data=await response.json();if(!response.ok)throw Error(data.detail||'Dependency review unavailable');
+    if(monitoringChange!==current)return;
+    if(!data.impact.allowed)throw Error(data.impact.blockers.join(' '));
+    current.retirement_review_sha256=data.impact.review_sha256;
+    document.getElementById('monitoring-description').textContent='Dependency check passed. '+(data.impact.assets_continuing||[]).length+' shared assets remain maintained. '+(data.impact.assets_becoming_idle||[]).length+' become idle. The complete report and required recipes are retained.';
+    submit.disabled=false;
+  }catch(error){if(monitoringChange===current)document.getElementById('monitoring-error').textContent=error.message;}}
 });
 document.getElementById('monitoring-cancel').onclick=()=>document.getElementById('monitoring-dialog').close();
 document.getElementById('monitoring-form').onsubmit=async event=>{

@@ -43,6 +43,16 @@ def validated_fx_observations(paths):
     return selected, files
 
 
+def publish_observed_fx(settings, analytics):
+    """Publish audited FX even when no legacy CNH strategy is monitored."""
+    observed, files = validated_fx_observations((settings.data_dir / "market_data/fx_observations").glob("USD_CNH_*.json"))
+    records = [dict(point_key=d, family="validated_fx_observation", entity="USD/CNH", observed_at=d,
+                    available_at=r["available_at"], payload=encode(r)) for d, r in observed.items()]
+    analytics.publish("governance/fx-usd-cnh", digest(encode(observed)), records,
+        provenance=dict(method="observed midpoint leg equality, positive OHLC and post-close capture", files=files))
+    return observed, files
+
+
 def load_tracked_inputs(settings, analytics, config):
     protocol = config["calculation"]
     publication = analytics.latest("governance/catalog")
@@ -62,7 +72,7 @@ def load_tracked_inputs(settings, analytics, config):
     if sha256(model_path) != protocol["base_models_sha256"] or sha256(fx_path) != protocol["legacy_fx_sha256"]:
         raise ValueError("Pinned model or historical FX snapshot changed")
     legacy_fx = json.loads(fx_path.read_text(encoding="utf8"))
-    observed, files = validated_fx_observations((settings.data_dir / "market_data/fx_observations").glob("USD_CNH_*.json"))
+    observed, files = publish_observed_fx(settings, analytics)
     fx = {d: v for d, v in legacy_fx.items() if d <= protocol["legacy_fx_through"]}
     fx.update({d: r["rate"] for d, r in observed.items() if d > protocol["legacy_fx_through"]})
     days = [r["trade_date"] for r in raw[symbols[0]] if r["trade_date"] <= price_through]
@@ -81,10 +91,6 @@ def load_tracked_inputs(settings, analytics, config):
         legacy_fx_through=protocol["legacy_fx_through"], first_missing_fx=missing,
         price_basis="Audited dividend/split-adjusted OHLC and split-adjusted source volume",
         historical_availability="Revised historical price vintages; no certified historical availability")
-    records = [dict(point_key=d, family="validated_fx_observation", entity="USD/CNH", observed_at=d,
-                    available_at=r["available_at"], payload=encode(r)) for d, r in observed.items()]
-    analytics.publish("governance/fx-usd-cnh", digest(encode(observed)), records,
-        provenance=dict(method="observed midpoint leg equality, positive OHLC and post-close capture", files=files))
     latest_bars = {s: [etf_bar(r) for r in raw[s] if r["trade_date"] <= price_through] for s in symbols}
     return dict(bars=bars, fx={d: fx[d] for d in usable}, urth=urth,
                 models=json.loads(model_path.read_text(encoding="utf8")), provenance=provenance, latest_bars=latest_bars)

@@ -1,0 +1,828 @@
+{
+  "schema_version": 1,
+  "assets": {
+    "prices-adjusted-v1": {
+      "name": "Audited adjusted price histories",
+      "contract": {
+        "kind": "time_series",
+        "provider": "systematic_trading.research.governed_inputs:GovernedInputs",
+        "inputs": {},
+        "basis": "adjusted",
+        "cadence": "daily",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": null
+      },
+      "sha256": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+      "source": "governance/catalog",
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "activity-raw-v1": {
+      "name": "Audited raw price and volume",
+      "contract": {
+        "kind": "time_series",
+        "provider": "systematic_trading.research.m1_monitoring:load_inputs",
+        "inputs": {},
+        "basis": "audited raw prices and raw volume",
+        "cadence": "daily",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": null
+      },
+      "sha256": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8",
+      "source": "governance/catalog",
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "fx-usdcnh-v1": {
+      "name": "Observed USD/CNH",
+      "contract": {
+        "kind": "time_series",
+        "provider": "systematic_trading.research.tracked_inputs:publish_observed_fx",
+        "inputs": {},
+        "basis": "observed post-close midpoint",
+        "cadence": "daily",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": null
+      },
+      "sha256": "cce18bf6b62fff3dfe8ab5a2780242ee88faa90c958b801bcbaef5b58edd948a",
+      "source": "governance/fx-usd-cnh",
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "usd-vintages-v1": {
+      "name": "Broad-dollar vintage histories",
+      "contract": {
+        "kind": "time_series",
+        "provider": "systematic_trading.research.usd_data:load_usd",
+        "inputs": {},
+        "basis": "original published vintages",
+        "cadence": "daily",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": null
+      },
+      "sha256": "1ae826542bbb2ff41995135a6d0a11a61790f59460c8a268ab7286a18777ff84",
+      "source": "governance/usd-broad-index",
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "economic-context-v1": {
+      "name": "Original economic context vintages",
+      "contract": {
+        "kind": "time_series",
+        "provider": "systematic_trading.research.economic_tracking:economic_inputs",
+        "inputs": {},
+        "basis": "original eleven-series vintage subset",
+        "cadence": "daily",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": null
+      },
+      "sha256": "f755c1c4cfd9f086a2a5a39336d101e8e809110919c0d4e4fa3c5f2e22c8b060",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "financial-context-v1": {
+      "name": "FR25 financial-condition vintages",
+      "contract": {
+        "kind": "time_series",
+        "provider": "systematic_trading.research.fr25_tracking:economic_inputs",
+        "inputs": {},
+        "basis": "frozen financial vintage subset",
+        "cadence": "daily",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": null
+      },
+      "sha256": "31a2713fa803ffb82bd2da91be568d69b5780c140c36e28bc717e4d37ccd9e82",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "technical-features-v1": {
+      "name": "Price and technical features",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.signals.library:compute_signal_features",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+        },
+        "basis": "adjusted",
+        "cadence": "daily",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "evidence_gap"
+      },
+      "sha256": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "activity-lag20-v1": {
+      "name": "Lagged activity features",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.flow_concentration:concentration_features",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+        },
+        "basis": "adjusted prices and published volume; legacy activity contract",
+        "cadence": "daily",
+        "parameters": {
+          "lag": 20
+        },
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "evidence_gap"
+      },
+      "sha256": "22d7a7a12268b83ba5998e311855bf47fa12d082c599f8d9630f2cbdceef9e43",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "activity-audited-lag20-v1": {
+      "name": "Audited raw-dollar activity \u00b7 lag 20",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.candidate_pool:AuditedActivity",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+          "activity-raw-v1": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8"
+        },
+        "basis": "raw dollar activity; adjusted return direction",
+        "cadence": "daily",
+        "parameters": {
+          "lag": 20
+        },
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "evidence_gap"
+      },
+      "sha256": "e90e9fe4ef9919a8e642256d146c1e22f73736b31462c813b58fcfe74b3ae495",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "fixed-tree-v1": {
+      "name": "Frozen technical decision tree",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.signals.decision_tree:DecisionTreeSignalOverlay",
+        "inputs": {
+          "technical-features-v1": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218"
+        },
+        "basis": "adjusted",
+        "cadence": "frozen fit; daily inference",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "evidence_gap"
+      },
+      "sha256": "a8dae08467492dcd7291766d0fdb02a3f74f72edcefc6e62afd3a5a996585a60",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "m1-selection-v1": {
+      "name": "M1 momentum and volume selection",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.signal_decay_job:signal_values",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+          "activity-raw-v1": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8"
+        },
+        "basis": "adjusted",
+        "cadence": "daily",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "m1_rank_ic"
+      },
+      "sha256": "6d69d9d053b30906da639e2913717043bd1aab3627136a7cbe223d2d53250f2f",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "rolling-xgboost-12-v1": {
+      "name": "Rolling one-year XGBoost \u00b7 12 ETFs",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.rolling_tracking:prepare_model_schedule",
+        "inputs": {
+          "technical-features-v1": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218"
+        },
+        "basis": "adjusted",
+        "cadence": "monthly fit; daily inference",
+        "parameters": {
+          "universe_size": 12,
+          "training_years": 1,
+          "label_embargo": "strictly before fit close"
+        },
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "evidence_gap"
+      },
+      "sha256": "a13ca547b2e182cac50bf23a95a42a90f73e37e6beb7d61a51a5e22442d25dc3",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "usd-ridge-12-v1": {
+      "name": "USD ridge \u00b7 12 ETFs",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.usd_tracking:prepare_usd_schedule",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+          "usd-vintages-v1": "1ae826542bbb2ff41995135a6d0a11a61790f59460c8a268ab7286a18777ff84"
+        },
+        "basis": "adjusted",
+        "cadence": "monthly fit; daily inference",
+        "parameters": {
+          "universe_size": 12
+        },
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "evidence_gap"
+      },
+      "sha256": "812d254c869e81d081bf3331017dae642d7f23482bde0e2820200ad8aae4d111",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "rolling-xgboost-14-v1": {
+      "name": "Rolling one-year XGBoost \u00b7 14 ETFs",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.rolling_tracking:prepare_model_schedule",
+        "inputs": {
+          "technical-features-v1": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218"
+        },
+        "basis": "adjusted",
+        "cadence": "monthly fit; daily inference",
+        "parameters": {
+          "universe_size": 14,
+          "training_years": 1,
+          "label_embargo": "strictly before fit close"
+        },
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "evidence_gap"
+      },
+      "sha256": "ee238c8d68d8fd6b56c4dd89b8c1901911e85e255159b4387435424c3e432718",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "usd-ridge-14-v1": {
+      "name": "USD ridge \u00b7 14 ETFs",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.usd_tracking:prepare_usd_schedule",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+          "usd-vintages-v1": "1ae826542bbb2ff41995135a6d0a11a61790f59460c8a268ab7286a18777ff84"
+        },
+        "basis": "adjusted",
+        "cadence": "monthly fit; daily inference",
+        "parameters": {
+          "universe_size": 14
+        },
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "evidence_gap"
+      },
+      "sha256": "414f8dab5b9afe0e326c07e1f03eb57c13c1c4d9ee7e8d3275dcbc536904e780",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "economic-ridge-v1": {
+      "name": "Economic expanding ridge",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.economic_tracking:economic_inputs",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+          "economic-context-v1": "f755c1c4cfd9f086a2a5a39336d101e8e809110919c0d4e4fa3c5f2e22c8b060"
+        },
+        "basis": "adjusted",
+        "cadence": "monthly fit; daily inference",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "evidence_gap"
+      },
+      "sha256": "faf9bbf9b8de8f36aeb518ee21504e1dc159cd7ab634907a0212e7b531649402",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "fr25-selection-v1": {
+      "name": "FR25 financial rank forecast",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.fr25_tracking:economic_inputs",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+          "financial-context-v1": "31a2713fa803ffb82bd2da91be568d69b5780c140c36e28bc717e4d37ccd9e82"
+        },
+        "basis": "adjusted",
+        "cadence": "monthly fit; daily inference",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "evidence_gap"
+      },
+      "sha256": "58bae506608804c64ffc0c06c3a0e23539e8466b37a1cf8c99c4fb9036a7515c",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "alpha101-tilt-v1": {
+      "name": "Alpha101 activity tilt",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.alpha101_tilt_overlay:Alpha101FamilyTiltOverlay",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+          "activity-raw-v1": "29c24b0ad948a89d39d1c280a05f4da684b15a412f609d9744dee8b48862b4e8"
+        },
+        "basis": "adjusted",
+        "cadence": "daily",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "evidence_gap"
+      },
+      "sha256": "d2f9e4e5e29a24f8de06008beb3089770138c5f0875f1dcceb6e868290b69541",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "broadtrend-models-v1": {
+      "name": "BroadTrend frozen per-ETF models",
+      "contract": {
+        "kind": "model",
+        "provider": "systematic_trading.research.broadtrend:model_pack",
+        "inputs": {},
+        "basis": "adjusted",
+        "cadence": "frozen; new version required to refit",
+        "parameters": {
+          "sha256": "40cb164b06d0052ab7f7641d6446d0ee9f93c810ae8204d05f3b6114e74a994e",
+          "training_end": "2022-12-30"
+        },
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": null
+      },
+      "sha256": "013a87357c159580bde0cbba052a2907c210ed2572d44e2f01a2e52df440bfa4",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "broadtrend-signals-v1": {
+      "name": "BroadTrend daily trend and long/cash states",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.broadtrend:signal_history",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+          "broadtrend-models-v1": "013a87357c159580bde0cbba052a2907c210ed2572d44e2f01a2e52df440bfa4"
+        },
+        "basis": "adjusted",
+        "cadence": "daily",
+        "parameters": {
+          "universe_size": 51,
+          "execution": "next open",
+          "prospective_start": "2026-10-30"
+        },
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "broadtrend_time_series"
+      },
+      "sha256": "35a3723c6f4fcfeb5f026ce427ca6b83bcfe197b80bb2d3bbe5f9bf54a43e137",
+      "source": null,
+      "limitations": [
+        "Frozen 2022 models; inspected historical development. Prospective monitoring starts 2026-10-30.",
+        "HMM scores are not calibrated probabilities; close-tested stops execute next open.",
+        "Fractional adjusted units; signals confer no broker execution authority."
+      ]
+    },
+    "conditional-snapshot-v1": {
+      "name": "Conditional FR25 frozen signal snapshot",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.research.fr25_lifecycle_conditional:verified_input_provenance",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+        },
+        "basis": "adjusted",
+        "cadence": "historical snapshot; no daily extension",
+        "parameters": {},
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "evidence_gap"
+      },
+      "sha256": "c553f96ae0f0e8b27ec6f9d0932bc6cb15bdff9b2959d2bafb7d902c11043d50",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    },
+    "risk-parity-volatility-v1": {
+      "name": "Risk-parity realized volatility",
+      "contract": {
+        "kind": "signal",
+        "provider": "systematic_trading.data.analytics:realized_volatility_from_bars",
+        "inputs": {
+          "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c"
+        },
+        "basis": "adjusted",
+        "cadence": "daily",
+        "parameters": {
+          "lookback_sessions": 63
+        },
+        "availability": "Completed observations only; actual capture and vintage cutoffs remain binding.",
+        "missing": "Abstain or fail under the frozen provider contract; never fill or substitute.",
+        "monitor": "evidence_gap"
+      },
+      "sha256": "b81f75c98a6de9879087fb4c000c17e151b59aa4ac2a0ff5712534db7f0c9918",
+      "source": null,
+      "limitations": [
+        "Audited histories do not certify historical dissemination availability."
+      ]
+    }
+  },
+  "composites": {
+    "sota_price_volume_technical_tree_relative_adaptive_top6": {
+      "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+      "fx-usdcnh-v1": "cce18bf6b62fff3dfe8ab5a2780242ee88faa90c958b801bcbaef5b58edd948a",
+      "technical-features-v1": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218",
+      "fixed-tree-v1": "a8dae08467492dcd7291766d0fdb02a3f74f72edcefc6e62afd3a5a996585a60"
+    },
+    "research_etf_activity_lag20_v1": {
+      "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+      "fx-usdcnh-v1": "cce18bf6b62fff3dfe8ab5a2780242ee88faa90c958b801bcbaef5b58edd948a",
+      "technical-features-v1": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218",
+      "activity-lag20-v1": "22d7a7a12268b83ba5998e311855bf47fa12d082c599f8d9630f2cbdceef9e43",
+      "fixed-tree-v1": "a8dae08467492dcd7291766d0fdb02a3f74f72edcefc6e62afd3a5a996585a60"
+    },
+    "research_rolling_xgboost_1y_lag20_v1": {
+      "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+      "fx-usdcnh-v1": "cce18bf6b62fff3dfe8ab5a2780242ee88faa90c958b801bcbaef5b58edd948a",
+      "technical-features-v1": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218",
+      "activity-lag20-v1": "22d7a7a12268b83ba5998e311855bf47fa12d082c599f8d9630f2cbdceef9e43",
+      "rolling-xgboost-12-v1": "a13ca547b2e182cac50bf23a95a42a90f73e37e6beb7d61a51a5e22442d25dc3"
+    },
+    "sota_price_volume_technical_tree_relative_adaptive_top6_usd_v1": {
+      "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+      "fx-usdcnh-v1": "cce18bf6b62fff3dfe8ab5a2780242ee88faa90c958b801bcbaef5b58edd948a",
+      "technical-features-v1": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218",
+      "fixed-tree-v1": "a8dae08467492dcd7291766d0fdb02a3f74f72edcefc6e62afd3a5a996585a60",
+      "usd-ridge-12-v1": "812d254c869e81d081bf3331017dae642d7f23482bde0e2820200ad8aae4d111"
+    },
+    "research_etf_activity_lag20_v1_usd_v1": {
+      "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+      "fx-usdcnh-v1": "cce18bf6b62fff3dfe8ab5a2780242ee88faa90c958b801bcbaef5b58edd948a",
+      "technical-features-v1": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218",
+      "activity-lag20-v1": "22d7a7a12268b83ba5998e311855bf47fa12d082c599f8d9630f2cbdceef9e43",
+      "fixed-tree-v1": "a8dae08467492dcd7291766d0fdb02a3f74f72edcefc6e62afd3a5a996585a60",
+      "usd-ridge-12-v1": "812d254c869e81d081bf3331017dae642d7f23482bde0e2820200ad8aae4d111"
+    },
+    "research_rolling_xgboost_1y_lag20_v1_usd_v1": {
+      "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+      "fx-usdcnh-v1": "cce18bf6b62fff3dfe8ab5a2780242ee88faa90c958b801bcbaef5b58edd948a",
+      "technical-features-v1": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218",
+      "activity-lag20-v1": "22d7a7a12268b83ba5998e311855bf47fa12d082c599f8d9630f2cbdceef9e43",
+      "rolling-xgboost-12-v1": "a13ca547b2e182cac50bf23a95a42a90f73e37e6beb7d61a51a5e22442d25dc3",
+      "usd-ridge-12-v1": "812d254c869e81d081bf3331017dae642d7f23482bde0e2820200ad8aae4d111"
+    },
+    "risk_parity": {
+      "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+      "risk-parity-volatility-v1": "b81f75c98a6de9879087fb4c000c17e151b59aa4ac2a0ff5712534db7f0c9918"
+    },
+    "research_rolling_xgboost_1y_v1": {
+      "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+      "fx-usdcnh-v1": "cce18bf6b62fff3dfe8ab5a2780242ee88faa90c958b801bcbaef5b58edd948a",
+      "technical-features-v1": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218",
+      "rolling-xgboost-12-v1": "a13ca547b2e182cac50bf23a95a42a90f73e37e6beb7d61a51a5e22442d25dc3"
+    },
+    "research_fallback_f3_v1": {
+      "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+      "fx-usdcnh-v1": "cce18bf6b62fff3dfe8ab5a2780242ee88faa90c958b801bcbaef5b58edd948a",
+      "technical-features-v1": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218",
+      "activity-lag20-v1": "22d7a7a12268b83ba5998e311855bf47fa12d082c599f8d9630f2cbdceef9e43",
+      "rolling-xgboost-12-v1": "a13ca547b2e182cac50bf23a95a42a90f73e37e6beb7d61a51a5e22442d25dc3",
+      "usd-ridge-12-v1": "812d254c869e81d081bf3331017dae642d7f23482bde0e2820200ad8aae4d111"
+    },
+    "research_economic_context_ridge_v1": {
+      "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+      "fx-usdcnh-v1": "cce18bf6b62fff3dfe8ab5a2780242ee88faa90c958b801bcbaef5b58edd948a",
+      "technical-features-v1": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218",
+      "activity-lag20-v1": "22d7a7a12268b83ba5998e311855bf47fa12d082c599f8d9630f2cbdceef9e43",
+      "rolling-xgboost-12-v1": "a13ca547b2e182cac50bf23a95a42a90f73e37e6beb7d61a51a5e22442d25dc3",
+      "usd-ridge-12-v1": "812d254c869e81d081bf3331017dae642d7f23482bde0e2820200ad8aae4d111",
+      "economic-ridge-v1": "faf9bbf9b8de8f36aeb518ee21504e1dc159cd7ab634907a0212e7b531649402"
+    },
+    "research_m1_14_v1": {
+      "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+      "fx-usdcnh-v1": "cce18bf6b62fff3dfe8ab5a2780242ee88faa90c958b801bcbaef5b58edd948a",
+      "technical-features-v1": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218",
+      "activity-audited-lag20-v1": "e90e9fe4ef9919a8e642256d146c1e22f73736b31462c813b58fcfe74b3ae495",
+      "rolling-xgboost-14-v1": "ee238c8d68d8fd6b56c4dd89b8c1901911e85e255159b4387435424c3e432718",
+      "usd-ridge-14-v1": "414f8dab5b9afe0e326c07e1f03eb57c13c1c4d9ee7e8d3275dcbc536904e780",
+      "m1-selection-v1": "6d69d9d053b30906da639e2913717043bd1aab3627136a7cbe223d2d53250f2f"
+    },
+    "research_fr25_14_v1": {
+      "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+      "fx-usdcnh-v1": "cce18bf6b62fff3dfe8ab5a2780242ee88faa90c958b801bcbaef5b58edd948a",
+      "technical-features-v1": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218",
+      "activity-audited-lag20-v1": "e90e9fe4ef9919a8e642256d146c1e22f73736b31462c813b58fcfe74b3ae495",
+      "rolling-xgboost-14-v1": "ee238c8d68d8fd6b56c4dd89b8c1901911e85e255159b4387435424c3e432718",
+      "usd-ridge-14-v1": "414f8dab5b9afe0e326c07e1f03eb57c13c1c4d9ee7e8d3275dcbc536904e780",
+      "m1-selection-v1": "6d69d9d053b30906da639e2913717043bd1aab3627136a7cbe223d2d53250f2f",
+      "fr25-selection-v1": "58bae506608804c64ffc0c06c3a0e23539e8466b37a1cf8c99c4fb9036a7515c"
+    },
+    "research_fr25_alpha_tilt_5_v1": {
+      "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+      "fx-usdcnh-v1": "cce18bf6b62fff3dfe8ab5a2780242ee88faa90c958b801bcbaef5b58edd948a",
+      "technical-features-v1": "97b349b80f88dc1b7e16149f36ef4f54639fe1c76937e9ea096aaae58b5df218",
+      "activity-audited-lag20-v1": "e90e9fe4ef9919a8e642256d146c1e22f73736b31462c813b58fcfe74b3ae495",
+      "rolling-xgboost-14-v1": "ee238c8d68d8fd6b56c4dd89b8c1901911e85e255159b4387435424c3e432718",
+      "usd-ridge-14-v1": "414f8dab5b9afe0e326c07e1f03eb57c13c1c4d9ee7e8d3275dcbc536904e780",
+      "m1-selection-v1": "6d69d9d053b30906da639e2913717043bd1aab3627136a7cbe223d2d53250f2f",
+      "fr25-selection-v1": "58bae506608804c64ffc0c06c3a0e23539e8466b37a1cf8c99c4fb9036a7515c",
+      "alpha101-tilt-v1": "d2f9e4e5e29a24f8de06008beb3089770138c5f0875f1dcceb6e868290b69541"
+    },
+    "fr25_lifecycle_conditional_v1": {
+      "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+      "conditional-snapshot-v1": "c553f96ae0f0e8b27ec6f9d0932bc6cb15bdff9b2959d2bafb7d902c11043d50"
+    },
+    "broadtrend_full_pool_v1": {
+      "prices-adjusted-v1": "95820f8d59b4b1a0dde448f7d99f1956d29a1a2fe1cd91144b4a28516ab6b17c",
+      "broadtrend-signals-v1": "35a3723c6f4fcfeb5f026ce427ca6b83bcfe197b80bb2d3bbe5f9bf54a43e137"
+    }
+  },
+  "reuse_reviews": {
+    "sota_price_volume_technical_tree_relative_adaptive_top6": {
+      "search_terms": [
+        "existing executable providers",
+        "time-series",
+        "rolling models"
+      ],
+      "inspected_assets": [
+        "prices-adjusted-v1",
+        "fx-usdcnh-v1",
+        "technical-features-v1",
+        "fixed-tree-v1"
+      ],
+      "decision": "Initial migration: reuse the existing application providers and frozen recipes; no model refit or parameter change."
+    },
+    "research_etf_activity_lag20_v1": {
+      "search_terms": [
+        "existing executable providers",
+        "time-series",
+        "rolling models"
+      ],
+      "inspected_assets": [
+        "prices-adjusted-v1",
+        "fx-usdcnh-v1",
+        "technical-features-v1",
+        "activity-lag20-v1",
+        "fixed-tree-v1"
+      ],
+      "decision": "Initial migration: reuse the existing application providers and frozen recipes; no model refit or parameter change."
+    },
+    "research_rolling_xgboost_1y_lag20_v1": {
+      "search_terms": [
+        "existing executable providers",
+        "time-series",
+        "rolling models"
+      ],
+      "inspected_assets": [
+        "prices-adjusted-v1",
+        "fx-usdcnh-v1",
+        "technical-features-v1",
+        "activity-lag20-v1",
+        "rolling-xgboost-12-v1"
+      ],
+      "decision": "Initial migration: reuse the existing application providers and frozen recipes; no model refit or parameter change."
+    },
+    "sota_price_volume_technical_tree_relative_adaptive_top6_usd_v1": {
+      "search_terms": [
+        "existing executable providers",
+        "time-series",
+        "rolling models"
+      ],
+      "inspected_assets": [
+        "prices-adjusted-v1",
+        "fx-usdcnh-v1",
+        "technical-features-v1",
+        "fixed-tree-v1",
+        "usd-ridge-12-v1"
+      ],
+      "decision": "Initial migration: reuse the existing application providers and frozen recipes; no model refit or parameter change."
+    },
+    "research_etf_activity_lag20_v1_usd_v1": {
+      "search_terms": [
+        "existing executable providers",
+        "time-series",
+        "rolling models"
+      ],
+      "inspected_assets": [
+        "prices-adjusted-v1",
+        "fx-usdcnh-v1",
+        "technical-features-v1",
+        "activity-lag20-v1",
+        "fixed-tree-v1",
+        "usd-ridge-12-v1"
+      ],
+      "decision": "Initial migration: reuse the existing application providers and frozen recipes; no model refit or parameter change."
+    },
+    "research_rolling_xgboost_1y_lag20_v1_usd_v1": {
+      "search_terms": [
+        "existing executable providers",
+        "time-series",
+        "rolling models"
+      ],
+      "inspected_assets": [
+        "prices-adjusted-v1",
+        "fx-usdcnh-v1",
+        "technical-features-v1",
+        "activity-lag20-v1",
+        "rolling-xgboost-12-v1",
+        "usd-ridge-12-v1"
+      ],
+      "decision": "Initial migration: reuse the existing application providers and frozen recipes; no model refit or parameter change."
+    },
+    "risk_parity": {
+      "search_terms": [
+        "existing executable providers",
+        "time-series",
+        "rolling models"
+      ],
+      "inspected_assets": [
+        "prices-adjusted-v1",
+        "risk-parity-volatility-v1"
+      ],
+      "decision": "Initial migration: reuse the existing application providers and frozen recipes; no model refit or parameter change."
+    },
+    "research_rolling_xgboost_1y_v1": {
+      "search_terms": [
+        "existing executable providers",
+        "time-series",
+        "rolling models"
+      ],
+      "inspected_assets": [
+        "prices-adjusted-v1",
+        "fx-usdcnh-v1",
+        "technical-features-v1",
+        "rolling-xgboost-12-v1"
+      ],
+      "decision": "Initial migration: reuse the existing application providers and frozen recipes; no model refit or parameter change."
+    },
+    "research_fallback_f3_v1": {
+      "search_terms": [
+        "existing executable providers",
+        "time-series",
+        "rolling models"
+      ],
+      "inspected_assets": [
+        "prices-adjusted-v1",
+        "fx-usdcnh-v1",
+        "technical-features-v1",
+        "activity-lag20-v1",
+        "rolling-xgboost-12-v1",
+        "usd-ridge-12-v1"
+      ],
+      "decision": "Initial migration: reuse the existing application providers and frozen recipes; no model refit or parameter change."
+    },
+    "research_economic_context_ridge_v1": {
+      "search_terms": [
+        "existing executable providers",
+        "time-series",
+        "rolling models"
+      ],
+      "inspected_assets": [
+        "prices-adjusted-v1",
+        "fx-usdcnh-v1",
+        "technical-features-v1",
+        "activity-lag20-v1",
+        "rolling-xgboost-12-v1",
+        "usd-ridge-12-v1",
+        "economic-ridge-v1"
+      ],
+      "decision": "Initial migration: reuse the existing application providers and frozen recipes; no model refit or parameter change."
+    },
+    "research_m1_14_v1": {
+      "search_terms": [
+        "existing executable providers",
+        "time-series",
+        "rolling models"
+      ],
+      "inspected_assets": [
+        "prices-adjusted-v1",
+        "fx-usdcnh-v1",
+        "technical-features-v1",
+        "activity-audited-lag20-v1",
+        "rolling-xgboost-14-v1",
+        "usd-ridge-14-v1",
+        "m1-selection-v1"
+      ],
+      "decision": "Initial migration: reuse the existing application providers and frozen recipes; no model refit or parameter change."
+    },
+    "research_fr25_14_v1": {
+      "search_terms": [
+        "existing executable providers",
+        "time-series",
+        "rolling models"
+      ],
+      "inspected_assets": [
+        "prices-adjusted-v1",
+        "fx-usdcnh-v1",
+        "technical-features-v1",
+        "activity-audited-lag20-v1",
+        "rolling-xgboost-14-v1",
+        "usd-ridge-14-v1",
+        "m1-selection-v1",
+        "fr25-selection-v1"
+      ],
+      "decision": "Initial migration: reuse the existing application providers and frozen recipes; no model refit or parameter change."
+    },
+    "research_fr25_alpha_tilt_5_v1": {
+      "search_terms": [
+        "existing executable providers",
+        "time-series",
+        "rolling models"
+      ],
+      "inspected_assets": [
+        "prices-adjusted-v1",
+        "fx-usdcnh-v1",
+        "technical-features-v1",
+        "activity-audited-lag20-v1",
+        "rolling-xgboost-14-v1",
+        "usd-ridge-14-v1",
+        "m1-selection-v1",
+        "fr25-selection-v1",
+        "alpha101-tilt-v1"
+      ],
+      "decision": "Initial migration: reuse the existing application providers and frozen recipes; no model refit or parameter change."
+    },
+    "fr25_lifecycle_conditional_v1": {
+      "search_terms": [
+        "existing executable providers",
+        "time-series",
+        "rolling models"
+      ],
+      "inspected_assets": [
+        "prices-adjusted-v1",
+        "conditional-snapshot-v1"
+      ],
+      "decision": "Initial migration: reuse the existing application providers and frozen recipes; no model refit or parameter change."
+    },
+    "broadtrend_full_pool_v1": {
+      "search_terms": [
+        "existing executable providers",
+        "time-series",
+        "rolling models"
+      ],
+      "inspected_assets": [
+        "prices-adjusted-v1",
+        "broadtrend-signals-v1"
+      ],
+      "decision": "Initial migration: reuse the existing application providers and frozen recipes; no model refit or parameter change."
+    }
+  }
+}

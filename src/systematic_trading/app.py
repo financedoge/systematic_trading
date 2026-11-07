@@ -208,6 +208,8 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
 
     from systematic_trading.web.strategy_control import router as strategy_control_router
     app.include_router(strategy_control_router)
+    from systematic_trading.web.strategy_assets_api import router as strategy_assets_router
+    app.include_router(strategy_assets_router)
     app.include_router(operator_router)
     app.include_router(platform_router)
     app.include_router(router)

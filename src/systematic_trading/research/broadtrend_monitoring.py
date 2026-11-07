@@ -37,7 +37,8 @@ def current_allocation(result, arrays, states, initial):
 
 def calculate(settings, config, root, inputs, peer_documents=()):
     initial=float(config['calculation']['initial_cash_cnh']);cost=float(config['calculation']['transaction_cost_bps'])
-    result,arrays,states=b.replay(inputs,cost_bp=cost)
+    signal_data=b.signal_history(inputs,cost_bp=cost)
+    result,arrays,states=b.replay(inputs,cost_bp=cost,signal_data=signal_data)
     days=result['days'];n=len(days);start=len(arrays['open'])-n;symbols=result['symbols']
     closes=arrays['close'][start:]; opens=arrays['open'][start:]
     nav_rows=[dict(trade_date=d,nav_cnh=float(v*initial),cash_cnh=float(v*c*initial),
@@ -84,6 +85,8 @@ def calculate(settings, config, root, inputs, peer_documents=()):
         'Native accounting fixtures validate a whole-share execution-open oracle only; they do not independently validate policy inference or this fractional strategy.',
         'Monitoring uses a dedicated daily-signal/monthly-capital adapter. Broker allocation for this contract remains unavailable.',
         current['notes']]
+    if not extra:
+        warnings.append('Optional FR25 comparison unavailable in this calculation; the primary matched full-pool buy-and-hold benchmark remains available.')
     if len(set(inputs['provenance']['latest_by_symbol'].values()))>1:
         warnings.append('Full-pool calculation ends at the last common complete session; later observations of individual ETFs are not substituted.')
     generation=config.get('monitoring_generations',{}).get(b.KEY,0)
@@ -112,5 +115,8 @@ def calculate(settings, config, root, inputs, peer_documents=()):
         observed_at=r['trade_date'],available_at=monitoring['computedAt'],payload=encode(r)) for r in nav_rows]
     observations.append(dict(point_key=b.KEY+'/allocation',family='tracked_strategy_allocation',entity=b.KEY,
         observed_at=days[-1],available_at=monitoring['computedAt'],payload=encode(current)))
+    from .strategy_asset_monitoring import broadtrend_publication
+    asset_doc, asset_rows = broadtrend_publication(signal_data, inputs['provenance'], cost_bp=cost)
+    documents.append(asset_doc); observations.extend(asset_rows)
     (folder/'validation.json').write_text(encode(dict(metrics=stats,independent_ledger=b.independent_ledger(result,closes))),encoding='utf8')
     return documents,observations,inputs['provenance']

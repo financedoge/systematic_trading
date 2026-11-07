@@ -103,7 +103,8 @@ def shadow(data, m, *, cost_bp=5, delay=0, anchor='2022-12-30'):
     return f, cl, sim, start
 
 
-def replay(inputs, *, cost_bp=5, delay=0):
+def signal_history(inputs, *, cost_bp=5, delay=0):
+    """Reusable per-ETF causal signal/shadow series, before portfolio construction."""
     pack = model_pack(); symbols = list(pack['models']); pieces=[]; states={}; days=None
     for s in symbols:
         f, cl, sim, start = shadow(inputs['data'][s], pack['models'][s], cost_bp=cost_bp, delay=delay)
@@ -112,6 +113,8 @@ def replay(inputs, *, cost_bp=5, delay=0):
             raise ValueError('BroadTrend aligned signal calendars required')
         days = these
         pieces.append(dict(open=f.open[start:],close=f.close[start:],
+            fast_up=cl['fast_probability'][start:,2], fast_down=cl['fast_probability'][start:,0],
+            slow_up=cl['slow_probability'][start:,2], stop=sim['stop'][start:],
             **{k:sim[k][start:] for k in ('nav','desired','held')}))
         states[s] = dict(fast_up=float(cl['fast_probability'][-1,2]),
             fast_down=float(cl['fast_probability'][-1,0]), slow_up=float(cl['slow_probability'][-1,2]),
@@ -119,6 +122,12 @@ def replay(inputs, *, cost_bp=5, delay=0):
             close_test_stop=float(sim['stop'][-1]) if np.isfinite(sim['stop'][-1]) else None,
             last_trade=sim['episodes'][-1] if sim['episodes'] else None)
     arrays = {k:np.column_stack([v[k] for v in pieces]) for k in pieces[0]}
+    return days, symbols, arrays, states
+
+
+def replay(inputs, *, cost_bp=5, delay=0, signal_data=None):
+    pack = model_pack()
+    days, symbols, arrays, states = signal_data if signal_data is not None else signal_history(inputs, cost_bp=cost_bp, delay=delay)
     start = int(np.searchsorted(days, pack['portfolio_anchor']))
     if start >= len(days)-1 or days[start] != pack['portfolio_anchor']:
         raise ValueError('BroadTrend exact portfolio anchor required')

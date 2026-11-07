@@ -135,6 +135,16 @@ def test_publication_race_is_rejected():
         build_strategy_comparison([epoch('2026-10-02','a',{'A':'1'})],analytics,[])
 
 
+def test_usd_conversion_cutoff_is_disclosed_without_filling_or_relabeling_usd():
+    analytics = publication({'A': [('2026-10-30', '100'), ('2026-11-02', '110')]})
+    detail = json.loads(analytics.docs['strategy-serving'][0]['payload'])
+    detail.update(accounting_currency='USD', cnh_nav_series=[dict(trade_date='2026-10-30', nav_cnh='700')])
+    analytics.docs['strategy-serving'][0]['payload'] = json.dumps(detail)
+    result = build_strategy_comparison([epoch('2026-10-30', 'a', {'A': '1'})], analytics, [])
+    assert [r['trade_date'] for r in result['strategy']] == ['2026-10-30']
+    assert any('USD NAV through 2026-11-02' in w and 'only through 2026-10-30' in w for w in result['warnings'])
+
+
 def test_dashboard_uses_strategy_nav_not_empty_reference_and_exposes_zero_opening_return(dashboard):
     from test_dashboard_performance import performance, snapshot
     client, _, root = dashboard

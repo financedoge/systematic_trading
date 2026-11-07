@@ -1,5 +1,296 @@
 # Project Log
 
+## 2026-11-07 — Economic and EIA transport incident
+
+The operator reported six November 6 ALFRED snapshots failing with connection
+closes/timeouts and EIA petroleum acquisition failing with URLError. The catalog
+was 16 snapshots behind (2,576/2,592). A read-only exact-URL probe reproduced the
+IPMAN timeout in urllib while Windows curl/Schannel returned the 4,835-byte
+response in 1.08 seconds; EIA's stocks and balance files were responding on both
+transports by the probe. Probe bytes were not used as strategy inputs.
+
+Dependency preflight passed before the shared recorder change. Economic CSV
+acquisition now opts into the existing verified native fallback after bounded
+transient retry exhaustion. EIA now uses that same reader instead of one direct
+urllib attempt. URLs, proxies, TLS verification, response bounds, raw capture,
+vintage/actual-first-seen semantics and publication audits are preserved. Permanent
+certificate/authorization failures still fail closed. Stopped the dashboard and
+dispatcher through the guarded launcher before changing calculation-hashed code.
+105 focused tests and Ruff passed. Recovery uses the application's capture,
+publication, calculation and native-validation services; deployment acceptance is
+recorded below once complete. Evidence: `var/maintenance/recorder-transport-20261107/`.
+
+Acceptance at 14:23 Asia/Shanghai: fallback initially also encountered transient
+curl timeout/connection failures (exits 28/35). The recorder retained those failed
+attempts and respected its five-minute identity cooldown; ordinary bounded passes
+then published all 16 missing snapshots. Economic catalog
+`f21e17826dada265b319a159f0fc8f77de5f7b4282968c8378888f9bc6ba4170` is complete
+at 2,592/2,592 with zero recorder failures. All new first-seen timestamps are
+November 7; none was backdated. Petroleum reacquisition passed all three file
+audits and was unchanged, preserving its prior publication; both EIA products
+are current with no recorder errors.
+
+Calculation `21e223e286c5d7a4c4199eec9f3a025d2f8d48d5b23e587e1aaa6d2d4c45d1a6`
+and serving `433baec48a7dbd6f58c82f7b22cbad70e28c96ceb1d98ecff006d0b1e11c3d63`
+passed all nine native checks on attempt 1. All ten retained report NAV arrays
+and current allocations exactly equal the prior `ea53d68a...` publication.
+The 14 automatically monitored signals remain available and BroadTrend reaches
+November 6. Restarted with the normal launcher: dashboard PID 26260, dispatcher
+PID 18120. Live APIs show empty errors, `strategy_stale=false`, November 6
+price/NAV/allocation-comparison dates, complete economics and clear EIA status.
+Regular startup lanes remain running; the unrelated broad-stock coverage backlog
+is outside this incident. No allocation, promotion, approval or broker-guard change.
+
+## 2026-11-07 — Governed asset pool and automatic signal monitoring
+
+The operator requested mandatory retirement checks, a separate reusable pool of
+time-series/signals/rolling models, composite-driven maintenance, an inspection
+workspace, and reuse-first future development. They also identified BroadTrend's
+absence from signal monitoring and required every new tracked signal to appear
+automatically. Implemented a versioned asset DAG and decomposition for the 15
+registered composites, recorded reuse reviews, demand/lifecycle receipts and
+automatic signal-panel discovery. Strategy archive now records/revalidates its
+impact, including continuing/newly idle assets. Asset retirement is an independent
+audited, idempotent transition guarded against membership/allocation changes and
+all retained consumers; no physical evidence deletion is implied.
+
+BroadTrend now computes reusable per-ETF signal history once and passes it into
+the unchanged capital-allocation replay. Its actual states, scores, adjusted
+prices, stops and shadow NAV are published for inspection, with prospective
+next-open completed-label diagnostics. No cross-sectional IC substitution or
+unapproved effectiveness threshold; the short prospective evidence is explicitly
+insufficient. Existing legacy forecasts expose lineage and diagnostic gaps,
+rather than pretending all have independent observation publications. Shared data
+acquisition and paper/live/approval safeguards remain unchanged. Validation and
+served-publication evidence follow below when deployment completes.
+
+201 focused tests passed with one existing optional integration skip; Ruff and
+assembled Strategies/asset-page scripts pass. Tests include new-signal automatic
+discovery, required monitoring/reuse contracts, shared-demand release, retained
+archived consumers, stale reviews and concurrent membership protection, actual
+BroadTrend observations, uncompleted-label exclusion and unchanged frozen policy
+replay. Before deployment, an already-running worker loaded a new monitoring
+module with the old BroadTrend module and failed with `fast_up`; revision
+`617f25ed58c2ff74903aca55af611556676a4bb85db0ffd26b2a9082bda5ff90` was not
+published and prior complete results remained served. Stopped dashboard/dispatcher
+through their guarded launcher. The consistent source rebuild is
+`77c285cc44f96e270295198ee2ac00636c074c0851e986a0a30c4d1c2da232d7`.
+Live read-only preflight blocks BroadTrend signal retirement and shows its two
+exclusive assets becoming idle on report archive. Membership remains revision 7,
+asset lifecycle revision 0. Evidence: `var/maintenance/strategy-assets-20261107/`.
+
+Final acceptance at 13:08 Asia/Shanghai: all nine native runs passed on attempt 1;
+calculation `77c285cc44f96e270295198ee2ac00636c074c0851e986a0a30c4d1c2da232d7`
+and serving `6c5c6e6547f34a8223f84cf6f5329dfce8a2daa36641ba3003da0fb56fc9cdc8`
+are published. All ten retained report NAV arrays and current allocations equal
+the prior `7a167fe9...` publication exactly. Registry
+`aa7422b10ed6276361397829d94d66243c29cfb06d1895ff8a4c53b0f26ea816` resolves 21
+required assets and 14 automatically monitored signals from 22 definitions.
+BroadTrend observations reach November 6: 20/51 next-open long intents and four
+completed prospective daily labels. The aggregate signed next-open return mean
+is 0.017993% gross, a descriptive diagnostic with no effectiveness claim. Real
+browser verification covers current states, a 260-session GLD chart, the required
+asset retirement blocker, automatic signal-panel entry and the strategy archive
+dialog's mandatory impact review. Cancelled the preview; no lifecycle write.
+
+Restarted through the normal launcher: dashboard PID 23940, dispatcher PID 31428.
+API errors are empty, `strategy_stale=false`, prices/NAV/allocation comparison
+reach November 6, membership revision remains 7 and asset lifecycle remains 0.
+Operations warmed; research and archive workers are still initializing. This
+accepts the asset/retirement/monitoring changes, not the unrelated broad stock
+coverage backlog or all startup workers. No execution/promotion/approval change.
+
+## 2026-11-07 — Strategy dependency contracts and retirement impact
+
+Following the hidden FX-publication dependency incident, the operator requested
+explicit dependency tracking so changes and retirement cannot silently break
+other strategies. Added a checked-in registry for all 15 executable strategy
+contracts, with recipe parents, shared services, required report benchmarks,
+continuing-monitoring requirements and optional comparisons. Executable fields
+are fingerprinted separately from display names/prose. Dependency checks reject
+missing references/providers, cycles and changed existing-version contracts;
+new behavior requires a new version and explicit consumer migration.
+
+The calculation plan binds dependencies before work, rechecks before publication,
+and stores the resolved receipt plus registry snapshot in the atomic publication.
+M1/FR25-only membership now schedules its USD reference replay even when both
+older USD reports are archived. Internal dependency results cannot advance an
+archived report or restore monitoring. BroadTrend discloses an unavailable
+optional FR25 comparison. Lifecycle writes recheck dependency identity under the
+existing membership/allocation guards and retain the receipt in their audit event.
+Affected allocation readiness and preparation also validate the pinned contracts.
+
+The Strategies page has a read-only dependency/impact panel and API. Impact
+includes monitored/funded/SOTA/pending roots and retained archived consumers;
+archiving preserves recipes, while recipe removal or incompatible modification
+requires migrating consumers first. Shared publisher ownership remains independent
+of report membership. This does not pin disposable historical generated artifacts.
+Added `scripts/check_strategy_dependencies.py`, developer preflight instructions
+in `AGENTS.md`, and `docs/strategy-dependencies.md`.
+
+235 focused tests passed with two existing optional integration skips; Ruff,
+all 15 contract pins and assembled Strategies-page script compilation passed.
+The initial rebuild revision `0d3c9ca31931059e5a32b470fdbd995c0ebd3e9c4be83a64f1233f3e3ce35ee3`
+was deliberately stopped before publication when final review identified that
+archived consumers also needed explicit retirement impact. Stopped only the
+verified recovery process tree; preserved its partial evidence and log. The
+expanded archived-consumer regression passes, and the final rebuild is running.
+Evidence: `var/maintenance/strategy-dependencies-20261107/`.
+
+Final revision `7a167fe9eac3de655e649ab20edda5bfd5d985833266b1ea85b5e2d29b4eeded`
+encountered another native LEAN `ObjectActivator.Clone` failure in M1 attempt 1
+(`IndexOutOfRangeException`, followed by an incomplete synchronized slice).
+Eight other native cases passed. The original failed receipt is retained.
+The existing bounded attempt service reran the identical M1 manifest
+`ee35ac3fb3cddd0926ca323c3ff7df7b803b28a196cc99dd3858f52877069888`
+at attempt 2, with the same 16-CPU limit and unchanged engine; parity passed
+without differences. All nine cases now have successful receipts. The normal
+application publication resume reuses verified evidence and retains all source,
+membership, dependency and native checks. This repeats the earlier native cloning
+incident; investigate the engine's concurrent cloning/cache behavior separately
+before treating bounded retries as a permanent reliability solution.
+
+Publication resume completed. The atomic dependency snapshot verifies registry
+hash `38ce50167a735bbe8123529031f1e3c2fc1f7eea2b05cd1c7b523a03842fadc4`,
+with 12 executable definitions required by this run (15 registered overall).
+Serving version `58c4eeb7c93064d59dbe2299c30742fe25a1c62f95b7513002e4723df6cd350a`
+is current after guarded restart: dashboard PID 2704, dispatcher PID 30160.
+At 12:23 Asia/Shanghai, API errors are empty and `strategy_stale=false`;
+expected/prices/NAV/allocation comparison all reach November 6. The theoretical
+NAV remains exactly CNH 818840.6648723571705201472151, matching the repaired
+pre-dependency publication. The real browser verifies the dependency panel and
+the legacy-base removal blocker for five protected and six archived consumers.
+Membership revision remains 7; no monitoring, allocation, approval or broker
+authority was changed by inspection/deployment. Operations warmed successfully;
+research is running listed-daily acquisition and archives are still initializing.
+Their startup notice remains subject to the existing guards. This is not an
+assertion that the separate stock-coverage backlog or native engine race is solved.
+
+## 2026-11-07 — Operator alert markup and allocation CNH cutoff
+
+The Operator page inserted `ALERT_JS` before its opening script tag, exposing
+the source as visible page text. It now inserts the alert inside the script;
+the assembled-page parser regression checks that it appears once as executable
+script and never as visible content. All four assembled scripts compile.
+
+The allocation theoretical chart stopped at October 30 although FR25's USD
+NAV reached November 6. Audited FX capture files already covered November 6,
+but `governance/fx-usd-cnh` remained at its October 30 publication: publishing
+was a side effect of loading the older CNH strategy, which had been archived.
+The USD-only calculation path now audits and publishes the same observed FX
+independently. M1/FR25-only membership also includes the FX version in its
+calculation revision. Publication rejects an FX revision change during replay.
+Exact-date conversion, raw-leg validation and source hashes remain required.
+The allocation comparison now discloses a truncated CNH conversion endpoint
+instead of silently ending there. Missing rates are never carried forward.
+
+148 focused tests passed; one legacy ClickHouse integration test was skipped under its
+existing environment gate. Ruff and diff checks passed. Tests cover M1-only
+monitoring, new-FX invalidation, rejected raw-leg mismatches, exact-date gaps,
+source tampering, allocation comparisons and Operator behavior. Recovery is
+running through the application services with the dashboard/dispatcher stopped
+to prevent concurrent publication. Evidence and the one-shot main-guarded
+launcher are in `var/maintenance/operator-display-20261107/`.
+
+Recovery completed with nine successful native parity cases and no differences.
+Calculation `24baa3fe16ef1eed388863161a948642afe3c261b80ec8d1f9a69bb6269df211`
+and serving `cf1e2605ae3a735a015ec0a98441af6148047e1e0cb2b77961405c954e0243fa`
+use FX publication `18286d485ee8ddec1c71d95e80763d8c690e04b5f9b1ad6db0f9fd8d072e358e`.
+Guarded restart restored dashboard PID 25628 and dispatcher PID 6848. At 11:56
+Asia/Shanghai, API and real browser both show the allocation comparison and
+current FR25 period through November 6; latest theoretical NAV is CNH
+818840.6648723571705201472151. The warning renders as a warning rather than source
+text. Calculation errors are empty, prices/NAV reach November 6, and allocation,
+approval, reconciliation and broker guards are unchanged. The operator requested
+general dependency tracking and modification/retirement safeguards; implementation
+continues under `docs/strategy-dependencies.md` and the new Kanban item.
+
+## 2026-11-07 — USD vintage timeout repair
+
+The November 6 update failed before replay while `refresh_usd` fetched ALFRED
+DTWEXBGS vintage November 5. The single urllib request timed out or lost TLS.
+This was a separate acquisition path from the issuer/economic recorder repair.
+Repeated Python requests (including an ICSA control) failed through the local
+proxy, while Windows curl 8.21.0/Schannel retrieved the identical USD URL in
+3.26 seconds, HTTP 200, 104938 bytes, with certificate checks enabled.
+The precise upstream/interoperability cause remains unconfirmed.
+
+USD acquisition now uses bounded retry/size handling and, only after transient
+retry exhaustion, one bounded native Windows HTTPS GET with the same URL,
+headers and urllib proxy routing. Curl configuration files and non-HTTPS
+redirects are disabled; certificate/HTTP-denial errors do not trigger fallback.
+Partial/oversized/failed responses never become archives or publications. Errors
+identify DTWEXBGS, vintage and signal-close dates. Raw hashes, actual retrieval
+times and the existing vintage/availability audit remain unchanged.
+
+41 focused tests and Ruff pass, covering timeout recovery, retry exhaustion,
+native routing, TLS failures, size limits, partial responses, wrong vintages,
+archive tampering, idempotence and existing USD strategy/freshness contracts.
+The app published the November 5 USD vintage for the November 6 signal close
+as `2377ce5e6343c8294c2af8747558a3116e2c7975d3eacfd2955184213886b568`.
+Last underlying observation is October 30, within the unchanged 14-day gate;
+retrieval occurred November 7, not backdated. Finished the one-shot app services
+with dashboard/dispatcher stopped to avoid competing catalog writes. An initial
+stdin recovery launcher could not spawn Windows model workers; replaced it with
+the retained `recover.py` main-guarded launcher. No publication was bypassed.
+
+Application calculation `883587fa22171fb80760e0782b919043f4d2cf851e6f60496293d7b690dd9805`
+completed November 7 at 11:34 Asia/Shanghai. All nine native cases passed parity
+on their first attempts. Serving and decay services completed; restarted dashboard
+PID 28392 and dispatcher PID 4564 through the normal guarded launcher. The API
+serves `3ccd28723c611180ae07e734031ad5a88db753d7e96b4c169021799a3bb327ed`,
+expected/prices/NAV November 6, `strategy_stale=false`, and no calculation errors.
+All six current reports, including BroadTrend, reach November 6. Conditional FR25
+remains October 12 historical-only. No strategy definition, membership, allocation, approval policy or broker guard
+changed. Existing broader stock-coverage and historical-report limitations are
+not whole-platform health acceptance. Evidence:
+`var/maintenance/strategy-timeout-20261107/`.
+
+## 2026-11-06 — Repair strategy recorder transport and shared ETF admission
+
+The operator reported TLS EOF errors in research ETF/ICSA acquisition, missing
+XLE admission and strategies stale at November 4. Verified XLE already had
+November 5 audited prices but its audit lacked `research_recorder`: the shared
+price publisher replaced that metadata when refreshing an admitted fund.
+It now revalidates the pinned issuer contract against the new source and keeps
+the original admission timestamp/hash. The research recorder checks the actual
+published admission before skipping current prices, and labels errors by fund.
+
+Issuer and economic reads retry transient EOF/reset/timeout/temporary HTTP
+failures three times with bounded backoff and response sizes. Certificate checks,
+configured proxies, raw capture, identity/coverage/adjustment audits and historical
+availability restrictions remain enforced. Fresh requests succeeded through the
+existing local proxy; its intermittent upstream disconnect cause is unconfirmed.
+
+113 relevant tests passed, including shared/listed refresh, prior-review
+preservation, bounded retries, certificate rejection, partial-body discard,
+M1 completeness and signal freshness. Ruff and diff checks passed. Reloaded the
+dashboard through its normal guarded launcher; native services remain in use.
+New XLE publication `157b854b4730423ef2489110235437f21cf5eb669d829e2e07dd8b6234f24607`
+passes the application's 14-constituent input loader through November 5.
+ICSA vintage November 5 is published; economic coverage is 2576/2576.
+At 00:26 Asia/Shanghai on November 7, application replay and serving verification
+completed: prices and NAV/held weights through November 5, `strategy_stale=false`,
+no calculation errors. Calculation revision starts `61c94f2f35e4`; serving version
+starts `853ba4a8949f`. All nine native cases pass parity. One 14-ETF risk-parity
+attempt failed when concurrent LEAN `ObjectActivator.Clone` cache writes raised
+`IndexOutOfRangeException`, resulting in an incomplete initial data slice.
+Retained that failed attempt and used the existing separate bounded retry with
+unchanged pinned inputs: 2727 NAV points, 1823 fills and 131 decisions matched
+without differences. No engine patch or validation bypass. Track this engine
+startup race for a separately validated reliability repair if it recurs.
+
+The broader listed-price publisher rejected its older snapshot when the repaired
+XLE catalog committed; its optimistic guard preserved the newer evidence.
+Finished the one-shot recovery through the application's calculation, serving
+and decay services with the dashboard stopped, then restarted the dashboard and
+dispatcher through the guarded launcher. Normal acquisition resumes. Five
+current reports reached November 5; BroadTrend remains November 3 (separate
+catch-up), and conditional FR25 remains October 12 historical-only. Broad stock
+coverage is still degraded; do not describe the entire platform as healthy.
+Evidence: `var/maintenance/strategy-refresh-20261106/`. No strategy definition,
+membership, allocation, approval policy or broker guard was changed.
+
 ## 2026-11-06 — Independent IBKR histories captured and reconciled
 
 After the operator restored the session, captured ten TRADES and ten

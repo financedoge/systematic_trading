@@ -36,7 +36,7 @@ def _operator_dashboard_html() -> str:
     from systematic_trading.web.signal_decay_ui import ALERT_HTML, ALERT_JS
 
     html = html.replace("<main>", "<main>" + ALERT_HTML + WORKSPACE_HTML, 1)
-    html = html.replace("<script>", ALERT_JS + "<script>", 1)
+    html = html.replace("<script>", "<script>" + ALERT_JS, 1)
     html = html.replace("<script>", WORKSPACE_DIALOG + "<script>", 1)
     html = html.replace(
         "    Promise.all([loadProposals(), loadDashboardData()])",
@@ -51,9 +51,17 @@ def strategy_portal() -> HTMLResponse:
     return HTMLResponse(_strategy_portal_html())
 
 
+@router.get('/strategy-assets', response_class=HTMLResponse, include_in_schema=False)
+def strategy_assets_portal() -> HTMLResponse:
+    from systematic_trading.web.strategy_assets_ui import HTML
+    return HTMLResponse(with_app_shell(HTML, 'assets'))
+
+
 @lru_cache(maxsize=1)
 def _strategy_portal_html() -> str:
     from systematic_trading.web.strategy_lifecycle_ui import HTML, JS
+    from systematic_trading.web.strategy_dependencies_ui import HTML as DEPENDENCY_HTML, JS as DEPENDENCY_JS
+    from systematic_trading.web.strategy_assets_ui import SIGNAL_HTML, SIGNAL_JS
     from systematic_trading.web.signal_decay_ui import (
         HTML as DECAY_HTML,
         JS as DECAY_JS,
@@ -63,7 +71,11 @@ def _strategy_portal_html() -> str:
     # Placed at the top of the workspace: signal health is the first thing an
     # operator should see before acting on any strategy row below it.
     html = html.replace("<main>", "<main>" + DECAY_HTML, 1)
+    html = html.replace("<main>", "<main>" + SIGNAL_HTML, 1)
     html = html.replace("<script>", "<script>" + DECAY_JS, 1)
+    html = html.replace("</main>", DEPENDENCY_HTML + "</main>", 1)
+    html = html.replace("</script>", DEPENDENCY_JS + "</script>", 1)
+    html = html.replace("</script>", SIGNAL_JS + "</script>", 1)
     return with_app_shell(html, "strategies")
 
 

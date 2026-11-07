@@ -7,10 +7,11 @@ from datetime import UTC, datetime
 import json
 from pathlib import Path
 import re
-from urllib.request import Request, urlopen
+from urllib.request import Request
 from uuid import uuid4
 
 from systematic_trading.daily_quality import completed_session
+from systematic_trading.data.http import read_bytes
 from systematic_trading.lean.contracts import sha256
 from systematic_trading.live.trading_calendar import previous_us_trading_day
 from systematic_trading.portfolio.context import NY
@@ -21,8 +22,8 @@ from systematic_trading.research.price_governance import names_agree
 
 
 def fetch_issuer(url):
-    with urlopen(Request(url, headers={"User-Agent": "Mozilla/5.0"}), timeout=30) as response:
-        return response.read()
+    return read_bytes(Request(url, headers={"User-Agent": "Mozilla/5.0"}),
+                      timeout=30, max_bytes=8_000_000)
 
 
 def validate_admission(fund, source, rows, audit, sessions, cutoff):
@@ -89,11 +90,14 @@ def refresh_research_etfs(settings, analytics, *, now=None, fetch=acquire, issue
         catalog = json.loads(prior.checked("catalog.json").read_text(encoding="utf8"))
         old = prior.rows(symbol, "1950-01-01", cutoff) if any(r["symbol"] == symbol for r in catalog) else []
         previous = state.get(symbol, {})
-        if old and old[-1]["trade_date"] == cutoff and previous.get("config_sha256") == sha256(path) and previous.get("status") == "published":
+        admission = prior.audit(symbol).get("research_recorder", {}) if old else {}
+        if (old and old[-1]["trade_date"] == cutoff
+                and admission.get("config_sha256") == sha256(path) and admission.get("isin") == fund["isin"]
+                and previous.get("config_sha256") == sha256(path) and previous.get("status") == "published"):
             continue
         if previous.get("cutoff") == cutoff and (now - datetime.fromisoformat(previous["attempted_at"])).total_seconds() < 300:
             if previous.get("status") == "quarantined":
-                errors.append(previous["message"])
+                errors.append(symbol + ": " + previous["message"])
             continue
         output = settings.data_dir.resolve() / "governance" / ("research-" + cutoff + "-" + uuid4().hex[:12])
         receipt = dict(status="acquiring", cutoff=cutoff, attempted_at=now.isoformat(),
@@ -122,7 +126,7 @@ def refresh_research_etfs(settings, analytics, *, now=None, fetch=acquire, issue
             changed = True
         except Exception as exc:
             receipt.update(status="quarantined", message=str(exc))
-            errors.append(str(exc))
+            errors.append(symbol + ": " + str(exc))
         state[symbol] = receipt
         _write(state_path.parent, state_path.name, state)
     if errors:

@@ -41,6 +41,23 @@ def next_session(day):
     return day
 
 
+def retain_archived_reports(documents, observations, previous, keys, dependency_only):
+    """Internal benchmark replay must not resume an archived public report."""
+    dependency_only = set(dependency_only)
+    documents = [d for d in documents if d['point_key'].split('/', 1)[-1] not in dependency_only]
+    observations = [r for r in observations if r.get('entity') not in dependency_only]
+    archive_keys = []
+    for key, (detail, report) in previous.items():
+        if key in keys:
+            continue
+        detail = dict(detail, lifecycle='archived')
+        report = dict(report, monitoring=dict(report.get('monitoring', {}), lifecycle='archived'))
+        documents.extend([dict(point_key='detail/'+key, media_type='application/json', payload=encode(detail)),
+                          dict(point_key='report/'+key, media_type='application/json', payload=encode(report))])
+        archive_keys.append(key)
+    return documents, observations, archive_keys
+
+
 CALCULATION_PACKAGES = ("research", "lean", "signals", "portfolio", "backtest")
 CALCULATION_EXTRA_SOURCES = (
     "recorders/economics.py", "runtime_io.py", "presentation/templates.py",
@@ -48,6 +65,8 @@ CALCULATION_EXTRA_SOURCES = (
     "research/fr25_lifecycle_conditional_parameters.json",
     "research/fr25_lifecycle_inputs.json",
     "research/broadtrend_models_v1.json",
+    "research/strategy_dependencies.json",
+    "research/strategy_assets.json",
 )
 
 
@@ -241,7 +260,13 @@ def _refresh_tracked_strategies(settings, store, analytics):
         return False
     p = config["calculation"]
     keys = list(dict.fromkeys(config["monitored_strategy_ids"]))
-    definitions = [registered_strategy_definition(k) for k in keys]
+    from systematic_trading.research.strategy_dependencies import calculation_plan
+    from systematic_trading.portfolio.strategy_allocation import sota_definition
+    selected_sota = sota_definition(store)
+    dependency_plan = calculation_plan(keys, selected_sota.key)
+    from systematic_trading.research.strategy_assets import live_plan as asset_demand, load_registry as asset_registry
+    asset_plan = asset_demand(settings, store)
+    definitions = [registered_strategy_definition(k) for k in [*keys, *dependency_plan['dependency_only']]]
     from systematic_trading.research import broadtrend
     broadtrend_definitions = [d for d in definitions if d.key == broadtrend.KEY]
     definitions = [d for d in definitions if d.key != broadtrend.KEY]
@@ -258,17 +283,19 @@ def _refresh_tracked_strategies(settings, store, analytics):
     definitions = [d for d in definitions if d.key not in m1_family]
     usd_definitions = [d for d in definitions if d.key in USD_KEYS]
     definitions = [d for d in definitions if d.key not in USD_KEYS]
-    from systematic_trading.portfolio.strategy_allocation import sota_definition
-    selected_sota=sota_definition(store)
     sota = selected_sota
     risk = replace(risk_parity_definition(), universe_key="multi_asset")
     all_definitions = {d.key: d for d in [risk, *definitions]} if definitions else {}
-    has_usd = any(o.kind == 'usd_ridge' for d in requested_definitions for o in d.overlays)
+    has_usd = any(a.startswith('usd-ridge-') for a in asset_plan['jobs'])
     if definitions:
         inputs = load_tracked_inputs(settings, analytics, config)
     else:
         from systematic_trading.research.usd_monitored import load_inputs
+        from systematic_trading.research.tracked_inputs import publish_observed_fx
+        publish_observed_fx(settings, analytics)
         inputs=dict(load_inputs(settings,analytics,config),fx={})
+    inputs['provenance']['dependencies'] = dependency_plan['receipt']
+    inputs['provenance']['strategy_assets'] = asset_plan
     usd_models = None
     if has_usd:
         from systematic_trading.research.usd_data import load_usd, refresh_usd
@@ -303,12 +330,13 @@ def _refresh_tracked_strategies(settings, store, analytics):
         from systematic_trading.research.fr25_lifecycle_conditional import verified_input_provenance
         inputs["provenance"]["fr25_conditional"] = verified_input_provenance()
     broadtrend_inputs = None
-    if broadtrend_definitions:
+    if 'broadtrend-signals-v1' in asset_plan['jobs']:
         broadtrend_inputs = broadtrend.load_inputs(settings, analytics, config)
         if broadtrend_inputs['provenance']['batch'] != inputs['provenance']['batch']:
             raise ValueError('BroadTrend and parent price publications differ')
         inputs['provenance']['broadtrend'] = broadtrend_inputs['provenance']
-    fx_publication=analytics.latest('governance/fx-usd-cnh') if usd_definitions else None
+    needs_fx_bridge = bool(usd_definitions or m1_definitions)
+    fx_publication=analytics.latest('governance/fx-usd-cnh') if needs_fx_bridge else None
     revision=digest(encode([calculation_revision(config, inputs, requested_definitions),
         selected_sota.to_dict(),(fx_publication or {}).get('version')]))
     current = analytics.latest(SOURCE)
@@ -528,20 +556,19 @@ def _refresh_tracked_strategies(settings, store, analytics):
         documents.extend(usd_documents);observations.extend(usd_observations)
     if broadtrend_inputs is not None:
         progress('replaying_broadtrend')
-        from systematic_trading.research.broadtrend_monitoring import calculate as calculate_broadtrend
-        bt_documents, bt_observations, _ = calculate_broadtrend(settings, config, root, broadtrend_inputs, documents)
-        documents.extend(bt_documents); observations.extend(bt_observations)
-    # Keep the last complete report for archived entries. Their portfolios are not extended.
-    previous=published_strategies(analytics)
-    archive_keys=[]
-    for key,(detail,report) in previous.items():
-        if key in keys:
-            continue
-        detail=dict(detail,lifecycle='archived')
-        report=dict(report,monitoring=dict(report.get('monitoring',{}),lifecycle='archived'))
-        documents.extend([dict(point_key='detail/'+key,media_type='application/json',payload=encode(detail)),
-                          dict(point_key='report/'+key,media_type='application/json',payload=encode(report))])
-        archive_keys.append(key)
+        if broadtrend_definitions:
+            from systematic_trading.research.broadtrend_monitoring import calculate as calculate_broadtrend
+            bt_documents, bt_observations, _ = calculate_broadtrend(settings, config, root, broadtrend_inputs, documents)
+            documents.extend(bt_documents); observations.extend(bt_observations)
+        else:
+            from systematic_trading.research.strategy_asset_monitoring import broadtrend_publication
+            signal_data = broadtrend.signal_history(broadtrend_inputs, cost_bp=float(p['transaction_cost_bps']))
+            asset_doc, asset_rows = broadtrend_publication(signal_data, broadtrend_inputs['provenance'], cost_bp=float(p['transaction_cost_bps']))
+            documents.append(asset_doc); observations.extend(asset_rows)
+    documents, observations, archive_keys = retain_archived_reports(
+        documents, observations, published_strategies(analytics), keys, dependency_plan['dependency_only'])
+    from systematic_trading.research.strategy_asset_monitoring import retain_idle_assets
+    documents.extend(retain_idle_assets(analytics, asset_plan, documents))
     # Commit all strategies and benchmarks together. Readers retain the previous
     # complete version on failure; an incomplete native run never becomes NAV.
     if analytics.latest("governance/catalog")["version"] != inputs["provenance"]["batch"]:
@@ -550,8 +577,14 @@ def _refresh_tracked_strategies(settings, store, analytics):
         raise ValueError('Monitoring changed during calculation; catch-up must replay the current membership')
     if sota_definition(store)!=selected_sota:
         raise ValueError('SOTA changed during calculation; refresh matched benchmarks')
+    if calculation_plan(keys, selected_sota.key) != dependency_plan:
+        raise ValueError('Strategy dependencies changed during calculation; retain the last complete publication')
+    if asset_demand(settings, store) != asset_plan:
+        raise ValueError('Strategy asset demand changed during calculation; retain the last complete publication')
     if calculation_code_hashes()!=_LOADED_CODE_HASHES:
         raise ValueError("Calculation implementation changed before publication")
+    if needs_fx_bridge and analytics.latest('governance/fx-usd-cnh') != fx_publication:
+        raise ValueError('Observed FX publication changed during calculation; retry CNH conversion')
     if conditional_definitions and verified_input_provenance() != inputs["provenance"]["fr25_conditional"]:
         raise ValueError("Conditional input files changed before publication")
     if broadtrend_inputs is not None and broadtrend.load_inputs(settings, analytics, config)['provenance'] != inputs['provenance']['broadtrend']:
@@ -565,6 +598,11 @@ def _refresh_tracked_strategies(settings, store, analytics):
         if financial_inputs(analytics,m1_inputs['bars'],p['start'])['provenance']!=m1_inputs['financial']['provenance']:
             raise ValueError('FR25 financial inputs changed during calculation; retry publication')
     documents.append(dict(point_key="catalog", media_type="application/json", payload=encode([*keys,*archive_keys])))
+    from systematic_trading.research.strategy_dependencies import load_registry
+    documents.append(dict(point_key='dependencies', media_type='application/json',
+        payload=encode(dict(plan=dependency_plan, registry=load_registry()))))
+    documents.append(dict(point_key='strategy-assets', media_type='application/json',
+        payload=encode(dict(plan=asset_plan, registry=asset_registry()))))
     published = analytics.publish(SOURCE, revision, observations, documents,
         provenance=dict(owner="application", inputs=inputs["provenance"], config=config,
                         native_runs={k: r["run_id"] for k, r in receipts.items()}, model_training=model_receipts,

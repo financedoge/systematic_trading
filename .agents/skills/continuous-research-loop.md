@@ -19,6 +19,12 @@ Tracked candidates must be implemented as full executable strategy definitions a
 
 1. Start with the research hypothesis and a matched benchmark set: current SOTA/FR25, cash, buy-and-hold and simple strategy controls. Per the operator's 2026-10-26 instruction, FR25 is an empirical incumbent, not a universal gold standard. Examine its regime/asset dependence as well as the challenger; preserve frozen historical gates and promotion controls.
 2. Define the research question and expected failure mode before running experiments.
+   Search `/strategy-assets` or `scripts/check_strategy_assets.py --search` before
+   building inputs. Record inspected asset versions and the reuse/new-version
+   decision. Build missing time-series, signals and rolling/walk-forward models
+   separately from the composite portfolio; pin their input, availability,
+   label-embargo and monitoring contracts. A tracked composite automatically
+   monitors every required signal. Follow `docs/strategy-assets.md`.
 3. Use point-in-time features and explicit universe rules.
    Always include dynamic rebalancing as a research option alongside a fixed-interval control. Register the event/threshold grid before results, including joint selection-width/timing choices when relevant. Target-change events compare latest theoretical with last adopted target weights, including cash; adopted-target versus actual-held alignment stays in Trading. Evaluate net Sharpe with return/drawdown guards, actual traded notional and costs, execution delays and chronological parameter stability. Do not carry the current universe's preference for monthly rebalancing forward as a universal conclusion.
 4. Compare against SOTA, relevant external benchmarks, and risk-adjusted metrics.
@@ -39,7 +45,10 @@ Tracked candidates must be implemented as full executable strategy definitions a
    and make it easy to open. Keep the main comparison to two or three models with
    mathematical definitions. Capture operator observations as new hypotheses;
    do not silently tune on the inspected failure periods.
-9. On retirement/completion, apply the operator's storage policy: keep compact
+9. On retirement/completion, apply the operator's storage policy.
+   Run and record strategy/asset dependency preflight before any retirement;
+   migrate retained consumers before removing their required version. Archiving
+   a report retains shared assets demanded by other composites. Then keep compact
    findings, the definition/runner and retirement receipt; discard unneeded bulky
    exploratory artifacts after checking active/paper/promotion dependencies. Exact
    replay is required for active candidates and promotion evidence, not for every

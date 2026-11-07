@@ -1,0 +1,251 @@
+{
+  "schema_version": 1,
+  "note": "Frozen executable contracts. Do not regenerate pins to bypass a mismatch; version and migrate dependencies explicitly.",
+  "strategies": {
+    "sota_price_volume_technical_tree_relative_adaptive_top6": {
+      "definition_sha256": "6111e421c94d6eb25b834f4da5de1afad28a9d55b50a66dd9ba012289fb55456",
+      "parents": [],
+      "services": [
+        "audited-prices",
+        "observed-fx"
+      ],
+      "requires_monitoring": [],
+      "optional_comparisons": [],
+      "benchmarks": [
+        "risk_parity"
+      ]
+    },
+    "research_etf_activity_lag20_v1": {
+      "definition_sha256": "b3f7d90fadccc761bf8363b572da81bddc955a24774b603687bc8f6d36fe089a",
+      "parents": [
+        "sota_price_volume_technical_tree_relative_adaptive_top6"
+      ],
+      "services": [
+        "audited-prices",
+        "observed-fx"
+      ],
+      "requires_monitoring": [],
+      "optional_comparisons": [],
+      "benchmarks": [
+        "risk_parity"
+      ]
+    },
+    "research_rolling_xgboost_1y_lag20_v1": {
+      "definition_sha256": "0340a70922dfb2a90aa5d712506f02decb05cfa556f1ddf5504f7e63e0495fed",
+      "parents": [
+        "research_etf_activity_lag20_v1"
+      ],
+      "services": [
+        "audited-prices",
+        "observed-fx",
+        "rolling-models"
+      ],
+      "requires_monitoring": [],
+      "optional_comparisons": [],
+      "benchmarks": [
+        "risk_parity"
+      ]
+    },
+    "sota_price_volume_technical_tree_relative_adaptive_top6_usd_v1": {
+      "definition_sha256": "937f0e889aa0a50797256961c9e4f8d0b38abcbdbf1ad4affb1d99e5f5779368",
+      "parents": [
+        "sota_price_volume_technical_tree_relative_adaptive_top6"
+      ],
+      "services": [
+        "audited-prices",
+        "observed-fx",
+        "usd-vintages"
+      ],
+      "requires_monitoring": [],
+      "optional_comparisons": [],
+      "benchmarks": [
+        "risk_parity"
+      ]
+    },
+    "research_etf_activity_lag20_v1_usd_v1": {
+      "definition_sha256": "29a942f60eb66f57f018b3f6677695397158b3d9c7b5afea4c23e21afa375719",
+      "parents": [
+        "research_etf_activity_lag20_v1"
+      ],
+      "services": [
+        "audited-prices",
+        "observed-fx",
+        "usd-vintages"
+      ],
+      "requires_monitoring": [],
+      "optional_comparisons": [],
+      "benchmarks": [
+        "risk_parity"
+      ]
+    },
+    "research_rolling_xgboost_1y_lag20_v1_usd_v1": {
+      "definition_sha256": "372ee88c96618bc6ce60e26ed0bbb3c9881537414c93c3056b2f66aab410d39e",
+      "parents": [
+        "research_rolling_xgboost_1y_lag20_v1"
+      ],
+      "services": [
+        "audited-prices",
+        "observed-fx",
+        "usd-vintages",
+        "rolling-models"
+      ],
+      "requires_monitoring": [],
+      "optional_comparisons": [],
+      "benchmarks": [
+        "risk_parity"
+      ]
+    },
+    "risk_parity": {
+      "definition_sha256": "53b211a59eaf82b8b6d5c102ec0679f8234bca7a6f0883eb574935b1d857b9b2",
+      "parents": [],
+      "services": [
+        "audited-prices"
+      ],
+      "requires_monitoring": [],
+      "optional_comparisons": [],
+      "benchmarks": []
+    },
+    "research_rolling_xgboost_1y_v1": {
+      "definition_sha256": "411be2dc2d49aef01d7e3e5b6654d4862229c0992ed14f30332ad508ec8f4a2b",
+      "parents": [
+        "sota_price_volume_technical_tree_relative_adaptive_top6"
+      ],
+      "services": [
+        "audited-prices",
+        "observed-fx",
+        "rolling-models"
+      ],
+      "requires_monitoring": [],
+      "optional_comparisons": [],
+      "benchmarks": [
+        "risk_parity"
+      ]
+    },
+    "research_fallback_f3_v1": {
+      "definition_sha256": "77799ea2d0cb1be2814e03471c1f8d55bcbc03576ddb992b91383dd2999f1366",
+      "parents": [
+        "research_rolling_xgboost_1y_lag20_v1_usd_v1"
+      ],
+      "services": [
+        "audited-prices",
+        "observed-fx",
+        "usd-vintages",
+        "rolling-models"
+      ],
+      "requires_monitoring": [],
+      "optional_comparisons": [],
+      "benchmarks": [
+        "risk_parity",
+        "$sota"
+      ]
+    },
+    "research_economic_context_ridge_v1": {
+      "definition_sha256": "f300f97f25c64b965b85883a6db6df6404bd2140e8256db014b748a2dfacb4c1",
+      "parents": [
+        "research_fallback_f3_v1"
+      ],
+      "services": [
+        "audited-prices",
+        "observed-fx",
+        "usd-vintages",
+        "rolling-models",
+        "economic-vintages"
+      ],
+      "requires_monitoring": [],
+      "optional_comparisons": [],
+      "benchmarks": [
+        "risk_parity",
+        "$sota"
+      ]
+    },
+    "research_m1_14_v1": {
+      "definition_sha256": "543d789fe3343b8c5a91a5e989c76908c3b11edff1f3b46b4f81f2f9df6a08ea",
+      "parents": [
+        "research_fallback_f3_v1"
+      ],
+      "services": [
+        "audited-prices",
+        "observed-fx",
+        "usd-vintages",
+        "rolling-models",
+        "raw-activity",
+        "usd-reference"
+      ],
+      "requires_monitoring": [],
+      "optional_comparisons": [],
+      "benchmarks": [
+        "risk_parity",
+        "$sota"
+      ]
+    },
+    "research_fr25_14_v1": {
+      "definition_sha256": "f1237ba36fa46e3b9d5ebbcf01f3f8b4f79204b0c41a5e0643055600fa5b69d4",
+      "parents": [
+        "research_m1_14_v1"
+      ],
+      "services": [
+        "audited-prices",
+        "observed-fx",
+        "usd-vintages",
+        "rolling-models",
+        "financial-vintages",
+        "raw-activity",
+        "usd-reference"
+      ],
+      "requires_monitoring": [],
+      "optional_comparisons": [],
+      "benchmarks": [
+        "risk_parity",
+        "$sota"
+      ]
+    },
+    "research_fr25_alpha_tilt_5_v1": {
+      "definition_sha256": "6efa944b3ea666cf4ee1ef40f268479b7f7fb7b17176188fe08c939b66f48210",
+      "parents": [
+        "research_fr25_14_v1"
+      ],
+      "services": [
+        "audited-prices",
+        "observed-fx",
+        "usd-vintages",
+        "rolling-models",
+        "financial-vintages",
+        "raw-activity",
+        "usd-reference"
+      ],
+      "requires_monitoring": [],
+      "optional_comparisons": [],
+      "benchmarks": [
+        "risk_parity",
+        "$sota"
+      ]
+    },
+    "fr25_lifecycle_conditional_v1": {
+      "definition_sha256": "c021d83d8ba3448b2b049dcc05de7be666094f55b57d59d097b18cddb190d597",
+      "parents": [],
+      "services": [
+        "audited-prices",
+        "usd-vintages",
+        "rolling-models",
+        "financial-vintages",
+        "conditional-snapshot"
+      ],
+      "requires_monitoring": [],
+      "optional_comparisons": [],
+      "benchmarks": []
+    },
+    "broadtrend_full_pool_v1": {
+      "definition_sha256": "7abd4ef711061cb08080213e165792c24f247d524eb5a8a160f33fd8aab434b4",
+      "parents": [],
+      "services": [
+        "audited-prices",
+        "broadtrend-models"
+      ],
+      "requires_monitoring": [],
+      "optional_comparisons": [
+        "research_fr25_14_v1"
+      ],
+      "benchmarks": []
+    }
+  }
+}

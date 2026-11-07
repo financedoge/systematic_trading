@@ -42,7 +42,7 @@ def replay_supported(key):
         return False
 
 
-def archive_blocker(store, key):
+def archive_blocker(store, key, settings=None):
     roles = control_state(store)
     if key == roles['sota_key']:
         return 'Choose another SOTA before archiving this strategy.'
@@ -51,15 +51,21 @@ def archive_blocker(store, key):
     pending = (roles.get('pending') or {}).get('change', {})
     if key==pending.get('sota_key') or any(r['strategy_key']==key for r in pending.get('allocations') or []):
         return 'Cancel or complete the pending allocation change before archiving this strategy.'
+    if settings is not None:
+        from systematic_trading.research.strategy_dependencies import membership_preflight
+        try:
+            membership_preflight(settings, store, [k for k in membership(settings, store)['monitored'] if k != key])
+        except ValueError as exc:
+            return str(exc)
     return None
 
 
-def change_membership(settings, store, *, key, lifecycle, expected_revision, event_id, operator, reason):
+def change_membership(settings, store, *, key, lifecycle, expected_revision, event_id, operator, reason, retirement_review_sha256=None):
     if lifecycle not in {'monitored','archived'} or not operator.strip() or not reason.strip():
         raise ValueError('A lifecycle, operator and reason are required.')
     if not replay_supported(key):
         raise ValueError('This historical artifact has no supported replay definition. It cannot be monitored yet.')
-    request_hash = digest(encode([key,lifecycle,expected_revision,operator,reason]))
+    request_hash = digest(encode([key,lifecycle,expected_revision,operator,reason,retirement_review_sha256]))
     with ORDER_CONNECTION_LOCK:
         for previous in store.strategy_control_events(SCOPE):
             if previous['event_id']==event_id:
@@ -72,14 +78,29 @@ def change_membership(settings, store, *, key, lifecycle, expected_revision, eve
         if (key in state['monitored'])==(lifecycle=='monitored'):
             return state
         roles=control_state(store)
-        if lifecycle=='archived' and (issue:=archive_blocker(store,key)):
+        if lifecycle=='archived' and (issue:=archive_blocker(store,key,settings)):
             raise ValueError(issue)
+        from systematic_trading.research.strategy_dependencies import require_retirement_review
+        retirement_review = require_retirement_review(settings, store, key) if lifecycle == 'archived' else None
+        if retirement_review_sha256 and (not retirement_review or retirement_review['review_sha256'] != retirement_review_sha256):
+            raise ValueError('Strategy retirement impact changed. Refresh and review again.')
+        from systematic_trading.research.strategy_dependencies import membership_preflight
+        requested = set(state['monitored'])
+        (requested.add if lifecycle == 'monitored' else requested.discard)(key)
+        dependency_receipt = membership_preflight(settings, store, requested)
         now=datetime.now(UTC).isoformat()
         overrides=dict(state['overrides'], **{key:dict(lifecycle=lifecycle,generation=state['revision']+1,changed_at=now)})
+        if membership_preflight(settings, store, requested) != dependency_receipt:
+            raise ValueError('Strategy dependencies changed during lifecycle review. Refresh and try again.')
+        if retirement_review and require_retirement_review(settings, store, key) != retirement_review:
+            raise ValueError('Strategy retirement impact changed. Refresh and review again.')
+        from systematic_trading.research.strategy_assets import SCOPE as ASSET_SCOPE
         store.commit_strategy_control(SCOPE,expected_revision,dict(overrides=overrides),
             dict(event_id=event_id,request_hash=request_hash,kind='monitoring_'+lifecycle,at=now,
-                 strategy_key=key,operator=operator,reason=reason),
-            guard_revisions={scope_for(store):roles['revision']})
+                 strategy_key=key,operator=operator,reason=reason,dependencies=dependency_receipt,
+                 retirement_review=retirement_review),
+            guard_revisions={scope_for(store):roles['revision'],
+                ASSET_SCOPE:dependency_receipt['asset_plan']['lifecycle_revision']})
         return membership(settings,store)
 
 
@@ -88,15 +109,23 @@ def require_monitored(settings, store, keys):
     missing=sorted(set(keys)-set(state['monitored']))
     if missing:
         raise ValueError('Allocation is restricted to monitored strategies: '+', '.join(missing))
+    from systematic_trading.research.strategy_dependencies import validate_required, benchmark_recipes, load_registry
+    registry = load_registry()
+    benchmarks = {b for key in keys for b in benchmark_recipes(key, control_state(store)['sota_key'], registry)}
+    validate_required([*keys, *benchmarks], registry)
+    from systematic_trading.research.strategy_assets import live_plan
+    live_plan(settings, store)
     return state
 
 
 def calculation_ready(detail, state, through=None):
     key=detail['strategy_id']
+    from systematic_trading.research.strategy_dependencies import contract_issue
     return (key in state['monitored'] and detail.get('lifecycle')=='monitored'
         and detail.get('current_signal_available', True)
         and detail.get('monitoring_generation',0)==required_generation(state,key)
-        and detail.get('app_tracking',False) and (through is None or detail.get('end_date','')>=through))
+        and detail.get('app_tracking',False) and (through is None or detail.get('end_date','')>=through)
+        and contract_issue(key) is None)
 
 
 def decorate_catalog(payload, settings, store):
@@ -116,7 +145,13 @@ def decorate_catalog(payload, settings, store):
         allocation_supported = issue is None
         row.update(lifecycle='monitored' if key in state['monitored'] else 'archived',
             calculation_status='Current' if ready else 'Catching up' if key in state['monitored'] else 'Paused',
-            allocation_ready=ready and allocation_supported,can_restore=replay_supported(key),archive_blocker=archive_blocker(store,key))
+            allocation_ready=ready and allocation_supported,can_restore=replay_supported(key),archive_blocker=archive_blocker(store,key,settings))
+        from systematic_trading.research.strategy_dependencies import contract_issue
+        dependency_issue = contract_issue(key) if replay_supported(key) else None
+        row['dependency_issue'] = dependency_issue
+        if dependency_issue and key in state['monitored']:
+            row.update(calculation_status='Dependency blocked', allocation_ready=False,
+                allocation_unavailable_reason=dependency_issue)
         if key in state['monitored'] and row.get('current_signal_available') is False:
             row['calculation_status'] = 'Historical only'
         from systematic_trading.storage.artifact_retention import retirement_for_path

@@ -57,6 +57,57 @@ def test_active_refresh_preserves_new_research_series_and_source_hashes(setup):
     assert next(json.loads(r["payload"]) for r in analytics.rows["governance/catalog"] if r["entity"]=="BIL")["storage_batch"] == first["version"]
 
 
+def test_active_refresh_revalidates_and_preserves_shared_fund_admission(setup, monkeypatch):
+    settings, analytics, fetch, _ = setup
+    run(setup)
+    first = analytics.latest("governance/catalog")
+    reader = GovernedInputs(Path(json.loads(first["provenance"])["root"]), first["version"])
+    admission = reader.audit("BIL")["research_recorder"]
+    monkeypatch.setattr(producer, "instruments_for_definition", lambda _: {"BIL": None, "X": None})
+    assert producer.refresh_governed_etfs(settings, analytics, fetch=fetch, now=datetime(2026,8,4,22,tzinfo=UTC))
+    p = analytics.latest("governance/catalog")
+    after = GovernedInputs(Path(json.loads(p["provenance"])["root"]), p["version"])
+    assert after.audit("BIL")["research_recorder"] == admission
+    old_rows = reader.rows("BIL", "2026-01-02", "2026-08-04")
+    new_rows = after.rows("BIL", "2026-01-02", "2026-08-04")
+    assert [{k:v for k,v in r.items() if k != "source_id"} for r in new_rows] == [
+        {k:v for k,v in r.items() if k != "source_id"} for r in old_rows]
+    assert new_rows[0]["source_id"] != old_rows[0]["source_id"]
+
+
+def test_active_refresh_cannot_carry_admission_over_changed_listing(setup, monkeypatch):
+    settings, analytics, fetch, _ = setup
+    run(setup)
+    before = analytics.latest("governance/catalog")
+    monkeypatch.setattr(producer, "instruments_for_definition", lambda _: {"BIL": None, "X": None})
+    def bad(symbol, now):
+        obj = json.loads(fetch(symbol, now))
+        if symbol == "BIL":
+            obj["chart"]["result"][0]["meta"]["firstTradeDate"] -= 86400 * 30
+        return json.dumps(obj).encode()
+    with pytest.raises(ValueError, match="listing boundary"):
+        producer.refresh_governed_etfs(settings, analytics, fetch=bad, now=datetime(2026,8,4,22,tzinfo=UTC))
+    assert analytics.latest("governance/catalog") == before
+
+
+def test_current_prices_and_local_success_do_not_hide_missing_published_admission(setup, monkeypatch):
+    settings, analytics, fetch, _ = setup
+    run(setup)
+    original = GovernedInputs.audit
+    def missing(self, symbol):
+        audit = dict(original(self, symbol))
+        audit.pop("research_recorder", None)
+        return audit
+    monkeypatch.setattr(GovernedInputs, "audit", missing)
+    seen = []
+    def issuer(url):
+        seen.append(url)
+        return b"BIL TESTID"
+    assert recorder.refresh_research_etfs(settings, analytics, fetch=fetch, issuer_fetch=issuer,
+        now=datetime(2026,8,4,22,6,tzinfo=UTC))
+    assert len(seen) == 1
+
+
 def test_issuer_failure_is_visible_and_does_not_commit(setup):
     settings, analytics, fetch, written = setup
     before = analytics.latest("governance/catalog")

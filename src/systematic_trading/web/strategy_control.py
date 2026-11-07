@@ -38,6 +38,7 @@ class MonitoringChange(BaseModel):
     event_id: str = Field(min_length=8,max_length=100,pattern='^[a-zA-Z0-9_-]+$')
     operator: str = Field(min_length=1,max_length=100)
     reason: str = Field(min_length=1,max_length=1000)
+    retirement_review_sha256: str | None = Field(default=None,pattern='^[a-f0-9]{64}$')
 
 
 @router.post('/monitoring')

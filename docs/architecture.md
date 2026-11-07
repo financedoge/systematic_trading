@@ -20,6 +20,26 @@ Start with the [documentation index](README.md) and the
 [maintenance/code map](repository-maintenance.md). The strategy/data contracts
 below remain authoritative; dated deployment receipts are historical observations.
 
+## Strategy dependency contracts
+
+`research/strategy_dependencies.json` pins the executable contracts of registered
+strategy versions and declares recipe ancestry, shared services, report benchmarks
+and any dependency requiring continuing monitoring. The application resolves
+transitive requirements separately from report membership, validates contracts
+before calculations and allocation readiness, and stores a compact dependency
+receipt and registry snapshot with each atomic calculation. Lifecycle commits
+recheck dependency and membership/allocation revisions. Missing or changed
+contracts retain the last complete publication and block affected new work.
+
+The USD/CNH publisher operates independently of the archived legacy CNH report.
+When M1/FR25 needs the USD reference family after its reports are archived, the
+calculation plan replays that internal dependency without restoring its monitoring
+status or advancing its archived report. BroadTrend's optional FR25 comparison is
+explicitly disclosed when unavailable. The Strategies dependency panel and
+read-only inspection API show direct requirements, transitive protected consumers
+and archive/modification/recipe-removal impact. See the
+[dependency and migration contract](strategy-dependencies.md).
+
 ## FR25 monitoring contract — 2026-10-10
 
 `research_fr25_14_v1` is a versioned `multi_asset_14` strategy: the full 14-ETF
@@ -300,6 +320,16 @@ defaults and physical storage. The [LEAN worker contract](lean-backtesting.md)
 covers frozen offline inputs and explicit remaining data limitations.
 
 ## Strategy monitoring lifecycle
+
+### Reusable strategy assets
+
+Composite portfolio recipes now declare pinned time-series, signal and model
+assets in a separate registry. Asset demand derives from tracked/protected
+consumers and benchmarks; signal monitoring discovers the resolved signal DAG
+automatically. BroadTrend separates daily per-ETF states from capital allocation
+and publishes its consumed states for inspection. Legacy providers retain their
+verified contracts and explicit diagnostic gaps. Lifecycle transitions recheck
+asset revisions and retain dependency impact. [Contracts and migration boundary](strategy-assets.md).
 
 ### Paper execution membership and evidence
 

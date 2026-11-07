@@ -258,6 +258,38 @@ def test_decay_panel_defines_every_function_it_calls_at_load():
     assert "function loadDecayAlert" in ALERT_JS and "loadDecayAlert();" in ALERT_JS
 
 
+def test_operator_embeds_decay_alert_inside_script_not_visible_markup():
+    from html.parser import HTMLParser
+    from systematic_trading.web.operator import _operator_dashboard_html
+    from systematic_trading.web.signal_decay_ui import ALERT_JS
+
+    class Page(HTMLParser):
+        in_script = False
+
+        def __init__(self):
+            super().__init__()
+            self.scripts, self.visible, self.alerts = [], [], 0
+
+        def handle_starttag(self, tag, attrs):
+            if tag == 'script':
+                self.in_script = True
+            if dict(attrs).get('id') == 'decay-alert':
+                self.alerts += 1
+
+        def handle_endtag(self, tag):
+            if tag == 'script':
+                self.in_script = False
+
+        def handle_data(self, data):
+            (self.scripts if self.in_script else self.visible).append(data)
+
+    page = Page()
+    page.feed(_operator_dashboard_html())
+    assert page.alerts == 1
+    assert sum(ALERT_JS in script for script in page.scripts) == 1
+    assert 'loadDecayAlert' not in ''.join(page.visible)
+
+
 def test_panel_never_claims_authority_to_change_an_allocation():
     """The surfaces are decision support and must say so."""
     from systematic_trading.web.signal_decay_ui import ALERT_JS, JS

@@ -29,7 +29,7 @@ HTML = '''<style>
 </style>
 <section class="signal-decay panel" id="signal-decay">
 <div class="decay-head">
-<h2>Signal decay</h2>
+<h2>Rank-signal decay</h2>
 <div class="note" id="decay-meta">Loading…</div>
 </div>
 <div id="decay-warnings"></div>

@@ -4,9 +4,10 @@ from __future__ import annotations
 from datetime import UTC, date, datetime
 import json
 from pathlib import Path
-from urllib.request import Request, urlopen
+from urllib.request import Request
 from uuid import uuid4
 
+from systematic_trading.data.http import read_bytes
 from systematic_trading.market_data.analytics_store import digest, encode
 from systematic_trading.recorders.energy_parsers import natural_gas, petroleum
 from systematic_trading.runtime_io import atomic_json, exclusive_lock
@@ -43,9 +44,8 @@ def configuration(settings):
 
 def fetch_bytes(url):
     request = Request(url, headers={"User-Agent": "systematic-trading-research/0.1"})
-    with urlopen(request, timeout=30) as response:
-        content = response.read(10_000_001)
-    if not content or len(content) > 10_000_000:
+    content = read_bytes(request, timeout=30, max_bytes=10_000_000, native_fallback=True)
+    if not content:
         raise ValueError("Unexpected EIA response size")
     return content
 

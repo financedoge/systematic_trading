@@ -26,8 +26,9 @@ def with_app_shell(html: str, page: str) -> str:
     html = with_strategy_controls(with_asset_names(html), page)
     if 'id="application-shell-style"' in html:
         return html
-    titles = {"trading":"Trading operations", "strategies":"Strategies", "system":"System", "market":"Market Data"}
+    titles = {"trading":"Trading operations", "strategies":"Strategies", "assets":"Strategy assets", "system":"System", "market":"Market Data"}
     links = [("trading", "Trading", "/operator"), ("strategies", "Strategies", "/strategies"),
+             ("assets", "Strategy assets", "/strategy-assets"),
              ("system", "System", "/platform"), ("market", "Market Data", "/platform/market-data-audit")]
     nav = ''.join(f'<a class="button" href="{url}"'+(' aria-current="page"' if key == page else '')+f'>{label}</a>' for key,label,url in links)
     header = f'<header><h1>SYSTEMATIC / {titles[page]}</h1><nav class="actions" aria-label="Application">{nav}</nav></header>'

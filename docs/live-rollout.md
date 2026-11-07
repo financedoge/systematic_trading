@@ -87,6 +87,23 @@ requests missing observed USD/CNH history from the earliest evidence gap,
 independently of account reconciliation or the oldest pending accounting day.
 Raw IB midpoint legs must pass existing evidence validation before use.
 
+Issuer-reference and economic-vintage HTTP reads also retry transient TLS EOF,
+connection resets, timeouts and selected temporary HTTP failures up to three
+times. Certificate checks and the configured proxy remain enforced; exhausted
+attempts retain their acquisition error. Shared price refreshes revalidate and
+carry forward existing issuer-admission metadata with its original capture
+timestamp and hash. Current prices alone cannot replace missing admission
+evidence; the research recorder reacquires it through the normal audit path.
+
+The broad-dollar factor acquisition uses the same bounded retries. On native
+Windows, exhausted transient transport failures permit one curl/Schannel HTTPS
+GET of the identical ALFRED vintage URL, using the existing proxy routing.
+Certificate failures and non-transient HTTP errors do not trigger fallback.
+The native request disables curl configuration files, allows only HTTPS redirects,
+limits time and bytes, and discards failed/partial responses before raw capture.
+All returned data still passes the unchanged USD vintage audit and hash-pinned
+publication. See [curl's transport options](https://curl.se/docs/manpage.html).
+
 Daily signals/latest indicative targets follow the latest audited prices. Daily
 CNH NAV and held weights require matching supported FX. The catalog, full report
 and System health explicitly show expected session, price date and valuation

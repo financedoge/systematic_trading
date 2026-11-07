@@ -57,7 +57,11 @@ schedule against the pinned catalog; there is no nearest-vintage substitution.
 `recorders/economics.py` is called by the app analytics research lane after
 strategy publication, independent of execution and approvals. Each pass allows
 six captures, with at most three simultaneous external requests and a 25-second
-request timeout. Failed identities retry after five minutes; successful source
+timeout per request. Transient connection closes, TLS EOFs and timeouts receive
+three bounded attempts, then one Windows curl/Schannel attempt against the same
+URL, headers and proxy. Certificates remain verified; certificate/authorization
+failures do not invoke fallback, and partial/oversized bodies are rejected.
+Failed identities retry after five minutes; successful source
 commits recover after interruption even if their catalog update did not finish.
 The one-shot `scripts/run_economic_recorder.py --cycles N` drains a finite number
 of the same app-owned passes. It is not a separate strategy worker.
@@ -77,7 +81,7 @@ after this explicit boundary repair.
 The broad value bounds accommodate pandemic observations; they are schema checks,
 not a filter against unusual economics.
 
-The existing AnalyticsStore verifies exact ClickHouse payload hashes before
+The native AnalyticsStore verifies exact published payload hashes before
 committing each snapshot publication. Only committed snapshots enter the catalog;
 the catalog reports incomplete capture coverage explicitly. Catalog and snapshot
 manifests bind original bytes, normalized values and receipts. A changed registry

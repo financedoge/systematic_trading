@@ -12,9 +12,11 @@ import json
 from pathlib import Path
 import re
 from urllib.parse import urlencode
-from urllib.request import Request, urlopen
+from urllib.request import Request
 from uuid import uuid4
 from zoneinfo import ZoneInfo
+
+from systematic_trading.data.http import read_bytes
 
 from systematic_trading.lean.contracts import sha256
 from systematic_trading.live.trading_calendar import next_us_trading_day, previous_us_trading_day
@@ -145,11 +147,8 @@ def planned_vintages(config, now):
 
 
 def fetch_csv(url):
-    with urlopen(Request(url, headers={"User-Agent": "Mozilla/5.0 economic research recorder"}), timeout=25) as response:
-        result = response.read(4_000_001)
-    if len(result) > 4_000_000:
-        raise ValueError("Economic source exceeds bounded response size")
-    return result
+    return read_bytes(Request(url, headers={"User-Agent": "Mozilla/5.0 economic research recorder"}),
+                      timeout=25, max_bytes=4_000_000, native_fallback=True)
 
 
 def audit_csv(content, series, vintage, start):

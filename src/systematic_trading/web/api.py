@@ -680,6 +680,15 @@ def strategy_catalog(request: Request) -> dict[str, Any]:
     }
 
 
+@router.get("/strategies/dependencies")
+def strategy_dependencies(request: Request, key: str | None = None, action: str = 'modify'):
+    from systematic_trading.research.strategy_dependencies import inspection
+    try:
+        return inspection(_settings(request), _store(request), key=key, action=action)
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
 @router.get("/strategies/signal-decay")
 def strategy_signal_decay(request: Request) -> dict[str, Any]:
     """Signal decay and IC diagnostics for the monitored strategies.

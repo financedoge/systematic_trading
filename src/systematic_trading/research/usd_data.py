@@ -5,9 +5,10 @@ Archives are inspection evidence. Consumers read only committed, hash-verified b
 from datetime import UTC, date, datetime, timedelta
 import json
 from pathlib import Path
-from urllib.request import Request, urlopen
+from urllib.request import Request
 from urllib.parse import urlencode
 
+from systematic_trading.data.http import read_bytes
 from systematic_trading.lean.contracts import sha256, write_json
 from systematic_trading.market_data.analytics_store import digest, encode
 from systematic_trading.research.usd_index_governance import audit_snapshot
@@ -58,8 +59,11 @@ def refresh_usd(settings, analytics, known):
             if sha256(raw) != metadata['sha256']:
                 raise ValueError('Changed USD provider archive')
         else:
-            with urlopen(Request(url, headers={'User-Agent': 'Mozilla/5.0 research data audit'}), timeout=35) as response:
-                content = response.read(4_000_000)
+            try:
+                content = read_bytes(Request(url, headers={'User-Agent': 'Mozilla/5.0 research data audit'}),
+                                     timeout=35, max_bytes=4_000_000, native_fallback=True)
+            except (OSError, ValueError) as exc:
+                raise ValueError(f'USD index acquisition failed: DTWEXBGS/{vintage} for signal close {known}: {exc}') from exc
             raw.write_bytes(content)
             metadata = dict(url=url, retrieved_at=datetime.now(UTC).isoformat(), sha256=sha256(raw))
             write_json(meta, metadata)

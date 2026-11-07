@@ -8,6 +8,14 @@ Market Data → Energy Data exposes releases, captured versions, units, coverage
 revision flags and availability. The CLI `scripts/run_energy_recorder.py` invokes
 the same capture/publication service. No account or API subscription is needed.
 
+Each file uses the shared bounded HTTPS reader: three attempts for transient
+connection closes, TLS EOFs and timeouts, then one Windows curl/Schannel attempt
+with the same URL, headers and proxy. Each attempt has a 30-second timeout and
+a 10 MB response bound. TLS verification stays enabled; permanent certificate or
+authorization errors fail immediately. Empty, partial and oversized responses
+cannot enter a publication. The product still requires every file to pass its
+release/identity audits before its catalog can advance.
+
 ## Sources and interpretation
 
 The [Weekly Petroleum Status Report](https://www.eia.gov/petroleum/supply/weekly/)
@@ -42,7 +50,7 @@ require their own vintage qualification.
 Every response is saved before parsing under `var/governance/eia-energy/` with
 its request URL, exact bytes, hash and response-completion timestamp. Config,
 parser/recorder hashes, normalized snapshot and a file manifest establish the
-capture. ClickHouse readback verifies observations/documents before the product
+capture. Native AnalyticsStore readback verifies observations/documents before the product
 catalog commits. Failed attempts retain evidence; the prior publication remains
 readable. Unchanged normalized reports retain their original capture boundary.
 Revisions append captures, including revisions with the same nominal release

@@ -95,7 +95,7 @@ def test_catalog_reads_control_once_per_scope_without_hiding_later_changes(setup
     view=CatalogControlView(SimpleNamespace(latest_pnl_baseline=lambda:None,
         strategy_control_state=lambda scope:reads.append(scope) or store.strategy_control_state(scope)))
     decorate_catalog(dict(strategies=[detail(),dict(detail(),strategy_id='unknown')]),setup[0],view)
-    assert len(reads)==len(set(reads))==2
+    assert len(reads)==len(set(reads))==3
     change(setup,'archived',0)
     fresh=decorate_catalog(dict(strategies=[detail()]),setup[0],CatalogControlView(store))
     assert fresh['strategies'][0]['lifecycle']=='archived'

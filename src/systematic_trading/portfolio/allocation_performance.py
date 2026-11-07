@@ -12,7 +12,7 @@ from systematic_trading.live.trading_calendar import us_trading_dates_after
 from systematic_trading.market_data.analytics_store import digest
 
 
-CONTRACT = "allocation-strategy-nav-v2-reset-spot"
+CONTRACT = "allocation-strategy-nav-v3-fx-coverage"
 
 
 def comparison_timeline(store, timeline, account):
@@ -141,6 +141,14 @@ continuous chain cannot resume without its missing handover value.
                 raise ValueError(f'Invalid or duplicate published strategy NAV: {key} on {day}.')
             rows[day] = nav
         histories[key] = rows
+        if detail.get('accounting_currency') == 'USD':
+            usd_end = max((r['trade_date'] for r in detail.get('nav_series', [])), default=None)
+            cnh_end = max(rows, default=None)
+            if usd_end and (not cnh_end or cnh_end < usd_end):
+                result['warnings'].append(
+                    f"Theoretical performance: {key} has USD NAV through {usd_end}, but exact observed "
+                    f"USD/CNH conversion is available only through {cnh_end or 'no dates'}. "
+                    "The CNH comparison stops at supported FX; missing rates are never carried forward.")
         result['sources'][key] = dict(source, input_provenance=provenance)
         result['warnings'].extend(detail.get('warnings', []))
 

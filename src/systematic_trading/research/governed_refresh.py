@@ -159,7 +159,16 @@ def _build_publish(analytics, prior, publication, output, symbols, old_rows, cut
             validate_admission(admissions[symbol], source, bars, audit, sessions, cutoff)
             audit["research_recorder"] = admissions[symbol]
         if old_rows.get(symbol):
-            validate_revision(symbol, old_rows[symbol], bars, prior.audit(symbol), audit, cutoff)
+            old_audit = prior.audit(symbol)
+            validate_revision(symbol, old_rows[symbol], bars, old_audit, audit, cutoff)
+            if "research_recorder" not in audit and old_audit.get("research_recorder"):
+                # An active strategy may share funds with the research recorder.
+                # Revalidate the pinned issuer contract against this new source;
+                # keep its original capture time/hash, never invent a recapture.
+                from systematic_trading.recorders.research_etfs import validate_admission
+                admission = old_audit["research_recorder"]
+                validate_admission(admission, source, bars, audit, sessions, cutoff)
+                audit["research_recorder"] = admission
         elif not admissions or symbol not in admissions:
             raise ValueError("New fund requires explicit admission: " + symbol)
         audit["requested_cutoff"] = cutoff

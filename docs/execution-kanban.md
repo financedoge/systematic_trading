@@ -1,5 +1,134 @@
 # Execution Kanban
 
+## Economic and EIA recorder transport recovery — 2026-11-07
+
+**Complete; verified November 7 at 14:23 Asia/Shanghai.** Economic and EIA
+recorders now share bounded transient retries and verified Windows fallback.
+105 focused tests, dependency preflight and all nine native checks passed.
+All 16 missing November 6 economic snapshots passed audit (2,592/2,592 total);
+both EIA products are clear, with unchanged petroleum contents retaining their
+original first-seen boundary. Calculation
+`21e223e286c5d7a4c4199eec9f3a025d2f8d48d5b23e587e1aaa6d2d4c45d1a6`
+and serving `433baec48a7dbd6f58c82f7b22cbad70e28c96ceb1d98ecff006d0b1e11c3d63`
+are published. All ten retained NAV arrays and current allocations equal the
+preceding publication. Normal launcher restarted dashboard/dispatcher; served
+errors are empty, strategy freshness is current, and price/NAV/allocation
+comparison dates reach November 6. Exact source identity, raw captures,
+vintage/first-seen semantics and publication/broker guards remain enforced.
+Evidence: `var/maintenance/recorder-transport-20261107/`.
+
+## Governed strategy assets and mandatory retirement checks — 2026-11-07
+
+**Complete; verified November 7 at 13:08 Asia/Shanghai.** The 22-asset catalog maps
+all 15 composites, validates pinned inputs and recorded reuse reviews, and derives
+signal monitoring from demand. BroadTrend publishes its separately computed daily
+signal history; legacy diagnostic gaps are explicit. Archive/retirement impact,
+asset lifecycle CAS/idempotency, catalog/API and future development rules are in
+place. 201 tests passed (one existing optional integration skip); Ruff and page
+scripts pass. All nine native checks passed on attempt 1. Calculation
+`77c285cc44f96e270295198ee2ac00636c074c0851e986a0a30c4d1c2da232d7` and serving
+`6c5c6e6547f34a8223f84cf6f5329dfce8a2daa36641ba3003da0fb56fc9cdc8` are published.
+All ten retained reports' full NAV and current allocations match the preceding
+publication exactly. API/browser verify 21 required assets, 14 automatic signal
+entries, BroadTrend through November 6 and its 260-session GLD inspection. The
+retirement blocker and archive dialog (19 continuing/two idle) work; preview was
+cancelled without saving. Membership remains 7 and asset lifecycle 0. No reported
+calculation errors; allocation comparison remains November 6. Dashboard/dispatcher
+PIDs 23940/31428 run normally; operations warmed, research/archive startup continues.
+Evidence: `var/maintenance/strategy-assets-20261107/`. Paper/broker authority is
+unchanged. Legacy missing diagnostics and BroadTrend's insufficient prospective
+effectiveness evidence remain explicit, not silently classified healthy.
+
+## Strategy dependency and retirement safeguards — 2026-11-07
+
+**Complete; verified November 7 at 12:23 Asia/Shanghai.** The application now
+registers all 15 executable contracts, recipe ancestry, shared services, required
+benchmarks, continuing-monitoring dependencies and optional comparisons. Pinned
+definition checks, dependency preflight and lifecycle CAS guards fail closed;
+calculation publications retain their registry snapshot and resolved receipt.
+M1/FR25 schedules its internal USD reference replay even after the older reports
+are archived, preserving their archived reports and monitoring state. The new
+Strategies panel/API and CLI show active and archived transitive consumers and
+archive/modification/recipe-removal impact. No funding or execution authority is
+added, and disposable generated artifacts remain governed by selective retention.
+
+235 focused tests passed (two existing optional integration skips), Ruff and
+assembled page scripts pass. Nine native cases passed; M1 required one bounded
+retry on its identical frozen manifest after the recurring LEAN cloning error.
+Failed evidence is retained; engine/cache investigation is a separate reliability
+follow-up. Calculation `7a167fe9eac3de655e649ab20edda5bfd5d985833266b1ea85b5e2d29b4eeded`
+and serving `58c4eeb7c93064d59dbe2299c30742fe25a1c62f95b7513002e4723df6cd350a`
+are published. Browser/API verify the legacy-base retirement blocker covers five
+protected and six archived consumers. No dependency/calculation errors; prices,
+NAV and the allocation chart remain November 6 with `strategy_stale=false`.
+Dashboard PID 2704 and dispatcher PID 30160 are running. Operations warmed;
+research/listed acquisition and archive startup work are still initializing.
+Evidence: `var/maintenance/strategy-dependencies-20261107/`.
+
+## Operator alert rendering and allocation NAV cutoff — 2026-11-07
+
+**Complete; verified November 7 at 11:56 Asia/Shanghai.** Alert JavaScript is now
+inside its script tag. The USD-only calculation path independently publishes
+audited observed FX; M1-only revisions also track FX and reject a changed FX
+publication during replay. A truncated CNH conversion now has an explicit warning.
+148 focused tests passed (one legacy ClickHouse integration test skipped), Ruff
+passed and all four assembled scripts compile. Nine native parity cases passed
+without differences. Calculation `24baa3fe16ef1eed388863161a948642afe3c261b80ec8d1f9a69bb6269df211`
+and serving `cf1e2605ae3a735a015ec0a98441af6148047e1e0cb2b77961405c954e0243fa`
+are published. After guarded restart, API and browser both show the allocation
+chart/FR25 period through November 6; no visible JavaScript and no calculation
+errors. Dashboard PID 25628 and dispatcher PID 6848 are running. Evidence:
+`var/maintenance/operator-display-20261107/`. Allocation and execution authority
+are unchanged. Broader dependency safeguards continue in the item above.
+
+## November 6 strategy update timeout — 2026-11-07
+
+**Complete; verified November 7.** The USD factor's separate ALFRED acquisition
+timed out before replay. Added bounded retries, explicit DTWEXBGS/vintage error
+context and one same-URL native Windows HTTPS fallback after transient retry
+exhaustion. Native curl/Schannel succeeded where repeated urllib probes failed.
+Both transports preserve configured proxy routing and certificate checks;
+partial/oversized output is rejected before raw capture. Vintage audits and
+publication hashes remain enforced. 41 focused tests and Ruff pass.
+
+USD vintage November 5 was published for the November 6 signal close; its latest
+underlying observation remains October 30 under the unchanged freshness rule.
+Application revision `883587fa22171fb80760e0782b919043f4d2cf851e6f60496293d7b690dd9805`
+completed with nine successful native parity cases. After guarded restart,
+served version `3ccd28723c611180ae07e734031ad5a88db753d7e96b4c169021799a3bb327ed`
+reports expected/prices/NAV November 6, `strategy_stale=false`, and no calculation
+errors. Dashboard and dispatcher are running; normal app-owned acquisition resumes.
+Evidence: `var/maintenance/strategy-timeout-20261107/`. No strategy, allocation,
+approval, reconciliation or broker-environment guard changes. All six current
+reports, including BroadTrend, now reach November 6. Conditional FR25 remains
+October 12 historical-only; the broader stock-coverage backlog is separate.
+
+## Strategy daily refresh incident — 2026-11-06
+
+**Complete; verified 2026-11-07 00:26 Asia/Shanghai.** Added bounded verified-TLS
+HTTP retries for issuer/economic reads and fixed the shared price publisher
+dropping issuer admission metadata. Refreshes revalidate the original contract;
+current prices cannot hide a missing published admission. XLE was reacquired,
+audited and published; the M1/14 loader accepts all constituents through November 5.
+Economic coverage is 2576/2576 with no recorder failures. 113 tests and Ruff pass.
+
+Application calculation `61c94f2f35e4815b529ffac7b6dcc43effd374818468a3d8d773768b03f96a7e`
+completed; all nine native cases pass parity. One LEAN risk-parity attempt failed
+in `ObjectActivator.Clone`'s concurrent dictionary cache; its distinct bounded
+retry passed 2727 NAV observations, 1823 fills and 131 decisions without differences.
+The failed receipt remains intact; engine binaries and completeness gates unchanged.
+Investigate that engine cache race separately if it recurs.
+
+After guarded dashboard/dispatcher restart, served version
+`853ba4a8949f87fccfec220152d23c394e12619f0a84fca3b636431e10ab8f3e` reports no
+calculation errors, expected/prices/NAV November 5 and `strategy_stale=false`.
+Five current strategy reports advanced to November 5. BroadTrend remains November 3
+on its separate catch-up path; conditional FR25 remains an explicit October 12
+historical-only report. Broad listed-stock coverage remains degraded and continues
+normal acquisition; this is not whole-platform health acceptance. Evidence:
+`var/maintenance/strategy-refresh-20261106/`. No allocation, approval, reconciliation
+or broker-environment guard change.
+
 ## P4.21 independent broker history reconciliation — 2026-11-06
 
 Complete. Restored access returned 20 complete primary series (ten stocks,

@@ -65,3 +65,23 @@ def test_equity_can_refresh_without_erasing_prior_conflicts(governed):
     published = json.loads((module.Path(json.loads(latest['provenance'])['root'])/'audits/URTH.json').read_text())
     assert published['status'] == 'review'
     assert published['previous_audit']['conflict_dates'] == 42
+
+
+def test_listed_refresh_preserves_admission_and_prior_review(governed):
+    settings, analytics, fetch, _ = prepare(governed)
+    root = settings.data_dir / 'original'
+    audit = json.loads((root/'audits/URTH.json').read_text())
+    admission = dict(symbol='URTH', name='URTH Example ETF', isin='TESTID',
+        inception='2026-01-02', listing_date='2026-01-02', required_start='2026-01-02',
+        captured_at='2026-08-03T22:00:00+00:00', issuer_sha256='original-evidence-hash')
+    audit.update(status='review', research_recorder=admission, conflict_dates=42)
+    governed_refresh._write(root, 'audits/URTH.json', audit)
+    governed_refresh._write(root, 'manifest.json', {p.relative_to(root).as_posix():sha256(p)
+        for p in root.rglob('*') if p.is_file() and p.name != 'manifest.json'})
+    analytics.publish('governance/catalog', sha256(root/'manifest.json'), [], provenance={'root':str(root)})
+    assert module.refresh_listed_daily(settings, analytics, now=datetime(2026,8,4,22,tzinfo=UTC), fetch=fetch)
+    latest = analytics.latest('governance/catalog')
+    published = json.loads((module.Path(json.loads(latest['provenance'])['root'])/'audits/URTH.json').read_text())
+    assert published['research_recorder'] == admission
+    assert published['status'] == 'review'
+    assert published['previous_audit']['conflict_dates'] == 42
