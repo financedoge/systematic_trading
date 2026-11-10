@@ -1,5 +1,68 @@
 # Execution Kanban
 
+## Recovery backup checkpoint — 2026-11-10 (packaged and verified)
+
+Operator requested commit and push of the completed recovery-only NAS transition,
+startup fix, restore verification, retention guards and storage audit. Reviewed
+the source/configuration/documentation/test changes and confirmed the recorded
+96 passing tests with four skips; scoped Ruff passes again. Publish this verified
+checkpoint on the existing master branch. The generated paper-reconciliation
+snapshot is unrelated runtime output and remains outside this checkpoint.
+
+## NAS recovery pruning — 2026-11-09 (NAS complete; local test-copy cleanup blocked)
+
+Recovery-only capture and bounded retention are deployed. The final NAS inventory
+at 01:36 Shanghai contains 83,588,643,997 bytes (83.59 GB), with an empty project
+recycle subtree. Measured volume free space increased by 844,657,397,760 bytes
+(844.66 GB), to 1,027,281,301,504 bytes. Retired 145 old restic snapshots and
+2,148 redundant SQL generations, then purged the recognized retired backup files
+from the NAS recycle share. Live repository checks passed with zero errors.
+
+The replacement profile passed actual isolated NAS restoration on November8 at
+23:01: 729,885 dependency hashes, 24 SQL table counts, portfolio controls, all
+publication heads, 86 current report documents and NATS state. The first hourly
+successor completed November9 at 00:35 and automatic retention kept one complete
+snapshot, `249445d75c708a6bb14164edded50085ab38d363e49cf6fa1da2c9418ab8693a`.
+It protects 162.94 GB of logical source; the update added 88.26 MB packed data.
+The scheduler resumed at 01:37 and began its next routine capture. The recovery
+key and acceptance receipt are hash-verified beside the NAS repository.
+
+The startup hang came from synchronous SQL checkpoint/NAS preparation after a
+maintenance writer pause. Platform services recovered at 19:21; the exact startup
+command passed in seven seconds at 19:44. Recovery-only startup now performs only
+the local interrupted-restore safety check. Backup IO stays in the background.
+The served backup panel correctly identifies the retired SQL lane as included in
+application recovery. Production is online; existing data/report warnings remain.
+
+Validation: 96 focused tests passed, four environment-dependent skips, scoped
+Ruff passed, all 15 strategy dependency contracts passed. The final narrow NAS
+duplicate-lease pattern change also passed its three focused retention tests.
+Evidence: `var/maintenance/recovery-pruning-20261108/`, especially `acceptance.json`,
+`fresh-complete.json`, `nas-final.json`, the recycle retirement receipts and
+`served-final.json`. Protected data, strategy pins and broker guards remain intact.
+
+The disposable local test copy at
+`D:/systematic_trading_data/recovery-pruning-restore-20261108` remains. Its services
+are stopped and verification evidence is saved. The operator explicitly approved
+deletion, but automatic approval review still rejected native PowerShell removal
+before execution with "blocked by policy". Do not request approval again.
+
+## NAS/storage audit — 2026-11-08 (complete; recovery transition completed above)
+
+Operator clarified that NAS exists for laptop disaster recovery, with code from
+Git, not the full research replay history. Measured 922.18 GB of NAS backup files:
+764.53 GB across 2,146 SQL generations and 157.65 GB restic. The 3.76 TB processed
+counter is largely 3.60 TB of repeated governance file names/hard links. Current
+PostgreSQL is 10.42 GB and analytical Parquet 74.75 GB. Guarded plans identified
+26.69 GB of superseded strategy/model files; no deletion occurred. Closed-study
+planning respected the application's busy retention lock. All 15 dependency
+contracts pass. [Audit, evidence and recovery contract](storage-audit-2026-11-08.md).
+
+The recovery-only transition above supersedes the stale October19 SQL handoff
+lane and broad research backup coverage. Local superseded models, old restore
+workspaces, governance attempts and historical projections remain separate review
+opportunities; the 26.69 GB planner result is not a local reclaimed-space claim.
+
 ## Research checkpoint — 2026-11-08 (packaged and verified)
 
 Operator requested commit and push. Package the dated-identity findings, both

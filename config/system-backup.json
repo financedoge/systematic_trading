@@ -1,5 +1,9 @@
 {
   "enabled": true,
+  "scope": "recovery-v1",
+  "retention_enabled": true,
+  "retention_acceptance": "var/system-backup/restore-acceptance.json",
+  "recycle_root": "\\\\192.168.1.32\\Recycle Bin - Volume_1\\systematic-trading",
   "repository": "\\\\192.168.1.32\\Public\\systematic-trading\\full-system-restic",
   "restic_binary": "var/dependencies/restic/restic.exe",
   "password_file": "var/private/system-backup-recovery-key.txt",
@@ -11,9 +15,16 @@
   "clickhouse_container": "systematic-trading-clickhouse",
   "nats_url": "nats://127.0.0.1:4222",
   "required_paths": [
-    "src", "scripts", "config", "docs", "tests", ".agents", "research", "var",
-    "README.md", "AGENTS.md", "log.md", "pyproject.toml", ".env.example", "deploy",
-    "D:/systematic_trading_data/research", "D:/systematic_trading_data/lean"
+    "config", "var/broker_evidence", "var/reconciliation", "var/live",
+    "var/execution_registry", "var/execution_benchmarks", "var/execution_benchmark_state",
+    "var/tracked_models", "var/tracked_strategies", "var/market_data",
+    "var/governance/economic-captures", "var/governance/economic-catalogs",
+    "var/governance/cftc-positioning", "var/governance/eia-energy",
+    "var/governance/issuer-etfs", "var/governance/pilots",
+    "D:/systematic_trading_data/source-archives"
+  ],
+  "input_manifests": [
+    "src/systematic_trading/research/fr25_lifecycle_inputs.json"
   ],
   "exclude": [
     "**/.env", "**/.env.*", "**/*_key.txt", "**/*_token.txt", "**/credentials*",

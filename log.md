@@ -1,5 +1,149 @@
 # Project Log
 
+## 2026-11-10 — Package recovery-only NAS backup and startup fixes
+
+Operator requested commit and push. Reviewed the recovery-only configuration,
+background startup behavior, consistent dependency capture, isolated restore
+verification, bounded restic/SQL/recycle retention, backup status UI and regression
+tests. Include the storage audit, recovery instructions and recorded pruning/
+restore outcomes. Confirmed the recorded suite has 96 passes and four skips;
+scoped Ruff passes again. Publish on the existing master branch. The generated
+paper-reconciliation snapshot stays outside this checkpoint; keys, licensed data
+and local maintenance receipts remain outside Git.
+
+## 2026-11-09 — NAS recovery pruning completed; scheduler resumed
+
+Final inventory at 01:36 Shanghai: 83,588,643,997 bytes of project NAS files,
+including an 83,588,576,514-byte restic repository. The project recycle subtree
+is empty. NAS volume free space is 1,027,281,301,504 bytes, a measured gain of
+844,657,397,760 bytes over the pre-prune baseline. The main recycle retirement
+removed 11,228 known backup files; final cleanup removed 14 lock/lease records
+(1,917 bytes), with no skipped files. Recurring retention now performs the same
+scoped cleanup after a successful live repository check. Other projects and
+unknown files remain outside deletion scope.
+
+The first hourly successor completed at 00:35 with 162,944,032,062 logical bytes,
+831,832 files and 88,258,293 newly packed bytes. Automatic pruning retained only
+`249445d75c708a6bb14164edded50085ab38d363e49cf6fa1da2c9418ab8693a`.
+The November8 full isolated restore acceptance remains the recovery profile's
+verification evidence; each successor additionally passes publication checks.
+The backup scheduler resumed at 01:37 after the one-time recycle cleanup and
+started its next capture. Health and backup endpoints return HTTP 200; the worker
+is active with a fresh heartbeat, and the retired SQL lane reports recovery_only.
+
+Final focused suite: 96 passed, four environment-dependent skips; all 15 strategy
+contracts and scoped Ruff pass. Three retention tests passed after the final
+narrow duplicate-lease filename adjustment. Evidence is in
+`var/maintenance/recovery-pruning-20261108/`, including `nas-final.json`,
+`recycle-retirement-main.json`, `recycle-retirement-final.json`,
+`focused-tests.xml`, `dependency-contracts-final.json` and `served-final.json`.
+
+The local disposable restore copy remains solely because automatic approval
+review rejected deletion as "blocked by policy" even after explicit operator
+authorization. Its services are stopped and acceptance evidence is saved. The
+operator was given the literal native PowerShell cleanup command; do not ask for
+approval again. No other local retention opportunities are claimed as reclaimed.
+
+## 2026-11-08 — Recovery transition and startup incident (chronological record)
+
+The backup maintenance writer pause left the platform offline longer than intended.
+The operator's restart stopped after NATS initialization because `prepare` performed
+a full SQL checkpoint and NAS transfer synchronously. Stopped only that preparation
+process after confirming no restore was active, then restarted the dashboard,
+dispatcher, recorder and recovery supervisor. PostgreSQL/NATS remained running.
+Local restore safety now completes without NAS IO in recovery-only mode; routine
+start/stop no longer dumps or automatically replaces the database. The interrupted
+restore guard and broker/approval checks remain intact. Standalone safety probe:
+0.0001 seconds; core service health passed after restart.
+
+Recovery-only capture resumed online. It includes explicit durable roots and
+registered external dependencies, a consistent PostgreSQL/Parquet inventory,
+NATS and a Git-based code delta. The redundant recurring SQL lane is disabled.
+Legacy NAS lock crash recovery was evidenced; new SMB byte-range leases passed
+cross-process exclusion checks. Reduced restore verification and NAS reclamation
+are still pending; no freed-space claim is warranted yet.
+
+The operator was unsure whether the recovery key existed off-laptop. After being
+told that a NAS-side key allows anyone with folder access to unlock the backup,
+they explicitly selected a copy alongside the NAS backup. Copied and hash-verified
+`system-backup-recovery-key.txt` in the project NAS root at 20:42 Shanghai without
+displaying its contents. This copy remains outside the encrypted repository and
+the SQL-generation pruning root. Receipt: `var/maintenance/recovery-pruning-20261108/recovery-key-copy.json`.
+
+The reduced capture completed at 19:51 Shanghai (162.44 GB logical source,
+830,986 files). The isolated NAS restore remains in progress. Preflight found
+181 loose runtime files pinned despite capture exclusions: 180 empty dataset/run
+locks and a UUID-suffixed atomic request left by an incomplete November 6 model
+write. Consumers read the committed request and completion receipt, not that
+temporary file. Future inventories omit only those recognized runtime patterns;
+the restore verifier records excluded legacy pins and still checks every declared
+sealed artifact. All 1,734 sealed inventories inspected contain no `.tmp`/`.lock`
+payload; classification and missing-artifact regression tests pass.
+
+Actual NAS extraction and restic verification completed at 22:38 Shanghai. The
+isolated application recovery passed at 23:01: 729,885 dependencies, 24 SQL table
+counts, portfolio controls, all publication heads, 86 current report documents,
+and NATS stream/consumer state. The isolated PostgreSQL/NATS services stopped.
+The acceptance receipt was copied and hash-verified on NAS. Pruning preview keeps
+`c6d4f7fb18c339ab663ff095abc20b0c02e818afd13e5a590da7c51ff8ca4d60`
+and retires 145 older managed snapshots; actual pruning is underway. Automatic
+bounded retention is enabled following this accepted recovery profile.
+
+Long background compaction needed explicit restic progress reporting to avoid a
+false 15-minute silence timeout. Enabled ten-second progress and separated forget
+from prune so retry still compacts when snapshot references were already removed;
+an actual repository regression exercises that interruption/retry sequence.
+Compaction was restarted under the same accepted snapshot after normal stale-lock
+recovery. Dashboard-only code reload took 7.93 seconds at 23:29; PostgreSQL/NATS
+continued running and all six core service checks passed. The served backup API
+now marks the redundant SQL lane as included in application recovery, with no
+stale October19 generation or error presented as a current backup failure.
+
+November9 00:07: 145 restic snapshots and 2,148 SQL generations were retired
+(770,124,353,124 SQL bytes). The retained repository passed check with zero errors
+and no suggested prune; project backup files total 83,549,241,465 bytes. However,
+the NAS moved deleted files to a separate `Recycle Bin - Volume_1` share, so
+volume free space did not rise. Its project subtree contains the retired backup
+files. Implement scoped, checked recycle cleanup in recurring retention rather
+than claiming these bytes were physically reclaimed. The temporary local restore
+copy remains: automatic approval review rejected its deletion as blocked by
+policy despite resolved-path, saved-acceptance and stopped-service checks.
+The operator subsequently explicitly approved deleting that exact test copy.
+Automatic review still rejected the guarded native PowerShell delete before
+execution, with only "blocked by policy". Authorization persists; the test copy
+remains a tool-permission limitation, not an unapproved action.
+
+## 2026-11-08 — Storage audit and NAS recovery-only direction
+
+Operator questioned 3.76 TB of backup processing, then clarified the recovery
+goal: Git supplies code after laptop disk failure; NAS supplies durable data,
+without preserving the entire research replay history. Recorded this scope in
+project memory and the backup guide. Runtime changes and deletion are pending.
+
+Measured 764.53 GB of SQL generations (2,146 directories, including 905 legacy
+SQLite copies), plus 157.65 GB restic. The processed counter is logical source
+size: var/governance contributes about 3.60 TB/29.13 million names, largely
+hard-linked histories. D: used approximately 373 GB. A sampled stock history has
+259 links. PostgreSQL is 10.42 GB; Parquet 74.75 GB. The event outbox is 6.81 GB,
+dominated by 3.716 million delivered market-data events. Typed Parquet reduced
+a ten-symbol gzip JSONL sample by 11.3%; redundant retention is the larger issue.
+
+Existing guarded dry-runs identified 58 superseded tracked revisions (23.54 GB)
+and 115 model schedules (3.15 GB), protecting 26/24 paths respectively. The
+closed-study planner deferred on the application's retention lock. No deletion,
+lock override, broker action or runtime change. All 15 strategy dependency
+contracts validate. Additional review targets include a 36.22 GB restore-drill
+workspace and 6.04 GB pre-migration backup. These are not reclaimed-space claims.
+
+Recovery concern: NAS SQL latest is October19, blocked by operation.lock; the
+restic capture completed November8 at 00:49 Shanghai time. Preserve the newer
+complete recovery point until a reduced, dependency-complete replacement passes
+an isolated restore. PostgreSQL is only part of the recoverable dataset: external
+Parquet/canonical histories, protected model files and operational evidence must
+remain consistent. The new 17 MB source-archives root is absent from inspected
+backup sources; retain WRDS locally and include irreplaceable captures in the
+recovery contract. [Full audit and next actions](docs/storage-audit-2026-11-08.md).
+
 ## 2026-11-08 — Package completed research and deferred momentum plan
 
 Operator requested a Git commit and push. This checkpoint packages the completed

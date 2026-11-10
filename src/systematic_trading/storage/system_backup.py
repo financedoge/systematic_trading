@@ -127,7 +127,7 @@ class SystemBackup:
             running=status not in {"disabled", "paused"}, last_error=self.state.get("error"),
             message="Full recovery backup: " + status, details=self.state)
 
-    def command(self, args, *, env=None, timeout=None, stall_timeout=None):
+    def command(self, args, *, env=None, timeout=None, stall_timeout=None, capture_output=True):
         """Bounded child process; shutdown cancels work, never waits for NAS upload."""
         output = self.local / "command.stdout.log"
         errors = self.local / "command.stderr.log"
@@ -176,12 +176,12 @@ class SystemBackup:
         if process.returncode:
             # A restic exit 3 creates an incomplete snapshot. Never tag it complete.
             raise RuntimeError(f"{Path(args[0]).name} failed (exit {process.returncode}); inspect var/system-backup/command.stderr.log")
-        return output.read_text(encoding="utf8", errors="replace")
+        return output.read_text(encoding="utf8", errors="replace") if capture_output else ""
 
     def restic(self, *args, timeout=None, stall_timeout=None):
         env = os.environ.copy()
         env.update(RESTIC_REPOSITORY=str(self.repository), RESTIC_PASSWORD_FILE=str(self.password),
-                   RESTIC_CACHE_DIR=str(self.local / "cache"))
+                   RESTIC_CACHE_DIR=str(self.local / "cache"), RESTIC_PROGRESS_FPS='0.1')
         return self.command([self.binary, "--json", *args], env=env,
             timeout=timeout, stall_timeout=stall_timeout)
 
@@ -207,6 +207,14 @@ class SystemBackup:
                 stream.write(secrets.token_urlsafe(48) + "\n")
         self.restic("init", "--repository-version", "2")
 
+    def inventory_progress(self):
+        now = time.monotonic()
+        if now >= getattr(self, '_inventory_heartbeat_at', 0):
+            if self.stop_path.exists():
+                raise BackupStopped('Recovery inventory paused for local shutdown')
+            self.heartbeat()
+            self._inventory_heartbeat_at = now + 20
+
     def source_paths(self, dependencies=None):
         paths = [self.resolve(p) for p in self.config["required_paths"]]
         paths.append(self.settings.market_data_storage_policy_path.resolve())
@@ -220,15 +228,48 @@ class SystemBackup:
         from systematic_trading.storage.dependencies import dependency_receipt
         dependencies = dependencies if dependencies is not None else dependency_receipt(self.settings)
         paths.extend(Path(p).resolve() for p in dependencies.get("files", {}))
+        if self.config.get('scope') == 'recovery-v1':
+            # A pinned bundle manifest represents its entire sealed directory.
+            # Its payload must accompany it even outside configured roots.
+            for name in dependencies.get('files', {}):
+                path = Path(name)
+                if path.name in {'manifest.json', 'run.json'}:
+                    paths.append(path.parent.resolve())
         paths.extend(Path(item["root"]).resolve() for item in dependencies.get("governed_roots", []))
         if self.settings.lean_runtime_backend=='native':
             runtime=read_json(self.workspace/'config/native-runtime.json')['lean']
-            paths.extend(Path(runtime[key]).resolve() for key in
-                ('engine_root','data_root','python_root','dotnet_root','manifest','acceptance'))
+            runtime_keys = ('manifest', 'acceptance') if self.config.get('scope') == 'recovery-v1' else (
+                'engine_root','data_root','python_root','dotnet_root','manifest','acceptance')
+            paths.extend(Path(runtime[key]).resolve() for key in runtime_keys)
+        if self.config.get('scope') == 'recovery-v1':
+            # Registered frozen inputs can live in research directories. Include
+            # their declared files and audited parent chain, not the experiment.
+            from systematic_trading.research.governed_inputs import GovernedInputs
+            for name in self.config.get('input_manifests', []):
+                manifest_path = self.resolve(name)
+                record = read_json(manifest_path)
+                paths.append(manifest_path)
+                dependencies['files'][str(manifest_path)] = file_hash(manifest_path)
+                for relative, expected in record['files'].items():
+                    path = self.resolve(relative)
+                    if file_hash(path) != expected:
+                        raise ValueError('Frozen recovery input changed: ' + relative)
+                    paths.append(path)
+                    dependencies['files'][str(path)] = expected
+                pin = record.get('price_pin')
+                reader = GovernedInputs(Path(pin['root']), pin['batch']) if pin else None
+                while reader:
+                    paths.append(reader.root.resolve())
+                    pin = dict(root=str(reader.root.resolve()), manifest_sha256=file_hash(reader.root/'manifest.json'))
+                    if pin not in dependencies['governed_roots']:
+                        dependencies['governed_roots'].append(pin)
+                    reader = reader.parent
         unique = sorted(set(paths), key=lambda p: (len(p.parts), str(p)))
         roots = []
         root_set = set()
-        for path in unique:
+        for index, path in enumerate(unique):
+            if index % 1024 == 0:
+                self.inventory_progress()
             if not path.exists():
                 raise FileNotFoundError(f"Required recovery source missing: {path}")
             if path == self.stage or path.is_relative_to(self.stage):
@@ -237,6 +278,65 @@ class SystemBackup:
                 roots.append(path)
                 root_set.add(path)
         return roots, dependencies
+
+    def prune(self, *, dry_run=False):
+        """Retain the current verified recovery point; never group by changing paths."""
+        acceptance = self.resolve(self.config.get('retention_acceptance', 'var/system-backup/restore-acceptance.json'))
+        proof = read_json(acceptance)
+        if (not proof.get('passed') or proof.get('repository') != str(self.repository)
+                or proof.get('scope') != 'recovery-v1' or self.config.get('scope') != 'recovery-v1'):
+            raise ValueError('A passed restore of the recovery-only repository is required before pruning')
+        from systematic_trading.storage.recovery_checks import recovery_policy_hash
+        if proof.get('policy_sha256') != recovery_policy_hash(self.config):
+            raise ValueError('Recovery coverage changed; verify a new restore before pruning')
+        snapshot = self.state.get('snapshot', '')
+        if self.state.get('status') not in {'complete', 'paused'} or not re.fullmatch(r'[0-9a-f]{64}', snapshot):
+            raise ValueError('Pruning requires a current complete snapshot')
+        rows = json.loads(self.restic('snapshots', snapshot))
+        if len(rows) != 1 or not {'system-complete', 'recovery-v1'} <= set(rows[0].get('tags', [])):
+            raise ValueError('Current snapshot is not a complete recovery-only capture')
+        capture_tag = next((t for t in rows[0]['tags'] if t.startswith('capture-')), None)
+        if not capture_tag:
+            raise ValueError('Current capture tag is missing')
+        sql_config = self.workspace/'config/database-sync.json'
+        sync = None
+        if not dry_run and sql_config.exists() and read_json(sql_config).get('recovery_only'):
+            from systematic_trading.storage.optional_sync import OptionalNasSync
+            config = read_json(sql_config)
+            sync = OptionalNasSync(self.workspace, config, LocalDatabases(self.workspace, config, self.settings))
+            # Publish the verified replacement locator before forgetting its
+            # predecessor. A later cleanup failure must not strand a stale ID.
+            with sync.local_lock(), sync.lock():
+                sync.publish_recovery_locator(proof, snapshot)
+        env = dict(os.environ, RESTIC_REPOSITORY=str(self.repository),
+                   RESTIC_PASSWORD_FILE=str(self.password), RESTIC_CACHE_DIR=str(self.local / 'cache'),
+                   RESTIC_PROGRESS_FPS='0.1')
+        args = [self.binary, 'forget', '--compact', '--host', socket.gethostname(),
+                '--tag', 'system-complete', '--tag', 'system-candidate', '--group-by', 'host',
+                '--keep-tag', capture_tag]
+        args += ['--dry-run'] if dry_run else []
+        self.command(args, env=env, capture_output=False)
+        if not dry_run:
+            # A retry may find no more snapshot references to forget after a
+            # previous repack was interrupted. Always finish physical cleanup;
+            # forget --prune only runs prune when it deletes new references.
+            # Explicit progress keeps long non-interactive repacks observable
+            # without disabling the stalled-command guard.
+            self.command([self.binary, 'prune', '--max-unused', '0'], env=env, capture_output=False)
+        write_json(self.local / 'retention-latest.json', dict(at=datetime.now(UTC).isoformat(),
+            kept_snapshot=snapshot, dry_run=dry_run, scope='recovery-v1'))
+        if sync is not None:
+            with sync.local_lock(), sync.lock():
+                sync.retire_generations(proof, snapshot)
+        if not dry_run and self.config.get('recycle_root'):
+            from systematic_trading.storage.recovery_retention import validate_recycle_mapping, purge_recycled_backups
+            recycle = self.config['recycle_root']
+            validate_recycle_mapping(recycle, str(self.repository))
+            # NAS recycle bins otherwise retain every successfully pruned byte.
+            # Check the retained live repository before purging retired copies.
+            self.restic('check')
+            purge_recycled_backups(recycle, self.repository, self.local/'recycle-retention-latest.json',
+                                   progress=self.inventory_progress)
 
     def clickhouse(self, query):
         return json.loads(self.command(["docker", "exec", self.config["clickhouse_container"],
@@ -299,7 +399,9 @@ class SystemBackup:
 
     def capture(self):
         self.status("inventorying_sources", error=None)
-        sources, dependencies = self.source_paths()
+        # Native capture obtains its authoritative inventory inside the exported
+        # SQL snapshot below. Do not hash every retained model/run twice.
+        sources, dependencies = ([], {}) if self.settings.market_data_store_backend == 'parquet' else self.source_paths()
         if self.stop_path.exists():
             raise BackupStopped("Backup inventory paused for local shutdown")
         self.stage.mkdir(parents=True, exist_ok=True)
@@ -322,7 +424,14 @@ class SystemBackup:
             # exported PostgreSQL snapshot. Later publications cannot make the
             # restore prerequisite list disagree with the captured SQL state.
             from systematic_trading.storage.dependencies import native_backup_snapshot
-            with native_backup_snapshot(self.settings) as (snapshot,dependencies):
+            with native_backup_snapshot(self.settings, progress=self.inventory_progress) as (snapshot,dependencies):
+                if self.config.get('scope') == 'recovery-v1':
+                    from psycopg import sql
+                    from systematic_trading.storage.recovery_checks import database_checks
+                    with databases.connection() as connection:
+                        connection.execute('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY')
+                        connection.execute(sql.SQL('SET TRANSACTION SNAPSHOT {}').format(sql.Literal(snapshot)))
+                        write_json(capture/'restore-checks.json', database_checks(connection))
                 databases.pg('pg_dump','--no-password','--format=custom','--compress=0','--no-owner',
                     '--snapshot',snapshot,'--file',capture/'postgres.dump')
             sources,_=self.source_paths(dependencies)
@@ -344,6 +453,9 @@ class SystemBackup:
         self.status("capturing_queue")
         streams = asyncio.run(snapshot_nats(self.config["nats_url"], capture / "nats"))
         write_json(capture / "dependencies.json", dependencies)
+        if self.config.get('scope') == 'recovery-v1':
+            from systematic_trading.storage.recovery_checks import capture_code
+            capture_code(self.workspace, capture)
         self.status("hashing_capture")
         files = {}
         for path in capture.rglob("*"):
@@ -351,7 +463,8 @@ class SystemBackup:
                 raise BackupStopped("Capture hashing paused for local shutdown")
             if path.is_file():
                 files[str(path.relative_to(capture)).replace("\\", "/")] = dict(sha256=file_hash(path), bytes=path.stat().st_size)
-        manifest = dict(schema_version=1, market_data_store_backend=self.settings.market_data_store_backend,
+        manifest = dict(schema_version=1, scope=self.config.get('scope', 'full-system'),
+            market_data_store_backend=self.settings.market_data_store_backend,
             captured_from=started, postgres_at=postgres_at,
             captured_to=datetime.now(UTC).isoformat(), host=socket.gethostname(),
             workspace=str(self.workspace), postgres_database=self.settings.postgres_database,
@@ -372,6 +485,8 @@ class SystemBackup:
         captured_backend = manifest.get("market_data_store_backend") or ("parquet" if manifest.get("native_analytics") else "clickhouse")
         if captured_backend != self.settings.market_data_store_backend:
             raise ValueError("Pending capture uses a different analytics backend; retire its pending record and capture the current native state before publishing")
+        if manifest.get('scope', 'full-system') != self.config.get('scope', 'full-system'):
+            raise ValueError('Pending capture scope differs; preserve the completed backup and recapture')
         # Preserve effective non-secret .env settings (ports, identities, paths,
         # feature flags) without putting private credentials on the NAS.
         raw_settings = self.settings.model_dump(mode="json")
@@ -394,6 +509,10 @@ class SystemBackup:
         self.restic("unlock", timeout=120)  # Only restic-proven stale locks; never --remove-all.
         backup_args = ["backup", "--tag", "system-candidate", "--host", socket.gethostname(),
             "--files-from-verbatim", str(paths_file), "--iexclude-file", str(exclude_file)]
+        capture_tag = 'capture-' + pending['manifest_sha256']
+        backup_args.extend(['--tag', capture_tag])
+        if self.config.get('scope') == 'recovery-v1':
+            backup_args.extend(['--tag', 'recovery-v1'])
         # Native committed fragment lists change with each publication. Restic's
         # default host+paths grouping otherwise misses the previous snapshot and
         # needlessly rereads every unchanged source file.
@@ -416,7 +535,8 @@ class SystemBackup:
             raise RuntimeError("NAS manifest readback mismatch")
         self.restic("tag", "--add", "system-complete", "--remove", "system-candidate", snapshot)
         # Tag changes the snapshot ID. Resolve the resulting immutable identity.
-        snapshots = json.loads(self.restic("snapshots", "--tag", "system-complete", "--host", socket.gethostname()))
+        snapshots = json.loads(self.restic("snapshots", "--tag", "system-complete," + capture_tag,
+                                          "--host", socket.gethostname()))
         # --latest is per host/path group, so a changed source list can return
         # an older group's snapshot first. Tagging preserves the original ID.
         matches = [row for row in snapshots if row.get("original") == snapshot or row["id"] == snapshot]
@@ -427,6 +547,13 @@ class SystemBackup:
                     captured_at=pending["captured_at"], candidate_snapshot=None,
                     verification="restic repository metadata check and decrypted manifest readback; full data scrub/restore is separate")
         (self.local / "pending.json").unlink()
+        if self.config.get('retention_enabled'):
+            try:
+                self.prune()
+                self.status('complete', retention_error=None)
+            except Exception as exc:
+                # A retention failure cannot invalidate a completed recovery point.
+                self.status('complete', retention_error=str(exc))
         return final_id
 
     def once(self):
@@ -452,15 +579,19 @@ class SystemBackup:
                 self.status("deferred", error=f"{type(exc).__name__}: {exc}")
                 return None
 
-    def restore_files(self, snapshot, target):
+    def restore_files(self, snapshot, target, *, resume=False):
         with exclusive_lock(self.local / "capture.lock"):
-            return self._restore_files(snapshot, target)
+            return self._restore_files(snapshot, target, resume=resume)
 
-    def _restore_files(self, snapshot, target):
+    def _restore_files(self, snapshot, target, *, resume=False):
         if not re.fullmatch(r"[0-9a-f]{64}", snapshot):
             raise ValueError("Use an exact complete snapshot ID")
         target = Path(target).resolve()
-        if target.exists() and any(target.iterdir()):
+        identity = dict(snapshot=snapshot, repository=str(self.repository))
+        if resume:
+            if read_json(target/'restore-request.json') != identity:
+                raise ValueError('Resume requires the same recorded snapshot and repository')
+        elif target.exists() and any(target.iterdir()):
             raise ValueError("Restore requires an empty target; never restore onto running databases")
         protected = [self.workspace, self.stage, self.repository, self.settings.native_analytics_root.resolve(),
                      *[self.resolve(p) for p in self.config["required_paths"]]]
@@ -475,8 +606,23 @@ class SystemBackup:
         # A mapping retains exact original locations without inheriting those
         # ancestors or ever overwriting production paths.
         target.mkdir(parents=True, exist_ok=True)
+        write_json(target/'restore-request.json', identity)
         mapping = []
         sources = snapshots[0]["paths"]
+        drives = {Path(source).drive for source in sources}
+        if ('recovery-v1' in snapshots[0].get('tags', []) and drives == {self.workspace.drive}
+                and self.workspace.drive and self.workspace.drive.upper() != 'C:'):
+            # This recovery profile contains only selected data on the data
+            # drive. One authenticated restore avoids rereading the NAS index
+            # for every input file. Do not apply this to C:/Windows/User ACLs.
+            drive = self.workspace.drive.rstrip(':')
+            item = target / ('drive-' + drive)
+            self.restic('restore', snapshot + ':/' + drive, '--target', str(item), '--verify',
+                        '-o', 'local.connections=8')
+            write_json(target/'restore-map.json', [dict(original=self.workspace.drive+'\\',
+                restored=str(item), type='dir')])
+            write_json(target/'restore-source.json', dict(snapshot=snapshot, repository=str(self.repository)))
+            return target
         # The backup selects individual committed fragments. Restore their
         # authenticated snapshot subtree once, rather than launching restic
         # separately for every one of tens of thousands of immutable files.
@@ -489,6 +635,9 @@ class SystemBackup:
             source_path = Path(source)
             restic_path = "/" + source.replace("\\", "/").replace(":", "")
             item = target / f"root-{index:03d}"
+            if source_path == parquet_root:
+                # Retain a lake-root/parquet layout for isolated native readers.
+                item = item / 'parquet'
             # Determine directory/file from the authenticated snapshot, not the
             # current PC (the original disk may no longer exist).
             listing = [json.loads(line) for line in self.restic("ls", snapshot, restic_path).splitlines() if line.startswith("{")]
@@ -504,4 +653,5 @@ class SystemBackup:
                             "--target", str(item), "--verify")
             mapping.append(dict(original=str(source_path), restored=str(item), type=node.get("type")))
         write_json(target / "restore-map.json", mapping)
+        write_json(target/'restore-source.json', dict(snapshot=snapshot, repository=str(self.repository)))
         return target

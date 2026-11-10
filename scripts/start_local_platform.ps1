@@ -335,7 +335,18 @@ try {
         & (Join-Path $ScriptDir 'maintain_research_storage.ps1')
     }
     $syncConfig = Get-Content (Join-Path $RepoRoot "config\database-sync.json") -Raw | ConvertFrom-Json
-    if ($syncConfig.enabled) {
+    $syncAlreadyRunning = $false
+    $syncPidPath = Join-Path $RunDir "database_sync.pid"
+    if (Test-Path -LiteralPath $syncPidPath) {
+        $syncProcessId = 0
+        if ([int]::TryParse((Get-Content -LiteralPath $syncPidPath -Raw).Trim(), [ref]$syncProcessId)) {
+            $syncState = Get-ServiceProcessState -ProcessId $syncProcessId -ExpectedScript "sync_databases.py"
+            $syncAlreadyRunning = $syncState.Exists -and $syncState.Matches -ne $false
+        }
+    }
+    if ($syncConfig.enabled -and $syncAlreadyRunning) {
+        Write-Output "Database backup supervisor is already running."
+    } elseif ($syncConfig.enabled) {
         $syncProcess = Start-Process -FilePath $Python -ArgumentList @(".\scripts\sync_databases.py", "worker") `
             -WorkingDirectory $RepoRoot -WindowStyle Hidden `
             -RedirectStandardOutput (Join-Path $LogDir "database_sync.out.log") `

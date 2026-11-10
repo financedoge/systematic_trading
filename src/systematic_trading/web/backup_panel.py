@@ -5,6 +5,7 @@ BACKUP_PANEL_HTML = r'''
   #backup-panel { margin-bottom: 12px; }
   #backup-panel .panel-head { flex-wrap: wrap; }
   .backup-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(250px, 1fr); }
+  #backup-panel[data-recovery-only="true"] .backup-grid { grid-template-columns: 1fr; }
   .backup-main, .backup-db { padding: 16px; min-width: 0; }
   .backup-db { border-left: 1px solid var(--line-soft); background: #fbfcfd; }
   .backup-title { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
@@ -42,7 +43,7 @@ BACKUP_PANEL_HTML = r'''
   </div>
   <div class="backup-grid">
     <div class="backup-main">
-      <div class="backup-title"><h3>Full-system recovery</h3><span class="backup-badge" id="backup-status" role="status">Loading</span></div>
+      <div class="backup-title"><h3>Application recovery</h3><span class="backup-badge" id="backup-status" role="status">Loading</span></div>
       <ol class="backup-steps" aria-label="Full backup process">
         <li id="backup-step-0">Connect</li><li id="backup-step-1">Capture</li><li id="backup-step-2">Transfer</li><li id="backup-step-3">Verify</li><li id="backup-step-4">Complete</li>
       </ol>
@@ -55,13 +56,15 @@ BACKUP_PANEL_HTML = r'''
       <dl class="backup-facts">
         <div><dt>Last completed on NAS</dt><dd id="backup-completed">No completed backup recorded</dd></div>
         <div><dt>Database capture completed</dt><dd id="backup-captured">—</dd></div>
-        <div><dt>Source data in last backup</dt><dd id="backup-size">—</dd></div>
-        <div><dt>New encrypted data stored</dt><dd id="backup-added">—</dd></div>
+        <div><dt>Logical source data processed</dt><dd id="backup-size">—</dd></div>
+        <div><dt>Added to NAS by this backup</dt><dd id="backup-added">—</dd></div>
       </dl>
+      <p class="backup-copy">Processed size includes repeated content. NAS storage is compressed and deduplicated.</p>
+      <p id="backup-recovery-copy" class="backup-copy" hidden>PostgreSQL, analytical histories and required files are included in this recovery set. Recover code and compact research findings from Git; restore the database explicitly after laptop failure.</p>
       <p id="backup-snapshot" class="backup-copy"></p>
       <p id="backup-verification" class="backup-copy"></p>
     </div>
-    <aside class="backup-db" aria-label="Database checkpoint status">
+    <aside id="backup-db-panel" class="backup-db" aria-label="Database checkpoint status">
       <div class="backup-title"><h3 id="backup-db-heading">Database checkpoints</h3><span id="backup-db-status" class="backup-badge">Loading</span></div>
       <p id="backup-db-schedule" class="backup-copy"></p>
       <dl>
@@ -149,6 +152,10 @@ BACKUP_PANEL_HTML = r'''
     text('backup-snapshot', last ? `Snapshot ${last.snapshot}` : '');
     text('backup-verification', last ? last.verification : 'A transfer is only complete after its NAS verification passes.');
     badge('backup-db-status', db.label, db.tone);
+    const recoveryOnly = db.result === 'recovery_only';
+    get('backup-panel').dataset.recoveryOnly = String(recoveryOnly);
+    get('backup-db-panel').hidden = recoveryOnly;
+    get('backup-recovery-copy').hidden = !recoveryOnly;
     text('backup-db-heading', db.postgres && !db.sqlite_count ? 'PostgreSQL checkpoints' : 'Database checkpoints');
     text('backup-db-schedule', `Local checkpoint and optional NAS sync every ${minutes(db.interval_seconds)} after the previous attempt. Transfer time can extend this interval.`);
     text('backup-db-checked', time(db.checked_at));

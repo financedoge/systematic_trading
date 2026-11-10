@@ -127,7 +127,7 @@ def main():
                     except Exception as error:
                         print(f"Optional system backup worker startup deferred: {error}", file=sys.stderr, flush=True)
                     next_system_check = time.monotonic() + 30
-                if time.monotonic() >= next_backup:
+                if not config.get("recovery_only", False) and time.monotonic() >= next_backup:
                     try:
                         sync.backup()
                         if not optional:
@@ -143,15 +143,16 @@ def main():
             worker_lock.__exit__(None, None, None)
     else:
         if args.action in ("prepare", "release"):
-            assert_services_stopped()
-            if recorded_process_running(pid_path):
-                raise SyncConflict("Stop database sync worker before handoff")
-            pid_path.unlink(missing_ok=True)
+            if not (optional and config.get("recovery_only", False)):
+                assert_services_stopped()
+                if recorded_process_running(pid_path):
+                    raise SyncConflict("Stop database sync worker before handoff")
+                pid_path.unlink(missing_ok=True)
             if args.action == "prepare":
                 stop_path.unlink(missing_ok=True)
         result = getattr(sync, args.action)()
         print(f"Database {args.action}: {result or 'complete'}")
-        if optional and sync.state.get("sync_error"):
+        if optional and not config.get("recovery_only", False) and sync.state.get("sync_error"):
             print(f"Optional NAS backup deferred; local services may run: {sync.state['sync_error']}")
     return 0
 

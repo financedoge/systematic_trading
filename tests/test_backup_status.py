@@ -68,6 +68,16 @@ def test_complete_status_has_distinct_recovery_point_and_next_run(backup_root):
     assert db["sqlite_count"] == 0
 
 
+def test_recovery_only_does_not_present_retired_sql_lane_as_current_or_failed(backup_root):
+    write(backup_root, "config/database-sync.json", dict(enabled=True, recovery_only=True, postgres=True))
+    write(backup_root, "var/run/database_sync.state.json", dict(ok=False, status="local_only", error="old SQL failure"))
+    db = module.backup_status(backup_root, now=NOW)["database"]
+    assert db["result"] == "recovery_only"
+    assert db["tone"] == "muted"
+    assert db["nas_confirmed_at"] is None and db["issue"] is None
+    assert db["nas_generation"] is None
+
+
 @pytest.mark.parametrize("phase,stage", [("capturing_postgres", 1), ("copying_clickhouse", 1), ("verifying", 3)])
 def test_current_phase_never_uses_previous_upload_progress(backup_root, phase, stage):
     update(backup_root, status=phase)

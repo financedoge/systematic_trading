@@ -1,10 +1,27 @@
 # Application recovery backups
 
+**November 8 operator scope change:** NAS should recover the application after
+laptop disk failure, with code recovered from Git; it should not preserve the
+entire research replay history. The [storage audit and replacement contract](storage-audit-2026-11-08.md)
+record measured overhead and the required bounded recovery set. `recovery-v1`
+now captures that set. Actual NAS restoration passed on November8 at 23:01
+Shanghai, and the first hourly replacement completed November9 at 00:35.
+Bounded retention is enabled after that acceptance. Preserve the current complete
+backup until each replacement passes publication verification.
+
+Pruning completed November9 at 01:36 Shanghai: the project NAS files total
+83.59 GB, its recycle subtree is empty, and measured volume free space rose by
+844.66 GB. This includes retiring 2,148 redundant SQL generations and obsolete
+restic history. The retained hourly recovery set represents 162.94 GB of logical
+source; the most recent update added 88.26 MB of compressed/deduplicated content.
+These are different measurements, not cumulative transfer or Windows disk-image
+sizes. Detailed receipts are under `var/maintenance/recovery-pruning-20261108/`.
+
 The native platform uses PostgreSQL for operations/publication manifests and
 Parquet/DuckDB for analytical histories. SQLite is an explicit offline test and
 legacy inspection backend, not a production service. All 145,836 legacy rows
 were reverified in the PostgreSQL archive on October 7, 2026. The original SQLite
-file is retained as evidence and included in file backups.
+file remains local legacy evidence; recovery uses its PostgreSQL archive.
 
 ## Coverage and consistency
 
@@ -12,23 +29,24 @@ file is retained as evidence and included in file backups.
 through the existing database backup worker. It captures:
 
 - A native PostgreSQL custom dump of all schemas, including approvals, orders,
-  reconciliation, registry, outbox and the legacy archive. Frequent SQL handoff
-  checkpoints continue separately with gzip compression and no active SQLite.
+  reconciliation, registry, outbox and the legacy archive. Recovery-only mode
+  replaces the separate recurring SQL handoff generations.
 - Every committed Parquet fragment selected by the SQL snapshot, with immutable
   dataset/publication manifests and SHA-256 dependencies. PostgreSQL dependency
   reads and `pg_dump` share one exported snapshot. A legacy ClickHouse capture
   branch remains only for explicit pre-cutover recovery.
 - Native NATS JetStream snapshots of all streams, configurations and consumer
   positions, with message checksum checking.
-- Project source/configuration/docs/tests/research and durable `var` state:
-  models, strategies, broker/account evidence, reconciliation, governance,
-  benchmarks, audit records and reports, including uncommitted source files.
-  Explicit pre-restore rollback copies are preserved; routine checkpoint copies,
-  transfer scratch space and PC-specific sync identity are excluded.
-- External D: research/provider archives, governed histories, LEAN inputs/results,
-  the configured raw hot spool and any existing local archive. Dependency receipts
-  add externally located pinned model/FX files and governed roots to coverage.
-- The accepted native LEAN engine, data/runtime files and acceptance provenance.
+- Explicit durable file roots: retained models/strategy publications, broker and
+  reconciliation evidence, market-data capture state, economic/energy/positioning
+  sources, issuer holdings and the reusable WRDS source archive. Dependency
+  receipts add pinned model/FX files and current/frozen governed history chains.
+- The configured raw hot spool/local archive and committed analytical fragments.
+  Disposable experiments, unused governance attempts and copied runtime trees are
+  excluded. A pinned sealed bundle includes its payload, not only its manifest.
+- Native LEAN runtime manifest and acceptance provenance; reinstall the runtime.
+- Git commit identity plus a compact patch and untracked source delta for current
+  code changes. Git supplies committed code, recipes and compact research findings.
 
 Provider archives remain inspection/replay evidence; backing them up does not
 make them audited research inputs or establish historical availability.
@@ -38,14 +56,18 @@ package environments. Caches, runtime PID/lock files, ClickHouse diagnostic logs
 `.env*`, named token/key files and private/secrets directories are excluded.
 Effective non-secret environment settings are saved in `runtime-settings.json`;
 password/key/token fields are omitted and listed for reprovisioning.
-Reprovision credentials separately. Source files are included; Git history is
-available separately from the Git remote.
+Reprovision credentials separately. Recover the recorded Git commit, apply the
+captured working-tree patch and overlay `uncommitted-source` when present.
 
 Each native database/stream snapshot is consistent, but the recorded capture
 interval is not a global cross-service transaction. Live file roots are read
 during upload. Versioned immutable artifacts remain recovery evidence. Validate
 input/publication dependencies and reconcile with the broker before execution.
 No full-system snapshot is automatically restored onto a running database.
+Loose empty strategy worker locks and UUID-suffixed, uncommitted model request
+writes are runtime state, not recovery dependencies. The verifier records these
+entries when an older inventory pinned them despite explicitly excluding them.
+Declared files inside sealed bundles always require their recorded hashes.
 
 ## Offline behavior and verification
 
@@ -76,7 +98,11 @@ default) for the whole child, and `stall_timeout_seconds` (900 s) of no
 stdout/stderr growth for restic commands. A NAS call that answers nothing
 therefore fails, releases the capture lock and retries on the normal five-minute
 schedule instead of holding the lock until the long timeout. The restic `unlock`
-probe is additionally bounded to 120 s. System → Backups marks an active stage
+probe is additionally bounded to 120 s. Explicit ten-second progress reporting
+keeps background compaction observable without disabling the stall guard.
+Snapshot forgetting and pack pruning are separate commands, so an interrupted
+repack is retried even when its old snapshot references were already removed.
+System → Backups marks an active stage
 that has reported no progress for 30 minutes as possibly stalled. Restic
 uses the last verified snapshot as its explicit parent when committed fragment
 paths change. Completion resolves the tagged candidate's original ID, because
@@ -121,10 +147,28 @@ Use `system_backup.py stop` to explicitly pause only this worker; automatic
 supervision honors that pause. `system_backup.py start` resumes it. Ordinary
 platform shutdown/startup preserves this explicit choice.
 
-No automatic snapshot deletion is enabled. Existing SQL generations are retained.
-Review NAS capacity before choosing a separate retention policy. The worker uses
+Recovery retention requires a passed isolated restore receipt for this repository.
+`system_backup.py prune --dry-run` previews restic retention; `prune` retains one
+current complete recovery snapshot, grouped by host rather than changing source
+paths, and reclaims unreferenced packs. With `recovery_only: true`, obsolete SQL
+generations are retired under both local and NAS locks; unknown files are retained
+for inspection. `recovery.json` records the replacement snapshot on the NAS.
+`retention_enabled` enables the same bounded cleanup after future successful
+captures. It is enabled after the accepted November8 restore. The worker uses
 only restic's stale-lock removal; never use `unlock --remove-all` to bypass a
 writer. Local staging is a dedicated, validated path outside all source roots.
+
+This NAS moves deleted backup files into a separate `Recycle Bin - Volume_1`
+share. `recycle_root` identifies only this project's subtree there. After a live
+repository check passes, retention purges recognized retired restic objects and
+SQL generations from that subtree and records a receipt. Unknown files, linked
+paths, other projects and other NAS shares are protected. Removing visible
+snapshot files alone does not establish reclaimed volume space; compare the NAS
+free-space counter after recycle cleanup.
+
+Ordinary start/stop performs the local interrupted-restore safety check without
+SQL dumps, NAS transfers or automatic database replacement. Backups run while the
+app is online; an isolated restore drill never requires stopping production.
 
 ## Encryption and recovery key
 
@@ -133,10 +177,14 @@ encrypted/authenticated repository is at:
 
 `\\192.168.1.32\Public\systematic-trading\full-system-restic`
 
-The generated key is `var/private/system-backup-recovery-key.txt`, excluded from
-backups and Git. **Save a separate copy in a password manager or another safe
-device. Losing the laptop and this key makes the encrypted backup unrecoverable.**
-An existing repository without its key fails closed rather than being recreated.
+The working key is `var/private/system-backup-recovery-key.txt`, excluded from
+the encrypted data set and Git. On November 8 the operator explicitly selected
+an off-laptop copy alongside the NAS backup. It was copied and hash-verified at
+`\\192.168.1.32\Public\systematic-trading\system-backup-recovery-key.txt`.
+The operator accepted that access to this folder also permits unlocking the backup.
+During disaster recovery, copy that file to the configured private local path
+before opening the restic repository. An existing repository without its key
+fails closed rather than being recreated.
 
 ## Recovery
 
@@ -153,7 +201,12 @@ An existing repository without its key fails closed rather than being recreated.
    ```
 
    Extracted contents are verified. `restore-map.json` maps neutral `root-NNN`
-   directories to original paths without copying Windows system-ancestor ACLs.
+   directories (or a single `drive-D` tree for the current recovery profile) to
+   original paths without copying Windows system-ancestor ACLs. Interrupted
+   isolated restores can resume with the same command plus `--resume`; the
+   recorded snapshot/repository must match. Existing content is hash-checked and
+   mismatching parts are restored. The data-drive restore uses eight concurrent
+   reads for SMB; production directories remain forbidden as restore targets.
    Locate the capture's `manifest.json`, `postgres.dump`, `native-analytics.json`,
    `dependencies.json`, `nats/streams.json` and stream snapshots. Check that the
    manifest declares the expected analytics backend. Provision the pinned native
@@ -172,6 +225,20 @@ An existing repository without its key fails closed rather than being recreated.
    restore guards and fresh broker reconciliation before execution. Review the
    captured paper policy; live remains disabled by default. Retain original data
    until the recovery drill passes.
+
+For a rehearsal on the running laptop, keep production online and validate the
+isolated extraction with:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/verify_recovery_restore.py `
+    --snapshot EXACT_COMPLETE_SNAPSHOT_ID --target D:/systematic_trading_recovery
+```
+
+This checks captured file hashes, every dependency/bundle/history, isolated native
+PostgreSQL table counts and portfolio controls, publication heads and served
+documents, and NATS stream/consumer state. It never substitutes production files
+for missing restored data. Passing produces the retention acceptance receipt;
+changing recovery coverage requires another accepted restore before pruning.
 
 Older captures explicitly marked ClickHouse require a separate compatible legacy
 restore, including their `clickhouse/.backup` data. Do not mix that layout with

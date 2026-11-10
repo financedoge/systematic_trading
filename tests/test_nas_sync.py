@@ -30,6 +30,25 @@ def values(sync):
         return [r[0] for r in db.execute("SELECT value FROM audit")]
 
 
+def test_crash_released_nas_lease_and_legacy_exclusion(tmp_path):
+    from systematic_trading.runtime_io import exclusive_lock, LockUnavailable
+    a = make_sync(tmp_path, 'lease')
+    a.root.mkdir()
+    lock = a.root/'operation.lock'
+    lock.mkdir()
+    with pytest.raises(SyncConflict, match='crash recovery'):
+        with a.lock():
+            pytest.fail('Unknown legacy lock must not be stolen')
+    write_json(lock/'lease.json', {'protocol':'smb-byte-lock-v1'})
+    with exclusive_lock(a.root/'operation.guard'):
+        with pytest.raises(LockUnavailable):
+            with a.lock():
+                pytest.fail('Active SMB lock must exclude competitors')
+    with a.lock():
+        assert read_json(lock/'lease.json')['node'] == a.state['node']
+    assert not lock.exists()
+
+
 def test_two_pc_roundtrip_and_competing_owner(tmp_path):
     a, b = make_sync(tmp_path, "a"), make_sync(tmp_path, "b")
     insert(a, "approval")

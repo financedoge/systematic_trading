@@ -209,7 +209,13 @@ def backup_status(root: Path, *, now=None):
         "newer_remote_pending_restart": "Newer NAS copy awaits safe restart"}
     db_label = db_labels.get(db_phase, "Status unavailable")
     db_tone = "good" if confirmed else "warning"
-    if cfg_db.get("enabled") is False:
+    if cfg_db.get("recovery_only"):
+        db_phase = "recovery_only"
+        db_labels[db_phase] = "Included in application recovery backup"
+        db_label, db_tone = db_labels[db_phase], "muted"
+        confirmed = False
+        db = {}
+    elif cfg_db.get("enabled") is False:
         db_label, db_tone = "Disabled", "muted"
     elif not db_running:
         db_label, db_tone = "Worker stopped", "warning"

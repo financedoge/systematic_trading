@@ -8,6 +8,8 @@ Incoming restores only run while local application services are stopped.
 from contextlib import contextmanager
 from datetime import UTC, datetime
 import os
+from pathlib import Path
+import re
 import shutil
 import socket
 from uuid import uuid4
@@ -16,6 +18,73 @@ from systematic_trading.storage.nas_sync import NasSync, SyncConflict, file_hash
 
 
 class OptionalNasSync(NasSync):
+    def prune_generations(self, verified_head):
+        """Called under the NAS lock, only after head bytes have been verified.
+
+        Unknown directories/files and links fail closed. The default remains
+        no pruning for older configurations; recovery-only installations opt in.
+        """
+        if self.config.get("retain_generations") != 1:
+            return
+        if not re.fullmatch(r"[0-9a-f]{32}", verified_head or "") or self.head() != verified_head:
+            raise SyncConflict("Verified NAS head changed before retention")
+        return self._remove_generations(keep=verified_head)
+
+    def retire_generations(self, proof, snapshot):
+        """Retire the redundant SQL lane after a complete recovery restore passed.
+
+        Caller validates the current restic snapshot and holds local/NAS locks.
+        This method is never called by legacy handoff or routine SQL transfer.
+        """
+        self.publish_recovery_locator(proof, snapshot)
+        (self.root/'latest.json').unlink(missing_ok=True)
+        return self._remove_generations(keep=None)
+
+    def publish_recovery_locator(self, proof, snapshot):
+        if (not self.config.get('recovery_only') or not proof.get('passed')
+                or proof.get('scope') != 'recovery-v1'
+                or not re.fullmatch(r'[0-9a-f]{64}', snapshot or '')
+                or not re.fullmatch(r'[0-9a-f]{64}', proof.get('snapshot', ''))
+                or Path(proof.get('repository', '')).resolve().parent != self.root.resolve()):
+            raise SyncConflict('A verified replacement recovery repository is required')
+        # Publish the replacement locator before withdrawing the legacy pointer.
+        write_json(self.root/'recovery.json', dict(repository=proof['repository'],
+            snapshot=snapshot, restore_verified_snapshot=proof['snapshot'], scope='recovery-v1'))
+
+    def _remove_generations(self, *, keep):
+        root = (self.root / "snapshots").resolve()
+        if root != self.root.resolve()/'snapshots' or (self.root/'snapshots').is_junction():
+            raise SyncConflict('Unsafe NAS snapshots root')
+        removed, skipped = [], []
+        receipt = self.local / "retention" / (uuid4().hex + ".json")
+        def record_receipt():
+            write_json(receipt, dict(at=datetime.now(UTC).isoformat(), root=str(root), kept=keep,
+                removed=removed, skipped_unknown=skipped,
+                removed_bytes=sum(r['bytes'] for r in removed)))
+        for path in root.iterdir():
+            if path.name == keep or not re.fullmatch(r"[0-9a-f]{32}", path.name):
+                continue
+            if (path.is_symlink() or path.is_junction() or not path.is_dir()
+                    or path.resolve().parent != root):
+                raise SyncConflict("Unsafe NAS generation path")
+            files = list(path.iterdir())
+            if any(p.is_symlink() or p.is_junction() or not p.is_file()
+                   or p.resolve().parent != path.resolve()
+                   or not re.fullmatch(r"manifest\.json|postgres\.sql(?:\.gz)?|sqlite-\d+\.db", p.name)
+                   for p in files):
+                skipped.append(path.name)
+                continue
+            record = dict(generation=path.name, bytes=sum(p.stat().st_size for p in files))
+            for file in files:
+                file.unlink()
+            path.rmdir()
+            removed.append(record)
+            if len(removed) % 25 == 0:
+                record_receipt()
+        if removed or skipped:
+            record_receipt()
+        return dict(removed=len(removed), removed_bytes=sum(r['bytes'] for r in removed), skipped=skipped)
+
     def guard(self):
         self.state = read_json(self.state_path)
         if self.state["phase"] == "restoring":
@@ -97,6 +166,7 @@ class OptionalNasSync(NasSync):
                     remote = self.download(head, incoming)
                     if remote["fingerprints"] == manifest["fingerprints"]:
                         self.save(head=head, revision_at=remote.get("revision_at", remote["created_at"]))
+                        self.prune_generations(head)
                         return "current"
                     if self.revision(remote) > self.revision(manifest):
                         if not restore:
@@ -123,6 +193,7 @@ class OptionalNasSync(NasSync):
             write_json(destination / "manifest.json", dict(manifest, parent=head))
             write_json(self.root / "latest.json", generation)
             self.save(head=generation)
+            self.prune_generations(generation)
             return "published_local"
 
     def synchronize(self, *, restore=False, closing=False):
@@ -151,10 +222,18 @@ class OptionalNasSync(NasSync):
         return result
 
     def prepare(self):
+        if self.config.get("recovery_only", False):
+            # Disaster recovery is an explicit restore. Ordinary startup must
+            # never wait for a full dump, SMB IO, or replace the local database.
+            self.guard()
+            return "local_ready"
         return self.synchronize(restore=True)
 
     def backup(self):
         return self.synchronize()
 
     def release(self):
+        if self.config.get("recovery_only", False):
+            self.guard()
+            return "local_ready"
         return self.synchronize(closing=True)

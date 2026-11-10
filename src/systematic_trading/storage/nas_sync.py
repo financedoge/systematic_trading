@@ -274,16 +274,30 @@ class NasSync:
         if not self.root.parent.is_dir():
             raise SyncConflict("NAS unavailable; startup/handoff blocked")
         self.root.mkdir(exist_ok=True)
+        from systematic_trading.runtime_io import exclusive_lock
         lock = self.root / "operation.lock"
-        try:
+        # SMB byte-range locks are released when the client/process disconnects.
+        # Keep the directory too: older clients still honor that exclusion gate.
+        with exclusive_lock(self.root / "operation.guard"):
+            lease = lock / "lease.json"
+            if lock.exists():
+                if (lock.is_symlink() or lock.is_junction() or not lease.is_file()
+                        or {p.name for p in lock.iterdir()} != {"lease.json"}
+                        or read_json(lease).get("protocol") != "smb-byte-lock-v1"):
+                    raise SyncConflict("NAS operation.lock exists; another sync is running or needs crash recovery")
+                # Possession of operation.guard proves no updated client holds
+                # this lease. Never infer liveness from an age or a remote PID.
+                lease.unlink()
+                lock.rmdir()
             lock.mkdir()
-        except FileExistsError:
-            raise SyncConflict("NAS operation.lock exists; another sync is running or needs crash recovery") from None
-        try:
-            self.state = read_json(self.state_path)
-            yield
-        finally:
-            lock.rmdir()
+            write_json(lease, dict(protocol="smb-byte-lock-v1", host=socket.gethostname(),
+                                   node=self.state["node"], pid=os.getpid()))
+            try:
+                self.state = read_json(self.state_path)
+                yield
+            finally:
+                lease.unlink()
+                lock.rmdir()
 
     def head(self):
         path = self.root / "latest.json"

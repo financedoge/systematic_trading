@@ -14,8 +14,18 @@ from systematic_trading.market_data.analytics_store import AnalyticsStore
 from systematic_trading.research.governed_inputs import GovernedInputs
 
 
+def publication_versions(analytics, *, native=False):
+    """A recovery receipt needs head identities, not large historical provenance."""
+    if native:
+        with analytics.catalog.connect() as connection:
+            return {r['source_id']: r['version'] for r in connection.execute(
+                'SELECT source_id,version FROM native_analytics.publication_heads '
+                'WHERE workspace=%s ORDER BY source_id', (analytics.workspace,))}
+    return {key: value['version'] for key, value in analytics.publication_index('').items()}
+
+
 @contextmanager
-def native_backup_snapshot(settings):
+def native_backup_snapshot(settings, *, progress=None):
     """Pin dependency reads and pg_dump to the same committed database view."""
     from systematic_trading.market_data.native_analytics import NativeAnalyticsStore
     analytics=NativeAnalyticsStore.from_settings(settings)
@@ -25,13 +35,15 @@ def native_backup_snapshot(settings):
         connection.execute('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY')
         snapshot=connection.execute('SELECT pg_export_snapshot() AS id').fetchone()['id']
         analytics.catalog.connect=lambda: nullcontext(connection)
-        yield snapshot,dependency_receipt(settings,analytics=analytics)
+        yield snapshot,dependency_receipt(settings,analytics=analytics,progress=progress)
 
 
-def directory_pins(folder):
+def directory_pins(folder, *, progress=None):
     """Pin immutable inventories once; directly hash files outside those bundles."""
     files = {}
     for parent, directories, names in os.walk(folder):
+        if progress:
+            progress()
         root = Path(parent)
         inventory_path = next((root / name for name in ('manifest.json', 'run.json') if name in names), None)
         if inventory_path:
@@ -43,15 +55,34 @@ def directory_pins(folder):
                 continue
         for name in names:
             path = root / name
-            files[str(path.resolve())] = sha256(path)
+            checksum = sha256(path)
+            if not transient_dependency_reason(path, checksum):
+                files[str(path.resolve())] = checksum
     return files
 
 
-def dependency_receipt(settings, *, analytics=None):
+def transient_dependency_reason(path, checksum):
+    """Recognize loose worker coordination files, never sealed bundle entries.
+
+    Dataset/run locks contain no payload. A UUID-suffixed request is an
+    uncommitted atomic write; consumers open only request.json. Keep this narrow
+    so a filename suffix alone cannot excuse a missing durable artifact.
+    """
+    name = str(path).replace('\\', '/').lower()
+    if (checksum == 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+            and re.search(r'/tracked_strategies/[0-9a-f]{64}/(?:datasets|runs)/'
+                          r'(?:[^/]+\.lock|[^/]+\.worker-[0-9a-f]{32}/bundle\.lock)$', name)):
+        return 'empty strategy worker lock'
+    if re.search(r'/tracked_models/[0-9a-f]{64}/request\.json\.[0-9a-f]{32}\.tmp$', name):
+        return 'uncommitted atomic model request'
+    return None
+
+
+def dependency_receipt(settings, *, analytics=None, progress=None):
     if settings.market_data_store_backend not in {"clickhouse","parquet"}:
         return dict(schema_version=1, storage="transactional_only", files={}, publications={})
     analytics = analytics or AnalyticsStore.from_settings(settings)
-    publications = analytics.publication_index("")
+    publications = publication_versions(analytics, native=settings.market_data_store_backend == 'parquet')
     files = {}
     config_path = settings.strategy_monitoring_config_path.resolve()
     if config_path.exists():
@@ -66,6 +97,12 @@ def dependency_receipt(settings, *, analytics=None):
                 files[str(path)] = actual
     latest = analytics.latest("governance/catalog")
     roots = []
+    usd = analytics.latest('governance/usd-broad-index')
+    if usd:
+        usd_root = Path(json.loads(usd['provenance'])['root']).resolve()
+        # This publication is read from files by the USD model provider. The
+        # previous broad var backup masked its omission from the SQL contract.
+        files.update(directory_pins(usd_root, progress=progress))
     if latest:
         root = Path(json.loads(latest["provenance"])["root"])
         reader = GovernedInputs(root, latest["version"])
@@ -80,13 +117,15 @@ def dependency_receipt(settings, *, analytics=None):
     # replay inputs. Keep exact locations/hashes in the prerequisite inventory.
     for folder in (settings.data_dir / "tracked_models", settings.data_dir / "tracked_strategies",
                    settings.data_dir / "market_data/fx_observations"):
-        files.update(directory_pins(folder))
+        files.update(directory_pins(folder, progress=progress))
     native={}
     if settings.market_data_store_backend=='parquet':
         with analytics.catalog.connect() as c:
             datasets=c.execute('SELECT dataset_key,revision,manifest_sha256,manifest FROM native_analytics.datasets '
                 'WHERE workspace=%s ORDER BY dataset_key,revision',(analytics.workspace,)).fetchall()
-        for dataset in datasets:
+        for index, dataset in enumerate(datasets):
+            if progress and index % 1024 == 0:
+                progress()
             manifest=dataset.pop('manifest')
             from systematic_trading.market_data.analytics_store import digest,encode
             if digest(encode(manifest))!=dataset['manifest_sha256']: raise ValueError('Native backup manifest identity mismatch')
@@ -97,7 +136,7 @@ def dependency_receipt(settings, *, analytics=None):
         native=dict(root=str(analytics.lake.root),datasets=datasets)
     return dict(schema_version=1, storage="external_dependencies_required", analytics_workspace=analytics.workspace,
         files=files, governed_roots=roots,native_analytics=native,
-        publications={key:value["version"] for key,value in publications.items()},
+        publications=publications,
         note="SQL files are backed up. The analytical backend and listed immutable artifacts must be copied/restored together; prepare verifies them before changing databases or ownership.")
 
 
@@ -138,7 +177,7 @@ def verify_dependencies(settings, receipt, *, verify_publications=True):
         analytics = AnalyticsStore.from_settings(settings)
         if analytics.workspace != receipt["analytics_workspace"]:
             raise ValueError("Analytical workspace differs; restore the original namespace before handoff")
-        current = analytics.publication_index("")
-        missing = [key for key,value in receipt["publications"].items() if current.get(key, {}).get("version") != value]
+        current = publication_versions(analytics, native=settings.market_data_store_backend == 'parquet')
+        missing = [key for key,value in receipt["publications"].items() if current.get(key) != value]
         if missing:
             raise ValueError("Analytical publications missing or changed: " + ", ".join(missing[:5]))

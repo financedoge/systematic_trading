@@ -1,12 +1,13 @@
-# Optional NAS backups and PC handoff
+# Optional NAS recovery and legacy PC handoff
 
-The October 7 upgrade adds [full recovery backups](full-system-backup.md) for
-ClickHouse, NATS and durable model/research/raw files. Frequent SQL handoff now
-snapshots PostgreSQL only, with gzip compression. SQLite has no active production
-functions: its frozen rows remain in PostgreSQL and its original file is retained.
-Both PCs must upgrade before handoff; changed old-PC SQLite files are rejected.
+The November 8 recovery-only policy uses one [application recovery backup](full-system-backup.md)
+for PostgreSQL, committed Parquet, NATS and required durable files. Git supplies
+code and compact recipes/findings. `recovery_only: true` disables recurring SQL
+handoff dumps and automatic startup restores. Legacy handoff behavior described
+below applies only when that setting is false. SQLite has no active production
+functions; its frozen rows remain in PostgreSQL.
 
-The platform runs on local PostgreSQL, ClickHouse and local files. NAS access is
+The platform runs on local PostgreSQL, Parquet/DuckDB and local files. NAS access is
 optional. Standard start/stop scripts work away from home; the dashboard launcher
 checks local restore safety without contacting NAS or requiring a backup worker.
 
@@ -23,14 +24,22 @@ both PCs to the same policy/code.
 .\scripts\stop_local_platform.ps1 -KeepInfrastructure
 ```
 
-Preparation, five-minute backups and shutdown first create a local checkpoint.
+In recovery-only mode, startup/shutdown check local restore safety immediately;
+neither dumps the database nor waits for NAS. The supervised backup worker
+captures the complete application recovery set hourly while services run.
+After catastrophic disk loss, perform an explicit verified recovery. A partial
+local restore still blocks startup; this safety check is never bypassed.
+
+Legacy handoff mode: preparation, periodic backups and shutdown create a local checkpoint.
 When NAS is unavailable, services continue and the next backup retries. UNC paths
 receive a two-second SMB TCP connection probe before filesystem access. A backup
 worker startup failure is a warning in optional mode.
 
-Two recent checkpoints remain under `var/database-sync/checkpoints`. Explicit
-`before-restore-*` rollback copies and immutable NAS generations are retained
-separately. Inspect `var/run/database_sync.state.json` and worker logs. `local_only`
+In legacy handoff mode, two recent checkpoints remain under
+`var/database-sync/checkpoints`. Explicit `before-restore-*` rollback copies are
+retained separately. Recovery-only mode retires the redundant NAS SQL generations
+after application restore acceptance. Inspect `var/run/database_sync.state.json`
+and worker logs. `local_only`
 means NAS has not confirmed the local state; its checkpoint/error fields distinguish
 successful local checkpoints from local backup failures. The original local
 database remains available in either case.
@@ -40,7 +49,7 @@ database remains available in either case.
 Get-Content var/run/database_sync.state.json
 ```
 
-## Latest revision wins
+## Legacy handoff: latest revision wins
 
 The newer complete database generation wins as requested by the operator. Revision
 time is the UTC time when the snapshot process observes a changed logical database
@@ -81,9 +90,13 @@ one transaction. Interrupted multi-database restore remains a hard local integri
 block (`phase: restoring`). Preserve rollback copies and recover local databases
 before starting services; never bypass it by deleting checkpoint state.
 
-NAS generations are not automatically pruned. Plan capacity for full snapshots.
-A stale NAS `operation.lock` may be removed only after verifying neither PC is
-synchronizing; removal is unnecessary for offline operation. Legacy `owner.json`
+Recovery pruning retires legacy SQL generations only after the replacement full
+recovery set passes isolated restore acceptance. Normal transfer can optionally
+retain just its verified current generation with `retain_generations: 1`.
+The NAS lock combines an SMB byte-range guard with a directory lease compatible
+with legacy clients. A crashed updated lease is recoverable only after acquiring
+the OS guard. An unknown/legacy lock still requires verified crash recovery;
+elapsed time or a local PID alone never authorizes stealing it. Legacy `owner.json`
 is not an authority gate under the optional latest policy.
 
 ## New PC prerequisites
@@ -93,11 +106,11 @@ Install compatible PostgreSQL server/client tools and a dedicated
 `st_readonly`. Configure local passwords and allow the migrator to assume the owner
 role. Roles/passwords are not in SQL dumps. `pg_dump`/`psql` are discovered on PATH
 or under `C:/Program Files/PostgreSQL`; `postgres_bin` can select another location.
-Install Docker and paper Gateway separately.
+Install native NATS, the validated native LEAN runtime and paper Gateway separately.
 
-SQL handoff snapshots do not contain ClickHouse or immutable model/market-data artifacts.
+SQL handoff snapshots do not contain Parquet or immutable model/market-data artifacts.
 Manifests retain hashes of governed roots, model/FX inputs, tracked outputs and
-ClickHouse publications. Restore these dependencies separately at the recorded
+analytical publications. Restore these dependencies separately at the recorded
 paths from the separate full-system backup before incoming SQL restore can succeed. Missing prerequisites defer that
 restore; they neither replace local data nor establish trading readiness. See
 [analytical migration](analytics-migration.md) and

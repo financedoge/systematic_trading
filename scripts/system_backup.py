@@ -3,6 +3,7 @@ import argparse
 from datetime import datetime
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -65,10 +66,12 @@ def stop_worker(root=ROOT, *, explicit=False):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["once", "worker", "start", "stop", "status", "verify", "restore-files"])
+    parser.add_argument("action", choices=["once", "worker", "start", "stop", "status", "verify", "restore-files", "prune"])
     parser.add_argument("--config", type=Path, default=ROOT / "config/system-backup.json")
     parser.add_argument("--snapshot")
     parser.add_argument("--target", type=Path)
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--resume", action="store_true", help="Resume only the same recorded isolated restore")
     args = parser.parse_args()
     os.chdir(ROOT)
     if args.action == "start":
@@ -84,6 +87,10 @@ def main():
         backup.once()
         print(json.dumps(backup.state, indent=2))
         return 0 if backup.state.get("status") == "complete" else 2
+    elif args.action == "prune":
+        with exclusive_lock(backup.local / "capture.lock"):
+            backup.prune(dry_run=args.dry_run)
+        print('Recovery retention ' + ('plan verified' if args.dry_run else 'completed'))
     elif args.action == "verify":
         check_nas(backup.repository)
         with exclusive_lock(backup.local / "capture.lock"):
@@ -92,12 +99,15 @@ def main():
     elif args.action == "restore-files":
         if not args.snapshot or not args.target:
             parser.error("restore-files requires --snapshot and --target")
-        print(backup.restore_files(args.snapshot, args.target))
+        print(backup.restore_files(args.snapshot, args.target, resume=args.resume))
     else:
         pid = backup.run_dir / "system_backup.pid"
         with exclusive_lock(backup.run_dir / "system_backup.worker.lock"):
             pid.write_text(str(os.getpid()))
             try:
+                if backup.state.get('status') == 'paused':
+                    verified = re.fullmatch('[0-9a-f]{64}', backup.state.get('snapshot') or '') and backup.state.get('completed_at')
+                    backup.status('complete' if verified else 'starting', error=None)
                 while not backup.stop_path.exists():
                     last = backup.state.get("captured_at")
                     due = not last or time.time()-datetime.fromisoformat(last).timestamp() >= backup.config["interval_seconds"]

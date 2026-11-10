@@ -32,7 +32,8 @@ def fake_capture(backup):
     capture = backup.stage / "capture"
     capture.mkdir(parents=True, exist_ok=True)
     (capture / "postgres.dump").write_bytes(b"fake-test-dump")
-    write_json(capture / "manifest.json", {"market_data_store_backend": backup.settings.market_data_store_backend,
+    write_json(capture / "manifest.json", {"scope": backup.config.get('scope', 'full-system'),
+        "market_data_store_backend": backup.settings.market_data_store_backend,
         "files": {"postgres.dump": {"sha256": file_hash(capture/"postgres.dump")}}})
     pending = dict(capture=str(capture), manifest_sha256=file_hash(capture/"manifest.json"),
                    captured_at="2026-10-07T02:00:00+00:00", sources=[str(backup.workspace/"source")])
@@ -115,11 +116,135 @@ def test_command_output_prevents_the_stall_guard(backup):
     assert output.strip().splitlines()[-1] == "5"
 
 
+def test_worker_resume_reports_fresh_recovery_without_recapturing(backup, monkeypatch):
+    import importlib.util
+    from datetime import UTC, datetime
+    script = Path(__file__).resolve().parents[1]/'scripts/system_backup.py'
+    spec = importlib.util.spec_from_file_location('recovery_worker_resume_test', script)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    config = backup.workspace/'config/system-backup.json'
+    write_json(config, backup.config)
+    backup.config.update(interval_seconds=3600, retry_seconds=2)
+    backup.state.update(status='paused', snapshot='a'*64, captured_at=datetime.now(UTC).isoformat(),
+                        completed_at=datetime.now(UTC).isoformat())
+    observed = []
+    monkeypatch.setattr(backup, 'heartbeat', lambda: observed.append(backup.state['status']))
+    monkeypatch.setattr(backup, 'once', lambda: pytest.fail('Fresh recovery must wait for its normal interval'))
+    monkeypatch.setattr(module, 'ROOT', backup.workspace)
+    monkeypatch.setattr(module, 'SystemBackup', lambda *args: backup)
+    monkeypatch.setattr(module.time, 'sleep', lambda _: backup.stop_path.touch())
+    monkeypatch.setattr(sys, 'argv', ['system_backup.py', 'worker', '--config', str(config)])
+    monkeypatch.chdir(backup.workspace)
+    assert module.main() == 0
+    assert observed[:2] == ['complete', 'complete']
+    assert observed[-1] == 'paused'
+
+
 def test_pending_manifest_tampering_fails_before_upload(backup):
     pending = fake_capture(backup)
     (backup.stage / "capture/manifest.json").write_text("{}")
     with pytest.raises(ValueError, match="identity changed"):
         backup.publish(pending)
+
+
+def test_scope_change_cannot_resume_a_broad_pending_capture(backup):
+    pending = fake_capture(backup)
+    backup.config['scope'] = 'recovery-v1'
+    with pytest.raises(ValueError, match='scope differs'):
+        backup.publish(pending)
+
+
+def test_recovery_scope_keeps_declared_payload_but_omits_runtime_and_old_research(backup, tmp_path):
+    backup.config.update(scope='recovery-v1', input_manifests=['frozen.json'])
+    frozen = backup.workspace/'experiment'
+    frozen.mkdir()
+    payload = frozen/'needed.npz'
+    payload.write_bytes(b'frozen required input')
+    (frozen/'discardable.log').write_text('exploratory replay')
+    write_json(backup.workspace/'frozen.json', dict(files={'experiment/needed.npz':file_hash(payload)}))
+    hot = tmp_path/'hot'
+    hot.mkdir()
+    policy = backup.workspace/'policy.json'
+    write_json(policy, dict(hot_spool_root=str(hot)))
+    backup.settings = backup.settings.model_copy(update=dict(market_data_storage_policy_path=policy,
+                                                            lean_runtime_backend='docker'))
+    sources, dependencies = backup.source_paths(dict(files={}, governed_roots=[]))
+    assert payload in sources and frozen not in sources
+    assert frozen/'discardable.log' not in sources
+    assert dependencies['files'][str(payload)] == file_hash(payload)
+
+
+def test_pruning_requires_restore_acceptance_and_keeps_current_capture(backup, monkeypatch):
+    import json
+    from systematic_trading.storage.recovery_checks import recovery_policy_hash
+    backup.config.update(scope='recovery-v1')
+    backup.state.update(status='complete', snapshot='a'*64)
+    proof = backup.local/'restore-acceptance.json'
+    write_json(proof, dict(passed=False, repository=str(backup.repository), scope='recovery-v1'))
+    with pytest.raises(ValueError, match='passed restore'):
+        backup.prune()
+    write_json(proof, dict(passed=True, repository=str(backup.repository), scope='recovery-v1',
+                          policy_sha256=recovery_policy_hash(backup.config)))
+    monkeypatch.setattr(backup, 'restic', lambda *args: json.dumps([
+        dict(id='a'*64, tags=['system-complete','recovery-v1','capture-current'])]))
+    calls = []
+    monkeypatch.setattr(backup, 'command', lambda args, **kwargs: calls.append(args))
+    backup.prune(dry_run=True)
+    assert '--dry-run' in calls[0] and '--prune' not in calls[0]
+    assert calls[0][calls[0].index('--group-by')+1] == 'host'
+    assert calls[0][calls[0].index('--keep-tag')+1] == 'capture-current'
+    backup.state['status'] = 'deferred'
+    with pytest.raises(ValueError, match='current complete'):
+        backup.prune()
+    backup.state['status'] = 'paused'
+    backup.config['exclude'].append('**/newly-excluded/**')
+    with pytest.raises(ValueError, match='coverage changed'):
+        backup.prune()
+
+
+def test_pruning_cannot_forget_before_replacement_locator_is_published(backup, monkeypatch):
+    import json
+    from contextlib import nullcontext
+    from types import SimpleNamespace
+    from systematic_trading.storage.recovery_checks import recovery_policy_hash
+    backup.config['scope'] = 'recovery-v1'
+    backup.state.update(status='complete', snapshot='a'*64)
+    write_json(backup.local/'restore-acceptance.json', dict(passed=True, repository=str(backup.repository),
+        scope='recovery-v1', policy_sha256=recovery_policy_hash(backup.config), snapshot='a'*64))
+    write_json(backup.workspace/'config/database-sync.json', dict(recovery_only=True, postgres=False, sqlite_paths=[]))
+    monkeypatch.setattr(backup, 'restic', lambda *args: json.dumps([
+        dict(tags=['system-complete','recovery-v1','capture-current'])]))
+    def unavailable():
+        raise OSError('NAS locator is busy')
+    sync = SimpleNamespace(local_lock=nullcontext, lock=unavailable)
+    monkeypatch.setattr('systematic_trading.storage.optional_sync.OptionalNasSync', lambda *args: sync)
+    monkeypatch.setattr(backup, 'command', lambda *args, **kwargs: pytest.fail('Must publish replacement before forgetting'))
+    with pytest.raises(OSError, match='locator is busy'):
+        backup.prune()
+
+
+def test_recycle_cleanup_requires_a_successful_live_repository_check(backup, monkeypatch):
+    import json
+    from systematic_trading.storage.recovery_checks import recovery_policy_hash
+    import systematic_trading.storage.recovery_retention as retention
+    backup.config.update(scope='recovery-v1', recycle_root='configured-bin')
+    backup.state.update(status='complete', snapshot='a'*64)
+    write_json(backup.local/'restore-acceptance.json', dict(passed=True, repository=str(backup.repository),
+        scope='recovery-v1', policy_sha256=recovery_policy_hash(backup.config), snapshot='a'*64))
+    calls = []
+    def restic(*args):
+        if args[0] == 'snapshots':
+            return json.dumps([dict(id='a'*64, tags=['system-complete','recovery-v1','capture-current'])])
+        calls.append(args[0])
+        raise RuntimeError('missing live repository pack')
+    monkeypatch.setattr(backup, 'restic', restic)
+    monkeypatch.setattr(backup, 'command', lambda args, **kwargs: calls.append(args[1]))
+    monkeypatch.setattr(retention, 'validate_recycle_mapping', lambda *args: None)
+    monkeypatch.setattr(retention, 'purge_recycled_backups', lambda *args, **kwargs: pytest.fail('Must retain trash for recovery'))
+    with pytest.raises(RuntimeError, match='missing live'):
+        backup.prune()
+    assert calls == ['forget', 'prune', 'check']
 
 
 def test_legacy_pending_capture_cannot_be_published_as_native(backup, monkeypatch):
@@ -191,6 +316,26 @@ def test_restore_groups_only_committed_native_fragments(backup,tmp_path,monkeypa
         backup.restore_files('a'*64,lake/'empty-child')
 
 
+def test_recovery_restore_batches_selected_data_drive_in_one_verified_read(backup, tmp_path, monkeypatch):
+    import json
+    backup.workspace = Path('D:/test-recovery-workspace')
+    calls = []
+    def restic(*args):
+        calls.append(args)
+        if args[0] == 'snapshots':
+            return json.dumps([dict(tags=['system-complete','recovery-v1'],
+                                    paths=['D:/test-recovery-workspace/config','D:/lake/parquet/a.parquet'])])
+        return ''
+    monkeypatch.setattr(backup, 'restic', restic)
+    target = tmp_path/'batched-restore'
+    backup.restore_files('a'*64, target)
+    restores = [c for c in calls if c[0] == 'restore']
+    assert len(restores) == 1 and restores[0][1] == 'a'*64+':/D'
+    assert '--verify' in restores[0]
+    assert read_json(target/'restore-map.json')[0]['original'] == 'D:\\'
+    assert read_json(target/'restore-source.json') == dict(snapshot='a'*64, repository=str(backup.repository))
+
+
 def test_staging_cannot_contain_source_or_be_inside_source(backup):
     for target in [backup.workspace, backup.workspace/"source/nested"]:
         config = dict(backup.config, staging_root=str(target))
@@ -208,6 +353,17 @@ def test_shutdown_cancels_slow_network_child(backup):
     finally:
         timer.join()
     assert time.monotonic()-started < 5
+
+
+def test_source_inventory_updates_heartbeat_and_honors_stop(backup, monkeypatch):
+    beats = []
+    monkeypatch.setattr(backup, 'heartbeat', lambda: beats.append(True))
+    backup.inventory_progress()
+    assert beats == [True]
+    backup.stop_path.touch()
+    backup._inventory_heartbeat_at = 0
+    with pytest.raises(BackupStopped, match='inventory paused'):
+        backup.inventory_progress()
 
 
 def test_explicit_worker_pause_is_honored_by_automatic_supervision(backup, monkeypatch):
@@ -250,6 +406,11 @@ def test_real_restic_backup_readback_restore_and_incremental_catchup(backup, mon
     assert "postgres_port" in saved_settings["settings"]
     assert "clickhouse_password" not in saved_settings["settings"]
     assert "postgres_app_password" in saved_settings["reprovision_fields"]
+    with pytest.raises(ValueError, match='same recorded snapshot'):
+        backup.restore_files('f'*64, target, resume=True)
+    next(target.rglob('data.txt')).write_text('interrupted partial restore')
+    backup.restore_files(first, target, resume=True)
+    assert [p.read_text() for p in target.rglob('data.txt')] == ['durable market evidence\n']
     (backup.workspace / "source/data.txt").write_text("offline-change\n")
     original = backup.repository
     backup.repository = original / "offline/child"
@@ -271,6 +432,42 @@ def test_real_restic_backup_readback_restore_and_incremental_catchup(backup, mon
     assert [p.read_text() for p in (tmp_path/"restored-second").rglob("data.txt")] == ["offline-change\n"]
     assert backup.state['summary']['files_unmodified'] > 0
     backup.restic("check", "--read-data")
+
+
+def test_real_retention_removes_old_complete_and_failed_candidates_but_keeps_manual(backup, monkeypatch):
+    import json
+    import socket
+    from systematic_trading.storage.recovery_checks import recovery_policy_hash
+    if not backup.binary.exists():
+        pytest.skip('Pinned restic binary not provisioned')
+    monkeypatch.setattr(backup, 'capture', lambda: fake_capture(backup))
+    assert backup.once(), backup.state
+    backup.restic('backup', '--host', socket.gethostname(), '--tag', 'system-candidate', str(backup.workspace/'source'))
+    backup.restic('backup', '--host', socket.gethostname(), '--tag', 'manual', str(backup.workspace/'source'))
+    backup.config['scope'] = 'recovery-v1'
+    current = backup.once()
+    assert current, backup.state
+    write_json(backup.local/'restore-acceptance.json', dict(passed=True, scope='recovery-v1',
+        repository=str(backup.repository), snapshot=current, policy_sha256=recovery_policy_hash(backup.config)))
+    backup.prune(dry_run=True)
+    assert len(json.loads(backup.restic('snapshots'))) == 4
+    command = backup.command
+    def interrupted_repack(args, **kwargs):
+        if args[1] == 'prune':
+            assert kwargs['env']['RESTIC_PROGRESS_FPS'] == '0.1'
+            raise TimeoutError('Interrupted after forgetting references')
+        return command(args, **kwargs)
+    monkeypatch.setattr(backup, 'command', interrupted_repack)
+    with pytest.raises(TimeoutError, match='Interrupted after forgetting'):
+        backup.prune()
+    monkeypatch.setattr(backup, 'command', command)
+    assert len(json.loads(backup.restic('snapshots'))) == 2
+    backup.prune()
+    remaining = json.loads(backup.restic('snapshots'))
+    assert len(remaining) == 2
+    assert {row['id'] for row in remaining if 'system-complete' in row['tags']} == {current}
+    assert any('manual' in row['tags'] for row in remaining)
+    backup.restic('check', '--read-data')
 
 
 def test_queue_native_snapshot_includes_consumers_and_acks_chunks(tmp_path, monkeypatch):
